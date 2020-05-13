@@ -1,1 +1,1 @@
-# Belangrijke zaken (voorkant)
+# Zaken (frontend)
