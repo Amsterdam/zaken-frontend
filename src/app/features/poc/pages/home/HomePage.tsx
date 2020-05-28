@@ -3,12 +3,13 @@ import { FormTitle, Heading } from "@datapunt/asc-ui"
 import { RouteComponentProps } from "@reach/router"
 
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
+import POCForm from "../../organisms/form/POCForm"
 
 const HomePage: React.FC<RouteComponentProps> = () => (
   <DefaultLayout>
     <Heading>Proof of Concept</Heading>
-    <FormTitle>Consectetur Mattis Egestas Amet Ligula</FormTitle>
-    <p>TODO show form</p>
+    <FormTitle>Eerste versie van een formulier in het zaaksysteem</FormTitle>
+    <POCForm />
   </DefaultLayout>
 )
 

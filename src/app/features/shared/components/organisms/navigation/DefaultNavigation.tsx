@@ -1,11 +1,7 @@
 import React from "react"
 import { MenuInline, MenuItem, MenuButton, MenuFlyOut } from "@datapunt/asc-ui"
 
-type Props = {
-
-}
-
-const DefaultNavigation: React.FC<Props> = () => (
+const DefaultNavigation: React.FC = () => (
   <MenuInline>
     <MenuItem>
       <MenuButton forwardedAs="a" href="/" active>
