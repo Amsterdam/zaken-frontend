@@ -1,9 +1,9 @@
 import React from "react"
 
-import { Scaffold } from "amsterdam-react-final-form"
-import { FormPositioner, FormPositionerProps } from "amsterdam-scaffold-form/package"
+import { Scaffold, ScaffoldAvailableFields } from "amsterdam-react-final-form"
+import { FormPositioner, FormPositionerFields } from "amsterdam-scaffold-form/package"
 
-const form: FormPositionerProps = {
+const form: FormPositionerFields<ScaffoldAvailableFields> = {
   zaaknummer: {
     type: "TextField",
     props: {
