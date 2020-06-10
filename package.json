@@ -17,6 +17,7 @@
     "@types/styled-components": "^5.1.0",
     "amsterdam-react-final-form": "^0.1.36",
     "amsterdam-scaffold-form": "^0.1.14",
+    "dtsgenerator": "^2.6.0",
     "final-form": "^4.20.0",
     "final-form-arrays": "^3.0.2",
     "react": "^16.13.1",
@@ -33,7 +34,8 @@
     "test": "react-scripts test --watchAll=false",
     "test:coverage": "react-scripts test --coverage --watchAll=false",
     "lint": "eslint --cache --ext .ts,.tsx src",
-    "lint:fix": "npm run lint -- --fix"
+    "lint:fix": "npm run lint -- --fix",
+    "swagger:generate-schema": "dtsgen -o ./src/__generated__/apiSchema.d.ts -n API --url http://localhost:8000/api/v1/schema/"
   },
   "eslintConfig": {
     "extends": "react-app"
