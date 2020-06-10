@@ -1,7 +1,7 @@
 import React from "react"
-import { ScaffoldForm } from "amsterdam-react-final-form"
+import { ScaffoldForm, Scaffold, DebugFormValues } from "amsterdam-react-final-form"
 
-import { scaffoldProps } from "./scaffold"
+import scaffoldProps from "./scaffold"
 
 const mockHandleSubmit = (...args: any[]) => new Promise(resolve => {
   console.log("Mock submit...", args)
@@ -13,10 +13,10 @@ const mockHandleSubmit = (...args: any[]) => new Promise(resolve => {
 })
 
 const POCForm: React.FC = () => (
-  <ScaffoldForm
-    scaffoldProps={scaffoldProps}
-    onSubmit={mockHandleSubmit}
-  />
+  <ScaffoldForm onSubmit={mockHandleSubmit}>
+    <Scaffold {...scaffoldProps} />
+    <DebugFormValues />
+  </ScaffoldForm>
 )
 
 
