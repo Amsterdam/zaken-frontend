@@ -1,0 +1,101 @@
+{
+  "fields": {
+    "url": {
+      "type": "TextField",
+      "props": {
+        "type": "text",
+        "position": {},
+        "name": "url",
+        "label": "Url"
+      }
+    },
+    "uuid": {
+      "type": "TextField",
+      "props": {
+        "type": "text",
+        "position": {},
+        "name": "uuid",
+        "label": "Uuid"
+      }
+    },
+    "identificatie": {
+      "type": "TextField",
+      "props": {
+        "type": "text",
+        "position": {},
+        "name": "identificatie",
+        "label": "Identificatie"
+      }
+    },
+    "omschrijving": {
+      "type": "TextAreaField",
+      "props": {
+        "position": {},
+        "name": "omschrijving",
+        "label": "Omschrijving"
+      }
+    },
+    "startdatum": {
+      "type": "TextField",
+      "props": {
+        "type": "date",
+        "position": {},
+        "name": "startdatum",
+        "label": "Startdatum"
+      }
+    },
+    "einddatum": {
+      "type": "TextField",
+      "props": {
+        "type": "date",
+        "position": {},
+        "name": "einddatum",
+        "label": "Einddatum"
+      }
+    },
+    "status": {
+      "type": "TextField",
+      "props": {
+        "type": "text",
+        "position": {},
+        "name": "status",
+        "label": "Status"
+      }
+    },
+    "bronorganisatie": {
+      "type": "TextField",
+      "props": {
+        "type": "text",
+        "position": {},
+        "name": "bronorganisatie",
+        "label": "Bronorganisatie"
+      }
+    },
+    "verantwoordelijkeOrganisatie": {
+      "type": "TextField",
+      "props": {
+        "type": "text",
+        "position": {},
+        "name": "verantwoordelijkeOrganisatie",
+        "label": "Verantwoordelijke organisatie"
+      }
+    },
+    "zaaktype": {
+      "type": "TextField",
+      "props": {
+        "type": "text",
+        "position": {},
+        "name": "zaaktype",
+        "label": "Zaaktype"
+      }
+    },
+    "submit": {
+      "type": "SubmitButton",
+      "props": {
+        "align": "right",
+        "label": "Opslaan"
+      }
+    }
+  },
+  "columns": {}
+}

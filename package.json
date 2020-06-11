@@ -15,10 +15,11 @@
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
     "@types/styled-components": "^5.1.0",
-    "amsterdam-react-final-form": "^0.1.36",
-    "amsterdam-scaffold-form": "^0.1.14",
+    "amsterdam-react-final-form": "^0.1.55",
+    "amsterdam-scaffold-form": "^0.1.19",
     "final-form": "^4.20.0",
     "final-form-arrays": "^3.0.2",
+    "immer": "^6.0.9",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-final-form": "^6.5.0",
@@ -33,7 +34,9 @@
     "test": "react-scripts test --watchAll=false",
     "test:coverage": "react-scripts test --coverage --watchAll=false",
     "lint": "eslint --cache --ext .ts,.tsx src",
-    "lint:fix": "npm run lint -- --fix"
+    "lint:fix": "npm run lint -- --fix",
+    "generate:swagger-schema": "dtsgen -o ./src/__generated__/apiSchema.d.ts -n API --url http://localhost:8000/api/v1/schema/",
+    "generate:form-scaffolds": "ts-node scripts/generateFormScaffolds.ts"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -51,8 +54,10 @@
     ]
   },
   "devDependencies": {
+    "dtsgenerator": "^2.6.0",
     "husky": "^4.2.5",
-    "lint-staged": "^10.2.7"
+    "lint-staged": "^10.2.7",
+    "ts-node": "^8.10.2"
   },
   "husky": {
     "hooks": {
