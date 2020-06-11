@@ -6,7 +6,9 @@
         "type": "text",
         "position": {},
         "name": "url",
-        "label": "Url"
+        "label": "Url",
+        "disabled": true,
+        "isRequired": true
       }
     },
     "uuid": {
@@ -15,7 +17,9 @@
         "type": "text",
         "position": {},
         "name": "uuid",
-        "label": "Uuid"
+        "label": "Uuid",
+        "disabled": true,
+        "isRequired": true
       }
     },
     "identificatie": {
@@ -24,7 +28,9 @@
         "type": "text",
         "position": {},
         "name": "identificatie",
-        "label": "Identificatie"
+        "label": "Identificatie",
+        "disabled": true,
+        "isRequired": true
       }
     },
     "omschrijving": {
@@ -32,7 +38,8 @@
       "props": {
         "position": {},
         "name": "omschrijving",
-        "label": "Omschrijving"
+        "label": "Omschrijving",
+        "isRequired": true
       }
     },
     "startdatum": {
@@ -41,7 +48,8 @@
         "type": "date",
         "position": {},
         "name": "startdatum",
-        "label": "Startdatum"
+        "label": "Startdatum",
+        "isRequired": true
       }
     },
     "einddatum": {
@@ -59,7 +67,9 @@
         "type": "text",
         "position": {},
         "name": "status",
-        "label": "Status"
+        "label": "Status",
+        "disabled": true,
+        "isRequired": true
       }
     },
     "bronorganisatie": {
@@ -68,7 +78,9 @@
         "type": "text",
         "position": {},
         "name": "bronorganisatie",
-        "label": "Bronorganisatie"
+        "label": "Bronorganisatie",
+        "disabled": true,
+        "isRequired": true
       }
     },
     "verantwoordelijkeOrganisatie": {
@@ -77,7 +89,9 @@
         "type": "text",
         "position": {},
         "name": "verantwoordelijkeOrganisatie",
-        "label": "Verantwoordelijke organisatie"
+        "label": "Verantwoordelijke organisatie",
+        "disabled": true,
+        "isRequired": true
       }
     },
     "zaaktype": {
@@ -86,7 +100,8 @@
         "type": "text",
         "position": {},
         "name": "zaaktype",
-        "label": "Zaaktype"
+        "label": "Zaaktype",
+        "isRequired": true
       }
     },
     "submit": {
