@@ -4,7 +4,7 @@ const { fetchSchema, getSchemaObjects, parseOpenApiSchema } = require("amsterdam
 const fs = require("fs")
 
 const writeToFile = (filename: string, obj: any) => {
-  console.log("Writing " + filename)
+  console.log(`\t"${ filename }"`)
   const path = "./src/__generated__/"
 
   if (!fs.existsSync(path)) {
@@ -17,6 +17,14 @@ const writeToFile = (filename: string, obj: any) => {
 const writeSchemas = (schema: any) => {
   const schemaObjects = getSchemaObjects(schema)
 
+  console.log("-----")
+  console.log("Found schemas:")
+  console.log("-----")
+  console.log(Object.keys(schemaObjects).map(_ => `\t"${ _ }"`).join("\n"))
+  console.log("-----")
+  console.log("Writing schemas:")
+  console.log("-----")
+
   // Write
   // NOTE: add your own cases here:
   // ----
@@ -25,6 +33,7 @@ const writeSchemas = (schema: any) => {
 
   // DONE!
   // ----
+  console.log("-----")
   console.log("DONE")
 }
 
