@@ -1,17 +1,13 @@
 import React from "react"
 import { ThemeProvider, GlobalStyle } from "@datapunt/asc-ui"
-import { Router } from "@reach/router"
 
-import HomePage from "app/features/poc/pages/home/HomePage"
+import Router from "./app/features/shared/routing/Router"
 
 const App: React.FC = () => (
   <ThemeProvider>
       <GlobalStyle />
-      <Router>
-        <HomePage path="/" />
-      </Router>
+      <Router />
   </ThemeProvider>
 )
-
 
 export default App
