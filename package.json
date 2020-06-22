@@ -54,7 +54,7 @@
     ]
   },
   "devDependencies": {
-    "dtsgenerator": "^2.6.0",
+    "dtsgenerator": "^3.1.0",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
     "ts-node": "^8.10.2"
