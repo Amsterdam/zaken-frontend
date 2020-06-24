@@ -12,7 +12,7 @@ const DefaultNavigation: React.FC = () => (
     </MenuItem>
     <MenuFlyOut label="Submenu">
       <MenuItem>
-        <MenuButton forwardedAs="a" href={ to("/poc/foo/:bar/", { bar: "bar" }) }>
+        <MenuButton forwardedAs="a" href={ to("/poc/foo/:bar/", { bar: "foo" }) }>
           Bar Egestas
         </MenuButton>
       </MenuItem>
