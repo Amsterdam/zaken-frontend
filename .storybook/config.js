@@ -1,3 +1,6 @@
+import "react-app-polyfill/ie11"
+import "react-app-polyfill/stable"
+
 import React from "react"
 
 import styled from "styled-components"
@@ -14,8 +17,7 @@ const Wrap = styled.div`
 const req = require.context("../src", true, /\.stories\.(tsx)$/)
 
 const extendedTheme = {
-  globalStyle: `
-  `,
+  globalStyle: "",
 }
 
 function withGlobalStyles(storyFn) {

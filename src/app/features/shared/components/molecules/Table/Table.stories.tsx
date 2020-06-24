@@ -17,7 +17,7 @@ const columns = [
   "Email",
   "Gender",
   "Ip",
-  <>&nbsp;</>
+  undefined
 ]
 
 const OpenButton: React.FC = () => <Button variant="textButton" iconSize={14} iconLeft={<ChevronRight />}>Open</Button>

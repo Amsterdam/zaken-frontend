@@ -2,11 +2,12 @@ import React from "react"
 import { themeColor } from "@datapunt/asc-ui"
 import styled from "styled-components"
 
+import SmallSkeleton from "app/features/shared/components/atoms/Skeleton/SmallSkeleton"
+
 import TableCell from "./components/TableCell/TableCell"
 import TableHeading from "./components/TableHeading/TableHeading"
-import SmallSkeleton from "../../atoms/Skeleton/SmallSkeleton"
 
-type CellContent = string | number| JSX.Element
+type CellContent = string | number | JSX.Element | undefined
 
 type Props = {
   loading?: boolean
@@ -62,7 +63,7 @@ const Table: React.FC<Props> = ({ columns, loading, fixedColumnWidth, ...restPro
           <Row>
             { columns.map( (column, index) =>
               <TableHeading key={index} fixedWidth={fixedWidth(!loading && columns.length - 1 === index, fixedColumnWidth)}>
-                { column }
+                { column ?? <>&nbsp;</> }
               </TableHeading>
             ) }
           </Row>
@@ -72,7 +73,7 @@ const Table: React.FC<Props> = ({ columns, loading, fixedColumnWidth, ...restPro
             <Row key={index}>
               { row.map( (cell, index) =>
                 <TableCell key={index} fixedWidth={fixedWidth(!loading && row.length - 1 === index, fixedColumnWidth)}>
-                  { loading ? <SmallSkeleton /> : cell }
+                  { loading ? <SmallSkeleton /> : cell ?? <>&nbsp;</> }
                 </TableCell>
               ) }
             </Row>
