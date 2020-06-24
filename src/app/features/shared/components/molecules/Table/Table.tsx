@@ -4,6 +4,7 @@ import styled from "styled-components"
 
 import TableCell from "./components/TableCell/TableCell"
 import TableHeading from "./components/TableHeading/TableHeading"
+import SmallSkeleton from "../../atoms/Skeleton/SmallSkeleton"
 
 type CellContent = string | number| JSX.Element
 
