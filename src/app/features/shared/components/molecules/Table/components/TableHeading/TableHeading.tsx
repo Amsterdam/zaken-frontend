@@ -1,4 +1,3 @@
-import React from "react"
 import styled, { css } from "styled-components"
 import { themeColor, themeSpacing } from "@datapunt/asc-ui"
 

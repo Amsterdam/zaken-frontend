@@ -1,12 +1,13 @@
 import React from "react"
 import { Button } from "@datapunt/asc-ui"
 import { ChevronRight } from "@datapunt/asc-assets/lib"
-
+import { withKnobs, boolean } from "@storybook/addon-knobs"
 
 import Table from "./Table"
 
 export default {
-  title: "Shared/Molecules/Table"
+  title: "Shared/Molecules/Table",
+  decorators: [withKnobs]
 }
 
 const columns = [
@@ -62,15 +63,33 @@ const data = [
 ]
 
 export const Example = () =>
-  <Table
-    columns={columns}
-    data={data}
-  />
+  <div>
+    <p>Example of a basic table</p>
+    <Table
+      columns={columns}
+      data={data}
+    />
+  </div>
 
 export const ExampleWithFixedColumn = () =>
-  <Table
-    columns={columns}
-    data={data}
-    fixedColumnWidth='90px'
-  />
+  <div>
+    <p>Please change viewport by clicking the 'change size of preview' button above, and see the last column acting sticky</p>
+    <Table
+      columns={columns}
+      data={data}
+      fixedColumnWidth='90px'
+    />
+  </div>
+
+export const ExampleWithLoading: React.FC = () =>
+  <div>
+    <p>Please change loading state by toggling the knob below</p>
+    <Table
+      columns={columns}
+      data={data}
+      loading={boolean("Loading", true)}
+      fixedColumnWidth='90px'
+    />
+  </div>
+
 

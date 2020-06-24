@@ -9,9 +9,10 @@ import SmallSkeleton from "../../atoms/Skeleton/SmallSkeleton"
 type CellContent = string | number| JSX.Element
 
 type Props = {
+  loading?: boolean
   fixedColumnWidth?: string
   columns: Array<CellContent>
-  data: Array<Array<CellContent>>
+  data?: Array<Array<CellContent>>
 }
 
 const Wrap = styled.div`
@@ -45,34 +46,43 @@ const fixedWidth = (isLastColumn: boolean, fixedColumnWidth?: string) =>
     ? fixedColumnWidth
     : undefined
 
-const Table: React.FC<Props> = ({ columns, data, fixedColumnWidth }) => (
-  <Wrap>
-    <HorizontalScrollContainer fixedColumnWidth={ fixedColumnWidth }>
-      <StyledTable>
-        <thead>
+const createLoadingData = (numColumns: number, numRows: number = 15) =>
+  [...Array(numRows)].map(_ => [...Array(numColumns)].map(_ => 1))
+
+const Table: React.FC<Props> = ({ columns, loading, fixedColumnWidth, ...restProps }) => {
+  const data = loading
+    ? createLoadingData(columns.length)
+    : restProps.data
+
+  return (
+    <Wrap>
+      <HorizontalScrollContainer fixedColumnWidth={ !loading ? fixedColumnWidth : undefined }>
+        <StyledTable>
+          <thead>
           <Row>
             { columns.map( (column, index) =>
-              <TableHeading key={index} fixedWidth={fixedWidth(columns.length - 1 === index, fixedColumnWidth)}>
+              <TableHeading key={index} fixedWidth={fixedWidth(!loading && columns.length - 1 === index, fixedColumnWidth)}>
                 { column }
               </TableHeading>
             ) }
           </Row>
-        </thead>
-        <tbody>
-          { data.map( row =>
-            <Row>
+          </thead>
+          <tbody>
+          { data?.map( (row, index) =>
+            <Row key={index}>
               { row.map( (cell, index) =>
-                <TableCell key={index} fixedWidth={fixedWidth(row.length - 1 === index, fixedColumnWidth)}>
-                  { cell }
+                <TableCell key={index} fixedWidth={fixedWidth(!loading && row.length - 1 === index, fixedColumnWidth)}>
+                  { loading ? <SmallSkeleton /> : cell }
                 </TableCell>
               ) }
             </Row>
           ) }
-        </tbody>
-      </StyledTable>
-    </HorizontalScrollContainer>
-  </Wrap>
-)
+          </tbody>
+        </StyledTable>
+      </HorizontalScrollContainer>
+    </Wrap>
+  )
+}
 
 
 export default Table

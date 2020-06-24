@@ -13,7 +13,7 @@ const backgroundAnimation = keyframes`
 `
 
 const StyledDiv = styled.div<StyledDivProps>`  
-  height: ${ themeSpacing(4.5) };
+  height: ${ themeSpacing(5) };
   width: ${ props => props.width }px;  
   max-width: 100%;
   

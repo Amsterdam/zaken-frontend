@@ -1,4 +1,3 @@
-import React from "react"
 import styled, { css } from "styled-components"
 import { themeColor, themeSpacing } from "@datapunt/asc-ui"
 
@@ -13,7 +12,7 @@ const TableCell = styled.td<Props>`
       position: absolute;
       right: 0;
       
-      border-left: 2px solid ${ themeColor("tint", "level5") };
+      border-left: 1px solid ${ themeColor("tint", "level3") };
       
       width: ${ fixedWidth };
   ` }   
