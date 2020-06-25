@@ -11,13 +11,13 @@ export default {
 }
 
 const columns = [
-  "ID",
-  "First name",
-  "Surname",
-  "Email",
-  "Gender",
-  "Ip",
-  undefined
+  { header: "ID", minWidth: 100 },
+  { header: "First name", minWidth: 150 },
+  { header: "Surname", minWidth: 150 },
+  { header: "Email", minWidth: 300 },
+  { header: "Gender", minWidth: 150 },
+  { header: "Ip", minWidth: 200 },
+  { minWidth: 90 }
 ]
 
 const OpenButton: React.FC = () => <Button variant="textButton" iconSize={14} iconLeft={<ChevronRight />}>Open</Button>
@@ -78,7 +78,7 @@ export const ExampleWithFixedColumn = () =>
     <Table
       columns={columns}
       data={data}
-      fixedColumnWidth='90px'
+      hasFixedColumn={true}
     />
   </div>
 
@@ -89,7 +89,7 @@ export const ExampleWithLoading: React.FC = () =>
       columns={columns}
       data={data}
       loading={boolean("Loading", true)}
-      fixedColumnWidth='90px'
+      hasFixedColumn={true}
     />
   </div>
 

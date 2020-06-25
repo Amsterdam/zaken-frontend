@@ -23,8 +23,12 @@ const StyledDiv = styled.div<StyledDivProps>`
   animation: ${ backgroundAnimation } 4s linear infinite;   
 `
 
-const SmallSkeleton: React.FC = () => {
-  const width = useMemo(() => Math.round(Math.random() * 100 ) + 100, [])
+type Props = {
+  maxRandomWidth?: number
+}
+
+const SmallSkeleton: React.FC<Props> = ({ maxRandomWidth = 100 }) => {
+  const width = useMemo(() => Math.round(Math.random() * (maxRandomWidth - 50) ) + 50, [maxRandomWidth])
   return <StyledDiv width={width} />
 }
 

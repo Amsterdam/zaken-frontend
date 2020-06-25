@@ -9,7 +9,13 @@ import { ChevronRight } from "@datapunt/asc-assets/lib"
 const OpenButton: React.FC = () =>
   <Button variant="textButton" iconSize={14} iconLeft={<ChevronRight />}>Open</Button>
 
-const columns = ["Startdatum", "Einddatum", "Omschrijving", undefined]
+const columns = [
+  { header:"Startdatum", minWidth: 100 },
+  { header:"Einddatum", minWidth: 100 },
+  { header:"Omschrijving", minWidth: 300 },
+  { minWidth: 90 }
+]
+
 const mapData = (data: API.Case) => [
   data.startdatum,
   data.einddatum ?? "-",
@@ -25,7 +31,7 @@ const CaseIndexTable: React.FC = () => {
     columns={columns}
     data={mappedData}
     loading={data === undefined || isFetching}
-    fixedColumnWidth='90px'
+    hasFixedColumn={true}
   />)
 }
 
