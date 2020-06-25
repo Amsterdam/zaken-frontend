@@ -1,4 +1,5 @@
 import React from "react"
+
 import { themeColor } from "@datapunt/asc-ui"
 import styled from "styled-components"
 
@@ -27,7 +28,7 @@ const HorizontalScrollContainer = styled.div<Pick<Props, "fixedColumnWidth">>`
 
 const StyledTable = styled.table`  
   border-spacing: 0px;
-  width: 100%;  
+  width: 100%;    
 `
 
 const Row = styled.tr`
@@ -47,7 +48,7 @@ const fixedWidth = (isLastColumn: boolean, fixedColumnWidth?: string) =>
     ? fixedColumnWidth
     : undefined
 
-const createLoadingData = (numColumns: number, numRows: number = 15) =>
+const createLoadingData = (numColumns: number, numRows: number = 5) =>
   [...Array(numRows)].map(_ => [...Array(numColumns)].map(_ => 1))
 
 const Table: React.FC<Props> = ({ columns, loading, fixedColumnWidth, ...restProps }) => {

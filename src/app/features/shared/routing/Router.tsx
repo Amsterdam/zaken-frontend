@@ -8,7 +8,7 @@ const Router: React.FC = () => (
     {
       Object
         .entries(routes)
-        .map(([path, Page]) => <Page path={path} />)
+        .map(([path, Page]) => <Page key={path} path={path} />)
     }
   </ReachRouter>
 )

@@ -1,4 +1,4 @@
-import POCRoutes from "../features/poc/routes"
+import POCRoutes from "../features/cases/routes"
 
 const routes = {
   // NOTE: add your own feature here for routing.
