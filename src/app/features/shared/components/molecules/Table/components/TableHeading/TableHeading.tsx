@@ -2,7 +2,8 @@ import styled, { css } from "styled-components"
 import { themeColor, themeSpacing } from "@datapunt/asc-ui"
 
 type Props = {
-  fixedWidth?: string
+  isFixed?: boolean
+  minWidth?: number
 }
 
 const TableHeading = styled.th<Props>`     
@@ -10,11 +11,13 @@ const TableHeading = styled.th<Props>`
   border-bottom: 1px solid ${ themeColor("tint", "level5") };
   padding: ${ themeSpacing(2) } ${ themeSpacing(3) };
     
-  ${ ( { fixedWidth }: Props ) => fixedWidth && css`  
+  min-width: ${ props => props.minWidth ? `${ props.minWidth }px` : "auto" };  
+    
+  ${ props  => props.isFixed && css`  
       position: absolute;
       right: 0;
                 
-      width: ${ fixedWidth };
+      width: ${ props.minWidth ? `${ props.minWidth }px` : "auto" } };
   ` }   
 `
 

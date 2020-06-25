@@ -13,8 +13,8 @@ type CellContent = string | number | JSX.Element | undefined
 
 type Props = {
   loading?: boolean
-  fixedColumnWidth?: string
-  columns: Array<CellContent>
+  hasFixedColumn?: boolean
+  columns: Array<{header?: CellContent, minWidth: number}>
   data?: Array<Array<CellContent>>
 }
 
@@ -22,9 +22,12 @@ const Wrap = styled.div`
   position: relative;
 `
 
-const HorizontalScrollContainer = styled.div<Pick<Props, "fixedColumnWidth">>`  
+type HorizontalScrollContainerProps = {
+  fixedColumnWidth?: number
+}
+const HorizontalScrollContainer = styled.div<HorizontalScrollContainerProps>`  
   overflow-x: auto; 
-  margin-right: ${ (props) => props.fixedColumnWidth ?? "auto" }; 
+  margin-right: ${ (props) => `${ props.fixedColumnWidth }px` ?? "auto" }; 
 `
 
 const StyledTable = styled.table`  
@@ -44,28 +47,27 @@ const Row = styled.tr`
   }
 `
 
-const fixedWidth = (isLastColumn: boolean, fixedColumnWidth?: string) =>
-  isLastColumn && fixedColumnWidth !== undefined
-    ? fixedColumnWidth
-    : undefined
-
 const createLoadingData = (numColumns: number, numRows: number = 5) =>
-  [...Array(numRows)].map(_ => [...Array(numColumns)].map(_ => 1))
+  [...Array(numRows)].map(_ => [...Array(numColumns)].map(_ => ""))
 
-const Table: React.FC<Props> = ({ columns, loading, fixedColumnWidth, ...restProps }) => {
+const Table: React.FC<Props> = ({ columns, loading, hasFixedColumn, ...restProps }) => {
   const data = loading
     ? createLoadingData(columns.length)
     : restProps.data
 
+  const fixedColumnWidth = hasFixedColumn
+    ? columns[columns.length - 1].minWidth
+    : undefined
+
   return (
     <Wrap>
-      <HorizontalScrollContainer fixedColumnWidth={ !loading ? fixedColumnWidth : undefined }>
+      <HorizontalScrollContainer fixedColumnWidth={ fixedColumnWidth }>
         <StyledTable>
           <thead>
           <Row>
             { columns.map( (column, index) =>
-              <TableHeading key={index} fixedWidth={fixedWidth(!loading && columns.length - 1 === index, fixedColumnWidth)}>
-                { column ?? <>&nbsp;</> }
+              <TableHeading key={index} minWidth={column.minWidth} isFixed={ hasFixedColumn && index === columns.length - 1 }>
+                { column.header ?? <>&nbsp;</> }
               </TableHeading>
             ) }
           </Row>
@@ -73,12 +75,9 @@ const Table: React.FC<Props> = ({ columns, loading, fixedColumnWidth, ...restPro
           <tbody>
           { data?.map( (row, index) =>
             <Row key={index}>
-              { row.map( (cell, index) => {
-                  const fixed = fixedWidth(!loading && row.length - 1 === index, fixedColumnWidth)
-                  return fixed === undefined
-                    ? <TableCell key={index}>{ loading ? <SmallSkeleton /> : cell ?? <>&nbsp;</> }</TableCell>
-                    : <FixedTableCell key={index} fixedWidth={fixed}>{ cell ?? <>&nbsp;</> }</FixedTableCell>
-                }
+              { row.map( (cell, index) => hasFixedColumn && index === row.length - 1
+                    ? <FixedTableCell key={index} width={ fixedColumnWidth }>{ cell ?? <>&nbsp;</> }</FixedTableCell>
+                    : <TableCell key={index}>{ loading ? <SmallSkeleton maxRandomWidth={columns[index].minWidth - 30} /> : cell ?? <>&nbsp;</> }</TableCell>
               ) }
             </Row>
           ) }
