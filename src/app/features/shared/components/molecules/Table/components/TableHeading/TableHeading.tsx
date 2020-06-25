@@ -5,13 +5,11 @@ type Props = {
   fixedWidth?: string
 }
 
-const TableHeading = styled.th<Props>`  
-  padding: ${ themeSpacing(4) } ${ themeSpacing(3) };
-  
+const TableHeading = styled.th<Props>`     
   text-align: left;
   border-bottom: 1px solid ${ themeColor("tint", "level5") };
-  padding: ${ themeSpacing(2) } ${ themeSpacing(3) };  
-  
+  padding: ${ themeSpacing(2) } ${ themeSpacing(3) };
+    
   ${ ( { fixedWidth }: Props ) => fixedWidth && css`  
       position: absolute;
       right: 0;

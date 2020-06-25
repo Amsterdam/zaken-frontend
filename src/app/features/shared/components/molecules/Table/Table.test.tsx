@@ -40,8 +40,8 @@ describe("Table", () => {
   describe("when loading", () => {
     it("should render 30 SmallSkeletons", () => {
       const component = mount(<Table data={data} columns={columns} loading={true} />)
-      // 15 * 2 = numLoadingRows * numColumns
-      expect(component.find(SmallSkeleton).length).toEqual(30)
+      // 5 * 2 = numLoadingRows * numColumns
+      expect(component.find(SmallSkeleton).length).toEqual(10)
     })
 
     describe("when given fixedColumnWidth", () => {

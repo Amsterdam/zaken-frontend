@@ -10,14 +10,14 @@ const DefaultNavigation: React.FC = () => (
         Home
       </MenuButton>
     </MenuItem>
-    <MenuFlyOut label="Submenu">
+    <MenuFlyOut label="Zaken">
       <MenuItem>
-        <MenuButton forwardedAs="a" href={ to("/poc/foo/:bar/", { bar: "foo" }) }>
-          Bar Egestas
+        <MenuButton forwardedAs="a" href={ to("/cases") }>
+          Overzicht
         </MenuButton>
       </MenuItem>
       <MenuItem>
-        <MenuButton forwardedAs="a" href={ to("/poc/foo/:bar/", { bar: "foo" }) }>
+        <MenuButton forwardedAs="a" href={ to("/", { bar: "foo" }) }>
           Foo Ullamcorper Fringilla
         </MenuButton>
       </MenuItem>

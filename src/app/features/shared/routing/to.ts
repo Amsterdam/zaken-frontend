@@ -1,16 +1,21 @@
 import { ComponentProps, ComponentType } from "react"
 import { Routes } from "app/config/routes"
+import { RouteComponentProps } from "@reach/router"
 
 // RouteParams for given K in Routes
 type RouteParams<T extends Routes, K extends keyof T> =
   // ... value for K should be a Component:
-  T[K] extends ComponentType<any>
-    // We're only interested in parameters that are either a string or a  number
-    ? Omit<ComponentProps<T[K]>, "children"> extends { [key: string]: string|number }
-        ? Omit<ComponentProps<T[K]>, "children">
-        : never
+  T[K] extends ComponentType
+    // Omit default RouteComponentProps, we're not interested in those. (E.g location, navigate, etc)
+    ? Omit<ComponentProps<T[K]>, keyof RouteComponentProps | "children">
     // Don't allow anything else than Components. As we cannot safely extract component-props on anything other than a Component
     : never
+
+// Safely convert any object to a string, even null or undefined
+const toString = (obj: any): string =>
+  typeof obj.toString === "function"
+    ? obj.toString()
+    : ""
 
 /**
  * Example:
@@ -21,7 +26,7 @@ const applyRouteParams = <T extends Routes, K extends keyof T>
     Object
       .entries(params)
       .reduce(
-        (url, [key, value]) => url.replace(`:${ key }`, value.toString()),
+        (url, [key, value]) => url.replace(`:${ key }`, toString(value)),
         url
       )
 
