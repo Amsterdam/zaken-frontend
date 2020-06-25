@@ -21,10 +21,11 @@ const columns = [
 ]
 
 const OpenButton: React.FC = () => <Button variant="textButton" iconSize={14} iconLeft={<ChevronRight />}>Open</Button>
+const LargerComponent: React.FC = () => <div style={{ height: "100px", border: "1px solid #ddd", padding: "8px" }}>Larger element</div>
 
 const data = [
   ["1", "Dotti", "Stinchcombe", "dstinchcombe0@phpbb.com", "Female", "11.202.107.115", <OpenButton />],
-  ["2", "Walden", "Vahey", "wvahey1@godaddy.com", "Male", "100.44.64.241", <OpenButton />],
+  ["2", "Walden", "Vahey", <LargerComponent />, "Male", "100.44.64.241", <OpenButton />],
   ["3", "Guss", "Trayhorn", "gtrayhorn2@wisc.edu", "Male", "79.159.29.210", <OpenButton />],
   ["4", "Brynne", "Bartosiak", "bbartosiak3@walmart.com", "Female", "16.8.52.4", <OpenButton />],
   ["5", "Cherey", "Garbutt", "cgarbutt4@bluehost.com", "Female", "97.173.26.92", <OpenButton />],

@@ -7,6 +7,7 @@ import SmallSkeleton from "app/features/shared/components/atoms/Skeleton/SmallSk
 
 import TableCell from "./components/TableCell/TableCell"
 import TableHeading from "./components/TableHeading/TableHeading"
+import FixedTableCell from "./components/TableCell/FixedTableCell"
 
 type CellContent = string | number | JSX.Element | undefined
 
@@ -22,7 +23,7 @@ const Wrap = styled.div`
 `
 
 const HorizontalScrollContainer = styled.div<Pick<Props, "fixedColumnWidth">>`  
-  overflow-x: scroll; 
+  overflow-x: auto; 
   margin-right: ${ (props) => props.fixedColumnWidth ?? "auto" }; 
 `
 
@@ -72,10 +73,12 @@ const Table: React.FC<Props> = ({ columns, loading, fixedColumnWidth, ...restPro
           <tbody>
           { data?.map( (row, index) =>
             <Row key={index}>
-              { row.map( (cell, index) =>
-                <TableCell key={index} fixedWidth={fixedWidth(!loading && row.length - 1 === index, fixedColumnWidth)}>
-                  { loading ? <SmallSkeleton /> : cell ?? <>&nbsp;</> }
-                </TableCell>
+              { row.map( (cell, index) => {
+                  const fixed = fixedWidth(!loading && row.length - 1 === index, fixedColumnWidth)
+                  return fixed === undefined
+                    ? <TableCell key={index}>{ loading ? <SmallSkeleton /> : cell ?? <>&nbsp;</> }</TableCell>
+                    : <FixedTableCell key={index} fixedWidth={fixed}>{ cell ?? <>&nbsp;</> }</FixedTableCell>
+                }
               ) }
             </Row>
           ) }

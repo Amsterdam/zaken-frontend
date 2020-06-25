@@ -4,6 +4,7 @@ import { mount } from "enzyme"
 import TableCell from "./components/TableCell/TableCell"
 import Table from "./Table"
 import SmallSkeleton from "../../atoms/Skeleton/SmallSkeleton"
+import FixedTableCell from "./components/TableCell/FixedTableCell"
 
 describe("Table", () => {
   const columns = ["column1", "column2"]
@@ -21,18 +22,15 @@ describe("Table", () => {
     describe("when given fixedColumnWidth", () => {
       it("should pass fixedColumnWidth to the last column", () => {
         const component = mount(<Table data={data} columns={columns} fixedColumnWidth="100px" />)
-        const cells = component.find("[fixedWidth]")
+        const fixedCells = component.find(FixedTableCell)
 
-        expect(cells.length).toEqual(3)
+        expect(fixedCells.length).toEqual(2)
 
-        expect(cells.at(0).prop("fixedWidth")).toEqual("100px")
-        expect(cells.at(0).text()).toEqual("column2")
+        expect(fixedCells.at(0).prop("fixedWidth")).toEqual("100px")
+        expect(fixedCells.at(0).text()).toEqual("bar")
 
-        expect(cells.at(1).prop("fixedWidth")).toEqual("100px")
-        expect(cells.at(1).text()).toEqual("bar")
-
-        expect(cells.at(2).prop("fixedWidth")).toEqual("100px")
-        expect(cells.at(2).text()).toEqual("baz")
+        expect(fixedCells.at(1).prop("fixedWidth")).toEqual("100px")
+        expect(fixedCells.at(1).text()).toEqual("baz")
       })
     })
   })
