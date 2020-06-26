@@ -16,9 +16,19 @@ const FormCreate: React.FC = () => {
     <ScaffoldForm
       onSubmit={ create }
       hasError={ hasError }
-      successComponent={<Alert variant="success" title="Zaak succesvol aangemaakt!">Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</Alert>}
-      // @ts-ignore errorMessage is typed as string, while in reality its an object
-      errorComponent={<Alert variant="error" title="Kon zaak niet aanmaken!">{ errorMessage?.detail }</Alert>}
+      successComponent={
+        <Alert variant="success" title="Zaak succesvol aangemaakt!">
+          Integer posuere erat a ante venenatis dapibus posuere velit aliquet.
+        </Alert>
+      }
+      errorComponent={
+        <Alert variant="error" title="Kon zaak niet aanmaken!">
+          {
+            // @ts-ignore errorMessage is typed as string, while in reality its an object
+            errorMessage?.detail
+          }
+        </Alert>
+      }
     >
       <ScaffoldFields {...scaffoldProps} />
     </ScaffoldForm>
