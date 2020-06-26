@@ -19,7 +19,7 @@
     "amsterdam-scaffold-form": "^0.1.20",
     "final-form": "^4.20.0",
     "final-form-arrays": "^3.0.2",
-    "globalstate-hooks": "^0.1.1",
+    "globalstate-hooks": "^0.1.6",
     "immer": "^6.0.9",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

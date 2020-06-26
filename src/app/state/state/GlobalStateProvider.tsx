@@ -1,9 +1,9 @@
 import React from "react"
-import GlobalStateContext from "./GlobalStateContext"
+import { GlobalStateProvider } from "./globalState"
 import { useRestActions } from "globalstate-hooks"
 import { api } from "./config"
 
-const GlobalStateProvider: React.FC = ({ children }) => {
+const Provider: React.FC = ({ children }) => {
   const [cases, casesActions] = useRestActions<API.Case>({ api: { ...api, name: "cases" } })
 
   const value = {
@@ -12,9 +12,9 @@ const GlobalStateProvider: React.FC = ({ children }) => {
   }
 
   return (
-    <GlobalStateContext.Provider value={ value }>
+    <GlobalStateProvider value={ value }>
       { children }
-    </GlobalStateContext.Provider>
+    </GlobalStateProvider>
   )
 }
-export default GlobalStateProvider
+export default Provider
