@@ -1,8 +1,10 @@
 import React from "react"
-import { Scaffold, ScaffoldForm, Alert } from "amsterdam-react-final-form"
+import { ScaffoldForm, Alert } from "amsterdam-react-final-form"
 
 import useGlobalActions from "app/state/state/useGlobalActions"
 import useGlobalState from "app/state/state/useGlobalState"
+
+import ScaffoldFields from "app/features/shared/components/molecules/Form/ScaffoldFields"
 
 import scaffoldProps from "./scaffold"
 
@@ -18,7 +20,7 @@ const FormCreate: React.FC = () => {
       // @ts-ignore errorMessage is typed as string, while in reality its an object
       errorComponent={<Alert variant="error" title="Kon zaak niet aanmaken!">{ errorMessage?.detail }</Alert>}
     >
-      <Scaffold {...scaffoldProps} />
+      <ScaffoldFields {...scaffoldProps} />
     </ScaffoldForm>
   )
 }

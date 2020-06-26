@@ -1,5 +1,7 @@
 import React from "react"
-import { ScaffoldForm, Scaffold, DebugFormValues } from "amsterdam-react-final-form"
+import { ScaffoldForm, DebugFormValues } from "amsterdam-react-final-form"
+
+import ScaffoldFields from "app/features/shared/components/molecules/Form/ScaffoldFields"
 
 // import useGlobalActions from "../../../../../state/state/useGlobalActions"
 
@@ -10,7 +12,7 @@ const FormEdit: React.FC = () =>
 
    (
     <ScaffoldForm onSubmit={ () => {} }>
-      <Scaffold {...scaffoldProps} />
+      <ScaffoldFields {...scaffoldProps} />
       <DebugFormValues />
     </ScaffoldForm>
   )
