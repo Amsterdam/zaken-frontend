@@ -5,9 +5,13 @@ import Table from "app/features/shared/components/molecules/Table/Table"
 import { useCaseIndexData } from "./hooks/useCaseIndexData"
 import { Button } from "@datapunt/asc-ui"
 import { ChevronRight } from "@datapunt/asc-assets/lib"
+import to from "../../../../shared/routing/to"
 
-const OpenButton: React.FC = () =>
-  <Button variant="textButton" iconSize={14} iconLeft={<ChevronRight />}>Open</Button>
+type ButtonProps = {
+  href: string
+}
+const OpenButton: React.FC<ButtonProps> = ({ href }) =>
+  <Button as='a' variant="textButton" iconSize={14} iconLeft={<ChevronRight />} href={href}>Open</Button>
 
 const columns = [
   { header:"Startdatum", minWidth: 100 },
@@ -20,10 +24,10 @@ const mapData = (data: API.Case) => [
   data.startdatum,
   data.einddatum ?? "-",
   data.omschrijving,
-  <OpenButton />
+  <OpenButton href={to("/cases/:uuid", { uuid: data.uuid })} />
 ]
 
-const CaseIndexTable: React.FC = () => {
+const TableCases: React.FC = () => {
   const { data, isFetching } = useCaseIndexData()
   const mappedData = useMemo(() => data?.map(mapData), [ data ])
 
@@ -35,4 +39,4 @@ const CaseIndexTable: React.FC = () => {
   />)
 }
 
-export default CaseIndexTable
+export default TableCases

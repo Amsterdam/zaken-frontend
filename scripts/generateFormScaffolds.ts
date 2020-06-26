@@ -29,7 +29,8 @@ const writeSchemas = (schema: any) => {
   // NOTE: add your own cases here:
   // ----
 
-  writeToFile("POST_cases.json", parseOpenApiSchema(schemaObjects["POST /cases/"]))
+  writeToFile("POST_Cases.json", parseOpenApiSchema(schemaObjects["POST /api/v1/cases/"]))
+  writeToFile("PUT_Cases.json", parseOpenApiSchema(schemaObjects["PUT /api/v1/cases/{uuid}/"]))
 
   // DONE!
   // ----
@@ -38,7 +39,7 @@ const writeSchemas = (schema: any) => {
 }
 
 // TODO URL should come from .env file.
-fetchSchema("http://localhost:8000/api/v1/schema/")
-  .then(writeSchemas)
+fetchSchema("http://localhost:8080/api/v1/schema/")
+  .then(writeSchemas, (...args: any[]) => console.log(args))
 
 export {}
