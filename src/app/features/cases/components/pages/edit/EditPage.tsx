@@ -3,7 +3,7 @@ import { RouteComponentProps } from "@reach/router"
 import { FormTitle, Heading } from "@datapunt/asc-ui"
 import { TrashBin } from "@datapunt/asc-assets/lib"
 
-import { useGlobalActions } from "app/state/state/globalState"
+import { useGlobalActions, useGlobalState } from "app/state/state/globalState"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 import ActionButtonWrap from "app/features/shared/components/atoms/ActionButtonWrap/ActionButtonWrap"
 import ConfirmButton from "app/features/shared/components/molecules/ConfirmButton/ConfirmButton"
@@ -16,6 +16,11 @@ type Props = {
 }
 
 const EditPage: React.FC<RouteComponentProps<Props>> = ({ uuid }) => {
+  const {
+    cases: { isGetting: isGettingCases  },
+    caseTypes: { isGetting: isGettingCaseTypes }
+  } = useGlobalState()
+
   const { cases: { del } } = useGlobalActions()
   const { caseDetails } = useCaseByUUID(uuid!)
 
@@ -26,6 +31,7 @@ const EditPage: React.FC<RouteComponentProps<Props>> = ({ uuid }) => {
       <Heading>Aanpassen zaak:  { uuid }</Heading>
       <ActionButtonWrap>
         <ConfirmButton
+          disabled={ !caseDetails || isGettingCaseTypes || isGettingCases }
           onConfirm={handleDelete}
           iconLeft={<TrashBin />}
           variant="secondary"
@@ -36,7 +42,7 @@ const EditPage: React.FC<RouteComponentProps<Props>> = ({ uuid }) => {
         </ConfirmButton>
       </ActionButtonWrap>
       <FormTitle>Gebruik dit formulier een zaak te wijzigen</FormTitle>
-      { caseDetails && <FormEdit caseDetails={caseDetails} /> }
+      <FormEdit caseDetails={caseDetails} />
     </DefaultLayout>
   )
 }

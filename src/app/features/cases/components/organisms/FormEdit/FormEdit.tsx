@@ -7,15 +7,20 @@ import ScaffoldFields from "app/features/shared/components/molecules/Form/Scaffo
 import scaffoldProps from "./scaffold"
 
 type Props = {
-  caseDetails: API.Case
+  caseDetails?: API.Case
 }
 
 const FormEdit: React.FC<Props> = ({ caseDetails }) => {
-  const { cases: { errorMessage, hasError  } } = useGlobalState()
+  const {
+    cases: { errorMessage, hasError, isGetting: isGettingCases  },
+    caseTypes: { isGetting: isGettingCaseTypes }
+  } = useGlobalState()
+
   const { cases: { update } } = useGlobalActions()
 
   return (
     <ScaffoldForm
+      showSpinner={ !caseDetails || isGettingCaseTypes || isGettingCases }
       onSubmit={ update }
       hasError={ hasError }
       initialValues={ caseDetails }
