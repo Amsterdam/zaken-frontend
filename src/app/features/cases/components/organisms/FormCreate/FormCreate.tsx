@@ -1,8 +1,7 @@
 import React from "react"
 import { ScaffoldForm, Alert } from "amsterdam-react-final-form"
 
-import useGlobalActions from "app/state/state/useGlobalActions"
-import useGlobalState from "app/state/state/useGlobalState"
+import { useGlobalState, useGlobalActions } from "app/state/state/globalState"
 
 import ScaffoldFields from "app/features/shared/components/molecules/Form/ScaffoldFields"
 
