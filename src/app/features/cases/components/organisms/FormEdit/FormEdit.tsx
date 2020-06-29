@@ -1,21 +1,27 @@
 import React from "react"
-import { ScaffoldForm, Alert } from "amsterdam-react-final-form"
+import { ScaffoldForm, Alert, DebugFormState } from "amsterdam-react-final-form"
 
-import { useGlobalState } from "app/state/state/globalState"
+import { useGlobalActions, useGlobalState } from "app/state/state/globalState"
 import ScaffoldFields from "app/features/shared/components/molecules/Form/ScaffoldFields"
 
 import scaffoldProps from "./scaffold"
+import { useCaseByUUID } from "../../../hooks/useCaseByUUID"
 
-const FormEdit: React.FC = () => {
+type Props = {
+  caseDetails: API.Case
+}
+
+const FormEdit: React.FC<Props> = ({ caseDetails }) => {
   const { cases: { errorMessage, hasError  } } = useGlobalState()
+  const { cases: { update } } = useGlobalActions()
 
   return (
     <ScaffoldForm
-      // TODO call an update action
-      onSubmit={ () => {} }
+      onSubmit={ update }
       hasError={ hasError }
+      initialValues={ caseDetails }
       successComponent={
-        <Alert variant="success" title="Zaak succesvol gewijigd!">
+        <Alert variant="success" title="Zaak succesvol gewijzigd!">
           Integer posuere erat a ante venenatis dapibus posuere velit aliquet.
         </Alert>
       }

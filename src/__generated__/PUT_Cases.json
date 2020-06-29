@@ -7,8 +7,7 @@
         "position": {},
         "name": "url",
         "label": "Url",
-        "disabled": true,
-        "isRequired": true
+        "disabled": true
       }
     },
     "uuid": {
@@ -18,8 +17,7 @@
         "position": {},
         "name": "uuid",
         "label": "Uuid",
-        "disabled": true,
-        "isRequired": true
+        "disabled": true
       }
     },
     "identificatie": {
@@ -29,8 +27,7 @@
         "position": {},
         "name": "identificatie",
         "label": "Identificatie",
-        "disabled": true,
-        "isRequired": true
+        "disabled": true
       }
     },
     "omschrijving": {
@@ -68,8 +65,7 @@
         "position": {},
         "name": "status",
         "label": "Status",
-        "disabled": true,
-        "isRequired": true
+        "disabled": true
       }
     },
     "bronorganisatie": {
@@ -79,8 +75,7 @@
         "position": {},
         "name": "bronorganisatie",
         "label": "Bronorganisatie",
-        "disabled": true,
-        "isRequired": true
+        "disabled": true
       }
     },
     "verantwoordelijkeOrganisatie": {
@@ -90,8 +85,7 @@
         "position": {},
         "name": "verantwoordelijkeOrganisatie",
         "label": "Verantwoordelijke organisatie",
-        "disabled": true,
-        "isRequired": true
+        "disabled": true
       }
     },
     "zaaktype": {
