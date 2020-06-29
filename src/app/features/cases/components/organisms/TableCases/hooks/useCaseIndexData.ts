@@ -12,6 +12,5 @@ export const useCaseIndexData = () => {
   useEffect(() => {
     index()
   }, [index])
-
   return { isFetching, data }
 }

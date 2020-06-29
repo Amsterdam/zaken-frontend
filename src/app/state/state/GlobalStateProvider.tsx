@@ -5,10 +5,17 @@ import { api } from "./config"
 
 const Provider: React.FC = ({ children }) => {
   const [cases, casesActions] = useRestActions<API.Case>({ api: { ...api, name: "cases" } })
+  const [caseTypes, caseTypesActions] = useRestActions<API.CaseType>({ api: { ...api, name: "case-types" } })
 
   const value = {
-    state: { cases },
-    actions: { cases: casesActions }
+    state: {
+      cases,
+      caseTypes
+    },
+    actions: {
+      cases: casesActions,
+      caseTypes: caseTypesActions
+    }
   }
 
   return (
