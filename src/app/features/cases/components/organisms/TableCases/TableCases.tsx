@@ -1,12 +1,12 @@
 import React, { useMemo } from "react"
 
+import to from "app/features/shared/routing/to"
 import Table from "app/features/shared/components/molecules/Table/Table"
 import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
 
 import { useGlobalState } from "app/state/state/globalState"
 import { Button } from "@datapunt/asc-ui"
 import { ChevronRight } from "@datapunt/asc-assets/lib"
-import to from "../../../../shared/routing/to"
 
 type ButtonProps = {
   href: string
