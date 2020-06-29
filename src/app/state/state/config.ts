@@ -1,4 +1,4 @@
 export const api = {
-  domain: "http://localhost:8080",
-  path: "api/v1"
+  domain: process.env.REACT_APP_GATEWAY_HOST,
+  path: process.env.REACT_APP_GATEWAY_PATH
 }
