@@ -11,4 +11,7 @@ export default {
 const handleClick = () => new Promise((resolve) => setTimeout(resolve, 2000))
 
 export const Example = () =>
-  <SpinnerButton onClick={handleClick}>Click me!</SpinnerButton>
+  <>
+    <p>Shows a spinner as long as the <code>Promise</code> returned by <code>onClick</code> was not resolved.</p>
+    <SpinnerButton onClick={handleClick}>Click me!</SpinnerButton>
+  </>

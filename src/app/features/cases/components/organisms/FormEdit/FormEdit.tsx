@@ -1,11 +1,10 @@
 import React from "react"
-import { ScaffoldForm, Alert, DebugFormState } from "amsterdam-react-final-form"
+import { ScaffoldForm, Alert } from "amsterdam-react-final-form"
 
 import { useGlobalActions, useGlobalState } from "app/state/state/globalState"
 import ScaffoldFields from "app/features/shared/components/molecules/Form/ScaffoldFields"
 
 import scaffoldProps from "./scaffold"
-import { useCaseByUUID } from "../../../hooks/useCaseByUUID"
 
 type Props = {
   caseDetails: API.Case

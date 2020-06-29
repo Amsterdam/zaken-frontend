@@ -1,11 +1,11 @@
 import React from "react"
 import styled from "styled-components"
-import { Button, Paragraph, Heading } from "@datapunt/asc-ui"
+import { Button, Paragraph } from "@datapunt/asc-ui"
 
 import Modal, { ModalBlock } from "./Modal"
 import SpinnerButton from "../../atoms/SpinnerButton/SpinnerButton"
 
-type Props = {
+export type Props = {
   title: string
   isOpen: boolean
   onClose: () => void
@@ -22,7 +22,6 @@ const ModalBlockFlex = styled(ModalBlock)`
 const Flex = styled.div`
   flex: 1;
 `
-
 
 const ConfirmModal: React.FC<Props> = ({ isOpen, onClose, title, children, okValue = "Ok", cancelValue = "Annuleren", onConfirm }) => (
   <Modal isOpen={isOpen} onClose={onClose} title={title}>
