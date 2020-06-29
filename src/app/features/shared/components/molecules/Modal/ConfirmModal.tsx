@@ -7,7 +7,6 @@ import SpinnerButton from "../../atoms/SpinnerButton/SpinnerButton"
 
 type Props = {
   title: string
-  heading: string
   isOpen: boolean
   onClose: () => void
   onConfirm: () => Promise<any>
@@ -25,10 +24,9 @@ const Flex = styled.div`
 `
 
 
-const ConfirmModal: React.FC<Props> = ({ isOpen, onClose, title, heading, children, okValue = "Ok", cancelValue = "Annuleren", onConfirm }) => (
+const ConfirmModal: React.FC<Props> = ({ isOpen, onClose, title, children, okValue = "Ok", cancelValue = "Annuleren", onConfirm }) => (
   <Modal isOpen={isOpen} onClose={onClose} title={title}>
     <ModalBlock>
-      <Heading forwardedAs='h4'>{ heading }</Heading>
       <Paragraph>{ children }</Paragraph>
     </ModalBlock>
     <ModalBlockFlex>

@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { Modal, TopBar, Heading, Button, Icon, Divider, themeSpacing } from "@datapunt/asc-ui"
+import { Modal as AscModal, TopBar, Heading, Button, Icon, Divider, themeSpacing } from "@datapunt/asc-ui"
 import { Close } from "@datapunt/asc-assets/lib"
 
 type Props = {
@@ -15,8 +15,8 @@ export const ModalBlock = styled.div`
   margin: ${ themeSpacing(4) } 0;
 `
 
-const ConfirmModal: React.FC<Props> = ({ children, title, isOpen, onClose }) => (
-  <Modal open={isOpen} onClose={onClose}>
+const Modal: React.FC<Props> = ({ children, title, isOpen, onClose }) => (
+  <AscModal open={isOpen} onClose={onClose}>
     <TopBar>
       <Heading forwardedAs="h4" style={{ flexGrow: 1 }}>
         { title }
@@ -34,6 +34,6 @@ const ConfirmModal: React.FC<Props> = ({ children, title, isOpen, onClose }) => 
     </TopBar>
     <Divider />
     { children }
-  </Modal>)
+  </AscModal>)
 
-export default ConfirmModal
+export default Modal

@@ -22,12 +22,15 @@ export const Example = () =>
     </ModalBlock>
   </Modal>
 
+
+const handleConfirm = () => new Promise(( resolve ) => setTimeout(resolve, 1000))
+
 export const ConfirmExample = () =>
   <ConfirmModal
     isOpen={boolean("isOpen", true)}
     onClose={() => {}}
-    title='Zaak verwijderen'
-    heading='Weet je zeker dat je deze zaak wilt verwijderen?'
+    onConfirm={handleConfirm}
+    title='Weet je zeker dat je deze zaak wilt verwijderen?'
   >
     Let op: Deze actie kan niet worden ongedaan gemaakt!
   </ConfirmModal>
