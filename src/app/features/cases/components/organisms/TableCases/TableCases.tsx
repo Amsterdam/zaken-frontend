@@ -1,6 +1,7 @@
 import React, { useMemo } from "react"
 
 import Table from "app/features/shared/components/molecules/Table/Table"
+import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
 
 import { useCaseIndexData } from "./hooks/useCaseIndexData"
 import { Button } from "@datapunt/asc-ui"
@@ -11,7 +12,9 @@ type ButtonProps = {
   href: string
 }
 const OpenButton: React.FC<ButtonProps> = ({ href }) =>
-  <Button as='a' variant="textButton" iconSize={14} iconLeft={<ChevronRight />} href={href}>Open</Button>
+  <ButtonLink to={href}>
+    <Button as="span" variant="textButton" iconSize={14} iconLeft={<ChevronRight />}>Open</Button>
+  </ButtonLink>
 
 const columns = [
   { header:"Startdatum", minWidth: 100 },

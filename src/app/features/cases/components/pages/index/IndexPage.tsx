@@ -9,11 +9,15 @@ import ActionButtonWrap from "app/features/shared/components/atoms/ActionButtonW
 import TableCases from "app/features/cases/components/organisms/TableCases/TableCases"
 import to from "../../../../shared/routing/to"
 
+import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
+
 const IndexPage: React.FC<RouteComponentProps> = () => (
     <DefaultLayout>
       <Heading>Zaken overzicht</Heading>
       <ActionButtonWrap>
-        <Button as='a' variant="primary" iconLeft={<Document />} href={to("/cases/create")}>Nieuwe zaak</Button>
+        <ButtonLink to={to("/cases/create")}>
+          <Button as="span" variant="primary" iconLeft={<Document />}>Nieuwe zaak</Button>
+        </ButtonLink>
       </ActionButtonWrap>
       <TableCases />
     </DefaultLayout>
