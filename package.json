@@ -15,7 +15,7 @@
     "@types/react": "^16.9.41",
     "@types/react-dom": "^16.9.8",
     "@types/styled-components": "^5.1.0",
-    "amsterdam-react-final-form": "^0.1.64",
+    "amsterdam-react-final-form": "^0.1.69",
     "amsterdam-scaffold-form": "^0.1.24",
     "dotenv-flow": "^3.2.0",
     "final-form": "^4.20.0",
