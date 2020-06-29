@@ -1,7 +1,7 @@
 import React, { useMemo } from "react"
 import { SelectField } from "amsterdam-react-final-form"
 
-import { useCaseTypeIndexData } from "./hooks/useCaseTypeIndexData"
+import { useGlobalState } from "app/state/state/globalState"
 
 export type CaseTypeFieldProps = Omit<React.ComponentProps<typeof SelectField>, "options">
 
@@ -9,8 +9,8 @@ export type CaseTypeFieldProps = Omit<React.ComponentProps<typeof SelectField>, 
  * Requests caseType-data from the API, and use the response to create options.
  */
 const CaseTypeField: React.FC<CaseTypeFieldProps> = (props) => {
-  const { data } = useCaseTypeIndexData()
-  
+  const { caseTypes: { data } } = useGlobalState()
+
   const options = useMemo(
     () => data?.reduce((acc, caseType) => ({ ...acc, [caseType.url]: caseType.omschrijving }), { "": "-" }),
     [ data ]
