@@ -4,8 +4,8 @@ import { useRestActions } from "globalstate-hooks"
 import { api } from "./config"
 
 const Provider: React.FC = ({ children }) => {
-  const [cases, casesActions] = useRestActions<API.Case>({ api: { ...api, name: "cases" } })
-  const [caseTypes, caseTypesActions] = useRestActions<API.CaseType>({ api: { ...api, name: "case-types" } })
+  const [cases, casesActions] = useRestActions<API.Case>({ api: { ...api, name: "cases" }, idKey: "uuid" })
+  const [caseTypes, caseTypesActions] = useRestActions<API.CaseType>({ api: { ...api, name: "case-types" }, idKey: "uuid" })
 
   const value = {
     state: {
