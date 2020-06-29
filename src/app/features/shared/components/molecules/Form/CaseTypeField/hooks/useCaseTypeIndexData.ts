@@ -1,7 +1,6 @@
 import { useEffect } from "react"
 
-import useGlobalActions from "app/state/state/useGlobalActions"
-import useGlobalState from "app/state/state/useGlobalState"
+import { useGlobalState, useGlobalActions } from "app/state/state/globalState"
 
 /**
  * Returns data, and kicks of an index onMount.

@@ -3,9 +3,11 @@ import { createGlobalState, ItemsState, ItemsActions } from "globalstate-hooks"
 export type GlobalStateContext = {
   state: {
     cases: ItemsState<API.Case>
+    caseTypes: ItemsState<API.CaseType>
   }
   actions: {
     cases: ItemsActions<API.Case>
+    caseTypes: ItemsActions<API.CaseType>
   }
 }
 const {
