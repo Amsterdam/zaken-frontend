@@ -1,7 +1,12 @@
 #!/usr/bin/env ts-node-script
 
+// Loads .env.development or .env.production based on NODE_ENV
+require("dotenv-flow").config()
+
 const { fetchSchema, getSchemaObjects, parseOpenApiSchema } = require("amsterdam-scaffold-form")
 const fs = require("fs")
+
+const { slashSandwich } = require("./utils/url.utils")
 
 const writeToFile = (filename: string, obj: any) => {
   console.log(`\t"${ filename }"`)
@@ -38,8 +43,10 @@ const writeSchemas = (schema: any) => {
   console.log("DONE")
 }
 
-// TODO URL should come from .env file.
-fetchSchema("http://localhost:8080/api/v1/schema/")
-  .then(writeSchemas, (...args: any[]) => console.log(args))
-
-export {}
+fetchSchema(
+  slashSandwich([
+    process.env.REACT_APP_GATEWAY_HOST,
+    process.env.REACT_APP_GATEWAY_PATH,
+    process.env.REACT_APP_GATEWAY_SCHEMA
+  ], { leadingSlash: false })
+).then(writeSchemas)

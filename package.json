@@ -17,6 +17,7 @@
     "@types/styled-components": "^5.1.0",
     "amsterdam-react-final-form": "^0.1.64",
     "amsterdam-scaffold-form": "^0.1.24",
+    "dotenv-flow": "^3.2.0",
     "final-form": "^4.20.0",
     "final-form-arrays": "^3.0.2",
     "globalstate-hooks": "^0.1.6",
@@ -37,8 +38,8 @@
     "test:coverage": "react-scripts test --coverage --watchAll=false",
     "lint": "eslint --cache --ext .ts,.tsx src",
     "lint:fix": "npm run lint -- --fix",
-    "generate:swagger-schema": "dtsgen -o ./src/__generated__/apiSchema.d.ts -n API --url http://localhost:8080/api/v1/schema/",
-    "generate:form-scaffolds": "ts-node scripts/generateFormScaffolds.ts",
+    "generate:swagger-schema": "TS_NODE_PROJECT='./scripts/tsconfig.json' NODE_ENV='development' ts-node scripts/generateSwaggerSchema.ts",
+    "generate:form-scaffolds": "TS_NODE_PROJECT='./scripts/tsconfig.json' NODE_ENV='development' ts-node scripts/generateFormScaffolds.ts",
     "storybook": "start-storybook -p 9009 -s public",
     "storybook:build": "build-storybook -s public"
   },
