@@ -1,8 +1,9 @@
 import React, { useMemo } from "react"
 
 import Table from "app/features/shared/components/molecules/Table/Table"
+import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
 
-import { useCaseIndexData } from "./hooks/useCaseIndexData"
+import { useGlobalState } from "app/state/state/globalState"
 import { Button } from "@datapunt/asc-ui"
 import { ChevronRight } from "@datapunt/asc-assets/lib"
 import to from "../../../../shared/routing/to"
@@ -11,7 +12,9 @@ type ButtonProps = {
   href: string
 }
 const OpenButton: React.FC<ButtonProps> = ({ href }) =>
-  <Button as='a' variant="textButton" iconSize={14} iconLeft={<ChevronRight />} href={href}>Open</Button>
+  <ButtonLink to={href}>
+    <Button as="span" variant="textButton" iconSize={14} iconLeft={<ChevronRight />}>Open</Button>
+  </ButtonLink>
 
 const columns = [
   { header:"Startdatum", minWidth: 100 },
@@ -28,7 +31,7 @@ const mapData = (data: API.Case) => [
 ]
 
 const TableCases: React.FC = () => {
-  const { data, isFetching } = useCaseIndexData()
+  const { cases: { data, isFetching } } = useGlobalState()
   const mappedData = useMemo(() => data?.map(mapData), [ data ])
 
   return (<Table
