@@ -1,23 +1,42 @@
-import { useCallback } from "react"
-import { useGlobalActions, useGlobalState } from "app/state/state/globalState"
+import { useGlobalState } from "app/state/state/globalState"
+
+import to from "app/features/shared/routing/to"
+import { useCrudUpdate, useCrudDelete } from "app/features/shared/hooks/useCrud/useCrud"
 
 export const useEditPage = (uuid?: API.Case["uuid"]) => {
-  // Get the info we need from the state:
   const {
     cases: { errorMessage, hasError, isGetting: isGettingCases, data  },
     caseTypes: { isGetting: isGettingCaseTypes }
   } = useGlobalState()
-  // Get actions
-  const {
-    cases: { update: handleUpdate, del }
-  } = useGlobalActions()
 
   // Find caseDetails
   const caseDetails = data?.find(caseDetails => caseDetails.uuid === uuid)
-  // Define handleDelete callback
-  const handleDelete = useCallback(() => del(caseDetails!), [ caseDetails, del ])
-  // Are we still loading?
-  const isLoading = isGettingCaseTypes || isGettingCases
+
+  const handleUpdate = useCrudUpdate({
+    stateKey: "cases",
+    redirectTo: to("/cases"),
+    success: {
+      title: "Succesvol gewijzigd",
+      body: "De zaak is succesvol gewijzigd"
+    },
+    error: {
+      title: "Kon niet wijzigen"
+    }
+  })
+
+  const handleDelete = useCrudDelete(caseDetails!, {
+    stateKey: "cases",
+    redirectTo: to("/cases"),
+    success: {
+      title: "Succesvol verwijderd",
+      body: "De zaak is succesvol verwijderd"
+    },
+    error: {
+      title: "Kon niet verwijderen"
+    }
+  })
+
+  const isLoading = !caseDetails || isGettingCaseTypes || isGettingCases
 
   return {
     errorMessage,

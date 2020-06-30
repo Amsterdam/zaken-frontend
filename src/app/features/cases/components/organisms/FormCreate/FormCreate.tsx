@@ -1,34 +1,22 @@
 import React from "react"
-import { ScaffoldForm, Alert } from "amsterdam-react-final-form"
+import { ScaffoldForm } from "amsterdam-react-final-form"
 
-import { useGlobalState, useGlobalActions } from "app/state/state/globalState"
-
+import to from "app/features/shared/routing/to"
 import ScaffoldFields from "app/features/shared/components/molecules/Form/ScaffoldFields"
+import { useCrudCreate } from "app/features/shared/hooks/useCrud/useCrud"
 
 import scaffoldProps from "./scaffold"
 
 const FormCreate: React.FC = () => {
-  const { cases: { errorMessage, hasError  } } = useGlobalState()
-  const { cases: { create } } = useGlobalActions()
+  const handleCreate = useCrudCreate({
+    stateKey: "cases",
+    redirectTo: to("/cases"),
+    success: { title: "Zaak aangemaakt", body: "De zaak is succesvol aangemaakt" },
+    error: { title: "Kon zaak niet aanmaken" }
+  })
 
   return (
-    <ScaffoldForm
-      onSubmit={ create }
-      hasError={ hasError }
-      successComponent={
-        <Alert variant="success" title="Zaak succesvol aangemaakt!">
-          Integer posuere erat a ante venenatis dapibus posuere velit aliquet.
-        </Alert>
-      }
-      errorComponent={
-        <Alert variant="error" title="Kon zaak niet aanmaken!">
-          {
-            // @ts-ignore errorMessage is typed as string, while in reality its an object
-            errorMessage?.detail
-          }
-        </Alert>
-      }
-    >
+    <ScaffoldForm onSubmit={ handleCreate }>
       <ScaffoldFields {...scaffoldProps} />
     </ScaffoldForm>
   )
