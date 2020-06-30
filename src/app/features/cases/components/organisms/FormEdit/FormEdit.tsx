@@ -1,29 +1,25 @@
 import React from "react"
 import { ScaffoldForm, Alert } from "amsterdam-react-final-form"
 
-import { useGlobalActions, useGlobalState } from "app/state/state/globalState"
 import ScaffoldFields from "app/features/shared/components/molecules/Form/ScaffoldFields"
 
 import scaffoldProps from "./scaffold"
 
 type Props = {
+  errorMessage?: { detail: string }
+  hasError: boolean
+  onSubmit: (data: API.Case) => Promise<void>
+  isLoading: boolean
   caseDetails?: API.Case
 }
 
-const FormEdit: React.FC<Props> = ({ caseDetails }) => {
-  const {
-    cases: { errorMessage, hasError, isGetting: isGettingCases  },
-    caseTypes: { isGetting: isGettingCaseTypes }
-  } = useGlobalState()
-
-  const { cases: { update } } = useGlobalActions()
-
-  return (
+const FormEdit: React.FC<Props> = ({ isLoading, onSubmit, caseDetails, errorMessage, hasError }) => (
     <ScaffoldForm
-      showSpinner={ !caseDetails || isGettingCaseTypes || isGettingCases }
-      onSubmit={ update }
+      showSpinner={ isLoading }
+      onSubmit={ onSubmit }
       hasError={ hasError }
       initialValues={ caseDetails }
+      // TODO move these components to some sort of a message-system?
       successComponent={
         <Alert variant="success" title="Zaak succesvol gewijzigd!">
           Integer posuere erat a ante venenatis dapibus posuere velit aliquet.
@@ -31,17 +27,13 @@ const FormEdit: React.FC<Props> = ({ caseDetails }) => {
       }
       errorComponent={
         <Alert variant="error" title="Kon de zaak niet opslaan!">
-          {
-            // @ts-ignore errorMessage is typed as string, while in reality its an object
-            errorMessage?.detail
-          }
+          { errorMessage?.detail }
         </Alert>
       }
     >
       <ScaffoldFields {...scaffoldProps} />
     </ScaffoldForm>
   )
-}
 
 
 export default FormEdit
