@@ -1,37 +1,29 @@
-import React, { useCallback } from "react"
+import React from "react"
 import { RouteComponentProps } from "@reach/router"
 import { FormTitle, Heading } from "@datapunt/asc-ui"
 import { TrashBin } from "@datapunt/asc-assets/lib"
 
-import { useGlobalActions, useGlobalState } from "app/state/state/globalState"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 import ActionButtonWrap from "app/features/shared/components/atoms/ActionButtonWrap/ActionButtonWrap"
 import ConfirmButton from "app/features/shared/components/molecules/ConfirmButton/ConfirmButton"
 
 import FormEdit from "app/features/cases/components/organisms/FormEdit/FormEdit"
-import { useCaseByUUID } from "app/features/cases/hooks/useCaseByUUID"
+
+import { useEditPage } from "./hooks/useEditPage"
 
 type Props = {
   uuid: API.Case["uuid"]
 }
 
 const EditPage: React.FC<RouteComponentProps<Props>> = ({ uuid }) => {
-  const {
-    cases: { isGetting: isGettingCases  },
-    caseTypes: { isGetting: isGettingCaseTypes }
-  } = useGlobalState()
-
-  const { cases: { del } } = useGlobalActions()
-  const { caseDetails } = useCaseByUUID(uuid!)
-
-  const handleDelete = useCallback(() => del(caseDetails!), [ caseDetails, del ])
+  const { handleDelete, caseDetails, isLoading, hasError, errorMessage, handleUpdate } = useEditPage(uuid)
 
   return (
     <DefaultLayout>
-      <Heading>Aanpassen zaak:  { uuid }</Heading>
+      <Heading>Aanpassen zaak</Heading>
       <ActionButtonWrap>
         <ConfirmButton
-          disabled={ !caseDetails || isGettingCaseTypes || isGettingCases }
+          disabled={isLoading}
           onConfirm={handleDelete}
           iconLeft={<TrashBin />}
           variant="secondary"
@@ -42,7 +34,13 @@ const EditPage: React.FC<RouteComponentProps<Props>> = ({ uuid }) => {
         </ConfirmButton>
       </ActionButtonWrap>
       <FormTitle>Gebruik dit formulier een zaak te wijzigen</FormTitle>
-      <FormEdit caseDetails={caseDetails} />
+      <FormEdit
+        errorMessage={errorMessage as unknown as { detail: string }}
+        hasError={hasError}
+        onSubmit={handleUpdate}
+        isLoading={isLoading}
+        caseDetails={caseDetails}
+      />
     </DefaultLayout>
   )
 }
