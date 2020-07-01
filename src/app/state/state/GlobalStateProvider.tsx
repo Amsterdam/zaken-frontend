@@ -9,8 +9,15 @@ const Provider: React.FC = ({ children }) => {
     idKey: "uuid",
     shouldIndex: true
   })
+
   const [caseTypes, caseTypesActions] = useRestActions<API.CaseType>({
     api: { ...api, name: "case-types" },
+    idKey: "uuid",
+    shouldIndex: true
+  })
+
+  const [caseStatuses, caseStatusesActions] = useRestActions<API.State>({
+    api: { ...api, name: "states" },
     idKey: "uuid",
     shouldIndex: true
   })
@@ -18,11 +25,13 @@ const Provider: React.FC = ({ children }) => {
   const value = {
     state: {
       cases,
-      caseTypes
+      caseTypes,
+      caseStatuses
     },
     actions: {
       cases: casesActions,
-      caseTypes: caseTypesActions
+      caseTypes: caseTypesActions,
+      caseStatuses: caseStatusesActions
     }
   }
 

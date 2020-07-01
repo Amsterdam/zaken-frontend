@@ -1,3 +1,4 @@
+import produce from "immer"
 import { useGlobalState } from "app/state/state/globalState"
 
 import to from "app/features/shared/routing/to"
@@ -6,11 +7,21 @@ import { useCrudUpdate, useCrudDelete } from "app/features/shared/hooks/useCrud/
 export const useEditPage = (uuid?: API.Case["uuid"]) => {
   const {
     cases: { isGetting: isGettingCases, data  },
-    caseTypes: { isGetting: isGettingCaseTypes }
+    caseTypes: { isGetting: isGettingCaseTypes },
+    caseStatuses: { isGetting: isGettingCaseStatuses }
   } = useGlobalState()
 
   // Find caseDetails
-  const caseDetails = data?.find(caseDetails => caseDetails.uuid === uuid)
+  const caseDetails = produce(
+    data?.find(caseDetails => caseDetails.uuid === uuid),
+    (draft) => {
+      if (draft !== undefined) {
+        // TODO find a better solution for this.
+        draft.status = draft?.status?.url
+      }
+    }
+  )
+
 
   const handleUpdate = useCrudUpdate({
     stateKey: "cases",
@@ -36,7 +47,7 @@ export const useEditPage = (uuid?: API.Case["uuid"]) => {
     }
   })
 
-  const isLoading = !caseDetails || isGettingCaseTypes || isGettingCases
+  const isLoading = !caseDetails || isGettingCaseTypes || isGettingCases || isGettingCaseStatuses
 
   return {
     isLoading,
