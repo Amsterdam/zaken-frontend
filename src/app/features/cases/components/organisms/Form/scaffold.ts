@@ -1,7 +1,7 @@
 import { produce } from "immer"
 import { FormPositioner } from "amsterdam-scaffold-form/package"
 
-import PUTCases from "__generated__/PUT_Cases.json"
+import PUTCases from "__generated__/FormCases.json"
 
 import { Fields } from "app/features/shared/components/molecules/Form/ScaffoldFields"
 

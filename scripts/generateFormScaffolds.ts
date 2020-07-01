@@ -34,8 +34,7 @@ const writeSchemas = (schema: any) => {
   // NOTE: add your own cases here:
   // ----
 
-  writeToFile("POST_Cases.json", parseOpenApiSchema(schemaObjects["POST /api/v1/cases/"]))
-  writeToFile("PUT_Cases.json", parseOpenApiSchema(schemaObjects["PUT /api/v1/cases/{uuid}/"]))
+  writeToFile("FormCases.json", parseOpenApiSchema(schemaObjects["POST /api/v1/cases/"]))
 
   // DONE!
   // ----

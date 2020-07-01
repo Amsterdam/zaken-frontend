@@ -6,14 +6,12 @@ import ScaffoldFields from "app/features/shared/components/molecules/Form/Scaffo
 import scaffoldProps from "./scaffold"
 
 type Props = {
-  errorMessage?: { detail: string }
-  hasError: boolean
   onSubmit: (data: API.Case) => Promise<void>
-  isLoading: boolean
+  isLoading?: boolean
   caseDetails?: API.Case
 }
 
-const FormEdit: React.FC<Props> = ({ isLoading, onSubmit, caseDetails }) => (
+const Form: React.FC<Props> = ({ isLoading, onSubmit, caseDetails }) => (
     <ScaffoldForm
       showSpinner={ isLoading }
       onSubmit={ onSubmit }
@@ -24,4 +22,4 @@ const FormEdit: React.FC<Props> = ({ isLoading, onSubmit, caseDetails }) => (
   )
 
 
-export default FormEdit
+export default Form

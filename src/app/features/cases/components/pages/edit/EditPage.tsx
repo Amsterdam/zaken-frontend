@@ -7,7 +7,7 @@ import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/
 import ActionButtonWrap from "app/features/shared/components/atoms/ActionButtonWrap/ActionButtonWrap"
 import ConfirmButton from "app/features/shared/components/molecules/ConfirmButton/ConfirmButton"
 
-import FormEdit from "app/features/cases/components/organisms/FormEdit/FormEdit"
+import Form from "app/features/cases/components/organisms/Form/Form"
 
 import { useEditPage } from "./hooks/useEditPage"
 
@@ -16,7 +16,7 @@ type Props = {
 }
 
 const EditPage: React.FC<RouteComponentProps<Props>> = ({ uuid }) => {
-  const { handleDelete, caseDetails, isLoading, hasError, errorMessage, handleUpdate } = useEditPage(uuid)
+  const { handleDelete, caseDetails, isLoading, handleUpdate } = useEditPage(uuid)
 
   return (
     <DefaultLayout>
@@ -34,9 +34,7 @@ const EditPage: React.FC<RouteComponentProps<Props>> = ({ uuid }) => {
         </ConfirmButton>
       </ActionButtonWrap>
       <FormTitle>Gebruik dit formulier een zaak te wijzigen</FormTitle>
-      <FormEdit
-        errorMessage={errorMessage as unknown as { detail: string }}
-        hasError={hasError}
+      <Form
         onSubmit={handleUpdate}
         isLoading={isLoading}
         caseDetails={caseDetails}

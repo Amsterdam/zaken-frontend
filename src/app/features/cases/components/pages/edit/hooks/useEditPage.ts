@@ -5,7 +5,7 @@ import { useCrudUpdate, useCrudDelete } from "app/features/shared/hooks/useCrud/
 
 export const useEditPage = (uuid?: API.Case["uuid"]) => {
   const {
-    cases: { errorMessage, hasError, isGetting: isGettingCases, data  },
+    cases: { isGetting: isGettingCases, data  },
     caseTypes: { isGetting: isGettingCaseTypes }
   } = useGlobalState()
 
@@ -39,8 +39,6 @@ export const useEditPage = (uuid?: API.Case["uuid"]) => {
   const isLoading = !caseDetails || isGettingCaseTypes || isGettingCases
 
   return {
-    errorMessage,
-    hasError,
     isLoading,
     handleUpdate,
     handleDelete,
