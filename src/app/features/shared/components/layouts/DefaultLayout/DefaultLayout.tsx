@@ -9,7 +9,7 @@ import FlashMessages from "app/features/shared/components/molecules/FlashMessage
 const DefaultLayout: React.FC = ({ children }) => (
   <>
     <Header
-      title="Zaaksysteem Vakantieverhuur"
+      title="Zaken"
       homeLink={to("/")}
       fullWidth={true}
       navigation={<DefaultNavigation />}
