@@ -1,5 +1,5 @@
 import React from "react"
-import { ScaffoldForm, Alert } from "amsterdam-react-final-form"
+import { ScaffoldForm } from "amsterdam-react-final-form"
 
 import ScaffoldFields from "app/features/shared/components/molecules/Form/ScaffoldFields"
 
@@ -13,23 +13,11 @@ type Props = {
   caseDetails?: API.Case
 }
 
-const FormEdit: React.FC<Props> = ({ isLoading, onSubmit, caseDetails, errorMessage, hasError }) => (
+const FormEdit: React.FC<Props> = ({ isLoading, onSubmit, caseDetails }) => (
     <ScaffoldForm
       showSpinner={ isLoading }
       onSubmit={ onSubmit }
-      hasError={ hasError }
       initialValues={ caseDetails }
-      // TODO move these components to some sort of a message-system?
-      successComponent={
-        <Alert variant="success" title="Zaak succesvol gewijzigd!">
-          Integer posuere erat a ante venenatis dapibus posuere velit aliquet.
-        </Alert>
-      }
-      errorComponent={
-        <Alert variant="error" title="Kon de zaak niet opslaan!">
-          { errorMessage?.detail }
-        </Alert>
-      }
     >
       <ScaffoldFields {...scaffoldProps} />
     </ScaffoldForm>
