@@ -39,6 +39,15 @@
         "isRequired": true
       }
     },
+    "toelichting": {
+      "type": "TextField",
+      "props": {
+        "type": "text",
+        "position": {},
+        "name": "toelichting",
+        "label": "Toelichting"
+      }
+    },
     "startdatum": {
       "type": "TextField",
       "props": {
