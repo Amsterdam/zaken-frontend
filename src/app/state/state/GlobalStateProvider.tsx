@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { GlobalStateProvider } from "./globalState"
 import { useRestActions } from "globalstate-hooks"
 import { api } from "./config"
@@ -25,6 +25,11 @@ const Provider: React.FC = ({ children }) => {
       caseTypes: caseTypesActions
     }
   }
+
+  useEffect(() => {
+    if (!process.env.REACT_APP_DEBUG_MODE) return
+    (window as any).globalState = value.state
+  }, [value.state])
 
   return (
     <GlobalStateProvider value={ value }>
