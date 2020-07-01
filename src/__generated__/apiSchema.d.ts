@@ -4,9 +4,12 @@ declare namespace API {
         readonly uuid: string
         readonly identificatie: string
         omschrijving: string
+        toelichting?: string
         startdatum: string // date
         einddatum?: string // date
-        readonly status: string // uri ^(?:[a-z0-9\.\-\+]*)://(?:[^\s:@/]+(?::[^\s:@/]*)?@)?(?:(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)(?:\.(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)){3}|\[[0-9a-f:\.]+\]|([a-z¡-￿0-9](?:[a-z¡-￿0-9-]{0,61}[a-z¡-￿0-9])?(?:\.(?!-)[a-z¡-￿0-9-]{1,63}(?<!-))*\.(?!-)(?:[a-z¡-￿-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\.?|localhost))(?::\d{2,5})?(?:[/?#][^\s]*)?\Z
+        readonly status: {
+            [name: string]: any
+        }
         readonly bronorganisatie: string
         readonly verantwoordelijkeOrganisatie: string
         zaaktype: string // uri ^(?:[a-z0-9\.\-\+]*)://(?:[^\s:@/]+(?::[^\s:@/]*)?@)?(?:(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)(?:\.(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)){3}|\[[0-9a-f:\.]+\]|([a-z¡-￿0-9](?:[a-z¡-￿0-9-]{0,61}[a-z¡-￿0-9])?(?:\.(?!-)[a-z¡-￿0-9-]{1,63}(?<!-))*\.(?!-)(?:[a-z¡-￿-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\.?|localhost))(?::\d{2,5})?(?:[/?#][^\s]*)?\Z
@@ -44,6 +47,12 @@ declare namespace API {
         identificatie: string
         omschrijving: string
         toelichting: string
+        startdatum: string // date
+        einddatum?: string // date
+    }
+    export type PushCheckAction = {
+        identificatie: string
+        check_actie: boolean
     }
     export type RequestBody = API.State;
     namespace Responses {
