@@ -8,14 +8,14 @@ import scaffoldProps from "./scaffold"
 type Props = {
   onSubmit: (data: API.Case) => Promise<void>
   isLoading?: boolean
-  caseDetails?: API.Case
+  initialValues?: API.Case
 }
 
-const Form: React.FC<Props> = ({ isLoading, onSubmit, caseDetails }) => (
+const Form: React.FC<Props> = ({ isLoading, onSubmit, initialValues }) => (
     <ScaffoldForm
       showSpinner={ isLoading }
       onSubmit={ onSubmit }
-      initialValues={ caseDetails }
+      initialValues={ initialValues }
     >
       <ScaffoldFields {...scaffoldProps} />
     </ScaffoldForm>
