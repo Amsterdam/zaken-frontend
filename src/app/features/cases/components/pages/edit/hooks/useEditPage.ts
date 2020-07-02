@@ -24,7 +24,7 @@ export const useEditPage = (uuid?: API.Case["uuid"]) => {
     }
   })
 
-  const handleDelete = useCrudDelete(initialValues!, {
+  const handleDelete = useCrudDelete(initialValues, {
     stateKey: "cases",
     redirectTo: to("/cases"),
     success: {

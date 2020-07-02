@@ -42,6 +42,10 @@ const useCrud = (
   const handleAction = globalActions[stateKey][action]
 
   return useCallback(async (item?) => {
+    if (action === "del" && toDelete === undefined) {
+      return Promise.resolve()
+    }
+
     try {
       // Actually call the action: (either, `update`, `create` or `del`)
       await handleAction(action === "del" ? toDelete : item)
