@@ -1,3 +1,23 @@
+# Zaken frontend
+
+## Production
+[zaken.amsterdam.nl](https://zaken.amsterdam.nl)
+
+## Acceptance
+[acc.zaken.amsterdam.nl](https://acc.zaken.amsterdam.nl)
+
+## Development
+- there is a dependency on https://github.com/Amsterdam/zaken-backend
+
+- `git clone https://github.com/Amsterdam/zaken-frontend.git`
+- `cd zaken-frontend`
+- `npm install .`
+- `npm run generate:swagger-schema`
+- `npm run generate:form-scaffolds`
+- `npm run start`
+
+# Original README
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
