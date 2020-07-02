@@ -19,14 +19,16 @@ const OpenButton: React.FC<ButtonProps> = ({ href }) =>
 const columns = [
   { header:"Startdatum", minWidth: 100 },
   { header:"Einddatum", minWidth: 100 },
+  { header:"Adres", minWidth: 300 },
   { header:"Status", minWidth: 300 },
-  { header:"Omschrijving", minWidth: 300 },
+  { header:"Projectnaam", minWidth: 300 },
   { minWidth: 90 }
 ]
 
 const mapData = (data: API.Case) => [
   data.startdatum,
   data.einddatum ?? "-",
+  data.toelichting ?? "-",
   data?.status?.statustoelichting ?? "-",
   data.omschrijving,
   <OpenButton href={to("/cases/:uuid", { uuid: data.uuid })} />

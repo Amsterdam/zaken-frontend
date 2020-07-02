@@ -31,8 +31,9 @@
       }
     },
     "omschrijving": {
-      "type": "TextAreaField",
+      "type": "TextField",
       "props": {
+        "type": "text",
         "position": {},
         "name": "omschrijving",
         "label": "Omschrijving",
