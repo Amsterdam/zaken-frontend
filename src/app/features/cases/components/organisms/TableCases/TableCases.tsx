@@ -41,6 +41,7 @@ const TableCases: React.FC = () => {
     data={mappedData}
     loading={data === undefined || isFetching}
     hasFixedColumn={true}
+    noValuesPlaceholder={"Er zijn (nog) geen zaken gevonden"}
   />)
 }
 
