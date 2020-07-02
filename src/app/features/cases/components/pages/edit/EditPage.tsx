@@ -16,7 +16,7 @@ type Props = {
 }
 
 const EditPage: React.FC<RouteComponentProps<Props>> = ({ uuid }) => {
-  const { handleDelete, caseDetails, isLoading, handleUpdate } = useEditPage(uuid)
+  const { handleDelete, initialValues, isLoading, handleUpdate } = useEditPage(uuid)
 
   return (
     <DefaultLayout>
@@ -37,7 +37,7 @@ const EditPage: React.FC<RouteComponentProps<Props>> = ({ uuid }) => {
       <Form
         onSubmit={handleUpdate}
         isLoading={isLoading}
-        caseDetails={caseDetails}
+        initialValues={initialValues}
       />
     </DefaultLayout>
   )

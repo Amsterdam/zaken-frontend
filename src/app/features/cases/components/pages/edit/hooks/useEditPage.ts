@@ -1,8 +1,8 @@
-import produce from "immer"
 import { useGlobalState } from "app/state/state/globalState"
 
 import to from "app/features/shared/routing/to"
 import { useCrudUpdate, useCrudDelete } from "app/features/shared/hooks/useCrud/useCrud"
+import { mapInitialValues } from "./mapInitialValues"
 
 export const useEditPage = (uuid?: API.Case["uuid"]) => {
   const {
@@ -12,16 +12,8 @@ export const useEditPage = (uuid?: API.Case["uuid"]) => {
   } = useGlobalState()
 
   // Find caseDetails
-  const caseDetails = produce(
-    data?.find(caseDetails => caseDetails.uuid === uuid),
-    (draft) => {
-      if (draft !== undefined) {
-        // TODO find a better solution for this.
-        draft.status = draft?.status?.url
-      }
-    }
-  )
-
+  const caseDetails = data?.find(caseDetails => caseDetails.uuid === uuid)
+  const initialValues = mapInitialValues(caseDetails)
 
   const handleUpdate = useCrudUpdate({
     stateKey: "cases",
@@ -51,8 +43,8 @@ export const useEditPage = (uuid?: API.Case["uuid"]) => {
 
   return {
     isLoading,
+    initialValues,
     handleUpdate,
-    handleDelete,
-    caseDetails
+    handleDelete
   }
 }
