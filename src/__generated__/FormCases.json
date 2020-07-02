@@ -71,7 +71,6 @@
     "status": {
       "type": "TextField",
       "props": {
-        "type": "text",
         "position": {},
         "name": "status",
         "label": "Status",
@@ -106,6 +105,15 @@
         "name": "zaaktype",
         "label": "Zaaktype",
         "isRequired": true
+      }
+    },
+    "debug": {
+      "type": "TextField",
+      "props": {
+        "position": {},
+        "name": "debug",
+        "label": "Debug",
+        "disabled": true
       }
     },
     "submit": {

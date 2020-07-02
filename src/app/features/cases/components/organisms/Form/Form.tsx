@@ -1,5 +1,5 @@
 import React from "react"
-import { ScaffoldForm } from "amsterdam-react-final-form"
+import { DebugFormValues, ScaffoldForm } from "amsterdam-react-final-form"
 
 import ScaffoldFields from "app/features/shared/components/molecules/Form/ScaffoldFields"
 

@@ -1,9 +1,9 @@
-import React, { useMemo } from "react"
-import { SelectField } from "amsterdam-react-final-form"
+import React from "react"
+import { ComplexSelectField } from "amsterdam-react-final-form"
 
 import { useGlobalState } from "app/state/state/globalState"
 
-export type CaseStatusFieldProps = Omit<React.ComponentProps<typeof SelectField>, "options">
+export type CaseStatusFieldProps = Omit<React.ComponentProps<typeof ComplexSelectField>, "options" | "validate" | "optionLabelField" | "withEmptyOption">
 
 /**
  * Requests CaseStatus-data from the API, and use the response to create options.
@@ -11,12 +11,14 @@ export type CaseStatusFieldProps = Omit<React.ComponentProps<typeof SelectField>
 const CaseStatusField: React.FC<CaseStatusFieldProps> = (props) => {
   const { caseStatuses: { data } } = useGlobalState()
 
-  const options = useMemo(
-    () => data?.reduce((acc, caseStatus) => ({ ...acc, [caseStatus.url]: caseStatus.statustoelichting }), { "": "-" }),
-    [ data ]
+  return (
+    <ComplexSelectField<API.State>
+      options={data ?? []}
+      optionLabelField="statustoelichting"
+      withEmptyOption={true}
+      {...props}
+    />
   )
-
-  return <SelectField options={options ?? { "": "-" }} {...props} />
 }
 
 export default CaseStatusField

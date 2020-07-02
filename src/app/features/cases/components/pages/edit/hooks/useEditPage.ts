@@ -2,7 +2,6 @@ import { useGlobalState } from "app/state/state/globalState"
 
 import to from "app/features/shared/routing/to"
 import { useCrudUpdate, useCrudDelete } from "app/features/shared/hooks/useCrud/useCrud"
-import { mapInitialValues } from "./mapInitialValues"
 
 export const useEditPage = (uuid?: API.Case["uuid"]) => {
   const {
@@ -11,9 +10,7 @@ export const useEditPage = (uuid?: API.Case["uuid"]) => {
     caseStatuses: { isGetting: isGettingCaseStatuses }
   } = useGlobalState()
 
-  // Find caseDetails
-  const caseDetails = data?.find(caseDetails => caseDetails.uuid === uuid)
-  const initialValues = mapInitialValues(caseDetails)
+  const initialValues = data?.find(caseDetails => caseDetails.uuid === uuid)
 
   const handleUpdate = useCrudUpdate({
     stateKey: "cases",
@@ -27,7 +24,7 @@ export const useEditPage = (uuid?: API.Case["uuid"]) => {
     }
   })
 
-  const handleDelete = useCrudDelete(caseDetails!, {
+  const handleDelete = useCrudDelete(initialValues!, {
     stateKey: "cases",
     redirectTo: to("/cases"),
     success: {
@@ -39,7 +36,7 @@ export const useEditPage = (uuid?: API.Case["uuid"]) => {
     }
   })
 
-  const isLoading = !caseDetails || isGettingCaseTypes || isGettingCases || isGettingCaseStatuses
+  const isLoading = !initialValues || isGettingCaseTypes || isGettingCases || isGettingCaseStatuses
 
   return {
     isLoading,
