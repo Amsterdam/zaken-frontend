@@ -67,8 +67,19 @@ export const Example = () =>
   <div>
     <p>Example of a basic table</p>
     <Table
+      noValuesPlaceholder="Lorem ispum"
       columns={columns}
       data={data}
+    />
+  </div>
+
+export const ExampleWithoutData = () =>
+  <div>
+    <p>Example of a basic table without data</p>
+    <Table
+      noValuesPlaceholder="Er zijn (nog) geen zaken gevonden"
+      columns={columns}
+      data={[]}
     />
   </div>
 
@@ -76,6 +87,7 @@ export const ExampleWithFixedColumn = () =>
   <div>
     <p>Please change viewport by clicking the 'change size of preview' button above, and see the last column acting sticky</p>
     <Table
+      noValuesPlaceholder="Lorem ispum"
       columns={columns}
       data={data}
       hasFixedColumn={true}
@@ -86,6 +98,7 @@ export const ExampleWithLoading: React.FC = () =>
   <div>
     <p>Please change loading state by toggling the knob below</p>
     <Table
+      noValuesPlaceholder="Lorem ispum"
       columns={columns}
       data={data}
       loading={boolean("Loading", true)}

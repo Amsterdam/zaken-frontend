@@ -16,6 +16,7 @@ type Props = {
   hasFixedColumn?: boolean
   columns: Array<{header?: CellContent, minWidth: number}>
   data?: Array<Array<CellContent>>
+  noValuesPlaceholder: string | JSX.Element
 }
 
 const Wrap = styled.div`
@@ -47,10 +48,14 @@ const Row = styled.tr`
   }
 `
 
+const NoValuesPlaceholder = styled(TableCell)`
+  font-style: italic; 
+`
+
 const createLoadingData = (numColumns: number, numRows: number = 5) =>
   [...Array(numRows)].map(_ => [...Array(numColumns)].map(_ => ""))
 
-const Table: React.FC<Props> = ({ columns, loading, hasFixedColumn, ...restProps }) => {
+const Table: React.FC<Props> = ({ columns, loading, hasFixedColumn, noValuesPlaceholder, ...restProps }) => {
   const data = loading
     ? createLoadingData(columns.length)
     : restProps.data
@@ -80,6 +85,13 @@ const Table: React.FC<Props> = ({ columns, loading, hasFixedColumn, ...restProps
                     : <TableCell key={index}>{ loading ? <SmallSkeleton maxRandomWidth={columns[index].minWidth - 30} /> : cell ?? <>&nbsp;</> }</TableCell>
               ) }
             </Row>
+          ) }
+          { (data === undefined || data.length === 0) && (
+            <tr>
+              <NoValuesPlaceholder colSpan={columns.length}>
+                { noValuesPlaceholder }
+              </NoValuesPlaceholder>
+            </tr>
           ) }
           </tbody>
         </StyledTable>
