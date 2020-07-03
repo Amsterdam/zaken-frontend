@@ -38,8 +38,8 @@
     "test:coverage": "react-scripts test --coverage --watchAll=false",
     "lint": "eslint --cache --ext .ts,.tsx src",
     "lint:fix": "npm run lint -- --fix",
-    "generate:swagger-schema": "TS_NODE_PROJECT='./scripts/tsconfig.json' NODE_ENV='development' ts-node scripts/generateSwaggerSchema.ts",
-    "generate:form-scaffolds": "TS_NODE_PROJECT='./scripts/tsconfig.json' NODE_ENV='development' ts-node scripts/generateFormScaffolds.ts",
+    "generate:swagger-schema": "TS_NODE_PROJECT='./scripts/tsconfig.json' NODE_ENV='development' ts-node scripts/src/generateSwaggerSchema.ts",
+    "generate:form-scaffolds": "TS_NODE_PROJECT='./scripts/tsconfig.json' NODE_ENV='development' ts-node scripts/src/generateFormScaffolds.ts",
     "storybook": "start-storybook -p 9009 -s public",
     "storybook:build": "build-storybook -s public"
   },
@@ -68,6 +68,7 @@
     "@storybook/addons": "^5.3.19",
     "@storybook/preset-create-react-app": "^3.1.2",
     "@storybook/react": "^5.3.19",
+    "@types/dotenv-flow": "^3.0.0",
     "@types/enzyme": "^3.10.5",
     "@types/enzyme-adapter-react-16": "^1.0.6",
     "dtsgenerator": "^2.7.0",

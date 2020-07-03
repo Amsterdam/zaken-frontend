@@ -5,8 +5,8 @@
  * When called with tralingSlash=false, the string will become: '/foo/zoo/bar/moo'
  * When called with leadingSlash=false, the string will become: 'foo/zoo/bar/moo/'
  */
-const slashSandwich = (
-  parts: string[],
+export const slashSandwich = (
+  parts: Array<string | undefined>,
   { leadingSlash = true, trailingSlash = true } = {}
 ): string => {
   let sandwich = stripDoubleSlashes(`/${ parts.filter(_ => !!_).join("/") }/`)
@@ -40,8 +40,4 @@ const stripTrailingSlash = (path: string): string =>
 const stripLeadingSlash = (path: string): string =>
   path.replace(/^\//, "")
 
-module.exports = {
-  slashSandwich
-}
 
-export {}
