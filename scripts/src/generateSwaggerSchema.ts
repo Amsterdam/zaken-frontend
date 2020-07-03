@@ -1,11 +1,10 @@
 #!/usr/bin/env ts-node-script
-
-const { exec } = require("child_process")
+import { exec } from "child_process"
+import { config } from "dotenv-flow"
+import { slashSandwich } from "./utils/url.utils"
 
 // Loads .env.development or .env.production based on NODE_ENV
-require("dotenv-flow").config()
-
-const { slashSandwich } = require("./utils/url.utils")
+config()
 
 const url = slashSandwich([
   process.env.REACT_APP_GATEWAY_HOST,
@@ -14,7 +13,7 @@ const url = slashSandwich([
 ], { leadingSlash: false })
 
 exec(`dtsgen -o ./src/__generated__/apiSchema.d.ts -n API --url ${ url }`,
-  (error: { message: string }, stdout: string, stderr: string) => {
+  (error, stdout, stderr) => {
     if (error) {
       console.log("ERROR")
       console.log(error.message)

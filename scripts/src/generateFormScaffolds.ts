@@ -1,12 +1,12 @@
 #!/usr/bin/env ts-node-script
+import fs from "fs"
+import { config } from "dotenv-flow"
+import { fetchSchema, getSchemaObjects, parseOpenApiSchema } from "amsterdam-scaffold-form"
+
+import { slashSandwich } from "./utils/url.utils"
 
 // Loads .env.development or .env.production based on NODE_ENV
-require("dotenv-flow").config()
-
-const { fetchSchema, getSchemaObjects, parseOpenApiSchema } = require("amsterdam-scaffold-form")
-const fs = require("fs")
-
-const { slashSandwich } = require("./utils/url.utils")
+config()
 
 const writeToFile = (filename: string, obj: any) => {
   console.log(`\t"${ filename }"`)
