@@ -1,9 +1,12 @@
 import { useCrudCreate } from "app/features/shared/hooks/useCrud/useCrud"
 import to from "app/features/shared/routing/to"
+import { useCases } from "app/state/rest/config"
 
 const useCreatePage = () => {
+  const { execPost } = useCases()
+
   const handleCreate = useCrudCreate({
-    stateKey: "cases",
+    action: execPost,
     redirectTo: to("/cases"),
     success: {
       title: "Succesvol aangemaakt",

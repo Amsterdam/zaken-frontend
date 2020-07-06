@@ -1,7 +1,7 @@
 import React from "react"
 import { ComplexSelectField } from "amsterdam-react-final-form"
 
-import { useGlobalState } from "app/state/state/globalState"
+import { useCaseStates } from "app/state/rest/config"
 
 export type CaseStatusFieldProps = Omit<React.ComponentProps<typeof ComplexSelectField>, "options" | "validate" | "optionLabelField" | "withEmptyOption">
 
@@ -9,7 +9,7 @@ export type CaseStatusFieldProps = Omit<React.ComponentProps<typeof ComplexSelec
  * Requests CaseStatus-data from the API, and use the response to create options.
  */
 const CaseStatusField: React.FC<CaseStatusFieldProps> = (props) => {
-  const { caseStatuses: { data } } = useGlobalState()
+  const { data } = useCaseStates()
 
   return (
     <ComplexSelectField<API.State>

@@ -1,19 +1,15 @@
-import { useGlobalState } from "app/state/state/globalState"
-
 import to from "app/features/shared/routing/to"
 import { useCrudUpdate, useCrudDelete } from "app/features/shared/hooks/useCrud/useCrud"
+import { useCase, useCases, useCaseStates, useCaseTypes } from "app/state/rest/config"
 
 export const useEditPage = (uuid?: API.Case["uuid"]) => {
-  const {
-    cases: { isGetting: isGettingCases, data  },
-    caseTypes: { isGetting: isGettingCaseTypes },
-    caseStatuses: { isGetting: isGettingCaseStatuses }
-  } = useGlobalState()
-
-  const initialValues = data?.find(caseDetails => caseDetails.uuid === uuid)
+  const { isBusy: isGettingCases } = useCases()
+  const { isBusy: isGettingCaseTypes } = useCaseTypes()
+  const { isBusy: isGettingCaseStatuses } = useCaseStates()
+  const { data: initialValues, execPut, execDelete } = useCase(uuid!)
 
   const handleUpdate = useCrudUpdate({
-    stateKey: "cases",
+    action: execPut,
     redirectTo: to("/cases"),
     success: {
       title: "Succesvol gewijzigd",
@@ -25,7 +21,7 @@ export const useEditPage = (uuid?: API.Case["uuid"]) => {
   })
 
   const handleDelete = useCrudDelete(initialValues, {
-    stateKey: "cases",
+    action: execDelete,
     redirectTo: to("/cases"),
     success: {
       title: "Succesvol verwijderd",

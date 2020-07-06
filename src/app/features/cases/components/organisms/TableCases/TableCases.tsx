@@ -1,12 +1,12 @@
 import React, { useMemo } from "react"
+import { Button } from "@datapunt/asc-ui"
+import { ChevronRight } from "@datapunt/asc-assets/lib"
 
 import to from "app/features/shared/routing/to"
 import Table from "app/features/shared/components/molecules/Table/Table"
 import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
 
-import { useGlobalState } from "app/state/state/globalState"
-import { Button } from "@datapunt/asc-ui"
-import { ChevronRight } from "@datapunt/asc-assets/lib"
+import { useCases } from "app/state/rest/config"
 
 type ButtonProps = {
   href: string
@@ -35,13 +35,13 @@ const mapData = (data: API.Case) => [
 ]
 
 const TableCases: React.FC = () => {
-  const { cases: { data, isFetching } } = useGlobalState()
+  const { data, isBusy } = useCases()
   const mappedData = useMemo(() => data?.map(mapData), [ data ])
 
   return (<Table
     columns={columns}
     data={mappedData}
-    loading={data === undefined || isFetching}
+    loading={data === undefined || isBusy}
     hasFixedColumn={true}
     noValuesPlaceholder={"Er zijn (nog) geen zaken gevonden"}
   />)
