@@ -33,7 +33,11 @@ const ConfirmModal: React.FC<Props> = ({ isOpen, onClose, title, children, okVal
         <Button variant="tertiary" onClick={onClose}>{ cancelValue }</Button>
       </Flex>
       <div>
-        <SpinnerButton onClick={onConfirm} variant="secondary">{ okValue }</SpinnerButton>
+        <SpinnerButton
+          data-e2e-id="confirm"
+          onClick={onConfirm}
+          variant="secondary"
+        >{ okValue }</SpinnerButton>
       </div>
     </ModalBlockFlex>
   </Modal>

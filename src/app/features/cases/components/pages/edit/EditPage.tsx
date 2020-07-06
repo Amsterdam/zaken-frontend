@@ -23,6 +23,7 @@ const EditPage: React.FC<RouteComponentProps<Props>> = ({ uuid }) => {
       <Heading>Aanpassen zaak</Heading>
       <ActionButtonWrap>
         <ConfirmButton
+          data-e2e-id="delete"
           disabled={isLoading}
           onConfirm={handleDelete}
           iconLeft={<TrashBin />}
