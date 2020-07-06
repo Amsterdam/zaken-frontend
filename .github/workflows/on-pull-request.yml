@@ -1,0 +1,26 @@
+# action.yml
+name: 'Lint, test & build'
+on: pull_request
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout frontend
+        uses: actions/checkout@v2
+        with:
+          path: frontend
+
+#      - name: Checkout backend
+#        uses: actions/checkout@v2
+#        with:
+#          repository: amsterdam/zaken-backend
+#          path: backend
+
+#      - name: Start backend
+#        run: frontend/.github/workflows/on-pull-request/start-backend.sh
+
+#      - name: Start frontend
+#        run: frontend/.github/workflows/on-pull-request/start-frontend.sh
+
+      - name: Run tests
+        run: frontend/.github/workflows/on-pull-request/test-frontend.sh
