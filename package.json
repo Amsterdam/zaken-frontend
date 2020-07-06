@@ -35,6 +35,7 @@
   },
   "scripts": {
     "start": "PORT=3001 react-scripts start",
+    "start:ci": "npm run build; live-server ./build --port=3001 --entry-file=./index.html --no-browser --quiet",
     "build": "react-scripts build",
     "test": "react-scripts test --watchAll=false",
     "test:coverage": "react-scripts test --coverage --watchAll=false",
@@ -45,7 +46,8 @@
     "storybook": "start-storybook -p 9009 -s public",
     "storybook:build": "build-storybook -s public",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "cypress:run": "cypress run",
+    "cypress:ci": "start-server-and-test start:ci http://localhost:3001 cypress:run"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -82,8 +84,10 @@
     "enzyme-adapter-react-16": "^1.15.2",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
+    "live-server": "^1.2.1",
     "react-app-polyfill": "^1.0.6",
     "react-docgen-typescript-loader": "^3.7.2",
+    "start-server-and-test": "^1.11.0",
     "ts-loader": "^7.0.5",
     "ts-node": "^8.10.2"
   },
