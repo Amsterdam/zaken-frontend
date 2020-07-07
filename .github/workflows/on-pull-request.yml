@@ -36,4 +36,4 @@ jobs:
 
       - name: Print logs
         if: ${{ always() }}
-        run: docker logs zaken-backend_openzaak.test_1
+        run: docker logs backend_openzaak.test_1

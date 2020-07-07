@@ -31,6 +31,12 @@ echo "----"
 docker-compose exec -T db psql -U postgres -d postgres -c "INSERT INTO vng_api_common_jwtsecret (id, identifier, secret)  VALUES (1, 'client', 'secret_key')"
 
 echo "----"
+echo "docker-compose exec -T db psql -U postgres -d postgres -c \"INSERT INTO notifications_notificationsconfig (id, api_root) VALUES (1, 'https://notificaties-api.vng.cloud/api/v1/')\""
+echo "----"
+docker-compose exec -T db psql -U postgres -d postgres -c "INSERT INTO notifications_notificationsconfig (id, api_root) VALUES (1, 'https://notificaties-api.vng.cloud/api/v1/')"
+
+
+echo "----"
 echo "docker-compose up --detach"
 echo "----"
 docker-compose up --detach
