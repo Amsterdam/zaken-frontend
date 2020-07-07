@@ -29,3 +29,6 @@ jobs:
 
       - name: Run tests
         run: frontend/.github/workflows/on-pull-request/test.sh
+
+      - name: Check running containers again
+        run: docker ps -a        
