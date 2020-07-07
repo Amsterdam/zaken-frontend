@@ -24,5 +24,8 @@ jobs:
         with:
           time: '2m'
 
+      - name: Check running containers
+        run: docker ps -a
+
       - name: Run tests
         run: frontend/.github/workflows/on-pull-request/test.sh
