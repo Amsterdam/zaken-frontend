@@ -31,6 +31,6 @@ echo "----"
 docker-compose exec -T db psql -U postgres -d postgres -c "INSERT INTO vng_api_common_jwtsecret (id, identifier, secret)  VALUES (1, 'client', 'secret_key')"
 
 echo "----"
-echo "docker-compose up"
+echo "docker-compose up --detach"
 echo "----"
-docker-compose up
+docker-compose up --detach
