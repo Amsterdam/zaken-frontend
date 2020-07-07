@@ -6,9 +6,9 @@ cd ./backend
 docker network create fixxx-looplijsten-backend_looplijsten_backend
 
 echo "----"
-echo "docker-compose up --build --detach"
+echo "docker-compose build"
 echo "----"
-docker-compose up --build --detach
+docker-compose build
 
 echo "----"
 echo "docker-compose run --rm openzaak.test python src/manage.py migrate"
@@ -29,3 +29,8 @@ echo "----"
 echo "docker-compose exec -T db psql -U postgres -d postgres -c \"INSERT INTO vng_api_common_jwtsecret (id, identifier, secret)  VALUES (1, 'client', 'secret_key')\""
 echo "----"
 docker-compose exec -T db psql -U postgres -d postgres -c "INSERT INTO vng_api_common_jwtsecret (id, identifier, secret)  VALUES (1, 'client', 'secret_key')"
+
+echo "----"
+echo "docker-compose up"
+echo "----"
+docker-compose up
