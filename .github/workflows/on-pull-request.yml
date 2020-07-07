@@ -31,4 +31,9 @@ jobs:
         run: frontend/.github/workflows/on-pull-request/test.sh
 
       - name: Check running containers again
-        run: docker ps -a        
+        if: ${{ always() }}
+        run: docker ps -a
+
+      - name: Print logs
+        if: ${{ always() }}
+        run: docker logs openzaak.test
