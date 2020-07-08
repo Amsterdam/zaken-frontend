@@ -12,7 +12,7 @@ const url = slashSandwich([
   process.env.REACT_APP_GATEWAY_SCHEMA
 ], { leadingSlash: false })
 
-exec(`dtsgen -o ./src/__generated__/apiSchema.d.ts -n API --url ${ url }`,
+exec(`dtsgen -o ./src/__generated__/apiSchema.d.ts --config ./scripts/src/config/dtsgen.json --url ${ url }`,
   (error, stdout, stderr) => {
     if (error) {
       console.log("ERROR")
