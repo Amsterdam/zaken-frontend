@@ -1,0 +1,21 @@
+# action.yml
+name: 'Install, lint, test & build'
+on: pull_request
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout frontend
+        uses: actions/checkout@v2
+
+      - name: Install node modules
+        run: npm install  
+
+      - name: Lint
+        run: npm run lint
+        
+      - name: Test
+        run: npm run test
+
+      - name: Build
+        run: npm run build
