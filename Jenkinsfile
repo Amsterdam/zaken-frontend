@@ -42,7 +42,7 @@ pipeline {
       //
       // To deploy to production, tag an existing commit (that has already been
       // build) and push the tag.
-      // (looplijsten actually wants to be able to hotfix to production,
+      // (zaken-frontend actually wants to be able to hotfix to production,
       // without passing through acceptance)
       //when { not { buildingTag() } }
 
