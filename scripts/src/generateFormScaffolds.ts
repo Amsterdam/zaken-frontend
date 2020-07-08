@@ -48,4 +48,7 @@ fetchSchema(
     process.env.REACT_APP_GATEWAY_PATH,
     process.env.REACT_APP_GATEWAY_SCHEMA
   ], { leadingSlash: false })
-).then(writeSchemas)
+).then(
+  writeSchemas,
+  () => process.exit(1)
+)

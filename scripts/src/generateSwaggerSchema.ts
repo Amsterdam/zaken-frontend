@@ -17,12 +17,14 @@ exec(`dtsgen -o ./src/__generated__/apiSchema.d.ts -n API --url ${ url }`,
     if (error) {
       console.log("ERROR")
       console.log(error.message)
+      process.exit(1)
       return
     }
 
     if (stderr) {
       console.log("ERROR")
       console.log(stderr)
+      process.exit(1)
       return
     }
 
