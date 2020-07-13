@@ -1,10 +1,22 @@
 import * as Sentry from "@sentry/browser"
 
-export default () => {
-  const environment = process.env.REACT_APP_SENTRY_ENV
-  const dsn = process.env.REACT_APP_SENTRY_DSN
+type Environment = "production" | "acceptance"
 
+const getEnvironment = (): Environment | undefined => {
+  const { hostname } = window.location
+  const environment =
+    hostname === "zaken.amsterdam.nl" ? "production" :
+    hostname === "acc.zaken.amsterdam.nl" ? "acceptance" :
+    undefined
+  return environment
+}
+
+export default () => {
+  // @TODO: Get environment from .env file
+  const environment = getEnvironment()
   if (environment === undefined) return
+
+  const dsn = process.env.REACT_APP_SENTRY_DSN
 
   // @TODO: Pass Git commit hash as third argument
   Sentry.init({
