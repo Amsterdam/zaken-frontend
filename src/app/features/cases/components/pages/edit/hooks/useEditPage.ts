@@ -1,5 +1,5 @@
 import to from "app/features/shared/routing/to"
-import { useCrudUpdate, useCrudDelete } from "app/features/shared/hooks/useCrud/useCrud"
+import { useCrud } from "app/features/shared/hooks/useCrud/useCrud"
 import { useCase, useCases, useCaseStates, useCaseTypes } from "app/state/rest/config"
 
 export const useEditPage = (uuid?: API.Case["uuid"]) => {
@@ -8,7 +8,7 @@ export const useEditPage = (uuid?: API.Case["uuid"]) => {
   const { isBusy: isGettingCaseStatuses } = useCaseStates()
   const { data: initialValues, execPut, execDelete } = useCase(uuid!)
 
-  const handleUpdate = useCrudUpdate({
+  const handleUpdate = useCrud({
     action: execPut,
     redirectTo: to("/cases"),
     success: {
@@ -20,7 +20,7 @@ export const useEditPage = (uuid?: API.Case["uuid"]) => {
     }
   })
 
-  const handleDelete = useCrudDelete(initialValues, {
+  const handleDelete = useCrud({
     action: execDelete,
     redirectTo: to("/cases"),
     success: {

@@ -1,7 +1,9 @@
-import axios, { AxiosResponse, Method } from "axios"
+import axios, { AxiosError, AxiosResponse, Method } from "axios"
 import { useState, useCallback, useEffect } from "react"
+import slashSandwich from "slash-sandwich"
 
 import cache from "./CacheStore"
+import { useFlashMessages } from "../flashMessages/useFlashMessages"
 
 type Config = {
   group: string
@@ -22,7 +24,23 @@ const useApiRequest = <SCHEMA>({ url, group }: Config) => {
   const [ isBusy, setIsBusy ] = useState(false)
   const [ data, setData ] = useState<SCHEMA>()
   const [ error, setError ] = useState()
+  const { addErrorFlashMessage } = useFlashMessages()
 
+  /**
+   * Handle API error
+   */
+  const handleError = useCallback((error: AxiosError) => {
+    const details = error?.response?.data?.detail ?? error.message
+
+    setError(details)
+    addErrorFlashMessage("Oeps er ging iets mis!", `${ details } (URL: ${ error.config.url })`)
+
+    return Promise.reject(details)
+  }, [setError, addErrorFlashMessage])
+
+  /**
+   * Execute API request
+   */
   const exec = useCallback(async (method: Method, payload?: {}) => {
     setIsBusy(true)
 
@@ -33,7 +51,7 @@ const useApiRequest = <SCHEMA>({ url, group }: Config) => {
           // ...no its not! Execute request
           ? api.request<SCHEMA>({
               method,
-              url: `${ process.env.REACT_APP_GATEWAY_HOST }/${ process.env.REACT_APP_GATEWAY_PATH }/${ url }/`,
+              url: slashSandwich([process.env.REACT_APP_GATEWAY, url]),
               data: payload,
               cache: { key: () => group }
           })
@@ -54,12 +72,9 @@ const useApiRequest = <SCHEMA>({ url, group }: Config) => {
 
       return Promise.resolve(response.data)
     } catch(error) {
-      // An error occurred!
-      // Save error-message to state
-      setError(error.message)
-      return Promise.reject(error.message)
+      return handleError(error)
     }
-  }, [ url, group, setData, setIsBusy ])
+  }, [ url, group, setData, setIsBusy, handleError ])
 
   // Syntax sugar for different methods:
   const execGet = useCallback(() => exec("get"), [ exec ])
@@ -76,7 +91,6 @@ const useApiRequest = <SCHEMA>({ url, group }: Config) => {
     data,
     error,
 
-    exec,
     execGet,
     execPost,
     execPut,
