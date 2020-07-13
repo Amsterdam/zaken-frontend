@@ -20,7 +20,7 @@ type Config = {
  * - Adds a flashMessage on either success or server-error
  * - Redirects on success.
  */
-const useCrud = (
+export const useCrud = (
   config: Config
 ) => {
   const {
@@ -30,22 +30,15 @@ const useCrud = (
     error: { title: errorTitle }
   } = config
   const { addSuccessFlashMessage, addErrorFlashMessage } = useFlashMessages()
-
-  const handleAction = action
-
   return useCallback(async (item?) => {
     try {
       // Actually call the action: (either, `update`, `create` or `del`)
-      await handleAction(item)
+      await action(item)
       addSuccessFlashMessage(redirectTo, successTitle, successBody)
       return navigate(redirectTo)
     } catch(e) {
       // Something went wrong! Set flash message
       addErrorFlashMessage(errorTitle, e.detail)
     }
-  }, [handleAction, addSuccessFlashMessage, redirectTo, successTitle, successBody, addErrorFlashMessage, errorTitle])
+  }, [action, addSuccessFlashMessage, redirectTo, successTitle, successBody, addErrorFlashMessage, errorTitle])
 }
-
-export const useCrudUpdate = (config: Config) => useCrud(config)
-export const useCrudCreate = (config: Config) => useCrud(config)
-export const useCrudDelete = (toDelete: any, config: Config) => useCrud(config)

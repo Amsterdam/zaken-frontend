@@ -26,15 +26,21 @@ const useApiRequest = <SCHEMA>({ url, group }: Config) => {
   const [ error, setError ] = useState()
   const { addErrorFlashMessage } = useFlashMessages()
 
+  /**
+   * Handle API error
+   */
   const handleError = useCallback((error: AxiosError) => {
     const details = error?.response?.data?.detail ?? error.message
 
     setError(details)
-    addErrorFlashMessage("Oeps er ging iets mis!", details)
+    addErrorFlashMessage("Oeps er ging iets mis!", `${ details } (URL: ${ error.config.url })`)
 
     return Promise.reject(details)
   }, [setError, addErrorFlashMessage])
 
+  /**
+   * Execute API request
+   */
   const exec = useCallback(async (method: Method, payload?: {}) => {
     setIsBusy(true)
 
@@ -85,7 +91,6 @@ const useApiRequest = <SCHEMA>({ url, group }: Config) => {
     data,
     error,
 
-    exec,
     execGet,
     execPost,
     execPut,
