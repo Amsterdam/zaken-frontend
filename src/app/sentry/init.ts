@@ -1,19 +1,8 @@
 import * as Sentry from "@sentry/browser"
-
-type Environment = "production" | "acceptance"
-
-const getEnvironment = (): Environment | undefined => {
-  const { hostname } = window.location
-  const environment =
-    hostname === "zaken.amsterdam.nl" ? "production" :
-    hostname === "acc.zaken.amsterdam.nl" ? "acceptance" :
-    undefined
-  return environment
-}
+import environment from "../config/environment"
 
 export default () => {
-  // TODO Get environment from .env file
-  const environment = getEnvironment()
+  console.log(environment)
   if (environment === undefined) return
 
   const dsn = process.env.REACT_APP_SENTRY_DSN
