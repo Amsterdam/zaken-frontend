@@ -3,6 +3,10 @@ import ReactDOM from "react-dom"
 import App from "./App"
 import * as serviceWorker from "./serviceWorker"
 
+// Sentry
+import initSentry from "./app/sentry/init"
+initSentry()
+
 ReactDOM.render(
   <React.StrictMode>
     <App />
