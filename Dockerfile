@@ -1,10 +1,14 @@
 FROM node:12 AS builder
 
-ENV DIR /var/www
+ARG COMMIT_HASH
 
+ENV DIR /var/www
 WORKDIR $DIR
+
 COPY . $DIR
+
 RUN npm ci --unsafe-perm .
+RUN echo "REACT_APP_GIT_COMMIT_HASH=$COMMIT_HASH" > .env.production.local
 RUN npm run build
 
 FROM nginx:stable-alpine
