@@ -12,13 +12,13 @@ const getEnvironment = (): Environment | undefined => {
 }
 
 export default () => {
-  // @TODO: Get environment from .env file
+  // TODO Get environment from .env file
   const environment = getEnvironment()
   if (environment === undefined) return
 
   const dsn = process.env.REACT_APP_SENTRY_DSN
 
-  // @TODO: Pass Git commit hash as third argument
+  // TODO Pass Git commit hash as third argument
   Sentry.init({
     dsn,
     environment
