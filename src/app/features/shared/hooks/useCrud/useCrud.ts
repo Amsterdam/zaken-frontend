@@ -29,8 +29,6 @@ const useCrud = (
     success: { title: successTitle, body: successBody },
     error: { title: errorTitle }
   } = config
-
-  const { pathname } = useLocation()
   const { addSuccessFlashMessage, addErrorFlashMessage } = useFlashMessages()
 
   const handleAction = action
@@ -43,9 +41,9 @@ const useCrud = (
       return navigate(redirectTo)
     } catch(e) {
       // Something went wrong! Set flash message
-      addErrorFlashMessage(pathname, errorTitle, e.detail)
+      addErrorFlashMessage(errorTitle, e.detail)
     }
-  }, [handleAction, addSuccessFlashMessage, redirectTo, successTitle, successBody, addErrorFlashMessage, pathname, errorTitle])
+  }, [handleAction, addSuccessFlashMessage, redirectTo, successTitle, successBody, addErrorFlashMessage, errorTitle])
 }
 
 export const useCrudUpdate = (config: Config) => useCrud(config)
