@@ -1,5 +1,6 @@
 import axios, { AxiosResponse, Method } from "axios"
 import { useState, useCallback, useEffect } from "react"
+import slashSandwich from "slash-sandwich"
 
 import cache from "./CacheStore"
 
@@ -33,7 +34,7 @@ const useApiRequest = <SCHEMA>({ url, group }: Config) => {
           // ...no its not! Execute request
           ? api.request<SCHEMA>({
               method,
-              url: `${ process.env.REACT_APP_GATEWAY_HOST }/${ process.env.REACT_APP_GATEWAY_PATH }/${ url }/`,
+              url: slashSandwich([process.env.REACT_APP_GATEWAY, url]),
               data: payload,
               cache: { key: () => group }
           })
