@@ -1,5 +1,5 @@
 import { useCallback } from "react"
-import { navigate, useLocation } from "@reach/router"
+import { navigate } from "@reach/router"
 
 import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
 

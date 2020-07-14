@@ -1,4 +1,5 @@
 module.exports = {
+  plugins: ["unused-imports"],
   extends: [
     "react-app"
   ],
@@ -14,6 +15,7 @@ module.exports = {
     "space-infix-ops": ["error"],
     "semi": ["error", "never"],
     "template-curly-spacing": ["error", "always"],
+    "unused-imports/no-unused-imports": "warn",
 
     "@typescript-eslint/consistent-type-definitions": ["error", "type"],
     "@typescript-eslint/member-delimiter-style": ["error", {
