@@ -2,6 +2,7 @@ import axios, { AxiosError, AxiosResponse, Method } from "axios"
 import { useState, useCallback, useEffect } from "react"
 import slashSandwich from "slash-sandwich"
 
+import { getToken } from "../auth/tokenStore"
 import cache from "./CacheStore"
 import { useFlashMessages } from "../flashMessages/useFlashMessages"
 
@@ -26,6 +27,8 @@ const useApiRequest = <SCHEMA>({ url, group }: Config) => {
   const [ error, setError ] = useState()
   const { addErrorFlashMessage } = useFlashMessages()
 
+  const token = getToken()
+
   /**
    * Handle API error
    */
@@ -33,7 +36,7 @@ const useApiRequest = <SCHEMA>({ url, group }: Config) => {
     const details = error?.response?.data?.detail ?? error.message
 
     setError(details)
-    addErrorFlashMessage("Oeps er ging iets mis!", `${ details } (URL: ${ error.config.url })`)
+    addErrorFlashMessage("Oeps er ging iets mis!", `${ details } (URL: ${ error?.config?.url })`)
 
     return Promise.reject(details)
   }, [setError, addErrorFlashMessage])
@@ -45,11 +48,16 @@ const useApiRequest = <SCHEMA>({ url, group }: Config) => {
     setIsBusy(true)
 
     try {
+      const headers = {
+        Authorization: `Bearer ${ token }`
+      }
+
       const promise: Promise<AxiosResponse<SCHEMA>> =
         // Is this request pending already?
         pending[url] === undefined
           // ...no its not! Execute request
           ? api.request<SCHEMA>({
+              headers,
               method,
               url: slashSandwich([process.env.REACT_APP_GATEWAY, url]),
               data: payload,
@@ -74,7 +82,7 @@ const useApiRequest = <SCHEMA>({ url, group }: Config) => {
     } catch(error) {
       return handleError(error)
     }
-  }, [ url, group, setData, setIsBusy, handleError ])
+  }, [ url, group, token, setData, setIsBusy, handleError ])
 
   // Syntax sugar for different methods:
   const execGet = useCallback(() => exec("get"), [ exec ])
