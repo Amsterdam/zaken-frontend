@@ -1,5 +1,5 @@
-import axios, { AxiosError, AxiosResponse, Method } from "axios"
-import { useState, useCallback, useEffect } from "react"
+import axios, { AxiosError, AxiosResponse, CancelTokenSource, Method } from "axios"
+import { useState, useCallback, useEffect, useRef } from "react"
 import slashSandwich from "slash-sandwich"
 
 import { getToken } from "../auth/tokenStore"
@@ -27,7 +27,11 @@ const useApiRequest = <SCHEMA>({ url, group }: Config) => {
   const [ error, setError ] = useState()
   const { addErrorFlashMessage } = useFlashMessages()
 
-  const token = getToken()
+  // Collect cancel tokens, but keep them within a reference to be able to use them in a useEffect
+  const cancelTokens = useRef<CancelTokenSource[]>([])
+
+  // Get authorization token from localStorage
+  const authorizationToken = getToken()
 
   /**
    * Handle API error
@@ -48,8 +52,12 @@ const useApiRequest = <SCHEMA>({ url, group }: Config) => {
     setIsBusy(true)
 
     try {
+      // collect cancelTokens, we want to be able to cancel all requests on unMount.
+      const cancelToken = axios.CancelToken.source()
+      cancelTokens.current.push(cancelToken)
+
       const headers = {
-        Authorization: `Bearer ${ token }`
+        Authorization: `Bearer ${ authorizationToken }`
       }
 
       const promise: Promise<AxiosResponse<SCHEMA>> =
@@ -61,7 +69,8 @@ const useApiRequest = <SCHEMA>({ url, group }: Config) => {
               method,
               url: slashSandwich([process.env.REACT_APP_GATEWAY, url]),
               data: payload,
-              cache: { key: () => group }
+              cache: { key: () => group },
+              cancelToken: cancelToken.token
           })
           // ...yes it is, return the already pending request...
           : pending[url]
@@ -80,9 +89,11 @@ const useApiRequest = <SCHEMA>({ url, group }: Config) => {
 
       return Promise.resolve(response.data)
     } catch(error) {
-      return handleError(error)
+      if (!axios.isCancel(error)) {
+        return handleError(error)
+      }
     }
-  }, [ url, group, token, setData, setIsBusy, handleError ])
+  }, [ url, group, authorizationToken, setData, setIsBusy, handleError, cancelTokens ])
 
   // Syntax sugar for different methods:
   const execGet = useCallback(() => exec("get"), [ exec ])
@@ -93,6 +104,9 @@ const useApiRequest = <SCHEMA>({ url, group }: Config) => {
 
   // onMount, execute get:
   useEffect(() => { execGet() }, [ execGet ])
+
+  // onUnmount, cancel tokens:
+  useEffect(() => () => { cancelTokens.current.forEach(_ => _.cancel()) }, [ cancelTokens ])
 
   return {
     isBusy,
