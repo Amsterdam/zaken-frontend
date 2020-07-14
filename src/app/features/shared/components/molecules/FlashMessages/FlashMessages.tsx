@@ -11,6 +11,7 @@ const FlashMessages: React.FC = () => {
   return (
     <>
       {state[pathname] && state[pathname].map((props, index) => <Alert key={index} {...props} />)}
+      {state["current"] && state["current"].map((props, index) => <Alert key={index} {...props} />)}
     </>
   )
 }

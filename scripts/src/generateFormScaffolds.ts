@@ -2,8 +2,8 @@
 import fs from "fs"
 import { config } from "dotenv-flow"
 import { fetchSchema, getSchemaObjects, parseOpenApiSchema } from "amsterdam-scaffold-form"
+import slashSandwich from "slash-sandwich"
 
-import { slashSandwich } from "./utils/url.utils"
 
 // Loads .env.development or .env.production based on NODE_ENV
 config()
@@ -43,11 +43,7 @@ const writeSchemas = (schema: any) => {
 }
 
 fetchSchema(
-  slashSandwich([
-    process.env.REACT_APP_GATEWAY_HOST,
-    process.env.REACT_APP_GATEWAY_PATH,
-    process.env.REACT_APP_GATEWAY_SCHEMA
-  ], { leadingSlash: false })
+  slashSandwich([process.env.REACT_APP_GATEWAY, "schema"])
 ).then(
   writeSchemas,
   () => process.exit(1)

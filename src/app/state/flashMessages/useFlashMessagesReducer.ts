@@ -20,6 +20,7 @@ export const reducer = produce((draft, action: Action) => {
       break
     case "clear":
       delete draft[action.path]
+      delete draft["current"]
       break
   }
 })
@@ -45,8 +46,8 @@ export const useFlashMessagesReducer = () => {
   )
 
   const addErrorFlashMessage = useCallback(
-    (path: string, title: string, body?: string | JSX.Element) => dispatch({
-      path,
+    (title: string, body?: string | JSX.Element) => dispatch({
+      path: "current",
       type: "add",
       props: { title, children: body, variant: "error" }
     }),
