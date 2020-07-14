@@ -17,13 +17,18 @@ const CallbackPage: React.FC = () => {
   const { code } = qs.parse(search, { ignoreQueryPrefix: true })
 
   useEffect(() => {
+    const cancelToken = axios.CancelToken.source()
+
     axios
-      .post(OIDCAuthUrl, { code })
+      .post(OIDCAuthUrl, { code }, { cancelToken: cancelToken.token })
       .then(response => {
         setToken(response.data.access)
         return navigate(to("/"))
       })
       .catch(error => console.log("Something went wrong", error))
+
+    // Cancel request onUnmount
+    return () => cancelToken.cancel()
   }, [ code ])
 
   return null

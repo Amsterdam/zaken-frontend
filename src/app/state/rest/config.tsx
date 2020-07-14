@@ -19,7 +19,7 @@ export const useCase = (uuid: string) =>
 export const useCaseTypes = () =>
   useApiRequest<API.CaseType[]>({
     url: "case-types",
-    group: "cases-types"
+    group: "case-types"
   })
 
 export const useCaseStates = () =>

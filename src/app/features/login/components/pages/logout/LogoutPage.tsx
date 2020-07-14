@@ -6,11 +6,23 @@ import { clearToken } from "app/state/auth/tokenStore"
 
 const LogoutPage: React.FC = () => {
   useEffect(() => {
-    clearToken()
-    navigate(to("/login"))
+    (async () => {
+      clearToken()
+
+      // TODO enable when GRIP is enabled for zaken.
+      // try {
+      //   await axios.request({
+      //     method: "get",
+      //     url: process.env.REACT_APP_AUTH_LOGOUT_URL,
+      //     headers: { mode: "no-cors", credentials: "include" }
+      //   })
+      // } finally {
+        await navigate(to("/login"))
+      // }
+    })()
   }, [])
 
-  return <></>
+  return null
 }
 
 export default LogoutPage

@@ -1,8 +1,8 @@
 import axios, { AxiosError, AxiosResponse, Method } from "axios"
 import { useState, useCallback, useEffect } from "react"
 import slashSandwich from "slash-sandwich"
-import { getToken } from "../auth/tokenStore"
 
+import { getToken } from "../auth/tokenStore"
 import cache from "./CacheStore"
 import { useFlashMessages } from "../flashMessages/useFlashMessages"
 

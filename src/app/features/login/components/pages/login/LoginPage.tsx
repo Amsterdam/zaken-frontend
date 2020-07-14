@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { themeSpacing, Button } from "@datapunt/asc-ui"
 
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
-import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
+
 
 const CenterWrap = styled.div`
   margin-top: ${ themeSpacing(50) };
@@ -15,11 +15,9 @@ const authUrl = process.env.REACT_APP_AUTH_URL ?? ""
 const LoginPage: React.FC = () => (
     <DefaultLayout>
       <CenterWrap>
-        <ButtonLink to={ authUrl }>
-          <Button variant="primaryInverted">
-            Log in met je ADW account
-          </Button>
-        </ButtonLink>
+        <Button as="a" href={authUrl} variant="primaryInverted">
+          Log in met je ADW account
+        </Button>
       </CenterWrap>
     </DefaultLayout>
   )
