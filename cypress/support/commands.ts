@@ -24,12 +24,23 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
+
 /**
  * Performs a API request to start again with a clean slate
  */
 Cypress.Commands.add("cleanDatabase", () => {
   cy.log("Cleaning database and generating mock data...")
-  return cy.request(`${ Cypress.env("CYPRESS_BACKEND_HOST") }/api/v1/generate-mock`)
+
+  return cy
+    .request("POST", `${ Cypress.env("CYPRESS_BACKEND_HOST") }/api/v1/oidc-authenticate/`, { code: "dummy-code" })
+    .then(response => {
+      const bearer = response.body.access
+      window.localStorage.setItem("zaken-authtoken", bearer)
+      return cy.request({
+        url: `${ Cypress.env("CYPRESS_BACKEND_HOST") }/api/v1/generate-mock`,
+        auth: { bearer }
+      })
+    })
 })
 
 /**
@@ -70,8 +81,11 @@ Cypress.Commands.add("getSubmitButton", () => cy.get("[data-e2e-id=\"submit\"]")
  * Directly posts something to the backend
  */
 Cypress.Commands.add("postToAPI", (path: string, body: {}) =>
-  cy.request("POST", `${ Cypress.env("CYPRESS_BACKEND_HOST") }/api/v1/${ path }`, body)
-)
-
+  cy.request({
+    method: "POST",
+    url: `${ Cypress.env("CYPRESS_BACKEND_HOST") }/api/v1/${ path }`,
+    auth: { bearer: window.localStorage.getItem("zaken-authtoken") },
+    body
+  }))
 
 export default {}
