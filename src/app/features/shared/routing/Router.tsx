@@ -4,7 +4,7 @@ import { Router as ReachRouter } from "@reach/router"
 import routes from "app/config/routes"
 import ProtectedRoute from "./components/ProtectedRoute"
 
-const allowList = /^\/login|^\/logout/
+const allowList = /^\/login|^\/authentication/
 
 const Router: React.FC = () => (
   <ReachRouter>

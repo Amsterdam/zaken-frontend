@@ -4,6 +4,6 @@ import LogoutPage from "./components/pages/logout/LogoutPage"
 
 export default {
   "/login": LoginPage,
-  "/login/callback": CallbackPage,
+  "/authentication/callback": CallbackPage,
   "/logout": LogoutPage
 }
