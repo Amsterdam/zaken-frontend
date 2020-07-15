@@ -12,8 +12,11 @@ const CaseStatusField: React.FC<CaseStatusFieldProps> = (props) => {
   const { data } = useCaseStates()
 
   return (
-    <ComplexSelectField<API.State>
-      options={data ?? []}
+
+    // TODO fix when API.CaseState is reintroduced
+    //<ComplexSelectField<API.State>
+    <ComplexSelectField<{ statustoelichting: "string" }>
+      options={data?.results ?? []}
       optionLabelField="statustoelichting"
       withEmptyOption={true}
       {...props}

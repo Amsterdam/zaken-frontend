@@ -1,119 +1,31 @@
 {
   "fields": {
-    "url": {
-      "type": "TextField",
+    "id": {
+      "type": "NumberField",
       "props": {
-        "type": "text",
         "position": {},
-        "name": "url",
-        "label": "Url",
+        "name": "id",
+        "label": "Id",
         "disabled": true
       }
     },
-    "uuid": {
-      "type": "TextField",
+    "case_type_id": {
+      "type": "NumberField",
       "props": {
-        "type": "text",
         "position": {},
-        "name": "uuid",
-        "label": "Uuid",
+        "name": "case_type.id",
+        "label": "Id",
         "disabled": true
       }
     },
-    "identificatie": {
+    "case_type_name": {
       "type": "TextField",
       "props": {
         "type": "text",
         "position": {},
-        "name": "identificatie",
-        "label": "Identificatie",
-        "disabled": true
-      }
-    },
-    "omschrijving": {
-      "type": "TextField",
-      "props": {
-        "type": "text",
-        "position": {},
-        "name": "omschrijving",
-        "label": "Omschrijving",
+        "name": "case_type.name",
+        "label": "Name",
         "isRequired": true
-      }
-    },
-    "toelichting": {
-      "type": "TextField",
-      "props": {
-        "type": "text",
-        "position": {},
-        "name": "toelichting",
-        "label": "Toelichting"
-      }
-    },
-    "startdatum": {
-      "type": "TextField",
-      "props": {
-        "type": "date",
-        "position": {},
-        "name": "startdatum",
-        "label": "Startdatum",
-        "isRequired": true
-      }
-    },
-    "einddatum": {
-      "type": "TextField",
-      "props": {
-        "type": "date",
-        "position": {},
-        "name": "einddatum",
-        "label": "Einddatum"
-      }
-    },
-    "status": {
-      "type": "TextField",
-      "props": {
-        "position": {},
-        "name": "status",
-        "label": "Status",
-        "disabled": true
-      }
-    },
-    "bronorganisatie": {
-      "type": "TextField",
-      "props": {
-        "type": "text",
-        "position": {},
-        "name": "bronorganisatie",
-        "label": "Bronorganisatie",
-        "disabled": true
-      }
-    },
-    "verantwoordelijkeOrganisatie": {
-      "type": "TextField",
-      "props": {
-        "type": "text",
-        "position": {},
-        "name": "verantwoordelijkeOrganisatie",
-        "label": "Verantwoordelijke organisatie",
-        "disabled": true
-      }
-    },
-    "zaaktype": {
-      "type": "TextField",
-      "props": {
-        "type": "text",
-        "position": {},
-        "name": "zaaktype",
-        "label": "Zaaktype",
-        "isRequired": true
-      }
-    },
-    "debug": {
-      "type": "TextField",
-      "props": {
-        "position": {},
-        "name": "debug",
-        "label": "Debug",
-        "disabled": true
       }
     },
     "submit": {
@@ -121,6 +33,119 @@
       "props": {
         "align": "right",
         "label": "Opslaan"
+      }
+    },
+    "address_id": {
+      "type": "NumberField",
+      "props": {
+        "position": {},
+        "name": "address.id",
+        "label": "Id",
+        "disabled": true
+      }
+    },
+    "address_bag_id": {
+      "type": "TextField",
+      "props": {
+        "type": "text",
+        "position": {},
+        "name": "address.bag_id",
+        "label": "Bag id",
+        "isRequired": true
+      }
+    },
+    "address_street_name": {
+      "type": "TextField",
+      "props": {
+        "type": "text",
+        "position": {},
+        "name": "address.street_name",
+        "label": "Street name",
+        "disabled": true
+      }
+    },
+    "address_number": {
+      "type": "NumberField",
+      "props": {
+        "position": {},
+        "name": "address.number",
+        "label": "Number",
+        "disabled": true
+      }
+    },
+    "address_suffix_letter": {
+      "type": "TextField",
+      "props": {
+        "type": "text",
+        "position": {},
+        "name": "address.suffix_letter",
+        "label": "Suffix letter",
+        "disabled": true
+      }
+    },
+    "address_suffix": {
+      "type": "TextField",
+      "props": {
+        "type": "text",
+        "position": {},
+        "name": "address.suffix",
+        "label": "Suffix",
+        "disabled": true
+      }
+    },
+    "address_postal_code": {
+      "type": "TextField",
+      "props": {
+        "type": "text",
+        "position": {},
+        "name": "address.postal_code",
+        "label": "Postal code",
+        "disabled": true
+      }
+    },
+    "address_lat": {
+      "type": "NumberField",
+      "props": {
+        "position": {},
+        "name": "address.lat",
+        "label": "Lat",
+        "disabled": true
+      }
+    },
+    "address_lng": {
+      "type": "NumberField",
+      "props": {
+        "position": {},
+        "name": "address.lng",
+        "label": "Lng",
+        "disabled": true
+      }
+    },
+    "identification": {
+      "type": "TextField",
+      "props": {
+        "type": "text",
+        "position": {},
+        "name": "identification",
+        "label": "Identification"
+      }
+    },
+    "start_date": {
+      "type": "TextField",
+      "props": {
+        "type": "date",
+        "position": {},
+        "name": "start_date",
+        "label": "Start date"
+      }
+    },
+    "end_date": {
+      "type": "TextField",
+      "props": {
+        "type": "date",
+        "position": {},
+        "name": "end_date",
+        "label": "End date"
       }
     }
   },

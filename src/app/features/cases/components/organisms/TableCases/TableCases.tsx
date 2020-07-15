@@ -20,23 +20,19 @@ const columns = [
   { header:"Startdatum", minWidth: 100 },
   { header:"Einddatum", minWidth: 100 },
   { header:"Adres", minWidth: 300 },
-  { header:"Status", minWidth: 300 },
-  { header:"Projectnaam", minWidth: 300 },
   { minWidth: 90 }
 ]
 
 const mapData = (data: API.Case) => [
-  data.startdatum,
-  data.einddatum ?? "-",
-  data.toelichting ?? "-",
-  data?.status?.statustoelichting ?? "-",
-  data.omschrijving,
-  <OpenButton href={to("/cases/:uuid", { uuid: data.uuid })} />
+  data.start_date ?? "-",
+  data.end_date ?? "-",
+  data.address.street_name ?? "-",
+  <OpenButton href={to("/cases/:id", { id: data.id })} />
 ]
 
 const TableCases: React.FC = () => {
   const { data, isBusy } = useCases()
-  const mappedData = useMemo(() => data?.map(mapData), [ data ])
+  const mappedData = useMemo(() => data?.results?.map(mapData), [ data ])
 
   return (<Table
     columns={columns}
