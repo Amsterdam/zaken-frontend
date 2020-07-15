@@ -12,11 +12,11 @@ import Form from "app/features/cases/components/organisms/Form/Form"
 import { useEditPage } from "./hooks/useEditPage"
 
 type Props = {
-  uuid: API.Case["uuid"]
+  id: API.Case["id"]
 }
 
-const EditPage: React.FC<RouteComponentProps<Props>> = ({ uuid }) => {
-  const { handleDelete, initialValues, isLoading, handleUpdate } = useEditPage(uuid)
+const EditPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
+  const { handleDelete, initialValues, isLoading, handleUpdate } = useEditPage(id)
 
   return (
     <DefaultLayout>

@@ -8,5 +8,5 @@ export default {
   "/": HomePage,
   "/cases": IndexPage,
   "/cases/create": CreatePage,
-  "/cases/:uuid": EditPage
+  "/cases/:id": EditPage
 }

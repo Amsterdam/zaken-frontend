@@ -1,107 +1,93 @@
 declare namespace API {
-    export type Case = {
-        readonly url: string // uri ^(?:[a-z0-9\.\-\+]*)://(?:[^\s:@/]+(?::[^\s:@/]*)?@)?(?:(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)(?:\.(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)){3}|\[[0-9a-f:\.]+\]|([a-z¡-￿0-9](?:[a-z¡-￿0-9-]{0,61}[a-z¡-￿0-9])?(?:\.(?!-)[a-z¡-￿0-9-]{1,63}(?<!-))*\.(?!-)(?:[a-z¡-￿-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\.?|localhost))(?::\d{2,5})?(?:[/?#][^\s]*)?\Z
-        readonly uuid: string
-        readonly identificatie: string
-        omschrijving: string
-        toelichting?: string
-        startdatum: string // date
-        einddatum?: string // date
-        readonly status: {
-            [name: string]: any
-        }
-        readonly bronorganisatie: string
-        readonly verantwoordelijkeOrganisatie: string
-        zaaktype: string // uri ^(?:[a-z0-9\.\-\+]*)://(?:[^\s:@/]+(?::[^\s:@/]*)?@)?(?:(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)(?:\.(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)){3}|\[[0-9a-f:\.]+\]|([a-z¡-￿0-9](?:[a-z¡-￿0-9-]{0,61}[a-z¡-￿0-9])?(?:\.(?!-)[a-z¡-￿0-9-]{1,63}(?<!-))*\.(?!-)(?:[a-z¡-￿-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\.?|localhost))(?::\d{2,5})?(?:[/?#][^\s]*)?\Z
-        readonly debug: {
-            [name: string]: any
-        }
+    export type Address = {
+        readonly id: number
+        bag_id: string
+        readonly street_name: string
+        readonly number: number
+        readonly suffix_letter: string
+        readonly suffix: string
+        readonly postal_code: string
+        readonly lat: number // float
+        readonly lng: number // float
     }
-    export type CaseObject = {
-        readonly url: string // uri ^(?:[a-z0-9\.\-\+]*)://(?:[^\s:@/]+(?::[^\s:@/]*)?@)?(?:(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)(?:\.(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)){3}|\[[0-9a-f:\.]+\]|([a-z¡-￿0-9](?:[a-z¡-￿0-9-]{0,61}[a-z¡-￿0-9])?(?:\.(?!-)[a-z¡-￿0-9-]{1,63}(?<!-))*\.(?!-)(?:[a-z¡-￿-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\.?|localhost))(?::\d{2,5})?(?:[/?#][^\s]*)?\Z
-        readonly uuid: string
-        readonly zaakUuid: string
-        zaak: string // uri ^(?:[a-z0-9\.\-\+]*)://(?:[^\s:@/]+(?::[^\s:@/]*)?@)?(?:(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)(?:\.(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)){3}|\[[0-9a-f:\.]+\]|([a-z¡-￿0-9](?:[a-z¡-￿0-9-]{0,61}[a-z¡-￿0-9])?(?:\.(?!-)[a-z¡-￿0-9-]{1,63}(?<!-))*\.(?!-)(?:[a-z¡-￿-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\.?|localhost))(?::\d{2,5})?(?:[/?#][^\s]*)?\Z
-        object: string // uri ^(?:[a-z0-9\.\-\+]*)://(?:[^\s:@/]+(?::[^\s:@/]*)?@)?(?:(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)(?:\.(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)){3}|\[[0-9a-f:\.]+\]|([a-z¡-￿0-9](?:[a-z¡-￿0-9-]{0,61}[a-z¡-￿0-9])?(?:\.(?!-)[a-z¡-￿0-9-]{1,63}(?<!-))*\.(?!-)(?:[a-z¡-￿-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\.?|localhost))(?::\d{2,5})?(?:[/?#][^\s]*)?\Z
-        objectType: string
+    export type Case = {
+        readonly id: number
+        case_type: CaseType
+        address: Address
+        identification?: string | null
+        start_date?: string | null // date
+        end_date?: string | null // date
     }
     export type CaseType = {
-        readonly url: string // uri ^(?:[a-z0-9\.\-\+]*)://(?:[^\s:@/]+(?::[^\s:@/]*)?@)?(?:(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)(?:\.(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)){3}|\[[0-9a-f:\.]+\]|([a-z¡-￿0-9](?:[a-z¡-￿0-9-]{0,61}[a-z¡-￿0-9])?(?:\.(?!-)[a-z¡-￿0-9-]{1,63}(?<!-))*\.(?!-)(?:[a-z¡-￿-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\.?|localhost))(?::\d{2,5})?(?:[/?#][^\s]*)?\Z
-        readonly uuid: string
-        readonly omschrijving: string
-        readonly doel: string
-        readonly aanleiding: string
-        readonly onderwerp: string
+        readonly id: number
+        name: string
     }
-    export type Catalog = {
-        readonly url: string // uri ^(?:[a-z0-9\.\-\+]*)://(?:[^\s:@/]+(?::[^\s:@/]*)?@)?(?:(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)(?:\.(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)){3}|\[[0-9a-f:\.]+\]|([a-z¡-￿0-9](?:[a-z¡-￿0-9-]{0,61}[a-z¡-￿0-9])?(?:\.(?!-)[a-z¡-￿0-9-]{1,63}(?<!-))*\.(?!-)(?:[a-z¡-￿-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\.?|localhost))(?::\d{2,5})?(?:[/?#][^\s]*)?\Z
-        readonly uuid: string
+    export type OIDCAuthenticate = {
+        code: string
     }
-    export type Push = {
-        identificatie: string
-        omschrijving: string
-        toelichting: string
-        startdatum: string // date
-        einddatum?: string // date
+    export type PatchedAddress = {
+        readonly id?: number
+        bag_id?: string
+        readonly street_name?: string
+        readonly number?: number
+        readonly suffix_letter?: string
+        readonly suffix?: string
+        readonly postal_code?: string
+        readonly lat?: number // float
+        readonly lng?: number // float
     }
-    export type PushCheckAction = {
-        identificatie: string
-        check_actie: boolean
+    export type PatchedCase = {
+        readonly id?: number
+        case_type?: PatchedCaseType
+        address?: PatchedAddress
+        identification?: string | null
+        start_date?: string | null // date
+        end_date?: string | null // date
     }
-    export type State = {
-        readonly url: string // uri ^(?:[a-z0-9\.\-\+]*)://(?:[^\s:@/]+(?::[^\s:@/]*)?@)?(?:(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)(?:\.(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)){3}|\[[0-9a-f:\.]+\]|([a-z¡-￿0-9](?:[a-z¡-￿0-9-]{0,61}[a-z¡-￿0-9])?(?:\.(?!-)[a-z¡-￿0-9-]{1,63}(?<!-))*\.(?!-)(?:[a-z¡-￿-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\.?|localhost))(?::\d{2,5})?(?:[/?#][^\s]*)?\Z
-        readonly uuid: string
-        readonly datumStatusGezet: string // date
-        zaak: string // uri ^(?:[a-z0-9\.\-\+]*)://(?:[^\s:@/]+(?::[^\s:@/]*)?@)?(?:(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)(?:\.(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)){3}|\[[0-9a-f:\.]+\]|([a-z¡-￿0-9](?:[a-z¡-￿0-9-]{0,61}[a-z¡-￿0-9])?(?:\.(?!-)[a-z¡-￿0-9-]{1,63}(?<!-))*\.(?!-)(?:[a-z¡-￿-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\.?|localhost))(?::\d{2,5})?(?:[/?#][^\s]*)?\Z
-        statustype: string // uri ^(?:[a-z0-9\.\-\+]*)://(?:[^\s:@/]+(?::[^\s:@/]*)?@)?(?:(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)(?:\.(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)){3}|\[[0-9a-f:\.]+\]|([a-z¡-￿0-9](?:[a-z¡-￿0-9-]{0,61}[a-z¡-￿0-9])?(?:\.(?!-)[a-z¡-￿0-9-]{1,63}(?<!-))*\.(?!-)(?:[a-z¡-￿-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\.?|localhost))(?::\d{2,5})?(?:[/?#][^\s]*)?\Z
-        statustoelichting?: string
-    }
-    export type StateType = {
-        readonly url: string // uri ^(?:[a-z0-9\.\-\+]*)://(?:[^\s:@/]+(?::[^\s:@/]*)?@)?(?:(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)(?:\.(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)){3}|\[[0-9a-f:\.]+\]|([a-z¡-￿0-9](?:[a-z¡-￿0-9-]{0,61}[a-z¡-￿0-9])?(?:\.(?!-)[a-z¡-￿0-9-]{1,63}(?<!-))*\.(?!-)(?:[a-z¡-￿-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\.?|localhost))(?::\d{2,5})?(?:[/?#][^\s]*)?\Z
-        statustekst: string
-        omschrijving: string
-        readonly uuid: string
-        zaaktype: string
-        volgnummer: number
+    export type PatchedCaseType = {
+        readonly id?: number
+        name?: string
     }
 }
 declare namespace Paths {
-    namespace CaseObjectsCreate {
-        export type RequestBody = API.CaseObject;
-        namespace Responses {
-            export type $200 = API.CaseObject;
-        }
-    }
-    namespace CaseObjectsList {
-        namespace Responses {
-            export type $200 = API.CaseObject[];
-        }
-    }
-    namespace CaseObjectsRetrieve {
+    namespace AddressesList {
         namespace Parameters {
-            export type Uuid = string;
+            export type Page = number;
         }
-        export type PathParameters = {
-            uuid: Parameters.Uuid
+        export type QueryParameters = {
+            page?: Parameters.Page
         }
         namespace Responses {
-            export type $200 = API.CaseObject;
+            export type $200 = {
+                /**
+                 * example:
+                 * 123
+                 */
+                count?: number
+                next?: string | null
+                previous?: string | null
+                results?: API.Address[]
+            }
         }
     }
     namespace CaseTypesList {
-        namespace Responses {
-            export type $200 = API.CaseType[];
-        }
-    }
-    namespace CaseTypesRetrieve {
         namespace Parameters {
-            export type Uuid = string;
+            export type Page = number;
         }
-        export type PathParameters = {
-            uuid: Parameters.Uuid
+        export type QueryParameters = {
+            page?: Parameters.Page
         }
         namespace Responses {
-            export type $200 = API.CaseType;
+            export type $200 = {
+                /**
+                 * example:
+                 * 123
+                 */
+                count?: number
+                next?: string | null
+                previous?: string | null
+                results?: API.CaseType[]
+            }
         }
     }
     namespace CasesCreate {
@@ -112,10 +98,10 @@ declare namespace Paths {
     }
     namespace CasesDestroy {
         namespace Parameters {
-            export type Uuid = string;
+            export type Id = number;
         }
         export type PathParameters = {
-            uuid: Parameters.Uuid
+            id: Parameters.Id
         }
         namespace Responses {
             export type $204 = {
@@ -123,16 +109,43 @@ declare namespace Paths {
         }
     }
     namespace CasesList {
+        namespace Parameters {
+            export type Page = number;
+        }
+        export type QueryParameters = {
+            page?: Parameters.Page
+        }
         namespace Responses {
-            export type $200 = API.Case[];
+            export type $200 = {
+                /**
+                 * example:
+                 * 123
+                 */
+                count?: number
+                next?: string | null
+                previous?: string | null
+                results?: API.Case[]
+            }
+        }
+    }
+    namespace CasesPartialUpdate {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export type PathParameters = {
+            id: Parameters.Id
+        }
+        export type RequestBody = API.PatchedCase;
+        namespace Responses {
+            export type $200 = API.Case;
         }
     }
     namespace CasesRetrieve {
         namespace Parameters {
-            export type Uuid = string;
+            export type Id = number;
         }
         export type PathParameters = {
-            uuid: Parameters.Uuid
+            id: Parameters.Id
         }
         namespace Responses {
             export type $200 = API.Case;
@@ -140,59 +153,32 @@ declare namespace Paths {
     }
     namespace CasesUpdate {
         namespace Parameters {
-            export type Uuid = string;
+            export type Id = number;
         }
         export type PathParameters = {
-            uuid: Parameters.Uuid
+            id: Parameters.Id
         }
         export type RequestBody = API.Case;
         namespace Responses {
             export type $200 = API.Case;
         }
     }
-    namespace CatalogsList {
+    namespace GenerateMockRetrieve {
         namespace Responses {
-            export type $200 = API.Catalog[];
-        }
-    }
-    namespace CatalogsRetrieve {
-        namespace Parameters {
-            export type Uuid = string;
-        }
-        export type PathParameters = {
-            uuid: Parameters.Uuid
-        }
-        namespace Responses {
-            export type $200 = API.Catalog;
-        }
-    }
-    namespace GenerateMockDeleteDestroy {
-        namespace Responses {
-            /**
-             * Unspecified response body
-             */
             export type $200 = {
-                [name: string]: any
             }
         }
     }
-    namespace GenerateMockList {
+    namespace IsAuthenticatedRetrieve {
         namespace Responses {
             export type $200 = {
-                [name: string]: any
-            }[];
+            }
         }
     }
-    namespace PushCheckActionCreate {
-        export type RequestBody = API.PushCheckAction;
+    namespace OidcAuthenticateCreate {
+        export type RequestBody = API.OIDCAuthenticate;
         namespace Responses {
-            export type $200 = API.PushCheckAction;
-        }
-    }
-    namespace PushCreate {
-        export type RequestBody = API.Push;
-        namespace Responses {
-            export type $200 = API.Push;
+            export type $200 = API.OIDCAuthenticate;
         }
     }
     namespace SchemaRetrieve {
@@ -200,44 +186,6 @@ declare namespace Paths {
             export type $200 = {
                 [name: string]: any
             }
-        }
-    }
-    namespace StateTypesList {
-        namespace Responses {
-            export type $200 = API.StateType[];
-        }
-    }
-    namespace StateTypesRetrieve {
-        namespace Parameters {
-            export type Uuid = string;
-        }
-        export type PathParameters = {
-            uuid: Parameters.Uuid
-        }
-        namespace Responses {
-            export type $200 = API.StateType;
-        }
-    }
-    namespace StatesCreate {
-        export type RequestBody = API.State;
-        namespace Responses {
-            export type $200 = API.State;
-        }
-    }
-    namespace StatesList {
-        namespace Responses {
-            export type $200 = API.State[];
-        }
-    }
-    namespace StatesRetrieve {
-        namespace Parameters {
-            export type Uuid = string;
-        }
-        export type PathParameters = {
-            uuid: Parameters.Uuid
-        }
-        namespace Responses {
-            export type $200 = API.State;
         }
     }
 }
