@@ -8,8 +8,10 @@ import { Fields } from "app/features/shared/components/molecules/Form/ScaffoldFi
 const fields = produce(PUTCases.fields, ({ start_date, end_date, case_type_id, address_bag_id, submit }) => ({
   start_date,
   end_date,
-  case_type: { type: "CaseTypeField", props: { label: "Zaaktype", name: "case_type" } },
-  address_bag_id,
+  // TODO should be generated
+  case_type: { type: "CaseTypeField", props: { label: "Zaaktype", name: "case_type", id: "case_type" } },
+  // TODO make BAG picker
+  address_bag_id: { ...address_bag_id, props: {  ...address_bag_id.props, id: "address" } },
   submit
 }))
 

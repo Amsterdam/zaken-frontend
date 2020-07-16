@@ -1,26 +1,25 @@
 export default context("Cases", () => {
   const apiFixture = {
-    startdatum: "2020-02-02",
-    einddatum: "2019-01-01",
-    zaaktype: "",
-    toelichting: "API boulevard 12, 9999ZZ",
-    omschrijving: "Already added"
+    start_date: "2020-02-02",
+    end_date: "2019-01-01",
+    case_type: null,
+    address: { bag_id: "Some other sort of ID" }
   }
 
   const browserFixture = {
-    startdatum: "2019-01-01",
-    einddatum:  "2019-02-03",
-    zaaktype: "Illegale vakantieverhuur",
-    toelichting: "Teststraat 1, 1111AA",
-    omschrijving: "End to end test"
+    start_date: "2019-01-01",
+    end_date:  "2019-02-03",
+    case_type: "Safari",
+    address: "Some sort of ID"
   }
 
   beforeEach(() => {
-    cy.cleanDatabase()
+    cy
+      .cleanDatabase()
       .then((response: any) => {
         // After cleaning the database, a new case_type URL is generated.
         // We need it to be able to programmatically create a case
-        apiFixture.zaaktype = response.body.case_type.url
+        apiFixture.case_type = response.body.case_types[0]
       })
   })
 
@@ -39,7 +38,7 @@ export default context("Cases", () => {
     // We need a pre-existing case to edit.
     cy.postToAPI("cases/", apiFixture)
       .then((response: any) => {
-        cy.visit(`cases/${ response.body.uuid }`)
+        cy.visit(`cases/${ response.body.id }`)
         cy.autoFill(browserFixture)
         cy.getSubmitButton().click()
 
@@ -54,7 +53,7 @@ export default context("Cases", () => {
     // We need a pre-existing case to delete.
     cy.postToAPI("cases/", apiFixture)
       .then((response: any) => {
-        cy.visit(`cases/${ response.body.uuid }`)
+        cy.visit(`cases/${ response.body.id }`)
         cy.get("[data-e2e-id='delete']").click()
         cy.get("[data-e2e-id='confirm']").click()
 
