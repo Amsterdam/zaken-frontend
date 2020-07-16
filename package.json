@@ -20,7 +20,6 @@
     "amsterdam-react-final-form": "^0.1.77",
     "amsterdam-scaffold-form": "^0.1.26",
     "axios": "^0.19.2",
-    "axios-cache-adapter": "^2.5.0",
     "dotenv-flow": "^3.2.0",
     "final-form": "^4.20.1",
     "final-form-arrays": "^3.0.2",
@@ -33,7 +32,7 @@
     "react-final-form-arrays": "^3.1.1",
     "react-scripts": "3.4.1",
     "resize-observer-polyfill": "^1.5.1",
-    "slash-sandwich": "^1.0.7",
+    "slash-sandwich": "^1.0.9",
     "styled-components": "^5.1.1",
     "typescript": "^3.9.6"
   },
