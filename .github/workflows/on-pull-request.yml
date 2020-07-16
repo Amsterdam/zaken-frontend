@@ -50,6 +50,12 @@ jobs:
       - run: npm run build
         working-directory: frontend
 
+      - run: npm run start:build-folder &>/dev/null &
+        working-directory: frontend
+
+      - run: npm run cypress:run
+        working-directory: frontend
+
       ###################################################
       # On failure
       ###################################################
