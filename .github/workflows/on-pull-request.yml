@@ -50,11 +50,29 @@ jobs:
       - run: npm run build
         working-directory: frontend
 
-      - run: npm run start:build-folder &>/dev/null &
+      - run: npm run start &>/dev/null &
         working-directory: frontend
 
       - run: npm run cypress:run
         working-directory: frontend
+
+      - if: ${{ failure() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress-videos
+          path: ./frontend/cypress/videos/
+
+      - if: ${{ failure() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress-screenshots
+          path: ./frontend/cypress/screenshots/
+
+      - if: ${{ failure() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: ./frontend/build/
 
       ###################################################
       # On failure
