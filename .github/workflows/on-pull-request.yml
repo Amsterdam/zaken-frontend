@@ -68,12 +68,6 @@ jobs:
           name: cypress-screenshots
           path: ./frontend/cypress/screenshots/
 
-      - if: ${{ failure() }}
-        uses: actions/upload-artifact@v2
-        with:
-          name: build
-          path: ./frontend/build/
-
       ###################################################
       # On failure
       ###################################################
