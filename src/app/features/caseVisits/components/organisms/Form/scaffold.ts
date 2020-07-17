@@ -11,6 +11,15 @@ const caseVisitChecks = [
 
 const createScaffold = (values?: CaseVisit, onClickNoteButton?: any) => {
   const fields: Fields = {
+    visitStatuses: {
+      type: "ComplexCheckboxFields",
+      props: {
+        label: "Kies eventueel een kenmerk:",
+        name: "visitStatuses",
+        options: caseVisitChecks,
+        optionLabelField: "label"
+      }
+    },
     note: {
       type: "TextAreaField",
       props: {
@@ -50,15 +59,6 @@ const createScaffold = (values?: CaseVisit, onClickNoteButton?: any) => {
         onClick: onClickNoteButton("note1")
       }
     },
-    visitStatuses: {
-      type: "ComplexCheckboxFields",
-      props: {
-        label: "Kies eventueel een kenmerk:",
-        name: "visitStatuses",
-        options: caseVisitChecks,
-        optionLabelField: "label"
-      }
-    },
     submit: {
       type: "SubmitButton",
       props: {
@@ -70,6 +70,14 @@ const createScaffold = (values?: CaseVisit, onClickNoteButton?: any) => {
 
   return new FormPositioner(fields)
     .setVertical("mobileS")
+    .setGrid("laptop", "1fr 1fr", [
+      ["note",      "note0"],
+      ["note",      "note0Button"],
+      ["note",       "note1"],
+      ["note",      "note1Button"],
+      ["visitStatuses",  "visitStatuses"],
+      ["submit",          "submit"]
+    ])
     .getScaffoldProps()
 }
 export default createScaffold
