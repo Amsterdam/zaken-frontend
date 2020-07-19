@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useReducer } from "react"
+import { useCallback, useReducer } from "react"
 
 export type ApiCache = {
   cache: Record<string, any>
@@ -22,11 +22,9 @@ const reducer = (state: State, action: Action) => {
 
 export const useApiCache = (): ApiCache => {
   const [ cache, dispatch ] = useReducer(reducer, {})
-  // @ts-ignore
-  window.apiCache = cache
 
   const setItem = useCallback((key: string, value: any) => dispatch({ type: "SET_ITEM", key, value }), [ dispatch ])
   const clear = useCallback(() => dispatch({ type: "CLEAR" }), [ dispatch ])
 
-  return useMemo(() => ({ cache, setItem, clear }), [ cache, setItem, clear ])
+  return { cache, setItem, clear }
 }

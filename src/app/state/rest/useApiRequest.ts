@@ -1,83 +1,89 @@
-import axios, { AxiosError, AxiosResponse, Method } from "axios"
-import { useState, useCallback, useEffect, useContext } from "react"
+import axios, { AxiosError, Method } from "axios"
+import { useCallback, useEffect, useContext, useState } from "react"
 
 import { getToken } from "../auth/tokenStore"
 import { useFlashMessages } from "../flashMessages/useFlashMessages"
 import { ApiCacheContext } from "./ApiCacheProvider"
-import useIsMounted from "../../features/shared/hooks/useIsMounted/useIsMounted"
+import PromiseQueue from "./PromiseQueue"
 
 type Config = {
   url: string
 }
 
-const pending: Record<string, Promise<AxiosResponse<any>>> = {}
+const queue = new PromiseQueue()
+const pending: Record<string, boolean> = {}
 
 const useApiRequest = <SCHEMA>({ url }: Config) => {
-  const [ isBusy, setIsBusy ] = useState(false)
+  const [ isDeleted, setIsDeleted ] = useState(false)
   const { cache, setItem, clear } = useContext(ApiCacheContext)
-  const [ error, setError ] = useState()
   const { addErrorFlashMessage } = useFlashMessages()
-  const isMounted = useIsMounted()
-
-  // Get authorization token from localStorage
   const authorizationToken = getToken()
 
-  // Handle API errors:
+  /**
+   * Handles API errors
+   */
   const handleError = useCallback((error: AxiosError) => {
     const details = error?.response?.data?.detail ?? error.message
-
-    setError(details)
     addErrorFlashMessage("Oeps er ging iets mis!", `${ details } (URL: ${ error?.config?.url })`)
-
     return Promise.reject(details)
-  }, [setError, addErrorFlashMessage])
+  }, [addErrorFlashMessage])
 
-  // Execute an API request
-  const exec = useCallback(async (method: Method, payload?: {}) => {
+  /**
+   * Executes an API request
+   */
+  const execRequest = useCallback(async (method: Method, payload: any) => {
+    const response = await axios.request<SCHEMA>({
+      headers: { Authorization: `Bearer ${ authorizationToken }` },
+      method,
+      url,
+      data: payload
+    })
+
+    if (method !== "get") {
+      clear()
+    } else {
+      setItem(url, response.data)
+    }
+
+    if (method === "delete") {
+      // Mark item as deleted, we don't want to fetch it when cache invalidates
+      setIsDeleted(true)
+    }
+
+    delete pending[url]
+    return Promise.resolve(response.data)
+  }, [clear, setItem, authorizationToken, url])
+
+  /**
+   * Queues an API request
+   */
+  const queueRequest = useCallback(async (method: Method, payload?: {}) => {
     try {
-      setIsBusy(true)
-
-      const promise: Promise<AxiosResponse<SCHEMA>> = pending[url]
-        ?  pending[url]
-        :  axios.request<SCHEMA>({
-            headers: { Authorization: `Bearer ${ authorizationToken }` },
-            method,
-            url,
-            data: payload
-          })
-
-      pending[url] = promise
-      const response = await promise
-      delete pending[url]
-
-      if (isMounted.current) {
-        method !== "get"
-          ? clear()
-          : setItem(url, response.data)
-        setIsBusy(false)
+      if (pending[url] === undefined) {
+        pending[url] = true
+        return queue.push(() => execRequest(method, payload))
       }
-
-      return Promise.resolve(response.data)
     } catch(error) {
         return handleError(error)
     }
-  }, [ url, authorizationToken, setIsBusy, handleError, isMounted, setItem, clear ])
+  }, [ handleError, execRequest, url ])
 
-  // Syntax sugar for different methods:
-  const execGet = useCallback(() => exec("get"), [ exec ])
-  const execPost = useCallback((payload: {}) => exec("post", payload), [ exec ])
-  const execPut = useCallback((payload: {}) => exec("put", payload), [ exec ])
-  const execPatch = useCallback((payload: {}) => exec("patch", payload), [ exec ])
-  const execDelete = useCallback((payload: {}) => exec("delete", payload), [ exec ])
+  /**
+   * Define HTTP methods
+   */
+  const execGet = useCallback(() => queueRequest("get"), [ queueRequest ])
+  const execPost = useCallback((payload: {}) => queueRequest("post", payload), [ queueRequest ])
+  const execPut = useCallback((payload: {}) => queueRequest("put", payload), [ queueRequest ])
+  const execPatch = useCallback((payload: {}) => queueRequest("patch", payload), [ queueRequest ])
+  const execDelete = useCallback((payload: {}) => queueRequest("delete", payload), [ queueRequest ])
 
   // reFetch whenever our cache is invalidated
   const data = cache[url]
-  useEffect(() => { if (!data) { execGet() } }, [ execGet, data ])
+  useEffect(() => { if (!data && !isDeleted) { execGet() } }, [ execGet, data, isDeleted ])
 
   return {
-    isBusy,
     data,
-    error,
+
     execGet,
     execPost,
     execPut,
