@@ -2,13 +2,14 @@ import React from "react"
 import { ApiCache, useApiCache } from "./useApiCache"
 import { RequestQueue, useRequestQueue } from "./useRequestQueue"
 
-const noop = (...args: any[]): any => {}
+const noopUndefined = () => undefined
+const noopBoolean = () => false
 export const ApiContext = React.createContext<ApiCache & RequestQueue>({
-  isPendingRequest: noop,
-  pushRequest: noop,
-  getCacheItem: noop,
-  setCacheItem: noop,
-  clearCache: noop
+  isPendingRequest: noopBoolean,
+  pushRequest: noopUndefined,
+  getCacheItem: noopUndefined,
+  setCacheItem: noopUndefined,
+  clearCache: noopUndefined
 })
 
 const ApiProvider: React.FC = ({ children }) => {

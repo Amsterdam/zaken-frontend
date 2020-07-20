@@ -10,7 +10,7 @@ type Config = {
   groupName: string
 }
 
-const useApiRequest = <SCHEMA>({ url, groupName }: Config) => {
+const useApiRequest = <Schema>({ url, groupName }: Config) => {
   const { getCacheItem, setCacheItem, clearCache, pushRequest, isPendingRequest } = useContext(ApiContext)
   const { addErrorFlashMessage } = useFlashMessages()
   const authorizationToken = getToken()
@@ -28,7 +28,7 @@ const useApiRequest = <SCHEMA>({ url, groupName }: Config) => {
    */
   const execRequest = useCallback(async (method: Method, payload: any) => {
     try {
-      const response = await axios.request<SCHEMA>({
+      const response = await axios.request<Schema>({
         headers: { Authorization: `Bearer ${ authorizationToken }` },
         method,
         url,
