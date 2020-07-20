@@ -1,9 +1,9 @@
 import { useCallback, useReducer } from "react"
 
 export type ApiCache = {
-  getItem: (group: string, url: string) => any
-  setItem: (key: string, group: string, value: any) => void
-  clear: (group: string) => void
+  getCacheItem: (group: string, url: string) => any
+  setCacheItem: (key: string, group: string, value: any) => void
+  clearCache: (group: string) => void
 }
 
 type State = Record<string, any>
@@ -25,9 +25,9 @@ const reducer = (state: State, action: Action) => {
 export const useApiCache = (): ApiCache => {
   const [ cache, dispatch ] = useReducer(reducer, {})
 
-  const getItem = useCallback((group: string, url: string) => cache[`${ group }__${ url }`], [ cache ])
-  const setItem = useCallback((group: string, key: string, value: any) => dispatch({ type: "SET_ITEM", group, key, value }), [ dispatch ])
-  const clear = useCallback((group: string) => dispatch({ type: "CLEAR", group }), [ dispatch ])
+  const getCacheItem = useCallback((group: string, url: string) => cache[`${ group }__${ url }`], [ cache ])
+  const setCacheItem = useCallback((group: string, key: string, value: any) => dispatch({ type: "SET_ITEM", group, key, value }), [ dispatch ])
+  const clearCache = useCallback((group: string) => dispatch({ type: "CLEAR", group }), [ dispatch ])
 
-  return { getItem, setItem, clear }
+  return { getCacheItem, setCacheItem, clearCache }
 }

@@ -5,17 +5,17 @@ import { LocationProvider } from "@reach/router"
 import Router from "app/features/shared/routing/Router"
 import FlashMessageProvider from "app/state/flashMessages/FlashMessageProvider"
 import AuthSession from "./app/state/auth/AuthSession"
-import ApiCacheProvider from "./app/state/rest/ApiCacheProvider"
+import ApiProvider from "./app/state/rest/ApiProvider"
 
 const App: React.FC = () => (
   <ThemeProvider>
     <GlobalStyle />
     <LocationProvider>
       <FlashMessageProvider>
-        <ApiCacheProvider>
+        <ApiProvider>
           <AuthSession />
           <Router />
-        </ApiCacheProvider>
+        </ApiProvider>
       </FlashMessageProvider>
     </LocationProvider>
   </ThemeProvider>

@@ -1,22 +1,17 @@
 import axios, { AxiosError, Method } from "axios"
-import { useCallback, useEffect, useContext, useState } from "react"
-
-import useIsMounted from "app/features/shared/hooks/useIsMounted/useIsMounted"
+import { useCallback, useEffect, useContext } from "react"
 
 import { getToken } from "../auth/tokenStore"
 import { useFlashMessages } from "../flashMessages/useFlashMessages"
-import { ApiCacheContext } from "./ApiCacheProvider"
-import { GroupConfig } from "./createGroupConfig"
+import { ApiContext } from "./ApiProvider"
 
 type Config = {
   url: string
-  group: GroupConfig
+  groupName: string
 }
 
-const useApiRequest = <SCHEMA>({ url, group: { pending, queue, groupName } }: Config) => {
-  const [ isBusy, setIsBusy ] = useState(false)
-  const isMounted = useIsMounted()
-  const { getItem, setItem, clear } = useContext(ApiCacheContext)
+const useApiRequest = <SCHEMA>({ url, groupName }: Config) => {
+  const { getCacheItem, setCacheItem, clearCache, pushRequest, isPendingRequest } = useContext(ApiContext)
   const { addErrorFlashMessage } = useFlashMessages()
   const authorizationToken = getToken()
 
@@ -26,7 +21,6 @@ const useApiRequest = <SCHEMA>({ url, group: { pending, queue, groupName } }: Co
   const handleError = useCallback((error: AxiosError) => {
     const details = error?.response?.data?.detail ?? error.message
     addErrorFlashMessage("Oeps er ging iets mis!", `${ details } (URL: ${ error?.config?.url })`)
-    return Promise.reject(details)
   }, [addErrorFlashMessage])
 
   /**
@@ -42,33 +36,21 @@ const useApiRequest = <SCHEMA>({ url, group: { pending, queue, groupName } }: Co
       })
 
       if (method !== "get") {
-        clear(groupName)
+        clearCache(groupName)
       } else {
-        setItem(groupName, url, response.data)
+        setCacheItem(groupName, url, response.data)
       }
-
-      delete pending[method + url]
-
-      if (isMounted.current) {
-        setIsBusy(false)
-      }
-
-      return Promise.resolve(response.data)
     } catch(error) {
-      return handleError(error)
+      handleError(error)
     }
-  }, [clear, setItem, authorizationToken, url, groupName, pending, setIsBusy, isMounted, handleError])
+  }, [clearCache, setCacheItem, authorizationToken, url, groupName, handleError])
 
   /**
    * Queues an API request
    */
-  const queueRequest = useCallback(async (method: Method, payload?: {}) => {
-    if (pending[method + url] === undefined) {
-      setIsBusy(true)
-      pending[method + url] = true
-      return queue.push(() => execRequest(method, payload))
-    }
-  }, [ execRequest, url, pending, queue, setIsBusy ])
+  const queueRequest = useCallback(async (method: Method, payload?: {}) =>
+    pushRequest(url, method, () => execRequest(method, payload))
+  , [ execRequest, url, pushRequest ])
 
   /**
    * Define HTTP methods
@@ -80,12 +62,12 @@ const useApiRequest = <SCHEMA>({ url, group: { pending, queue, groupName } }: Co
   const execDelete = useCallback((payload: {}) => queueRequest("delete", payload), [ queueRequest ])
 
   // reFetch whenever our cache is invalidated
-  const data = getItem(groupName, url)
+  const data = getCacheItem(groupName, url)
   useEffect(() => { if (!data) { execGet() } }, [ execGet, data ])
 
   return {
     data,
-    isBusy,
+    isBusy: isPendingRequest(url),
 
     execGet,
     execPost,
