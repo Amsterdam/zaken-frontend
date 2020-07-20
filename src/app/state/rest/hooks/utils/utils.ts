@@ -2,8 +2,9 @@ import { useCallback } from "react"
 import { AxiosError } from "axios"
 import slashSandwich from "slash-sandwich"
 
-import { useFlashMessages } from "../flashMessages/useFlashMessages"
-import { getToken } from "../auth/tokenStore"
+import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
+import { getToken } from "app/state/auth/tokenStore"
+
 
 /**
  * Default error handler:

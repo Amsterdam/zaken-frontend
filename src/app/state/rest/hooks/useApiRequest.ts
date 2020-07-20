@@ -1,7 +1,7 @@
 import axios, { AxiosError, Method } from "axios"
 import { useCallback, useEffect, useContext } from "react"
 
-import { ApiContext } from "./ApiProvider"
+import { ApiContext } from "../provider/ApiProvider"
 
 type Config = {
   url: string
@@ -65,12 +65,14 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
   const execDelete = useCallback((onSuccess?: Callback) => queueRequest("delete", undefined, onSuccess), [ queueRequest ])
 
   // reFetch whenever our cache is invalidated
-  const data = getCacheItem(groupName, url)
-  useEffect(() => { if (!data) { execGet() } }, [ execGet, data ])
+  const data = getCacheItem(groupName, url) as Schema
+  useEffect(() => {
+    if (!data) { execGet() }
+  }, [ execGet, data ])
 
   return {
     data,
-    isBusy: isPendingRequest(url),
+    isBusy: isPendingRequest(url, "get"),
 
     execGet,
     execPost,

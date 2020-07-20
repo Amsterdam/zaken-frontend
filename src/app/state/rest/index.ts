@@ -1,5 +1,5 @@
-import useApiRequest from "./useApiRequest"
-import { useErrorHandler, makeGatewayUrl, getHeaders } from "./utils"
+import useApiRequest from "./hooks/useApiRequest"
+import { useErrorHandler, makeGatewayUrl, getHeaders } from "./hooks/utils/utils"
 
 type APIListResponse<T> = {
   count: number
