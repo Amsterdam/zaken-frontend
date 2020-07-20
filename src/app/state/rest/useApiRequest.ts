@@ -1,6 +1,8 @@
 import axios, { AxiosError, Method } from "axios"
 import { useCallback, useEffect, useContext, useState } from "react"
 
+import useIsMounted from "app/features/shared/hooks/useIsMounted/useIsMounted"
+
 import { getToken } from "../auth/tokenStore"
 import { useFlashMessages } from "../flashMessages/useFlashMessages"
 import { ApiCacheContext } from "./ApiCacheProvider"
@@ -13,6 +15,7 @@ type Config = {
 
 const useApiRequest = <SCHEMA>({ url, group: { pending, queue, groupName } }: Config) => {
   const [ isBusy, setIsBusy ] = useState(false)
+  const isMounted = useIsMounted()
   const { getItem, setItem, clear } = useContext(ApiCacheContext)
   const { addErrorFlashMessage } = useFlashMessages()
   const authorizationToken = getToken()
@@ -46,12 +49,15 @@ const useApiRequest = <SCHEMA>({ url, group: { pending, queue, groupName } }: Co
 
       delete pending[method + url]
 
-      setIsBusy(false)
+      if (isMounted.current) {
+        setIsBusy(false)
+      }
+
       return Promise.resolve(response.data)
     } catch(error) {
       return handleError(error)
     }
-  }, [clear, setItem, authorizationToken, url, groupName, pending, setIsBusy, handleError])
+  }, [clear, setItem, authorizationToken, url, groupName, pending, setIsBusy, isMounted, handleError])
 
   /**
    * Queues an API request
