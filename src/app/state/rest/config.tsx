@@ -1,4 +1,5 @@
 import useApiRequest from "./useApiRequest"
+import slashSandwich from "slash-sandwich/dist/slash-sandwich"
 
 type APIListResponse<T> = {
   count: number
@@ -8,30 +9,28 @@ type APIListResponse<T> = {
 /**
  * Please configure your endpoints here:
  */
-
 export const useCases = () =>
   useApiRequest<APIListResponse<API.Case>>({
-    url: "cases",
-    group: "cases" // <- When a POST/PUT/PATCH/DELETE (anything other then GET) is called, cache for the whole group is invalidated
+    url: slashSandwich([process.env.REACT_APP_GATEWAY, "cases"]),
+    groupName: "cases"    // NOTE: "cases" and "cases/:id" share the same group config. Cache will be cleared for the whole group. Requests will be queued within the same group.
   })
 
 export const useCase = (id: API.Case["id"]) =>
   useApiRequest<API.Case>({
-    url: `cases/${ id }`,
-    group: "cases"
+    url: slashSandwich([process.env.REACT_APP_GATEWAY, "cases", id]),
+    groupName: "cases"
   })
 
 export const useCaseTypes = () =>
   useApiRequest<APIListResponse<API.CaseType>>({
-    url: "case-types",
-    group: "case-types"
+    url: slashSandwich([process.env.REACT_APP_GATEWAY, "case-types"]),
+    groupName: "case-types"
   })
 
 export const useCaseStates = () =>
   // TODO fix when API.CaseState is reintroduced
-  //useApiRequest<API.State[]>({
   useApiRequest<APIListResponse<any>>({
-    url: "states",
-    group: "states"
+    url: slashSandwich([process.env.REACT_APP_GATEWAY, "states"]),
+    groupName: "case-states"
   })
 
