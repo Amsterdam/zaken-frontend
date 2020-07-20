@@ -1,9 +1,8 @@
 import to from "app/features/shared/routing/to"
 import { useCrud } from "app/features/shared/hooks/useCrud/useCrud"
-import { useCase, useCases, useCaseTypes } from "app/state/rest/config"
+import { useCase,  useCaseTypes } from "app/state/rest/config"
 
 export const useEditPage = (id?: API.Case["id"]) => {
-  const { isBusy: isGettingCases } = useCases()
   const { isBusy: isGettingCaseTypes } = useCaseTypes()
   const { data: initialValues, execPut, execDelete } = useCase(id!)
 
@@ -31,7 +30,7 @@ export const useEditPage = (id?: API.Case["id"]) => {
     }
   })
 
-  const isLoading = !initialValues || isGettingCaseTypes || isGettingCases
+  const isLoading = !initialValues || isGettingCaseTypes
 
   return {
     isLoading,

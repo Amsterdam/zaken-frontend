@@ -4,18 +4,17 @@ import { useCallback, useEffect, useContext, useState } from "react"
 import { getToken } from "../auth/tokenStore"
 import { useFlashMessages } from "../flashMessages/useFlashMessages"
 import { ApiCacheContext } from "./ApiCacheProvider"
-import PromiseQueue from "./PromiseQueue"
+import { GroupConfig } from "./createGroupConfig"
 
 type Config = {
   url: string
+  group: GroupConfig
 }
 
-const queue = new PromiseQueue()
-const pending: Record<string, boolean> = {}
-
-const useApiRequest = <SCHEMA>({ url }: Config) => {
+const useApiRequest = <SCHEMA>({ url, group: { pending, queue, groupName } }: Config) => {
+  const [ isBusy, setIsBusy ] = useState(false)
   const [ isDeleted, setIsDeleted ] = useState(false)
-  const { cache, setItem, clear } = useContext(ApiCacheContext)
+  const { getItem, setItem, clear } = useContext(ApiCacheContext)
   const { addErrorFlashMessage } = useFlashMessages()
   const authorizationToken = getToken()
 
@@ -40,9 +39,9 @@ const useApiRequest = <SCHEMA>({ url }: Config) => {
     })
 
     if (method !== "get") {
-      clear()
+      clear(groupName)
     } else {
-      setItem(url, response.data)
+      setItem(groupName, url, response.data)
     }
 
     if (method === "delete") {
@@ -50,23 +49,27 @@ const useApiRequest = <SCHEMA>({ url }: Config) => {
       setIsDeleted(true)
     }
 
-    delete pending[url]
+    delete pending[method + url]
+
+    setIsBusy(false)
     return Promise.resolve(response.data)
-  }, [clear, setItem, authorizationToken, url])
+  }, [clear, setItem, authorizationToken, url, groupName, pending, setIsBusy])
 
   /**
    * Queues an API request
    */
   const queueRequest = useCallback(async (method: Method, payload?: {}) => {
     try {
-      if (pending[url] === undefined) {
-        pending[url] = true
+      if (pending[method + url] === undefined) {
+        setIsBusy(true)
+        pending[method + url] = true
+
         return queue.push(() => execRequest(method, payload))
       }
     } catch(error) {
         return handleError(error)
     }
-  }, [ handleError, execRequest, url ])
+  }, [ handleError, execRequest, url, pending, queue, setIsBusy ])
 
   /**
    * Define HTTP methods
@@ -78,11 +81,12 @@ const useApiRequest = <SCHEMA>({ url }: Config) => {
   const execDelete = useCallback((payload: {}) => queueRequest("delete", payload), [ queueRequest ])
 
   // reFetch whenever our cache is invalidated
-  const data = cache[url]
+  const data = getItem(groupName, url)
   useEffect(() => { if (!data && !isDeleted) { execGet() } }, [ execGet, data, isDeleted ])
 
   return {
     data,
+    isBusy,
 
     execGet,
     execPost,

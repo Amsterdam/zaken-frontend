@@ -3,7 +3,7 @@ import { ApiCache, useApiCache } from "./useApiCache"
 
 const noop = () => {}
 export const ApiCacheContext = React.createContext<ApiCache>({
-  cache: {},
+  getItem: noop,
   setItem: noop,
   clear: noop
 })
