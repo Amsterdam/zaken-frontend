@@ -1,21 +1,21 @@
-import { useCrud } from "app/features/shared/hooks/useCrud/useCrud"
+import { navigate } from "@reach/router"
+import { useCallback } from "react"
+
 import to from "app/features/shared/routing/to"
 import { useCases } from "app/state/rest/config"
+import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
 
 const useCreatePage = () => {
   const { execPost } = useCases()
+  const { addSuccessFlashMessage } = useFlashMessages()
 
-  const handleCreate = useCrud({
-    action: execPost,
-    redirectTo: to("/cases"),
-    success: {
-      title: "Succesvol aangemaakt",
-      body: "De zaak is succesvol aangemaakt"
-    },
-    error: {
-      title: "Kon niet aanmaken"
-    }
-  })
+  const handleCreate = useCallback(payload =>
+    execPost(payload, () => {
+      addSuccessFlashMessage("/cases", "Succesvol aangemaakt", "De zaak is succesvol aangemaakt")
+      return navigate(to("/cases"))
+    }),
+    [addSuccessFlashMessage, execPost]
+  )
 
   return { handleCreate }
 }

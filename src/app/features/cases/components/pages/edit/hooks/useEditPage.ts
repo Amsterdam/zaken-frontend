@@ -1,34 +1,30 @@
+import { useCallback } from "react"
+import { navigate } from "@reach/router"
+
 import to from "app/features/shared/routing/to"
-import { useCrud } from "app/features/shared/hooks/useCrud/useCrud"
 import { useCase,  useCaseTypes } from "app/state/rest/config"
+import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
 
 export const useEditPage = (id?: API.Case["id"]) => {
   const { isBusy: isGettingCaseTypes } = useCaseTypes()
   const { data: initialValues, execPut, execDelete } = useCase(id!)
+  const { addSuccessFlashMessage } = useFlashMessages()
 
-  const handleUpdate = useCrud({
-    action: execPut,
-    redirectTo: to("/cases"),
-    success: {
-      title: "Succesvol gewijzigd",
-      body: "De zaak is succesvol gewijzigd"
-    },
-    error: {
-      title: "Kon niet wijzigen"
-    }
-  })
+  const handleUpdate = useCallback(payload =>
+      execPut(payload, () => {
+        addSuccessFlashMessage("/cases", "Succesvol gewijzigd", "De zaak is succesvol gewijzigd")
+        return navigate(to("/cases"))
+      }),
+    [addSuccessFlashMessage, execPut]
+  )
 
-  const handleDelete = useCrud({
-    action: execDelete,
-    redirectTo: to("/cases"),
-    success: {
-      title: "Succesvol verwijderd",
-      body: "De zaak is succesvol verwijderd"
-    },
-    error: {
-      title: "Kon niet verwijderen"
-    }
-  })
+  const handleDelete = useCallback(() =>
+      execDelete(() => {
+        addSuccessFlashMessage("/cases", "Succesvol verwiderd", "De zaak is succesvol verwijderd")
+        return navigate(to("/cases"))
+      }),
+    [addSuccessFlashMessage, execDelete]
+  )
 
   const isLoading = !initialValues || isGettingCaseTypes
 

@@ -10,7 +10,9 @@ type Config = {
   getHeaders?: () => Record<string, string>
 }
 
-const useApiRequest = <Schema>({ url, groupName, handleError, getHeaders }: Config) => {
+type Callback = () => void
+
+const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, handleError, getHeaders }: Config) => {
   const {
     getCacheItem,
     setCacheItem,
@@ -22,7 +24,7 @@ const useApiRequest = <Schema>({ url, groupName, handleError, getHeaders }: Conf
   /**
    * Executes an API request
    */
-  const execRequest = useCallback(async (method: Method, payload: any) => {
+  const execRequest = useCallback(async (method: Method, payload?: Payload, onSuccess?: Callback) => {
     try {
       const response = await axios.request<Schema>({
         headers: getHeaders ? getHeaders() : undefined,
@@ -36,9 +38,12 @@ const useApiRequest = <Schema>({ url, groupName, handleError, getHeaders }: Conf
       } else {
         setCacheItem(groupName, url, response.data)
       }
+      if (onSuccess) {
+        onSuccess()
+      }
     } catch(error) {
       if (handleError) {
-        handleError(error)  
+        handleError(error)
       }
     }
   }, [clearCache, setCacheItem, url, groupName, handleError, getHeaders])
@@ -46,18 +51,18 @@ const useApiRequest = <Schema>({ url, groupName, handleError, getHeaders }: Conf
   /**
    * Queues an API request
    */
-  const queueRequest = useCallback(async (method: Method, payload?: {}) =>
-    pushRequest(url, method, () => execRequest(method, payload))
+  const queueRequest = useCallback(async (method: Method, payload?: Payload, onSuccess?: Callback) =>
+    pushRequest(url, method, () => execRequest(method, payload, onSuccess))
   , [ execRequest, url, pushRequest ])
 
   /**
    * Define HTTP methods
    */
-  const execGet = useCallback(() => queueRequest("get"), [ queueRequest ])
-  const execPost = useCallback((payload: {}) => queueRequest("post", payload), [ queueRequest ])
-  const execPut = useCallback((payload: {}) => queueRequest("put", payload), [ queueRequest ])
-  const execPatch = useCallback((payload: {}) => queueRequest("patch", payload), [ queueRequest ])
-  const execDelete = useCallback((payload: {}) => queueRequest("delete", payload), [ queueRequest ])
+  const execGet = useCallback((onSuccess?: Callback) => queueRequest("get", undefined, onSuccess), [ queueRequest ])
+  const execPost = useCallback((payload: Payload, onSuccess?: Callback) => queueRequest("post", payload, onSuccess), [ queueRequest ])
+  const execPut = useCallback((payload: Payload, onSuccess?: Callback) => queueRequest("put", payload, onSuccess), [ queueRequest ])
+  const execPatch = useCallback((payload: Payload, onSuccess?: Callback) => queueRequest("patch", payload, onSuccess), [ queueRequest ])
+  const execDelete = useCallback((onSuccess?: Callback) => queueRequest("delete", undefined, onSuccess), [ queueRequest ])
 
   // reFetch whenever our cache is invalidated
   const data = getCacheItem(groupName, url)
