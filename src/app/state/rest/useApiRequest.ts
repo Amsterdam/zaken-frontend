@@ -1,27 +1,23 @@
 import axios, { AxiosError, Method } from "axios"
 import { useCallback, useEffect, useContext } from "react"
 
-import { getToken } from "../auth/tokenStore"
-import { useFlashMessages } from "../flashMessages/useFlashMessages"
 import { ApiContext } from "./ApiProvider"
 
 type Config = {
   url: string
   groupName: string
+  handleError?: ( error: AxiosError ) => void
+  getHeaders?: () => Record<string, string>
 }
 
-const useApiRequest = <Schema>({ url, groupName }: Config) => {
-  const { getCacheItem, setCacheItem, clearCache, pushRequest, isPendingRequest } = useContext(ApiContext)
-  const { addErrorFlashMessage } = useFlashMessages()
-  const authorizationToken = getToken()
-
-  /**
-   * Handles API errors
-   */
-  const handleError = useCallback((error: AxiosError) => {
-    const details = error?.response?.data?.detail ?? error.message
-    addErrorFlashMessage("Oeps er ging iets mis!", `${ details } (URL: ${ error?.config?.url })`)
-  }, [addErrorFlashMessage])
+const useApiRequest = <Schema>({ url, groupName, handleError, getHeaders }: Config) => {
+  const {
+    getCacheItem,
+    setCacheItem,
+    clearCache,
+    pushRequest,
+    isPendingRequest
+  } = useContext(ApiContext)
 
   /**
    * Executes an API request
@@ -29,7 +25,7 @@ const useApiRequest = <Schema>({ url, groupName }: Config) => {
   const execRequest = useCallback(async (method: Method, payload: any) => {
     try {
       const response = await axios.request<Schema>({
-        headers: { Authorization: `Bearer ${ authorizationToken }` },
+        headers: getHeaders ? getHeaders() : undefined,
         method,
         url,
         data: payload
@@ -41,9 +37,11 @@ const useApiRequest = <Schema>({ url, groupName }: Config) => {
         setCacheItem(groupName, url, response.data)
       }
     } catch(error) {
-      handleError(error)
+      if (handleError) {
+        handleError(error)  
+      }
     }
-  }, [clearCache, setCacheItem, authorizationToken, url, groupName, handleError])
+  }, [clearCache, setCacheItem, url, groupName, handleError, getHeaders])
 
   /**
    * Queues an API request

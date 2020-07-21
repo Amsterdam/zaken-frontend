@@ -1,5 +1,5 @@
 import useApiRequest from "./useApiRequest"
-import slashSandwich from "slash-sandwich/dist/slash-sandwich"
+import { useErrorHandler, makeGatewayUrl, getHeaders } from "./utils"
 
 type APIListResponse<T> = {
   count: number
@@ -9,28 +9,44 @@ type APIListResponse<T> = {
 /**
  * Please configure your endpoints here:
  */
-export const useCases = () =>
-  useApiRequest<APIListResponse<API.Case>>({
-    url: slashSandwich([process.env.REACT_APP_GATEWAY, "cases"]),
-    groupName: "cases"    // NOTE: "cases" and "cases/:id" share the same group config. Cache will be cleared for the whole group. Requests will be queued within the same group.
+export const useCases = () => {
+  const handleError = useErrorHandler()
+  return useApiRequest<APIListResponse<API.Case>>({
+    url: makeGatewayUrl("cases"),
+    groupName: "cases",    // NOTE: "cases" and "cases/:id" share the same group config. Cache will be cleared for the whole group.
+    handleError,
+    getHeaders
   })
+}
 
-export const useCase = (id: API.Case["id"]) =>
-  useApiRequest<API.Case>({
-    url: slashSandwich([process.env.REACT_APP_GATEWAY, "cases", id]),
-    groupName: "cases"
+export const useCase = (id: API.Case["id"]) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<API.Case>({
+    url: makeGatewayUrl("cases", id),
+    groupName: "cases",
+    handleError,
+    getHeaders
   })
+}
 
-export const useCaseTypes = () =>
-  useApiRequest<APIListResponse<API.CaseType>>({
-    url: slashSandwich([process.env.REACT_APP_GATEWAY, "case-types"]),
-    groupName: "case-types"
+
+export const useCaseTypes = () => {
+  const handleError = useErrorHandler()
+  return useApiRequest<APIListResponse<API.CaseType>>({
+    url: makeGatewayUrl("case-types"),
+    groupName: "case-types",
+    handleError,
+    getHeaders
   })
+}
 
-export const useCaseStates = () =>
+export const useCaseStates = () => {
+  const handleError = useErrorHandler()
   // TODO fix when API.CaseState is reintroduced
-  useApiRequest<APIListResponse<any>>({
-    url: slashSandwich([process.env.REACT_APP_GATEWAY, "states"]),
-    groupName: "case-states"
+  return useApiRequest<APIListResponse<any>>({
+    url: makeGatewayUrl("states"),
+    groupName: "case-states",
+    handleError,
+    getHeaders
   })
-
+}
