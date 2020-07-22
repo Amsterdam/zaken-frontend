@@ -19,10 +19,10 @@ export const useCases = () => {
   })
 }
 
-export const useCase = (id: API.Case["id"]) => {
+export const useCase = (id: API.Case["identification"]) => {
   const handleError = useErrorHandler()
   return useApiRequest<API.Case>({
-    url: makeGatewayUrl("cases", id),
+    url: makeGatewayUrl("cases", id!),
     groupName: "cases",
     handleError,
     getHeaders
