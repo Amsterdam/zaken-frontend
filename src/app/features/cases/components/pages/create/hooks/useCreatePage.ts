@@ -2,7 +2,7 @@ import { navigate } from "@reach/router"
 import { useCallback } from "react"
 
 import to from "app/features/shared/routing/to"
-import { useCases } from "app/state/rest/config"
+import { useCases } from "app/state/rest"
 import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
 
 const useCreatePage = () => {

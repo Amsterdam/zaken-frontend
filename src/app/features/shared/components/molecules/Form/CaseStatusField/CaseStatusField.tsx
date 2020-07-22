@@ -1,7 +1,7 @@
 import React from "react"
 import { ComplexSelectField } from "amsterdam-react-final-form"
 
-import { useCaseStates } from "app/state/rest/config"
+import { useCaseStates } from "app/state/rest"
 
 export type CaseStatusFieldProps = Omit<React.ComponentProps<typeof ComplexSelectField>, "options" | "validate" | "optionLabelField" | "withEmptyOption">
 

@@ -2,7 +2,7 @@ import { useCallback } from "react"
 import { navigate } from "@reach/router"
 
 import to from "app/features/shared/routing/to"
-import { useCase,  useCaseTypes } from "app/state/rest/config"
+import { useCase,  useCaseTypes } from "app/state/rest"
 import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
 
 export const useEditPage = (id?: API.Case["id"]) => {

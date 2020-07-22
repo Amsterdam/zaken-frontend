@@ -6,7 +6,7 @@ import to from "app/features/shared/routing/to"
 import Table from "app/features/shared/components/molecules/Table/Table"
 import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
 
-import { useCases } from "app/state/rest/config"
+import { useCases } from "app/state/rest"
 
 type ButtonProps = {
   href: string
