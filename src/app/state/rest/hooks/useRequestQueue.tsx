@@ -16,14 +16,14 @@ type Action =
   | { type: "SHIFT" }
 
 export type RequestQueue = {
-  isPendingRequest: (url: string) => boolean
+  isPendingRequest: (url: string, method: string) => boolean
   pushRequest: (url: string, method: string, promise: QueuedPromise) => void
 }
 
 const reducer = produce((draft: State, action: Action) => {
   switch(action.type) {
     case "PUSH":
-      if (!isPending(draft, action.item.url)) {
+      if (!isPending(draft, action.item.url, action.item.method)) {
         draft.push(action.item)
       } 
       break
@@ -33,13 +33,13 @@ const reducer = produce((draft: State, action: Action) => {
   }
 })
 
-const isPending = (state: Readonly<State>, url: string): boolean =>
-  state.find(_ => _.url === url) !== undefined
+const isPending = (state: Readonly<State>, url: string, method: string): boolean =>
+  state.find(_ => _.url === url && _.method.toUpperCase() === method.toUpperCase()) !== undefined
 
 export const useRequestQueue = () => {
   const [isBusy, setIsBusy] = useState(false)
   const [state, dispatch] = useReducer(reducer, [])
-  const isPendingRequest = useCallback((url) => isPending(state, url), [ state ])
+  const isPendingRequest = useCallback((url, method) => isPending(state, url, method), [ state ])
 
   const pushRequest = useCallback(
     (url: string, method: string, promise: QueuedPromise) => { dispatch({ type: "PUSH", item: { url, method, promise  } }) },

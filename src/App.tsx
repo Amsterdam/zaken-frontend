@@ -5,7 +5,7 @@ import { LocationProvider } from "@reach/router"
 import Router from "app/features/shared/routing/Router"
 import FlashMessageProvider from "app/state/flashMessages/FlashMessageProvider"
 import AuthSession from "./app/state/auth/AuthSession"
-import ApiProvider from "./app/state/rest/ApiProvider"
+import ApiProvider from "./app/state/rest/provider/ApiProvider"
 
 const App: React.FC = () => (
   <ThemeProvider>

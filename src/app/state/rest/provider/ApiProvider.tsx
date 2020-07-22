@@ -1,6 +1,6 @@
 import React from "react"
-import { ApiCache, useApiCache } from "./useApiCache"
-import { RequestQueue, useRequestQueue } from "./useRequestQueue"
+import { ApiCache, useApiCache } from "../hooks/useApiCache"
+import { RequestQueue, useRequestQueue } from "../hooks/useRequestQueue"
 
 const noopUndefined = () => undefined
 const noopBoolean = () => false
