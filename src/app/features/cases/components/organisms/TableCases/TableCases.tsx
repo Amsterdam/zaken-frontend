@@ -27,7 +27,7 @@ const mapData = (data: API.Case) => [
   data.start_date ?? "-",
   data.end_date ?? "-",
   data.address.street_name ?? "-",
-  <OpenButton href={to("/cases/:id", { id: data.id })} />
+  <OpenButton href={to("/cases/:id", { id: data.identification })} />
 ]
 
 const TableCases: React.FC = () => {

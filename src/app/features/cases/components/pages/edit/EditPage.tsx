@@ -12,7 +12,7 @@ import Form from "app/features/cases/components/organisms/Form/Form"
 import { useEditPage } from "./hooks/useEditPage"
 
 type Props = {
-  id: API.Case["id"]
+  id: API.Case["identification"]
 }
 
 const EditPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {

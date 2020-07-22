@@ -1,7 +1,8 @@
 declare namespace API {
     export type Address = {
-        readonly id: number
         bag_id: string
+        readonly id: number
+        readonly full_address: any
         readonly street_name: string
         readonly number: number
         readonly suffix_letter: string
@@ -26,8 +27,9 @@ declare namespace API {
         code: string
     }
     export type PatchedAddress = {
-        readonly id?: number
         bag_id?: string
+        readonly id?: number
+        readonly full_address?: any
         readonly street_name?: string
         readonly number?: number
         readonly suffix_letter?: string
@@ -47,6 +49,29 @@ declare namespace API {
     export type PatchedCaseType = {
         readonly id?: number
         name?: string
+    }
+    export type Push = {
+        identification: string
+        case_type: string
+        bag_id: string
+        start_date: string // date
+        end_date?: string // date
+    }
+    export type PushCheckAction = {
+        identification: string
+        check_action: boolean
+    }
+    export type State = {
+        readonly id: number
+        state_type: StateType
+        case: Case
+        start_date?: string | null // date
+        end_date?: string | null // date
+        gauge_date?: string | null // date
+    }
+    export type StateType = {
+        readonly id: number
+        name: string
     }
 }
 declare namespace Paths {
@@ -98,14 +123,25 @@ declare namespace Paths {
     }
     namespace CasesDestroy {
         namespace Parameters {
-            export type Id = number;
+            export type Identification = string;
         }
         export type PathParameters = {
-            id: Parameters.Id
+            identification: Parameters.Identification
         }
         namespace Responses {
             export type $204 = {
             }
+        }
+    }
+    namespace CasesFinesRetrieve {
+        namespace Parameters {
+            export type Identification = string;
+        }
+        export type PathParameters = {
+            identification: Parameters.Identification
+        }
+        namespace Responses {
+            export type $200 = API.Case;
         }
     }
     namespace CasesList {
@@ -130,10 +166,10 @@ declare namespace Paths {
     }
     namespace CasesPartialUpdate {
         namespace Parameters {
-            export type Id = number;
+            export type Identification = string;
         }
         export type PathParameters = {
-            id: Parameters.Id
+            identification: Parameters.Identification
         }
         export type RequestBody = API.PatchedCase;
         namespace Responses {
@@ -142,10 +178,10 @@ declare namespace Paths {
     }
     namespace CasesRetrieve {
         namespace Parameters {
-            export type Id = number;
+            export type Identification = string;
         }
         export type PathParameters = {
-            id: Parameters.Id
+            identification: Parameters.Identification
         }
         namespace Responses {
             export type $200 = API.Case;
@@ -153,10 +189,10 @@ declare namespace Paths {
     }
     namespace CasesUpdate {
         namespace Parameters {
-            export type Id = number;
+            export type Identification = string;
         }
         export type PathParameters = {
-            id: Parameters.Id
+            identification: Parameters.Identification
         }
         export type RequestBody = API.Case;
         namespace Responses {
@@ -181,10 +217,62 @@ declare namespace Paths {
             export type $200 = API.OIDCAuthenticate;
         }
     }
+    namespace PushCheckActionCreate {
+        export type RequestBody = API.PushCheckAction;
+        namespace Responses {
+            export type $200 = API.PushCheckAction;
+        }
+    }
+    namespace PushCreate {
+        export type RequestBody = API.Push;
+        namespace Responses {
+            export type $200 = API.Push;
+        }
+    }
     namespace SchemaRetrieve {
         namespace Responses {
             export type $200 = {
                 [name: string]: any
+            }
+        }
+    }
+    namespace StateTypesList {
+        namespace Parameters {
+            export type Page = number;
+        }
+        export type QueryParameters = {
+            page?: Parameters.Page
+        }
+        namespace Responses {
+            export type $200 = {
+                /**
+                 * example:
+                 * 123
+                 */
+                count?: number
+                next?: string | null
+                previous?: string | null
+                results?: API.StateType[]
+            }
+        }
+    }
+    namespace StatesList {
+        namespace Parameters {
+            export type Page = number;
+        }
+        export type QueryParameters = {
+            page?: Parameters.Page
+        }
+        namespace Responses {
+            export type $200 = {
+                /**
+                 * example:
+                 * 123
+                 */
+                count?: number
+                next?: string | null
+                previous?: string | null
+                results?: API.State[]
             }
         }
     }
