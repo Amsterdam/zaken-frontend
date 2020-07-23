@@ -43,17 +43,6 @@ export const useCaseTypes = () => {
   })
 }
 
-export const useCaseStates = () => {
-  const handleError = useErrorHandler()
-  // TODO fix when API.CaseState is reintroduced
-  return useApiRequest<APIListResponse<any>>({
-    url: makeGatewayUrl("states"),
-    groupName: "caseStates",
-    handleError,
-    getHeaders
-  })
-}
-
 export const useBAG = (bagId: string) => {
   const handleError = useErrorHandler()
   return useApiRequest<BAGAddressResponse>({
