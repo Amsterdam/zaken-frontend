@@ -32,5 +32,5 @@ RUN ls -la $DIR/builds
 FROM nginx:stable-alpine
 ADD nginx.conf /etc/nginx/nginx.conf
 COPY --from=builder /var/www/builds /var/www
-RUN ls -la /var/www/builds
+RUN ls -la /var/www/
 CMD nginx -g 'daemon off;'
