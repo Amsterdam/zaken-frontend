@@ -7,11 +7,11 @@ type Props = {
 }
 
 const BAGDetails: React.FC<Props> = ({ bagID }) => {
-  const { data } = useBAG(bagID)
+  const { data, isBusy } = useBAG(bagID)
   const { _links, centroid, ...strippedData } = data?.results[0] ?? {}
 
   // @ts-ignore
-  return <Details title="BAG" values={strippedData} />
+  return <Details isLoading={isBusy} title="Basis administratie gebouwen" values={strippedData} />
 }
 
 export default BAGDetails

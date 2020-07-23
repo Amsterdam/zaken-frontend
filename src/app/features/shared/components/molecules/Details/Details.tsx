@@ -2,7 +2,10 @@ import React from "react"
 import { Heading, themeColor, themeSpacing } from "@datapunt/asc-ui"
 import styled from "styled-components"
 
+import SmallSkeleton from "app/features/shared/components/atoms/Skeleton/SmallSkeleton"
+
 type Props = {
+  isLoading?: boolean
   title?: string
   values: Record<string, string|number|JSX.Element|undefined|null>
 }
@@ -30,18 +33,43 @@ const StyledTD = styled.td`
 const capitalize = (str: string) => str.replace(/^\w/, c => c.toUpperCase())
 const humanize = (str: string) => capitalize(str.replace(/_/g, " "))
 
-const Details: React.FC<Props> = ({ title, values }) => (<>
-  { title && <StyledHeading>{title}</StyledHeading> }
+const LoadingRows: React.FC = () => <>
+  <StyledTR>
+    <StyledTD><SmallSkeleton /></StyledTD>
+    <StyledTD><SmallSkeleton /></StyledTD>
+  </StyledTR>
+  <StyledTR>
+    <StyledTD><SmallSkeleton /></StyledTD>
+    <StyledTD><SmallSkeleton /></StyledTD>
+  </StyledTR>
+  <StyledTR>
+    <StyledTD><SmallSkeleton /></StyledTD>
+    <StyledTD><SmallSkeleton /></StyledTD>
+  </StyledTR>
+  <StyledTR>
+    <StyledTD><SmallSkeleton /></StyledTD>
+    <StyledTD><SmallSkeleton /></StyledTD>
+  </StyledTR>
+  <StyledTR>
+    <StyledTD><SmallSkeleton /></StyledTD>
+    <StyledTD><SmallSkeleton /></StyledTD>
+  </StyledTR>
+</>
+
+const Details: React.FC<Props> = ({  isLoading, title, values }) => (<>
+  { title && <StyledHeading>{ isLoading ? <SmallSkeleton height={10} /> : title}</StyledHeading> }
   <StyledTable>
     <tbody>
-    { Object
-      .entries(values)
-      .map(([key, value]) => (
-        <StyledTR key={key}>
-          <StyledTD>{ humanize(key) }</StyledTD>
-          <StyledTD>{ value?.toString() ?? "-" }</StyledTD>
-        </StyledTR>
-      )) }
+    { isLoading
+      ? <LoadingRows />
+      : Object
+        .entries(values)
+        .map(([key, value]) => (
+          <StyledTR key={key}>
+            <StyledTD>{ humanize(key) }</StyledTD>
+            <StyledTD>{ value?.toString() ?? "-" }</StyledTD>
+          </StyledTR>
+        )) }
     </tbody>
   </StyledTable>
 </>)

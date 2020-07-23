@@ -8,7 +8,6 @@ import ActionButtonWrap from "app/features/shared/components/atoms/ActionButtonW
 import ConfirmButton from "app/features/shared/components/molecules/ConfirmButton/ConfirmButton"
 
 import Form from "app/features/cases/components/organisms/Form/Form"
-import BagMap from "app/features/cases/components/organisms/BagMap/BagMap"
 
 import { useEditPage } from "./hooks/useEditPage"
 
@@ -41,7 +40,6 @@ const EditPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
         isLoading={isLoading}
         initialValues={initialValues}
       />
-      { !isLoading && (<BagMap bagId={initialValues.address.bag_id} />) }
     </DefaultLayout>
   )
 }

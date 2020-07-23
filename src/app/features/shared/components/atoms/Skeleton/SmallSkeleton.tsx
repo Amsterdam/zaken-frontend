@@ -3,6 +3,7 @@ import styled, { keyframes } from "styled-components"
 import { themeColor, themeSpacing } from "@datapunt/asc-ui"
 
 type StyledDivProps = {
+  height: number
   width: number
 }
 
@@ -13,7 +14,7 @@ const backgroundAnimation = keyframes`
 `
 
 const StyledDiv = styled.div<StyledDivProps>`  
-  height: ${ themeSpacing(5) };
+  height: ${ props => themeSpacing(props.height) };
   width: ${ props => props.width }px;  
   max-width: 100%;
   
@@ -24,12 +25,13 @@ const StyledDiv = styled.div<StyledDivProps>`
 `
 
 type Props = {
+  height?: number
   maxRandomWidth?: number
 }
 
-const SmallSkeleton: React.FC<Props> = ({ maxRandomWidth = 100 }) => {
+const SmallSkeleton: React.FC<Props> = ({ maxRandomWidth = 100, height = 5 }) => {
   const width = useMemo(() => Math.round(Math.random() * (maxRandomWidth - 50) ) + 50, [maxRandomWidth])
-  return <StyledDiv width={width} />
+  return <StyledDiv width={width} height={height} />
 }
 
 export default SmallSkeleton
