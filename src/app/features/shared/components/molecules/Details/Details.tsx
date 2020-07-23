@@ -4,7 +4,7 @@ import styled from "styled-components"
 
 type Props = {
   title?: string
-  values: Record<string, string|number>
+  values: Record<string, string|number|JSX.Element|undefined|null>
 }
 
 const StyledTable = styled.table`
@@ -12,7 +12,7 @@ const StyledTable = styled.table`
 `
 
 const StyledTD = styled.td`
-  padding: ${ themeSpacing(2) } 0;
+  padding: ${ themeSpacing(3) } 0;
   border-bottom: 1px solid ${ themeColor("tint", "level3") };
   
   &:nth-child(1) { white-space: nowrap; padding-right: ${ themeSpacing(2) } } 

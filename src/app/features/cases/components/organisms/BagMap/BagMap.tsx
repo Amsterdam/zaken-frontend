@@ -11,13 +11,14 @@ type Props = {
 }
 
 const StyledIFrame = styled.iframe`
+  border: none;
   flex: 1;
+  height: 100%;
 `
 
 const Wrapper = styled.div`
   display: flex;
-  min-width: 300px;
-  min-height: 300px;
+  height: 100%;
 `
 
 const BagMap: React.FC<Props> = ({ bagId, zoom = 30 }) => {
