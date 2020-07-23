@@ -18,8 +18,8 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
     getCacheItem,
     setCacheItem,
     clearCache,
-    pushRequest,
-    isPendingRequest
+    pushRequestInQueue,
+    isRequestPendingInQueue
   } = useContext(ApiContext)[groupName]
 
   /**
@@ -53,8 +53,8 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
    * Queues an API request
    */
   const queueRequest = useCallback(async (method: Method, payload?: Payload, onSuccess?: Callback) =>
-    pushRequest(url, method, () => execRequest(method, payload, onSuccess))
-  , [ execRequest, url, pushRequest ])
+    pushRequestInQueue(url, method, () => execRequest(method, payload, onSuccess))
+  , [ execRequest, url, pushRequestInQueue ])
 
   /**
    * Define HTTP methods
@@ -73,7 +73,7 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
 
   return {
     data,
-    isBusy: isPendingRequest(url, "get"),
+    isBusy: isRequestPendingInQueue(url, "get"),
 
     execGet,
     execPost,
