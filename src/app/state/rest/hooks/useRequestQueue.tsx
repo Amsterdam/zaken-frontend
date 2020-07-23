@@ -16,8 +16,8 @@ type Action =
   | { type: "SHIFT" }
 
 export type RequestQueue = {
-  isPendingRequest: (url: string, method: string) => boolean
-  pushRequest: (url: string, method: string, promise: QueuedPromise) => void
+  isRequestPendingInQueue: (url: string, method: string) => boolean
+  pushRequestInQueue: (url: string, method: string, promise: QueuedPromise) => void
 }
 
 const reducer = produce((draft: State, action: Action) => {
@@ -39,9 +39,9 @@ const isPending = (state: Readonly<State>, url: string, method: string): boolean
 export const useRequestQueue = () => {
   const [isBusy, setIsBusy] = useState(false)
   const [state, dispatch] = useReducer(reducer, [])
-  const isPendingRequest = useCallback((url, method) => isPending(state, url, method), [ state ])
+  const isRequestPendingInQueue = useCallback((url, method) => isPending(state, url, method), [ state ])
 
-  const pushRequest = useCallback(
+  const pushRequestInQueue = useCallback(
     (url: string, method: string, promise: QueuedPromise) => { dispatch({ type: "PUSH", item: { url, method, promise  } }) },
     [ dispatch ]
   )
@@ -64,5 +64,5 @@ export const useRequestQueue = () => {
     }
   }, [ state, shiftRequest, setIsBusy, isBusy ])
 
-  return { isPendingRequest, pushRequest }
+  return { isRequestPendingInQueue, pushRequestInQueue }
 }
