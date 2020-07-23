@@ -1,7 +1,8 @@
 import React from "react"
 import { ScaffoldForm } from "amsterdam-react-final-form"
 
-import Fields from "./Fields"
+import ScaffoldFields from "app/features/shared/components/molecules/Form/ScaffoldFields"
+import scaffoldProps from "./scaffold"
 
 import type { CaseVisit } from "../../../hooks/useCaseVisits"
 
@@ -17,7 +18,7 @@ const Form: React.FC<Props> = ({ isLoading, onSubmit, initialValues }) => (
     onSubmit={ onSubmit }
     initialValues={ initialValues }
   >
-    <Fields initialValues={ initialValues } />
+    <ScaffoldFields { ...scaffoldProps } />
   </ScaffoldForm>
 )
 
