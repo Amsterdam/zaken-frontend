@@ -13,6 +13,7 @@ type Props = {
 const StyledIFrame = styled.iframe`
   border: none;
   flex: 1;
+  max-height: 70vh;
   height: 100%;
 `
 
@@ -21,7 +22,7 @@ const Wrapper = styled.div`
   height: 100%;
 `
 
-const BagMap: React.FC<Props> = ({ bagId, zoom = 30 }) => {
+const BagMap: React.FC<Props> = ({ bagId, zoom = 20 }) => {
   const { data } = useBAG(bagId)
 
   if (data === undefined) {

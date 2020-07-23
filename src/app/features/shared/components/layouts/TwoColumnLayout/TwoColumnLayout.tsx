@@ -13,7 +13,9 @@ const Wrap = styled.div`
 
 const Column = styled.div`  
   padding: 0 ${ themeSpacing(GUTTER) };
-  flex: 50%;
+  
+  &:nth-child(1) { flex: 40%; }
+  &:nth-child(2) { flex: 60%; }  
 `
 
 type Props = {
