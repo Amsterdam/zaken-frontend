@@ -1,22 +1,35 @@
 import React from "react"
+
 import { ApiCache, useApiCache } from "../hooks/useApiCache"
 import { RequestQueue, useRequestQueue } from "../hooks/useRequestQueue"
+import { noopContext } from "./noopContext"
 
-const noopUndefined = () => undefined
-const noopBoolean = () => false
-export const ApiContext = React.createContext<ApiCache & RequestQueue>({
-  isPendingRequest: noopBoolean,
-  pushRequest: noopUndefined,
-  getCacheItem: noopUndefined,
-  setCacheItem: noopUndefined,
-  clearCache: noopUndefined
+import { ApiGroup } from "../index"
+
+type GroupedContext = Record<ApiGroup, ApiCache & RequestQueue>
+export const ApiContext = React.createContext<GroupedContext>({
+  cases: noopContext,
+  caseTypes: noopContext,
+  caseStates: noopContext
 })
 
 const ApiProvider: React.FC = ({ children }) => {
-  const cache = useApiCache()
-  const queue = useRequestQueue()
+  const value: GroupedContext = {
+    cases: {
+      ...useApiCache(),
+      ...useRequestQueue()
+    },
+    caseTypes: {
+      ...useApiCache(),
+      ...useRequestQueue()
+    },
+    caseStates: {
+      ...useApiCache(),
+      ...useRequestQueue()
+    }
+  }
 
-  return <ApiContext.Provider value={{ ...cache, ...queue }}>
+  return <ApiContext.Provider value={value}>
     {children}
   </ApiContext.Provider>
 }

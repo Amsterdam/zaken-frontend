@@ -2,10 +2,11 @@ import axios, { AxiosError, Method } from "axios"
 import { useCallback, useEffect, useContext } from "react"
 
 import { ApiContext } from "../provider/ApiProvider"
+import { ApiGroup } from "../index"
 
 type Config = {
   url: string
-  groupName: string
+  groupName: ApiGroup
   handleError?: ( error: AxiosError ) => void
   getHeaders?: () => Record<string, string>
 }
@@ -19,7 +20,7 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
     clearCache,
     pushRequest,
     isPendingRequest
-  } = useContext(ApiContext)
+  } = useContext(ApiContext)[groupName]
 
   /**
    * Executes an API request
@@ -34,9 +35,9 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
       })
 
       if (method !== "get") {
-        clearCache(groupName)
+        clearCache()
       } else {
-        setCacheItem(groupName, url, response.data)
+        setCacheItem(url, response.data)
       }
       if (onSuccess) {
         onSuccess()
@@ -46,7 +47,7 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
         handleError(error)
       }
     }
-  }, [clearCache, setCacheItem, url, groupName, handleError, getHeaders])
+  }, [clearCache, setCacheItem, url, handleError, getHeaders])
 
   /**
    * Queues an API request
@@ -65,7 +66,7 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
   const execDelete = useCallback((onSuccess?: Callback) => queueRequest("delete", undefined, onSuccess), [ queueRequest ])
 
   // reFetch whenever our cache is invalidated
-  const data = getCacheItem(groupName, url) as Schema
+  const data = getCacheItem(url) as Schema
   useEffect(() => {
     if (!data) { execGet() }
   }, [ execGet, data ])
