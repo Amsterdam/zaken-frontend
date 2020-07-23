@@ -1,23 +1,26 @@
 import React from "react"
 import qs from "qs"
-import styled from "styled-components"
-
+import styled, { css } from "styled-components"
 
 import { useBAG } from "app/state/rest"
+import { themeColor } from "@datapunt/asc-ui"
 
 type Props = {
   bagId: string
   zoom?: number
 }
 
-const StyledIFrame = styled.iframe`
-  border: none;
+export const iframeCSS = css`
+  border: 2px solid ${ themeColor("tint", "level3") };
   flex: 1;
   max-height: 70vh;
   height: 100%;
 `
 
-const Wrapper = styled.div`
+const StyledIFrame = styled.iframe`${ iframeCSS }`
+const StyledSkeleton = styled.div`${ iframeCSS }`
+
+const Wrapper = styled.div`    
   display: flex;
   height: 100%;
 `
@@ -43,5 +46,7 @@ const BagMap: React.FC<Props> = ({ bagId, zoom = 20 }) => {
     </Wrapper>
   )
 }
+
+export const BagMapSkeleton: React.FC = () => (<Wrapper><StyledSkeleton /></Wrapper>)
 
 export default BagMap

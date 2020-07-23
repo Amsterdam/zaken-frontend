@@ -5,6 +5,7 @@ import styled from "styled-components"
 import SmallSkeleton from "app/features/shared/components/atoms/Skeleton/SmallSkeleton"
 
 type Props = {
+  numLoadingRows?: number
   isLoading?: boolean
   title?: string
   values: Record<string, string|number|JSX.Element|undefined|null>
@@ -30,44 +31,30 @@ const StyledTD = styled.td`
   &:nth-child(2) { width:100%; } 
 `
 
-const capitalize = (str: string) => str.replace(/^\w/, c => c.toUpperCase())
-const humanize = (str: string) => capitalize(str.replace(/_/g, " "))
-
-const LoadingRows: React.FC = () => <>
-  <StyledTR>
-    <StyledTD><SmallSkeleton /></StyledTD>
-    <StyledTD><SmallSkeleton /></StyledTD>
-  </StyledTR>
-  <StyledTR>
-    <StyledTD><SmallSkeleton /></StyledTD>
-    <StyledTD><SmallSkeleton /></StyledTD>
-  </StyledTR>
-  <StyledTR>
-    <StyledTD><SmallSkeleton /></StyledTD>
-    <StyledTD><SmallSkeleton /></StyledTD>
-  </StyledTR>
-  <StyledTR>
-    <StyledTD><SmallSkeleton /></StyledTD>
-    <StyledTD><SmallSkeleton /></StyledTD>
-  </StyledTR>
-  <StyledTR>
-    <StyledTD><SmallSkeleton /></StyledTD>
-    <StyledTD><SmallSkeleton /></StyledTD>
-  </StyledTR>
+type LoadingRowsProps = {
+  numRows: number
+}
+const LoadingRows: React.FC<LoadingRowsProps> = ({ numRows }) => <>
+  { [...Array(numRows)].map(_ => (
+    <StyledTR>
+      <StyledTD><SmallSkeleton /></StyledTD>
+      <StyledTD><SmallSkeleton /></StyledTD>
+    </StyledTR>
+  )) }
 </>
 
-const Details: React.FC<Props> = ({  isLoading, title, values }) => (<>
+const Details: React.FC<Props> = ({  isLoading, numLoadingRows, title, values }) => (<>
   { title && <StyledHeading>{ isLoading ? <SmallSkeleton height={10} /> : title}</StyledHeading> }
   <StyledTable>
     <tbody>
     { isLoading
-      ? <LoadingRows />
+      ? <LoadingRows numRows={numLoadingRows ?? 5} />
       : Object
         .entries(values)
         .map(([key, value]) => (
           <StyledTR key={key}>
-            <StyledTD>{ humanize(key) }</StyledTD>
-            <StyledTD>{ value?.toString() ?? "-" }</StyledTD>
+            <StyledTD>{ key }</StyledTD>
+            <StyledTD>{ value?.toString !== undefined && value?.toString() !== "" ? value.toString() : "-" }</StyledTD>
           </StyledTR>
         )) }
     </tbody>

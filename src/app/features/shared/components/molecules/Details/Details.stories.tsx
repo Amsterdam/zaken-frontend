@@ -40,5 +40,5 @@ export const LoadingExample = () =>
 export const LoadingAliasExample = () =>
   <div>
     <p>Example of a basic details component</p>
-    <LoadingDetails />
+    <LoadingDetails numRows={10} />
   </div>

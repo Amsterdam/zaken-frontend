@@ -56,7 +56,7 @@ export const useBAG = (bagId: string) => {
   const handleError = useErrorHandler()
   return useApiRequest<BAGAddressResponse>({
     url: `https://api.data.amsterdam.nl/atlas/search/adres/?q=${ bagId }`,
-    groupName: "caseStates",
+    groupName: "dataPunt",
     handleError
   })
 }

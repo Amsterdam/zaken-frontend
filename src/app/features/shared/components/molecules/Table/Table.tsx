@@ -12,6 +12,7 @@ import FixedTableCell from "./components/TableCell/FixedTableCell"
 type CellContent = string | number | JSX.Element | undefined
 
 type Props = {
+  numLoadingRows?: number
   loading?: boolean
   hasFixedColumn?: boolean
   columns: Array<{header?: CellContent, minWidth: number}>
@@ -55,9 +56,9 @@ const NoValuesPlaceholder = styled(TableCell)`
 const createLoadingData = (numColumns: number, numRows: number = 5) =>
   [...Array(numRows)].map(_ => [...Array(numColumns)].map(_ => ""))
 
-const Table: React.FC<Props> = ({ columns, loading, hasFixedColumn, noValuesPlaceholder, ...restProps }) => {
+const Table: React.FC<Props> = ({ columns, loading, numLoadingRows, hasFixedColumn, noValuesPlaceholder, ...restProps }) => {
   const data = loading
-    ? createLoadingData(columns.length)
+    ? createLoadingData(columns.length, numLoadingRows)
     : restProps.data
 
   const fixedColumnWidth = hasFixedColumn

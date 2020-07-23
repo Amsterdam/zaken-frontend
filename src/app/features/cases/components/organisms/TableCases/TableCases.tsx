@@ -36,6 +36,7 @@ const TableCases: React.FC = () => {
     columns={columns}
     data={mappedData}
     loading={data === undefined || isBusy}
+    numLoadingRows={10}
     hasFixedColumn={true}
     noValuesPlaceholder={"Er zijn (nog) geen zaken gevonden"}
   />)

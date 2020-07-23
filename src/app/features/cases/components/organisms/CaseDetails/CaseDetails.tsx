@@ -8,10 +8,11 @@ type Props = {
 const CaseDetails: React.FC<Props> = ({ caseData }) => {
   const values = useMemo(() => ({
     "Start datum": caseData.start_date,
-    "Eind datum": caseData.end_date
+    "Eind datum": caseData.end_date,
+    "Zaaktype": caseData.case_type.name
   }), [ caseData ])
 
-  return <Details title={caseData.address.full_address} values={values} />
+  return <Details title="Zaak details" values={values} />
 }
 
 export default CaseDetails
