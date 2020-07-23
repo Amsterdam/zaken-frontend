@@ -27,7 +27,9 @@ RUN cat .env.acceptance > .env.production.local
 RUN npm run build
 RUN mv $DIR/build/* $DIR/builds/acceptance/
 
+RUN ls -la $DIR/builds
+
 FROM nginx:stable-alpine
 ADD nginx.conf /etc/nginx/nginx.conf
-COPY --from=builder /var/www/build /var/www
+COPY --from=builder /var/www/builds /var/www
 CMD nginx -g 'daemon off;'
