@@ -1,10 +1,15 @@
 import useApiRequest from "./hooks/useApiRequest"
-import { useErrorHandler, makeGatewayUrl, getHeaders } from "./hooks/utils/utils"
+import { getHeaders, makeGatewayUrl, useErrorHandler } from "./hooks/utils/utils"
 
 type APIListResponse<T> = {
   count: number
   results: T[]
 }
+
+export type ApiGroup =
+  | "cases"
+  | "caseTypes"
+  | "caseStates"
 
 /**
  * Please configure your endpoints here:
@@ -34,7 +39,7 @@ export const useCaseTypes = () => {
   const handleError = useErrorHandler()
   return useApiRequest<APIListResponse<API.CaseType>>({
     url: makeGatewayUrl("case-types"),
-    groupName: "case-types",
+    groupName: "caseTypes",
     handleError,
     getHeaders
   })
@@ -45,7 +50,7 @@ export const useCaseStates = () => {
   // TODO fix when API.CaseState is reintroduced
   return useApiRequest<APIListResponse<any>>({
     url: makeGatewayUrl("states"),
-    groupName: "case-states",
+    groupName: "caseStates",
     handleError,
     getHeaders
   })

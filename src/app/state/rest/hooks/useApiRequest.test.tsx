@@ -12,7 +12,7 @@ type Pet = {
 describe("useApiRequest", () => {
   it("should perform a GET request on mount", async () => {
     const getHeaders = jest.fn()
-    const usePet = () => useApiRequest<Pet>({ url: "http://localhost/pet", groupName: "pet", getHeaders })
+    const usePet = () => useApiRequest<Pet>({ url: "http://localhost/pet", groupName: "cases", getHeaders })
 
     // Define nock scope:
     const scope = nock("http://localhost")
@@ -38,7 +38,7 @@ describe("useApiRequest", () => {
   })
 
   it("should NOT perform duplicate requests", async () => {
-    const usePet = () => useApiRequest<Pet>({ url: "http://localhost/pet", groupName: "pet" })
+    const usePet = () => useApiRequest<Pet>({ url: "http://localhost/pet", groupName: "cases" })
 
     const scope = nock("http://localhost")
       .get("/pet")
@@ -89,7 +89,7 @@ describe("useApiRequest", () => {
       (hook: any, onSuccess: () => void) => hook.execDelete(onSuccess)
     ]
   ])("should re-execute a GET after a %s", async (method, prepareScope, exec) => {
-    const usePet = () => useApiRequest<Pet>({ url: "http://localhost/pet", groupName: "pet" })
+    const usePet = () => useApiRequest<Pet>({ url: "http://localhost/pet", groupName: "cases" })
 
     const scope = nock("http://localhost")
       .get("/pet")
@@ -126,7 +126,7 @@ describe("useApiRequest", () => {
 
   it("should call the error handler when a error occurs", async () => {
     const handleError = jest.fn()
-    const usePet = () => useApiRequest<Pet>({ url: "http://localhost/pet", groupName: "pet", handleError })
+    const usePet = () => useApiRequest<Pet>({ url: "http://localhost/pet", groupName: "cases", handleError })
 
     const scope = nock("http://localhost")
       .get("/pet")
