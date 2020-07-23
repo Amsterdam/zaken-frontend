@@ -38,7 +38,7 @@ export default context("Cases", () => {
     // We need a pre-existing case to edit.
     cy.postToAPI("cases/", apiFixture)
       .then((response: any) => {
-        cy.visit(`cases/${ response.body.identification }`)
+        cy.visit(`cases/edit/${ response.body.identification }`)
         cy.autoFill(browserFixture)
         cy.getSubmitButton().click()
 
