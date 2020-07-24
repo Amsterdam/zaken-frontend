@@ -23,8 +23,7 @@ RUN npm run build
 RUN mv $DIR/build/* $DIR/builds/production/
 
 # build acceptance
-RUN cat .env.acceptance > .env.production.local
-RUN npm run build
+RUN npm run build:acc
 RUN mv $DIR/build/* $DIR/builds/acceptance/
 
 FROM nginx:stable-alpine
