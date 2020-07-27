@@ -68,11 +68,11 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
           }
           { caseData?.address.bag_id
             ? <BAGDetails bagID={caseData.address.bag_id} />
-            : <LoadingDetails numRows={16} />
+            : <LoadingDetails numRows={5} />
           }
           { finesData
             ? finesData.items.map(fine => <FineDetails fine={fine}/>)
-            : <LoadingDetails numRows={20}/>
+            : <LoadingDetails numRows={5}/>
           }
         </Column>
       </Wrap>

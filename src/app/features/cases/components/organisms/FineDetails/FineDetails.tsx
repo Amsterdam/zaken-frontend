@@ -40,7 +40,11 @@ const FineDetails: React.FC<Props> = ({ fine }) => {
     "Vorderingnummer": fine.vorderingnummer
   }), [ fine ])
 
-  return <Details title={`Vordering "${ fine.vorderingnummer }"`} values={values} />
+  return <Details
+    numInitialVisibleRows={5}
+    title={`Vordering "${ fine.vorderingnummer }"`}
+    values={values}
+  />
 }
 
 export default FineDetails

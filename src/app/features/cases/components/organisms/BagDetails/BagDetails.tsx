@@ -31,6 +31,7 @@ const BAGDetails: React.FC<Props> = ({ bagID }) => {
   }), [ result ])
 
   return <Details
+    numInitialVisibleRows={5}
     title="Basis Administratie Gebouwen"
     values={values}
   />

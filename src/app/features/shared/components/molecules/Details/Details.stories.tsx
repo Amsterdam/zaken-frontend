@@ -10,35 +10,43 @@ export default {
 
 
 export const Example = () =>
-  <div>
-    <Details
-      title="Ultricies Parturient Amet"
-      values={{
-        "Malesuada Vestibulum": "Elit Mattis",
-        "Ultricies Parturient": "Malesuada Dapibus",
-        "Sollicitudin Lorem Fermentum": 1000,
-        "Commodo Fringilla": "Inceptos Pharetra"
-      }}
-    />
-  </div>
+  <Details
+    title="Ultricies Parturient Amet"
+    values={{
+      "Malesuada Vestibulum": "Elit Mattis",
+      "Ultricies Parturient": "Malesuada Dapibus",
+      "Sollicitudin Lorem Fermentum": 1000,
+      "Commodo Fringilla": "Inceptos Pharetra"
+    }}
+  />
 
 
 export const LoadingExample = () =>
-  <div>
-    <Details
-      isLoading={true}
-      title="Ultricies Parturient Amet"
-      values={{
-        "Malesuada Vestibulum": "Elit Mattis",
-        "Ultricies Parturient": "Malesuada Dapibus",
-        "Sollicitudin Lorem Fermentum": 1000,
-        "Commodo Fringilla": "Inceptos Pharetra"
-      }}
-    />
-  </div>
+  <Details
+    isLoading={true}
+    title="Ultricies Parturient Amet"
+    values={{
+      "Malesuada Vestibulum": "Elit Mattis",
+      "Ultricies Parturient": "Malesuada Dapibus",
+      "Sollicitudin Lorem Fermentum": 1000,
+      "Commodo Fringilla": "Inceptos Pharetra"
+    }}
+  />
 
 export const LoadingAliasExample = () =>
   <div>
     <p>Example of a basic details component</p>
     <LoadingDetails numRows={10} />
   </div>
+
+
+export const CollapsibleExample = () => <Details
+  numInitialVisibleRows={2}
+  title="Ultricies Parturient Amet"
+  values={{
+    "Malesuada Vestibulum": "Elit Mattis",
+    "Ultricies Parturient": "Malesuada Dapibus",
+    "Sollicitudin Lorem Fermentum": 1000,
+    "Commodo Fringilla": "Inceptos Pharetra"
+  }}
+/>
