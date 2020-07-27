@@ -22,14 +22,15 @@ const fields: Fields = {
     type: "TextAreaField",
     props: {
       name: "note",
-      label: "notitie"
+      hint: "Sed posuere consectetur est at lobortis. Vestibulum id ligula porta felis euismod semper.",
+      label: "Notitie"
     }
   },
   note0: {
     type: "TextAreaField",
     props: {
       name: "note0",
-      label: "notitie TZH 1",
+      label: "Notitie toezichthouder 1",
       disabled: true
     }
   },
@@ -46,7 +47,7 @@ const fields: Fields = {
     type: "TextAreaField",
     props: {
       name: "note1",
-      label: "notitie TZH 2",
+      label: "Notitie toezichthouder 1",
       disabled: true
     }
   },
