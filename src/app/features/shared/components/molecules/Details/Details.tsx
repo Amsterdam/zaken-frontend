@@ -1,8 +1,9 @@
 import React, { useCallback, useState } from "react"
-import { Button, Heading, themeColor, themeSpacing } from "@datapunt/asc-ui"
+import { Button, themeColor, themeSpacing } from "@datapunt/asc-ui"
 import styled from "styled-components"
 
 import SmallSkeleton from "app/features/shared/components/atoms/Skeleton/SmallSkeleton"
+import Heading from "app/features/shared/components/atoms/Heading/Heading"
 
 type Props = {
   numLoadingRows?: number
@@ -11,10 +12,6 @@ type Props = {
   title?: string
   values: Record<string, string|number|JSX.Element|undefined|null>
 }
-
-const StyledHeading = styled(Heading)`
-  margin-bottom: ${ themeSpacing(4) };
-`
 
 const StyledTable = styled.table`
   border-spacing:0;
@@ -62,7 +59,7 @@ const Details: React.FC<Props> = ({  isLoading, numLoadingRows, numInitialVisibl
     : valueEntries
 
   return (<>
-    { title && <StyledHeading>{ isLoading ? <SmallSkeleton height={10} /> : title}</StyledHeading> }
+    { title && <Heading>{ isLoading ? <SmallSkeleton height={10} /> : title}</Heading> }
     <StyledTable>
       <tbody>
       { isLoading

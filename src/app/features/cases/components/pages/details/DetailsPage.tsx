@@ -1,7 +1,7 @@
 import React from "react"
 import { RouteComponentProps } from "@reach/router"
 import styled from "styled-components"
-import { breakpoint, Button, Heading, themeSpacing } from "@datapunt/asc-ui"
+import { breakpoint, Button, themeSpacing } from "@datapunt/asc-ui"
 import { Document } from "@datapunt/asc-assets/lib"
 
 import { useCase, useCaseFines } from "app/state/rest"
@@ -12,11 +12,14 @@ import to from "app/features/shared/routing/to"
 import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
 import SmallSkeleton from "app/features/shared/components/atoms/Skeleton/SmallSkeleton"
 import LoadingDetails from "app/features/shared/components/molecules/Details/LoadingDetails"
+import Heading from "app/features/shared/components/atoms/Heading/Heading"
 
 import BagMap, { BagMapSkeleton } from "app/features/cases/components/organisms/BagMap/BagMap"
 import BAGDetails from "app/features/cases/components/organisms/BagDetails/BagDetails"
 import FineDetails from "app/features/cases/components/organisms/FineDetails/FineDetails"
 import CaseDetails from "app/features/cases/components/organisms/CaseDetails/CaseDetails"
+
+import TableCaseVisits from "app/features/caseVisits/components/organisms/TableCaseVisits/TableCaseVisits"
 
 type Props = {
   id: API.Case["identification"]
@@ -24,12 +27,13 @@ type Props = {
 
 const GUTTER = 6
 
-const Wrap = styled.div`
+const ColumnWrap = styled.div`
   display:flex;
   margin: 0 -${ themeSpacing(GUTTER) };  
 `
 
-const Column = styled.div`  
+const Column = styled.div`
+  flex:1;
   padding: 0 ${ themeSpacing(GUTTER) };
   
   @media screen and ${ breakpoint("min-width", "mobileS") } {
@@ -54,7 +58,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
           <Button as="span" variant="primary" iconLeft={<Document />}>Wijzig deze zaak</Button>
         </ButtonLink>
       </ActionButtonWrap>
-      <Wrap>
+      <ColumnWrap>
         <Column>
           { caseData?.address.bag_id
             ? <BagMap bagId={caseData.address.bag_id} />
@@ -75,7 +79,9 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
             : <LoadingDetails numRows={5}/>
           }
         </Column>
-      </Wrap>
+      </ColumnWrap>
+      <Heading>Bezoeken</Heading>
+      <TableCaseVisits />
     </DefaultLayout>
   )
 }
