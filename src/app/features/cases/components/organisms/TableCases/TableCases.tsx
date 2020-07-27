@@ -10,22 +10,26 @@ import { useCases } from "app/state/rest"
 
 type ButtonProps = {
   href: string
+  text: string
 }
-const OpenButton: React.FC<ButtonProps> = ({ href }) =>
+const OpenButton: React.FC<ButtonProps> = ({ href, text }) =>
   <ButtonLink to={href}>
-    <Button as="span" variant="textButton" iconSize={14} iconLeft={<ChevronRight />}>Open</Button>
+    <Button as="span" variant="textButton" iconSize={14} iconLeft={<ChevronRight />}>{ text }</Button>
   </ButtonLink>
 
 const columns = [
   { header:"Startdatum", minWidth: 100 },
   { header:"Adres", minWidth: 300 },
-  { minWidth: 90 }
+  { minWidth: 210 }
 ]
 
 const mapData = (data: API.Case) => [
   data.start_date ?? "-",
   data.address.full_address ?? "-",
-  <OpenButton href={to("/cases/:id", { id: data.identification })} />
+  <>
+    <OpenButton href={to("/cases/:id", { id: data.identification })} text="Open" />&nbsp;
+    <OpenButton href={to("/case-visits/:caseId", { caseId: data.identification })} text="Bezoeken" />
+  </>
 ]
 
 const TableCases: React.FC = () => {
