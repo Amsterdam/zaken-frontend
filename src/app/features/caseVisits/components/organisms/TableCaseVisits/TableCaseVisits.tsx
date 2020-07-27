@@ -28,7 +28,7 @@ const mapData = (data: CaseVisit) => [
   data.date.toString().substring(0, 15),
   data.employees.join(", "),
   data.published ? "Ja" : "Nee",
-  data.published ? undefined : <OpenButton href={to("/case-visits/:id/edit", data)} text="afronden" />
+  data.published ? undefined : <OpenButton href={to("/case-visits/:id/edit", { id: data.case_id })} text="afronden" />
 ]
 
 const TableCases: React.FC = () => {

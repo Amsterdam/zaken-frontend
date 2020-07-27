@@ -1,6 +1,6 @@
 export type CaseVisit = {
   id: number
-  case_id: number
+  case_id: string
   address: string
   employees: string[]
   date: Date
@@ -9,10 +9,10 @@ export type CaseVisit = {
   checks: { label: string, checked: boolean }[]
   published: boolean
 }
-const caseVisits = [
+const caseVisits: CaseVisit[] = [
   {
     id: 8,
-    case_id: 999,
+    case_id: "999",
     address: "Alfastraat 12b",
     employees: ["Anne Aa", "Benne Bb", "Carlo Cc"],
     date: new Date(),
@@ -28,7 +28,7 @@ const caseVisits = [
   },
   {
     id: 9,
-    case_id: 999,
+    case_id: "999",
     address: "Alfastraat 12b",
     employees: ["Danny Dd", "Eve Ee", "Frans Ff"],
     date: new Date(),
@@ -44,4 +44,4 @@ const caseVisits = [
   }
 ]
 export default (): CaseVisit[] => caseVisits
-export const useCaseVisit = (id: number): CaseVisit => caseVisits[0]
+export const useCaseVisit = (id: string): CaseVisit => caseVisits[0]

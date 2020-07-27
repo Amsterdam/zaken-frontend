@@ -27,8 +27,8 @@ const mapData = (data: API.Case) => [
   data.start_date ?? "-",
   data.address.full_address ?? "-",
   <>
-    <OpenButton href={to("/cases/:id", { id: data.id })} text="open" />
-    <OpenButton href={to("/case-visits/:caseId", { caseId: data.id })} text="bezoeken" />
+    <OpenButton href={to("/cases/:id", { id: data.identification })} text="Open" />&nbsp;
+    <OpenButton href={to("/case-visits/:caseId", { caseId: data.identification })} text="Bezoeken" />
   </>
 ]
 
