@@ -23,6 +23,45 @@ declare namespace API {
         readonly id: number
         name: string
     }
+    export type Fine = {
+        identificatienummer: string
+        vorderingnummer: number
+        jaar: number
+        soort_vordering: SoortVorderingEnum
+        omschrijving_soort_vordering: string
+        indicatie_publiekrechtelijk: IndicatiePubliekrechtelijkEnum
+        subjectnr: number // int64
+        opgemaaktenaam: string
+        subjectnr_opdrachtgever: number
+        opgemaaktenaam_opdrachtgever: string
+        runnr: number
+        omschrijving_run: string
+        code_runwijze: string
+        omschrijving_runwijze: string
+        dagtekening: string // date-time
+        vervaldatum: string // date-time
+        indicatie_combi_dwangbevel: IndicatieCombiDwangbevelEnum
+        notatekst: string | null
+        omschrijving: string | null
+        invorderingstatus: string
+        indicatie_bet_hern_bevel: IndicatieBetHernBevelEnum
+        landcode: string | null
+        kenteken: string | null
+        bonnummer: string | null
+        bedrag_opgelegd: string // decimal
+        bedrag_open_post_incl_rente: string // decimal
+        totaalbedrag_open_kosten: string // decimal
+        bedrag_open_rente: string // decimal
+        reden_opschorting: string | null
+        omschrijving_1: string | null
+        omschrijving_2: string | null
+    }
+    export type FineList = {
+        items: Fine[]
+    }
+    export type IndicatieBetHernBevelEnum = "J" | "N";
+    export type IndicatieCombiDwangbevelEnum = "J" | "N" | "O";
+    export type IndicatiePubliekrechtelijkEnum = "J" | "N";
     export type OIDCAuthenticate = {
         code: string
     }
@@ -61,6 +100,7 @@ declare namespace API {
         identification: string
         check_action: boolean
     }
+    export type SoortVorderingEnum = "PBF" | "PBN" | "PRV" | "SOC";
     export type State = {
         readonly id: number
         state_type: StateType
@@ -141,7 +181,7 @@ declare namespace Paths {
             identification: Parameters.Identification
         }
         namespace Responses {
-            export type $200 = API.Case;
+            export type $200 = API.FineList;
         }
     }
     namespace CasesList {

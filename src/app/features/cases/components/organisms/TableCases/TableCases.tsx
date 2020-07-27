@@ -18,15 +18,13 @@ const OpenButton: React.FC<ButtonProps> = ({ href }) =>
 
 const columns = [
   { header:"Startdatum", minWidth: 100 },
-  { header:"Einddatum", minWidth: 100 },
   { header:"Adres", minWidth: 300 },
   { minWidth: 90 }
 ]
 
 const mapData = (data: API.Case) => [
   data.start_date ?? "-",
-  data.end_date ?? "-",
-  data.address.street_name ?? "-",
+  data.address.full_address ?? "-",
   <OpenButton href={to("/cases/:id", { id: data.identification })} />
 ]
 
@@ -38,6 +36,7 @@ const TableCases: React.FC = () => {
     columns={columns}
     data={mappedData}
     loading={data === undefined || isBusy}
+    numLoadingRows={10}
     hasFixedColumn={true}
     noValuesPlaceholder={"Er zijn (nog) geen zaken gevonden"}
   />)

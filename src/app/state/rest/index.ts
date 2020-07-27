@@ -1,15 +1,13 @@
 import useApiRequest from "./hooks/useApiRequest"
 import { getHeaders, makeGatewayUrl, useErrorHandler } from "./hooks/utils/utils"
-
-type APIListResponse<T> = {
-  count: number
-  results: T[]
-}
+import { APIListResponse } from "./types/ApiListResponse"
+import { BAGAddressResponse } from "./types/BAGAddressResponse"
 
 export type ApiGroup =
   | "cases"
   | "caseTypes"
   | "caseStates"
+  | "dataPunt"
 
 /**
  * Please configure your endpoints here:
@@ -34,6 +32,15 @@ export const useCase = (id: API.Case["identification"]) => {
   })
 }
 
+export const useCaseFines = (id: API.Case["identification"]) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<API.FineList>({
+    url: makeGatewayUrl("cases", id!, "fines"),
+    groupName: "cases",
+    handleError,
+    getHeaders
+  })
+}
 
 export const useCaseTypes = () => {
   const handleError = useErrorHandler()
@@ -45,13 +52,11 @@ export const useCaseTypes = () => {
   })
 }
 
-export const useCaseStates = () => {
+export const useBAG = (bagId: string) => {
   const handleError = useErrorHandler()
-  // TODO fix when API.CaseState is reintroduced
-  return useApiRequest<APIListResponse<any>>({
-    url: makeGatewayUrl("states"),
-    groupName: "caseStates",
-    handleError,
-    getHeaders
+  return useApiRequest<BAGAddressResponse>({
+    url: `https://api.data.amsterdam.nl/atlas/search/adres/?q=${ bagId }`,
+    groupName: "dataPunt",
+    handleError
   })
 }
