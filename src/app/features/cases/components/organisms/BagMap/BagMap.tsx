@@ -3,7 +3,7 @@ import qs from "qs"
 import styled, { css } from "styled-components"
 
 import { useBAG } from "app/state/rest"
-import { themeColor } from "@datapunt/asc-ui"
+import { themeColor, themeSpacing } from "@datapunt/asc-ui"
 
 type Props = {
   bagId: string
@@ -21,8 +21,9 @@ const StyledIFrame = styled.iframe`${ iframeCSS }`
 const StyledSkeleton = styled.div`${ iframeCSS }`
 
 const Wrapper = styled.div`    
+  padding-bottom: ${ themeSpacing(4) };
   display: flex;
-  height: 100%;
+  height: 100%;  
 `
 
 const BagMap: React.FC<Props> = ({ bagId, zoom = 20 }) => {
