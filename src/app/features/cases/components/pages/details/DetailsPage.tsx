@@ -16,7 +16,7 @@ import Heading from "app/features/shared/components/atoms/Heading/Heading"
 
 import BagMap, { BagMapSkeleton } from "app/features/cases/components/organisms/BagMap/BagMap"
 import BAGDetails from "app/features/cases/components/organisms/BagDetails/BagDetails"
-import FineDetails from "app/features/cases/components/organisms/FineDetails/FineDetails"
+import FineSummary from "app/features/cases/components/organisms/FineSummary/FineSummary"
 import CaseDetails from "app/features/cases/components/organisms/CaseDetails/CaseDetails"
 
 import TableCaseVisits from "app/features/caseVisits/components/organisms/TableCaseVisits/TableCaseVisits"
@@ -29,20 +29,20 @@ const GUTTER = 6
 
 const ColumnWrap = styled.div`
   display:flex;
-  margin: 0 -${ themeSpacing(GUTTER) };  
+  margin: 0 -${ themeSpacing(GUTTER) };
 `
 
 const Column = styled.div`
   flex:1;
   padding: 0 ${ themeSpacing(GUTTER) };
-  
+
   @media screen and ${ breakpoint("min-width", "mobileS") } {
     &:nth-child(1) { display:none; }
   }
-  
+
   @media screen and ${ breakpoint("min-width", "laptop") } {
     &:nth-child(1) { flex: 40%; display: block; }
-    &:nth-child(2) { flex: 60%; }  
+    &:nth-child(2) { flex: 60%; }
   }
 `
 
@@ -74,9 +74,12 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
             ? <BAGDetails bagID={caseData.address.bag_id} />
             : <LoadingDetails numRows={5} />
           }
+          <Heading>{ finesData?.items.length > 1 ? "Invorderingsbesluiten" : "Invorderingsbesluit" }</Heading>
           { finesData
-            ? finesData.items.map(fine => <FineDetails fine={fine}/>)
-            : <LoadingDetails numRows={5}/>
+            ? finesData.items.length
+              ? finesData.items.map(fine => <FineSummary fine={fine} />)
+              : "Geen"
+            : <LoadingDetails numRows={3} title="" />
           }
         </Column>
       </ColumnWrap>
