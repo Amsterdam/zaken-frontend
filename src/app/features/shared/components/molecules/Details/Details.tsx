@@ -24,21 +24,21 @@ const StyledTR = styled.tr`
 `
 
 const StyledTD = styled.td`
-  padding: ${ themeSpacing(3) } ${ themeSpacing(1) };    
-  &:nth-child(1) { min-width: 300px; white-space: nowrap; padding-right: ${ themeSpacing(3) } } 
-  &:nth-child(2) { width:100%; } 
+  padding: ${ themeSpacing(3) } ${ themeSpacing(1) };
+  &:nth-child(1) { min-width: 300px; white-space: nowrap; padding-right: ${ themeSpacing(3) } }
+  &:nth-child(2) { width:100%; }
 `
 
 const StyledButton = styled(Button)`
-  margin: ${ themeSpacing(3) } ${ themeSpacing(1) };  
+  margin: ${ themeSpacing(3) } ${ themeSpacing(1) };
 `
 
 type LoadingRowsProps = {
   numRows: number
 }
 const LoadingRows: React.FC<LoadingRowsProps> = ({ numRows }) => <>
-  { [...Array(numRows)].map(_ => (
-    <StyledTR>
+  { [...Array(numRows)].map((_, index) => (
+    <StyledTR key={ index }>
       <StyledTD><SmallSkeleton /></StyledTD>
       <StyledTD><SmallSkeleton /></StyledTD>
     </StyledTR>
@@ -72,8 +72,8 @@ const Details: React.FC<Props> = ({  isLoading, numLoadingRows, numInitialVisibl
                   <StyledTD>{ value?.toString !== undefined && value?.toString() !== "" ? value.toString() : "-" }</StyledTD>
                 </StyledTR>
               )) }
-            { isCollapsible && isCollapsed && <StyledButton variant="textButton" onClick={toggleCollapsed}> + Toon alle </StyledButton> }
-            { isCollapsible && !isCollapsed && <StyledButton variant="textButton" onClick={toggleCollapsed}> - Toon minder </StyledButton> }
+            { isCollapsible && isCollapsed && <tr><td><StyledButton variant="textButton" onClick={toggleCollapsed}> + Toon alle </StyledButton></td></tr> }
+            { isCollapsible && !isCollapsed && <tr><td><StyledButton variant="textButton" onClick={toggleCollapsed}> - Toon minder </StyledButton></td></tr> }
           </>
         }
       </tbody>

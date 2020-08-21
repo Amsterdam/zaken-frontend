@@ -88,7 +88,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
           </Heading>
           { finesData
             ? finesData.items.length
-              ? finesData.items.map(fine => <FineSummary fine={fine} />)
+              ? finesData.items.map((fine, index) => <FineSummary key={index} fine={fine} />)
               : "Geen"
             : <LoadingDetails numRows={3} title="" />
           }
