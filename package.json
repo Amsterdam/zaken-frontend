@@ -19,7 +19,7 @@
     "@types/styled-components": "^5.1.1",
     "amsterdam-react-final-form": "^0.1.88",
     "amsterdam-scaffold-form": "^0.1.27",
-    "axios": "^0.19.2",
+    "axios": "^0.20.0",
     "dotenv-flow": "^3.2.0",
     "env-cmd": "^10.1.0",
     "final-form": "^4.20.1",
