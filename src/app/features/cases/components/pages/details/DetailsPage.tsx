@@ -21,6 +21,9 @@ import CaseDetails from "app/features/cases/components/organisms/CaseDetails/Cas
 
 import TableCaseVisits from "app/features/caseVisits/components/organisms/TableCaseVisits/TableCaseVisits"
 
+import { useModal } from "app/features/shared/components/molecules/Modal/hooks/useModal"
+import Modal from "app/features/shared/components/molecules/Modal/Modal"
+
 type Props = {
   id: API.Case["identification"]
 }
@@ -49,6 +52,7 @@ const Column = styled.div`
 const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
   const { data: caseData } = useCase(id)
   const { data: finesData } = useCaseFines(id)
+  const { isModalOpen, openModal, closeModal } = useModal()
 
   return (
     <DefaultLayout>
@@ -74,7 +78,14 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
             ? <BAGDetails bagID={caseData.address.bag_id} />
             : <LoadingDetails numRows={5} />
           }
-          <Heading>{ finesData?.items.length > 1 ? "Invorderingsbesluiten" : "Invorderingsbesluit" }</Heading>
+          <Heading>
+            { finesData?.items.length > 1 ? "Invorderingsbesluiten" : "Invorderingsbesluit" }
+            <Button variant="blank" onClick={ () => openModal() }>?</Button>
+            <Modal title="Verwerkingstijd" isOpen={isModalOpen} onClose={closeModal}>
+              Belastingen pakt overgedragen beschikkingen in principe op binnen 5 werkdagen
+            </Modal>
+
+          </Heading>
           { finesData
             ? finesData.items.length
               ? finesData.items.map(fine => <FineSummary fine={fine} />)
