@@ -42,6 +42,17 @@ export const useCaseFines = (id: API.Case["identification"]) => {
   })
 }
 
+export const useCaseResidents = (id: NonNullable<API.Case["identification"]>) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<{ items: API.Resident[] }>({
+    url: makeGatewayUrl("cases", id, "residents"),
+    groupName: "cases",
+    handleError,
+    getHeaders
+  })
+}
+
+
 export const useCaseTypes = () => {
   const handleError = useErrorHandler()
   return useApiRequest<APIListResponse<API.CaseType>>({

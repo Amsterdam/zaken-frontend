@@ -16,6 +16,7 @@ import Heading from "app/features/shared/components/atoms/Heading/Heading"
 
 import BagMap, { BagMapSkeleton } from "app/features/cases/components/organisms/BagMap/BagMap"
 import BAGDetails from "app/features/cases/components/organisms/BagDetails/BagDetails"
+import Residents from "app/features/cases/components/organisms/Residents/Residents"
 import Fines from "app/features/cases/components/organisms/Fines/Fines"
 import CaseDetails from "app/features/cases/components/organisms/CaseDetails/CaseDetails"
 
@@ -74,6 +75,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
             ? <BAGDetails bagID={caseData.address.bag_id} />
             : <LoadingDetails numRows={5} />
           }
+          <Residents id={ id! } />
           <Fines id={ id } />
         </Column>
       </ColumnWrap>
