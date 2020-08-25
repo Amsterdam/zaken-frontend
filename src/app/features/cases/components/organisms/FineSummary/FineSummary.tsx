@@ -20,7 +20,7 @@ const FineSummary: React.FC<Props> = ({ id, date, state, hasInvoice = false }) =
     "Kenmerk": id,
     "Status": hasInvoice ? <Wrap>{ state }<CheckmarkIcon/></Wrap> : state,
     "Datum": date
-}), [ id, state, date, hasInvoice ])
+  }), [ id, state, date, hasInvoice ])
 
   return <Details
     numInitialVisibleRows={3}
