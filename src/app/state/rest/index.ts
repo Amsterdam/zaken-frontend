@@ -34,8 +34,7 @@ export const useCase = (id: API.Case["identification"]) => {
 
 export const useCaseFines = (id: API.Case["identification"]) => {
   const handleError = useErrorHandler()
-  //return useApiRequest<API.FineList>({
-  return useApiRequest<any>({
+  return useApiRequest<API.FineList>({
     url: makeGatewayUrl("cases", id!, "fines"),
     groupName: "cases",
     handleError,

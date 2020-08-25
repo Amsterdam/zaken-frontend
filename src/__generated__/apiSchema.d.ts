@@ -20,6 +20,28 @@ declare namespace API {
         start_date?: string | null // date
         end_date?: string | null // date
     }
+    export type CaseTimeline = {
+        readonly id: number
+        readonly casetimelinethread_set: CaseTimelineThread[]
+        subject: string
+        is_done?: boolean
+    }
+    export type CaseTimelineReaction = {
+        readonly id: number
+        comment: string
+        readonly date: string // date
+        timeline_item: number
+        author: string // uuid
+    }
+    export type CaseTimelineThread = {
+        readonly id: number
+        readonly castetimelinereaction_set: CaseTimelineReaction[]
+        readonly date: string // date
+        parameters?: string
+        notes?: string | null
+        subject: number
+        authors: string /* uuid */[]
+    }
     export type CaseType = {
         readonly id: number
         name: string
@@ -59,6 +81,7 @@ declare namespace API {
     }
     export type FineList = {
         items: Fine[]
+        states_with_fines: Fine[]
     }
     export type GeslachtsaanduidingEnum = "M" | "V" | "X";
     export type IndicatieBetHernBevelEnum = "J" | "N";
@@ -87,6 +110,28 @@ declare namespace API {
         identification?: string | null
         start_date?: string | null // date
         end_date?: string | null // date
+    }
+    export type PatchedCaseTimeline = {
+        readonly id?: number
+        readonly casetimelinethread_set?: CaseTimelineThread[]
+        subject?: string
+        is_done?: boolean
+    }
+    export type PatchedCaseTimelineReaction = {
+        readonly id?: number
+        comment?: string
+        readonly date?: string // date
+        timeline_item?: number
+        author?: string // uuid
+    }
+    export type PatchedCaseTimelineThread = {
+        readonly id?: number
+        readonly castetimelinereaction_set?: CaseTimelineReaction[]
+        readonly date?: string // date
+        parameters?: string
+        notes?: string | null
+        subject?: number
+        authors?: string /* uuid */[]
     }
     export type PatchedCaseType = {
         readonly id?: number
@@ -158,6 +203,225 @@ declare namespace Paths {
                 previous?: string | null
                 results?: API.Address[]
             }
+        }
+    }
+    namespace CaseTimelineReactionsCreate {
+        export type RequestBody = API.CaseTimelineReaction;
+        namespace Responses {
+            export type $200 = API.CaseTimelineReaction;
+        }
+    }
+    namespace CaseTimelineReactionsDestroy {
+        namespace Parameters {
+            export type Id = string;
+        }
+        export type PathParameters = {
+            id: Parameters.Id
+        }
+        namespace Responses {
+            export type $204 = {
+            }
+        }
+    }
+    namespace CaseTimelineReactionsList {
+        namespace Parameters {
+            export type Page = number;
+        }
+        export type QueryParameters = {
+            page?: Parameters.Page
+        }
+        namespace Responses {
+            export type $200 = {
+                /**
+                 * example:
+                 * 123
+                 */
+                count?: number
+                next?: string | null
+                previous?: string | null
+                results?: API.CaseTimelineReaction[]
+            }
+        }
+    }
+    namespace CaseTimelineReactionsPartialUpdate {
+        namespace Parameters {
+            export type Id = string;
+        }
+        export type PathParameters = {
+            id: Parameters.Id
+        }
+        export type RequestBody = API.PatchedCaseTimelineReaction;
+        namespace Responses {
+            export type $200 = API.CaseTimelineReaction;
+        }
+    }
+    namespace CaseTimelineReactionsRetrieve {
+        namespace Parameters {
+            export type Id = string;
+        }
+        export type PathParameters = {
+            id: Parameters.Id
+        }
+        namespace Responses {
+            export type $200 = API.CaseTimelineReaction;
+        }
+    }
+    namespace CaseTimelineReactionsUpdate {
+        namespace Parameters {
+            export type Id = string;
+        }
+        export type PathParameters = {
+            id: Parameters.Id
+        }
+        export type RequestBody = API.CaseTimelineReaction;
+        namespace Responses {
+            export type $200 = API.CaseTimelineReaction;
+        }
+    }
+    namespace CaseTimelineThreadsCreate {
+        export type RequestBody = API.CaseTimelineThread;
+        namespace Responses {
+            export type $200 = API.CaseTimelineThread;
+        }
+    }
+    namespace CaseTimelineThreadsDestroy {
+        namespace Parameters {
+            export type Id = string;
+        }
+        export type PathParameters = {
+            id: Parameters.Id
+        }
+        namespace Responses {
+            export type $204 = {
+            }
+        }
+    }
+    namespace CaseTimelineThreadsList {
+        namespace Parameters {
+            export type Page = number;
+        }
+        export type QueryParameters = {
+            page?: Parameters.Page
+        }
+        namespace Responses {
+            export type $200 = {
+                /**
+                 * example:
+                 * 123
+                 */
+                count?: number
+                next?: string | null
+                previous?: string | null
+                results?: API.CaseTimelineThread[]
+            }
+        }
+    }
+    namespace CaseTimelineThreadsPartialUpdate {
+        namespace Parameters {
+            export type Id = string;
+        }
+        export type PathParameters = {
+            id: Parameters.Id
+        }
+        export type RequestBody = API.PatchedCaseTimelineThread;
+        namespace Responses {
+            export type $200 = API.CaseTimelineThread;
+        }
+    }
+    namespace CaseTimelineThreadsRetrieve {
+        namespace Parameters {
+            export type Id = string;
+        }
+        export type PathParameters = {
+            id: Parameters.Id
+        }
+        namespace Responses {
+            export type $200 = API.CaseTimelineThread;
+        }
+    }
+    namespace CaseTimelineThreadsUpdate {
+        namespace Parameters {
+            export type Id = string;
+        }
+        export type PathParameters = {
+            id: Parameters.Id
+        }
+        export type RequestBody = API.CaseTimelineThread;
+        namespace Responses {
+            export type $200 = API.CaseTimelineThread;
+        }
+    }
+    namespace CaseTimelinesCreate {
+        export type RequestBody = API.CaseTimeline;
+        namespace Responses {
+            export type $200 = API.CaseTimeline;
+        }
+    }
+    namespace CaseTimelinesDestroy {
+        namespace Parameters {
+            export type Id = string;
+        }
+        export type PathParameters = {
+            id: Parameters.Id
+        }
+        namespace Responses {
+            export type $204 = {
+            }
+        }
+    }
+    namespace CaseTimelinesList {
+        namespace Parameters {
+            export type Page = number;
+        }
+        export type QueryParameters = {
+            page?: Parameters.Page
+        }
+        namespace Responses {
+            export type $200 = {
+                /**
+                 * example:
+                 * 123
+                 */
+                count?: number
+                next?: string | null
+                previous?: string | null
+                results?: API.CaseTimeline[]
+            }
+        }
+    }
+    namespace CaseTimelinesPartialUpdate {
+        namespace Parameters {
+            export type Id = string;
+        }
+        export type PathParameters = {
+            id: Parameters.Id
+        }
+        export type RequestBody = API.PatchedCaseTimeline;
+        namespace Responses {
+            export type $200 = API.CaseTimeline;
+        }
+    }
+    namespace CaseTimelinesRetrieve {
+        namespace Parameters {
+            export type Id = string;
+        }
+        export type PathParameters = {
+            id: Parameters.Id
+        }
+        namespace Responses {
+            export type $200 = API.CaseTimeline;
+        }
+    }
+    namespace CaseTimelinesUpdate {
+        namespace Parameters {
+            export type Id = string;
+        }
+        export type PathParameters = {
+            id: Parameters.Id
+        }
+        export type RequestBody = API.CaseTimeline;
+        namespace Responses {
+            export type $200 = API.CaseTimeline;
         }
     }
     namespace CaseTypesList {
@@ -291,6 +555,20 @@ declare namespace Paths {
         export type RequestBody = API.OIDCAuthenticate;
         namespace Responses {
             export type $200 = API.OIDCAuthenticate;
+        }
+    }
+    namespace PermitsListDocumentsRetrieve {
+        namespace Parameters {
+            export type BookId = string;
+            export type Query = string;
+        }
+        export type QueryParameters = {
+            book_id: Parameters.BookId
+            query: Parameters.Query
+        }
+        namespace Responses {
+            export type $200 = {
+            }
         }
     }
     namespace PermitsRetrieve {
