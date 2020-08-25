@@ -1,16 +1,26 @@
 import React, { useMemo } from "react"
+import styled from "styled-components"
 import Details from "../../../../shared/components/molecules/Details/Details"
+import CheckmarkIcon from "./CheckmarkIcon"
 
 type Props = {
-  fine: API.Fine
+  id: number
+  date: string
+  state: string
+  hasInvoice?: boolean
 }
 
-const FineSummary: React.FC<Props> = ({ fine }) => {
+const Wrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
+
+const FineSummary: React.FC<Props> = ({ id, date, state, hasInvoice = false }) => {
   const values = useMemo(() => ({
-    "Kenmerk": fine.vorderingnummer,
-    "Status": fine.invorderingstatus,
-    "Datum": fine.vervaldatum.substr(0, 10)
-  }), [ fine ])
+    "Kenmerk": id,
+    "Status": hasInvoice ? <Wrap>{ state }<CheckmarkIcon/></Wrap> : state,
+    "Datum": date
+}), [ id, state, date, hasInvoice ])
 
   return <Details
     numInitialVisibleRows={3}

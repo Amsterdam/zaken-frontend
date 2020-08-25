@@ -4,7 +4,7 @@ import styled from "styled-components"
 import { breakpoint, Button, themeSpacing } from "@datapunt/asc-ui"
 import { Document } from "@datapunt/asc-assets/lib"
 
-import { useCase, useCaseFines } from "app/state/rest"
+import { useCase } from "app/state/rest"
 
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 import ActionButtonWrap from "app/features/shared/components/atoms/ActionButtonWrap/ActionButtonWrap"
@@ -16,16 +16,14 @@ import Heading from "app/features/shared/components/atoms/Heading/Heading"
 
 import BagMap, { BagMapSkeleton } from "app/features/cases/components/organisms/BagMap/BagMap"
 import BAGDetails from "app/features/cases/components/organisms/BagDetails/BagDetails"
-import FineSummary from "app/features/cases/components/organisms/FineSummary/FineSummary"
+import Fines from "app/features/cases/components/organisms/Fines/Fines"
 import CaseDetails from "app/features/cases/components/organisms/CaseDetails/CaseDetails"
 
 import TableCaseVisits from "app/features/caseVisits/components/organisms/TableCaseVisits/TableCaseVisits"
 
-import { useModal } from "app/features/shared/components/molecules/Modal/hooks/useModal"
-import Modal from "app/features/shared/components/molecules/Modal/Modal"
 
 type Props = {
-  id: API.Case["identification"]
+    id: API.Case["identification"]
 }
 
 const GUTTER = 6
@@ -51,8 +49,6 @@ const Column = styled.div`
 
 const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
   const { data: caseData } = useCase(id)
-  const { data: finesData } = useCaseFines(id)
-  const { isModalOpen, openModal, closeModal } = useModal()
 
   return (
     <DefaultLayout>
@@ -78,20 +74,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
             ? <BAGDetails bagID={caseData.address.bag_id} />
             : <LoadingDetails numRows={5} />
           }
-          <Heading>
-            { finesData?.items.length > 1 ? "Invorderingsbesluiten" : "Invorderingsbesluit" }
-            <Button variant="blank" onClick={ () => openModal() }>?</Button>
-            <Modal title="Verwerkingstijd" isOpen={isModalOpen} onClose={closeModal}>
-              Belastingen pakt overgedragen beschikkingen in principe op binnen 5 werkdagen
-            </Modal>
-
-          </Heading>
-          { finesData
-            ? finesData.items.length
-              ? finesData.items.map((fine, index) => <FineSummary key={index} fine={fine} />)
-              : "Geen"
-            : <LoadingDetails numRows={3} title="" />
-          }
+          <Fines id={ id } />
         </Column>
       </ColumnWrap>
       <Heading>Bezoeken</Heading>
