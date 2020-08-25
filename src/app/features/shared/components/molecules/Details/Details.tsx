@@ -37,8 +37,8 @@ type LoadingRowsProps = {
   numRows: number
 }
 const LoadingRows: React.FC<LoadingRowsProps> = ({ numRows }) => <>
-  { [...Array(numRows)].map(_ => (
-    <StyledTR>
+  { [...Array(numRows)].map((_, index) => (
+    <StyledTR key={ index }>
       <StyledTD><SmallSkeleton /></StyledTD>
       <StyledTD><SmallSkeleton /></StyledTD>
     </StyledTR>
@@ -72,8 +72,8 @@ const Details: React.FC<Props> = ({  isLoading, numLoadingRows, numInitialVisibl
                   <StyledTD>{ value?.toString !== undefined && value?.toString() !== "" ? value.toString() : "-" }</StyledTD>
                 </StyledTR>
               )) }
-            { isCollapsible && isCollapsed && <StyledButton variant="textButton" onClick={toggleCollapsed}> + Toon alle </StyledButton> }
-            { isCollapsible && !isCollapsed && <StyledButton variant="textButton" onClick={toggleCollapsed}> - Toon minder </StyledButton> }
+            { isCollapsible && isCollapsed && <tr><td><StyledButton variant="textButton" onClick={toggleCollapsed}> + Toon alle </StyledButton></td></tr> }
+            { isCollapsible && !isCollapsed && <tr><td><StyledButton variant="textButton" onClick={toggleCollapsed}> - Toon minder </StyledButton></td></tr> }
           </>
         }
       </tbody>
