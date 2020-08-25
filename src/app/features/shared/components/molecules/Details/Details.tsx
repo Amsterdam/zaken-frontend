@@ -5,12 +5,13 @@ import styled from "styled-components"
 import SmallSkeleton from "app/features/shared/components/atoms/Skeleton/SmallSkeleton"
 import Heading from "app/features/shared/components/atoms/Heading/Heading"
 
+type Value = string|number|JSX.Element|undefined|null
 type Props = {
   numLoadingRows?: number
   numInitialVisibleRows?: number
   isLoading?: boolean
   title?: string
-  values: Record<string, string|number|JSX.Element|undefined|null>
+  values: Record<string, Value>
 }
 
 const StyledTable = styled.table`
@@ -24,13 +25,13 @@ const StyledTR = styled.tr`
 `
 
 const StyledTD = styled.td`
-  padding: ${ themeSpacing(3) } ${ themeSpacing(1) };    
-  &:nth-child(1) { min-width: 300px; white-space: nowrap; padding-right: ${ themeSpacing(3) } } 
-  &:nth-child(2) { width:100%; } 
+  padding: ${ themeSpacing(3) } ${ themeSpacing(1) };
+  &:nth-child(1) { min-width: 300px; white-space: nowrap; padding-right: ${ themeSpacing(3) } }
+  &:nth-child(2) { width:100%; }
 `
 
 const StyledButton = styled(Button)`
-  margin: ${ themeSpacing(3) } ${ themeSpacing(1) };  
+  margin: ${ themeSpacing(3) } ${ themeSpacing(1) };
 `
 
 type LoadingRowsProps = {
@@ -44,6 +45,12 @@ const LoadingRows: React.FC<LoadingRowsProps> = ({ numRows }) => <>
     </StyledTR>
   )) }
 </>
+
+const castValue = (value: Value): string|JSX.Element => {
+  if (value == null || value === "") return "-"
+  if (typeof value === "number") return `${ value }`
+  return value
+}
 
 const Details: React.FC<Props> = ({  isLoading, numLoadingRows, numInitialVisibleRows = Number.MAX_VALUE, title, values }) => {
   const [isCollapsed, setIsCollapsed] = useState(true)
@@ -69,7 +76,7 @@ const Details: React.FC<Props> = ({  isLoading, numLoadingRows, numInitialVisibl
               .map(([key, value]) => (
                 <StyledTR key={key}>
                   <StyledTD>{ key }</StyledTD>
-                  <StyledTD>{ value?.toString !== undefined && value?.toString() !== "" ? value.toString() : "-" }</StyledTD>
+                  <StyledTD>{ castValue(value) }</StyledTD>
                 </StyledTR>
               )) }
             { isCollapsible && isCollapsed && <tr><td><StyledButton variant="textButton" onClick={toggleCollapsed}> + Toon alle </StyledButton></td></tr> }

@@ -4,7 +4,7 @@ import styled from "styled-components"
 import { breakpoint, Button, themeSpacing } from "@datapunt/asc-ui"
 import { Document } from "@datapunt/asc-assets/lib"
 
-import { useCase, useCaseFines } from "app/state/rest"
+import { useCase } from "app/state/rest"
 
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 import ActionButtonWrap from "app/features/shared/components/atoms/ActionButtonWrap/ActionButtonWrap"
@@ -16,13 +16,14 @@ import Heading from "app/features/shared/components/atoms/Heading/Heading"
 
 import BagMap, { BagMapSkeleton } from "app/features/cases/components/organisms/BagMap/BagMap"
 import BAGDetails from "app/features/cases/components/organisms/BagDetails/BagDetails"
-import FineDetails from "app/features/cases/components/organisms/FineDetails/FineDetails"
+import Fines from "app/features/cases/components/organisms/Fines/Fines"
 import CaseDetails from "app/features/cases/components/organisms/CaseDetails/CaseDetails"
 
 import TableCaseVisits from "app/features/caseVisits/components/organisms/TableCaseVisits/TableCaseVisits"
 
+
 type Props = {
-  id: API.Case["identification"]
+    id: API.Case["identification"]
 }
 
 const GUTTER = 6
@@ -48,7 +49,6 @@ const Column = styled.div`
 
 const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
   const { data: caseData } = useCase(id)
-  const { data: finesData } = useCaseFines(id)
 
   return (
     <DefaultLayout>
@@ -74,10 +74,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
             ? <BAGDetails bagID={caseData.address.bag_id} />
             : <LoadingDetails numRows={5} />
           }
-          { finesData
-            ? finesData.items.map((fine, index) => <FineDetails key={index} fine={fine}/>)
-            : <LoadingDetails numRows={5}/>
-          }
+          <Fines id={ id } />
         </Column>
       </ColumnWrap>
       <Heading>Bezoeken</Heading>
