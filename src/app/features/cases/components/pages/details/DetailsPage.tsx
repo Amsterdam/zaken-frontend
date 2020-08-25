@@ -29,20 +29,20 @@ const GUTTER = 6
 
 const ColumnWrap = styled.div`
   display:flex;
-  margin: 0 -${ themeSpacing(GUTTER) };  
+  margin: 0 -${ themeSpacing(GUTTER) };
 `
 
 const Column = styled.div`
   flex:1;
   padding: 0 ${ themeSpacing(GUTTER) };
-  
+
   @media screen and ${ breakpoint("min-width", "mobileS") } {
     &:nth-child(1) { display:none; }
   }
-  
+
   @media screen and ${ breakpoint("min-width", "laptop") } {
     &:nth-child(1) { flex: 40%; display: block; }
-    &:nth-child(2) { flex: 60%; }  
+    &:nth-child(2) { flex: 60%; }
   }
 `
 
@@ -75,7 +75,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
             : <LoadingDetails numRows={5} />
           }
           { finesData
-            ? finesData.items.map(fine => <FineDetails fine={fine}/>)
+            ? finesData.items.map((fine, index) => <FineDetails key={index} fine={fine}/>)
             : <LoadingDetails numRows={5}/>
           }
         </Column>
