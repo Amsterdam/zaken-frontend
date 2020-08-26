@@ -29,7 +29,7 @@ const Fines: React.FC<Props> = ({ id }) => {
                 id={ fine.invoice_identification }
                 state={fine.state_type.name}
                 date={ fine.start_date }
-                hasInvoice={ fine.state_type.invoice_available }
+                hasInvoice={ fine.fines.length > 0 }
                 />)
             : "Geen"
           }
