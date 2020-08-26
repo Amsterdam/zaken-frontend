@@ -13,7 +13,7 @@ const Residents: React.FC<Props> = ({ id }) => {
     <>
       <Heading>Actueel ingeschreven personen</Heading>
       { caseResidents?.items
-          .map(resident => <Resident resident={ resident } />)
+          .map((resident, index) => <Resident key={ index } resident={ resident } />)
       }
     </>
   )
