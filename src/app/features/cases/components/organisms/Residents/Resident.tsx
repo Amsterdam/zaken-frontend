@@ -1,5 +1,6 @@
 import React, { useMemo } from "react"
 import Details from "app/features/shared/components/molecules/Details/Details"
+import DateDisplay from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
 
 type Props = {
   resident: API.Resident
@@ -15,9 +16,8 @@ const mapSex = (value: API.Resident["geslachtsaanduiding"]) => {
 const Resident: React.FC<Props> = ({ resident, num }) => {
   const values = useMemo(() => ({
     [`${ num }. ${ mapSex(resident.geslachtsaanduiding) }${ resident.voorletters }. ${ resident.voorvoegsel_geslachtsnaam } ${ resident.geslachtsnaam }`]: "",
-    "Geboren": resident.geboortedatum.substr(0, 10),
-    "Ingeschreven sinds": resident.datum_begin_relatie_verblijadres.substr(0, 10),
-    "Uitgeschreven sinds": undefined
+    "Geboren": <DateDisplay date={ resident.geboortedatum } />,
+    "Ingeschreven sinds": <DateDisplay date={ resident.datum_begin_relatie_verblijadres } />
   }), [num, resident.datum_begin_relatie_verblijadres, resident.geboortedatum, resident.geslachtsaanduiding, resident.geslachtsnaam, resident.voorletters, resident.voorvoegsel_geslachtsnaam])
   return <Details
     numInitialVisibleRows={4}
