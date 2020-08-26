@@ -11,7 +11,7 @@ type Props = {
 
 const Fines: React.FC<Props> = ({ id }) => {
   const { data: finesData } = useCaseFines(id)
-  
+
   return (
     <>
       { finesData ?
@@ -20,7 +20,7 @@ const Fines: React.FC<Props> = ({ id }) => {
             infoTitle="Verwerkingstijd"
             infoText="Belastingen pakt overgedragen beschikkingen in principe op binnen 5 werkdagen"
             >
-            { finesData.items.length > 1 ? "Invorderingsbesluiten" : "Invorderingsbesluit" }
+            { finesData.states_with_fines.length > 1 ? "Invorderingsbesluiten" : "Invorderingsbesluit" }
           </InfoHeading>
           { finesData.states_with_fines.length
             ? finesData.states_with_fines.map((fine: any, index: number) =>
@@ -29,7 +29,7 @@ const Fines: React.FC<Props> = ({ id }) => {
                 id={ fine.invoice_identification }
                 state={fine.state_type.name}
                 date={ fine.start_date }
-                hasInvoice={ fine.state_type.invoice_available }
+                hasInvoice={ fine.fines.length > 0 }
                 />)
             : "Geen"
           }
