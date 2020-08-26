@@ -8,8 +8,8 @@ type Props = {
 
 const CaseDetails: React.FC<Props> = ({ caseData }) => {
   const values = useMemo(() => ({
-    "Start datum": caseData.start_date ? <DateDisplay date={ caseData.start_date } /> : "-",
-    "Eind datum": caseData.end_date ? <DateDisplay date={ caseData.end_date } /> : "-",
+    "Start datum": caseData.start_date ? <DateDisplay date={ caseData.start_date } /> : undefined,
+    "Eind datum": caseData.end_date ? <DateDisplay date={ caseData.end_date } /> : undefined,
     "Zaaktype": caseData.case_type.name
   }), [ caseData ])
 
