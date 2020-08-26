@@ -12,6 +12,7 @@ type Props = {
   isLoading?: boolean
   title?: string
   values: Record<string, Value>
+  startAlternative?: boolean
 }
 
 const StyledTable = styled.table`
@@ -20,8 +21,9 @@ const StyledTable = styled.table`
   margin-bottom: ${ themeSpacing(10) };
 `
 
-const StyledTR = styled.tr`
-  &:nth-of-type(odd) { background-color: ${ themeColor("tint", "level2") }; }
+type StyledTRProps = { startAlternative?: boolean }
+const StyledTR = styled.tr<StyledTRProps>`
+  &:nth-of-type(${ (props: StyledTRProps) => props.startAlternative ? "odd" : "even" }) { background-color: ${ themeColor("tint", "level2") }; }
 `
 
 const StyledTD = styled.td`
@@ -47,12 +49,12 @@ const LoadingRows: React.FC<LoadingRowsProps> = ({ numRows }) => <>
 </>
 
 const castValue = (value: Value): string|JSX.Element => {
-  if (value == null || value === "") return "-"
+  if (value == null) return "-"
   if (typeof value === "number") return `${ value }`
   return value
 }
 
-const Details: React.FC<Props> = ({  isLoading, numLoadingRows, numInitialVisibleRows = Number.MAX_VALUE, title, values }) => {
+const Details: React.FC<Props> = ({ isLoading, numLoadingRows, numInitialVisibleRows = Number.MAX_VALUE, title, values, startAlternative = true }) => {
   const [isCollapsed, setIsCollapsed] = useState(true)
 
   const toggleCollapsed = useCallback(() => setIsCollapsed(!isCollapsed), [setIsCollapsed, isCollapsed])
@@ -74,7 +76,7 @@ const Details: React.FC<Props> = ({  isLoading, numLoadingRows, numInitialVisibl
         : <>
             { rows
               .map(([key, value]) => (
-                <StyledTR key={key}>
+                <StyledTR key={key} startAlternative={ startAlternative }>
                   <StyledTD>{ key }</StyledTD>
                   <StyledTD>{ castValue(value) }</StyledTD>
                 </StyledTR>
