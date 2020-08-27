@@ -1,7 +1,7 @@
 import React from "react"
 import { Button } from "@datapunt/asc-ui"
 import Heading from "app/features/shared/components/atoms/Heading/Heading"
-import Modal from "app/features/shared/components/molecules/Modal/Modal"
+import Modal, { ModalBlock } from "app/features/shared/components/molecules/Modal/Modal"
 import { useModal } from "app/features/shared/components/molecules/Modal/hooks/useModal"
 
 type Props = {
@@ -17,7 +17,9 @@ const InfoHeading: React.FC<Props> = ({ children, infoTitle, infoText }) => {
       { children }
       <Button variant="blank" onClick={ () => openModal() }>?</Button>
       <Modal title={ infoTitle } isOpen={ isModalOpen } onClose={ closeModal }>
-        { infoText }
+        <ModalBlock>
+          { infoText }
+        </ModalBlock>
       </Modal>
     </Heading>
   )
