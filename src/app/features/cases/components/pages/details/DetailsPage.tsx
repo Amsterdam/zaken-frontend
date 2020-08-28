@@ -4,6 +4,7 @@ import styled from "styled-components"
 import { breakpoint, Button, themeSpacing } from "@datapunt/asc-ui"
 import { Document } from "@datapunt/asc-assets/lib"
 
+
 import { useCase } from "app/state/rest"
 
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
@@ -24,7 +25,7 @@ import TableCaseVisits from "app/features/caseVisits/components/organisms/TableC
 
 
 type Props = {
-    id: API.Case["identification"]
+  id: NonNullable<API.Case["identification"]>
 }
 
 const GUTTER = 6
@@ -49,13 +50,13 @@ const Column = styled.div`
 `
 
 const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
-  const { data: caseData } = useCase(id)
+  const { data: caseData } = useCase(id!)
 
   return (
     <DefaultLayout>
       <Heading>{ caseData?.address?.full_address ?? <SmallSkeleton height={10}/> }</Heading>
       <ActionButtonWrap>
-        <ButtonLink to={to("/cases/edit/:id", { id: id })}>
+        <ButtonLink to={to("/cases/edit/:id", { id: id! })}>
           <Button as="span" variant="primary" iconLeft={<Document />}>Wijzig deze zaak</Button>
         </ButtonLink>
       </ActionButtonWrap>
@@ -76,7 +77,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
             : <LoadingDetails numRows={5} />
           }
           <Residents id={ id! } />
-          <Fines id={ id } />
+          <Fines id={ id! } />
         </Column>
       </ColumnWrap>
       <Heading>Bezoeken</Heading>
