@@ -1,4 +1,6 @@
 import React from "react"
+
+
 import { useCaseFines } from "app/state/rest"
 
 import InfoHeading from "app/features/shared/components/molecules/InfoHeading/InfoHeading"
@@ -6,7 +8,7 @@ import FineSummary from "app/features/cases/components/organisms/FineSummary/Fin
 import LoadingDetails from "app/features/shared/components/molecules/Details/LoadingDetails"
 
 type Props = {
-  id: API.Case["identification"]
+  id: NonNullable<API.Case["identification"]>
 }
 
 const Fines: React.FC<Props> = ({ id }) => {

@@ -11,31 +11,33 @@ export type ApiGroup =
 
 /**
  * Please configure your endpoints here:
+ * NOTE: For example "cases" and "cases/:id" share the same group config. Cache will be cleared for the whole group.
  */
+
 export const useCases = () => {
   const handleError = useErrorHandler()
   return useApiRequest<APIListResponse<API.Case>>({
     url: makeGatewayUrl("cases"),
-    groupName: "cases",    // NOTE: "cases" and "cases/:id" share the same group config. Cache will be cleared for the whole group.
-    handleError,
-    getHeaders
-  })
-}
-
-export const useCase = (id: API.Case["identification"]) => {
-  const handleError = useErrorHandler()
-  return useApiRequest<API.Case>({
-    url: makeGatewayUrl("cases", id!),
     groupName: "cases",
     handleError,
     getHeaders
   })
 }
 
-export const useCaseFines = (id: API.Case["identification"]) => {
+export const useCase = (id: NonNullable<API.Case["identification"]>) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<API.Case>({
+    url: makeGatewayUrl("cases", id),
+    groupName: "cases",
+    handleError,
+    getHeaders
+  })
+}
+
+export const useCaseFines = (id: NonNullable<API.Case["identification"]>) => {
   const handleError = useErrorHandler()
   return useApiRequest<API.FineList>({
-    url: makeGatewayUrl("cases", id!, "fines"),
+    url: makeGatewayUrl("cases", id, "fines"),
     groupName: "cases",
     handleError,
     getHeaders
