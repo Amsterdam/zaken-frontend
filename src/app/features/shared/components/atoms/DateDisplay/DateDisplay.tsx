@@ -2,6 +2,7 @@ import React from "react"
 
 type Props = {
   date: string
+  full?: boolean
 }
 
 const months = [
@@ -22,10 +23,12 @@ const months = [
 const isValidDate = (d: Date) => !Number.isNaN(d.getFullYear())
 const invalidDateText = "Ongeldige datum"
 
-const DateDisplay: React.FC<Props> = ({ date }) => {
+const DateDisplay: React.FC<Props> = ({ date, full = false }) => {
   const d = new Date(date)
   if (!isValidDate(d)) return <>{ invalidDateText }</>
-  const str = `${ d.getDate() } ${ months[d.getMonth()] } ${ d.getFullYear() }`
+  const str = full ?
+    `${ d.getDate() } ${ months[d.getMonth()] } ${ d.getFullYear() }` :
+    `${ d.getDate() }-${ d.getMonth() + 1 }-${ d.getFullYear() }`
   return <>{ str }</>
 }
 
