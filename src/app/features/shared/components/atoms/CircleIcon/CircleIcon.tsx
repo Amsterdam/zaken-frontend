@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { Icon } from "@datapunt/asc-ui"
+import { Icon, themeColor, ascDefaultTheme } from "@datapunt/asc-ui"
 import * as Assets from "@datapunt/asc-assets"
 
 type Props = {
@@ -16,8 +16,8 @@ const StyledIcon = styled(Icon)<StyledIconProps>`
   padding: 3px;
 `
 
-const CircleIcon: React.FC<Props> = ({ icon, color = "black", size = 11 }) => {
+const CircleIcon: React.FC<Props> = ({ icon, color, size = 11 }) => {
   const Asset = Assets[icon]
-  return <StyledIcon size={ size } color={ color }><Asset /></StyledIcon>
+  return <StyledIcon size={ size } color={ color ?? themeColor("tint", "level7")({ theme: ascDefaultTheme }) }><Asset /></StyledIcon>
 }
 export default CircleIcon
