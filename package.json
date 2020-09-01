@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@datapunt/asc-assets": "^0.20.0",
-    "@datapunt/asc-ui": "^0.20.0",
+    "@datapunt/asc-assets": "^0.23.0",
+    "@datapunt/asc-ui": "^0.23.0",
     "@reach/router": "^1.3.4",
     "@sentry/browser": "^5.21.1",
     "@testing-library/jest-dom": "^5.11.3",
