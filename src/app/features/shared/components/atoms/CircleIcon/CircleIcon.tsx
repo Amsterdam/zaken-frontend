@@ -18,6 +18,7 @@ const StyledIcon = styled(Icon)<StyledIconProps>`
 
 const CircleIcon: React.FC<Props> = ({ icon, color, size = 11 }) => {
   const Asset = Assets[icon]
+  // TODO: Remove `({ theme: ascDefaultTheme })` after fix https://github.com/Amsterdam/amsterdam-styled-components/issues/1108 
   return <StyledIcon size={ size } color={ color ?? themeColor("tint", "level7")({ theme: ascDefaultTheme }) }><Asset /></StyledIcon>
 }
 export default CircleIcon

@@ -23,8 +23,9 @@ const FineSummary: React.FC<Props> = ({ id, date, state, hasInvoice = false }) =
     "Status": <Wrap>
       { state }
       { hasInvoice ?
-        <CircleIcon color={ themeColor("support", "valid")({ theme: ascDefaultTheme }) } icon={ "Checkmark" } /> :
-        <CircleIcon color={ themeColor("supplement", "lightblue")({ theme: ascDefaultTheme }) } icon={ "Ellipsis" } />
+        // TODO: Remove `({ theme: ascDefaultTheme })` after fix https://github.com/Amsterdam/amsterdam-styled-components/issues/1108 
+        <CircleIcon color={ themeColor("support", "valid")({ theme: ascDefaultTheme }) } icon="Checkmark" /> :
+        <CircleIcon color={ themeColor("supplement", "lightblue")({ theme: ascDefaultTheme }) } icon="Ellipsis" />
       }
     </Wrap>,
     "Datum": <DateDisplay date={ date } />
