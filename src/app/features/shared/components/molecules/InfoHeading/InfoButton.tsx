@@ -1,16 +1,16 @@
-import React from "react"
+import React, { ComponentProps, FC } from "react"
 import styled from "styled-components"
 import { Button, Icon } from "@datapunt/asc-ui"
 
 type Props = {
-  onClick?: () => void
+  onClick?: ComponentProps<typeof Button>["onClick"]
 }
 
 const StyledIcon = styled(Icon)`
   background-size: contain;
 `
 
-const InfoButton: React.FC<Props> = ({ onClick = () => {} }) =>
+const InfoButton: FC<Props> = ({ onClick = () => {} }) =>
   <Button
     variant="blank"
     onClick={ onClick }
