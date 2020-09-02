@@ -1,5 +1,5 @@
 import React from "react"
-import { Button } from "@datapunt/asc-ui"
+import InfoButton from "./InfoButton"
 import Heading from "app/features/shared/components/atoms/Heading/Heading"
 import Modal, { ModalBlock } from "app/features/shared/components/molecules/Modal/Modal"
 import { useModal } from "app/features/shared/components/molecules/Modal/hooks/useModal"
@@ -15,7 +15,7 @@ const InfoHeading: React.FC<Props> = ({ children, infoTitle, infoText }) => {
   return (
     <Heading>
       { children }
-      <Button variant="blank" onClick={ () => openModal() }>?</Button>
+      <InfoButton onClick={ () => openModal() } />
       <Modal title={ infoTitle } isOpen={ isModalOpen } onClose={ closeModal }>
         <ModalBlock>
           { infoText }
