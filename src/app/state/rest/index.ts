@@ -16,7 +16,7 @@ export type ApiGroup =
 
 export const useCases = () => {
   const handleError = useErrorHandler()
-  return useApiRequest<APIListResponse<API.Case>>({
+  return useApiRequest<APIListResponse<Components.Schemas.Case>>({
     url: makeGatewayUrl("cases"),
     groupName: "cases",
     handleError,
@@ -24,9 +24,9 @@ export const useCases = () => {
   })
 }
 
-export const useCase = (id: NonNullable<API.Case["identification"]>) => {
+export const useCase = (id: NonNullable<Components.Schemas.Case["identification"]>) => {
   const handleError = useErrorHandler()
-  return useApiRequest<API.Case>({
+  return useApiRequest<Components.Schemas.Case>({
     url: makeGatewayUrl("cases", id),
     groupName: "cases",
     handleError,
@@ -34,9 +34,9 @@ export const useCase = (id: NonNullable<API.Case["identification"]>) => {
   })
 }
 
-export const useCaseFines = (id: NonNullable<API.Case["identification"]>) => {
+export const useCaseFines = (id: NonNullable<Components.Schemas.Case["identification"]>) => {
   const handleError = useErrorHandler()
-  return useApiRequest<API.FineList>({
+  return useApiRequest<Components.Schemas.FineList>({
     url: makeGatewayUrl("cases", id, "fines"),
     groupName: "cases",
     handleError,
@@ -44,9 +44,9 @@ export const useCaseFines = (id: NonNullable<API.Case["identification"]>) => {
   })
 }
 
-export const useCaseResidents = (id: NonNullable<API.Case["identification"]>) => {
+export const useCaseResidents = (id: NonNullable<Components.Schemas.Case["identification"]>) => {
   const handleError = useErrorHandler()
-  return useApiRequest<{ items: API.Resident[] }>({
+  return useApiRequest<{ items: Components.Schemas.Resident[] }>({
     url: makeGatewayUrl("cases", id, "residents"),
     groupName: "cases",
     handleError,
@@ -57,7 +57,7 @@ export const useCaseResidents = (id: NonNullable<API.Case["identification"]>) =>
 
 export const useCaseTypes = () => {
   const handleError = useErrorHandler()
-  return useApiRequest<APIListResponse<API.CaseType>>({
+  return useApiRequest<APIListResponse<Components.Schemas.CaseType>>({
     url: makeGatewayUrl("case-types"),
     groupName: "caseTypes",
     handleError,

@@ -23,7 +23,7 @@ const columns = [
   { minWidth: 210 }
 ]
 
-const mapData = (data: API.Case) => [
+const mapData = (data: Components.Schemas.Case) => [
   data.start_date ?? "-",
   data.address.full_address ?? "-",
   data.identification ? <OpenButton href={to("/cases/:id", { id: data.identification })} text="Open" /> : null

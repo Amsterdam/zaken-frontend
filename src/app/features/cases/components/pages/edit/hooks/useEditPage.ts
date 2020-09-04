@@ -5,7 +5,7 @@ import to from "app/features/shared/routing/to"
 import { useCase,  useCaseTypes } from "app/state/rest"
 import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
 
-export const useEditPage = (id?: API.Case["identification"]) => {
+export const useEditPage = (id?: Components.Schemas.Case["identification"]) => {
   const { isBusy: isGettingCaseTypes } = useCaseTypes()
   const { data: initialValues, execPut, execDelete } = useCase(id!)
   const { addSuccessFlashMessage } = useFlashMessages()

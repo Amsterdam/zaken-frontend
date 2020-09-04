@@ -10,7 +10,7 @@ export type CaseTypeFieldProps = Omit<React.ComponentProps<typeof ComplexSelectF
  */
 const CaseTypeField: React.FC<CaseTypeFieldProps> = (props) => {
   const { data } = useCaseTypes()
-  return <ComplexSelectField<API.CaseType> {...props} options={data?.results ?? []} optionLabelField="name" withEmptyOption={true} />
+  return <ComplexSelectField<Components.Schemas.CaseType> {...props} options={data?.results ?? []} optionLabelField="name" withEmptyOption={true} />
 }
 
 export default CaseTypeField
