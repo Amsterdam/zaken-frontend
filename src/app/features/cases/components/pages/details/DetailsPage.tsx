@@ -25,7 +25,7 @@ import TableCaseVisits from "app/features/caseVisits/components/organisms/TableC
 
 
 type Props = {
-  id: NonNullable<API.Case["identification"]>
+  id: NonNullable<Components.Schemas.Case["identification"]>
 }
 
 const GUTTER = 6

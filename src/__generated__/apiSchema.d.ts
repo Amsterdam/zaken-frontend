@@ -1,187 +1,189 @@
-declare namespace API {
-    export type Address = {
-        bag_id: string
-        readonly id: number
-        readonly full_address: any
-        readonly street_name: string
-        readonly number: number
-        readonly suffix_letter: string
-        readonly suffix: string
-        readonly postal_code: string
-        readonly lat: number // float
-        readonly lng: number // float
-    }
-    export type Case = {
-        readonly id: number
-        case_type: CaseType
-        address: Address
-        readonly states: State[]
-        identification?: string | null
-        start_date?: string | null // date
-        end_date?: string | null // date
-    }
-    export type CaseTimeline = {
-        readonly id: number
-        readonly casetimelinethread_set: CaseTimelineThread[]
-        subject: string
-        is_done?: boolean
-    }
-    export type CaseTimelineReaction = {
-        readonly id: number
-        comment: string
-        readonly date: string // date
-        timeline_item: number
-        author: string // uuid
-    }
-    export type CaseTimelineThread = {
-        readonly id: number
-        readonly castetimelinereaction_set: CaseTimelineReaction[]
-        readonly date: string // date
-        parameters?: string
-        notes?: string | null
-        subject: number
-        authors: string /* uuid */[]
-    }
-    export type CaseType = {
-        readonly id: number
-        name: string
-    }
-    export type Fine = {
-        identificatienummer: string
-        vorderingnummer: number
-        jaar: number
-        soort_vordering: SoortVorderingEnum
-        omschrijving_soort_vordering: string
-        indicatie_publiekrechtelijk: IndicatiePubliekrechtelijkEnum
-        subjectnr: number // int64
-        opgemaaktenaam: string
-        subjectnr_opdrachtgever: number
-        opgemaaktenaam_opdrachtgever: string
-        runnr: number
-        omschrijving_run: string
-        code_runwijze: string
-        omschrijving_runwijze: string
-        dagtekening: string // date-time
-        vervaldatum: string // date-time
-        indicatie_combi_dwangbevel: IndicatieCombiDwangbevelEnum
-        notatekst: string | null
-        omschrijving: string | null
-        invorderingstatus: string
-        indicatie_bet_hern_bevel: IndicatieBetHernBevelEnum
-        landcode: string | null
-        kenteken: string | null
-        bonnummer: string | null
-        bedrag_opgelegd: string // decimal
-        bedrag_open_post_incl_rente: string // decimal
-        totaalbedrag_open_kosten: string // decimal
-        bedrag_open_rente: string // decimal
-        reden_opschorting: string | null
-        omschrijving_1: string | null
-        omschrijving_2: string | null
-    }
-    export type FineList = {
-        items: Fine[]
-        states_with_fines: Fine[]
-    }
-    export type GeslachtsaanduidingEnum = "M" | "V" | "X";
-    export type IndicatieBetHernBevelEnum = "J" | "N";
-    export type IndicatieCombiDwangbevelEnum = "J" | "N" | "O";
-    export type IndicatiePubliekrechtelijkEnum = "J" | "N";
-    export type OIDCAuthenticate = {
-        code: string
-    }
-    export type PatchedAddress = {
-        bag_id?: string
-        readonly id?: number
-        readonly full_address?: any
-        readonly street_name?: string
-        readonly number?: number
-        readonly suffix_letter?: string
-        readonly suffix?: string
-        readonly postal_code?: string
-        readonly lat?: number // float
-        readonly lng?: number // float
-    }
-    export type PatchedCase = {
-        readonly id?: number
-        case_type?: PatchedCaseType
-        address?: PatchedAddress
-        readonly states?: State[]
-        identification?: string | null
-        start_date?: string | null // date
-        end_date?: string | null // date
-    }
-    export type PatchedCaseTimeline = {
-        readonly id?: number
-        readonly casetimelinethread_set?: CaseTimelineThread[]
-        subject?: string
-        is_done?: boolean
-    }
-    export type PatchedCaseTimelineReaction = {
-        readonly id?: number
-        comment?: string
-        readonly date?: string // date
-        timeline_item?: number
-        author?: string // uuid
-    }
-    export type PatchedCaseTimelineThread = {
-        readonly id?: number
-        readonly castetimelinereaction_set?: CaseTimelineReaction[]
-        readonly date?: string // date
-        parameters?: string
-        notes?: string | null
-        subject?: number
-        authors?: string /* uuid */[]
-    }
-    export type PatchedCaseType = {
-        readonly id?: number
-        name?: string
-    }
-    export type Push = {
-        identification: string
-        case_type: string
-        bag_id: string
-        start_date: string // date
-        end_date?: string // date
-        states?: PushState[]
-    }
-    export type PushCheckAction = {
-        identification: string
-        check_action: boolean
-    }
-    export type PushState = {
-        name: string
-        start_date: string // date
-        end_date?: string | null // date
-        gauge_date?: string | null // date
-        invoice_identification: string
-    }
-    export type Resident = {
-        geboortedatum: string // date-time
-        geslachtsaanduiding: GeslachtsaanduidingEnum
-        geslachtsnaam: string
-        voorletters: string
-        voornamen: string
-        voorvoegsel_geslachtsnaam?: string
-        datum_begin_relatie_verblijadres: string // date-time
-    }
-    export type Residents = {
-        items: Resident[]
-    }
-    export type SoortVorderingEnum = "PBF" | "PBN" | "PRV" | "SOC";
-    export type State = {
-        readonly id: number
-        state_type: StateType
-        start_date?: string | null // date
-        end_date?: string | null // date
-        gauge_date?: string | null // date
-        invoice_identification?: string | null
-        case: number
-    }
-    export type StateType = {
-        readonly id: number
-        name: string
-        invoice_available?: boolean
+declare namespace Components {
+    namespace Schemas {
+        export type Address = {
+            bag_id: string
+            readonly id: number
+            readonly full_address: any
+            readonly street_name: string
+            readonly number: number
+            readonly suffix_letter: string
+            readonly suffix: string
+            readonly postal_code: string
+            readonly lat: number // float
+            readonly lng: number // float
+        }
+        export type Case = {
+            readonly id: number
+            case_type: CaseType
+            address: Address
+            readonly states: State[]
+            identification?: string | null
+            start_date?: string | null // date
+            end_date?: string | null // date
+        }
+        export type CaseTimeline = {
+            readonly id: number
+            readonly casetimelinethread_set: CaseTimelineThread[]
+            subject: string
+            is_done?: boolean
+        }
+        export type CaseTimelineReaction = {
+            readonly id: number
+            comment: string
+            readonly date: string // date
+            timeline_item: number
+            author: string // uuid
+        }
+        export type CaseTimelineThread = {
+            readonly id: number
+            readonly castetimelinereaction_set: CaseTimelineReaction[]
+            readonly date: string // date
+            parameters?: string
+            notes?: string | null
+            subject: number
+            authors: string /* uuid */[]
+        }
+        export type CaseType = {
+            readonly id: number
+            name: string
+        }
+        export type Fine = {
+            identificatienummer: string
+            vorderingnummer: number
+            jaar: number
+            soort_vordering: SoortVorderingEnum
+            omschrijving_soort_vordering: string
+            indicatie_publiekrechtelijk: IndicatiePubliekrechtelijkEnum
+            subjectnr: number // int64
+            opgemaaktenaam: string
+            subjectnr_opdrachtgever: number
+            opgemaaktenaam_opdrachtgever: string
+            runnr: number
+            omschrijving_run: string
+            code_runwijze: string
+            omschrijving_runwijze: string
+            dagtekening: string // date-time
+            vervaldatum: string // date-time
+            indicatie_combi_dwangbevel: IndicatieCombiDwangbevelEnum
+            notatekst: string | null
+            omschrijving: string | null
+            invorderingstatus: string
+            indicatie_bet_hern_bevel: IndicatieBetHernBevelEnum
+            landcode: string | null
+            kenteken: string | null
+            bonnummer: string | null
+            bedrag_opgelegd: string // decimal
+            bedrag_open_post_incl_rente: string // decimal
+            totaalbedrag_open_kosten: string // decimal
+            bedrag_open_rente: string // decimal
+            reden_opschorting: string | null
+            omschrijving_1: string | null
+            omschrijving_2: string | null
+        }
+        export type FineList = {
+            items: Fine[]
+            states_with_fines: Fine[]
+        }
+        export type GeslachtsaanduidingEnum = "M" | "V" | "X";
+        export type IndicatieBetHernBevelEnum = "J" | "N";
+        export type IndicatieCombiDwangbevelEnum = "J" | "N" | "O";
+        export type IndicatiePubliekrechtelijkEnum = "J" | "N";
+        export type OIDCAuthenticate = {
+            code: string
+        }
+        export type PatchedAddress = {
+            bag_id?: string
+            readonly id?: number
+            readonly full_address?: any
+            readonly street_name?: string
+            readonly number?: number
+            readonly suffix_letter?: string
+            readonly suffix?: string
+            readonly postal_code?: string
+            readonly lat?: number // float
+            readonly lng?: number // float
+        }
+        export type PatchedCase = {
+            readonly id?: number
+            case_type?: PatchedCaseType
+            address?: PatchedAddress
+            readonly states?: State[]
+            identification?: string | null
+            start_date?: string | null // date
+            end_date?: string | null // date
+        }
+        export type PatchedCaseTimeline = {
+            readonly id?: number
+            readonly casetimelinethread_set?: CaseTimelineThread[]
+            subject?: string
+            is_done?: boolean
+        }
+        export type PatchedCaseTimelineReaction = {
+            readonly id?: number
+            comment?: string
+            readonly date?: string // date
+            timeline_item?: number
+            author?: string // uuid
+        }
+        export type PatchedCaseTimelineThread = {
+            readonly id?: number
+            readonly castetimelinereaction_set?: CaseTimelineReaction[]
+            readonly date?: string // date
+            parameters?: string
+            notes?: string | null
+            subject?: number
+            authors?: string /* uuid */[]
+        }
+        export type PatchedCaseType = {
+            readonly id?: number
+            name?: string
+        }
+        export type Push = {
+            identification: string
+            case_type: string
+            bag_id: string
+            start_date: string // date
+            end_date?: string // date
+            states?: PushState[]
+        }
+        export type PushCheckAction = {
+            identification: string
+            check_action: boolean
+        }
+        export type PushState = {
+            name: string
+            start_date: string // date
+            end_date?: string | null // date
+            gauge_date?: string | null // date
+            invoice_identification: string
+        }
+        export type Resident = {
+            geboortedatum: string // date-time
+            geslachtsaanduiding: GeslachtsaanduidingEnum
+            geslachtsnaam: string
+            voorletters: string
+            voornamen: string
+            voorvoegsel_geslachtsnaam?: string
+            datum_begin_relatie_verblijadres: string // date-time
+        }
+        export type Residents = {
+            items: Resident[]
+        }
+        export type SoortVorderingEnum = "PBF" | "PBN" | "PRV" | "SOC";
+        export type State = {
+            readonly id: number
+            state_type: StateType
+            start_date?: string | null // date
+            end_date?: string | null // date
+            gauge_date?: string | null // date
+            invoice_identification?: string | null
+            case: number
+        }
+        export type StateType = {
+            readonly id: number
+            name: string
+            invoice_available?: boolean
+        }
     }
 }
 declare namespace Paths {
@@ -201,14 +203,14 @@ declare namespace Paths {
                 count?: number
                 next?: string | null
                 previous?: string | null
-                results?: API.Address[]
+                results?: Components.Schemas.Address[]
             }
         }
     }
     namespace CaseTimelineReactionsCreate {
-        export type RequestBody = API.CaseTimelineReaction;
+        export type RequestBody = Components.Schemas.CaseTimelineReaction;
         namespace Responses {
-            export type $200 = API.CaseTimelineReaction;
+            export type $200 = Components.Schemas.CaseTimelineReaction;
         }
     }
     namespace CaseTimelineReactionsDestroy {
@@ -239,7 +241,7 @@ declare namespace Paths {
                 count?: number
                 next?: string | null
                 previous?: string | null
-                results?: API.CaseTimelineReaction[]
+                results?: Components.Schemas.CaseTimelineReaction[]
             }
         }
     }
@@ -250,9 +252,9 @@ declare namespace Paths {
         export type PathParameters = {
             id: Parameters.Id
         }
-        export type RequestBody = API.PatchedCaseTimelineReaction;
+        export type RequestBody = Components.Schemas.PatchedCaseTimelineReaction;
         namespace Responses {
-            export type $200 = API.CaseTimelineReaction;
+            export type $200 = Components.Schemas.CaseTimelineReaction;
         }
     }
     namespace CaseTimelineReactionsRetrieve {
@@ -263,7 +265,7 @@ declare namespace Paths {
             id: Parameters.Id
         }
         namespace Responses {
-            export type $200 = API.CaseTimelineReaction;
+            export type $200 = Components.Schemas.CaseTimelineReaction;
         }
     }
     namespace CaseTimelineReactionsUpdate {
@@ -273,15 +275,15 @@ declare namespace Paths {
         export type PathParameters = {
             id: Parameters.Id
         }
-        export type RequestBody = API.CaseTimelineReaction;
+        export type RequestBody = Components.Schemas.CaseTimelineReaction;
         namespace Responses {
-            export type $200 = API.CaseTimelineReaction;
+            export type $200 = Components.Schemas.CaseTimelineReaction;
         }
     }
     namespace CaseTimelineThreadsCreate {
-        export type RequestBody = API.CaseTimelineThread;
+        export type RequestBody = Components.Schemas.CaseTimelineThread;
         namespace Responses {
-            export type $200 = API.CaseTimelineThread;
+            export type $200 = Components.Schemas.CaseTimelineThread;
         }
     }
     namespace CaseTimelineThreadsDestroy {
@@ -312,7 +314,7 @@ declare namespace Paths {
                 count?: number
                 next?: string | null
                 previous?: string | null
-                results?: API.CaseTimelineThread[]
+                results?: Components.Schemas.CaseTimelineThread[]
             }
         }
     }
@@ -323,9 +325,9 @@ declare namespace Paths {
         export type PathParameters = {
             id: Parameters.Id
         }
-        export type RequestBody = API.PatchedCaseTimelineThread;
+        export type RequestBody = Components.Schemas.PatchedCaseTimelineThread;
         namespace Responses {
-            export type $200 = API.CaseTimelineThread;
+            export type $200 = Components.Schemas.CaseTimelineThread;
         }
     }
     namespace CaseTimelineThreadsRetrieve {
@@ -336,7 +338,7 @@ declare namespace Paths {
             id: Parameters.Id
         }
         namespace Responses {
-            export type $200 = API.CaseTimelineThread;
+            export type $200 = Components.Schemas.CaseTimelineThread;
         }
     }
     namespace CaseTimelineThreadsUpdate {
@@ -346,15 +348,15 @@ declare namespace Paths {
         export type PathParameters = {
             id: Parameters.Id
         }
-        export type RequestBody = API.CaseTimelineThread;
+        export type RequestBody = Components.Schemas.CaseTimelineThread;
         namespace Responses {
-            export type $200 = API.CaseTimelineThread;
+            export type $200 = Components.Schemas.CaseTimelineThread;
         }
     }
     namespace CaseTimelinesCreate {
-        export type RequestBody = API.CaseTimeline;
+        export type RequestBody = Components.Schemas.CaseTimeline;
         namespace Responses {
-            export type $200 = API.CaseTimeline;
+            export type $200 = Components.Schemas.CaseTimeline;
         }
     }
     namespace CaseTimelinesDestroy {
@@ -385,7 +387,7 @@ declare namespace Paths {
                 count?: number
                 next?: string | null
                 previous?: string | null
-                results?: API.CaseTimeline[]
+                results?: Components.Schemas.CaseTimeline[]
             }
         }
     }
@@ -396,9 +398,9 @@ declare namespace Paths {
         export type PathParameters = {
             id: Parameters.Id
         }
-        export type RequestBody = API.PatchedCaseTimeline;
+        export type RequestBody = Components.Schemas.PatchedCaseTimeline;
         namespace Responses {
-            export type $200 = API.CaseTimeline;
+            export type $200 = Components.Schemas.CaseTimeline;
         }
     }
     namespace CaseTimelinesRetrieve {
@@ -409,7 +411,7 @@ declare namespace Paths {
             id: Parameters.Id
         }
         namespace Responses {
-            export type $200 = API.CaseTimeline;
+            export type $200 = Components.Schemas.CaseTimeline;
         }
     }
     namespace CaseTimelinesUpdate {
@@ -419,9 +421,9 @@ declare namespace Paths {
         export type PathParameters = {
             id: Parameters.Id
         }
-        export type RequestBody = API.CaseTimeline;
+        export type RequestBody = Components.Schemas.CaseTimeline;
         namespace Responses {
-            export type $200 = API.CaseTimeline;
+            export type $200 = Components.Schemas.CaseTimeline;
         }
     }
     namespace CaseTypesList {
@@ -440,14 +442,14 @@ declare namespace Paths {
                 count?: number
                 next?: string | null
                 previous?: string | null
-                results?: API.CaseType[]
+                results?: Components.Schemas.CaseType[]
             }
         }
     }
     namespace CasesCreate {
-        export type RequestBody = API.Case;
+        export type RequestBody = Components.Schemas.Case;
         namespace Responses {
-            export type $200 = API.Case;
+            export type $200 = Components.Schemas.Case;
         }
     }
     namespace CasesDestroy {
@@ -470,7 +472,7 @@ declare namespace Paths {
             identification: Parameters.Identification
         }
         namespace Responses {
-            export type $200 = API.FineList;
+            export type $200 = Components.Schemas.FineList;
         }
     }
     namespace CasesList {
@@ -489,7 +491,7 @@ declare namespace Paths {
                 count?: number
                 next?: string | null
                 previous?: string | null
-                results?: API.Case[]
+                results?: Components.Schemas.Case[]
             }
         }
     }
@@ -500,9 +502,9 @@ declare namespace Paths {
         export type PathParameters = {
             identification: Parameters.Identification
         }
-        export type RequestBody = API.PatchedCase;
+        export type RequestBody = Components.Schemas.PatchedCase;
         namespace Responses {
-            export type $200 = API.Case;
+            export type $200 = Components.Schemas.Case;
         }
     }
     namespace CasesResidentsRetrieve {
@@ -513,7 +515,7 @@ declare namespace Paths {
             identification: Parameters.Identification
         }
         namespace Responses {
-            export type $200 = API.Residents;
+            export type $200 = Components.Schemas.Residents;
         }
     }
     namespace CasesRetrieve {
@@ -524,7 +526,7 @@ declare namespace Paths {
             identification: Parameters.Identification
         }
         namespace Responses {
-            export type $200 = API.Case;
+            export type $200 = Components.Schemas.Case;
         }
     }
     namespace CasesUpdate {
@@ -534,9 +536,9 @@ declare namespace Paths {
         export type PathParameters = {
             identification: Parameters.Identification
         }
-        export type RequestBody = API.Case;
+        export type RequestBody = Components.Schemas.Case;
         namespace Responses {
-            export type $200 = API.Case;
+            export type $200 = Components.Schemas.Case;
         }
     }
     namespace GenerateMockRetrieve {
@@ -552,18 +554,28 @@ declare namespace Paths {
         }
     }
     namespace OidcAuthenticateCreate {
-        export type RequestBody = API.OIDCAuthenticate;
+        export type RequestBody = Components.Schemas.OIDCAuthenticate;
         namespace Responses {
-            export type $200 = API.OIDCAuthenticate;
+            export type $200 = Components.Schemas.OIDCAuthenticate;
         }
     }
     namespace PermitsListDocumentsRetrieve {
         namespace Parameters {
-            export type BookId = string;
             export type Query = string;
         }
         export type QueryParameters = {
-            book_id: Parameters.BookId
+            query: Parameters.Query
+        }
+        namespace Responses {
+            export type $200 = {
+            }
+        }
+    }
+    namespace PermitsListSwaggerRetrieve {
+        namespace Parameters {
+            export type Query = string;
+        }
+        export type QueryParameters = {
             query: Parameters.Query
         }
         namespace Responses {
@@ -586,15 +598,15 @@ declare namespace Paths {
         }
     }
     namespace PushCheckActionCreate {
-        export type RequestBody = API.PushCheckAction;
+        export type RequestBody = Components.Schemas.PushCheckAction;
         namespace Responses {
-            export type $200 = API.PushCheckAction;
+            export type $200 = Components.Schemas.PushCheckAction;
         }
     }
     namespace PushCreate {
-        export type RequestBody = API.Push;
+        export type RequestBody = Components.Schemas.Push;
         namespace Responses {
-            export type $200 = API.Push;
+            export type $200 = Components.Schemas.Push;
         }
     }
     namespace SchemaRetrieve {
@@ -628,7 +640,7 @@ declare namespace Paths {
                 count?: number
                 next?: string | null
                 previous?: string | null
-                results?: API.StateType[]
+                results?: Components.Schemas.StateType[]
             }
         }
     }
@@ -648,7 +660,7 @@ declare namespace Paths {
                 count?: number
                 next?: string | null
                 previous?: string | null
-                results?: API.State[]
+                results?: Components.Schemas.State[]
             }
         }
     }

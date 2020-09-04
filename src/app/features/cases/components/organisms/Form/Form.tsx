@@ -6,9 +6,9 @@ import ScaffoldFields from "app/features/shared/components/molecules/Form/Scaffo
 import scaffoldProps from "./scaffold"
 
 type Props = {
-  onSubmit: (data: API.Case) => Promise<void>
+  onSubmit: (data: Components.Schemas.Case) => Promise<void>
   isLoading?: boolean
-  initialValues?: API.Case
+  initialValues?: Components.Schemas.Case
 }
 
 const Form: React.FC<Props> = ({ isLoading, onSubmit, initialValues }) => (

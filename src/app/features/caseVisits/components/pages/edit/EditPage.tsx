@@ -11,7 +11,7 @@ import Form from "app/features/caseVisits/components/organisms/Form/Form"
 import { useEditPage } from "./hooks/useEditPage"
 
 type Props = {
-  id: API.Case["identification"]
+  id: Components.Schemas.Case["identification"]
 }
 
 const EditPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {

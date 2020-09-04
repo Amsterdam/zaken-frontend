@@ -8,7 +8,7 @@ import Resident from "./Resident"
 import LoadingDetails from "app/features/shared/components/molecules/Details/LoadingDetails"
 
 type Props = {
-  id: NonNullable<API.Case["identification"]>
+  id: NonNullable<Components.Schemas.Case["identification"]>
 }
 
 const Residents: React.FC<Props> = ({ id }) => {

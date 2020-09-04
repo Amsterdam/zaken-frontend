@@ -8,7 +8,7 @@ import FineSummary from "app/features/cases/components/organisms/FineSummary/Fin
 import LoadingDetails from "app/features/shared/components/molecules/Details/LoadingDetails"
 
 type Props = {
-  id: NonNullable<API.Case["identification"]>
+  id: NonNullable<Components.Schemas.Case["identification"]>
 }
 
 const Fines: React.FC<Props> = ({ id }) => {

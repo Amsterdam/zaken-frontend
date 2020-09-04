@@ -3,7 +3,7 @@ import Details from "../../../../shared/components/molecules/Details/Details"
 import DateDisplay from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
 
 type Props = {
-  caseData: API.Case
+  caseData: Components.Schemas.Case
 }
 
 const CaseDetails: React.FC<Props> = ({ caseData }) => {

@@ -3,11 +3,11 @@ import Details from "app/features/shared/components/molecules/Details/Details"
 import DateDisplay from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
 
 type Props = {
-  resident: API.Resident
+  resident: Components.Schemas.Resident
   num: number
 }
 
-const mapSex = (value: API.Resident["geslachtsaanduiding"]) => {
+const mapSex = (value: Components.Schemas.Resident["geslachtsaanduiding"]) => {
   if (value === "M") return "Dhr. "
   if (value === "V") return "Mvr. "
   if (value === "X") return ""
