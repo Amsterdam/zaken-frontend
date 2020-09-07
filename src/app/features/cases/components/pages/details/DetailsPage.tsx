@@ -20,6 +20,7 @@ import BAGDetails from "app/features/cases/components/organisms/BagDetails/BagDe
 import Residents from "app/features/cases/components/organisms/Residents/Residents"
 import Fines from "app/features/cases/components/organisms/Fines/Fines"
 import CaseDetails from "app/features/cases/components/organisms/CaseDetails/CaseDetails"
+import PermitDetails from "app/features/cases/components/organisms/PermitDetails/PermitDetails"
 
 import TableCaseVisits from "app/features/caseVisits/components/organisms/TableCaseVisits/TableCaseVisits"
 import PanoramaPreview from "../../organisms/Panorama/PanoramaPreview"
@@ -82,6 +83,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
           }
           <Residents id={ id! } />
           <Fines id={ id! } />
+          <PermitDetails id={ id! } />
         </Column>
       </ColumnWrap>
       <Heading>Bezoeken</Heading>
