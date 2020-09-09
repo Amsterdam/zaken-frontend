@@ -3,6 +3,7 @@ import { Router as ReachRouter } from "@reach/router"
 
 import routes from "app/config/routes"
 import ProtectedRoute from "./components/ProtectedRoute"
+import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
 
 const allowList = /^\/login|^\/authentication/
 
@@ -22,6 +23,7 @@ const Router: React.FC = () => (
         .filter(([path]) => path.match(allowList))
         .map(([path, Page]) => <Page key={path} path={path} />)
     }
+    <NotFoundPage default />
   </ReachRouter>
 )
 
