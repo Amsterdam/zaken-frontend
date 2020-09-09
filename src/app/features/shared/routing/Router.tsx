@@ -5,23 +5,21 @@ import routes from "app/config/routes"
 import ProtectedRoute from "./components/ProtectedRoute"
 import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
 
-const allowList = /^\/login|^\/authentication/
+const allowed = ["login", "authentication"]
+const isAllowed = (path: string) => {
+  const p = path.split("/").filter(_ => _ !== "")[0]
+  return allowed.includes(p)
+}
 
 const Router: React.FC = () => (
   <ReachRouter>
     {
-      // Pages that do NOT match the allowList are protected
       Object
         .entries(routes)
-        .filter(([path]) => !path.match(allowList))
-        .map(([path, Page]) => <ProtectedRoute page={Page} key={path} path={path} />)
-    }
-    {
-      // Pages that do match the allowList are NOT protected
-      Object
-        .entries(routes)
-        .filter(([path]) => path.match(allowList))
-        .map(([path, Page]) => <Page key={path} path={path} />)
+        .map(([path, Page]) =>
+          isAllowed(path) ?
+            <Page key={path} path={path} /> :
+            <ProtectedRoute page={Page} key={path} path={path} />)
     }
     <NotFoundPage default />
   </ReachRouter>
