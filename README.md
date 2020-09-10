@@ -11,7 +11,7 @@
 
 - `git clone https://github.com/Amsterdam/zaken-frontend.git`
 - `cd zaken-frontend`
-- `npm install .`
+- `npm install`
 - `npm run generate:swagger-schema`
 - `npm run generate:form-scaffolds`
 - `npm run start`
