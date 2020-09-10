@@ -19,7 +19,7 @@ describe("useApiRequest", () => {
       .get("/pet")
       .reply(200, { name: "Fifi", type: "dog" })
 
-    const { result, waitForNextUpdate } = renderHook(usePet, { wrapper: ApiProvider  })
+    const { result, waitForNextUpdate } = renderHook(usePet, { wrapper: ApiProvider })
 
     // Busy... no results yet.
     expect(result.current.isBusy).toEqual(true)
@@ -50,7 +50,7 @@ describe("useApiRequest", () => {
       second: usePet()
     })
 
-    const { result, waitForNextUpdate } = renderHook(useTwoHooks, { wrapper: ApiProvider  })
+    const { result, waitForNextUpdate } = renderHook(useTwoHooks, { wrapper: ApiProvider })
 
     // Busy...
     expect(result.current.first.isBusy).toEqual(true)
@@ -74,19 +74,19 @@ describe("useApiRequest", () => {
   test.each([
     [ "POST",
       (scope: nock.Scope) => scope.post("/pet").reply(200),
-      (hook: any, onSuccess: () => void) => hook.execPost({ name: "popo" }, onSuccess)
+      (hook: any) => hook.execPost({ name: "popo" })
     ],
     [ "PUT",
       (scope: nock.Scope) => scope.put("/pet").reply(200),
-      (hook: any, onSuccess: () => void) => hook.execPut({ name: "popo" }, onSuccess)
+      (hook: any) => hook.execPut({ name: "popo" })
     ],
     [ "PATCH",
       (scope: nock.Scope) => scope.patch("/pet").reply(200),
-      (hook: any, onSuccess: () => void) => hook.execPatch({ name: "popo" }, onSuccess)
+      (hook: any) => hook.execPatch({ name: "popo" })
     ],
     [ "DELETE",
       (scope: nock.Scope) => scope.delete("/pet").reply(200),
-      (hook: any, onSuccess: () => void) => hook.execDelete(onSuccess)
+      (hook: any) => hook.execDelete()
     ]
   ])("should re-execute a GET after a %s", async (method, prepareScope, exec) => {
     const usePet = () => useApiRequest<Pet>({ url: "http://localhost/pet", groupName: "cases" })
@@ -100,18 +100,16 @@ describe("useApiRequest", () => {
     prepareScope(scope)
 
     const onSuccess = jest.fn()
-    const { result, waitForNextUpdate } = renderHook(usePet, { wrapper: ApiProvider  })
+    const { result, waitForNextUpdate } = renderHook(usePet, { wrapper: ApiProvider })
     await act(() => waitForNextUpdate())
 
     // On mount, "Fifi" should be fetched
     expect(result.current.data).toEqual({ name: "Fifi", type: "dog" })
 
     await act(async () => {
-      await exec(result.current, onSuccess)
+      await exec(result.current).then(onSuccess)
       return waitForNextUpdate()
     })
-
-    await act(() => waitForNextUpdate())
 
     // Cache was cleared. Data should be undefined now:
     expect(result.current.data).toEqual(undefined)
@@ -132,7 +130,7 @@ describe("useApiRequest", () => {
       .get("/pet")
       .reply(500, { detail: "S.O.S." })
 
-    const { waitForNextUpdate } = renderHook(usePet, { wrapper: ApiProvider  })
+    const { waitForNextUpdate } = renderHook(usePet, { wrapper: ApiProvider })
     await act(() => waitForNextUpdate())
 
     expect(handleError).toHaveBeenCalledWith(expect.objectContaining({
