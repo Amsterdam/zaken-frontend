@@ -1,22 +1,39 @@
-import axios, { AxiosError, Method } from "axios"
+import axios, { AxiosError } from "axios"
 import { useCallback, useEffect, useContext } from "react"
 
 import { ApiContext } from "../provider/ApiProvider"
 import { ApiGroup } from "../index"
 
+type GetOptions = {
+  method: "get"
+}
+
+type MutateOptions = {
+  method: "post" | "put" | "patch" | "delete"
+  skipCacheClear?: boolean
+  useResponseAsCache?: boolean
+}
+
+const isGetOptions = (options: any): options is GetOptions =>
+  options.method === "get"
+
+const isMutateOptions = (options: any): options is MutateOptions =>
+  ["post", "put", "patch", "delete"].includes(options.method)
+
 type Config = {
+  keepUsingInvalidCache?: boolean
+  lazy?: boolean
   url: string
   groupName: ApiGroup
   handleError?: ( error: AxiosError ) => void
   getHeaders?: () => Record<string, string>
 }
 
-type Callback = () => void
-
-const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, handleError, getHeaders }: Config) => {
+const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, handleError, getHeaders, lazy, keepUsingInvalidCache }: Config) => {
   const {
     getCacheItem,
     setCacheItem,
+    updateCacheItem,
     clearCache,
     pushRequestInQueue,
     isRequestPendingInQueue
@@ -25,26 +42,29 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
   /**
    * Executes an API request
    */
-  const execRequest = useCallback(async (method: Method, payload?: Payload, onSuccess?: Callback) => {
+  const execRequest = useCallback(async (options: GetOptions | MutateOptions, payload?: Payload) => {
     try {
+      if (isMutateOptions(options) && !options.skipCacheClear) {
+        clearCache()
+      }
+
       const response = await axios.request<Schema>({
         headers: getHeaders ? getHeaders() : undefined,
-        method,
+        method: options.method,
         url,
         data: payload
       })
 
-      if (method !== "get") {
-        clearCache()
-      } else {
+      if (isGetOptions(options) || (isMutateOptions(options) && options.useResponseAsCache)) {
         setCacheItem(url, response.data)
       }
-      if (onSuccess) {
-        onSuccess()
-      }
+
+      return response
     } catch(error) {
       if (handleError) {
         handleError(error)
+      } else {
+        throw error
       }
     }
   }, [clearCache, setCacheItem, url, handleError, getHeaders])
@@ -52,34 +72,59 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
   /**
    * Queues an API request
    */
-  const queueRequest = useCallback(async (method: Method, payload?: Payload, onSuccess?: Callback) =>
-    pushRequestInQueue(url, method, () => execRequest(method, payload, onSuccess))
-  , [ execRequest, url, pushRequestInQueue ])
+  const queueRequest = useCallback(async (options: GetOptions | MutateOptions, payload?: Payload) => new Promise(
+    (resolve, reject) =>
+      pushRequestInQueue(url, options.method, () => execRequest(options, payload)
+        .then(resolve)
+        .catch(reject)
+      )
+  ), [ execRequest, url, pushRequestInQueue ])
 
   /**
    * Define HTTP methods
    */
-  const execGet = useCallback((onSuccess?: Callback) => queueRequest("get", undefined, onSuccess), [ queueRequest ])
-  const execPost = useCallback((payload: Payload, onSuccess?: Callback) => queueRequest("post", payload, onSuccess), [ queueRequest ])
-  const execPut = useCallback((payload: Payload, onSuccess?: Callback) => queueRequest("put", payload, onSuccess), [ queueRequest ])
-  const execPatch = useCallback((payload: Payload, onSuccess?: Callback) => queueRequest("patch", payload, onSuccess), [ queueRequest ])
-  const execDelete = useCallback((onSuccess?: Callback) => queueRequest("delete", undefined, onSuccess), [ queueRequest ])
+  const execGet = useCallback((options?: Omit<GetOptions, "method">) =>
+    queueRequest({ method: "get", ...options }), [ queueRequest ])
+
+  const execPost = useCallback((payload: Payload, options?: Omit<MutateOptions, "method">) =>
+    queueRequest({ method: "post", ...options }, payload), [ queueRequest ])
+
+  const execPut = useCallback((payload: Payload, options?: Omit<MutateOptions, "method">) =>
+    queueRequest({ method: "put", ...options }, payload), [ queueRequest ])
+
+  const execPatch = useCallback((payload: Payload, options?: Omit<MutateOptions, "method">) =>
+    queueRequest({ method: "patch", ...options }, payload), [ queueRequest ])
+
+  const execDelete = useCallback((options?: Omit<MutateOptions, "method">) =>
+    queueRequest({ method: "delete", ...options }), [ queueRequest ])
+
+  const updateCache = useCallback(
+    (updater: (item: Schema) => void) => updateCacheItem(url, updater),
+    [ updateCacheItem, url ]
+  )
 
   // reFetch whenever our cache is invalidated
-  const data = getCacheItem(url) as Schema
+  const cacheItem = getCacheItem(url)
+
+  const data = cacheItem && (cacheItem.valid || keepUsingInvalidCache)
+    ? cacheItem.value as Schema
+    : undefined
+
   useEffect(() => {
-    if (!data) { execGet() }
-  }, [ execGet, data ])
+    if ((!cacheItem || !cacheItem.valid) && !lazy) {
+      execGet()
+    }
+  }, [ execGet, cacheItem, lazy ])
 
   return {
     data,
     isBusy: isRequestPendingInQueue(url, "get"),
-
     execGet,
     execPost,
     execPut,
     execPatch,
-    execDelete
+    execDelete,
+    updateCache
   }
 }
 

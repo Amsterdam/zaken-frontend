@@ -7,7 +7,8 @@ const noopBoolean = () => false
 export const noopContext: ApiCache & RequestQueue = {
   isRequestPendingInQueue: noopBoolean,
   pushRequestInQueue: noopUndefined,
-  getCacheItem: noopUndefined,
+  getCacheItem: () => ({ valid: false, value: undefined }),
   setCacheItem: noopUndefined,
+  updateCacheItem: noopUndefined,
   clearCache: noopUndefined
 }
