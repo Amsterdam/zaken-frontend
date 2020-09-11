@@ -16,7 +16,7 @@ const routesToRouteConfig = (routes: Record<string, RouteConfig | Page>) =>
     return acc
   }, {} as Record<string, RouteConfig>)
 
-// Add feature routes here
+// NOTE: Add feature routes here
 const routes = {
   ...loginRoutes,
   ...casesRoutes,

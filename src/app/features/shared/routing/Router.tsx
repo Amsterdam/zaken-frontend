@@ -13,7 +13,7 @@ const Router: React.FC = () => (
         .map(([path, { publicly, Page }]) =>
           publicly ?
             <Page key={path} path={path} /> :
-            <ProtectedRoute page={Page} key={path} path={path} />)
+            <ProtectedRoute key={path} path={path} page={Page} />)
     }
     <NotFoundPage default />
   </ReachRouter>
