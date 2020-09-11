@@ -1,23 +1,28 @@
 import { FC } from "react"
+import type { RouteComponentProps } from "@reach/router"
 import loginRoutes from "../features/login/routes"
 import caseVisitsRoutes from "../features/caseVisits/routes"
 import casesRoutes from "../features/cases/routes"
 
-import type { RouteComponentProps } from "@reach/router"
 type Page = FC<RouteComponentProps>
+type RouteConfig = { publicly: boolean, Page: Page }
 
-//export type Route = Record<string, Page>
-//export type ProtectedRoute = Record<string, { public: boolean, page: Page }
+const toRouteConfig = (config: RouteConfig | Page): RouteConfig =>
+  "Page" in config ? config : { publicly: false, Page: config }
 
-const allRoutes = [
-  loginRoutes,
-  casesRoutes,
-  caseVisitsRoutes
-]
-const routesObject = allRoutes.reduce((routes, acc) => ({
-    ...acc,
-    ...routes
-  }), {} as Record<string, Page>)
+const routesToRouteConfig = (routes: Record<string, RouteConfig | Page>) =>
+  Object.keys(routes).reduce((acc, key) => {
+    acc[key] = toRouteConfig(routes[key])
+    return acc
+  }, {} as Record<string, RouteConfig>)
 
+// Add feature routes here
+const routes = {
+  ...loginRoutes,
+  ...casesRoutes,
+  ...caseVisitsRoutes
+}
+
+const routesObject = routesToRouteConfig(routes)
 export type Routes = typeof routesObject
 export default routesObject
