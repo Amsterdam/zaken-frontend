@@ -22,6 +22,7 @@ import Fines from "app/features/cases/components/organisms/Fines/Fines"
 import CaseDetails from "app/features/cases/components/organisms/CaseDetails/CaseDetails"
 
 import TableCaseVisits from "app/features/caseVisits/components/organisms/TableCaseVisits/TableCaseVisits"
+import PanoramaPreview from "../../organisms/Panorama/PanoramaPreview"
 
 
 type Props = {
@@ -63,7 +64,10 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
       <ColumnWrap>
         <Column>
           { caseData?.address.bag_id
-            ? <BagMap bagId={caseData.address.bag_id} />
+            ? <>
+                <PanoramaPreview bagId={caseData.address.bag_id} />
+                <BagMap bagId={caseData.address.bag_id} />
+              </>
             : <BagMapSkeleton />
           }
         </Column>

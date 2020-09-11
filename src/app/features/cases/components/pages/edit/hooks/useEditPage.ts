@@ -11,7 +11,7 @@ export const useEditPage = (id?: Components.Schemas.Case["identification"]) => {
   const { addSuccessFlashMessage } = useFlashMessages()
 
   const handleUpdate = useCallback(payload =>
-      execPut(payload, () => {
+      execPut(payload).then(() => {
         addSuccessFlashMessage("/cases", "Succesvol gewijzigd", "De zaak is succesvol gewijzigd")
         return navigate(to("/cases"))
       }),
@@ -19,7 +19,7 @@ export const useEditPage = (id?: Components.Schemas.Case["identification"]) => {
   )
 
   const handleDelete = useCallback(() =>
-      execDelete(() => {
+      execDelete().then(() => {
         addSuccessFlashMessage("/cases", "Succesvol verwiderd", "De zaak is succesvol verwijderd")
         return navigate(to("/cases"))
       }),

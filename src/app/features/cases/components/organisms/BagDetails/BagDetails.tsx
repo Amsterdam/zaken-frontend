@@ -8,7 +8,7 @@ type Props = {
 
 const BAGDetails: React.FC<Props> = ({ bagID }) => {
   const { data } = useBAG(bagID)
-  const result = data?.results[0] ?? {}
+  const result = data?.results[0]
   
   const values = useMemo(() => ({
     "Adres": result?.adres,
