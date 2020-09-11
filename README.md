@@ -7,7 +7,7 @@
 [acc.zaken.amsterdam.nl](https://acc.zaken.amsterdam.nl)
 
 ## Development
-- there is a dependency on https://github.com/Amsterdam/zaken-backend
+- There is a dependency on https://github.com/Amsterdam/zaken-backend
 
 - `git clone https://github.com/Amsterdam/zaken-frontend.git`
 - `cd zaken-frontend`
@@ -15,6 +15,9 @@
 - `npm run generate:swagger-schema`
 - `npm run generate:form-scaffolds`
 - `npm run start`
+
+### Bypassing authentication
+- When running zaken-frontend and zaken-backend locally, it's possible to bypass Grip authentication by uncommenting line 10 in `.env.development` 
 
 # Original README
 
