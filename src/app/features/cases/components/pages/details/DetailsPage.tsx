@@ -83,7 +83,10 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
           }
           <Residents id={ id! } />
           <Fines id={ id! } />
-          <PermitDetails id={ id! } />
+          { caseData?.address.bag_id
+            ? <PermitDetails bagID={caseData.address.bag_id} />
+            : <LoadingDetails numRows={2} />
+          }
         </Column>
       </ColumnWrap>
       <Heading>Bezoeken</Heading>

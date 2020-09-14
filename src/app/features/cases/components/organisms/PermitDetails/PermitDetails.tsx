@@ -1,20 +1,20 @@
 import React, { useMemo } from "react"
 
-import usePermit from "app/state/rest/hooks/custom/usePermits"
+import { usePermitCheckmarks } from "app/state/rest"
 
 import Heading from "app/features/shared/components/atoms/Heading/Heading"
 import Details from "app/features/shared/components/molecules/Details/Details"
 
 type Props = {
-  id: NonNullable<API.Case["identification"]>
+  bagID: string
 }
 
-const PermitDetails: React.FC<Props> = ({ id }) => {
-  const { data, isBusy } = usePermit(id)
+const PermitDetails: React.FC<Props> = ({ bagID }) => {
+  const { data, isBusy } = usePermitCheckmarks(bagID)
 
   const values = useMemo(() => ({
-    "Bed & Breakfast": data?.bedBreakfast ? "Ja" : "Nee",
-    "Vakantieverhuur": data?.holidayRental ? "Ja" : "Nee"
+    "Bed & Breakfast": data?.has_b_and_b_permit ? "Ja" : "Nee",
+    "Vakantieverhuur": data?.has_vacation_rental_permit ? "Ja" : "Nee"
   }), [data])
 
   return (
