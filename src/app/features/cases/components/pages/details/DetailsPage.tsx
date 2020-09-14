@@ -65,7 +65,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
         <Column>
           { caseData?.address.bag_id
             ? <>
-                <PanoramaPreview bagId={caseData.address.bag_id} width={400} g/>
+                <PanoramaPreview bagId={caseData.address.bag_id} />
                 <BagMap bagId={caseData.address.bag_id} />
               </>
             : <BagMapSkeleton />

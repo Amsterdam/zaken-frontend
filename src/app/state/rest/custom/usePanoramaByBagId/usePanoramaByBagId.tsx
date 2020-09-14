@@ -1,13 +1,14 @@
 import { useBAG, usePanorama } from "../../index"
 
-const usePanoramaByBagId = (bagId: string, width: number) => {
+const usePanoramaByBagId = (bagId: string, width: number, radius: number) => {
   const { data } = useBAG(bagId)
 
   return usePanorama(
-    data?.results?.[0].centroid[1],
-    data?.results?.[0].centroid[0],
+    data?.results?.[0]?.centroid[1],
+    data?.results?.[0]?.centroid[0],
     width,
-    { lazy: data === undefined }
+    radius,
+    { lazy: data?.results?.[0] === undefined }
   )
 }
 

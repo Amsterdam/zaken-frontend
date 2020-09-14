@@ -85,11 +85,11 @@ export const useBAG = (bagId: string, options?: Options) => {
   })
 }
 
-export const usePanorama = (lat?: number, lon?: number, width: number = 438, options?: Options) => {
+export const usePanorama = (lat?: number, lon?: number, width?: number, radius?: number, options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<{ url: string }>({
     ...options,
-    url: `https://api.data.amsterdam.nl/panorama/thumbnail/?lat=${ lat }&lon=${ lon }&width=${ width }&radius=180`,
+    url: `https://api.data.amsterdam.nl/panorama/thumbnail/?lat=${ lat }&lon=${ lon }&width=${ width }&radius=${ radius }`,
     groupName: "dataPunt",
     handleError
   })
