@@ -10,7 +10,7 @@ const useCreatePage = () => {
   const { addSuccessFlashMessage } = useFlashMessages()
 
   const handleCreate = useCallback(payload =>
-    execPost(payload, () => {
+    execPost(payload).then(() => {
       addSuccessFlashMessage("/cases", "Succesvol aangemaakt", "De zaak is succesvol aangemaakt")
       return navigate(to("/cases"))
     }),
