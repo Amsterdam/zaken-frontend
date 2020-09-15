@@ -1,21 +1,11 @@
 import React, { useMemo } from "react"
-import { Button } from "@datapunt/asc-ui"
-import { ChevronRight } from "@datapunt/asc-assets/lib"
 
 import to from "app/features/shared/routing/to"
 import Table from "app/features/shared/components/molecules/Table/Table"
-import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
+import OpenButton from "app/features/shared/components/atoms/OpenButton/OpenButton"
 
 import { useCases } from "app/state/rest"
 
-type ButtonProps = {
-  href: string
-  text: string
-}
-const OpenButton: React.FC<ButtonProps> = ({ href, text }) =>
-  <ButtonLink to={href}>
-    <Button as="span" variant="textButton" iconSize={14} iconLeft={<ChevronRight />}>{ text }</Button>
-  </ButtonLink>
 
 const columns = [
   { header:"Startdatum", minWidth: 100 },
