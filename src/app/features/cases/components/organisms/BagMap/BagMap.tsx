@@ -29,7 +29,7 @@ const Wrapper = styled.div`
 const BagMap: React.FC<Props> = ({ bagId, zoom = 20 }) => {
   const { data } = useBAG(bagId)
 
-  if (data === undefined) {
+  if (data?.results[0] === undefined) {
     return null
   }
   
