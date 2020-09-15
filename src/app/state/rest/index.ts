@@ -1,3 +1,5 @@
+import qs from "qs"
+
 import useApiRequest from "./hooks/useApiRequest"
 import { getHeaders, makeGatewayUrl, useErrorHandler } from "./hooks/utils/utils"
 import { APIListResponse } from "./types/ApiListResponse"
@@ -87,9 +89,10 @@ export const useBAG = (bagId: string, options?: Options) => {
 
 export const usePanorama = (lat?: number, lon?: number, width?: number, radius?: number, options?: Options) => {
   const handleError = useErrorHandler()
+  const queryString = qs.stringify({ lat, lon, width, radius }, { addQueryPrefix: true })
   return useApiRequest<{ url: string }>({
     ...options,
-    url: `https://api.data.amsterdam.nl/panorama/thumbnail/?lat=${ lat }&lon=${ lon }&width=${ width }&radius=${ radius }`,
+    url: `https://api.data.amsterdam.nl/panorama/thumbnail/${ queryString }`,
     groupName: "dataPunt",
     handleError
   })
