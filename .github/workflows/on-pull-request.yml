@@ -47,7 +47,10 @@ jobs:
       - run: npm run test
         working-directory: frontend
 
-      - run: npm run start &>/dev/null &
+      - run: npm run build:test
+        working-directory: frontend
+
+      - run: npm run serve:build &>/dev/null &
         working-directory: frontend
 
       - run: npm run cypress:run

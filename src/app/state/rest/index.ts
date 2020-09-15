@@ -1,3 +1,5 @@
+import qs from "qs"
+
 import useApiRequest from "./hooks/useApiRequest"
 import { getHeaders, makeGatewayUrl, useErrorHandler } from "./hooks/utils/utils"
 import { APIListResponse } from "./types/ApiListResponse"
@@ -8,6 +10,7 @@ export type ApiGroup =
   | "caseTypes"
   | "caseStates"
   | "dataPunt"
+  | "permits"
 
 export type Options = {
   keepUsingInvalidCache?: boolean
@@ -85,12 +88,23 @@ export const useBAG = (bagId: string, options?: Options) => {
   })
 }
 
-export const usePanorama = (lat?: number, lon?: number, options?: Options) => {
+export const usePanorama = (lat?: number, lon?: number, width?: number, radius?: number, options?: Options) => {
   const handleError = useErrorHandler()
+  const queryString = qs.stringify({ lat, lon, width, radius }, { addQueryPrefix: true })
   return useApiRequest<{ url: string }>({
     ...options,
-    url: `https://api.data.amsterdam.nl/panorama/thumbnail/?lat=${ lat }&lon=${ lon }&width=438&radius=180`,
+    url: `https://api.data.amsterdam.nl/panorama/thumbnail/${ queryString }`,
     groupName: "dataPunt",
     handleError
+  })
+}
+
+export const usePermitCheckmarks = (bagId: string) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<{ has_b_and_b_permit: boolean, has_vacation_rental_permit: boolean }>({
+    url: makeGatewayUrl("permits", "get_permit_checkmarks") + `?bag_id=${ bagId }`,
+    groupName: "permits",
+    handleError,
+    getHeaders
   })
 }

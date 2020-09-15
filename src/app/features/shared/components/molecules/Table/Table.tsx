@@ -9,7 +9,7 @@ import TableCell from "./components/TableCell/TableCell"
 import TableHeading from "./components/TableHeading/TableHeading"
 import FixedTableCell from "./components/TableCell/FixedTableCell"
 
-type CellContent = string | number | JSX.Element | undefined
+type CellContent = string | number | JSX.Element | undefined | null
 
 type Props = {
   numLoadingRows?: number
