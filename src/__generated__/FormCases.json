@@ -35,15 +35,6 @@
         "label": "Opslaan"
       }
     },
-    "address_id": {
-      "type": "NumberField",
-      "props": {
-        "position": {},
-        "name": "address.id",
-        "label": "Id",
-        "disabled": true
-      }
-    },
     "address_bag_id": {
       "type": "TextField",
       "props": {
@@ -52,6 +43,15 @@
         "name": "address.bag_id",
         "label": "Bag id",
         "isRequired": true
+      }
+    },
+    "address_id": {
+      "type": "NumberField",
+      "props": {
+        "position": {},
+        "name": "address.id",
+        "label": "Id",
+        "disabled": true
       }
     },
     "address_street_name": {
@@ -118,6 +118,164 @@
         "position": {},
         "name": "address.lng",
         "label": "Lng",
+        "disabled": true
+      }
+    },
+    "states": {
+      "type": "ArrayField",
+      "props": {
+        "scaffoldFields": {
+          "id": {
+            "type": "NumberField",
+            "props": {
+              "position": {
+                "mobileS": {
+                  "column": 0,
+                  "columnSpan": 1,
+                  "row": 0,
+                  "rowSpan": 1
+                }
+              },
+              "name": "id",
+              "label": "Id",
+              "disabled": true
+            }
+          },
+          "state_type_id": {
+            "type": "NumberField",
+            "props": {
+              "position": {
+                "mobileS": {
+                  "column": 1,
+                  "columnSpan": 1,
+                  "row": 0,
+                  "rowSpan": 1
+                }
+              },
+              "name": "state_type.id",
+              "label": "Id",
+              "disabled": true
+            }
+          },
+          "state_type_name": {
+            "type": "TextField",
+            "props": {
+              "type": "text",
+              "position": {
+                "mobileS": {
+                  "column": 2,
+                  "columnSpan": 1,
+                  "row": 0,
+                  "rowSpan": 1
+                }
+              },
+              "name": "state_type.name",
+              "label": "Name",
+              "isRequired": true
+            }
+          },
+          "state_type_invoice_available": {
+            "type": "Boolean",
+            "props": {
+              "position": {
+                "mobileS": {
+                  "column": 3,
+                  "columnSpan": 1,
+                  "row": 0,
+                  "rowSpan": 1
+                }
+              },
+              "name": "state_type.invoice_available",
+              "label": "Invoice available"
+            }
+          },
+          "start_date": {
+            "type": "TextField",
+            "props": {
+              "type": "date",
+              "position": {
+                "mobileS": {
+                  "column": 5,
+                  "columnSpan": 1,
+                  "row": 0,
+                  "rowSpan": 1
+                }
+              },
+              "name": "start_date",
+              "label": "Start date"
+            }
+          },
+          "end_date": {
+            "type": "TextField",
+            "props": {
+              "type": "date",
+              "position": {
+                "mobileS": {
+                  "column": 6,
+                  "columnSpan": 1,
+                  "row": 0,
+                  "rowSpan": 1
+                }
+              },
+              "name": "end_date",
+              "label": "End date"
+            }
+          },
+          "gauge_date": {
+            "type": "TextField",
+            "props": {
+              "type": "date",
+              "position": {
+                "mobileS": {
+                  "column": 7,
+                  "columnSpan": 1,
+                  "row": 0,
+                  "rowSpan": 1
+                }
+              },
+              "name": "gauge_date",
+              "label": "Gauge date"
+            }
+          },
+          "invoice_identification": {
+            "type": "TextField",
+            "props": {
+              "type": "text",
+              "position": {
+                "mobileS": {
+                  "column": 8,
+                  "columnSpan": 1,
+                  "row": 0,
+                  "rowSpan": 1
+                }
+              },
+              "name": "invoice_identification",
+              "label": "Invoice identification"
+            }
+          },
+          "case": {
+            "type": "NumberField",
+            "props": {
+              "position": {
+                "mobileS": {
+                  "column": 9,
+                  "columnSpan": 1,
+                  "row": 0,
+                  "rowSpan": 1
+                }
+              },
+              "name": "case",
+              "label": "Case",
+              "isRequired": true
+            }
+          }
+        },
+        "allowAdd": true,
+        "allowRemove": true,
+        "columns": "1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr auto",
+        "position": {},
+        "name": "states",
+        "label": "States",
         "disabled": true
       }
     },
