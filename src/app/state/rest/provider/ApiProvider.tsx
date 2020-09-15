@@ -11,7 +11,8 @@ export const ApiContext = React.createContext<GroupedContext>({
   cases: noopContext,
   caseTypes: noopContext,
   caseStates: noopContext,
-  dataPunt: noopContext
+  dataPunt: noopContext,
+  permits: noopContext
 })
 
 const ApiProvider: React.FC = ({ children }) => {
@@ -29,6 +30,10 @@ const ApiProvider: React.FC = ({ children }) => {
       ...useRequestQueue()
     },
     dataPunt: {
+      ...useApiCache(),
+      ...useRequestQueue()
+    },
+    permits: {
       ...useApiCache(),
       ...useRequestQueue()
     }

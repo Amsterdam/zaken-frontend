@@ -1,15 +1,20 @@
 import React from "react"
 
-
 import { useCaseFines } from "app/state/rest"
 
 import InfoHeading from "app/features/shared/components/molecules/InfoHeading/InfoHeading"
 import FineSummary from "app/features/cases/components/organisms/FineSummary/FineSummary"
 import LoadingDetails from "app/features/shared/components/molecules/Details/LoadingDetails"
+import styled from "styled-components"
+import { themeSpacing } from "@datapunt/asc-ui"
 
 type Props = {
   id: NonNullable<Components.Schemas.Case["identification"]>
 }
+
+const Wrapper = styled.div`
+  margin-bottom: ${ themeSpacing(10) };
+`
 
 const Fines: React.FC<Props> = ({ id }) => {
   const { data: finesData } = useCaseFines(id)
@@ -33,7 +38,7 @@ const Fines: React.FC<Props> = ({ id }) => {
                 date={ fine.start_date }
                 hasInvoice={ fine.fines.length > 0 }
                 />)
-            : "Geen"
+            : <Wrapper>Geen</Wrapper>
           }
         </> :
         <LoadingDetails numRows={3} />
