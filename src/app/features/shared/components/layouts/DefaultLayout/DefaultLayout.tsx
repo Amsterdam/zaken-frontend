@@ -7,8 +7,10 @@ import to from "app/features/shared/routing/to"
 import FlashMessages from "app/features/shared/components/molecules/FlashMessages/FlashMessages"
 
 
-const LeftAlignWrap = styled.div`
+const MenuWithSearchButtonWrap = styled.div`
   margin-right: auto;
+  position: relative;
+  width: 100%;
 `
 
 
@@ -19,30 +21,9 @@ const DefaultLayout: React.FC = ({ children }) => (
       title="Zaken" 
       homeLink={to("/")} 
       navigation={
-        <LeftAlignWrap>
-        <MenuInline >
-          <MenuItem>
-            <MenuButton forwardedAs="a" href="/" active>
-              Menu item
-            </MenuButton>
-          </MenuItem>
-          <MenuFlyOut label="Menu item 2">
-            <MenuItem>
-              <MenuButton forwardedAs="a" href="/" active>
-                Submenu item
-              </MenuButton>
-            </MenuItem>
-          </MenuFlyOut>
-        </MenuInline>
-        </LeftAlignWrap>}
-        />
-
-<span>haai</span>
-        <SearchBar
-        placeholder="Enter the search text"
-        onChange={() => {
-          
-        }}
+        <MenuWithSearchButtonWrap>
+          <DefaultNavigation />
+        </MenuWithSearchButtonWrap>}
       />
     <MainWrapper>
       <FlashMessages />
