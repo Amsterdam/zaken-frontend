@@ -1,13 +1,15 @@
 import loginRoutes from "../features/login/routes"
 import caseVisitsRoutes from "../features/caseVisits/routes"
 import casesRoutes from "../features/cases/routes"
+import routesToRouteConfig from "./utils/routesToRouteConfig"
 
+// NOTE: Add feature routes here
 const routes = {
-  // NOTE: add your own feature here for routing.
   ...loginRoutes,
   ...casesRoutes,
   ...caseVisitsRoutes
 }
 
-export type Routes = typeof routes
-export default routes
+const routesObject = routesToRouteConfig(routes)
+export type Routes = typeof routesObject
+export default routesObject

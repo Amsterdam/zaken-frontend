@@ -559,6 +559,18 @@ declare namespace Paths {
             export type $200 = Components.Schemas.OIDCAuthenticate;
         }
     }
+    namespace PermitsGetPermitCheckmarksRetrieve {
+        namespace Parameters {
+            export type BagId = string;
+        }
+        export type QueryParameters = {
+            bag_id: Parameters.BagId
+        }
+        namespace Responses {
+            export type $200 = {
+            }
+        }
+    }
     namespace PermitsListDocumentsRetrieve {
         namespace Parameters {
             export type Query = string;
