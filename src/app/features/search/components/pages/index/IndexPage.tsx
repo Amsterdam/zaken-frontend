@@ -8,6 +8,7 @@ import SearchResults from "app/features/search/components/organisms/SearchResult
 
 const IndexPage: React.FC<RouteComponentProps> = () => (
   <DefaultLayout>
+    // TODO: Add SearchForm, remove Heading
     <Heading>Zoeken</Heading>
     <SearchResults />
   </DefaultLayout>
