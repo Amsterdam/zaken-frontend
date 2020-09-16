@@ -4,7 +4,7 @@ import styled from "styled-components"
 import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
 import to from "app/features/shared/routing/to"
 import { hasToken } from "app/state/auth/tokenStore"
-import { Search } from "@datapunt/asc-assets/lib"
+import { Search } from "@datapunt/asc-assets"
 
 
 const SearchButton = styled(Button)`
