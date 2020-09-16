@@ -4,7 +4,7 @@ import { Row } from "@datapunt/asc-ui"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 import AddressDisplay from "app/features/addresses/components/atoms/AddressDisplay/AddressDisplay"
 import PermitOverview from "app/features/permits/components/organisms/PermitOverview/PermitOverview"
-
+import BreadCrumbs from "app/features/addresses/components/molecules/BreadCrumbs/BreadCrumbs"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -12,6 +12,7 @@ type Props = {
 
 const DetailPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
     <DefaultLayout>
+      <BreadCrumbs bagId={ bagId! } subPageTitle="Detail" subPage="detail" />
       <Row>
         <AddressDisplay bagId={ bagId! } />
       </Row>
