@@ -29,7 +29,7 @@ const DefaultNavigation: React.FC = () =>
             </ButtonLink>
           </MenuItem>
         </MenuInline>
-        <ButtonLink to={to("/")}>
+        <ButtonLink to={to("/zoeken")}>
           <SearchButton size={50} variant="blank" iconSize={20} icon={<Search />} />
         </ButtonLink>
       </>
