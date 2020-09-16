@@ -13,7 +13,7 @@ RUN mkdir -p $DIR/builds/production
 WORKDIR $DIR
 
 # install dependencies
-RUN npm ci --unsafe-perm .
+RUN npm ci --production --unsafe-perm .
 
 # global variables
 RUN echo "REACT_APP_GIT_COMMIT_HASH=$COMMIT_HASH" > .env.local
