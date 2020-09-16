@@ -1,9 +1,7 @@
 import React from "react"
 import styled from "styled-components"
-import { Link } from "@reach/router"
-import { Card, CardContent, Icon, Heading, TopTaskLink, themeSpacing } from "@datapunt/asc-ui"
-import { Housing, PersonalLogin, DocumentCheckmark, Layers } from "@datapunt/asc-assets"
-import to from "app/features/shared/routing/to"
+import { themeSpacing } from "@datapunt/asc-ui"
+import NavBlock from "app/features/addresses/components/atoms/NavBlock/NavBlock"
 
 const Menu = styled.menu`
   margin: 0;
@@ -23,29 +21,22 @@ const Ul = styled.ul`
   }
 `
 
-const W = 220
-const style = {
-  minWidth: W,
-  maxWidth: W,
-  minHeight: 132
-}
-
 const AddressMenu: React.FC = () =>
+  // TODO: Read page title, routing, icons from global config JSON
   <Menu>
     <Ul>
       <li>
-        <Link to={ to("detail") }>
-          <Card maxWidth={ W } backgroundColor="level2" shadow>
-            <CardContent>
-              <Icon><Housing /></Icon>
-              <Heading as="h5">Adres details</Heading>
-            </CardContent>
-          </Card>
-        </Link>
+        <NavBlock to="detail" icon="Housing" header="Adres details" />
       </li>
-      <li><Link to="personen"><TopTaskLink title="Persoonsgegevens" icon={ PersonalLogin } style={ style } /></Link></li>
-      <li><Link to="vergunningen"><TopTaskLink title="Vergunningen" icon={ DocumentCheckmark } style={ style } /></Link></li>
-      <li><Link to="zaken"><TopTaskLink title="Gerelateerde zaken" icon={ Layers } style={ style } /></Link></li>
+      <li>
+        <NavBlock to="personen" icon="PersonalLogin" header="Persoonsgegevens" />
+      </li>
+      <li>
+        <NavBlock to="vergunningen" icon="DocumentCheckmark" header="Vergunningen" />
+      </li>
+      <li>
+        <NavBlock to="zaken" icon="Layers" header="Gerelateerde zaken" />
+      </li>
     </Ul>
   </Menu>
 export default AddressMenu
