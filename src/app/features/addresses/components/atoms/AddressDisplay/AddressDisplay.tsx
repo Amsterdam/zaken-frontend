@@ -8,8 +8,7 @@ type Props = {
 
 const AddressDisplay: React.FC<Props> = ({ bagId }) => {
   const { data } = useBAG(bagId)
-
   // TODO: Show loading status visually
-  return <Heading>{ data ? data.results[0].adres : "" }</Heading>
+  return <Heading>{ data ? `${ data.results[0].adres }, ${ data.results[0].postcode }` : "" }</Heading>
 }
 export default AddressDisplay

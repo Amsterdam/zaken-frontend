@@ -3,7 +3,7 @@ declare namespace Components {
         export type Address = {
             bag_id: string
             readonly id: number
-            readonly full_address: any
+            readonly full_address: string
             readonly street_name: string
             readonly number: number
             readonly suffix_letter: string
@@ -38,7 +38,9 @@ declare namespace Components {
             readonly id: number
             readonly castetimelinereaction_set: CaseTimelineReaction[]
             readonly date: string // date
-            parameters?: string
+            parameters?: {
+                [name: string]: any
+            }
             notes?: string | null
             subject: number
             authors: string /* uuid */[]
@@ -94,7 +96,7 @@ declare namespace Components {
         export type PatchedAddress = {
             bag_id?: string
             readonly id?: number
-            readonly full_address?: any
+            readonly full_address?: string
             readonly street_name?: string
             readonly number?: number
             readonly suffix_letter?: string
@@ -129,7 +131,9 @@ declare namespace Components {
             readonly id?: number
             readonly castetimelinereaction_set?: CaseTimelineReaction[]
             readonly date?: string // date
-            parameters?: string
+            parameters?: {
+                [name: string]: any
+            }
             notes?: string | null
             subject?: number
             authors?: string /* uuid */[]
