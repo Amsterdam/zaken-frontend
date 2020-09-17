@@ -52,7 +52,6 @@ pipeline {
             "--no-cache " +
             "--shm-size 1G " +
             "--build-arg COMMIT_HASH=${env.COMMIT_HASH} " +
-            "--build-arg BRANCH_NAME=${env.BRANCH_NAME} " +
             " .")
           image.push()
           tag_image_as("latest")
