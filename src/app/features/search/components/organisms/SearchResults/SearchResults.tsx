@@ -1,5 +1,5 @@
 import React, { useMemo } from "react"
-import { useBAG } from "app/state/rest"
+import { useBAGWithZipCode } from "app/state/rest"
 import Table from "app/features/shared/components/molecules/Table/Table"
 import OpenButton from "app/features/shared/components/atoms/OpenButton/OpenButton"
 import to from "app/features/shared/routing/to"
@@ -19,11 +19,11 @@ type SearchResult = Pick<BAGAddressResponse["results"][0], "adres" | "postcode" 
 const mapData = (data: SearchResult) => [
   data.adres ?? "-",
   data.postcode ?? "-",
-  data.subtype_id ? <OpenButton href={to("/adres/:id", { id: data.subtype_id })} text="Open" /> : null
+  data.subtype_id && data.adres ? <OpenButton href={to("/adres/:id", { id: data.subtype_id })} text="Open" /> : null
 ]
 
 const SearchResults: React.FC<Props> = ({ searchString }) => {
-  const { data, isBusy } = useBAG(searchString)
+  const { data, isBusy } = useBAGWithZipCode(searchString)
   const mappedData = useMemo(() => data?.results?.map(mapData), [ data ])
 
   return (<Table
