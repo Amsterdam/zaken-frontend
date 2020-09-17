@@ -34,7 +34,7 @@
     "react-scripts": "3.4.1",
     "resize-observer-polyfill": "^1.5.1",
     "slash-sandwich": "^1.0.12",
-    "styled-components": "^5.1.1",
+    "styled-components": "^5.2.0",
     "typescript": "^4.0.2"
   },
   "scripts": {
