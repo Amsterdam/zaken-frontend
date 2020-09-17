@@ -7,19 +7,18 @@ import Heading from "app/features/shared/components/atoms/Heading/Heading"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 import SearchResults from "app/features/search/components/organisms/SearchResults/SearchResults"
 
+type Props = {
+  searchString: string
+}
+
 const IndexPage: React.FC<RouteComponentProps> = () => {
   const [searchString, setSearchString] = useState("")
-  const delayedQuery = useCallback(_.debounce(( q: any ) => sendQuery(q), 750), [])
-  const sendQuery = (query: any) => setSearchString(query)
-
-  const handleChange = (event: any) => {
-    let searchString: string = event.target.value
+  const delayedQuery = useCallback(_.debounce( setSearchString, 750), [ setSearchString ])
+  
+  const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    let searchString = event.target.value.trim()
     searchString.length > 2 && delayedQuery(searchString)
-  }
-
-  type Props = {
-    searchString: string
-  }
+  }, [ delayedQuery ])
 
   return (
     <DefaultLayout>

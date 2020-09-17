@@ -15,7 +15,6 @@ const columns = [
   { minWidth: 210 }
 ]
 
-// type SearchResult = Pick<BAGAddress, "adres" | "postcode" | "subtype_id">
 type SearchResult = Pick<BAGAddressResponse["results"][0], "adres" | "postcode" | "subtype_id">
 const mapData = (data: SearchResult) => [
   data.adres ?? "-",
