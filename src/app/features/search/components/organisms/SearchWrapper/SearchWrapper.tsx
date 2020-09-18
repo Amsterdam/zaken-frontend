@@ -1,29 +1,43 @@
 import React, { useState, useCallback } from "react"
-import { SearchBar } from "@datapunt/asc-ui"
-import _ from "lodash"
+import { SearchBar, themeSpacing } from "@datapunt/asc-ui"
+import styled from "styled-components"
+import _ from "lodash.debounce"
 
 import SearchResults from "app/features/search/components/organisms/SearchResults/SearchResults"
 
-type Props = {
-  searchString: string
-}
+const SearchBarWrap = styled.div`
+  margin: ${ themeSpacing(10) } 0;
+  width: 100%;
+  max-width: 500px;
+`
+
+const SearchResultsWrap = styled.div`
+width: 100%;
+`
 
 const SearchWrapper: React.FC = () => {
   const [searchString, setSearchString] = useState("")
-  const delayedQuery = useCallback(_.debounce( setSearchString, 750), [ setSearchString ])
+  const delayedQuery = useCallback(_( setSearchString, 750), [ setSearchString ])
   
   const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    let searchString = event.target.value.trim()
+    const searchString = event.target.value.trim()
     searchString.length > 2 && delayedQuery(searchString)
   }, [ delayedQuery ])
 
   return (
       <>
-       <SearchBar 
-            placeholder="Zoek op postcode en huisnummer"
-            onChange={handleChange}
+      <SearchBarWrap>
+        <SearchBar 
+              placeholder="Zoek op postcode en huisnummer"
+              onChange={handleChange}
         />
-        <SearchResults searchString={ searchString } />
+      </SearchBarWrap>
+
+      {searchString.length > 2 && 
+        <SearchResultsWrap>
+          <SearchResults searchString={ searchString } />
+        </SearchResultsWrap>
+      }
     </>
   )
 }
