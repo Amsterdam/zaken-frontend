@@ -5,6 +5,9 @@ import _ from "lodash.debounce"
 
 import SearchResults from "app/features/search/components/organisms/SearchResults/SearchResults"
 
+const MIN_SEARCH_LENGHT = 3
+const DELAY = 750
+
 const SearchBarWrap = styled.div`
   margin: ${ themeSpacing(10) } 0;
   width: 100%;
@@ -14,14 +17,15 @@ const SearchBarWrap = styled.div`
 const SearchResultsWrap = styled.div`
 width: 100%;
 `
+const isValidSearchString = (s: string) => s !== undefined && s.length >= MIN_SEARCH_LENGHT
 
 const SearchWrapper: React.FC = () => {
   const [searchString, setSearchString] = useState("")
-  const delayedQuery = useCallback(_( setSearchString, 750), [ setSearchString ])
+  const delayedQuery = useCallback(_( setSearchString, DELAY), [ setSearchString ])
   
   const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const searchString = event.target.value.trim()
-    searchString.length > 2 && delayedQuery(searchString)
+    isValidSearchString(searchString) && delayedQuery(searchString)
   }, [ delayedQuery ])
 
   return (
@@ -33,7 +37,7 @@ const SearchWrapper: React.FC = () => {
         />
       </SearchBarWrap>
 
-      {searchString.length > 2 && 
+      {isValidSearchString(searchString) && 
         <SearchResultsWrap>
           <SearchResults searchString={ searchString } />
         </SearchResultsWrap>
