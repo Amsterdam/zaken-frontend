@@ -6,13 +6,16 @@ import { MainWrapper } from "app/features/shared/components/atoms/MainWrapper/Ma
 import to from "app/features/shared/routing/to"
 import FlashMessages from "app/features/shared/components/molecules/FlashMessages/FlashMessages"
 
+type Props = {
+  showSearchButton?: boolean
+}
 const MenuWithSearchButtonWrap = styled.div`
   margin-right: auto;
   position: relative;
   width: 100%;
 `
 
-const DefaultLayout: React.FC = ({ children }) => (
+const DefaultLayout: React.FC<Props> = ({ showSearchButton = true, children }) => (
   <>
     <Header 
       tall 
@@ -20,7 +23,7 @@ const DefaultLayout: React.FC = ({ children }) => (
       homeLink={to("/")} 
       navigation={
         <MenuWithSearchButtonWrap>
-          <DefaultNavigation />
+          <DefaultNavigation showSearchButton={showSearchButton} />
         </MenuWithSearchButtonWrap>}
       />
     <MainWrapper>

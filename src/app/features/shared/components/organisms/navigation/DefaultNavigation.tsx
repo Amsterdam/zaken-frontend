@@ -6,6 +6,9 @@ import to from "app/features/shared/routing/to"
 import { hasToken } from "app/state/auth/tokenStore"
 import { Search } from "@datapunt/asc-assets"
 
+type Props = {
+  showSearchButton: boolean
+}
 
 const SearchButton = styled(Button)`
   background-color: transparent;
@@ -14,7 +17,7 @@ const SearchButton = styled(Button)`
   right: 0;
 `
 
-const DefaultNavigation: React.FC = () =>
+const DefaultNavigation: React.FC<Props> = ({ showSearchButton }) =>
   hasToken()
     ? <>
         <MenuInline>
@@ -29,9 +32,11 @@ const DefaultNavigation: React.FC = () =>
             </ButtonLink>
           </MenuItem>
         </MenuInline>
+        { showSearchButton && 
         <ButtonLink to={to("/zoeken")}>
           <SearchButton size={50} variant="blank" iconSize={20} icon={<Search />} />
         </ButtonLink>
+        }
       </>
     : null
 

@@ -7,7 +7,8 @@ import Heading from "app/features/shared/components/atoms/Heading/Heading"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 
 const IndexPage: React.FC<RouteComponentProps> = () => (
-    <DefaultLayout>
+  
+    <DefaultLayout showSearchButton={false}>
       
       <Row halign="flex-start">
         <Heading>Zoeken</Heading>
