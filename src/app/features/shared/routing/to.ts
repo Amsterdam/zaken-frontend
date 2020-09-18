@@ -1,6 +1,7 @@
 import { ComponentProps, ComponentType } from "react"
-import { Routes } from "app/config/routes"
+import routesObject, { Routes } from "app/config/routes"
 import { RouteComponentProps } from "@reach/router"
+import slashSandwich from "slash-sandwich"
 
 // RouteParams for given K in Routes
 type RouteParams<T extends Routes, K extends keyof T> =
@@ -41,7 +42,10 @@ const applyRouteParams = <T extends Routes, K extends keyof T>
  * NOTE: Type-errors will occur when "/foo/:id" does not exit, or when the related Page-component does not accept an `id` property
  */
 export default <T extends Routes, K extends keyof T>
-  (path: K, params?: RouteParams<T, K>) =>
-    params !== undefined
-      ? applyRouteParams(path.toString(), params)
-      : path
+  (path: K, params?: RouteParams<T, K>) => {
+    const str = path.toString()
+    if (!(slashSandwich([str], { trailingSlash: true }) in routesObject)) console.warn(`${ path } is not an existing route`)
+    return params !== undefined
+      ? applyRouteParams(str, params)
+      : str
+  }

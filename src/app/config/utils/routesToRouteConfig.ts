@@ -18,11 +18,11 @@ export default (routes: Record<string, RouteConfig | Page>) =>
   Object.keys(routes).reduce((acc, key) => {
     const route = routes[key]
     const routeConfig = toRouteConfig(route)
-    acc[key] = routeConfig
+    acc[slashSandwich([key], { trailingSlash: true })] = routeConfig
     Object.keys(routeConfig.subRoutes ?? {}).forEach(subKey => {
       const config = routeConfig.subRoutes?.[subKey]
       if (config === undefined) return
-      acc[slashSandwich([key, subKey])] = toRouteConfig(config)
+      acc[slashSandwich([key, subKey], { trailingSlash: true })] = toRouteConfig(config)
     })
     return acc
   }, {} as Record<string, RouteConfig>)
