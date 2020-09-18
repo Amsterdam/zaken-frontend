@@ -88,6 +88,16 @@ export const useBAG = (bagId: string, options?: Options) => {
   })
 }
 
+export const useBAGWithZipCode = (bagId: string, options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<BAGAddressResponse>({
+    url: `https://api.data.amsterdam.nl/atlas/search/postcode/?q=${ bagId }`,
+    ...options,
+    groupName: "dataPunt",
+    handleError
+  })
+}
+
 export const usePanorama = (lat?: number, lon?: number, width?: number, radius?: number, options?: Options) => {
   const handleError = useErrorHandler()
   const queryString = qs.stringify({ lat, lon, width, radius }, { addQueryPrefix: true })
