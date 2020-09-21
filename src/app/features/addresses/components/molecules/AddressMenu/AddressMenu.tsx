@@ -31,16 +31,16 @@ const AddressMenu: React.FC<Props> = ({ bagId }) =>
   <Menu>
     <Ul>
       <li>
-        <NavBlock to={ to("adres/:bagId/detail", { bagId }) } icon="Housing" header="Adres details" />
+        <NavBlock to={ to("/adres/:bagId/detail", { bagId }) } icon="Housing" header="Adres details" />
       </li>
       <li>
-        <NavBlock to={ to("adres/:bagId/personen", { bagId }) } icon="PersonalLogin" header="Persoonsgegevens" />
+        <NavBlock to={ to("/adres/:bagId/personen", { bagId }) } icon="PersonalLogin" header="Persoonsgegevens" />
       </li>
       <li>
-        <NavBlock to={ to("adres/:bagId/vergunningen", { bagId }) } icon="DocumentCheckmark" header="Vergunningen" />
+        <NavBlock to={ to("/adres/:bagId/vergunningen", { bagId }) } icon="DocumentCheckmark" header="Vergunningen" />
       </li>
       <li>
-        <NavBlock to={ to("adres/:bagId/zaken", { bagId }) } icon="Layers" header="Gerelateerde zaken" />
+        <NavBlock to={ to("/adres/:bagId/zaken", { bagId }) } icon="Layers" header="Gerelateerde zaken" />
       </li>
     </Ul>
   </Menu>
