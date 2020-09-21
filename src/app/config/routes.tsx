@@ -16,5 +16,6 @@ const routes = {
 }
 
 const routesObject = routesToRouteConfig(routes)
+if (process.env.NODE_ENV === "development") console.log("Routes:", routesObject)
 export type Routes = typeof routesObject
 export default routesObject
