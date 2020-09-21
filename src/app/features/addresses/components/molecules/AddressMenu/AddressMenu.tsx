@@ -2,6 +2,11 @@ import React from "react"
 import styled from "styled-components"
 import { themeSpacing } from "@datapunt/asc-ui"
 import NavBlock from "app/features/addresses/components/atoms/NavBlock/NavBlock"
+import to from "app/features/shared/routing/to"
+
+type Props = {
+  bagId: Components.Schemas.Address["bag_id"]
+}
 
 const Menu = styled.menu`
   margin: 0;
@@ -21,21 +26,21 @@ const Ul = styled.ul`
   }
 `
 
-const AddressMenu: React.FC = () =>
+const AddressMenu: React.FC<Props> = ({ bagId }) =>
   // TODO: Read page title, routing, icons from global config JSON
   <Menu>
     <Ul>
       <li>
-        <NavBlock to="detail" icon="Housing" header="Adres details" />
+        <NavBlock to={ to("/adres/:bagId/detail", { bagId }) } icon="Housing" header="Adres details" />
       </li>
       <li>
-        <NavBlock to="personen" icon="PersonalLogin" header="Persoonsgegevens" />
+        <NavBlock to={ to("/adres/:bagId/personen", { bagId }) } icon="PersonalLogin" header="Persoonsgegevens" />
       </li>
       <li>
-        <NavBlock to="vergunningen" icon="DocumentCheckmark" header="Vergunningen" />
+        <NavBlock to={ to("/adres/:bagId/vergunningen", { bagId }) } icon="DocumentCheckmark" header="Vergunningen" />
       </li>
       <li>
-        <NavBlock to="zaken" icon="Layers" header="Gerelateerde zaken" />
+        <NavBlock to={ to("/adres/:bagId/zaken", { bagId }) } icon="Layers" header="Gerelateerde zaken" />
       </li>
     </Ul>
   </Menu>
