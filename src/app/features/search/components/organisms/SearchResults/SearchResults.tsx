@@ -24,7 +24,9 @@ const mapData = (data: SearchResult) => [
 
 const SearchResults: React.FC<Props> = ({ searchString }) => {
   const { data, isBusy } = useBAGWithZipCode(searchString)
-  const mappedData = useMemo(() => data?.results?.map(mapData), [ data ])
+  const mappedData = useMemo(() => data?.results
+    .filter((result) => typeof result.postcode === "string" )
+    .map(mapData), [ data ])
 
   return (<Table
     columns={columns}
@@ -32,7 +34,7 @@ const SearchResults: React.FC<Props> = ({ searchString }) => {
     loading={data === undefined || isBusy}
     numLoadingRows={10}
     hasFixedColumn={true}
-    noValuesPlaceholder={"Er zijn (nog) geen addressen gevonden"}
+    noValuesPlaceholder={"Er zijn (nog) geen adressen gevonden"}
   />)
 }
 export default SearchResults
