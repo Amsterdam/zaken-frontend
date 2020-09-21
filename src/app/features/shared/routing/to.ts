@@ -38,13 +38,11 @@ const applyRouteParams = <T extends Routes, K extends keyof T>
 /**
  * Typesafe routes.
  * Usage: `to("/foo/:id/", { id: 100 })`
- *
- * NOTE: Type-errors will occur when "/foo/:id" does not exit, or when the related Page-component does not accept an `id` property
  */
 export default <T extends Routes, K extends keyof T>
   (path: K, params?: RouteParams<T, K>) => {
     const str = path.toString()
-    if (!(slashSandwich([str], { trailingSlash: true }) in routesObject)) console.warn(`${ path } is not an existing route`)
+    if (!(slashSandwich([str], { trailingSlash: true }) in routesObject)) console.warn(`${ str } is not an existing route`)
     return params !== undefined
       ? applyRouteParams(str, params)
       : str
