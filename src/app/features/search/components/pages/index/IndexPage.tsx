@@ -11,7 +11,7 @@ const IndexPage: React.FC<RouteComponentProps> = () => (
     <DefaultLayout showSearchButton={false}>
       
       <Row halign="flex-start">
-        <Heading>Zoeken</Heading>
+        <Heading>Adres zoeken</Heading>
       </Row>
       <Row>  
         <SearchWrapper />

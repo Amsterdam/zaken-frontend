@@ -24,9 +24,11 @@ const mapData = (data: SearchResult) => [
 
 const SearchResults: React.FC<Props> = ({ searchString }) => {
   const { data, isBusy } = useBAGWithZipCode(searchString)
-  const mappedData = useMemo(() => data?.results
-    .filter((result) => typeof result.postcode === "string" )
-    .map(mapData), [ data ])
+  const mappedData = useMemo(() => 
+    data?.results &&
+      data?.results
+        .filter((result) =>  (result && typeof result.postcode === "string" ))
+        .map(mapData), [ data ])
 
   return (<Table
     columns={columns}
