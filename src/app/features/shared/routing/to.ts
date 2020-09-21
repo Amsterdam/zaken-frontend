@@ -42,7 +42,7 @@ const applyRouteParams = <T extends Routes, K extends keyof T>
 export default <T extends Routes, K extends keyof T>
   (path: K, params?: RouteParams<T, K>) => {
     const str = path.toString()
-    if (!(slashSandwich([str], { trailingSlash: true }) in routesObject)) console.warn(`${ str } is not an existing route`)
+    if (process.env.NODE_ENV === "development" && !(slashSandwich([str], { trailingSlash: true }) in routesObject)) console.warn(`${ str } is not an existing route`)
     return params !== undefined
       ? applyRouteParams(str, params)
       : str
