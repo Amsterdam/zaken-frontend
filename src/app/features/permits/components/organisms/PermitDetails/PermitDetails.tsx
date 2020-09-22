@@ -10,6 +10,7 @@ type Props = {
         processed: string
         date_from: string | null
         date_to: string | null
+        decos_join_web_url: string | null
     }
   }
 
@@ -38,7 +39,7 @@ type Props = {
   }
 `
 const PermitDetail: React.FC<Props> = ({ detail }) => {
-    const { permit_granted, permit_type, date_from, date_to } = detail
+    const { permit_granted, permit_type, date_from, date_to, decos_join_web_url } = detail
     return (
         <>
             <Heading forwardedAs="h2">{ permitType[ permit_type ] }</Heading>
@@ -51,9 +52,9 @@ const PermitDetail: React.FC<Props> = ({ detail }) => {
                 { date_to && <dd>{ date_to }</dd> }
                     
             </Dl>
-            <Link href="/" variant="inline" icon="external">
-                B &amp; B vergunning
-            </Link>
+            { decos_join_web_url && <Link href={ decos_join_web_url } variant="inline" icon="external">
+                { decos_join_web_url } vergunning
+            </Link>}
         </>
     )
 }

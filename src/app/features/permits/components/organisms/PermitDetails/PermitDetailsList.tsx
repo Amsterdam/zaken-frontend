@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { themeSpacing, themeColor, Row, Spinner } from "@datapunt/asc-ui"
 import Heading from "app/features/shared/components/atoms/Heading/Heading"
 import { usePermitDetails } from "app/state/rest"
-import PermitDetail from "./PermitDetails"
+import PermitDetails from "./PermitDetails"
 
 type Props = {
   bagId: string
@@ -29,7 +29,7 @@ const PermitDetailsList: React.FC<Props> = ({ bagId }) => {
   const listItems = data?.map((detail) => 
   
     <li key={detail.permit_type}>
-      <PermitDetail detail={ detail } />
+      <PermitDetails detail={ detail } />
     </li>
   )
   

@@ -113,7 +113,7 @@ export const usePanorama = (lat?: number, lon?: number, width?: number, radius?:
 export const usePermitCheckmarks = (bagId: string) => {
   const handleError = useErrorHandler()
   return useApiRequest<{ has_b_and_b_permit: boolean, has_vacation_rental_permit: boolean }>({
-    url: makeGatewayUrl("permits", "get_permit_checkmarks") + `?bag_id=${ bagId }`,
+    url: makeGatewayUrl("permits", "checkmarks") + `?bag_id=${ bagId }`,
     groupName: "permits",
     handleError,
     getHeaders
@@ -123,7 +123,7 @@ export const usePermitCheckmarks = (bagId: string) => {
 export const usePermitDetails = (bagId: string) => {
   const handleError = useErrorHandler()
   return useApiRequest<PermitDetailsResponse>({
-    url: makeGatewayUrl("permits", "get_permit_details") + `?bag_id=${ bagId }`,
+    url: makeGatewayUrl("permits", "details") + `?bag_id=${ bagId }`,
     groupName: "permits",
     handleError,
     getHeaders

@@ -5,4 +5,5 @@ export type PermitDetailsResponse =
     processed: string
     date_from: null | string
     date_to: null | string
+    decos_join_web_url: null | string
   }[]
