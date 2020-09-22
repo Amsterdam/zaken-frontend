@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { themeSpacing, themeColor, Row, Spinner } from "@datapunt/asc-ui"
-import Heading from "app/features/shared/components/atoms/Heading/Heading"
+
 import { usePermitDetails } from "app/state/rest"
 import PermitDetails from "./PermitDetails"
 
@@ -35,9 +35,6 @@ const PermitDetailsList: React.FC<Props> = ({ bagId }) => {
   
   return (
     <>
-      <Row halign="flex-start">
-        <Heading forwardedAs="h2">Vergunningen vakantieverhuur</Heading>
-      </Row>
       <Row>
         { isBusy && <Spinner /> }
         { !isBusy && 

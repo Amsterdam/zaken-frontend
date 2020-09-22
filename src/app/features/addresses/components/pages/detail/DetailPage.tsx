@@ -4,7 +4,6 @@ import { Row } from "@datapunt/asc-ui"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 import AddressDisplay from "app/features/addresses/components/atoms/AddressDisplay/AddressDisplay"
 import PermitOverview from "app/features/permits/components/organisms/PermitOverview/PermitOverview"
-import PermitDetailsList from "app/features/permits/components/organisms/PermitDetails/PermitDetailsList"
 
 
 type Props = {
@@ -22,7 +21,6 @@ const DetailPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
       <Row>
         <PermitOverview bagId={ bagId! }></PermitOverview>
       </Row>
-        <PermitDetailsList bagId={ bagId! }></PermitDetailsList>
     </DefaultLayout>
   )
 
