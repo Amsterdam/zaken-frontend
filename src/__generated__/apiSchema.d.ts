@@ -3,7 +3,7 @@ declare namespace Components {
         export type Address = {
             bag_id: string
             readonly id: number
-            readonly full_address: string
+            readonly full_address: any
             readonly street_name: string
             readonly number: number
             readonly suffix_letter: string
@@ -38,9 +38,7 @@ declare namespace Components {
             readonly id: number
             readonly castetimelinereaction_set: CaseTimelineReaction[]
             readonly date: string // date
-            parameters?: {
-                [name: string]: any
-            }
+            parameters?: string
             notes?: string | null
             subject: number
             authors: string /* uuid */[]
@@ -96,7 +94,7 @@ declare namespace Components {
         export type PatchedAddress = {
             bag_id?: string
             readonly id?: number
-            readonly full_address?: string
+            readonly full_address?: any
             readonly street_name?: string
             readonly number?: number
             readonly suffix_letter?: string
@@ -131,9 +129,7 @@ declare namespace Components {
             readonly id?: number
             readonly castetimelinereaction_set?: CaseTimelineReaction[]
             readonly date?: string // date
-            parameters?: {
-                [name: string]: any
-            }
+            parameters?: string
             notes?: string | null
             subject?: number
             authors?: string /* uuid */[]
@@ -564,6 +560,18 @@ declare namespace Paths {
         }
     }
     namespace PermitsGetPermitCheckmarksRetrieve {
+        namespace Parameters {
+            export type BagId = string;
+        }
+        export type QueryParameters = {
+            bag_id: Parameters.BagId
+        }
+        namespace Responses {
+            export type $200 = {
+            }
+        }
+    }
+    namespace PermitsGetPermitDetailsRetrieve {
         namespace Parameters {
             export type BagId = string;
         }
