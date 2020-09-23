@@ -3,16 +3,7 @@ import styled from "styled-components"
 import { Link } from "@datapunt/asc-ui"
 import Heading from "app/features/shared/components/atoms/Heading/Heading"
 
-type Props = {
-    detail: {
-        permit_granted: boolean
-        permit_type: "BED_AND_BREAKFAST" | "VAKANTIEVERHUUR" | "PERMIT_UNKNOWN"
-        processed: string
-        date_from: string | null
-        date_to: string | null
-        decos_join_web_url: string | null
-    }
-  }
+type Props = {detail: Components.Schemas.DecosPermit}
 
   const permitType = {
     BED_AND_BREAKFAST: "Bed and breakfast",
@@ -42,7 +33,7 @@ const PermitDetail: React.FC<Props> = ({ detail }) => {
     const { permit_granted, permit_type, date_from, date_to, decos_join_web_url } = detail
     return (
         <>
-            <Heading forwardedAs="h2">{ permitType[ permit_type ] }</Heading>
+            { permit_type && <Heading forwardedAs="h2">{ permitType[ permit_type ] }</Heading> }
             <Dl>
                 <dt>Vergunning:</dt>
                 <dd>{permit_granted ? "ja" : "nee"}</dd>
@@ -52,7 +43,8 @@ const PermitDetail: React.FC<Props> = ({ detail }) => {
                 { date_to && <dd>{ date_to }</dd> }
                     
             </Dl>
-            { decos_join_web_url && <Link href={ decos_join_web_url } variant="inline" icon="external">
+            { decos_join_web_url && 
+              <Link href={ decos_join_web_url } variant="inline" icon="external" target="_blank">
                 { decos_join_web_url } vergunning
             </Link>}
         </>
