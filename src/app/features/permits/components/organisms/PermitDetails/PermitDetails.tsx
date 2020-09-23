@@ -37,15 +37,15 @@ const PermitDetail: React.FC<Props> = ({ detail }) => {
             <Dl>
                 <dt>Vergunning:</dt>
                 <dd>{permit_granted ? "ja" : "nee"}</dd>
-                { date_from && <dt>Begindatum:</dt> }
-                { date_from && <dd>{ date_from }</dd> }
-                { date_to && <dt>Einddatum:</dt> }
-                { date_to && <dd>{ date_to }</dd> }
+                <dt>Begindatum:</dt>
+                <dd>{ date_from || "-" }</dd>
+                <dt>Einddatum:</dt>
+                <dd>{ date_to ?? "-" }</dd>
                     
             </Dl>
-            { decos_join_web_url && 
+            { decos_join_web_url && permit_type &&
               <Link href={ decos_join_web_url } variant="inline" icon="external" target="_blank">
-                { decos_join_web_url } vergunning
+                { permitType[ permit_type ] } vergunning
             </Link>}
         </>
     )

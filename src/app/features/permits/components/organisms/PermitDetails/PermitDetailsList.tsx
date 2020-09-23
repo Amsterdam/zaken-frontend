@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { themeSpacing, themeColor, Row, Spinner } from "@datapunt/asc-ui"
+import { themeSpacing, Row, Spinner } from "@datapunt/asc-ui"
 
 import { usePermitDetails } from "app/state/rest"
 import PermitDetails from "./PermitDetails"
@@ -10,16 +10,12 @@ type Props = {
 }
 
 const Ul = styled.ul`
-  margin: 0;
+  margin: ${ themeSpacing(8) } 0 0;
   padding: 0;
   list-style: none;
-  display: flex;
-  flex-flow: row wrap;
 
   li {
-    margin-bottom: ${ themeSpacing(8) };
-    padding-left: ${ themeSpacing(4) };
-    border-left: 1px solid ${ themeColor("tint", "level3") };
+    margin-bottom: ${ themeSpacing(14) };
     max-width: 390px;
   }
 `

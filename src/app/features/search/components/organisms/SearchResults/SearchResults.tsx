@@ -19,7 +19,7 @@ type SearchResult = Pick<BAGAddressResponse["results"][0], "adres" | "postcode" 
 const mapData = (data: SearchResult) => [
   data.adres ?? "-",
   data.postcode ?? "-",
-  data.subtype_id && data.adres ? <OpenButton href={to("/adres/:id", { id: data.subtype_id })} text="Open" /> : null
+  data.subtype_id && data.adres ? <OpenButton href={to("/adres/:id", { id: data.subtype_id })} text="Bekijk" /> : null
 ]
 
 const SearchResults: React.FC<Props> = ({ searchString }) => {
