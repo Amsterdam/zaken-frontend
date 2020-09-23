@@ -15,7 +15,7 @@ const Ul = styled.ul`
   list-style: none;
 
   li {
-    margin-bottom: ${ themeSpacing(8) };
+    margin-bottom: ${ themeSpacing(14) };
     max-width: 390px;
   }
 `
