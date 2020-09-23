@@ -3,7 +3,7 @@ declare namespace Components {
         export type Address = {
             bag_id: string
             readonly id: number
-            readonly full_address: string
+            readonly full_address: any
             readonly street_name: string
             readonly number: number
             readonly suffix_letter: string
@@ -38,9 +38,7 @@ declare namespace Components {
             readonly id: number
             readonly castetimelinereaction_set: CaseTimelineReaction[]
             readonly date: string // date
-            parameters?: {
-                [name: string]: any
-            }
+            parameters?: string
             notes?: string | null
             subject: number
             authors: string /* uuid */[]
@@ -48,6 +46,14 @@ declare namespace Components {
         export type CaseType = {
             readonly id: number
             name: string
+        }
+        export type DecosPermit = {
+            permit_granted?: boolean
+            permit_type?: "BED_AND_BREAKFAST" | "VAKANTIEVERHUUR" | "PERMIT_UNKNOWN"
+            processed: string | null
+            date_from: string | null // date
+            date_to?: string | null // date
+            decos_join_web_url?: string // uri ^(?:[a-z0-9.+-]*)://(?:[^\s:@/]+(?::[^\s:@/]*)?@)?(?:(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)(?:\.(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)){3}|\[[0-9a-f:.]+\]|([a-z¡-￿0-9](?:[a-z¡-￿0-9-]{0,61}[a-z¡-￿0-9])?(?:\.(?!-)[a-z¡-￿0-9-]{1,63}(?<!-))*\.(?!-)(?:[a-z¡-￿-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\.?|localhost))(?::\d{2,5})?(?:[/?#][^\s]*)?\Z
         }
         export type Fine = {
             identificatienummer: string
@@ -87,6 +93,8 @@ declare namespace Components {
             states_with_fines: Fine[]
         }
         export type GeslachtsaanduidingEnum = "M" | "V" | "X";
+        export type HasBAndBPermitEnum = "True" | "False" | "UNKNOWN";
+        export type HasVacationRentalPermitEnum = "True" | "False" | "UNKNOWN";
         export type IndicatieBetHernBevelEnum = "J" | "N";
         export type IndicatieCombiDwangbevelEnum = "J" | "N" | "O";
         export type IndicatiePubliekrechtelijkEnum = "J" | "N";
@@ -96,7 +104,7 @@ declare namespace Components {
         export type PatchedAddress = {
             bag_id?: string
             readonly id?: number
-            readonly full_address?: string
+            readonly full_address?: any
             readonly street_name?: string
             readonly number?: number
             readonly suffix_letter?: string
@@ -131,9 +139,7 @@ declare namespace Components {
             readonly id?: number
             readonly castetimelinereaction_set?: CaseTimelineReaction[]
             readonly date?: string // date
-            parameters?: {
-                [name: string]: any
-            }
+            parameters?: string
             notes?: string | null
             subject?: number
             authors?: string /* uuid */[]
@@ -142,6 +148,11 @@ declare namespace Components {
             readonly id?: number
             name?: string
         }
+        export type PermitCheckmark = {
+            has_b_and_b_permit: HasBAndBPermitEnum
+            has_vacation_rental_permit: HasVacationRentalPermitEnum
+        }
+        export type PermitTypeEnum = "BED_AND_BREAKFAST" | "VAKANTIEVERHUUR" | "PERMIT_UNKNOWN";
         export type Push = {
             identification: string
             case_type: string
@@ -563,7 +574,7 @@ declare namespace Paths {
             export type $200 = Components.Schemas.OIDCAuthenticate;
         }
     }
-    namespace PermitsGetPermitCheckmarksRetrieve {
+    namespace PermitsCheckmarksRetrieve {
         namespace Parameters {
             export type BagId = string;
         }
@@ -571,8 +582,18 @@ declare namespace Paths {
             bag_id: Parameters.BagId
         }
         namespace Responses {
-            export type $200 = {
-            }
+            export type $200 = Components.Schemas.PermitCheckmark;
+        }
+    }
+    namespace PermitsDetailsList {
+        namespace Parameters {
+            export type BagId = string;
+        }
+        export type QueryParameters = {
+            bag_id: Parameters.BagId
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.DecosPermit[];
         }
     }
     namespace PermitsListDocumentsRetrieve {
