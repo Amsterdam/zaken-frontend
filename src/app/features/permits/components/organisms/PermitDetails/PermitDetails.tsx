@@ -37,10 +37,10 @@ const PermitDetail: React.FC<Props> = ({ detail }) => {
             <Dl>
                 <dt>Vergunning:</dt>
                 <dd>{permit_granted ? "ja" : "nee"}</dd>
-                { date_from && <dt>Begindatum:</dt> }
-                { date_from && <dd>{ date_from || "-" }</dd> }
-                { (date_to || date_to === null) && <dt>Einddatum:</dt> }
-                { (date_to || date_to === null) && <dd>{ date_to || "-" }</dd> }
+                <dt>Begindatum:</dt>
+                <dd>{ date_from || "-" }</dd>
+                <dt>Einddatum:</dt>
+                <dd>{ date_to ?? "-" }</dd>
                     
             </Dl>
             { decos_join_web_url && permit_type &&
