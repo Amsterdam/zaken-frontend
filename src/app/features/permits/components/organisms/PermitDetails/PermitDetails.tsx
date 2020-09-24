@@ -44,7 +44,7 @@ const PermitDetail: React.FC<Props> = ({ detail }) => {
                     
             </Dl>
             { decos_join_web_url && permit_type &&
-              <Link href={ decos_join_web_url } variant="inline" icon="external" target="_blank">
+              <Link href={ decos_join_web_url } variant="inline" icon="external" target="_blank" rel="noreferer">
                 { permitType[ permit_type ] } vergunning
             </Link>}
         </>
