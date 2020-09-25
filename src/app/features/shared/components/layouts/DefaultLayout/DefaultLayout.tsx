@@ -17,10 +17,10 @@ const MenuWithSearchButtonWrap = styled.div`
 
 const DefaultLayout: React.FC<Props> = ({ showSearchButton = true, children }) => (
   <>
-    <Header 
-      tall 
-      title="Zaken" 
-      homeLink={to("/")} 
+    <Header
+      tall
+      title="Zaaksysteem Wonen"
+      homeLink={to("/")}
       navigation={
         <MenuWithSearchButtonWrap>
           <DefaultNavigation showSearchButton={showSearchButton} />
