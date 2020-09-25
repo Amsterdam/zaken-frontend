@@ -1,10 +1,10 @@
 import React from "react"
 import { RouteComponentProps } from "@reach/router"
 import { Row } from "@datapunt/asc-ui"
+
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 import AddressDisplay from "app/features/addresses/components/atoms/AddressDisplay/AddressDisplay"
 import PermitOverview from "app/features/permits/components/organisms/PermitOverview/PermitOverview"
-
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]

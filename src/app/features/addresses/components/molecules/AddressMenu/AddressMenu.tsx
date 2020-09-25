@@ -9,9 +9,9 @@ type Props = {
 }
 
 const Menu = styled.menu`
-  margin: 0;
-  margin-top:  ${ themeSpacing(4) };
-  padding: 0
+  width: 100%;
+  margin:  ${ themeSpacing(4) } 0;
+  padding: 0;
 `
 const Ul = styled.ul`
   margin: 0;
