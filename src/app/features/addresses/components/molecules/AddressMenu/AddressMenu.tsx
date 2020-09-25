@@ -3,6 +3,7 @@ import styled from "styled-components"
 import { themeSpacing } from "@datapunt/asc-ui"
 import NavBlock from "app/features/addresses/components/atoms/NavBlock/NavBlock"
 import to from "app/features/shared/routing/to"
+import routesObject from "app/config/routes"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -26,22 +27,27 @@ const Ul = styled.ul`
   }
 `
 
+const routes = [
+  "/adres/:bagId/detail/",
+  "/adres/:bagId/personen/",
+  "/adres/:bagId/vergunningen/",
+  "/adres/:bagId/zaken/"
+]
+
 const AddressMenu: React.FC<Props> = ({ bagId }) =>
   // TODO: Read page title, routing, icons from global config JSON
   <Menu>
     <Ul>
-      <li>
-        <NavBlock to={ to("/adres/:bagId/detail", { bagId }) } icon="Housing" header="Adres details" />
-      </li>
-      <li>
-        <NavBlock to={ to("/adres/:bagId/personen", { bagId }) } icon="PersonalLogin" header="Persoonsgegevens" />
-      </li>
-      <li>
-        <NavBlock to={ to("/adres/:bagId/vergunningen", { bagId }) } icon="DocumentCheckmark" header="Vergunningen" />
-      </li>
-      <li>
-        <NavBlock to={ to("/adres/:bagId/zaken", { bagId }) } icon="Layers" header="Gerelateerde zaken" />
-      </li>
+      { routes.map(route => {
+          const page = routesObject[route]
+          if (page?.icon === undefined || page?.title === undefined) return null
+          return (
+            <li key={ route }>
+              <NavBlock to={ to(route, { bagId }) } icon={ page.icon } header={ page.title } />
+            </li>
+          )
+        })
+      }
     </Ul>
   </Menu>
 export default AddressMenu

@@ -6,11 +6,28 @@ import PermitIndexPage from "app/features/permits/components/pages/index/IndexPa
 export default {
   "/adres/:bagId": {
     Page: IndexPage,
+    title: "Adres overzicht",
     subRoutes: {
-      "detail": DetailPage,
-      "personen": DetailPage,
-      "vergunningen": PermitIndexPage,
-      "zaken": DetailPage
+      "detail": {
+        Page: DetailPage,
+        icon: "Housing",
+        title: "Adres details"
+      },
+      "personen": {
+        Page: DetailPage,
+        icon: "PersonalLogin",
+        title: "Persoonsgegevens"
+      },
+      "vergunningen": {
+        Page: PermitIndexPage,
+        icon: "DocumentCheckmark",
+        title: "Vergunningen"
+      },
+      "zaken": {
+        Page: DetailPage,
+        icon: "Layers",
+        title: "Gerelateerde zaken"
+      }
     }
   }
 }

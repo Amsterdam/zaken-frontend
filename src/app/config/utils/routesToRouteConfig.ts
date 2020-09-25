@@ -6,6 +6,8 @@ type Page = FC<RouteComponentProps>
 type RouteConfig = {
   Page: Page
   publicly?: boolean
+  title?: string
+  icon?: string
   subRoutes?: Record<string, RouteConfig | Page>
 }
 

@@ -4,6 +4,8 @@ import { Link } from "@reach/router"
 import { Heading, Icon, themeSpacing, themeColor, ascDefaultTheme } from "@datapunt/asc-ui"
 import { ChevronRight } from "@datapunt/asc-assets"
 import to from "app/features/shared/routing/to"
+import find from "app/features/shared/routing/find"
+import routes from "app/config/routes"
 import slashSandwich from "slash-sandwich"
 
 
@@ -45,6 +47,11 @@ const createItems = (bagId: BagId, subPageTitle?: string, subPage?: string) => {
 
 const BreadCrumbs: React.FC<Props> = ({ bagId, subPageTitle, subPage }) => {
   const items = useMemo(() => createItems(bagId, subPageTitle, subPage), [bagId, subPageTitle, subPage])
+
+  const route = find(routes, window.location.pathname)
+  if (route === undefined ) return null
+
+  //const pageConfig = routes[route]
 
   return (
     <Heading forwardedAs="h3">
