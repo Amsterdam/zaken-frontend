@@ -1,5 +1,5 @@
 import IndexPage from "./components/pages/index/IndexPage"
-import DetailPage from "./components/pages/detail/DetailPage"
+import DetailsPage from "./components/pages/details/DetailsPage"
 import PermitIndexPage from "app/features/permits/components/pages/index/IndexPage"
 
 // NOTE: please add your own POC-specific routes here.
@@ -7,10 +7,10 @@ export default {
   "/adres/:bagId": {
     Page: IndexPage,
     subRoutes: {
-      "detail": DetailPage,
-      "personen": DetailPage,
+      "details": DetailsPage,
+      "personen": DetailsPage,
       "vergunningen": PermitIndexPage,
-      "zaken": DetailPage
+      "zaken": DetailsPage
     }
   }
 }
