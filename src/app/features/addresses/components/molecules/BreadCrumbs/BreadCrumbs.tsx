@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useMemo } from "react"
 import styled from "styled-components"
 import { Link } from "@reach/router"
 import { Heading, Icon, themeSpacing, themeColor, ascDefaultTheme } from "@datapunt/asc-ui"
@@ -6,8 +6,10 @@ import { ChevronRight } from "@datapunt/asc-assets"
 import to from "app/features/shared/routing/to"
 import slashSandwich from "slash-sandwich"
 
+
+type BagId = Components.Schemas.Address["bag_id"]
 type Props = {
-  bagId: Components.Schemas.Address["bag_id"]
+  bagId: BagId
   subPageTitle?: string
   subPage?: string
 }
@@ -31,15 +33,21 @@ const StyledIcon = styled(Icon)`
   }
 `
 
-const BreadCrumbs: React.FC<Props> = ({ bagId, subPageTitle, subPage }) => {
+const createItems = (bagId: BagId, subPageTitle?: string, subPage?: string) => {
   const items = [
     { title: "Home", to: "/" },
     { title: "Adres overzicht", to: to("/adres/:bagId", { bagId }) }
   ]
   if (subPage && subPageTitle) items.push({ title: subPageTitle, to: to(slashSandwich(["/adres/:bagId", subPage]), { bagId }) })
+  return items
+}
+
+
+const BreadCrumbs: React.FC<Props> = ({ bagId, subPageTitle, subPage }) => {
+  const items = useMemo(() => createItems(bagId, subPageTitle, subPage), [bagId, subPageTitle, subPage])
 
   return (
-    <Heading forwardedAs="h2">
+    <Heading forwardedAs="h3">
       <Ul>
         { items.map(({ title, to }, index) => {
             const isLast = items.length - 1 === index
