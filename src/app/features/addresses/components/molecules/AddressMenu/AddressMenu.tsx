@@ -9,9 +9,9 @@ type Props = {
 }
 
 const Menu = styled.menu`
-  margin: 0;
-  margin-top:  ${ themeSpacing(4) };
-  padding: 0
+  width: 100%;
+  margin:  ${ themeSpacing(4) } 0;
+  padding: 0;
 `
 const Ul = styled.ul`
   margin: 0;
@@ -31,7 +31,7 @@ const AddressMenu: React.FC<Props> = ({ bagId }) =>
   <Menu>
     <Ul>
       <li>
-        <NavBlock to={ to("/adres/:bagId/detail", { bagId }) } icon="Housing" header="Adres details" />
+        <NavBlock to={ to("/adres/:bagId/details", { bagId }) } icon="Housing" header="Adres details" />
       </li>
       <li>
         <NavBlock to={ to("/adres/:bagId/personen", { bagId }) } icon="PersonalLogin" header="Persoonsgegevens" />

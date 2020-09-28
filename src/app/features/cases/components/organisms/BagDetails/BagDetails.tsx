@@ -3,13 +3,13 @@ import { useBAG } from "app/state/rest"
 import Details from "app/features/shared/components/molecules/Details/Details"
 
 type Props = {
-  bagID: string
+  bagId: Components.Schemas.Address["bag_id"]
 }
 
-const BAGDetails: React.FC<Props> = ({ bagID }) => {
-  const { data } = useBAG(bagID)
+const BAGDetails: React.FC<Props> = ({ bagId }) => {
+  const { data } = useBAG(bagId)
   const result = data?.results[0]
-  
+
   const values = useMemo(() => ({
     "Adres": result?.adres,
     "Adresseerbaar Object ID": result?.adresseerbaar_object_id,

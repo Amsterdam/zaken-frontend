@@ -1,10 +1,12 @@
 import React from "react"
 import { RouteComponentProps } from "@reach/router"
 import { Row } from "@datapunt/asc-ui"
+
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 import AddressDisplay from "app/features/addresses/components/atoms/AddressDisplay/AddressDisplay"
-import PermitOverview from "app/features/permits/components/organisms/PermitOverview/PermitOverview"
-
+import PanoramaPreview from "app/features/cases/components/organisms/Panorama/PanoramaPreview"
+import BagMap from "app/features/cases/components/organisms/BagMap/BagMap"
+import BagDetails from "app/features/cases/components/organisms/BagDetails/BagDetails"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -16,10 +18,13 @@ const DetailPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
         <AddressDisplay bagId={ bagId! } />
       </Row>
       <Row>
-        <p>{ window.location.pathname }</p>
+        <PanoramaPreview bagId={ bagId! } />
       </Row>
       <Row>
-        <PermitOverview bagId={ bagId! }></PermitOverview>
+        <BagMap bagId={ bagId! } />
+      </Row>
+      <Row>
+        <BagDetails bagId={ bagId ! } />
       </Row>
     </DefaultLayout>
   )
