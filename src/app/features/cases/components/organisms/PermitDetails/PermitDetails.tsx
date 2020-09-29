@@ -6,11 +6,12 @@ import Heading from "app/features/shared/components/atoms/Heading/Heading"
 import Details from "app/features/shared/components/molecules/Details/Details"
 
 type Props = {
-  bagID: string
+  bagId: Components.Schemas.Address["bag_id"]
 }
 
-const PermitDetails: React.FC<Props> = ({ bagID }) => {
-  const { data, isBusy } = usePermitCheckmarks(bagID)
+
+const PermitDetails: React.FC<Props> = ({ bagId }) => {
+  const { data, isBusy } = usePermitCheckmarks(bagId)
 
   const values = useMemo(() => ({
     "Bed & Breakfast": data?.has_b_and_b_permit ? "Ja" : "Nee",

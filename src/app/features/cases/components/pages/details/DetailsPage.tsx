@@ -78,13 +78,13 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
             : <LoadingDetails numRows={2} />
           }
           { caseData?.address.bag_id
-            ? <BAGDetails bagID={caseData.address.bag_id} />
+            ? <BAGDetails bagId={caseData.address.bag_id} />
             : <LoadingDetails numRows={5} />
           }
           <Residents id={ id! } />
           <Fines id={ id! } />
           { caseData?.address.bag_id
-            ? <PermitDetails bagID={caseData.address.bag_id} />
+            ? <PermitDetails bagId={caseData.address.bag_id} />
             : <LoadingDetails numRows={2} />
           }
         </Column>

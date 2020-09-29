@@ -1,5 +1,7 @@
 import IndexPage from "./components/pages/index/IndexPage"
-import DetailPage from "./components/pages/detail/DetailPage"
+import DetailsPage from "./components/pages/details/DetailsPage"
+import PeoplePage from "./components/pages/people/PeoplePage"
+import CasesPage from "./components/pages/cases/CasesPage"
 import PermitIndexPage from "app/features/permits/components/pages/index/IndexPage"
 
 // NOTE: please add your own POC-specific routes here.
@@ -9,12 +11,12 @@ export default {
     title: "Adres overzicht",
     subRoutes: {
       "detail": {
-        Page: DetailPage,
+        Page: DetailsPage,
         icon: "Housing",
         title: "Adres details"
       },
       "personen": {
-        Page: DetailPage,
+        Page: PeoplePage,
         icon: "PersonalLogin",
         title: "Persoonsgegevens"
       },
@@ -24,7 +26,7 @@ export default {
         title: "Vergunningen"
       },
       "zaken": {
-        Page: DetailPage,
+        Page: CasesPage,
         icon: "Layers",
         title: "Gerelateerde zaken"
       }
