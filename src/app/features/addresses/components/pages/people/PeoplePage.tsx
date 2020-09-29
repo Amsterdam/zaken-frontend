@@ -13,7 +13,9 @@ type Props = {
 
 const PeoplePage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
     <DefaultLayout>
-      <BreadCrumbs bagId={ bagId! } />
+      <Row>
+        <BreadCrumbs bagId={ bagId! } />
+      </Row>
       <Row>
         <AddressDisplay bagId={ bagId! } />
       </Row>
