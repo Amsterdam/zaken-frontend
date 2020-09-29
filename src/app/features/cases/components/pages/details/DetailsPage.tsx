@@ -1,7 +1,6 @@
 import React from "react"
 import { RouteComponentProps } from "@reach/router"
-import styled from "styled-components"
-import { breakpoint, Button, themeSpacing } from "@datapunt/asc-ui"
+import { Button, themeSpacing } from "@datapunt/asc-ui"
 import { Document } from "@datapunt/asc-assets/lib"
 
 
@@ -24,46 +23,31 @@ import PermitDetails from "app/features/cases/components/organisms/PermitDetails
 
 import TableCaseVisits from "app/features/caseVisits/components/organisms/TableCaseVisits/TableCaseVisits"
 import PanoramaPreview from "../../organisms/Panorama/PanoramaPreview"
+import Row, { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
+import Column from "app/features/shared/components/atoms/Grid/Column"
 
 
 type Props = {
   id: NonNullable<Components.Schemas.Case["identification"]>
 }
 
-const GUTTER = 6
-
-const ColumnWrap = styled.div`
-  display:flex;
-  margin: 0 -${ themeSpacing(GUTTER) };
-`
-
-const Column = styled.div`
-  flex:1;
-  padding: 0 ${ themeSpacing(GUTTER) };
-
-  @media screen and ${ breakpoint("min-width", "mobileS") } {
-    &:nth-child(1) { display:none; }
-  }
-
-  @media screen and ${ breakpoint("min-width", "laptop") } {
-    &:nth-child(1) { flex: 40%; display: block; }
-    &:nth-child(2) { flex: 60%; }
-  }
-`
-
 const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
   const { data: caseData } = useCase(id!)
 
   return (
     <DefaultLayout>
-      <Heading>{ caseData?.address?.full_address ?? <SmallSkeleton height={10}/> }</Heading>
-      <ActionButtonWrap>
-        <ButtonLink to={to("/cases/edit/:id", { id: id! })}>
-          <Button as="span" variant="primary" iconLeft={<Document />}>Wijzig deze zaak</Button>
-        </ButtonLink>
-      </ActionButtonWrap>
-      <ColumnWrap>
-        <Column>
+      <RowWithColumn marginBottom={themeSpacing(6)}>
+          <Heading>{ caseData?.address?.full_address ?? <SmallSkeleton height={10}/> }</Heading>
+      </RowWithColumn>
+      <RowWithColumn>
+          <ActionButtonWrap>
+            <ButtonLink to={to("/cases/edit/:id", { id: id! })}>
+              <Button as="span" variant="primary" iconLeft={<Document />}>Wijzig deze zaak</Button>
+            </ButtonLink>
+          </ActionButtonWrap>
+      </RowWithColumn>
+      <Row>
+        <Column spanSmall={100} spanLarge={40}>
           { caseData?.address.bag_id
             ? <>
                 <PanoramaPreview bagId={caseData.address.bag_id} />
@@ -72,7 +56,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
             : <BagMapSkeleton />
           }
         </Column>
-        <Column>
+        <Column spanSmall={100} spanLarge={60}>
           { caseData
             ? <CaseDetails caseData={caseData} />
             : <LoadingDetails numRows={2} />
@@ -88,9 +72,11 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
             : <LoadingDetails numRows={2} />
           }
         </Column>
-      </ColumnWrap>
-      <Heading>Bezoeken</Heading>
-      <TableCaseVisits />
+      </Row>
+      <RowWithColumn>
+        <Heading>Bezoeken</Heading>
+        <TableCaseVisits />
+      </RowWithColumn>
     </DefaultLayout>
   )
 }

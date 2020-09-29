@@ -1,20 +1,23 @@
 import React from "react"
 import { RouteComponentProps } from "@reach/router"
 
-import Row from "app/features/shared/components/atoms/Grid/Row"
+import Row, { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import SearchWrapper from "app/features/search/components/organisms/SearchWrapper/SearchWrapper"
 import Heading from "app/features/shared/components/atoms/Heading/Heading"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
+import Column from "app/features/shared/components/atoms/Grid/Column"
 
 const IndexPage: React.FC<RouteComponentProps> = () => (
   
     <DefaultLayout showSearchButton={false}>
       
-      <Row>
+      <RowWithColumn>
         <Heading>Adres zoeken</Heading>
-      </Row>
-      <Row>  
-        <SearchWrapper />
+      </RowWithColumn>
+      <Row>
+        <Column spanLarge={40}>
+          <SearchWrapper />
+        </Column>
       </Row>
     </DefaultLayout>
   )

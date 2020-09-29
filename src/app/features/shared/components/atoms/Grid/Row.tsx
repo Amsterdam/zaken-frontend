@@ -1,6 +1,9 @@
 import React from "react"
 import styled from "styled-components"
 
+import { breakpoint, themeSpacing } from "@datapunt/asc-ui" 
+import Column from "./Column"
+
 
 /**
  * optional props:
@@ -14,27 +17,39 @@ export type TypeProps = {
   children: React.ReactNode
   marginBottom?: any
   marginTop?: any
-  isFullWidth?: boolean
+  addColumn?: boolean
 }
 
-const MAX_WIDTH = 1430
+const GUTTER = 6
 
 const RowStyle = styled.div<TypeProps>`
   box-sizing: border-box;
-  margin: 0 auto;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   flex-wrap: wrap;
-  max-width: ${ ({ isFullWidth } ) => isFullWidth ? "100%" : `${ MAX_WIDTH }px` };
+  width: calc(100% + 2*${ themeSpacing(GUTTER / 2) });
+  margin-left: -${ themeSpacing(GUTTER / 2) };
+  margin-right: -${ themeSpacing(GUTTER / 2) };
+  @media screen and ${ breakpoint("min-width", "laptop") } {
+    width: calc(100% + 2*${ themeSpacing(GUTTER) });
+    margin-left: -${ themeSpacing(GUTTER) };
+    margin-right: -${ themeSpacing(GUTTER) };
+  }
   margin-top: ${ props => props.marginTop || 0 };
   margin-bottom: ${ props => props.marginBottom || 0 };
-
 `
 
+export const RowWithColumn: React.FC<TypeProps> = ({ children, ...props }) => (
+  <RowStyle { ...props } >  
+      <Column>
+         { children }
+      </Column>
+  </RowStyle>
+)
 const Row: React.FC<TypeProps> = ({ children, ...props }) => (
-  <RowStyle { ...props } >    
-    {children}
+  <RowStyle { ...props } >  
+    { children }
   </RowStyle>
 )
 
