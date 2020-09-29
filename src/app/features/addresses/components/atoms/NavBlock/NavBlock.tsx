@@ -6,7 +6,7 @@ import * as Assets from "@datapunt/asc-assets"
 
 type Props = {
   to: string
-  icon: string
+  icon: keyof typeof Assets
   header: string
 }
 
@@ -18,7 +18,7 @@ const StyledCard = styled(Card)`
 `
 
 const NavBlock: React.FC<Props> = ({ to: toPath, icon, header }) => {
-  const Asset = Assets[(icon as keyof typeof Assets)] ?? <span></span>
+  const Asset = Assets[icon] ?? <span></span>
   return (
     <Link to={ toPath }>
       <StyledCard maxWidth={ W } backgroundColor="level2" shadow>
