@@ -15,7 +15,7 @@ const IndexPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
 
     <DefaultLayout>
       <Row>
-        <BreadCrumbs bagId={ bagId! } subPageTitle="Vergunningen" subPage="vergunningen" />
+        <BreadCrumbs bagId={ bagId! } />
       </Row>
       <Row halign="flex-start">
         <Heading>Vergunningen vakantieverhuur</Heading>

@@ -1,19 +1,15 @@
-import React, { useMemo } from "react"
+import React from "react"
 import styled from "styled-components"
 import { Link } from "@reach/router"
 import { Heading, Icon, themeSpacing, themeColor, ascDefaultTheme } from "@datapunt/asc-ui"
+import * as Assets from "@datapunt/asc-assets"
 import { ChevronRight } from "@datapunt/asc-assets"
 import to from "app/features/shared/routing/to"
 import find from "app/features/shared/routing/find"
 import routes from "app/config/routes"
-import slashSandwich from "slash-sandwich"
 
-
-type BagId = Components.Schemas.Address["bag_id"]
 type Props = {
-  bagId: BagId
-  subPageTitle?: string
-  subPage?: string
+  bagId: Components.Schemas.Address["bag_id"]
 }
 
 const Ul = styled.ul`
@@ -29,43 +25,41 @@ const Ul = styled.ul`
 `
 const StyledIcon = styled(Icon)`
   display: inline;
+  margin-right: 8px;
+`
+const StyledSeperator = styled(Icon)`
+  display: inline;
   margin: 0 ${ themeSpacing(2) };
   svg {
     vertical-align: middle;
   }
 `
 
-const createItems = (bagId: BagId, subPageTitle?: string, subPage?: string) => {
-  const items = [
-    { title: "Home", to: "/" },
-    { title: "Adres overzicht", to: to("/adres/:bagId", { bagId }) }
-  ]
-  if (subPage && subPageTitle) items.push({ title: subPageTitle, to: to(slashSandwich(["/adres/:bagId", subPage]), { bagId }) })
-  return items
-}
-
-
-const BreadCrumbs: React.FC<Props> = ({ bagId, subPageTitle, subPage }) => {
-  const items = useMemo(() => createItems(bagId, subPageTitle, subPage), [bagId, subPageTitle, subPage])
-
+const BreadCrumbs: React.FC<Props> = ({ bagId }) => {
   const route = find(routes, window.location.pathname)
-  if (route === undefined ) return null
 
-  //const pageConfig = routes[route]
+  const pageConfig = route ? routes[route] : undefined
+  const items = pageConfig?.path?.map(item => ({ ...item, to: to(item.path, { bagId }) })) ?? []
 
+  // TODO: Remove `({ theme: ascDefaultTheme })` after fix https://github.com/Amsterdam/amsterdam-styled-components/issues/1108
   return (
     <Heading forwardedAs="h3">
       <Ul>
-        { items.map(({ title, to }, index) => {
+        { items.map(({ title, icon, to }, index) => {
             const isLast = items.length - 1 === index
+            const Asset = icon ? Assets[icon] : null
             return (
               <li key={ index }>
-                <Link to={ to }>{ title }</Link>
+                <Link to={ to }>
+                  { Asset &&
+                    <StyledIcon color={ themeColor("tint", "level4")({ theme: ascDefaultTheme }) }><Asset /></StyledIcon>
+                  }
+                  { title ?? "" }
+                </Link>
                 { !isLast &&
-                  // TODO: Remove `({ theme: ascDefaultTheme })` after fix https://github.com/Amsterdam/amsterdam-styled-components/issues/1108
-                  <StyledIcon color={ themeColor("tint", "level4")({ theme: ascDefaultTheme }) }>
+                  <StyledSeperator color={ themeColor("tint", "level4")({ theme: ascDefaultTheme }) }>
                     <ChevronRight />
-                  </StyledIcon>
+                  </StyledSeperator>
                 }
               </li>
             )

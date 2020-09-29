@@ -12,7 +12,7 @@ type Props = {
 
 const DetailPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
     <DefaultLayout>
-      <BreadCrumbs bagId={ bagId! } subPageTitle="Detail" subPage="detail" />
+      <BreadCrumbs bagId={ bagId! } />
       <Row>
         <AddressDisplay bagId={ bagId! } />
       </Row>
