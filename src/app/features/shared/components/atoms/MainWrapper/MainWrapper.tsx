@@ -1,8 +1,31 @@
+import React from "react"
 import styled from "styled-components"
-import { themeSpacing } from "@datapunt/asc-ui"
+import { breakpoint, themeSpacing } from "@datapunt/asc-ui"
+import { sizes } from "@datapunt/asc-ui/lib/theme/default/breakpoints"
 
-// TODO less margin on mobile.
+const MAX_WIDTH = sizes.laptopL
+
 // TODO introduce a Spacing component?
-export const MainWrapper = styled.div`   
-  margin: ${ themeSpacing(10) };
+const MainWrapperStyle = styled.main`
+  margin: ${ themeSpacing(3) };
+  @media screen and ${ breakpoint("min-width", "laptop") } {
+    margin: ${ themeSpacing(11) };
+  }
 `
+const LayoutContainer = styled.div`   
+  box-sizing: border-box;
+  margin: 0 auto;
+  width: 100%;
+  max-width: ${ MAX_WIDTH }px;
+`
+const MainWrapper: React.FC = ({ children }) => (
+   
+    <MainWrapperStyle>
+      <LayoutContainer>
+        { children }
+      </LayoutContainer>
+    </MainWrapperStyle>
+  
+)
+
+export default MainWrapper

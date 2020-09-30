@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { themeSpacing, Row, Spinner } from "@datapunt/asc-ui"
+import { themeSpacing, Spinner } from "@datapunt/asc-ui"
 
 import { usePermitDetails } from "app/state/rest"
 import PermitDetails from "./PermitDetails"
@@ -10,7 +10,6 @@ type Props = {
 }
 
 const Ul = styled.ul`
-  margin: ${ themeSpacing(8) } 0 0;
   padding: 0;
   list-style: none;
 
@@ -31,14 +30,12 @@ const PermitDetailsList: React.FC<Props> = ({ bagId }) => {
   
   return (
     <>
-      <Row>
         { isBusy && <Spinner /> }
         { !isBusy && 
           <Ul>
             {listItems}
           </Ul>
         }
-      </Row>
     </>
   )
 }

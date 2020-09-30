@@ -1,20 +1,23 @@
 import React from "react"
 import { RouteComponentProps } from "@reach/router"
-import { Row } from "@datapunt/asc-ui/lib/components/Grid"
-import SearchWrapper from "app/features/search/components/organisms/SearchWrapper/SearchWrapper"
 
+import Row, { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
+import SearchWrapper from "app/features/search/components/organisms/SearchWrapper/SearchWrapper"
 import Heading from "app/features/shared/components/atoms/Heading/Heading"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
+import Column from "app/features/shared/components/atoms/Grid/Column"
 
 const IndexPage: React.FC<RouteComponentProps> = () => (
   
     <DefaultLayout showSearchButton={false}>
       
-      <Row halign="flex-start">
+      <RowWithColumn>
         <Heading>Adres zoeken</Heading>
-      </Row>
-      <Row>  
-        <SearchWrapper />
+      </RowWithColumn>
+      <Row>
+        <Column>
+          <SearchWrapper />
+        </Column>
       </Row>
     </DefaultLayout>
   )

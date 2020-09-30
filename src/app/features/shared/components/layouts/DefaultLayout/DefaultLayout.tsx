@@ -2,7 +2,7 @@ import React from "react"
 import { Header } from "@datapunt/asc-ui"
 import styled from "styled-components"
 import DefaultNavigation from "app/features/shared/components/organisms/navigation/DefaultNavigation"
-import { MainWrapper } from "app/features/shared/components/atoms/MainWrapper/MainWrapper"
+import MainWrapper from "app/features/shared/components/atoms/MainWrapper/MainWrapper"
 import to from "app/features/shared/routing/to"
 import FlashMessages from "app/features/shared/components/molecules/FlashMessages/FlashMessages"
 
