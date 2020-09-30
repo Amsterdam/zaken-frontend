@@ -9,7 +9,7 @@ const MAX_WIDTH = sizes.laptopL
 const MainWrapperStyle = styled.main`
   margin: ${ themeSpacing(3) };
   @media screen and ${ breakpoint("min-width", "laptop") } {
-    margin: ${ themeSpacing(10) };
+    margin: ${ themeSpacing(11) };
   }
 `
 const LayoutContainer = styled.div`   
