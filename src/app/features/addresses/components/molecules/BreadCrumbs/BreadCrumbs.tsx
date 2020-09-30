@@ -45,7 +45,7 @@ const BreadCrumbs: React.FC<Props> = ({ bagId }) => {
   return (
     <nav>
       <Ul>
-        { items.map(({ title, icon, to }, index) => {
+        { items.map(({ title, to }, index) => {
             const isLast = items.length - 1 === index
             return (
               <li key={ index }>
