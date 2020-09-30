@@ -1,7 +1,7 @@
 import React from "react"
 import { RouteComponentProps } from "@reach/router"
 
-import Row from "app/features/shared/components/atoms/Grid/Row"
+import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 import AddressDisplay from "app/features/addresses/components/atoms/AddressDisplay/AddressDisplay"
 import AddressMenu from "app/features/addresses/components/molecules/AddressMenu/AddressMenu"
@@ -9,6 +9,7 @@ import AddressMenu from "app/features/addresses/components/molecules/AddressMenu
 import BreadCrumbs from "app/features/addresses/components/molecules/BreadCrumbs/BreadCrumbs"
 import PanoramaPreview from "app/features/cases/components/organisms/Panorama/PanoramaPreview"
 import PermitOverview from "app/features/permits/components/organisms/PermitOverview/PermitOverview"
+import { themeSpacing } from "@datapunt/asc-ui"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -16,21 +17,21 @@ type Props = {
 
 const IndexPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
   <DefaultLayout>
-    <Row>
+    <RowWithColumn>
       <BreadCrumbs bagId={ bagId! } />
-    </Row>
-    <Row>
+    </RowWithColumn>
+    <RowWithColumn marginBottom={ themeSpacing(10) }>
       <AddressDisplay bagId={ bagId! } />
-    </Row>
-    <Row>
+    </RowWithColumn>
+    <RowWithColumn>
       <PanoramaPreview bagId={ bagId! } />
-    </Row>
-    <Row>
+    </RowWithColumn>
+    <RowWithColumn>
       <AddressMenu bagId={ bagId! } />
-    </Row>
-    <Row>
+    </RowWithColumn>
+    <RowWithColumn>
       <PermitOverview bagId={ bagId! }></PermitOverview>
-    </Row>
+    </RowWithColumn>
   </DefaultLayout>
 )
 

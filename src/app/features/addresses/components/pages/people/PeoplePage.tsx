@@ -1,11 +1,12 @@
 import React from "react"
 import { RouteComponentProps } from "@reach/router"
+import { themeSpacing } from "@datapunt/asc-ui"
 
-import Row from "app/features/shared/components/atoms/Grid/Row"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 import AddressDisplay from "app/features/addresses/components/atoms/AddressDisplay/AddressDisplay"
 import BreadCrumbs from "app/features/addresses/components/molecules/BreadCrumbs/BreadCrumbs"
 import PanoramaPreview from "app/features/cases/components/organisms/Panorama/PanoramaPreview"
+import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -13,18 +14,18 @@ type Props = {
 
 const PeoplePage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
     <DefaultLayout>
-      <Row>
+      <RowWithColumn>
         <BreadCrumbs bagId={ bagId! } />
-      </Row>
-      <Row>
+      </RowWithColumn>
+      <RowWithColumn marginBottom={ themeSpacing(10)}>
         <AddressDisplay bagId={ bagId! } />
-      </Row>
-      <Row>
+      </RowWithColumn>
+      <RowWithColumn>
         <PanoramaPreview bagId={ bagId! } />
-      </Row>
-      <Row>
+      </RowWithColumn>
+      <RowWithColumn>
         <p>Ingeschreven personen (via BAG id)</p>
-      </Row>
+      </RowWithColumn>
     </DefaultLayout>
   )
 

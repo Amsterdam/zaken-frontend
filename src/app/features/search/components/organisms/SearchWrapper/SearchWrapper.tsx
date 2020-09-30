@@ -11,6 +11,7 @@ const DELAY = 750
 const SearchBarWrap = styled.div`
   margin: ${ themeSpacing(10) } 0;
   width: 100%;
+  max-width: 500px;
 `
 
 const SearchResultsWrap = styled.div`

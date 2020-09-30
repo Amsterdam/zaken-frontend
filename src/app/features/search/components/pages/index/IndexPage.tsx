@@ -15,7 +15,7 @@ const IndexPage: React.FC<RouteComponentProps> = () => (
         <Heading>Adres zoeken</Heading>
       </RowWithColumn>
       <Row>
-        <Column spanLarge={40}>
+        <Column>
           <SearchWrapper />
         </Column>
       </Row>
