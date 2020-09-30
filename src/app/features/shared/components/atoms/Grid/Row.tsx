@@ -17,7 +17,6 @@ export type TypeProps = {
   children: React.ReactNode
   marginBottom?: any
   marginTop?: any
-  addColumn?: boolean
 }
 
 const GUTTER = layouts.large.gutter
@@ -36,8 +35,8 @@ const RowStyle = styled.div<TypeProps>`
     margin-left: -${ GUTTER / 2 }px;
     margin-right: -${ GUTTER  / 2 }px;
   }
-  margin-top: ${ props => props.marginTop || 0 };
-  margin-bottom: ${ props => props.marginBottom || 0 };
+  margin-top: ${ props => props.marginTop ?? 0 };
+  margin-bottom: ${ props => props.marginBottom ?? 0 };
 `
 
 export const RowWithColumn: React.FC<TypeProps> = ({ children, ...props }) => (
