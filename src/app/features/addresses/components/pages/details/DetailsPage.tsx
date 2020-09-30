@@ -2,13 +2,13 @@ import React from "react"
 import { RouteComponentProps } from "@reach/router"
 import { themeSpacing } from "@datapunt/asc-ui"
 
-import Row, { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 import BreadCrumbs from "app/features/addresses/components/molecules/BreadCrumbs/BreadCrumbs"
 import AddressDisplay from "app/features/addresses/components/atoms/AddressDisplay/AddressDisplay"
 import PanoramaPreview from "app/features/cases/components/organisms/Panorama/PanoramaPreview"
 import BagMap from "app/features/cases/components/organisms/BagMap/BagMap"
 import BagDetails from "app/features/cases/components/organisms/BagDetails/BagDetails"
+import Row, { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import Column from "app/features/shared/components/atoms/Grid/Column"
 
 type Props = {

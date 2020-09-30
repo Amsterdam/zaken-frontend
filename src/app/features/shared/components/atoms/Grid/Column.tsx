@@ -23,8 +23,8 @@ const ColumnStyle = styled.div<TypeProps>`
   flex:1;
   padding: 0 ${ GUTTER / 2 }px;
   max-width: 100%;
-  flex-basis: ${ props => `${ props.spanSmall }%` || "100%" };
-  flex-grow: ${ props => props.spanSmall  !== undefined ? 0 : 1 };
+  flex-basis: ${ props => props.spanSmall ? `${ props.spanSmall }%` : "100%" };
+  flex-grow: ${ props => props.spanSmall ? 0 : 1 };
   @media screen and ${ breakpoint("min-width", "laptop") } {
     padding: 0 ${ GUTTER / 2 }px;
     flex-basis: ${ props => props.spanLarge ? `${ props.spanLarge }%` : "100%" };
