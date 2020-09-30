@@ -18,7 +18,7 @@ const StyledCard = styled(Card)`
 `
 
 const NavBlock: React.FC<Props> = ({ to: toPath, icon, header }) => {
-  const Asset = Assets[icon]
+  const Asset = Assets[icon] ?? <span></span>
   return (
     <Link to={ toPath }>
       <StyledCard maxWidth={ W } backgroundColor="level2" shadow>
