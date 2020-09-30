@@ -1,11 +1,14 @@
 import React from "react"
 import styled from "styled-components"
-import { breakpoint, themeSpacing } from "@datapunt/asc-ui"
+import { breakpoint } from "@datapunt/asc-ui"
+import layouts from "@datapunt/asc-ui/lib/theme/default/layouts"
 
-
-/**
+/** Columns for page layout
  * optional props:
- * 
+ *    - spanSmall: percentage for width of column used on screens with width < 1024
+ *    - spanLarge: percentage for width of column used on screens with width > 1024
+* Implementation :
+ * <Column spanSmall={100} spanLarge={40}>
  */
 
 export type TypeProps = {
@@ -14,18 +17,18 @@ export type TypeProps = {
   spanLarge?: number
 }
 
-const GUTTER = 6
+const GUTTER = layouts.large.gutter
 
 const ColumnStyle = styled.div<TypeProps>`
   flex:1;
-  padding: 0 ${ themeSpacing(GUTTER / 2) };
+  padding: 0 ${ GUTTER / 2 }px;
   max-width: 100%;
   flex-basis: ${ props => `${ props.spanSmall }%` || "100%" };
   flex-grow: ${ props => props.spanSmall  !== undefined ? 0 : 1 };
   @media screen and ${ breakpoint("min-width", "laptop") } {
-    padding: 0 ${ themeSpacing(GUTTER) };
-    flex-basis: ${ props => `${ props.spanLarge }%` || "100%" };
-    flex-grow: ${ props => props.spanLarge  !== undefined ? 0 : 1 };
+    padding: 0 ${ GUTTER / 2 }px;
+    flex-basis: ${ props => props.spanLarge ? `${ props.spanLarge }%` : "100%" };
+    flex-grow: ${ props => props.spanLarge ? 0 : 1 };
   }
 `
 

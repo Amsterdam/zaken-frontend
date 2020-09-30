@@ -1,15 +1,15 @@
 import React from "react"
 import styled from "styled-components"
+import { breakpoint } from "@datapunt/asc-ui" 
+import layouts from "@datapunt/asc-ui/lib/theme/default/layouts"
 
-import { breakpoint, themeSpacing } from "@datapunt/asc-ui" 
-import Column from "./Column"
+import Column from "app/features/shared/components/atoms/Grid/Column"
 
-
-/**
+/** Rows for page layout
  * optional props:
  *    - isFullWidth: by default the max-width of content is set to 1430px, overwrite this with 100% by setting the isFullWidth = true
  *    - marginBottom, marginTop: add vertical margins by use of the theme's spacing (this includes 'px')
- * For example:
+ * Implementation :
  * <Row isFullWidth marginBottom={themeSpacing(10)} marginTop={themeSpacing(10)} >
  */
 
@@ -20,7 +20,7 @@ export type TypeProps = {
   addColumn?: boolean
 }
 
-const GUTTER = 6
+const GUTTER = layouts.large.gutter
 
 const RowStyle = styled.div<TypeProps>`
   box-sizing: border-box;
@@ -28,13 +28,13 @@ const RowStyle = styled.div<TypeProps>`
   justify-content: flex-start;
   align-items: flex-start;
   flex-wrap: wrap;
-  width: calc(100% + 2*${ themeSpacing(GUTTER / 2) });
-  margin-left: -${ themeSpacing(GUTTER / 2) };
-  margin-right: -${ themeSpacing(GUTTER / 2) };
+  width: calc(100% + ${ GUTTER } px);
+  margin-left: -${ GUTTER / 2 }px;
+  margin-right: -${ GUTTER / 2 }px;
   @media screen and ${ breakpoint("min-width", "laptop") } {
-    width: calc(100% + 2*${ themeSpacing(GUTTER) });
-    margin-left: -${ themeSpacing(GUTTER) };
-    margin-right: -${ themeSpacing(GUTTER) };
+    width: calc(100% + ${ GUTTER }px);
+    margin-left: -${ GUTTER / 2 }px;
+    margin-right: -${ GUTTER  / 2 }px;
   }
   margin-top: ${ props => props.marginTop || 0 };
   margin-bottom: ${ props => props.marginBottom || 0 };

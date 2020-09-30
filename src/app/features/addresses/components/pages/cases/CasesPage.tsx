@@ -1,6 +1,5 @@
 import React from "react"
 import { RouteComponentProps } from "@reach/router"
-//import { Row } from "@datapunt/asc-ui"
 
 import Row from "app/features/shared/components/atoms/Grid/Row"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
