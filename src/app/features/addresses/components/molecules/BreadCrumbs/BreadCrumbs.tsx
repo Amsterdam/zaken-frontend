@@ -1,8 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { Link } from "@reach/router"
-import { Heading, Icon, themeSpacing, themeColor, ascDefaultTheme } from "@datapunt/asc-ui"
-import * as Assets from "@datapunt/asc-assets"
+import { Icon, themeSpacing, themeColor, ascDefaultTheme } from "@datapunt/asc-ui"
 import { ChevronRight } from "@datapunt/asc-assets"
 import to from "app/features/shared/routing/to"
 import find from "app/features/shared/routing/find"
@@ -15,17 +14,18 @@ type Props = {
 const Ul = styled.ul`
   list-style: none;
   padding-left: 0;
+  line-height: 1.6em;
   li {
     display: inline;
     a {
       color: ${ themeColor("tint", "level4") };
       text-decoration: none;
+      &:hover {
+        color: ${ themeColor("secondary") };
+        text-decoration: underline;
+      }
     }
   }
-`
-const StyledIcon = styled(Icon)`
-  display: inline;
-  margin-right: 8px;
 `
 const StyledSeperator = styled(Icon)`
   display: inline;
@@ -43,21 +43,17 @@ const BreadCrumbs: React.FC<Props> = ({ bagId }) => {
 
   // TODO: Remove `({ theme: ascDefaultTheme })` after fix https://github.com/Amsterdam/amsterdam-styled-components/issues/1108
   return (
-    <Heading forwardedAs="h3">
+    <nav>
       <Ul>
         { items.map(({ title, icon, to }, index) => {
             const isLast = items.length - 1 === index
-            const Asset = icon ? Assets[icon] : null
             return (
               <li key={ index }>
                 <Link to={ to }>
-                  { Asset &&
-                    <StyledIcon color={ themeColor("tint", "level4")({ theme: ascDefaultTheme }) }><Asset /></StyledIcon>
-                  }
                   { title ?? "" }
                 </Link>
                 { !isLast &&
-                  <StyledSeperator color={ themeColor("tint", "level4")({ theme: ascDefaultTheme }) }>
+                  <StyledSeperator size={ 12 } color={ themeColor("tint", "level4")({ theme: ascDefaultTheme }) }>
                     <ChevronRight />
                   </StyledSeperator>
                 }
@@ -66,7 +62,7 @@ const BreadCrumbs: React.FC<Props> = ({ bagId }) => {
           })
         }
       </Ul>
-    </Heading>
+    </nav>
   )
 }
 export default BreadCrumbs
