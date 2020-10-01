@@ -17,6 +17,7 @@ const Ul = styled.ul`
   line-height: 1.6em;
   li {
     display: inline;
+    font-size: 14px;
     a {
       color: ${ themeColor("tint", "level4") };
       text-decoration: none;
@@ -24,6 +25,9 @@ const Ul = styled.ul`
         color: ${ themeColor("secondary") };
         text-decoration: underline;
       }
+    }
+    span {
+      color: ${ themeColor("tint", "level4") };
     }
   }
 `
@@ -49,11 +53,14 @@ const BreadCrumbs: React.FC<Props> = ({ bagId }) => {
             const isLast = items.length - 1 === index
             return (
               <li key={ index }>
-                <Link to={ to }>
-                  { title ?? "" }
-                </Link>
+                { !isLast ?
+                  <Link to={ to }>
+                    { title ?? "" }
+                  </Link> :
+                  <span>{ title ?? "" }</span>
+                }
                 { !isLast &&
-                  <StyledSeperator size={ 12 } color={ themeColor("tint", "level4")({ theme: ascDefaultTheme }) }>
+                  <StyledSeperator size={ 9 } color={ themeColor("tint", "level4")({ theme: ascDefaultTheme }) }>
                     <ChevronRight />
                   </StyledSeperator>
                 }
