@@ -11,14 +11,18 @@ type Props = {
   bagId: Components.Schemas.Address["bag_id"]
 }
 
+const LEVEL = "level5"
 const Ul = styled.ul`
   list-style: none;
   padding-left: 0;
   line-height: 1.6em;
   li {
     display: inline;
+    font-size: 14px;
+    a, span {
+      color: ${ themeColor("tint", LEVEL) };
+    }
     a {
-      color: ${ themeColor("tint", "level4") };
       text-decoration: none;
       &:hover {
         color: ${ themeColor("secondary") };
@@ -49,11 +53,14 @@ const BreadCrumbs: React.FC<Props> = ({ bagId }) => {
             const isLast = items.length - 1 === index
             return (
               <li key={ index }>
-                <Link to={ to }>
-                  { title ?? "" }
-                </Link>
+                { !isLast ?
+                  <Link to={ to }>
+                    { title ?? "" }
+                  </Link> :
+                  <span>{ title ?? "" }</span>
+                }
                 { !isLast &&
-                  <StyledSeperator size={ 12 } color={ themeColor("tint", "level4")({ theme: ascDefaultTheme }) }>
+                  <StyledSeperator size={ 9 } color={ themeColor("tint", LEVEL)({ theme: ascDefaultTheme }) }>
                     <ChevronRight />
                   </StyledSeperator>
                 }
