@@ -18,16 +18,15 @@ const Ul = styled.ul`
   li {
     display: inline;
     font-size: 14px;
+    a, span {
+      color: ${ themeColor("tint", "level5") };
+    }
     a {
-      color: ${ themeColor("tint", "level4") };
       text-decoration: none;
       &:hover {
         color: ${ themeColor("secondary") };
         text-decoration: underline;
       }
-    }
-    span {
-      color: ${ themeColor("tint", "level4") };
     }
   }
 `
