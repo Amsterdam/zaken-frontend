@@ -17,10 +17,10 @@ const ColumnAlignRight = styled(Column)`
 
 const DetailHeader: React.FC<Props> = ({ bagId }) => (    
   <Row>
-    <Column spanSmall={100} spanLarge={50}>
+    <Column spanLarge={50}>
       <BreadCrumbs bagId={ bagId! } />
     </Column>
-    <ColumnAlignRight spanSmall={100} spanLarge={50}>
+    <ColumnAlignRight spanLarge={50}>
       <AddressDisplay bagId={ bagId! } />
     </ColumnAlignRight>
   </Row>
