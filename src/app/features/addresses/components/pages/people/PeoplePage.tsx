@@ -6,6 +6,7 @@ import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/
 import PanoramaPreview from "app/features/cases/components/organisms/Panorama/PanoramaPreview"
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import DetailHeader from "app/features/shared/components/organisms/DetailHeader/DetailHeader"
+import People from "app/features/addresses/components/organisms/People/People"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -21,7 +22,7 @@ const PeoplePage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
         <PanoramaPreview bagId={ bagId! } />
       </RowWithColumn>
       <RowWithColumn>
-        <p>Ingeschreven personen (via BAG id)</p>
+        <People bagId={ bagId! } />
       </RowWithColumn>
     </DefaultLayout>
   )
