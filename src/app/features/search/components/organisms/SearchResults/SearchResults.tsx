@@ -19,12 +19,12 @@ type SearchResult = Pick<BAGAddressResponse["results"][0], "adres" | "postcode" 
 const mapData = (data: SearchResult) => [
   data.adres ?? "-",
   data.postcode ?? "-",
-  data.subtype_id && data.adres ? <OpenButton href={to("/adres/:id", { id: data.subtype_id })} text="Bekijk" /> : null
+  data.subtype_id && data.adres ? <OpenButton href={to("/adres/:bagId", { bagId: data.subtype_id })} text="Bekijk" /> : null
 ]
 
 const SearchResults: React.FC<Props> = ({ searchString }) => {
   const { data, isBusy } = useBAGWithZipCode(searchString)
-  const mappedData = useMemo(() => 
+  const mappedData = useMemo(() =>
     data?.results &&
       data?.results
         .filter((result) =>  (result && typeof result.postcode === "string" ))
