@@ -9,6 +9,7 @@ import styled from "styled-components"
 type Props = {
   bagId: string
   headingSize?: "h1" | "h2"
+  isHeader?: boolean
 }
 
 const StyledDiv = styled.div`
@@ -16,14 +17,14 @@ const StyledDiv = styled.div`
 `
 
 
-const AddressDisplay: React.FC<Props> = ({ bagId, headingSize = "h2" }) => {
+const AddressDisplay: React.FC<Props> = ({ bagId, headingSize = "h2", isHeader = false }) => {
   const { data } = useBAG(bagId)
   const { data: otherAddresses } = useOtherAddressesByBagId(bagId)
 
   // TODO: Show loading status visually
   return (
     <StyledDiv>
-      <Typography as="span" styleAs={ headingSize }>
+      <Typography as={ isHeader ? headingSize : "span" } styleAs={ headingSize }>
       { data ? `${ data.results[0].adres }, ${ data.results[0].postcode }` : "" }
             { otherAddresses?.results && otherAddresses?.results?.length > 1 && <ShowOtherAddressesButton bagId={bagId} /> }
       </Typography>
