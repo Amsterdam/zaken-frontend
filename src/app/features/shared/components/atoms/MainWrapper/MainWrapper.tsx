@@ -5,26 +5,24 @@ import { sizes } from "@datapunt/asc-ui/lib/theme/default/breakpoints"
 
 const MAX_WIDTH = sizes.laptopL
 
-// TODO introduce a Spacing component?
-const MainWrapperStyle = styled.main`
-  margin: ${ themeSpacing(3) };
-  @media screen and ${ breakpoint("min-width", "laptop") } {
-    margin: ${ themeSpacing(11) };
-  }
-`
 const LayoutContainer = styled.div`   
   box-sizing: border-box;
   margin: 0 auto;
+  padding: ${ themeSpacing(3) };
   width: 100%;
   max-width: ${ MAX_WIDTH }px;
+
+  @media screen and ${ breakpoint("min-width", "laptop") } {
+    padding: ${ themeSpacing(3) } ${ themeSpacing(14) };
+  }
 `
 const MainWrapper: React.FC = ({ children }) => (
    
-    <MainWrapperStyle>
+    <main>
       <LayoutContainer>
         { children }
       </LayoutContainer>
-    </MainWrapperStyle>
+    </main>
   
 )
 
