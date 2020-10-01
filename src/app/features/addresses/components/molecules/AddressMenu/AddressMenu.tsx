@@ -4,6 +4,7 @@ import { themeSpacing, breakpoint } from "@datapunt/asc-ui"
 import NavBlock from "app/features/addresses/components/atoms/NavBlock/NavBlock"
 import to from "app/features/shared/routing/to"
 import routesObject from "app/config/routes"
+import { usePermitDetails } from "app/state/rest"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -43,22 +44,28 @@ const routes = [
   "/adres/:bagId/zaken/"
 ]
 
-const AddressMenu: React.FC<Props> = ({ bagId }) =>
-  // TODO: Read page title, routing, icons from global config JSON
-  <Menu>
-    <Ul>
-      { routes.map(route => {
-          const page = routesObject[route]
-          if (page?.icon === undefined || page?.title === undefined) return null
-          return (
-            <Li key={ route }>
-              <Div>
-                <NavBlock to={ to(route, { bagId }) } icon={ page.icon } header={ page.title } />
-              </Div>
-            </Li>
-          )
-        })
-      }
-    </Ul>
-  </Menu>
+const AddressMenu: React.FC<Props> = ({ bagId }) => {
+  const { data: permitDetails } = usePermitDetails(bagId)
+  const permitDetailsCount = permitDetails?.length
+  const counts = [undefined, undefined, permitDetailsCount]
+
+  return (
+    <Menu>
+      <Ul>
+        { routes.map((route, index) => {
+            const page = routesObject[route]
+            if (page?.icon === undefined || page?.title === undefined) return null
+            return (
+              <Li key={ route }>
+                <Div>
+                  <NavBlock to={ to(route, { bagId }) } icon={ page.icon } header={ page.title } count={ counts[index] }/>
+                </Div>
+              </Li>
+            )
+          })
+        }
+      </Ul>
+    </Menu>
+  )
+}
 export default AddressMenu
