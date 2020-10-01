@@ -11,6 +11,7 @@ type Props = {
   bagId: Components.Schemas.Address["bag_id"]
 }
 
+const LEVEL = "level5"
 const Ul = styled.ul`
   list-style: none;
   padding-left: 0;
@@ -19,7 +20,7 @@ const Ul = styled.ul`
     display: inline;
     font-size: 14px;
     a, span {
-      color: ${ themeColor("tint", "level5") };
+      color: ${ themeColor("tint", LEVEL) };
     }
     a {
       text-decoration: none;
@@ -59,7 +60,7 @@ const BreadCrumbs: React.FC<Props> = ({ bagId }) => {
                   <span>{ title ?? "" }</span>
                 }
                 { !isLast &&
-                  <StyledSeperator size={ 9 } color={ themeColor("tint", "level4")({ theme: ascDefaultTheme }) }>
+                  <StyledSeperator size={ 9 } color={ themeColor("tint", LEVEL)({ theme: ascDefaultTheme }) }>
                     <ChevronRight />
                   </StyledSeperator>
                 }
