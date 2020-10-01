@@ -19,6 +19,7 @@ const DefaultLayout: React.FC<Props> = ({ showSearchButton = true, children }) =
   <>
     <Header
       tall
+      fullWidth={false}
       title="Zaaksysteem Wonen"
       homeLink={to("/")}
       navigation={
