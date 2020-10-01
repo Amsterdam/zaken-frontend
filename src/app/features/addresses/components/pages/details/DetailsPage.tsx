@@ -19,7 +19,7 @@ const DetailPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
       <RowWithColumn marginBottom={ themeSpacing(10) }>
         <DetailHeader bagId={ bagId! } />
       </RowWithColumn>
-      <Row>
+      <Row marginBottom={ themeSpacing(10) }>
         <Column spanSmall={100} spanLarge={40}>
           <PanoramaPreview bagId={ bagId! } />
           </Column>
