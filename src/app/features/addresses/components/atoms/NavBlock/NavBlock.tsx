@@ -8,6 +8,7 @@ type Props = {
   to: string
   icon: keyof typeof Assets
   header: string
+  count?: number
 }
 
 const StyledLink = styled(Link)`
@@ -26,14 +27,14 @@ const StyledHeading = styled(Heading)`
   margin-top: ${ themeSpacing(4) };
 `
 
-const NavBlock: React.FC<Props> = ({ to: toPath, icon, header }) => {
+const NavBlock: React.FC<Props> = ({ to: toPath, icon, header, count }) => {
   const Asset = Assets[icon] ?? <span></span>
   return (
     <StyledLink to={ toPath }>
       <StyledCard backgroundColor="level2" shadow>
         <CardContent>
           <Icon size={ 36 }><Asset /></Icon>
-          <StyledHeading as="h3">{ header }</StyledHeading>
+          <StyledHeading as="h3">{ header }{ count ? ` (${ count })` : "" }</StyledHeading>
         </CardContent>
       </StyledCard>
     </StyledLink>
