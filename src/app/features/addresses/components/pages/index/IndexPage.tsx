@@ -24,7 +24,7 @@ const IndexPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
       <AddressDisplay bagId={ bagId! } headingSize="h1" isHeader={true} />
     </RowWithColumn>
     <RowWithColumn marginBottom={ themeSpacing(3) }>
-      <PanoramaPreview bagId={ bagId! } />
+      <PanoramaPreview bagId={ bagId! } height={ 480 } />
     </RowWithColumn>
     <RowWithColumn marginBottom={ themeSpacing(10) }>
       <AddressMenu bagId={ bagId! } />
