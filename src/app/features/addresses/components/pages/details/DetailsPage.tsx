@@ -9,6 +9,7 @@ import BagDetails from "app/features/cases/components/organisms/BagDetails/BagDe
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import DetailHeader from "app/features/shared/components/organisms/DetailHeader/DetailHeader"
 import HeadingWithIcon from "app/features/shared/components/organisms/HeadingWithIcon/HeadingWithIcon"
+import ObjectDetails from "app/features/addresses/components/atoms/ObjectDetails/ObjectDetails"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -26,6 +27,9 @@ const DetailPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => {
       </RowWithColumn>
       <RowWithColumn>
         <HeadingWithIcon icon={ page?.icon ?? "ChevronRight" } header={ page?.title ?? "" } />
+      </RowWithColumn>
+      <RowWithColumn>
+        <ObjectDetails bagId={ bagId ! } />
       </RowWithColumn>
       <RowWithColumn>
         <BagDetails bagId={ bagId ! } />

@@ -4,6 +4,7 @@ import useApiRequest from "./hooks/useApiRequest"
 import { getHeaders, makeGatewayUrl, useErrorHandler } from "./hooks/utils/utils"
 import { APIListResponse } from "./types/ApiListResponse"
 import { BAGAddressResponse } from "./types/BAGAddressResponse"
+import { BAGObjectResponse } from "./types/BAGObjectResponse"
 
 export type ApiGroup =
   | "cases"
@@ -92,6 +93,16 @@ export const useBAGWithZipCode = (bagId: string, options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<BAGAddressResponse>({
     url: `https://api.data.amsterdam.nl/atlas/search/postcode/?q=${ bagId }`,
+    ...options,
+    groupName: "dataPunt",
+    handleError
+  })
+}
+
+export const useBAGLodging = (type: string, subTypeId: string, options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<BAGObjectResponse>({
+    url: `https://api.data.amsterdam.nl/bag/v1.1/${ type }/${ subTypeId }/`,
     ...options,
     groupName: "dataPunt",
     handleError
