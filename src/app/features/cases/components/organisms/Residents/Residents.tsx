@@ -13,12 +13,13 @@ type Props = {
 
 const Residents: React.FC<Props> = ({ id }) => {
   const { data: caseResidents } = useCaseResidents(id)
+
   return (
     <>
       { caseResidents ?
         <>
-          <Heading>Actueel ingeschreven personen</Heading>
-          { caseResidents?.items
+          <Heading>Actueel ingeschreven personen ({ caseResidents.items.length })</Heading>
+          { caseResidents.items
               .map((resident, index) => <Resident key={ index } resident={ resident } num={ index + 1 }/>)
           }
         </>

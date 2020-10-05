@@ -16,7 +16,7 @@ const CasesPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
       <RowWithColumn marginBottom={themeSpacing(10)}>
         <DetailHeader bagId={ bagId! } />
       </RowWithColumn>
-      <RowWithColumn>
+      <RowWithColumn marginBottom={themeSpacing(10)}>
         <PanoramaPreview bagId={ bagId! } />
       </RowWithColumn>
       <RowWithColumn>
