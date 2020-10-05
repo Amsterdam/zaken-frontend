@@ -2,11 +2,10 @@ import React from "react"
 import { RouteComponentProps } from "@reach/router"
 import {   themeSpacing } from "@datapunt/asc-ui"
 
-
 import routesObject from "app/config/routes"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
-import BagDetails from "app/features/cases/components/organisms/BagDetails/BagDetails"
-import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
+import Row, { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
+import Column from "app/features/shared/components/atoms/Grid/Column"
 import DetailHeader from "app/features/shared/components/organisms/DetailHeader/DetailHeader"
 import HeadingWithIcon from "app/features/shared/components/organisms/HeadingWithIcon/HeadingWithIcon"
 import ObjectDetails from "app/features/addresses/components/atoms/ObjectDetails/ObjectDetails"
@@ -28,12 +27,11 @@ const DetailPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => {
       <RowWithColumn>
         <HeadingWithIcon icon={ page?.icon ?? "ChevronRight" } header={ page?.title ?? "" } />
       </RowWithColumn>
-      <RowWithColumn>
-        <ObjectDetails bagId={ bagId ! } />
-      </RowWithColumn>
-      <RowWithColumn>
-        <BagDetails bagId={ bagId ! } />
-      </RowWithColumn>
+      <Row>
+        <Column spanLarge={50}>
+          <ObjectDetails bagId={ bagId ! } />
+        </Column>
+      </Row>
     </DefaultLayout>
   )
 }

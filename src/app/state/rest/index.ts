@@ -99,7 +99,7 @@ export const useBAGWithZipCode = (bagId: string, options?: Options) => {
   })
 }
 
-export const useBAGLodging = (type: string, subTypeId: string, options?: Options) => {
+export const useBAGLodging = (type: string | undefined, subTypeId: string | undefined, options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<BAGObjectResponse>({
     url: `https://api.data.amsterdam.nl/bag/v1.1/${ type }/${ subTypeId }/`,

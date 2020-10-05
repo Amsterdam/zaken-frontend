@@ -7,22 +7,22 @@ type Props = {
 }
 
 const ObjectDetails: React.FC<Props> = ({ bagId }) => {
-  const { data } = useBAG(bagId)
-  const result = data?.results[0]
-  const type = result?.type || ""
-  const subTypeId = result?.subtype_id || ""
-  const subData = useBAGLodging( type , subTypeId )
+  const BAGData = useBAG(bagId)
+  const result = BAGData?.data?.results[0]
+  const type = result?.type
+  const subTypeId = result?.subtype_id
+  const { data } = useBAGLodging( type , subTypeId, { lazy: type === undefined } )
   
   const values = useMemo(() => ({
     "Bestemming": result?.type,
-    "Oppervlakte": subData?.data?.oppervlakte ? `${ subData?.data?.oppervlakte } m2` : "-",
-    "Bouwlagen": subData?.data?.bouwlagen,
-    "Aantal kamers": subData?.data?.aantal_kamers
-  }), [ result, subData ])
+    "Oppervlakte": data?.oppervlakte ? `${ data?.oppervlakte } m2` : "-",
+    "Bouwlagen": data?.bouwlagen,
+    "Aantal kamers": data?.aantal_kamers
+  }), [ result, data ])
 
   return <Details
     numInitialVisibleRows={5}
-    title="Basis Administratie Gebouwen"
+    title="Object details"
     values={values}
   />
 }
