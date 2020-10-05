@@ -20,7 +20,7 @@
     "@types/react-dom": "^16.9.8",
     "@types/resize-observer-browser": "^0.1.3",
     "@types/styled-components": "^5.1.3",
-    "amsterdam-react-final-form": "^0.1.98",
+    "amsterdam-react-final-form": "^0.1.99",
     "amsterdam-scaffold-form": "^0.1.29",
     "axios": "^0.20.0",
     "env-cmd": "^10.1.0",
