@@ -4,27 +4,27 @@ import * as Assets from "@datapunt/asc-assets"
 import styled from "styled-components"
 
 type Props = {
-  icon: keyof typeof Assets
   header: string
-  headingSize?: "h1" | "h2" | "h3" | "h4"
+  headingSize?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6"
+  icon?: keyof typeof Assets
   iconSize?: number
 }
 
 const Div = styled.div`
-    display: flex;
-    margin-bottom: ${ themeSpacing(15) };
-
-    span {
-        margin-right: 20px;
-    }
-
+  display: flex;
+  margin-bottom: ${ themeSpacing(15) };
+`
+const StyledIcon = styled(Icon)`
+  margin-right: ${ themeSpacing(5) };
 `
 
-const HeadingWithIcon: React.FC<Props> = ({ icon, header, headingSize = "h1", iconSize = 48 }) => {
-  const Asset = Assets[icon] ?? <span></span>
+const HeadingWithIcon: React.FC<Props> = ({ icon, header, headingSize = "h1", iconSize = 36 }) => {
+  const Asset = icon ? Assets[icon] : null
   return (
     <Div>
-      <Icon size={ iconSize }><Asset /></Icon>
+      { Asset != null &&
+        <StyledIcon size={ iconSize }><Asset /></StyledIcon>
+      }
       <Heading forwardedAs={ headingSize }>{ header }</Heading>
     </Div>
   )
