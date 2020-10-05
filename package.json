@@ -99,7 +99,7 @@
     "react-hooks-testing-library": "^0.6.0",
     "serve": "^11.3.2",
     "ts-loader": "^8.0.1",
-    "ts-node": "^8.10.2"
+    "ts-node": "^9.0.0"
   },
   "husky": {
     "hooks": {
