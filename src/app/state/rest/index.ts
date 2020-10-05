@@ -1,4 +1,5 @@
 import qs from "qs"
+import slashSandwich from "slash-sandwich"
 
 import useApiRequest from "./hooks/useApiRequest"
 import { getHeaders, makeGatewayUrl, useErrorHandler } from "./hooks/utils/utils"
@@ -101,8 +102,11 @@ export const useBAGWithZipCode = (bagId: string, options?: Options) => {
 
 export const useBAGLodging = (type: string | undefined, subTypeId: string | undefined, options?: Options) => {
   const handleError = useErrorHandler()
+  const url = slashSandwich(["https://api.data.amsterdam.nl/bag/v1.1", type, subTypeId], { trailingSlash: true })
+  
   return useApiRequest<BAGObjectResponse>({
-    url: `https://api.data.amsterdam.nl/bag/v1.1/${ type }/${ subTypeId }/`,
+    url: url,
+    lazy: type === undefined || subTypeId === undefined,
     ...options,
     groupName: "dataPunt",
     handleError

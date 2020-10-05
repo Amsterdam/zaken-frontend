@@ -11,7 +11,7 @@ const ObjectDetails: React.FC<Props> = ({ bagId }) => {
   const result = BAGData?.data?.results[0]
   const type = result?.type
   const subTypeId = result?.subtype_id
-  const { data } = useBAGLodging( type , subTypeId, { lazy: type === undefined } )
+  const { data } = useBAGLodging( type , subTypeId )
   
   const values = useMemo(() => ({
     "Bestemming": result?.type,
