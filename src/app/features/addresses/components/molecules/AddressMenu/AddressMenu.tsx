@@ -4,7 +4,8 @@ import { themeSpacing, breakpoint } from "@datapunt/asc-ui"
 import NavBlock from "app/features/addresses/components/atoms/NavBlock/NavBlock"
 import to from "app/features/shared/routing/to"
 import routesObject from "app/config/routes"
-import { usePermitDetails, useCaseResidents } from "app/state/rest"
+import { usePermitDetails } from "app/state/rest"
+import useResidentsByBagId from "app/state/rest/custom/useResidentsByBagId/useResidentsByBagId"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -47,7 +48,7 @@ const routes = [
 const AddressMenu: React.FC<Props> = ({ bagId }) => {
   const { data: permitDetails } = usePermitDetails(bagId)
   // TODO: Do show Residents by BAG_id
-  const { data: residents } = useCaseResidents("297951_7")
+  const { data: residents } = useResidentsByBagId(bagId)
   const counts = [undefined, residents?.items.length, permitDetails?.length]
 
   return (
