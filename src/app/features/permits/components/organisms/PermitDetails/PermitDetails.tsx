@@ -1,7 +1,6 @@
-import React from "react"
-import styled from "styled-components"
+import React, { useMemo } from "react"
 import { Link } from "@datapunt/asc-ui"
-import Heading from "app/features/shared/components/atoms/Heading/Heading"
+import Details from "app/features/shared/components/molecules/Details/Details"
 
 type Props = {detail: Components.Schemas.DecosPermit}
 
@@ -11,43 +10,31 @@ type Props = {detail: Components.Schemas.DecosPermit}
     PERMIT_UNKNOWN: "Onbekend"
   }
 
-  const Dl = styled.dl`
-
-  display: flex;
-  flex-wrap: wrap;
-  width:100%;
-
-  > * {
-    padding-top: 0.5em;
-  }
-  dt {
-    width:45%;
-  }
-  dd {
-    width:55%;
-    padding-left:1em;
-    margin-left: 0px;
-  }
-`
 const PermitDetail: React.FC<Props> = ({ detail }) => {
     const { permit_granted, permit_type, date_from, date_to, decos_join_web_url } = detail
+
+    const values = useMemo(() => ({
+      "Vergunning": permit_granted ? "ja" : "nee" ,
+      "Begindatum": date_from || "-" ,
+      "Einddatum": date_to || "-"
+      
+    }),[date_from, date_to, permit_granted])
+
+
     return (
-        <>
-            { permit_type && <Heading forwardedAs="h2">{ permitType[ permit_type ] }</Heading> }
-            <Dl>
-                <dt>Vergunning:</dt>
-                <dd>{permit_granted ? "ja" : "nee"}</dd>
-                <dt>Begindatum:</dt>
-                <dd>{ date_from || "-" }</dd>
-                <dt>Einddatum:</dt>
-                <dd>{ date_to ?? "-" }</dd>
-                    
-            </Dl>
-            { decos_join_web_url && permit_type &&
-              <Link href={ decos_join_web_url } variant="inline" icon="external" target="_blank" rel="noreferer">
-                { permitType[ permit_type ] } vergunning
-            </Link>}
-        </>
+    <>
+      <Details
+        numInitialVisibleRows={3}
+        title= { permit_type ?  permitType[ permit_type ] : "" }
+        values={values}
+      />
+      { decos_join_web_url && permit_type &&
+        <Link href={ decos_join_web_url } variant="inline" icon="external" target="_blank" rel="noreferer">
+          { permitType[ permit_type ] } vergunning
+        </Link>
+      }
+
+    </>
     )
 }
 export default PermitDetail

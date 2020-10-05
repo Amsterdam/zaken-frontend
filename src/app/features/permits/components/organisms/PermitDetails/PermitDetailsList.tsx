@@ -15,7 +15,6 @@ const Ul = styled.ul`
 
   li {
     margin-bottom: ${ themeSpacing(14) };
-    max-width: 390px;
   }
 `
 
