@@ -1,6 +1,6 @@
 import React from "react"
 import { useBAG } from "app/state/rest"
-import { themeSpacing, Typography } from "@datapunt/asc-ui"
+import { breakpoint, themeSpacing, Typography } from "@datapunt/asc-ui"
 
 import ShowOtherAddressesButton from "app/features/addresses/components/organisms/AddressSuffixSwitcher/ShowOtherAddressesButton"
 import useOtherAddressesByBagId from "app/state/rest/custom/useOtherAddresses/useOtherAddresses"
@@ -13,7 +13,9 @@ type Props = {
 }
 
 const StyledDiv = styled.div`
-  margin-top: ${ themeSpacing(1) }
+  @media screen and ${ breakpoint("min-width", "laptop") } {
+    margin-top: ${ themeSpacing(4) }
+  }
 `
 
 
