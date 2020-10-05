@@ -13,6 +13,7 @@ type Props = {
   title?: string
   values: Record<string, Value>
   startAlternative?: boolean
+  headingSize?: "h1" | "h2" | "h3" | "h4"
 }
 
 const StyledTable = styled.table`
@@ -54,7 +55,7 @@ const castValue = (value: Value): string|JSX.Element => {
   return value
 }
 
-const Details: React.FC<Props> = ({ isLoading, numLoadingRows, numInitialVisibleRows = Number.MAX_VALUE, title, values, startAlternative = true }) => {
+const Details: React.FC<Props> = ({ isLoading, numLoadingRows, numInitialVisibleRows = Number.MAX_VALUE, title, values, startAlternative = true, headingSize = "h2" }) => {
   const [isCollapsed, setIsCollapsed] = useState(true)
 
   const toggleCollapsed = useCallback(() => setIsCollapsed(!isCollapsed), [setIsCollapsed, isCollapsed])
@@ -68,7 +69,7 @@ const Details: React.FC<Props> = ({ isLoading, numLoadingRows, numInitialVisible
     : valueEntries
 
   return (<>
-    { title && <Heading>{ isLoading ? <SmallSkeleton height={10} /> : title}</Heading> }
+    { title && <Heading forwardedAs={ headingSize }>{ isLoading ? <SmallSkeleton height={10} /> : title}</Heading> }
     <StyledTable>
       <tbody>
       { isLoading
