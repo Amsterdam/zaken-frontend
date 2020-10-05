@@ -27,6 +27,7 @@ const PermitDetail: React.FC<Props> = ({ detail }) => {
         numInitialVisibleRows={3}
         title= { permit_type ?  permitType[ permit_type ] : "" }
         values={values}
+        headingSize="h3"
       />
       { decos_join_web_url && permit_type &&
         <Link href={ decos_join_web_url } variant="inline" icon="external" target="_blank" rel="noreferer">
