@@ -1,6 +1,6 @@
 import { useBAG, usePanorama } from "../../index"
 
-const usePanoramaByBagId = (bagId: string, width: number | undefined, aspect: number | undefined, radius: number) => {
+const usePanoramaByBagId = (bagId: string, width: number | undefined, aspect: number | undefined, radius: number, fov: number | undefined) => {
   const { data } = useBAG(bagId)
 
   return usePanorama(
@@ -9,6 +9,7 @@ const usePanoramaByBagId = (bagId: string, width: number | undefined, aspect: nu
     width,
     aspect,
     radius,
+    fov,
     { lazy: data?.results?.[0] === undefined || width === undefined }
   )
 }

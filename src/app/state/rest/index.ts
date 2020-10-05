@@ -98,9 +98,8 @@ export const useBAGWithZipCode = (bagId: string, options?: Options) => {
   })
 }
 
-export const usePanorama = (lat?: number, lon?: number, width?: number, aspect?: number, radius?: number, options?: Options) => {
+export const usePanorama = (lat?: number, lon?: number, width?: number, aspect?: number, radius?: number, fov?: number, options?: Options) => {
   const handleError = useErrorHandler()
-  const fov = 120
   const queryString = qs.stringify({ lat, lon, width, fov, aspect, radius }, { addQueryPrefix: true })
   return useApiRequest<{ url: string }>({
     ...options,

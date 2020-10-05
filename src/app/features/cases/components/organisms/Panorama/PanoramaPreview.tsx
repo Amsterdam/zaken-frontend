@@ -10,6 +10,7 @@ type Props = {
   width?: number
   aspect?: number
   radius?: number
+  fov?: number
 }
 
 const Div = styled.div`
@@ -19,12 +20,12 @@ const Img = styled.img`
   width: 100%;
 `
 
-const PanoramaPreview: React.FC<Props> = ({ bagId, width: w, aspect = 1.5, radius = 180 }) => {
+const PanoramaPreview: React.FC<Props> = ({ bagId, width: w, aspect = 1.5, radius = 180, fov = 80 }) => {
   const ref = useRef<HTMLDivElement>(null)
   const rect = useRect(ref, 100)
   const width = w ?? rect.width
   const height = width !== undefined ? width / aspect : undefined
-  const { data } = usePanoramaByBagId(bagId, width, aspect, radius)
+  const { data } = usePanoramaByBagId(bagId, width, aspect, radius, fov)
 
   return (
     <Div ref={ ref } style={ { height } }>
