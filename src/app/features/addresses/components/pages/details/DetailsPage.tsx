@@ -2,12 +2,11 @@ import React from "react"
 import { RouteComponentProps } from "@reach/router"
 import {   themeSpacing } from "@datapunt/asc-ui"
 
-import routesObject from "app/config/routes"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 import Row, { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import Column from "app/features/shared/components/atoms/Grid/Column"
 import DetailHeader from "app/features/shared/components/organisms/DetailHeader/DetailHeader"
-import HeadingWithIcon from "app/features/shared/components/organisms/HeadingWithIcon/HeadingWithIcon"
+import Heading from "app/features/addresses/components/molecules/Heading/Heading"
 import ObjectDetails from "app/features/addresses/components/atoms/ObjectDetails/ObjectDetails"
 import PermitOverview from "app/features/permits/components/organisms/PermitOverview/PermitOverview"
 
@@ -15,18 +14,13 @@ type Props = {
   bagId: Components.Schemas.Address["bag_id"]
 }
 
-const route = "/adres/:bagId/detail/"
-
-const DetailPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => {
-  const page = routesObject[route]
-  
-  return (
+const DetailPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
     <DefaultLayout>
       <RowWithColumn marginBottom={ themeSpacing(2) }>
         <DetailHeader bagId={ bagId! } />
       </RowWithColumn>
       <RowWithColumn>
-        <HeadingWithIcon icon={ page?.icon ?? "ChevronRight" } header={ page?.title ?? "" } />
+        <Heading />
       </RowWithColumn>
       <Row>
         <Column spanLarge={50}>
@@ -40,6 +34,5 @@ const DetailPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => {
       </Row>
     </DefaultLayout>
   )
-}
 
 export default DetailPage

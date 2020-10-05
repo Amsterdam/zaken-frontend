@@ -19,6 +19,7 @@ const StyledLink = styled(Link)`
   }
 `
 const StyledCard = styled(Card)`
+  height: 162px;
   &:hover {
     box-shadow: 2px 2px ${ themeColor("secondary") };
   }
