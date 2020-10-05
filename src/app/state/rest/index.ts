@@ -113,9 +113,9 @@ export const useBAGLodging = (type: string | undefined, subTypeId: string | unde
   })
 }
 
-export const usePanorama = (lat?: number, lon?: number, width?: number, radius?: number, options?: Options) => {
+export const usePanorama = (lat?: number, lon?: number, width?: number, aspect?: number, radius?: number, fov?: number, options?: Options) => {
   const handleError = useErrorHandler()
-  const queryString = qs.stringify({ lat, lon, width, radius }, { addQueryPrefix: true })
+  const queryString = qs.stringify({ lat, lon, width, fov, aspect, radius }, { addQueryPrefix: true })
   return useApiRequest<{ url: string }>({
     ...options,
     url: `https://api.data.amsterdam.nl/panorama/thumbnail/${ queryString }`,

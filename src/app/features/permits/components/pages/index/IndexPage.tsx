@@ -3,7 +3,6 @@ import { RouteComponentProps } from "@reach/router"
 import { Link, themeSpacing } from "@datapunt/asc-ui"
 
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
-import PanoramaPreview from "app/features/cases/components/organisms/Panorama/PanoramaPreview"
 import Heading from "app/features/shared/components/atoms/Heading/Heading"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 import PermitDetailsList from "app/features/permits/components/organisms/PermitDetails/PermitDetailsList"
@@ -18,9 +17,6 @@ const IndexPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
     <DefaultLayout>
       <RowWithColumn marginBottom={ themeSpacing(10) }>
         <DetailHeader bagId={ bagId! } />
-      </RowWithColumn>
-      <RowWithColumn marginBottom={themeSpacing(10)}>
-        <PanoramaPreview bagId={ bagId! } />
       </RowWithColumn>
       <RowWithColumn>
           <Heading>Vergunningen vakantieverhuur</Heading>
