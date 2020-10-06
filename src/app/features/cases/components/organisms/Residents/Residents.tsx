@@ -1,7 +1,6 @@
 import React from "react"
 import Heading from "app/features/shared/components/atoms/Heading/Heading"
 
-
 import { useCaseResidents } from "app/state/rest"
 
 import Resident from "./Resident"

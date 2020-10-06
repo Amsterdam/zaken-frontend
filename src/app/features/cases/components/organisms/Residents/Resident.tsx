@@ -1,5 +1,6 @@
 import React, { useMemo } from "react"
 import Details from "app/features/shared/components/molecules/Details/Details"
+import PersonDisplay from "app/features/shared/components/atoms/PersonDisplay/PersonDisplay"
 import DateDisplay from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
 
 type Props = {
@@ -7,20 +8,17 @@ type Props = {
   num: number
 }
 
-const mapSex = (value: Components.Schemas.Resident["geslachtsaanduiding"]) => {
-  if (value === "M") return "Dhr. "
-  if (value === "V") return "Mvr. "
-  if (value === "X") return ""
-}
-
 const Resident: React.FC<Props> = ({ resident, num }) => {
+  const title = <>{ `${ num }. ` } <PersonDisplay sex={ resident.geslachtsaanduiding } firstName={ `${ resident.voorletters }.` } namePrefix={ resident.voorvoegsel_geslachtsnaam } name={ resident.geslachtsnaam } /></>
   const values = useMemo(() => ({
-    [`${ num }. ${ mapSex(resident.geslachtsaanduiding) }${ resident.voorletters }. ${ resident.voorvoegsel_geslachtsnaam } ${ resident.geslachtsnaam }`]: "",
     "Geboren": <DateDisplay date={ resident.geboortedatum } />,
     "Ingeschreven sinds": <DateDisplay date={ resident.datum_begin_relatie_verblijadres } />
-  }), [num, resident.datum_begin_relatie_verblijadres, resident.geboortedatum, resident.geslachtsaanduiding, resident.geslachtsnaam, resident.voorletters, resident.voorvoegsel_geslachtsnaam])
+  }), [resident.geboortedatum, resident.datum_begin_relatie_verblijadres])
+
   return <Details
     numInitialVisibleRows={4}
+    title={ title }
+    headingSize="h6"
     values={ values }
     startAlternative={ false }
   />
