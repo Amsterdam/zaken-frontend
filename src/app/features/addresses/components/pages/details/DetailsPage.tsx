@@ -6,7 +6,7 @@ import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/
 import Row, { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import Column from "app/features/shared/components/atoms/Grid/Column"
 import DetailHeader from "app/features/shared/components/organisms/DetailHeader/DetailHeader"
-import Heading from "app/features/addresses/components/molecules/Heading/Heading"
+import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
 import ObjectDetails from "app/features/addresses/components/atoms/ObjectDetails/ObjectDetails"
 import PermitOverview from "app/features/permits/components/organisms/PermitOverview/PermitOverview"
 
@@ -20,7 +20,7 @@ const DetailPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
         <DetailHeader bagId={ bagId! } />
       </RowWithColumn>
       <RowWithColumn>
-        <Heading />
+        <PageHeading />
       </RowWithColumn>
       <Row>
         <Column spanLarge={50}>
