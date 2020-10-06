@@ -23,12 +23,17 @@ const AddressDisplay: React.FC<Props> = ({ bagId, headingSize = "h2", isHeader =
   const { data } = useBAG(bagId)
   const { data: otherAddresses } = useOtherAddressesByBagId(bagId)
 
+  const isCurrentAddress = (address: any) => address.adres.trim() === data?.results[0].adres.trim()
+  const addressIndex = otherAddresses?.results.findIndex(isCurrentAddress)
+  const index = addressIndex === 0 ? "first" : addressIndex === (otherAddresses?.results.length ! - 1) ? "last" : undefined
   // TODO: Show loading status visually
   return (
     <StyledDiv>
       <Typography as={ isHeader ? headingSize : "span" } styleAs={ headingSize }>
       { data ? `${ data.results[0].adres }, ${ data.results[0].postcode }` : "" }
-            { otherAddresses?.results && otherAddresses?.results?.length > 1 && <ShowOtherAddressesButton bagId={bagId} /> }
+            { otherAddresses?.results && otherAddresses?.results?.length > 1 && 
+              <ShowOtherAddressesButton bagId={bagId} index={index} /> 
+            }
       </Typography>
     </StyledDiv>
   )
