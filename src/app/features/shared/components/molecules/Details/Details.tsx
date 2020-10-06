@@ -5,15 +5,15 @@ import styled from "styled-components"
 import SmallSkeleton from "app/features/shared/components/atoms/Skeleton/SmallSkeleton"
 import Heading from "app/features/shared/components/atoms/Heading/Heading"
 
-type Value = string|number|JSX.Element|undefined|null
+type Value = string | number | JSX.Element | undefined | null
 type Props = {
   numLoadingRows?: number
   numInitialVisibleRows?: number
   isLoading?: boolean
-  title?: string
+  title?: string | JSX.Element
   values: Record<string, Value>
   startAlternative?: boolean
-  headingSize?: "h1" | "h2" | "h3" | "h4"
+  headingSize?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6"
 }
 
 const StyledTable = styled.table`
@@ -29,7 +29,7 @@ const StyledTR = styled.tr<StyledTRProps>`
 
 const StyledTD = styled.td`
   padding: ${ themeSpacing(3) } ${ themeSpacing(1) };
-  &:nth-child(1) { min-width: 300px; white-space: nowrap; padding-right: ${ themeSpacing(3) } }
+  &:nth-child(1) { min-width: 240px; white-space: nowrap; padding-right: ${ themeSpacing(3) } }
   &:nth-child(2) { width:100%; }
 `
 
