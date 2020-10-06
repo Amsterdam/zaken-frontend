@@ -10,9 +10,9 @@ type Props = {
 }
 
 const columns = [
-  { header:"Adres", minWidth: 300 },
-  { header:"Postcode", minWidth: 210 },
-  { minWidth: 210 }
+  { header:"Adres", minWidth: 100 },
+  { header:"Postcode", minWidth: 100 },
+  { minWidth: 100 }
 ]
 
 type SearchResult = Pick<BAGAddressResponse["results"][0], "adres" | "postcode" | "subtype_id">
