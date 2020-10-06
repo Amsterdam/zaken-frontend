@@ -1,6 +1,7 @@
 import React, { useMemo } from "react"
 import { Link } from "@datapunt/asc-ui"
 import Details from "app/features/shared/components/molecules/Details/Details"
+import DateDisplay from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
 
 type Props = {detail: Components.Schemas.DecosPermit}
 
@@ -15,8 +16,8 @@ const PermitDetail: React.FC<Props> = ({ detail }) => {
 
     const values = useMemo(() => ({
       "Vergunning": permit_granted ? "ja" : "nee" ,
-      "Begindatum": date_from || "-" ,
-      "Einddatum": date_to || "-"
+      "Begindatum": date_from ? <DateDisplay date= { date_from } /> : "-" ,
+      "Einddatum": date_to ? <DateDisplay date={ date_to } /> : "-"
       
     }),[date_from, date_to, permit_granted])
 
