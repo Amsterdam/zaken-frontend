@@ -1,15 +1,25 @@
 import React from "react"
-import Heading from "app/features/shared/components/atoms/Heading/Heading"
-
+import styled from "styled-components"
+import { themeSpacing } from "@datapunt/asc-ui"
 
 import { useCaseResidents } from "app/state/rest"
-
-import Resident from "./Resident"
+import Heading from "app/features/shared/components/atoms/Heading/Heading"
 import LoadingDetails from "app/features/shared/components/molecules/Details/LoadingDetails"
+import Resident from "./Resident"
 
 type Props = {
   id: NonNullable<Components.Schemas.Case["identification"]>
 }
+
+const Ul = styled.ul`
+  margin-top: ${ themeSpacing(8) };
+  padding: 0;
+  list-style: none;
+
+  li {
+    margin-bottom: ${ themeSpacing(14) };
+  }
+`
 
 const Residents: React.FC<Props> = ({ id }) => {
   const { data: caseResidents } = useCaseResidents(id)
@@ -18,10 +28,13 @@ const Residents: React.FC<Props> = ({ id }) => {
     <>
       { caseResidents ?
         <>
-          <Heading>Actueel ingeschreven personen ({ caseResidents.items.length })</Heading>
+          <Heading as="h2">Actueel ingeschreven personen ({ caseResidents.items.length })</Heading>
+          <Ul>
           { caseResidents.items
-              .map((resident, index) => <Resident key={ index } resident={ resident } num={ index + 1 }/>)
+              .map((resident, index) =>
+                <li><Resident key={ index } resident={ resident } num={ index + 1 }/></li>)
           }
+          </Ul>
         </>
         :
         <LoadingDetails numRows={4} />

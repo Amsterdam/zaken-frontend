@@ -3,10 +3,11 @@ import { RouteComponentProps } from "@reach/router"
 import { themeSpacing } from "@datapunt/asc-ui"
 
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
-import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
+import Row, { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
+import Column from "app/features/shared/components/atoms/Grid/Column"
 import DetailHeader from "app/features/shared/components/organisms/DetailHeader/DetailHeader"
 import People from "app/features/addresses/components/organisms/People/People"
-import Heading from "app/features/addresses/components/molecules/Heading/Heading"
+import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -19,11 +20,13 @@ const PeoplePage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
         <DetailHeader bagId={ bagId! } />
       </RowWithColumn>
       <RowWithColumn>
-        <Heading />
+        <PageHeading />
       </RowWithColumn>
-      <RowWithColumn>
-        <People bagId={ bagId! } />
-      </RowWithColumn>
+      <Row>
+        <Column spanLarge={50}>
+          <People bagId={ bagId! } />
+        </Column>
+      </Row>
     </DefaultLayout>
   )
 

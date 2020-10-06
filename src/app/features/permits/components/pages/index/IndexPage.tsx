@@ -3,7 +3,7 @@ import { RouteComponentProps } from "@reach/router"
 import { Link, themeSpacing } from "@datapunt/asc-ui"
 
 import Row, { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
-import Heading from "app/features/addresses/components/molecules/Heading/Heading"
+import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
 import SubHeading from "app/features/shared/components/atoms/Heading/Heading"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 import PermitDetailsList from "app/features/permits/components/organisms/PermitDetails/PermitDetailsList"
@@ -20,7 +20,7 @@ const IndexPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
       <DetailHeader bagId={ bagId! } />
     </RowWithColumn>
     <RowWithColumn>
-      <Heading />
+      <PageHeading />
       <SubHeading forwardedAs="h2">Vergunningen vakantieverhuur</SubHeading>
     </RowWithColumn>
     <Row>
