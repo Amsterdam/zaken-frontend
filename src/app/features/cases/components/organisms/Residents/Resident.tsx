@@ -18,9 +18,8 @@ const Resident: React.FC<Props> = ({ resident, num }) => {
   return <Details
     numInitialVisibleRows={4}
     title={ title }
-    headingSize="h6"
+    headingSize="h3"
     values={ values }
-    startAlternative={ false }
   />
 }
 export default Resident
