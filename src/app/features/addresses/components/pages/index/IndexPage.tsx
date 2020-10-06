@@ -8,7 +8,6 @@ import AddressDisplay from "app/features/addresses/components/atoms/AddressDispl
 import AddressMenu from "app/features/addresses/components/molecules/AddressMenu/AddressMenu"
 import BreadCrumbs from "app/features/addresses/components/molecules/BreadCrumbs/BreadCrumbs"
 import PanoramaPreview from "app/features/cases/components/organisms/Panorama/PanoramaPreview"
-import PermitOverview from "app/features/permits/components/organisms/PermitOverview/PermitOverview"
 
 
 type Props = {
@@ -28,9 +27,6 @@ const IndexPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
     </RowWithColumn>
     <RowWithColumn marginBottom={ themeSpacing(10) }>
       <AddressMenu bagId={ bagId! } />
-    </RowWithColumn>
-    <RowWithColumn>
-      <PermitOverview bagId={ bagId! }></PermitOverview>
     </RowWithColumn>
   </DefaultLayout>
 )
