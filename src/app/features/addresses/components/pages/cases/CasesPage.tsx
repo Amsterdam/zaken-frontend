@@ -5,7 +5,7 @@ import { themeSpacing } from "@datapunt/asc-ui"
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 import DetailHeader from "app/features/shared/components/organisms/DetailHeader/DetailHeader"
-import Heading from "app/features/addresses/components/molecules/Heading/Heading"
+import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -17,7 +17,7 @@ const CasesPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
         <DetailHeader bagId={ bagId! } />
       </RowWithColumn>
       <RowWithColumn>
-        <Heading />
+        <PageHeading />
       </RowWithColumn>
       <RowWithColumn>
         <p>Cases (via BAG id)</p>
