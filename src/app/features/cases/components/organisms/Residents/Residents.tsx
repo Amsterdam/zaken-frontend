@@ -32,7 +32,7 @@ const Residents: React.FC<Props> = ({ id }) => {
           <Ul>
           { caseResidents.items
               .map((resident, index) =>
-                <li><Resident key={ index } resident={ resident } num={ index + 1 }/></li>)
+                <li key={ index }><Resident resident={ resident } num={ index + 1 }/></li>)
           }
           </Ul>
         </>
