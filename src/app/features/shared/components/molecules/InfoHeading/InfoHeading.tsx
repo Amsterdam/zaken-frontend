@@ -1,6 +1,6 @@
 import React from "react"
+import { Heading } from "@datapunt/asc-ui"
 import InfoButton from "./InfoButton"
-import Heading from "app/features/shared/components/atoms/Heading/Heading"
 import Modal, { ModalBlock } from "app/features/shared/components/molecules/Modal/Modal"
 import { useModal } from "app/features/shared/components/molecules/Modal/hooks/useModal"
 

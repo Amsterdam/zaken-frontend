@@ -1,9 +1,8 @@
 import React from "react"
 import styled from "styled-components"
-import { themeSpacing } from "@datapunt/asc-ui"
+import { themeSpacing, Heading } from "@datapunt/asc-ui"
 
 import { useCaseResidents } from "app/state/rest"
-import Heading from "app/features/shared/components/atoms/Heading/Heading"
 import LoadingDetails from "app/features/shared/components/molecules/Details/LoadingDetails"
 import Resident from "./Resident"
 

@@ -1,6 +1,5 @@
 import React from "react"
 import { RouteComponentProps } from "@reach/router"
-import { themeSpacing } from "@datapunt/asc-ui"
 
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
@@ -13,7 +12,7 @@ type Props = {
 
 const CasesPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
     <DefaultLayout>
-      <RowWithColumn marginBottom={themeSpacing(10)}>
+      <RowWithColumn>
         <DetailHeader bagId={ bagId! } />
       </RowWithColumn>
       <RowWithColumn>

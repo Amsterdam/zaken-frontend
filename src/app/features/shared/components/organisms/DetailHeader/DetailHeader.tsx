@@ -5,6 +5,7 @@ import Row from "app/features/shared/components/atoms/Grid/Row"
 import Column from "app/features/shared/components/atoms/Grid/Column"
 import BreadCrumbs from "app/features/addresses/components/molecules/BreadCrumbs/BreadCrumbs"
 import AddressDisplay from "app/features/addresses/components/atoms/AddressDisplay/AddressDisplay"
+
 type Props = {
   bagId: string
 }
@@ -15,8 +16,8 @@ const ColumnAlignRight = styled(Column)`
 }`
 
 
-const DetailHeader: React.FC<Props> = ({ bagId }) => (    
-  <Row>
+const DetailHeader: React.FC<Props> = ({ bagId }) => (
+  <Row bottomSpacing={ 0 }>
     <Column spanLarge={50}>
       <BreadCrumbs bagId={ bagId! } />
     </Column>

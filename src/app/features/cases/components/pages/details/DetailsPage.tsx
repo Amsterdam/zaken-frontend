@@ -1,7 +1,7 @@
 import React from "react"
 import { RouteComponentProps } from "@reach/router"
-import { Button, themeSpacing } from "@datapunt/asc-ui"
-import { Document } from "@datapunt/asc-assets/lib"
+import { Button, Heading } from "@datapunt/asc-ui"
+import { Document } from "@datapunt/asc-assets"
 
 
 import { useCase } from "app/state/rest"
@@ -12,7 +12,6 @@ import to from "app/features/shared/routing/to"
 import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
 import SmallSkeleton from "app/features/shared/components/atoms/Skeleton/SmallSkeleton"
 import LoadingDetails from "app/features/shared/components/molecules/Details/LoadingDetails"
-import Heading from "app/features/shared/components/atoms/Heading/Heading"
 
 import BagMap, { BagMapSkeleton } from "app/features/cases/components/organisms/BagMap/BagMap"
 import BAGDetails from "app/features/cases/components/organisms/BagDetails/BagDetails"
@@ -36,7 +35,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
 
   return (
     <DefaultLayout>
-      <RowWithColumn marginBottom={themeSpacing(6)}>
+      <RowWithColumn>
           <Heading>{ caseData?.address?.full_address ?? <SmallSkeleton height={10}/> }</Heading>
       </RowWithColumn>
       <RowWithColumn>

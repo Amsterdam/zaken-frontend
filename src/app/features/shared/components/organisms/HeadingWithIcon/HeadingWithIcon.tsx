@@ -12,7 +12,6 @@ type Props = {
 
 const Div = styled.div`
   display: flex;
-  margin-bottom: ${ themeSpacing(15) };
 `
 const StyledIcon = styled(Icon)`
   margin-right: ${ themeSpacing(5) };

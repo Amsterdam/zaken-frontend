@@ -1,8 +1,7 @@
 import React, { useMemo } from "react"
+import { Heading } from "@datapunt/asc-ui"
 
 import { usePermitCheckmarks } from "app/state/rest"
-
-import Heading from "app/features/shared/components/atoms/Heading/Heading"
 import Details from "app/features/shared/components/molecules/Details/Details"
 
 type Props = {

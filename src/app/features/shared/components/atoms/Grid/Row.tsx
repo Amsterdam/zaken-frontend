@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { breakpoint } from "@datapunt/asc-ui" 
+import { breakpoint, themeSpacing } from "@datapunt/asc-ui"
 import layouts from "@datapunt/asc-ui/lib/theme/default/layouts"
 
 import Column from "app/features/shared/components/atoms/Grid/Column"
@@ -15,8 +15,8 @@ import Column from "app/features/shared/components/atoms/Grid/Column"
 
 export type TypeProps = {
   children: React.ReactNode
-  marginBottom?: any
-  marginTop?: any
+  // TODO: Make both mobile and desktop spacing settable
+  bottomSpacing?: number
 }
 
 const GUTTER = layouts.large.gutter
@@ -30,24 +30,25 @@ const RowStyle = styled.div<TypeProps>`
   width: calc(100% + ${ GUTTER } px);
   margin-left: -${ GUTTER / 2 }px;
   margin-right: -${ GUTTER / 2 }px;
+  margin-bottom: ${ props => themeSpacing(props.bottomSpacing ?? 4) };
+
   @media screen and ${ breakpoint("min-width", "laptop") } {
     width: calc(100% + ${ GUTTER }px);
     margin-left: -${ GUTTER / 2 }px;
     margin-right: -${ GUTTER  / 2 }px;
+    margin-bottom: ${ props => themeSpacing(props.bottomSpacing ?? 12) };
   }
-  margin-top: ${ props => props.marginTop ?? 0 };
-  margin-bottom: ${ props => props.marginBottom ?? 0 };
 `
 
 export const RowWithColumn: React.FC<TypeProps> = ({ children, ...props }) => (
-  <RowStyle { ...props } >  
+  <RowStyle { ...props }>
       <Column>
          { children }
       </Column>
   </RowStyle>
 )
 const Row: React.FC<TypeProps> = ({ children, ...props }) => (
-  <RowStyle { ...props } >  
+  <RowStyle { ...props }>
     { children }
   </RowStyle>
 )

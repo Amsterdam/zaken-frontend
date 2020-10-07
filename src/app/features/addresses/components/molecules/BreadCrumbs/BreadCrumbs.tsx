@@ -13,6 +13,7 @@ type Props = {
 
 const LEVEL = "level5"
 const Ul = styled.ul`
+  margin: 0;
   list-style: none;
   padding-left: 0;
   line-height: 1.6em;

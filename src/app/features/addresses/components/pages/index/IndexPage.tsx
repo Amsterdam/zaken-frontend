@@ -1,6 +1,5 @@
 import React from "react"
 import { RouteComponentProps } from "@reach/router"
-import { themeSpacing } from "@datapunt/asc-ui"
 
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
@@ -19,13 +18,13 @@ const IndexPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
     <RowWithColumn>
       <BreadCrumbs bagId={ bagId! } />
     </RowWithColumn>
-    <RowWithColumn marginBottom={ themeSpacing(10) }>
+    <RowWithColumn>
       <AddressDisplay bagId={ bagId! } headingSize="h1" isHeader={true} />
     </RowWithColumn>
-    <RowWithColumn marginBottom={ themeSpacing(3) }>
+    <RowWithColumn>
       <PanoramaPreview bagId={ bagId! } aspect={ 2.8 } fov={ 120 } />
     </RowWithColumn>
-    <RowWithColumn marginBottom={ themeSpacing(10) }>
+    <RowWithColumn>
       <AddressMenu bagId={ bagId! } />
     </RowWithColumn>
   </DefaultLayout>
