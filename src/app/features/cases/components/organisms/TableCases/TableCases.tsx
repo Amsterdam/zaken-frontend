@@ -10,7 +10,7 @@ import { useCases } from "app/state/rest"
 const columns = [
   { header:"Startdatum", minWidth: 100 },
   { header:"Adres", minWidth: 300 },
-  { minWidth: 210 }
+  { minWidth: 90 }
 ]
 
 const mapData = (data: Components.Schemas.Case) => [

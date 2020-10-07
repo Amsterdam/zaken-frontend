@@ -3,8 +3,8 @@ import { RouteComponentProps } from "@reach/router"
 import { FormTitle, Heading } from "@datapunt/asc-ui"
 import { TrashBin } from "@datapunt/asc-assets/lib"
 
+import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
-import ActionButtonWrap from "app/features/shared/components/atoms/ActionButtonWrap/ActionButtonWrap"
 import ConfirmButton from "app/features/shared/components/molecules/ConfirmButton/ConfirmButton"
 
 import Form from "app/features/cases/components/organisms/Form/Form"
@@ -20,8 +20,10 @@ const EditPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
 
   return (
     <DefaultLayout>
-      <Heading>Aanpassen zaak</Heading>
-      <ActionButtonWrap>
+      <RowWithColumn>
+        <Heading>Aanpassen zaak</Heading>
+      </RowWithColumn>
+      <RowWithColumn>
         <ConfirmButton
           data-e2e-id="delete"
           disabled={isLoading}
@@ -33,13 +35,15 @@ const EditPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
         >
           Verwijder deze zaak
         </ConfirmButton>
-      </ActionButtonWrap>
-      <FormTitle>Gebruik dit formulier een zaak te wijzigen</FormTitle>
-      <Form
-        onSubmit={handleUpdate}
-        isLoading={isLoading}
-        initialValues={initialValues}
-      />
+      </RowWithColumn>
+      <RowWithColumn>
+        <FormTitle>Gebruik dit formulier een zaak te wijzigen</FormTitle>
+        <Form
+          onSubmit={handleUpdate}
+          isLoading={isLoading}
+          initialValues={initialValues}
+        />
+      </RowWithColumn>
     </DefaultLayout>
   )
 }

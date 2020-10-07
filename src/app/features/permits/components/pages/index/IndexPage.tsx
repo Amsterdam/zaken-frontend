@@ -1,10 +1,9 @@
 import React from "react"
 import { RouteComponentProps } from "@reach/router"
-import { Link, themeSpacing } from "@datapunt/asc-ui"
+import { Link, Heading } from "@datapunt/asc-ui"
 
 import Row, { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
-import SubHeading from "app/features/shared/components/atoms/Heading/Heading"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 import PermitDetailsList from "app/features/permits/components/organisms/PermitDetails/PermitDetailsList"
 import DetailHeader from "app/features/shared/components/organisms/DetailHeader/DetailHeader"
@@ -16,12 +15,12 @@ type Props = {
 
 const IndexPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
   <DefaultLayout>
-    <RowWithColumn marginBottom={ themeSpacing(10) }>
-      <DetailHeader bagId={ bagId! } />
-    </RowWithColumn>
+    <DetailHeader bagId={ bagId! } />
     <RowWithColumn>
       <PageHeading />
-      <SubHeading forwardedAs="h2">Vergunningen vakantieverhuur</SubHeading>
+    </RowWithColumn>
+    <RowWithColumn>
+      <Heading forwardedAs="h2">Vergunningen vakantieverhuur</Heading>
     </RowWithColumn>
     <Row>
       <Column spanLarge={50}>

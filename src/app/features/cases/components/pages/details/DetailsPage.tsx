@@ -1,18 +1,16 @@
 import React from "react"
 import { RouteComponentProps } from "@reach/router"
-import { Button, themeSpacing } from "@datapunt/asc-ui"
-import { Document } from "@datapunt/asc-assets/lib"
+import { Button, Heading } from "@datapunt/asc-ui"
+import { Document } from "@datapunt/asc-assets"
 
 
 import { useCase } from "app/state/rest"
 
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
-import ActionButtonWrap from "app/features/shared/components/atoms/ActionButtonWrap/ActionButtonWrap"
 import to from "app/features/shared/routing/to"
 import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
 import SmallSkeleton from "app/features/shared/components/atoms/Skeleton/SmallSkeleton"
 import LoadingDetails from "app/features/shared/components/molecules/Details/LoadingDetails"
-import Heading from "app/features/shared/components/atoms/Heading/Heading"
 
 import BagMap, { BagMapSkeleton } from "app/features/cases/components/organisms/BagMap/BagMap"
 import BAGDetails from "app/features/cases/components/organisms/BagDetails/BagDetails"
@@ -36,22 +34,24 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
 
   return (
     <DefaultLayout>
-      <RowWithColumn marginBottom={themeSpacing(6)}>
-          <Heading>{ caseData?.address?.full_address ?? <SmallSkeleton height={10}/> }</Heading>
+      <RowWithColumn>
+        <Heading>{ caseData?.address?.full_address ?? <SmallSkeleton height={10}/> }</Heading>
       </RowWithColumn>
       <RowWithColumn>
-          <ActionButtonWrap>
-            <ButtonLink to={to("/cases/edit/:id", { id: id! })}>
-              <Button as="span" variant="primary" iconLeft={<Document />}>Wijzig deze zaak</Button>
-            </ButtonLink>
-          </ActionButtonWrap>
+        <ButtonLink to={to("/cases/edit/:id", { id: id! })}>
+          <Button as="span" variant="primary" iconLeft={<Document />}>Wijzig deze zaak</Button>
+        </ButtonLink>
       </RowWithColumn>
       <Row>
         <Column spanSmall={100} spanLarge={40}>
           { caseData?.address.bag_id
             ? <>
-                <PanoramaPreview bagId={caseData.address.bag_id} />
-                <BagMap bagId={caseData.address.bag_id} />
+                <RowWithColumn>
+                  <PanoramaPreview bagId={caseData.address.bag_id} />
+                </RowWithColumn>
+                <RowWithColumn>
+                  <BagMap bagId={caseData.address.bag_id} />
+                </RowWithColumn>
               </>
             : <BagMapSkeleton />
           }

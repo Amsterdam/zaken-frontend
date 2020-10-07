@@ -1,9 +1,8 @@
 import React, { useCallback, useState } from "react"
-import { Button, themeColor, themeSpacing } from "@datapunt/asc-ui"
+import { Button, Heading, themeColor, themeSpacing } from "@datapunt/asc-ui"
 import styled from "styled-components"
 
 import SmallSkeleton from "app/features/shared/components/atoms/Skeleton/SmallSkeleton"
-import Heading from "app/features/shared/components/atoms/Heading/Heading"
 
 type Value = string | number | JSX.Element | undefined | null
 type Props = {
