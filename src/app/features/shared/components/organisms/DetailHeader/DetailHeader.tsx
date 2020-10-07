@@ -17,7 +17,7 @@ const ColumnAlignRight = styled(Column)`
 
 
 const DetailHeader: React.FC<Props> = ({ bagId }) => (
-  <Row bottomSpacing={ 0 }>
+  <Row>
     <Column spanLarge={50}>
       <BreadCrumbs bagId={ bagId! } />
     </Column>

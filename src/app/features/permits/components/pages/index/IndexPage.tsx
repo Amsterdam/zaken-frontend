@@ -15,9 +15,7 @@ type Props = {
 
 const IndexPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
   <DefaultLayout>
-    <RowWithColumn>
-      <DetailHeader bagId={ bagId! } />
-    </RowWithColumn>
+    <DetailHeader bagId={ bagId! } />
     <RowWithColumn>
       <PageHeading />
     </RowWithColumn>

@@ -30,21 +30,29 @@ const RowStyle = styled.div<TypeProps>`
   width: calc(100% + ${ GUTTER } px);
   margin-left: -${ GUTTER / 2 }px;
   margin-right: -${ GUTTER / 2 }px;
-  margin-bottom: ${ props => themeSpacing(props.bottomSpacing ?? 4) };
+
+  /* Column */
+  > div {
+    margin-bottom: ${ props => themeSpacing(props.bottomSpacing ?? 6) };
+  }
 
   @media screen and ${ breakpoint("min-width", "laptop") } {
     width: calc(100% + ${ GUTTER }px);
     margin-left: -${ GUTTER / 2 }px;
     margin-right: -${ GUTTER  / 2 }px;
-    margin-bottom: ${ props => themeSpacing(props.bottomSpacing ?? 12) };
+
+    /* Column */
+    > div {
+      margin-bottom: ${ props => themeSpacing(props.bottomSpacing ?? 12) };
+    }
   }
 `
 
 export const RowWithColumn: React.FC<TypeProps> = ({ children, ...props }) => (
   <RowStyle { ...props }>
-      <Column>
-         { children }
-      </Column>
+    <Column>
+      { children }
+    </Column>
   </RowStyle>
 )
 const Row: React.FC<TypeProps> = ({ children, ...props }) => (

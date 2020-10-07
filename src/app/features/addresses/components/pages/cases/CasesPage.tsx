@@ -12,9 +12,7 @@ type Props = {
 
 const CasesPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
     <DefaultLayout>
-      <RowWithColumn>
-        <DetailHeader bagId={ bagId! } />
-      </RowWithColumn>
+      <DetailHeader bagId={ bagId! } />
       <RowWithColumn>
         <PageHeading />
       </RowWithColumn>
