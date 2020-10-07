@@ -31,7 +31,7 @@ const ButtonWrap = styled.div`
   margin-left: ${ themeSpacing(3) };
 `
 
-const AddressDisplay: React.FC<Props> = ({ bagId, headingSize = "h2", isHeader = false }) => {
+const AddressHeader: React.FC<Props> = ({ bagId, headingSize = "h2", isHeader = false }) => {
   const { data } = useBAG(bagId)
   const { data: otherAddresses } = useOtherAddressesByBagId(bagId)
 
@@ -59,4 +59,4 @@ const AddressDisplay: React.FC<Props> = ({ bagId, headingSize = "h2", isHeader =
     </Div>
   )
 }
-export default AddressDisplay
+export default AddressHeader

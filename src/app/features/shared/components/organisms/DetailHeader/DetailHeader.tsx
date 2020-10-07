@@ -4,7 +4,7 @@ import { breakpoint } from "@datapunt/asc-ui"
 import Row from "app/features/shared/components/atoms/Grid/Row"
 import Column from "app/features/shared/components/atoms/Grid/Column"
 import BreadCrumbs from "app/features/addresses/components/molecules/BreadCrumbs/BreadCrumbs"
-import AddressDisplay from "app/features/addresses/components/atoms/AddressDisplay/AddressDisplay"
+import AddressHeader from "app/features/addresses/components/atoms/AddressHeader/AddressHeader"
 
 type Props = {
   bagId: string
@@ -22,7 +22,7 @@ const DetailHeader: React.FC<Props> = ({ bagId }) => (
       <BreadCrumbs bagId={ bagId! } />
     </Column>
     <ColumnAlignRight spanLarge={50}>
-      <AddressDisplay bagId={ bagId! } />
+      <AddressHeader bagId={ bagId! } />
     </ColumnAlignRight>
   </Row>
 )

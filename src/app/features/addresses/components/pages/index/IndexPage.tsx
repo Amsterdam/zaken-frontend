@@ -3,7 +3,7 @@ import { RouteComponentProps } from "@reach/router"
 
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
-import AddressDisplay from "app/features/addresses/components/atoms/AddressDisplay/AddressDisplay"
+import AddressHeader from "app/features/addresses/components/atoms/AddressHeader/AddressHeader"
 import AddressMenu from "app/features/addresses/components/molecules/AddressMenu/AddressMenu"
 import BreadCrumbs from "app/features/addresses/components/molecules/BreadCrumbs/BreadCrumbs"
 import PanoramaPreview from "app/features/cases/components/organisms/Panorama/PanoramaPreview"
@@ -19,7 +19,7 @@ const IndexPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
       <BreadCrumbs bagId={ bagId! } />
     </RowWithColumn>
     <RowWithColumn>
-      <AddressDisplay bagId={ bagId! } headingSize="h1" isHeader={true} />
+      <AddressHeader bagId={ bagId! } headingSize="h1" isHeader={true} />
     </RowWithColumn>
     <RowWithColumn>
       <PanoramaPreview bagId={ bagId! } aspect={ 2.8 } fov={ 120 } />
