@@ -17,9 +17,7 @@ const PermitDetails: React.FC<Props> = ({ bagId }) => {
   }), [data])
 
   return (
-    <>
       <DefinitionList isLoading={isBusy} numLoadingRows={2} values={values} title="Vergunningen" />
-    </>
   )
 }
 export default PermitDetails
