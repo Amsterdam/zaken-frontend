@@ -19,7 +19,7 @@ const PermitDetails: React.FC<Props> = ({ bagId }) => {
 
   return (
     <>
-      <Heading>Vergunningen</Heading>
+      <Heading as="h2">Vergunningen</Heading>
       <Details isLoading={isBusy} numLoadingRows={2} values={values} />
     </>
   )
