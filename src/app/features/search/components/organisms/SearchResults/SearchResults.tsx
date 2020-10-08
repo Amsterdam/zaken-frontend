@@ -28,9 +28,11 @@ const SearchResults: React.FC<Props> = ({ searchString }) => {
   const { data, isBusy } = useBAGWithZipCode(searchString)
 
   const mappedData = useMemo(() =>
-    data?.results
-      .filter(filterData)
-      .map(mapData), [ data ])
+    Array.isArray(data?.results) ?
+      data!.results.filter(filterData).map(mapData) :
+      undefined,
+    [ data ]
+  )
 
   return (<Table
     columns={columns}
