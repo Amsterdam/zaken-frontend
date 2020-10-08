@@ -1,6 +1,6 @@
 import React, { useMemo } from "react"
-import Details from "../../../../shared/components/molecules/Details/Details"
 import DateDisplay from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
+import DefinitionList from "app/features/shared/components/molecules/DefinitionList/DefinitionList"
 
 type Props = {
   caseData: Components.Schemas.Case
@@ -13,7 +13,7 @@ const CaseDetails: React.FC<Props> = ({ caseData }) => {
     "Zaaktype": caseData.case_type.name
   }), [ caseData ])
 
-  return <Details title="Zaak details" values={values} />
+  return <DefinitionList title="Zaak details" values={values} />
 }
 
 export default CaseDetails

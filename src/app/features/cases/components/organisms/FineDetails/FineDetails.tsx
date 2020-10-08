@@ -1,5 +1,5 @@
+import DefinitionList from "app/features/shared/components/molecules/DefinitionList/DefinitionList"
 import React, { useMemo } from "react"
-import Details from "../../../../shared/components/molecules/Details/Details"
 
 type Props = {
   fine: Components.Schemas.Fine
@@ -40,7 +40,7 @@ const FineDetails: React.FC<Props> = ({ fine }) => {
     "Vorderingnummer": fine.vorderingnummer
   }), [ fine ])
 
-  return <Details
+  return <DefinitionList
     numInitialVisibleRows={5}
     title={`Vordering "${ fine.vorderingnummer }"`}
     values={values}

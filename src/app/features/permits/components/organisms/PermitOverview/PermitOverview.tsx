@@ -2,8 +2,8 @@ import React, { useMemo } from "react"
 import { Link } from "@datapunt/asc-ui"
 import { usePermitCheckmarks } from "app/state/rest"
 
-import Details from "app/features/shared/components/molecules/Details/Details"
 import to from "app/features/shared/routing/to"
+import DefinitionList from "app/features/shared/components/molecules/DefinitionList/DefinitionList"
 
 type Props = {
   bagId: string
@@ -19,7 +19,7 @@ const PermitOverview: React.FC<Props> = ({ bagId }) => {
 
   return (
     <>
-      <Details isLoading={isBusy} numLoadingRows={2} values={values} title="Vergunningen" />
+      <DefinitionList isLoading={isBusy} numLoadingRows={2} values={values} title="Vergunningen" />
       <Link href={ to("/adres/:bagId/vergunningen", { bagId }) } variant="inline" inList>Alle vergunningen details</Link>
     </>
   )
