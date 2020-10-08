@@ -5,6 +5,7 @@ import OpenButton from "app/features/shared/components/atoms/OpenButton/OpenButt
 import to from "app/features/shared/routing/to"
 import { BAGAddressResponse } from "app/state/rest/types/BAGAddressResponse"
 
+type SearchResult = Pick<BAGAddressResponse["results"][0], "adres" | "postcode" | "subtype_id">
 type Props = {
   searchString: string
 }
@@ -15,26 +16,27 @@ const columns = [
   { minWidth: 100 }
 ]
 
-type SearchResult = Pick<BAGAddressResponse["results"][0], "adres" | "postcode" | "subtype_id">
+const filterData = (data: SearchResult) => typeof data?.postcode === "string"
+
 const mapData = (data: SearchResult) => [
   data.adres ?? "-",
   data.postcode ?? "-",
-  data.subtype_id && data.adres ? <OpenButton href={to("/adres/:bagId", { bagId: data.subtype_id })} text="Bekijk" /> : null
+  data.subtype_id ? <OpenButton href={to("/adres/:bagId", { bagId: data.subtype_id })} text="Bekijk" /> : null
 ]
 
 const SearchResults: React.FC<Props> = ({ searchString }) => {
   const { data, isBusy } = useBAGWithZipCode(searchString)
+
   const mappedData = useMemo(() =>
-    data?.results &&
-      data?.results
-        .filter((result) =>  (result && typeof result.postcode === "string" ))
-        .map(mapData), [ data ])
+    data?.results
+      .filter(filterData)
+      .map(mapData), [ data ])
 
   return (<Table
     columns={columns}
     data={mappedData}
     loading={data === undefined || isBusy}
-    numLoadingRows={10}
+    numLoadingRows={1}
     hasFixedColumn={true}
     noValuesPlaceholder={"Er zijn (nog) geen adressen gevonden"}
   />)
