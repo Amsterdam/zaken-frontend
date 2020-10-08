@@ -74,7 +74,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
         </Column>
       </Row>
       <RowWithColumn>
-        <Heading>Bezoeken</Heading>
+        <Heading as="h2">Bezoeken</Heading>
         <TableCaseVisits />
       </RowWithColumn>
     </DefaultLayout>
