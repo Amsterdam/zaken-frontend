@@ -1,7 +1,4 @@
-// polyfills
-import "react-app-polyfill/ie11"
-import "react-app-polyfill/stable"
-import { enableES5 } from "immer"
+import "./polyfills/"
 
 import React from "react"
 import ReactDOM from "react-dom"
@@ -10,7 +7,6 @@ import * as serviceWorker from "./serviceWorker"
 
 // Sentry
 import initSentry from "./app/sentry/init"
-enableES5()
 initSentry()
 
 ReactDOM.render(
