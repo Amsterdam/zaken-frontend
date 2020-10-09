@@ -1,6 +1,6 @@
 import React, { useMemo } from "react"
 import { Link } from "@datapunt/asc-ui"
-import Details from "app/features/shared/components/molecules/Details/Details"
+import DefinitionList from "app/features/shared/components/molecules/DefinitionList/DefinitionList"
 import DateDisplay from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
 
 type Props = {detail: Components.Schemas.DecosPermit}
@@ -24,7 +24,7 @@ const PermitDetail: React.FC<Props> = ({ detail }) => {
 
     return (
     <>
-      <Details
+      <DefinitionList
         numInitialVisibleRows={3}
         title= { permit_type ?  permitType[ permit_type ] : "" }
         values={values}

@@ -1,6 +1,6 @@
 import React, { useMemo } from "react"
 import { useBAG, useBAGLodging } from "app/state/rest"
-import Details from "app/features/shared/components/molecules/Details/Details"
+import DefinitionList from "app/features/shared/components/molecules/DefinitionList/DefinitionList"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -20,7 +20,7 @@ const ObjectDetails: React.FC<Props> = ({ bagId }) => {
     "Aantal kamers": data?.aantal_kamers
   }), [ result, data ])
 
-  return <Details
+  return <DefinitionList
     numInitialVisibleRows={5}
     title="Object details"
     values={values}

@@ -1,7 +1,7 @@
 import React, { useMemo } from "react"
-import Details from "app/features/shared/components/molecules/Details/Details"
 import PersonDisplay from "app/features/shared/components/atoms/PersonDisplay/PersonDisplay"
 import DateDisplay from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
+import DefinitionList from "app/features/shared/components/molecules/DefinitionList/DefinitionList"
 
 type Props = {
   resident: Components.Schemas.Resident
@@ -15,7 +15,7 @@ const Resident: React.FC<Props> = ({ resident, num }) => {
     "Ingeschreven sinds": <DateDisplay date={ resident.datum_begin_relatie_verblijadres } />
   }), [resident.geboortedatum, resident.datum_begin_relatie_verblijadres])
 
-  return <Details
+  return <DefinitionList
     numInitialVisibleRows={4}
     title={ title }
     headingSize="h3"

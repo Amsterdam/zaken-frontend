@@ -1,8 +1,7 @@
 import React, { useMemo } from "react"
-import { Heading } from "@datapunt/asc-ui"
 
 import { usePermitCheckmarks } from "app/state/rest"
-import Details from "app/features/shared/components/molecules/Details/Details"
+import DefinitionList from "app/features/shared/components/molecules/DefinitionList/DefinitionList"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -18,10 +17,7 @@ const PermitDetails: React.FC<Props> = ({ bagId }) => {
   }), [data])
 
   return (
-    <>
-      <Heading as="h2">Vergunningen</Heading>
-      <Details isLoading={isBusy} numLoadingRows={2} values={values} />
-    </>
+      <DefinitionList isLoading={isBusy} numLoadingRows={2} values={values} title="Vergunningen" />
   )
 }
 export default PermitDetails

@@ -1,9 +1,10 @@
 import React, { useMemo } from "react"
 import styled from "styled-components"
 import { themeColor, ascDefaultTheme } from "@datapunt/asc-ui"
-import Details from "../../../../shared/components/molecules/Details/Details"
+
 import CircleIcon from "app/features/shared/components/atoms/CircleIcon/CircleIcon"
 import DateDisplay from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
+import DefinitionList from "app/features/shared/components/molecules/DefinitionList/DefinitionList"
 
 type Props = {
   id: number
@@ -31,7 +32,7 @@ const FineSummary: React.FC<Props> = ({ id, date, state, hasInvoice = false }) =
     "Datum": <DateDisplay date={ date } />
   }), [ id, state, date, hasInvoice ])
 
-  return <Details
+  return <DefinitionList
     numInitialVisibleRows={3}
     values={values}
   />
