@@ -3,7 +3,7 @@ import React from "react"
 
 import Row from "app/features/shared/components/atoms/Grid/Row"
 import Column from "app/features/shared/components/atoms/Grid/Column"
-import BreadCrumbs from "app/features/addresses/components/molecules/BreadCrumbs/BreadCrumbs"
+import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
 import AddressHeader from "app/features/addresses/components/atoms/AddressHeader/AddressHeader"
 
 type Props = {
@@ -13,7 +13,7 @@ type Props = {
 const DetailHeader: React.FC<Props> = ({ bagId }) => (
   <Row>
     <Column spanLarge={50}>
-      <BreadCrumbs bagId={ bagId! } />
+      <BreadCrumbs routeParams={ { bagId } } />
     </Column>
     <Column spanLarge={50}>
       <AddressHeader bagId={ bagId! } />
