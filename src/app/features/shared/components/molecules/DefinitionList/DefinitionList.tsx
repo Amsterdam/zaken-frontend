@@ -1,8 +1,9 @@
 import React, { useCallback, useState } from "react"
-import { Button, Heading, themeColor, themeSpacing } from "@datapunt/asc-ui"
+import {  Heading, themeColor, themeSpacing } from "@datapunt/asc-ui"
 import styled from "styled-components"
 
 import SmallSkeleton from "app/features/shared/components/atoms/Skeleton/SmallSkeleton"
+import ToggleCollapse from "app/features/shared/components/atoms/ToggleCollapse/ToggleCollapse"
 
 type Value = string | number | JSX.Element | undefined | null
 type Props = {
@@ -43,10 +44,6 @@ const StyledDL = styled.dl`
   }
 `
 
-const StyledButton = styled(Button)`
-  margin: ${ themeSpacing(3) } ${ themeSpacing(1) };
-`
-
 type LoadingRowsProps = {
   numRows: number
 }
@@ -78,28 +75,26 @@ const DefinitionList: React.FC<Props> = ({ isLoading, numLoadingRows, numInitial
     ? valueEntries.slice(0, numInitialVisibleRows)
     : valueEntries
 
-  return (<>
-    { title && <Heading forwardedAs={ headingSize }>{ isLoading ? <SmallSkeleton height={10} /> : title}</Heading> }
-    <StyledDL>
-      
-      { isLoading
-        ? <LoadingRows numRows={numLoadingRows ?? 5} />
-        : <>
-            { rows
-              .map(([key, value]) => (
-                <div key={key}>
-                  <dt>{ key }</dt>
-                  <dd>{ castValue(value) || "-" }</dd>
-                </div>
-              )) }
-            
-          </>
-        }
-    </StyledDL>
-    { isCollapsible && isCollapsed && <div><StyledButton variant="textButton" onClick={toggleCollapsed}> + Toon alle </StyledButton></div> }
-    { isCollapsible && !isCollapsed && <div><StyledButton variant="textButton" onClick={toggleCollapsed}> - Toon minder </StyledButton></div> }
-  </>)
+  return (
+    <div>
+      { title && <Heading forwardedAs={ headingSize }>{ isLoading ? <SmallSkeleton height={10} /> : title}</Heading> }
+      <StyledDL>
+        { isLoading
+          ? <LoadingRows numRows={numLoadingRows ?? 5} />
+          : <>
+              { rows
+                .map(([key, value]) => (
+                  <div key={key}>
+                    <dt>{ key }</dt>
+                    <dd>{ castValue(value) || "-" }</dd>
+                  </div>
+                )) }
+            </>
+          }
+      </StyledDL>
+      { isCollapsible && <ToggleCollapse clickHandler={toggleCollapsed} isCollapsed={isCollapsed} /> }
+    </div>
+  )
 }
-
 
 export default DefinitionList
