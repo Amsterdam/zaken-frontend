@@ -92,7 +92,7 @@ const DefinitionList: React.FC<Props> = ({ isLoading, numLoadingRows, numInitial
             </>
           }
       </StyledDL>
-      { isCollapsible && <ToggleCollapse clickHandler={toggleCollapsed} isCollapsed={isCollapsed} /> }
+      { isCollapsible && <ToggleCollapse onClick={toggleCollapsed} isCollapsed={isCollapsed} /> }
     </div>
   )
 }

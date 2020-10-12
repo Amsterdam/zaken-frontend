@@ -4,10 +4,9 @@ import { ButtonVariant } from "@datapunt/asc-ui/lib/components/Button/Button"
 import styled from "styled-components"
 
 type Props = Omit<React.ComponentProps<typeof Button>, "onClick"> & {
-  clickHandler: () => void
+  onClick: () => void
   isCollapsed: boolean
-  displayInline? : boolean
-  buttonVariant?: ButtonVariant
+  variant?: ButtonVariant
   textToOpen?: string
   textToClose?: string
 }
@@ -17,13 +16,13 @@ const StyledButton = styled(Button)`
 `
 
 const ToggleCollapse: React.FC<Props> = (
-  { clickHandler, 
+  { onClick, 
     isCollapsed, 
-    buttonVariant = "textButton", 
+    variant = "textButton", 
     textToOpen = "+ Toon alle", 
     textToClose = "- Toon minder"  
   }) => (
-    <StyledButton onClick={ clickHandler } variant={buttonVariant} >{ isCollapsed ? textToOpen : textToClose }</StyledButton>
+    <StyledButton onClick={ onClick } variant={variant} >{ isCollapsed ? textToOpen : textToClose }</StyledButton>
   ) 
 
 export default ToggleCollapse
