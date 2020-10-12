@@ -80,10 +80,11 @@ export const useCaseTypes = (options?: Options) => {
   })
 }
 
-export const useBAG = (bagId: string, options?: Options) => {
+export const useBAG = (bagId: string | undefined, options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<BAGAddressResponse>({
     url: `https://api.data.amsterdam.nl/atlas/search/adres/?q=${ bagId }`,
+    lazy: bagId === undefined,
     ...options,
     groupName: "dataPunt",
     handleError

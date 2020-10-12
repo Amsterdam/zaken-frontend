@@ -8,15 +8,16 @@ import AddressHeader from "app/features/addresses/components/atoms/AddressHeader
 
 type Props = {
   bagId: string
+  enableSwitch?: boolean
 }
 
-const DetailHeader: React.FC<Props> = ({ bagId }) => (
+const DetailHeader: React.FC<Props> = ({ bagId, enableSwitch }) => (
   <Row>
     <Column spanLarge={50}>
       <BreadCrumbs bagId={ bagId! } />
     </Column>
     <Column spanLarge={50}>
-      <AddressHeader bagId={ bagId! } />
+      <AddressHeader bagId={ bagId! } enableSwitch = { enableSwitch } />
     </Column>
   </Row>
 )

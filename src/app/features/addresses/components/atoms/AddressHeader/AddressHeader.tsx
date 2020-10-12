@@ -10,6 +10,7 @@ type Props = {
   bagId: string
   headingSize?: "h1" | "h2"
   isHeader?: boolean
+  enableSwitch?: boolean
 }
 
 const Div = styled.div<{ isHeader: boolean }>`
@@ -31,14 +32,14 @@ const ButtonWrap = styled.div`
   margin-left: ${ themeSpacing(3) };
 `
 
-const AddressHeader: React.FC<Props> = ({ bagId, headingSize = "h2", isHeader = false }) => {
+const AddressHeader: React.FC<Props> = ({ bagId, headingSize = "h2", isHeader = false, enableSwitch = true }) => {
   const { data } = useBAG(bagId)
   const { data: otherAddresses } = useOtherAddressesByBagId(bagId)
 
   const title = data ? `${ data.results[0].adres }, ${ data.results[0].postcode }` : undefined
   const showTitle = title !== undefined
 
-  const showButton = otherAddresses?.results !== undefined && otherAddresses.results.length > 1
+  const showButton = enableSwitch && (otherAddresses?.results !== undefined && otherAddresses.results.length > 1)
   const isCurrentAddress = (address: { adres: string }) => address.adres.trim() === data?.results[0].adres.trim()
   const addressIndex = otherAddresses?.results.findIndex(isCurrentAddress)
   const index = addressIndex === 0 ? "first" : addressIndex === (otherAddresses?.results.length ! - 1) ? "last" : undefined
