@@ -8,7 +8,7 @@ import find from "app/features/shared/routing/find"
 import routes from "app/config/routes"
 
 type Props = {
-  bagId: Components.Schemas.Address["bag_id"]
+  routeParams?: Record<string, unknown>
 }
 
 const LEVEL = "level5"
@@ -40,11 +40,11 @@ const StyledSeperator = styled(Icon)`
   }
 `
 
-const BreadCrumbs: React.FC<Props> = ({ bagId }) => {
+const BreadCrumbs: React.FC<Props> = ({ routeParams }) => {
   const route = find(routes, window.location.pathname)
 
   const pageConfig = route ? routes[route] : undefined
-  const items = pageConfig?.path?.map(item => ({ ...item, to: to(item.path, { bagId }) })) ?? []
+  const items = pageConfig?.path?.map(item => ({ ...item, to: to(item.path, routeParams) })) ?? []
 
   // TODO: Remove `({ theme: ascDefaultTheme })` after fix https://github.com/Amsterdam/amsterdam-styled-components/issues/1108
   return (

@@ -5,7 +5,7 @@ import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 import AddressHeader from "app/features/addresses/components/atoms/AddressHeader/AddressHeader"
 import AddressMenu from "app/features/addresses/components/molecules/AddressMenu/AddressMenu"
-import BreadCrumbs from "app/features/addresses/components/molecules/BreadCrumbs/BreadCrumbs"
+import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
 import PanoramaPreview from "app/features/cases/components/organisms/Panorama/PanoramaPreview"
 
 
@@ -16,7 +16,7 @@ type Props = {
 const IndexPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
   <DefaultLayout>
     <RowWithColumn>
-      <BreadCrumbs bagId={ bagId! } />
+      <BreadCrumbs routeParams={ { bagId } } />
     </RowWithColumn>
     <RowWithColumn>
       <AddressHeader bagId={ bagId! } headingSize="h1" isHeader={true} />
