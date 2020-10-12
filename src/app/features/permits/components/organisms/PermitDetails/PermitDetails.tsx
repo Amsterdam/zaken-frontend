@@ -24,7 +24,7 @@ const PermitDetail: React.FC<Props> = ({ detail }) => {
   return (
   <>
     <DefinitionList
-      numInitialVisibleRows={1}
+      numInitialVisibleRows={3}
       title= { permit_type ?  permitType[ permit_type ] : "" }
       values={values}
       headingSize="h3"
