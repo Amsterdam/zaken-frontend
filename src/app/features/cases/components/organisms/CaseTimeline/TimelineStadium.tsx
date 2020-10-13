@@ -35,7 +35,7 @@ const TimelineStadium: React.FC<Props> = ({ isOpen, title, threadSet }) => {
       
         <div key={index}>
           <dt>{key}</dt>
-          {/* <dd>{ thread?.parameters?.[key] }</dd> */}
+          <dd>{ thread?.parameters?.[key as unknown as number] }</dd>
         </div>
       ))
     }
