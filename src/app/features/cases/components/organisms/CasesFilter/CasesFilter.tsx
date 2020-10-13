@@ -10,19 +10,13 @@ const Menu = styled.menu`
   background: ${ themeColor("tint", "level2") };
   margin-top: ${ themeSpacing(8) };
   padding: ${ themeSpacing(4) } ${ themeSpacing(6) };
-  min-height: 400px;
 `
 
-const CasesFilter: React.FC = () => {
-  const onSubmit = () => console.log("submit")
-  return (
+const CasesFilter: React.FC = () => (
     <Menu>
-      <ScaffoldForm
-        onSubmit={ onSubmit }
-      >
+      <ScaffoldForm>
         <ScaffoldFields { ...scaffoldProps } />
       </ScaffoldForm>
     </Menu>
   )
-}
 export default CasesFilter
