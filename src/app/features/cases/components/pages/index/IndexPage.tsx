@@ -2,12 +2,10 @@ import React from "react"
 import { RouteComponentProps } from "@reach/router"
 import { Heading } from "@datapunt/asc-ui"
 
-import { Row, RowWithColumn, Column } from "app/features/shared/components/atoms/Grid/"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
+import { RowWithColumn } from "app/features/shared/components/atoms/Grid/"
 import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
-
-import TableCases from "app/features/cases/components/organisms/TableCases/TableCases"
-import CasesFilter from "app/features/cases/components/organisms/CasesFilter/CasesFilter"
+import Cases from "app/features/cases/components/organisms/Cases/Cases"
 
 const IndexPage: React.FC<RouteComponentProps> = () => (
     <DefaultLayout>
@@ -17,14 +15,7 @@ const IndexPage: React.FC<RouteComponentProps> = () => (
       <RowWithColumn>
         <Heading>Overzicht gelopen zaken</Heading>
       </RowWithColumn>
-      <Row>
-        <Column spanLarge={80}>
-          <TableCases />
-        </Column>
-        <Column spanLarge={20}>
-          <CasesFilter />
-        </Column>
-      </Row>
+      <Cases />
     </DefaultLayout>
   )
 

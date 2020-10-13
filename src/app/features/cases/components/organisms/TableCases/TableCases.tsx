@@ -5,7 +5,11 @@ import Table from "app/features/shared/components/molecules/Table/Table"
 import OpenButton from "app/features/shared/components/atoms/OpenButton/OpenButton"
 import DateDisplay from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
 
-import { useCases } from "app/state/rest"
+
+type Props = {
+  data?: { results: Components.Schemas.Case[] }
+  isBusy: boolean
+}
 
 const columns = [
   { header: "Adres", minWidth: 300 },
@@ -21,8 +25,7 @@ const mapData = (data: Components.Schemas.Case) => [
   data.identification ? <OpenButton href={to("/cases/:id", { id: data.identification })} text="Zaak details" /> : null
 ]
 
-const TableCases: React.FC = () => {
-  const { data, isBusy } = useCases()
+const TableCases: React.FC<Props> = ({ data, isBusy }) => {
   const mappedData = useMemo(() => data?.results?.map(mapData), [ data ])
 
   return (<Table
