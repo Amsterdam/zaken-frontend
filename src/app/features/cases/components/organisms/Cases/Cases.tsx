@@ -12,9 +12,8 @@ const Cases: React.FC = () => {
   const [date, setDate] = useState(getDate())
 
   useEffect(() => {
-    if (isBusy) return
     (async () => await execGet())()
-  }, [date, execGet, isBusy])
+  }, [date, execGet])
 
   return (
     <Row>
