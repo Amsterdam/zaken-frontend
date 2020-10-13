@@ -14,6 +14,6 @@ export default {
   "/cases/:id": {
     Page: DetailsPage,
     title: "Zaak details",
-    icon: "DocumentText"
+    icon: "Suitcase"
   }
 }
