@@ -27,9 +27,9 @@ const Residents: React.FC<Props> = ({ id }) => {
     <>
       { caseResidents ?
         <>
-          <Heading as="h2">Actueel ingeschreven personen ({ caseResidents.items.length })</Heading>
+          <Heading as="h2">Actueel ingeschreven personen ({ caseResidents.results.length })</Heading>
           <Ul>
-          { caseResidents.items
+          { caseResidents.results
               .map((resident, index) =>
                 <li key={ index }><Resident resident={ resident } num={ index + 1 }/></li>)
           }

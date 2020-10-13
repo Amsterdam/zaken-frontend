@@ -49,7 +49,7 @@ const AddressMenu: React.FC<Props> = ({ bagId }) => {
   const { data: permitDetails } = usePermitDetails(bagId)
   // TODO: Do show Residents by BAG_id
   const { data: residents } = useResidentsByBagId(bagId)
-  const counts = [undefined, residents?.items.length, permitDetails?.length]
+  const counts = [undefined, residents?.results.length, permitDetails?.length]
 
   return (
     <Menu>

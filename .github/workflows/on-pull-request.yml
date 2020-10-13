@@ -35,10 +35,10 @@ jobs:
       - run: npm install
         working-directory: frontend
 
-      - run: npm run generate:form-scaffolds
+      - run: npm run form-scaffolds:generate
         working-directory: frontend
 
-      - run: npm run generate:swagger-schema
+      - run: npm run swagger:generate-schema
         working-directory: frontend
 
       - run: npm run lint:fix
