@@ -8,16 +8,14 @@ type Props = {
 }
 const TimelineContainer: React.FC<Props> = ({ caseId }) => {
   const { data } = useCaseTimelines(caseId!)
-  const subject: any = data?.results[0].subject
-  const threadSet: Components.Schemas.CaseTimelineThread[] | undefined = data?.results[0].casetimelinethread_set
-  
+
   return (
     <AccordionWrapper>
-      <TimelineStadium title={ subject } threadSet={ threadSet }/>
-        
+      <TimelineStadium title={ data?.results[0].subject ?? "" } threadSet={ data?.results[0].casetimelinethread_set ?? [] }/>
+
       <Accordion title="Aanleiding" id="2" />
-        
-      
+
+
     </AccordionWrapper>
   )
 }
