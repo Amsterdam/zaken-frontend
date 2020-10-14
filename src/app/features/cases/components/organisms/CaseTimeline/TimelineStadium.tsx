@@ -6,7 +6,7 @@ import styled from "styled-components"
 type Props = {
   isOpen?: boolean
   title: string
-  threadSet: Components.Schemas.CaseTimelineThread[] | undefined
+  threadSet: Components.Schemas.CaseTimelineThread[]
 }
 
 const StyledAccordion = styled(Accordion)`
@@ -26,19 +26,16 @@ const StyledAccordion = styled(Accordion)`
 // }
 
 const TimelineStadium: React.FC<Props> = ({ isOpen, title, threadSet }) => {
-  const data = { threadSet }.threadSet
-  console.log("data", data)
-  const accordions = data?.map((thread: Components.Schemas.CaseTimelineThread) => 
+  const accordions = threadSet.map(thread =>
     <Accordion title={thread.date} key={thread.id}>
       <dl>
-      { Object.keys(thread.parameters ?? {}).map((key, index) => (
-      
-        <div key={index}>
-          <dt>{key}</dt>
-          <dd>{ thread?.parameters?.[key as unknown as number] }</dd>
-        </div>
-      ))
-    }
+        { Object.keys(thread.parameters ?? {}).map((key, index) => (
+          <div key={index}>
+            <dt>{key}</dt>
+            <dd>{ thread.parameters?.[key] as string }</dd>
+          </div>
+        ))
+        }
       </dl>
     </Accordion>
   )
