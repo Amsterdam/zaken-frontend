@@ -1,11 +1,10 @@
 import React from "react"
-import Residents from "app/features/cases/components/organisms/Residents/Residents"
-import { tmpCaseId } from "app/state/rest/custom/useResidentsByBagId/useResidentsByBagId"
+import Residents from "app/features/addresses/components/organisms/Residents/Residents"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
 }
 
 // TODO: Do show Residents by BAG_id
-const People: React.FC<Props> = () => <Residents id={ tmpCaseId } />
+const People: React.FC<Props> = ({ bagId }) => <Residents bagId={ bagId } />
 export default People

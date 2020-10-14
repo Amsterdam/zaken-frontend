@@ -5,7 +5,7 @@ import NavBlock from "app/features/addresses/components/atoms/NavBlock/NavBlock"
 import to from "app/features/shared/routing/to"
 import routesObject from "app/config/routes"
 import { usePermitDetails } from "app/state/rest"
-import useResidentsByBagId from "app/state/rest/custom/useResidentsByBagId/useResidentsByBagId"
+import { useResidents } from "app/state/rest/"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -48,7 +48,7 @@ const routes = [
 const AddressMenu: React.FC<Props> = ({ bagId }) => {
   const { data: permitDetails } = usePermitDetails(bagId)
   // TODO: Do show Residents by BAG_id
-  const { data: residents } = useResidentsByBagId(bagId)
+  const { data: residents } = useResidents(bagId)
   const counts = [undefined, residents?.results.length, permitDetails?.length]
 
   return (
