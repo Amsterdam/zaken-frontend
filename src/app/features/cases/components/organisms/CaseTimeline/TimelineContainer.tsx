@@ -1,4 +1,4 @@
-import { Accordion, AccordionWrapper } from "@datapunt/asc-ui"
+import { AccordionWrapper } from "@datapunt/asc-ui"
 import { useCaseTimelines } from "app/state/rest"
 import React from "react"
 import TimelineStadium from "./TimelineStadium"
@@ -8,17 +8,17 @@ type Props = {
 }
 const TimelineContainer: React.FC<Props> = ({ caseId }) => {
   const { data } = useCaseTimelines(caseId!)
-  const subject: any = data?.results[0].subject
-  const threadSet: Components.Schemas.CaseTimelineThread[] | undefined = data?.results[0].casetimelinethread_set
+  
+  const accordionWrapper = data?.results.map((result) => 
+    <AccordionWrapper>
+      <TimelineStadium title={`${ result.subject } (${ result.casetimelinethread_set?.length })`} threadSet={ result.casetimelinethread_set }/>
+    </AccordionWrapper>
+  )
   
   return (
-    <AccordionWrapper>
-      <TimelineStadium title={ subject } threadSet={ threadSet }/>
-        
-      <Accordion title="Aanleiding" id="2" />
-        
-      
-    </AccordionWrapper>
+    <div>
+      { accordionWrapper }
+    </div>
   )
 }
 

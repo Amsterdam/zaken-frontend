@@ -47,18 +47,6 @@ const TimelineStadium: React.FC<Props> = ({ isOpen, title, threadSet }) => {
   return (
     <StyledAccordion title={title}>
       { accordions }
-      {/* <Accordion title="Woensdag 30-09-2020">
-          <dl>
-            <dt>Starttijd</dt>
-            <dd>13:59</dd>
-          </dl>
-        </Accordion>
-        <Accordion title="Maandag 28-09-2020">
-          <dl>
-            <dt>Starttijd</dt>
-            <dd>14:45</dd>
-          </dl>
-        </Accordion> */}
     </StyledAccordion>
   )
 }
