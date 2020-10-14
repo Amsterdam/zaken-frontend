@@ -372,7 +372,7 @@ declare namespace Paths {
             export type $200 = Components.Schemas.PaginatedAddressList;
         }
     }
-    namespace AddressesResidentsByBagIdRetrieve {
+    namespace AddressesResidentsRetrieve {
         namespace Parameters {
             export type BagId = string;
         }
@@ -496,13 +496,14 @@ declare namespace Paths {
             export type $200 = Components.Schemas.CaseTimelineThread;
         }
     }
-    namespace CaseTimelineThreadsRemoveTimelineItemRetrieve {
+    namespace CaseTimelineThreadsRemoveTimelineItemCreate {
         namespace Parameters {
             export type ThreadId = string;
         }
         export type QueryParameters = {
             thread_id: Parameters.ThreadId
         }
+        export type RequestBody = Components.Schemas.CaseTimelineThread;
         namespace Responses {
             export type $200 = Components.Schemas.CaseTimelineThread;
         }
