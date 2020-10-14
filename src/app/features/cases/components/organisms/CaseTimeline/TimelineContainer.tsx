@@ -1,18 +1,12 @@
-import { AccordionWrapper, breakpoint, themeColor, themeSpacing } from "@datapunt/asc-ui"
+import {  AccordionWrapper, breakpoint, themeColor, themeSpacing } from "@datapunt/asc-ui"
 import { useCaseTimelines } from "app/state/rest"
 import React from "react"
 import styled from "styled-components"
-import TimelineThreadSet from "./TimelineThreadSet"
+import { TimelineThreadSet, TimelineAccordion } from "./TimelineThreadSet"
 
 type Props = {
   caseId: string | undefined
 }
-
-const StyledWrapper = styled(AccordionWrapper)`
-  div {
-    border: 0;
-  }
-`
 
 const Div = styled.div`
   background-color: ${ themeColor("tint", "level2") };
@@ -26,6 +20,9 @@ const Div = styled.div`
     top: 0;
     background-color: ${ themeColor("tint", "level4") };
   }
+  >div[role="button"]:not(:last-child) {
+    border-bottom: ${ themeSpacing(5) } solid ${ themeColor("tint", "level1") };
+  }
   @media screen and ${ breakpoint("min-width", "laptop") } {
     &:before {
       left: ${ themeSpacing(11) };
@@ -37,14 +34,26 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
   const { data } = useCaseTimelines(caseId!)
   
   const accordionWrapper = data?.results.map((result, index) => 
-    <StyledWrapper key={index}>
-      <TimelineThreadSet title={`${ result.subject ?? "" } (${ result.casetimelinethread_set?.length })`} threadSet={ result.casetimelinethread_set ?? [] }/>
-    </StyledWrapper>
+  <>
+    <AccordionWrapper key={index}>
+      { result.casetimelinethread_set?.length > 0  
+        ? <TimelineThreadSet 
+          title={`${ result.subject ?? "" } (${ result.casetimelinethread_set?.length })`} 
+          threadSet={ result.casetimelinethread_set ?? [] }
+          isOpen={true}
+        />
+        : <TimelineAccordion title={ result.subject ?? "" } />
+      }
+  </AccordionWrapper>
+  </>
   )
 
   return (
     <Div>
       { accordionWrapper }
+      
+      {/* TODO: make dynamic */}
+      <TimelineAccordion title={ "Aanleiding" } />
     </Div>
   )
 }

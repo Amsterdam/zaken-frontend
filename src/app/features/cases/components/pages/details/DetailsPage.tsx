@@ -7,7 +7,7 @@ import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import DetailHeader from "app/features/shared/components/organisms/DetailHeader/DetailHeader"
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
 import { Divider, Heading } from "@datapunt/asc-ui"
-import TableCaseVisits from "app/features/caseVisits/components/organisms/TableCaseVisits/TableCaseVisits"
+
 import TimelineContainer from "../../organisms/CaseTimeline/TimelineContainer"
 
 type Props = {
@@ -31,11 +31,6 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
       <RowWithColumn>
         <TimelineContainer caseId={id} />
       </RowWithColumn>
-      <RowWithColumn>
-        <Heading as="h2">Bezoeken</Heading>
-        <TableCaseVisits />
-      </RowWithColumn>
-      
     </DefaultLayout>
   )
 }

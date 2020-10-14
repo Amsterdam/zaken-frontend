@@ -5,6 +5,9 @@ const StyledAccordion = styled(Accordion)`
   padding-left: ${ themeSpacing(10) };
   background-color: transparent;
   position: relative;
+  > span {
+      font-weight: 500;
+  }
 
   &:before {
     content: "";
@@ -19,19 +22,22 @@ const StyledAccordion = styled(Accordion)`
 
   + div {
     border: 0;
+    padding-top: 0;
+    padding-left: ${ themeSpacing(10) };
      > button {
        padding-right: 0;
-       padding-left: ${ themeSpacing(6) };
+       padding-left: 0;
+       border: 0;
 
        &:before {
         width: ${ themeSpacing(4) };
         height: ${ themeSpacing(4) };
-        left: -${ themeSpacing(1) };
+        left: -${ themeSpacing(7) };
         top: ${ themeSpacing(3) };
       }
       + div {
         padding-right: 0;
-        padding-left: ${ themeSpacing(6) };
+        padding-left: 0;
       }
      }
   }
@@ -52,14 +58,11 @@ const StyledAccordion = styled(Accordion)`
     }
   
     + div {
+      padding-left: ${ themeSpacing(20) };
       border: 0;
        > button {
-        padding-left: ${ themeSpacing(16) };
-         &:before {
-          left: ${ themeSpacing(5) };
-        }
-        + div {
-          padding-left: ${ themeSpacing(16) };
+        &:before {
+          left: -${ themeSpacing(11) };
         }
        }
     }
@@ -83,7 +86,7 @@ dt {
   clear: both;
   word-wrap: break-word;
   padding-right: ${ themeSpacing(5) }; 
-  color: ${ themeColor("tint","level4") }
+  color: ${ themeColor("tint","level6") }
 }
 dd {
   margin: 0;
