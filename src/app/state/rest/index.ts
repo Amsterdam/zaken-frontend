@@ -8,6 +8,7 @@ import { BAGAddressResponse } from "./types/BAGAddressResponse"
 import { BAGObjectResponse } from "./types/BAGObjectResponse"
 
 export type ApiGroup =
+  | "addresses"
   | "cases"
   | "caseTypes"
   | "caseStates"
@@ -23,6 +24,17 @@ export type Options = {
  * Please configure your endpoints here:
  * NOTE: For example "cases" and "cases/:id" share the same group config. Cache will be cleared for the whole group.
  */
+
+export const useResidents = (bagId: Components.Schemas.Address["bag_id"], options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<Components.Schemas.Residents>({
+    ...options,
+    url: makeGatewayUrl("addresses", bagId, "residents"),
+    groupName: "addresses",
+    handleError,
+    getHeaders
+  })
+}
 
 export const useCases = (options?: Options) => {
   const handleError = useErrorHandler()
@@ -59,7 +71,7 @@ export const useCaseFines = (id: NonNullable<Components.Schemas.Case["identifica
 
 export const useCaseResidents = (id: NonNullable<Components.Schemas.Case["identification"]>, options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<{ items: Components.Schemas.Resident[] }>({
+  return useApiRequest<Components.Schemas.Residents>({
     ...options,
     url: makeGatewayUrl("cases", id, "residents"),
     groupName: "cases",
@@ -129,7 +141,7 @@ export const useBAGWithZipCode = (bagId: string, options?: Options) => {
 export const useBAGLodging = (type: string | undefined, subTypeId: string | undefined, options?: Options) => {
   const handleError = useErrorHandler()
   const url = slashSandwich(["https://api.data.amsterdam.nl/bag/v1.1", type, subTypeId], { trailingSlash: true })
-  
+
   return useApiRequest<BAGObjectResponse>({
     url: url,
     lazy: type === undefined || subTypeId === undefined,

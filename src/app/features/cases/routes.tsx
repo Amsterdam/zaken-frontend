@@ -8,7 +8,10 @@ import EditPage from "./components/pages/edit/EditPage"
 
 // NOTE: please add your own POC-specific routes here.
 export default {
-  "/cases": IndexPage,
+  "/cases": {
+    title: "Zakenoverzicht",
+    Page: IndexPage
+  },
   "/cases/create": CreatePage,
   "/cases/edit/:id": EditPage,
   "/cases/:id": {
