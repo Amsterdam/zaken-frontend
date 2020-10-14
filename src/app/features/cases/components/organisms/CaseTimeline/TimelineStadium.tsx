@@ -18,28 +18,21 @@ const StyledAccordion = styled(Accordion)`
   }
 `
 
-// const mappedParams = (params: {}) => {
-//   Object.keys(params).map(function(key, index) {
-//     <dt>{params}[key]</dt>
-//   });
-
-// }
-
 const TimelineStadium: React.FC<Props> = ({ isOpen, title, threadSet }) => {
-  const accordions = threadSet.map(thread =>
+  const data = { threadSet }.threadSet
+  const accordions = data?.map((thread: Components.Schemas.CaseTimelineThread) => 
     <Accordion title={thread.date} key={thread.id}>
       <dl>
-        { Object.keys(thread.parameters ?? {}).map((key, index) => (
-          <div key={index}>
-            <dt>{key}</dt>
-            <dd>{ thread.parameters?.[key] as string }</dd>
-          </div>
-        ))
-        }
+      { Object.keys(thread.parameters ?? {}).map((key, index) => (
+      
+        <div key={index}>
+          <dt>{key}</dt>
+          <dd>{ thread?.parameters?.[key as unknown as number] }</dd>
+        </div>
+      ))}
       </dl>
     </Accordion>
   )
-
 
   return (
     <StyledAccordion title={title}>
