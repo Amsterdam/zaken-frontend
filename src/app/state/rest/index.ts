@@ -92,19 +92,6 @@ export const useCaseTypes = (options?: Options) => {
   })
 }
 
-/**
- export const usePermitCheckmarks = (bagId: string) => {
-  const handleError = useErrorHandler()
-  const queryString = qs.stringify({ bagId }, { addQueryPrefix: true })
-  return useApiRequest<{ has_b_and_b_permit: boolean, has_vacation_rental_permit: boolean }>({
-    url: makeGatewayUrl("permits", "checkmarks", queryString),
-    groupName: "permits",
-    handleError,
-    getHeaders
-  })
-} 
- */
-
 export const useCaseTimelines = (caseId: string) => {
   console.log("index id", caseId)
   const handleError = useErrorHandler()

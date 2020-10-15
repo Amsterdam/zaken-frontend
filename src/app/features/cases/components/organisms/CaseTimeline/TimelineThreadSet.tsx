@@ -12,20 +12,19 @@ type ThreadsetProps = {
 }
 
 
-const dateFormatted = (date: any) => {
+const dateFormatted = (date: string) => {
   const d = new Date(date)
   return `${ d.getDate() }-${ d.getMonth() + 1 }-${ d.getFullYear() }`
 }
 
 const TimelineThreadSet: React.FC<ThreadsetProps> = ({ isOpen, title, threadSet }) => {
-  const data = { threadSet }.threadSet
-  const accordions = data?.map((thread: Components.Schemas.CaseTimelineThread) => 
+  const accordions = threadSet.map(thread =>
     <StyledAccordion title={ dateFormatted(thread.date) } key={thread.id} isOpen={isOpen} >
       <Dl>
       { Object.keys(thread.parameters ?? {}).map((key, index) => (
         <div key={index}>
           <dt>{key}</dt>
-          <dd>{ thread?.parameters?.[key as unknown as number] }</dd>
+          <dd>{ thread?.parameters?.[key] }</dd>
         </div>
 
       ))}

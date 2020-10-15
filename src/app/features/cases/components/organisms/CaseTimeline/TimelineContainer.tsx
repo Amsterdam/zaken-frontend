@@ -38,7 +38,7 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
     <AccordionWrapper key={index}>
       { result.casetimelinethread_set?.length > 0  
         ? <TimelineThreadSet 
-          title={`${ result.subject ?? "" } (${ result.casetimelinethread_set?.length })`} 
+          title={`${ result.subject ?? "" } (${ result.casetimelinethread_set?.length ?? 0 })`} 
           threadSet={ result.casetimelinethread_set ?? [] }
           isOpen={true}
         />
@@ -51,7 +51,7 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
   return (
     <Div>
       { accordionWrapper }
-      
+
       {/* TODO: make dynamic */}
       <TimelineAccordion title={ "Aanleiding" } />
     </Div>
