@@ -24,7 +24,7 @@ const TimelineThreadSet: React.FC<ThreadsetProps> = ({ isOpen, title, threadSet 
       { Object.keys(thread.parameters ?? {}).map((key, index) => (
         <div key={index}>
           <dt>{key}</dt>
-          <dd>{ thread?.parameters?.[key] }</dd>
+          <dd>{ thread.parameters?.[key] }</dd>
         </div>
 
       ))}
