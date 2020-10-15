@@ -93,7 +93,6 @@ export const useCaseTypes = (options?: Options) => {
 }
 
 export const useCaseTimelines = (caseId: string) => {
-  console.log("index id", caseId)
   const handleError = useErrorHandler()
   const queryString = qs.stringify( caseId , { addQueryPrefix: true })
   return useApiRequest<APIListResponse<Components.Schemas.CaseTimeline>>({
