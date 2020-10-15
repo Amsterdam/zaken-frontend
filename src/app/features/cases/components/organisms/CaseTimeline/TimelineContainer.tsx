@@ -40,9 +40,9 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
         ? <TimelineThreadSet 
           title={`${ result.subject ?? "" } (${ result.casetimelinethread_set?.length ?? 0 })`} 
           threadSet={ result.casetimelinethread_set ?? [] }
-          isOpen={true}
+          isOpen={!result.is_done}
         />
-        : <TimelineAccordion title={ result.subject ?? "" } />
+        : <TimelineAccordion title={ result.subject ?? "" } isOpen={!result.is_done} />
       }
   </AccordionWrapper>
   </>

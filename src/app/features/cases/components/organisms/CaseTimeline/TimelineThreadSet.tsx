@@ -1,13 +1,16 @@
+
+
 import React from "react"
 import { StyledAccordion, Dl } from "./CaseTimelineStyle"
 
 type Props = {
   title: string
+  isOpen?: boolean
 }
 
 type ThreadsetProps = {
-  isOpen?: boolean
   title: string
+  isOpen?: boolean
   threadSet: Components.Schemas.CaseTimelineThread[]
 }
 
@@ -26,7 +29,6 @@ const TimelineThreadSet: React.FC<ThreadsetProps> = ({ isOpen, title, threadSet 
           <dt>{key}</dt>
           <dd>{ thread.parameters?.[key] }</dd>
         </div>
-
       ))}
       { thread.notes && <div><dt>Toelichting</dt><dd><i>{ thread.notes }</i></dd></div> }
       </Dl>
@@ -40,8 +42,8 @@ const TimelineThreadSet: React.FC<ThreadsetProps> = ({ isOpen, title, threadSet 
   )
 }
 
-const TimelineAccordion: React.FC<Props> = ({ title }) => (
-  <StyledAccordion title={title}>
+const TimelineAccordion: React.FC<Props> = ({ title, isOpen }) => (
+  <StyledAccordion title={title} isOpen={isOpen}>
     {/* TODO: make dynamic */}
     <p>Nog geen content</p>
   </StyledAccordion>

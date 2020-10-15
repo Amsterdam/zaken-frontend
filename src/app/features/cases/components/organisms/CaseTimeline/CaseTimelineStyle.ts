@@ -7,17 +7,28 @@ const StyledAccordion = styled(Accordion)`
   position: relative;
   > span {
       font-weight: 500;
+
+      &:last-child {
+        margin-left: ${ themeSpacing(3) };
+        width: 14px;
+      }
   }
 
   &:before {
     content: "";
-    width: ${ themeSpacing(6) };
-    height: ${ themeSpacing(6) };
+    font-family: Arial;
+    color: white;
+    width: ${ themeSpacing(7) };
+    height: ${ themeSpacing(7) };
     border-radius: 50%;
     position: absolute;
     left: ${ themeSpacing(2) };
-    top: ${ themeSpacing(3) };
-    background-color: ${ themeColor("tint", "level4") };
+    top: ${ themeSpacing(2) };
+    background-color: ${ ({ isOpen }) => (isOpen ?  themeColor("primary") : themeColor("tint", "level5")) };
+    font-size: 1em;
+    text-align: center;
+    line-height: 1.8em;
+    
   }
 
   + div {
@@ -30,10 +41,12 @@ const StyledAccordion = styled(Accordion)`
        border: 0;
 
        &:before {
-        width: ${ themeSpacing(4) };
-        height: ${ themeSpacing(4) };
+        width: ${ themeSpacing(5) };
+        height: ${ themeSpacing(5) };
         left: -${ themeSpacing(7) };
         top: ${ themeSpacing(3) };
+        font-size: .7em;
+        line-height: 1.8em;
       }
       + div {
         padding-right: 0;
@@ -54,7 +67,7 @@ const StyledAccordion = styled(Accordion)`
   @media screen and ${ breakpoint("min-width", "laptop") } {
     padding-left: ${ themeSpacing(20) };
     &:before {
-      left: ${ themeSpacing(8) };
+      left: ${ themeSpacing(7.5) };
     }
   
     + div {
@@ -62,7 +75,7 @@ const StyledAccordion = styled(Accordion)`
       border: 0;
        > button {
         &:before {
-          left: -${ themeSpacing(11) };
+          left: -${ themeSpacing(11.5) };
         }
        }
     }
