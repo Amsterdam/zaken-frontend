@@ -25,7 +25,7 @@
         const dsn = "%REACT_APP_SENTRY_DSN%"
         const environment = "%REACT_APP_SENTRY_ENVIRONMENT%"
         const release = "%REACT_APP_GIT_COMMIT_HASH%"
-        if (["development", "production"].indexOf(environment) === -1) return
+        if (["acceptance", "production"].indexOf(environment) === -1) return
         Sentry.init({
           dsn,
           environment,
