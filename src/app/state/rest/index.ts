@@ -92,10 +92,22 @@ export const useCaseTypes = (options?: Options) => {
   })
 }
 
-export const useBAG = (bagId: string, options?: Options) => {
+export const useCaseTimelines = (caseId: string) => {
+  const handleError = useErrorHandler()
+  const queryString = qs.stringify( caseId , { addQueryPrefix: true })
+  return useApiRequest<APIListResponse<Components.Schemas.CaseTimeline>>({
+    url: makeGatewayUrl("case-timelines", queryString),
+    groupName: "cases",
+    handleError,
+    getHeaders
+  })
+}
+
+export const useBAG = (bagId: string | undefined, options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<BAGAddressResponse>({
     url: `https://api.data.amsterdam.nl/atlas/search/adres/?q=${ bagId }`,
+    lazy: bagId === undefined,
     ...options,
     groupName: "dataPunt",
     handleError
