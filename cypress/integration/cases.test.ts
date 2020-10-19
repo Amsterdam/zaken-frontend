@@ -3,16 +3,14 @@ export default context("Cases", () => {
     start_date: "2020-02-02",
     end_date: "2019-01-01",
     case_type: null,
-    address: { bag_id: "0363010000958286" },
-    case_states: [] as any
+    address: { bag_id: "0363010000958286" }
   }
 
   const browserFixture = {
     start_date: "2019-01-01",
     end_date:  "2019-02-03",
     case_type: "Safari",
-    address: "0363010000958286",
-    case_states: [] as any
+    address: "0363010000958286"
   }
 
   beforeEach(() => {
