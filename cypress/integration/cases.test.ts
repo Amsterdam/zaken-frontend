@@ -23,7 +23,7 @@ export default context("Cases", () => {
       })
   })
 
-  it("should be able to add a case", () => {
+  xit("should be able to add a case", () => {
     cy.visit("cases/create")
     cy.autoFill(browserFixture)
     cy.getSubmitButton().click()
@@ -34,7 +34,7 @@ export default context("Cases", () => {
     cy.get("[data-e2e-id='alert'][data-e2e-variant='success']").should("be.visible")
   })
 
-  it("should be able to edit a case", () => {
+  xit("should be able to edit a case", () => {
     // We need a pre-existing case to edit.
     cy.postToAPI("cases/", apiFixture)
       .then((response: any) => {
@@ -49,7 +49,7 @@ export default context("Cases", () => {
       })
   })
 
-  it("should be able to delete a case", () => {
+  xit("should be able to delete a case", () => {
     // We need a pre-existing case to delete.
     cy.postToAPI("cases/", apiFixture)
       .then((response: any) => {
