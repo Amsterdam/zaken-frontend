@@ -36,11 +36,12 @@ export const useResidents = (bagId: Components.Schemas.Address["bag_id"], option
   })
 }
 
-export const useCases = (options?: Options) => {
+export const useCases = (state_date?: string, options?: Options) => {
+  const url = `${ makeGatewayUrl("cases") }${ state_date !== undefined ? `?state_date=${ state_date }` : "" }`
   const handleError = useErrorHandler()
   return useApiRequest<APIListResponse<Components.Schemas.Case>>({
     ...options,
-    url: makeGatewayUrl("cases"),
+    url,
     groupName: "cases",
     handleError,
     getHeaders
