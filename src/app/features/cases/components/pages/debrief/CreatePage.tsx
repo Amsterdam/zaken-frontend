@@ -1,6 +1,7 @@
 import React from "react"
 import { FormTitle, Heading } from "@datapunt/asc-ui"
 
+import { useCase } from "app/state/rest/"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
 import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
@@ -8,8 +9,14 @@ import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 
 import Form from "app/features/cases/components/organisms/DebriefForm/DebriefForm"
 
-const CreatePage: React.FC = () => {
+type Props = {
+  id: string
+}
+
+const CreatePage: React.FC<Props> = ({ id }) => {
   const handleCreate = async () => console.log("create")
+  const { data } = useCase(id)
+  const showAddress = data !== undefined
 
   return (
     <DefaultLayout>
@@ -22,6 +29,13 @@ const CreatePage: React.FC = () => {
       <RowWithColumn>
         <Heading>Nieuwe debrief</Heading>
         <FormTitle>Gebruik dit formulier om terugkoppeling te geven van een debrief</FormTitle>
+        { showAddress &&
+          <>
+            <Heading as="h2">Adres</Heading>
+            <p>{ data?.address.street_name ?? "" }</p>
+            <p>{ data?.address.postal_code ?? "" }</p>
+          </>
+        }
         <Form onSubmit={ handleCreate } />
       </RowWithColumn>
     </DefaultLayout>
