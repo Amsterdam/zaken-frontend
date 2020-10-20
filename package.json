@@ -85,7 +85,7 @@
     "@types/dotenv-flow": "^3.1.0",
     "@types/enzyme": "^3.10.7",
     "@types/enzyme-adapter-react-16": "^1.0.6",
-    "cypress": "^5.0.0",
+    "cypress": "^5.4.0",
     "dotenv-flow": "^3.2.0",
     "dtsgenerator": "^3.3.0",
     "enzyme": "^3.11.0",
