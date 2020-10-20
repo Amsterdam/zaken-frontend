@@ -22,7 +22,7 @@ const mapData = (data: Components.Schemas.Case) => [
   data.address.full_address ?? "-",
   "Niet gelopen",
   data.start_date ? <DateDisplay date={ data.start_date } /> : "-",
-  data.identification ? <OpenButton href={to("/cases/:id", { id: data.identification })} text="Zaak details" /> : null
+  data.identification ? <OpenButton href={to("/cases/:id", { id: data.identification })} text="Zaakdetails" /> : null
 ]
 
 const TableCases: React.FC<Props> = ({ data, isBusy }) => {
