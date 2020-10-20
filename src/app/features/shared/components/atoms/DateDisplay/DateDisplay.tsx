@@ -21,22 +21,21 @@ const months = [
   "december"
 ]
 
-export const displayDate = (d: Date, full = false) =>
-  full ?
-    `${ d.getDate() } ${ months[d.getMonth()] } ${ d.getFullYear() }` :
-    `${ d.getDate() }-${ d.getMonth() + 1 }-${ d.getFullYear() }`
-
 const isValidDate = (d: Date) => !Number.isNaN(d.getFullYear())
 const invalidDateText = "Ongeldige datum"
+const twoCharNum = (num: number) => `${ num < 10 ? "0" : "" }${ num }`
+export const displayDate = (date: string | Date, full = false) => {
+  const d = typeof date === "string" ? new Date(date) : date
+  if (!isValidDate(d)) return invalidDateText
+  return full ?
+    `${ twoCharNum(d.getDate()) } ${ months[d.getMonth()] } ${ d.getFullYear() }` :
+    `${ twoCharNum(d.getDate()) }-${ twoCharNum(d.getMonth() + 1) }-${ d.getFullYear() }`
+}
 
 const Span = styled.span`
   white-space: nowrap;
 `
 
-const DateDisplay: React.FC<Props> = ({ date, full = false }) => {
-  const d = new Date(date)
-  if (!isValidDate(d)) return <>{ invalidDateText }</>
-  return <Span>{ displayDate(d, full) }</Span>
-}
+const DateDisplay: React.FC<Props> = ({ date, full = false }) => <Span>{ displayDate(date, full) }</Span>
 
 export default DateDisplay
