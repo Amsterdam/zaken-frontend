@@ -1,5 +1,7 @@
 import React from "react"
 import { StyledAccordion, Dl } from "./CaseTimelineStyle"
+import { getDay }from "app/features/shared/components/atoms/DayDisplay/DayDisplay"
+import { displayDate } from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
 
 type Props = {
   title: string
@@ -18,14 +20,9 @@ type DLProps = {
   showDate: boolean
 }
 
-const dateFormatted = (date: string) => {
-  const d = new Date(date)
-  return `${ d.getDate() }-${ d.getMonth() + 1 }-${ d.getFullYear() }`
-}
-
 const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => (
   <Dl>
-  { showDate && thread.date && <div><dt>Datum</dt><dd>{ dateFormatted(thread.date) }</dd></div> }  
+  { showDate && thread.date && <div><dt>Datum</dt><dd>{ displayDate(thread.date) }</dd></div> }
   { Object.keys(thread.parameters ?? {}).map((key, index) => (
     <div key={index}>
       <dt>{key}</dt>
@@ -38,9 +35,8 @@ const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => (
 
 const TimelineThreadSet: React.FC<ThreadsetProps> = ({ isOpen, title, threadSet }) => {
   const accordions = threadSet.map(thread =>
-    <StyledAccordion title={ dateFormatted(thread.date) } key={thread.id} isOpen={isOpen} >
+    <StyledAccordion title={ `${ getDay(thread.date, true) } ${ displayDate(thread.date) }` } key={thread.id} isOpen={isOpen} >
       <DefinitionList thread={thread} showDate={false} />
-
     </StyledAccordion>
   )
 
