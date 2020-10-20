@@ -8,8 +8,8 @@ import { getDate } from "app/features/cases/components/organisms/CasesFilter/sca
 import { useCases } from "app/state/rest"
 
 const Cases: React.FC = () => {
-  const { data, isBusy, execGet } = useCases()
-  const [date, setDate] = useState(getDate())
+  const [date, setDate] = useState(getDate()[0])
+  const { data, isBusy, execGet } = useCases(date)
 
   useEffect(() => {
     (async () => await execGet())()

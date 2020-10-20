@@ -4,16 +4,16 @@ import { displayDate } from "app/features/shared/components/atoms/DateDisplay/Da
 
 export const getDate = (backwards = 0) => {
   const d = new Date(new Date().setDate(new Date().getDate() - backwards))
-  return displayDate(d)
+  return [`${ d.getFullYear() }-${ d.getMonth() + 1 }-${ d.getDate() }`, displayDate(d)]
 }
 
 const createOptions = () =>
   [...Array(7)].reduce((acc, _, index) => {
-    const date = getDate(index)
+    const [date, displayDate] = getDate(index)
     switch (index) {
       case 0: acc[date] = "Vandaag"; break
       case 1: acc[date] = "Gisteren"; break
-      default: acc[date] = date
+      default: acc[date] = displayDate
     }
     return acc
   }, {} as Record<string, string>)
