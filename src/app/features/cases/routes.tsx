@@ -16,7 +16,7 @@ export default {
   "/cases/edit/:id": EditPage,
   "/cases/:id": {
     Page: DetailsPage,
-    title: "Zaak details",
+    title: "Zaakdetails",
     icon: "Suitcase"
   }
 }

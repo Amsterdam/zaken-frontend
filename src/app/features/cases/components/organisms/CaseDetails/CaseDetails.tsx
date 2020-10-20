@@ -13,7 +13,7 @@ const CaseDetails: React.FC<Props> = ({ caseData }) => {
     "Zaaktype": caseData.case_type.name
   }), [ caseData ])
 
-  return <DefinitionList title="Zaak details" values={values} />
+  return <DefinitionList title="Zaakdetails" values={values} />
 }
 
 export default CaseDetails
