@@ -1,5 +1,6 @@
 import React from "react"
 import { StyledAccordion, Dl } from "./CaseTimelineStyle"
+import { getDay }from "app/features/shared/components/atoms/DateDay/DateDay"
 import { displayDate } from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
 
 type Props = {
@@ -34,9 +35,8 @@ const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => (
 
 const TimelineThreadSet: React.FC<ThreadsetProps> = ({ isOpen, title, threadSet }) => {
   const accordions = threadSet.map(thread =>
-    <StyledAccordion title={ displayDate(thread.date) } key={thread.id} isOpen={isOpen} >
+    <StyledAccordion title={ `${ getDay(thread.date, true) } ${ displayDate(thread.date) }` } key={thread.id} isOpen={isOpen} >
       <DefinitionList thread={thread} showDate={false} />
-
     </StyledAccordion>
   )
 
