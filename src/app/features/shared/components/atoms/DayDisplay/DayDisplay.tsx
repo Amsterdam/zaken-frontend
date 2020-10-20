@@ -25,8 +25,8 @@ export const getDay = (date: string | Date, capitalize = false) => {
   return capitalize ? capitalizeString(day) : day
 }
 
-const DateDay: React.FC<Props> = ({ date, capitalize = false }) => {
+const DayDisplay: React.FC<Props> = ({ date, capitalize = false }) => {
   const day = getDay(date, capitalize)
   return <>{ day }</>
 }
-export default DateDay
+export default DayDisplay

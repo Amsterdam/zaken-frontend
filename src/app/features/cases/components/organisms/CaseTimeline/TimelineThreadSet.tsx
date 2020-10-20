@@ -1,6 +1,6 @@
 import React from "react"
 import { StyledAccordion, Dl } from "./CaseTimelineStyle"
-import { getDay }from "app/features/shared/components/atoms/DateDay/DateDay"
+import { getDay }from "app/features/shared/components/atoms/DayDisplay/DayDisplay"
 import { displayDate } from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
 
 type Props = {
