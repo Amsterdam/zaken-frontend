@@ -16,10 +16,25 @@ declare namespace Components {
             readonly id: number
             case_type: CaseType
             address: Address
-            readonly states: State[]
+            case_states: CaseState[]
+            readonly current_state: {
+                readonly id: number
+                state_date: string // date
+                case: number
+                status: number
+                users: string /* uuid */[]
+            }
+            readonly legacy_states: OpenZaakState[]
             identification?: string | null
             start_date?: string | null // date
             end_date?: string | null // date
+        }
+        export type CaseState = {
+            readonly id: number
+            state_date: string // date
+            case: number
+            status: number
+            users: string /* uuid */[]
         }
         export type CaseTimeline = {
             readonly id: number
@@ -37,7 +52,7 @@ declare namespace Components {
         }
         export type CaseTimelineThread = {
             readonly id: number
-            readonly castetimelinereaction_set: CaseTimelineReaction[]
+            readonly casettimelinereaction_set: CaseTimelineReaction[]
             readonly date: string // date
             parameters?: {
                 [name: string]: any
@@ -104,6 +119,20 @@ declare namespace Components {
         export type OIDCAuthenticate = {
             code: string
         }
+        export type OpenZaakState = {
+            readonly id: number
+            state_type: OpenZaakStateType
+            start_date?: string | null // date
+            end_date?: string | null // date
+            gauge_date?: string | null // date
+            invoice_identification?: string | null
+            case: number
+        }
+        export type OpenZaakStateType = {
+            readonly id: number
+            name: string
+            invoice_available?: boolean
+        }
         export type PaginatedAddressList = {
             /**
              * example:
@@ -139,6 +168,24 @@ declare namespace Components {
              */
             previous?: string | null // uri
             results?: Case[]
+        }
+        export type PaginatedCaseStateList = {
+            /**
+             * example:
+             * 123
+             */
+            count?: number
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=4
+             */
+            next?: string | null // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null // uri
+            results?: CaseState[]
         }
         export type PaginatedCaseTimelineList = {
             /**
@@ -212,7 +259,7 @@ declare namespace Components {
             previous?: string | null // uri
             results?: CaseType[]
         }
-        export type PaginatedStateList = {
+        export type PaginatedOpenZaakStateList = {
             /**
              * example:
              * 123
@@ -228,9 +275,9 @@ declare namespace Components {
              * http://api.example.org/accounts/?page=2
              */
             previous?: string | null // uri
-            results?: State[]
+            results?: OpenZaakState[]
         }
-        export type PaginatedStateTypeList = {
+        export type PaginatedOpenZaakStateTypeList = {
             /**
              * example:
              * 123
@@ -246,7 +293,7 @@ declare namespace Components {
              * http://api.example.org/accounts/?page=2
              */
             previous?: string | null // uri
-            results?: StateType[]
+            results?: OpenZaakStateType[]
         }
         export type PatchedAddress = {
             bag_id?: string
@@ -264,10 +311,25 @@ declare namespace Components {
             readonly id?: number
             case_type?: PatchedCaseType
             address?: PatchedAddress
-            readonly states?: State[]
+            case_states?: PatchedCaseState[]
+            readonly current_state?: {
+                readonly id: number
+                state_date: string // date
+                case: number
+                status: number
+                users: string /* uuid */[]
+            }
+            readonly legacy_states?: OpenZaakState[]
             identification?: string | null
             start_date?: string | null // date
             end_date?: string | null // date
+        }
+        export type PatchedCaseState = {
+            readonly id?: number
+            state_date?: string // date
+            case?: number
+            status?: number
+            users?: string /* uuid */[]
         }
         export type PatchedCaseTimeline = {
             readonly id?: number
@@ -285,7 +347,7 @@ declare namespace Components {
         }
         export type PatchedCaseTimelineThread = {
             readonly id?: number
-            readonly castetimelinereaction_set?: CaseTimelineReaction[]
+            readonly casettimelinereaction_set?: CaseTimelineReaction[]
             readonly date?: string // date
             parameters?: {
                 [name: string]: any
@@ -335,20 +397,6 @@ declare namespace Components {
             results: Resident[]
         }
         export type SoortVorderingEnum = "PBF" | "PBN" | "PRV" | "SOC";
-        export type State = {
-            readonly id: number
-            state_type: StateType
-            start_date?: string | null // date
-            end_date?: string | null // date
-            gauge_date?: string | null // date
-            invoice_identification?: string | null
-            case: number
-        }
-        export type StateType = {
-            readonly id: number
-            name: string
-            invoice_available?: boolean
-        }
         export type TimelineUpdate = {
             thread_id: string
             subject: string
@@ -372,7 +420,7 @@ declare namespace Paths {
             export type $200 = Components.Schemas.PaginatedAddressList;
         }
     }
-    namespace AddressesResidentsByBagIdRetrieve {
+    namespace AddressesResidentsRetrieve {
         namespace Parameters {
             export type BagId = string;
         }
@@ -381,6 +429,70 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.Residents;
+        }
+    }
+    namespace CaseStatesCreate {
+        export type RequestBody = Components.Schemas.CaseState;
+        namespace Responses {
+            export type $200 = Components.Schemas.CaseState;
+        }
+    }
+    namespace CaseStatesDestroy {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export type PathParameters = {
+            id: Parameters.Id
+        }
+        namespace Responses {
+            export type $204 = {
+            }
+        }
+    }
+    namespace CaseStatesList {
+        namespace Parameters {
+            export type Page = number;
+        }
+        export type QueryParameters = {
+            page?: Parameters.Page
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedCaseStateList;
+        }
+    }
+    namespace CaseStatesPartialUpdate {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export type PathParameters = {
+            id: Parameters.Id
+        }
+        export type RequestBody = Components.Schemas.PatchedCaseState;
+        namespace Responses {
+            export type $200 = Components.Schemas.CaseState;
+        }
+    }
+    namespace CaseStatesRetrieve {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export type PathParameters = {
+            id: Parameters.Id
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.CaseState;
+        }
+    }
+    namespace CaseStatesUpdate {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export type PathParameters = {
+            id: Parameters.Id
+        }
+        export type RequestBody = Components.Schemas.CaseState;
+        namespace Responses {
+            export type $200 = Components.Schemas.CaseState;
         }
     }
     namespace CaseTimelineReactionsCreate {
@@ -496,13 +608,14 @@ declare namespace Paths {
             export type $200 = Components.Schemas.CaseTimelineThread;
         }
     }
-    namespace CaseTimelineThreadsRemoveTimelineItemRetrieve {
+    namespace CaseTimelineThreadsRemoveTimelineItemCreate {
         namespace Parameters {
             export type ThreadId = string;
         }
         export type QueryParameters = {
             thread_id: Parameters.ThreadId
         }
+        export type RequestBody = Components.Schemas.CaseTimelineThread;
         namespace Responses {
             export type $200 = Components.Schemas.CaseTimelineThread;
         }
@@ -645,9 +758,11 @@ declare namespace Paths {
     namespace CasesList {
         namespace Parameters {
             export type Page = number;
+            export type StateDate = string;
         }
         export type QueryParameters = {
             page?: Parameters.Page
+            state_date?: Parameters.StateDate
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCaseList;
@@ -715,6 +830,28 @@ declare namespace Paths {
         export type RequestBody = Components.Schemas.OIDCAuthenticate;
         namespace Responses {
             export type $200 = Components.Schemas.OIDCAuthenticate;
+        }
+    }
+    namespace OpenZaakStateTypesList {
+        namespace Parameters {
+            export type Page = number;
+        }
+        export type QueryParameters = {
+            page?: Parameters.Page
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedOpenZaakStateTypeList;
+        }
+    }
+    namespace OpenZaakStatesList {
+        namespace Parameters {
+            export type Page = number;
+        }
+        export type QueryParameters = {
+            page?: Parameters.Page
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedOpenZaakStateList;
         }
     }
     namespace PermitsCheckmarksRetrieve {
@@ -802,28 +939,6 @@ declare namespace Paths {
             export type $200 = {
                 [name: string]: any
             }
-        }
-    }
-    namespace StateTypesList {
-        namespace Parameters {
-            export type Page = number;
-        }
-        export type QueryParameters = {
-            page?: Parameters.Page
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.PaginatedStateTypeList;
-        }
-    }
-    namespace StatesList {
-        namespace Parameters {
-            export type Page = number;
-        }
-        export type QueryParameters = {
-            page?: Parameters.Page
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.PaginatedStateList;
         }
     }
 }

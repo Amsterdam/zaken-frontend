@@ -14,5 +14,9 @@ export default {
   },
   "/cases/create": CreatePage,
   "/cases/edit/:id": EditPage,
-  "/cases/:id": DetailsPage
+  "/cases/:id": {
+    Page: DetailsPage,
+    title: "Zaak details",
+    icon: "Suitcase"
+  }
 }

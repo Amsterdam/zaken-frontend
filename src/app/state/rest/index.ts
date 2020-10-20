@@ -8,6 +8,7 @@ import { BAGAddressResponse } from "./types/BAGAddressResponse"
 import { BAGObjectResponse } from "./types/BAGObjectResponse"
 
 export type ApiGroup =
+  | "addresses"
   | "cases"
   | "caseTypes"
   | "caseStates"
@@ -23,6 +24,17 @@ export type Options = {
  * Please configure your endpoints here:
  * NOTE: For example "cases" and "cases/:id" share the same group config. Cache will be cleared for the whole group.
  */
+
+export const useResidents = (bagId: Components.Schemas.Address["bag_id"], options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<Components.Schemas.Residents>({
+    ...options,
+    url: makeGatewayUrl("addresses", bagId, "residents"),
+    groupName: "addresses",
+    handleError,
+    getHeaders
+  })
+}
 
 export const useCases = (state_date?: string, options?: Options) => {
   const url = `${ makeGatewayUrl("cases") }${ state_date !== undefined ? `?state_date=${ state_date }` : "" }`
@@ -81,10 +93,22 @@ export const useCaseTypes = (options?: Options) => {
   })
 }
 
-export const useBAG = (bagId: string, options?: Options) => {
+export const useCaseTimelines = (caseId: string) => {
+  const handleError = useErrorHandler()
+  const queryString = qs.stringify( caseId , { addQueryPrefix: true })
+  return useApiRequest<APIListResponse<Components.Schemas.CaseTimeline>>({
+    url: makeGatewayUrl("case-timelines", queryString),
+    groupName: "cases",
+    handleError,
+    getHeaders
+  })
+}
+
+export const useBAG = (bagId: string | undefined, options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<BAGAddressResponse>({
     url: `https://api.data.amsterdam.nl/atlas/search/adres/?q=${ bagId }`,
+    lazy: bagId === undefined,
     ...options,
     groupName: "dataPunt",
     handleError
