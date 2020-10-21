@@ -33,7 +33,7 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
             <Heading as="h3">Adres</Heading>
             <p>{ data.address.street_name }</p>
             <p>{ data.address.postal_code }</p>
-            <Form onSubmit={ handleCreate } />
+            <Form caseId={ id! } onSubmit={ handleCreate } />
           </>
         }
       </RowWithColumn>
