@@ -21,7 +21,7 @@ const columns = [
 const mapData = (data: Components.Schemas.Case) => [
   data.address.full_address ?? "-",
   "Niet gelopen",
-  data.start_date ? <DateDisplay date={ data.start_date } /> : "-",
+  data.current_state.state_date ? <DateDisplay date={ data.current_state.state_date } /> : "-",
   data.identification ? <OpenButton href={to("/cases/:id", { id: data.identification })} text="Zaakdetails" /> : null
 ]
 
@@ -34,7 +34,7 @@ const TableCases: React.FC<Props> = ({ data, isBusy }) => {
     loading={data === undefined || isBusy}
     numLoadingRows={10}
     hasFixedColumn={true}
-    noValuesPlaceholder={"Er zijn (nog) geen zaken gevonden"}
+    noValuesPlaceholder={"Er zijn geen zaken voor deze dag"}
   />)
 }
 
