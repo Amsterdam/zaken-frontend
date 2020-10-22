@@ -106,7 +106,7 @@ export const useDebriefings = (options?: Options) => {
 
 export const useCaseTimeline = (caseId: NonNullable<Components.Schemas.Case["identification"]>) => {
   const handleError = useErrorHandler()
-  return useApiRequest<APIListResponse<Components.Schemas.CaseTimeline>>({
+  return useApiRequest<Components.Schemas.CaseTimeline[]>({
     url: makeGatewayUrl("cases", caseId, "timeline"),
     groupName: "cases",
     handleError,

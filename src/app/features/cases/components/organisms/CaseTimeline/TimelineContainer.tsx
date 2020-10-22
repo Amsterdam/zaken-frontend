@@ -35,7 +35,7 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
 
   return (
     <Div>
-      { data?.results && data?.results.map(({ casetimelinethread_set, subject, is_done }, index) =>
+      { data?.map(({ casetimelinethread_set, subject, is_done }, index) =>
         <AccordionWrapper key={ index }>
           { casetimelinethread_set?.length > 1
             ? <TimelineThreadSet
