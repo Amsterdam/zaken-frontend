@@ -34,23 +34,28 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
   const { data } = useCaseTimeline(caseId!)
 
   return (
-    <Div>
-      { data?.map(({ casetimelinethread_set, subject, is_done }, index) =>
-        <AccordionWrapper key={ index }>
-          { casetimelinethread_set?.length > 1
-            ? <TimelineThreadSet
-              title={`${ subject ?? "" } (${ casetimelinethread_set?.length ?? 0 })`}
-              threadSet={ casetimelinethread_set ?? [] }
-              isOpen={ !is_done }
-            />
-            : <TimelineBaseSet
-              title={ subject ?? "" }
-              thread={ casetimelinethread_set[0] ?? {} }
-              isOpen={ !is_done } />
-          }
-        </AccordionWrapper>
-      ) }
-    </Div>
+    <>
+      <Div>
+        { data?.map(({ casetimelinethread_set, subject, is_done }, index) =>
+          <AccordionWrapper key={ index }>
+            { casetimelinethread_set?.length > 1
+              ? <TimelineThreadSet
+                title={`${ subject ?? "" } (${ casetimelinethread_set?.length ?? 0 })`}
+                threadSet={ casetimelinethread_set ?? [] }
+                isOpen={ !is_done }
+              />
+              : <TimelineBaseSet
+                title={ subject ?? "" }
+                thread={ casetimelinethread_set[0] ?? {} }
+                isOpen={ !is_done } />
+            }
+          </AccordionWrapper>
+        ) }
+      </Div>
+      { data?.length === 0 &&
+        <p>Geen tijdlijn evenementen beschikbaar</p>
+      }
+    </>
   )
 }
 
