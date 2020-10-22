@@ -4,24 +4,23 @@ import { navigate } from "@reach/router"
 
 export default (caseId: string) => {
   const fields = {
-    hit: {
+    violation: {
       type: "RadioFields",
       props: {
-        label: "Is er sprake van een hit?",
-        name: "hit",
+        label: "Is er sprake van een overtreding?",
         isRequired: true,
         options: {
-          "true": "Ja, hit",
-          "false": "Nee, geen hit",
+          "true": "Ja, overtreding",
+          "false": "Nee, geen overtreding",
           "other": "Nader onderzoek nodig"
         }
       }
     },
-    text: {
+    feedback: {
       type: "TextAreaField",
+      isRequired: true,
       props: {
-        label: "Korte toelichting",
-        name: "text"
+        label: "Korte toelichting"
       }
     },
     submit: {
@@ -42,8 +41,8 @@ export default (caseId: string) => {
 
   return new FormPositioner(fields as Fields)
     .setGrid("mobileS", "1fr 1fr", [
-      ["hit"],
-      ["text"],
+      ["violation"],
+      ["feedback"],
       ["submit"],
       ["cancel"]
     ])

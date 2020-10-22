@@ -1,5 +1,5 @@
 import {  AccordionWrapper, breakpoint, themeColor, themeSpacing } from "@datapunt/asc-ui"
-import { useCaseTimelines } from "app/state/rest"
+import { useCaseTimeline } from "app/state/rest"
 import React from "react"
 import styled from "styled-components"
 import { TimelineThreadSet, TimelineBaseSet } from "./TimelineThreadSet"
@@ -31,7 +31,7 @@ const Div = styled.div`
 `
 
 const TimelineContainer: React.FC<Props> = ({ caseId }) => {
-  const { data } = useCaseTimelines(caseId!)
+  const { data } = useCaseTimeline(caseId!)
 
   const accordionWrapper = data?.results.map((result, index) => {
     const numberOfThreadItems = result.casetimelinethread_set?.length
