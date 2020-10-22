@@ -33,30 +33,23 @@ const Div = styled.div`
 const TimelineContainer: React.FC<Props> = ({ caseId }) => {
   const { data } = useCaseTimeline(caseId!)
 
-  const accordionWrapper = data?.results.map((result, index) => {
-    const numberOfThreadItems = result.casetimelinethread_set?.length
-
-    return (
-        <AccordionWrapper key={index}>
-          { numberOfThreadItems > 1
-            ? <TimelineThreadSet
-              title={`${ result.subject ?? "" } (${ numberOfThreadItems ?? 0 })`}
-              threadSet={ result.casetimelinethread_set ?? [] }
-              isOpen={!result.is_done}
-            />
-            : <TimelineBaseSet
-              title={ result.subject ?? "" }
-              thread={ result.casetimelinethread_set[0] ?? {} }
-              isOpen={!result.is_done} />
-          }
-      </AccordionWrapper>
-    )
-  }
-  )
-
   return (
     <Div>
-      { accordionWrapper }
+      { data?.results && data?.results.map(({ casetimelinethread_set, subject, is_done }, index) =>
+        <AccordionWrapper key={ index }>
+          { casetimelinethread_set?.length > 1
+            ? <TimelineThreadSet
+              title={`${ subject ?? "" } (${ casetimelinethread_set?.length ?? 0 })`}
+              threadSet={ casetimelinethread_set ?? [] }
+              isOpen={ !is_done }
+            />
+            : <TimelineBaseSet
+              title={ subject ?? "" }
+              thread={ casetimelinethread_set[0] ?? {} }
+              isOpen={ !is_done } />
+          }
+        </AccordionWrapper>
+      ) }
     </Div>
   )
 }

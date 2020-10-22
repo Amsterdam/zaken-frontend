@@ -7,8 +7,9 @@ export default (caseId: string) => {
     violation: {
       type: "RadioFields",
       props: {
-        label: "Is er sprake van een overtreding?",
         isRequired: true,
+        label: "Is er sprake van een overtreding?",
+        name: "violation",
         options: {
           "true": "Ja, overtreding",
           "false": "Nee, geen overtreding",
@@ -18,8 +19,9 @@ export default (caseId: string) => {
     },
     feedback: {
       type: "TextAreaField",
-      isRequired: true,
       props: {
+        isRequired: true,
+        name: "feedback",
         label: "Korte toelichting"
       }
     },

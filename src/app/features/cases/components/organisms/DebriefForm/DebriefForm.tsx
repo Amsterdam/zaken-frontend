@@ -12,13 +12,13 @@ type Props = {
   initialValues?: Components.Schemas.Debriefing
 }
 
-const DebriefForm: React.FC<Props> = ({ caseId, isLoading, onSubmit, initialValues }) => (
+const DebriefForm: React.FC<Props> = ({ caseId, isLoading, onSubmit }) => (
     <ScaffoldForm
       showSpinner={ isLoading }
       onSubmit={ onSubmit }
-      initialValues={ { case: caseId as unknown as number } }
+      initialValues={ { case: caseId } }
     >
-      <ScaffoldFields {...createScaffoldProps(caseId)} />
+      <ScaffoldFields {...createScaffoldProps(caseId) } />
     </ScaffoldForm>
   )
 
