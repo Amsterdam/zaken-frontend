@@ -18,10 +18,10 @@ declare namespace Components {
             address: Address
             case_states: CaseState[]
             readonly current_state: {
-                readonly id: number
-                state_date: string // date
                 case: number
+                readonly status_name: string
                 status: number
+                state_date: string // date
                 users: string /* uuid */[]
             }
             readonly legacy_states: OpenZaakState[]
@@ -30,11 +30,15 @@ declare namespace Components {
             end_date?: string | null // date
         }
         export type CaseState = {
-            readonly id: number
-            state_date: string // date
             case: number
+            readonly status_name: string
             status: number
+            state_date: string // date
             users: string /* uuid */[]
+        }
+        export type CaseStateType = {
+            readonly id: number
+            name: string
         }
         export type CaseTimeline = {
             readonly id: number
@@ -64,6 +68,20 @@ declare namespace Components {
         export type CaseType = {
             readonly id: number
             name: string
+        }
+        export type Debriefing = {
+            readonly id: number
+            readonly date_added: string // date-time
+            readonly date_modified: string // date-time
+            hit: boolean
+            feedback: string
+            case: number
+            author: string // uuid
+        }
+        export type DebriefingCreate = {
+            hit: boolean
+            feedback: string
+            case: number
         }
         export type DecosPermit = {
             permit_granted?: boolean
@@ -186,6 +204,24 @@ declare namespace Components {
              */
             previous?: string | null // uri
             results?: CaseState[]
+        }
+        export type PaginatedCaseStateTypeList = {
+            /**
+             * example:
+             * 123
+             */
+            count?: number
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=4
+             */
+            next?: string | null // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null // uri
+            results?: CaseStateType[]
         }
         export type PaginatedCaseTimelineList = {
             /**
@@ -313,10 +349,10 @@ declare namespace Components {
             address?: PatchedAddress
             case_states?: PatchedCaseState[]
             readonly current_state?: {
-                readonly id: number
-                state_date: string // date
                 case: number
+                readonly status_name: string
                 status: number
+                state_date: string // date
                 users: string /* uuid */[]
             }
             readonly legacy_states?: OpenZaakState[]
@@ -325,11 +361,15 @@ declare namespace Components {
             end_date?: string | null // date
         }
         export type PatchedCaseState = {
-            readonly id?: number
-            state_date?: string // date
             case?: number
+            readonly status_name?: string
             status?: number
+            state_date?: string // date
             users?: string /* uuid */[]
+        }
+        export type PatchedCaseStateType = {
+            readonly id?: number
+            name?: string
         }
         export type PatchedCaseTimeline = {
             readonly id?: number
@@ -360,6 +400,15 @@ declare namespace Components {
             readonly id?: number
             name?: string
         }
+        export type PatchedDebriefing = {
+            readonly id?: number
+            readonly date_added?: string // date-time
+            readonly date_modified?: string // date-time
+            hit?: boolean
+            feedback?: string
+            case?: number
+            author?: string // uuid
+        }
         export type PermitCheckmark = {
             has_b_and_b_permit: HasBAndBPermitEnum
             has_vacation_rental_permit: HasVacationRentalPermitEnum
@@ -372,10 +421,6 @@ declare namespace Components {
             start_date: string // date
             end_date?: string // date
             states?: PushState[]
-        }
-        export type PushCheckAction = {
-            identification: string
-            check_action: boolean
         }
         export type PushState = {
             name: string
@@ -429,6 +474,70 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.Residents;
+        }
+    }
+    namespace CaseStateTypesCreate {
+        export type RequestBody = Components.Schemas.CaseStateType;
+        namespace Responses {
+            export type $200 = Components.Schemas.CaseStateType;
+        }
+    }
+    namespace CaseStateTypesDestroy {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export type PathParameters = {
+            id: Parameters.Id
+        }
+        namespace Responses {
+            export type $204 = {
+            }
+        }
+    }
+    namespace CaseStateTypesList {
+        namespace Parameters {
+            export type Page = number;
+        }
+        export type QueryParameters = {
+            page?: Parameters.Page
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedCaseStateTypeList;
+        }
+    }
+    namespace CaseStateTypesPartialUpdate {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export type PathParameters = {
+            id: Parameters.Id
+        }
+        export type RequestBody = Components.Schemas.PatchedCaseStateType;
+        namespace Responses {
+            export type $200 = Components.Schemas.CaseStateType;
+        }
+    }
+    namespace CaseStateTypesRetrieve {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export type PathParameters = {
+            id: Parameters.Id
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.CaseStateType;
+        }
+    }
+    namespace CaseStateTypesUpdate {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export type PathParameters = {
+            id: Parameters.Id
+        }
+        export type RequestBody = Components.Schemas.CaseStateType;
+        namespace Responses {
+            export type $200 = Components.Schemas.CaseStateType;
         }
     }
     namespace CaseStatesCreate {
@@ -732,6 +841,17 @@ declare namespace Paths {
             export type $200 = Components.Schemas.Case;
         }
     }
+    namespace CasesDebriefingsRetrieve {
+        namespace Parameters {
+            export type Identification = string;
+        }
+        export type PathParameters = {
+            identification: Parameters.Identification
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.Residents;
+        }
+    }
     namespace CasesDestroy {
         namespace Parameters {
             export type Identification = string;
@@ -812,6 +932,59 @@ declare namespace Paths {
         export type RequestBody = Components.Schemas.Case;
         namespace Responses {
             export type $200 = Components.Schemas.Case;
+        }
+    }
+    namespace DebriefingsCreate {
+        export type RequestBody = Components.Schemas.DebriefingCreate;
+        namespace Responses {
+            export type $200 = Components.Schemas.DebriefingCreate;
+        }
+    }
+    namespace DebriefingsDestroy {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export type PathParameters = {
+            id: Parameters.Id
+        }
+        namespace Responses {
+            export type $204 = {
+            }
+        }
+    }
+    namespace DebriefingsPartialUpdate {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export type PathParameters = {
+            id: Parameters.Id
+        }
+        export type RequestBody = Components.Schemas.PatchedDebriefing;
+        namespace Responses {
+            export type $200 = Components.Schemas.Debriefing;
+        }
+    }
+    namespace DebriefingsRetrieve {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export type PathParameters = {
+            id: Parameters.Id
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.Debriefing;
+        }
+    }
+    namespace DebriefingsUpdate {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export type PathParameters = {
+            id: Parameters.Id
+        }
+        export type RequestBody = Components.Schemas.Debriefing;
+        namespace Responses {
+            export type $200 = Components.Schemas.Debriefing;
         }
     }
     namespace GenerateMockRetrieve {
@@ -912,12 +1085,6 @@ declare namespace Paths {
         namespace Responses {
             export type $200 = {
             }
-        }
-    }
-    namespace PushCheckActionCreate {
-        export type RequestBody = Components.Schemas.PushCheckAction;
-        namespace Responses {
-            export type $200 = Components.Schemas.PushCheckAction;
         }
     }
     namespace PushCreate {
