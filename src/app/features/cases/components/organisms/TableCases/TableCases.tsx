@@ -20,7 +20,7 @@ const columns = [
 
 const mapData = (data: Components.Schemas.Case) => [
   data.address.full_address ?? "-",
-  "Niet gelopen",
+  data.current_state.status_name,
   data.current_state.state_date ? <DateDisplay date={ data.current_state.state_date } /> : "-",
   data.identification ? <OpenButton href={to("/cases/:id", { id: data.identification })} text="Zaakdetails" /> : null
 ]
