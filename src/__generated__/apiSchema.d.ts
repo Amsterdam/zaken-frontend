@@ -70,16 +70,15 @@ declare namespace Components {
             name: string
         }
         export type Debriefing = {
-            readonly id: number
+            readonly case: string
+            author: string // uuid
             readonly date_added: string // date-time
             readonly date_modified: string // date-time
-            hit: boolean
+            violation: boolean
             feedback: string
-            case: number
-            author: string // uuid
         }
         export type DebriefingCreate = {
-            hit: boolean
+            violation: boolean
             feedback: string
             case: number
         }
@@ -401,13 +400,12 @@ declare namespace Components {
             name?: string
         }
         export type PatchedDebriefing = {
-            readonly id?: number
+            readonly case?: string
+            author?: string // uuid
             readonly date_added?: string // date-time
             readonly date_modified?: string // date-time
-            hit?: boolean
+            violation?: boolean
             feedback?: string
-            case?: number
-            author?: string // uuid
         }
         export type PermitCheckmark = {
             has_b_and_b_permit: HasBAndBPermitEnum
@@ -920,6 +918,17 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.Case;
+        }
+    }
+    namespace CasesTimelineRetrieve {
+        namespace Parameters {
+            export type Identification = string;
+        }
+        export type PathParameters = {
+            identification: Parameters.Identification
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.CaseTimeline;
         }
     }
     namespace CasesUpdate {

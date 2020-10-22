@@ -30,7 +30,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
         <Heading as="h2">Open taken</Heading>
         <Divider />
         <p>Verwerken uitkomst debrief door projecthandhaver</p>
-        <ButtonLink to={ to("/cases/:id/debrief", { id })}>
+        <ButtonLink to={ to("/cases/:id/debriefing", { id })}>
           <Button variant="primary" as="span">Debrief verwerken</Button>
         </ButtonLink>
       </RowWithColumn>

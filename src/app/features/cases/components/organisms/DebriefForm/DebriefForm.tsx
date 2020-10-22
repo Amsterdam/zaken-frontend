@@ -7,20 +7,20 @@ import createScaffoldProps from "./scaffold"
 
 type Props = {
   caseId: NonNullable<Components.Schemas.Case["identification"]>
-  onSubmit: (data: Components.Schemas.Case) => Promise<void>
+  onSubmit: (data: Components.Schemas.Debriefing) => Promise<void>
   isLoading?: boolean
-  initialValues?: Components.Schemas.Case
+  initialValues?: Components.Schemas.Debriefing
 }
 
-const Form: React.FC<Props> = ({ caseId, isLoading, onSubmit, initialValues }) => (
+const DebriefForm: React.FC<Props> = ({ caseId, isLoading, onSubmit }) => (
     <ScaffoldForm
       showSpinner={ isLoading }
       onSubmit={ onSubmit }
-      initialValues={ initialValues }
+      initialValues={ { case: caseId } }
     >
-      <ScaffoldFields {...createScaffoldProps(caseId)} />
+      <ScaffoldFields {...createScaffoldProps(caseId) } />
     </ScaffoldForm>
   )
 
 
-export default Form
+export default DebriefForm

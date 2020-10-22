@@ -93,11 +93,21 @@ export const useCaseTypes = (options?: Options) => {
   })
 }
 
-export const useCaseTimelines = (caseId: string) => {
+export const useDebriefings = (options?: Options) => {
   const handleError = useErrorHandler()
-  const queryString = qs.stringify( caseId , { addQueryPrefix: true })
+  return useApiRequest<APIListResponse<Components.Schemas.Debriefing>>({
+    ...options,
+    url: makeGatewayUrl("debriefings"),
+    groupName: "cases",
+    handleError,
+    getHeaders
+  })
+}
+
+export const useCaseTimeline = (caseId: NonNullable<Components.Schemas.Case["identification"]>) => {
+  const handleError = useErrorHandler()
   return useApiRequest<APIListResponse<Components.Schemas.CaseTimeline>>({
-    url: makeGatewayUrl("case-timelines", queryString),
+    url: makeGatewayUrl("cases", caseId, "timeline"),
     groupName: "cases",
     handleError,
     getHeaders

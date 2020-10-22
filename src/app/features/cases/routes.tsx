@@ -6,7 +6,7 @@ import CreatePage from "./components/pages/create/CreatePage"
 import DetailsPage from "./components/pages/details/DetailsPage"
 import EditPage from "./components/pages/edit/EditPage"
 
-import DebriefCreatePage from "./components/pages/debrief/CreatePage"
+import DebriefCreatePage from "./components/pages/debriefing/CreatePage"
 
 // NOTE: please add your own POC-specific routes here.
 export default {
@@ -21,7 +21,7 @@ export default {
         title: "Zaakdetails",
         icon: "Suitcase"
       },
-      ":id/debrief": {
+      ":id/debriefing": {
         Page: DebriefCreatePage,
         title: "Debrief terugkoppeling geven",
         icon: "DocumentEdit"
