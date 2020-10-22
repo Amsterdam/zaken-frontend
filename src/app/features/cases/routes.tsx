@@ -12,18 +12,20 @@ import DebriefCreatePage from "./components/pages/debrief/CreatePage"
 export default {
   "/cases": {
     title: "Zakenoverzicht",
-    Page: IndexPage
-  },
-  "/cases/create": CreatePage,
-  "/cases/edit/:id": EditPage,
-  "/cases/:id": {
-    Page: DetailsPage,
-    title: "Zaakdetails",
-    icon: "Suitcase"
-  },
-  "/cases/:id/debrief": {
-    Page: DebriefCreatePage,
-    title: "Debrief terugkoppeling geven",
-    icon: "DocumentEdit"
+    Page: IndexPage,
+    subRoutes: {
+      "create": CreatePage,
+      "edit/:id": EditPage,
+      ":id": {
+        Page: DetailsPage,
+        title: "Zaakdetails",
+        icon: "Suitcase"
+      },
+      ":id/debrief": {
+        Page: DebriefCreatePage,
+        title: "Debrief terugkoppeling geven",
+        icon: "DocumentEdit"
+      }
+    }
   }
 }
