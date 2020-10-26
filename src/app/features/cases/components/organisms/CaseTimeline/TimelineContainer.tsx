@@ -11,23 +11,28 @@ type Props = {
 const Div = styled.div`
   background-color: ${ themeColor("tint", "level2") };
   position: relative;
-  &:before {
-    content: "";
-    width: 1px;
-    height: 100%;
-    position: absolute;
-    left: ${ themeSpacing(5) };
-    top: 0;
-    background-color: ${ themeColor("tint", "level4") };
-  }
+  
   >div[role="button"]:not(:last-child) {
+    position: relative;
     border-bottom: ${ themeSpacing(5) } solid ${ themeColor("tint", "level1") };
-  }
-  @media screen and ${ breakpoint("min-width", "laptop") } {
     &:before {
-      left: ${ themeSpacing(11) };
+      content: "";
+      width: 2px;
+      height: 100%;
+      position: absolute;
+      left: ${ themeSpacing(5.5) };
+      top: 30px;
+      background-color: ${ themeColor("tint", "level4") };
     }
-  }
+
+    @media screen and ${ breakpoint("min-width", "laptop") } {
+        &:before {
+          left: ${ themeSpacing(11) };
+        }
+      }
+    }
+  
+  
 `
 
 const TimelineContainer: React.FC<Props> = ({ caseId }) => {
