@@ -1,17 +1,22 @@
 import React from "react"
-import { StyledAccordion, Dl } from "./CaseTimelineStyle"
+import { Dl } from "./CaseTimelineStyle"
 import { getDay }from "app/features/shared/components/atoms/DayDisplay/DayDisplay"
 import { displayDate } from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
+import { Timeline } from "app/features/shared/components/molecules/Timeline"
 
 type Props = {
   title: string
   isOpen?: boolean
+  active?: boolean
+  checked?: boolean
   thread: Components.Schemas.CaseTimelineThread
 }
 
 type ThreadsetProps = {
   title: string
   isOpen?: boolean
+  active?: boolean
+  checked?: boolean
   threadSet: Components.Schemas.CaseTimelineThread[]
 }
 
@@ -33,24 +38,45 @@ const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => (
   </Dl>
 )
 
-const TimelineThreadSet: React.FC<ThreadsetProps> = ({ isOpen, title, threadSet }) => {
-  const accordions = threadSet.map(thread =>
-    <StyledAccordion title={ `${ getDay(thread.date, true) } ${ displayDate(thread.date) }` } key={thread.id} isOpen={isOpen} >
-      <DefinitionList thread={thread} showDate={false} />
-    </StyledAccordion>
+const TimelineThreadSet: React.FC<ThreadsetProps> = ({ isOpen, checked, active, title, threadSet }) => {
+  const Timelines = threadSet.map(thread =>
+    <Timeline 
+      title={ `${ getDay(thread.date, true) } ${ displayDate(thread.date) }` } 
+      key={thread.id} 
+      isOpen={isOpen} 
+      checked={ checked }
+      largeCircle={false}
+      active={false}
+    >
+      <DefinitionList 
+        thread={thread} 
+        showDate={false} 
+      />
+    </Timeline>
   )
 
   return (
-    <StyledAccordion title={title} isOpen={isOpen}>
-      { accordions }
-    </StyledAccordion>
+    <Timeline 
+      title={title} 
+      isOpen={isOpen} 
+      checked={ checked }
+      active={active}  
+    >
+      { Timelines }
+    </Timeline>
   )
 }
 
-const TimelineBaseSet: React.FC<Props> = ({ title, isOpen, thread }) => (
-    <StyledAccordion title={title} isOpen={isOpen}>
+const TimelineBaseSet: React.FC<Props> = ({ title, isOpen, active,  checked, thread }) => (
+    <Timeline 
+      title={title} 
+      isOpen={isOpen} 
+      checked={ checked } 
+      customSize={true}
+      active={  active}
+    >
       <DefinitionList thread={thread} showDate={true} />
-    </StyledAccordion>
+    </Timeline>
   )
 
 export { TimelineBaseSet, TimelineThreadSet }

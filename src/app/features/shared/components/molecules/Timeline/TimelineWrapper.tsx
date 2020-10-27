@@ -1,0 +1,14 @@
+import React, { useRef } from "react"
+import useFocusWithArrows from "@datapunt/asc-ui/es/utils/hooks/useFocusWithArrows"
+
+const TimelineWrapper: React.FC = ({ children }) => {
+  const ref = useRef<HTMLDivElement>(null)
+  const { keyDown } = useFocusWithArrows(ref, true, true)
+  return (
+    <div role="button" tabIndex={-1} onKeyDown={keyDown} ref={ref}>
+      {children}
+    </div>
+  )
+}
+
+export default TimelineWrapper
