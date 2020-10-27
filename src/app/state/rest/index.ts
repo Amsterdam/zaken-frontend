@@ -161,9 +161,8 @@ export const usePanorama = (lat?: number, lon?: number, width?: number, aspect?:
 
 export const usePermitCheckmarks = (bagId: string) => {
   const handleError = useErrorHandler()
-  const queryString = qs.stringify({ bagId }, { addQueryPrefix: true })
   return useApiRequest<{ has_b_and_b_permit: boolean, has_vacation_rental_permit: boolean }>({
-    url: makeGatewayUrl("permits", "checkmarks", queryString),
+    url: makeGatewayUrl("addresses", bagId, "permits_checkmarks"),
     groupName: "permits",
     handleError,
     getHeaders
@@ -172,9 +171,8 @@ export const usePermitCheckmarks = (bagId: string) => {
 
 export const usePermitDetails = (bagId: string) => {
   const handleError = useErrorHandler()
-  const queryString = qs.stringify({ bagId }, { addQueryPrefix: true })
   return useApiRequest<Components.Schemas.DecosPermit[]>({
-    url: makeGatewayUrl("permits", "details", queryString),
+    url: makeGatewayUrl("addresses", bagId, "permits_details"),
     groupName: "permits",
     handleError,
     getHeaders
