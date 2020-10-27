@@ -16,8 +16,8 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <script
-      src="https://browser.sentry-cdn.com/5.26.0/bundle.min.js"
-      integrity="sha384-VGljl8BTZL6Py4DmlOaYmfkOwp8mD3PrmD2L+fN446PZpsrIHuDhX7mnV/L5KuNR"
+      src="https://browser.sentry-cdn.com/5.27.1/bundle.min.js"
+      integrity="sha384-oLDTaC1h1q52AeEe8tHrz2rHl4He0XwOB3/lsZ4kafbI6glka5MfnFbK9xkLAx44"
       crossorigin="anonymous"
     ></script>
     <script>
@@ -29,9 +29,9 @@
         Sentry.init({
           dsn,
           environment,
-          integrations: [new Sentry.Integrations.BrowserTracing()],
           release
         })
+        undefinedFunction()
       })()
     </script>
     <div id="root"></div>
