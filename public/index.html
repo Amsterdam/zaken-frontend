@@ -29,6 +29,7 @@
         Sentry.init({
           dsn,
           environment,
+          integrations: [new Sentry.Integrations.BrowserTracing()],
           release
         })
       })()
