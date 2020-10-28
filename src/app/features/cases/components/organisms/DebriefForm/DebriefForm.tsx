@@ -6,7 +6,7 @@ import ScaffoldFields from "app/features/shared/components/molecules/Form/Scaffo
 import createScaffoldProps from "./scaffold"
 
 type Props = {
-  caseId: NonNullable<Components.Schemas.Case["identification"]>
+  caseId: Components.Schemas.Case["id"]
   onSubmit: (data: Components.Schemas.Debriefing) => Promise<void>
   isLoading?: boolean
   initialValues?: Components.Schemas.Debriefing

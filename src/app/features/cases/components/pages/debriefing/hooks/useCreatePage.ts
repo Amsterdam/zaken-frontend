@@ -5,7 +5,7 @@ import to from "app/features/shared/routing/to"
 import { useDebriefings } from "app/state/rest"
 import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
 
-const useCreatePage = (caseId: NonNullable<Components.Schemas.Case["identification"]>) => {
+const useCreatePage = (caseId: Components.Schemas.Case["id"]) => {
   const { execPost } = useDebriefings({ lazy: true })
   const { addSuccessFlashMessage } = useFlashMessages()
 

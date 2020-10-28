@@ -9,7 +9,7 @@ import styled from "styled-components"
 import { themeSpacing } from "@datapunt/asc-ui"
 
 type Props = {
-  id: NonNullable<Components.Schemas.Case["identification"]>
+  id: Components.Schemas.Case["id"]
 }
 
 const Wrapper = styled.div`

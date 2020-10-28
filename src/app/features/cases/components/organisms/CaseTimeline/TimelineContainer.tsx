@@ -5,13 +5,13 @@ import styled from "styled-components"
 import { TimelineThreadSet, TimelineBaseSet } from "./TimelineThreadSet"
 
 type Props = {
-  caseId: string | undefined
+  caseId: Components.Schemas.Case["id"] 
 }
 
 const Div = styled.div`
   background-color: ${ themeColor("tint", "level2") };
   position: relative;
-  
+
   >div[role="button"]:not(:last-child) {
     position: relative;
     border-bottom: ${ themeSpacing(5) } solid ${ themeColor("tint", "level1") };
@@ -31,8 +31,8 @@ const Div = styled.div`
         }
       }
     }
-  
-  
+
+
 `
 
 const TimelineContainer: React.FC<Props> = ({ caseId }) => {

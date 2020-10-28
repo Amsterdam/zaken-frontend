@@ -48,7 +48,7 @@ export const useCases = (state_date?: string, options?: Options) => {
   })
 }
 
-export const useCase = (id: NonNullable<Components.Schemas.Case["identification"]>, options?: Options) => {
+export const useCase = (id: Components.Schemas.Case["id"], options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.Case>({
     ...options,
@@ -59,7 +59,7 @@ export const useCase = (id: NonNullable<Components.Schemas.Case["identification"
   })
 }
 
-export const useCaseFines = (id: NonNullable<Components.Schemas.Case["identification"]>, options?: Options) => {
+export const useCaseFines = (id: Components.Schemas.Case["id"], options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.FineList>({
     ...options,
@@ -70,7 +70,7 @@ export const useCaseFines = (id: NonNullable<Components.Schemas.Case["identifica
   })
 }
 
-export const useCaseResidents = (id: NonNullable<Components.Schemas.Case["identification"]>, options?: Options) => {
+export const useCaseResidents = (id: Components.Schemas.Case["id"], options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.Residents>({
     ...options,
@@ -104,7 +104,7 @@ export const useDebriefings = (options?: Options) => {
   })
 }
 
-export const useCaseTimeline = (caseId: NonNullable<Components.Schemas.Case["identification"]>) => {
+export const useCaseTimeline = (caseId: Components.Schemas.Case["id"]) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.CaseTimeline[]>({
     url: makeGatewayUrl("cases", caseId, "timeline"),
