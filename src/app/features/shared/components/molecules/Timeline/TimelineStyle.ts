@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components"
-import Button from "@datapunt/asc-ui/es/components/Button"
+import { Button } from "@datapunt/asc-ui"
 import { IconStyle } from "@datapunt/asc-ui/es/components/Icon"
 import { themeColor, themeSpacing, breakpoint, Icon } from "@datapunt/asc-ui"
 
