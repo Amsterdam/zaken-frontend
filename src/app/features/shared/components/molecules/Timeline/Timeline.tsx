@@ -1,7 +1,6 @@
 import { ChevronDown, Checkmark } from "@datapunt/asc-assets"
 import React, { useCallback, useEffect, useState } from "react"
 import { useUID } from "react-uid"
-// import { ButtonStyleProps } from "@datapunt/asc-ui/es/components/Button/ButtonStyle"
 import { Theme } from "@datapunt/asc-ui/es/types/Theme"
 
 import {
@@ -13,6 +12,7 @@ import {
   CircleWrapperStyle,
   CircleStyle,
   Background,
+  NestedContainer,
   Props as StyleProps
 } from "./TimelineStyle"
 
@@ -65,13 +65,10 @@ const Timeline: React.FC<
   id: idProp,
   isOpen,
   onToggle,
-  noMultiline,
-  active,
-  checked,
-  circleBackgroundColor,
-  done: doneProp,
+  done,
   largeCircle = true,
   onClick,
+  nested,
   ...otherProps
 
 }) => {
@@ -79,11 +76,6 @@ const Timeline: React.FC<
   const id = idProp || uid
   const [open, setOpen] = useState(isOpen ?? false)
 
-  // The `checked` item is `done`, but the `active` item is not `done`
-  //checked = true
-  const done = (doneProp || checked) && !active
-  const small = !largeCircle
-  
   useEffect(() => {
     if (isOpen !== undefined && isOpen !== open) {
       setOpen(isOpen)
@@ -102,36 +94,38 @@ const Timeline: React.FC<
   return (
     <>
       <Background isOpen={open} />
-      <CircleWrapperStyle isOpen={open} {...{ done }}>
-        <CircleStyle
-          size={13}
-          {...{ active, checked, circleBackgroundColor, done, small }}
-        >
-          {checked && <Checkmark />}
-        </CircleStyle>
-      </CircleWrapperStyle>
-      <TimelineItem isOpen={open}>
-        <TimelineButton
-          aria-controls={id}
-          aria-expanded={open}
-          id={`label-${ id }`}
-          type="button"
-          variant="blank"
-          iconRight={<ChevronDown />}
-          isOpen={open}
-          title={title}
-          onClick={handleClick}
-          {...otherProps}
-        >
-          
-          <TimelineButtonContent noMultiline={noMultiline}>
-            {title}
-          </TimelineButtonContent>
-        </TimelineButton>
-        <TimelineContent isOpen={open} aria-labelledby={`label-${ id }`} id={id}>
-          {children}
-        </TimelineContent>
-      </TimelineItem>
+      <NestedContainer nested={nested}>
+        <CircleWrapperStyle isOpen={open} nested={nested} {...{ done }}>
+          <CircleStyle
+            size={13}
+            {...{ done, largeCircle }}
+          >
+            {done && <Checkmark />}
+          </CircleStyle>
+        </CircleWrapperStyle>
+        <TimelineItem isOpen={open}>
+          <TimelineButton
+            aria-controls={id}
+            aria-expanded={open}
+            id={`label-${ id }`}
+            type="button"
+            variant="blank"
+            iconRight={<ChevronDown />}
+            isOpen={open}
+            title={title}
+            onClick={handleClick}
+            {...otherProps}
+          >
+            
+            <TimelineButtonContent>
+              {title}
+            </TimelineButtonContent>
+          </TimelineButton>
+          <TimelineContent isOpen={open} aria-labelledby={`label-${ id }`} id={id} nested={nested}>
+            {children}
+          </TimelineContent>
+        </TimelineItem>
+      </NestedContainer>
     </>
   )
 }

@@ -14,9 +14,18 @@ const Div = styled.div`
     position: relative;
     display: flex;
     border-bottom: 20px solid white;
+
+    &:last-child{
+      //hide the thin line in the last timelinecontainer
+      >div:nth-child(2){
+        >div:first-child{
+          &:after{
+            display: none;
+          }
+        }
+      }
     }
-  
-  
+  }
 `
 
 const TimelineContainer: React.FC<Props> = ({ caseId }) => {
@@ -25,15 +34,16 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
   return (
     <>
       <Div>
-        { data?.map(({ casetimelinethread_set, subject, is_done }, index) =>
+        { data?.map(({ casetimelinethread_set, subject, is_done }, index) => {
+          console.log("is_done", is_done)
+          return (
           <TimelineWrapper key={ index }>
             { casetimelinethread_set?.length > 1
               ? <TimelineThreadSet
                 title={`${ subject ?? "" } (${ casetimelinethread_set?.length ?? 0 })`}
                 threadSet={ casetimelinethread_set ?? [] }
                 isOpen={ !is_done }
-                checked={ is_done }
-                active={ !is_done }
+                done={ is_done }
               />
               : <TimelineBaseSet
                 title={ subject ?? "" }
@@ -41,7 +51,8 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
                 isOpen={ !is_done } />
             }
           </TimelineWrapper>
-        ) }
+          
+        ) })}
       </Div>
       { data?.length === 0 &&
         <p>Geen tijdlijn evenementen beschikbaar</p>

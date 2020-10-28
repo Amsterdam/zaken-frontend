@@ -5,20 +5,9 @@ import { themeColor, themeSpacing, breakpoint, Icon } from "@datapunt/asc-ui"
 
 export type Props = {
   isOpen?: boolean
-  active?: boolean
-  checked?: boolean
-  circleBackgroundColor?: string
-  clickable?: boolean
-  customSize?: boolean
-  disabled?: boolean
-  disabledTextColor?: string
   done?: boolean
-  doneTextColor?: string
-  heading?: string
-  headingProps?: any
-  highlightActive?: boolean
   largeCircle?: boolean
-  small?: boolean
+  nested?: boolean
 } & React.AnchorHTMLAttributes<HTMLAnchorElement> &
   React.HTMLAttributes<HTMLDivElement>;
 
@@ -61,11 +50,11 @@ const CircleWrapperStyle = styled.div<Props>`
     position: absolute;
     display: block;
     width: 2px;
-    height: calc(100% + ${ themeSpacing(12) });
-    top: ${ themeSpacing(3) };
+    height: calc(100% + ${ themeSpacing(10) });
+    //top: ${ themeSpacing(3) };
+    top: ${ ({ nested }) => nested ? themeSpacing(-5.5) : themeSpacing(3) };
     left: calc(50% - 1px);
-    background-color: ${ ({ done }) =>
-      done ? themeColor("primary", "main") : themeColor("tint", "level4") };
+    background-color: ${ themeColor("tint", "level4") };
   }
 `
 const CircleStyle = styled(Icon)<Props>`
@@ -83,36 +72,50 @@ const CircleStyle = styled(Icon)<Props>`
     width: ${ circleSize.desktop.large };
     height: ${ circleSize.desktop.large };
   }
-  ${ ({ small }) =>
-    small &&
+  ${ ({ largeCircle }) =>
+    !largeCircle &&
     css`
       width: ${ circleSize.mobile.small };
       height: ${ circleSize.mobile.small };
+      margin-top: 4px;
       @media ${ breakpoint("min-width", "tabletM") } {
         width: ${ circleSize.desktop.small };
         height: ${ circleSize.desktop.small };
       }
     ` }
-  ${ ({ active, done }) =>
-    (active || done) &&
+  ${ ({ done }) =>
+    (!done) &&
     css`
       background-color: ${ themeColor("primary", "main") };
     ` }
-  ${ ({ checked }) =>
-    checked &&
+  ${ ({ done }) =>
+    done &&
     css`
       color: ${ themeColor("tint", "level1") };
       fill: ${ themeColor("tint", "level1") };
       transform: rotate(0deg) !important;
     ` }
-  ${ ({ circleBackgroundColor }) =>
-    circleBackgroundColor &&
-    css`
-      background-color: ${ circleBackgroundColor };
-    ` }
 `
+
 const TimelineItem = styled.div<Props>`
   flex: 1;
+`
+
+const NestedContainer = styled.div<Props>`
+  display: flex;
+  margin-left: ${ ({ nested }) => nested && "-32px" };
+  @media ${ breakpoint("min-width", "tabletM") } {
+    margin-left: ${ ({ nested }) => nested && "-60px" };
+  }
+
+  &:last-child{
+    >div:first-child{
+      &:after{
+        display: ${ ({ nested }) => nested && "none" };
+      }
+    }
+  }
+  
 `
 
 const TimelineContent = styled.div<Props>`
@@ -177,4 +180,4 @@ const Background = styled.div<Props>`
   z-index: -1;
   `
 
-export { TimelineItem, TimelineButton, TimelineContent, TimelineButtonContent, CircleWrapperStyle, CircleStyle, Background }
+export { TimelineItem, TimelineButton, TimelineContent, TimelineButtonContent, CircleWrapperStyle, CircleStyle, Background, NestedContainer }

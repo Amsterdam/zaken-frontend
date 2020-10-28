@@ -1,5 +1,6 @@
 import React from "react"
-import { Dl } from "./CaseTimelineStyle"
+import styled from "styled-components"
+import { themeColor, themeSpacing } from "@datapunt/asc-ui"
 import { getDay }from "app/features/shared/components/atoms/DayDisplay/DayDisplay"
 import { displayDate } from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
 import { Timeline } from "app/features/shared/components/molecules/Timeline"
@@ -7,16 +8,14 @@ import { Timeline } from "app/features/shared/components/molecules/Timeline"
 type Props = {
   title: string
   isOpen?: boolean
-  active?: boolean
-  checked?: boolean
+  done?: boolean
   thread: Components.Schemas.CaseTimelineThread
 }
 
 type ThreadsetProps = {
   title: string
   isOpen?: boolean
-  active?: boolean
-  checked?: boolean
+  done?: boolean
   threadSet: Components.Schemas.CaseTimelineThread[]
 }
 
@@ -24,6 +23,34 @@ type DLProps = {
   thread: Components.Schemas.CaseTimelineThread
   showDate: boolean
 }
+
+const Dl = styled.dl`
+max-width: 500px;
+
+&:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+dd, dt {
+  width: 50%;
+  padding: ${ themeSpacing(1) } 0; 
+}
+dt {
+  float: left;
+  clear: both;
+  word-wrap: break-word;
+  padding-right: ${ themeSpacing(5) }; 
+  color: ${ themeColor("tint","level6") }
+}
+dd {
+  margin: 0;
+  padding-right: 20px;
+  float: right;
+  clear: right;
+}
+`
 
 const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => (
   <Dl>
@@ -38,15 +65,15 @@ const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => (
   </Dl>
 )
 
-const TimelineThreadSet: React.FC<ThreadsetProps> = ({ isOpen, checked, active, title, threadSet }) => {
+const TimelineThreadSet: React.FC<ThreadsetProps> = ({ isOpen, done, title, threadSet }) => { //nested item
   const Timelines = threadSet.map(thread =>
     <Timeline 
       title={ `${ getDay(thread.date, true) } ${ displayDate(thread.date) }` } 
       key={thread.id} 
       isOpen={isOpen} 
-      checked={ checked }
+      done={ done }
       largeCircle={false}
-      active={false}
+      nested={true}
     >
       <DefinitionList 
         thread={thread} 
@@ -59,21 +86,18 @@ const TimelineThreadSet: React.FC<ThreadsetProps> = ({ isOpen, checked, active, 
     <Timeline 
       title={title} 
       isOpen={isOpen} 
-      checked={ checked }
-      active={active}  
+      done={ done }
     >
       { Timelines }
     </Timeline>
   )
 }
 
-const TimelineBaseSet: React.FC<Props> = ({ title, isOpen, active,  checked, thread }) => (
+const TimelineBaseSet: React.FC<Props> = ({ title, isOpen,  done, thread }) => (
     <Timeline 
       title={title} 
       isOpen={isOpen} 
-      checked={ checked } 
-      customSize={true}
-      active={  active}
+      done={ done } 
     >
       <DefinitionList thread={thread} showDate={true} />
     </Timeline>
