@@ -81,11 +81,11 @@ export const useCaseResidents = (id: Components.Schemas.Case["id"], options?: Op
   })
 }
 
-export const useDebriefings = (options?: Options) => {
+export const useDebriefings = (id?: number, options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<APIListResponse<Components.Schemas.Debriefing>>({
+  return useApiRequest<Components.Schemas.Debriefing>({
     ...options,
-    url: makeGatewayUrl("debriefings"),
+    url: makeGatewayUrl("debriefings", id),
     groupName: "cases",
     handleError,
     getHeaders

@@ -9,7 +9,7 @@ type Props = {
   caseId: Components.Schemas.Case["id"]
   onSubmit: (data: Components.Schemas.Debriefing) => Promise<void>
   isLoading?: boolean
-  initialValues?: Components.Schemas.Debriefing
+  initialValues?: Partial<Components.Schemas.Debriefing>
 }
 
 const DebriefForm: React.FC<Props> = ({ caseId, isLoading, onSubmit }) => (

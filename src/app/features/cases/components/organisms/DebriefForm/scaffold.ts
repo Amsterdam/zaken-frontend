@@ -11,9 +11,9 @@ export default (caseId: Components.Schemas.Case["id"]) => {
         label: "Is er sprake van een overtreding?",
         name: "violation",
         options: {
-          "true": "Ja, overtreding",
-          "false": "Nee, geen overtreding",
-          "other": "Nader onderzoek nodig"
+          "YES": "Ja, overtreding",
+          "NO": "Nee, geen overtreding",
+          "ADDITIONAL_RESEARCH_REQUIRED": "Nader onderzoek nodig"
         }
       }
     },
