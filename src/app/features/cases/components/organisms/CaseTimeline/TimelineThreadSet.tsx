@@ -11,7 +11,7 @@ import to from "app/features/shared/routing/to"
 
 type Props = {
   title: string
-  caseId: string | undefined
+  caseId: number
   isOpen?: boolean
   isDone?: boolean
   isEditable?: boolean

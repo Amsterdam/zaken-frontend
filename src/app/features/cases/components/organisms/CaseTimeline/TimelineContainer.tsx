@@ -1,4 +1,3 @@
-import { themeColor } from "@datapunt/asc-ui"
 import { TimelineWrapper } from "app/features/shared/components/molecules/Timeline"
 import { useCaseTimeline } from "app/state/rest"
 import React from "react"
@@ -10,26 +9,22 @@ type Props = {
 }
 
 const Div = styled.div`
-  background-color: ${ themeColor("tint", "level2") };
+>div[role="button"] {
   position: relative;
+  display: flex;
+  border-bottom: 20px solid white;
 
-  >div[role="button"]:not(:last-child) {
-    position: relative;
-    display: flex;
-    border-bottom: 20px solid white;
-
-    &:last-child{
-      //hide the thin line in the last timelinecontainer
-      >div:nth-child(2){
-        >div:first-child{
-          &:after{
-            display: none;
-          }
+  &:last-child{
+    //hide the thin line in the last timelinecontainer
+    >div:nth-child(2){
+      >div:first-child{
+        &:after{
+          display: none;
         }
       }
     }
   }
-
+}
 `
 
 const TimelineContainer: React.FC<Props> = ({ caseId }) => {
