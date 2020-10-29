@@ -1,122 +1,122 @@
 declare namespace Components {
     namespace Schemas {
-        export interface Address {
-            bag_id: string;
-            readonly id: number;
-            readonly full_address: string;
-            readonly street_name: string;
-            readonly number: number;
-            readonly suffix_letter: string;
-            readonly suffix: string;
-            readonly postal_code: string;
-            readonly lat: number; // float
-            readonly lng: number; // float
+        export type Address = {
+            bag_id: string
+            readonly id: number
+            readonly full_address: string
+            readonly street_name: string
+            readonly number: number
+            readonly suffix_letter: string
+            readonly suffix: string
+            readonly postal_code: string
+            readonly lat: number // float
+            readonly lng: number // float
         }
-        export interface Case {
-            readonly id: number;
-            address: Address;
-            case_states: CaseState[];
+        export type Case = {
+            readonly id: number
+            address: Address
+            case_states: CaseState[]
             readonly current_state: {
-                case: number;
-                readonly status_name: string;
-                status: number;
-                state_date: string; // date
-                users: string /* uuid */[];
-            };
-            identification?: string | null;
-            start_date?: string | null; // date
-            end_date?: string | null; // date
+                case: number
+                readonly status_name: string
+                status: number
+                state_date: string // date
+                users: string /* uuid */[]
+            }
+            identification?: string | null
+            start_date?: string | null // date
+            end_date?: string | null // date
         }
-        export interface CaseState {
-            case: number;
-            readonly status_name: string;
-            status: number;
-            state_date: string; // date
-            users: string /* uuid */[];
+        export type CaseState = {
+            case: number
+            readonly status_name: string
+            status: number
+            state_date: string // date
+            users: string /* uuid */[]
         }
-        export interface CaseTimeline {
-            readonly id: number;
-            readonly casetimelinethread_set: CaseTimelineThread[];
-            subject: string;
-            is_done?: boolean;
-            case: number;
+        export type CaseTimeline = {
+            readonly id: number
+            readonly casetimelinethread_set: CaseTimelineThread[]
+            subject: string
+            is_done?: boolean
+            case: number
         }
-        export interface CaseTimelineReaction {
-            readonly id: number;
-            comment: string;
-            readonly date: string; // date
-            timeline_item: number;
-            author: string; // uuid
+        export type CaseTimelineReaction = {
+            readonly id: number
+            comment: string
+            readonly date: string // date
+            timeline_item: number
+            author: string // uuid
         }
-        export interface CaseTimelineThread {
-            readonly id: number;
-            readonly casettimelinereaction_set: CaseTimelineReaction[];
-            readonly date: string; // date
+        export type CaseTimelineThread = {
+            readonly id: number
+            readonly casettimelinereaction_set: CaseTimelineReaction[]
+            readonly date: string // date
             parameters?: {
-                [name: string]: any;
-            };
-            notes?: string | null;
-            subject: number;
-            authors: string /* uuid */[];
+                [name: string]: any
+            }
+            notes?: string | null
+            subject: number
+            authors: string /* uuid */[]
         }
-        export interface Debriefing {
-            readonly id: number;
-            case: number;
-            author: string; // uuid
-            readonly date_added: string; // date-time
-            readonly date_modified: string; // date-time
-            violation?: ViolationEnum;
-            feedback: string;
+        export type Debriefing = {
+            readonly id: number
+            case: number
+            author: string // uuid
+            readonly date_added: string // date-time
+            readonly date_modified: string // date-time
+            violation?: ViolationEnum
+            feedback: string
         }
-        export interface DebriefingCreate {
-            readonly id: number;
-            violation?: ViolationEnum;
-            feedback: string;
-            case: number;
+        export type DebriefingCreate = {
+            readonly id: number
+            violation?: ViolationEnum
+            feedback: string
+            case: number
         }
-        export interface DecosPermit {
-            permit_granted?: boolean;
-            permit_type?: "BED_AND_BREAKFAST" | "VAKANTIEVERHUUR" | "PERMIT_UNKNOWN";
-            processed: string | null;
-            date_from: string | null; // date
-            date_to?: string | null; // date
-            decos_join_web_url?: string; // uri ^(?:[a-z0-9.+-]*)://(?:[^\s:@/]+(?::[^\s:@/]*)?@)?(?:(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)(?:\.(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)){3}|\[[0-9a-f:.]+\]|([a-z¡-￿0-9](?:[a-z¡-￿0-9-]{0,61}[a-z¡-￿0-9])?(?:\.(?!-)[a-z¡-￿0-9-]{1,63}(?<!-))*\.(?!-)(?:[a-z¡-￿-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\.?|localhost))(?::\d{2,5})?(?:[/?#][^\s]*)?\Z
+        export type DecosPermit = {
+            permit_granted?: boolean
+            permit_type?: "BED_AND_BREAKFAST" | "VAKANTIEVERHUUR" | "PERMIT_UNKNOWN"
+            processed: string | null
+            date_from: string | null // date
+            date_to?: string | null // date
+            decos_join_web_url?: string // uri ^(?:[a-z0-9.+-]*)://(?:[^\s:@/]+(?::[^\s:@/]*)?@)?(?:(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)(?:\.(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)){3}|\[[0-9a-f:.]+\]|([a-z¡-￿0-9](?:[a-z¡-￿0-9-]{0,61}[a-z¡-￿0-9])?(?:\.(?!-)[a-z¡-￿0-9-]{1,63}(?<!-))*\.(?!-)(?:[a-z¡-￿-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\.?|localhost))(?::\d{2,5})?(?:[/?#][^\s]*)?\Z
         }
-        export interface Fine {
-            identificatienummer: string;
-            vorderingnummer: number;
-            jaar: number;
-            soort_vordering: SoortVorderingEnum;
-            omschrijving_soort_vordering: string;
-            indicatie_publiekrechtelijk: IndicatiePubliekrechtelijkEnum;
-            subjectnr: number; // int64
-            opgemaaktenaam: string;
-            subjectnr_opdrachtgever: number;
-            opgemaaktenaam_opdrachtgever: string;
-            runnr: number;
-            omschrijving_run: string;
-            code_runwijze: string;
-            omschrijving_runwijze: string;
-            dagtekening: string; // date-time
-            vervaldatum: string; // date-time
-            indicatie_combi_dwangbevel: IndicatieCombiDwangbevelEnum;
-            notatekst: string | null;
-            omschrijving: string | null;
-            invorderingstatus: string;
-            indicatie_bet_hern_bevel: IndicatieBetHernBevelEnum;
-            landcode: string | null;
-            kenteken: string | null;
-            bonnummer: string | null;
-            bedrag_opgelegd: string; // decimal
-            bedrag_open_post_incl_rente: string; // decimal
-            totaalbedrag_open_kosten: string; // decimal
-            bedrag_open_rente: string; // decimal
-            reden_opschorting: string | null;
-            omschrijving_1: string | null;
-            omschrijving_2: string | null;
+        export type Fine = {
+            identificatienummer: string
+            vorderingnummer: number
+            jaar: number
+            soort_vordering: SoortVorderingEnum
+            omschrijving_soort_vordering: string
+            indicatie_publiekrechtelijk: IndicatiePubliekrechtelijkEnum
+            subjectnr: number // int64
+            opgemaaktenaam: string
+            subjectnr_opdrachtgever: number
+            opgemaaktenaam_opdrachtgever: string
+            runnr: number
+            omschrijving_run: string
+            code_runwijze: string
+            omschrijving_runwijze: string
+            dagtekening: string // date-time
+            vervaldatum: string // date-time
+            indicatie_combi_dwangbevel: IndicatieCombiDwangbevelEnum
+            notatekst: string | null
+            omschrijving: string | null
+            invorderingstatus: string
+            indicatie_bet_hern_bevel: IndicatieBetHernBevelEnum
+            landcode: string | null
+            kenteken: string | null
+            bonnummer: string | null
+            bedrag_opgelegd: string // decimal
+            bedrag_open_post_incl_rente: string // decimal
+            totaalbedrag_open_kosten: string // decimal
+            bedrag_open_rente: string // decimal
+            reden_opschorting: string | null
+            omschrijving_1: string | null
+            omschrijving_2: string | null
         }
-        export interface FineList {
-            items: Fine[];
+        export type FineList = {
+            items: Fine[]
         }
         export type GeslachtsaanduidingEnum = "M" | "V" | "X";
         export type HasBAndBPermitEnum = "True" | "False" | "UNKNOWN";
@@ -124,193 +124,193 @@ declare namespace Components {
         export type IndicatieBetHernBevelEnum = "J" | "N";
         export type IndicatieCombiDwangbevelEnum = "J" | "N" | "O";
         export type IndicatiePubliekrechtelijkEnum = "J" | "N";
-        export interface OIDCAuthenticate {
-            code: string;
+        export type OIDCAuthenticate = {
+            code: string
         }
-        export interface PaginatedCaseList {
+        export type PaginatedCaseList = {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count?: number
             /**
              * example:
              * http://api.example.org/accounts/?page=4
              */
-            next?: string | null; // uri
+            next?: string | null // uri
             /**
              * example:
              * http://api.example.org/accounts/?page=2
              */
-            previous?: string | null; // uri
-            results?: Case[];
+            previous?: string | null // uri
+            results?: Case[]
         }
-        export interface PaginatedCaseTimelineList {
+        export type PaginatedCaseTimelineList = {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count?: number
             /**
              * example:
              * http://api.example.org/accounts/?page=4
              */
-            next?: string | null; // uri
+            next?: string | null // uri
             /**
              * example:
              * http://api.example.org/accounts/?page=2
              */
-            previous?: string | null; // uri
-            results?: CaseTimeline[];
+            previous?: string | null // uri
+            results?: CaseTimeline[]
         }
-        export interface PaginatedCaseTimelineReactionList {
+        export type PaginatedCaseTimelineReactionList = {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count?: number
             /**
              * example:
              * http://api.example.org/accounts/?page=4
              */
-            next?: string | null; // uri
+            next?: string | null // uri
             /**
              * example:
              * http://api.example.org/accounts/?page=2
              */
-            previous?: string | null; // uri
-            results?: CaseTimelineReaction[];
+            previous?: string | null // uri
+            results?: CaseTimelineReaction[]
         }
-        export interface PaginatedCaseTimelineThreadList {
+        export type PaginatedCaseTimelineThreadList = {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count?: number
             /**
              * example:
              * http://api.example.org/accounts/?page=4
              */
-            next?: string | null; // uri
+            next?: string | null // uri
             /**
              * example:
              * http://api.example.org/accounts/?page=2
              */
-            previous?: string | null; // uri
-            results?: CaseTimelineThread[];
+            previous?: string | null // uri
+            results?: CaseTimelineThread[]
         }
-        export interface PatchedAddress {
-            bag_id?: string;
-            readonly id?: number;
-            readonly full_address?: string;
-            readonly street_name?: string;
-            readonly number?: number;
-            readonly suffix_letter?: string;
-            readonly suffix?: string;
-            readonly postal_code?: string;
-            readonly lat?: number; // float
-            readonly lng?: number; // float
+        export type PatchedAddress = {
+            bag_id?: string
+            readonly id?: number
+            readonly full_address?: string
+            readonly street_name?: string
+            readonly number?: number
+            readonly suffix_letter?: string
+            readonly suffix?: string
+            readonly postal_code?: string
+            readonly lat?: number // float
+            readonly lng?: number // float
         }
-        export interface PatchedCase {
-            readonly id?: number;
-            address?: PatchedAddress;
-            case_states?: PatchedCaseState[];
+        export type PatchedCase = {
+            readonly id?: number
+            address?: PatchedAddress
+            case_states?: PatchedCaseState[]
             readonly current_state?: {
-                case: number;
-                readonly status_name: string;
-                status: number;
-                state_date: string; // date
-                users: string /* uuid */[];
-            };
-            identification?: string | null;
-            start_date?: string | null; // date
-            end_date?: string | null; // date
+                case: number
+                readonly status_name: string
+                status: number
+                state_date: string // date
+                users: string /* uuid */[]
+            }
+            identification?: string | null
+            start_date?: string | null // date
+            end_date?: string | null // date
         }
-        export interface PatchedCaseState {
-            case?: number;
-            readonly status_name?: string;
-            status?: number;
-            state_date?: string; // date
-            users?: string /* uuid */[];
+        export type PatchedCaseState = {
+            case?: number
+            readonly status_name?: string
+            status?: number
+            state_date?: string // date
+            users?: string /* uuid */[]
         }
-        export interface PatchedCaseTimeline {
-            readonly id?: number;
-            readonly casetimelinethread_set?: CaseTimelineThread[];
-            subject?: string;
-            is_done?: boolean;
-            case?: number;
+        export type PatchedCaseTimeline = {
+            readonly id?: number
+            readonly casetimelinethread_set?: CaseTimelineThread[]
+            subject?: string
+            is_done?: boolean
+            case?: number
         }
-        export interface PatchedCaseTimelineReaction {
-            readonly id?: number;
-            comment?: string;
-            readonly date?: string; // date
-            timeline_item?: number;
-            author?: string; // uuid
+        export type PatchedCaseTimelineReaction = {
+            readonly id?: number
+            comment?: string
+            readonly date?: string // date
+            timeline_item?: number
+            author?: string // uuid
         }
-        export interface PatchedCaseTimelineThread {
-            readonly id?: number;
-            readonly casettimelinereaction_set?: CaseTimelineReaction[];
-            readonly date?: string; // date
+        export type PatchedCaseTimelineThread = {
+            readonly id?: number
+            readonly casettimelinereaction_set?: CaseTimelineReaction[]
+            readonly date?: string // date
             parameters?: {
-                [name: string]: any;
-            };
-            notes?: string | null;
-            subject?: number;
-            authors?: string /* uuid */[];
+                [name: string]: any
+            }
+            notes?: string | null
+            subject?: number
+            authors?: string /* uuid */[]
         }
-        export interface PatchedDebriefing {
-            readonly id?: number;
-            case?: number;
-            author?: string; // uuid
-            readonly date_added?: string; // date-time
-            readonly date_modified?: string; // date-time
-            violation?: ViolationEnum;
-            feedback?: string;
+        export type PatchedDebriefing = {
+            readonly id?: number
+            case?: number
+            author?: string // uuid
+            readonly date_added?: string // date-time
+            readonly date_modified?: string // date-time
+            violation?: ViolationEnum
+            feedback?: string
         }
-        export interface PermitCheckmark {
-            has_b_and_b_permit: HasBAndBPermitEnum;
-            has_vacation_rental_permit: HasVacationRentalPermitEnum;
+        export type PermitCheckmark = {
+            has_b_and_b_permit: HasBAndBPermitEnum
+            has_vacation_rental_permit: HasVacationRentalPermitEnum
         }
         export type PermitTypeEnum = "BED_AND_BREAKFAST" | "VAKANTIEVERHUUR" | "PERMIT_UNKNOWN";
-        export interface Push {
-            identification: string;
-            case_type: string;
-            bag_id: string;
-            start_date: string; // date
-            end_date?: string; // date
-            states?: PushState[];
+        export type Push = {
+            identification: string
+            case_type: string
+            bag_id: string
+            start_date: string // date
+            end_date?: string // date
+            states?: PushState[]
         }
-        export interface PushState {
-            name: string;
-            start_date: string; // date
-            end_date?: string | null; // date
-            gauge_date?: string | null; // date
-            invoice_identification: string;
+        export type PushState = {
+            name: string
+            start_date: string // date
+            end_date?: string | null // date
+            gauge_date?: string | null // date
+            invoice_identification: string
         }
-        export interface Resident {
-            geboortedatum: string; // date-time
-            geslachtsaanduiding: GeslachtsaanduidingEnum;
-            geslachtsnaam: string;
-            voorletters: string;
-            voornamen: string;
-            voorvoegsel_geslachtsnaam?: string;
-            datum_begin_relatie_verblijadres: string; // date-time
+        export type Resident = {
+            geboortedatum: string // date-time
+            geslachtsaanduiding: GeslachtsaanduidingEnum
+            geslachtsnaam: string
+            voorletters: string
+            voornamen: string
+            voorvoegsel_geslachtsnaam?: string
+            datum_begin_relatie_verblijadres: string // date-time
         }
-        export interface Residents {
-            results: Resident[];
+        export type Residents = {
+            results: Resident[]
         }
         export type SoortVorderingEnum = "PBF" | "PBN" | "PRV" | "SOC";
-        export interface Test {
-            request_url: string;
+        export type Test = {
+            request_url: string
         }
-        export interface TimelineUpdate {
-            thread_id: string;
-            subject: string;
+        export type TimelineUpdate = {
+            thread_id: string
+            subject: string
             parameters: {
-                [name: string]: any;
-            } | null;
-            notes: string | null;
-            authors: string | null;
+                [name: string]: any
+            } | null
+            notes: string | null
+            authors: string | null
         }
         export type ViolationEnum = "NO" | "YES" | "ADDITIONAL_RESEARCH_REQUIRED";
     }
@@ -320,8 +320,8 @@ declare namespace Paths {
         namespace Parameters {
             export type BagId = string;
         }
-        export interface PathParameters {
-            bag_id: Parameters.BagId;
+        export type PathParameters = {
+            bag_id: Parameters.BagId
         }
         namespace Responses {
             export type $200 = Components.Schemas.PermitCheckmark;
@@ -331,8 +331,8 @@ declare namespace Paths {
         namespace Parameters {
             export type BagId = string;
         }
-        export interface PathParameters {
-            bag_id: Parameters.BagId;
+        export type PathParameters = {
+            bag_id: Parameters.BagId
         }
         namespace Responses {
             export type $200 = Components.Schemas.DecosPermit[];
@@ -342,8 +342,8 @@ declare namespace Paths {
         namespace Parameters {
             export type BagId = string;
         }
-        export interface PathParameters {
-            bag_id: Parameters.BagId;
+        export type PathParameters = {
+            bag_id: Parameters.BagId
         }
         namespace Responses {
             export type $200 = Components.Schemas.Residents;
@@ -359,11 +359,11 @@ declare namespace Paths {
         namespace Parameters {
             export type Id = number;
         }
-        export interface PathParameters {
-            id: Parameters.Id;
+        export type PathParameters = {
+            id: Parameters.Id
         }
         namespace Responses {
-            export interface $204 {
+            export type $204 = {
             }
         }
     }
@@ -371,8 +371,8 @@ declare namespace Paths {
         namespace Parameters {
             export type Page = number;
         }
-        export interface QueryParameters {
-            page?: Parameters.Page;
+        export type QueryParameters = {
+            page?: Parameters.Page
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCaseTimelineReactionList;
@@ -382,8 +382,8 @@ declare namespace Paths {
         namespace Parameters {
             export type Id = number;
         }
-        export interface PathParameters {
-            id: Parameters.Id;
+        export type PathParameters = {
+            id: Parameters.Id
         }
         export type RequestBody = Components.Schemas.PatchedCaseTimelineReaction;
         namespace Responses {
@@ -394,8 +394,8 @@ declare namespace Paths {
         namespace Parameters {
             export type Id = number;
         }
-        export interface PathParameters {
-            id: Parameters.Id;
+        export type PathParameters = {
+            id: Parameters.Id
         }
         namespace Responses {
             export type $200 = Components.Schemas.CaseTimelineReaction;
@@ -405,8 +405,8 @@ declare namespace Paths {
         namespace Parameters {
             export type Id = number;
         }
-        export interface PathParameters {
-            id: Parameters.Id;
+        export type PathParameters = {
+            id: Parameters.Id
         }
         export type RequestBody = Components.Schemas.CaseTimelineReaction;
         namespace Responses {
@@ -429,11 +429,11 @@ declare namespace Paths {
         namespace Parameters {
             export type Id = number;
         }
-        export interface PathParameters {
-            id: Parameters.Id;
+        export type PathParameters = {
+            id: Parameters.Id
         }
         namespace Responses {
-            export interface $204 {
+            export type $204 = {
             }
         }
     }
@@ -442,9 +442,9 @@ declare namespace Paths {
             export type Page = number;
             export type SubjectCaseIdentification = string;
         }
-        export interface QueryParameters {
-            page?: Parameters.Page;
-            subject__case__identification?: Parameters.SubjectCaseIdentification;
+        export type QueryParameters = {
+            page?: Parameters.Page
+            subject__case__identification?: Parameters.SubjectCaseIdentification
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCaseTimelineThreadList;
@@ -454,8 +454,8 @@ declare namespace Paths {
         namespace Parameters {
             export type Id = number;
         }
-        export interface PathParameters {
-            id: Parameters.Id;
+        export type PathParameters = {
+            id: Parameters.Id
         }
         export type RequestBody = Components.Schemas.PatchedCaseTimelineThread;
         namespace Responses {
@@ -466,8 +466,8 @@ declare namespace Paths {
         namespace Parameters {
             export type ThreadId = string;
         }
-        export interface QueryParameters {
-            thread_id: Parameters.ThreadId;
+        export type QueryParameters = {
+            thread_id: Parameters.ThreadId
         }
         export type RequestBody = Components.Schemas.CaseTimelineThread;
         namespace Responses {
@@ -478,8 +478,8 @@ declare namespace Paths {
         namespace Parameters {
             export type Id = number;
         }
-        export interface PathParameters {
-            id: Parameters.Id;
+        export type PathParameters = {
+            id: Parameters.Id
         }
         namespace Responses {
             export type $200 = Components.Schemas.CaseTimelineThread;
@@ -489,8 +489,8 @@ declare namespace Paths {
         namespace Parameters {
             export type Id = number;
         }
-        export interface PathParameters {
-            id: Parameters.Id;
+        export type PathParameters = {
+            id: Parameters.Id
         }
         export type RequestBody = Components.Schemas.CaseTimelineThread;
         namespace Responses {
@@ -513,11 +513,11 @@ declare namespace Paths {
         namespace Parameters {
             export type Id = number;
         }
-        export interface PathParameters {
-            id: Parameters.Id;
+        export type PathParameters = {
+            id: Parameters.Id
         }
         namespace Responses {
-            export interface $204 {
+            export type $204 = {
             }
         }
     }
@@ -526,9 +526,9 @@ declare namespace Paths {
             export type CaseIdentification = string;
             export type Page = number;
         }
-        export interface QueryParameters {
-            case__identification?: Parameters.CaseIdentification;
-            page?: Parameters.Page;
+        export type QueryParameters = {
+            case__identification?: Parameters.CaseIdentification
+            page?: Parameters.Page
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCaseTimelineList;
@@ -538,8 +538,8 @@ declare namespace Paths {
         namespace Parameters {
             export type Id = number;
         }
-        export interface PathParameters {
-            id: Parameters.Id;
+        export type PathParameters = {
+            id: Parameters.Id
         }
         export type RequestBody = Components.Schemas.PatchedCaseTimeline;
         namespace Responses {
@@ -550,8 +550,8 @@ declare namespace Paths {
         namespace Parameters {
             export type Id = number;
         }
-        export interface PathParameters {
-            id: Parameters.Id;
+        export type PathParameters = {
+            id: Parameters.Id
         }
         namespace Responses {
             export type $200 = Components.Schemas.CaseTimeline;
@@ -561,8 +561,8 @@ declare namespace Paths {
         namespace Parameters {
             export type Id = number;
         }
-        export interface PathParameters {
-            id: Parameters.Id;
+        export type PathParameters = {
+            id: Parameters.Id
         }
         export type RequestBody = Components.Schemas.CaseTimeline;
         namespace Responses {
@@ -579,8 +579,8 @@ declare namespace Paths {
         namespace Parameters {
             export type Id = number;
         }
-        export interface PathParameters {
-            id: Parameters.Id;
+        export type PathParameters = {
+            id: Parameters.Id
         }
         namespace Responses {
             export type $200 = Components.Schemas.Debriefing;
@@ -590,11 +590,11 @@ declare namespace Paths {
         namespace Parameters {
             export type Id = number;
         }
-        export interface PathParameters {
-            id: Parameters.Id;
+        export type PathParameters = {
+            id: Parameters.Id
         }
         namespace Responses {
-            export interface $204 {
+            export type $204 = {
             }
         }
     }
@@ -602,8 +602,8 @@ declare namespace Paths {
         namespace Parameters {
             export type Id = number;
         }
-        export interface PathParameters {
-            id: Parameters.Id;
+        export type PathParameters = {
+            id: Parameters.Id
         }
         namespace Responses {
             export type $200 = Components.Schemas.FineList;
@@ -614,9 +614,9 @@ declare namespace Paths {
             export type Page = number;
             export type StateDate = string;
         }
-        export interface QueryParameters {
-            page?: Parameters.Page;
-            state_date?: Parameters.StateDate;
+        export type QueryParameters = {
+            page?: Parameters.Page
+            state_date?: Parameters.StateDate
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCaseList;
@@ -626,8 +626,8 @@ declare namespace Paths {
         namespace Parameters {
             export type Id = number;
         }
-        export interface PathParameters {
-            id: Parameters.Id;
+        export type PathParameters = {
+            id: Parameters.Id
         }
         export type RequestBody = Components.Schemas.PatchedCase;
         namespace Responses {
@@ -638,8 +638,8 @@ declare namespace Paths {
         namespace Parameters {
             export type Id = number;
         }
-        export interface PathParameters {
-            id: Parameters.Id;
+        export type PathParameters = {
+            id: Parameters.Id
         }
         namespace Responses {
             export type $200 = Components.Schemas.Case;
@@ -649,8 +649,8 @@ declare namespace Paths {
         namespace Parameters {
             export type Id = number;
         }
-        export interface PathParameters {
-            id: Parameters.Id;
+        export type PathParameters = {
+            id: Parameters.Id
         }
         namespace Responses {
             export type $200 = Components.Schemas.CaseTimeline;
@@ -660,8 +660,8 @@ declare namespace Paths {
         namespace Parameters {
             export type Id = number;
         }
-        export interface PathParameters {
-            id: Parameters.Id;
+        export type PathParameters = {
+            id: Parameters.Id
         }
         export type RequestBody = Components.Schemas.Case;
         namespace Responses {
@@ -678,11 +678,11 @@ declare namespace Paths {
         namespace Parameters {
             export type Id = number;
         }
-        export interface PathParameters {
-            id: Parameters.Id;
+        export type PathParameters = {
+            id: Parameters.Id
         }
         namespace Responses {
-            export interface $204 {
+            export type $204 = {
             }
         }
     }
@@ -690,8 +690,8 @@ declare namespace Paths {
         namespace Parameters {
             export type Id = number;
         }
-        export interface PathParameters {
-            id: Parameters.Id;
+        export type PathParameters = {
+            id: Parameters.Id
         }
         export type RequestBody = Components.Schemas.PatchedDebriefing;
         namespace Responses {
@@ -702,8 +702,8 @@ declare namespace Paths {
         namespace Parameters {
             export type Id = number;
         }
-        export interface PathParameters {
-            id: Parameters.Id;
+        export type PathParameters = {
+            id: Parameters.Id
         }
         namespace Responses {
             export type $200 = Components.Schemas.Debriefing;
@@ -713,8 +713,8 @@ declare namespace Paths {
         namespace Parameters {
             export type Id = number;
         }
-        export interface PathParameters {
-            id: Parameters.Id;
+        export type PathParameters = {
+            id: Parameters.Id
         }
         export type RequestBody = Components.Schemas.Debriefing;
         namespace Responses {
@@ -723,7 +723,7 @@ declare namespace Paths {
     }
     namespace IsAuthenticatedRetrieve {
         namespace Responses {
-            export interface $200 {
+            export type $200 = {
             }
         }
     }
@@ -744,20 +744,20 @@ declare namespace Paths {
             export type Format = "json" | "yaml";
             export type Lang = "af" | "ar" | "ar-dz" | "ast" | "az" | "be" | "bg" | "bn" | "br" | "bs" | "ca" | "cs" | "cy" | "da" | "de" | "dsb" | "el" | "en" | "en-au" | "en-gb" | "eo" | "es" | "es-ar" | "es-co" | "es-mx" | "es-ni" | "es-ve" | "et" | "eu" | "fa" | "fi" | "fr" | "fy" | "ga" | "gd" | "gl" | "he" | "hi" | "hr" | "hsb" | "hu" | "hy" | "ia" | "id" | "ig" | "io" | "is" | "it" | "ja" | "ka" | "kab" | "kk" | "km" | "kn" | "ko" | "ky" | "lb" | "lt" | "lv" | "mk" | "ml" | "mn" | "mr" | "my" | "nb" | "ne" | "nl" | "nn" | "os" | "pa" | "pl" | "pt" | "pt-br" | "ro" | "ru" | "sk" | "sl" | "sq" | "sr" | "sr-latn" | "sv" | "sw" | "ta" | "te" | "tg" | "th" | "tk" | "tr" | "tt" | "udm" | "uk" | "ur" | "uz" | "vi" | "zh-hans" | "zh-hant";
         }
-        export interface QueryParameters {
-            format?: Parameters.Format;
-            lang?: Parameters.Lang;
+        export type QueryParameters = {
+            format?: Parameters.Format
+            lang?: Parameters.Lang
         }
         namespace Responses {
-            export interface $200 {
-                [name: string]: any;
+            export type $200 = {
+                [name: string]: any
             }
         }
     }
     namespace TestingUrlTryBrkApiCreate {
         export type RequestBody = Components.Schemas.Test;
         namespace Responses {
-            export interface $200 {
+            export type $200 = {
             }
         }
     }
