@@ -7,7 +7,7 @@ import DateDisplay from "app/features/shared/components/atoms/DateDisplay/DateDi
 import DefinitionList from "app/features/shared/components/molecules/DefinitionList/DefinitionList"
 
 type Props = {
-  id: number
+  id: Components.Schemas.Fine["identificatienummer"]
   date: string
   state: string
   hasInvoice?: boolean
@@ -24,7 +24,7 @@ const FineSummary: React.FC<Props> = ({ id, date, state, hasInvoice = false }) =
     "Status": <Wrap>
       { state }
       { hasInvoice ?
-        // TODO: Remove `({ theme: ascDefaultTheme })` after fix https://github.com/Amsterdam/amsterdam-styled-components/issues/1108 
+        // TODO: Remove `({ theme: ascDefaultTheme })` after fix https://github.com/Amsterdam/amsterdam-styled-components/issues/1108
         <CircleIcon color={ themeColor("support", "valid")({ theme: ascDefaultTheme }) } icon="Checkmark" /> :
         <CircleIcon color={ themeColor("supplement", "lightblue")({ theme: ascDefaultTheme }) } icon="Ellipsis" />
       }

@@ -14,7 +14,6 @@ declare namespace Components {
         }
         export type Case = {
             readonly id: number
-            case_type: CaseType
             address: Address
             case_states: CaseState[]
             readonly current_state: {
@@ -24,7 +23,6 @@ declare namespace Components {
                 state_date: string // date
                 users: string /* uuid */[]
             }
-            readonly legacy_states: OpenZaakState[]
             identification?: string | null
             start_date?: string | null // date
             end_date?: string | null // date
@@ -61,20 +59,18 @@ declare namespace Components {
             subject: number
             authors: string /* uuid */[]
         }
-        export type CaseType = {
-            readonly id: number
-            name: string
-        }
         export type Debriefing = {
+            readonly id: number
             case: number
             author: string // uuid
             readonly date_added: string // date-time
             readonly date_modified: string // date-time
-            violation: boolean
+            violation?: ViolationEnum
             feedback: string
         }
         export type DebriefingCreate = {
-            violation: boolean
+            readonly id: number
+            violation?: ViolationEnum
             feedback: string
             case: number
         }
@@ -121,7 +117,6 @@ declare namespace Components {
         }
         export type FineList = {
             items: Fine[]
-            states_with_fines: Fine[]
         }
         export type GeslachtsaanduidingEnum = "M" | "V" | "X";
         export type HasBAndBPermitEnum = "True" | "False" | "UNKNOWN";
@@ -131,20 +126,6 @@ declare namespace Components {
         export type IndicatiePubliekrechtelijkEnum = "J" | "N";
         export type OIDCAuthenticate = {
             code: string
-        }
-        export type OpenZaakState = {
-            readonly id: number
-            state_type: OpenZaakStateType
-            start_date?: string | null // date
-            end_date?: string | null // date
-            gauge_date?: string | null // date
-            invoice_identification?: string | null
-            case: number
-        }
-        export type OpenZaakStateType = {
-            readonly id: number
-            name: string
-            invoice_available?: boolean
         }
         export type PaginatedCaseList = {
             /**
@@ -232,7 +213,6 @@ declare namespace Components {
         }
         export type PatchedCase = {
             readonly id?: number
-            case_type?: PatchedCaseType
             address?: PatchedAddress
             case_states?: PatchedCaseState[]
             readonly current_state?: {
@@ -242,7 +222,6 @@ declare namespace Components {
                 state_date: string // date
                 users: string /* uuid */[]
             }
-            readonly legacy_states?: OpenZaakState[]
             identification?: string | null
             start_date?: string | null // date
             end_date?: string | null // date
@@ -279,16 +258,13 @@ declare namespace Components {
             subject?: number
             authors?: string /* uuid */[]
         }
-        export type PatchedCaseType = {
-            readonly id?: number
-            name?: string
-        }
         export type PatchedDebriefing = {
+            readonly id?: number
             case?: number
             author?: string // uuid
             readonly date_added?: string // date-time
             readonly date_modified?: string // date-time
-            violation?: boolean
+            violation?: ViolationEnum
             feedback?: string
         }
         export type PermitCheckmark = {
@@ -336,6 +312,7 @@ declare namespace Components {
             notes: string | null
             authors: string | null
         }
+        export type ViolationEnum = "NO" | "YES" | "ADDITIONAL_RESEARCH_REQUIRED";
     }
 }
 declare namespace Paths {

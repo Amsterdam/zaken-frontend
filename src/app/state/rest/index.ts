@@ -81,18 +81,6 @@ export const useCaseResidents = (id: Components.Schemas.Case["id"], options?: Op
   })
 }
 
-
-export const useCaseTypes = (options?: Options) => {
-  const handleError = useErrorHandler()
-  return useApiRequest<APIListResponse<Components.Schemas.CaseType>>({
-    ...options,
-    url: makeGatewayUrl("case-types"),
-    groupName: "caseTypes",
-    handleError,
-    getHeaders
-  })
-}
-
 export const useDebriefings = (options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<APIListResponse<Components.Schemas.Debriefing>>({

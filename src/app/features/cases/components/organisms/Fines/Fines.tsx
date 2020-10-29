@@ -17,26 +17,26 @@ const Wrapper = styled.div`
 `
 
 const Fines: React.FC<Props> = ({ id }) => {
-  const { data: finesData } = useCaseFines(id)
+  const { data } = useCaseFines(id)
 
   return (
     <>
-      { finesData ?
+      { data ?
         <>
           <InfoHeading
             infoTitle="Verwerkingstijd"
             infoText="Belastingen pakt overgedragen beschikkingen in principe op binnen 5 werkdagen"
             >
-            { finesData.states_with_fines.length > 1 ? "Invorderingsbesluiten" : "Invorderingsbesluit" }
+            { data.items.length > 1 ? "Invorderingsbesluiten" : "Invorderingsbesluit" }
           </InfoHeading>
-          { finesData.states_with_fines.length
-            ? finesData.states_with_fines.map((fine: any, index: number) =>
+          { data.items.length
+            ? data.items.map((fine, index) =>
               <FineSummary
                 key={ index }
-                id={ fine.invoice_identification }
-                state={fine.state_type.name}
-                date={ fine.start_date }
-                hasInvoice={ fine.fines.length > 0 }
+                id={ fine.identificatienummer }
+                state={ fine.invorderingstatus }
+                date={ fine.dagtekening }
+                hasInvoice={ true }
                 />)
             : <Wrapper>Geen</Wrapper>
           }
