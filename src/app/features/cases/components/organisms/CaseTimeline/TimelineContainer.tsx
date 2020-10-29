@@ -1,4 +1,4 @@
-import {  AccordionWrapper, breakpoint, themeColor, themeSpacing } from "@datapunt/asc-ui"
+import { TimelineWrapper } from "app/features/shared/components/molecules/Timeline"
 import { useCaseTimeline } from "app/state/rest"
 import React from "react"
 import styled from "styled-components"
@@ -9,30 +9,22 @@ type Props = {
 }
 
 const Div = styled.div`
-  background-color: ${ themeColor("tint", "level2") };
+>div[role="button"] {
   position: relative;
+  display: flex;
+  border-bottom: 20px solid white;
 
-  >div[role="button"]:not(:last-child) {
-    position: relative;
-    border-bottom: ${ themeSpacing(5) } solid ${ themeColor("tint", "level1") };
-    &:before {
-      content: "";
-      width: 2px;
-      height: 100%;
-      position: absolute;
-      left: ${ themeSpacing(5.5) };
-      top: 30px;
-      background-color: ${ themeColor("tint", "level4") };
-    }
-
-    @media screen and ${ breakpoint("min-width", "laptop") } {
-        &:before {
-          left: ${ themeSpacing(11) };
+  &:last-child{
+    //hide the thin line in the last timelinecontainer
+    >div:nth-child(2){
+      >div:first-child{
+        &:after{
+          display: none;
         }
       }
     }
-
-
+  }
+}
 `
 
 const TimelineContainer: React.FC<Props> = ({ caseId }) => {
@@ -41,20 +33,26 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
   return (
     <>
       <Div>
-        { data?.map(({ casetimelinethread_set, subject, is_done }, index) =>
-          <AccordionWrapper key={ index }>
+        { data?.map(({ casetimelinethread_set, subject, is_done }, index) => 
+          <TimelineWrapper key={ index }>
             { casetimelinethread_set?.length > 1
               ? <TimelineThreadSet
                 title={`${ subject ?? "" } (${ casetimelinethread_set?.length ?? 0 })`}
                 threadSet={ casetimelinethread_set ?? [] }
                 isOpen={ !is_done }
+                isDone={ is_done }
               />
               : <TimelineBaseSet
                 title={ subject ?? "" }
                 thread={ casetimelinethread_set[0] ?? {} }
-                isOpen={ !is_done } />
+                isOpen={ !is_done } 
+                caseId={ caseId }
+                // TODO: get isEditable from back-end
+                isEditable={false}
+              />
             }
-          </AccordionWrapper>
+          </TimelineWrapper>
+          
         ) }
       </Div>
       { data?.length === 0 &&
