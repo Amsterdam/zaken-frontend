@@ -34,25 +34,27 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
   return (
     <>
       <Div>
-        { data?.map(({ casetimelinethread_set, subject, is_done }, index) => {
-          console.log("is_done", is_done)
-          return (
+        { data?.map(({ casetimelinethread_set, subject, is_done }, index) => 
           <TimelineWrapper key={ index }>
             { casetimelinethread_set?.length > 1
               ? <TimelineThreadSet
                 title={`${ subject ?? "" } (${ casetimelinethread_set?.length ?? 0 })`}
                 threadSet={ casetimelinethread_set ?? [] }
                 isOpen={ !is_done }
-                done={ is_done }
+                isDone={ is_done }
               />
               : <TimelineBaseSet
                 title={ subject ?? "" }
                 thread={ casetimelinethread_set[0] ?? {} }
-                isOpen={ !is_done } />
+                isOpen={ !is_done } 
+                caseId={ caseId }
+                // TODO: get isEditable from back-end
+                isEditable={false}
+              />
             }
           </TimelineWrapper>
           
-        ) })}
+        ) }
       </Div>
       { data?.length === 0 &&
         <p>Geen tijdlijn evenementen beschikbaar</p>

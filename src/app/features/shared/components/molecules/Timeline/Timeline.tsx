@@ -8,7 +8,6 @@ import {
   TimelineButton,
   TimelineButtonContent,
   TimelineContent,
-  ButtonContentProps,
   CircleWrapperStyle,
   CircleStyle,
   Background,
@@ -18,8 +17,7 @@ import {
 
 type Props = {
   onToggle?: (open: boolean) => void
-} & StyleProps &
-  ButtonContentProps
+} & StyleProps
 
 type ButtonVariant =
   | "primary"
@@ -65,10 +63,10 @@ const Timeline: React.FC<
   id: idProp,
   isOpen,
   onToggle,
-  done,
+  isDone,
   largeCircle = true,
   onClick,
-  nested,
+  isNested,
   ...otherProps
 
 }) => {
@@ -94,16 +92,16 @@ const Timeline: React.FC<
   return (
     <>
       <Background isOpen={open} />
-      <NestedContainer nested={nested}>
-        <CircleWrapperStyle isOpen={open} nested={nested} {...{ done }}>
+      <NestedContainer isNested={isNested}>
+        <CircleWrapperStyle isOpen={open} isNested={isNested} {...{ isDone }}>
           <CircleStyle
             size={13}
-            {...{ done, largeCircle }}
+            {...{ isDone, largeCircle }}
           >
-            {done && <Checkmark />}
+            {isDone && <Checkmark />}
           </CircleStyle>
         </CircleWrapperStyle>
-        <TimelineItem isOpen={open}>
+        <TimelineItem>
           <TimelineButton
             aria-controls={id}
             aria-expanded={open}
@@ -116,12 +114,11 @@ const Timeline: React.FC<
             onClick={handleClick}
             {...otherProps}
           >
-            
             <TimelineButtonContent>
               {title}
             </TimelineButtonContent>
           </TimelineButton>
-          <TimelineContent isOpen={open} aria-labelledby={`label-${ id }`} id={id} nested={nested}>
+          <TimelineContent isOpen={open} aria-labelledby={`label-${ id }`} id={id} isNested={isNested}>
             {children}
           </TimelineContent>
         </TimelineItem>

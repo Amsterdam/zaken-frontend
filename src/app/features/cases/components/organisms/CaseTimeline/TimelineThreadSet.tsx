@@ -1,21 +1,27 @@
 import React from "react"
 import styled from "styled-components"
-import { themeColor, themeSpacing } from "@datapunt/asc-ui"
+import { breakpoint, Button, themeColor, themeSpacing } from "@datapunt/asc-ui"
+import { EditDocument } from "@datapunt/asc-assets"
 import { getDay }from "app/features/shared/components/atoms/DayDisplay/DayDisplay"
 import { displayDate } from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
 import { Timeline } from "app/features/shared/components/molecules/Timeline"
+import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
+import to from "app/features/shared/routing/to"
+
 
 type Props = {
   title: string
+  caseId: string | undefined
   isOpen?: boolean
-  done?: boolean
+  isDone?: boolean
+  isEditable?: boolean
   thread: Components.Schemas.CaseTimelineThread
 }
 
 type ThreadsetProps = {
   title: string
   isOpen?: boolean
-  done?: boolean
+  isDone?: boolean
   threadSet: Components.Schemas.CaseTimelineThread[]
 }
 
@@ -23,6 +29,15 @@ type DLProps = {
   thread: Components.Schemas.CaseTimelineThread
   showDate: boolean
 }
+
+const StyledButton = styled(Button)`
+  background-color: transparent;
+  @media ${ breakpoint("min-width", "laptop") } {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+  }
+`
 
 const Dl = styled.dl`
 max-width: 500px;
@@ -65,15 +80,15 @@ const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => (
   </Dl>
 )
 
-const TimelineThreadSet: React.FC<ThreadsetProps> = ({ isOpen, done, title, threadSet }) => { //nested item
+const TimelineThreadSet: React.FC<ThreadsetProps> = ({ isOpen, isDone, title, threadSet }) => { //nested item
   const Timelines = threadSet.map(thread =>
     <Timeline 
       title={ `${ getDay(thread.date, true) } ${ displayDate(thread.date) }` } 
       key={thread.id} 
       isOpen={isOpen} 
-      done={ done }
+      isDone={true}
       largeCircle={false}
-      nested={true}
+      isNested={true}
     >
       <DefinitionList 
         thread={thread} 
@@ -86,20 +101,26 @@ const TimelineThreadSet: React.FC<ThreadsetProps> = ({ isOpen, done, title, thre
     <Timeline 
       title={title} 
       isOpen={isOpen} 
-      done={ done }
+      isDone={ isDone }
     >
       { Timelines }
     </Timeline>
   )
 }
 
-const TimelineBaseSet: React.FC<Props> = ({ title, isOpen,  done, thread }) => (
+const TimelineBaseSet: React.FC<Props> = ({ title, caseId, isOpen,  isDone, thread, isEditable }) => (
     <Timeline 
       title={title} 
       isOpen={isOpen} 
-      done={ done } 
+      isDone={ isDone } 
     >
       <DefinitionList thread={thread} showDate={true} />
+
+      { (isEditable && caseId) && 
+        // TODO: get and use debrief id like "/cases/:caseId/debriefing/:id", { caseId, id }
+        <ButtonLink to={ to("/cases/:caseId/debriefing", { caseId })}>
+          <StyledButton size={60} variant="blank" iconSize={32} icon={<EditDocument />} />
+        </ButtonLink> }
     </Timeline>
   )
 

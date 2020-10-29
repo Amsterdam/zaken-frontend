@@ -5,17 +5,11 @@ import { IconStyle } from "@datapunt/asc-ui/lib/components/Icon"
 
 export type Props = {
   isOpen?: boolean
-  done?: boolean
+  isDone?: boolean
   largeCircle?: boolean
-  nested?: boolean
+  isNested?: boolean
 } & React.AnchorHTMLAttributes<HTMLAnchorElement> &
   React.HTMLAttributes<HTMLDivElement>;
-
-
-export type ButtonContentProps = { 
-  noMultiline?: boolean 
-  isOpen?: boolean
-}
 
 const circleSize = {
   desktop: {
@@ -36,7 +30,7 @@ const CircleWrapperStyle = styled.div<Props>`
   z-index: 1;
   padding: ${ themeSpacing(2) } 0; 
   background-color: transparent;
-  @media ${ breakpoint("min-width", "tabletM") } {
+  @media ${ breakpoint("min-width", "laptop") } {
     width: 60px;
     margin-right: 0;
     flex: 0 0 60px;
@@ -51,10 +45,12 @@ const CircleWrapperStyle = styled.div<Props>`
     display: block;
     width: 2px;
     height: calc(100% + ${ themeSpacing(10) });
-    //top: ${ themeSpacing(3) };
-    top: ${ ({ nested }) => nested ? themeSpacing(-5.5) : themeSpacing(3) };
+    top: ${ ({ isNested }) => isNested ? themeSpacing(-7) : themeSpacing(3) };
     left: calc(50% - 1px);
     background-color: ${ themeColor("tint", "level4") };
+    @media ${ breakpoint("min-width", "laptop") } {
+      top: ${ ({ isNested }) => isNested ? themeSpacing(-5.5) : themeSpacing(3) };
+    }
   }
 `
 const CircleStyle = styled(Icon)<Props>`
@@ -68,7 +64,7 @@ const CircleStyle = styled(Icon)<Props>`
   justify-content: center;
   transition: background-color 0.2s ease-in-out;
   z-index: 1;
-  @media ${ breakpoint("min-width", "tabletM") } {
+  @media ${ breakpoint("min-width", "laptop") } {
     width: ${ circleSize.desktop.large };
     height: ${ circleSize.desktop.large };
   }
@@ -78,18 +74,18 @@ const CircleStyle = styled(Icon)<Props>`
       width: ${ circleSize.mobile.small };
       height: ${ circleSize.mobile.small };
       margin-top: 4px;
-      @media ${ breakpoint("min-width", "tabletM") } {
+      @media ${ breakpoint("min-width", "laptop") } {
         width: ${ circleSize.desktop.small };
         height: ${ circleSize.desktop.small };
       }
     ` }
-  ${ ({ done }) =>
-    (!done) &&
+  ${ ({ isDone }) =>
+    (!isDone) &&
     css`
       background-color: ${ themeColor("primary", "main") };
     ` }
-  ${ ({ done }) =>
-    done &&
+  ${ ({ isDone }) =>
+    isDone &&
     css`
       color: ${ themeColor("tint", "level1") };
       fill: ${ themeColor("tint", "level1") };
@@ -97,21 +93,22 @@ const CircleStyle = styled(Icon)<Props>`
     ` }
 `
 
-const TimelineItem = styled.div<Props>`
+const TimelineItem = styled.div`
   flex: 1;
 `
 
 const NestedContainer = styled.div<Props>`
   display: flex;
-  margin-left: ${ ({ nested }) => nested && "-32px" };
-  @media ${ breakpoint("min-width", "tabletM") } {
-    margin-left: ${ ({ nested }) => nested && "-60px" };
+  width: 100%;
+  margin-left: ${ ({ isNested }) => isNested && "-32px" };
+  @media ${ breakpoint("min-width", "laptop") } {
+    margin-left: ${ ({ isNested }) => isNested && "-60px" };
   }
 
   &:last-child{
     >div:first-child{
       &:after{
-        display: ${ ({ nested }) => nested && "none" };
+        display: ${ ({ isNested }) => isNested && "none" };
       }
     }
   }
@@ -126,22 +123,10 @@ const TimelineContent = styled.div<Props>`
   display: ${ ({ isOpen }) => !isOpen && "none" };
 `
 
-const TimelineButtonContent = styled.span<ButtonContentProps>`
+const TimelineButtonContent = styled.span`
   text-align: left;
   position: relative;
   font-weight: 500;
-
-  ${ ({ noMultiline }) =>
-    noMultiline
-      ? css`
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          margin-right: 20px;
-        `
-      : css`
-          white-space: normal;
-        ` }
 `
 
 const TimelineButton = styled(Button)<Props>`
