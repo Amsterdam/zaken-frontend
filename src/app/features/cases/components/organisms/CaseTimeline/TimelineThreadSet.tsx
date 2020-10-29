@@ -15,13 +15,6 @@ type Props = {
   isOpen?: boolean
   isDone?: boolean
   isEditable?: boolean
-  thread: Components.Schemas.CaseTimelineThread
-}
-
-type ThreadsetProps = {
-  title: string
-  isOpen?: boolean
-  isDone?: boolean
   threadSet: Components.Schemas.CaseTimelineThread[]
 }
 
@@ -80,21 +73,23 @@ const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => (
   </Dl>
 )
 
-const TimelineThreadSet: React.FC<ThreadsetProps> = ({ isOpen, isDone, title, threadSet }) => { //nested item
-  const Timelines = threadSet.map(thread =>
-    <Timeline 
-      title={ `${ getDay(thread.date, true) } ${ displayDate(thread.date) }` } 
-      key={thread.id} 
-      isOpen={isOpen} 
-      isDone={true}
-      largeCircle={false}
-      isNested={true}
-    >
-      <DefinitionList 
-        thread={thread} 
-        showDate={false} 
-      />
-    </Timeline>
+const TimelineThreadSet: React.FC<Props> = ({ caseId, isOpen, isDone, title, threadSet, isEditable }) => { 
+  const TimelineThread = threadSet.map(thread =>
+    threadSet.length > 1 ?
+      <Timeline 
+        title= { `${ getDay(thread.date, true) } ${ displayDate(thread.date) }` }
+        key={thread.id} 
+        isOpen={isOpen} 
+        isDone={true}
+        largeCircle={false}
+        isNested={true}
+      >
+        <DefinitionList 
+          thread={thread} 
+          showDate={false} 
+        />
+      </Timeline>
+      : <DefinitionList thread={thread} showDate={true} />
   )
 
   return (
@@ -103,25 +98,14 @@ const TimelineThreadSet: React.FC<ThreadsetProps> = ({ isOpen, isDone, title, th
       isOpen={isOpen} 
       isDone={ isDone }
     >
-      { Timelines }
-    </Timeline>
-  )
-}
-
-const TimelineBaseSet: React.FC<Props> = ({ title, caseId, isOpen,  isDone, thread, isEditable }) => (
-    <Timeline 
-      title={title} 
-      isOpen={isOpen} 
-      isDone={ isDone } 
-    >
-      <DefinitionList thread={thread} showDate={true} />
-
+      { TimelineThread }
       { (isEditable && caseId) && 
-        // TODO: get and use debrief id like "/cases/:caseId/debriefing/:id", { caseId, id }
+      // TODO: get and use debrief id like "/cases/:caseId/debriefing/:id", { caseId, id }
         <ButtonLink to={ to("/cases/:caseId/debriefing", { caseId })}>
           <StyledButton size={60} variant="blank" iconSize={32} icon={<EditDocument />} />
         </ButtonLink> }
     </Timeline>
   )
+}
 
-export { TimelineBaseSet, TimelineThreadSet }
+export { TimelineThreadSet }

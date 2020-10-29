@@ -1,8 +1,9 @@
-import { TimelineWrapper } from "app/features/shared/components/molecules/Timeline"
-import { useCaseTimeline } from "app/state/rest"
+
 import React from "react"
 import styled from "styled-components"
-import { TimelineThreadSet, TimelineBaseSet } from "./TimelineThreadSet"
+import { useCaseTimeline } from "app/state/rest"
+import { TimelineWrapper } from "app/features/shared/components/molecules/Timeline"
+import { TimelineThreadSet } from "./TimelineThreadSet"
 
 type Props = {
   caseId: Components.Schemas.Case["id"] 
@@ -35,24 +36,14 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
       <Div>
         { data?.map(({ casetimelinethread_set, subject, is_done }, index) => 
           <TimelineWrapper key={ index }>
-            { casetimelinethread_set?.length > 1
-              ? <TimelineThreadSet
-                title={`${ subject ?? "" } (${ casetimelinethread_set?.length ?? 0 })`}
-                threadSet={ casetimelinethread_set ?? [] }
-                isOpen={ !is_done }
-                isDone={ is_done }
-              />
-              : <TimelineBaseSet
-                title={ subject ?? "" }
-                thread={ casetimelinethread_set[0] ?? {} }
-                isOpen={ !is_done } 
-                caseId={ caseId }
-                // TODO: get isEditable from back-end
-                isEditable={false}
-              />
-            }
-          </TimelineWrapper>
-          
+            <TimelineThreadSet
+              title={`${ subject ?? "" } (${ casetimelinethread_set?.length ?? 0 })`}
+              threadSet={ casetimelinethread_set ?? [] }
+              isOpen={ !is_done }
+              isDone={ is_done }
+              caseId={ caseId }
+            />
+          </TimelineWrapper>  
         ) }
       </Div>
       { data?.length === 0 &&
