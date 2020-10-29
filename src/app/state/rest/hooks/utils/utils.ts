@@ -32,5 +32,5 @@ export const getHeaders = () => {
 /**
  * Utility function to create a gateway URL.
  */
-export const makeGatewayUrl = (...paths: Array<number|string>) =>
- slashSandwich([process.env.REACT_APP_GATEWAY, ...paths])
+export const makeGatewayUrl = (...paths: Array<number|string|undefined>) =>
+  slashSandwich([process.env.REACT_APP_GATEWAY, ...paths])
