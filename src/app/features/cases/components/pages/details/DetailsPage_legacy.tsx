@@ -26,7 +26,7 @@ import Column from "app/features/shared/components/atoms/Grid/Column"
 
 
 type Props = {
-  id: NonNullable<Components.Schemas.Case["identification"]>
+  id: Components.Schemas.Case["id"]
 }
 
 const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {

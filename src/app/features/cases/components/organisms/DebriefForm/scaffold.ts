@@ -2,7 +2,7 @@ import { FormPositioner } from "amsterdam-scaffold-form/package"
 import { Fields } from "app/features/shared/components/molecules/Form/ScaffoldFields"
 import { navigate } from "@reach/router"
 
-export default (caseId: string) => {
+export default (caseId: Components.Schemas.Case["id"]) => {
   const fields = {
     violation: {
       type: "RadioFields",

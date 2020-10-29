@@ -44,4 +44,4 @@ const caseVisits: CaseVisit[] = [
   }
 ]
 export default (): CaseVisit[] => caseVisits
-export const useCaseVisit = (id: string): CaseVisit => caseVisits[0]
+export const useCaseVisit = (id: Components.Schemas.Case["id"]): CaseVisit => caseVisits[0]

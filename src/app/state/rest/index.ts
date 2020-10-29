@@ -48,7 +48,7 @@ export const useCases = (state_date?: string, options?: Options) => {
   })
 }
 
-export const useCase = (id: NonNullable<Components.Schemas.Case["identification"]>, options?: Options) => {
+export const useCase = (id: Components.Schemas.Case["id"], options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.Case>({
     ...options,
@@ -59,7 +59,7 @@ export const useCase = (id: NonNullable<Components.Schemas.Case["identification"
   })
 }
 
-export const useCaseFines = (id: NonNullable<Components.Schemas.Case["identification"]>, options?: Options) => {
+export const useCaseFines = (id: Components.Schemas.Case["id"], options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.FineList>({
     ...options,
@@ -70,24 +70,12 @@ export const useCaseFines = (id: NonNullable<Components.Schemas.Case["identifica
   })
 }
 
-export const useCaseResidents = (id: NonNullable<Components.Schemas.Case["identification"]>, options?: Options) => {
+export const useCaseResidents = (id: Components.Schemas.Case["id"], options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.Residents>({
     ...options,
     url: makeGatewayUrl("cases", id, "residents"),
     groupName: "cases",
-    handleError,
-    getHeaders
-  })
-}
-
-
-export const useCaseTypes = (options?: Options) => {
-  const handleError = useErrorHandler()
-  return useApiRequest<APIListResponse<Components.Schemas.CaseType>>({
-    ...options,
-    url: makeGatewayUrl("case-types"),
-    groupName: "caseTypes",
     handleError,
     getHeaders
   })
@@ -104,7 +92,7 @@ export const useDebriefings = (options?: Options) => {
   })
 }
 
-export const useCaseTimeline = (caseId: NonNullable<Components.Schemas.Case["identification"]>) => {
+export const useCaseTimeline = (caseId: Components.Schemas.Case["id"]) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.CaseTimeline[]>({
     url: makeGatewayUrl("cases", caseId, "timeline"),
@@ -161,9 +149,8 @@ export const usePanorama = (lat?: number, lon?: number, width?: number, aspect?:
 
 export const usePermitCheckmarks = (bagId: string) => {
   const handleError = useErrorHandler()
-  const queryString = qs.stringify({ bagId }, { addQueryPrefix: true })
   return useApiRequest<{ has_b_and_b_permit: boolean, has_vacation_rental_permit: boolean }>({
-    url: makeGatewayUrl("permits", "checkmarks", queryString),
+    url: makeGatewayUrl("addresses", bagId, "permits","checkmarks"),
     groupName: "permits",
     handleError,
     getHeaders
@@ -172,9 +159,8 @@ export const usePermitCheckmarks = (bagId: string) => {
 
 export const usePermitDetails = (bagId: string) => {
   const handleError = useErrorHandler()
-  const queryString = qs.stringify({ bagId }, { addQueryPrefix: true })
   return useApiRequest<Components.Schemas.DecosPermit[]>({
-    url: makeGatewayUrl("permits", "details", queryString),
+    url: makeGatewayUrl("addresses", bagId, "permits"),
     groupName: "permits",
     handleError,
     getHeaders

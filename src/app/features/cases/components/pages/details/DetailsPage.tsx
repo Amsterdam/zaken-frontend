@@ -13,7 +13,7 @@ import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLi
 import TimelineContainer from "../../organisms/CaseTimeline/TimelineContainer"
 
 type Props = {
-  id: NonNullable<Components.Schemas.Case["identification"]>
+  id: Components.Schemas.Case["id"]
 }
 
 const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
@@ -39,7 +39,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
         <Divider />
       </RowWithColumn>
       <RowWithColumn>
-        <TimelineContainer caseId={id} />
+        <TimelineContainer caseId={id!} />
       </RowWithColumn>
     </DefaultLayout>
   )

@@ -11,7 +11,7 @@ import DebriefForm from "app/features/cases/components/organisms/DebriefForm/Deb
 import useCreatePage from "./hooks/useCreatePage"
 
 type Props = {
-  id: string
+  id: Components.Schemas.Case["id"]
 }
 
 const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
