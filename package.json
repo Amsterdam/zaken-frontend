@@ -52,8 +52,6 @@
     "lint:fix": "npm run lint -- --fix",
     "swagger:generate-schema": "TS_NODE_PROJECT='./scripts/tsconfig.json' NODE_ENV='development' ts-node scripts/src/generateSwaggerSchema.ts",
     "form-scaffolds:generate": "TS_NODE_PROJECT='./scripts/tsconfig.json' NODE_ENV='development' ts-node scripts/src/generateFormScaffolds.ts",
-    "storybook": "start-storybook -p 9009 -s public",
-    "storybook:build": "build-storybook -s public",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run"
   },
@@ -74,14 +72,6 @@
     ]
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^6.0.26",
-    "@storybook/addon-info": "^5.3.21",
-    "@storybook/addon-knobs": "^6.0.26",
-    "@storybook/addon-links": "^6.0.26",
-    "@storybook/addon-viewport": "^6.0.22",
-    "@storybook/addons": "^6.0.22",
-    "@storybook/preset-create-react-app": "^3.1.4",
-    "@storybook/react": "^6.0.26",
     "@types/dotenv-flow": "^3.1.0",
     "@types/enzyme": "^3.10.7",
     "@types/enzyme-adapter-react-16": "^1.0.6",
@@ -115,7 +105,6 @@
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{ts,tsx}",
-      "!src/**/*.stories.{ts,tsx}",
       "!src/**/*.d.ts",
       "!src/**/index.{ts,tsx}"
     ]
