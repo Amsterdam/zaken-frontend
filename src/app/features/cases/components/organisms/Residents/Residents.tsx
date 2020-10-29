@@ -7,7 +7,7 @@ import LoadingDetails from "app/features/shared/components/molecules/Details/Loa
 import Resident from "./Resident"
 
 type Props = {
-  id: NonNullable<Components.Schemas.Case["identification"]>
+  id: Components.Schemas.Case["id"]
 }
 
 const Ul = styled.ul`

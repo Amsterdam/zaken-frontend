@@ -2,11 +2,10 @@ import { useCallback } from "react"
 import { navigate } from "@reach/router"
 
 import to from "app/features/shared/routing/to"
-import { useCase,  useCaseTypes } from "app/state/rest"
+import { useCase } from "app/state/rest"
 import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
 
-export const useEditPage = (id?: Components.Schemas.Case["identification"]) => {
-  const { isBusy: isGettingCaseTypes } = useCaseTypes()
+export const useEditPage = (id?: Components.Schemas.Case["id"]) => {
   const { data: initialValues, execPut, execDelete } = useCase(id!)
   const { addSuccessFlashMessage } = useFlashMessages()
 
@@ -20,13 +19,13 @@ export const useEditPage = (id?: Components.Schemas.Case["identification"]) => {
 
   const handleDelete = useCallback(() =>
       execDelete().then(() => {
-        addSuccessFlashMessage("/cases", "Succesvol verwiderd", "De zaak is succesvol verwijderd")
+        addSuccessFlashMessage("/cases", "Succesvol verwijderd", "De zaak is succesvol verwijderd")
         return navigate(to("/cases"))
       }),
     [addSuccessFlashMessage, execDelete]
   )
 
-  const isLoading = !initialValues || isGettingCaseTypes
+  const isLoading = !initialValues
 
   return {
     isLoading,

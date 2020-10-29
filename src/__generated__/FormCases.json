@@ -9,30 +9,14 @@
         "disabled": true
       }
     },
-    "case_type_id": {
-      "type": "NumberField",
-      "props": {
-        "position": {},
-        "name": "case_type.id",
-        "label": "Id",
-        "disabled": true
-      }
-    },
-    "case_type_name": {
+    "address_bag_id": {
       "type": "TextField",
       "props": {
         "type": "text",
         "position": {},
-        "name": "case_type.name",
-        "label": "Name",
+        "name": "address.bag_id",
+        "label": "Bag id",
         "isRequired": true
-      }
-    },
-    "submit": {
-      "type": "SubmitButton",
-      "props": {
-        "align": "right",
-        "label": "Opslaan"
       }
     },
     "address_id": {
@@ -44,14 +28,14 @@
         "disabled": true
       }
     },
-    "address_bag_id": {
+    "address_full_address": {
       "type": "TextField",
       "props": {
         "type": "text",
         "position": {},
-        "name": "address.bag_id",
-        "label": "Bag id",
-        "isRequired": true
+        "name": "address.full_address",
+        "label": "Full address",
+        "disabled": true
       }
     },
     "address_street_name": {
@@ -119,6 +103,198 @@
         "name": "address.lng",
         "label": "Lng",
         "disabled": true
+      }
+    },
+    "submit": {
+      "type": "SubmitButton",
+      "props": {
+        "align": "right",
+        "label": "Opslaan"
+      }
+    },
+    "case_states": {
+      "type": "ArrayField",
+      "props": {
+        "scaffoldFields": {
+          "case": {
+            "type": "NumberField",
+            "props": {
+              "position": {
+                "mobileS": {
+                  "column": 0,
+                  "columnSpan": 1,
+                  "row": 0,
+                  "rowSpan": 1
+                }
+              },
+              "name": "case",
+              "label": "Case",
+              "isRequired": true
+            }
+          },
+          "status_name": {
+            "type": "TextField",
+            "props": {
+              "type": "text",
+              "position": {
+                "mobileS": {
+                  "column": 1,
+                  "columnSpan": 1,
+                  "row": 0,
+                  "rowSpan": 1
+                }
+              },
+              "name": "status_name",
+              "label": "Status name",
+              "disabled": true
+            }
+          },
+          "status": {
+            "type": "NumberField",
+            "props": {
+              "position": {
+                "mobileS": {
+                  "column": 2,
+                  "columnSpan": 1,
+                  "row": 0,
+                  "rowSpan": 1
+                }
+              },
+              "name": "status",
+              "label": "Status",
+              "isRequired": true
+            }
+          },
+          "state_date": {
+            "type": "TextField",
+            "props": {
+              "type": "date",
+              "position": {
+                "mobileS": {
+                  "column": 3,
+                  "columnSpan": 1,
+                  "row": 0,
+                  "rowSpan": 1
+                }
+              },
+              "name": "state_date",
+              "label": "State date",
+              "isRequired": true
+            }
+          },
+          "users": {
+            "type": "ArrayField",
+            "props": {
+              "scaffoldFields": {
+                "": {
+                  "type": "TextField",
+                  "props": {
+                    "type": "text",
+                    "position": {
+                      "mobileS": {
+                        "column": 0,
+                        "columnSpan": 1,
+                        "row": 0,
+                        "rowSpan": 1
+                      }
+                    },
+                    "name": "",
+                    "label": ""
+                  }
+                }
+              },
+              "allowAdd": true,
+              "allowRemove": true,
+              "columns": "1fr 1fr auto",
+              "position": {
+                "mobileS": {
+                  "column": 4,
+                  "columnSpan": 1,
+                  "row": 0,
+                  "rowSpan": 1
+                }
+              },
+              "name": "users",
+              "label": "Users",
+              "isRequired": true
+            }
+          }
+        },
+        "allowAdd": true,
+        "allowRemove": true,
+        "columns": "1fr 1fr 1fr 1fr 1fr 1fr auto",
+        "position": {},
+        "name": "case_states",
+        "label": "Case states",
+        "isRequired": true
+      }
+    },
+    "current_state_case": {
+      "type": "NumberField",
+      "props": {
+        "position": {},
+        "name": "current_state.case",
+        "label": "Case",
+        "isRequired": true
+      }
+    },
+    "current_state_status_name": {
+      "type": "TextField",
+      "props": {
+        "type": "text",
+        "position": {},
+        "name": "current_state.status_name",
+        "label": "Status name",
+        "disabled": true
+      }
+    },
+    "current_state_status": {
+      "type": "NumberField",
+      "props": {
+        "position": {},
+        "name": "current_state.status",
+        "label": "Status",
+        "isRequired": true
+      }
+    },
+    "current_state_state_date": {
+      "type": "TextField",
+      "props": {
+        "type": "date",
+        "position": {},
+        "name": "current_state.state_date",
+        "label": "State date",
+        "isRequired": true
+      }
+    },
+    "current_state_users": {
+      "type": "ArrayField",
+      "props": {
+        "scaffoldFields": {
+          "": {
+            "type": "TextField",
+            "props": {
+              "type": "text",
+              "position": {
+                "mobileS": {
+                  "column": 0,
+                  "columnSpan": 1,
+                  "row": 0,
+                  "rowSpan": 1
+                }
+              },
+              "name": "",
+              "label": ""
+            }
+          }
+        },
+        "allowAdd": true,
+        "allowRemove": true,
+        "columns": "1fr 1fr auto",
+        "position": {},
+        "name": "current_state.users",
+        "label": "Users",
+        "isRequired": true
       }
     },
     "identification": {
