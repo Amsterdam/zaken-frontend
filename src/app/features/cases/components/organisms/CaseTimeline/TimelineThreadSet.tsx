@@ -108,4 +108,4 @@ const TimelineThreadSet: React.FC<Props> = ({ caseId, isOpen, isDone, title, thr
   )
 }
 
-export { TimelineThreadSet }
+export default TimelineThreadSet
