@@ -1,12 +1,16 @@
-
 import React from "react"
 import styled from "styled-components"
+import { breakpoint, Button } from "@datapunt/asc-ui"
+import { EditDocument } from "@datapunt/asc-assets"
+
 import { useCaseTimeline } from "app/state/rest"
 import { TimelineWrapper } from "app/features/shared/components/molecules/Timeline"
 import { TimelineThreadSet } from "./TimelineThreadSet"
+import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
+import to from "app/features/shared/routing/to"
 
 type Props = {
-  caseId: Components.Schemas.Case["id"] 
+  caseId: Components.Schemas.Case["id"]
 }
 
 const Div = styled.div`
@@ -28,13 +32,22 @@ const Div = styled.div`
 }
 `
 
+const StyledButton = styled(Button)`
+  background-color: transparent;
+  @media ${ breakpoint("min-width", "laptop") } {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+  }
+`
+
 const TimelineContainer: React.FC<Props> = ({ caseId }) => {
   const { data } = useCaseTimeline(caseId!)
 
   return (
     <>
       <Div>
-        { data?.map(({ casetimelinethread_set, subject, is_done }, index) => 
+        { data?.map(({ casetimelinethread_set, subject, is_done }, index) =>
           <TimelineWrapper key={ index }>
             <TimelineThreadSet
               title={`${ subject ?? "" } (${ casetimelinethread_set?.length ?? 0 })`}
@@ -42,8 +55,15 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
               isOpen={ !is_done }
               isDone={ is_done }
               caseId={ caseId }
+              button={
+                subject === "Debriefing" ?
+                  <ButtonLink to={ to("/cases/:caseId/debriefing/:id", { caseId, id: casetimelinethread_set[0].id })}>
+                    <StyledButton size={60} variant="blank" iconSize={32} icon={<EditDocument />} />
+                  </ButtonLink> :
+                  undefined
+              }
             />
-          </TimelineWrapper>  
+          </TimelineWrapper>
         ) }
       </Div>
       { data?.length === 0 &&
