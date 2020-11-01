@@ -21,7 +21,7 @@ const EditPage: React.FC<RouteComponentProps<Props>> = ({ caseId: caseIdString, 
 
   const { data: caseData } = useCase(caseId)
   const { data } = useDebriefings(id)
-  const { handleUpdate } = useDebriefing(caseId!, id!)
+  const { handleUpdate, handleDelete } = useDebriefing(caseId!, id!)
   const showForm = caseData !== undefined && data !== undefined
 
   return (
@@ -40,7 +40,7 @@ const EditPage: React.FC<RouteComponentProps<Props>> = ({ caseId: caseIdString, 
             <Heading as="h3">Adres</Heading>
             <p>{ caseData!.address.street_name }</p>
             <p>{ caseData!.address.postal_code }</p>
-            <DebriefForm caseId={ caseId! } onSubmit={ handleUpdate } initialValues={ data } />
+            <DebriefForm caseId={ caseId! } onSubmit={ handleUpdate } onDelete={ handleDelete } initialValues={ data } />
           </>
         }
       </RowWithColumn>
