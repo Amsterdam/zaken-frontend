@@ -6,7 +6,7 @@ import { useDebriefings } from "app/state/rest"
 import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
 
 const useDebriefing = (caseId: Components.Schemas.Case["id"], id?: Components.Schemas.Debriefing["id"]) => {
-  const { execPost, execPut } = useDebriefings(id, { lazy: true })
+  const { execPost, execPut, execDelete } = useDebriefings(id, { lazy: true })
   const { addSuccessFlashMessage } = useFlashMessages()
 
   const path = `/cases/${ caseId }`
@@ -27,7 +27,15 @@ const useDebriefing = (caseId: Components.Schemas.Case["id"], id?: Components.Sc
     [addSuccessFlashMessage, path, execPut]
   )
 
-  return { handleCreate, handleUpdate }
+  const handleDelete = useCallback(() =>
+    execDelete().then(() => {
+      addSuccessFlashMessage(path, "Succes", "De debriefing is succesvol verwijderd")
+      return navigate(to(path))
+    }),
+    [addSuccessFlashMessage, path, execDelete]
+  )
+
+  return { handleCreate, handleUpdate, handleDelete }
 }
 
 export default useDebriefing
