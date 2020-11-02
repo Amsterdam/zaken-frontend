@@ -12,8 +12,8 @@
 - `git clone https://github.com/Amsterdam/zaken-frontend.git`
 - `cd zaken-frontend`
 - `npm install`
-- `npm run generate:swagger-schema`
-- `npm run generate:form-scaffolds`
+- `npm run swagger:generate-schema`
+- `npm run form-scaffolds:generate`
 - `npm run start`
 
 ### Bypassing authentication
