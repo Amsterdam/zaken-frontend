@@ -28,7 +28,6 @@ const EditPage: React.FC<RouteComponentProps<Props>> = ({ caseId: caseIdString, 
     if (window.confirm(CONFIRM_TEXT)) await handleDelete()
   }
 
-
   const showForm = caseData !== undefined && data !== undefined
 
   return (
