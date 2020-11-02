@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { breakpoint, Button } from "@datapunt/asc-ui"
+import { Button } from "@datapunt/asc-ui"
 import { EditDocument } from "@datapunt/asc-assets"
 
 import { useCaseTimeline } from "app/state/rest"
@@ -34,11 +34,6 @@ const Div = styled.div`
 
 const StyledButton = styled(Button)`
   background-color: transparent;
-  @media ${ breakpoint("min-width", "laptop") } {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-  }
 `
 
 const TimelineContainer: React.FC<Props> = ({ caseId }) => {

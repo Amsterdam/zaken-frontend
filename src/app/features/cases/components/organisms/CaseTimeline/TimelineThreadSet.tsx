@@ -1,10 +1,9 @@
 import React from "react"
 import styled from "styled-components"
-import { themeColor, themeSpacing } from "@datapunt/asc-ui"
+import { breakpoint, themeColor, themeSpacing } from "@datapunt/asc-ui"
 import { getDay }from "app/features/shared/components/atoms/DayDisplay/DayDisplay"
 import { displayDate } from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
 import { Timeline } from "app/features/shared/components/molecules/Timeline"
-
 
 type Props = {
   title: string
@@ -62,6 +61,14 @@ const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => (
   </Dl>
 )
 
+const ButtonWrap = styled.div`
+  @media ${ breakpoint("min-width", "laptop") } {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+  }
+`
+
 const TimelineThreadSet: React.FC<Props> = ({ isOpen, isDone, title, threadSet, button }) => {
   const TimelineThread = threadSet.map(thread =>
     threadSet.length > 1 ?
@@ -88,7 +95,9 @@ const TimelineThreadSet: React.FC<Props> = ({ isOpen, isDone, title, threadSet, 
       isDone={ isDone }
     >
       { TimelineThread }
-      { button }
+      <ButtonWrap>
+        { button }
+      </ButtonWrap>
     </Timeline>
   )
 }
