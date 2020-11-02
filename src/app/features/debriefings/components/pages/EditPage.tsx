@@ -7,7 +7,7 @@ import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
 import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
-import DebriefForm from "app/features/cases/components/organisms/DebriefForm/DebriefForm"
+import DebriefForm from "app/features/debriefings/components/molecules/DebriefForm/DebriefForm"
 import useDebriefing from "./hooks/useDebriefing"
 
 type Props = {
