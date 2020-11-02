@@ -3,7 +3,7 @@ import { RouteComponentProps } from "@reach/router"
 
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
-import DetailHeader from "app/features/shared/components/organisms/DetailHeader/DetailHeader"
+import DetailHeader from "app/features/shared/components/molecules/DetailHeader/DetailHeader"
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
 
 type Props = {
