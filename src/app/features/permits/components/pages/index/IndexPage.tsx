@@ -5,7 +5,7 @@ import { Link, Heading } from "@datapunt/asc-ui"
 import Row, { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
-import PermitDetailsList from "app/features/permits/components/organisms/PermitDetails/PermitDetailsList"
+import PermitDetailsList from "app/features/permits/components/molecules/PermitDetails/PermitDetailsList"
 import DetailHeader from "app/features/shared/components/molecules/DetailHeader/DetailHeader"
 import Column from "app/features/shared/components/atoms/Grid/Column"
 
