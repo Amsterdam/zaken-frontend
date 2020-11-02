@@ -35,16 +35,16 @@ export default (caseId: Components.Schemas.Case["id"], onDelete?: () => void) =>
       type: "Button",
       props: {
         label: onDelete ? "Verwijder" : "Annuleer",
-        variant: "textButton",
+        variant: "primaryInverted",
         onClick: onDelete ?? (() => navigate(`/cases/${ caseId }`))
       }
     }
   }
 
   return new FormPositioner(fields as Fields)
-    .setGrid("mobileS", "1fr 1fr", [
-      ["violation"],
-      ["feedback"],
+    .setGrid("laptop", "1fr 1fr 1fr 1fr", [
+      ["violation", "violation"],
+      ["feedback", "feedback"],
       ["submit", "secondaryButton"]
     ])
     .getScaffoldProps()
