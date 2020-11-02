@@ -5,7 +5,7 @@ import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLi
 import to from "app/features/shared/routing/to"
 import { hasToken } from "app/state/auth/tokenStore"
 import { Search } from "@datapunt/asc-assets"
-import MenuItems from "app/features/shared/components/organisms/navigation/MenuItems"
+import MenuItems from "app/features/shared/components/molecules/navigation/MenuItems"
 
 type Props = {
   showSearchButton: boolean

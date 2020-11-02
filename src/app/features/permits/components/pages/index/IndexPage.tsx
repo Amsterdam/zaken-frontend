@@ -6,7 +6,7 @@ import Row, { RowWithColumn } from "app/features/shared/components/atoms/Grid/Ro
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 import PermitDetailsList from "app/features/permits/components/organisms/PermitDetails/PermitDetailsList"
-import DetailHeader from "app/features/shared/components/organisms/DetailHeader/DetailHeader"
+import DetailHeader from "app/features/shared/components/molecules/DetailHeader/DetailHeader"
 import Column from "app/features/shared/components/atoms/Grid/Column"
 
 type Props = {
