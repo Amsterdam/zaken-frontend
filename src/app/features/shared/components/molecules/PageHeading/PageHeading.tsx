@@ -2,7 +2,7 @@ import React from "react"
 
 import routes from "app/config/routes"
 import find from "app/features/shared/routing/find"
-import HeadingWithIcon from "app/features/shared/components/organisms/HeadingWithIcon/HeadingWithIcon"
+import HeadingWithIcon from "app/features/shared/components/molecules/HeadingWithIcon/HeadingWithIcon"
 
 const PageHeading: React.FC = () => {
   const route = find(routes, window.location.pathname)
