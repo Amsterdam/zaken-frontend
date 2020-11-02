@@ -15,6 +15,8 @@ type Props = {
   id: string
 }
 
+const CONFIRM_TEXT = "Weet je zeker dat je deze debriefing wilt verwijderen?"
+
 const EditPage: React.FC<RouteComponentProps<Props>> = ({ caseId: caseIdString, id: idString }) => {
   const caseId: Components.Schemas.Case["id"] = parseInt(caseIdString!)
   const id: Components.Schemas.Debriefing["id"] = parseInt(idString!)
@@ -22,6 +24,11 @@ const EditPage: React.FC<RouteComponentProps<Props>> = ({ caseId: caseIdString, 
   const { data: caseData } = useCase(caseId)
   const { data } = useDebriefings(id)
   const { handleUpdate, handleDelete } = useDebriefing(caseId!, id!)
+  const onDelete = async () => {
+    if (window.confirm(CONFIRM_TEXT)) await handleDelete()
+  }
+
+
   const showForm = caseData !== undefined && data !== undefined
 
   return (
@@ -40,7 +47,7 @@ const EditPage: React.FC<RouteComponentProps<Props>> = ({ caseId: caseIdString, 
             <Heading as="h3">Adres</Heading>
             <p>{ caseData!.address.street_name }</p>
             <p>{ caseData!.address.postal_code }</p>
-            <DebriefForm caseId={ caseId! } onSubmit={ handleUpdate } onDelete={ handleDelete } initialValues={ data } />
+            <DebriefForm caseId={ caseId! } onSubmit={ handleUpdate } onDelete={ onDelete } initialValues={ data } />
           </>
         }
       </RowWithColumn>
