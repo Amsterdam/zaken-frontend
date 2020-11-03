@@ -38,9 +38,9 @@ const StyledButton = styled(Button)`
 const TimelineContainer: React.FC<Props> = ({ caseId }) => {
   const data = useCaseEvents(caseId!).data
 
-  const debriefEvents = data?.filter(event  => event.type === "DEBRIEFING")
-  const visitEvents = data?.filter(event  => event.type === "VISIT")
-  const reasonEvents = data?.filter(event  => event.type === "CASE")
+  const debriefEvents = data?.filter(({ type })  => type === "DEBRIEFING")
+  const visitEvents = data?.filter(({ type })  => type === "VISIT")
+  const reasonEvents = data?.filter(({ type })  => type === "CASE")
   
   return (
     <>
@@ -56,16 +56,16 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
               />
             </TimelineWrapper>
           }
-          { reasonEvents && reasonEvents.length > 0 &&
-            <TimelineWrapper >
-              <CaseEvent 
-                caseEvents={ reasonEvents } />
-            </TimelineWrapper>
-          }
           { visitEvents && visitEvents.length > 0 &&
             <TimelineWrapper >
               <CaseEvent 
                 caseEvents={ visitEvents } />
+            </TimelineWrapper>
+          }
+          { reasonEvents && reasonEvents.length > 0 &&
+            <TimelineWrapper >
+              <CaseEvent 
+                caseEvents={ reasonEvents } />
             </TimelineWrapper>
           }
       </Div>

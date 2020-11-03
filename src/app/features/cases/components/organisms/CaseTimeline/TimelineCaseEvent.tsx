@@ -94,8 +94,10 @@ const CaseEvent: React.FC<Props> = ({ caseEvents, button }) => {
       <DefinitionList key={ thread.id } thread="TODO" showDate={true} />
   )
   const currentEvent = caseEvents[0]
+
   return (
-    
+    <>
+    { currentEvent && 
     <Timeline
       title={ mapCaseType(currentEvent.type)}
       isDone={ currentEvent.type === "CASE" }
@@ -112,6 +114,8 @@ const CaseEvent: React.FC<Props> = ({ caseEvents, button }) => {
         </ButtonWrap>
       }
     </Timeline>
+    }
+    </>
   )
 }
 
