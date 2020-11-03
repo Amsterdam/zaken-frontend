@@ -113,11 +113,13 @@ const CaseEvent: React.FC<Props> = ({ caseEvents, button }) => {
       </>
   )
   const currentEvent = caseEvents[0]
+  const counterString = caseEvents.length > 1 ? `(${ caseEvents.length })` : ""
+  
   return (
     <>
     { currentEvent && 
     <Timeline
-      title={ mapCaseType(currentEvent.type)}
+      title={ `${ mapCaseType(currentEvent.type) } ${ counterString } `}
       isDone={ currentEvent.type === "CASE" }
     >
       { currentEvent.type === "CASE"
