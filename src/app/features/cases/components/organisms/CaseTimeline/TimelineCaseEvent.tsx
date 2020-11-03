@@ -110,7 +110,7 @@ const CaseEvent: React.FC<Props> = ({ caseEvents, button }) => {
         ? <p>{ currentEvent.event_values.reason }</p>
         : TimelineThread
       }
-      { currentEvent.type === "CASE" &&
+      { currentEvent.type === "DEBRIEFING" &&
         <ButtonWrap>
           <ButtonLink to={ to("/cases/:caseId/debriefing/:id", { caseId: currentEvent.case , id: currentEvent.id })}>
           { button }
