@@ -1,18 +1,15 @@
 import React from "react"
 import styled from "styled-components"
-import {  themeColor, themeSpacing } from "@datapunt/asc-ui"
+import {  themeColor, themeSpacing, breakpoint } from "@datapunt/asc-ui"
 import { getDay }from "app/features/shared/components/atoms/DayDisplay/DayDisplay"
 import { displayDate } from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
 import { Timeline } from "app/features/shared/components/molecules/Timeline"
+import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
+import to from "app/features/shared/routing/to"
 
 type Props = {
-  // title: string
-  caseEvent: Components.Schemas.CaseEvent[]
-  // isOpen?: boolean
-  // isDone?: boolean
-  // isEditable?: boolean
-  // threadSet: Components.Schemas.CaseTimelineThread[]
-  // button?: JSX.Element
+  caseEvents: Components.Schemas.CaseEvent[]
+  button?: JSX.Element
 }
 
 type DLProps = {
@@ -48,6 +45,14 @@ dd {
 }
 `
 
+const mapCaseType = (type: Components.Schemas.TypeEnum) => {
+  switch (type) {
+    case "DEBRIEFING": return "Debrief"
+    case "VISIT": return "Huisbezoek(en)"
+    case "CASE": return "Aanleiding"
+  }
+}
+
 const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => (
   <Dl>
     {thread}
@@ -62,17 +67,17 @@ const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => (
   </Dl>
 )
 
-// const ButtonWrap = styled.div`
-//   @media ${ breakpoint("min-width", "laptop") } {
-//     position: absolute;
-//     bottom: 20px;
-//     right: 20px;
-//   }
-// `
+const ButtonWrap = styled.div`
+  @media ${ breakpoint("min-width", "laptop") } {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+  }
+`
 
-const CaseEvent: React.FC<Props> = ({ caseEvent }) => {
-  const TimelineThread = caseEvent.map(thread =>
-    caseEvent.length > 1 ?
+const CaseEvent: React.FC<Props> = ({ caseEvents, button }) => {
+  const TimelineThread = caseEvents.map(thread =>
+    caseEvents.length > 1 ?
       <Timeline
         title= { `${ getDay(thread.date_created, true) } ${ displayDate(thread.date_created) }` }
         key={thread.id}
@@ -88,19 +93,29 @@ const CaseEvent: React.FC<Props> = ({ caseEvent }) => {
       : 
       <DefinitionList key={ thread.id } thread="TODO" showDate={true} />
   )
+  const currentEvent = caseEvents[0]
 
   return (
-        // <div>{ caseEvent[0].type }, aantal: { caseEvent.length }</div>
-    
+    <>
+    { currentEvent && 
     <Timeline
-      title={ caseEvent[0].type }
-      isDone={ true }
+      title={ mapCaseType(currentEvent.type)}
+      isDone={ currentEvent.type === "CASE" }
     >
-      { TimelineThread }
-      {/* <ButtonWrap>
-        { button }
-      </ButtonWrap> */}
+      { currentEvent.type === "CASE"
+        ? <p>{ currentEvent.event_values.reason }</p>
+        : TimelineThread
+      }
+      { currentEvent.type === "CASE" &&
+        <ButtonWrap>
+          <ButtonLink to={ to("/cases/:caseId/debriefing/:id", { caseId: currentEvent.case , id: currentEvent.id })}>
+          { button }
+          </ButtonLink>
+        </ButtonWrap>
+      }
     </Timeline>
+    }
+    </>
   )
 }
 
