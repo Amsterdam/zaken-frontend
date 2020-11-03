@@ -8,7 +8,7 @@ import PageHeading from "app/features/shared/components/molecules/PageHeading/Pa
 import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import DebriefForm from "app/features/debriefings/components/molecules/DebriefForm/DebriefForm"
-import useDebriefing from "./hooks/useDebriefing"
+import usePageDebriefing from "./hooks/usePageDebriefing"
 
 type Props = {
   id: string
@@ -18,7 +18,7 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
   const id: Components.Schemas.Case["id"] = parseInt(idString!)
 
   const { data } = useCase(id)
-  const { handleCreate } = useDebriefing(id)
+  const { handleCreate } = usePageDebriefing(id)
 
   return (
     <DefaultLayout>

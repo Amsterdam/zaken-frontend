@@ -5,7 +5,7 @@ import to from "app/features/shared/routing/to"
 import { useDebriefings } from "app/state/rest"
 import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
 
-const useDebriefing = (caseId: Components.Schemas.Case["id"], id?: Components.Schemas.Debriefing["id"]) => {
+const usePageDebriefing = (caseId: Components.Schemas.Case["id"], id?: Components.Schemas.Debriefing["id"]) => {
   const { execPost, execPut, execDelete } = useDebriefings(id, { lazy: true })
   const { addSuccessFlashMessage } = useFlashMessages()
 
@@ -39,4 +39,4 @@ const useDebriefing = (caseId: Components.Schemas.Case["id"], id?: Components.Sc
   return { handleCreate, handleUpdate, handleDelete }
 }
 
-export default useDebriefing
+export default usePageDebriefing

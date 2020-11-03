@@ -8,7 +8,7 @@ import PageHeading from "app/features/shared/components/molecules/PageHeading/Pa
 import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import DebriefForm from "app/features/debriefings/components/molecules/DebriefForm/DebriefForm"
-import useDebriefing from "./hooks/useDebriefing"
+import usePageDebriefing from "./hooks/usePageDebriefing"
 
 type Props = {
   caseId: string
@@ -23,7 +23,7 @@ const EditPage: React.FC<RouteComponentProps<Props>> = ({ caseId: caseIdString, 
 
   const { data: caseData } = useCase(caseId)
   const { data } = useDebriefings(id)
-  const { handleUpdate, handleDelete } = useDebriefing(caseId!, id!)
+  const { handleUpdate, handleDelete } = usePageDebriefing(caseId!, id!)
   const onDelete = () => {
     if (!window.confirm(CONFIRM_TEXT)) return
     handleDelete()
