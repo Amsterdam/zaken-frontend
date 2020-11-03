@@ -27,15 +27,12 @@ const useDebriefing = (caseId: Components.Schemas.Case["id"], id?: Components.Sc
     [addSuccessFlashMessage, path, execPut]
   )
 
-  const handleDelete = useCallback(() => {
-      navigate(to(path))
-      window.setTimeout(() =>
-        execDelete().then(() => {
-          addSuccessFlashMessage(path, "Succes", "De debriefing is succesvol verwijderd")
-        }),
-        100
-      )
-    },
+  const handleDelete = useCallback(() =>
+    execDelete().then(() => {
+      addSuccessFlashMessage(path, "Succes", "De debriefing is succesvol verwijderd")
+      // TODO: Fix bug that debrief will be refetched, cause it's cache hook is used within displayed component
+      return navigate(to(path))
+    }),
     [addSuccessFlashMessage, path, execDelete]
   )
 
