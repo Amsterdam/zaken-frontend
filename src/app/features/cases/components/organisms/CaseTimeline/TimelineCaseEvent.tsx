@@ -13,7 +13,7 @@ type Props = {
 }
 
 type DLProps = {
-  thread: string//Components.Schemas.CaseTimelineThread
+  thread: Components.Schemas.CaseEvent
   showDate: boolean
 }
 
@@ -55,9 +55,9 @@ const mapCaseType = (type: Components.Schemas.TypeEnum) => {
 
 const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => (
   <Dl>
-    {thread}
-  {/* { showDate && thread.date && <div><dt>Datum</dt><dd>{ displayDate(thread.date) }</dd></div> }
-  { Object.keys(thread.parameters ?? {}).map((key, index) => (
+    
+  { showDate && thread.date_created && <div><dt>Datum</dt><dd>{ displayDate(thread.date_created) }</dd></div> }
+  {/* TODO { Object.keys(thread.parameters ?? {}).map((key, index) => (
     <div key={index}>
       <dt>{key}</dt>
       <dd>{ thread.parameters?.[key] }</dd>
@@ -86,12 +86,16 @@ const CaseEvent: React.FC<Props> = ({ caseEvents, button }) => {
         isNested={true}
       >
         <DefinitionList
-          thread="TODO"
+          thread={ thread }
           showDate={false}
         />
       </Timeline>
       : 
-      <DefinitionList key={ thread.id } thread="TODO" showDate={true} />
+      <DefinitionList 
+        key={ thread.id }
+        thread={ thread }
+        showDate={true}
+      />
   )
   const currentEvent = caseEvents[0]
 
