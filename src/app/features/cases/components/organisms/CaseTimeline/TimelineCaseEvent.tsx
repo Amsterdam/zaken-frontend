@@ -1,22 +1,22 @@
 import React from "react"
 import styled from "styled-components"
-import { breakpoint, themeColor, themeSpacing } from "@datapunt/asc-ui"
+import {  themeColor, themeSpacing } from "@datapunt/asc-ui"
 import { getDay }from "app/features/shared/components/atoms/DayDisplay/DayDisplay"
 import { displayDate } from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
 import { Timeline } from "app/features/shared/components/molecules/Timeline"
 
 type Props = {
-  title: string
-  caseId: number
-  isOpen?: boolean
-  isDone?: boolean
-  isEditable?: boolean
-  threadSet: Components.Schemas.CaseTimelineThread[]
-  button?: JSX.Element
+  // title: string
+  caseEvent: Components.Schemas.Event[]
+  // isOpen?: boolean
+  // isDone?: boolean
+  // isEditable?: boolean
+  // threadSet: Components.Schemas.CaseTimelineThread[]
+  // button?: JSX.Element
 }
 
 type DLProps = {
-  thread: Components.Schemas.CaseTimelineThread
+  thread: string//Components.Schemas.CaseTimelineThread
   showDate: boolean
 }
 
@@ -50,56 +50,58 @@ dd {
 
 const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => (
   <Dl>
-  { showDate && thread.date && <div><dt>Datum</dt><dd>{ displayDate(thread.date) }</dd></div> }
+    {thread}
+  {/* { showDate && thread.date && <div><dt>Datum</dt><dd>{ displayDate(thread.date) }</dd></div> }
   { Object.keys(thread.parameters ?? {}).map((key, index) => (
     <div key={index}>
       <dt>{key}</dt>
       <dd>{ thread.parameters?.[key] }</dd>
     </div>
   ))}
-  { thread.notes && <div><dt>Toelichting</dt><dd><i>{ thread.notes }</i></dd></div> }
+  { thread.notes && <div><dt>Toelichting</dt><dd><i>{ thread.notes }</i></dd></div> } */}
   </Dl>
 )
 
-const ButtonWrap = styled.div`
-  @media ${ breakpoint("min-width", "laptop") } {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-  }
-`
+// const ButtonWrap = styled.div`
+//   @media ${ breakpoint("min-width", "laptop") } {
+//     position: absolute;
+//     bottom: 20px;
+//     right: 20px;
+//   }
+// `
 
-const TimelineThreadSet: React.FC<Props> = ({ isOpen, isDone, title, threadSet, button }) => {
-  const TimelineThread = threadSet.map(thread =>
-    threadSet.length > 1 ?
+const CaseEvent: React.FC<Props> = ({ caseEvent }) => {
+  const TimelineThread = caseEvent.map(thread =>
+    caseEvent.length > 1 ?
       <Timeline
-        title= { `${ getDay(thread.date, true) } ${ displayDate(thread.date) }` }
+        title= { `${ getDay(thread.date_created, true) } ${ displayDate(thread.date_created) }` }
         key={thread.id}
-        isOpen={isOpen}
         isDone={true}
         largeCircle={false}
         isNested={true}
       >
         <DefinitionList
-          thread={thread}
+          thread="TODO"
           showDate={false}
         />
       </Timeline>
-      : <DefinitionList key={ thread.id } thread={thread} showDate={true} />
+      : 
+      <DefinitionList key={ thread.id } thread="TODO" showDate={true} />
   )
 
   return (
+        // <div>{ caseEvent[0].type }, aantal: { caseEvent.length }</div>
+    
     <Timeline
-      title={title}
-      isOpen={isOpen}
-      isDone={ isDone }
+      title={ caseEvent[0].type }
+      isDone={ true }
     >
       { TimelineThread }
-      <ButtonWrap>
+      {/* <ButtonWrap>
         { button }
-      </ButtonWrap>
+      </ButtonWrap> */}
     </Timeline>
   )
 }
 
-export { TimelineThreadSet }
+export default CaseEvent

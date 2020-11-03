@@ -67,7 +67,7 @@ declare namespace Components {
         }
         export interface Event {
             readonly id: number;
-            values: {
+            event_values: {
                 [name: string]: any;
             };
             readonly date_created: string; // date-time
@@ -213,6 +213,10 @@ declare namespace Components {
             start_time?: string; // date-time
             situation?: string;
             observations?: string[];
+            can_next_visit_go_ahead?: boolean;
+            can_next_visit_go_ahead_description?: string | null;
+            suggest_next_visit?: string | null;
+            suggest_next_visit_description?: string | null;
             notes?: string;
             case?: number;
         }
@@ -252,7 +256,7 @@ declare namespace Components {
         export interface Test {
             request_url: string;
         }
-        export type TypeEnum = "DEBRIEFING" | "VISIT";
+        export type TypeEnum = "DEBRIEFING" | "VISIT" | "CASE";
         export interface User {
             id: string; // uuid
             email: string; // email
@@ -268,6 +272,10 @@ declare namespace Components {
             start_time: string; // date-time
             situation: string;
             observations?: string[];
+            can_next_visit_go_ahead?: boolean;
+            can_next_visit_go_ahead_description?: string | null;
+            suggest_next_visit?: string | null;
+            suggest_next_visit_description?: string | null;
             notes: string;
             case: number;
         }
