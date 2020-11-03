@@ -16,7 +16,11 @@ type DLProps = {
   thread: Components.Schemas.CaseEvent
   showDate: boolean
 }
-
+type ButtonDebriefProps = {
+  caseId:  number
+  debriefId: number
+  button?: JSX.Element
+}
 const Dl = styled.dl`
 max-width: 500px;
 
@@ -52,6 +56,13 @@ const mapCaseType = (type: Components.Schemas.TypeEnum) => {
     case "CASE": return "Aanleiding"
   }
 }
+
+const ButtonDebrief: React.FC<ButtonDebriefProps> = ({ caseId, debriefId, button }) => 
+    <ButtonWrap>
+      <ButtonLink to={ to("/cases/:caseId/debriefing/:id", { caseId: caseId , id: debriefId })}>
+      { button }
+      </ButtonLink>
+    </ButtonWrap>
 
 const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => (
   <Dl>
@@ -89,16 +100,19 @@ const CaseEvent: React.FC<Props> = ({ caseEvents, button }) => {
           thread={ thread }
           showDate={false}
         />
+        { thread.type === "DEBRIEFING" && <ButtonDebrief caseId={ thread.case } debriefId={ thread.id } button={ button } /> }
       </Timeline>
       : 
-      <DefinitionList 
-        key={ thread.id }
-        thread={ thread }
-        showDate={true}
-      />
+      <>
+        <DefinitionList 
+          key={ thread.id }
+          thread={ thread }
+          showDate={true}
+        />
+        { thread.type === "DEBRIEFING" && <ButtonDebrief caseId={ thread.case } debriefId={ thread.id } button={ button } /> }
+      </>
   )
   const currentEvent = caseEvents[0]
-
   return (
     <>
     { currentEvent && 
@@ -110,13 +124,7 @@ const CaseEvent: React.FC<Props> = ({ caseEvents, button }) => {
         ? <p>{ currentEvent.event_values.reason }</p>
         : TimelineThread
       }
-      { currentEvent.type === "DEBRIEFING" &&
-        <ButtonWrap>
-          <ButtonLink to={ to("/cases/:caseId/debriefing/:id", { caseId: currentEvent.case , id: currentEvent.id })}>
-          { button }
-          </ButtonLink>
-        </ButtonWrap>
-      }
+      
     </Timeline>
     }
     </>
