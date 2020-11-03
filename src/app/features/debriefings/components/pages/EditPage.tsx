@@ -1,6 +1,6 @@
 import React from "react"
 import { RouteComponentProps } from "@reach/router"
-import { FormTitle, Heading } from "@datapunt/asc-ui"
+import { FormTitle, Heading, Button } from "@datapunt/asc-ui"
 
 import { useCase, useDebriefings } from "app/state/rest/"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
@@ -24,8 +24,9 @@ const EditPage: React.FC<RouteComponentProps<Props>> = ({ caseId: caseIdString, 
   const { data: caseData } = useCase(caseId)
   const { data } = useDebriefings(id)
   const { handleUpdate, handleDelete } = useDebriefing(caseId!, id!)
-  const onDelete = async () => {
-    if (window.confirm(CONFIRM_TEXT)) await handleDelete()
+  const onDelete = () => {
+    if (!window.confirm(CONFIRM_TEXT)) return
+    handleDelete()
   }
 
   const showForm = caseData !== undefined && data !== undefined
@@ -41,12 +42,13 @@ const EditPage: React.FC<RouteComponentProps<Props>> = ({ caseId: caseIdString, 
       <RowWithColumn>
         { showForm &&
           <>
-            <Heading as="h2">Nieuwe debrief</Heading>
-            <FormTitle>Gebruik dit formulier om terugkoppeling te geven van een debrief</FormTitle>
+            <Heading as="h2">Debrief</Heading>
+            <Button variant="secondary" onClick={ onDelete }>Terugkoppeling verwijderen</Button>
+            <FormTitle>Gebruik dit formulier om terugkoppeling te wijzigen</FormTitle>
             <Heading as="h3">Adres</Heading>
             <p>{ caseData!.address.street_name }</p>
             <p>{ caseData!.address.postal_code }</p>
-            <DebriefForm caseId={ caseId! } onSubmit={ handleUpdate } onDelete={ onDelete } initialValues={ data } />
+            <DebriefForm caseId={ caseId! } onSubmit={ handleUpdate } initialValues={ data } isLoading={ data === undefined } />
           </>
         }
       </RowWithColumn>

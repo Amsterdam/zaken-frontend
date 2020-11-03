@@ -27,11 +27,15 @@ const useDebriefing = (caseId: Components.Schemas.Case["id"], id?: Components.Sc
     [addSuccessFlashMessage, path, execPut]
   )
 
-  const handleDelete = useCallback(() =>
-    execDelete().then(() => {
-      addSuccessFlashMessage(path, "Succes", "De debriefing is succesvol verwijderd")
-      return navigate(to(path))
-    }),
+  const handleDelete = useCallback(() => {
+      navigate(to(path))
+      window.setTimeout(() =>
+        execDelete().then(() => {
+          addSuccessFlashMessage(path, "Succes", "De debriefing is succesvol verwijderd")
+        }),
+        100
+      )
+    },
     [addSuccessFlashMessage, path, execDelete]
   )
 

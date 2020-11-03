@@ -36,7 +36,7 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
             <Heading as="h3">Adres</Heading>
             <p>{ data.address.street_name }</p>
             <p>{ data.address.postal_code }</p>
-            <DebriefForm caseId={ id! } onSubmit={ handleCreate } initialValues={ { case: id } } />
+            <DebriefForm caseId={ id! } onSubmit={ handleCreate } />
           </>
         }
       </RowWithColumn>

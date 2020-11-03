@@ -9,17 +9,16 @@ type Props = {
   caseId: Components.Schemas.Case["id"]
   initialValues?: Partial<Components.Schemas.Debriefing>
   onSubmit: (data: Components.Schemas.Debriefing) => Promise<void>
-  onDelete?: () => Promise<void>
   isLoading?: boolean
 }
 
-const DebriefForm: React.FC<Props> = ({ caseId, initialValues, isLoading, onSubmit, onDelete }) => (
+const DebriefForm: React.FC<Props> = ({ caseId, initialValues, isLoading, onSubmit }) => (
     <ScaffoldForm
       showSpinner={ isLoading }
       onSubmit={ onSubmit }
-      initialValues={ initialValues }
+      initialValues={ initialValues ?? { case: caseId } }
     >
-      <ScaffoldFields {...createScaffoldProps(caseId, onDelete) } />
+      <ScaffoldFields {...createScaffoldProps(caseId, initialValues !== undefined) } />
     </ScaffoldForm>
   )
 
