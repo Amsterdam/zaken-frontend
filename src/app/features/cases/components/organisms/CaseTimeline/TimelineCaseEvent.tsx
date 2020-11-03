@@ -90,14 +90,14 @@ const CaseEvent: React.FC<Props> = ({ caseEvents, button }) => {
           showDate={false}
         />
       </Timeline>
-      : 
+      :
       <DefinitionList key={ thread.id } thread="TODO" showDate={true} />
   )
   const currentEvent = caseEvents[0]
 
   return (
     <>
-    { currentEvent && 
+    { currentEvent &&
     <Timeline
       title={ mapCaseType(currentEvent.type)}
       isDone={ currentEvent.type === "CASE" }
@@ -106,9 +106,9 @@ const CaseEvent: React.FC<Props> = ({ caseEvents, button }) => {
         ? <p>{ currentEvent.event_values.reason }</p>
         : TimelineThread
       }
-      { currentEvent.type === "CASE" &&
+      { currentEvent.type === "DEBRIEFING" &&
         <ButtonWrap>
-          <ButtonLink to={ to("/cases/:caseId/debriefing/:id", { caseId: currentEvent.case , id: currentEvent.id })}>
+          <ButtonLink to={ to("/cases/:caseId/debriefing/:id", { caseId: currentEvent.case , id: currentEvent.emitter_id })}>
           { button }
           </ButtonLink>
         </ButtonWrap>
