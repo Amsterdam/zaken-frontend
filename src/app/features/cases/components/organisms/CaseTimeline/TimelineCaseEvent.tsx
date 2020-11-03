@@ -6,7 +6,7 @@ import { displayDate } from "app/features/shared/components/atoms/DateDisplay/Da
 import { Timeline } from "app/features/shared/components/molecules/Timeline"
 
 type Props = {
-  caseEvent: Components.Schemas.Event[]
+  caseEvent: Components.Schemas.CaseEvent[]
   // button?: JSX.Element
 }
 

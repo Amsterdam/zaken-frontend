@@ -35,6 +35,16 @@ declare namespace Components {
             start_date?: string | null; // date
             end_date?: string | null; // date
         }
+        export interface CaseEvent {
+            readonly id: number;
+            event_values: {
+                [name: string]: any;
+            };
+            readonly date_created: string; // date-time
+            type: TypeEnum;
+            emitter_id: number;
+            case: number;
+        }
         export interface CaseState {
             case: number;
             readonly status_name: string;
@@ -64,16 +74,6 @@ declare namespace Components {
             date_from: string | null; // date
             date_to?: string | null; // date
             decos_join_web_url?: string; // uri ^(?:[a-z0-9.+-]*)://(?:[^\s:@/]+(?::[^\s:@/]*)?@)?(?:(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)(?:\.(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)){3}|\[[0-9a-f:.]+\]|([a-z¡-￿0-9](?:[a-z¡-￿0-9-]{0,61}[a-z¡-￿0-9])?(?:\.(?!-)[a-z¡-￿0-9-]{1,63}(?<!-))*\.(?!-)(?:[a-z¡-￿-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\.?|localhost))(?::\d{2,5})?(?:[/?#][^\s]*)?\Z
-        }
-        export interface Event {
-            readonly id: number;
-            event_values: {
-                [name: string]: any;
-            };
-            readonly date_created: string; // date-time
-            type: TypeEnum;
-            emitter_id: number;
-            case: number;
         }
         export interface Fine {
             identificatienummer: string;
@@ -352,7 +352,7 @@ declare namespace Paths {
             id: Parameters.Id;
         }
         namespace Responses {
-            export type $200 = Components.Schemas.Event;
+            export type $200 = Components.Schemas.CaseEvent;
         }
     }
     namespace CasesFinesRetrieve {

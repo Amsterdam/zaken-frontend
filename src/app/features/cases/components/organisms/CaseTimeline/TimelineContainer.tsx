@@ -9,7 +9,8 @@ import CaseEvent from "./TimelineCaseEvent"
 // import to from "app/features/shared/routing/to"
 
 type Props = {
-  caseId: Components.Schemas.Event["id"]
+  caseId: Components.Schemas.CaseEvent["id"]
+  //type: Components.Schemas.TypeEnum
 }
 
 const Div = styled.div`
@@ -77,7 +78,7 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
       r[caseEvent.type] = r[caseEvent.type] || []
       r[caseEvent.type].push(caseEvent)
       return r
-  }, {} as Record<string, Components.Schemas.Event[]>)
+  }, {} as Record<string, Components.Schemas.CaseEvent[]>)
 
   const keys = Object.keys(groupedEvents ?? {})
   
