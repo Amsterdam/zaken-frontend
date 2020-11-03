@@ -10,7 +10,7 @@ import PageHeading from "app/features/shared/components/molecules/PageHeading/Pa
 
 import TimelineContainer from "app/features/cases/components/organisms/CaseTimeline/TimelineContainer"
 import CreateDebriefingLink from "app/features/cases/components/organisms/CreateDebriefingLink/CreateDebriefingLink"
-import createDebriefing from "app/state/workflow/createDebriefing"
+import canCreateDebriefing from "app/state/workflow/canCreateDebriefing"
 
 type Props = {
   id: Components.Schemas.Case["id"]
@@ -21,7 +21,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
   const bagId = caseData?.address.bag_id
 
   const { data: caseEvents } = useCaseEvents(id!)
-  const showCreateDebriefingLink = createDebriefing(caseEvents)
+  const showCreateDebriefingLink = canCreateDebriefing(caseEvents)
 
   return (
     <DefaultLayout>
