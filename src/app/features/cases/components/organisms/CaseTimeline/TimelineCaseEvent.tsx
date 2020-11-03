@@ -8,6 +8,7 @@ import { Timeline } from "app/features/shared/components/molecules/Timeline"
 type Props = {
   // title: string
   caseEvent: Components.Schemas.Event[]
+
   // isOpen?: boolean
   // isDone?: boolean
   // isEditable?: boolean
@@ -47,6 +48,15 @@ dd {
   clear: right;
 }
 `
+
+const mapCaseType = (type: Components.Schemas.TypeEnum) => {
+  switch (type) {
+    case "DEBRIEFING": return "Debrief"
+    case "VISIT": return "Huisbezoek(en)"
+    case "CASE": return "Aanleiding"
+    default: return ""
+  }
+}
 
 const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => (
   <Dl>
@@ -90,10 +100,9 @@ const CaseEvent: React.FC<Props> = ({ caseEvent }) => {
   )
 
   return (
-        // <div>{ caseEvent[0].type }, aantal: { caseEvent.length }</div>
     
     <Timeline
-      title={ caseEvent[0].type }
+      title={ mapCaseType(caseEvent[0].type)}
       isDone={ true }
     >
       { TimelineThread }
