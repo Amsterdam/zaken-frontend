@@ -95,7 +95,7 @@ export const useDebriefings = (id?: number, options?: Options) => {
 
 export const useCaseEvents = (caseId: Components.Schemas.Case["id"]) => {
   const handleError = useErrorHandler()
-  return useApiRequest<Components.Schemas.Event[]>({
+  return useApiRequest<Components.Schemas.CaseEvent[]>({
     url: makeGatewayUrl("cases", caseId, "events"),
     groupName: "cases",
     handleError,

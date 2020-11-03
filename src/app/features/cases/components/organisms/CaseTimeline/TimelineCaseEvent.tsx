@@ -7,7 +7,7 @@ import { Timeline } from "app/features/shared/components/molecules/Timeline"
 
 type Props = {
   // title: string
-  caseEvent: Components.Schemas.Event[]
+  caseEvent: Components.Schemas.CaseEvent[]
   // isOpen?: boolean
   // isDone?: boolean
   // isEditable?: boolean

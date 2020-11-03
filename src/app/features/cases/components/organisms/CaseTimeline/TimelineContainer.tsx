@@ -9,7 +9,7 @@ import CaseEvent from "./TimelineCaseEvent"
 // import to from "app/features/shared/routing/to"
 
 type Props = {
-  caseId: Components.Schemas.Event["id"]
+  caseId: Components.Schemas.CaseEvent["id"]
   //type: Components.Schemas.TypeEnum
 }
 
