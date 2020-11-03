@@ -6,13 +6,7 @@ import { displayDate } from "app/features/shared/components/atoms/DateDisplay/Da
 import { Timeline } from "app/features/shared/components/molecules/Timeline"
 
 type Props = {
-  // title: string
   caseEvent: Components.Schemas.Event[]
-
-  // isOpen?: boolean
-  // isDone?: boolean
-  // isEditable?: boolean
-  // threadSet: Components.Schemas.CaseTimelineThread[]
   // button?: JSX.Element
 }
 
@@ -98,14 +92,17 @@ const CaseEvent: React.FC<Props> = ({ caseEvent }) => {
       : 
       <DefinitionList key={ thread.id } thread="TODO" showDate={true} />
   )
-
+  const currentEvent = caseEvent[0]
   return (
     
     <Timeline
-      title={ mapCaseType(caseEvent[0].type)}
-      isDone={ true }
+      title={ mapCaseType(currentEvent.type)}
+      isDone={ currentEvent.type === "CASE" }
     >
-      { TimelineThread }
+      { currentEvent.type === "CASE"
+        ? <p>{ currentEvent.event_values.reason }</p>
+        : TimelineThread
+      }
       {/* <ButtonWrap>
         { button }
       </ButtonWrap> */}
