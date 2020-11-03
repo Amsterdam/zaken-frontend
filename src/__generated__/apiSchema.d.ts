@@ -117,26 +117,26 @@ declare namespace Components {
         export type IndicatieBetHernBevelEnum = "J" | "N";
         export type IndicatieCombiDwangbevelEnum = "J" | "N" | "O";
         export type IndicatiePubliekrechtelijkEnum = "J" | "N";
-        export type OIDCAuthenticate = {
-            code: string
+        export interface OIDCAuthenticate {
+            code: string;
         }
-        export type PaginatedCaseList = {
+        export interface PaginatedCaseList {
             /**
              * example:
              * 123
              */
-            count?: number
+            count?: number;
             /**
              * example:
              * http://api.example.org/accounts/?page=4
              */
-            next?: string | null // uri
+            next?: string | null; // uri
             /**
              * example:
              * http://api.example.org/accounts/?page=2
              */
-            previous?: string | null // uri
-            results?: Case[]
+            previous?: string | null; // uri
+            results?: Case[];
         }
         export type PaginatedVisitList = {
             /**
@@ -221,32 +221,32 @@ declare namespace Components {
             has_vacation_rental_permit: HasVacationRentalPermitEnum
         }
         export type PermitTypeEnum = "BED_AND_BREAKFAST" | "VAKANTIEVERHUUR" | "PERMIT_UNKNOWN";
-        export type Push = {
-            identification: string
-            case_type: string
-            bag_id: string
-            start_date: string // date
-            end_date?: string // date
-            states?: PushState[]
+        export interface Push {
+            identification: string;
+            case_type: string;
+            bag_id: string;
+            start_date: string; // date
+            end_date?: string; // date
+            states?: PushState[];
         }
-        export type PushState = {
-            name: string
-            start_date: string // date
-            end_date?: string | null // date
-            gauge_date?: string | null // date
-            invoice_identification: string
+        export interface PushState {
+            name: string;
+            start_date: string; // date
+            end_date?: string | null; // date
+            gauge_date?: string | null; // date
+            invoice_identification: string;
         }
-        export type Resident = {
-            geboortedatum: string // date-time
-            geslachtsaanduiding: GeslachtsaanduidingEnum
-            geslachtsnaam: string
-            voorletters: string
-            voornamen: string
-            voorvoegsel_geslachtsnaam?: string
-            datum_begin_relatie_verblijadres: string // date-time
+        export interface Resident {
+            geboortedatum: string; // date-time
+            geslachtsaanduiding: GeslachtsaanduidingEnum;
+            geslachtsnaam: string;
+            voorletters: string;
+            voornamen: string;
+            voorvoegsel_geslachtsnaam?: string;
+            datum_begin_relatie_verblijadres: string; // date-time
         }
-        export type Residents = {
-            results: Resident[]
+        export interface Residents {
+            results: Resident[];
         }
         export type SoortVorderingEnum = "PBF" | "PBN" | "PRV" | "SOC";
         export type Test = {
@@ -278,8 +278,8 @@ declare namespace Paths {
         namespace Parameters {
             export type BagId = string;
         }
-        export type PathParameters = {
-            bag_id: Parameters.BagId
+        export interface PathParameters {
+            bag_id: Parameters.BagId;
         }
         namespace Responses {
             export type $200 = Components.Schemas.PermitCheckmark;
@@ -289,8 +289,8 @@ declare namespace Paths {
         namespace Parameters {
             export type BagId = string;
         }
-        export type PathParameters = {
-            bag_id: Parameters.BagId
+        export interface PathParameters {
+            bag_id: Parameters.BagId;
         }
         namespace Responses {
             export type $200 = Components.Schemas.DecosPermit[];
@@ -300,8 +300,8 @@ declare namespace Paths {
         namespace Parameters {
             export type BagId = string;
         }
-        export type PathParameters = {
-            bag_id: Parameters.BagId
+        export interface PathParameters {
+            bag_id: Parameters.BagId;
         }
         namespace Responses {
             export type $200 = Components.Schemas.Residents;
@@ -317,8 +317,8 @@ declare namespace Paths {
         namespace Parameters {
             export type Id = number;
         }
-        export type PathParameters = {
-            id: Parameters.Id
+        export interface PathParameters {
+            id: Parameters.Id;
         }
         namespace Responses {
             export type $200 = Components.Schemas.Debriefing;
@@ -328,11 +328,11 @@ declare namespace Paths {
         namespace Parameters {
             export type Id = number;
         }
-        export type PathParameters = {
-            id: Parameters.Id
+        export interface PathParameters {
+            id: Parameters.Id;
         }
         namespace Responses {
-            export type $204 = {
+            export interface $204 {
             }
         }
     }
@@ -345,124 +345,6 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.Event;
-        }
-    }
-    namespace CasesFinesRetrieve {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export type PathParameters = {
-            id: Parameters.Id
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.FineList;
-        }
-    }
-    namespace CasesList {
-        namespace Parameters {
-            export type Page = number;
-            export type StateDate = string;
-        }
-        export type QueryParameters = {
-            page?: Parameters.Page
-            state_date?: Parameters.StateDate
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.PaginatedCaseList;
-        }
-    }
-    namespace CasesPartialUpdate {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export type PathParameters = {
-            id: Parameters.Id
-        }
-        export type RequestBody = Components.Schemas.PatchedCase;
-        namespace Responses {
-            export type $200 = Components.Schemas.Case;
-        }
-    }
-    namespace CasesRetrieve {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export type PathParameters = {
-            id: Parameters.Id
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.Case;
-        }
-    }
-    namespace CasesUpdate {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export type PathParameters = {
-            id: Parameters.Id
-        }
-        export type RequestBody = Components.Schemas.Case;
-        namespace Responses {
-            export type $200 = Components.Schemas.Case;
-        }
-    }
-    namespace DebriefingsCreate {
-        export type RequestBody = Components.Schemas.DebriefingCreate;
-        namespace Responses {
-            export type $200 = Components.Schemas.DebriefingCreate;
-        }
-    }
-    namespace DebriefingsDestroy {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export type PathParameters = {
-            id: Parameters.Id
-        }
-        namespace Responses {
-            export type $204 = {
-            }
-        }
-    }
-    namespace DebriefingsPartialUpdate {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export type PathParameters = {
-            id: Parameters.Id
-        }
-        export type RequestBody = Components.Schemas.PatchedDebriefing;
-        namespace Responses {
-            export type $200 = Components.Schemas.Debriefing;
-        }
-    }
-    namespace DebriefingsRetrieve {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export type PathParameters = {
-            id: Parameters.Id
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.Debriefing;
-        }
-    }
-    namespace DebriefingsUpdate {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export type PathParameters = {
-            id: Parameters.Id
-        }
-        export type RequestBody = Components.Schemas.Debriefing;
-        namespace Responses {
-            export type $200 = Components.Schemas.Debriefing;
-        }
-    }
-    namespace IsAuthenticatedRetrieve {
-        namespace Responses {
-            export type $200 = {
-            }
         }
     }
     namespace OidcAuthenticateCreate {
@@ -482,21 +364,90 @@ declare namespace Paths {
             export type Format = "json" | "yaml";
             export type Lang = "af" | "ar" | "ar-dz" | "ast" | "az" | "be" | "bg" | "bn" | "br" | "bs" | "ca" | "cs" | "cy" | "da" | "de" | "dsb" | "el" | "en" | "en-au" | "en-gb" | "eo" | "es" | "es-ar" | "es-co" | "es-mx" | "es-ni" | "es-ve" | "et" | "eu" | "fa" | "fi" | "fr" | "fy" | "ga" | "gd" | "gl" | "he" | "hi" | "hr" | "hsb" | "hu" | "hy" | "ia" | "id" | "ig" | "io" | "is" | "it" | "ja" | "ka" | "kab" | "kk" | "km" | "kn" | "ko" | "ky" | "lb" | "lt" | "lv" | "mk" | "ml" | "mn" | "mr" | "my" | "nb" | "ne" | "nl" | "nn" | "os" | "pa" | "pl" | "pt" | "pt-br" | "ro" | "ru" | "sk" | "sl" | "sq" | "sr" | "sr-latn" | "sv" | "sw" | "ta" | "te" | "tg" | "th" | "tk" | "tr" | "tt" | "udm" | "uk" | "ur" | "uz" | "vi" | "zh-hans" | "zh-hant";
         }
-        export type QueryParameters = {
-            format?: Parameters.Format
-            lang?: Parameters.Lang
+        export interface QueryParameters {
+            format?: Parameters.Format;
+            lang?: Parameters.Lang;
         }
         namespace Responses {
-            export type $200 = {
-                [name: string]: any
+            export interface $200 {
+                [name: string]: any;
             }
         }
     }
-    namespace TestingUrlTryBrkApiCreate {
-        export type RequestBody = Components.Schemas.Test;
+    namespace CasesUpdate {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export type PathParameters = {
+            id: Parameters.Id
+        }
+        export type RequestBody = Components.Schemas.Case;
         namespace Responses {
-            export type $200 = {
+            export type $200 = Components.Schemas.Visit;
+        }
+    }
+    namespace VisitsCreateVisitFromTopCreate {
+        export type RequestBody = Components.Schemas.AddVisit;
+        namespace Responses {
+            export type $200 = Components.Schemas.Visit;
+        }
+    }
+    namespace VisitsDestroy {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        namespace Responses {
+            export interface $204 {
             }
+        }
+    }
+    namespace VisitsList {
+        namespace Parameters {
+            export type Page = number;
+        }
+        export interface QueryParameters {
+            page?: Parameters.Page;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedVisitList;
+        }
+    }
+    namespace VisitsPartialUpdate {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        export type RequestBody = Components.Schemas.PatchedVisit;
+        namespace Responses {
+            export type $200 = Components.Schemas.Visit;
+        }
+    }
+    namespace VisitsRetrieve {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.Visit;
+        }
+    }
+    namespace VisitsUpdate {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        export type RequestBody = Components.Schemas.Visit;
+        namespace Responses {
+            export type $200 = Components.Schemas.Visit;
         }
     }
     namespace VisitsCreate {

@@ -2,7 +2,7 @@ import { FormPositioner } from "amsterdam-scaffold-form/package"
 import { Fields } from "app/features/shared/components/molecules/Form/ScaffoldFields"
 import { navigate } from "@reach/router"
 
-export default (caseId: Components.Schemas.Case["id"]) => {
+export default (caseId: Components.Schemas.Case["id"], onDelete?: () => void) => {
   const fields = {
     violation: {
       type: "RadioFields",
@@ -31,22 +31,21 @@ export default (caseId: Components.Schemas.Case["id"]) => {
         label: "Terugkoppeling toevoegen"
       }
     },
-    cancel: {
+    secondaryButton: {
       type: "Button",
       props: {
-        label: "Annuleer",
-        variant: "textButton",
-        onClick: () => navigate(`/cases/${ caseId }`)
+        label: onDelete ? "Verwijder" : "Annuleer",
+        variant: "primaryInverted",
+        onClick: onDelete ?? (() => navigate(`/cases/${ caseId }`))
       }
     }
   }
 
   return new FormPositioner(fields as Fields)
-    .setGrid("mobileS", "1fr 1fr", [
-      ["violation"],
-      ["feedback"],
-      ["submit"],
-      ["cancel"]
+    .setGrid("laptop", "1fr 1fr 1fr 1fr", [
+      ["violation", "violation"],
+      ["feedback", "feedback"],
+      ["submit", "secondaryButton"]
     ])
     .getScaffoldProps()
 }
