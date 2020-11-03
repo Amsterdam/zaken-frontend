@@ -1,5 +1,13 @@
 declare namespace Components {
     namespace Schemas {
+        export type AddVisit = {
+            case_identification: string
+            start_time: string
+            observations: string[]
+            situation: string
+            authors: string[]
+            notes: string | null
+        }
         export type Address = {
             bag_id: string
             readonly id: number
@@ -34,31 +42,6 @@ declare namespace Components {
             state_date: string // date
             users: string /* uuid */[]
         }
-        export type CaseTimeline = {
-            readonly id: number
-            readonly casetimelinethread_set: CaseTimelineThread[]
-            subject: string
-            is_done?: boolean
-            case: number
-        }
-        export type CaseTimelineReaction = {
-            readonly id: number
-            comment: string
-            readonly date: string // date
-            timeline_item: number
-            author: string // uuid
-        }
-        export type CaseTimelineThread = {
-            readonly id: number
-            readonly casettimelinereaction_set: CaseTimelineReaction[]
-            readonly date: string // date
-            parameters?: {
-                [name: string]: any
-            }
-            notes?: string | null
-            subject: number
-            authors: string /* uuid */[]
-        }
         export type Debriefing = {
             readonly id: number
             case: number
@@ -81,6 +64,16 @@ declare namespace Components {
             date_from: string | null // date
             date_to?: string | null // date
             decos_join_web_url?: string // uri ^(?:[a-z0-9.+-]*)://(?:[^\s:@/]+(?::[^\s:@/]*)?@)?(?:(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)(?:\.(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)){3}|\[[0-9a-f:.]+\]|([a-z¡-￿0-9](?:[a-z¡-￿0-9-]{0,61}[a-z¡-￿0-9])?(?:\.(?!-)[a-z¡-￿0-9-]{1,63}(?<!-))*\.(?!-)(?:[a-z¡-￿-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\.?|localhost))(?::\d{2,5})?(?:[/?#][^\s]*)?\Z
+        }
+        export type Event = {
+            readonly id: number
+            values: {
+                [name: string]: any
+            }
+            readonly date_created: string // date-time
+            type: TypeEnum
+            emitter_id: number
+            case: number
         }
         export type Fine = {
             identificatienummer: string
@@ -145,7 +138,7 @@ declare namespace Components {
             previous?: string | null // uri
             results?: Case[]
         }
-        export type PaginatedCaseTimelineList = {
+        export type PaginatedVisitList = {
             /**
              * example:
              * 123
@@ -161,43 +154,7 @@ declare namespace Components {
              * http://api.example.org/accounts/?page=2
              */
             previous?: string | null // uri
-            results?: CaseTimeline[]
-        }
-        export type PaginatedCaseTimelineReactionList = {
-            /**
-             * example:
-             * 123
-             */
-            count?: number
-            /**
-             * example:
-             * http://api.example.org/accounts/?page=4
-             */
-            next?: string | null // uri
-            /**
-             * example:
-             * http://api.example.org/accounts/?page=2
-             */
-            previous?: string | null // uri
-            results?: CaseTimelineReaction[]
-        }
-        export type PaginatedCaseTimelineThreadList = {
-            /**
-             * example:
-             * 123
-             */
-            count?: number
-            /**
-             * example:
-             * http://api.example.org/accounts/?page=4
-             */
-            next?: string | null // uri
-            /**
-             * example:
-             * http://api.example.org/accounts/?page=2
-             */
-            previous?: string | null // uri
-            results?: CaseTimelineThread[]
+            results?: Visit[]
         }
         export type PatchedAddress = {
             bag_id?: string
@@ -233,31 +190,6 @@ declare namespace Components {
             state_date?: string // date
             users?: string /* uuid */[]
         }
-        export type PatchedCaseTimeline = {
-            readonly id?: number
-            readonly casetimelinethread_set?: CaseTimelineThread[]
-            subject?: string
-            is_done?: boolean
-            case?: number
-        }
-        export type PatchedCaseTimelineReaction = {
-            readonly id?: number
-            comment?: string
-            readonly date?: string // date
-            timeline_item?: number
-            author?: string // uuid
-        }
-        export type PatchedCaseTimelineThread = {
-            readonly id?: number
-            readonly casettimelinereaction_set?: CaseTimelineReaction[]
-            readonly date?: string // date
-            parameters?: {
-                [name: string]: any
-            }
-            notes?: string | null
-            subject?: number
-            authors?: string /* uuid */[]
-        }
         export type PatchedDebriefing = {
             readonly id?: number
             case?: number
@@ -266,6 +198,23 @@ declare namespace Components {
             readonly date_modified?: string // date-time
             violation?: ViolationEnum
             feedback?: string
+        }
+        export type PatchedUser = {
+            id?: string // uuid
+            email?: string // email
+            username?: string
+            first_name?: string
+            last_name?: string
+            full_name?: string
+        }
+        export type PatchedVisit = {
+            readonly id?: number
+            authors?: PatchedUser[]
+            start_time?: string // date-time
+            situation?: string
+            observations?: string[]
+            notes?: string
+            case?: number
         }
         export type PermitCheckmark = {
             has_b_and_b_permit: HasBAndBPermitEnum
@@ -303,16 +252,25 @@ declare namespace Components {
         export type Test = {
             request_url: string
         }
-        export type TimelineUpdate = {
-            thread_id: string
-            subject: string
-            parameters: {
-                [name: string]: any
-            } | null
-            notes: string | null
-            authors: string | null
+        export type TypeEnum = "DEBRIEFING" | "VISIT";
+        export type User = {
+            id: string // uuid
+            email: string // email
+            username: string
+            first_name: string
+            last_name: string
+            full_name: string
         }
         export type ViolationEnum = "NO" | "YES" | "ADDITIONAL_RESEARCH_REQUIRED";
+        export type Visit = {
+            readonly id: number
+            authors: User[]
+            start_time: string // date-time
+            situation: string
+            observations?: string[]
+            notes: string
+            case: number
+        }
     }
 }
 declare namespace Paths {
@@ -349,226 +307,6 @@ declare namespace Paths {
             export type $200 = Components.Schemas.Residents;
         }
     }
-    namespace CaseTimelineReactionsCreate {
-        export type RequestBody = Components.Schemas.CaseTimelineReaction;
-        namespace Responses {
-            export type $200 = Components.Schemas.CaseTimelineReaction;
-        }
-    }
-    namespace CaseTimelineReactionsDestroy {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export type PathParameters = {
-            id: Parameters.Id
-        }
-        namespace Responses {
-            export type $204 = {
-            }
-        }
-    }
-    namespace CaseTimelineReactionsList {
-        namespace Parameters {
-            export type Page = number;
-        }
-        export type QueryParameters = {
-            page?: Parameters.Page
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.PaginatedCaseTimelineReactionList;
-        }
-    }
-    namespace CaseTimelineReactionsPartialUpdate {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export type PathParameters = {
-            id: Parameters.Id
-        }
-        export type RequestBody = Components.Schemas.PatchedCaseTimelineReaction;
-        namespace Responses {
-            export type $200 = Components.Schemas.CaseTimelineReaction;
-        }
-    }
-    namespace CaseTimelineReactionsRetrieve {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export type PathParameters = {
-            id: Parameters.Id
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.CaseTimelineReaction;
-        }
-    }
-    namespace CaseTimelineReactionsUpdate {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export type PathParameters = {
-            id: Parameters.Id
-        }
-        export type RequestBody = Components.Schemas.CaseTimelineReaction;
-        namespace Responses {
-            export type $200 = Components.Schemas.CaseTimelineReaction;
-        }
-    }
-    namespace CaseTimelineThreadsAddTimelineItemCreate {
-        export type RequestBody = Components.Schemas.TimelineUpdate;
-        namespace Responses {
-            export type $200 = Components.Schemas.CaseTimelineThread;
-        }
-    }
-    namespace CaseTimelineThreadsCreate {
-        export type RequestBody = Components.Schemas.CaseTimelineThread;
-        namespace Responses {
-            export type $200 = Components.Schemas.CaseTimelineThread;
-        }
-    }
-    namespace CaseTimelineThreadsDestroy {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export type PathParameters = {
-            id: Parameters.Id
-        }
-        namespace Responses {
-            export type $204 = {
-            }
-        }
-    }
-    namespace CaseTimelineThreadsList {
-        namespace Parameters {
-            export type Page = number;
-            export type SubjectCaseIdentification = string;
-        }
-        export type QueryParameters = {
-            page?: Parameters.Page
-            subject__case__identification?: Parameters.SubjectCaseIdentification
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.PaginatedCaseTimelineThreadList;
-        }
-    }
-    namespace CaseTimelineThreadsPartialUpdate {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export type PathParameters = {
-            id: Parameters.Id
-        }
-        export type RequestBody = Components.Schemas.PatchedCaseTimelineThread;
-        namespace Responses {
-            export type $200 = Components.Schemas.CaseTimelineThread;
-        }
-    }
-    namespace CaseTimelineThreadsRemoveTimelineItemCreate {
-        namespace Parameters {
-            export type ThreadId = string;
-        }
-        export type QueryParameters = {
-            thread_id: Parameters.ThreadId
-        }
-        export type RequestBody = Components.Schemas.CaseTimelineThread;
-        namespace Responses {
-            export type $200 = Components.Schemas.CaseTimelineThread;
-        }
-    }
-    namespace CaseTimelineThreadsRetrieve {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export type PathParameters = {
-            id: Parameters.Id
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.CaseTimelineThread;
-        }
-    }
-    namespace CaseTimelineThreadsUpdate {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export type PathParameters = {
-            id: Parameters.Id
-        }
-        export type RequestBody = Components.Schemas.CaseTimelineThread;
-        namespace Responses {
-            export type $200 = Components.Schemas.CaseTimelineThread;
-        }
-    }
-    namespace CaseTimelineThreadsUpdateTimelineItemCreate {
-        export type RequestBody = Components.Schemas.TimelineUpdate;
-        namespace Responses {
-            export type $200 = Components.Schemas.CaseTimelineThread;
-        }
-    }
-    namespace CaseTimelinesCreate {
-        export type RequestBody = Components.Schemas.CaseTimeline;
-        namespace Responses {
-            export type $200 = Components.Schemas.CaseTimeline;
-        }
-    }
-    namespace CaseTimelinesDestroy {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export type PathParameters = {
-            id: Parameters.Id
-        }
-        namespace Responses {
-            export type $204 = {
-            }
-        }
-    }
-    namespace CaseTimelinesList {
-        namespace Parameters {
-            export type CaseIdentification = string;
-            export type Page = number;
-        }
-        export type QueryParameters = {
-            case__identification?: Parameters.CaseIdentification
-            page?: Parameters.Page
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.PaginatedCaseTimelineList;
-        }
-    }
-    namespace CaseTimelinesPartialUpdate {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export type PathParameters = {
-            id: Parameters.Id
-        }
-        export type RequestBody = Components.Schemas.PatchedCaseTimeline;
-        namespace Responses {
-            export type $200 = Components.Schemas.CaseTimeline;
-        }
-    }
-    namespace CaseTimelinesRetrieve {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export type PathParameters = {
-            id: Parameters.Id
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.CaseTimeline;
-        }
-    }
-    namespace CaseTimelinesUpdate {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export type PathParameters = {
-            id: Parameters.Id
-        }
-        export type RequestBody = Components.Schemas.CaseTimeline;
-        namespace Responses {
-            export type $200 = Components.Schemas.CaseTimeline;
-        }
-    }
     namespace CasesCreate {
         export type RequestBody = Components.Schemas.Case;
         namespace Responses {
@@ -596,6 +334,17 @@ declare namespace Paths {
         namespace Responses {
             export type $204 = {
             }
+        }
+    }
+    namespace CasesEventsRetrieve {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export type PathParameters = {
+            id: Parameters.Id
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.Event;
         }
     }
     namespace CasesFinesRetrieve {
@@ -643,17 +392,6 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.Case;
-        }
-    }
-    namespace CasesTimelineRetrieve {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export type PathParameters = {
-            id: Parameters.Id
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.CaseTimeline;
         }
     }
     namespace CasesUpdate {
@@ -759,6 +497,76 @@ declare namespace Paths {
         namespace Responses {
             export type $200 = {
             }
+        }
+    }
+    namespace VisitsCreate {
+        export type RequestBody = Components.Schemas.Visit;
+        namespace Responses {
+            export type $200 = Components.Schemas.Visit;
+        }
+    }
+    namespace VisitsCreateVisitFromTopCreate {
+        export type RequestBody = Components.Schemas.AddVisit;
+        namespace Responses {
+            export type $200 = Components.Schemas.Visit;
+        }
+    }
+    namespace VisitsDestroy {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export type PathParameters = {
+            id: Parameters.Id
+        }
+        namespace Responses {
+            export type $204 = {
+            }
+        }
+    }
+    namespace VisitsList {
+        namespace Parameters {
+            export type Page = number;
+        }
+        export type QueryParameters = {
+            page?: Parameters.Page
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedVisitList;
+        }
+    }
+    namespace VisitsPartialUpdate {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export type PathParameters = {
+            id: Parameters.Id
+        }
+        export type RequestBody = Components.Schemas.PatchedVisit;
+        namespace Responses {
+            export type $200 = Components.Schemas.Visit;
+        }
+    }
+    namespace VisitsRetrieve {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export type PathParameters = {
+            id: Parameters.Id
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.Visit;
+        }
+    }
+    namespace VisitsUpdate {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export type PathParameters = {
+            id: Parameters.Id
+        }
+        export type RequestBody = Components.Schemas.Visit;
+        namespace Responses {
+            export type $200 = Components.Schemas.Visit;
         }
     }
 }

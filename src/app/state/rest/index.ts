@@ -92,10 +92,11 @@ export const useDebriefings = (id?: number, options?: Options) => {
   })
 }
 
-export const useCaseTimeline = (caseId: Components.Schemas.Case["id"]) => {
+
+export const useCaseEvents = (caseId: Components.Schemas.Case["id"]) => {
   const handleError = useErrorHandler()
-  return useApiRequest<Components.Schemas.CaseTimeline[]>({
-    url: makeGatewayUrl("cases", caseId, "timeline"),
+  return useApiRequest<Components.Schemas.Event[]>({
+    url: makeGatewayUrl("cases", caseId, "events"),
     groupName: "cases",
     handleError,
     getHeaders
