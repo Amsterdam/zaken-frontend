@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { RouteComponentProps } from "@reach/router"
 import { FormTitle, Heading, Button } from "@datapunt/asc-ui"
 
@@ -19,14 +19,20 @@ type Props = {
 const CONFIRM_TEXT = "Weet je zeker dat je deze debriefing wilt verwijderen?"
 
 const EditPage: React.FC<RouteComponentProps<Props>> = ({ caseId: caseIdString, id: idString }) => {
+  // TODO: Fix showing 404 for NaN
   const caseId: Components.Schemas.Case["id"] = parseInt(caseIdString!)
   const id: Components.Schemas.Debriefing["id"] = parseInt(idString!)
 
+  // This is a hack used to make sure Debriefing is not refetched after being deleted and cache cleared
+  // TODO: Fix in caching hook?
+  const [isDeleted, setIsDeleted] = useState(false)
   const { data: caseData } = useCase(caseId)
-  const { data } = useDebriefings(id)
+  const { data } = useDebriefings(id, { lazy: isDeleted })
   const { handleUpdate, handleDelete } = usePageDebriefing(caseId!, id!)
+
   const onDelete = () => {
     if (!window.confirm(CONFIRM_TEXT)) return
+    setIsDeleted(true)
     handleDelete()
   }
 
