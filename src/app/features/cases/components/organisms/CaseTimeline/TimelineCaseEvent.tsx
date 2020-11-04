@@ -68,13 +68,13 @@ const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => (
   <Dl>
     
   { showDate && thread.date_created && <div><dt>Datum</dt><dd>{ displayDate(thread.date_created) }</dd></div> }
-  {/* TODO { Object.keys(thread.parameters ?? {}).map((key, index) => (
+  { Object.keys(thread.event_values ?? {}).map((key, index) => (
     <div key={index}>
       <dt>{key}</dt>
-      <dd>{ thread.parameters?.[key] }</dd>
+      <dd>{ thread.event_values?.[key] }</dd>
     </div>
   ))}
-  { thread.notes && <div><dt>Toelichting</dt><dd><i>{ thread.notes }</i></dd></div> } */}
+  {/* { thread.notes && <div><dt>Toelichting</dt><dd><i>{ thread.notes }</i></dd></div> } */}
   </Dl>
 )
 
