@@ -57,7 +57,7 @@ const mapCaseType = (type: Components.Schemas.TypeEnum) => {
   }
 }
 
-const ButtonDebrief: React.FC<ButtonDebriefProps> = ({ caseId, debriefId, button }) => 
+const ButtonDebrief: React.FC<ButtonDebriefProps> = ({ caseId, debriefId, button }) =>
     <ButtonWrap>
       <ButtonLink to={ to("/cases/:caseId/debriefing/:id", { caseId: caseId , id: debriefId })}>
       { button }
@@ -66,7 +66,7 @@ const ButtonDebrief: React.FC<ButtonDebriefProps> = ({ caseId, debriefId, button
 
 const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => (
   <Dl>
-    
+
   { showDate && thread.date_created && <div><dt>Datum</dt><dd>{ displayDate(thread.date_created) }</dd></div> }
   { Object.keys(thread.event_values ?? {}).map((key, index) => (
     <div key={index}>
@@ -102,9 +102,9 @@ const CaseEvent: React.FC<Props> = ({ caseEvents, button }) => {
         />
         { thread.type === "DEBRIEFING" && <ButtonDebrief caseId={ thread.case } debriefId={ thread.id } button={ button } /> }
       </Timeline>
-      : 
+      :
       <>
-        <DefinitionList 
+        <DefinitionList
           key={ thread.id }
           thread={ thread }
           showDate={true}
@@ -114,10 +114,10 @@ const CaseEvent: React.FC<Props> = ({ caseEvents, button }) => {
   )
   const currentEvent = caseEvents[0]
   const counterString = caseEvents.length > 1 ? `(${ caseEvents.length })` : ""
-  
+
   return (
     <>
-    { currentEvent && 
+    { currentEvent &&
     <Timeline
       title={ `${ mapCaseType(currentEvent.type) } ${ counterString } `}
       isDone={ currentEvent.type === "CASE" }
@@ -126,7 +126,6 @@ const CaseEvent: React.FC<Props> = ({ caseEvents, button }) => {
         ? <p>{ currentEvent.event_values.reason }</p>
         : TimelineThread
       }
-      
     </Timeline>
     }
     </>
