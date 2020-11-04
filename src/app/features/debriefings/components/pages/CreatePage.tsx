@@ -8,6 +8,7 @@ import PageHeading from "app/features/shared/components/molecules/PageHeading/Pa
 import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import DebriefForm from "app/features/debriefings/components/molecules/DebriefForm/DebriefForm"
+import AddressHeading from "app/features/debriefings/components/molecules/AddressHeading/AddressHeading"
 import usePageDebriefing from "./hooks/usePageDebriefing"
 
 type Props = {
@@ -33,9 +34,7 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
           <>
             <Heading as="h2">Nieuwe debrief</Heading>
             <FormTitle>Gebruik dit formulier om terugkoppeling te geven van een debrief</FormTitle>
-            <Heading as="h3">Adres</Heading>
-            <p>{ data.address.street_name }</p>
-            <p>{ data.address.postal_code }</p>
+            <AddressHeading caseId={ id } />
             <DebriefForm caseId={ id! } onSubmit={ handleCreate } />
           </>
         }

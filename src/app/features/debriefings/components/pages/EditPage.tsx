@@ -7,6 +7,7 @@ import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
 import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
+import AddressHeading from "app/features/debriefings/components/molecules/AddressHeading/AddressHeading"
 import DebriefForm from "app/features/debriefings/components/molecules/DebriefForm/DebriefForm"
 import usePageDebriefing from "./hooks/usePageDebriefing"
 
@@ -45,9 +46,7 @@ const EditPage: React.FC<RouteComponentProps<Props>> = ({ caseId: caseIdString, 
             <Heading as="h2">Debrief</Heading>
             <Button variant="secondary" onClick={ onDelete }>Terugkoppeling verwijderen</Button>
             <FormTitle>Gebruik dit formulier om terugkoppeling te wijzigen</FormTitle>
-            <Heading as="h3">Adres</Heading>
-            <p>{ caseData!.address.street_name }</p>
-            <p>{ caseData!.address.postal_code }</p>
+            <AddressHeading caseId={ caseId } />
             <DebriefForm caseId={ caseId! } onSubmit={ handleUpdate } initialValues={ data } isLoading={ data === undefined } />
           </>
         }
