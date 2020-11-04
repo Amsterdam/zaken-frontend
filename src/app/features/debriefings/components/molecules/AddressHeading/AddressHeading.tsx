@@ -9,7 +9,6 @@ type Props = {
 
 const AddressHeading: React.FC<Props> = ({ caseId }) => {
   const { data } = useCase(caseId)
-  console.log(data)
 
   return (
     <>
