@@ -13,10 +13,14 @@ type Props = {
 }
 
 type DLProps = {
-  thread: string//Components.Schemas.CaseTimelineThread
+  thread: Components.Schemas.CaseEvent
   showDate: boolean
 }
-
+type ButtonDebriefProps = {
+  caseId:  number
+  debriefId: number
+  button?: JSX.Element
+}
 const Dl = styled.dl`
 max-width: 500px;
 
@@ -53,11 +57,18 @@ const mapCaseType = (type: Components.Schemas.TypeEnum) => {
   }
 }
 
+const ButtonDebrief: React.FC<ButtonDebriefProps> = ({ caseId, debriefId, button }) =>
+    <ButtonWrap>
+      <ButtonLink to={ to("/cases/:caseId/debriefing/:id", { caseId: caseId , id: debriefId })}>
+      { button }
+      </ButtonLink>
+    </ButtonWrap>
+
 const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => (
   <Dl>
-    {thread}
-  {/* { showDate && thread.date && <div><dt>Datum</dt><dd>{ displayDate(thread.date) }</dd></div> }
-  { Object.keys(thread.parameters ?? {}).map((key, index) => (
+
+  { showDate && thread.date_created && <div><dt>Datum</dt><dd>{ displayDate(thread.date_created) }</dd></div> }
+  {/* TODO { Object.keys(thread.parameters ?? {}).map((key, index) => (
     <div key={index}>
       <dt>{key}</dt>
       <dd>{ thread.parameters?.[key] }</dd>
@@ -86,32 +97,34 @@ const CaseEvent: React.FC<Props> = ({ caseEvents, button }) => {
         isNested={true}
       >
         <DefinitionList
-          thread="TODO"
+          thread={ thread }
           showDate={false}
         />
+        { thread.type === "DEBRIEFING" && <ButtonDebrief caseId={ thread.case } debriefId={ thread.id } button={ button } /> }
       </Timeline>
       :
-      <DefinitionList key={ thread.id } thread="TODO" showDate={true} />
+      <>
+        <DefinitionList
+          key={ thread.id }
+          thread={ thread }
+          showDate={true}
+        />
+        { thread.type === "DEBRIEFING" && <ButtonDebrief caseId={ thread.case } debriefId={ thread.id } button={ button } /> }
+      </>
   )
   const currentEvent = caseEvents[0]
+  const counterString = caseEvents.length > 1 ? `(${ caseEvents.length })` : ""
 
   return (
     <>
     { currentEvent &&
     <Timeline
-      title={ mapCaseType(currentEvent.type)}
+      title={ `${ mapCaseType(currentEvent.type) } ${ counterString } `}
       isDone={ currentEvent.type === "CASE" }
     >
       { currentEvent.type === "CASE"
         ? <p>{ currentEvent.event_values.reason }</p>
         : TimelineThread
-      }
-      { currentEvent.type === "DEBRIEFING" &&
-        <ButtonWrap>
-          <ButtonLink to={ to("/cases/:caseId/debriefing/:id", { caseId: currentEvent.case , id: currentEvent.emitter_id })}>
-          { button }
-          </ButtonLink>
-        </ButtonWrap>
       }
     </Timeline>
     }

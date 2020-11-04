@@ -99,7 +99,7 @@ const TimelineItem = styled.div`
 
 const NestedContainer = styled.div<Props>`
   display: flex;
-  width: 100%;
+  min-width: 100%;
   margin-left: ${ ({ isNested }) => isNested && "-32px" };
   @media ${ breakpoint("min-width", "laptop") } {
     margin-left: ${ ({ isNested }) => isNested && "-60px" };
