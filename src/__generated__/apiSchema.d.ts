@@ -1,13 +1,5 @@
 declare namespace Components {
     namespace Schemas {
-        export interface AddVisit {
-            case_identification: string;
-            start_time: string;
-            observations: string[];
-            situation: string;
-            authors: string[];
-            notes: string | null;
-        }
         export interface Address {
             bag_id: string;
             readonly id: number;
@@ -255,6 +247,18 @@ declare namespace Components {
         export type SoortVorderingEnum = "PBF" | "PBN" | "PRV" | "SOC";
         export interface Test {
             request_url: string;
+        }
+        export interface TopVisit {
+            case_identification: string;
+            start_time: string;
+            observations: string[];
+            situation: string;
+            authors: string[];
+            can_next_visit_go_ahead: boolean | null;
+            can_next_visit_go_ahead_description: string | null;
+            suggest_next_visit: string | null;
+            suggest_next_visit_description: string | null;
+            notes: string | null;
         }
         export type TypeEnum = "DEBRIEFING" | "VISIT" | "CASE";
         export interface User {
@@ -514,7 +518,7 @@ declare namespace Paths {
         }
     }
     namespace VisitsCreateVisitFromTopCreate {
-        export type RequestBody = Components.Schemas.AddVisit;
+        export type RequestBody = Components.Schemas.TopVisit;
         namespace Responses {
             export type $200 = Components.Schemas.Visit;
         }
@@ -573,6 +577,12 @@ declare namespace Paths {
             id: Parameters.Id;
         }
         export type RequestBody = Components.Schemas.Visit;
+        namespace Responses {
+            export type $200 = Components.Schemas.Visit;
+        }
+    }
+    namespace VisitsUpdateVisitFromTopCreate {
+        export type RequestBody = Components.Schemas.TopVisit;
         namespace Responses {
             export type $200 = Components.Schemas.Visit;
         }
