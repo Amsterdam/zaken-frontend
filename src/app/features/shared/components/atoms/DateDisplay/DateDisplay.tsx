@@ -31,6 +31,11 @@ export const displayDate = (date: string | Date, full = false) => {
     `${ twoCharNum(d.getDate()) } ${ months[d.getMonth()] } ${ d.getFullYear() }` :
     `${ twoCharNum(d.getDate()) }-${ twoCharNum(d.getMonth() + 1) }-${ d.getFullYear() }`
 }
+export const displayTime = (date: string | Date) => {
+  const d = typeof date === "string" ? new Date(date) : date
+  if (!isValidDate(d)) return invalidDateText
+  return `${ twoCharNum(d.getHours()) }:${ twoCharNum(d.getMinutes()) }` 
+}
 
 const Span = styled.span`
   white-space: nowrap;

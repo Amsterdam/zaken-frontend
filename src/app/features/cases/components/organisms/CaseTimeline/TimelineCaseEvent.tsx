@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import {  themeColor, themeSpacing, breakpoint } from "@datapunt/asc-ui"
 import { getDay }from "app/features/shared/components/atoms/DayDisplay/DayDisplay"
-import { displayDate } from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
+import { displayDate, displayTime } from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
 import { Timeline } from "app/features/shared/components/molecules/Timeline"
 import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
 import to from "app/features/shared/routing/to"
@@ -65,19 +65,19 @@ const mapCaseType = (type: Components.Schemas.TypeEnum) => {
   }
 }
 
-const mapEventKeys = (value: string) => {
-  switch (value) {
-    case "start_time": return "Starttijd"
-    case "authors": return "Toezichthouders"
-    case "situation": return "Situatie"
-    case "observations": return "Kenmerken"
-    case "can_next_visit_go_ahead": return "Vervolgactie"
-    case "can_next_visit_go_ahead_description": return "Toelichting"
-    case "suggest_next_visit": return "Volgend bezoek"
-    case "suggest_next_visit_description": return "Toelichting"
-    case "notes": return "Toelichting"
-  }
-}
+// const mapEventKeys = (value: string) => {
+//   switch (value) {
+//     case "start_time": return "Starttijd"
+//     case "authors": return "Toezichthouders"
+//     case "situation": return "Situatie"
+//     case "observations": return "Kenmerken"
+//     case "can_next_visit_go_ahead": return "Vervolgactie"
+//     case "can_next_visit_go_ahead_description": return "Toelichting"
+//     case "suggest_next_visit": return "Volgend bezoek"
+//     case "suggest_next_visit_description": return "Toelichting"
+//     case "notes": return "Toelichting"
+//   }
+// }
 
 const mapEventValues = (value: string) => {
   switch (value) {
@@ -129,7 +129,7 @@ const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => {
             { value.start_time &&
               <div>
                   <dt>Starttijd</dt>
-                  <dd>{ value.start_time }</dd>
+                  <dd>{ displayTime(value.start_time) }</dd>
               </div>
             }
             { value.authors && 
