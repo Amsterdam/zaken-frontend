@@ -8,7 +8,8 @@ import PageHeading from "app/features/shared/components/molecules/PageHeading/Pa
 import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import DebriefForm from "app/features/debriefings/components/molecules/DebriefForm/DebriefForm"
-import useDebriefing from "./hooks/useDebriefing"
+import AddressHeading from "app/features/debriefings/components/molecules/AddressHeading/AddressHeading"
+import usePageDebriefing from "./hooks/usePageDebriefing"
 
 type Props = {
   id: string
@@ -18,7 +19,7 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
   const id: Components.Schemas.Case["id"] = parseInt(idString!)
 
   const { data } = useCase(id)
-  const { handleCreate } = useDebriefing(id)
+  const { handleCreate } = usePageDebriefing(id)
 
   return (
     <DefaultLayout>
@@ -33,10 +34,8 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
           <>
             <Heading as="h2">Nieuwe debrief</Heading>
             <FormTitle>Gebruik dit formulier om terugkoppeling te geven van een debrief</FormTitle>
-            <Heading as="h3">Adres</Heading>
-            <p>{ data.address.street_name }</p>
-            <p>{ data.address.postal_code }</p>
-            <DebriefForm caseId={ id! } onSubmit={ handleCreate } initialValues={ { case: id } } />
+            <AddressHeading caseId={ id } />
+            <DebriefForm caseId={ id! } onSubmit={ handleCreate } />
           </>
         }
       </RowWithColumn>
