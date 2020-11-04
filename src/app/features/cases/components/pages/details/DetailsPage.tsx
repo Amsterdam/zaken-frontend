@@ -31,6 +31,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
       </RowWithColumn>
       <RowWithColumn>
         <Heading as="h2">Open taken</Heading>
+        <Divider />
         { showCreateDebriefingLink &&
           <CreateDebriefingLink id={ id! } />
         }

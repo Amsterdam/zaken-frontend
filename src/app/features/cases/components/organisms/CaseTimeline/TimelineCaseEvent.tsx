@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import {  themeColor, themeSpacing, breakpoint } from "@datapunt/asc-ui"
 import { getDay }from "app/features/shared/components/atoms/DayDisplay/DayDisplay"
-import { displayDate } from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
+import { displayDate, displayTime } from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
 import { Timeline } from "app/features/shared/components/molecules/Timeline"
 import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
 import to from "app/features/shared/routing/to"
@@ -48,6 +48,14 @@ dd {
   clear: right;
 }
 `
+const UnstyledList = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  li {
+    padding: 0 0 ${ themeSpacing(1) } 0;
+  }
+`
 
 const mapCaseType = (type: Components.Schemas.TypeEnum) => {
   switch (type) {
@@ -57,6 +65,42 @@ const mapCaseType = (type: Components.Schemas.TypeEnum) => {
   }
 }
 
+// const mapEventKeys = (value: string) => {
+//   switch (value) {
+//     case "start_time": return "Starttijd"
+//     case "authors": return "Toezichthouders"
+//     case "situation": return "Situatie"
+//     case "observations": return "Kenmerken"
+//     case "can_next_visit_go_ahead": return "Vervolgactie"
+//     case "can_next_visit_go_ahead_description": return "Toelichting"
+//     case "suggest_next_visit": return "Volgend bezoek"
+//     case "suggest_next_visit_description": return "Toelichting"
+//     case "notes": return "Toelichting"
+//   }
+// }
+
+const mapEventValues = (value: string) => {
+  switch (value) {
+    case "malfunctioning_doorbel": return "Bel functioneert niet"
+    case "intercom": return "Contact via intercom"
+    case "hotel_furnished": return "Hotelmatig ingericht"
+    case "vacant": return "Leegstaand"
+    case "inhabited": return "Vermoedelijk bewoond" //TODO check value with back-end
+    case "nobody_present": return "Niemand aanwezig"
+    case "no_cooperation": return "Geen medewerking" //TODO check value with back-end
+    case "access_granted": return "Toegang verleend"
+  }
+}
+
+const mapArrayToUl = (list: any, doMapValue: boolean = false) => 
+  <UnstyledList>
+    { list.map((item: any, index: number) =>
+      doMapValue 
+      ? <li key={ index }>{ mapEventValues(item) }</li>
+      : <li key={ index }>{ item }</li>
+    )}
+  </UnstyledList>
+
 const ButtonDebrief: React.FC<ButtonDebriefProps> = ({ caseId, debriefId, button }) =>
     <ButtonWrap>
       <ButtonLink to={ to("/cases/:caseId/debriefing/:id", { caseId: caseId , id: debriefId })}>
@@ -64,19 +108,83 @@ const ButtonDebrief: React.FC<ButtonDebriefProps> = ({ caseId, debriefId, button
       </ButtonLink>
     </ButtonWrap>
 
-const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => (
+const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => {
+  const value = thread.event_values
+  return (
   <Dl>
-
-  { showDate && thread.date_created && <div><dt>Datum</dt><dd>{ displayDate(thread.date_created) }</dd></div> }
-  {/* TODO { Object.keys(thread.parameters ?? {}).map((key, index) => (
-    <div key={index}>
-      <dt>{key}</dt>
-      <dd>{ thread.parameters?.[key] }</dd>
-    </div>
-  ))}
-  { thread.notes && <div><dt>Toelichting</dt><dd><i>{ thread.notes }</i></dd></div> } */}
+        { showDate && thread.date_created && <div><dt>Datum</dt><dd>{ displayDate(thread.date_created) }</dd></div> }
+        { thread.type !== "VISIT" ?
+          <>
+            { Object.keys(thread.event_values ?? {}).map((key, index) => (
+              <div key={index}>
+                <dt>{key}</dt>
+                <dd>{ value?.[key] }</dd>
+              </div>
+            ))
+            }
+          </>
+          :
+          <>
+          {/* thread.type === VISIT */}
+            { value.start_time &&
+              <div>
+                  <dt>Starttijd</dt>
+                  <dd>{ displayTime(value.start_time) }</dd>
+              </div>
+            }
+            { value.authors && 
+              <div>
+                <dt>Toezichthouders</dt>
+                <dd>{ mapArrayToUl(value.authors) }</dd>
+              </div>
+            }
+            { value.situation && 
+              <div>
+                <dt>Situatie</dt>
+                <dd>{ mapEventValues(value.situation) }</dd>
+              </div>
+            }
+            { value.situation && value.situation === "access_granted" &&
+              <div>
+                <dt>Toelichting</dt>
+                <dd>{ value.notes }</dd>
+              </div>
+            }
+            { value.observations &&
+              <div>
+                <dt>Kenmerken</dt>
+                <dd>{ mapArrayToUl(value.observations, true) }</dd>
+              </div>
+            }
+            { value.suggest_next_visit &&
+              <div>
+                  <dt>Volgend bezoek</dt>
+                  <dd>{ value.suggest_next_visit }</dd>
+              </div>
+            }
+            { value.suggest_next_visit && value.suggest_next_visit_description &&
+              <div>
+                <dt>Toelichting</dt>
+                <dd>{ value.suggest_next_visit_description }</dd>
+              </div>
+            }
+            { value.can_next_visit_go_ahead &&
+              <div>
+                  <dt>Vervolgactie</dt>
+                  <dd>{ value.can_next_visit_go_ahead ? "Ja, doorlaten" : "Nee, tegenhouden" }</dd>
+              </div>
+            }
+            { value.can_next_visit_go_ahead && value.can_next_visit_go_ahead_description &&
+              <div>
+                <dt>Toelichting</dt>
+                <dd>{ value.can_next_visit_go_ahead_description }</dd>
+              </div>
+            }
+          </>
+        }
   </Dl>
-)
+  )
+}
 
 const ButtonWrap = styled.div`
   @media ${ breakpoint("min-width", "laptop") } {
