@@ -2,6 +2,7 @@ import { ChevronDown, Checkmark } from "@datapunt/asc-assets"
 import React, { useCallback, useEffect, useState } from "react"
 import { useUID } from "react-uid"
 import { Theme } from "@datapunt/asc-ui/es/types/Theme"
+import { themeSpacing } from "@datapunt/asc-ui"
 
 import {
   TimelineItem,
@@ -14,9 +15,11 @@ import {
   NestedContainer,
   Props as StyleProps
 } from "./TimelineStyle"
+import styled from "styled-components"
 
 type Props = {
   onToggle?: (open: boolean) => void
+  canBeOpened?: boolean
 } & StyleProps
 
 type ButtonVariant =
@@ -67,6 +70,7 @@ const Timeline: React.FC<
   largeCircle = true,
   onClick,
   isNested,
+  canBeOpened = true,
   ...otherProps
 
 }) => {
@@ -89,6 +93,11 @@ const Timeline: React.FC<
     setOpen(newOpenState)
   }, [open, onToggle])
 
+  const Label = styled.span`
+    display: inline-block;
+    padding: ${ themeSpacing(3) } 0;
+  `
+
   return (
     <>
       <Background isOpen={open} />
@@ -102,25 +111,34 @@ const Timeline: React.FC<
           </CircleStyle>
         </CircleWrapperStyle>
         <TimelineItem>
-          <TimelineButton
-            aria-controls={id}
-            aria-expanded={open}
-            id={`label-${ id }`}
-            type="button"
-            variant="blank"
-            iconRight={<ChevronDown />}
-            isOpen={open}
-            title={title}
-            onClick={handleClick}
-            {...otherProps}
-          >
+          { canBeOpened 
+            ? 
+            <>
+              <TimelineButton
+                aria-controls={id}
+                aria-expanded={open}
+                id={`label-${ id }`}
+                type="button"
+                variant="blank"
+                iconRight={<ChevronDown />}
+                isOpen={open}
+                title={title}
+                onClick={handleClick}
+                {...otherProps}
+              >
+                <TimelineButtonContent>
+                  {title}
+                </TimelineButtonContent>
+              </TimelineButton>
+              <TimelineContent isOpen={open} aria-labelledby={`label-${ id }`} id={id} isNested={isNested}>
+                {children}
+              </TimelineContent>
+            </>  
+            :            
             <TimelineButtonContent>
-              {title}
-            </TimelineButtonContent>
-          </TimelineButton>
-          <TimelineContent isOpen={open} aria-labelledby={`label-${ id }`} id={id} isNested={isNested}>
-            {children}
-          </TimelineContent>
+              <Label>{title}</Label>
+            </TimelineButtonContent>            
+          }
         </TimelineItem>
       </NestedContainer>
     </>

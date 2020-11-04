@@ -2,9 +2,10 @@ import React from "react"
 import styled from "styled-components"
 import { Button } from "@datapunt/asc-ui"
 import { EditDocument } from "@datapunt/asc-assets"
-import { TimelineWrapper } from "app/features/shared/components/molecules/Timeline"
+import { Timeline, TimelineWrapper } from "app/features/shared/components/molecules/Timeline"
 import CaseEvent from "./TimelineCaseEvent"
 import { useCaseEvents } from "app/state/rest"
+import canCreateDebriefing from "app/state/workflow/canCreateDebriefing"
 
 
 type Props = {
@@ -37,6 +38,7 @@ const StyledButton = styled(Button)`
 
 const TimelineContainer: React.FC<Props> = ({ caseId }) => {
   const data = useCaseEvents(caseId!).data
+  const showCreateDebriefingLink = canCreateDebriefing(data)
 
   const debriefEvents = data?.filter(({ type })  => type === "DEBRIEFING")
   const visitEvents = data?.filter(({ type })  => type === "VISIT")
@@ -45,7 +47,15 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
   return (
     <>
       <Div>
-        
+        { showCreateDebriefingLink &&
+          <TimelineWrapper >
+            <Timeline
+              title= { "Debrief" }
+              isDone={false}
+              canBeOpened={false}
+            />
+          </TimelineWrapper>
+        }
         { debriefEvents && debriefEvents.length > 0 &&
             <TimelineWrapper >
               <CaseEvent 
@@ -59,7 +69,7 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
           { visitEvents && visitEvents.length > 0 &&
             <TimelineWrapper >
               <CaseEvent 
-                caseEvents={ visitEvents } />
+                caseEvents={ visitEvents.reverse() } />
             </TimelineWrapper>
           }
           { reasonEvents && reasonEvents.length > 0 &&
