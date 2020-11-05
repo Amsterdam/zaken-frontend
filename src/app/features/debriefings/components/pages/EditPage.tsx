@@ -51,7 +51,7 @@ const EditPage: React.FC<RouteComponentProps<Props>> = ({ caseId: caseIdString, 
         { showForm &&
           <>
             <Heading as="h2">Debrief</Heading>
-            <Button variant="primaryInverted" icon={ <TrashBin /> } onClick={ onDelete }>Terugkoppeling verwijderen</Button>
+            <Button variant="primaryInverted" iconLeft={ <TrashBin /> } onClick={ onDelete }>Terugkoppeling verwijderen</Button>
             <FormTitle>Gebruik dit formulier om terugkoppeling te wijzigen</FormTitle>
             <AddressHeading caseId={ caseId } />
             <DebriefForm caseId={ caseId! } onSubmit={ handleUpdate } initialValues={ data } isLoading={ data === undefined } />
