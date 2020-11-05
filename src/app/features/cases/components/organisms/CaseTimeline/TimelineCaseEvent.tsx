@@ -23,7 +23,7 @@ type ButtonDebriefProps = {
   button?: JSX.Element
 }
 const Dl = styled.dl`
-max-width: 500px;
+max-width: 800px;
 
 &:after {
   clear: both;
@@ -40,13 +40,19 @@ dt {
   clear: both;
   word-wrap: break-word;
   padding-right: ${ themeSpacing(5) };
-  color: ${ themeColor("tint","level6") }
+  color: ${ themeColor("tint","level6") };
+  @media ${ breakpoint("min-width", "tabletM") } {
+    width: 30%;
+  }
 }
 dd {
   margin: 0;
   padding-right: 20px;
   float: right;
   clear: right;
+  @media ${ breakpoint("min-width", "tabletM") } {
+    width: 70%;
+  }
 }
 `
 const UnstyledList = styled.ul`
