@@ -99,10 +99,16 @@ const mapEventValues = (value: string) => {
   }
 }
 
-const mapArrayToUl = (list: any, doMapValue: boolean = false) => 
+const debriefViolationMap = {
+  "YES": "Ja, overtreding",
+  "NO": "Nee, geen overtreding",
+  "ADDITIONAL_RESEARCH_REQUIRED": "Nader onderzoek nodig"
+} as Record<string, string>
+
+const mapArrayToUl = (list: any, doMapValue: boolean = false) =>
   <UnstyledList>
     { list.map((item: any, index: number) =>
-      doMapValue 
+      doMapValue
       ? <li key={ index }>{ mapEventValues(item) }</li>
       : <li key={ index }>{ item }</li>
     )}
@@ -119,18 +125,8 @@ const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => {
   const value = thread.event_values
   return (
   <Dl>
-        { showDate && value.start_time && <div><dt>Datum</dt><dd>{ displayDate(value.start_time) }</dd></div> }
-        { thread.type !== "VISIT" ?
-          <>
-            { Object.keys(thread.event_values ?? {}).map((key, index) => (
-              <div key={index}>
-                <dt>{key}</dt>
-                <dd>{ value?.[key] }</dd>
-              </div>
-            ))
-            }
-          </>
-          :
+        { showDate && thread.date_created && <div><dt>Datum</dt><dd>{ displayDate(thread.date_created) }</dd></div> }
+        { thread.type === "VISIT" ?
           <>
           {/* thread.type === VISIT */}
             { value.start_time &&
@@ -139,13 +135,13 @@ const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => {
                   <dd>{ displayTime(value.start_time) }</dd>
               </div>
             }
-            { value.authors && 
+            { value.authors &&
               <div>
                 <dt>Toezichthouders</dt>
                 <dd>{ mapArrayToUl(value.authors) }</dd>
               </div>
             }
-            { value.situation && 
+            { value.situation &&
               <div>
                 <dt>Situatie</dt>
                 <dd>{ mapEventValues(value.situation) }</dd>
@@ -186,6 +182,31 @@ const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => {
                 <dt>Toelichting</dt>
                 <dd>{ value.can_next_visit_go_ahead_description }</dd>
               </div>
+            }
+          </>
+          : thread.type === "DEBRIEFING" ?
+          <>
+            <div>
+              <dt>Auteur</dt>
+              <dd>{ value.author }</dd>
+            </div>
+            <div>
+              <dt>Toelichting</dt>
+              <dd>{ value.feedback }</dd>
+            </div>
+            <div>
+              <dt>Overtreding</dt>
+              <dd>{ debriefViolationMap[value.violation] }</dd>
+            </div>
+          </>
+          :
+          <>
+            { Object.keys(thread.event_values ?? {}).map((key, index) => (
+              <div key={index}>
+                <dt>{key}</dt>
+                <dd>{ value?.[key] }</dd>
+              </div>
+            ))
             }
           </>
         }
