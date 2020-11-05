@@ -42,7 +42,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
         }
       </RowWithColumn>
       <RowWithColumn>
-        <Heading as="h2">Zaak historie</Heading>
+        <Heading as="h2">Zaakhistorie</Heading>
         <Divider />
       </RowWithColumn>
       <RowWithColumn>

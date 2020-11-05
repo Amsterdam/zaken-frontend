@@ -7,7 +7,7 @@ const MenuItems: React.FC = () =>
 <>
   <MenuItem>
     <ButtonLink to={to("/cases")}>
-      <MenuButton as="span">Zaken</MenuButton>
+      <MenuButton as="span">Zakenoverzicht</MenuButton>
     </ButtonLink>
   </MenuItem>
   <MenuItem>
