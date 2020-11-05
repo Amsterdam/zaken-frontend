@@ -8,12 +8,12 @@ import PermitIndexPage from "app/features/permits/components/pages/index/IndexPa
 export default {
   "/adres/:bagId": {
     Page: IndexPage,
-    title: "Adres overzicht",
+    title: "Adresoverzicht",
     subRoutes: {
       "detail": {
         Page: DetailsPage,
         icon: "Housing",
-        title: "Adres details"
+        title: "Adresdetails"
       },
       "personen": {
         Page: PeoplePage,
