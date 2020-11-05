@@ -69,7 +69,7 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
           { visitEvents && visitEvents.length > 0 &&
             <TimelineWrapper >
               <CaseEvent 
-                caseEvents={ visitEvents.reverse() } />
+                caseEvents={ visitEvents } />
             </TimelineWrapper>
           }
           { reasonEvents && reasonEvents.length > 0 &&
