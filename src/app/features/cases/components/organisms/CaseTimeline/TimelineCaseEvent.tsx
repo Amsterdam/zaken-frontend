@@ -99,10 +99,16 @@ const mapEventValues = (value: string) => {
   }
 }
 
-const mapArrayToUl = (list: any, doMapValue: boolean = false) => 
+const debriefViolationMap = {
+  "YES": "Ja, overtreding",
+  "NO": "Nee, geen overtreding",
+  "ADDITIONAL_RESEARCH_REQUIRED": "Nader onderzoek nodig"
+} as Record<string, string>
+
+const mapArrayToUl = (list: any, doMapValue: boolean = false) =>
   <UnstyledList>
     { list.map((item: any, index: number) =>
-      doMapValue 
+      doMapValue
       ? <li key={ index }>{ mapEventValues(item) }</li>
       : <li key={ index }>{ item }</li>
     )}
@@ -120,17 +126,7 @@ const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => {
   return (
   <Dl>
         { showDate && value.start_time && <div><dt>Datum</dt><dd>{ displayDate(value.start_time) }</dd></div> }
-        { thread.type !== "VISIT" ?
-          <>
-            { Object.keys(thread.event_values ?? {}).map((key, index) => (
-              <div key={index}>
-                <dt>{key}</dt>
-                <dd>{ value?.[key] }</dd>
-              </div>
-            ))
-            }
-          </>
-          :
+        { thread.type === "VISIT" ?
           <>
           {/* thread.type === VISIT */}
             { value.start_time &&
@@ -145,7 +141,7 @@ const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => {
                 <dd>{ mapArrayToUl(value.authors) }</dd>
               </div>
             }
-            { value.situation && 
+            { value.situation &&
               <div>
                 <dt>Situatie</dt>
                 <dd>{ mapEventValues(value.situation) }</dd>
@@ -188,6 +184,31 @@ const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => {
               </div>
             }
           </>
+          : thread.type === "DEBRIEFING" ?
+          <>
+            <div>
+              <dt>Auteur</dt>
+              <dd>{ value.author }</dd>
+            </div>
+            <div>
+              <dt>Toelichting</dt>
+              <dd>{ value.feedback }</dd>
+            </div>
+            <div>
+              <dt>Overtreding</dt>
+              <dd>{ value.violation ? debriefViolationMap[value.violation] : "-" }</dd>
+            </div>
+          </>
+          :
+          <>
+            { Object.keys(thread.event_values ?? {}).map((key, index) => (
+              <div key={index}>
+                <dt>{key}</dt>
+                <dd>{ value?.[key] }</dd>
+              </div>
+            ))
+            }
+          </>
         }
   </Dl>
   )
@@ -205,7 +226,7 @@ const CaseEvent: React.FC<Props> = ({ caseEvents, button }) => {
   const TimelineThread = caseEvents.map(thread =>
     caseEvents.length > 1 ?
       <Timeline
-        title= { `${ getDay(thread.event_values.start_time, true) } ${ displayDate(thread.event_values.start_time) }` }
+        title= { thread.event_values.start_time ? `${ getDay(thread.event_values.start_time, true) } ${ displayDate(thread.event_values.start_time) }` : `${ mapCaseType(thread.type) }` }
         key={thread.id}
         isDone={true}
         largeCircle={false}
