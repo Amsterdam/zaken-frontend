@@ -10,7 +10,8 @@ import PageHeading from "app/features/shared/components/molecules/PageHeading/Pa
 
 import TimelineContainer from "app/features/cases/components/organisms/CaseTimeline/TimelineContainer"
 import CreateDebriefingLink from "app/features/cases/components/organisms/CreateDebriefingLink/CreateDebriefingLink"
-import canCreateDebriefing from "app/state/workflow/canCreateDebriefing"
+import shouldCreateDebriefing from "app/state/workflow/shouldCreateDebriefing"
+import shouldCreateVisit from "app/state/workflow/shouldCreateVisit"
 
 type Props = {
   id: Components.Schemas.Case["id"]
@@ -21,7 +22,8 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
   const bagId = caseData?.address.bag_id
 
   const { data: caseEvents } = useCaseEvents(id!)
-  const showCreateDebriefingLink = canCreateDebriefing(caseEvents)
+  const showVisit = shouldCreateVisit(caseEvents)
+  const showCreateDebriefingLink = shouldCreateDebriefing(caseEvents)
 
   return (
     <DefaultLayout>
@@ -32,6 +34,9 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
       <RowWithColumn>
         <Heading as="h2">Open taken</Heading>
         <Divider />
+        { showVisit &&
+          <p>Huisbezoek</p>
+        }
         { showCreateDebriefingLink &&
           <CreateDebriefingLink id={ id! } />
         }

@@ -6,7 +6,7 @@ import { displayDate, displayTime } from "app/features/shared/components/atoms/D
 import { Timeline } from "app/features/shared/components/molecules/Timeline"
 import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
 import to from "app/features/shared/routing/to"
-import canCreateDebriefing from "app/state/workflow/canCreateDebriefing"
+import shouldCreateDebriefing from "app/state/workflow/shouldCreateDebriefing"
 
 type Props = {
   caseEvents: Components.Schemas.CaseEvent[]
@@ -223,7 +223,7 @@ const CaseEvent: React.FC<Props> = ({ caseEvents, button }) => {
   )
   const currentEvent = caseEvents[0]
   const counterString = caseEvents.length > 1 ? `(${ caseEvents.length })` : ""
-  const visitsDone = currentEvent.type === "VISIT" && canCreateDebriefing(caseEvents)
+  const visitsDone = currentEvent.type === "VISIT" && shouldCreateDebriefing(caseEvents)
 
   return (
     <>
