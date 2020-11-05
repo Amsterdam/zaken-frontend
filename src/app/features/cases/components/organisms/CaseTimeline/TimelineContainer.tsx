@@ -5,7 +5,7 @@ import { EditDocument } from "@datapunt/asc-assets"
 import { Timeline, TimelineWrapper } from "app/features/shared/components/molecules/Timeline"
 import CaseEvent from "./TimelineCaseEvent"
 import { useCaseEvents } from "app/state/rest"
-import canCreateDebriefing from "app/state/workflow/canCreateDebriefing"
+import shouldCreateDebriefing from "app/state/workflow/shouldCreateDebriefing"
 
 
 type Props = {
@@ -38,7 +38,7 @@ const StyledButton = styled(Button)`
 
 const TimelineContainer: React.FC<Props> = ({ caseId }) => {
   const data = useCaseEvents(caseId!).data
-  const showCreateDebriefingLink = canCreateDebriefing(data)
+  const showCreateDebriefingLink = shouldCreateDebriefing(data)
 
   const debriefEvents = data?.filter(({ type })  => type === "DEBRIEFING")
   const visitEvents = data?.filter(({ type })  => type === "VISIT")
