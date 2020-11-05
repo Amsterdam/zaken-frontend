@@ -196,7 +196,7 @@ const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => {
             </div>
             <div>
               <dt>Overtreding</dt>
-              <dd>{ debriefViolationMap[value.violation] }</dd>
+              <dd>{ value.violation ? debriefViolationMap[value.violation] : "-" }</dd>
             </div>
           </>
           :
