@@ -24,6 +24,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
   const { data: caseEvents } = useCaseEvents(id!)
   const showVisit = shouldCreateVisit(caseEvents)
   const showCreateDebriefingLink = shouldCreateDebriefing(caseEvents)
+  const showCloseCase = shouldCloseCase(caseEvents)
 
   return (
     <DefaultLayout>
@@ -39,6 +40,9 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
         }
         { showCreateDebriefingLink &&
           <CreateDebriefingLink id={ id! } />
+        }
+        { showCloseCase &&
+          <p>Zaak afsluiten</p>
         }
       </RowWithColumn>
       <RowWithColumn>
