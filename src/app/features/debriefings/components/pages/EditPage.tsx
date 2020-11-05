@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { RouteComponentProps } from "@reach/router"
 import { FormTitle, Heading, Button } from "@datapunt/asc-ui"
+import { TrashBin } from "@datapunt/asc-assets"
 
 import { useCase, useDebriefings } from "app/state/rest/"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
@@ -50,7 +51,7 @@ const EditPage: React.FC<RouteComponentProps<Props>> = ({ caseId: caseIdString, 
         { showForm &&
           <>
             <Heading as="h2">Debrief</Heading>
-            <Button variant="secondary" onClick={ onDelete }>Terugkoppeling verwijderen</Button>
+            <Button variant="primaryInverted" icon={ <TrashBin /> } onClick={ onDelete }>Terugkoppeling verwijderen</Button>
             <FormTitle>Gebruik dit formulier om terugkoppeling te wijzigen</FormTitle>
             <AddressHeading caseId={ caseId } />
             <DebriefForm caseId={ caseId! } onSubmit={ handleUpdate } initialValues={ data } isLoading={ data === undefined } />
