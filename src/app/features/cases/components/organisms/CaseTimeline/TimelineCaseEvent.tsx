@@ -135,7 +135,7 @@ const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => {
                   <dd>{ displayTime(value.start_time) }</dd>
               </div>
             }
-            { value.authors &&
+            { value.authors.length > 0 && 
               <div>
                 <dt>Toezichthouders</dt>
                 <dd>{ mapArrayToUl(value.authors) }</dd>
@@ -153,7 +153,7 @@ const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => {
                 <dd>{ value.notes }</dd>
               </div>
             }
-            { value.observations &&
+            { value.observations.length > 0 &&
               <div>
                 <dt>Kenmerken</dt>
                 <dd>{ mapArrayToUl(value.observations, true) }</dd>
@@ -226,7 +226,7 @@ const CaseEvent: React.FC<Props> = ({ caseEvents, button }) => {
   const TimelineThread = caseEvents.map(thread =>
     caseEvents.length > 1 ?
       <Timeline
-        title= { `${ getDay(thread.event_values.start_time, true) } ${ displayDate(thread.event_values.start_time) }` }
+        title= { thread.event_values.start_time ? `${ getDay(thread.event_values.start_time, true) } ${ displayDate(thread.event_values.start_time) }` : `${ mapCaseType(thread.type) }` }
         key={thread.id}
         isDone={true}
         largeCircle={false}
