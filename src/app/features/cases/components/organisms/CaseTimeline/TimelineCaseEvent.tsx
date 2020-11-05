@@ -23,7 +23,7 @@ type ButtonDebriefProps = {
   button?: JSX.Element
 }
 const Dl = styled.dl`
-max-width: 500px;
+max-width: 800px;
 
 &:after {
   clear: both;
@@ -40,13 +40,19 @@ dt {
   clear: both;
   word-wrap: break-word;
   padding-right: ${ themeSpacing(5) };
-  color: ${ themeColor("tint","level6") }
+  color: ${ themeColor("tint","level6") };
+  @media ${ breakpoint("min-width", "tabletM") } {
+    width: 30%;
+  }
 }
 dd {
   margin: 0;
   padding-right: 20px;
   float: right;
   clear: right;
+  @media ${ breakpoint("min-width", "tabletM") } {
+    width: 70%;
+  }
 }
 `
 const UnstyledList = styled.ul`
@@ -113,7 +119,7 @@ const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => {
   const value = thread.event_values
   return (
   <Dl>
-        { showDate && thread.date_created && <div><dt>Datum</dt><dd>{ displayDate(thread.date_created) }</dd></div> }
+        { showDate && value.start_time && <div><dt>Datum</dt><dd>{ displayDate(value.start_time) }</dd></div> }
         { thread.type !== "VISIT" ?
           <>
             { Object.keys(thread.event_values ?? {}).map((key, index) => (
@@ -199,7 +205,7 @@ const CaseEvent: React.FC<Props> = ({ caseEvents, button }) => {
   const TimelineThread = caseEvents.map(thread =>
     caseEvents.length > 1 ?
       <Timeline
-        title= { `${ getDay(thread.date_created, true) } ${ displayDate(thread.date_created) }` }
+        title= { `${ getDay(thread.event_values.start_time, true) } ${ displayDate(thread.event_values.start_time) }` }
         key={thread.id}
         isDone={true}
         largeCircle={false}
