@@ -125,7 +125,7 @@ const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => {
   const value = thread.event_values
   return (
   <Dl>
-        { showDate && thread.date_created && <div><dt>Datum</dt><dd>{ displayDate(thread.date_created) }</dd></div> }
+        { showDate && value.start_time && <div><dt>Datum</dt><dd>{ displayDate(value.start_time) }</dd></div> }
         { thread.type === "VISIT" ?
           <>
           {/* thread.type === VISIT */}
