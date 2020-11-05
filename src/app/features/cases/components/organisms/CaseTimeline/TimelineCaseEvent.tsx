@@ -135,7 +135,7 @@ const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => {
                   <dd>{ displayTime(value.start_time) }</dd>
               </div>
             }
-            { value.authors.length > 0 && 
+            { value.authors.length > 0 &&
               <div>
                 <dt>Toezichthouders</dt>
                 <dd>{ mapArrayToUl(value.authors) }</dd>
@@ -236,7 +236,7 @@ const CaseEvent: React.FC<Props> = ({ caseEvents, button }) => {
           thread={ thread }
           showDate={false}
         />
-        { thread.type === "DEBRIEFING" && <ButtonDebrief caseId={ thread.case } debriefId={ thread.id } button={ button } /> }
+        { thread.type === "DEBRIEFING" && <ButtonDebrief caseId={ thread.case } debriefId={ thread.emitter_id } button={ button } /> }
       </Timeline>
       :
       <>
