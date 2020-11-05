@@ -55,6 +55,11 @@ type ButtonVariant =
     taskflow?: boolean
   }
 
+  const Label = styled.span`
+    display: inline-block;
+    padding: ${ themeSpacing(3) } 0;
+  `
+
 const Timeline: React.FC<
   Props &
     ButtonStyleProps &
@@ -92,11 +97,6 @@ const Timeline: React.FC<
     }
     setOpen(newOpenState)
   }, [open, onToggle])
-
-  const Label = styled.span`
-    display: inline-block;
-    padding: ${ themeSpacing(3) } 0;
-  `
 
   return (
     <>
