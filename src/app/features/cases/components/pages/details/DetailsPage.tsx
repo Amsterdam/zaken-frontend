@@ -12,6 +12,7 @@ import TimelineContainer from "app/features/cases/components/organisms/CaseTimel
 import CreateDebriefingLink from "app/features/cases/components/organisms/CreateDebriefingLink/CreateDebriefingLink"
 import shouldCreateDebriefing from "app/state/workflow/shouldCreateDebriefing"
 import shouldCreateVisit from "app/state/workflow/shouldCreateVisit"
+import shouldCloseCase from "app/state/workflow/shouldCloseCase"
 
 type Props = {
   id: Components.Schemas.Case["id"]
@@ -24,6 +25,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
   const { data: caseEvents } = useCaseEvents(id!)
   const showVisit = shouldCreateVisit(caseEvents)
   const showCreateDebriefingLink = shouldCreateDebriefing(caseEvents)
+  const showCloseCase = shouldCloseCase(caseEvents)
 
   return (
     <DefaultLayout>
@@ -39,6 +41,9 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
         }
         { showCreateDebriefingLink &&
           <CreateDebriefingLink id={ id! } />
+        }
+        { showCloseCase &&
+          <p>Zaak afsluiten</p>
         }
       </RowWithColumn>
       <RowWithColumn>
