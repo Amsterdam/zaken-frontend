@@ -196,7 +196,7 @@ const ButtonWrap = styled.div`
 `
 
 const CaseEvent: React.FC<Props> = ({ caseEvents, button }) => {
-  const TimelineThread = caseEvents?.map(thread =>
+  const TimelineThread = caseEvents.map(thread =>
     caseEvents.length > 1 ?
       <Timeline
         title= { `${ getDay(thread.date_created, true) } ${ displayDate(thread.date_created) }` }
