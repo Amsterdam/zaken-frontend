@@ -13,7 +13,7 @@ const IndexPage: React.FC<RouteComponentProps> = () => (
         <BreadCrumbs />
       </RowWithColumn>
       <RowWithColumn>
-        <Heading>Overzicht gelopen zaken</Heading>
+        <Heading>Overzicht zaken looplijst(en)</Heading>
       </RowWithColumn>
       <Cases />
     </DefaultLayout>

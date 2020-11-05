@@ -22,7 +22,7 @@ const ObjectDetails: React.FC<Props> = ({ bagId }) => {
 
   return <DefinitionList
     numInitialVisibleRows={5}
-    title="Object details"
+    title="Objectdetails"
     values={values}
   />
 }
