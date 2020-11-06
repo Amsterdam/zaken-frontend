@@ -7,7 +7,7 @@ type Props = {
 }
 
 type DivProps = {
-  environment: string
+  environment?: string
 }
 const Div = styled.div<DivProps>`
   background: ${ ({ environment }) => environment !== "production" ? themeColor("supplement", "pink") : "transparent" };
@@ -15,7 +15,7 @@ const Div = styled.div<DivProps>`
 `
 
 const MockWrapper: React.FC<Props> = ({ children }) => (
-    <Div environment={ process.env.REACT_APP_ENVIRONMENT ?? "development" }>
+    <Div environment={ process.env.REACT_APP_ENVIRONMENT }>
       { children }
     </Div>
   )
