@@ -236,7 +236,7 @@ const CaseEvent: React.FC<Props> = ({ caseEvents, button }) => {
           thread={ thread }
           showDate={false}
         />
-        { thread.type === "DEBRIEFING" && <ButtonDebrief caseId={ thread.case } debriefId={ thread.emitter_id } button={ button } /> }
+        { thread.type === "DEBRIEFING" && thread.emitter_is_editable && <ButtonDebrief caseId={ thread.case } debriefId={ thread.emitter_id } button={ button } /> }
       </Timeline>
       :
       <>
@@ -245,7 +245,7 @@ const CaseEvent: React.FC<Props> = ({ caseEvents, button }) => {
           thread={ thread }
           showDate={true}
         />
-        { thread.type === "DEBRIEFING" && <ButtonDebrief caseId={ thread.case } debriefId={ thread.emitter_id } button={ button } /> }
+        { thread.type === "DEBRIEFING" && thread.emitter_is_editable && <ButtonDebrief caseId={ thread.case } debriefId={ thread.emitter_id } button={ button } /> }
       </>
   )
   const currentEvent = caseEvents[0]
