@@ -35,6 +35,7 @@ declare namespace Components {
             readonly date_created: string; // date-time
             type: TypeEnum;
             emitter_id: number;
+            readonly emitter_is_editable: string;
             case: number;
         }
         export interface CaseState {
@@ -52,6 +53,7 @@ declare namespace Components {
             readonly date_modified: string; // date-time
             violation?: ViolationEnum;
             feedback: string;
+            readonly is_editable: string;
         }
         export interface DebriefingCreate {
             readonly id: number;
@@ -190,6 +192,7 @@ declare namespace Components {
             readonly date_modified?: string; // date-time
             violation?: ViolationEnum;
             feedback?: string;
+            readonly is_editable?: string;
         }
         export interface PatchedUser {
             id?: string; // uuid
@@ -381,6 +384,11 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCaseList;
+        }
+    }
+    namespace CasesMockCasesRetrieve {
+        namespace Responses {
+            export type $200 = Components.Schemas.Case;
         }
     }
     namespace CasesPartialUpdate {
