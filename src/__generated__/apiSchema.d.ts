@@ -35,7 +35,8 @@ declare namespace Components {
             readonly date_created: string; // date-time
             type: TypeEnum;
             emitter_id: number;
-            readonly emitter_is_editable: string;
+            emitter_is_editable: boolean;
+            emitter_is_editable_until: string; // date-time
             case: number;
         }
         export interface CaseState {
@@ -53,7 +54,8 @@ declare namespace Components {
             readonly date_modified: string; // date-time
             violation?: ViolationEnum;
             feedback: string;
-            readonly is_editable: string;
+            readonly is_editable: boolean;
+            readonly is_editable_until: string; // date-time
         }
         export interface DebriefingCreate {
             readonly id: number;
@@ -67,7 +69,7 @@ declare namespace Components {
             processed: string | null;
             date_from: string | null; // date
             date_to?: string | null; // date
-            decos_join_web_url?: string; // uri ^(?:[a-z0-9.+-]*)://(?:[^\s:@/]+(?::[^\s:@/]*)?@)?(?:(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)(?:\.(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)){3}|\[[0-9a-f:.]+\]|([a-z¡-￿0-9](?:[a-z¡-￿0-9-]{0,61}[a-z¡-￿0-9])?(?:\.(?!-)[a-z¡-￿0-9-]{1,63}(?<!-))*\.(?!-)(?:[a-z¡-￿-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\.?|localhost))(?::\d{2,5})?(?:[/?#][^\s]*)?\Z
+            decos_join_web_url?: string; // uri
         }
         export interface Fine {
             identificatienummer: string;
@@ -192,7 +194,8 @@ declare namespace Components {
             readonly date_modified?: string; // date-time
             violation?: ViolationEnum;
             feedback?: string;
-            readonly is_editable?: string;
+            readonly is_editable?: boolean;
+            readonly is_editable_until?: string; // date-time
         }
         export interface PatchedUser {
             id?: string; // uuid
