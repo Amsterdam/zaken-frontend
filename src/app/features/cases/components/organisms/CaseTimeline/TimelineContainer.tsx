@@ -1,7 +1,5 @@
 import React from "react"
 import styled from "styled-components"
-import { Button } from "@datapunt/asc-ui"
-import { EditDocument } from "@datapunt/asc-assets"
 import { Timeline, TimelineWrapper } from "app/features/shared/components/molecules/Timeline"
 import CaseEvent from "./TimelineCaseEvent"
 import { useCaseEvents } from "app/state/rest"
@@ -32,10 +30,6 @@ const Div = styled.div`
 }
 `
 
-const StyledButton = styled(Button)`
-  background-color: transparent;
-`
-
 const TimelineContainer: React.FC<Props> = ({ caseId }) => {
   const data = useCaseEvents(caseId!).data
   const showCreateDebriefingLink = shouldCreateDebriefing(data)
@@ -60,9 +54,6 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
             <TimelineWrapper >
               <CaseEvent 
                 caseEvents={ debriefEvents }
-                button={
-                  <StyledButton size={60} variant="blank" iconSize={32} icon={<EditDocument />} />
-                } 
               />
             </TimelineWrapper>
           }
