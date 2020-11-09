@@ -155,7 +155,7 @@ const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => {
                   <dd>{ displayTime(value.start_time) }</dd>
               </div>
             }
-            { value.authors.length > 0 && 
+            { value.authors.length > 0 &&
               <div>
                 <dt>Toezichthouders</dt>
                 <dd>{ mapArrayToUl(value.authors) }</dd>
