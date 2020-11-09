@@ -31,7 +31,7 @@ const Div = styled.div`
 
 const TimelineContainer: React.FC<Props> = ({ caseId }) => {
   const { data } = useCaseEvents(caseId!)
-  const { shouldCreateDebriefing: showCreateDebriefingLink } = workflow(data)
+  const { shouldCreateDebriefing: showCreateDebriefingLink } = workflow(data, true)
 
   const debriefEvents = data?.filter(({ type })  => type === "DEBRIEFING")
   const visitEvents = data?.filter(({ type })  => type === "VISIT")
