@@ -4,6 +4,7 @@ import { Timeline, TimelineWrapper } from "app/features/shared/components/molecu
 import CaseEvent from "./TimelineCaseEvent"
 import { useCaseEvents } from "app/state/rest"
 import workflow from "app/state/workflow/workflow"
+import Reason from "./Events/Reason"
 
 type Props = {
   caseId: Components.Schemas.CaseEvent["id"]
@@ -64,7 +65,7 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
           }
           { reasonEvents && reasonEvents.length > 0 &&
             <TimelineWrapper >
-              <CaseEvent
+              <Reason
                 caseEvents={ reasonEvents } />
             </TimelineWrapper>
           }
