@@ -7,6 +7,7 @@ import { debriefViolationMap, debriefLabelsMap } from "../helpers/Dictionaries"
 
 type Props = {
   caseEvents: Components.Schemas.CaseEvent[]
+  isDone?: boolean
 }
 
 const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => {
@@ -37,7 +38,7 @@ const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => {
   )
 }
 
-const Debrief: React.FC<Props> = ({ caseEvents }) => {
+const Debrief: React.FC<Props> = ({ caseEvents, isDone }) => {
   const TimelineThread = caseEvents.map(thread =>
     caseEvents.length > 1 ?
       <Timeline
@@ -67,7 +68,7 @@ const Debrief: React.FC<Props> = ({ caseEvents }) => {
     { currentEvent &&
     <Timeline
       title={ `${ mapCaseType(currentEvent.type) } ${ counterString } `}
-      // isDone={ true }
+      isDone={ isDone }
     >
       { TimelineThread }
     </Timeline>

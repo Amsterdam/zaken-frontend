@@ -6,9 +6,14 @@ import workflow from "app/state/workflow/workflow"
 import Reason from "./Events/Reason"
 import Debrief from "./Events/Debrief"
 import Visit from "./Events/Visit"
+import { mapCaseType } from "./helpers/Helpers"
 
 type Props = {
   caseId: Components.Schemas.CaseEvent["id"]
+}
+
+type NextStepProp = {
+  title: string
 }
 
 const Div = styled.div`
@@ -30,9 +35,19 @@ const Div = styled.div`
 }
 `
 
+const NextStep: React.FC<NextStepProp> = ({ title }) => 
+  <TimelineWrapper >
+    <Timeline
+      title= { title }
+      isDone={ false }
+      canBeOpened={false}
+    />
+  </TimelineWrapper>
+
 const TimelineContainer: React.FC<Props> = ({ caseId }) => {
   const { data } = useCaseEvents(caseId!)
-  const { shouldCreateDebriefing: showCreateDebriefingLink } = workflow(data, true)
+  const { shouldCreateDebriefing, shouldCreateVisit } = workflow(data, true)
+  const { visitIsDone, debriefIsDone } = workflow(data)
 
   const debriefEvents = data?.filter(({ type })  => type === "DEBRIEFING")
   const visitEvents = data?.filter(({ type })  => type === "VISIT")
@@ -41,26 +56,25 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
   return (
     <>
       <Div>
-        { showCreateDebriefingLink &&
-          <TimelineWrapper >
-            <Timeline
-              title= { "Debrief" }
-              isDone={false}
-              canBeOpened={false}
-            />
-          </TimelineWrapper>
+        { shouldCreateDebriefing &&
+          <NextStep title={ mapCaseType("DEBRIEFING") } />
+        }
+        { shouldCreateVisit &&
+          <NextStep title={ mapCaseType("VISIT") } />
         }
         { debriefEvents && debriefEvents.length > 0 &&
             <TimelineWrapper >
               <Debrief
                 caseEvents={ debriefEvents }
+                isDone={ debriefIsDone }
               />
             </TimelineWrapper>
           }
           { visitEvents && visitEvents.length > 0 &&
             <TimelineWrapper >
               <Visit
-                caseEvents={ visitEvents } />
+                caseEvents={ visitEvents } 
+                isDone={ visitIsDone } />
             </TimelineWrapper>
           }
           { reasonEvents && reasonEvents.length > 0 &&

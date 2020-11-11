@@ -7,6 +7,7 @@ import { visitEventValuesMap, visitLabelsMap, visit_go_ahead } from "../helpers/
 
 type Props = {
   caseEvents: Components.Schemas.CaseEvent[]
+  isDone?: boolean
 }
 
 const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => {
@@ -83,7 +84,7 @@ const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => {
   )
 }
 
-const Visit: React.FC<Props> = ({ caseEvents }) => {
+const Visit: React.FC<Props> = ({ caseEvents, isDone }) => {
   const TimelineThread = caseEvents.map(thread =>
     caseEvents.length > 1 ?
       <Timeline
@@ -107,13 +108,12 @@ const Visit: React.FC<Props> = ({ caseEvents }) => {
   )
   const currentEvent = caseEvents[0]
   const counterString = caseEvents.length > 1 ? `(${ caseEvents.length })` : ""
-
   return (
     <>
     { currentEvent &&
     <Timeline
       title={ `${ mapCaseType(currentEvent.type) } ${ counterString } `}
-      // isDone={ true }
+      isDone={ isDone }
     >
       { TimelineThread }
     </Timeline>
