@@ -1,15 +1,14 @@
 import React from "react"
 import styled from "styled-components"
 import { Timeline, TimelineWrapper } from "app/features/shared/components/molecules/Timeline"
-import CaseEvent from "./TimelineCaseEvent"
 import { useCaseEvents } from "app/state/rest"
 import workflow from "app/state/workflow/workflow"
 import Reason from "./Events/Reason"
 import Debrief from "./Events/Debrief"
+import Visit from "./Events/Visit"
 
 type Props = {
   caseId: Components.Schemas.CaseEvent["id"]
-  //type: Components.Schemas.TypeEnum
 }
 
 const Div = styled.div`
@@ -60,7 +59,7 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
           }
           { visitEvents && visitEvents.length > 0 &&
             <TimelineWrapper >
-              <CaseEvent
+              <Visit
                 caseEvents={ visitEvents } />
             </TimelineWrapper>
           }

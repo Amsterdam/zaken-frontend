@@ -9,10 +9,6 @@ type Props = {
   caseEvents: Components.Schemas.CaseEvent[]
 }
 
-
-console.log("debriefViolationMap", debriefViolationMap)
-
-
 const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => {
   const value = thread.event_values
   return (
