@@ -114,6 +114,7 @@ const Visit: React.FC<Props> = ({ caseEvents, isDone }) => {
     <Timeline
       title={ `${ mapCaseType(currentEvent.type) } ${ counterString } `}
       isDone={ isDone }
+      isOpen={ !isDone }
     >
       { TimelineThread }
     </Timeline>
