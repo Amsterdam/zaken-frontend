@@ -5,6 +5,7 @@ import CaseEvent from "./TimelineCaseEvent"
 import { useCaseEvents } from "app/state/rest"
 import workflow from "app/state/workflow/workflow"
 import Reason from "./Events/Reason"
+import Debrief from "./Events/Debrief"
 
 type Props = {
   caseId: Components.Schemas.CaseEvent["id"]
@@ -52,7 +53,7 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
         }
         { debriefEvents && debriefEvents.length > 0 &&
             <TimelineWrapper >
-              <CaseEvent
+              <Debrief
                 caseEvents={ debriefEvents }
               />
             </TimelineWrapper>

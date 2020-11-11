@@ -3,7 +3,7 @@ import { getDay }from "app/features/shared/components/atoms/DayDisplay/DayDispla
 import { displayDate } from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
 import { Timeline } from "app/features/shared/components/molecules/Timeline"
 import { Dl, DLProps, mapCaseType } from "../helpers/Helpers"
-import { reasonLabelsDict } from "../helpers/Dictionaries"
+import { reasonLabelsMap } from "../helpers/Dictionaries"
 
 type Props = {
   caseEvents: Components.Schemas.CaseEvent[]
@@ -14,7 +14,7 @@ const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) =>
     { showDate && thread.date_created && <div><dt>Datum</dt><dd>{ displayDate(thread.date_created) }</dd></div> }
     {/* TODO use map here */}
     <div>
-      <dt>{ reasonLabelsDict.reason }</dt>
+      <dt>{ reasonLabelsMap.reason }</dt>
       <dd>{ thread.event_values.reason }</dd>
     </div>
   </Dl>
