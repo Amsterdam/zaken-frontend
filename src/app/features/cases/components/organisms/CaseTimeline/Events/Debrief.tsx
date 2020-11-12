@@ -4,11 +4,19 @@ import { displayDate } from "app/features/shared/components/atoms/DateDisplay/Da
 import { Timeline } from "app/features/shared/components/molecules/Timeline"
 import { Dl, DLProps, mapCaseType } from "../helpers/Helpers"
 import { debriefViolationMap, debriefLabelsMap } from "../helpers/Dictionaries"
+import ButtonEditEvent from "./ButtonEditEvent"
 
 type Props = {
   caseEvents: Components.Schemas.CaseEvent[]
   isDone?: boolean
   isOpen?: boolean
+}
+
+type ButtonDebriefProps = {
+  caseId:  number
+  debriefId: number
+  disabled: boolean
+  editable_until: string
 }
 
 const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => {
@@ -54,13 +62,17 @@ const Debrief: React.FC<Props> = ({ caseEvents, isDone, isOpen }) => {
           thread={ thread }
           showDate={false}
         />
+        <ButtonEditEvent target={ `/cases/${ thread.case }/debriefing/${ thread.emitter_id }` } disabled={!thread.emitter_is_editable} editable_until={thread.emitter_is_editable_until} />
       </Timeline>
       :
+      <>
         <DefinitionList
           key={ thread.id }
           thread={ thread }
           showDate={true}
         />
+        <ButtonEditEvent target={ `/cases/${ thread.case }/debriefing/${ thread.emitter_id }` } disabled={!thread.emitter_is_editable} editable_until={thread.emitter_is_editable_until} />
+      </>
   )
   const currentEvent = caseEvents[0]
   const counterString = caseEvents.length > 1 ? `(${ caseEvents.length })` : ""

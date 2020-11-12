@@ -4,6 +4,7 @@ import { displayDate } from "app/features/shared/components/atoms/DateDisplay/Da
 import { Timeline } from "app/features/shared/components/molecules/Timeline"
 import { Dl, DLProps, mapCaseType } from "../helpers/Helpers"
 import { reasonLabelsMap } from "../helpers/Dictionaries"
+import ButtonEditEvent from "./ButtonEditEvent"
 
 type Props = {
   caseEvents: Components.Schemas.CaseEvent[]
@@ -35,13 +36,17 @@ const Reason: React.FC<Props> = ({ caseEvents, isOpen }) => {
           thread={ thread }
           showDate={false}
         />
+        { thread.emitter_is_editable_until && <ButtonEditEvent target={ `/cases/${ thread.case }/case/${ thread.emitter_id }` } disabled={!thread.emitter_is_editable} editable_until={thread.emitter_is_editable_until} /> }
       </Timeline>
       :
+      <>
         <DefinitionList
           key={ thread.id }
           thread={ thread }
           showDate={true}
         />
+        { thread.emitter_is_editable_until && <ButtonEditEvent target={ `/cases/${ thread.case }/case/${ thread.emitter_id }` } disabled={!thread.emitter_is_editable} editable_until={thread.emitter_is_editable_until} /> }
+      </>  
   )
   const currentEvent = caseEvents[0]
   const counterString = caseEvents.length > 1 ? `(${ caseEvents.length })` : ""
