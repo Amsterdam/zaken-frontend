@@ -1,7 +1,7 @@
 // REASON
 export const reasonLabelsMap = {
-  reason: "Aanleiding"
-}
+  "reason": "Aanleiding"
+} as Record<string, string>
   
 // DEBRIEF
 export const debriefLabelsMap = {
