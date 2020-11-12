@@ -12,36 +12,22 @@ type Props = {
   isOpen?: boolean
 }
 
-type ButtonDebriefProps = {
-  caseId:  number
-  debriefId: number
-  disabled: boolean
-  editable_until: string
-}
-
 const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => {
   const value = thread.event_values
   return (
     <Dl>
         { showDate && value.date_added && <div><dt>Datum</dt><dd>{ displayDate(value.date_added) }</dd></div> }
-        {/* TODO use map here
-        iterate over event_values (from endpoint) and check if key is in debriefLabelsMap ?
-        if it is, render it, 
-        if it's not, skip it
-        
-        */}
-        
         <div>
             <dt>{ debriefLabelsMap["author"] }</dt>
             <dd>{ value.author }</dd>
         </div>
         <div>
-            <dt>{ debriefLabelsMap["feedback"] }</dt>
-            <dd>{ value.feedback ? value.feedback : "-" }</dd>
-        </div>
-        <div>
             <dt>{ debriefLabelsMap["violation"] }</dt>
             <dd>{ value.violation ? debriefViolationMap[value.violation] : "-" }</dd>
+        </div>
+        <div>
+            <dt>{ debriefLabelsMap["feedback"] }</dt>
+            <dd><i>{ value.feedback ? value.feedback : "-" }</i></dd>
         </div>
     </Dl>
   )

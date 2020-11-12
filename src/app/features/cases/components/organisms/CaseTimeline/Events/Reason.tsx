@@ -14,7 +14,6 @@ type Props = {
 const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => 
   <Dl>
     { showDate && thread.date_created && <div><dt>Datum</dt><dd>{ displayDate(thread.date_created) }</dd></div> }
-    {/* TODO use map here */}
     <div>
       <dt>{ reasonLabelsMap.reason }</dt>
       <dd>{ thread.event_values.reason }</dd>

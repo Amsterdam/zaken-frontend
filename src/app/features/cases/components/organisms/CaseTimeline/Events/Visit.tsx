@@ -16,17 +16,6 @@ const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => {
   return (
     <Dl>
         { showDate && value.start_time && <div><dt>Datum</dt><dd>{ displayDate(value.start_time) }</dd></div> }
-        {/* TODO use map here
-        iterate over event_values (from endpoint) and check if key is in debriefLabelsMap ?
-        if it is, render it, 
-        if it's not, skip it
-        
-        */}
-        
-        <div>
-            <dt>{ visitLabelsMap["author"] }</dt>
-            <dd>{ value.author }</dd>
-        </div>
         { value.start_time &&
         <div>
             <dt>{ visitLabelsMap["start_time"] }</dt>
@@ -48,7 +37,7 @@ const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => {
       { value.situation && value.situation === "access_granted" &&
         <div>
           <dt>{ visitLabelsMap["notes"] }</dt>
-          <dd>{ value.notes }</dd>
+          <dd><i>{ value.notes }</i></dd>
         </div>
       }
       { value.observations.length > 0 &&
@@ -66,7 +55,7 @@ const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => {
       { value.suggest_next_visit && value.suggest_next_visit_description &&
         <div>
           <dt>{ visitLabelsMap["suggest_next_visit_description"] }</dt>
-          <dd>{ value.suggest_next_visit_description }</dd>
+          <dd><i>{ value.suggest_next_visit_description }</i></dd>
         </div>
       }
       { value.can_next_visit_go_ahead &&
@@ -78,7 +67,7 @@ const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => {
       { value.can_next_visit_go_ahead && value.can_next_visit_go_ahead_description &&
         <div>
           <dt>{ visitLabelsMap["can_next_visit_go_ahead_description"] }</dt>
-          <dd>{ value.can_next_visit_go_ahead_description }</dd>
+          <dd><i>{ value.can_next_visit_go_ahead_description }</i></dd>
         </div>
       }
     </Dl>

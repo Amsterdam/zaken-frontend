@@ -47,7 +47,7 @@ export const Dl = styled.dl`
     clear: both;
     word-wrap: break-word;
     padding-right: ${ themeSpacing(5) };
-    color: ${ themeColor("tint","level6") };
+    color: ${ themeColor("tint","level5") };
     @media ${ breakpoint("min-width", "tabletM") } {
       width: 30%;
     }
