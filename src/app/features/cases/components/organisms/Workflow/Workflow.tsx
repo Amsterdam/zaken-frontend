@@ -14,7 +14,8 @@ const Workflow: React.FC<Props> = ({ caseId }) => {
   const {
     shouldCreateVisit,
     shouldCreateDebriefing,
-    shouldCloseCase
+    shouldCloseCase,
+    shouldCreateViolation
   } = workflow(data)
 
   return (
@@ -22,13 +23,31 @@ const Workflow: React.FC<Props> = ({ caseId }) => {
       <Heading as="h2">Open taken</Heading>
       <Divider />
       { shouldCreateVisit &&
-        <p>Huisbezoek</p>
+        <ul>
+          <li>Huisbezoek</li>
+        </ul>
       }
       { shouldCreateDebriefing &&
         <CreateDebriefingLink id={ caseId } />
       }
       { shouldCloseCase &&
-        <p>Zaak afsluiten</p>
+        <>
+        <ul>
+          <li>Opstellen buitendienst rapport</li>
+          <li>Afsluiten zaak</li>
+        </ul>
+        <small>(Uit te voeren in BWV)</small>
+      </>
+      }
+      { shouldCreateViolation &&
+        <>
+          <ul>
+            <li>Opstellen beeldverslag (optioneel)</li>
+            <li>Opstellen rapport van bevindingen</li>
+            <li>Opstellen aanschrijving</li>
+          </ul>
+          <small>(Uit te voeren in BWV)</small>
+        </>
       }
     </div>
   )
