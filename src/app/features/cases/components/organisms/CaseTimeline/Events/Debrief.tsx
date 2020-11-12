@@ -8,6 +8,7 @@ import { debriefViolationMap, debriefLabelsMap } from "../helpers/Dictionaries"
 type Props = {
   caseEvents: Components.Schemas.CaseEvent[]
   isDone?: boolean
+  isOpen?: boolean
 }
 
 const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => {
@@ -38,13 +39,14 @@ const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => {
   )
 }
 
-const Debrief: React.FC<Props> = ({ caseEvents, isDone }) => {
+const Debrief: React.FC<Props> = ({ caseEvents, isDone, isOpen }) => {
   const TimelineThread = caseEvents.map(thread =>
     caseEvents.length > 1 ?
       <Timeline
         title= { thread.event_values.date_added ? `${ getDay(thread.event_values.date_added, true) } ${ displayDate(thread.event_values.date_added) }` : `${ mapCaseType(thread.type) }` }
         key={thread.id}
         isDone={true}
+        isOpen={isOpen}
         largeCircle={false}
         isNested={true}
       >
@@ -69,7 +71,7 @@ const Debrief: React.FC<Props> = ({ caseEvents, isDone }) => {
     <Timeline
       title={ `${ mapCaseType(currentEvent.type) } ${ counterString } `}
       isDone={ isDone }
-      isOpen={ !isDone }
+      isOpen={ isOpen }
     >
       { TimelineThread }
     </Timeline>

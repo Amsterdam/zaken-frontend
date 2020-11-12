@@ -7,6 +7,7 @@ import { reasonLabelsMap } from "../helpers/Dictionaries"
 
 type Props = {
   caseEvents: Components.Schemas.CaseEvent[]
+  isOpen?: boolean
 }
 
 const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => 
@@ -19,13 +20,14 @@ const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) =>
     </div>
   </Dl>
 
-const Reason: React.FC<Props> = ({ caseEvents }) => {
+const Reason: React.FC<Props> = ({ caseEvents, isOpen }) => {
   const TimelineThread = caseEvents.map(thread =>
     caseEvents.length > 1 ?
       <Timeline
         title= { thread.event_values.date_created ? `${ getDay(thread.event_values.date_created, true) }` : `${ mapCaseType(thread.type) }` }
         key={thread.id}
         isDone={true}
+        isOpen={isOpen}
         largeCircle={false}
         isNested={true}
       >

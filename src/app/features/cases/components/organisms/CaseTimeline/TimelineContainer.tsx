@@ -46,7 +46,7 @@ const NextStep: React.FC<NextStepProp> = ({ title }) =>
 
 const TimelineContainer: React.FC<Props> = ({ caseId }) => {
   const { data } = useCaseEvents(caseId!)
-  const { shouldCreateDebriefing, shouldCreateVisit } = workflow(data, true)
+  const { shouldCreateDebriefing, shouldCreateVisit, shouldCreateViolation, shouldCloseCase } = workflow(data, true)
   const { visitIsDone, debriefIsDone } = workflow(data)
 
   const debriefEvents = data?.filter(({ type })  => type === "DEBRIEFING")
@@ -62,11 +62,18 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
         { shouldCreateVisit &&
           <NextStep title={ mapCaseType("VISIT") } />
         }
+        { debriefIsDone && shouldCreateViolation &&
+          <NextStep title="Overtreding" />
+        }
+        { debriefIsDone && shouldCloseCase &&
+          <NextStep title="Zaak afsluiten" />
+        }
         { debriefEvents && debriefEvents.length > 0 &&
             <TimelineWrapper >
               <Debrief
                 caseEvents={ debriefEvents }
                 isDone={ debriefIsDone }
+                isOpen={ !debriefIsDone || (debriefIsDone && (shouldCreateViolation || shouldCloseCase)) }
               />
             </TimelineWrapper>
           }
@@ -74,7 +81,8 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
             <TimelineWrapper >
               <Visit
                 caseEvents={ visitEvents } 
-                isDone={ visitIsDone } />
+                isDone={ visitIsDone }
+                isOpen={ !visitIsDone || (visitIsDone && shouldCreateDebriefing) } />
             </TimelineWrapper>
           }
           { reasonEvents && reasonEvents.length > 0 &&

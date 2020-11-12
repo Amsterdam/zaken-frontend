@@ -8,6 +8,7 @@ import { visitEventValuesMap, visitLabelsMap, visit_go_ahead } from "../helpers/
 type Props = {
   caseEvents: Components.Schemas.CaseEvent[]
   isDone?: boolean
+  isOpen?: boolean
 }
 
 const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => {
@@ -84,13 +85,14 @@ const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => {
   )
 }
 
-const Visit: React.FC<Props> = ({ caseEvents, isDone }) => {
+const Visit: React.FC<Props> = ({ caseEvents, isDone, isOpen }) => {
   const TimelineThread = caseEvents.map(thread =>
     caseEvents.length > 1 ?
       <Timeline
         title= { thread.event_values.start_time ? `${ getDay(thread.event_values.start_time, true) } ${ displayDate(thread.event_values.start_time) }` : `${ mapCaseType(thread.type) }` }
         key={thread.id}
         isDone={true}
+        isOpen={isOpen}
         largeCircle={false}
         isNested={true}
       >
@@ -114,7 +116,7 @@ const Visit: React.FC<Props> = ({ caseEvents, isDone }) => {
     <Timeline
       title={ `${ mapCaseType(currentEvent.type) } ${ counterString } `}
       isDone={ isDone }
-      isOpen={ !isDone }
+      isOpen={ isOpen }
     >
       { TimelineThread }
     </Timeline>
