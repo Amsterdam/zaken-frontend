@@ -1,13 +1,19 @@
 import React from "react"
 import styled from "styled-components"
 import { Timeline, TimelineWrapper } from "app/features/shared/components/molecules/Timeline"
-import CaseEvent from "./TimelineCaseEvent"
 import { useCaseEvents } from "app/state/rest"
 import workflow from "app/state/workflow/workflow"
+import Reason from "./Events/Reason"
+import Debrief from "./Events/Debrief"
+import Visit from "./Events/Visit"
+import { mapCaseType } from "./helpers/Helpers"
 
 type Props = {
   caseId: Components.Schemas.CaseEvent["id"]
-  //type: Components.Schemas.TypeEnum
+}
+
+type NextStepProp = {
+  title: string
 }
 
 const Div = styled.div`
@@ -29,9 +35,19 @@ const Div = styled.div`
 }
 `
 
+const NextStep: React.FC<NextStepProp> = ({ title }) => 
+  <TimelineWrapper >
+    <Timeline
+      title= { title }
+      isDone={ false }
+      canBeOpened={false}
+    />
+  </TimelineWrapper>
+
 const TimelineContainer: React.FC<Props> = ({ caseId }) => {
   const { data } = useCaseEvents(caseId!)
-  const { shouldCreateDebriefing: showCreateDebriefingLink } = workflow(data, true)
+  const { shouldCreateDebriefing, shouldCreateVisit, shouldCreateViolation, shouldCloseCase } = workflow(data, true)
+  const { visitIsDone, debriefIsDone } = workflow(data)
 
   const debriefEvents = data?.filter(({ type })  => type === "DEBRIEFING")
   const visitEvents = data?.filter(({ type })  => type === "VISIT")
@@ -40,31 +56,38 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
   return (
     <>
       <Div>
-        { showCreateDebriefingLink &&
-          <TimelineWrapper >
-            <Timeline
-              title= { "Debrief" }
-              isDone={false}
-              canBeOpened={false}
-            />
-          </TimelineWrapper>
+        { shouldCreateDebriefing &&
+          <NextStep title={ mapCaseType("DEBRIEFING") } />
+        }
+        { shouldCreateVisit &&
+          <NextStep title={ mapCaseType("VISIT") } />
+        }
+        { debriefIsDone && shouldCreateViolation &&
+          <NextStep title="Overtreding" />
+        }
+        { debriefIsDone && shouldCloseCase &&
+          <NextStep title="Zaak afsluiten" />
         }
         { debriefEvents && debriefEvents.length > 0 &&
             <TimelineWrapper >
-              <CaseEvent
+              <Debrief
                 caseEvents={ debriefEvents }
+                isDone={ debriefIsDone }
+                isOpen={ !debriefIsDone || (debriefIsDone && (shouldCreateViolation || shouldCloseCase)) }
               />
             </TimelineWrapper>
           }
           { visitEvents && visitEvents.length > 0 &&
             <TimelineWrapper >
-              <CaseEvent
-                caseEvents={ visitEvents } />
+              <Visit
+                caseEvents={ visitEvents } 
+                isDone={ visitIsDone }
+                isOpen={ !visitIsDone || (visitIsDone && shouldCreateDebriefing) } />
             </TimelineWrapper>
           }
           { reasonEvents && reasonEvents.length > 0 &&
             <TimelineWrapper >
-              <CaseEvent
+              <Reason
                 caseEvents={ reasonEvents } />
             </TimelineWrapper>
           }
