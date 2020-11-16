@@ -43,13 +43,18 @@ const Reason: React.FC<Props> = ({ caseEvents, isOpen }) => {
 
   return (
     <>
-    { currentEvent &&
-    <Timeline
-      title={ `${ mapCaseType(currentEvent.type) } ${ counterString } `}
-      isDone={ true }
-    >
-      { TimelineThread }
-    </Timeline>
+    { currentEvent ?
+      <Timeline
+        title={ `${ mapCaseType(currentEvent.type) } ${ counterString } `}
+        isDone={ true }
+      >
+        { TimelineThread }
+      </Timeline>
+    : 
+      <Timeline
+        title="Aanleiding ontbreekt"
+        canBeOpened={false}
+      />
     }
     </>
   )

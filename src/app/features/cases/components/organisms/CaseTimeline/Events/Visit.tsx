@@ -38,14 +38,19 @@ const Visit: React.FC<Props> = ({ caseEvents, isDone, isOpen }) => {
   const counterString = caseEvents.length > 1 ? `(${ caseEvents.length })` : ""
   return (
     <>
-    { currentEvent &&
-    <Timeline
-      title={ `${ mapCaseType(currentEvent.type) } ${ counterString } `}
-      isDone={ isDone }
-      isOpen={ isOpen }
-    >
-      { TimelineThread }
-    </Timeline>
+    { currentEvent ?
+      <Timeline
+        title={ `${ mapCaseType(currentEvent.type) } ${ counterString } `}
+        isDone={ isDone }
+        isOpen={ isOpen }
+      >
+        { TimelineThread }
+      </Timeline>
+    : 
+      <Timeline
+        title="Er zijn geen huisbezoeken"
+        canBeOpened={false}
+      />
     }
     </>
   )

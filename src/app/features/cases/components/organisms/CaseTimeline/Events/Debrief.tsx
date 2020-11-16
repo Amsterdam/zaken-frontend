@@ -45,14 +45,19 @@ const Debrief: React.FC<Props> = ({ caseEvents, isDone, isOpen }) => {
 
   return (
     <>
-    { currentEvent &&
-    <Timeline
-      title={ `${ mapCaseType(currentEvent.type) } ${ counterString } `}
-      isDone={ isDone }
-      isOpen={ isOpen }
-    >
-      { TimelineThread }
-    </Timeline>
+    { currentEvent ?
+      <Timeline
+        title={ `${ mapCaseType(currentEvent.type) } ${ counterString } `}
+        isDone={ isDone }
+        isOpen={ isOpen }
+      >
+        { TimelineThread }
+      </Timeline>
+      : 
+      <Timeline
+        title="Er is geen Debrief"
+        canBeOpened={false}
+      />
     }
     </>
   )
