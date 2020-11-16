@@ -1,6 +1,6 @@
 import React from "react"
 import { getDay }from "app/features/shared/components/atoms/DayDisplay/DayDisplay"
-import { displayDate } from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
+
 import { Timeline } from "app/features/shared/components/molecules/Timeline"
 import { Dl, DLProps, mapCaseType } from "../helpers/Helpers"
 import { reasonLabelsMap } from "../helpers/Dictionaries"
@@ -13,7 +13,7 @@ type Props = {
 
 const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => 
   <Dl>
-    { showDate && thread.date_created && <div><dt>Datum</dt><dd>{ displayDate(thread.date_created) }</dd></div> }
+    {/* { showDate && thread.date_created && <div><dt>Datum</dt><dd>{ displayDate(thread.date_created) }</dd></div> } */}
     <div>
       <dt>{ reasonLabelsMap.reason }</dt>
       <dd>{ thread.event_values.reason }</dd>
