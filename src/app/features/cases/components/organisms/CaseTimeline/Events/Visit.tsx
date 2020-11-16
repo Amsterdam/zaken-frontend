@@ -1,77 +1,14 @@
 import React from "react"
 import { getDay }from "app/features/shared/components/atoms/DayDisplay/DayDisplay"
-import { displayDate, displayTime } from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
+import { displayDate } from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
 import { Timeline } from "app/features/shared/components/molecules/Timeline"
-import { Dl, DLProps, mapCaseType, mapArrayToUl } from "../helpers/Helpers"
-import { visitEventValuesMap, visitLabelsMap, visit_go_ahead } from "../helpers/Dictionaries"
+import { mapCaseType } from "../helpers/Helpers"
+import VisitData from "./VisitData"
 
 type Props = {
   caseEvents: Components.Schemas.CaseEvent[]
   isDone?: boolean
   isOpen?: boolean
-}
-
-const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => {
-  const value = thread.event_values
-  return (
-    <Dl>
-        { showDate && value.start_time && <div><dt>Datum</dt><dd>{ displayDate(value.start_time) }</dd></div> }
-        { value.start_time &&
-        <div>
-            <dt>{ visitLabelsMap["start_time"] }</dt>
-            <dd>{ displayTime(value.start_time) }</dd>
-        </div>
-      }
-      { value.authors.length > 0 &&
-        <div>
-          <dt>{ visitLabelsMap["authors"] }</dt>
-          <dd>{ mapArrayToUl(value.authors) }</dd>
-        </div>
-      }
-      { value.situation &&
-        <div>
-          <dt>{ visitLabelsMap["situation"] }</dt>
-          <dd>{ visitEventValuesMap[value.situation] }</dd>
-        </div>
-      }
-      { value.situation && value.situation === "access_granted" &&
-        <div>
-          <dt>{ visitLabelsMap["notes"] }</dt>
-          <dd><i>{ value.notes }</i></dd>
-        </div>
-      }
-      { value.observations.length > 0 &&
-        <div>
-          <dt>{ visitLabelsMap["observations"] }</dt>
-          <dd>{ mapArrayToUl(value.observations, true) }</dd>
-        </div>
-      }
-      { value.suggest_next_visit &&
-        <div>
-            <dt>{ visitLabelsMap["suggest_next_visit"] }</dt>
-            <dd>{ value.suggest_next_visit }</dd>
-        </div>
-      }
-      { value.suggest_next_visit && value.suggest_next_visit_description &&
-        <div>
-          <dt>{ visitLabelsMap["suggest_next_visit_description"] }</dt>
-          <dd><i>{ value.suggest_next_visit_description }</i></dd>
-        </div>
-      }
-      { value.can_next_visit_go_ahead && value.situation !== "access_granted" &&
-        <div>
-            <dt>{ visitLabelsMap["can_next_visit_go_ahead"] }</dt>
-            <dd>{ visit_go_ahead[value.can_next_visit_go_ahead as string] }</dd>
-        </div>
-      }
-      { value.can_next_visit_go_ahead && value.can_next_visit_go_ahead_description &&
-        <div>
-          <dt>{ visitLabelsMap["can_next_visit_go_ahead_description"] }</dt>
-          <dd><i>{ value.can_next_visit_go_ahead_description }</i></dd>
-        </div>
-      }
-    </Dl>
-  )
 }
 
 const Visit: React.FC<Props> = ({ caseEvents, isDone, isOpen }) => {
@@ -85,13 +22,13 @@ const Visit: React.FC<Props> = ({ caseEvents, isDone, isOpen }) => {
         largeCircle={false}
         isNested={true}
       >
-        <DefinitionList
+        <VisitData
           thread={ thread }
           showDate={false}
         />
       </Timeline>
       :
-        <DefinitionList
+        <VisitData
           key={ thread.id }
           thread={ thread }
           showDate={true}
@@ -101,14 +38,19 @@ const Visit: React.FC<Props> = ({ caseEvents, isDone, isOpen }) => {
   const counterString = caseEvents.length > 1 ? `(${ caseEvents.length })` : ""
   return (
     <>
-    { currentEvent &&
-    <Timeline
-      title={ `${ mapCaseType(currentEvent.type) } ${ counterString } `}
-      isDone={ isDone }
-      isOpen={ isOpen }
-    >
-      { TimelineThread }
-    </Timeline>
+    { currentEvent ?
+      <Timeline
+        title={ `${ mapCaseType(currentEvent.type) } ${ counterString } `}
+        isDone={ isDone }
+        isOpen={ isOpen }
+      >
+        { TimelineThread }
+      </Timeline>
+    : 
+      <Timeline
+        title="Er zijn geen huisbezoeken"
+        canBeOpened={false}
+      />
     }
     </>
   )

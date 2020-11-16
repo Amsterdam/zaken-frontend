@@ -245,15 +245,12 @@ declare namespace Components {
             voorletters: string;
             voornamen: string;
             voorvoegsel_geslachtsnaam?: string;
-            datum_begin_relatie_verblijadres: string; // date-time
+            datum_begin_relatie_verblijfadres: string; // date-time
         }
         export interface Residents {
             results: Resident[];
         }
         export type SoortVorderingEnum = "PBF" | "PBN" | "PRV" | "SOC";
-        export interface Test {
-            request_url: string;
-        }
         export interface TopVisit {
             case_identification: string;
             start_time: string;
@@ -328,7 +325,7 @@ declare namespace Paths {
     namespace CasesCreate {
         export type RequestBody = Components.Schemas.Case;
         namespace Responses {
-            export type $200 = Components.Schemas.Case;
+            export type $201 = Components.Schemas.Case;
         }
     }
     namespace CasesDebriefingsRetrieve {
@@ -432,7 +429,7 @@ declare namespace Paths {
     namespace DebriefingsCreate {
         export type RequestBody = Components.Schemas.DebriefingCreate;
         namespace Responses {
-            export type $200 = Components.Schemas.DebriefingCreate;
+            export type $201 = Components.Schemas.DebriefingCreate;
         }
     }
     namespace DebriefingsDestroy {
@@ -497,7 +494,7 @@ declare namespace Paths {
     namespace PushCreate {
         export type RequestBody = Components.Schemas.Push;
         namespace Responses {
-            export type $200 = Components.Schemas.Push;
+            export type $201 = Components.Schemas.Push;
         }
     }
     namespace SchemaRetrieve {
@@ -515,17 +512,32 @@ declare namespace Paths {
             }
         }
     }
-    namespace TestingUrlTryBrkApiCreate {
-        export type RequestBody = Components.Schemas.Test;
+    namespace TestPermitsCheckmarksRetrieve {
+        namespace Parameters {
+            export type BagId = string;
+        }
+        export interface QueryParameters {
+            bag_id: Parameters.BagId;
+        }
         namespace Responses {
-            export interface $200 {
-            }
+            export type $200 = Components.Schemas.PermitCheckmark;
+        }
+    }
+    namespace TestPermitsDetailsList {
+        namespace Parameters {
+            export type BagId = string;
+        }
+        export interface QueryParameters {
+            bag_id: Parameters.BagId;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.DecosPermit[];
         }
     }
     namespace VisitsCreate {
         export type RequestBody = Components.Schemas.Visit;
         namespace Responses {
-            export type $200 = Components.Schemas.Visit;
+            export type $201 = Components.Schemas.Visit;
         }
     }
     namespace VisitsCreateVisitFromTopCreate {

@@ -2,23 +2,14 @@ import React from "react"
 import { getDay }from "app/features/shared/components/atoms/DayDisplay/DayDisplay"
 
 import { Timeline } from "app/features/shared/components/molecules/Timeline"
-import { Dl, DLProps, mapCaseType } from "../helpers/Helpers"
-import { reasonLabelsMap } from "../helpers/Dictionaries"
+import { mapCaseType } from "../helpers/Helpers"
 import ButtonEditEvent from "./ButtonEditEvent"
+import ReasonData from "./ReasonData"
 
 type Props = {
   caseEvents: Components.Schemas.CaseEvent[]
   isOpen?: boolean
 }
-
-const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => 
-  <Dl>
-    {/* { showDate && thread.date_created && <div><dt>Datum</dt><dd>{ displayDate(thread.date_created) }</dd></div> } */}
-    <div>
-      <dt>{ reasonLabelsMap.reason }</dt>
-      <dd>{ thread.event_values.reason }</dd>
-    </div>
-  </Dl>
 
 const Reason: React.FC<Props> = ({ caseEvents, isOpen }) => {
   const TimelineThread = caseEvents.map(thread =>
@@ -31,7 +22,7 @@ const Reason: React.FC<Props> = ({ caseEvents, isOpen }) => {
         largeCircle={false}
         isNested={true}
       >
-        <DefinitionList
+        <ReasonData
           thread={ thread }
           showDate={false}
         />
@@ -39,7 +30,7 @@ const Reason: React.FC<Props> = ({ caseEvents, isOpen }) => {
       </Timeline>
       :
       <>
-        <DefinitionList
+        <ReasonData
           key={ thread.id }
           thread={ thread }
           showDate={true}
@@ -52,13 +43,18 @@ const Reason: React.FC<Props> = ({ caseEvents, isOpen }) => {
 
   return (
     <>
-    { currentEvent &&
-    <Timeline
-      title={ `${ mapCaseType(currentEvent.type) } ${ counterString } `}
-      isDone={ true }
-    >
-      { TimelineThread }
-    </Timeline>
+    { currentEvent ?
+      <Timeline
+        title={ `${ mapCaseType(currentEvent.type) } ${ counterString } `}
+        isDone={ true }
+      >
+        { TimelineThread }
+      </Timeline>
+    : 
+      <Timeline
+        title="Aanleiding ontbreekt"
+        canBeOpened={false}
+      />
     }
     </>
   )
