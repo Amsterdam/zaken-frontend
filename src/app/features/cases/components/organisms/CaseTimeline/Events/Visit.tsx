@@ -58,7 +58,7 @@ const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => {
           <dd><i>{ value.suggest_next_visit_description }</i></dd>
         </div>
       }
-      { value.can_next_visit_go_ahead &&
+      { value.can_next_visit_go_ahead && value.situation !== "access_granted" &&
         <div>
             <dt>{ visitLabelsMap["can_next_visit_go_ahead"] }</dt>
             <dd>{ visit_go_ahead[value.can_next_visit_go_ahead as string] }</dd>
