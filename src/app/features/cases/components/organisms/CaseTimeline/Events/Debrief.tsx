@@ -2,9 +2,9 @@ import React from "react"
 import { getDay }from "app/features/shared/components/atoms/DayDisplay/DayDisplay"
 import { displayDate } from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
 import { Timeline } from "app/features/shared/components/molecules/Timeline"
-import { Dl, DLProps, mapCaseType } from "../helpers/Helpers"
-import { debriefViolationMap, debriefLabelsMap } from "../helpers/Dictionaries"
+import { mapCaseType } from "../helpers/Helpers"
 import ButtonEditEvent from "./ButtonEditEvent"
+import DebriefData from "./DebriefData"
 
 type Props = {
   caseEvents: Components.Schemas.CaseEvent[]
@@ -12,26 +12,6 @@ type Props = {
   isOpen?: boolean
 }
 
-const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => {
-  const value = thread.event_values
-  return (
-    <Dl>
-        { showDate && value.date_added && <div><dt>Datum</dt><dd>{ displayDate(value.date_added) }</dd></div> }
-        <div>
-            <dt>{ debriefLabelsMap["author"] }</dt>
-            <dd>{ value.author }</dd>
-        </div>
-        <div>
-            <dt>{ debriefLabelsMap["violation"] }</dt>
-            <dd>{ value.violation ? debriefViolationMap[value.violation] : "-" }</dd>
-        </div>
-        <div>
-            <dt>{ debriefLabelsMap["feedback"] }</dt>
-            <dd><i>{ value.feedback ? value.feedback : "-" }</i></dd>
-        </div>
-    </Dl>
-  )
-}
 
 const Debrief: React.FC<Props> = ({ caseEvents, isDone, isOpen }) => {
   const TimelineThread = caseEvents.map(thread =>
@@ -44,18 +24,18 @@ const Debrief: React.FC<Props> = ({ caseEvents, isDone, isOpen }) => {
         largeCircle={false}
         isNested={true}
       >
-        <DefinitionList
+        <DebriefData
           thread={ thread }
-          showDate={false}
+          showDate={ false }
         />
         <ButtonEditEvent target={ `/cases/${ thread.case }/debriefing/${ thread.emitter_id }` } disabled={!thread.emitter_is_editable} editable_until={thread.emitter_is_editable_until} />
       </Timeline>
       :
       <>
-        <DefinitionList
+        <DebriefData
           key={ thread.id }
           thread={ thread }
-          showDate={true}
+          showDate={ true }
         />
         <ButtonEditEvent target={ `/cases/${ thread.case }/debriefing/${ thread.emitter_id }` } disabled={!thread.emitter_is_editable} editable_until={thread.emitter_is_editable_until} />
       </>
