@@ -1,9 +1,7 @@
-import React, { ComponentType, useEffect } from "react"
-import { navigate, RouteComponentProps } from "@reach/router"
+import React, { ComponentType } from "react"
+import { RouteComponentProps } from "@reach/router"
 
-import { hasToken } from "app/state/auth/tokenStore"
-
-import to from "../to"
+import useKeycloak from "app/state/auth/keycloak/useKeycloak"
 
 type Props = {
   page: ComponentType
@@ -13,13 +11,7 @@ type Props = {
  * The user needs to be logged on to visit this route
  */
 const ProtectedRoute: React.FC<Props> = ({ page: Page, ...restProps }) => {
-  const token = hasToken()
-
-  useEffect(() => {
-    if (!token) {
-      navigate(to("/login"))
-    }
-  }, [token])
+  const { token } = useKeycloak()
 
   return token
     ? <Page {...restProps} />

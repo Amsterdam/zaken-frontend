@@ -3,6 +3,8 @@ import { useCallback, useEffect, useContext } from "react"
 
 import { ApiContext } from "../provider/ApiProvider"
 import { ApiGroup } from "../index"
+import createAuthHeaders from "./utils/createAuthHeaders"
+import useKeycloak from "app/state/auth/keycloak/useKeycloak"
 
 type GetOptions = {
   method: "get"
@@ -26,10 +28,10 @@ type Config = {
   url: string
   groupName: ApiGroup
   handleError?: ( error: AxiosError ) => void
-  getHeaders?: () => Record<string, string>
+  includeHeaders?: boolean
 }
 
-const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, handleError, getHeaders, lazy, keepUsingInvalidCache }: Config) => {
+const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, handleError, includeHeaders, lazy, keepUsingInvalidCache }: Config) => {
   const {
     getCacheItem,
     setCacheItem,
@@ -38,6 +40,8 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
     pushRequestInQueue,
     isRequestPendingInQueue
   } = useContext(ApiContext)[groupName]
+
+  const { keycloak, token } = useKeycloak()
 
   /**
    * Executes an API request
@@ -49,7 +53,7 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
       }
 
       const response = await axios.request<Schema>({
-        headers: getHeaders ? getHeaders() : undefined,
+        headers: includeHeaders && token ? createAuthHeaders(token) : undefined,
         method: options.method,
         url,
         data: payload
@@ -61,13 +65,16 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
 
       return response
     } catch(error) {
+      if (error.response.status === 401) {
+        keycloak.logout()
+      }
       if (handleError) {
         handleError(error)
       } else {
         throw error
       }
     }
-  }, [clearCache, setCacheItem, url, handleError, getHeaders])
+  }, [includeHeaders, token, url, clearCache, setCacheItem, handleError, keycloak])
 
   /**
    * Queues an API request

@@ -3,7 +3,7 @@
 import { renderHook } from "@testing-library/react-hooks"
 import { AxiosError } from "axios"
 
-import { makeGatewayUrl, getHeaders, useErrorHandler } from "./utils"
+import { makeGatewayUrl, useErrorHandler } from "./utils"
 
 const mockAddErrorFlashMessage = jest.fn()
 jest.mock("app/state/flashMessages/useFlashMessages", () => ({
@@ -30,16 +30,6 @@ describe("rest hook utils", () => {
       result.current(mockedError)
 
       expect(mockAddErrorFlashMessage).toHaveBeenCalledWith("Oeps er ging iets mis!", "S.O.S. (URL: http://www.foo.com)")
-    })
-  })
-
-  describe("getHeaders", () => {
-    it("should return s Authorization header", () => {
-      jest.spyOn(window.localStorage.__proto__, "getItem")
-      window.localStorage.__proto__.getItem = jest.fn(() => "MY TOKEN")
-
-      const headers = getHeaders()
-      expect(headers).toEqual({ Authorization: "Bearer MY TOKEN" })
     })
   })
 
