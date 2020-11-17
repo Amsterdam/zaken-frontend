@@ -3,6 +3,7 @@ import { useCallback, useEffect, useContext } from "react"
 
 import { ApiContext } from "../provider/ApiProvider"
 import { ApiGroup } from "../index"
+import useHeaders from "./useHeaders"
 
 type GetOptions = {
   method: "get"
@@ -26,10 +27,10 @@ type Config = {
   url: string
   groupName: ApiGroup
   handleError?: ( error: AxiosError ) => void
-  getHeaders?: () => Record<string, string>
+  includeHeaders?: boolean
 }
 
-const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, handleError, getHeaders, lazy, keepUsingInvalidCache }: Config) => {
+const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, handleError, includeHeaders, lazy, keepUsingInvalidCache }: Config) => {
   const {
     getCacheItem,
     setCacheItem,
@@ -38,6 +39,8 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
     pushRequestInQueue,
     isRequestPendingInQueue
   } = useContext(ApiContext)[groupName]
+
+  const headers = useHeaders()
 
   /**
    * Executes an API request
@@ -49,7 +52,7 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
       }
 
       const response = await axios.request<Schema>({
-        headers: getHeaders ? getHeaders() : undefined,
+        headers: includeHeaders ? headers : undefined,
         method: options.method,
         url,
         data: payload
@@ -67,7 +70,7 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
         throw error
       }
     }
-  }, [clearCache, setCacheItem, url, handleError, getHeaders])
+  }, [clearCache, setCacheItem, url, handleError, includeHeaders, headers])
 
   /**
    * Queues an API request
