@@ -24,7 +24,7 @@ const Workflow: React.FC<Props> = ({ caseId }) => {
       <Divider />
       { shouldCreateVisit &&
         <ul>
-          <li>Huisbezoek</li>
+          <li>Huisbezoek afleggen (door toezichthouders)</li>
         </ul>
       }
       { shouldCreateDebriefing &&
@@ -33,20 +33,20 @@ const Workflow: React.FC<Props> = ({ caseId }) => {
       { shouldCloseCase &&
         <>
         <ul>
-          <li>Opstellen buitendienst rapport</li>
-          <li>Afsluiten zaak</li>
+          <li>Opstellen buitendienst rapport (door toezichthouder)</li>
+          <li>Afsluiten zaak (door projectmedewerker)</li>
         </ul>
-        <small>(Uit te voeren in BWV)</small>
+        <small>Het zaaksysteem geeft voor nu alleen een weergave van de taken. De uitvoering/verwerking vindt dus gewoon nog plaats in BWV.</small>
       </>
       }
       { shouldCreateViolation &&
         <>
           <ul>
-            <li>Opstellen beeldverslag (optioneel)</li>
-            <li>Opstellen rapport van bevindingen</li>
-            <li>Opstellen aanschrijving</li>
+            <li>Opstellen beeldverslag (door toezichthouder)</li>
+            <li>Opstellen rapport van bevindingen (door toezichthouder)</li>
+            <li>Opstellen aanschrijving (door projecthandhaver)</li>
           </ul>
-          <small>(Uit te voeren in BWV)</small>
+          <small>Het zaaksysteem geeft voor nu alleen een weergave van de taken. De uitvoering/verwerking vindt dus gewoon nog plaats in BWV.</small>
         </>
       }
     </div>
