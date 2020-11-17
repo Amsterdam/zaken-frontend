@@ -41,7 +41,7 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
     isRequestPendingInQueue
   } = useContext(ApiContext)[groupName]
 
-  const { token } = useKeycloak()
+  const { keycloak, token } = useKeycloak()
 
   /**
    * Executes an API request
@@ -65,13 +65,16 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
 
       return response
     } catch(error) {
+      if (error.response.status === 401) {
+        keycloak.logout()
+      }
       if (handleError) {
         handleError(error)
       } else {
         throw error
       }
     }
-  }, [clearCache, setCacheItem, url, handleError, includeHeaders, token])
+  }, [includeHeaders, token, url, clearCache, setCacheItem, handleError, keycloak])
 
   /**
    * Queues an API request
