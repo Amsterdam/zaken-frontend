@@ -6,6 +6,7 @@ import to from "app/features/shared/routing/to"
 import useKeycloak from "app/state/auth/keycloak/useKeycloak"
 import { Search } from "@datapunt/asc-assets"
 import MenuItems from "app/features/shared/components/molecules/navigation/MenuItems"
+import UserInfo from "../UserInfo/UserInfo"
 
 type Props = {
   showSearchButton: boolean
@@ -19,6 +20,9 @@ const ResponsiveMenuInline = styled(MenuInline)`
   display: none;
   @media screen and ${ breakpoint("min-width", "laptopM") } {
     display: flex;
+    a {
+      height: 100%;
+    }
   }
 `
 const ResponsiveMenuToggle = styled(MenuToggle)`
@@ -48,6 +52,7 @@ const DefaultNavigation: React.FC<Props> = ({ showSearchButton }) => {
       }
       <ResponsiveMenuToggle align="right">
         <MenuItems />
+        <UserInfo />
       </ResponsiveMenuToggle>
     </>
   )
