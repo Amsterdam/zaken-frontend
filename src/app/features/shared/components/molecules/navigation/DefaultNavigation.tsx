@@ -19,6 +19,9 @@ const ResponsiveMenuInline = styled(MenuInline)`
   display: none;
   @media screen and ${ breakpoint("min-width", "laptopM") } {
     display: flex;
+    a {
+      height: 100%;
+    }
   }
 `
 const ResponsiveMenuToggle = styled(MenuToggle)`
