@@ -6,15 +6,18 @@ import useKeycloak from "app/state/auth/keycloak/useKeycloak"
 import React from "react"
 import styled from "styled-components"
 
-const MenuButtonWrap = styled.span`
-  a {
-    height: 54px;
-  }
-`
+type Props = {
+  showAsListItem?: boolean
+}
 
-const UserInfo: React.FC = () => {
+const linkStyle = "{ height: 54px"
+
+const UserInfo: React.FC<Props> = ({ showAsListItem = false }) => {
   const { keycloak } = useKeycloak()
   const onClick = () => keycloak.logout()
+  const MenuButtonWrap = showAsListItem 
+    ? styled.li`a ${ linkStyle }`
+    : styled.span`a  ${ linkStyle }`
 
   return (
     <MenuButtonWrap>
