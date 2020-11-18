@@ -52,7 +52,7 @@ const DefaultNavigation: React.FC<Props> = ({ showSearchButton }) => {
       }
       <ResponsiveMenuToggle align="right">
         <MenuItems />
-        <UserInfo />
+        <UserInfo showAsListItem={true} />
       </ResponsiveMenuToggle>
     </>
   )
