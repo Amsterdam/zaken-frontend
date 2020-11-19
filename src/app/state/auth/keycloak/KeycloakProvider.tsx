@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+
 import { keycloak, Keycloak } from "./keycloak"
 
 export type Context = {
@@ -9,7 +10,7 @@ export const KeycloakContext = React.createContext<Context|undefined>(undefined)
 
 const KeycloakProvider: React.FC = ({ children }) => {
   const [token, setToken] = useState<string>()
-  
+
   useEffect(() => {
     keycloak.init({
       onLoad: "login-required",
