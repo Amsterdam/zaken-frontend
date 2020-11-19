@@ -14,6 +14,7 @@ export type ApiGroup =
   | "caseStates"
   | "dataPunt"
   | "permits"
+  | "auth"
 
 export type Options = {
   keepUsingInvalidCache?: boolean
@@ -24,6 +25,17 @@ export type Options = {
  * Please configure your endpoints here:
  * NOTE: For example "cases" and "cases/:id" share the same group config. Cache will be cleared for the whole group.
  */
+
+export const useIsAuthorized = (options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<any>({
+    ...options,
+    url: makeGatewayUrl("is-authorized"),
+    groupName: "auth",
+    handleError,
+    includeHeaders: true
+  })
+}
 
 export const useResidents = (bagId: Components.Schemas.Address["bag_id"], options?: Options) => {
   const handleError = useErrorHandler()
