@@ -12,11 +12,8 @@ type Props = {
 
 const UserDisplayStyle = styled.div`
   
-  height: 54px;
-  padding: 12px;
   flex: 1 0 100%;
-  height: auto;
-  padding: 12px 16px 0;
+  padding: 12px 0 0 24px;
 
   >span {
     vertical-align: text-top;
@@ -40,17 +37,19 @@ const linkStyle = `{
 const UserInfo: React.FC<Props> = ({ showAsListItem = false }) => {
   const { keycloak } = useKeycloak()
   const onClick = () => keycloak.logout()
-  const userDisplay = keycloak.tokenParsed?.name ?? "-"
+  const userDisplay = keycloak.tokenParsed?.name
   const MenuButtonWrap = showAsListItem 
     ? styled.li`a ${ linkStyle }`
     : styled.span`a  ${ linkStyle }`
 
   return (
     <MenuButtonWrap>
-      <UserDisplayStyle>
-        <PersonalLogin width={24} height={24} />
-        <span>{ userDisplay }</span>
-      </UserDisplayStyle>
+      { userDisplay &&
+        <UserDisplayStyle>
+          <PersonalLogin width={24} height={24} />
+          <span>{ userDisplay }</span>
+        </UserDisplayStyle>
+      }
       <MenuButton
         as="a"
         tabIndex={0}
