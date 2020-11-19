@@ -1,3 +1,4 @@
+import authRoutes from "../features/auth/routes"
 import searchRoutes from "../features/search/routes"
 import addressesRoutes from "../features/addresses/routes"
 import casesRoutes from "../features/cases/routes"
@@ -7,6 +8,7 @@ import routesToRouteConfig, { RouteConfigObject } from "./utils/routesToRouteCon
 
 // NOTE: Add feature routes here
 const routes = {
+  ...authRoutes,
   ...addressesRoutes,
   ...searchRoutes,
   ...casesRoutes,
