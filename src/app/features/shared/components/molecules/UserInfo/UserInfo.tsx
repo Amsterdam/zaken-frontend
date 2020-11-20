@@ -11,7 +11,7 @@ type Props = {
 }
 
 const UserDisplayStyle = styled.div`
-  
+
   flex: 1 0 100%;
   padding: 12px 0 0 24px;
 
@@ -28,17 +28,17 @@ const UserDisplayStyle = styled.div`
     display: inline-block;
   }
 `
-const linkStyle = `{ 
-  height: 54px; 
-  font-weight: normal; 
+const linkStyle = `{
+  height: 54px;
+  font-weight: normal;
   padding: 12px 16px 9px;
 }`
 
 const UserInfo: React.FC<Props> = ({ showAsListItem = false }) => {
-  const { keycloak } = useKeycloak()
+  const keycloak = useKeycloak()
   const onClick = () => keycloak.logout()
   const userDisplay = keycloak.tokenParsed?.name
-  const MenuButtonWrap = showAsListItem 
+  const MenuButtonWrap = showAsListItem
     ? styled.li`a ${ linkStyle }`
     : styled.span`a  ${ linkStyle }`
 

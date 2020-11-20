@@ -8,7 +8,7 @@ import { makeGatewayUrl } from "app/state/rest/hooks/utils/utils"
 import createAuthHeaders from "app/state/rest/hooks/utils/createAuthHeaders"
 
 export type Context = {
-  token: string | undefined
+  isInitialized: boolean
   keycloak: Keycloak
 }
 export const KeycloakContext = React.createContext<Context|undefined>(undefined)
@@ -19,14 +19,15 @@ const options = {
 }
 
 const KeycloakProvider: React.FC = ({ children }) => {
-  const [token, setToken] = useState<string>()
+  const [isInitialized, setIsInitialized] = useState(false)
+  const initialize = () => setIsInitialized(true)
 
   useEffect(() => {
     (async () => {
       try {
         const isAuthenticated = await keycloak.init(options)
+        initialize()
         if (isAuthenticated) {
-          setToken(keycloak.token)
           const response = await fetch(makeGatewayUrl("is-authorized"), {
             headers: {
               ...createAuthHeaders(keycloak.token),
@@ -45,7 +46,7 @@ const KeycloakProvider: React.FC = ({ children }) => {
   }, [])
 
   const value = {
-    token,
+    isInitialized,
     keycloak
   }
 

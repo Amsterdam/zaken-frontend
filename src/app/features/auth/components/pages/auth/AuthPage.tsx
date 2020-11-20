@@ -7,7 +7,7 @@ import useKeycloak from "app/state/auth/keycloak/useKeycloak"
 import { useIsAuthorized } from "app/state/rest/"
 
 const AuthPage: React.FC = () => {
-  const { keycloak } = useKeycloak()
+  const keycloak = useKeycloak()
   const { data } = useIsAuthorized()
   const showUnauthorized = data?.isAuthorized === false
 
