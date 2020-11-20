@@ -5,3 +5,7 @@
 - Add `KeycloakProvider` to [App.tsx](https://github.com/Amsterdam/zaken-frontend/blob/master/src/App.tsx)
 - Optionaly add a `initializedCallback` function
 - Use `useKeycloak` hook in your components
+
+## TODO
+- Look into SSI (Single Signon) support
+- IE11 bug
