@@ -479,7 +479,7 @@ declare namespace Paths {
             export type $200 = Components.Schemas.Debriefing;
         }
     }
-    namespace IsAuthenticatedRetrieve {
+    namespace IsAuthorizedRetrieve {
         namespace Responses {
             export interface $200 {
             }
