@@ -14,7 +14,7 @@ type UserProps = {
 }
 
 const UserDisplayStyle = styled.div`
-  
+
   flex: 1 0 100%;
   padding: 12px 0 0 24px;
 
@@ -31,6 +31,7 @@ const UserDisplayStyle = styled.div`
     display: inline-block;
   }
 `
+
 const StyledMenuButton = styled(MenuButton)`
   height: 54px; 
   font-weight: normal; 
@@ -55,10 +56,10 @@ const UserDisplay: React.FC<UserProps> = ({ userDisplay, onClick }) =>
   </>
 
 const UserInfo: React.FC<Props> = ({ showAsListItem = false }) => {
-  const { keycloak } = useKeycloak()
+  const keycloak = useKeycloak()
   const onClick = () => keycloak.logout()
   const userDisplay = keycloak.tokenParsed?.name
-  
+
   return (
     showAsListItem 
       ?
