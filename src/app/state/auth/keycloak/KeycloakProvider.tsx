@@ -5,6 +5,7 @@ import options from "./options"
 
 export type Context = {
   isInitialized: boolean
+  isAuthenticated: boolean
   keycloak: Keycloak
 }
 export const KeycloakContext = React.createContext<Context|undefined>(undefined)
