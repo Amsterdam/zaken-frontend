@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react"
-import { navigate } from "@reach/router"
 
 import { keycloak, Keycloak } from "./keycloak"
-
-import to from "app/features/shared/routing/to"
-import { makeGatewayUrl } from "app/state/rest/hooks/utils/utils"
-import createAuthHeaders from "app/state/rest/hooks/utils/createAuthHeaders"
+import options from "./options"
 
 export type Context = {
   isInitialized: boolean
@@ -13,40 +9,30 @@ export type Context = {
 }
 export const KeycloakContext = React.createContext<Context|undefined>(undefined)
 
-const options = {
-  onLoad: "login-required",
-  checkLoginIframe: false
+type Props = {
+  initializedCallback?: (keycloak: Keycloak, isAuthenticated: boolean) => Promise<void>
 }
 
-const KeycloakProvider: React.FC = ({ children }) => {
+const KeycloakProvider: React.FC<Props> = ({ initializedCallback, children }) => {
   const [isInitialized, setIsInitialized] = useState(false)
-  const initialize = () => setIsInitialized(true)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   useEffect(() => {
     (async () => {
       try {
         const isAuthenticated = await keycloak.init(options)
-        initialize()
-        if (isAuthenticated) {
-          const response = await fetch(makeGatewayUrl("is-authorized"), {
-            headers: {
-              ...createAuthHeaders(keycloak.token),
-              "Content-Type": "application/json"
-            }
-          })
-          const { is_authorized } = await response.json()
-          if (is_authorized === false) navigate(to("/auth"))
-        } else {
-          console.log("Keycloak failed to authenticate")
-        }
+        setIsInitialized(true)
+        setIsAuthenticated(isAuthenticated)
+        if (initializedCallback !== undefined) await initializedCallback(keycloak, isAuthenticated)
       } catch {
         console.error("Keycloak failed to initialize")
       }
     })()
-  }, [])
+  }, [initializedCallback])
 
   const value = {
     isInitialized,
+    isAuthenticated,
     keycloak
   }
 
