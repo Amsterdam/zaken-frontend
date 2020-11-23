@@ -8,6 +8,7 @@ import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/
 import PermitDetailsList from "app/features/permits/components/molecules/PermitDetails/PermitDetailsList"
 import DetailHeader from "app/features/shared/components/molecules/DetailHeader/DetailHeader"
 import Column from "app/features/shared/components/atoms/Grid/Column"
+import MockWrapper from "app/features/shared/components/molecules/MockWrapper/MockWrapper"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -24,7 +25,9 @@ const IndexPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
     </RowWithColumn>
     <Row>
       <Column spanLarge={50}>
-        <PermitDetailsList bagId={ bagId! }></PermitDetailsList>
+        <MockWrapper>
+          <PermitDetailsList bagId={ bagId! }></PermitDetailsList>
+        </MockWrapper>
       </Column>
     </Row>
     <RowWithColumn>
