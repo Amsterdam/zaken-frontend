@@ -35,6 +35,8 @@ declare namespace Components {
             readonly date_created: string; // date-time
             type: TypeEnum;
             emitter_id: number;
+            emitter_is_editable: boolean;
+            emitter_is_editable_until: string; // date-time
             case: number;
         }
         export interface CaseState {
@@ -52,6 +54,8 @@ declare namespace Components {
             readonly date_modified: string; // date-time
             violation?: ViolationEnum;
             feedback: string;
+            readonly is_editable: boolean;
+            readonly is_editable_until: string; // date-time
         }
         export interface DebriefingCreate {
             readonly id: number;
@@ -65,7 +69,7 @@ declare namespace Components {
             processed: string | null;
             date_from: string | null; // date
             date_to?: string | null; // date
-            decos_join_web_url?: string; // uri ^(?:[a-z0-9.+-]*)://(?:[^\s:@/]+(?::[^\s:@/]*)?@)?(?:(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)(?:\.(?:25[0-5]|2[0-4]\d|[0-1]?\d?\d)){3}|\[[0-9a-f:.]+\]|([a-z¡-￿0-9](?:[a-z¡-￿0-9-]{0,61}[a-z¡-￿0-9])?(?:\.(?!-)[a-z¡-￿0-9-]{1,63}(?<!-))*\.(?!-)(?:[a-z¡-￿-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\.?|localhost))(?::\d{2,5})?(?:[/?#][^\s]*)?\Z
+            decos_join_web_url?: string; // uri
         }
         export interface Fine {
             identificatienummer: string;
@@ -190,6 +194,8 @@ declare namespace Components {
             readonly date_modified?: string; // date-time
             violation?: ViolationEnum;
             feedback?: string;
+            readonly is_editable?: boolean;
+            readonly is_editable_until?: string; // date-time
         }
         export interface PatchedUser {
             id?: string; // uuid
@@ -239,15 +245,12 @@ declare namespace Components {
             voorletters: string;
             voornamen: string;
             voorvoegsel_geslachtsnaam?: string;
-            datum_begin_relatie_verblijadres: string; // date-time
+            datum_begin_relatie_verblijfadres: string; // date-time
         }
         export interface Residents {
             results: Resident[];
         }
         export type SoortVorderingEnum = "PBF" | "PBN" | "PRV" | "SOC";
-        export interface Test {
-            request_url: string;
-        }
         export interface TopVisit {
             case_identification: string;
             start_time: string;
@@ -322,7 +325,7 @@ declare namespace Paths {
     namespace CasesCreate {
         export type RequestBody = Components.Schemas.Case;
         namespace Responses {
-            export type $200 = Components.Schemas.Case;
+            export type $201 = Components.Schemas.Case;
         }
     }
     namespace CasesDebriefingsRetrieve {
@@ -383,6 +386,11 @@ declare namespace Paths {
             export type $200 = Components.Schemas.PaginatedCaseList;
         }
     }
+    namespace CasesMockCasesRetrieve {
+        namespace Responses {
+            export type $200 = Components.Schemas.Case;
+        }
+    }
     namespace CasesPartialUpdate {
         namespace Parameters {
             export type Id = number;
@@ -421,7 +429,7 @@ declare namespace Paths {
     namespace DebriefingsCreate {
         export type RequestBody = Components.Schemas.DebriefingCreate;
         namespace Responses {
-            export type $200 = Components.Schemas.DebriefingCreate;
+            export type $201 = Components.Schemas.DebriefingCreate;
         }
     }
     namespace DebriefingsDestroy {
@@ -471,7 +479,7 @@ declare namespace Paths {
             export type $200 = Components.Schemas.Debriefing;
         }
     }
-    namespace IsAuthenticatedRetrieve {
+    namespace IsAuthorizedRetrieve {
         namespace Responses {
             export interface $200 {
             }
@@ -486,7 +494,7 @@ declare namespace Paths {
     namespace PushCreate {
         export type RequestBody = Components.Schemas.Push;
         namespace Responses {
-            export type $200 = Components.Schemas.Push;
+            export type $201 = Components.Schemas.Push;
         }
     }
     namespace SchemaRetrieve {
@@ -504,17 +512,32 @@ declare namespace Paths {
             }
         }
     }
-    namespace TestingUrlTryBrkApiCreate {
-        export type RequestBody = Components.Schemas.Test;
+    namespace TestPermitsCheckmarksRetrieve {
+        namespace Parameters {
+            export type BagId = string;
+        }
+        export interface QueryParameters {
+            bag_id: Parameters.BagId;
+        }
         namespace Responses {
-            export interface $200 {
-            }
+            export type $200 = Components.Schemas.PermitCheckmark;
+        }
+    }
+    namespace TestPermitsDetailsList {
+        namespace Parameters {
+            export type BagId = string;
+        }
+        export interface QueryParameters {
+            bag_id: Parameters.BagId;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.DecosPermit[];
         }
     }
     namespace VisitsCreate {
         export type RequestBody = Components.Schemas.Visit;
         namespace Responses {
-            export type $200 = Components.Schemas.Visit;
+            export type $201 = Components.Schemas.Visit;
         }
     }
     namespace VisitsCreateVisitFromTopCreate {

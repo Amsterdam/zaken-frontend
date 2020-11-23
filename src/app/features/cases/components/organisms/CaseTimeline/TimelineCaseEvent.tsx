@@ -1,12 +1,13 @@
 import React from "react"
 import styled from "styled-components"
-import {  themeColor, themeSpacing, breakpoint } from "@datapunt/asc-ui"
+import {  themeColor, themeSpacing, breakpoint, Button } from "@datapunt/asc-ui"
 import { getDay }from "app/features/shared/components/atoms/DayDisplay/DayDisplay"
 import { displayDate, displayTime } from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
 import { Timeline } from "app/features/shared/components/molecules/Timeline"
 import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
 import to from "app/features/shared/routing/to"
 import shouldCreateDebriefing from "app/state/workflow/shouldCreateDebriefing"
+import { EditDocument } from "@datapunt/asc-assets"
 
 type Props = {
   caseEvents: Components.Schemas.CaseEvent[]
@@ -20,7 +21,8 @@ type DLProps = {
 type ButtonDebriefProps = {
   caseId:  number
   debriefId: number
-  button?: JSX.Element
+  disabled: boolean
+  editable_until: string
 }
 const Dl = styled.dl`
 max-width: 800px;
@@ -55,6 +57,7 @@ dd {
   }
 }
 `
+
 const UnstyledList = styled.ul`
   list-style: none;
   padding: 0;
@@ -63,7 +66,13 @@ const UnstyledList = styled.ul`
     padding: 0 0 ${ themeSpacing(1) } 0;
   }
 `
+const StyledButton = styled(Button)`
+  background-color: transparent;
 
+  &:disabled {
+    background-color: transparent;
+  }
+`
 const mapCaseType = (type: Components.Schemas.TypeEnum) => {
   switch (type) {
     case "DEBRIEFING": return "Debrief"
@@ -114,12 +123,23 @@ const mapArrayToUl = (list: any, doMapValue: boolean = false) =>
     )}
   </UnstyledList>
 
-const ButtonDebrief: React.FC<ButtonDebriefProps> = ({ caseId, debriefId, button }) =>
+const ButtonDebrief: React.FC<ButtonDebriefProps> = ({ caseId, debriefId, disabled = false, editable_until }) => {
+  const editableUntilText = `Wijzigen mogelijk tot ${ displayDate(editable_until) } ${ displayTime(editable_until) } uur`
+  const button = <StyledButton size={60} variant="blank" iconSize={32} icon={<EditDocument /> } disabled={disabled} title={editableUntilText} />
+
+  return (
     <ButtonWrap>
-      <ButtonLink to={ to("/cases/:caseId/debriefing/:id", { caseId: caseId , id: debriefId })}>
-      { button }
-      </ButtonLink>
+      { 
+      !disabled ?
+        <ButtonLink to={ to("/cases/:caseId/debriefing/:id", { caseId: caseId , id: debriefId })} >
+          <>{ button }</>
+        </ButtonLink>
+        :
+        <>{ button }</>
+      }
     </ButtonWrap>
+  )
+}
 
 const DefinitionList: React.FC<DLProps> = ({ thread, showDate }) => {
   const value = thread.event_values
@@ -236,7 +256,7 @@ const CaseEvent: React.FC<Props> = ({ caseEvents, button }) => {
           thread={ thread }
           showDate={false}
         />
-        { thread.type === "DEBRIEFING" && <ButtonDebrief caseId={ thread.case } debriefId={ thread.emitter_id } button={ button } /> }
+        { thread.type === "DEBRIEFING" && <ButtonDebrief caseId={ thread.case } debriefId={ thread.emitter_id } disabled={!thread.emitter_is_editable} editable_until={thread.emitter_is_editable_until} /> }
       </Timeline>
       :
       <>
@@ -245,7 +265,7 @@ const CaseEvent: React.FC<Props> = ({ caseEvents, button }) => {
           thread={ thread }
           showDate={true}
         />
-        { thread.type === "DEBRIEFING" && <ButtonDebrief caseId={ thread.case } debriefId={ thread.emitter_id } button={ button } /> }
+        { thread.type === "DEBRIEFING" && <ButtonDebrief caseId={ thread.case } debriefId={ thread.emitter_id } disabled={!thread.emitter_is_editable} editable_until={thread.emitter_is_editable_until}/> }
       </>
   )
   const currentEvent = caseEvents[0]

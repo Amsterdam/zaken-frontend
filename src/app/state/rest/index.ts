@@ -2,7 +2,7 @@ import qs from "qs"
 import slashSandwich from "slash-sandwich"
 
 import useApiRequest from "./hooks/useApiRequest"
-import { getHeaders, makeGatewayUrl, useErrorHandler } from "./hooks/utils/utils"
+import { makeGatewayUrl, useErrorHandler } from "./hooks/utils/utils"
 import { APIListResponse } from "./types/ApiListResponse"
 import { BAGAddressResponse } from "./types/BAGAddressResponse"
 import { BAGObjectResponse } from "./types/BAGObjectResponse"
@@ -14,6 +14,7 @@ export type ApiGroup =
   | "caseStates"
   | "dataPunt"
   | "permits"
+  | "auth"
 
 export type Options = {
   keepUsingInvalidCache?: boolean
@@ -25,6 +26,17 @@ export type Options = {
  * NOTE: For example "cases" and "cases/:id" share the same group config. Cache will be cleared for the whole group.
  */
 
+export const useIsAuthorized = (options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<any>({
+    ...options,
+    url: makeGatewayUrl("is-authorized"),
+    groupName: "auth",
+    handleError,
+    includeHeaders: true
+  })
+}
+
 export const useResidents = (bagId: Components.Schemas.Address["bag_id"], options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.Residents>({
@@ -32,7 +44,7 @@ export const useResidents = (bagId: Components.Schemas.Address["bag_id"], option
     url: makeGatewayUrl("addresses", bagId, "residents"),
     groupName: "addresses",
     handleError,
-    getHeaders
+    includeHeaders: true
   })
 }
 
@@ -44,7 +56,7 @@ export const useCases = (state_date?: string, options?: Options) => {
     url,
     groupName: "cases",
     handleError,
-    getHeaders
+    includeHeaders: true
   })
 }
 
@@ -55,7 +67,7 @@ export const useCase = (id: Components.Schemas.Case["id"], options?: Options) =>
     url: makeGatewayUrl("cases", id),
     groupName: "cases",
     handleError,
-    getHeaders
+    includeHeaders: true
   })
 }
 
@@ -66,7 +78,7 @@ export const useCaseFines = (id: Components.Schemas.Case["id"], options?: Option
     url: makeGatewayUrl("cases", id, "fines"),
     groupName: "cases",
     handleError,
-    getHeaders
+    includeHeaders: true
   })
 }
 
@@ -77,7 +89,7 @@ export const useCaseResidents = (id: Components.Schemas.Case["id"], options?: Op
     url: makeGatewayUrl("cases", id, "residents"),
     groupName: "cases",
     handleError,
-    getHeaders
+    includeHeaders: true
   })
 }
 
@@ -88,7 +100,7 @@ export const useDebriefings = (id?: number, options?: Options) => {
     url: makeGatewayUrl("debriefings", id),
     groupName: "cases",
     handleError,
-    getHeaders
+    includeHeaders: true
   })
 }
 
@@ -100,7 +112,7 @@ export const useCaseEvents = (caseId: Components.Schemas.Case["id"], options?: O
     url: makeGatewayUrl("cases", caseId, "events"),
     groupName: "cases",
     handleError,
-    getHeaders
+    includeHeaders: true
   })
 }
 
@@ -155,7 +167,7 @@ export const usePermitCheckmarks = (bagId: string) => {
     url: makeGatewayUrl("addresses", bagId, "permits", "checkmarks"),
     groupName: "permits",
     handleError,
-    getHeaders
+    includeHeaders: true
   })
 }
 
@@ -165,6 +177,6 @@ export const usePermitDetails = (bagId: string) => {
     url: makeGatewayUrl("addresses", bagId, "permits"),
     groupName: "permits",
     handleError,
-    getHeaders
+    includeHeaders: true
   })
 }

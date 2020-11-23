@@ -3,8 +3,6 @@ import { AxiosError } from "axios"
 import slashSandwich from "slash-sandwich"
 
 import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
-import { getToken } from "app/state/auth/tokenStore"
-
 
 /**
  * Default error handler:
@@ -19,14 +17,6 @@ export const useErrorHandler = () => {
       ),
     [addErrorFlashMessage]
   )
-}
-
-/**
- * Default headers:
- */
-export const getHeaders = () => {
-  const token = getToken()
-  return { Authorization: `Bearer ${ token }` }
 }
 
 /**

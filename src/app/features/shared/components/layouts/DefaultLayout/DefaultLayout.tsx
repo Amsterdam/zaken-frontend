@@ -5,6 +5,7 @@ import DefaultNavigation from "app/features/shared/components/molecules/navigati
 import MainWrapper from "app/features/shared/components/atoms/MainWrapper/MainWrapper"
 import to from "app/features/shared/routing/to"
 import FlashMessages from "app/features/shared/components/molecules/FlashMessages/FlashMessages"
+import UserInfo from "../../molecules/UserInfo/UserInfo"
 
 type Props = {
   showSearchButton?: boolean
@@ -39,6 +40,7 @@ const DefaultLayout: React.FC<Props> = ({ showSearchButton = true, children }) =
         navigation={<MenuWithSearchButtonWrap>
           <DefaultNavigation showSearchButton={showSearchButton} />
         </MenuWithSearchButtonWrap>}
+        links={<UserInfo />}
       />
     </Div>  
     <MainWrapper>
