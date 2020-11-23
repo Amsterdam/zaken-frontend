@@ -55,7 +55,8 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
         clearCache()
       }
 
-      await updateToken(30)
+      const isUpdated = await updateToken(30)
+      if (isUpdated) return
 
       const response = await axios.request<Schema>({
         headers: includeHeaders && token ? createAuthHeaders(token) : undefined,
