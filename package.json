@@ -73,7 +73,7 @@
   },
   "devDependencies": {
     "@types/dotenv-flow": "^3.1.0",
-    "@types/enzyme": "^3.10.7",
+    "@types/enzyme": "^3.10.8",
     "@types/enzyme-adapter-react-16": "^1.0.6",
     "cypress": "^5.4.0",
     "dotenv-flow": "^3.2.0",
