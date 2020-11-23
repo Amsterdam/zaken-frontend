@@ -44,7 +44,7 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
     isRequestPendingInQueue
   } = useContext(ApiContext)[groupName]
 
-  const { token } = useKeycloak()
+  const { token, updateToken } = useKeycloak()
 
   /**
    * Executes an API request
@@ -54,6 +54,8 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
       if (isMutateOptions(options) && !options.skipCacheClear) {
         clearCache()
       }
+
+      await updateToken(30)
 
       const response = await axios.request<Schema>({
         headers: includeHeaders && token ? createAuthHeaders(token) : undefined,
@@ -67,7 +69,7 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
       }
 
       return response
-    } catch(error) {
+    } catch (error) {
       if (error.response.status === 401) {
         navigate(to("/auth"))
       }
@@ -77,7 +79,7 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
         throw error
       }
     }
-  }, [includeHeaders, token, url, clearCache, setCacheItem, handleError])
+  }, [includeHeaders, token, updateToken, url, clearCache, setCacheItem, handleError])
 
   /**
    * Queues an API request
