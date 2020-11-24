@@ -16,13 +16,17 @@ const SearchBarWrap = styled.div`
 const isValidSearchString = (s: string) => s.length >= MIN_SEARCH_LENGTH
 
 const SearchWrapper: React.FC = () => {
-  const [searchString, setSearchString] = useState("")
+  const urlParams = new URLSearchParams(window.location.search)
+  console.log(urlParams.get("query"))
+  const [searchString, setSearchString] = useState(urlParams.get("query") ?? "")
   const delayedQuery = useCallback(debounce(setSearchString, DELAY), [setSearchString])
 
   const onChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const searchString = event.target.value.trim()
     isValidSearchString(searchString) && delayedQuery(searchString)
-  }, [delayedQuery])
+    urlParams.set("query", searchString)
+    window.history.pushState("", "", `?${ urlParams.toString() }`)
+  }, [delayedQuery, urlParams])
 
   return (
     <>
@@ -30,6 +34,7 @@ const SearchWrapper: React.FC = () => {
         <SearchBarWrap>
           <SearchBar
             placeholder="Zoek op postcode en huisnummer"
+            value={ searchString }
             onChange={ onChange }
           />
         </SearchBarWrap>
