@@ -13,7 +13,7 @@ const SearchBarWrap = styled.div`
   max-width: 500px;
 `
 
-const isValidSearchString = (s: string) => s !== undefined && s.length >= MIN_SEARCH_LENGTH
+const isValidSearchString = (s: string) => s.length >= MIN_SEARCH_LENGTH
 
 const SearchWrapper: React.FC = () => {
   const [searchString, setSearchString] = useState("")
