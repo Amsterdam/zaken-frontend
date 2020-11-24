@@ -1,15 +1,25 @@
+import React from "react"
 import nock from "nock"
 
 import { renderHook, act } from "@testing-library/react-hooks"
 import useApiRequest from "./useApiRequest"
 import ApiProvider from "../provider/ApiProvider"
+import KeycloakProvider from "app/state/auth/keycloak/KeycloakProvider"
 
 type Pet = {
   name: string
   type: string
 }
 
-xdescribe("useApiRequest", () => {
+const Wrapper: React.FC = ({ children }) => (
+    <KeycloakProvider>
+      <ApiProvider>
+        { children }
+      </ApiProvider>
+    </KeycloakProvider>
+  )
+
+describe("useApiRequest", () => {
   it("should perform a GET request on mount", async () => {
     const usePet = () => useApiRequest<Pet>({ url: "http://localhost/pet", groupName: "cases" })
 
@@ -18,13 +28,14 @@ xdescribe("useApiRequest", () => {
       .get("/pet")
       .reply(200, { name: "Fifi", type: "dog" })
 
-    const { result, waitForNextUpdate } = renderHook(usePet, { wrapper: ApiProvider })
+    const { result, waitForNextUpdate } = renderHook(usePet, { wrapper: Wrapper })
 
     // Busy... no results yet.
     expect(result.current.isBusy).toEqual(true)
     expect(result.current.data).toEqual(undefined)
 
     // Make API respond:
+    await act(() => waitForNextUpdate())
     await act(() => waitForNextUpdate())
 
     // not busy anymore... results are in!
@@ -47,7 +58,7 @@ xdescribe("useApiRequest", () => {
       second: usePet()
     })
 
-    const { result, waitForNextUpdate } = renderHook(useTwoHooks, { wrapper: ApiProvider })
+    const { result, waitForNextUpdate } = renderHook(useTwoHooks, { wrapper: Wrapper })
 
     // Busy...
     expect(result.current.first.isBusy).toEqual(true)
@@ -56,6 +67,7 @@ xdescribe("useApiRequest", () => {
     expect(result.current.first.data).toEqual(undefined)
     expect(result.current.second.data).toEqual(undefined)
 
+    await act(() => waitForNextUpdate())
     await act(() => waitForNextUpdate())
 
     // not busy anymore
@@ -97,7 +109,8 @@ xdescribe("useApiRequest", () => {
     prepareScope(scope)
 
     const onSuccess = jest.fn()
-    const { result, waitForNextUpdate } = renderHook(usePet, { wrapper: ApiProvider })
+    const { result, waitForNextUpdate } = renderHook(usePet, { wrapper: Wrapper })
+    await act(() => waitForNextUpdate())
     await act(() => waitForNextUpdate())
 
     // On mount, "Fifi" should be fetched
@@ -127,7 +140,8 @@ xdescribe("useApiRequest", () => {
       .get("/pet")
       .reply(500, { detail: "S.O.S." })
 
-    const { waitForNextUpdate } = renderHook(usePet, { wrapper: ApiProvider })
+    const { waitForNextUpdate } = renderHook(usePet, { wrapper: Wrapper })
+    await act(() => waitForNextUpdate())
     await act(() => waitForNextUpdate())
 
     expect(handleError).toHaveBeenCalledWith(expect.objectContaining({
