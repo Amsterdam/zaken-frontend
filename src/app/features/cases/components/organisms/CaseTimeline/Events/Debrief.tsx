@@ -31,14 +31,13 @@ const Debrief: React.FC<Props> = ({ caseEvents, isDone, isOpen }) => {
         <ButtonEditEvent target={ `/cases/${ thread.case }/debriefing/${ thread.emitter_id }` } disabled={!thread.emitter_is_editable} editable_until={thread.emitter_is_editable_until} />
       </Timeline>
       :
-      <>
+      <div key={ thread.id }>
         <DebriefData
-          key={ thread.id }
           thread={ thread }
           showDate={ true }
         />
         <ButtonEditEvent target={ `/cases/${ thread.case }/debriefing/${ thread.emitter_id }` } disabled={!thread.emitter_is_editable} editable_until={thread.emitter_is_editable_until} />
-      </>
+      </div >
   )
   const currentEvent = caseEvents[0]
   const counterString = caseEvents.length > 1 ? `(${ caseEvents.length })` : ""
@@ -50,6 +49,7 @@ const Debrief: React.FC<Props> = ({ caseEvents, isDone, isOpen }) => {
         title={ `${ mapCaseType(currentEvent.type) } ${ counterString } `}
         isDone={ isDone }
         isOpen={ isOpen }
+        key={ currentEvent.id }
       >
         { TimelineThread }
       </Timeline>

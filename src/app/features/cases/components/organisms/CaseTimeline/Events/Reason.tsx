@@ -29,14 +29,13 @@ const Reason: React.FC<Props> = ({ caseEvents, isOpen }) => {
         { thread.emitter_is_editable_until && <ButtonEditEvent target={ `/cases/${ thread.case }/case/${ thread.emitter_id }` } disabled={!thread.emitter_is_editable} editable_until={thread.emitter_is_editable_until} /> }
       </Timeline>
       :
-      <>
+      <div key={ thread.id }>
         <ReasonData
-          key={ thread.id }
           thread={ thread }
           showDate={true}
         />
         { thread.emitter_is_editable_until && <ButtonEditEvent target={ `/cases/${ thread.case }/case/${ thread.emitter_id }` } disabled={!thread.emitter_is_editable} editable_until={thread.emitter_is_editable_until} /> }
-      </>  
+      </div>  
   )
   const currentEvent = caseEvents[0]
   const counterString = caseEvents.length > 1 ? `(${ caseEvents.length })` : ""
