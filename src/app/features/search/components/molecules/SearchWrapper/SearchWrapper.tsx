@@ -1,10 +1,11 @@
-import React, { useState, useCallback } from "react"
+import React, { useCallback } from "react"
 import { SearchBar } from "@datapunt/asc-ui"
 import styled from "styled-components"
 import debounce from "lodash.debounce"
 
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import SearchResults from "app/features/search/components/molecules/SearchResults/SearchResults"
+import useURLState from "app/features/shared/hooks/useURLState/useURLState"
 
 const MIN_SEARCH_LENGTH = 3
 const DELAY = 750
@@ -17,16 +18,14 @@ const isValidSearchString = (s: string) => s.length >= MIN_SEARCH_LENGTH
 
 const SearchWrapper: React.FC = () => {
   const urlParams = new URLSearchParams(window.location.search)
-  console.log(urlParams.get("query"))
-  const [searchString, setSearchString] = useState(urlParams.get("query") ?? "")
+  const [searchString, setSearchString] = useURLState("query")
   const delayedQuery = useCallback(debounce(setSearchString, DELAY), [setSearchString])
 
   const onChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const searchString = event.target.value.trim()
-    isValidSearchString(searchString) && delayedQuery(searchString)
-    urlParams.set("query", searchString)
-    window.history.pushState("", "", `?${ urlParams.toString() }`)
-  }, [delayedQuery, urlParams])
+    setSearchString(searchString)
+    if (isValidSearchString(searchString)) delayedQuery(searchString)
+  }, [delayedQuery, setSearchString])
 
   return (
     <>
