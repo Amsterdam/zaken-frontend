@@ -28,7 +28,7 @@ const mapData = (data: SearchResult) => [
 ]
 
 const SearchResults: React.FC<Props> = ({ searchString }) => {
-  const { data, isBusy, execGet } = useBAGWithZipCode(searchString)
+  const { data, isBusy, execGet } = useBAGWithZipCode(searchString, { lazy: true })
 
   useEffect(() => {
     if (isValidSearchString(searchString) === false) return
