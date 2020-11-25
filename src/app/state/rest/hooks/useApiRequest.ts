@@ -44,7 +44,7 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
     isRequestPendingInQueue
   } = useContext(ApiContext)[groupName]
 
-  const { token, updateToken } = useKeycloak()
+  const { token, updateToken, logout } = useKeycloak()
 
   /**
    * Executes an API request
@@ -71,8 +71,9 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
 
       return response
     } catch (error) {
-      if (error?.response?.status === 403) {
-        navigate(to("/auth"))
+      switch (error?.response?.status) {
+        case 401: logout(); break
+        case 403: navigate(to("/auth")); break
       }
       if (handleError) {
         handleError(error)
@@ -80,7 +81,7 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
         throw error
       }
     }
-  }, [includeHeaders, token, updateToken, url, clearCache, setCacheItem, handleError])
+  }, [includeHeaders, token, updateToken, logout, url, clearCache, setCacheItem, handleError])
 
   /**
    * Queues an API request
