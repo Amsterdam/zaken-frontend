@@ -1,4 +1,4 @@
-import React, { useCallback } from "react"
+import React from "react"
 import { SearchBar } from "@datapunt/asc-ui"
 import styled from "styled-components"
 import debounce from "lodash.debounce"
@@ -15,12 +15,8 @@ const SearchBarWrap = styled.div`
 
 const SearchWrapper: React.FC = () => {
   const [searchString, setSearchString] = useURLState("query")
-  const debouncedSetSearchString = useCallback(debounce(setSearchString, DELAY), [setSearchString])
-
-  const onChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    debouncedSetSearchString(event.target.value.trim())
-  }, [debouncedSetSearchString])
-
+  const debouncedSetSearchString = debounce(setSearchString, DELAY)
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => debouncedSetSearchString(event.target.value.trim())
   const onClear = () => debouncedSetSearchString("")
 
   return (
