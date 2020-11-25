@@ -1,4 +1,4 @@
-import React, { useMemo } from "react"
+import React, { useEffect, useMemo } from "react"
 import { useBAGWithZipCode } from "app/state/rest"
 import Table from "app/features/shared/components/molecules/Table/Table"
 import OpenButton from "app/features/shared/components/atoms/OpenButton/OpenButton"
@@ -9,6 +9,9 @@ type SearchResult = Pick<BAGAddressResponse["results"][0], "adres" | "postcode" 
 type Props = {
   searchString: string
 }
+
+const MIN_SEARCH_LENGTH = 3
+const isValidSearchString = (s: string) => s.length >= MIN_SEARCH_LENGTH
 
 const columns = [
   { header:"Adres", minWidth: 100 },
@@ -25,7 +28,12 @@ const mapData = (data: SearchResult) => [
 ]
 
 const SearchResults: React.FC<Props> = ({ searchString }) => {
-  const { data, isBusy } = useBAGWithZipCode(searchString)
+  const { data, isBusy, execGet } = useBAGWithZipCode(searchString)
+
+  useEffect(() => {
+    if (isValidSearchString(searchString) === false) return
+    execGet()
+  }, [searchString, execGet])
 
   const mappedData = useMemo(() =>
     Array.isArray(data?.results) ?
@@ -34,13 +42,15 @@ const SearchResults: React.FC<Props> = ({ searchString }) => {
     [ data ]
   )
 
-  return (<Table
-    columns={columns}
-    data={mappedData}
-    loading={data === undefined || isBusy}
-    numLoadingRows={1}
-    hasFixedColumn={true}
-    noValuesPlaceholder={"Er zijn (nog) geen adressen gevonden"}
-  />)
+  return isValidSearchString(searchString) ?
+    <Table
+      columns={columns}
+      data={mappedData}
+      loading={data === undefined || isBusy}
+      numLoadingRows={ 1 }
+      hasFixedColumn={ true }
+      noValuesPlaceholder="Er zijn (nog) geen adressen gevonden"
+    /> :
+    null
 }
 export default SearchResults

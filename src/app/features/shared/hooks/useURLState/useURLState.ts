@@ -12,7 +12,9 @@ export default (key: string) => {
       urlParams.set(key, v)
     }
     const s = urlParams.toString()
-    window.history.pushState(urlParams, document.title, `${ s !== "" ? "?" : "" }${ s }`)
+    const queryString = s !== "" ? `?${ s }` : ""
+    const url = `${ window.location.pathname }${ queryString }`
+    window.history.pushState({}, "", url)
   }, [key, urlParams])
   return [value, set] as const
 }
