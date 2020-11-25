@@ -7,7 +7,7 @@ import { useModal } from "app/features/shared/components/molecules/Modal/hooks/u
 
 type Props = {
   infoTitle: string
-  infoText: string | JSX.Element
+  infoText: React.ReactNode
   onClick?: ComponentProps<typeof Button>["onClick"]
 }
 
