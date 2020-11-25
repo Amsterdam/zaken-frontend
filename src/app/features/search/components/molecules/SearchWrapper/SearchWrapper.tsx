@@ -1,28 +1,23 @@
-import React, { useState, useCallback } from "react"
+import React from "react"
 import { SearchBar } from "@datapunt/asc-ui"
 import styled from "styled-components"
 import debounce from "lodash.debounce"
+
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
-
 import SearchResults from "app/features/search/components/molecules/SearchResults/SearchResults"
+import useURLState from "app/features/shared/hooks/useURLState/useURLState"
 
-const MIN_SEARCH_LENGTH = 3
 const DELAY = 750
 
 const SearchBarWrap = styled.div`
   max-width: 500px;
 `
 
-const isValidSearchString = (s: string) => s !== undefined && s.length >= MIN_SEARCH_LENGTH
-
 const SearchWrapper: React.FC = () => {
-  const [searchString, setSearchString] = useState("")
-  const delayedQuery = useCallback(debounce( setSearchString, DELAY), [ setSearchString ])
-
-  const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    const searchString = event.target.value.trim()
-    isValidSearchString(searchString) && delayedQuery(searchString)
-  }, [ delayedQuery ])
+  const [searchString, setSearchString] = useURLState("query")
+  const debouncedSetSearchString = debounce(setSearchString, DELAY)
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => debouncedSetSearchString(event.target.value.trim())
+  const onClear = () => debouncedSetSearchString("")
 
   return (
     <>
@@ -30,15 +25,15 @@ const SearchWrapper: React.FC = () => {
         <SearchBarWrap>
           <SearchBar
             placeholder="Zoek op postcode en huisnummer"
-            onChange={handleChange}
+            value={ searchString }
+            onChange={ onChange }
+            onClear={ onClear }
           />
         </SearchBarWrap>
       </RowWithColumn>
-      { isValidSearchString(searchString) &&
-        <RowWithColumn>
-          <SearchResults searchString={ searchString } />
-        </RowWithColumn>
-      }
+      <RowWithColumn>
+        <SearchResults searchString={ searchString } />
+      </RowWithColumn>
     </>
   )
 }
