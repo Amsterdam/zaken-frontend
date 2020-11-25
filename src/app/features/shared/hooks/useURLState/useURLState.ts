@@ -1,5 +1,8 @@
 import { useState, useCallback } from "react"
 
+// TODO: Polyfill for URLSearchParams for IE11
+// LINK: https://caniuse.com/urlsearchparams
+
 export default (key: string) => {
   const urlParams = new URLSearchParams(window.location.search)
   const [value, setValue] = useState(urlParams.get(key) ?? "")
