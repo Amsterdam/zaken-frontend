@@ -6,6 +6,11 @@
 - Optionaly add a `initializedCallback` function
 - Use `useKeycloak` hook in your components
 
+## Local development
+- Run `zaken-backend` locally
+- Create an access token at http://localhost:8080/api/v1/swagger/#/. Endpoint POST `/api/v1/oidc-authenticate/` (you can use any string for `code`).
+- Add the token (`access` field) to `.env.development.local`. `REACT_APP_GATEWAY_TOKEN={token}`
+
 ## TODO
 - Look into SSI (Single Signon) support
 - IE11 bug
