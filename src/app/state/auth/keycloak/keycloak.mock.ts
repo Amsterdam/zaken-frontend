@@ -4,4 +4,3 @@ export default {
   logout: () => {},
   token: process.env.REACT_APP_GATEWAY_TOKEN ?? ""
 }
-console.log(process.env.REACT_APP_GATEWAY_TOKEN)
