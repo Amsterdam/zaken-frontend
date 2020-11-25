@@ -71,7 +71,7 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
 
       return response
     } catch (error) {
-      if (error?.response?.status === 401) {
+      if (error?.response?.status === 403) {
         navigate(to("/auth"))
       }
       if (handleError) {
