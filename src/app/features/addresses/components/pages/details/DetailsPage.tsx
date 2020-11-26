@@ -8,6 +8,7 @@ import DetailHeader from "app/features/shared/components/molecules/DetailHeader/
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
 import ObjectDetails from "app/features/addresses/components/atoms/ObjectDetails/ObjectDetails"
 import PermitOverview from "app/features/permits/components/molecules/PermitOverview/PermitOverview"
+import MockWrapper from "app/features/shared/components/molecules/MockWrapper/MockWrapper"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -26,7 +27,9 @@ const DetailPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
       </Row>
       <Row>
         <Column spanLarge={50}>
-          <PermitOverview bagId={ bagId! }></PermitOverview>
+          <MockWrapper>
+            <PermitOverview bagId={ bagId! }></PermitOverview>
+          </MockWrapper>
         </Column>
       </Row>
     </DefaultLayout>

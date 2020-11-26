@@ -6,6 +6,7 @@ import to from "app/features/shared/routing/to"
 import routesObject from "app/config/routes"
 import { usePermitDetails } from "app/state/rest"
 import { useResidents } from "app/state/rest/"
+import MockWrapper from "app/features/shared/components/molecules/MockWrapper/MockWrapper"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -45,6 +46,12 @@ const routes = [
   "/adres/:bagId/zaken/"
 ]
 
+const mockedRoutes = [
+  "/adres/:bagId/personen/",
+  "/adres/:bagId/vergunningen/",
+  "/adres/:bagId/zaken/"
+]
+
 const AddressMenu: React.FC<Props> = ({ bagId }) => {
   const { data: permitDetails } = usePermitDetails(bagId)
   // TODO: Do show Residents by BAG_id
@@ -57,10 +64,14 @@ const AddressMenu: React.FC<Props> = ({ bagId }) => {
         { routes.map((route, index) => {
             const page = routesObject[route]
             if (page?.icon === undefined || page?.title === undefined) return null
+            const navBlock = <NavBlock to={ to(route, { bagId }) } icon={ page.icon } header={ page.title } count={ counts[index] }/>
             return (
               <Li key={ route }>
                 <Div>
-                  <NavBlock to={ to(route, { bagId }) } icon={ page.icon } header={ page.title } count={ counts[index] }/>
+                  { mockedRoutes.includes(route) ?
+                    <MockWrapper>{ navBlock }</MockWrapper> :
+                    navBlock
+                  }
                 </Div>
               </Li>
             )
