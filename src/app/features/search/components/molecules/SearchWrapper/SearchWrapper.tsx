@@ -28,6 +28,7 @@ const SearchWrapper: React.FC = () => {
             value={ searchString }
             onChange={ onChange }
             onClear={ onClear }
+            autoFocus={ true }
           />
         </SearchBarWrap>
       </RowWithColumn>
