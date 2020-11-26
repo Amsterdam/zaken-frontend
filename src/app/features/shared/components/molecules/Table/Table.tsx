@@ -9,7 +9,7 @@ import TableCell from "./components/TableCell/TableCell"
 import TableHeading from "./components/TableHeading/TableHeading"
 import FixedTableCell from "./components/TableCell/FixedTableCell"
 
-type CellContent = string | number | JSX.Element | undefined | null
+type CellContent = React.ReactNode
 
 type Props = {
   numLoadingRows?: number
@@ -17,7 +17,7 @@ type Props = {
   hasFixedColumn?: boolean
   columns: Array<{header?: CellContent, minWidth: number}>
   data?: Array<Array<CellContent>>
-  noValuesPlaceholder: string | JSX.Element
+  noValuesPlaceholder: React.ReactNode
 }
 
 const Wrap = styled.div`

@@ -1,19 +1,24 @@
+import React from "react"
 import { FormPositioner } from "amsterdam-scaffold-form/package"
 import { Fields } from "app/features/shared/components/molecules/Form/ScaffoldFields"
 import { navigate } from "@reach/router"
+import InfoButton from "app/features/shared/components/molecules/InfoHeading/InfoButton"
+import { helpTextViolation } from "./HelpContent"
 
-export default (caseId: Components.Schemas.Case["id"], isEditing = false) => {
+const Scaffold = (caseId: Components.Schemas.Case["id"], isEditing = false) => {
   const fields = {
     violation: {
       type: "RadioFields",
       props: {
         isRequired: true,
-        label: "Is er sprake van een overtreding?",
+        label: "Wat is de uitkomst van het huisbezoek?",
+        extraLabel: <InfoButton infoTitle="Niet duidelijk of er een overtreding is? Twee opties:" infoText={ helpTextViolation}></InfoButton>,
         name: "violation",
         options: {
-          "YES": "Ja, overtreding",
-          "NO": "Nee, geen overtreding",
-          "ADDITIONAL_RESEARCH_REQUIRED": "Nader onderzoek nodig"
+          "YES": "Overtreding",
+          "NO": "Geen overtreding",
+          "ADDITIONAL_RESEARCH_REQUIRED": "Nader onderzoek nodig",
+          "ADDITIONAL_VISIT_REQUIRED": "Aanvullend huisbezoek nodig"
         }
       }
     },
@@ -49,3 +54,5 @@ export default (caseId: Components.Schemas.Case["id"], isEditing = false) => {
     ])
     .getScaffoldProps()
 }
+
+export default Scaffold

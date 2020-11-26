@@ -37,7 +37,7 @@ export const useFlashMessagesReducer = () => {
   )
 
   const addSuccessFlashMessage = useCallback(
-    (path: string, title: string, body?: string | JSX.Element) => dispatch({
+    (path: string, title: string, body?: React.ReactNode) => dispatch({
       path,
       type: "add",
       props: { title, children: body, variant: "success" }
@@ -46,7 +46,7 @@ export const useFlashMessagesReducer = () => {
   )
 
   const addErrorFlashMessage = useCallback(
-    (title: string, body?: string | JSX.Element) => dispatch({
+    (title: string, body?: React.ReactNode) => dispatch({
       path: "current",
       type: "add",
       props: { title, children: body, variant: "error" }
