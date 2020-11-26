@@ -8,7 +8,7 @@ type Props =
   Omit<React.ComponentProps<typeof Button>, "onClick"> &
   {
     modalTitle: ConfirmModalProps["title"]
-    modalContent: string | JSX.Element
+    modalContent: React.ReactNode
     onConfirm: ConfirmModalProps["onConfirm"]
   }
 

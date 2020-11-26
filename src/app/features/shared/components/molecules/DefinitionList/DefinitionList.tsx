@@ -5,12 +5,12 @@ import styled from "styled-components"
 import SmallSkeleton from "app/features/shared/components/atoms/Skeleton/SmallSkeleton"
 import ToggleCollapse from "app/features/shared/components/atoms/ToggleCollapse/ToggleCollapse"
 
-type Value = string | number | JSX.Element | undefined | null
+type Value = React.ReactNode
 type Props = {
   numLoadingRows?: number
   numInitialVisibleRows?: number
   isLoading?: boolean
-  title?: string | JSX.Element
+  title?: React.ReactNode
   values: Record<string, Value>
   headingSize?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6"
 }
@@ -56,7 +56,7 @@ const LoadingRows: React.FC<LoadingRowsProps> = ({ numRows }) => <>
   )) }
 </>
 
-const castValue = (value: Value): string|JSX.Element => {
+const castValue = (value: Value): React.ReactNode => {
   if (value == null) return "-"
   if (typeof value === "number") return `${ value }`
   return value
