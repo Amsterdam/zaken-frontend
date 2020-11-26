@@ -117,13 +117,7 @@ const drawVisit = (index: number, eventList?: Components.Schemas.CaseEvent[]) =>
     )
   return (
     <>
-      
       <Div>
-        {/* TODO
-        check next step only for last event?
-        when there are more seperate Visit-events on timeline check only the last one for "Access_granted"
-         */}
-        
         { shouldCreateDebriefing &&
           <NextStep title={ mapCaseType("DEBRIEFING") } />
         }
