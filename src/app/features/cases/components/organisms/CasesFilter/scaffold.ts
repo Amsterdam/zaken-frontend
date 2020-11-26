@@ -7,7 +7,7 @@ export const getDate = (backwards = 0) => {
   return [`${ d.getFullYear() }-${ d.getMonth() + 1 }-${ d.getDate() }`, displayDate(d)]
 }
 
-const createOptions = () =>
+export const createOptions = () =>
   [...Array(7)].reduce((acc, _, index) => {
     const [date, displayDate] = getDate(index)
     switch (index) {
