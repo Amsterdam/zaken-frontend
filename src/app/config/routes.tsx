@@ -3,6 +3,7 @@ import searchRoutes from "../features/search/routes"
 import addressesRoutes from "../features/addresses/routes"
 import casesRoutes from "../features/cases/routes"
 import caseVisitsRoutes from "../features/caseVisits/routes"
+import helpRoutes from "../features/help/routes"
 
 import routesToRouteConfig, { RouteConfigObject } from "./utils/routesToRouteConfig"
 
@@ -12,7 +13,8 @@ const routes = {
   ...addressesRoutes,
   ...searchRoutes,
   ...casesRoutes,
-  ...caseVisitsRoutes
+  ...caseVisitsRoutes,
+  ...helpRoutes
 }
 
 const routesObject = routesToRouteConfig(routes as RouteConfigObject, [{ title: "Home", path: "/" }])
