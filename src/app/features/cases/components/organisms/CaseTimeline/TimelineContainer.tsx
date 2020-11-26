@@ -17,6 +17,7 @@ type NextStepProp = {
 }
 
 type EventProps = {
+  index: number
   type?: string
   eventList?: Components.Schemas.CaseEvent[]
 }
@@ -60,8 +61,8 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
 
   const startNewEventList = (event: Components.Schemas.CaseEvent) => {
     previousType = currentType
-    allEventsInTime.push({ "type": currentType, "eventList":[event]})
     currentIndex++
+    allEventsInTime.push({ "index": currentIndex, "type": currentType, "eventList":[event]})
   }
 
   const addEventToList = (event: Components.Schemas.CaseEvent) => {
@@ -84,23 +85,23 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
         />
       </TimelineWrapper>
     
-  const drawDebrief = (eventList?: Components.Schemas.CaseEvent[]) => 
+  const drawDebrief = (index: number, eventList?: Components.Schemas.CaseEvent[]) => 
     eventList &&
       <TimelineWrapper key={eventList[0].id} >
         <Debrief
           caseEvents={ eventList }
-          isDone={ debriefIsDone }
-          isOpen={ !debriefIsDone || (debriefIsDone && (shouldCreateViolation || shouldCloseCase)) }
+          isDone={ index > 0 || (index === 0 && (shouldCreateViolation || shouldCloseCase || shouldCreateAdditionalVisit)) }
+          isOpen={ index === 0 }
         />
       </TimelineWrapper>
 
-const drawVisit = (eventList?: Components.Schemas.CaseEvent[]) => 
+const drawVisit = (index: number, eventList?: Components.Schemas.CaseEvent[]) => 
   eventList &&
     <TimelineWrapper key={eventList[0].id} >
       <Visit
         caseEvents={ eventList } 
-        isDone={ visitIsDone }
-        isOpen={ !visitIsDone || (visitIsDone && shouldCreateDebriefing) } 
+        isDone={ index > 0 || (visitIsDone && shouldCreateDebriefing) }
+        isOpen={ index === 0 } 
       />
     </TimelineWrapper>
       
@@ -109,10 +110,10 @@ const drawVisit = (eventList?: Components.Schemas.CaseEvent[]) =>
 
   const TimelineEvent = allEventsInTime.map(timelineEvent => 
      timelineEvent.type === "CASE" 
-      ? drawReason(timelineEvent.eventList)
+      ? drawReason( timelineEvent.eventList)
       : timelineEvent.type === "VISIT" 
-        ? drawVisit(timelineEvent.eventList)
-        : timelineEvent.type === "DEBRIEFING" && drawDebrief(timelineEvent.eventList)
+        ? drawVisit(timelineEvent.index, timelineEvent.eventList)
+        : timelineEvent.type === "DEBRIEFING" && drawDebrief(timelineEvent.index, timelineEvent.eventList)
     )
   return (
     <>

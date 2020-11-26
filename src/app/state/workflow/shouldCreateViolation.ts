@@ -1,11 +1,6 @@
-export default (caseEvents: Components.Schemas.CaseEvent[], checkShowAsNextStep?: boolean) =>
+export default (caseEvents: Components.Schemas.CaseEvent[]) =>
   
-  checkShowAsNextStep 
-    ? caseEvents
-      .filter(({ type }) => type === "DEBRIEFING")
-      .filter(({ event_values }) => event_values.violation === "YES").length > 0 
-      
-    : caseEvents
+  caseEvents
       .filter(({ type }) => type === "DEBRIEFING")
       .filter(({ event_values }) => event_values.violation === "YES").length > 0
       

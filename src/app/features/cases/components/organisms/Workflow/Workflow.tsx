@@ -15,14 +15,15 @@ const Workflow: React.FC<Props> = ({ caseId }) => {
     shouldCreateVisit,
     shouldCreateDebriefing,
     shouldCloseCase,
-    shouldCreateViolation
+    shouldCreateViolation,
+    shouldCreateAdditionalVisit
   } = workflow(data)
 
   return (
     <div>
       <Heading as="h2">Open taken</Heading>
       <Divider />
-      { shouldCreateVisit &&
+      { (shouldCreateVisit || shouldCreateAdditionalVisit) &&
         <ul>
           <li>Huisbezoek afleggen (door toezichthouders)</li>
         </ul>
