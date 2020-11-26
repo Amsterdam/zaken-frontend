@@ -16,6 +16,12 @@ type NextStepProp = {
   title: string
 }
 
+type EventProps = {
+  index: number
+  type?: string
+  eventList?: Components.Schemas.CaseEvent[]
+}
+
 const Div = styled.div`
 >div[role="button"] {
   position: relative;
@@ -46,20 +52,76 @@ const NextStep: React.FC<NextStepProp> = ({ title }) =>
 
 const TimelineContainer: React.FC<Props> = ({ caseId }) => {
   const { data } = useCaseEvents(caseId!)
-  const { shouldCreateDebriefing, shouldCreateVisit, shouldCreateViolation, shouldCloseCase } = workflow(data, true)
+  const { shouldCreateDebriefing, shouldCreateVisit, shouldCreateViolation, shouldCloseCase, shouldCreateAdditionalVisit } = workflow(data, true)
   const { visitIsDone, debriefIsDone } = workflow(data)
+  let currentIndex = -1
+  let currentType = ""
+  let previousType = ""
+  const allEventsInTime: EventProps[] = []
 
-  const debriefEvents = data?.filter(({ type })  => type === "DEBRIEFING")
-  const visitEvents = data?.filter(({ type })  => type === "VISIT")
-  const reasonEvents = data?.filter(({ type })  => type === "CASE")
+  const startNewEventList = (event: Components.Schemas.CaseEvent) => {
+    previousType = currentType
+    currentIndex++
+    allEventsInTime.push({ "index": currentIndex, "type": currentType, "eventList":[event]})
+  }
 
+  const addEventToList = (event: Components.Schemas.CaseEvent) => {
+    allEventsInTime[currentIndex].eventList?.push(event)
+  }
+
+  const doGroupEvents = (item: any) => {
+    currentType = item.type
+    currentType !== previousType ?
+      startNewEventList(item)
+    : 
+      addEventToList(item)
+  }
+
+  const drawReason = (eventList?: Components.Schemas.CaseEvent[]) => 
+    eventList &&
+      <TimelineWrapper key={eventList[0].id}>
+        <Reason
+          caseEvents={ eventList }
+        />
+      </TimelineWrapper>
+    
+  const drawDebrief = (index: number, eventList?: Components.Schemas.CaseEvent[]) => 
+    eventList &&
+      <TimelineWrapper key={eventList[0].id} >
+        <Debrief
+          caseEvents={ eventList }
+          isDone={ index > 0 || (index === 0 && (shouldCreateViolation || shouldCloseCase || shouldCreateAdditionalVisit)) }
+          isOpen={ index === 0 }
+        />
+      </TimelineWrapper>
+
+const drawVisit = (index: number, eventList?: Components.Schemas.CaseEvent[]) => 
+  eventList &&
+    <TimelineWrapper key={eventList[0].id} >
+      <Visit
+        caseEvents={ eventList } 
+        isDone={ index > 0 || (visitIsDone && shouldCreateDebriefing) }
+        isOpen={ index === 0 } 
+      />
+    </TimelineWrapper>
+      
+  // TODO order list by date
+  data?.forEach(doGroupEvents)
+
+  const TimelineEvent = allEventsInTime.map(timelineEvent => 
+     timelineEvent.type === "CASE" 
+      ? drawReason( timelineEvent.eventList)
+      : timelineEvent.type === "VISIT" 
+        ? drawVisit(timelineEvent.index, timelineEvent.eventList)
+        : timelineEvent.type === "DEBRIEFING" && drawDebrief(timelineEvent.index, timelineEvent.eventList)
+    )
   return (
     <>
       <Div>
         { shouldCreateDebriefing &&
           <NextStep title={ mapCaseType("DEBRIEFING") } />
         }
-        { shouldCreateVisit &&
+        { (shouldCreateVisit || shouldCreateAdditionalVisit) &&
           <NextStep title={ mapCaseType("VISIT") } />
         }
         { debriefIsDone && shouldCreateViolation &&
@@ -68,29 +130,7 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
         { debriefIsDone && shouldCloseCase &&
           <NextStep title="Zaak afsluiten" />
         }
-        { debriefEvents && debriefEvents.length > 0 &&
-            <TimelineWrapper >
-              <Debrief
-                caseEvents={ debriefEvents }
-                isDone={ debriefIsDone }
-                isOpen={ !debriefIsDone || (debriefIsDone && (shouldCreateViolation || shouldCloseCase)) }
-              />
-            </TimelineWrapper>
-          }
-          { visitEvents && visitEvents.length > 0 &&
-            <TimelineWrapper >
-              <Visit
-                caseEvents={ visitEvents } 
-                isDone={ visitIsDone }
-                isOpen={ !visitIsDone || (visitIsDone && shouldCreateDebriefing) } />
-            </TimelineWrapper>
-          }
-          { reasonEvents && reasonEvents.length > 0 &&
-            <TimelineWrapper >
-              <Reason
-                caseEvents={ reasonEvents } />
-            </TimelineWrapper>
-          }
+        { TimelineEvent }
       </Div>
       { data?.length === 0 &&
         <p>Geen tijdlijn evenementen beschikbaar</p>
