@@ -51,7 +51,7 @@ const NextStep: React.FC<NextStepProp> = ({ title }) =>
 
 const TimelineContainer: React.FC<Props> = ({ caseId }) => {
   const { data } = useCaseEvents(caseId!)
-  const { shouldCreateDebriefing, shouldCreateVisit, shouldCreateViolation, shouldCloseCase } = workflow(data, true)
+  const { shouldCreateDebriefing, shouldCreateVisit, shouldCreateViolation, shouldCloseCase, shouldCreateAdditionalVisit } = workflow(data, true)
   const { visitIsDone, debriefIsDone } = workflow(data)
   let currentIndex = -1
   let currentType = ""
@@ -126,7 +126,7 @@ const drawVisit = (eventList?: Components.Schemas.CaseEvent[]) =>
         { shouldCreateDebriefing &&
           <NextStep title={ mapCaseType("DEBRIEFING") } />
         }
-        { shouldCreateVisit &&
+        { (shouldCreateVisit || shouldCreateAdditionalVisit) &&
           <NextStep title={ mapCaseType("VISIT") } />
         }
         { debriefIsDone && shouldCreateViolation &&
