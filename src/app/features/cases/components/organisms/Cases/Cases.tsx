@@ -8,7 +8,11 @@ import { useCases } from "app/state/rest"
 import useURLState from "app/features/shared/hooks/useURLState/useURLState"
 
 const Cases: React.FC = () => {
-  const [date, setDate] = useURLState("date", getDate()[0], Object.keys(createOptions()))
+  const parse = (value: string | null) => {
+    const options = Object.keys(createOptions())
+    return value !== null && options.includes(value) ? value : getDate()[0]
+  }
+  const [date, setDate] = useURLState("date", parse)
   const { data, isBusy, execGet } = useCases(date)
 
   useEffect(() => {
