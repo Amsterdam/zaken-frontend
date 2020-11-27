@@ -4,7 +4,7 @@ import styled from "styled-components"
 import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
 import to from "app/features/shared/routing/to"
 import useKeycloak from "app/state/auth/keycloak/useKeycloak"
-import { Search } from "@datapunt/asc-assets"
+import { Search, Handicap } from "@datapunt/asc-assets"
 import MenuItems from "app/features/shared/components/molecules/navigation/MenuItems"
 import UserInfo from "../UserInfo/UserInfo"
 
@@ -12,7 +12,7 @@ type Props = {
   showSearchButton: boolean
 }
 
-const SearchButton = styled(Button)`
+const IconButton = styled(Button)`
   background-color: transparent;
 `
 
@@ -26,13 +26,13 @@ const ResponsiveMenuInline = styled(MenuInline)`
   }
 `
 const ResponsiveMenuToggle = styled(MenuToggle)`
-display: block;
-a > span {
   display: block;
-}
-@media screen and ${ breakpoint("min-width", "laptopM") } {
-  display: none;
-}
+  a > span {
+    display: block;
+  }
+  @media screen and ${ breakpoint("min-width", "laptopM") } {
+    display: none;
+  }
 `
 
 const DefaultNavigation: React.FC<Props> = ({ showSearchButton }) => {
@@ -45,9 +45,12 @@ const DefaultNavigation: React.FC<Props> = ({ showSearchButton }) => {
       <ResponsiveMenuInline>
         <MenuItems />
       </ResponsiveMenuInline>
+      <ButtonLink to={to("/hulp")}>
+        <IconButton size={50} variant="blank" iconSize={20} icon={<Handicap />} />
+      </ButtonLink>
       { showSearchButton &&
         <ButtonLink to={to("/zoeken")}>
-          <SearchButton size={50} variant="blank" iconSize={20} icon={<Search />} />
+          <IconButton size={50} variant="blank" iconSize={20} icon={<Search />} />
         </ButtonLink>
       }
       <ResponsiveMenuToggle align="right">
