@@ -10,7 +10,7 @@ export const helpTextViolation =
     <li>
       <b>Nader onderzoek nodig</b>
       <Ul>
-        <li>Iets uitzoeken wat niet op de locatie zelf is. Bijv. advies van de teamleider of jurist.</li>
+        <li>Nader onderzoek nodig wat niet op de locatie zelf is. Bijv. advies van de teamleider of jurist.</li>
         <li>Verwerk de uitkomst vervolgens in een nieuwe debriefnotitie.</li>
       </Ul>
     </li>
