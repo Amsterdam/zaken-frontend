@@ -12,7 +12,7 @@ type Props = {
   showSearchButton: boolean
 }
 
-const SearchButton = styled(Button)`
+const IconButton = styled(Button)`
   background-color: transparent;
 `
 
@@ -26,13 +26,13 @@ const ResponsiveMenuInline = styled(MenuInline)`
   }
 `
 const ResponsiveMenuToggle = styled(MenuToggle)`
-display: block;
-a > span {
   display: block;
-}
-@media screen and ${ breakpoint("min-width", "laptopM") } {
-  display: none;
-}
+  a > span {
+    display: block;
+  }
+  @media screen and ${ breakpoint("min-width", "laptopM") } {
+    display: none;
+  }
 `
 
 const DefaultNavigation: React.FC<Props> = ({ showSearchButton }) => {
@@ -46,11 +46,11 @@ const DefaultNavigation: React.FC<Props> = ({ showSearchButton }) => {
         <MenuItems />
       </ResponsiveMenuInline>
       <ButtonLink to={to("/hulp")}>
-        <SearchButton size={50} variant="blank" iconSize={20} icon={<Handicap />} />
+        <IconButton size={50} variant="blank" iconSize={20} icon={<Handicap />} />
       </ButtonLink>
       { showSearchButton &&
         <ButtonLink to={to("/zoeken")}>
-          <SearchButton size={50} variant="blank" iconSize={20} icon={<Search />} />
+          <IconButton size={50} variant="blank" iconSize={20} icon={<Search />} />
         </ButtonLink>
       }
       <ResponsiveMenuToggle align="right">
