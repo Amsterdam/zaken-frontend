@@ -69,7 +69,7 @@ const AddressMenu: React.FC<Props> = ({ bagId }) => {
               <Li key={ route }>
                 <Div>
                   { mockedRoutes.includes(route) ?
-                    <MockWrapper>{ navBlock }</MockWrapper> :
+                    <MockWrapper hasPadding={ false }>{ navBlock }</MockWrapper> :
                     navBlock
                   }
                 </Div>
