@@ -2,11 +2,13 @@ import React from "react"
 import { Heading } from "@datapunt/asc-ui"
 
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/"
+import EmailLink from "./EmailLink"
+import PhoneLink from "./PhoneLink"
 
 const EMPLOYEES = [
-  { name: "E. Mployee 1", phone: "06-12345678" },
-  { name: "E. Mployee 2", phone: "06-23456789" },
-  { name: "E. Mployee 3", phone: "06-34567890", email: "test@example.com" }
+  { name: "E. Mployee", phoneNumber: "06-12345678" },
+  { name: "E.M. Ployee", phoneNumber: "06-23456789" },
+  { name: "E.M.P Loyee", phoneNumber: "06-34567890", email: "test@example.com" }
 ]
 
 const HelpContent: React.FC = () => (
@@ -18,8 +20,8 @@ const HelpContent: React.FC = () => (
       Werkt het zaaksysteeem dan nog steeds niet, neem dan contact op met:
       </p>
       <ul>
-        <li>Tijdens kantooruren ontwikkelteam Zaaksysteem, { EMPLOYEES[0].name } { EMPLOYEES[0].phone }</li>
-        <li>Buiten kantoortijden Datapunt, { EMPLOYEES[1].name } { EMPLOYEES[1].phone }</li>
+        <li>Tijdens kantooruren ontwikkelteam Zaaksysteem, { EMPLOYEES[0].name } <PhoneLink phoneNumber={ EMPLOYEES[0].phoneNumber } /></li>
+        <li>Buiten kantoortijden Datapunt, { EMPLOYEES[1].name } <PhoneLink phoneNumber={ EMPLOYEES[1].phoneNumber } /></li>
       </ul>
     </RowWithColumn>
     <RowWithColumn>
@@ -28,8 +30,8 @@ const HelpContent: React.FC = () => (
       Ben je nieuw met het systeem, loop je ergens tegen aan of wil je gewoon graag persoonlijke uitleg over het zaaksysteem? Neem contact op met { EMPLOYEES[2].name }
       </p>
       <ul>
-        <li>Telefonisch: te bereiken tijdens kantooruren op ma, di, wo en do op { EMPLOYEES[2].phone }</li>
-        <li>Per e-mail: { EMPLOYEES[2].email }</li>
+        <li>Telefonisch: te bereiken tijdens kantooruren op ma, di, wo en do op <PhoneLink phoneNumber={ EMPLOYEES[2].phoneNumber } /></li>
+        <li>Per e-mail: <EmailLink email={ EMPLOYEES[2].email! } /></li>
       </ul>
       <p>Ook voor goede ideeën en suggesties <span role="img">🙂</span></p>
     </RowWithColumn>
