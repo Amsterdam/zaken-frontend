@@ -31,7 +31,7 @@ const HelpContent: React.FC = () => (
         <li>Telefonisch: te bereiken tijdens kantooruren op ma, di, wo en do op { EMPLOYEES[2].phone }</li>
         <li>Per e-mail: { EMPLOYEES[2].email }</li>
       </ul>
-      <p>Ook voor goede ideeën en suggesties 🙂</p>
+      <p>Ook voor goede ideeën en suggesties <span role="img">🙂</span></p>
     </RowWithColumn>
   </>
 )
