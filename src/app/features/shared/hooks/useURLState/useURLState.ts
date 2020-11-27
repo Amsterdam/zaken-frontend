@@ -3,13 +3,15 @@ import { useState, useCallback } from "react"
 // TODO: Polyfill for URLSearchParams for IE11
 // LINK: https://caniuse.com/urlsearchparams
 
-export default (key: string, defaultValue = "", options?: string[]) => {
+const defaultParse = (value: string | null) => value ?? ""
+
+export default (key: string, parse: ((value: string | null) => string) = defaultParse) => {
   const urlParams = new URLSearchParams(window.location.search)
-  const p = (urlParams.get(key) ?? defaultValue).trim()
-  const param = options !== undefined && !options.includes(p) ? defaultValue : p
+  const param = parse(urlParams.get(key))
   const [value, setValue] = useState(param)
+  const stableParse = useCallback(parse, [])
   const set = useCallback((value: string) => {
-    const v = value.trim()
+    const v = stableParse(value)
     setValue(v)
     if (v === "") {
       urlParams.delete(key)
@@ -20,6 +22,6 @@ export default (key: string, defaultValue = "", options?: string[]) => {
     const queryString = s !== "" ? `?${ s }` : ""
     const url = `${ window.location.pathname }${ queryString }`
     window.history.pushState({}, "", url)
-  }, [key, urlParams])
+  }, [key, stableParse, urlParams])
   return [value, set] as const
 }
