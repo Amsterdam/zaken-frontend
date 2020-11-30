@@ -22,7 +22,7 @@
     "@types/styled-components": "^5.1.4",
     "amsterdam-react-final-form": "^0.1.99",
     "amsterdam-scaffold-form": "^0.1.29",
-    "axios": "^0.20.0",
+    "axios": "^0.21.0",
     "env-cmd": "^10.1.0",
     "final-form": "^4.20.1",
     "final-form-arrays": "^3.0.2",
