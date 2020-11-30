@@ -12,7 +12,7 @@ type Props = {
   caseId: Components.Schemas.Case["id"]
 }
 
-const workflowDebrief = (caseId: number) => [
+const workflowDebrief = (caseId: Components.Schemas.Case["id"]) => [
   [ <Icon size={ 20 }><EditDocument /></Icon>, "Verwerken Debrief", "ProjectHandhaver", "-", "-",
     <ButtonLink to={ to("/cases/:caseId/debriefing", { caseId })}>
       <Button variant="primary" as="span">Debrief verwerken</Button>
