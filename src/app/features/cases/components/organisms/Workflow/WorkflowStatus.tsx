@@ -12,7 +12,7 @@ type Props = {
   showBWVMessage?: boolean
 }
 
-const NewStyledTable = styled(Table)`
+const StyledTable = styled(Table)`
   line-height: ${ themeSpacing(12) };
   margin-bottom: ${ themeSpacing(5) };
   th {
@@ -25,7 +25,7 @@ const StyledHeading = styled(Heading)`
   margin-bottom: ${ themeSpacing(5) };
 `
 
-const Cap = styled.span`
+const UpperCase = styled.span`
   text-transform: uppercase;
 `
 
@@ -40,12 +40,11 @@ const columns = [
 
 const WorkflowStatus: React.FC<Props> = ({ status, data, showBWVMessage }) => 
   <>
-    <StyledHeading as="h2" >Huidige status:<Cap> - { status } -</Cap></StyledHeading>
-    <NewStyledTable
+    <StyledHeading as="h2" >Huidige status:<UpperCase> - { status } -</UpperCase></StyledHeading>
+    <StyledTable
       columns={columns}
       data={ data }
       noValuesPlaceholder=""
-      className="haai"
     />
     { showBWVMessage && <small>Het zaaksysteem geeft voor nu alleen een weergave van de taken. De uitvoering/verwerking vindt dus gewoon nog plaats in BWV.</small>}
   </>
