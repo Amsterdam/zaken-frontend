@@ -1,13 +1,39 @@
 import React from "react"
-import { Divider, Heading } from "@datapunt/asc-ui"
+import { Button, Icon } from "@datapunt/asc-ui"
 
-import CreateDebriefingLink from "app/features/cases/components/organisms/CreateDebriefingLink/CreateDebriefingLink"
 import { useCaseEvents } from "app/state/rest"
 import workflow from "app/state/workflow/workflow"
+import { EditDocument } from "@datapunt/asc-assets"
+import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
+import to from "app/features/shared/routing/to"
+import WorkflowStatus from "./WorkflowStatus"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
 }
+
+const workflowDebrief = (caseId: Components.Schemas.Case["id"]) => [
+  [ <Icon size={ 20 }><EditDocument /></Icon>, "Verwerken Debrief", "ProjectHandhaver", "-", "-",
+    <ButtonLink to={ to("/cases/:caseId/debriefing", { caseId })}>
+      <Button variant="primary" as="span">Debrief verwerken</Button>
+    </ButtonLink>
+  ]
+]
+
+const workflowVisit = [
+  [ <Icon size={ 20 }><EditDocument /></Icon>, "Huisbezoek afleggen", "Toezichthouders", "-", "-", "" ]
+]
+
+const workflowViolation = [
+  [ <Icon size={ 20 }><EditDocument /></Icon>, "Opstellen beeldverslag", "Toezichthouder", "-", "-", "" ],
+  [ <Icon size={ 20 }><EditDocument /></Icon>, "Opstellen rapport van bevindingen", "Toezichthouder", "-", "-", "" ],
+  [ <Icon size={ 20 }><EditDocument /></Icon>, "Opstellen aanschrijving", "Projecthandhaver", "-", "-", "" ]
+]
+
+const workflowCloseCase = [
+  [ <Icon size={ 20 }><EditDocument /></Icon>, "Opstellen buitendienst rapport", "Toezichthouder", "-", "-", "" ],
+  [ <Icon size={ 20 }><EditDocument /></Icon>, "Afsluiten zaak", "Projectmederker", "-", "-", "" ]
+]
 
 const Workflow: React.FC<Props> = ({ caseId }) => {
   const { data } = useCaseEvents(caseId)
@@ -21,34 +47,17 @@ const Workflow: React.FC<Props> = ({ caseId }) => {
 
   return (
     <div>
-      <Heading as="h2">Open taken</Heading>
-      <Divider />
       { (shouldCreateVisit || shouldCreateAdditionalVisit) &&
-        <ul>
-          <li>Huisbezoek afleggen (door toezichthouders)</li>
-        </ul>
+        <WorkflowStatus status="Huisbezoek" data={workflowVisit} />
       }
       { shouldCreateDebriefing &&
-        <CreateDebriefingLink id={ caseId } />
+        <WorkflowStatus status="Debrief" data={workflowDebrief(caseId)} />
       }
       { shouldCloseCase &&
-        <>
-        <ul>
-          <li>Opstellen buitendienst rapport (door toezichthouder)</li>
-          <li>Afsluiten zaak (door projectmedewerker)</li>
-        </ul>
-        <small>Het zaaksysteem geeft voor nu alleen een weergave van de taken. De uitvoering/verwerking vindt dus gewoon nog plaats in BWV.</small>
-      </>
+        <WorkflowStatus status="Zaak afsluiten" data={workflowCloseCase} showBWVMessage={true} />
       }
       { shouldCreateViolation &&
-        <>
-          <ul>
-            <li>Opstellen beeldverslag (door toezichthouder)</li>
-            <li>Opstellen rapport van bevindingen (door toezichthouder)</li>
-            <li>Opstellen aanschrijving (door projecthandhaver)</li>
-          </ul>
-          <small>Het zaaksysteem geeft voor nu alleen een weergave van de taken. De uitvoering/verwerking vindt dus gewoon nog plaats in BWV.</small>
-        </>
+        <WorkflowStatus status="Overtreding" data={workflowViolation} showBWVMessage={true} />
       }
     </div>
   )
