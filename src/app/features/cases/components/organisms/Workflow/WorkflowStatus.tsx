@@ -13,11 +13,16 @@ type Props = {
 }
 
 const StyledTable = styled(Table)`
-  line-height: ${ themeSpacing(12) };
   margin-bottom: ${ themeSpacing(5) };
   th {
     color: ${ themeColor("tint", "level4") };
-    border-color: ${ themeColor("tint", "level4") };
+  }
+    td { line-height: ${ themeSpacing(12) };
+    padding: ${ themeSpacing(1) } ${ themeSpacing(3) };
+    * {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
   }
 `
 
@@ -30,12 +35,11 @@ const UpperCase = styled.span`
 `
 
 const columns = [
-  { minWidth: 50 },
   { header: "Actuele taken", minWidth: 100 },
   { header: "Uitvoerder", minWidth: 100 },
   { header: "Einddatum", minWidth: 100 },
   { header: "Looptijd", minWidth: 100 },
-  { header: "Actie", minWidth: 140 }
+  { header: "Verwerking taak", minWidth: 140 }
 ]
 
 const WorkflowStatus: React.FC<Props> = ({ status, data, showBWVMessage }) => 

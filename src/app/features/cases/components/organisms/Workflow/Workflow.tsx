@@ -1,9 +1,8 @@
 import React from "react"
-import { Button, Icon } from "@datapunt/asc-ui"
+import { Button, Checkbox, Label } from "@datapunt/asc-ui"
 
 import { useCaseEvents } from "app/state/rest"
 import workflow from "app/state/workflow/workflow"
-import { EditDocument } from "@datapunt/asc-assets"
 import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
 import to from "app/features/shared/routing/to"
 import WorkflowStatus from "./WorkflowStatus"
@@ -13,7 +12,7 @@ type Props = {
 }
 
 const workflowDebrief = (caseId: Components.Schemas.Case["id"]) => [
-  [ <Icon size={ 20 }><EditDocument /></Icon>, "Verwerken Debrief", "ProjectHandhaver", "-", "-",
+  [ "Verwerken Debrief", "ProjectHandhaver", "-", "-",
     <ButtonLink to={ to("/cases/:caseId/debriefing", { caseId })}>
       <Button variant="primary" as="span">Debrief verwerken</Button>
     </ButtonLink>
@@ -21,18 +20,22 @@ const workflowDebrief = (caseId: Components.Schemas.Case["id"]) => [
 ]
 
 const workflowVisit = [
-  [ <Icon size={ 20 }><EditDocument /></Icon>, "Huisbezoek afleggen", "Toezichthouders", "-", "-", "" ]
+  [ "Huisbezoek afleggen", "Toezichthouders", "-", "-",
+    <Label htmlFor="cb_open" label="Open" disabled >
+      <Checkbox id="cb_open" />
+    </Label>
+  ]
 ]
 
 const workflowViolation = [
-  [ <Icon size={ 20 }><EditDocument /></Icon>, "Opstellen beeldverslag", "Toezichthouder", "-", "-", "" ],
-  [ <Icon size={ 20 }><EditDocument /></Icon>, "Opstellen rapport van bevindingen", "Toezichthouder", "-", "-", "" ],
-  [ <Icon size={ 20 }><EditDocument /></Icon>, "Opstellen aanschrijving", "Projecthandhaver", "-", "-", "" ]
+  [ "Opstellen beeldverslag", "Toezichthouder", "-", "-", "-" ],
+  [ "Opstellen rapport van bevindingen", "Toezichthouder", "-", "-", "-" ],
+  [ "Opstellen aanschrijving", "Projecthandhaver", "-", "-", "-" ]
 ]
 
 const workflowCloseCase = [
-  [ <Icon size={ 20 }><EditDocument /></Icon>, "Opstellen buitendienst rapport", "Toezichthouder", "-", "-", "" ],
-  [ <Icon size={ 20 }><EditDocument /></Icon>, "Afsluiten zaak", "Projectmederker", "-", "-", "" ]
+  [ "Opstellen buitendienst rapport", "Toezichthouder", "-", "-", "-" ],
+  [ "Afsluiten zaak", "Projectmederker", "-", "-", "-" ]
 ]
 
 const Workflow: React.FC<Props> = ({ caseId }) => {

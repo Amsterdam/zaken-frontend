@@ -39,14 +39,8 @@ const StyledTable = styled.table`
 `
 
 const Row = styled.tr`
-  &:nth-child(odd) td {
-    background-color: ${ themeColor("tint", "level1") };     
-  }
-  &:nth-child(even) td {
-    background-color: ${ themeColor("tint", "level2") };     
-  }
-  &:hover td {
-    background-color: ${ themeColor("tint", "level3") };
+  td{
+    border-bottom: 1px solid ${ themeColor("tint", "level3") };
   }
 `
 
