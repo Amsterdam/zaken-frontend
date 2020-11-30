@@ -1,5 +1,5 @@
 import React from "react"
-import { MenuInline, Button, MenuToggle, Hidden, breakpoint } from "@datapunt/asc-ui"
+import { MenuInline, Button, MenuToggle, Hidden } from "@datapunt/asc-ui"
 import styled from "styled-components"
 import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
 import to from "app/features/shared/routing/to"
@@ -16,25 +16,6 @@ const IconButton = styled(Button)`
   background-color: transparent;
 `
 
-const ResponsiveMenuInline = styled(MenuInline)`
-  display: none;
-  @media screen and ${ breakpoint("min-width", "laptopM") } {
-    display: flex;
-    a {
-      height: 100%;
-    }
-  }
-`
-const ResponsiveMenuToggle = styled(MenuToggle)`
-  display: block;
-  a > span {
-    display: block;
-  }
-  @media screen and ${ breakpoint("min-width", "laptopM") } {
-    display: none;
-  }
-`
-
 const DefaultNavigation: React.FC<Props> = ({ showSearchButton }) => {
   const { token } = useKeycloak()
 
@@ -42,9 +23,11 @@ const DefaultNavigation: React.FC<Props> = ({ showSearchButton }) => {
 
   return (
     <>
-      <ResponsiveMenuInline>
-        <MenuItems />
-      </ResponsiveMenuInline>
+      <Hidden maxBreakpoint="laptopM">
+        <MenuInline>
+          <MenuItems />
+        </MenuInline>
+      </Hidden>
       <div>
         <Hidden maxBreakpoint="laptopM">
           <ButtonLink to={to("/hulp")}>
@@ -57,13 +40,14 @@ const DefaultNavigation: React.FC<Props> = ({ showSearchButton }) => {
           </ButtonLink>
         }
       </div>
-      <ResponsiveMenuToggle align="right">
-        <MenuItems />
-        <UserInfo showAsListItem={true} />
-      </ResponsiveMenuToggle>
+      <Hidden minBreakpoint="laptopM">
+        <MenuToggle align="right">
+          <MenuItems />
+          <UserInfo showAsListItem={true} />
+        </MenuToggle>
+      </Hidden>
     </>
   )
 }
-
 
 export default DefaultNavigation
