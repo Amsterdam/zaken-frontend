@@ -16,7 +16,6 @@ const StyledTable = styled(Table)`
   margin-bottom: ${ themeSpacing(5) };
   th {
     color: ${ themeColor("tint", "level4") };
-    border-color: ${ themeColor("tint", "level4") };
   }
     td { line-height: ${ themeSpacing(12) };
     padding: ${ themeSpacing(1) } ${ themeSpacing(3) };

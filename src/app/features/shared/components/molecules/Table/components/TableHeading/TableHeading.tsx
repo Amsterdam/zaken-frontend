@@ -8,7 +8,7 @@ type Props = {
 
 const TableHeading = styled.th<Props>`     
   text-align: left;
-  border-bottom: 1px solid ${ themeColor("tint", "level5") };
+  border-bottom: 1px solid ${ themeColor("tint", "level4") };
   padding: ${ themeSpacing(2) } ${ themeSpacing(3) };
     
   min-width: ${ props => props.minWidth ? `${ props.minWidth }px` : "auto" };  
