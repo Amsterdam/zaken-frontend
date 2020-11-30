@@ -34,7 +34,7 @@ const HorizontalScrollContainer = styled.div<HorizontalScrollContainerProps>`
 
 const StyledTable = styled.table`  
   border-spacing: 0px;
-  width: 100%;    
+  width: 100%; 
 `
 
 const Row = styled.tr`
