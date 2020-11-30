@@ -17,17 +17,13 @@ const Div = styled.div`
 `
 const MenuWithSearchButtonWrap = styled.div`
   display: flex;
-  >ul {
-    width: calc(100% - 70px);
-  }
+  justify-content: space-between;
 
   @media screen and ${ breakpoint("min-width", "laptopM") } {
     margin-right: auto;
     width: 100%;
-
   }
 `
-
 
 const DefaultLayout: React.FC<Props> = ({ showSearchButton = true, children }) => (
   <>
@@ -42,7 +38,7 @@ const DefaultLayout: React.FC<Props> = ({ showSearchButton = true, children }) =
         </MenuWithSearchButtonWrap>}
         links={<UserInfo />}
       />
-    </Div>  
+    </Div>
     <MainWrapper>
       <FlashMessages />
       { children }
