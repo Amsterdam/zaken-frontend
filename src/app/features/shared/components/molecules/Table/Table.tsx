@@ -18,6 +18,7 @@ type Props = {
   columns: Array<{header?: CellContent, minWidth: number}>
   data?: Array<Array<CellContent>>
   noValuesPlaceholder: React.ReactNode
+  className?: string
 }
 
 const Wrap = styled.div`
@@ -56,7 +57,7 @@ const NoValuesPlaceholder = styled(TableCell)`
 const createLoadingData = (numColumns: number, numRows: number = 5) =>
   [...Array(numRows)].map(_ => [...Array(numColumns)].map(_ => ""))
 
-const Table: React.FC<Props> = ({ columns, loading, numLoadingRows, hasFixedColumn, noValuesPlaceholder, ...restProps }) => {
+const Table: React.FC<Props> = ({ columns, loading, numLoadingRows, hasFixedColumn, noValuesPlaceholder, className, ...restProps }) => {
   const data = loading
     ? createLoadingData(columns.length, numLoadingRows)
     : restProps.data
@@ -66,7 +67,7 @@ const Table: React.FC<Props> = ({ columns, loading, numLoadingRows, hasFixedColu
     : undefined
 
   return (
-    <Wrap>
+    <Wrap className={ className }>
       <HorizontalScrollContainer fixedColumnWidth={ fixedColumnWidth }>
         <StyledTable>
           <thead>

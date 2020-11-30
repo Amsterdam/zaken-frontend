@@ -13,10 +13,11 @@ type Props = {
 }
 
 const NewStyledTable = styled(Table)`
-  line-height: 48px;
+  line-height: ${ themeSpacing(12) };
   margin-bottom: ${ themeSpacing(5) };
-  thead {
+  th {
     color: ${ themeColor("tint", "level4") };
+    border-color: ${ themeColor("tint", "level4") };
   }
 `
 
@@ -44,6 +45,7 @@ const WorkflowStatus: React.FC<Props> = ({ status, data, showBWVMessage }) =>
       columns={columns}
       data={ data }
       noValuesPlaceholder=""
+      className="haai"
     />
     { showBWVMessage && <small>Het zaaksysteem geeft voor nu alleen een weergave van de taken. De uitvoering/verwerking vindt dus gewoon nog plaats in BWV.</small>}
   </>
