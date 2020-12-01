@@ -1,23 +1,45 @@
 import React from "react"
+import styled from "styled-components"
 import { MenuItem, MenuButton, Hidden } from "@datapunt/asc-ui"
 
+import routes from "app/config/routes"
 import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
 import to from "app/features/shared/routing/to"
 
-const MenuItems: React.FC = () => (
-    <>
-      <MenuItem>
-        <ButtonLink to={to("/cases")}>
-          <MenuButton as="span">Zakenoverzicht</MenuButton>
-        </ButtonLink>
-        <Hidden minBreakpoint="laptopM">
-          <ButtonLink to={to("/hulp")}>
-            <MenuButton as="span">Hulp</MenuButton>
-          </ButtonLink>
-        </Hidden>
-      </MenuItem>
-    </>
-  )
+const items = [
+  {
+    path: "/cases",
+    hiddenLaptopM: false
+  },
+  {
+    path: "/hulp",
+    hiddenLaptopM: true
+  }
+]
 
+const StyledButtonLink = styled(ButtonLink)`
+  span {
+    width: 100%;
+  }
+`
+
+const MenuItems: React.FC = () => (
+  <>
+  { items.map(({ path, hiddenLaptopM }) => {
+      const { title } = routes[`${ path }/`]
+      const menuItem = (
+        <MenuItem key={ path }>
+          <StyledButtonLink to={ to(path) }>
+            <MenuButton as="span">
+              { title }
+            </MenuButton>
+          </StyledButtonLink>
+        </MenuItem>
+      )
+      return hiddenLaptopM ? <Hidden minBreakpoint="laptopM" key={ path }>{ menuItem }</Hidden> : menuItem
+    })
+  }
+  </>
+)
 
 export default MenuItems
