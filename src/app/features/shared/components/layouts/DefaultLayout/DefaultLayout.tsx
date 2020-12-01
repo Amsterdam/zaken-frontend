@@ -11,6 +11,14 @@ type Props = {
   showSearchButton?: boolean
 }
 
+// This is needed to fix a bug where SVG where displayed above the header / menu.
+// Caused by the CSS property `position: fixed`.
+const HeaderWrap = styled.div`
+  > div {
+    z-index: 1;
+  }
+`
+
 const MenuWrap = styled.div`
   display: flex;
   justify-content: space-between;
@@ -19,18 +27,20 @@ const MenuWrap = styled.div`
 
 const DefaultLayout: React.FC<Props> = ({ showSearchButton = true, children }) => (
   <>
-    <Header
-      tall
-      fullWidth={ false }
-      title="Zaaksysteem Wonen"
-      homeLink={ to("/") }
-      navigation={
-        <MenuWrap>
-          <DefaultNavigation showSearchButton={ showSearchButton } />
-        </MenuWrap>
-      }
-      links={ <UserInfo /> }
-    />
+    <HeaderWrap>
+      <Header
+        tall
+        fullWidth={ false }
+        title="Zaaksysteem Wonen"
+        homeLink={ to("/") }
+        navigation={
+          <MenuWrap>
+            <DefaultNavigation showSearchButton={ showSearchButton } />
+          </MenuWrap>
+        }
+        links={ <UserInfo /> }
+      />
+    </HeaderWrap>
     <MainWrapper>
       <FlashMessages />
       { children }
