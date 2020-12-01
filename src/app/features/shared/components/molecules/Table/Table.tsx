@@ -9,6 +9,7 @@ import TableCell from "./components/TableCell/TableCell"
 import TableHeading from "./components/TableHeading/TableHeading"
 import FixedTableCell from "./components/TableCell/FixedTableCell"
 
+
 type CellContent = React.ReactNode
 
 type Props = {
@@ -16,7 +17,7 @@ type Props = {
   loading?: boolean
   hasFixedColumn?: boolean
   columns: Array<{header?: CellContent, minWidth: number}>
-  data?: Array<Array<CellContent>>
+  data?: Array<{href?: string, itemList?: React.ReactNode[]}>
   noValuesPlaceholder: React.ReactNode
   className?: string
 }
@@ -58,9 +59,7 @@ const createLoadingData = (numColumns: number, numRows: number = 5) =>
   [...Array(numRows)].map(_ => [...Array(numColumns)].map(_ => ""))
 
 const Table: React.FC<Props> = ({ columns, loading, numLoadingRows, hasFixedColumn, noValuesPlaceholder, className, ...restProps }) => {
-  const data = loading
-    ? createLoadingData(columns.length, numLoadingRows)
-    : restProps.data
+  const data = restProps.data
 
   const fixedColumnWidth = hasFixedColumn
     ? columns[columns.length - 1].minWidth
@@ -79,8 +78,16 @@ const Table: React.FC<Props> = ({ columns, loading, numLoadingRows, hasFixedColu
             ) }
           </Row>
           </thead>
-          <tbody>
-          { data?.map( (row, index) =>
+          <tbody>              
+            { !loading && data?.map( (row: {href?: string, itemList?: React.ReactNode[]}, index: number) =>
+              <Row key={index}>
+                { row.itemList?.map( (cell: CellContent, index: number) => hasFixedColumn && index === (row.itemList?.length ?? 0 ) - 1
+                      ? <FixedTableCell key={index} width={ fixedColumnWidth }>{ cell ?? <>&nbsp;</> }</FixedTableCell>
+                      : <TableCell key={index}>{ loading ? <SmallSkeleton maxRandomWidth={columns[index].minWidth - 30} /> : cell ?? <>&nbsp;</> }</TableCell>
+                ) }
+              </Row>
+            ) }
+            { loading && createLoadingData(columns.length, numLoadingRows).map( (row, index) =>
             <Row key={index}>
               { row.map( (cell, index) => hasFixedColumn && index === row.length - 1
                     ? <FixedTableCell key={index} width={ fixedColumnWidth }>{ cell ?? <>&nbsp;</> }</FixedTableCell>
@@ -88,13 +95,13 @@ const Table: React.FC<Props> = ({ columns, loading, numLoadingRows, hasFixedColu
               ) }
             </Row>
           ) }
-          { (data === undefined || data.length === 0) && (
-            <tr>
-              <NoValuesPlaceholder colSpan={columns.length}>
-                { noValuesPlaceholder }
-              </NoValuesPlaceholder>
-            </tr>
-          ) }
+            { (data === undefined || data.length === 0) && (
+              <tr>
+                <NoValuesPlaceholder colSpan={columns.length}>
+                  { noValuesPlaceholder }
+                </NoValuesPlaceholder>
+              </tr>
+            ) }
           </tbody>
         </StyledTable>
       </HorizontalScrollContainer>

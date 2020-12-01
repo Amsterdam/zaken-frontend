@@ -21,11 +21,15 @@ const columns = [
 
 const filterData = (data: SearchResult) => typeof data?.postcode === "string"
 
-const mapData = (data: SearchResult) => [
-  data.adres ?? "-",
-  data.postcode ?? "-",
-  data.subtype_id ? <OpenButton href={to("/adres/:bagId", { bagId: data.subtype_id })} text="Bekijk" /> : null
-]
+const mapData = (data: SearchResult) => 
+({ 
+  href: to("/adres/:bagId", { bagId: data.subtype_id }),
+  itemList: [
+    data.adres ?? "-",
+    data.postcode ?? "-",
+    data.subtype_id ? <OpenButton href={to("/adres/:bagId", { bagId: data.subtype_id })} text="Bekijk" /> : null
+  ]
+})
 
 const SearchResults: React.FC<Props> = ({ searchString }) => {
   const { data, isBusy, execGet } = useBAGWithZipCode(searchString, { lazy: true })

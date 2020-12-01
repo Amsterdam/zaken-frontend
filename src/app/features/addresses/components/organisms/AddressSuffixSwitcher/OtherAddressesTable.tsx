@@ -18,17 +18,20 @@ const columns = [
 ]
 
 type SearchResult = Pick<BAGAddressResponse["results"][0], "adres" | "landelijk_id">
-const mapData = (onClick: (bagId: string) => void) => (data: SearchResult) => [
-  `${ data.adres }`,
-  <Button
-    onClick={() => onClick(data.landelijk_id)}
-    as="span"
-    variant="textButton"
-    iconSize={14}
-    iconLeft={<ChevronRight />}>
-    Open
-  </Button>
-]
+const mapData = (onClick: (bagId: string) => void) => (data: SearchResult) => 
+({
+  itemList: [
+    `${ data.adres }`,
+    <Button
+      onClick={() => onClick(data.landelijk_id)}
+      as="span"
+      variant="textButton"
+      iconSize={14}
+      iconLeft={<ChevronRight />}>
+      Open
+    </Button>
+  ]
+})
 
 const OtherAddressesTable: React.FC<Props> = ({ bagId, onAddressChosen }) => {
   const { pathname } = useLocation()

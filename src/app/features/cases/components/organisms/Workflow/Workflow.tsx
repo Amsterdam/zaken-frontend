@@ -12,28 +12,36 @@ type Props = {
   caseId: Components.Schemas.Case["id"]
 }
 
-const workflowDebrief = (caseId: Components.Schemas.Case["id"]) => [
-  [ <Icon size={ 20 }><EditDocument /></Icon>, "Verwerken Debrief", "ProjectHandhaver", "-", "-",
-    <ButtonLink to={ to("/cases/:caseId/debriefing", { caseId })}>
-      <Button variant="primary" as="span">Debrief verwerken</Button>
-    </ButtonLink>
+const workflowDebrief = (caseId: Components.Schemas.Case["id"]) => (
+  [ 
+    { itemList: 
+      [ <Icon size={ 20 }><EditDocument /></Icon>, "Verwerken Debrief", "ProjectHandhaver", "-", "-",
+        <ButtonLink to={ to("/cases/:caseId/debriefing", { caseId })}>
+          <Button variant="primary" as="span">Debrief verwerken</Button>
+        </ButtonLink>
+      ]
+    }
   ]
-]
+)
 
-const workflowVisit = [
-  [ <Icon size={ 20 }><EditDocument /></Icon>, "Huisbezoek afleggen", "Toezichthouders", "-", "-", "" ]
-]
+const workflowVisit = (
+  [{ itemList: [ <Icon size={ 20 }><EditDocument /></Icon>, "Huisbezoek afleggen", "Toezichthouders", "-", "-", "" ]}]
+)
 
-const workflowViolation = [
-  [ <Icon size={ 20 }><EditDocument /></Icon>, "Opstellen beeldverslag", "Toezichthouder", "-", "-", "" ],
-  [ <Icon size={ 20 }><EditDocument /></Icon>, "Opstellen rapport van bevindingen", "Toezichthouder", "-", "-", "" ],
-  [ <Icon size={ 20 }><EditDocument /></Icon>, "Opstellen aanschrijving", "Projecthandhaver", "-", "-", "" ]
-]
+const workflowViolation = (
+  [
+    { itemList: [ <Icon size={ 20 }><EditDocument /></Icon>, "Opstellen beeldverslag", "Toezichthouder", "-", "-", "" ]},
+    { itemList: [ <Icon size={ 20 }><EditDocument /></Icon>, "Opstellen rapport van bevindingen", "Toezichthouder", "-", "-", "" ]},
+    { itemList: [ <Icon size={ 20 }><EditDocument /></Icon>, "Opstellen aanschrijving", "Projecthandhaver", "-", "-", "" ]}
+  ]
+)
 
-const workflowCloseCase = [
-  [ <Icon size={ 20 }><EditDocument /></Icon>, "Opstellen buitendienst rapport", "Toezichthouder", "-", "-", "" ],
-  [ <Icon size={ 20 }><EditDocument /></Icon>, "Afsluiten zaak", "Projectmederker", "-", "-", "" ]
-]
+const workflowCloseCase = (
+  [ 
+    { itemList: [ <Icon size={ 20 }><EditDocument /></Icon>, "Opstellen buitendienst rapport", "Toezichthouder", "-", "-", "" ]},
+    { itemList: [ <Icon size={ 20 }><EditDocument /></Icon>, "Afsluiten zaak", "Projectmederker", "-", "-", "" ]}
+  ]
+)
 
 const Workflow: React.FC<Props> = ({ caseId }) => {
   const { data } = useCaseEvents(caseId)
