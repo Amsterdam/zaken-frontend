@@ -8,7 +8,10 @@ type CellContent = React.ReactNode
 
 type Props = {
   status: string    
-  data: Array<Array<CellContent>>
+  data?: {
+    href?: string
+    itemList?: Array<CellContent>
+  }[]
   showBWVMessage?: boolean
 }
 

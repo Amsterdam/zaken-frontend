@@ -1,5 +1,5 @@
 import React from "react"
-import { Button, Checkbox, Label } from "@datapunt/asc-ui"
+import { Button } from "@datapunt/asc-ui"
 
 import { useCaseEvents } from "app/state/rest"
 import workflow from "app/state/workflow/workflow"
@@ -11,32 +11,36 @@ type Props = {
   caseId: Components.Schemas.Case["id"]
 }
 
-const workflowDebrief = (caseId: Components.Schemas.Case["id"]) => [
-  [ "Verwerken Debrief", "ProjectHandhaver", "-", "-",
-    <ButtonLink to={ to("/cases/:caseId/debriefing", { caseId })}>
-      <Button variant="primary" as="span">Debrief verwerken</Button>
-    </ButtonLink>
+const workflowDebrief = (caseId: Components.Schemas.Case["id"]) => (
+  [ 
+    { itemList: 
+      [ "Verwerken Debrief", "ProjectHandhaver", "-", "-",
+        <ButtonLink to={ to("/cases/:id/debriefing", { caseId })}>
+          <Button variant="primary" as="span">Debrief verwerken</Button>
+        </ButtonLink>
+      ]
+    }
   ]
-]
+)
 
-const workflowVisit = [
-  [ "Huisbezoek afleggen", "Toezichthouders", "-", "-",
-    <Label htmlFor="cb_open" label="Open" disabled >
-      <Checkbox id="cb_open" />
-    </Label>
+const workflowVisit = (
+  [{ itemList: [ "Huisbezoek afleggen", "Toezichthouders", "-", "-", "" ]}]
+)
+
+const workflowViolation = (
+  [
+    { itemList: [ "Opstellen beeldverslag", "Toezichthouder", "-", "-", "" ]},
+    { itemList: [ "Opstellen rapport van bevindingen", "Toezichthouder", "-", "-", "" ]},
+    { itemList: [ "Opstellen aanschrijving", "Projecthandhaver", "-", "-", "" ]}
   ]
-]
+)
 
-const workflowViolation = [
-  [ "Opstellen beeldverslag", "Toezichthouder", "-", "-", "-" ],
-  [ "Opstellen rapport van bevindingen", "Toezichthouder", "-", "-", "-" ],
-  [ "Opstellen aanschrijving", "Projecthandhaver", "-", "-", "-" ]
-]
-
-const workflowCloseCase = [
-  [ "Opstellen buitendienst rapport", "Toezichthouder", "-", "-", "-" ],
-  [ "Afsluiten zaak", "Projectmederker", "-", "-", "-" ]
-]
+const workflowCloseCase = (
+  [ 
+    { itemList: [ "Opstellen buitendienst rapport", "Toezichthouder", "-", "-", "" ]},
+    { itemList: [ "Afsluiten zaak", "Projectmederker", "-", "-", "" ]}
+  ]
+)
 
 const Workflow: React.FC<Props> = ({ caseId }) => {
   const { data } = useCaseEvents(caseId)

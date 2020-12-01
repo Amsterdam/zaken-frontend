@@ -9,8 +9,8 @@ import FixedTableCell from "./components/TableCell/FixedTableCell"
 describe("Table", () => {
   const columns = [{ header: "column1", minWidth: 100 }, { header: "column2", minWidth: 100 }]
   const data = [
-    ["foo", "bar"],
-    ["zoo", "baz"]
+    { itemList:["foo", "bar"]},
+    { itemList: ["zoo", "baz"]}
   ]
 
   describe("when NOT loading", () => {
@@ -21,7 +21,7 @@ describe("Table", () => {
 
     describe("when given fixedColumnWidth", () => {
       it("should render fixed cells", () => {
-        const component = mount(<Table data={data} columns={columns} hasFixedColumn={true} />)
+        const component = mount(<Table data={data} columns={columns} hasFixedColumn={true} noValuesPlaceholder={"..."} />)
         const fixedCells = component.find(FixedTableCell)
 
         expect(fixedCells.length).toEqual(2)
@@ -31,7 +31,7 @@ describe("Table", () => {
 
   describe("when loading", () => {
     it("should render SmallSkeletons", () => {
-      const component = mount(<Table data={data} columns={columns} loading={true} />)
+      const component = mount(<Table data={data} columns={columns} loading={true}  noValuesPlaceholder={"..."} />)
       // 5 * 2 = numLoadingRows * numColumns
       expect(component.find(SmallSkeleton).length).toEqual(10)
     })

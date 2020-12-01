@@ -18,12 +18,17 @@ const columns = [
   { minWidth: 140 }
 ]
 
-const mapData = (data: Components.Schemas.Case) => [
-  data.address.full_address ?? "-",
-  data.current_state.status_name,
-  data.current_state.state_date ? <DateDisplay date={ data.current_state.state_date } /> : "-",
-  <OpenButton href={to("/cases/:id", { id: data.id })} text="Zaakdetails" />
-]
+const mapData = (data: Components.Schemas.Case) => 
+
+  ({
+    href: to("/cases/:id", { id: data.id }),
+    itemList: [
+      data.address.full_address ?? "-",
+      data.current_state.status_name,
+      data.current_state.state_date ? <DateDisplay date={ data.current_state.state_date } /> : "-",
+      <OpenButton href={to("/cases/:id", { id: data.id })} text="Zaakdetails" />
+    ]
+  })
 
 const TableCases: React.FC<Props> = ({ data, isBusy }) => {
   const mappedData = useMemo(() => data?.results?.map(mapData), [ data ])
