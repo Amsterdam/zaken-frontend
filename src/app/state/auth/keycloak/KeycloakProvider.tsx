@@ -27,8 +27,9 @@ const KeycloakProvider: React.FC<Props> = ({ shouldInitialize = true, initialize
         setIsInitialized(true)
         setIsAuthenticated(isAuthenticated)
         if (initializedCallback !== undefined) await initializedCallback(keycloak, isAuthenticated)
-      } catch {
+      } catch (err) {
         console.error("Keycloak failed to initialize")
+        console.error(err)
       }
     })()
   }, [initializedCallback, shouldInitialize])
