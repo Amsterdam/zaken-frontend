@@ -5,7 +5,7 @@ import { useState, useCallback } from "react"
 
 const defaultParse = (value: string | null) => value ?? ""
 
-export default (key: string, parse: ((value: string | null) => string) = defaultParse) => {
+export default (key: string, parse = defaultParse) => {
   const urlParams = new URLSearchParams(window.location.search)
   const param = parse(urlParams.get(key))
   const [value, setValue] = useState(param)
@@ -21,7 +21,7 @@ export default (key: string, parse: ((value: string | null) => string) = default
     const s = urlParams.toString()
     const queryString = s !== "" ? `?${ s }` : ""
     const url = `${ window.location.pathname }${ queryString }`
-    window.history.pushState({}, "", url)
+    window.history.replaceState({}, "", url)
   }, [key, stableParse, urlParams])
   return [value, set] as const
 }
