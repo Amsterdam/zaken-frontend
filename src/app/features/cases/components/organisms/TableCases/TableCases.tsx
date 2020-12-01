@@ -11,11 +11,6 @@ type Props = {
   isBusy: boolean
 }
 
-type TableData = {
-  href?: string
-  itemList?: React.ReactNode[]
-}
-
 const columns = [
   { header: "Adres", minWidth: 300 },
   { header: "Situatie", minWidth: 100 },
@@ -23,7 +18,7 @@ const columns = [
   { minWidth: 140 }
 ]
 
-const mapData = (data: Components.Schemas.Case): TableData => 
+const mapData = (data: Components.Schemas.Case) => 
 
   ({
     href: to("/cases/:id", { id: data.id }),
@@ -31,7 +26,7 @@ const mapData = (data: Components.Schemas.Case): TableData =>
       data.address.full_address ?? "-",
       data.current_state.status_name,
       data.current_state.state_date ? <DateDisplay date={ data.current_state.state_date } /> : "-",
-      <OpenButton href="" text="Zaakdetails" />
+      <OpenButton href={to("/cases/:id", { id: data.id })} text="Zaakdetails" />
     ]
   })
 

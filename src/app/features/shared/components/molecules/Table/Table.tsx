@@ -1,23 +1,26 @@
 import React from "react"
 
 import { themeColor } from "@datapunt/asc-ui"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 
 import SmallSkeleton from "app/features/shared/components/atoms/Skeleton/SmallSkeleton"
 
 import TableCell from "./components/TableCell/TableCell"
 import TableHeading from "./components/TableHeading/TableHeading"
 import FixedTableCell from "./components/TableCell/FixedTableCell"
+import { navigate } from "@reach/router"
 
 
 type CellContent = React.ReactNode
+
+type TableData = Array<{href?: string, itemList?: React.ReactNode[]}>
 
 type Props = {
   numLoadingRows?: number
   loading?: boolean
   hasFixedColumn?: boolean
   columns: Array<{header?: CellContent, minWidth: number}>
-  data?: Array<{href?: string, itemList?: React.ReactNode[]}>
+  data?: TableData
   noValuesPlaceholder: React.ReactNode
   className?: string
 }
@@ -29,6 +32,11 @@ const Wrap = styled.div`
 type HorizontalScrollContainerProps = {
   fixedColumnWidth?: number
 }
+
+type ClickableRowProps = {
+  isClickable?: boolean
+}
+
 const HorizontalScrollContainer = styled.div<HorizontalScrollContainerProps>`  
   overflow-x: auto; 
   margin-right: ${ (props) => `${ props.fixedColumnWidth }px` ?? "auto" }; 
@@ -39,12 +47,19 @@ const StyledTable = styled.table`
   width: 100%; 
 `
 
-const Row = styled.tr`
+const Row = styled.tr<ClickableRowProps>`
+${ props  => props.isClickable && css`  
+  cursor: ${ props.isClickable ? "pointer" : "cursor" }; 
+  &:hover td {
+    background-color: ${ themeColor("tint", "level3") };
+  }
+` }     
+
   td{
     border-bottom: 1px solid ${ themeColor("tint", "level3") };
   }
-`
-
+` 
+  
 const NoValuesPlaceholder = styled(TableCell)`
   font-style: italic; 
 `
@@ -58,6 +73,13 @@ const Table: React.FC<Props> = ({ columns, loading, numLoadingRows, hasFixedColu
   const fixedColumnWidth = hasFixedColumn
     ? columns[columns.length - 1].minWidth
     : undefined
+
+const onClick = (href: string | undefined, e: any) => { 
+  if (href) {
+    e.stopPropagation()
+    href && navigate(href)
+  } 
+}    
 
   return (
     <Wrap className={ className }>
@@ -74,7 +96,7 @@ const Table: React.FC<Props> = ({ columns, loading, numLoadingRows, hasFixedColu
           </thead>
           <tbody>              
             { !loading && data?.map( (row: {href?: string, itemList?: React.ReactNode[]}, index: number) =>
-              <Row key={index}>
+              <Row key={index} onClick={(e) => onClick( row.href , e )} isClickable={row.href !== undefined } >
                 { row.itemList?.map( (cell: CellContent, index: number) => hasFixedColumn && index === (row.itemList?.length ?? 0 ) - 1
                       ? <FixedTableCell key={index} width={ fixedColumnWidth }>{ cell ?? <>&nbsp;</> }</FixedTableCell>
                       : <TableCell key={index}>{ loading ? <SmallSkeleton maxRandomWidth={columns[index].minWidth - 30} /> : cell ?? <>&nbsp;</> }</TableCell>
