@@ -68,16 +68,16 @@ const createLoadingData = (numColumns: number, numRows: number = 5) =>
   [...Array(numRows)].map(_ => [...Array(numColumns)].map(_ => ""))
 
 const Table: React.FC<Props> = ({ columns, loading, numLoadingRows, hasFixedColumn, noValuesPlaceholder, className, ...restProps }) => {
-  const data = restProps.data
+  const { data } = restProps
 
   const fixedColumnWidth = hasFixedColumn
     ? columns[columns.length - 1].minWidth
     : undefined
 
-const onClick = (href: string | undefined, e: any) => { 
+const onClick = (href: string | undefined, e: React.MouseEvent<HTMLTableRowElement>) => { 
   if (href) {
     e.stopPropagation()
-    href && navigate(href)
+    navigate(href)
   } 
 }    
 
