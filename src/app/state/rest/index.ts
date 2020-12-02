@@ -180,3 +180,14 @@ export const usePermitDetails = (bagId: string) => {
     includeHeaders: true
   })
 }
+
+export const useMockCases = (options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest({
+    ...options,
+    url: makeGatewayUrl("cases", "mock_cases"),
+    groupName: "cases",
+    handleError,
+    includeHeaders: true
+  })
+}
