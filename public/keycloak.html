@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="nl">
+  <head>
+    <meta charset="utf-8" />
+    <title>Keycloak - Gemeente Amsterdam</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <script src="https://iam.amsterdam.nl/auth/js/keycloak.js"></script>
+    <script>
+        var settings = {
+          realm: "datapunt-ad-acc",
+          "auth-server-url": "https://iam.amsterdam.nl/auth/",
+          "ssl-required": "external",
+          resource: "wonen-zaaksysteem-frontend",
+          "public-client": true,
+          "confidential-port": 0,
+          clientId: "wonen-zaaksysteem-frontend"
+        };
+        var options = {
+          onLoad: "login-required",
+          checkLoginIframe: false
+        };
+        var keycloak = new Keycloak(settings);
+        keycloak.init(options).then(function(authenticated) {
+            console.log(keycloak)
+            alert(authenticated ? 'authenticated' : 'not authenticated');
+        }).catch(function(err) {
+            console.error(err);
+            alert('failed to initialize');
+        });
+    </script>
+  </body>
+</html>
