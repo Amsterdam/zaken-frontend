@@ -26,7 +26,7 @@ const ButtonMockCases: React.FC = () => {
   }
 
   return (
-    <StyledButton onClick={ onClick } title="Genereer mock zaken" />
+    <StyledButton onClick={ onClick } title="Genereer mock zaken" tabIndex={-1} />
   )
 }
 export default ButtonMockCases
