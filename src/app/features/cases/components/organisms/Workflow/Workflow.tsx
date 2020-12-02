@@ -15,7 +15,7 @@ const workflowDebrief = (caseId: Components.Schemas.Case["id"]) => (
   [ 
     { itemList: 
       [ "Verwerken Debrief", "ProjectHandhaver", "-", "-",
-        <ButtonLink to={ to("/cases/:id/debriefing", { caseId })}>
+        <ButtonLink to={ to("/cases/:id/debriefing", { id: caseId })}>
           <Button variant="primary" as="span">Debrief verwerken</Button>
         </ButtonLink>
       ]
