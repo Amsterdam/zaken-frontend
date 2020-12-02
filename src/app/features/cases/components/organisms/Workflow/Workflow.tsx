@@ -24,21 +24,21 @@ const workflowDebrief = (caseId: Components.Schemas.Case["id"]) => (
 )
 
 const workflowVisit = (
-  [{ itemList: [ "Huisbezoek afleggen", "Toezichthouders", "-", "-", "" ]}]
+  [{ itemList: [ "Huisbezoek afleggen", "Toezichthouders", "-", "-", "-" ]}]
 )
 
 const workflowViolation = (
   [
-    { itemList: [ "Opstellen beeldverslag", "Toezichthouder", "-", "-", "" ]},
-    { itemList: [ "Opstellen rapport van bevindingen", "Toezichthouder", "-", "-", "" ]},
-    { itemList: [ "Opstellen aanschrijving", "Projecthandhaver", "-", "-", "" ]}
+    { itemList: [ "Opstellen beeldverslag", "Toezichthouder", "-", "-", "-" ]},
+    { itemList: [ "Opstellen rapport van bevindingen", "Toezichthouder", "-", "-", "-" ]},
+    { itemList: [ "Opstellen aanschrijving", "Projecthandhaver", "-", "-", "-" ]}
   ]
 )
 
 const workflowCloseCase = (
   [ 
-    { itemList: [ "Opstellen buitendienst rapport", "Toezichthouder", "-", "-", "" ]},
-    { itemList: [ "Afsluiten zaak", "Projectmederker", "-", "-", "" ]}
+    { itemList: [ "Opstellen buitendienst rapport", "Toezichthouder", "-", "-", "-" ]},
+    { itemList: [ "Afsluiten zaak", "Projectmederker", "-", "-", "-" ]}
   ]
 )
 
