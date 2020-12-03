@@ -19,7 +19,7 @@ const Wrapper: React.FC = ({ children }) => (
     </KeycloakProvider>
   )
 
-xdescribe("useApiRequest", () => {
+describe("useApiRequest", () => {
   it("should perform a GET request on mount", async () => {
     const usePet = () => useApiRequest<Pet>({ url: "http://localhost/pet", groupName: "cases" })
 
