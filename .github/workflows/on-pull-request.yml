@@ -13,21 +13,21 @@ jobs:
         with:
           path: frontend
 
-      # - name: Checkout backend
-      #   uses: actions/checkout@v2
-      #   with:
-      #     path: backend
-      #     repository: amsterdam/zaken-backend
+      - name: Checkout backend
+        uses: actions/checkout@v2
+        with:
+          path: backend
+          repository: amsterdam/zaken-backend
 
       ###################################################
       # BACKEND
       ###################################################
-      # - run: docker network create fixxx-looplijsten-backend_looplijsten_backend
-      #   working-directory: backend
-      #
-      # - run: docker-compose up --build --detach
-      #   working-directory: backend
-      # 
+      - run: docker network create fixxx-looplijsten-backend_looplijsten_backend
+        working-directory: backend
+
+      - run: docker-compose up --build --detach
+        working-directory: backend
+
       ###################################################
       # FRONTEND
       ###################################################
@@ -50,24 +50,24 @@ jobs:
       - run: npm run build:test
         working-directory: frontend
 
-      # - run: npm run serve:build &>/dev/null &
-      #   working-directory: frontend
-      #
-      # - run: npm run cypress:run
-      #   working-directory: frontend
-      #
-      # - if: ${{ failure() }}
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: cypress-videos
-      #     path: ./frontend/cypress/videos/
-      #
-      # - if: ${{ failure() }}
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: cypress-screenshots
-      #     path: ./frontend/cypress/screenshots/
-      #
+      - run: npm run serve:build &>/dev/null &
+        working-directory: frontend
+
+      - run: npm run cypress:run
+        working-directory: frontend
+
+      - if: ${{ failure() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress-videos
+          path: ./frontend/cypress/videos/
+
+      - if: ${{ failure() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress-screenshots
+          path: ./frontend/cypress/screenshots/
+
       ###################################################
       # On failure
       ###################################################
