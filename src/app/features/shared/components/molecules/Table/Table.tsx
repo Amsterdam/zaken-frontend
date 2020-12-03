@@ -1,6 +1,6 @@
 import React from "react"
 
-import { themeColor } from "@datapunt/asc-ui"
+import { themeColor } from "@amsterdam/asc-ui"
 import styled, { css } from "styled-components"
 
 import SmallSkeleton from "app/features/shared/components/atoms/Skeleton/SmallSkeleton"

@@ -1,5 +1,5 @@
 import React from "react"
-import { Heading, Paragraph } from "@datapunt/asc-ui"
+import { Heading, Paragraph } from "@amsterdam/asc-ui"
 
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/"
 import EmailLink from "./EmailLink"

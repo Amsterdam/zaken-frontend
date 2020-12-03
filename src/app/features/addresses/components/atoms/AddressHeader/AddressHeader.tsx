@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { Typography, breakpoint, themeSpacing } from "@datapunt/asc-ui"
+import { Typography, breakpoint, themeSpacing } from "@amsterdam/asc-ui"
 
 import { useBAG } from "app/state/rest"
 import ShowOtherAddressesButton from "app/features/addresses/components/organisms/AddressSuffixSwitcher/ShowOtherAddressesButton"

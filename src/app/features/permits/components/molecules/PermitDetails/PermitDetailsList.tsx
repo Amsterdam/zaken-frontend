@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { themeSpacing, Spinner } from "@datapunt/asc-ui"
+import { themeSpacing, Spinner } from "@amsterdam/asc-ui"
 
 import { usePermitDetails } from "app/state/rest"
 import PermitDetails from "./PermitDetails"

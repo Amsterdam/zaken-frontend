@@ -1,5 +1,5 @@
 import React from "react"
-import { FormTitle, Heading } from "@datapunt/asc-ui"
+import { FormTitle, Heading } from "@amsterdam/asc-ui"
 
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 

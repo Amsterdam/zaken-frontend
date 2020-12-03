@@ -1,5 +1,5 @@
 import React from "react"
-import { Heading, Alert } from "@datapunt/asc-ui"
+import { Heading, Alert } from "@amsterdam/asc-ui"
 
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 import DefinitionList from "app/features/shared/components/molecules/DefinitionList/DefinitionList"

@@ -13,5 +13,5 @@
 - Add the token (`access` field) to `.env.development.local`. `REACT_APP_GATEWAY_TOKEN={token}`
 
 ## TODO
-- Look into SSI (Single Signon) support
+- Look into SSO (Single Sign On) support
 - IE11 bug

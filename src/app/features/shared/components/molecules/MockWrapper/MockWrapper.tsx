@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { themeColor, ascDefaultTheme } from "@datapunt/asc-ui"
+import { themeColor, ascDefaultTheme } from "@amsterdam/asc-ui"
 
 type Props = {
   hasPadding?: boolean

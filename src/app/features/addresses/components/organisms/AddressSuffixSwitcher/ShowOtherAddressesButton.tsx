@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
-import { ChevronDown, ChevronUp } from "@datapunt/asc-assets"
-import { Button, Icon } from "@datapunt/asc-ui"
+import { ChevronDown, ChevronUp } from "@amsterdam/asc-assets"
+import { Button, Icon } from "@amsterdam/asc-ui"
 
 import { useModal } from "app/features/shared/components/molecules/Modal/hooks/useModal"
 import OtherAddressesModal from "./OtherAddressesModal"

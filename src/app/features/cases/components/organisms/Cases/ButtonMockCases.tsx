@@ -1,6 +1,6 @@
 import React from "react"
 import { useMockCases } from "app/state/rest"
-import { Button, themeColor } from "@datapunt/asc-ui"
+import { Button, themeColor } from "@amsterdam/asc-ui"
 import styled from "styled-components"
 
 const StyledButton = styled(Button)`

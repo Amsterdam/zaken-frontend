@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { themeColor, themeSpacing } from "@datapunt/asc-ui"
+import { themeColor, themeSpacing } from "@amsterdam/asc-ui"
 
 import useNodeDimensions from "app/features/shared/hooks/useNodeDimensions/useNodeDimensions"
 import useNodeByReference from "app/features/shared/hooks/useNodeByReference/useNodeByReference"

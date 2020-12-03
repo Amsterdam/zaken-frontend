@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
-import { Modal as AscModal, TopBar, Heading, Button, Icon, Divider, themeSpacing } from "@datapunt/asc-ui"
-import { Close } from "@datapunt/asc-assets/lib"
+import { Modal as AscModal, TopBar, Heading, Button, Icon, Divider, themeSpacing } from "@amsterdam/asc-ui"
+import { Close } from "@amsterdam/asc-assets/lib"
 
 type Props = {
   title: string

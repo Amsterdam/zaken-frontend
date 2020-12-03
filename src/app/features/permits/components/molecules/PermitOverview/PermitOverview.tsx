@@ -1,5 +1,5 @@
 import React, { useMemo } from "react"
-import { Link } from "@datapunt/asc-ui"
+import { Link } from "@amsterdam/asc-ui"
 import { usePermitCheckmarks } from "app/state/rest"
 
 import to from "app/features/shared/routing/to"

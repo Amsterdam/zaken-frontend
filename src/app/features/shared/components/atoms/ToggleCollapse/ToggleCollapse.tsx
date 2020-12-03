@@ -1,6 +1,6 @@
 import React from "react"
-import { Button, themeSpacing } from "@datapunt/asc-ui"
-import { ButtonVariant } from "@datapunt/asc-ui/lib/components/Button/Button"
+import { Button, themeSpacing } from "@amsterdam/asc-ui"
+import { ButtonVariant } from "@amsterdam/asc-ui/lib/components/Button/Button"
 import styled from "styled-components"
 
 type Props = Omit<React.ComponentProps<typeof Button>, "onClick"> & {
