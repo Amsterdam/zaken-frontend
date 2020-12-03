@@ -2,8 +2,12 @@ import React from "react"
 import { useLocation } from "@reach/router"
 
 import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
-// TODO: Do not import this from amsterdam-react-final-form better from ASC
-import Alert from "amsterdam-react-final-form/components/unbound/Alert"
+import { Alert, themeSpacing } from "@amsterdam/asc-ui"
+import styled from "styled-components"
+
+const StyledAlert = styled(Alert)`
+  margin-bottom: ${ themeSpacing(5) }
+`
 
 const FlashMessages: React.FC = () => {
   const { pathname } = useLocation()
@@ -11,8 +15,8 @@ const FlashMessages: React.FC = () => {
 
   return (
     <>
-      {state[pathname] && state[pathname].map((props, index) => <Alert key={index} {...props} />)}
-      {state["current"] && state["current"].map((props, index) => <Alert key={index} {...props} />)}
+      {state[pathname] && state[pathname].map((props, index) => <StyledAlert key={index} {...props} />)}
+      {state["current"] && state["current"].map((props, index) => <StyledAlert key={index} {...props} />)}
     </>
   )
 }
