@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react"
-import {  Heading, themeColor, themeSpacing } from "@datapunt/asc-ui"
+import {  Heading, themeColor, themeSpacing } from "@amsterdam/asc-ui"
 import styled from "styled-components"
 
 import SmallSkeleton from "app/features/shared/components/atoms/Skeleton/SmallSkeleton"

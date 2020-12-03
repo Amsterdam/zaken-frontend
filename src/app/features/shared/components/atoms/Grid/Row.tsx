@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
-import { breakpoint, themeSpacing } from "@datapunt/asc-ui"
-import layouts from "@datapunt/asc-ui/lib/theme/default/layouts"
+import { breakpoint, themeSpacing } from "@amsterdam/asc-ui"
+import layouts from "@amsterdam/asc-ui/lib/theme/default/layouts"
 
 import Column from "app/features/shared/components/atoms/Grid/Column"
 

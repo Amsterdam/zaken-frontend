@@ -1,6 +1,6 @@
 import React, { useRef } from "react"
 import styled from "styled-components"
-import { themeColor } from "@datapunt/asc-ui"
+import { themeColor } from "@amsterdam/asc-ui"
 
 import usePanoramaByBagId from "app/state/rest/custom/usePanoramaByBagId/usePanoramaByBagId"
 import useRect from "./hooks/useRect"

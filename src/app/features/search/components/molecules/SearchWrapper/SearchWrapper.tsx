@@ -1,5 +1,5 @@
 import React from "react"
-import { SearchBar } from "@datapunt/asc-ui"
+import { SearchBar } from "@amsterdam/asc-ui"
 import styled from "styled-components"
 import debounce from "lodash.debounce"
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { RouteComponentProps } from "@reach/router"
-import { FormTitle, Heading, Button } from "@datapunt/asc-ui"
-import { TrashBin } from "@datapunt/asc-assets"
+import { FormTitle, Heading, Button } from "@amsterdam/asc-ui"
+import { TrashBin } from "@amsterdam/asc-assets"
 
 import { useCase, useDebriefings } from "app/state/rest/"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"

@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { themeSpacing, Heading } from "@datapunt/asc-ui"
+import { themeSpacing, Heading } from "@amsterdam/asc-ui"
 
 import { useResidents } from "app/state/rest"
 import LoadingDetails from "app/features/shared/components/molecules/Details/LoadingDetails"

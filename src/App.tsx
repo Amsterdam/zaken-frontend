@@ -1,5 +1,5 @@
 import React from "react"
-import { ThemeProvider, GlobalStyle } from "@datapunt/asc-ui"
+import { ThemeProvider, GlobalStyle } from "@amsterdam/asc-ui"
 import { LocationProvider } from "@reach/router"
 
 import KeycloakProvider from "app/state/auth/keycloak/KeycloakProvider"

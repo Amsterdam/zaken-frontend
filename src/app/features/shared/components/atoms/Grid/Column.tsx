@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
-import { breakpoint } from "@datapunt/asc-ui"
-import layouts from "@datapunt/asc-ui/lib/theme/default/layouts"
+import { breakpoint } from "@amsterdam/asc-ui"
+import layouts from "@amsterdam/asc-ui/lib/theme/default/layouts"
 
 /** Columns for page layout
  * optional props:

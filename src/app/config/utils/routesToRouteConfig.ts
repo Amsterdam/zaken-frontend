@@ -1,6 +1,6 @@
 import { FC } from "react"
 import type { RouteComponentProps } from "@reach/router"
-import * as Assets from "@datapunt/asc-assets"
+import * as Assets from "@amsterdam/asc-assets"
 import slashSandwich from "slash-sandwich"
 
 type Page = FC<RouteComponentProps>

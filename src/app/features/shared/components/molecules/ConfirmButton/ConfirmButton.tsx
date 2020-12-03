@@ -1,5 +1,5 @@
 import React from "react"
-import { Button } from "@datapunt/asc-ui"
+import { Button } from "@amsterdam/asc-ui"
 
 import { useModal } from "../Modal/hooks/useModal"
 import ConfirmModal, { Props as ConfirmModalProps } from "../Modal/ConfirmModal"

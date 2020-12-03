@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components"
-import { themeColor, themeSpacing } from "@datapunt/asc-ui"
+import { themeColor, themeSpacing } from "@amsterdam/asc-ui"
 
 type Props = {
   isFixed?: boolean

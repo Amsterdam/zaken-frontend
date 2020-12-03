@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { themeSpacing, breakpoint } from "@datapunt/asc-ui"
+import { themeSpacing, breakpoint } from "@amsterdam/asc-ui"
 import NavBlock from "app/features/addresses/components/atoms/NavBlock/NavBlock"
 import to from "app/features/shared/routing/to"
 import routesObject from "app/config/routes"

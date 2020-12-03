@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from "react"
 import { useLocation, navigate } from "@reach/router"
-import { ChevronRight } from "@datapunt/asc-assets"
-import { Button } from "@datapunt/asc-ui"
+import { ChevronRight } from "@amsterdam/asc-assets"
+import { Button } from "@amsterdam/asc-ui"
 
 import useOtherAddressesByBagId from "app/state/rest/custom/useOtherAddresses/useOtherAddresses"
 import { BAGAddressResponse } from "app/state/rest/types/BAGAddressResponse"

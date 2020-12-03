@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
-import { breakpoint, themeSpacing } from "@datapunt/asc-ui"
-import { sizes } from "@datapunt/asc-ui/lib/theme/default/breakpoints"
+import { breakpoint, themeSpacing } from "@amsterdam/asc-ui"
+import { sizes } from "@amsterdam/asc-ui/lib/theme/default/breakpoints"
 
 const Main = styled.main`
   box-sizing: border-box;

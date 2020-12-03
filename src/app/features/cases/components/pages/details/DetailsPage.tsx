@@ -1,6 +1,6 @@
 import React from "react"
 import { RouteComponentProps } from "@reach/router"
-import { Divider, Heading } from "@datapunt/asc-ui"
+import { Divider, Heading } from "@amsterdam/asc-ui"
 
 import { useCase } from "app/state/rest"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"

@@ -1,6 +1,6 @@
 import React from "react"
 import { RouteComponentProps } from "@reach/router"
-import { Link, Heading } from "@datapunt/asc-ui"
+import { Link, Heading } from "@amsterdam/asc-ui"
 
 import Row, { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"

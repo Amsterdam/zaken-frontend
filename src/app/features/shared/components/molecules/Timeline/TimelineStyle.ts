@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components"
-import { Button } from "@datapunt/asc-ui"
-import { themeColor, themeSpacing, breakpoint, Icon } from "@datapunt/asc-ui"
-import { IconStyle } from "@datapunt/asc-ui/lib/components/Icon"
+import { Button } from "@amsterdam/asc-ui"
+import { themeColor, themeSpacing, breakpoint, Icon } from "@amsterdam/asc-ui"
+import { IconStyle } from "@amsterdam/asc-ui/lib/components/Icon"
 
 export type Props = {
   isOpen?: boolean

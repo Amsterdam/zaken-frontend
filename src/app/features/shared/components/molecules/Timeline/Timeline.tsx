@@ -1,8 +1,8 @@
-import { ChevronDown, Checkmark } from "@datapunt/asc-assets"
+import { ChevronDown, Checkmark } from "@amsterdam/asc-assets"
 import React, { useCallback, useEffect, useState } from "react"
 import { useUID } from "react-uid"
-import { Theme } from "@datapunt/asc-ui/es/types/Theme"
-import { themeSpacing } from "@datapunt/asc-ui"
+import { Theme } from "@amsterdam/asc-ui/es/types/Theme"
+import { themeSpacing } from "@amsterdam/asc-ui"
 
 import {
   TimelineItem,
