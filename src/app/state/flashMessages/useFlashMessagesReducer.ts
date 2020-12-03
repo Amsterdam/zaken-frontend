@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useReducer } from "react"
 import { globalHistory, useLocation } from "@reach/router"
 import produce from "immer"
-import { Alert } from "amsterdam-react-final-form"
+import { Alert } from "@amsterdam/asc-ui"
 
 export type FlashMessage = React.ComponentProps<typeof Alert>
 export type State = Record<string, FlashMessage[]>
@@ -40,7 +40,7 @@ export const useFlashMessagesReducer = () => {
     (path: string, title: string, body?: React.ReactNode) => dispatch({
       path,
       type: "add",
-      props: { title, children: body, variant: "success" }
+      props: { title, children: body, level: "info", dismissible: true }
     }),
     [dispatch]
   )
@@ -49,7 +49,7 @@ export const useFlashMessagesReducer = () => {
     (title: string, body?: React.ReactNode) => dispatch({
       path: "current",
       type: "add",
-      props: { title, children: body, variant: "error" }
+      props: { title, children: body, level: "error", dismissible: true }
     }),
     [dispatch]
   )
