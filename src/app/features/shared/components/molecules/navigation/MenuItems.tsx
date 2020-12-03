@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { MenuItem, MenuButton, Hidden } from "@datapunt/asc-ui"
+import { MenuItem, MenuButton, Hidden } from "@amsterdam/asc-ui"
 
 import routes from "app/config/routes"
 import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"

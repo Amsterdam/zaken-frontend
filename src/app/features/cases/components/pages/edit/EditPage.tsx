@@ -1,7 +1,7 @@
 import React from "react"
 import { RouteComponentProps } from "@reach/router"
-import { FormTitle, Heading } from "@datapunt/asc-ui"
-import { TrashBin } from "@datapunt/asc-assets/lib"
+import { FormTitle, Heading } from "@amsterdam/asc-ui"
+import { TrashBin } from "@amsterdam/asc-assets/lib"
 
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"

@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
-import { Logout, PersonalLogin } from "@datapunt/asc-assets"
-import { breakpoint, MenuButton } from "@datapunt/asc-ui"
+import { Logout, PersonalLogin } from "@amsterdam/asc-assets"
+import { breakpoint, MenuButton } from "@amsterdam/asc-ui"
 
 import useKeycloak from "app/state/auth/keycloak/useKeycloak"
 

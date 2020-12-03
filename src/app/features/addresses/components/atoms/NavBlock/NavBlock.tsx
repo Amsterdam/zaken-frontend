@@ -1,8 +1,8 @@
 import React from "react"
 import styled from "styled-components"
 import { Link } from "@reach/router"
-import { Card, CardContent, Icon, Heading, themeColor, themeSpacing } from "@datapunt/asc-ui"
-import * as Assets from "@datapunt/asc-assets"
+import { Card, CardContent, Icon, Heading, themeColor, themeSpacing } from "@amsterdam/asc-ui"
+import * as Assets from "@amsterdam/asc-assets"
 
 type Props = {
   to: string

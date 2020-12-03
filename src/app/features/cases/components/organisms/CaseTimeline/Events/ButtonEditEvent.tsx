@@ -1,9 +1,9 @@
 import React from "react"
 import styled from "styled-components"
-import { breakpoint, Button } from "@datapunt/asc-ui"
+import { breakpoint, Button } from "@amsterdam/asc-ui"
 import { displayDate, displayTime } from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
 import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
-import { EditDocument } from "@datapunt/asc-assets"
+import { EditDocument } from "@amsterdam/asc-assets"
 
 type Props = {
   target: string

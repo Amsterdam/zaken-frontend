@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { Button, Paragraph } from "@datapunt/asc-ui"
+import { Button, Paragraph } from "@amsterdam/asc-ui"
 
 import Modal, { ModalBlock } from "./Modal"
 import SpinnerButton from "../../atoms/SpinnerButton/SpinnerButton"

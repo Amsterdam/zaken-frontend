@@ -1,5 +1,5 @@
 import React from "react"
-import { Heading } from "@datapunt/asc-ui"
+import { Heading } from "@amsterdam/asc-ui"
 import InfoButton from "./InfoButton"
 
 type Props = {

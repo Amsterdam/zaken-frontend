@@ -1,10 +1,10 @@
 import React from "react"
-import { MenuInline, Button, MenuToggle, Hidden } from "@datapunt/asc-ui"
+import { MenuInline, Button, MenuToggle, Hidden } from "@amsterdam/asc-ui"
 import styled from "styled-components"
 import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
 import to from "app/features/shared/routing/to"
 import useKeycloak from "app/state/auth/keycloak/useKeycloak"
-import { Search, Info } from "@datapunt/asc-assets"
+import { Search, Info } from "@amsterdam/asc-assets"
 import MenuItems from "app/features/shared/components/molecules/navigation/MenuItems"
 import UserInfo from "../UserInfo/UserInfo"
 

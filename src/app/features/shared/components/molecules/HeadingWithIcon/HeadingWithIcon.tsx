@@ -1,6 +1,6 @@
 import React from "react"
-import { Icon, Heading, themeSpacing } from "@datapunt/asc-ui"
-import * as Assets from "@datapunt/asc-assets"
+import { Icon, Heading, themeSpacing } from "@amsterdam/asc-ui"
+import * as Assets from "@amsterdam/asc-assets"
 import styled from "styled-components"
 
 type Props = {

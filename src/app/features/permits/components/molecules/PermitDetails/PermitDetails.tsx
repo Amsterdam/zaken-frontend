@@ -1,5 +1,5 @@
 import React, { useMemo } from "react"
-import { Link } from "@datapunt/asc-ui"
+import { Link } from "@amsterdam/asc-ui"
 import DefinitionList from "app/features/shared/components/molecules/DefinitionList/DefinitionList"
 import DateDisplay from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
 

@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { themeSpacing } from "@datapunt/asc-ui"
+import { themeSpacing } from "@amsterdam/asc-ui"
 
 const TableCell = styled.td`  
   padding: ${ themeSpacing(4) } ${ themeSpacing(3) };   

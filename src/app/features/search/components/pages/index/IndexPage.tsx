@@ -1,6 +1,6 @@
 import React from "react"
 import { RouteComponentProps } from "@reach/router"
-import { Heading } from "@datapunt/asc-ui"
+import { Heading } from "@amsterdam/asc-ui"
 
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import SearchWrapper from "app/features/search/components/molecules/SearchWrapper/SearchWrapper"

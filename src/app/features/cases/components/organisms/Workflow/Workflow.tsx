@@ -1,5 +1,5 @@
 import React from "react"
-import { Button } from "@datapunt/asc-ui"
+import { Button } from "@amsterdam/asc-ui"
 
 import { useCaseEvents } from "app/state/rest"
 import workflow from "app/state/workflow/workflow"
