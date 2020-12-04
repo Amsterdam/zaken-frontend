@@ -97,13 +97,13 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
   const execGet = useCallback((options?: Omit<GetOptions, "method">) =>
     queueRequest({ method: "get", ...options }), [ queueRequest ])
 
-  const execPost = useCallback((payload: Payload, options?: Omit<MutateOptions, "method">) =>
+  const execPost = useCallback((payload?: Payload, options?: Omit<MutateOptions, "method">) =>
     queueRequest({ method: "post", ...options }, payload), [ queueRequest ])
 
-  const execPut = useCallback((payload: Payload, options?: Omit<MutateOptions, "method">) =>
+  const execPut = useCallback((payload?: Payload, options?: Omit<MutateOptions, "method">) =>
     queueRequest({ method: "put", ...options }, payload), [ queueRequest ])
 
-  const execPatch = useCallback((payload: Payload, options?: Omit<MutateOptions, "method">) =>
+  const execPatch = useCallback((payload?: Payload, options?: Omit<MutateOptions, "method">) =>
     queueRequest({ method: "patch", ...options }, payload), [ queueRequest ])
 
   const execDelete = useCallback((options?: Omit<MutateOptions, "method">) =>
