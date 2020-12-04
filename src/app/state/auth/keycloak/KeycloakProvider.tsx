@@ -34,15 +34,6 @@ const KeycloakProvider: React.FC<Props> = ({ shouldInitialize = true, initialize
     })()
   }, [initializedCallback, shouldInitialize])
 
-  useEffect(() => {
-    const interval = setInterval(async () => {
-      console.log(keycloak, keycloak.isTokenExpired())
-      const isUpdated = await keycloak.updateToken(30)
-      if (isUpdated) console.log("Keycloak token refreshed")
-    }, 1 * 60 * 1000) // 1 minute
-    return () => clearInterval(interval)
-  }, [])
-
   const value = {
     isInitialized,
     isAuthenticated,
