@@ -33,7 +33,7 @@ export const useIsAuthorized = (options?: Options) => {
     url: makeGatewayUrl("is-authorized"),
     groupName: "auth",
     handleError,
-    includeHeaders: true
+    isProtected: true
   })
 }
 
@@ -44,7 +44,7 @@ export const useResidents = (bagId: Components.Schemas.Address["bag_id"], option
     url: makeGatewayUrl("addresses", bagId, "residents"),
     groupName: "addresses",
     handleError,
-    includeHeaders: true
+    isProtected: true
   })
 }
 
@@ -56,7 +56,7 @@ export const useCases = (state_date?: string, options?: Options) => {
     url,
     groupName: "cases",
     handleError,
-    includeHeaders: true
+    isProtected: true
   })
 }
 
@@ -67,7 +67,7 @@ export const useCase = (id: Components.Schemas.Case["id"], options?: Options) =>
     url: makeGatewayUrl("cases", id),
     groupName: "cases",
     handleError,
-    includeHeaders: true
+    isProtected: true
   })
 }
 
@@ -78,7 +78,7 @@ export const useCaseFines = (id: Components.Schemas.Case["id"], options?: Option
     url: makeGatewayUrl("cases", id, "fines"),
     groupName: "cases",
     handleError,
-    includeHeaders: true
+    isProtected: true
   })
 }
 
@@ -89,7 +89,7 @@ export const useCaseResidents = (id: Components.Schemas.Case["id"], options?: Op
     url: makeGatewayUrl("cases", id, "residents"),
     groupName: "cases",
     handleError,
-    includeHeaders: true
+    isProtected: true
   })
 }
 
@@ -100,7 +100,7 @@ export const useDebriefings = (id?: number, options?: Options) => {
     url: makeGatewayUrl("debriefings", id),
     groupName: "cases",
     handleError,
-    includeHeaders: true
+    isProtected: true
   })
 }
 
@@ -112,7 +112,7 @@ export const useCaseEvents = (caseId: Components.Schemas.Case["id"], options?: O
     url: makeGatewayUrl("cases", caseId, "events"),
     groupName: "cases",
     handleError,
-    includeHeaders: true
+    isProtected: true
   })
 }
 
@@ -167,7 +167,7 @@ export const usePermitCheckmarks = (bagId: string) => {
     url: makeGatewayUrl("addresses", bagId, "permits", "checkmarks"),
     groupName: "permits",
     handleError,
-    includeHeaders: true
+    isProtected: true
   })
 }
 
@@ -177,7 +177,7 @@ export const usePermitDetails = (bagId: string) => {
     url: makeGatewayUrl("addresses", bagId, "permits"),
     groupName: "permits",
     handleError,
-    includeHeaders: true
+    isProtected: true
   })
 }
 
@@ -188,6 +188,6 @@ export const useMockCases = (options?: Options) => {
     url: makeGatewayUrl("cases", "generate-mock"),
     groupName: "cases",
     handleError,
-    includeHeaders: true
+    isProtected: true
   })
 }

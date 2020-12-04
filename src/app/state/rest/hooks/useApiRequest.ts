@@ -1,9 +1,9 @@
-import axios, { AxiosError } from "axios"
 import { useCallback, useEffect, useContext } from "react"
 
 import { ApiContext } from "../provider/ApiProvider"
 import { ApiGroup } from "../index"
-import createAuthHeaders from "./utils/createAuthHeaders"
+import useProtectedRequest from "./useProtectedRequest"
+import useRequest, { RequestError } from "./useRequest"
 import useKeycloak from "app/state/auth/keycloak/useKeycloak"
 
 import { navigate } from "@reach/router"
@@ -30,11 +30,11 @@ type Config = {
   lazy?: boolean
   url: string
   groupName: ApiGroup
-  handleError?: ( error: AxiosError ) => void
-  includeHeaders?: boolean
+  handleError?: ( error: RequestError ) => void
+  isProtected?: boolean
 }
 
-const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, handleError, includeHeaders, lazy, keepUsingInvalidCache }: Config) => {
+const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, handleError, isProtected, lazy, keepUsingInvalidCache }: Config) => {
   const {
     getCacheItem,
     setCacheItem,
@@ -44,7 +44,9 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
     isRequestPendingInQueue
   } = useContext(ApiContext)[groupName]
 
-  const { token, updateToken, logout } = useKeycloak()
+  const request = useRequest()
+  const protectedRequest = useProtectedRequest()
+  const { logout } = useKeycloak()
 
   /**
    * Executes an API request
@@ -55,12 +57,8 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
         clearCache()
       }
 
-      const response = await axios.request<Schema>({
-        headers: includeHeaders && token ? createAuthHeaders(token) : undefined,
-        method: options.method,
-        url,
-        data: payload
-      })
+      const requestMethod = isProtected ? protectedRequest : request
+      const response = await requestMethod(options.method, url, payload)
 
       if (isGetOptions(options) || (isMutateOptions(options) && options.useResponseAsCache)) {
         setCacheItem(url, response.data)
@@ -68,9 +66,11 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
 
       return response
     } catch (error) {
-      switch (error?.response?.status) {
-        case 401: logout(); break
-        case 403: navigate(to("/auth")); break
+      if (isProtected) {
+        switch (error?.response?.status) {
+          case 401: logout(); break
+          case 403: navigate(to("/auth")); break
+        }
       }
       if (handleError) {
         handleError(error)
@@ -78,7 +78,7 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
         throw error
       }
     }
-  }, [includeHeaders, token, logout, url, clearCache, setCacheItem, handleError])
+  }, [isProtected, request, protectedRequest, logout, url, clearCache, setCacheItem, handleError])
 
   /**
    * Queues an API request
@@ -126,13 +126,6 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
       execGet()
     }
   }, [ execGet, cacheItem, lazy ])
-
-  useEffect(() => {
-    (async () => {
-      const isUpdated = await updateToken(30)
-      if (isUpdated && process.env.REACT_APP_ENVIRONMENT !== "production") console.log("Keycloak token refreshed")
-    })()
-  })
 
   return {
     data,
