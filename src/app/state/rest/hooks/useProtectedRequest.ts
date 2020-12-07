@@ -9,7 +9,6 @@ export default () => {
 
   return useCallback(async (method: Method, url: string, data?: unknown, additionalHeaders = {}) => {
     const isUpdated = await keycloak.updateToken(30)
-    console.log(isUpdated)
     if (isUpdated) console.log("Keycloak token updated")
     const headers = {
       Authorization: `Bearer ${ keycloak.token }`,
