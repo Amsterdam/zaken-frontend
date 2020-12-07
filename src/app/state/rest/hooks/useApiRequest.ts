@@ -4,10 +4,6 @@ import { ApiContext } from "../provider/ApiProvider"
 import { ApiGroup } from "../index"
 import useProtectedRequest from "./useProtectedRequest"
 import useRequest, { RequestError } from "./useRequest"
-import useKeycloak from "app/state/auth/keycloak/useKeycloak"
-
-import { navigate } from "@reach/router"
-import to from "app/features/shared/routing/to"
 
 type GetOptions = {
   method: "get"
@@ -46,7 +42,6 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
 
   const request = useRequest()
   const protectedRequest = useProtectedRequest()
-  const { logout } = useKeycloak()
 
   /**
    * Executes an API request
@@ -66,19 +61,13 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
 
       return response
     } catch (error) {
-      if (isProtected) {
-        switch (error?.response?.status) {
-          case 401: logout(); break
-          case 403: navigate(to("/auth")); break
-        }
-      }
       if (handleError) {
         handleError(error)
       } else {
         throw error
       }
     }
-  }, [isProtected, request, protectedRequest, logout, url, clearCache, setCacheItem, handleError])
+  }, [isProtected, request, protectedRequest, url, clearCache, setCacheItem, handleError])
 
   /**
    * Queues an API request
