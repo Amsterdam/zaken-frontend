@@ -17,6 +17,7 @@ declare namespace Components {
             address: Address;
             case_states: CaseState[];
             readonly current_state: {
+                readonly id: number;
                 case: number;
                 readonly status_name: string;
                 status: number;
@@ -26,6 +27,7 @@ declare namespace Components {
             identification?: string | null;
             start_date?: string | null; // date
             end_date?: string | null; // date
+            is_legacy_bwv?: boolean;
         }
         export interface CaseEvent {
             readonly id: number;
@@ -40,6 +42,7 @@ declare namespace Components {
             case: number;
         }
         export interface CaseState {
+            readonly id: number;
             case: number;
             readonly status_name: string;
             status: number;
@@ -134,6 +137,24 @@ declare namespace Components {
             previous?: string | null; // uri
             results?: Case[];
         }
+        export interface PaginatedSupportContactList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=4
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null; // uri
+            results?: SupportContact[];
+        }
         export interface PaginatedVisitList {
             /**
              * example:
@@ -169,6 +190,7 @@ declare namespace Components {
             address?: PatchedAddress;
             case_states?: PatchedCaseState[];
             readonly current_state?: {
+                readonly id: number;
                 case: number;
                 readonly status_name: string;
                 status: number;
@@ -178,8 +200,10 @@ declare namespace Components {
             identification?: string | null;
             start_date?: string | null; // date
             end_date?: string | null; // date
+            is_legacy_bwv?: boolean;
         }
         export interface PatchedCaseState {
+            readonly id?: number;
             case?: number;
             readonly status_name?: string;
             status?: number;
@@ -215,7 +239,7 @@ declare namespace Components {
             can_next_visit_go_ahead_description?: string | null;
             suggest_next_visit?: string | null;
             suggest_next_visit_description?: string | null;
-            notes?: string;
+            notes?: string | null;
             case?: number;
         }
         export interface PermitCheckmark {
@@ -229,8 +253,14 @@ declare namespace Components {
             bag_id: string;
             start_date: string; // date
             end_date?: string; // date
-            states?: PushState[];
+            states?: /* Serializer for State pushed from Top (this is legacy Stadia data) */ PushState[];
         }
+        export interface PushCaseState {
+            user_emails: string /* email */[];
+        }
+        /**
+         * Serializer for State pushed from Top (this is legacy Stadia data)
+         */
         export interface PushState {
             name: string;
             start_date: string; // date
@@ -251,6 +281,13 @@ declare namespace Components {
             results: Resident[];
         }
         export type SoortVorderingEnum = "PBF" | "PBN" | "PRV" | "SOC";
+        export interface SupportContact {
+            readonly id: number;
+            name: string;
+            phone_number: string;
+            email: string;
+            title: string;
+        }
         export interface TopVisit {
             case_identification: string;
             start_time: string;
@@ -272,7 +309,7 @@ declare namespace Components {
             last_name: string;
             full_name: string;
         }
-        export type ViolationEnum = "NO" | "YES" | "ADDITIONAL_RESEARCH_REQUIRED";
+        export type ViolationEnum = "NO" | "YES" | "ADDITIONAL_RESEARCH_REQUIRED" | "ADDITIONAL_VISIT_REQUIRED";
         export interface Visit {
             readonly id: number;
             authors: User[];
@@ -283,7 +320,7 @@ declare namespace Components {
             can_next_visit_go_ahead_description?: string | null;
             suggest_next_visit?: string | null;
             suggest_next_visit_description?: string | null;
-            notes: string;
+            notes?: string | null;
             case: number;
         }
     }
@@ -320,6 +357,18 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.Residents;
+        }
+    }
+    namespace CaseStatesUpdateFromTopCreate {
+        namespace Parameters {
+            export type Id = string;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        export type RequestBody = Components.Schemas.PushCaseState;
+        namespace Responses {
+            export type $200 = Components.Schemas.PushCaseState;
         }
     }
     namespace CasesCreate {
@@ -373,6 +422,12 @@ declare namespace Paths {
             export type $200 = Components.Schemas.FineList;
         }
     }
+    namespace CasesGenerateMockCreate {
+        export type RequestBody = Components.Schemas.Case;
+        namespace Responses {
+            export type $200 = Components.Schemas.Case;
+        }
+    }
     namespace CasesList {
         namespace Parameters {
             export type Page = number;
@@ -384,11 +439,6 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCaseList;
-        }
-    }
-    namespace CasesMockCasesRetrieve {
-        namespace Responses {
-            export type $200 = Components.Schemas.Case;
         }
     }
     namespace CasesPartialUpdate {
@@ -510,6 +560,17 @@ declare namespace Paths {
             export interface $200 {
                 [name: string]: any;
             }
+        }
+    }
+    namespace SupportContactsList {
+        namespace Parameters {
+            export type Page = number;
+        }
+        export interface QueryParameters {
+            page?: Parameters.Page;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedSupportContactList;
         }
     }
     namespace TestPermitsCheckmarksRetrieve {
