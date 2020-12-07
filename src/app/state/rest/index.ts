@@ -15,6 +15,7 @@ export type ApiGroup =
   | "dataPunt"
   | "permits"
   | "auth"
+  | "supportContacts"
 
 export type Options = {
   keepUsingInvalidCache?: boolean
@@ -187,6 +188,17 @@ export const useMockCases = (options?: Options) => {
     ...options,
     url: makeGatewayUrl("cases", "generate-mock"),
     groupName: "cases",
+    handleError,
+    isProtected: true
+  })
+}
+
+export const useSupportContacts = (options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<Components.Schemas.PaginatedSupportContactList>({
+    ...options,
+    url: makeGatewayUrl("support-contacts"),
+    groupName: "supportContacts",
     handleError,
     isProtected: true
   })
