@@ -58,7 +58,7 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
       }
 
       const requestMethod = isProtected ? protectedRequest : request
-      const response = await requestMethod(options.method, url, payload)
+      const response = await requestMethod<Schema>(options.method, url, payload)
 
       if (isGetOptions(options) || (isMutateOptions(options) && options.useResponseAsCache)) {
         setCacheItem(url, response.data)
