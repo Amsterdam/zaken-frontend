@@ -1,10 +1,10 @@
 # Zaken frontend
 
 ## Production
-[zaken.amsterdam.nl](https://zaken.amsterdam.nl)
+[wonen.zaken.amsterdam.nl](https://wonen.zaken.amsterdam.nl)
 
 ## Acceptance
-[acc.zaken.amsterdam.nl](https://acc.zaken.amsterdam.nl)
+[acc.wonen.zaken.amsterdam.nl](https://acc.wonen.zaken.amsterdam.nl)
 
 ## Development
 - There is a dependency on https://github.com/Amsterdam/zaken-backend
@@ -17,10 +17,10 @@
 - `npm run start`
 
 ### Bypassing authentication
-- When running zaken-frontend and zaken-backend locally, it's possible to bypass Grip authentication. Add `REACT_APP_AUTH_URL=/authentication/callback?code=1234567890abcdefghijkl` to `.env.development.local`. See [.env.development](https://github.com/Amsterdam/zaken-frontend/blob/master/.env.development) for examples.
+- When running zaken-frontend and zaken-backend locally, it's possible to bypass Keycloak authentication. See https://github.com/Amsterdam/zaken-frontend/tree/master/src/app/state/auth/keycloak.
 
 ### Connecting to Acceptance API
-- It's possible to connect a locally run zaken-frontend to Acceptance API. Add `REACT_APP_GATEWAY=https://acc.looplijst.top.amsterdam.nl/api/v1/` to `.env.development.local`. See [.env.development](https://github.com/Amsterdam/zaken-frontend/blob/master/.env.development) for examples.
+- It's possible to connect a locally run zaken-frontend to Acceptance API. Add `REACT_APP_GATEWAY=https://acc.api.wonen.zaken.amsterdam.nl/api/v1/` to `.env.development.local`. See [.env.development](https://github.com/Amsterdam/zaken-frontend/blob/master/.env.development) for examples.
 
 # Original README
 
