@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { Icon, themeColor, ascDefaultTheme } from "@amsterdam/asc-ui"
-import * as Assets from "@amsterdam/asc-assets"
+import * as Assets from "@material-ui/icons"
 
 type Props = {
   icon: keyof typeof Assets

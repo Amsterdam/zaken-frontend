@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from "react"
 import { useLocation, navigate } from "@reach/router"
-import { ChevronRight } from "@amsterdam/asc-assets"
+import { ChevronRight } from "@material-ui/icons"
 import { Button } from "@amsterdam/asc-ui"
 
 import useOtherAddressesByBagId from "app/state/rest/custom/useOtherAddresses/useOtherAddresses"
@@ -26,7 +26,7 @@ const mapData = (onClick: (bagId: string) => void) => (data: SearchResult) =>
       onClick={() => onClick(data.landelijk_id)}
       as="span"
       variant="textButton"
-      iconSize={14}
+      iconSize={24}
       iconLeft={<ChevronRight />}>
       Open
     </Button>

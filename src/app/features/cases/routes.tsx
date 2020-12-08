@@ -20,17 +20,17 @@ export default {
       ":id": {
         Page: DetailsPage,
         title: "Zaakdetails",
-        icon: "Suitcase"
+        icon: "FolderOutlined"
       },
       ":id/debriefing": {
         Page: DebriefCreatePage,
         title: "Debrief terugkoppeling geven",
-        icon: "DocumentEdit"
+        icon: "Edit"
       },
       ":caseId/debriefing/:id": {
         Page: DebriefEditPage,
         title: "Debrief terugkoppeling wijzigen",
-        icon: "DocumentEdit"
+        icon: "Edit"
       }
     }
   }

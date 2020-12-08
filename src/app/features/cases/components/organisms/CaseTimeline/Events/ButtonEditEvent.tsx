@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { breakpoint, Button } from "@amsterdam/asc-ui"
 import { displayDate, displayTime } from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
 import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
-import { EditDocument } from "@amsterdam/asc-assets"
+import { Edit } from "@material-ui/icons"
 
 type Props = {
   target: string
@@ -34,10 +34,10 @@ const ButtonEditEvent: React.FC<Props> = ({ target, disabled = false, editable_u
         { 
         !disabled ?
           <ButtonLink to={ target } >
-            <StyledButton size={60} variant="blank" iconSize={32} icon={<EditDocument /> } disabled={disabled} title={editableUntilText} />
+            <StyledButton size={60} variant="blank" iconSize={36} icon={<Edit /> } disabled={disabled} title={editableUntilText} />
           </ButtonLink>
           :
-          <StyledButton size={60} variant="blank" iconSize={32} icon={<EditDocument /> } disabled={disabled} title={editableUntilText} />
+          <StyledButton size={60} variant="blank" iconSize={36} icon={<Edit /> } disabled={disabled} title={editableUntilText} />
         }
       </ButtonWrap>
     )

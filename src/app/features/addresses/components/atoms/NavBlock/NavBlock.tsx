@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { Link } from "@reach/router"
 import { Card, CardContent, Icon, Heading, themeColor, themeSpacing } from "@amsterdam/asc-ui"
-import * as Assets from "@amsterdam/asc-assets"
+import * as Assets from "@material-ui/icons"
 
 type Props = {
   to: string
@@ -34,7 +34,7 @@ const NavBlock: React.FC<Props> = ({ to: toPath, icon, header, count }) => {
     <StyledLink to={ toPath }>
       <StyledCard backgroundColor="level2" shadow>
         <CardContent>
-          <Icon size={ 36 }><Asset /></Icon>
+          <Icon size={ 48 }><Asset /></Icon>
           <StyledHeading as="h3">{ header }{ count ? ` (${ count })` : "" }</StyledHeading>
         </CardContent>
       </StyledCard>

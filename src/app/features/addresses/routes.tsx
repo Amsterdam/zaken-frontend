@@ -12,22 +12,22 @@ export default {
     subRoutes: {
       "detail": {
         Page: DetailsPage,
-        icon: "Housing",
+        icon: "HomeOutlined",
         title: "Adresdetails"
       },
       "personen": {
         Page: PeoplePage,
-        icon: "PersonalLogin",
+        icon: "PermIdentity",
         title: "Persoonsgegevens"
       },
       "vergunningen": {
         Page: PermitIndexPage,
-        icon: "DocumentCheckmark",
+        icon: "AssignmentTurnedInOutlined",
         title: "Vergunningen"
       },
       "zaken": {
         Page: CasesPage,
-        icon: "Layers",
+        icon: "FolderOutlined",
         title: "Gerelateerde zaken"
       }
     }
