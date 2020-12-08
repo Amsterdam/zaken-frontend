@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@amsterdam/asc-assets": "^0.26.1",
+    "@amsterdam/asc-assets": "^0.26.2",
     "@amsterdam/asc-ui": "^0.26.1",
     "@reach/router": "^1.3.4",
     "@sentry/browser": "^5.28.0",
