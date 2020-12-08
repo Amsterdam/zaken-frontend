@@ -20,7 +20,7 @@ export default {
       ":id": {
         Page: DetailsPage,
         title: "Zaakdetails",
-        icon: "FolderOutlined"
+        icon: "Folder"
       },
       ":id/debriefing": {
         Page: DebriefCreatePage,

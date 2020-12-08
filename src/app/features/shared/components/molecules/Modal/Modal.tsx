@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { Modal as AscModal, TopBar, Heading, Button, Icon, Divider, themeSpacing } from "@amsterdam/asc-ui"
-import Close from "@material-ui/icons/Close"
+import { Close } from "app/features/shared/components/atoms/Icons"
 
 type Props = {
   title: string

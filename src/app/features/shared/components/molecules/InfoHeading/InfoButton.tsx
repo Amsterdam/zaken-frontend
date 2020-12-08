@@ -1,6 +1,6 @@
 import React, { ComponentProps, FC } from "react"
 import { Button, Icon } from "@amsterdam/asc-ui"
-import { Info } from "@amsterdam/asc-assets"
+import { Info } from "app/features/shared/components/atoms/Icons"
 
 import Modal, { ModalBlock } from "app/features/shared/components/molecules/Modal/Modal"
 import { useModal } from "app/features/shared/components/molecules/Modal/hooks/useModal"

@@ -1,6 +1,6 @@
 import React from "react"
 import { Button } from "@amsterdam/asc-ui"
-import ChevronRight from "@material-ui/icons/ChevronRight"
+import { ChevronRight } from "app/features/shared/components/atoms/Icons"
 import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
 
 type ButtonProps = {

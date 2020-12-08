@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { Link } from "@reach/router"
 import { Card, CardContent, Icon, Heading, themeColor, themeSpacing } from "@amsterdam/asc-ui"
-import * as Assets from "@material-ui/icons"
+import * as Assets from "app/features/shared/components/atoms/Icons"
 
 type Props = {
   to: string

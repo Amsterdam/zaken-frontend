@@ -1,7 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import ExpandMore from "@material-ui/icons/ExpandMore"
-import ExpandLess from "@material-ui/icons/ExpandLess"
+import { ExpandMore, ExpandLess } from "app/features/shared/components/atoms/Icons"
 import { Button, Icon } from "@amsterdam/asc-ui"
 
 import { useModal } from "app/features/shared/components/molecules/Modal/hooks/useModal"

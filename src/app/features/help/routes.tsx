@@ -4,6 +4,6 @@ export default {
   "/hulp": {
     Page: HelpPage,
     title: "Hulp",
-    icon: "HelpOutline"
+    icon: "Help"
   }
 }

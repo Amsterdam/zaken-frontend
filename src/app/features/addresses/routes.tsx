@@ -12,7 +12,7 @@ export default {
     subRoutes: {
       "detail": {
         Page: DetailsPage,
-        icon: "HomeOutlined",
+        icon: "Home",
         title: "Adresdetails"
       },
       "personen": {
@@ -22,12 +22,12 @@ export default {
       },
       "vergunningen": {
         Page: PermitIndexPage,
-        icon: "AssignmentTurnedInOutlined",
+        icon: "AssignmentTurnedIn",
         title: "Vergunningen"
       },
       "zaken": {
         Page: CasesPage,
-        icon: "FolderOutlined",
+        icon: "Folder",
         title: "Gerelateerde zaken"
       }
     }
