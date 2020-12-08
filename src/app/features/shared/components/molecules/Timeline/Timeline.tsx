@@ -1,8 +1,8 @@
-import { ChevronDown, Checkmark } from "@amsterdam/asc-assets"
+import { ExpandMore, Check } from "@material-ui/icons"
 import React, { useCallback, useEffect, useState } from "react"
 import { useUID } from "react-uid"
 import { Theme } from "@amsterdam/asc-ui/es/types/Theme"
-import { themeSpacing } from "@amsterdam/asc-ui"
+import { Icon, themeSpacing } from "@amsterdam/asc-ui"
 
 import {
   TimelineItem,
@@ -107,7 +107,7 @@ const Timeline: React.FC<
             size={13}
             {...{ isDone, largeCircle }}
           >
-            {isDone && <Checkmark />}
+            {isDone && <Icon size={16}><Check /></Icon>}
           </CircleStyle>
         </CircleWrapperStyle>
         <TimelineItem>
@@ -120,7 +120,7 @@ const Timeline: React.FC<
                 id={`label-${ id }`}
                 type="button"
                 variant="blank"
-                iconRight={<ChevronDown />}
+                iconRight={<Icon size={20}><ExpandMore /></Icon>}
                 isOpen={open}
                 title={title}
                 onClick={handleClick}

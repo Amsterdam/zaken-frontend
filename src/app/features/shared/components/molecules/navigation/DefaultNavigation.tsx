@@ -4,7 +4,8 @@ import styled from "styled-components"
 import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
 import to from "app/features/shared/routing/to"
 import useKeycloak from "app/state/auth/keycloak/useKeycloak"
-import { Search, Info } from "@amsterdam/asc-assets"
+import { Search } from "@material-ui/icons"
+import Help from "@material-ui/icons/HelpOutline"
 import MenuItems from "app/features/shared/components/molecules/navigation/MenuItems"
 import UserInfo from "../UserInfo/UserInfo"
 
@@ -31,12 +32,12 @@ const DefaultNavigation: React.FC<Props> = ({ showSearchButton }) => {
       <div>
         <Hidden maxBreakpoint="laptopM">
           <ButtonLink to={to("/hulp")}>
-            <IconButton size={50} variant="blank" iconSize={20} icon={<Info />} />
+            <IconButton size={50} variant="blank" iconSize={28} icon={<Help />} />
           </ButtonLink>
         </Hidden>
         { showSearchButton &&
           <ButtonLink to={to("/zoeken")}>
-            <IconButton size={50} variant="blank" iconSize={20} icon={<Search />} />
+            <IconButton size={50} variant="blank" iconSize={28} icon={<Search />} />
           </ButtonLink>
         }
       </div>

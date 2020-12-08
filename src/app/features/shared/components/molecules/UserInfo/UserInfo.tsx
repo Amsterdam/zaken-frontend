@@ -1,7 +1,8 @@
 import React from "react"
 import styled from "styled-components"
-import { Logout, PersonalLogin } from "@amsterdam/asc-assets"
-import { breakpoint, MenuButton } from "@amsterdam/asc-ui"
+import { Logout } from "@amsterdam/asc-assets"
+import { PermIdentity } from "@material-ui/icons"
+import { breakpoint, MenuButton, Icon } from "@amsterdam/asc-ui"
 
 import useKeycloak from "app/state/auth/keycloak/useKeycloak"
 
@@ -42,7 +43,7 @@ const UserDisplay: React.FC<UserProps> = ({ userDisplay, onClick }) =>
   <>
     { userDisplay &&
       <UserDisplayStyle>
-        <PersonalLogin width={24} height={24} />
+        <Icon size={ 36 }><PermIdentity /></Icon>
         <span>{ userDisplay }</span>
       </UserDisplayStyle>
     }
