@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { RouteComponentProps } from "@reach/router"
 import { FormTitle, Heading, Button } from "@amsterdam/asc-ui"
-import { DeleteOutline } from "@material-ui/icons"
+import DeleteOutline from "@material-ui/icons/DeleteOutline"
 
 import { useCase, useDebriefings } from "app/state/rest/"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"

@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { Logout } from "@amsterdam/asc-assets"
-import { PermIdentity } from "@material-ui/icons"
+import PermIdentity from "@material-ui/icons/PermIdentity"
 import { breakpoint, MenuButton, Icon } from "@amsterdam/asc-ui"
 
 import useKeycloak from "app/state/auth/keycloak/useKeycloak"

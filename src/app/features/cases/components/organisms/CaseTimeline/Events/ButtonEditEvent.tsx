@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { breakpoint, Button } from "@amsterdam/asc-ui"
 import { displayDate, displayTime } from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
 import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
-import { Edit } from "@material-ui/icons"
+import Edit from "@material-ui/icons/Edit"
 
 type Props = {
   target: string

@@ -1,4 +1,5 @@
-import { ExpandMore, Check } from "@material-ui/icons"
+import ExpandMore from "@material-ui/icons/ExpandMore"
+import Check from "@material-ui/icons/Check"
 import React, { useCallback, useEffect, useState } from "react"
 import { useUID } from "react-uid"
 import { Theme } from "@amsterdam/asc-ui/es/types/Theme"

@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from "react"
 import { useLocation, navigate } from "@reach/router"
-import { ChevronRight } from "@material-ui/icons"
+import ChevronRight from "@material-ui/icons/ChevronRight"
 import { Button } from "@amsterdam/asc-ui"
 
 import useOtherAddressesByBagId from "app/state/rest/custom/useOtherAddresses/useOtherAddresses"
