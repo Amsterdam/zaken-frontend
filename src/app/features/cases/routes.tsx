@@ -1,11 +1,7 @@
-import IndexPage from "./components/pages/index/IndexPage"
-
-import CreatePage from "./components/pages/create/CreatePage"
-
-
-import DetailsPage from "./components/pages/details/DetailsPage"
-import EditPage from "./components/pages/edit/EditPage"
-
+import IndexPage from "app/pages/cases/index/IndexPage"
+import CreatePage from "app/pages/cases/create/CreatePage"
+import DetailsPage from "app/pages/cases/details/DetailsPage"
+import EditPage from "app/pages/cases/edit/EditPage"
 import DebriefCreatePage from "app/pages/debriefings/CreatePage"
 import DebriefEditPage from "app/pages/debriefings/EditPage"
 
