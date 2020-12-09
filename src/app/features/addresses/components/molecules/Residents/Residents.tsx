@@ -4,7 +4,7 @@ import { themeSpacing, Heading } from "@amsterdam/asc-ui"
 
 import { useResidents } from "app/state/rest"
 import LoadingDetails from "app/features/shared/components/molecules/Details/LoadingDetails"
-import Resident from "app/features/addresses/components/organisms/Residents/Resident"
+import Resident from "app/features/addresses/components/molecules/Residents/Resident"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
