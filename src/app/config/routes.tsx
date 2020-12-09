@@ -1,8 +1,8 @@
-import authRoutes from "../features/auth/routes"
+import authRoutes from "../pages/auth/routes"
 import searchRoutes from "../features/search/routes"
 import addressesRoutes from "../pages/addresses/routes"
 import casesRoutes from "../pages/cases/routes"
-import caseVisitsRoutes from "../features/caseVisits/routes"
+import caseVisitsRoutes from "../pages/caseVisits/routes"
 import helpRoutes from "../pages/help/routes"
 
 import routesToRouteConfig, { RouteConfigObject } from "./utils/routesToRouteConfig"

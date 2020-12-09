@@ -1,6 +1,6 @@
 import { useCallback } from "react"
 
-import { useCaseVisit, CaseVisit } from "../../../../hooks/useCaseVisits"
+import { useCaseVisit, CaseVisit } from "app/pages/caseVisits/hooks/useCaseVisits"
 
 export const useEditPage = (id?: Components.Schemas.Case["id"]) => {
   const initialValues = useCaseVisit(id!)

@@ -1,4 +1,4 @@
-import AuthPage from "./components/pages/auth/AuthPage"
+import AuthPage from "./AuthPage"
 
 export default {
   "/auth": AuthPage

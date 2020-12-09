@@ -3,7 +3,7 @@ import { RouteComponentProps } from "@reach/router"
 import { FormTitle, Heading } from "@amsterdam/asc-ui"
 
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
-import Form from "app/features/caseVisits/components/molecules/Form/Form"
+import Form from "app/features/caseVisits/components/Form/Form"
 import { useEditPage } from "./hooks/useEditPage"
 
 type Props = {

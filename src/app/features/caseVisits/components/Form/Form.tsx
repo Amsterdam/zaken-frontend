@@ -4,7 +4,7 @@ import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
 import ScaffoldFields from "app/features/shared/components/molecules/Form/ScaffoldFields"
 import scaffoldProps from "./scaffold"
 
-import type { CaseVisit } from "../../../hooks/useCaseVisits"
+import type { CaseVisit } from "app/pages/caseVisits/hooks/useCaseVisits"
 
 type Props = {
   onSubmit: (data: CaseVisit) => Promise<void>
