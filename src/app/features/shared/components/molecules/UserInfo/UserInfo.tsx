@@ -15,17 +15,19 @@ type UserProps = {
 
 const UserDisplayStyle = styled.div`
 
-  padding: 6px 0 0 24px;
+  padding: 8px 0 0 24px;
   vertical-align: middle;
   height: 54px;
   
   span {
-    display: inline;
+    display: inline-block;
     vertical-align: middle;
+    margin-right: 10px;
   }
 
   svg {
-    margin-right: 10px;
+    display: inline-block;
+    transform: translateY(-2px)
   }
 
   @media screen and ${ breakpoint("min-width", "laptopM") } {
