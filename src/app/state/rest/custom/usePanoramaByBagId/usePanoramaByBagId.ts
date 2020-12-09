@@ -1,4 +1,4 @@
-import { useBAG, usePanorama } from "../../index"
+import { useBAG, usePanorama } from "app/state/rest/index"
 
 const usePanoramaByBagId = (bagId: string, width: number | undefined, aspect: number | undefined, radius: number, fov: number | undefined) => {
   const { data } = useBAG(bagId)

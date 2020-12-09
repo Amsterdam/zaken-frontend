@@ -1,4 +1,4 @@
-import { useBAG } from "../../index"
+import { useBAG } from "app/state/rest/index"
 
 /**
  * Returns other addresses with the same postcode + huisnummer

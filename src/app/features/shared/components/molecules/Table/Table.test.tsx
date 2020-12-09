@@ -3,7 +3,7 @@ import { mount } from "enzyme"
 
 import TableCell from "./components/TableCell/TableCell"
 import Table from "./Table"
-import SmallSkeleton from "../../atoms/Skeleton/SmallSkeleton"
+import SmallSkeleton from "app/features/shared/components/atoms/Skeleton/SmallSkeleton"
 import FixedTableCell from "./components/TableCell/FixedTableCell"
 
 describe("Table", () => {
