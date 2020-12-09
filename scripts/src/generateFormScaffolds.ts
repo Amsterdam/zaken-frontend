@@ -1,7 +1,7 @@
 #!/usr/bin/env ts-node-script
 import fs from "fs"
 import { config } from "dotenv-flow"
-import { fetchSchema, getSchemaObjects, parseOpenApiSchema } from "amsterdam-scaffold-form"
+import { fetchSchema, getSchemaObjects, parseOpenApiSchema } from "@amsterdam/scaffold-form"
 import slashSandwich from "slash-sandwich"
 
 

@@ -1,5 +1,5 @@
 import React from "react"
-import { ScaffoldAvailableFields, ScaffoldField as AmsterdamScaffoldField } from "amsterdam-react-final-form"
+import { ScaffoldAvailableFields, ScaffoldField as AmsterdamScaffoldField } from "@amsterdam/amsterdam-react-final-form"
 
 import AutoFillButton, { AutoFillButtonProps } from "./AutoFillButton/AutoFillButton"
 

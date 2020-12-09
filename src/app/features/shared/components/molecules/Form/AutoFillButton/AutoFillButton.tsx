@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react"
 import { useForm } from "react-final-form"
-import { Button } from "amsterdam-react-final-form"
+import { Button } from "@amsterdam/amsterdam-react-final-form"
 
 export type AutoFillButtonProps = React.ComponentProps<typeof Button> & {
   field: string
