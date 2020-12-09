@@ -3,7 +3,7 @@ import { FormTitle, Heading } from "@amsterdam/asc-ui"
 
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 
-import Form from "app/features/cases/components/organisms/Form/Form"
+import Form from "app/features/cases/components/molecules/Form/Form"
 
 import useCreatePage from "./hooks/useCreatePage"
 

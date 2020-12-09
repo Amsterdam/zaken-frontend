@@ -8,8 +8,8 @@ import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import DetailHeader from "app/features/shared/components/molecules/DetailHeader/DetailHeader"
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
 
-import TimelineContainer from "app/features/cases/components/organisms/CaseTimeline/TimelineContainer"
-import Workflow from "app/features/cases/components/organisms/Workflow/Workflow"
+import TimelineContainer from "app/features/cases/components/molecules/CaseTimeline/TimelineContainer"
+import Workflow from "app/features/cases/components/molecules/Workflow/Workflow"
 
 type Props = {
   id: Components.Schemas.Case["id"]

@@ -5,7 +5,7 @@ import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/
 import Row, { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import Column from "app/features/shared/components/atoms/Grid/Column"
 import DetailHeader from "app/features/shared/components/molecules/DetailHeader/DetailHeader"
-import People from "app/features/addresses/components/organisms/People/People"
+import People from "app/features/addresses/components/molecules/People/People"
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
 import MockWrapper from "app/features/shared/components/molecules/MockWrapper/MockWrapper"
 

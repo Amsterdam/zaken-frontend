@@ -5,7 +5,7 @@ import { Heading } from "@amsterdam/asc-ui"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/"
 import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
-import Cases from "app/features/cases/components/organisms/Cases/Cases"
+import Cases from "app/features/cases/components/molecules/Cases/Cases"
 
 const IndexPage: React.FC<RouteComponentProps> = () => (
     <DefaultLayout>

@@ -7,7 +7,7 @@ import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 import ConfirmButton from "app/features/shared/components/molecules/ConfirmButton/ConfirmButton"
 
-import Form from "app/features/cases/components/organisms/Form/Form"
+import Form from "app/features/cases/components/molecules/Form/Form"
 
 import { useEditPage } from "./hooks/useEditPage"
 

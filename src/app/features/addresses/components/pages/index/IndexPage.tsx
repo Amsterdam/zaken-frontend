@@ -6,7 +6,7 @@ import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/
 import AddressHeader from "app/features/addresses/components/atoms/AddressHeader/AddressHeader"
 import AddressMenu from "app/features/addresses/components/molecules/AddressMenu/AddressMenu"
 import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
-import PanoramaPreview from "app/features/cases/components/organisms/Panorama/PanoramaPreview"
+import PanoramaPreview from "app/features/cases/components/molecules/Panorama/PanoramaPreview"
 
 
 type Props = {
