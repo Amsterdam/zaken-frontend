@@ -17,7 +17,7 @@ export default {
       },
       "personen": {
         Page: PeoplePage,
-        icon: "PermIdentity",
+        icon: "Portrait",
         title: "Persoonsgegevens"
       },
       "vergunningen": {
