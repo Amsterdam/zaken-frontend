@@ -1,5 +1,5 @@
 import React from "react"
-import Residents from "app/features/addresses/components/molecules/Residents/Residents"
+import Residents from "app/features/addresses/components/Residents/Residents"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
