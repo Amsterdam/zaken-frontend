@@ -6,7 +6,7 @@ import Row, { RowWithColumn } from "app/features/shared/components/atoms/Grid/Ro
 import Column from "app/features/shared/components/atoms/Grid/Column"
 import DetailHeader from "app/features/shared/components/molecules/DetailHeader/DetailHeader"
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
-import ObjectDetails from "app/features/addresses/components/atoms/ObjectDetails/ObjectDetails"
+import ObjectDetails from "app/features/addresses/components/ObjectDetails/ObjectDetails"
 import PermitOverview from "app/features/permits/components/molecules/PermitOverview/PermitOverview"
 import MockWrapper from "app/features/shared/components/molecules/MockWrapper/MockWrapper"
 

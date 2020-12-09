@@ -4,7 +4,7 @@ import React from "react"
 import Row from "app/features/shared/components/atoms/Grid/Row"
 import Column from "app/features/shared/components/atoms/Grid/Column"
 import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
-import AddressHeader from "app/features/addresses/components/atoms/AddressHeader/AddressHeader"
+import AddressHeader from "app/features/addresses/components/AddressHeader/AddressHeader"
 
 type Props = {
   bagId: string

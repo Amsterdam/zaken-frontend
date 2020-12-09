@@ -3,10 +3,10 @@ import { RouteComponentProps } from "@reach/router"
 
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
-import AddressHeader from "app/features/addresses/components/atoms/AddressHeader/AddressHeader"
+import AddressHeader from "app/features/addresses/components/AddressHeader/AddressHeader"
 import AddressMenu from "app/features/addresses/components/molecules/AddressMenu/AddressMenu"
 import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
-import PanoramaPreview from "app/features/cases/components/molecules/Panorama/PanoramaPreview"
+import PanoramaPreview from "app/features/cases/components/Panorama/PanoramaPreview"
 
 
 type Props = {

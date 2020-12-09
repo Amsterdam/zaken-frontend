@@ -1,7 +1,7 @@
-import IndexPage from "./components/pages/index/IndexPage"
-import DetailsPage from "./components/pages/details/DetailsPage"
-import PeoplePage from "./components/pages/people/PeoplePage"
-import CasesPage from "./components/pages/cases/CasesPage"
+import IndexPage from "app/pages/addresses/index/IndexPage"
+import DetailsPage from "app/pages/addresses/details/DetailsPage"
+import PeoplePage from "app/pages/addresses/people/PeoplePage"
+import CasesPage from "app/pages/addresses/cases/CasesPage"
 import PermitIndexPage from "app/features/permits/components/pages/index/IndexPage"
 
 // NOTE: please add your own POC-specific routes here.
