@@ -1,5 +1,5 @@
 import React, { ComponentProps } from "react"
-import { Scaffold as AmsterdamScaffold } from "amsterdam-react-final-form"
+import { Scaffold as AmsterdamScaffold } from "@amsterdam/amsterdam-react-final-form"
 import ScaffoldField, { Field } from "./ScaffoldField"
 import { FieldRenderer } from "amsterdam-react-final-form/components/final-form/Scaffold/Scaffold"
 
