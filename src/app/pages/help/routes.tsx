@@ -1,4 +1,4 @@
-import HelpPage from "./components/pages/Help/HelpPage"
+import HelpPage from "app/pages/help/HelpPage"
 
 export default {
   "/hulp": {

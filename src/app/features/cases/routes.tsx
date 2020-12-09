@@ -6,8 +6,8 @@ import CreatePage from "./components/pages/create/CreatePage"
 import DetailsPage from "./components/pages/details/DetailsPage"
 import EditPage from "./components/pages/edit/EditPage"
 
-import DebriefCreatePage from "app/features/debriefings/components/pages/CreatePage"
-import DebriefEditPage from "app/features/debriefings/components/pages/EditPage"
+import DebriefCreatePage from "app/pages/debriefings/CreatePage"
+import DebriefEditPage from "app/pages/debriefings/EditPage"
 
 // NOTE: please add your own POC-specific routes here.
 export default {

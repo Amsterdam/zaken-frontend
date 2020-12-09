@@ -3,7 +3,7 @@ import searchRoutes from "../features/search/routes"
 import addressesRoutes from "../features/addresses/routes"
 import casesRoutes from "../features/cases/routes"
 import caseVisitsRoutes from "../features/caseVisits/routes"
-import helpRoutes from "../features/help/routes"
+import helpRoutes from "../pages/help/routes"
 
 import routesToRouteConfig, { RouteConfigObject } from "./utils/routesToRouteConfig"
 

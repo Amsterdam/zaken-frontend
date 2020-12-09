@@ -8,8 +8,8 @@ import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
 import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
-import AddressHeading from "app/features/debriefings/components/molecules/AddressHeading/AddressHeading"
-import DebriefForm from "app/features/debriefings/components/molecules/DebriefForm/DebriefForm"
+import AddressHeading from "app/features/debriefings/components/AddressHeading/AddressHeading"
+import DebriefForm from "app/features/debriefings/components/DebriefForm/DebriefForm"
 import usePageDebriefing from "./hooks/usePageDebriefing"
 
 type Props = {

@@ -6,7 +6,7 @@ import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/"
 import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
-import HelpContent from "app/features/help/components/molecules/HelpContent/HelpContent"
+import HelpContent from "app/features/help/components/HelpContent/HelpContent"
 
 const IndexPage: React.FC<RouteComponentProps> = () => (
     <DefaultLayout>
