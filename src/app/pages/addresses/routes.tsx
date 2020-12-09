@@ -2,7 +2,7 @@ import IndexPage from "app/pages/addresses/index/IndexPage"
 import DetailsPage from "app/pages/addresses/details/DetailsPage"
 import PeoplePage from "app/pages/addresses/people/PeoplePage"
 import CasesPage from "app/pages/addresses/cases/CasesPage"
-import PermitIndexPage from "app/features/permits/components/pages/index/IndexPage"
+import PermitIndexPage from "app/pages/permits/index/IndexPage"
 
 // NOTE: please add your own POC-specific routes here.
 export default {
