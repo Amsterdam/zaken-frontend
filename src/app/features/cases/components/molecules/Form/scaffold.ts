@@ -1,5 +1,5 @@
 import { produce } from "immer"
-import { FormPositioner } from "amsterdam-scaffold-form/package"
+import { FormPositioner } from "@amsterdam/scaffold-form/package"
 
 import PUTCases from "__generated__/FormCases.json"
 
