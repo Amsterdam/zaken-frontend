@@ -6,6 +6,8 @@ import EmailLink from "./EmailLink"
 import PhoneLink from "./PhoneLink"
 
 import { useSupportContacts } from "app/state/rest/"
+import { Refresh } from "app/features/shared/components/atoms/Icons"
+import styled from "styled-components"
 
 const showOptionalProperty = (prop: string | undefined) => prop ?? "(onbekend)"
 
@@ -14,6 +16,10 @@ const mapData = (data: Components.Schemas.PaginatedSupportContactList | undefine
   data?.results?.find(({ title }) => title === "ICT Beheerder Team Basis"),
   data?.results?.find(({ title }) => title === "UX Designer")
 ])
+
+const RefreshIcon = styled (Refresh)`
+  vertical-align: text-top;
+`
 
 const HelpContent: React.FC = () => {
   const { data } = useSupportContacts()
@@ -27,7 +33,7 @@ const HelpContent: React.FC = () => {
       <RowWithColumn>
         <Heading as="h2">Technisch support</Heading>
         <Paragraph>
-        Werkt { title } niet (goed)? Probeer de pagina opnieuw te laden door op het refresh icoon te klikken.<br/>
+        Werkt { title } niet (goed)? Probeer de pagina opnieuw te laden door op het refresh icoon <RefreshIcon /> te klikken.<br/>
         Werkt { title } dan nog steeds niet, neem dan contact op met:
         </Paragraph>
         <ul>
@@ -38,7 +44,7 @@ const HelpContent: React.FC = () => {
       <RowWithColumn>
         <Heading as="h2">Vraag een demo aan</Heading>
         <Paragraph>
-        Ben je nieuw met { title }, loop je ergens tegen aan of wil je gewoon graag persoonlijke uitleg over { title }? Neem dan contact op met { showOptionalProperty(contacts[2]?.name) }.
+        Ben je nieuw met { title }, loop je ergens tegen aan of wil je gewoon graag persoonlijke uitleg over { title }? Neem dan contact op met { showOptionalProperty(contacts[2]?.name) }, { showOptionalProperty(contacts[2]?.title) }.
         </Paragraph>
         <ul>
           <li>Telefonisch: te bereiken tijdens kantooruren op ma, di, wo en do op <PhoneLink phoneNumber={ showOptionalProperty(contacts[2]?.phone_number) } /></li>
