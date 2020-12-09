@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
-import { Logout, PersonalLogin } from "@amsterdam/asc-assets"
-import { breakpoint, MenuButton } from "@amsterdam/asc-ui"
+import { PermIdentity, Logout } from "app/features/shared/components/atoms/Icons"
+import { breakpoint, MenuButton, Icon } from "@amsterdam/asc-ui"
 
 import useKeycloak from "app/state/auth/keycloak/useKeycloak"
 
@@ -15,16 +15,17 @@ type UserProps = {
 
 const UserDisplayStyle = styled.div`
 
-  flex: 1 0 100%;
-  padding: 12px 0 0 24px;
-
-  >span {
-    vertical-align: text-top;
+  padding: 6px 0 0 24px;
+  vertical-align: middle;
+  height: 54px;
+  
+  span {
+    display: inline;
+    vertical-align: middle;
   }
 
   svg {
     margin-right: 10px;
-    transform: translateY(2px);
   }
 
   @media screen and ${ breakpoint("min-width", "laptopM") } {
@@ -42,7 +43,7 @@ const UserDisplay: React.FC<UserProps> = ({ userDisplay, onClick }) =>
   <>
     { userDisplay &&
       <UserDisplayStyle>
-        <PersonalLogin width={24} height={24} />
+        <Icon size={ 32 }><PermIdentity /></Icon>
         <span>{ userDisplay }</span>
       </UserDisplayStyle>
     }

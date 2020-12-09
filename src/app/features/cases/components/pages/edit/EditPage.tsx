@@ -1,7 +1,7 @@
 import React from "react"
 import { RouteComponentProps } from "@reach/router"
 import { FormTitle, Heading } from "@amsterdam/asc-ui"
-import { TrashBin } from "@amsterdam/asc-assets/lib"
+import { Delete } from "app/features/shared/components/atoms/Icons"
 
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
@@ -28,7 +28,7 @@ const EditPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
           data-e2e-id="delete"
           disabled={isLoading}
           onConfirm={handleDelete}
-          iconLeft={<TrashBin />}
+          iconLeft={<Delete />}
           variant="secondary"
           modalTitle="Weet je zeker dat je deze zaak wilt verwijderen?"
           modalContent="Let op! Deze actie kan niet ongedaan worden gemaakt."

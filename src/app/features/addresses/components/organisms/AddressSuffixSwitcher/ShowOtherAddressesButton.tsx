@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { ChevronDown, ChevronUp } from "@amsterdam/asc-assets"
+import { ExpandMore, ExpandLess } from "app/features/shared/components/atoms/Icons"
 import { Button, Icon } from "@amsterdam/asc-ui"
 
 import { useModal } from "app/features/shared/components/molecules/Modal/hooks/useModal"
@@ -21,9 +21,9 @@ const StyledIcon = styled(Icon)`
 const renderIcon = (index: Index) => {
   switch(index) {
     case "first":
-      return <ChevronDown/>
+      return <StyledIcon size={32}><ExpandMore/></StyledIcon>
     case "last":
-      return <ChevronUp/>
+      return <StyledIcon size={32}><ExpandLess/></StyledIcon>
     default:
       return <StyledIcon
         inline

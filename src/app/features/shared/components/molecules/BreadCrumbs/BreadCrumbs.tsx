@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { Link } from "@reach/router"
 import { Icon, themeSpacing, themeColor, ascDefaultTheme } from "@amsterdam/asc-ui"
-import { ChevronRight } from "@amsterdam/asc-assets"
+import { ChevronRight } from "app/features/shared/components/atoms/Icons"
 import to from "app/features/shared/routing/to"
 import find from "app/features/shared/routing/find"
 import routes from "app/config/routes"
@@ -34,9 +34,9 @@ const Ul = styled.ul`
 `
 const StyledSeperator = styled(Icon)`
   display: inline;
-  margin: 0 ${ themeSpacing(2) };
+  margin: 0 ${ themeSpacing(1) };
   svg {
-    vertical-align: middle;
+    vertical-align: text-bottom;
   }
 `
 
@@ -61,7 +61,7 @@ const BreadCrumbs: React.FC<Props> = ({ routeParams }) => {
                   <span>{ title ?? "" }</span>
                 }
                 { !isLast &&
-                  <StyledSeperator size={ 9 } color={ themeColor("tint", LEVEL)({ theme: ascDefaultTheme }) }>
+                  <StyledSeperator size={ 18 } color={ themeColor("tint", LEVEL)({ theme: ascDefaultTheme }) }>
                     <ChevronRight />
                   </StyledSeperator>
                 }

@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { Modal as AscModal, TopBar, Heading, Button, Icon, Divider, themeSpacing } from "@amsterdam/asc-ui"
-import { Close } from "@amsterdam/asc-assets/lib"
+import { Close } from "app/features/shared/components/atoms/Icons"
 
 type Props = {
   title: string
@@ -26,9 +26,7 @@ const Modal: React.FC<Props> = ({ children, title, isOpen, onClose }) => (
           onClick={onClose}
           variant="blank"
         >
-          <Icon size={20}>
-            <Close />
-          </Icon>
+          <Icon size={28}><Close /></Icon>
         </Button>
       </Heading>
     </TopBar>
