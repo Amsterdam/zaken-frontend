@@ -1,5 +1,5 @@
 import authRoutes from "../pages/auth/routes"
-import searchRoutes from "../features/search/routes"
+import searchRoutes from "../pages/search/routes"
 import addressesRoutes from "../pages/addresses/routes"
 import casesRoutes from "../pages/cases/routes"
 import caseVisitsRoutes from "../pages/caseVisits/routes"

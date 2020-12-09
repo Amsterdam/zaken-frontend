@@ -1,4 +1,4 @@
-import IndexPage from "./components/pages/index/IndexPage"
+import IndexPage from "app/pages/search/index/IndexPage"
 
 export default {
   "/": IndexPage,

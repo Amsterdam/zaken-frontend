@@ -4,7 +4,7 @@ import styled from "styled-components"
 import debounce from "lodash.debounce"
 
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
-import SearchResults from "app/features/search/components/molecules/SearchResults/SearchResults"
+import SearchResults from "app/features/search/components/SearchResults/SearchResults"
 import useURLState from "app/features/shared/hooks/useURLState/useURLState"
 
 const DELAY = 750
