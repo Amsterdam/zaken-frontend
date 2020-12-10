@@ -38,11 +38,12 @@ const AddressHeader: React.FC<Props> = ({ bagId, headingSize = "h2", isHeader = 
 
   const title = data ? `${ data.results[0].adres }, ${ data.results[0].postcode }` : undefined
   const showTitle = title !== undefined
-
-  const showButton = enableSwitch && (otherAddresses?.results !== undefined && otherAddresses.results.length > 1)
+  const currentHouseNumber = data?.results[0].huisnummer
+  const filteredAddresses = otherAddresses?.results.filter(address => address.huisnummer.toString().length === currentHouseNumber?.toString().length)
+  const showButton = enableSwitch && (filteredAddresses !== undefined && filteredAddresses.length > 1)
   const isCurrentAddress = (address: { adres: string }) => address.adres.trim() === data?.results[0].adres.trim()
-  const addressIndex = otherAddresses?.results.findIndex(isCurrentAddress)
-  const index = addressIndex === 0 ? "first" : addressIndex === (otherAddresses?.results.length ! - 1) ? "last" : undefined
+  const addressIndex = filteredAddresses?.findIndex(isCurrentAddress)
+  const index = addressIndex === 0 ? "first" : addressIndex === (filteredAddresses?.length ! - 1) ? "last" : undefined
 
   // TODO: Show loading status visually
   return (
