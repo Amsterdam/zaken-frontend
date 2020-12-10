@@ -1,7 +1,5 @@
 import IndexPage from "app/pages/cases/index/IndexPage"
-import CreatePage from "app/pages/cases/create/CreatePage"
 import DetailsPage from "app/pages/cases/details/DetailsPage"
-import EditPage from "app/pages/cases/edit/EditPage"
 import DebriefCreatePage from "app/pages/debriefings/CreatePage"
 import DebriefEditPage from "app/pages/debriefings/EditPage"
 
@@ -11,8 +9,6 @@ export default {
     title: "Zakenoverzicht",
     Page: IndexPage,
     subRoutes: {
-      "create": CreatePage,
-      "edit/:id": EditPage,
       ":id": {
         Page: DetailsPage,
         title: "Zaakdetails",

@@ -1,0 +1,54 @@
+{
+  "fields": {
+    "id": {
+      "type": "NumberField",
+      "props": {
+        "position": {},
+        "name": "id",
+        "label": "Id",
+        "disabled": true
+      }
+    },
+    "violation": {
+      "type": "SelectField",
+      "props": {
+        "options": {
+          "NO": "No",
+          "YES": "Yes",
+          "ADDITIONAL_RESEARCH_REQUIRED": "Additional research required",
+          "ADDITIONAL_VISIT_REQUIRED": "Additional visit required"
+        },
+        "position": {},
+        "name": "violation",
+        "label": "Violation"
+      }
+    },
+    "feedback": {
+      "type": "TextField",
+      "props": {
+        "type": "text",
+        "position": {},
+        "name": "feedback",
+        "label": "Feedback",
+        "isRequired": true
+      }
+    },
+    "case": {
+      "type": "NumberField",
+      "props": {
+        "position": {},
+        "name": "case",
+        "label": "Case",
+        "isRequired": true
+      }
+    },
+    "submit": {
+      "type": "SubmitButton",
+      "props": {
+        "align": "right",
+        "label": "Opslaan"
+      }
+    }
+  },
+  "columns": {}
+}
