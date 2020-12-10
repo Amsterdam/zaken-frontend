@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react"
 import { Button } from "@amsterdam/asc-ui"
 import Spinner from "@amsterdam/asc-ui/lib/components/Spinner"
-import useIsMounted from "../../../hooks/useIsMounted/useIsMounted"
+import useIsMounted from "app/features/shared/hooks/useIsMounted/useIsMounted"
 
 type Props = Omit<React.ComponentProps<typeof Button>, "onClick"> & {
   onClick: () => Promise<any>

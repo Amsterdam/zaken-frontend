@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { Button, Paragraph } from "@amsterdam/asc-ui"
 
 import Modal, { ModalBlock } from "./Modal"
-import SpinnerButton from "../../atoms/SpinnerButton/SpinnerButton"
+import SpinnerButton from "app/features/shared/components/atoms/SpinnerButton/SpinnerButton"
 
 export type Props = {
   title: string
