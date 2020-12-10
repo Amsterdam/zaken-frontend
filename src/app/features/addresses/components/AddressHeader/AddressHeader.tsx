@@ -34,15 +34,13 @@ const ButtonWrap = styled.div`
 
 const AddressHeader: React.FC<Props> = ({ bagId, headingSize = "h2", isHeader = false, enableSwitch = true }) => {
   const { data } = useBAG(bagId)
-  const { data: otherAddresses } = useOtherAddressesByBagId(bagId)
-
+  const filteredAddresses = useOtherAddressesByBagId(bagId).results
   const title = data ? `${ data.results[0].adres }, ${ data.results[0].postcode }` : undefined
   const showTitle = title !== undefined
-
-  const showButton = enableSwitch && (otherAddresses?.results !== undefined && otherAddresses.results.length > 1)
+  const showButton = enableSwitch && (filteredAddresses !== undefined && filteredAddresses.length > 1)
   const isCurrentAddress = (address: { adres: string }) => address.adres.trim() === data?.results[0].adres.trim()
-  const addressIndex = otherAddresses?.results.findIndex(isCurrentAddress)
-  const index = addressIndex === 0 ? "first" : addressIndex === (otherAddresses?.results.length ! - 1) ? "last" : undefined
+  const addressIndex = filteredAddresses?.findIndex(isCurrentAddress)
+  const index = addressIndex === 0 ? "first" : addressIndex === (filteredAddresses?.length ! - 1) ? "last" : undefined
 
   // TODO: Show loading status visually
   return (
