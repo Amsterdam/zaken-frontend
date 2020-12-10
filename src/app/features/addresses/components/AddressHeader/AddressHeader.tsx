@@ -38,8 +38,7 @@ const AddressHeader: React.FC<Props> = ({ bagId, headingSize = "h2", isHeader = 
 
   const title = data ? `${ data.results[0].adres }, ${ data.results[0].postcode }` : undefined
   const showTitle = title !== undefined
-  const currentHouseNumber = data?.results[0].huisnummer
-  const filteredAddresses = otherAddresses?.results.filter(address => address.huisnummer.toString().length === currentHouseNumber?.toString().length)
+  const filteredAddresses = otherAddresses?.results.filter(address => address.huisnummer.toString().length === data?.results[0].huisnummer?.toString().length)
   const showButton = enableSwitch && (filteredAddresses !== undefined && filteredAddresses.length > 1)
   const isCurrentAddress = (address: { adres: string }) => address.adres.trim() === data?.results[0].adres.trim()
   const addressIndex = filteredAddresses?.findIndex(isCurrentAddress)
