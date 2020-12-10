@@ -9,6 +9,6 @@ const useOtherAddressesByBagId = (bagId: string) => {
   const firstResult = data?.results?.[0]
   const searchQuery = `${ firstResult?.postcode } ${ firstResult?.huisnummer }`
   const otherAddresses = useBAG(searchQuery, { lazy: data === undefined })
-  return ({ ...otherAddresses, results: otherAddresses.data?.results?.filter(address => (typeof address.huisnummer === "number" && address.huisnummer === firstResult?.huisnummer)) })
+  return ({ ...otherAddresses, results: otherAddresses.data?.results?.filter(({ huisnummer }) => huisnummer === firstResult?.huisnummer) })
 }
 export default useOtherAddressesByBagId
