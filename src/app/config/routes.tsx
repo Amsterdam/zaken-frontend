@@ -2,7 +2,6 @@ import authRoutes from "../pages/auth/routes"
 import searchRoutes from "../pages/search/routes"
 import addressesRoutes from "../pages/addresses/routes"
 import casesRoutes from "../pages/cases/routes"
-import caseVisitsRoutes from "../pages/caseVisits/routes"
 import helpRoutes from "../pages/help/routes"
 
 import routesToRouteConfig, { RouteConfigObject } from "./utils/routesToRouteConfig"
@@ -13,7 +12,6 @@ const routes = {
   ...addressesRoutes,
   ...searchRoutes,
   ...casesRoutes,
-  ...caseVisitsRoutes,
   ...helpRoutes
 }
 
