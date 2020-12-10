@@ -1,9 +1,8 @@
 #!/usr/bin/env ts-node-script
-import fs from "fs"
+import * as fs from "fs"
 import { config } from "dotenv-flow"
 import { fetchSchema, getSchemaObjects, parseOpenApiSchema } from "@amsterdam/scaffold-form"
 import slashSandwich from "slash-sandwich"
-
 
 // Loads .env.development or .env.production based on NODE_ENV
 config()
@@ -34,7 +33,9 @@ const writeSchemas = (schema: any) => {
   // NOTE: add your own cases here:
   // ----
 
-  writeToFile("FormCases.json", parseOpenApiSchema(schemaObjects["POST /api/v1/cases/"]))
+  console.log(schemaObjects["POST /api/v1/debriefings/"].properties?.violation)
+
+  writeToFile("FormDebriefing.json", parseOpenApiSchema(schemaObjects["POST /api/v1/debriefings/"]))
 
   // DONE!
   // ----
