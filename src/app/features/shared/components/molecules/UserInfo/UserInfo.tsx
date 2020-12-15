@@ -2,6 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { PermIdentity, Logout } from "app/features/shared/components/atoms/Icons"
 import { breakpoint, MenuButton, Icon } from "@amsterdam/asc-ui"
+import type KeycloakTokenParsedExtended from "app/state/auth/keycloak/KeycloakTokenParsedExtended"
 
 import useKeycloak from "app/state/auth/keycloak/useKeycloak"
 
@@ -18,7 +19,7 @@ const UserDisplayStyle = styled.div`
   padding: 8px 0 0 24px;
   vertical-align: middle;
   height: 54px;
-  
+
   span {
     display: inline-block;
     vertical-align: middle;
@@ -36,12 +37,12 @@ const UserDisplayStyle = styled.div`
 `
 
 const StyledMenuButton = styled(MenuButton)`
-  height: 54px; 
-  font-weight: normal; 
+  height: 54px;
+  font-weight: normal;
   padding: 12px 16px 9px;
 `
 
-const UserDisplay: React.FC<UserProps> = ({ userDisplay, onClick }) => 
+const UserDisplay: React.FC<UserProps> = ({ userDisplay, onClick }) =>
   <>
     { userDisplay &&
       <UserDisplayStyle>
@@ -61,10 +62,10 @@ const UserDisplay: React.FC<UserProps> = ({ userDisplay, onClick }) =>
 const UserInfo: React.FC<Props> = ({ showAsListItem = false }) => {
   const keycloak = useKeycloak()
   const onClick = () => keycloak.logout()
-  const userDisplay = keycloak.tokenParsed?.name
+  const userDisplay = (keycloak.tokenParsed as KeycloakTokenParsedExtended)?.name
 
   return (
-    showAsListItem 
+    showAsListItem
       ?
         <li>
           <UserDisplay userDisplay={userDisplay} onClick={onClick} />

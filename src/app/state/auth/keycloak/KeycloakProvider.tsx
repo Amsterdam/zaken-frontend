@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react"
 
-import { keycloak, Keycloak } from "./keycloak"
+import { KeycloakInstance } from "keycloak-js"
+import { keycloak } from "./keycloak"
 import options from "./options"
 
 export type Context = {
   isInitialized: boolean
   isAuthenticated: boolean
-  keycloak: Keycloak
+  keycloak: KeycloakInstance
 }
 export const KeycloakContext = React.createContext<Context|undefined>(undefined)
 
 type Props = {
   shouldInitialize?: boolean
-  initializedCallback?: (keycloak: Keycloak, isAuthenticated: boolean) => Promise<void>
+  initializedCallback?: (keycloak: KeycloakInstance, isAuthenticated: boolean) => Promise<void>
 }
 
 const KeycloakProvider: React.FC<Props> = ({ shouldInitialize = true, initializedCallback, children }) => {
