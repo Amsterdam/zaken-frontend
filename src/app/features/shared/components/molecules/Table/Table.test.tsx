@@ -15,13 +15,13 @@ describe("Table", () => {
 
   describe("when NOT loading", () => {
     it("should render 4 table cells", () => {
-      const component = mount(<Table data={data} columns={columns} />)
+      const component = mount(<Table data={data} columns={columns} novaluesplaceholder={"..."} />)
       expect(component.find(TableCell).length).toEqual(4)
     })
 
     describe("when given fixedColumnWidth", () => {
       it("should render fixed cells", () => {
-        const component = mount(<Table data={data} columns={columns} hasFixedColumn={true} noValuesPlaceholder={"..."} />)
+        const component = mount(<Table data={data} columns={columns} hasFixedColumn={true} novaluesplaceholder={"..."} />)
         const fixedCells = component.find(FixedTableCell)
 
         expect(fixedCells.length).toEqual(2)
