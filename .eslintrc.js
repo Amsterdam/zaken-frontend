@@ -7,6 +7,7 @@ module.exports = {
     "arrow-body-style": ["error", "as-needed"],
     "block-spacing": ["error", "always"],
     "comma-dangle": ["error", "never"],
+    "import/no-anonymous-default-export": "off",
     "no-multiple-empty-lines": ["error"],
     "object-curly-spacing": ["error", "always", { "arraysInObjects": false }],
     "padded-blocks": ["error", "never"],
@@ -26,7 +27,7 @@ module.exports = {
       singleline: {
         delimiter: "comma",
         requireLast: false
-      },
+      }
     }],
     "@typescript-eslint/type-annotation-spacing": ["error", {
       before: false,
