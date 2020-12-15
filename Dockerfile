@@ -4,7 +4,6 @@ ARG COMMIT_HASH
 
 ENV DIR /var/www
 COPY . $DIR/
-RUN ls -la $DIR
 
 # build dirs
 RUN mkdir -p $DIR/builds/acceptance
