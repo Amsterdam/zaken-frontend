@@ -6,9 +6,13 @@ import { useState, useCallback } from "react"
 const defaultParse = (value: string | null) => value ?? ""
 
 export default (key: string, parse = defaultParse) => {
+  // TODO: enable
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const urlParams = new URLSearchParams(window.location.search)
   const param = parse(urlParams.get(key))
   const [value, setValue] = useState(param)
+  // TODO: enable
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const stableParse = useCallback(parse, [])
   const set = useCallback((value: string) => {
     const v = stableParse(value)
