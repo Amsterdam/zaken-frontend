@@ -8,11 +8,13 @@ import { useCases } from "app/state/rest"
 import useURLState from "app/features/shared/hooks/useURLState/useURLState"
 import ButtonMockCases from "./ButtonMockCases"
 
+const parse = (value: string | null) => {
+  const options = Object.keys(createOptions())
+  return value !== null && options.includes(value) ? value : getDate()[0]
+}
+
 const Cases: React.FC = () => {
-  const parse = (value: string | null) => {
-    const options = Object.keys(createOptions())
-    return value !== null && options.includes(value) ? value : getDate()[0]
-  }
+
   const [date, setDate] = useURLState("date", parse)
   const { data, isBusy, execGet } = useCases(date)
 
@@ -23,14 +25,16 @@ const Cases: React.FC = () => {
   return (
     <>
       <Row>
-        <Column spanLarge={80}>
+        <Column spanLarge={ 80 }>
           <TableCases data={ data } isBusy={ isBusy } />
         </Column>
-        <Column spanLarge={20}>
+        <Column spanLarge={ 20 }>
           <CasesFilter date={ date } setDate={ setDate } />
         </Column>
       </Row>
-      { process.env.REACT_APP_ENVIRONMENT !== "production" && <ButtonMockCases /> }
+      { process.env.REACT_APP_ENVIRONMENT !== "production" &&
+        <ButtonMockCases />
+      }
     </>
   )
 }

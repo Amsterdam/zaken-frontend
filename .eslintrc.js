@@ -10,7 +10,6 @@ module.exports = {
     "import/no-anonymous-default-export": "off",
     "no-multiple-empty-lines": ["error"],
     "object-curly-spacing": ["error", "always", { "arraysInObjects": false }],
-    "padded-blocks": ["error", "never"],
     "quotes": ["error", "double", { "avoidEscape": true }],
     "space-unary-ops": ["error"],
     "space-infix-ops": ["error"],
