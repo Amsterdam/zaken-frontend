@@ -19,6 +19,13 @@
 ### Bypassing authentication
 - When running zaken-frontend and zaken-backend locally, it's possible to bypass Keycloak authentication. See https://github.com/Amsterdam/zaken-frontend/tree/master/src/app/state/auth/keycloak.
 
+### Required access to services for development
+- ADW account
+- GitHub repository (https://github.com/Amsterdam/zaken-frontend) OIS Basis
+- Jenkins (https://ci.secure.amsterdam.nl/job/fixxx/job/zaken-frontend/) OIS Basis
+- Sentry (https://sentry.data.amsterdam.nl/sentry/zaken-frontend/) OIS Basis
+- NPM (https://npmjs.com/amsterdam) OIS Slack #frontend-amsterdam
+
 ### Connecting to Acceptance API
 - It's possible to connect a locally run zaken-frontend to Acceptance API. Add `REACT_APP_GATEWAY=https://acc.api.wonen.zaken.amsterdam.nl/api/v1/` to `.env.development.local`. See [.env.development](https://github.com/Amsterdam/zaken-frontend/blob/master/.env.development) for examples.
 
