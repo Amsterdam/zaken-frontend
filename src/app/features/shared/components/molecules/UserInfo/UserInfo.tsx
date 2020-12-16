@@ -1,80 +1,20 @@
 import React from "react"
-import styled from "styled-components"
-import { PermIdentity, Logout } from "app/features/shared/components/atoms/Icons"
-import { breakpoint, MenuButton, Icon } from "@amsterdam/asc-ui"
 import type KeycloakTokenParsedExtended from "app/state/auth/keycloak/KeycloakTokenParsedExtended"
 
 import useKeycloak from "app/state/auth/keycloak/useKeycloak"
+import UserDisplay from "./UserDisplay"
 
 type Props = {
   showAsListItem?: boolean
 }
-type UserProps = {
-  onClick: () => void
-  userDisplay: string
-}
-
-const UserDisplayStyle = styled.div`
-
-  padding: 8px 0 0 24px;
-  vertical-align: middle;
-  height: 54px;
-
-  span {
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 10px;
-  }
-
-  svg {
-    display: inline-block;
-    transform: translateY(-2px)
-  }
-
-  @media screen and ${ breakpoint("min-width", "laptopM") } {
-    display: inline-block;
-  }
-`
-
-const StyledMenuButton = styled(MenuButton)`
-  height: 54px;
-  font-weight: normal;
-  padding: 12px 16px 9px;
-`
-
-const UserDisplay: React.FC<UserProps> = ({ userDisplay, onClick }) =>
-  <>
-    { userDisplay &&
-      <UserDisplayStyle>
-        <Icon size={ 32 }><PermIdentity /></Icon>
-        <span>{ userDisplay }</span>
-      </UserDisplayStyle>
-    }
-    <StyledMenuButton
-      tabIndex={0}
-      onClick={ onClick }
-      iconLeft={<Logout/>}
-      title="Uitloggen"
-      iconSize={24}
-    >Uitloggen</StyledMenuButton>
-  </>
 
 const UserInfo: React.FC<Props> = ({ showAsListItem = false }) => {
-  const keycloak = useKeycloak()
-  const onClick = () => keycloak.logout()
-  const userDisplay = (keycloak.tokenParsed as KeycloakTokenParsedExtended)?.name
+  const { tokenParsed, logout } = useKeycloak()
+  const name = (tokenParsed as KeycloakTokenParsedExtended)?.name
+  const userDisplay = <UserDisplay name={ name } onClick={ logout } />
 
-  return (
-    showAsListItem
-      ?
-        <li>
-          <UserDisplay userDisplay={userDisplay} onClick={onClick} />
-        </li>
-      :
-        <span>
-          <UserDisplay userDisplay={userDisplay} onClick={onClick} />
-        </span>
-  )
+  return showAsListItem ?
+    <li>{ userDisplay }</li> :
+    <span>{ userDisplay }</span>
 }
-
 export default UserInfo
