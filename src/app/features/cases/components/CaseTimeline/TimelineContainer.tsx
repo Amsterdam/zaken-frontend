@@ -9,15 +9,10 @@ import Reason from "./Events/Reason"
 import Debrief from "./Events/Debrief"
 import Visit from "./Events/Visit"
 import { mapCaseType } from "./helpers/Helpers"
+import useGroupedCaseEvents from "./hooks/useGroupedCaseEvents"
 
 type Props = {
   caseId: Components.Schemas.CaseEvent["id"]
-}
-
-type EventProps = {
-  index: number
-  type?: string
-  eventList?: Components.Schemas.CaseEvent[]
 }
 
 const Div = styled.div`
@@ -45,27 +40,7 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
   const { shouldCreateDebriefing, shouldCreateVisit, shouldCreateViolation, shouldCloseCase, shouldCreateAdditionalVisit } = workflow(data, true)
   const { visitIsDone, debriefIsDone } = workflow(data)
 
-  let currentIndex = -1
-  let currentType = ""
-  let previousType = ""
-  const allEventsInTime: EventProps[] = []
-
-  const startNewEventList = (event: Components.Schemas.CaseEvent) => {
-    previousType = currentType
-    currentIndex++
-    allEventsInTime.push({ index: currentIndex, type: currentType, eventList: [event] })
-  }
-
-  const addEventToList = (event: Components.Schemas.CaseEvent) => {
-    allEventsInTime[currentIndex].eventList?.push(event)
-  }
-
-  const doGroupEvents = (item: Components.Schemas.CaseEvent) => {
-    currentType = item.type
-    currentType !== previousType ?
-      startNewEventList(item) :
-      addEventToList(item)
-  }
+  const allEventsInTime = useGroupedCaseEvents(caseId)
 
   const drawReason = (eventList?: Components.Schemas.CaseEvent[]) =>
     eventList &&
@@ -94,9 +69,6 @@ const drawVisit = (index: number, eventList?: Components.Schemas.CaseEvent[]) =>
         isOpen={ index === 0 }
       />
     </TimelineWrapper>
-
-  // TODO order list by date
-  data?.forEach(doGroupEvents)
 
   const TimelineEvent = allEventsInTime.map(timelineEvent =>
      timelineEvent.type === "CASE"
