@@ -4,11 +4,10 @@ import styled from "styled-components"
 import { useCaseEvents } from "app/state/rest"
 import workflow from "app/state/workflow/workflow"
 import { TimelineWrapper } from "app/features/shared/components/molecules/Timeline"
-import NextStep from "./NextStep"
+import NextSteps from "./NextSteps"
 import Reason from "./Events/Reason"
 import Debrief from "./Events/Debrief"
 import Visit from "./Events/Visit"
-import { mapCaseType } from "./helpers/Helpers"
 import useGroupedCaseEvents from "./hooks/useGroupedCaseEvents"
 
 type Props = {
@@ -37,8 +36,8 @@ const Div = styled.div`
 const TimelineContainer: React.FC<Props> = ({ caseId }) => {
 
   const { data } = useCaseEvents(caseId)
-  const { shouldCreateDebriefing, shouldCreateVisit, shouldCreateViolation, shouldCloseCase, shouldCreateAdditionalVisit } = workflow(data, true)
-  const { visitIsDone, debriefIsDone } = workflow(data)
+  const { shouldCreateDebriefing, shouldCreateViolation, shouldCloseCase, shouldCreateAdditionalVisit } = workflow(data, true)
+  const { visitIsDone } = workflow(data)
 
   const allEventsInTime = useGroupedCaseEvents(caseId)
 
@@ -81,18 +80,7 @@ const drawVisit = (index: number, eventList?: Components.Schemas.CaseEvent[]) =>
   return (
     <>
       <Div>
-        { shouldCreateDebriefing &&
-          <NextStep title={ mapCaseType("DEBRIEFING") } />
-        }
-        { (shouldCreateVisit || shouldCreateAdditionalVisit) &&
-          <NextStep title={ mapCaseType("VISIT") } />
-        }
-        { debriefIsDone && shouldCreateViolation &&
-          <NextStep title="Overtreding" />
-        }
-        { debriefIsDone && shouldCloseCase &&
-          <NextStep title="Zaak afsluiten" />
-        }
+        <NextSteps caseId={ caseId } />
         { TimelineEvent }
       </Div>
       { data?.length === 0 &&
