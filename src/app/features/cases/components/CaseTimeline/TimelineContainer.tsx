@@ -40,9 +40,11 @@ const Div = styled.div`
 `
 
 const TimelineContainer: React.FC<Props> = ({ caseId }) => {
-  const { data } = useCaseEvents(caseId!)
+
+  const { data } = useCaseEvents(caseId)
   const { shouldCreateDebriefing, shouldCreateVisit, shouldCreateViolation, shouldCloseCase, shouldCreateAdditionalVisit } = workflow(data, true)
   const { visitIsDone, debriefIsDone } = workflow(data)
+
   let currentIndex = -1
   let currentType = ""
   let previousType = ""
@@ -51,18 +53,17 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
   const startNewEventList = (event: Components.Schemas.CaseEvent) => {
     previousType = currentType
     currentIndex++
-    allEventsInTime.push({ "index": currentIndex, "type": currentType, "eventList":[event]})
+    allEventsInTime.push({ index: currentIndex, type: currentType, eventList: [event] })
   }
 
   const addEventToList = (event: Components.Schemas.CaseEvent) => {
     allEventsInTime[currentIndex].eventList?.push(event)
   }
 
-  const doGroupEvents = (item: any) => {
+  const doGroupEvents = (item: Components.Schemas.CaseEvent) => {
     currentType = item.type
     currentType !== previousType ?
-      startNewEventList(item)
-    :
+      startNewEventList(item) :
       addEventToList(item)
   }
 
@@ -99,11 +100,12 @@ const drawVisit = (index: number, eventList?: Components.Schemas.CaseEvent[]) =>
 
   const TimelineEvent = allEventsInTime.map(timelineEvent =>
      timelineEvent.type === "CASE"
-      ? drawReason( timelineEvent.eventList)
+      ? drawReason(timelineEvent.eventList)
       : timelineEvent.type === "VISIT"
         ? drawVisit(timelineEvent.index, timelineEvent.eventList)
         : timelineEvent.type === "DEBRIEFING" && drawDebrief(timelineEvent.index, timelineEvent.eventList)
     )
+
   return (
     <>
       <Div>
