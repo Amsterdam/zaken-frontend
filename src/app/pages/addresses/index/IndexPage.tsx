@@ -6,8 +6,7 @@ import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/
 import AddressHeader from "app/features/addresses/components/AddressHeader/AddressHeader"
 import AddressMenu from "app/features/addresses/components/AddressMenu/AddressMenu"
 import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
-import PanoramaPreview from "app/features/cases/components/Panorama/PanoramaPreview"
-
+import PanoramaPreview from "app/features/shared/components/molecules/Panorama/PanoramaPreview"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
