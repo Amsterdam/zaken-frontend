@@ -1,8 +1,10 @@
 import React from "react"
 import styled from "styled-components"
-import { Timeline, TimelineWrapper } from "app/features/shared/components/molecules/Timeline"
+
 import { useCaseEvents } from "app/state/rest"
 import workflow from "app/state/workflow/workflow"
+import { TimelineWrapper } from "app/features/shared/components/molecules/Timeline"
+import NextStep from "./NextStep"
 import Reason from "./Events/Reason"
 import Debrief from "./Events/Debrief"
 import Visit from "./Events/Visit"
@@ -12,10 +14,6 @@ type Props = {
   caseId: Components.Schemas.CaseEvent["id"]
 }
 
-type NextStepProp = {
-  title: string
-}
-
 type EventProps = {
   index: number
   type?: string
@@ -23,32 +21,23 @@ type EventProps = {
 }
 
 const Div = styled.div`
->div[role="button"] {
-  position: relative;
-  display: flex;
-  border-bottom: 20px solid white;
+  >div[role="button"] {
+    position: relative;
+    display: flex;
+    border-bottom: 20px solid white;
 
-  &:last-child{
-    //hide the thin line in the last timelinecontainer
-    >div:nth-child(2){
-      >div:first-child{
-        &:after{
-          display: none;
+    &:last-child{
+      //hide the thin line in the last timelinecontainer
+      >div:nth-child(2){
+        >div:first-child{
+          &:after{
+            display: none;
+          }
         }
       }
     }
   }
-}
 `
-
-const NextStep: React.FC<NextStepProp> = ({ title }) => 
-  <TimelineWrapper >
-    <Timeline
-      title= { title }
-      isDone={ false }
-      canBeOpened={false}
-    />
-  </TimelineWrapper>
 
 const TimelineContainer: React.FC<Props> = ({ caseId }) => {
   const { data } = useCaseEvents(caseId!)
@@ -73,19 +62,19 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
     currentType = item.type
     currentType !== previousType ?
       startNewEventList(item)
-    : 
+    :
       addEventToList(item)
   }
 
-  const drawReason = (eventList?: Components.Schemas.CaseEvent[]) => 
+  const drawReason = (eventList?: Components.Schemas.CaseEvent[]) =>
     eventList &&
       <TimelineWrapper key={eventList[0].id}>
         <Reason
           caseEvents={ eventList }
         />
       </TimelineWrapper>
-    
-  const drawDebrief = (index: number, eventList?: Components.Schemas.CaseEvent[]) => 
+
+  const drawDebrief = (index: number, eventList?: Components.Schemas.CaseEvent[]) =>
     eventList &&
       <TimelineWrapper key={eventList[0].id} >
         <Debrief
@@ -95,23 +84,23 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
         />
       </TimelineWrapper>
 
-const drawVisit = (index: number, eventList?: Components.Schemas.CaseEvent[]) => 
+const drawVisit = (index: number, eventList?: Components.Schemas.CaseEvent[]) =>
   eventList &&
     <TimelineWrapper key={eventList[0].id} >
       <Visit
-        caseEvents={ eventList } 
+        caseEvents={ eventList }
         isDone={ index > 0 || (visitIsDone && shouldCreateDebriefing) }
-        isOpen={ index === 0 } 
+        isOpen={ index === 0 }
       />
     </TimelineWrapper>
-      
+
   // TODO order list by date
   data?.forEach(doGroupEvents)
 
-  const TimelineEvent = allEventsInTime.map(timelineEvent => 
-     timelineEvent.type === "CASE" 
+  const TimelineEvent = allEventsInTime.map(timelineEvent =>
+     timelineEvent.type === "CASE"
       ? drawReason( timelineEvent.eventList)
-      : timelineEvent.type === "VISIT" 
+      : timelineEvent.type === "VISIT"
         ? drawVisit(timelineEvent.index, timelineEvent.eventList)
         : timelineEvent.type === "DEBRIEFING" && drawDebrief(timelineEvent.index, timelineEvent.eventList)
     )
