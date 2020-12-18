@@ -2,13 +2,10 @@ import React from "react"
 import styled from "styled-components"
 
 import { useCaseEvents } from "app/state/rest"
-import workflow from "app/state/workflow/workflow"
-import { TimelineWrapper } from "app/features/shared/components/molecules/Timeline"
-import NextSteps from "./NextSteps"
-import Reason from "./Events/Reason"
-import Debrief from "./Events/Debrief"
-import Visit from "./Events/Visit"
 import useGroupedCaseEvents from "./hooks/useGroupedCaseEvents"
+import workflow from "app/state/workflow/workflow"
+import TimelineEvent from "./TimelineEvent"
+import NextSteps from "./NextSteps"
 
 type Props = {
   caseId: Components.Schemas.CaseEvent["id"]
@@ -20,11 +17,11 @@ const Div = styled.div`
     display: flex;
     border-bottom: 20px solid white;
 
-    &:last-child{
-      //hide the thin line in the last timelinecontainer
-      >div:nth-child(2){
-        >div:first-child{
-          &:after{
+    &:last-child {
+      // hide the thin line in the last timelinecontainer
+      >div:nth-child(2) {
+        >div:first-child {
+          &:after {
             display: none;
           }
         }
@@ -41,47 +38,19 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
 
   const allEventsInTime = useGroupedCaseEvents(caseId)
 
-  const drawReason = (eventList?: Components.Schemas.CaseEvent[]) =>
-    eventList &&
-      <TimelineWrapper key={eventList[0].id}>
-        <Reason
-          caseEvents={ eventList }
-        />
-      </TimelineWrapper>
-
-  const drawDebrief = (index: number, eventList?: Components.Schemas.CaseEvent[]) =>
-    eventList &&
-      <TimelineWrapper key={eventList[0].id} >
-        <Debrief
-          caseEvents={ eventList }
-          isDone={ index > 0 || (index === 0 && (shouldCreateViolation || shouldCloseCase || shouldCreateAdditionalVisit)) }
-          isOpen={ index === 0 }
-        />
-      </TimelineWrapper>
-
-const drawVisit = (index: number, eventList?: Components.Schemas.CaseEvent[]) =>
-  eventList &&
-    <TimelineWrapper key={eventList[0].id} >
-      <Visit
-        caseEvents={ eventList }
-        isDone={ index > 0 || (visitIsDone && shouldCreateDebriefing) }
-        isOpen={ index === 0 }
-      />
-    </TimelineWrapper>
-
-  const TimelineEvent = allEventsInTime.map(timelineEvent =>
-     timelineEvent.type === "CASE"
-      ? drawReason(timelineEvent.eventList)
-      : timelineEvent.type === "VISIT"
-        ? drawVisit(timelineEvent.index, timelineEvent.eventList)
-        : timelineEvent.type === "DEBRIEFING" && drawDebrief(timelineEvent.index, timelineEvent.eventList)
-    )
-
   return (
     <>
       <Div>
         <NextSteps caseId={ caseId } />
-        { TimelineEvent }
+        { allEventsInTime.map(item =>
+            <TimelineEvent
+              timelineEventItem={ item }
+              isDone={
+                (item.type === "DEBRIEF" && (shouldCreateViolation || shouldCloseCase || shouldCreateAdditionalVisit)) ||
+                (item.type === "VISIT" && (visitIsDone && shouldCreateDebriefing))
+              }
+              />)
+        }
       </Div>
       { data?.length === 0 &&
         <p>Geen tijdlijn evenementen beschikbaar</p>
