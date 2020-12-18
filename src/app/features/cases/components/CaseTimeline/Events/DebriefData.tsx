@@ -1,7 +1,7 @@
 import React from "react"
 import { Dl, DLProps } from "../helpers/Helpers"
 import { displayDate } from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
-import { debriefViolationMap, debriefLabelsMap } from "../helpers/Dictionaries"
+import { debriefViolationMap, debriefLabelsMap } from "../helpers/dictionaries"
 
 const DebriefData: React.FC<DLProps> = ({ thread, showDate }) => {
   const value = thread.event_values

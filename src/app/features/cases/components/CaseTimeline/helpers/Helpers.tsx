@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import {  themeColor, themeSpacing, breakpoint } from "@amsterdam/asc-ui"
-import { visitEventValuesMap } from "./Dictionaries"
+import { visitEventValuesMap } from "./dictionaries"
 
 export type DLProps = {
   thread: Components.Schemas.CaseEvent

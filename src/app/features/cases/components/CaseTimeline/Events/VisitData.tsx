@@ -1,7 +1,7 @@
 import React from "react"
 import { displayDate, displayTime } from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
 import { Dl, DLProps, mapArrayToUl } from "../helpers/Helpers"
-import { visitEventValuesMap, visitLabelsMap, visit_go_ahead } from "../helpers/Dictionaries"
+import { visitEventValuesMap, visitLabelsMap, visit_go_ahead } from "../helpers/dictionaries"
 
 const VisitData: React.FC<DLProps> = ({ thread, showDate }) => {
   const value = thread.event_values
