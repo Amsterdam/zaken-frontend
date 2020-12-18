@@ -21,7 +21,7 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/resize-observer-browser": "^0.1.4",
-    "@types/styled-components": "^5.1.5",
+    "@types/styled-components": "^5.1.6",
     "axios": "^0.21.0",
     "env-cmd": "^10.1.0",
     "eslint-plugin-unused-imports": "^1.0.1",
