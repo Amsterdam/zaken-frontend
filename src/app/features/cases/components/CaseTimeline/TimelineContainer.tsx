@@ -44,6 +44,7 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
         <NextSteps caseId={ caseId } />
         { allEventsInTime.map(item =>
             <TimelineEvent
+              key={ item.index }
               timelineEventItem={ item }
               isDone={
                 (item.type === "DEBRIEF" && (shouldCreateViolation || shouldCloseCase || shouldCreateAdditionalVisit)) ||
