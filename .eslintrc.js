@@ -9,7 +9,7 @@ module.exports = {
     "comma-dangle": ["error", "never"],
     "import/no-anonymous-default-export": "off",
     "no-multiple-empty-lines": ["error"],
-    "object-curly-spacing": ["error", "always", { "arraysInObjects": false }],
+    "object-curly-spacing": ["error", "always"],
     "quotes": ["error", "double", { "avoidEscape": true }],
     "space-unary-ops": ["error"],
     "space-infix-ops": ["error"],

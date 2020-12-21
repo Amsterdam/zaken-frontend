@@ -1,6 +1,6 @@
 import React from "react"
 import { Dl, DLProps } from "../helpers/Helpers"
-import { reasonLabelsMap } from "../helpers/Dictionaries"
+import { reasonLabelsMap } from "../helpers/dictionaries"
 
 const ReasonData: React.FC<DLProps> = ({ thread }) => (
     <Dl>
