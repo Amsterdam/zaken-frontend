@@ -4,6 +4,6 @@ export default {
   "/invorderingen": {
     Page: FinePage,
     title: "Invordering check",
-    icon: "Money"
+    icon: "Euro"
   }
 }
