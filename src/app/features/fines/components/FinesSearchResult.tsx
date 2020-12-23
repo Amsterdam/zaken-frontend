@@ -15,11 +15,17 @@ const values = useMemo(() => ({
     "Datum": fine.dagtekening ? <DateDisplay date={ fine.dagtekening } /> : "-"
   }),[fine])
 
+const info = {
+  infoTitle:"Invorderingsbesluit",
+  infoText: "Uitleg invorderingsbesluit"
+}
+
   return (
     <DefinitionList
     numInitialVisibleRows={3}
     title= { "Invorderingsbesluit" }
-    values={values}
+    extraInfo={ info }
+    values={ values }
     headingSize="h3"
   />
   )
