@@ -72,11 +72,11 @@ export const useCase = (id: Components.Schemas.Case["id"], options?: Options) =>
   })
 }
 
-export const useCaseFines = (id: Components.Schemas.Case["id"], options?: Options) => {
+export const useFine = (id: string, options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.FineList>({
     ...options,
-    url: makeGatewayUrl("cases", id, "fines"),
+    url: makeGatewayUrl("fines", id),
     groupName: "cases",
     handleError,
     isProtected: true
