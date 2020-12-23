@@ -12,6 +12,10 @@ const items = [
     hiddenLaptopM: false
   },
   {
+    path: "/invorderingen",
+    hiddenLaptopM: false
+  },
+  {
     path: "/hulp",
     hiddenLaptopM: true
   }
