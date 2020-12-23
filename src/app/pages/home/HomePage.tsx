@@ -4,20 +4,24 @@ import { RouteComponentProps } from "@reach/router"
 
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/"
-import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
-import FinesSearchWrapper from "app/features/fines/components/FinesSearchWrapper"
+import SearchWrapper from "app/features/search/components/SearchWrapper/SearchWrapper"
+import HomeMenu from "app/features/home/components/HomeMenu"
+import { Heading } from "@amsterdam/asc-ui"
 
-const FinePage: React.FC<RouteComponentProps> = () => (
+const IndexPage: React.FC<RouteComponentProps> = () => (
     <DefaultLayout>
-      <RowWithColumn>
-        <BreadCrumbs />
-      </RowWithColumn>
       <RowWithColumn>
         <PageHeading />
       </RowWithColumn>
-      <FinesSearchWrapper />
+      <RowWithColumn>
+        <HomeMenu />
+      </RowWithColumn>
+      <RowWithColumn>
+        <Heading>Adres zoeken</Heading>
+      </RowWithColumn>
+      <SearchWrapper />
     </DefaultLayout>
   )
 
-export default FinePage
+export default IndexPage

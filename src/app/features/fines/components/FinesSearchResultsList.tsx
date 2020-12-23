@@ -40,7 +40,7 @@ const FinesSearchResultsList: React.FC<Props> = ({ searchString }) => {
             <Ul>
               {listItems}
             </Ul> :
-            <p>Er is geen invorderingsbseluit gevonden</p>
+            <p>Er is geen invorderingsbesluit gevonden</p>
           }
         </>
       }
