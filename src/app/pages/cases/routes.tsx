@@ -8,6 +8,7 @@ export default {
   "/cases": {
     title: "Zakenoverzicht",
     Page: IndexPage,
+    icon: "Folder",
     subRoutes: {
       ":id": {
         Page: DetailsPage,

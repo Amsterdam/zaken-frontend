@@ -3,6 +3,8 @@ import searchRoutes from "../pages/search/routes"
 import addressesRoutes from "../pages/addresses/routes"
 import casesRoutes from "../pages/cases/routes"
 import helpRoutes from "../pages/help/routes"
+import fineRoutes from "../pages/fines/routes"
+import homeRoutes from "../pages/home/routes"
 
 import routesToRouteConfig, { RouteConfigObject } from "./utils/routesToRouteConfig"
 
@@ -12,7 +14,9 @@ const routes = {
   ...addressesRoutes,
   ...searchRoutes,
   ...casesRoutes,
-  ...helpRoutes
+  ...helpRoutes,
+  ...fineRoutes,
+  ...homeRoutes
 }
 
 const routesObject = routesToRouteConfig(routes as RouteConfigObject, [{ title: "Home", path: "/" }])

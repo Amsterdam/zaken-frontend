@@ -4,6 +4,7 @@ import styled from "styled-components"
 
 import SmallSkeleton from "app/features/shared/components/atoms/Skeleton/SmallSkeleton"
 import ToggleCollapse from "app/features/shared/components/atoms/ToggleCollapse/ToggleCollapse"
+import InfoButton from "../InfoHeading/InfoButton"
 
 type Value = React.ReactNode
 type Props = {
@@ -11,6 +12,7 @@ type Props = {
   numInitialVisibleRows?: number
   isLoading?: boolean
   title?: React.ReactNode
+  extraInfo?: {infoTitle: string, infoText: string}
   values: Record<string, Value>
   headingSize?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6"
 }
@@ -62,7 +64,7 @@ const castValue = (value: Value): React.ReactNode => {
   return value
 }
 
-const DefinitionList: React.FC<Props> = ({ isLoading, numLoadingRows, numInitialVisibleRows = Number.MAX_VALUE, title, values, headingSize = "h2" }) => {
+const DefinitionList: React.FC<Props> = ({ isLoading, numLoadingRows, numInitialVisibleRows = Number.MAX_VALUE, title, values, extraInfo, headingSize = "h2" }) => {
   const [isCollapsed, setIsCollapsed] = useState(true)
 
   const toggleCollapsed = useCallback(() => setIsCollapsed(!isCollapsed), [setIsCollapsed, isCollapsed])
@@ -77,7 +79,10 @@ const DefinitionList: React.FC<Props> = ({ isLoading, numLoadingRows, numInitial
 
   return (
     <div>
-      { title && <Heading forwardedAs={ headingSize }>{ isLoading ? <SmallSkeleton height={10} /> : title}</Heading> }
+      { title && <Heading forwardedAs={ headingSize }>
+        { isLoading ? <SmallSkeleton height={10} /> : title}
+        { extraInfo && <InfoButton infoTitle={extraInfo.infoTitle} infoText={extraInfo.infoText} /> }
+        </Heading> }
       <StyledDL>
         { isLoading
           ? <LoadingRows numRows={numLoadingRows ?? 5} />
