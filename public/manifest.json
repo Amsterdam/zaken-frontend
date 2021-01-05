@@ -2,11 +2,8 @@
   "short_name": "Zaken",
   "name": "Zaken - Gemeente Amsterdam",
   "icons": [
-    {
-      "src": "favicon.ico",
-      "sizes": "48x48 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    }
+    { "src": "/icon-192.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "/icon-512.png", "type": "image/png", "sizes": "512x512" }
   ],
   "start_url": ".",
   "display": "standalone",
