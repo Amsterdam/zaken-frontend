@@ -7,24 +7,16 @@ type Props = {
 }
 
 const FinesSearchResult: React.FC<Props> = ( data ) => {
-    const fine = data.data
-  
-const values = useMemo(() => ({
-    "Kenmerk": fine.vorderingnummer,
+  const fine = data.data
+  const values = useMemo(() => ({
+    "Kenmerk": fine.identificatienummer,
     "Status": fine.invorderingstatus ,
     "Datum": fine.dagtekening ? <DateDisplay date={ fine.dagtekening } /> : "-"
   }),[fine])
 
-const info = {
-  infoTitle:"Invorderingsbesluit",
-  infoText: "Uitleg invorderingsbesluit"
-}
-
   return (
     <DefinitionList
     numInitialVisibleRows={3}
-    title= { "Invorderingsbesluit" }
-    extraInfo={ info }
     values={ values }
     headingSize="h3"
   />
