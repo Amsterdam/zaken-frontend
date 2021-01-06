@@ -1,5 +1,4 @@
 import React from "react"
-import { useMockCases } from "app/state/rest"
 import { Button, themeColor } from "@amsterdam/asc-ui"
 import styled from "styled-components"
 
@@ -17,9 +16,10 @@ const StyledButton = styled(Button)`
 `
 
 const ButtonMockCases: React.FC = () => {
-  const { execPost } = useMockCases({ lazy: true })
+  //const { execPost } = useMockCases({ lazy: true })
   const onClick = () => {
-    execPost()
+    throw new Error("Test Sentry") 
+    //execPost()
   }
 
   return (
