@@ -6,11 +6,15 @@ type Props = {
   data: Components.Schemas.Fine
 }
 
+const statusMap = {
+  "AANM": "Gefactureerd"
+} as Record<string, string>
+
 const FinesSearchResult: React.FC<Props> = ( data ) => {
   const fine = data.data
   const values = useMemo(() => ({
     "Kenmerk": fine.identificatienummer,
-    "Status": fine.invorderingstatus ,
+    "Status": statusMap[fine.invorderingstatus] !== undefined ? statusMap[fine.invorderingstatus] : "Onbekend",
     "Datum": fine.dagtekening ? <DateDisplay date={ fine.dagtekening } /> : "-"
   }),[fine])
 
