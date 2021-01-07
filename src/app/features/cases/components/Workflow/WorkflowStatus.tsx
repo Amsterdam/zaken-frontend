@@ -33,10 +33,6 @@ const StyledHeading = styled(Heading)`
   margin-bottom: ${ themeSpacing(5) };
 `
 
-const UpperCase = styled.span`
-  text-transform: uppercase;
-`
-
 const columns = [
   { header: "Actuele taken", minWidth: 100 },
   { header: "Uitvoerder", minWidth: 100 },
@@ -47,7 +43,7 @@ const columns = [
 
 const WorkflowStatus: React.FC<Props> = ({ status, data, showBWVMessage }) => 
   <>
-    <StyledHeading as="h2" >Huidige status:<UpperCase> - { status } -</UpperCase></StyledHeading>
+    <StyledHeading as="h3" >{ status }</StyledHeading>
     <StyledTable
       columns={columns}
       data={ data }
