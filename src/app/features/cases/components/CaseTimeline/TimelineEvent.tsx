@@ -12,23 +12,20 @@ export type TimelineEventItem = {
 
 type Props = {
   timelineEventItem: TimelineEventItem
-  isDone?: boolean
 }
 
-const TimelineEvent: React.FC<Props> = ({ timelineEventItem: { index, type, eventList }, isDone }) => (
+const TimelineEvent: React.FC<Props> = ({ timelineEventItem: { index, type, eventList } }) => (
   <TimelineWrapper key={ eventList[0].id }>
     { type === "CASE" ?
         <Reason caseEvents={ eventList } /> :
       type === "VISIT" ?
         <Visit
           caseEvents={ eventList }
-          isDone={ index > 0 || (index === 0 && isDone) }
           isOpen={ index === 0 }
         /> :
       type === "DEBRIEFING" ?
         <Debrief
           caseEvents={ eventList }
-          isDone={ index > 0 || isDone }
           isOpen={ index === 0 }
         /> :
       null

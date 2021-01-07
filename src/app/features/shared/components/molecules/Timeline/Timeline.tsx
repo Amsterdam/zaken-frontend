@@ -72,7 +72,6 @@ const Timeline: React.FC<
   id: idProp,
   isOpen,
   onToggle,
-  isDone,
   largeCircle = true,
   onClick,
   isNested,
@@ -103,12 +102,12 @@ const Timeline: React.FC<
     <>
       <Background isOpen={open} />
       <NestedContainer isNested={isNested}>
-        <CircleWrapperStyle isOpen={open} isNested={isNested} {...{ isDone }}>
+        <CircleWrapperStyle isOpen={open} isNested={isNested} >
           <CircleStyle
             size={13}
-            {...{ isDone, largeCircle }}
+            {...{ largeCircle }}
           >
-            {isDone && <Icon size={16}><Check /></Icon>}
+            <Icon size={16}><Check /></Icon>
           </CircleStyle>
         </CircleWrapperStyle>
         <TimelineItem>
