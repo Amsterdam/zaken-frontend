@@ -5,7 +5,6 @@ import { IconStyle } from "@amsterdam/asc-ui/lib/components/Icon"
 
 export type Props = {
   isOpen?: boolean
-  isDone?: boolean
   largeCircle?: boolean
   isNested?: boolean
 } & React.AnchorHTMLAttributes<HTMLAnchorElement> &
@@ -64,6 +63,8 @@ const CircleStyle = styled(Icon)<Props>`
   justify-content: center;
   transition: background-color 0.2s ease-in-out;
   z-index: 1;
+  color: ${ themeColor("tint", "level1") };
+  
   @media ${ breakpoint("min-width", "laptop") } {
     width: ${ circleSize.desktop.large };
     height: ${ circleSize.desktop.large };
@@ -79,18 +80,7 @@ const CircleStyle = styled(Icon)<Props>`
         height: ${ circleSize.desktop.small };
       }
     ` }
-  ${ ({ isDone }) =>
-    (!isDone) &&
-    css`
-      background-color: ${ themeColor("primary", "main") };
-    ` }
-  ${ ({ isDone }) =>
-    isDone &&
-    css`
-      color: ${ themeColor("tint", "level1") };
-      fill: ${ themeColor("tint", "level1") };
-      transform: rotate(0deg) !important;
-    ` }
+  
 `
 
 const TimelineItem = styled.div`
@@ -139,13 +129,14 @@ const TimelineButton = styled(Button)<Props>`
   &:hover,
   &:focus {
     background-color: transparent;
+    outline-color: ${ themeColor("tint", "level4") };
 
     & + ${ TimelineContent } {
       border: 0;
     }
   }
-
-  ${ IconStyle } {
+// TODO This doesn't seem to do anything
+  ${ IconStyle } { 
     align-self: flex-start;
     transform: rotate(${ ({ isOpen }) => (isOpen ? "180deg" : "0deg") });
     transition: transform 0.3s ease;
