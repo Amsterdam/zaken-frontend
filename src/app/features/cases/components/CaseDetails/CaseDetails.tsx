@@ -13,7 +13,7 @@ const CaseDetails: React.FC<Props> = ({ caseId }) => {
     // TODO use real data
     "Zaak-ID": data?.id,
     "Team": "Vakantieverhuur",
-    "Startdatum": data?.start_date ? `${ displayDate(data?.start_date) }` : "-"
+    "Startdatum": data?.start_date ? `${ displayDate(data.start_date) }` : "-"
   }), [ data ])
   return <DefinitionList
     numInitialVisibleRows={3}
