@@ -35,7 +35,11 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
             <CaseDetails caseId={ id! } />
           </MockWrapper>
         </Column>
-      </Row>  
+      </Row>
+      <RowWithColumn>
+        <Heading as="h2">Status</Heading>
+        <Divider />
+      </RowWithColumn>
       <RowWithColumn>
         <Workflow caseId={ id! } />
       </RowWithColumn>
