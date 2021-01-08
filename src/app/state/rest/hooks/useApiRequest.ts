@@ -2,8 +2,9 @@ import { useCallback, useEffect, useContext } from "react"
 
 import { ApiContext } from "../provider/ApiProvider"
 import { ApiGroup } from "../index"
-import useProtectedRequest from "./useProtectedRequest"
 import useRequest, { RequestError } from "./useRequest"
+import useProtectedRequest from "./useProtectedRequest"
+import useMockedRequest from "./useMockedRequest"
 
 type GetOptions = {
   method: "get"
@@ -28,9 +29,10 @@ type Config = {
   groupName: ApiGroup
   handleError?: ( error: RequestError ) => void
   isProtected?: boolean
+  isMocked?: boolean
 }
 
-const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, handleError, isProtected, lazy, keepUsingInvalidCache }: Config) => {
+const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, handleError, isProtected, lazy, keepUsingInvalidCache, isMocked = false }: Config) => {
   const {
     getCacheItem,
     setCacheItem,
@@ -42,6 +44,8 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
 
   const request = useRequest()
   const protectedRequest = useProtectedRequest()
+  const mockedRequest = useMockedRequest()
+  const requestMethod = isMocked ? mockedRequest : isProtected ? protectedRequest : request
 
   /**
    * Executes an API request
@@ -52,7 +56,6 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
         clearCache()
       }
 
-      const requestMethod = isProtected ? protectedRequest : request
       const response = await requestMethod<Schema>(options.method, url, payload)
 
       if (isGetOptions(options) || (isMutateOptions(options) && options.useResponseAsCache)) {
