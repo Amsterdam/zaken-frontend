@@ -1,10 +1,12 @@
 import React from "react"
 import { RouteComponentProps } from "@reach/router"
+import { FormTitle } from "@amsterdam/asc-ui"
 
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 import Breadcrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
+import CreateForm from "app/features/cases/components/CreateForm/CreateForm"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -19,7 +21,8 @@ const CreateCasePage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
         <PageHeading />
       </RowWithColumn>
       <RowWithColumn>
-        form
+        <FormTitle>Gebruik dit formulier om een nieuwe zaak toe te voegen</FormTitle>
+        <CreateForm bagId={ bagId! } />
       </RowWithColumn>
     </DefaultLayout>
   )
