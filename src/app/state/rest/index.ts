@@ -207,7 +207,7 @@ export const useSupportContacts = (options?: Options) => {
 
 export const useTeams = (options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<Components.Schemas.PaginatedSupportContactList>({
+  return useApiRequest<MockComponents.Schemas.Team[]>({
     ...options,
     url: "teams",
     groupName: "teams",
