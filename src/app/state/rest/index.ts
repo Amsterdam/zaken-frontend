@@ -16,6 +16,7 @@ export type ApiGroup =
   | "permits"
   | "auth"
   | "supportContacts"
+  | "teams"
 
 export type Options = {
   keepUsingInvalidCache?: boolean
@@ -201,5 +202,17 @@ export const useSupportContacts = (options?: Options) => {
     groupName: "supportContacts",
     handleError,
     isProtected: true
+  })
+}
+
+export const useTeams = (options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<MockComponents.Schemas.Team[]>({
+    ...options,
+    url: "teams",
+    groupName: "teams",
+    handleError,
+    isProtected: true,
+    isMocked: true
   })
 }

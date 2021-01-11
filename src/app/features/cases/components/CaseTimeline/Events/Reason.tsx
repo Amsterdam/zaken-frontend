@@ -17,7 +17,6 @@ const Reason: React.FC<Props> = ({ caseEvents, isOpen }) => {
       <Timeline
         title= { thread.event_values.date_created ? `${ getDay(thread.event_values.date_created, true) }` : `${ mapCaseType(thread.type) }` }
         key={thread.id}
-        isDone={true}
         isOpen={isOpen}
         largeCircle={false}
         isNested={true}
@@ -45,7 +44,6 @@ const Reason: React.FC<Props> = ({ caseEvents, isOpen }) => {
     { currentEvent ?
       <Timeline
         title={ `${ mapCaseType(currentEvent.type) } ${ counterString } `}
-        isDone={ true }
       >
         { TimelineThread }
       </Timeline>

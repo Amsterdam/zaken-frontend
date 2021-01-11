@@ -3,36 +3,19 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="icon" href="%PUBLIC_URL%/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
       content="Gemeente Amsterdam - Zaaksysteem Wonen"
     />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>Zaken - Gemeente Amsterdam</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <script
-      src="https://browser.sentry-cdn.com/5.27.1/bundle.min.js"
-      integrity="sha384-oLDTaC1h1q52AeEe8tHrz2rHl4He0XwOB3/lsZ4kafbI6glka5MfnFbK9xkLAx44"
-      crossorigin="anonymous"
-    ></script>
-    <script>
-      (() => {
-        const dsn = "%REACT_APP_SENTRY_DSN%"
-        const environment = "%REACT_APP_ENVIRONMENT%"
-        const release = "%REACT_APP_GIT_COMMIT_HASH%"
-        if (["acceptance", "production"].indexOf(environment) === -1) return
-        Sentry.init({
-          dsn,
-          environment,
-          release
-        })
-      })()
-    </script>
     <div id="root"></div>
     <!-- begin usabilla live embed code -->
     <script type="text/javascript">

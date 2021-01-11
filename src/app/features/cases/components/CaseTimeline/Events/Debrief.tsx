@@ -8,18 +8,16 @@ import DebriefData from "./DebriefData"
 
 type Props = {
   caseEvents: Components.Schemas.CaseEvent[]
-  isDone?: boolean
   isOpen?: boolean
 }
 
 
-const Debrief: React.FC<Props> = ({ caseEvents, isDone, isOpen }) => {
+const Debrief: React.FC<Props> = ({ caseEvents, isOpen }) => {
   const TimelineThread = caseEvents.map(thread =>
     caseEvents.length > 1 ?
       <Timeline
         title= { thread.event_values.date_added ? `${ getDay(thread.event_values.date_added, true) } ${ displayDate(thread.event_values.date_added) }` : `${ mapCaseType(thread.type) }` }
         key={thread.id}
-        isDone={true}
         isOpen={isOpen}
         largeCircle={false}
         isNested={true}
@@ -47,7 +45,6 @@ const Debrief: React.FC<Props> = ({ caseEvents, isDone, isOpen }) => {
     { currentEvent ?
       <Timeline
         title={ `${ mapCaseType(currentEvent.type) } ${ counterString } `}
-        isDone={ isDone }
         isOpen={ isOpen }
         key={ currentEvent.id }
       >
