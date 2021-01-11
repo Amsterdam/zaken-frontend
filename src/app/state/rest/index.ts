@@ -216,3 +216,15 @@ export const useTeams = (options?: Options) => {
     isMocked: true
   })
 }
+
+export const useViews = (options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<MockComponents.Schemas.View>({
+    ...options,
+    url: "view",
+    groupName: "cases",
+    handleError,
+    isProtected: true,
+    isMocked: true
+  })
+}

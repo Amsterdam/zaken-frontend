@@ -2,6 +2,7 @@ import IndexPage from "app/pages/cases/index/IndexPage"
 import DetailsPage from "app/pages/cases/details/DetailsPage"
 import DebriefCreatePage from "app/pages/debriefings/CreatePage"
 import DebriefEditPage from "app/pages/debriefings/EditPage"
+import ViewCreatePage from "app/pages/views/CreatePage"
 
 // NOTE: please add your own POC-specific routes here.
 export default {
@@ -23,6 +24,11 @@ export default {
       ":caseId/debriefing/:id": {
         Page: DebriefEditPage,
         title: "Debrief terugkoppeling wijzigen",
+        icon: "Edit"
+      },
+      ":id/view": {
+        Page: ViewCreatePage,
+        title: "Resultaat zienswijze",
         icon: "Edit"
       }
     }
