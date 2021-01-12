@@ -242,18 +242,6 @@ export const useReasons = (options?: Options) => {
   })
 }
 
-export const useOpinions = (options?: Options) => {
-  const handleError = useErrorHandler()
-  return useApiRequest<MockComponents.Schemas.Opinion>({
-    ...options,
-    url: "opinion",
-    groupName: "cases",
-    handleError,
-    isProtected: true,
-    isMocked: true
-  })
-}
-
 export const useSummons = (options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<MockComponents.Schemas.Summon[]>({

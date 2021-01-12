@@ -9,7 +9,6 @@ import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/Br
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import OpinionForm from "app/features/opinion/components/OpinionForm/OpinionForm"
 import AddressHeading from "app/features/shared/components/molecules/AddressHeading/AddressHeading"
-import usePageView from "./hooks/usePageOpinion"
 
 type Props = {
   id: string
@@ -18,7 +17,6 @@ type Props = {
 const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
   const id: Components.Schemas.Case["id"] = parseInt(idString!)
   const caseData = useCase(id).data
-  const { handleCreate } = usePageView(id)
 
   // TODO-MOCKED, get summonId/summonTitle from useCaseEvents(caseId)  
   const summonId: number = 6
@@ -41,7 +39,7 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
           <>
             <FormTitle>Gebruik dit formulier om aan te geven wat de beoordeling van de zienswijze is</FormTitle>
             <AddressHeading caseId={ id } />
-            <OpinionForm caseId={ id! } summonTitle={data?.title} onSubmit={ handleCreate }  />
+            <OpinionForm caseId={ id! } summonTitle={data?.title}  />
           </>
         }
       </RowWithColumn>

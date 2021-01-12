@@ -7,16 +7,14 @@ import createScaffoldProps from "./scaffold"
 type Props = {
   caseId: Components.Schemas.Case["id"]
   summonTitle: string | undefined
-  onSubmit: (data: MockComponents.Schemas.Opinion) => Promise<void>
   isLoading?: boolean
 }
 
 
-const OpinionForm: React.FC<Props> = ({ caseId, summonTitle = "", isLoading, onSubmit }) => 
+const OpinionForm: React.FC<Props> = ({ caseId, summonTitle = "", isLoading }) => 
  
   <ScaffoldForm
     showSpinner={ isLoading }
-    onSubmit={ onSubmit }
     >
     <ScaffoldFields {...createScaffoldProps( caseId, summonTitle ) } />
   </ScaffoldForm>  

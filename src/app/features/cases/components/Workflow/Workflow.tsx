@@ -48,11 +48,9 @@ const workflowOpinion = (caseId: Components.Schemas.Case["id"]) => (
   [
     { itemList:
       [ "Beoordelen zienswijze", "ProjectHandhaver", "-", "-",
-      <>
         <ButtonLink to={ to("/cases/:id/opinion", { id: caseId })}>
           <Button variant="primary" as="span">Uitkomst zienswijze</Button>
         </ButtonLink>
-      </>
       ]
     }
   ]
@@ -74,7 +72,7 @@ const Workflow: React.FC<Props> = ({ caseId, summonId }) => {
     if (summonId === undefined) return
     execGet() }, [summonId, execGet]
   )
-  const opinionString = `Zienswijze - ${ data?.title }`
+  const opinionString = `Zienswijze - ${ data?.title ?? "" }`
 
   return (
     <div>
