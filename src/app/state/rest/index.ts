@@ -217,11 +217,23 @@ export const useTeams = (options?: Options) => {
   })
 }
 
-export const useViews = (options?: Options) => {
+export const useOpinions = (options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<MockComponents.Schemas.View>({
+  return useApiRequest<MockComponents.Schemas.Opinion>({
     ...options,
-    url: "view",
+    url: "opinion",
+    groupName: "cases",
+    handleError,
+    isProtected: true,
+    isMocked: true
+  })
+}
+
+export const useSummons = (options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<MockComponents.Schemas.Summon[]>({
+    ...options,
+    url: "summons",
     groupName: "cases",
     handleError,
     isProtected: true,

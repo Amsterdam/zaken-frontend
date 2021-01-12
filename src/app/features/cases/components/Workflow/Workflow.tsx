@@ -19,7 +19,7 @@ const workflowDebrief = (caseId: Components.Schemas.Case["id"]) => (
         <ButtonLink to={ to("/cases/:id/debriefing", { id: caseId })}>
           <Button variant="primary" as="span">Debrief verwerken</Button>
         </ButtonLink>
-        <ButtonLink to={ to("/cases/:id/view", { id: caseId })}>
+        <ButtonLink to={ to("/cases/:id/opinion", { id: caseId })}>
           <Button variant="primary" as="span">Uitkomst zienswijze</Button>
         </ButtonLink>
       </>

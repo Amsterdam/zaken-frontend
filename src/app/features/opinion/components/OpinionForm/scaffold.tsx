@@ -11,8 +11,8 @@ const Scaffold = (caseId: Components.Schemas.Case["id"]) => {
         label: "Wat is de uitkomst van de zienswijze: Voornemen boete?", //TODO make dynamic
         name: "resultview",
         options: {
-          "0": "Afzien aanschrijving",
-          "1": "Opstellen besluit"
+          "NO": "Afzien aanschrijving",
+          "YES": "Opstellen besluit"
         }
       }
     },

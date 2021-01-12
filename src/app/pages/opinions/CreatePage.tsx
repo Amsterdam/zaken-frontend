@@ -7,9 +7,9 @@ import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
 import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
-import ViewForm from "app/features/views/components/ViewForm/ViewForm"
+import OpinionForm from "app/features/opinion/components/OpinionForm/OpinionForm"
 import AddressHeading from "app/features/shared/components/molecules/AddressHeading/AddressHeading"
-import usePageView from "./hooks/usePageView"
+import usePageView from "./hooks/usePageOpinion"
 
 type Props = {
   id: string
@@ -20,6 +20,7 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
 
   const { data } = useCase(id)
   const { handleCreate } = usePageView(id)
+  //const SummonId: string = useSummons()
 
   return (
     <DefaultLayout>
@@ -34,7 +35,7 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
           <>
             <FormTitle>Gebruik dit formulier om aan te geven wat de beoordeling van de zienswijze is</FormTitle>
             <AddressHeading caseId={ id } />
-            <ViewForm caseId={ id! } onSubmit={ handleCreate } />
+            <OpinionForm caseId={ id! } summonId={5} onSubmit={ handleCreate }  />
           </>
         }
       </RowWithColumn>

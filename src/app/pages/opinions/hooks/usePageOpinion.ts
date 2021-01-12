@@ -2,11 +2,11 @@ import { navigate } from "@reach/router"
 import { useCallback } from "react"
 
 import to from "app/features/shared/routing/to"
-import { useViews } from "app/state/rest"
+import { useOpinions } from "app/state/rest"
 import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
 
-const usePageView = (caseId: Components.Schemas.Case["id"], id?: MockComponents.Schemas.View["id"]) => {
-  const { execPost } = useViews()
+const usePageOpinion = (caseId: Components.Schemas.Case["id"], id?: MockComponents.Schemas.Opinion["id"]) => {
+  const { execPost } = useOpinions()
   const { addSuccessFlashMessage } = useFlashMessages()
 
   const path = `/cases/${ caseId }`
@@ -22,4 +22,4 @@ const usePageView = (caseId: Components.Schemas.Case["id"], id?: MockComponents.
   return { handleCreate }
 }
 
-export default usePageView
+export default usePageOpinion

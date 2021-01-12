@@ -5,12 +5,20 @@ declare namespace MockComponents {
       readonly title: string
     }
 
-    export type View = {
+    export type OpinionEnum = "NO" | "YES";
+
+    export type Summon = {
+      readonly id: number
+      readonly title: string
+    }
+
+    export type Opinion = {
       readonly id: number
       case: number
+      summon?: MockComponents.Schemas.Summon
       author: string // uuid
       readonly date_added: string // date-time
-      result_view?: ViolationEnum
-  }
+      result_opinion?: OpinionEnum
+    }
   }
 }

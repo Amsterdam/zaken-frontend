@@ -3,20 +3,25 @@ import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
 
 import ScaffoldFields from "app/features/shared/components/molecules/Form/ScaffoldFields"
 import createScaffoldProps from "./scaffold"
+import { useSummons } from "app/state/rest"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
-  onSubmit: (data: MockComponents.Schemas.View) => Promise<void>
+  summonId: number
+  onSubmit: (data: MockComponents.Schemas.Opinion) => Promise<void>
   isLoading?: boolean
 }
 
-const ViewForm: React.FC<Props> = ({ caseId, isLoading, onSubmit }) => 
+const OpinionForm: React.FC<Props> = ({ caseId, summonId, isLoading, onSubmit }) => {
+  console.log("summon", useSummons() )
+
+  return (
   <ScaffoldForm
     showSpinner={ isLoading }
     onSubmit={ onSubmit }
     >
     <ScaffoldFields {...createScaffoldProps(caseId) } />
   </ScaffoldForm>  
-
-
-export default ViewForm
+  )
+}
+export default OpinionForm
