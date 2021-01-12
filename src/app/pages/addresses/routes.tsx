@@ -1,8 +1,9 @@
 import IndexPage from "app/pages/addresses/index/IndexPage"
 import DetailsPage from "app/pages/addresses/details/DetailsPage"
 import PeoplePage from "app/pages/addresses/people/PeoplePage"
-import CasesPage from "app/pages/addresses/cases/CasesPage"
 import PermitIndexPage from "app/pages/permits/index/IndexPage"
+import CasesPage from "app/pages/addresses/cases/CasesPage"
+import CreateCasePage from "app/pages/cases/create/CreateCasePage"
 
 // NOTE: please add your own POC-specific routes here.
 export default {
@@ -29,6 +30,11 @@ export default {
         Page: CasesPage,
         icon: "Folder",
         title: "Gerelateerde zaken"
+      },
+      "zaken/nieuw": {
+        Page: CreateCasePage,
+        icon: "Edit",
+        title: "Nieuwe zaak aanmaken"
       }
     }
   }

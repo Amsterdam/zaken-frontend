@@ -12,8 +12,8 @@ type Props = {
 }
 
 const workflowDebrief = (caseId: Components.Schemas.Case["id"]) => (
-  [ 
-    { itemList: 
+  [
+    { itemList:
       [ "Verwerken Debrief", "ProjectHandhaver", "-", "-",
       <>
         <ButtonLink to={ to("/cases/:id/debriefing", { id: caseId })}>
@@ -41,7 +41,7 @@ const workflowViolation = (
 )
 
 const workflowCloseCase = (
-  [ 
+  [
     { itemList: [ "Opstellen buitendienst rapport", "Toezichthouder", "-", "-", "-" ] },
     { itemList: [ "Afsluiten zaak", "Projectmederker", "-", "-", "-" ] }
   ]

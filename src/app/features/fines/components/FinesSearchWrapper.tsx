@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { SearchBar } from "@amsterdam/asc-ui"
 
-import { Row, Column } from "app/features/shared/components/atoms/Grid"
+import { Row, Column, RowWithColumn } from "app/features/shared/components/atoms/Grid"
 import FinesSearchResultsList from "app/features/fines/components/FinesSearchResultsList"
 import useURLState from "app/features/shared/hooks/useURLState/useURLState"
 
@@ -15,6 +15,9 @@ const FinesSearchWrapper: React.FC = () => {
 
   return (
     <>
+      <RowWithColumn>
+        <span>Controleer met de invorderingscheck of de beschikking is opgepakt door belastingen.</span>
+      </RowWithColumn>
       <Row>
         <Column spanLarge={50}>
         <form onSubmit={e => {
@@ -22,8 +25,8 @@ const FinesSearchWrapper: React.FC = () => {
           onSubmit()
         }}>
           <SearchBar
-            placeholder="Vul invorderings-ID in"
-            value={ searchString }
+            placeholder="Vul kenmerk in, bijv. 12345_6_78"
+            value={ searchQuery }
             onChange={ onChange }
             onClear={ onClear }
             autoFocus={ true }
@@ -32,7 +35,7 @@ const FinesSearchWrapper: React.FC = () => {
         </Column>
       </Row>
       <Row>
-        <Column spanLarge={50}>
+        <Column spanLarge={70}>
           <FinesSearchResultsList searchString={ searchQuery } />
         </Column>
       </Row>
