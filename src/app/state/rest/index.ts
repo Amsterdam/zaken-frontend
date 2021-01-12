@@ -241,3 +241,28 @@ export const useReasons = (options?: Options) => {
     isMocked: true
   })
 }
+
+export const useSummons = (options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<MockComponents.Schemas.Summon[]>({
+    ...options,
+    url: "summons",
+    groupName: "cases",
+    handleError,
+    isProtected: true,
+    isMocked: true
+  })
+}
+
+export const useSummon = (id?: number, options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<MockComponents.Schemas.Summon>({
+    ...options,
+    url: `summons/${ id }`,
+    lazy: id === undefined,
+    groupName: "cases",
+    handleError,
+    isProtected: true,
+    isMocked: true
+  })
+}
