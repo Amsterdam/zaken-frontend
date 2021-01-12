@@ -17,7 +17,7 @@ const Scaffold = (caseId: Components.Schemas.Case["id"], isEditing = false) => {
         options: {
           "YES": "Overtreding",
           "NO": "Geen overtreding",
-          "ADDITIONAL_RESEARCH_REQUIRED": "Nader onderzoek nodig",
+          "ADDITIONAL_RESEARCH_REQUIRED": "Nader intern onderzoek nodig",
           "ADDITIONAL_VISIT_REQUIRED": "Aanvullend huisbezoek nodig"
         }
       }
