@@ -4,7 +4,6 @@ import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
 import ScaffoldFields from "app/features/shared/components/molecules/Form/ScaffoldFields"
 import scaffold from "./scaffold"
 import { useTeams } from "app/state/rest"
-import { useReasons } from "app/state/rest"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
