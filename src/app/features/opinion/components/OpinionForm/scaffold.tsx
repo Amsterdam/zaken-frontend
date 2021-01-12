@@ -2,13 +2,13 @@ import { FormPositioner } from "@amsterdam/scaffold-form/package"
 import { Fields } from "app/features/shared/components/molecules/Form/ScaffoldFields"
 import { navigate } from "@reach/router"
 
-const Scaffold = (caseId: Components.Schemas.Case["id"]) => {
+const Scaffold = (caseId: Components.Schemas.Case["id"], summonTitle: string) => {
   const fields = {
     resultview: {
       type: "RadioFields",
       props: {
         isRequired: true,
-        label: "Wat is de uitkomst van de zienswijze: Voornemen boete?", //TODO make dynamic
+        label: `Wat is de uitkomst van de zienswijze: ${ summonTitle }?`, //TODO make dynamic
         name: "resultview",
         options: {
           "NO": "Afzien aanschrijving",

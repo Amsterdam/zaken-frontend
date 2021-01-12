@@ -41,7 +41,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
         <Divider />
       </RowWithColumn>
       <RowWithColumn>
-        <Workflow caseId={ id! } />
+        <Workflow caseId={ id! } summonId={6} />
       </RowWithColumn>
       <RowWithColumn>
         <Heading as="h2">Zaakhistorie</Heading>
