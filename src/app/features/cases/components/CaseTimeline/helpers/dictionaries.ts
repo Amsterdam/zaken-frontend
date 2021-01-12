@@ -14,7 +14,7 @@ export const debriefLabelsMap = {
 export const debriefViolationMap = {
   "YES": "Ja, overtreding",
   "NO": "Nee, geen overtreding",
-  "ADDITIONAL_RESEARCH_REQUIRED": "Nader onderzoek nodig",
+  "ADDITIONAL_RESEARCH_REQUIRED": "Nader intern onderzoek nodig",
   "ADDITIONAL_VISIT_REQUIRED": "Aanvullend huisbezoek nodig"
 } as Record<string, string>
 

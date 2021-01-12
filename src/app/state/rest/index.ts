@@ -218,6 +218,18 @@ export const useTeams = (options?: Options) => {
   })
 }
 
+export const useTeam = (id: number, options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<MockComponents.Schemas.Team>({
+    ...options,
+    url: `teams/${ id }`,
+    groupName: "teams",
+    handleError,
+    isProtected: true,
+    isMocked: true
+  })
+}
+
 export const useReasons = (options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<MockComponents.Schemas.Reason[]>({
