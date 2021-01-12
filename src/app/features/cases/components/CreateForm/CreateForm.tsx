@@ -1,4 +1,5 @@
 import React from "react"
+import { Spinner } from "@amsterdam/asc-ui"
 import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
 
 import ScaffoldFields from "app/features/shared/components/molecules/Form/ScaffoldFields"
@@ -14,11 +15,11 @@ const CreateForm: React.FC<Props> = ({ bagId }) => {
   const teams = useTeams()
   const reasons = useReasons()
 
-  if (teams.data === undefined || reasons.data === undefined) return null
+  if (teams.data === undefined || reasons.data === undefined) return <Spinner />
 
   return (
     <ScaffoldForm>
-      <ScaffoldFields { ...scaffold(teams.data, reasons.data) } />
+      <ScaffoldFields { ...scaffold(bagId, teams.data, reasons.data) } />
     </ScaffoldForm>
   )
 }
