@@ -220,7 +220,7 @@ export const useTeams = (options?: Options) => {
 
 export const useTeam = (id: number, options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<MockComponents.Schemas.Team[]>({
+  return useApiRequest<MockComponents.Schemas.Team>({
     ...options,
     url: `teams/${ id }`,
     groupName: "teams",
