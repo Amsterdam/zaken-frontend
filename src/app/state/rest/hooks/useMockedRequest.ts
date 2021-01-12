@@ -1,7 +1,7 @@
 import { useCallback } from "react"
 import { Method } from "axios"
 
-import mockData from "../../../../__mocked__/data"
+import mockData from "__mocked__/data"
 
 const timeout = (ms: number) => new Promise(resolve => window.setTimeout(resolve, ms))
 

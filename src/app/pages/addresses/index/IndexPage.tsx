@@ -1,5 +1,6 @@
 import React from "react"
 import { RouteComponentProps } from "@reach/router"
+import { Button } from "@amsterdam/asc-ui"
 
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
@@ -7,6 +8,8 @@ import AddressHeader from "app/features/addresses/components/AddressHeader/Addre
 import AddressMenu from "app/features/addresses/components/AddressMenu/AddressMenu"
 import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
 import PanoramaPreview from "app/features/shared/components/molecules/Panorama/PanoramaPreview"
+import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
+import to from "app/features/shared/routing/to"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -25,6 +28,11 @@ const IndexPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
     </RowWithColumn>
     <RowWithColumn>
       <AddressMenu bagId={ bagId! } />
+    </RowWithColumn>
+    <RowWithColumn>
+      <ButtonLink to={ to("/adres/:bagId/zaken/nieuw", { bagId })}>
+        <Button variant="primary" as="span">Nieuwe zaak aanmaken</Button>
+      </ButtonLink>
     </RowWithColumn>
   </DefaultLayout>
 )
