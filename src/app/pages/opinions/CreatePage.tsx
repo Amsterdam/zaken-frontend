@@ -1,15 +1,14 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { RouteComponentProps } from "@reach/router"
-import { FormTitle, Heading } from "@amsterdam/asc-ui"
+import { FormTitle } from "@amsterdam/asc-ui"
 
-import { useCase } from "app/state/rest/"
+import { useCase, useSummon } from "app/state/rest/"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
 import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
-import DebriefForm from "app/features/debriefings/components/DebriefForm/DebriefForm"
+import OpinionForm from "app/features/opinion/components/OpinionForm/OpinionForm"
 import AddressHeading from "app/features/shared/components/molecules/AddressHeading/AddressHeading"
-import usePageDebriefing from "./hooks/usePageDebriefing"
 
 type Props = {
   id: string
@@ -17,9 +16,15 @@ type Props = {
 
 const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
   const id: Components.Schemas.Case["id"] = parseInt(idString!)
+  const caseData = useCase(id).data
 
-  const { data } = useCase(id)
-  const { handleCreate } = usePageDebriefing(id)
+  // TODO-MOCKED, get summonId/summonTitle from useCaseEvents(caseId)  
+  const summonId: number = 6
+  const { data, execGet } = useSummon(summonId, { lazy: true })
+  useEffect(() => {
+    if (summonId === undefined) return
+    execGet() }, [summonId, execGet]
+  )
 
   return (
     <DefaultLayout>
@@ -30,12 +35,11 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
         <PageHeading />
       </RowWithColumn>
       <RowWithColumn>
-        { data !== undefined &&
+        { caseData !== undefined &&
           <>
-            <Heading as="h2">Nieuwe debrief</Heading>
-            <FormTitle>Gebruik dit formulier om terugkoppeling te geven van een debrief</FormTitle>
+            <FormTitle>Gebruik dit formulier om aan te geven wat de beoordeling van de zienswijze is</FormTitle>
             <AddressHeading caseId={ id } />
-            <DebriefForm caseId={ id! } onSubmit={ handleCreate } />
+            <OpinionForm caseId={ id! } summonTitle={data?.title}  />
           </>
         }
       </RowWithColumn>
