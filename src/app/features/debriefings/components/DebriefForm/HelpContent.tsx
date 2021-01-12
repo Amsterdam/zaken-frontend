@@ -8,7 +8,7 @@ const Ul = styled.ul`
 export const helpTextViolation = 
   <ol>
     <li>
-      <b>Nader onderzoek nodig</b>
+      <b>Nader intern onderzoek nodig</b>
       <Ul>
         <li>Nader onderzoek nodig wat niet op de locatie zelf is. Bijv. advies van de teamleider of jurist.</li>
         <li>Verwerk de uitkomst vervolgens in een nieuwe debriefnotitie.</li>
