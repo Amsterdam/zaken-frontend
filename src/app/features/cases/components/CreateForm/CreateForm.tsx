@@ -19,7 +19,7 @@ const CreateForm: React.FC<Props> = ({ bagId }) => {
 
   return (
     <ScaffoldForm>
-      <ScaffoldFields { ...scaffold(teams.data, reasons.data) } />
+      <ScaffoldFields { ...scaffold(bagId, teams.data, reasons.data) } />
     </ScaffoldForm>
   )
 }

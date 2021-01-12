@@ -1,7 +1,8 @@
 import { FormPositioner } from "@amsterdam/scaffold-form/package"
+import { navigate } from "@reach/router"
 import { Fields } from "app/features/shared/components/molecules/Form/ScaffoldFields"
 
-export default (teams: MockComponents.Schemas.Team[], reasons: MockComponents.Schemas.Team[]) => {
+export default (bagId: Components.Schemas.Address["bag_id"], teams: MockComponents.Schemas.Team[], reasons: MockComponents.Schemas.Team[]) => {
 
   const teamsObject = teams.reduce((acc, cur) => {
     acc[cur.id] = cur.title
@@ -40,7 +41,15 @@ export default (teams: MockComponents.Schemas.Team[], reasons: MockComponents.Sc
     submit: {
       type: "SubmitButton",
       props: {
-        label: "Opslaan"
+        label: "Zaak aanmaken"
+      }
+    },
+    cancel: {
+      type: "Button",
+      props: {
+        label: "Annuleer",
+        variant: "primaryInverted",
+        onClick: () => navigate(`/adres/${ bagId }`)
       }
     }
   }
