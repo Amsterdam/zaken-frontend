@@ -23,7 +23,7 @@ export default (bagId: Components.Schemas.Address["bag_id"], teams: MockComponen
         options: teamsObject
       }
     },
-    reasons: {
+    reason: {
       type: "RadioFields",
       props: {
         label: "Aanleiding",
@@ -56,5 +56,11 @@ export default (bagId: Components.Schemas.Address["bag_id"], teams: MockComponen
 
   return new FormPositioner(fields as Fields)
     .setVertical("mobileS")
+    .setGrid("laptop", "1fr 1fr 1fr 1fr", [
+      ["team", "team"],
+      ["reason", "reason"],
+      ["text", "text"],
+      ["submit", "cancel"]
+    ])
     .getScaffoldProps()
 }
