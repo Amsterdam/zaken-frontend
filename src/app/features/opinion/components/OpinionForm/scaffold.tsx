@@ -8,7 +8,7 @@ const Scaffold = (caseId: Components.Schemas.Case["id"], summonTitle: string) =>
       type: "RadioFields",
       props: {
         isRequired: true,
-        label: `Wat is de uitkomst van de zienswijze: ${ summonTitle }?`, //TODO make dynamic
+        label: `Wat is de uitkomst van de zienswijze: ${ summonTitle }?`,
         name: "resultview",
         options: {
           "NO": "Afzien aanschrijving",

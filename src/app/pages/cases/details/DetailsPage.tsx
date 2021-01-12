@@ -41,6 +41,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
         <Divider />
       </RowWithColumn>
       <RowWithColumn>
+        {/* TODO-MOCKED summonId has to come from useCaseEvents, so summonId can be removed here */}
         <Workflow caseId={ id! } summonId={6} />
       </RowWithColumn>
       <RowWithColumn>

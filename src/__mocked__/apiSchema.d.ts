@@ -21,7 +21,6 @@ declare namespace MockComponents {
     export type Opinion = {
       readonly id: number
       case: number
-      summon?: MockComponents.Schemas.Summon
       author: string // uuid
       readonly date_added: string // date-time
       result_opinion?: OpinionEnum
