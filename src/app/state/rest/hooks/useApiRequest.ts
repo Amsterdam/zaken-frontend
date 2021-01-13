@@ -2,9 +2,7 @@ import { useCallback, useEffect, useContext } from "react"
 
 import { ApiContext } from "../provider/ApiProvider"
 import { ApiGroup } from "../index"
-import useRequest, { RequestError } from "./useRequest"
-import useProtectedRequest from "./useProtectedRequest"
-import useMockedRequest from "./useMockedRequest"
+import useRequestWrapper, { RequestError } from "./useRequestWrapper"
 
 type GetOptions = {
   method: "get"
@@ -44,10 +42,7 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
     isRequestPendingInQueue
   } = useContext(ApiContext)[groupName]
 
-  const request = useRequest()
-  const protectedRequest = useProtectedRequest()
-  const mockedRequest = useMockedRequest()
-  const requestMethod = isMocked ? mockedRequest : isProtected ? protectedRequest : request
+  const request = useRequestWrapper(isProtected, isMocked)
 
   /**
    * Executes an API request
@@ -58,7 +53,7 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
         clearCache()
       }
 
-      const response = await requestMethod<Schema>(options.method, url, payload)
+      const response = await request<Schema>(options.method, url, payload)
 
       if (isGetOptions(options) || (isMutateOptions(options) && options.useResponseAsCache)) {
         setCacheItem(url, response.data)
@@ -72,7 +67,7 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
         throw error
       }
     }
-  }, [requestMethod, url, clearCache, setCacheItem, handleError])
+  }, [request, url, clearCache, setCacheItem, handleError])
 
   /**
    * Queues an API request
