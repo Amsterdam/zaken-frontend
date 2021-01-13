@@ -4,6 +4,7 @@ import DebriefCreatePage from "app/pages/debriefings/CreatePage"
 import DebriefEditPage from "app/pages/debriefings/EditPage"
 import OpinionCreatePage from "app/pages/opinions/CreatePage"
 import SummonCreatePage from "app/pages/summons/CreatePage"
+import DecisionCreatePage from "app/pages/decisions/CreatePage"
 
 // NOTE: please add your own POC-specific routes here.
 export default {
@@ -25,6 +26,11 @@ export default {
       ":caseId/debriefing/:id": {
         Page: DebriefEditPage,
         title: "Debrief terugkoppeling wijzigen",
+        icon: "Edit"
+      },
+      ":id/decision": {
+        Page: DecisionCreatePage,
+        title: "Resultaat besluit",
         icon: "Edit"
       },
       ":id/opinion": {

@@ -104,8 +104,20 @@ const summons: MockComponents.Schemas.Summon[] = [
   }
 ]
 
+const decisions: MockComponents.Schemas.Decision[] = [
+  {
+    id: 1,
+    title: "Boete"
+  },
+  {
+    id: 2,
+    title: "Afzien besluit"
+  }
+]
+
 export default {
   teams,
   reasons,
-  summons
+  summons,
+  decisions
 }

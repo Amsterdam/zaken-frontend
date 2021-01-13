@@ -266,3 +266,16 @@ export const useSummon = (id?: number, options?: Options) => {
     isMocked: true
   })
 }
+
+export const useDecisions = (options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<MockComponents.Schemas.Decision[]>({
+    ...options,
+    url: "decisions",
+    groupName: "cases",
+    handleError,
+    isProtected: true,
+    isMocked: true
+  })
+}
+
