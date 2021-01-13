@@ -13,9 +13,9 @@ export default (isProtected?: boolean) => {
   const mockedRequest = useMockedRequest()
 
   return useCallback(async <Schema>(method: Method, url: string, data?: unknown, headers = {}) => {
-    const response = await requestMethod(method, url, data, headers)
+    const response = await requestMethod<Schema>(method, url, data, headers)
     if (method !== "get") return response
     const mockedResponse = await mockedRequest(method, stripGatewayFromUrl(url), data, headers)
     return merge(response, mockedResponse)
-  }, [request, mockedRequest])
+  }, [requestMethod, mockedRequest])
 }
