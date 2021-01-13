@@ -5,12 +5,12 @@ import { Fields } from "app/features/shared/components/molecules/Form/ScaffoldFi
 export default (bagId: Components.Schemas.Address["bag_id"], teams: MockComponents.Schemas.Team[], reasons: MockComponents.Schemas.Team[]) => {
 
   const teamsObject = teams.reduce((acc, cur) => {
-    acc[cur.id] = cur.title
+    acc[`team.${ cur.id }`] = cur.title
     return acc
   }, {} as Record<string, string>)
 
   const reasonsObject = reasons.reduce((acc, cur) => {
-    acc[cur.id] = cur.title
+    acc[`reason.${ cur.id }`] = cur.title
     return acc
   }, {} as Record<string, string>)
 
@@ -20,7 +20,8 @@ export default (bagId: Components.Schemas.Address["bag_id"], teams: MockComponen
       props: {
         label: "Team wonen",
         name: "team",
-        options: teamsObject
+        options: teamsObject,
+        isRequired: true
       }
     },
     reason: {
@@ -28,14 +29,16 @@ export default (bagId: Components.Schemas.Address["bag_id"], teams: MockComponen
       props: {
         label: "Aanleiding",
         name: "reason",
-        options: reasonsObject
+        options: reasonsObject,
+        isRequired: true
       }
     },
     text: {
       type: "TextAreaField",
       props: {
         label: "Korte toelichting",
-        name: "text"
+        name: "text",
+        isRequired: true
       }
     },
     submit: {
