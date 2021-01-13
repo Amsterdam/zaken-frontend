@@ -16,10 +16,12 @@ type MutateOptions = {
   useResponseAsCache?: boolean
 }
 
-const isGetOptions = (options: any): options is GetOptions =>
+type Options = GetOptions | MutateOptions
+
+const isGetOptions = (options: Options): options is GetOptions =>
   options.method === "get"
 
-const isMutateOptions = (options: any): options is MutateOptions =>
+const isMutateOptions = (options: Options): options is MutateOptions =>
   ["post", "put", "patch", "delete"].includes(options.method)
 
 type Config = {
@@ -27,7 +29,7 @@ type Config = {
   lazy?: boolean
   url: string
   groupName: ApiGroup
-  handleError?: ( error: RequestError ) => void
+  handleError?: (error: RequestError) => void
   isProtected?: boolean
   isMocked?: boolean
 }
@@ -50,7 +52,7 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
   /**
    * Executes an API request
    */
-  const execRequest = useCallback(async (options: GetOptions | MutateOptions, payload?: Payload) => {
+  const execRequest = useCallback(async (options: Options, payload?: Payload) => {
     try {
       if (isMutateOptions(options) && !options.skipCacheClear) {
         clearCache()
@@ -75,7 +77,7 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
   /**
    * Queues an API request
    */
-  const queueRequest = useCallback(async (options: GetOptions | MutateOptions, payload?: Payload) => new Promise(
+  const queueRequest = useCallback(async (options: Options, payload?: Payload) => new Promise(
     (resolve, reject) =>
       pushRequestInQueue(url, options.method, () => execRequest(options, payload)
         .then(resolve)
@@ -130,6 +132,5 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
     updateCache
   }
 }
-
 
 export default useApiRequest
