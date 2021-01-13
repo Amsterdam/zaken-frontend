@@ -89,7 +89,7 @@ const Workflow: React.FC<Props> = ({ caseId, summonId }) => {
     <div>
       <MockWrapper>
         <WorkflowStatus status={opinionString} data={workflowOpinion(caseId)} />
-        <WorkflowStatus status={opinionString} data={workflowSummon(caseId)} />
+        <WorkflowStatus status="Aanschrijving" data={workflowSummon(caseId)} />
       </MockWrapper>
       { (shouldCreateVisit || shouldCreateAdditionalVisit) &&
         <WorkflowStatus status="Huisbezoek" data={workflowVisit} />
