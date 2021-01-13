@@ -2,18 +2,21 @@ import { FormPositioner } from "@amsterdam/scaffold-form/package"
 import { Fields } from "app/features/shared/components/molecules/Form/ScaffoldFields"
 import { navigate } from "@reach/router"
 
-const Scaffold = (caseId: Components.Schemas.Case["id"], summonTitle: string) => {
+const Scaffold = (caseId: Components.Schemas.Case["id"], opinions: MockComponents.Schemas.Opinion[], summonTitle: string) => {
+  
+  const opinionsObject = opinions.reduce((acc, cur) => {
+    acc[`opinion.${ cur.id }`] = cur.title
+    return acc
+  }, {} as Record<string, string>)
+  
   const fields = {
-    resultview: {
+    opinions: {
       type: "RadioFields",
       props: {
         isRequired: true,
         label: `Wat is de uitkomst van de zienswijze: ${ summonTitle }?`,
-        name: "resultview",
-        options: {
-          "NO": "Afzien aanschrijving",
-          "YES": "Opstellen besluit"
-        }
+        name: "opinions",
+        options: opinionsObject
       }
     },
     submit: {
@@ -34,7 +37,7 @@ const Scaffold = (caseId: Components.Schemas.Case["id"], summonTitle: string) =>
 
   return new FormPositioner(fields as Fields)
     .setGrid("laptop", "1fr 1fr 1fr 1fr", [
-      ["resultview", "resultview"],
+      ["opinions", "opinions"],
       ["submit", "secondaryButton"]
     ])
     .getScaffoldProps()

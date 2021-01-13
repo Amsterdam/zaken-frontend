@@ -11,7 +11,7 @@ type Props = {
   isLoading?: boolean
 }
 
-const DecisionForm: React.FC<Props> = ({ caseId, isLoading }) => {
+const DecisionForm: React.FC<Props> = ({ caseId }) => {
 
   const decisions = useDecisions()
 

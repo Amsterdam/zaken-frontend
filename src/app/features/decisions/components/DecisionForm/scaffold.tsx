@@ -5,7 +5,7 @@ import { navigate } from "@reach/router"
 export default (caseId: Components.Schemas.Case["id"], decisions: MockComponents.Schemas.Decision[]) => {
 
   const decisionsObject = decisions.reduce((acc, cur) => {
-    acc[cur.id] = cur.title
+    acc[`decision.${ cur.id }`] = cur.title
     return acc
   }, {} as Record<string, string>)
 
@@ -16,7 +16,7 @@ export default (caseId: Components.Schemas.Case["id"], decisions: MockComponents
       props: {
         isRequired: true,
         label: "Wat is het resultaat besluit?",
-        name: "summon",
+        name: "decision",
         options: decisionsObject
       }
     },

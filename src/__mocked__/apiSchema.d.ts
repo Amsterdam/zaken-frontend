@@ -20,10 +20,7 @@ declare namespace MockComponents {
 
     export type Opinion = {
       readonly id: number
-      case: number
-      author: string // uuid
-      readonly date_added: string // date-time
-      result_opinion?: OpinionEnum
+      readonly title: string
     }
 
     export type Decision = {

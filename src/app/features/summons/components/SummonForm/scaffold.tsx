@@ -6,13 +6,13 @@ import InfoButton from "app/features/shared/components/molecules/InfoHeading/Inf
 export default (caseId: Components.Schemas.Case["id"], summons: MockComponents.Schemas.Summon[]) => {
 
   const summonsObject = summons.reduce((acc, cur) => {
-    acc[cur.id] = cur.title
+    acc[`summon.${ cur.id }`] = cur.title
     return acc
   }, {} as Record<string, string>)
 
 
   const fields = {
-    resultview: {
+    summons: {
       type: "CheckboxFields",
       props: {
         isRequired: true,
@@ -40,7 +40,7 @@ export default (caseId: Components.Schemas.Case["id"], summons: MockComponents.S
 
   return new FormPositioner(fields as Fields)
     .setGrid("laptop", "1fr 1fr 1fr 1fr", [
-      ["resultview", "resultview"],
+      ["summons", "summons"],
       ["submit", "secondaryButton"]
     ])
     .getScaffoldProps()
