@@ -30,9 +30,10 @@ type Config = {
   handleError?: (error: RequestError) => void
   isProtected?: boolean
   isMocked?: boolean
+  isMockExtended?: boolean
 }
 
-const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, handleError, isProtected, lazy, keepUsingInvalidCache, isMocked = false }: Config) => {
+const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, handleError, isProtected, lazy, keepUsingInvalidCache, isMocked = false, isMockExtended = false }: Config) => {
   const {
     getCacheItem,
     setCacheItem,
@@ -42,7 +43,7 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
     isRequestPendingInQueue
   } = useContext(ApiContext)[groupName]
 
-  const request = useRequestWrapper(isProtected, isMocked)
+  const request = useRequestWrapper(isProtected, isMocked, isMockExtended)
 
   /**
    * Executes an API request

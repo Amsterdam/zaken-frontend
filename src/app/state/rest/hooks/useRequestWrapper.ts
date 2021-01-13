@@ -2,12 +2,19 @@
 import useRequest from "./useRequest"
 import useProtectedRequest from "./useProtectedRequest"
 import useMockedRequest from "./useMockedRequest"
+import useMockExtendedRequest from "./useMockExtendedRequest"
 
-export type { RequestError } from "./useRequest"
+export type { RequestError, Method } from "./useRequest"
 
-export default (isProtected?: boolean, isMocked?: boolean) => {
+export default (isProtected?: boolean, isMocked?: boolean, isMockExtended?: boolean) => {
   const request = useRequest()
   const protectedRequest = useProtectedRequest()
   const mockedRequest = useMockedRequest()
-  return isMocked ? mockedRequest : isProtected ? protectedRequest : request
+  const mockExtendedRequest = useMockExtendedRequest(isProtected)
+  return (
+    isMockExtended ? mockExtendedRequest :
+    isMocked ? mockedRequest :
+    isProtected ? protectedRequest
+    : request
+  )
 }

@@ -70,7 +70,8 @@ export const useCase = (id: Components.Schemas.Case["id"], options?: Options) =>
     url: makeGatewayUrl("cases", id),
     groupName: "cases",
     handleError,
-    isProtected: true
+    isProtected: true,
+    isMockExtended: true
   })
 }
 

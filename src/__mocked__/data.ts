@@ -103,9 +103,16 @@ const summons: MockComponents.Schemas.Summon[] = [
     title: "Voornemen intrekking VV-vergunning"
   }
 ]
+const cases: { id: number, mocked: boolean }[] = [
+  {
+    id: 989,
+    mocked: true
+  }
+]
 
 export default {
   teams,
   reasons,
-  summons
+  summons,
+  cases
 }

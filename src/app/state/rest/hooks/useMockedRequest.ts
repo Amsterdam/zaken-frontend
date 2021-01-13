@@ -3,6 +3,8 @@ import { Method } from "axios"
 
 import mockData from "__mocked__/data"
 
+type MockDataKey = keyof typeof mockData
+
 const timeout = (ms: number) => new Promise(resolve => window.setTimeout(resolve, ms))
 const getUrlId = (url: string) => {
   const parts = url.split("/")
@@ -16,8 +18,8 @@ export default () => useCallback(
     const urlId = getUrlId(url)
     const data = method === "get" ?
       urlId !== undefined ?
-        mockData[urlId[0] as keyof typeof mockData].find(item => item.id === urlId[1]) :
-        mockData[url as keyof typeof mockData] :
+        (mockData[urlId[0] as MockDataKey] as any).find((item: { id: number }) => item.id === urlId[1]) :
+        mockData[url as MockDataKey] :
       undefined
     return { data }
   },
