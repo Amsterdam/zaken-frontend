@@ -25,7 +25,7 @@ export default (caseId: Components.Schemas.Case["id"], correspondence: MockCompo
       props: {
         label: "Notitie",
         name: "text",
-        isRequired: false
+        isRequired: true
       }
     },
     submit: {
