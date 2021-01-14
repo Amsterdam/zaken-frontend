@@ -5,6 +5,7 @@ import DebriefEditPage from "app/pages/debriefings/EditPage"
 import OpinionCreatePage from "app/pages/opinions/CreatePage"
 import SummonCreatePage from "app/pages/summons/CreatePage"
 import DecisionCreatePage from "app/pages/decisions/CreatePage"
+import CorrespondenceCreatePage from "app/pages/correspondence/CreatePage"
 
 // NOTE: please add your own POC-specific routes here.
 export default {
@@ -17,6 +18,11 @@ export default {
         Page: DetailsPage,
         title: "Zaakdetails",
         icon: "Folder"
+      },
+      ":id/correspondence": {
+        Page: CorrespondenceCreatePage,
+        title: "Correspondentie toevoegen",
+        icon: "Edit"
       },
       ":id/debriefing": {
         Page: DebriefCreatePage,

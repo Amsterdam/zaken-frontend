@@ -291,3 +291,15 @@ export const useDecisions = (options?: Options) => {
   })
 }
 
+export const useCorrespondence = (options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<MockComponents.Schemas.Correspondence[]>({
+    ...options,
+    url: "correspondence",
+    groupName: "cases",
+    handleError,
+    isProtected: true,
+    isMocked: true
+  })
+}
+

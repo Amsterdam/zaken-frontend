@@ -1,6 +1,6 @@
 import React from "react"
 import { RouteComponentProps } from "@reach/router"
-import { Divider, Heading } from "@amsterdam/asc-ui"
+import { Button, Divider, Heading } from "@amsterdam/asc-ui"
 
 import { useCase } from "app/state/rest"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
@@ -12,10 +12,26 @@ import CaseDetails from "app/features/cases/components/CaseDetails/CaseDetails"
 import Workflow from "app/features/cases/components/Workflow/Workflow"
 import { Column } from "app/features/shared/components/atoms/Grid"
 import MockWrapper from "app/features/shared/components/molecules/MockWrapper/MockWrapper"
+import styled from "styled-components"
+import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
+import to from "app/features/shared/routing/to"
 
 type Props = {
   id: Components.Schemas.Case["id"]
 }
+
+const ButtonWrapper = styled.div`
+  float: right;
+
+  &:after {
+    clear: right;
+    float: none;
+  }
+`
+
+const ButtonTertiary = styled(Button)`
+  color: black;
+`
 
 const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
   const { data: caseData } = useCase(id!)
@@ -37,7 +53,14 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
         </Column>
       </Row>
       <RowWithColumn>
-        <Heading as="h2">Status</Heading>
+        <Heading as="h2">
+          Status
+          <ButtonWrapper>
+            <ButtonLink to={ to("/cases/:id/correspondence", { id: id })}>
+              <ButtonTertiary variant="tertiary">Correspondentie</ButtonTertiary>
+            </ButtonLink>
+          </ButtonWrapper>
+        </Heading>
         <Divider />
       </RowWithColumn>
       <RowWithColumn>

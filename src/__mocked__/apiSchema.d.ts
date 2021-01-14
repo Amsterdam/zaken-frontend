@@ -1,19 +1,12 @@
 declare namespace MockComponents {
   namespace Schemas {
-    export type Team = {
+
+    export type Correspondence = {
       readonly id: number
       readonly title: string
-      readonly enabled: boolean
-    }
-    export type Reason = {
-      readonly id: number
-      readonly title: string
-      readonly enabled: boolean
     }
 
-    export type OpinionEnum = "NO" | "YES";
-
-    export type Summon = {
+    export type Decision = {
       readonly id: number
       readonly title: string
     }
@@ -23,9 +16,20 @@ declare namespace MockComponents {
       readonly title: string
     }
 
-    export type Decision = {
+    export type Reason = {
       readonly id: number
       readonly title: string
+      readonly enabled: boolean
+    }
+
+    export type Summon = {
+      readonly id: number
+      readonly title: string
+    }
+    export type Team = {
+      readonly id: number
+      readonly title: string
+      readonly enabled: boolean
     }
   }
 }
