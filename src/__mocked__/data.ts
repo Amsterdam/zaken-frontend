@@ -1,3 +1,21 @@
+const cases: MockComponents.Schemas.Case[] = [
+  {
+    id: 996,
+    teamTitle: "Vakantieverhuur",
+    mocked: true
+  }
+]
+
+const completeCases: MockComponents.Schemas.CompleteCase[] = [
+  {
+    id: 1,
+    title: "Zaak afsluiten"
+  },
+  {
+    id: 2,
+    title: "Hercontrole uitzetten"
+  }
+]
 
 const correspondence: MockComponents.Schemas.Correspondence[] = [
   {
@@ -100,12 +118,6 @@ const summons: MockComponents.Schemas.Summon[] = [
     title: "Voornemen intrekking VV-vergunning"
   }
 ]
-const cases: MockComponents.Schemas.Case[] = [
-  {
-    id: 989,
-    mocked: true
-  }
-]
 
 const teams: MockComponents.Schemas.Team[] = [
   {
@@ -147,6 +159,7 @@ const teams: MockComponents.Schemas.Team[] = [
 
 export default {
   cases,
+  completeCases,
   correspondence,
   decisions,
   opinions,

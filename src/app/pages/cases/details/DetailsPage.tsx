@@ -59,6 +59,10 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
             <ButtonLink to={ to("/cases/:id/correspondence", { id: id })}>
               <ButtonTertiary variant="tertiary">Correspondentie</ButtonTertiary>
             </ButtonLink>
+            &nbsp;
+            <ButtonLink to={ to("/cases/:id/afronden", { id: id })}>
+              <ButtonTertiary variant="tertiary">Afronden</ButtonTertiary>
+            </ButtonLink>
           </ButtonWrapper>
         </Heading>
         <Divider />
