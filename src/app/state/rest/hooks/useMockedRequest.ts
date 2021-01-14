@@ -13,12 +13,12 @@ const getUrlId = (url: string) => {
 }
 
 export default () => useCallback(
-  async (method: Method, url: string, requestData?: unknown, headers = {}) => {
+  async <Schema>(method: Method, url: string, requestData?: unknown, headers = {}) => {
     await timeout(60)
     const urlId = getUrlId(url)
     const data = method === "get" ?
       urlId !== undefined ?
-        (mockData[urlId[0] as MockDataKey] as any).find((item: { id: number }) => item.id === urlId[1]) :
+        ((mockData[urlId[0] as MockDataKey] as Array<any>)?.find((item: { id: number }) => item.id === urlId[1]) as Schema) :
         mockData[url as MockDataKey] :
       undefined
     return { data }

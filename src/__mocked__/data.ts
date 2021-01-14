@@ -103,7 +103,7 @@ const summons: MockComponents.Schemas.Summon[] = [
     title: "Voornemen intrekking VV-vergunning"
   }
 ]
-const cases: { id: number, mocked: boolean }[] = [
+const cases: MockComponents.Schemas.Case[] = [
   {
     id: 989,
     mocked: true

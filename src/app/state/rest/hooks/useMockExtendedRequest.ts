@@ -12,10 +12,13 @@ export default (isProtected?: boolean) => {
   const requestMethod = isProtected ? protectedRequest : request
   const mockedRequest = useMockedRequest()
 
-  return useCallback(async <Schema>(method: Method, url: string, data?: unknown, headers = {}) => {
-    const response = await requestMethod<Schema>(method, url, data, headers)
-    if (method !== "get") return response
-    const mockedResponse = await mockedRequest(method, stripGatewayFromUrl(url), data, headers)
-    return merge(response, mockedResponse)
-  }, [requestMethod, mockedRequest])
+  return useCallback(
+    async <Schema>(method: Method, url: string, data?: unknown, headers = {}) => {
+      const response = await requestMethod<Schema>(method, url, data, headers)
+      if (method !== "get") return response
+      const mockedResponse = await mockedRequest(method, stripGatewayFromUrl(url), data, headers)
+      return merge(response, mockedResponse)
+    },
+    [requestMethod, mockedRequest]
+  )
 }

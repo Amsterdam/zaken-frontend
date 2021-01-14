@@ -25,5 +25,10 @@ declare namespace MockComponents {
       readonly date_added: string // date-time
       result_opinion?: OpinionEnum
     }
+
+    export type Case = {
+      id: number
+      mocked: boolean
+    }
   }
 }
