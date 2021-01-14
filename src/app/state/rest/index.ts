@@ -65,12 +65,13 @@ export const useCases = (state_date?: string, options?: Options) => {
 
 export const useCase = (id: Components.Schemas.Case["id"], options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<Components.Schemas.Case>({
+  return useApiRequest<Components.Schemas.Case & MockComponents.Schemas.Case>({
     ...options,
     url: makeGatewayUrl("cases", id),
     groupName: "cases",
     handleError,
-    isProtected: true
+    isProtected: true,
+    isMockExtended: true
   })
 }
 

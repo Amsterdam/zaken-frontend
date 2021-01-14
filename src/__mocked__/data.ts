@@ -100,6 +100,12 @@ const summons: MockComponents.Schemas.Summon[] = [
     title: "Voornemen intrekking VV-vergunning"
   }
 ]
+const cases: MockComponents.Schemas.Case[] = [
+  {
+    id: 989,
+    mocked: true
+  }
+]
 
 const teams: MockComponents.Schemas.Team[] = [
   {
@@ -140,6 +146,7 @@ const teams: MockComponents.Schemas.Team[] = [
 ]
 
 export default {
+  cases,
   correspondence,
   decisions,
   opinions,

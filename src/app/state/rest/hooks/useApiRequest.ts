@@ -2,9 +2,7 @@ import { useCallback, useEffect, useContext } from "react"
 
 import { ApiContext } from "../provider/ApiProvider"
 import { ApiGroup } from "../index"
-import useRequest, { RequestError } from "./useRequest"
-import useProtectedRequest from "./useProtectedRequest"
-import useMockedRequest from "./useMockedRequest"
+import useRequestWrapper, { RequestError } from "./useRequestWrapper"
 
 type GetOptions = {
   method: "get"
@@ -16,10 +14,12 @@ type MutateOptions = {
   useResponseAsCache?: boolean
 }
 
-const isGetOptions = (options: any): options is GetOptions =>
+type Options = GetOptions | MutateOptions
+
+const isGetOptions = (options: Options): options is GetOptions =>
   options.method === "get"
 
-const isMutateOptions = (options: any): options is MutateOptions =>
+const isMutateOptions = (options: Options): options is MutateOptions =>
   ["post", "put", "patch", "delete"].includes(options.method)
 
 type Config = {
@@ -27,12 +27,13 @@ type Config = {
   lazy?: boolean
   url: string
   groupName: ApiGroup
-  handleError?: ( error: RequestError ) => void
+  handleError?: (error: RequestError) => void
   isProtected?: boolean
   isMocked?: boolean
+  isMockExtended?: boolean
 }
 
-const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, handleError, isProtected, lazy, keepUsingInvalidCache, isMocked = false }: Config) => {
+const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, handleError, isProtected, lazy, keepUsingInvalidCache, isMocked = false, isMockExtended = false }: Config) => {
   const {
     getCacheItem,
     setCacheItem,
@@ -42,21 +43,18 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
     isRequestPendingInQueue
   } = useContext(ApiContext)[groupName]
 
-  const request = useRequest()
-  const protectedRequest = useProtectedRequest()
-  const mockedRequest = useMockedRequest()
-  const requestMethod = isMocked ? mockedRequest : isProtected ? protectedRequest : request
+  const request = useRequestWrapper(isProtected, isMocked, isMockExtended)
 
   /**
    * Executes an API request
    */
-  const execRequest = useCallback(async (options: GetOptions | MutateOptions, payload?: Payload) => {
+  const execRequest = useCallback(async (options: Options, payload?: Payload) => {
     try {
       if (isMutateOptions(options) && !options.skipCacheClear) {
         clearCache()
       }
 
-      const response = await requestMethod<Schema>(options.method, url, payload)
+      const response = await request<Schema>(options.method, url, payload)
 
       if (isGetOptions(options) || (isMutateOptions(options) && options.useResponseAsCache)) {
         setCacheItem(url, response.data)
@@ -70,12 +68,12 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
         throw error
       }
     }
-  }, [requestMethod, url, clearCache, setCacheItem, handleError])
+  }, [request, url, clearCache, setCacheItem, handleError])
 
   /**
    * Queues an API request
    */
-  const queueRequest = useCallback(async (options: GetOptions | MutateOptions, payload?: Payload) => new Promise(
+  const queueRequest = useCallback(async (options: Options, payload?: Payload) => new Promise(
     (resolve, reject) =>
       pushRequestInQueue(url, options.method, () => execRequest(options, payload)
         .then(resolve)
@@ -130,6 +128,5 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
     updateCache
   }
 }
-
 
 export default useApiRequest

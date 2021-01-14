@@ -24,3 +24,5 @@ export const useErrorHandler = () => {
  */
 export const makeGatewayUrl = (...paths: Array<number|string|undefined>) =>
   slashSandwich([process.env.REACT_APP_GATEWAY, ...paths])
+
+export const stripGatewayFromUrl = (url: string) => url.replace(new RegExp(`^${ process.env.REACT_APP_GATEWAY }`), "")

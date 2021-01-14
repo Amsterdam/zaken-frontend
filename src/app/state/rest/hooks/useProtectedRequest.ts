@@ -6,8 +6,8 @@ import to from "app/features/shared/routing/to"
 import useRequest, { Method } from "./useRequest"
 
 export default () => {
-  const keycloak = useKeycloak()
 
+  const keycloak = useKeycloak()
   const request = useRequest()
 
   return useCallback(
