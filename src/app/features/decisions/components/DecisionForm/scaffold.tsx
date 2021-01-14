@@ -2,21 +2,31 @@ import { FormPositioner } from "@amsterdam/scaffold-form/package"
 import { Fields } from "app/features/shared/components/molecules/Form/ScaffoldFields"
 import { navigate } from "@reach/router"
 
-const Scaffold = (caseId: Components.Schemas.Case["id"], opinions: MockComponents.Schemas.Opinion[], summonTitle: string) => {
-  
-  const opinionsObject = opinions.reduce((acc, cur) => {
-    acc[`opinion.${ cur.id }`] = cur.title
+export default (caseId: Components.Schemas.Case["id"], decisions: MockComponents.Schemas.Decision[]) => {
+
+  const decisionsObject = decisions.reduce((acc, cur) => {
+    acc[`decision.${ cur.id }`] = cur.title
     return acc
   }, {} as Record<string, string>)
-  
+
+
   const fields = {
-    opinions: {
+    decisions: {
       type: "RadioFields",
       props: {
         isRequired: true,
-        label: `Wat is de uitkomst van de zienswijze: ${ summonTitle }?`,
-        name: "opinions",
-        options: opinionsObject
+        label: "Wat is het resultaat besluit?",
+        name: "decision",
+        options: decisionsObject
+      }
+    },
+    text: {
+      type: "TextAreaField",
+      props: {
+        label: "Korte toelichting",
+        extraLabel: "(niet verplicht)",
+        name: "text",
+        isRequired: false
       }
     },
     submit: {
@@ -37,10 +47,10 @@ const Scaffold = (caseId: Components.Schemas.Case["id"], opinions: MockComponent
 
   return new FormPositioner(fields as Fields)
     .setGrid("laptop", "1fr 1fr 1fr 1fr", [
-      ["opinions", "opinions"],
+      ["decisions", "decisions"],
+      ["text", "text"],
       ["submit", "secondaryButton"]
     ])
     .getScaffoldProps()
 }
 
-export default Scaffold

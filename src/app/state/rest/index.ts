@@ -243,6 +243,18 @@ export const useReasons = (options?: Options) => {
   })
 }
 
+export const useOpinions = (options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<MockComponents.Schemas.Opinion[]>({
+    ...options,
+    url: "opinions",
+    groupName: "cases",
+    handleError,
+    isProtected: true,
+    isMocked: true
+  })
+}
+
 export const useSummons = (options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<MockComponents.Schemas.Summon[]>({
@@ -267,3 +279,16 @@ export const useSummon = (id?: number, options?: Options) => {
     isMocked: true
   })
 }
+
+export const useDecisions = (options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<MockComponents.Schemas.Decision[]>({
+    ...options,
+    url: "decisions",
+    groupName: "cases",
+    handleError,
+    isProtected: true,
+    isMocked: true
+  })
+}
+

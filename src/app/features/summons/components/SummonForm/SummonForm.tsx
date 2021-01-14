@@ -3,27 +3,25 @@ import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
 
 import ScaffoldFields from "app/features/shared/components/molecules/Form/ScaffoldFields"
 import scaffold from "./scaffold"
-import { useOpinions } from "app/state/rest"
+import { useSummons } from "app/state/rest"
 import { Spinner } from "@amsterdam/asc-ui"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
-  summonTitle: string | undefined
   isLoading?: boolean
 }
 
+const SummonForm: React.FC<Props> = ({ caseId, isLoading }) => {
 
-const OpinionForm: React.FC<Props> = ({ caseId, summonTitle = "" }) => {
+  const summons = useSummons()
 
-  const opinions = useOpinions()
+  if (summons.data === undefined) return <Spinner />
 
-  if (opinions.data === undefined) return <Spinner />
- 
-  return(
+  return (
     <ScaffoldForm>
-      <ScaffoldFields {...scaffold( caseId, opinions.data, summonTitle ) } />
+      <ScaffoldFields {...scaffold( caseId, summons.data ) } />
     </ScaffoldForm>  
   )
 }
 
-export default OpinionForm
+export default SummonForm
