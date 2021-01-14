@@ -55,12 +55,25 @@ const workflowOpinion = (caseId: Components.Schemas.Case["id"]) => (
     }
   ]
 )
+
 const workflowSummon = (caseId: Components.Schemas.Case["id"]) => (
   [
     { itemList:
       [ "Verwerken aanschrijving", "ProjectHandhaver", "28-02-2021", "14 dagen",
         <ButtonLink to={ to("/cases/:id/summon", { id: caseId })}>
           <Button variant="primary" as="span">Aanschrijving</Button>
+        </ButtonLink>
+      ]
+    }
+  ]
+)
+
+const workflowDecision = (caseId: Components.Schemas.Case["id"]) => (
+  [
+    { itemList:
+      [ "Verwerken besluit", "ProjectHandhaver", "28-02-2021", "14 dagen",
+        <ButtonLink to={ to("/cases/:id/decision", { id: caseId })}>
+          <Button variant="primary" as="span">Besluit</Button>
         </ButtonLink>
       ]
     }
@@ -90,6 +103,7 @@ const Workflow: React.FC<Props> = ({ caseId, summonId }) => {
       <MockWrapper>
         <WorkflowStatus status={opinionString} data={workflowOpinion(caseId)} />
         <WorkflowStatus status="Aanschrijving" data={workflowSummon(caseId)} />
+        <WorkflowStatus status="Besluit" data={workflowDecision(caseId)} />
       </MockWrapper>
       { (shouldCreateVisit || shouldCreateAdditionalVisit) &&
         <WorkflowStatus status="Huisbezoek" data={workflowVisit} />
