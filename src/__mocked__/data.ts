@@ -1,40 +1,37 @@
-const teams: MockComponents.Schemas.Team[] = [
+
+const correspondence: MockComponents.Schemas.Correspondence[] = [
   {
     id: 1,
-    title: "Vakantieverhuur",
-    enabled: true
+    title: "Correspondentie"
   },
   {
     id: 2,
-    title: "Criminele spookburgers",
-    enabled: false
-  },
-  {
-    id: 3,
-    title: "Goed verhuurdersschap",
-    enabled: false
-  },
-  {
-    id: 4,
-    title: "Leegstand",
-    enabled: false
-  },
-  {
-    id: 5,
-    title: "Onderhuur en Adreskwaliteit",
-    enabled: false
-  },
-  {
-    id: 6,
-    title: "Woningkwaliteit",
-    enabled: false
-  },
-  {
-    id: 7,
-    title: "Woningdelen",
-    enabled: false
+    title: "Terugbel verzoek"
   }
 ]
+
+const decisions: MockComponents.Schemas.Decision[] = [
+  {
+    id: 1,
+    title: "Boete"
+  },
+  {
+    id: 2,
+    title: "Afzien besluit"
+  }
+]
+
+const opinions: MockComponents.Schemas.Opinion[] = [
+  {
+    id: 1,
+    title: "Afzien aanschrijving"
+  },
+  {
+    id: 2,
+    title: "Opstellen besluit"
+  }
+]
+
 const reasons: MockComponents.Schemas.Reason[] = [
   {
     id: 1,
@@ -110,34 +107,50 @@ const cases: MockComponents.Schemas.Case[] = [
   }
 ]
 
-const decisions: MockComponents.Schemas.Decision[] = [
+const teams: MockComponents.Schemas.Team[] = [
   {
     id: 1,
-    title: "Boete"
+    title: "Vakantieverhuur",
+    enabled: true
   },
   {
     id: 2,
-    title: "Afzien besluit"
-  }
-]
-
-const opinions: MockComponents.Schemas.Opinion[] = [
-  {
-    id: 1,
-    title: "Afzien aanschrijving"
+    title: "Criminele spookburgers",
+    enabled: false
   },
   {
-    id: 2,
-    title: "Opstellen besluit"
+    id: 3,
+    title: "Goed verhuurdersschap",
+    enabled: false
+  },
+  {
+    id: 4,
+    title: "Leegstand",
+    enabled: false
+  },
+  {
+    id: 5,
+    title: "Onderhuur en Adreskwaliteit",
+    enabled: false
+  },
+  {
+    id: 6,
+    title: "Woningkwaliteit",
+    enabled: false
+  },
+  {
+    id: 7,
+    title: "Woningdelen",
+    enabled: false
   }
 ]
-
 
 export default {
-  teams,
+  cases,
+  correspondence,
+  decisions,
+  opinions,
   reasons,
   summons,
-  cases,
-  decisions,
-  opinions
+  teams
 }
