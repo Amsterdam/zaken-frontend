@@ -12,7 +12,7 @@ const CaseDetails: React.FC<Props> = ({ caseId }) => {
   const values = useMemo(() => ({
     // TODO-MOCKED use the right ID
     "Zaak-ID": data?.id,
-    "Team": data?.team.title,
+    "Team": data?.team?.title,
     "Startdatum": data?.start_date ? `${ displayDate(data.start_date) }` : "-"
   }), [ data ])
   return <DefinitionList
