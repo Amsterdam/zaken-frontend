@@ -3,7 +3,7 @@ declare namespace MockComponents {
 
     export type Case = {
       id: number
-      teamTitle: string
+      team: {id: number, title: string}
       mocked: boolean
     }    
 

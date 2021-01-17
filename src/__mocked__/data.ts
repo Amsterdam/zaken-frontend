@@ -1,7 +1,7 @@
 const cases: MockComponents.Schemas.Case[] = [
   {
     id: 996,
-    teamTitle: "Vakantieverhuur",
+    team: { id: 1, title: "Vakantieverhuur" },
     mocked: true
   }
 ]

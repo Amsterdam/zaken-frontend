@@ -1,6 +1,6 @@
 import React from "react"
 import { RouteComponentProps } from "@reach/router"
-import { Button, Divider, Heading } from "@amsterdam/asc-ui"
+import { Button, Divider, Heading, themeSpacing } from "@amsterdam/asc-ui"
 
 import { useCase } from "app/state/rest"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
@@ -26,6 +26,10 @@ const ButtonWrapper = styled.div`
   &:after {
     clear: right;
     float: none;
+  }
+
+  button {
+    margin-left: ${ themeSpacing(2) };
   }
 `
 
@@ -59,7 +63,6 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
             <ButtonLink to={ to("/cases/:id/correspondence", { id: id })}>
               <ButtonTertiary variant="tertiary">Correspondentie</ButtonTertiary>
             </ButtonLink>
-            &nbsp;
             <ButtonLink to={ to("/cases/:id/afronden", { id: id })}>
               <ButtonTertiary variant="tertiary">Afronden</ButtonTertiary>
             </ButtonLink>

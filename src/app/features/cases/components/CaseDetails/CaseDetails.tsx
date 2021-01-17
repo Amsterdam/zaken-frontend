@@ -4,7 +4,7 @@ import { useCase } from "app/state/rest"
 import { displayDate } from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
 
 type Props = {
-  caseId: MockComponents.Schemas.Case["id"]
+  caseId: Components.Schemas.Case["id"]
 }
 
 const CaseDetails: React.FC<Props> = ({ caseId }) => {
@@ -12,7 +12,7 @@ const CaseDetails: React.FC<Props> = ({ caseId }) => {
   const values = useMemo(() => ({
     // TODO-MOCKED use the right ID
     "Zaak-ID": data?.id,
-    "Team": data?.teamTitle,
+    "Team": data?.team.title,
     "Startdatum": data?.start_date ? `${ displayDate(data.start_date) }` : "-"
   }), [ data ])
   return <DefinitionList
