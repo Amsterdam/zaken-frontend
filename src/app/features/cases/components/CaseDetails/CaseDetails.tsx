@@ -4,15 +4,15 @@ import { useCase } from "app/state/rest"
 import { displayDate } from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
 
 type Props = {
-  caseId: Components.Schemas.CaseEvent["id"]
+  caseId: Components.Schemas.Case["id"]
 }
 
 const CaseDetails: React.FC<Props> = ({ caseId }) => {
   const { data } = useCase(caseId)
   const values = useMemo(() => ({
-    // TODO use real data
+    // TODO-MOCKED use the right ID
     "Zaak-ID": data?.id,
-    "Team": "Vakantieverhuur",
+    "Team": data?.team.title,
     "Startdatum": data?.start_date ? `${ displayDate(data.start_date) }` : "-"
   }), [ data ])
   return <DefinitionList

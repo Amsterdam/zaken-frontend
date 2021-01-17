@@ -6,6 +6,7 @@ import OpinionCreatePage from "app/pages/opinions/CreatePage"
 import SummonCreatePage from "app/pages/summons/CreatePage"
 import DecisionCreatePage from "app/pages/decisions/CreatePage"
 import CorrespondenceCreatePage from "app/pages/correspondence/CreatePage"
+import CompleteCasePage from "app/pages/cases/complete/CompleteCasePage"
 
 // NOTE: please add your own POC-specific routes here.
 export default {
@@ -18,6 +19,11 @@ export default {
         Page: DetailsPage,
         title: "Zaakdetails",
         icon: "Folder"
+      },
+      ":id/afronden": {
+        Page: CompleteCasePage,
+        title: "Zaak afronden",
+        icon: "Edit"
       },
       ":id/correspondence": {
         Page: CorrespondenceCreatePage,

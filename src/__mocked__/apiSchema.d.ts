@@ -3,8 +3,14 @@ declare namespace MockComponents {
 
     export type Case = {
       id: number
+      team: {id: number, title: string}
       mocked: boolean
     }    
+
+    export type CompleteCase = {
+      readonly id: number
+      readonly title: string
+    }
 
     export type Correspondence = {
       readonly id: number

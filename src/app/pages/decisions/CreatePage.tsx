@@ -2,7 +2,6 @@ import React from "react"
 import { RouteComponentProps } from "@reach/router"
 import { FormTitle } from "@amsterdam/asc-ui"
 
-import { useCase } from "app/state/rest/"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
 import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
@@ -16,8 +15,7 @@ type Props = {
 
 const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
   const id: Components.Schemas.Case["id"] = parseInt(idString!)
-  const { data } = useCase(id)
-
+  
   return (
     <DefaultLayout>
       <RowWithColumn>
@@ -27,13 +25,9 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
         <PageHeading />
       </RowWithColumn>
       <RowWithColumn>
-        { data !== undefined &&
-          <>
-            <FormTitle>Gebruik dit formulier om aan te geven welk besluit is genomen</FormTitle>
-            <AddressHeading caseId={ id } />
-            <DecisionForm caseId={ id! } />
-          </>
-        }
+        <FormTitle>Gebruik dit formulier om aan te geven welk besluit is genomen</FormTitle>
+        <AddressHeading caseId={ id } />
+        <DecisionForm caseId={ id! } />
       </RowWithColumn>
     </DefaultLayout>
   )

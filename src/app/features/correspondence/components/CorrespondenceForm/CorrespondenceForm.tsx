@@ -8,7 +8,6 @@ import { Spinner } from "@amsterdam/asc-ui"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
-  isLoading?: boolean
 }
 
 const CorrespondenceForm: React.FC<Props> = ({ caseId }) => {

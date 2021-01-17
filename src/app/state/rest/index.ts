@@ -304,3 +304,15 @@ export const useCorrespondence = (options?: Options) => {
   })
 }
 
+export const useCompleteCase = (options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<MockComponents.Schemas.CompleteCase[]>({
+    ...options,
+    url: "completeCases",
+    groupName: "cases",
+    handleError,
+    isProtected: true,
+    isMocked: true
+  })
+}
+
