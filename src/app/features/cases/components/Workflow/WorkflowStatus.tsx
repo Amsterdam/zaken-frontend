@@ -34,10 +34,10 @@ const StyledHeading = styled(Heading)`
 `
 
 const columns = [
+  { minWidth: 50 },
   { header: "Actuele taken", minWidth: 100 },
   { header: "Uitvoerder", minWidth: 100 },
-  { header: "Einddatum", minWidth: 100 },
-  { header: "Looptijd", minWidth: 100 },
+  { header: "Slotdatum", minWidth: 100 },
   { header: "Verwerking taak", minWidth: 140 }
 ]
 

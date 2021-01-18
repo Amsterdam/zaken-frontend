@@ -38,6 +38,16 @@ declare namespace MockComponents {
       readonly title: string
     }
 
+    export type Task = {
+      readonly camunda_task_id: string
+      readonly task_name_id: string
+      readonly name: string
+      readonly role: string
+      readonly end_date: string
+      readonly processing: string
+      readonly complete: boolean
+    }
+
     export type Team = {
       readonly id: number
       readonly title: string

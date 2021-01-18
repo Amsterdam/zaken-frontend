@@ -119,6 +119,27 @@ const summons: MockComponents.Schemas.Summon[] = [
   }
 ]
 
+const tasks: MockComponents.Schemas.Task[] = [
+  {
+    camunda_task_id: "455d3974-50cc-11eb-a870-0242ac120008",
+    task_name_id: "sia_melding_beoordelen",
+    name: "SIA Melding Beoordelen",
+    role: "-",
+    end_date: "-",
+    processing: "-",
+    complete: true
+  },
+  {
+    camunda_task_id: "455d3974-50cc-11eb-a870-0242ac120008",
+    task_name_id: "sia_melding_beoordelen",
+    name: "SIA Melding Beoordelen",
+    role: "-",
+    end_date: "-",
+    processing: "-",
+    complete: false
+  }
+]
+
 const teams: MockComponents.Schemas.Team[] = [
   {
     id: 1,
@@ -165,5 +186,6 @@ export default {
   opinions,
   reasons,
   summons,
+  tasks,
   teams
 }

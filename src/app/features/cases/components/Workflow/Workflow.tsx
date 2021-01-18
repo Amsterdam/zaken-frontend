@@ -1,7 +1,9 @@
-import React, { useEffect } from "react"
-import { Button } from "@amsterdam/asc-ui"
+import React, { useEffect, useMemo } from "react"
+import { Button, Icon } from "@amsterdam/asc-ui"
 
-import { useCaseEvents, useSummon } from "app/state/rest"
+import { Lock, LockOpen } from "app/features/shared/components/atoms/Icons"
+
+import { useCaseEvents, useCaseTasks, useSummon } from "app/state/rest"
 import workflow from "app/state/workflow/workflow"
 import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
 import to from "app/features/shared/routing/to"
@@ -16,7 +18,7 @@ type Props = {
 const workflowDebrief = (caseId: Components.Schemas.Case["id"]) => (
   [
     { itemList:
-      [ "Verwerken Debrief", "ProjectHandhaver", "-", "-",
+      [ "Verwerken Debrief", "ProjectHandhaver", "-",
       <ButtonLink to={ to("/cases/:id/debriefing", { id: caseId })}>
         <Button variant="primary" as="span">Debrief verwerken</Button>
       </ButtonLink>
@@ -26,28 +28,28 @@ const workflowDebrief = (caseId: Components.Schemas.Case["id"]) => (
 )
 
 const workflowVisit = (
-  [{ itemList: [ "Huisbezoek afleggen", "Toezichthouders", "-", "-", "-" ] }]
+  [{ itemList: [ "Huisbezoek afleggen", "Toezichthouders", "-", "-" ] }]
 )
 
 const workflowViolation = (
   [
-    { itemList: [ "Opstellen beeldverslag", "Toezichthouder", "-", "-", "-" ] },
-    { itemList: [ "Opstellen rapport van bevindingen", "Toezichthouder", "-", "-", "-" ] },
-    { itemList: [ "Opstellen aanschrijving", "Projecthandhaver", "-", "-", "-" ] }
+    { itemList: [ "Opstellen beeldverslag", "Toezichthouder", "-", "-" ] },
+    { itemList: [ "Opstellen rapport van bevindingen", "Toezichthouder", "-", "-" ] },
+    { itemList: [ "Opstellen aanschrijving", "Projecthandhaver", "-", "-" ] }
   ]
 )
 
 const workflowCloseCase = (
   [
-    { itemList: [ "Opstellen buitendienst rapport", "Toezichthouder", "-", "-", "-" ] },
-    { itemList: [ "Afsluiten zaak", "Projectmederker", "-", "-", "-" ] }
+    { itemList: [ "Opstellen buitendienst rapport", "Toezichthouder", "-", "-" ] },
+    { itemList: [ "Afsluiten zaak", "Projectmederker", "-", "-" ] }
   ]
 )
 
 const workflowOpinion = (caseId: Components.Schemas.Case["id"]) => (
   [
     { itemList:
-      [ "Beoordelen zienswijze", "ProjectHandhaver", "-", "-",
+      [ "Beoordelen zienswijze", "ProjectHandhaver", "-",
         <ButtonLink to={ to("/cases/:id/opinion", { id: caseId })}>
           <Button variant="primary" as="span">Uitkomst zienswijze</Button>
         </ButtonLink>
@@ -59,7 +61,7 @@ const workflowOpinion = (caseId: Components.Schemas.Case["id"]) => (
 const workflowSummon = (caseId: Components.Schemas.Case["id"]) => (
   [
     { itemList:
-      [ "Verwerken aanschrijving", "ProjectHandhaver", "28-02-2021", "14 dagen",
+      [ "Verwerken aanschrijving", "ProjectHandhaver", "28-02-2021",
         <ButtonLink to={ to("/cases/:id/summon", { id: caseId })}>
           <Button variant="primary" as="span">Aanschrijving</Button>
         </ButtonLink>
@@ -71,7 +73,7 @@ const workflowSummon = (caseId: Components.Schemas.Case["id"]) => (
 const workflowDecision = (caseId: Components.Schemas.Case["id"]) => (
   [
     { itemList:
-      [ "Verwerken besluit", "ProjectHandhaver", "28-02-2021", "14 dagen",
+      [ "Verwerken besluit", "ProjectHandhaver", "28-02-2021",
         <ButtonLink to={ to("/cases/:id/decision", { id: caseId })}>
           <Button variant="primary" as="span">Besluit</Button>
         </ButtonLink>
@@ -82,6 +84,7 @@ const workflowDecision = (caseId: Components.Schemas.Case["id"]) => (
 
 const Workflow: React.FC<Props> = ({ caseId, summonId }) => {
   const dataCase = useCaseEvents(caseId).data
+  const dataTasks = useCaseTasks(caseId).data
   const { data, execGet } = useSummon(summonId, { lazy: true })
   const {
     shouldCreateVisit,
@@ -91,6 +94,19 @@ const Workflow: React.FC<Props> = ({ caseId, summonId }) => {
     shouldCreateAdditionalVisit
   } = workflow(dataCase)
 
+  console.log("tasks", dataTasks)
+  const mapTaskData = (data: MockComponents.Schemas.Task) => 
+
+  ({
+    itemList: [
+      <Icon size={32}>{ data.complete ? <Lock /> : <LockOpen /> }</Icon> ,
+      data.name,
+      data.role,
+      data.end_date,
+      data.processing
+    ]
+  })
+
   // TODO-MOCKED, get summonId/summonTitle from useCaseEvents(caseId)
   useEffect(() => {
     if (summonId === undefined) return
@@ -98,12 +114,17 @@ const Workflow: React.FC<Props> = ({ caseId, summonId }) => {
   )
   const opinionString = `Zienswijze - ${ data?.title ?? "" }`
 
+  const mappedTaskData = useMemo(() => dataTasks?.map(mapTaskData), [ dataTasks ])
+
+
   return (
     <div>
+
       <MockWrapper>
         <WorkflowStatus status={opinionString} data={workflowOpinion(caseId)} />
         <WorkflowStatus status="Aanschrijving" data={workflowSummon(caseId)} />
         <WorkflowStatus status="Besluit" data={workflowDecision(caseId)} />
+        <WorkflowStatus status="-Camunda-" data={mappedTaskData} />
       </MockWrapper>
       { (shouldCreateVisit || shouldCreateAdditionalVisit) &&
         <WorkflowStatus status="Huisbezoek" data={workflowVisit} />
