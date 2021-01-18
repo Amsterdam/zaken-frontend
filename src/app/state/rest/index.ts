@@ -63,9 +63,10 @@ export const useCases = (state_date?: string, options?: Options) => {
   })
 }
 
-export const useCase = (id: Components.Schemas.Case["id"], options?: Options) => {
+export const useCase = (id?: Components.Schemas.Case["id"], options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.Case & MockComponents.Schemas.Case>({
+    lazy: id === undefined,
     ...options,
     url: makeGatewayUrl("cases", id),
     groupName: "cases",
