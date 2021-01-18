@@ -16,28 +16,33 @@ const CreateForm: React.FC<Props> = ({ bagId }) => {
   const teams = useTeams()
   const reasons = useReasons()
   const [isSubmitted, setSubmitted] = useState(false)
-  const [data, setData] = useState<any>()
+  const [data, setData] = useState<MockComponents.Schemas.CaseRequestBody>()
   const { execPost } = useCase()
 
   if (teams.data === undefined || reasons.data === undefined) return <Spinner />
 
   const fields = scaffold(bagId, teams.data, reasons.data)
 
-  const onSubmit = (data: any) => {
+  const onSubmit = async (data: any) => {
     setSubmitted(true)
     setData(data)
   }
 
+  const onSubmitConfirm = async () => {
+    await execPost(data)
+    setSubmitted(false)
+  }
+
   return (
     <ScaffoldForm onSubmit={ onSubmit }>
-      { isSubmitted === false ?
-        <ScaffoldFields { ...fields } /> :
+      <ScaffoldFields { ...fields } />
+      { isSubmitted &&
         <ConfirmScaffoldFields
-          fields={ fields }
+          fields={ fields.fields }
           data={ data }
           onCancel={ () => setSubmitted(false) }
           submitTitle="Zaak aanmaken"
-          onSubmit={ execPost }
+          onSubmit={ onSubmitConfirm }
           showInModal={ true }
         />
       }

@@ -4,7 +4,8 @@ declare namespace MockComponents {
     export type Case = {
       id: number
       mocked: boolean
-    }    
+    }
+    export type CaseRequestBody = any
 
     export type Correspondence = {
       readonly id: number
