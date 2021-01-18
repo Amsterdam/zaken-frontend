@@ -38,6 +38,7 @@ const CreateForm: React.FC<Props> = ({ bagId }) => {
           onCancel={ () => setSubmitted(false) }
           submitTitle="Zaak aanmaken"
           onSubmit={ execPost }
+          showInModal={ true }
         />
       }
     </ScaffoldForm>
