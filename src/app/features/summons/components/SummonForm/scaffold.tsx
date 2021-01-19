@@ -13,12 +13,12 @@ export default (caseId: Components.Schemas.Case["id"], summons: MockComponents.S
 
   const fields = {
     summons: {
-      type: "CheckboxFields",
+      type: "SelectField",
       props: {
         isRequired: true,
         label: "Welke aanschrijving is opgesteld?",
         extraLabel: <InfoButton infoTitle="TODO Aanschrijvingen" infoText="TODO Uitleg over aanschrijvingen"></InfoButton>,
-        name: "summon",
+        name: "summons",
         options: summonsObject
       }
     },

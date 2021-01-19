@@ -60,7 +60,6 @@ const ConfirmScaffoldFields: React.FC<Props> = ({
   submitTitle = defaultSubmitTitle,
   showInModal = false
 }) => {
-
   const [isSubmitting, setSubmitting] = useState(false)
   const values = useMemo(() => createValuesObject(fields, data), [data, fields])
 

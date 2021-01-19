@@ -16,7 +16,7 @@ export default (caseId: Components.Schemas.Case["id"], decisions: MockComponents
       props: {
         isRequired: true,
         label: "Wat is het resultaat besluit?",
-        name: "decision",
+        name: "decisions",
         options: decisionsObject
       }
     },
