@@ -64,7 +64,7 @@ const ConfirmScaffoldFields: React.FC<Props> = ({
   showInModal = false
 }) => {
 
-  const [isSubmitting, setSubmitting] = useState(true)
+  const [isSubmitting, setSubmitting] = useState(false)
   const values = useMemo(() => createValuesObject(fields, data), [data, fields])
 
   const onSubmitWrap = async () => {
