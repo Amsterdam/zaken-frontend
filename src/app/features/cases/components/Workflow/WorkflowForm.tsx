@@ -1,27 +1,30 @@
 import React, { useState } from "react"
-import { Spinner } from "@amsterdam/asc-ui"
 import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
 
 import ScaffoldFields from "app/features/shared/components/molecules/Form/ScaffoldFields"
-import scaffold from "./scaffold"
-import { useTeams, useReasons, useCase } from "app/state/rest"
+import { Spinner } from "@amsterdam/asc-ui"
 import ConfirmScaffoldFields from "app/features/shared/components/molecules/ConfirmScaffoldFields/ConfirmScaffoldFields"
 
 type Props = {
-  bagId: Components.Schemas.Address["bag_id"]
+  caseId: Components.Schemas.Case["id"]
+  endpoint: any
+  scaffold: any
+  extraLabel?: string
 }
 
-const CreateForm: React.FC<Props> = ({ bagId }) => {
+const WorkflowForm: React.FC<Props> = ({ caseId, scaffold, endpoint, extraLabel }) => {
 
-  const teams = useTeams()
-  const reasons = useReasons()
+  const result = endpoint()
   const [isSubmitted, setSubmitted] = useState(false)
   const [data, setData] = useState<MockComponents.Schemas.CaseRequestBody>()
-  const { execPost } = useCase()
 
-  if (teams.data === undefined || reasons.data === undefined) return <Spinner />
+  //TODO allow for PUT
+  const { execPost } = endpoint()
 
-  const fields = scaffold(bagId, teams.data, reasons.data)
+  if (result.data === undefined) return <Spinner />
+
+  const fields = scaffold( caseId, result.data, extraLabel )
+  const submitTitle = fields.fields.submit.props.label
 
   const onSubmit = async (data: any) => {
     setSubmitted(true)
@@ -35,18 +38,19 @@ const CreateForm: React.FC<Props> = ({ bagId }) => {
 
   return (
     <ScaffoldForm onSubmit={ onSubmit }>
-      <ScaffoldFields { ...fields } />
+      <ScaffoldFields {...fields } />
       { isSubmitted &&
         <ConfirmScaffoldFields
           fields={ fields.fields }
           data={ data }
           onCancel={ () => setSubmitted(false) }
-          submitTitle="Zaak aanmaken"
+          submitTitle= { submitTitle ?? "Resultaat verwerken" }
           onSubmit={ onSubmitConfirm }
           showInModal={ true }
         />
       }
-    </ScaffoldForm>
+    </ScaffoldForm>  
   )
 }
-export default CreateForm
+
+export default WorkflowForm
