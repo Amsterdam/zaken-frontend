@@ -1,11 +1,12 @@
-import React, { useState } from "react"
+import React from "react"
 import { Spinner } from "@amsterdam/asc-ui"
 import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
 
 import ScaffoldFields from "app/features/shared/components/molecules/Form/ScaffoldFields"
 import scaffold from "./scaffold"
 import { useTeams, useReasons, useCase } from "app/state/rest"
-import ConfirmScaffoldFields from "./ConfirmScaffoldFields"
+import ConfirmScaffoldFields from "app/features/shared/components/molecules/ConfirmScaffoldFields/ConfirmScaffoldFields"
+import useSubmitConfirmation from "app/features/shared/components/molecules/ConfirmScaffoldFields/hooks/useSubmitConfirmation"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -15,23 +16,18 @@ const CreateForm: React.FC<Props> = ({ bagId }) => {
 
   const teams = useTeams()
   const reasons = useReasons()
-  const [isSubmitted, setSubmitted] = useState(false)
-  const [data, setData] = useState<MockComponents.Schemas.CaseRequestBody>()
   const { execPost } = useCase()
+  const {
+    isSubmitted,
+    data: confirmData,
+    onSubmit,
+    onSubmitConfirm,
+    onCancelConfirm
+  } = useSubmitConfirmation<MockComponents.Schemas.CaseRequestBody>(execPost)
 
   if (teams.data === undefined || reasons.data === undefined) return <Spinner />
 
   const fields = scaffold(bagId, teams.data, reasons.data)
-
-  const onSubmit = async (data: any) => {
-    setSubmitted(true)
-    setData(data)
-  }
-
-  const onSubmitConfirm = async () => {
-    await execPost(data)
-    setSubmitted(false)
-  }
 
   return (
     <ScaffoldForm onSubmit={ onSubmit }>
@@ -39,8 +35,8 @@ const CreateForm: React.FC<Props> = ({ bagId }) => {
       { isSubmitted &&
         <ConfirmScaffoldFields
           fields={ fields.fields }
-          data={ data }
-          onCancel={ () => setSubmitted(false) }
+          data={ confirmData }
+          onCancel={ onCancelConfirm }
           submitTitle="Zaak aanmaken"
           onSubmit={ onSubmitConfirm }
           showInModal={ true }

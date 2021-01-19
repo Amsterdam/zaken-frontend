@@ -12,7 +12,7 @@ type Props = {
   title?: string
   onCancel?: () => void
   cancelTitle?: string
-  onSubmit?: () => Promise<unknown>
+  onSubmit?: () => Promise<any>
   submitTitle?: string
   showInModal?: boolean
 }
