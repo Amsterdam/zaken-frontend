@@ -22,7 +22,7 @@ const Scaffold = (caseId: Components.Schemas.Case["id"], opinions: MockComponent
     submit: {
       type: "SubmitButton",
       props: {
-        label: "Resultaat verwerkennnn"
+        label: "Resultaat verwerken"
       }
     },
     secondaryButton: {
