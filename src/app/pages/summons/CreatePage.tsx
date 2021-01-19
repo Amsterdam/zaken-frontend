@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { RouteComponentProps } from "@reach/router"
 import { FormTitle } from "@amsterdam/asc-ui"
 
-import { useCase, useSummons } from "app/state/rest/"
+import { useSummons } from "app/state/rest/"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
 import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
@@ -26,7 +26,8 @@ const FormWithTooltip = styled.div`
 
 const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
   const id: Components.Schemas.Case["id"] = parseInt(idString!)
-  const { data } = useCase(id)
+  const summons = useSummons()
+  const { execPost } = summons
 
   return (
     <DefaultLayout>
@@ -37,19 +38,16 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
         <PageHeading />
       </RowWithColumn>
       <RowWithColumn>
-        { data !== undefined &&
-          <>
-            <FormTitle>Gebruik dit formulier om aan te geven welke aanschrijving opgesteld is</FormTitle>
-            <AddressHeading caseId={ id } />
-            <FormWithTooltip>
-              <WorkflowForm 
-                caseId={ id! } 
-                endpoint={ useSummons } 
-                scaffold= { scaffold } 
-              />
-            </FormWithTooltip>
-          </>
-        }
+        <FormTitle>Gebruik dit formulier om aan te geven welke aanschrijving opgesteld is</FormTitle>
+        <AddressHeading caseId={ id } />
+        <FormWithTooltip>
+          <WorkflowForm 
+            caseId={ id! } 
+            endpoint={ summons }
+            postMethod={ execPost } 
+            scaffold= { scaffold } 
+          />
+        </FormWithTooltip>
       </RowWithColumn>
     </DefaultLayout>
   )

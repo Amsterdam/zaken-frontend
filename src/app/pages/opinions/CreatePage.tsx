@@ -21,6 +21,8 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
   // TODO-MOCKED, get summonId/summonTitle from useCaseEvents(caseId)  
   const summonId: number = 6
   const { data, execGet } = useSummon(summonId, { lazy: true })
+  const opinions = useOpinions()
+  const { execPost } = opinions
   useEffect(() => {
     if (summonId === undefined) return
     execGet() }, [summonId, execGet]
@@ -39,7 +41,8 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
         <AddressHeading caseId={ id } /> 
         <WorkflowForm
           caseId={ id! } 
-          endpoint={ useOpinions } 
+          endpoint={ opinions } 
+          postMethod={ execPost }
           scaffold= { scaffold } 
           extraLabel = { data?.title }
         />

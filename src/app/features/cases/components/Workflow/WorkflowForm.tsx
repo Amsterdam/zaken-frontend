@@ -8,7 +8,7 @@ import useSubmitConfirmation from "app/features/shared/components/molecules/Conf
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
-  endpoint: any
+  endpoint?: any
   postMethod?: any
   scaffold: any
   extraLabel?: string
@@ -16,7 +16,7 @@ type Props = {
 
 const WorkflowForm: React.FC<Props> = ({ caseId, scaffold, endpoint, postMethod,  extraLabel }) => {
 
-  const result = endpoint()
+  const data = endpoint.data
   const {
     isSubmitted,
     data: confirmData,
@@ -26,9 +26,9 @@ const WorkflowForm: React.FC<Props> = ({ caseId, scaffold, endpoint, postMethod,
   } = useSubmitConfirmation<MockComponents.Schemas.CaseRequestBody>(postMethod)
 
 
-  if (result.data === undefined) return <Spinner />
+  if (data === undefined) return <Spinner />
 
-  const fields = scaffold( caseId, result.data, extraLabel )
+  const fields = scaffold( caseId, data, extraLabel )
   const submitTitle = fields.fields.submit.props.label
 
   return (
