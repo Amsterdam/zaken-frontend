@@ -16,7 +16,7 @@ export default (caseId: Components.Schemas.Case["id"], completeCase: MockCompone
       props: {
         isRequired: true,
         label: "Wat is de vervolgstap in deze zaak?",
-        name: "completecase",
+        name: "complete",
         options: completeCaseObject
       }
     },

@@ -6,9 +6,10 @@ import { Fields } from "app/features/shared/components/molecules/Form/ScaffoldFi
 import DefinitionList from "app/features/shared/components/molecules/DefinitionList/DefinitionList"
 import Modal, { ModalBlock } from "app/features/shared/components/molecules/Modal/Modal"
 
+type RequestBody = any
 type Props = {
   fields: Fields
-  data: any
+  data: RequestBody
   title?: string
   onCancel?: () => void
   cancelTitle?: string
@@ -39,7 +40,7 @@ const SpinnerWrap = styled.div`
   height: 100%;
 `
 
-const createValuesObject = (fields: Fields, data: MockComponents.Schemas.CaseRequestBody) =>
+const createValuesObject = (fields: Fields, data: RequestBody) =>
   Object.keys(data).reduce((acc, key) => {
     const props = fields[key].props
     const { label } = props

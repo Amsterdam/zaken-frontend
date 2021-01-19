@@ -305,7 +305,7 @@ export const useCorrespondence = (options?: Options) => {
   })
 }
 
-export const useCompleteCase = (options?: Options) => {
+export const useCompleteCase = (id: Components.Schemas.Case["id"], options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<MockComponents.Schemas.CompleteCase[]>({
     ...options,
