@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from "react"
 import styled from "styled-components"
-import { Button, Spinner, themeSpacing } from "@amsterdam/asc-ui"
+import { Button, Spinner } from "@amsterdam/asc-ui"
 import { Fields } from "app/features/shared/components/molecules/Form/ScaffoldFields"
 
 import DefinitionList from "app/features/shared/components/molecules/DefinitionList/DefinitionList"
@@ -24,9 +24,8 @@ const defaultSubmitTitle = "Opslaan"
 const noop = () => {}
 
 const ButtonWrap = styled.div`
-  button {
-    margin-right: ${ themeSpacing(4) };
-  }
+  display: flex;
+  justify-content: space-between;
 `
 const Wrap = styled.div`
   position: relative;
@@ -38,6 +37,10 @@ const SpinnerWrap = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 `
 
 const createValuesObject = (fields: Fields, data: RequestBody) =>
@@ -61,7 +64,7 @@ const ConfirmScaffoldFields: React.FC<Props> = ({
   showInModal = false
 }) => {
 
-  const [isSubmitting, setSubmitting] = useState(false)
+  const [isSubmitting, setSubmitting] = useState(true)
   const values = useMemo(() => createValuesObject(fields, data), [data, fields])
 
   const onSubmitWrap = async () => {
@@ -81,7 +84,7 @@ const ConfirmScaffoldFields: React.FC<Props> = ({
         </ButtonWrap>
         { isSubmitting &&
           <SpinnerWrap>
-            <Spinner />
+            <Spinner size={ 36 } />
           </SpinnerWrap>
         }
       </Wrap>
