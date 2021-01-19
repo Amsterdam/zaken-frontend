@@ -9,24 +9,21 @@ import useSubmitConfirmation from "app/features/shared/components/molecules/Conf
 type Props = {
   caseId: Components.Schemas.Case["id"]
   endpoint: any
+  postMethod?: any
   scaffold: any
   extraLabel?: string
 }
 
-const WorkflowForm: React.FC<Props> = ({ caseId, scaffold, endpoint, extraLabel }) => {
+const WorkflowForm: React.FC<Props> = ({ caseId, scaffold, endpoint, postMethod,  extraLabel }) => {
 
   const result = endpoint()
-
-  //TODO allow for PUT
-  const { execPost } = endpoint()
-  
   const {
     isSubmitted,
     data: confirmData,
     onSubmit,
     onSubmitConfirm,
     onCancelConfirm
-  } = useSubmitConfirmation<MockComponents.Schemas.CaseRequestBody>(execPost)
+  } = useSubmitConfirmation<MockComponents.Schemas.CaseRequestBody>(postMethod)
 
 
   if (result.data === undefined) return <Spinner />
