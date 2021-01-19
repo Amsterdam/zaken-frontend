@@ -14,15 +14,15 @@ type Props = {
 
 const CompleteCaseForm: React.FC<Props> = ({ caseId }) => {
 
-  const { data } = useCompleteCase(caseId)
-  const execPut = async () => {}
+  const { data } = useCompleteCase()
+  const execPost = async () => {}
   const {
     isSubmitted,
     data: confirmData,
     onSubmit,
     onSubmitConfirm,
     onCancelConfirm
-  } = useSubmitConfirmation<{ complete: string, text: string }>(execPut)
+  } = useSubmitConfirmation<{ complete: string, text: string }>(execPost)
 
   if (data === undefined ) return <Spinner />
 
