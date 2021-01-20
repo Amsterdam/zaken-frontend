@@ -7,7 +7,10 @@ import PageHeading from "app/features/shared/components/molecules/PageHeading/Pa
 import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import AddressHeading from "app/features/shared/components/molecules/AddressHeading/AddressHeading"
-import DecisionForm from "app/features/decisions/components/DecisionForm/DecisionForm"
+import { useDecisions } from "app/state/rest"
+import WorkflowForm from "app/features/cases/components/Workflow/WorkflowForm"
+import scaffold from "app/features/decisions/components/DecisionForm/scaffold"
+import FormWithExtraLabel from "app/features/shared/components/atoms/FormWithExtraLabel/FormWithExtraLabel"
 
 type Props = {
   id: string
@@ -15,6 +18,8 @@ type Props = {
 
 const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
   const id: Components.Schemas.Case["id"] = parseInt(idString!)
+  const decisions = useDecisions()
+  const { execPost } = decisions
   
   return (
     <DefaultLayout>
@@ -27,7 +32,14 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
       <RowWithColumn>
         <FormTitle>Gebruik dit formulier om aan te geven welk besluit is genomen</FormTitle>
         <AddressHeading caseId={ id } />
-        <DecisionForm caseId={ id! } />
+        <FormWithExtraLabel>
+          <WorkflowForm
+            caseId={ id! } 
+            endpoint={ decisions } 
+            postMethod = { execPost }
+            scaffold= { scaffold } 
+          />
+        </FormWithExtraLabel>
       </RowWithColumn>
     </DefaultLayout>
   )

@@ -1,48 +1,51 @@
 import React from "react"
-import { Spinner } from "@amsterdam/asc-ui"
 import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
 
 import ScaffoldFields from "app/features/shared/components/molecules/Form/ScaffoldFields"
-import scaffold from "./scaffold"
-import { useTeams, useReasons, useCase } from "app/state/rest"
+import { Spinner } from "@amsterdam/asc-ui"
 import ConfirmScaffoldFields from "app/features/shared/components/molecules/ConfirmScaffoldFields/ConfirmScaffoldFields"
 import useSubmitConfirmation from "app/features/shared/components/molecules/ConfirmScaffoldFields/hooks/useSubmitConfirmation"
 
 type Props = {
-  bagId: Components.Schemas.Address["bag_id"]
+  caseId: Components.Schemas.Case["id"]
+  endpoint?: any
+  postMethod?: any
+  scaffold: any
+  extraLabel?: string
 }
 
-const CreateForm: React.FC<Props> = ({ bagId }) => {
+const WorkflowForm: React.FC<Props> = ({ caseId, scaffold, endpoint, postMethod,  extraLabel }) => {
 
-  const teams = useTeams()
-  const reasons = useReasons()
-  const { execPost } = useCase()
+  const data = endpoint.data
   const {
     isSubmitted,
     data: confirmData,
     onSubmit,
     onSubmitConfirm,
     onCancelConfirm
-  } = useSubmitConfirmation<MockComponents.Schemas.CaseRequestBody>(execPost)
+  } = useSubmitConfirmation<MockComponents.Schemas.CaseRequestBody>(postMethod)
 
-  if (teams.data === undefined || reasons.data === undefined) return <Spinner />
 
-  const fields = scaffold(bagId, teams.data, reasons.data)
+  if (data === undefined) return <Spinner />
+
+  const fields = scaffold( caseId, data, extraLabel )
+  const submitTitle = fields.fields.submit.props.label
 
   return (
     <ScaffoldForm onSubmit={ onSubmit }>
-      <ScaffoldFields { ...fields } />
+      <ScaffoldFields {...fields } />
       { isSubmitted &&
         <ConfirmScaffoldFields
           fields={ fields.fields }
           data={ confirmData }
-          onCancel={ onCancelConfirm }
-          submitTitle="Zaak aanmaken"
+          onCancel= { onCancelConfirm }
           onSubmit={ onSubmitConfirm }
+          submitTitle= { submitTitle ?? "Resultaat verwerken" }
           showInModal={ true }
         />
       }
-    </ScaffoldForm>
+    </ScaffoldForm>  
   )
 }
-export default CreateForm
+
+export default WorkflowForm

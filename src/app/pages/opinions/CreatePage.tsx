@@ -2,13 +2,15 @@ import React, { useEffect } from "react"
 import { RouteComponentProps } from "@reach/router"
 import { FormTitle } from "@amsterdam/asc-ui"
 
-import { useSummon } from "app/state/rest/"
+import { useOpinions, useSummon } from "app/state/rest/"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
 import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
-import OpinionForm from "app/features/opinion/components/OpinionForm/OpinionForm"
 import AddressHeading from "app/features/shared/components/molecules/AddressHeading/AddressHeading"
+import WorkflowForm from "app/features/cases/components/Workflow/WorkflowForm"
+import scaffold from "app/features/opinion/components/OpinionForm/scaffold"
+import FormWithExtraLabel from "app/features/shared/components/atoms/FormWithExtraLabel/FormWithExtraLabel"
 
 type Props = {
   id: string
@@ -20,6 +22,8 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
   // TODO-MOCKED, get summonId/summonTitle from useCaseEvents(caseId)  
   const summonId: number = 6
   const { data, execGet } = useSummon(summonId, { lazy: true })
+  const opinions = useOpinions()
+  const { execPost } = opinions
   useEffect(() => {
     if (summonId === undefined) return
     execGet() }, [summonId, execGet]
@@ -35,8 +39,16 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
       </RowWithColumn>
       <RowWithColumn>
         <FormTitle>Gebruik dit formulier om aan te geven wat de beoordeling van de zienswijze is</FormTitle>
-        <AddressHeading caseId={ id } />
-        <OpinionForm caseId={ id! } summonTitle={data?.title}  />
+        <AddressHeading caseId={ id } /> 
+        <FormWithExtraLabel>
+          <WorkflowForm
+            caseId={ id! } 
+            endpoint={ opinions } 
+            postMethod={ execPost }
+            scaffold= { scaffold } 
+            extraLabel = { data?.title }
+          />
+        </FormWithExtraLabel>
       </RowWithColumn>
     </DefaultLayout>
   )

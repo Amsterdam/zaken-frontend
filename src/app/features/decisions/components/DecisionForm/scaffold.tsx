@@ -16,7 +16,7 @@ export default (caseId: Components.Schemas.Case["id"], decisions: MockComponents
       props: {
         isRequired: true,
         label: "Wat is het resultaat besluit?",
-        name: "decision",
+        name: "decisions",
         options: decisionsObject
       }
     },
@@ -46,8 +46,8 @@ export default (caseId: Components.Schemas.Case["id"], decisions: MockComponents
   }
 
   return new FormPositioner(fields as Fields)
-    .setGrid("laptop", "1fr 1fr 1fr 1fr", [
-      ["decisions", "decisions"],
+    .setGrid("laptop", "1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr", [
+      ["decisions", "decisions", "decisions"],
       ["text", "text"],
       ["submit", "secondaryButton"]
     ])
