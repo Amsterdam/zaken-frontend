@@ -13,7 +13,7 @@ type Props = {
   title?: string
   onCancel?: () => void
   cancelTitle?: string
-  onSubmit?: () => Promise<any>
+  onSubmit?: () => Promise<void>
   submitTitle?: string
   showInModal?: boolean
 }
@@ -48,8 +48,8 @@ const createValuesObject = (fields: Fields, data: RequestBody) =>
     const props = fields[key].props
     const { label } = props
     const v = data[key]
-    const value = props.hasOwnProperty("options") ? (props as { options: any }).options[v] : v
-    acc[label as string] = value
+    const value = props.hasOwnProperty("options") ? (props as { options: Record<string, unknown> }).options[v] : v
+    if (label !== undefined) acc[label] = value
     return acc
   }, {} as Record<string, string>)
 
