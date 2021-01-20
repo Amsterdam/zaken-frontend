@@ -59,7 +59,7 @@ export default (bagId: Components.Schemas.Address["bag_id"], teams: MockComponen
 
   return new FormPositioner(fields as Fields)
     .setVertical("mobileS")
-    .setGrid("laptop", "1fr 1fr 1fr 1fr", [
+    .setGrid("laptop", "1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr", [
       ["team", "team"],
       ["reason", "reason"],
       ["text", "text"],

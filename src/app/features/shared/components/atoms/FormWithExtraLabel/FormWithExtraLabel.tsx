@@ -6,6 +6,6 @@ form > div > div > div > div {
     flex-grow: 0;
     align-self: center;
     white-space: nowrap;
-    margin-right: ${ themeSpacing(2) }
+    margin-right: ${ themeSpacing(2) };
   }
 `

@@ -47,7 +47,7 @@ const Scaffold = (caseId: Components.Schemas.Case["id"], isEditing = false) => {
   }
 
   return new FormPositioner(fields as Fields)
-    .setGrid("laptop", "1fr 1fr 1fr 1fr", [
+    .setGrid("laptop", "1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr", [
       ["violation", "violation"],
       ["feedback", "feedback"],
       ["submit", "secondaryButton"]

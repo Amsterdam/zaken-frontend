@@ -22,7 +22,7 @@ const Scaffold = (caseId: Components.Schemas.Case["id"], opinions: MockComponent
     text: {
       type: "TextAreaField",
       props: {
-        label: "Notitie",
+        label: "Korte toelichting",
         extraLabel: "(Niet verplicht)",
         name: "text",
         isRequired: false

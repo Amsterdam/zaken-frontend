@@ -16,6 +16,7 @@ export default (caseId: Components.Schemas.Case["id"], summons: MockComponents.S
       type: "SelectField",
       props: {
         isRequired: true,
+        withEmptyOption: true,
         label: "Welke aanschrijving is opgesteld?",
         extraLabel: <InfoButton infoTitle="TODO Aanschrijvingen" infoText="TODO Uitleg over aanschrijvingen"></InfoButton>,
         name: "summons",
@@ -25,7 +26,7 @@ export default (caseId: Components.Schemas.Case["id"], summons: MockComponents.S
     text: {
       type: "TextAreaField",
       props: {
-        label: "Notitie",
+        label: "Korte toelichting",
         extraLabel: "(Niet verplicht)",
         name: "text"
       }

@@ -15,7 +15,7 @@ export default (caseId: Components.Schemas.Case["id"], correspondence: MockCompo
       type: "RadioFields",
       props: {
         isRequired: true,
-        label: "Welk type correspondentie is van toepassing?",
+        label: "Welk type notitie is van toepassing?",
         extraLabel:<InfoButton infoTitle="Let op" infoText="Zorg dat je eventueel binnengekomen correspondentie correct opslaat in decos."></InfoButton>,
         name: "correspondence",
         options: correspondenceObject

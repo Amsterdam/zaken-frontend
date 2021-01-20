@@ -25,6 +25,10 @@ const correspondence: MockComponents.Schemas.Correspondence[] = [
   {
     id: 2,
     title: "Terugbel verzoek"
+  },
+  {
+    id: 3,
+    title: "Melding"
   }
 ]
 
