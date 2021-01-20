@@ -18,8 +18,7 @@ type Props = {
 const CompleteCasePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
 
   const id: Components.Schemas.Case["id"] = parseInt(idString!)
-  const endpoint = useCompleteCase()
-  const { execPost } = endpoint
+  const { data, execPost } = useCompleteCase()
 
   return (
     <DefaultLayout>
@@ -34,7 +33,7 @@ const CompleteCasePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }
         <AddressHeading caseId={ id } />
         <WorkflowForm
           caseId={ id }
-          endpoint={ endpoint }
+          data={ data }
           postMethod = { execPost }
           scaffold= { scaffold }
         />

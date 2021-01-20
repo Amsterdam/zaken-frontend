@@ -18,8 +18,7 @@ type Props = {
 
 const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
   const id: Components.Schemas.Case["id"] = parseInt(idString!)
-  const summons = useSummons()
-  const { execPost } = summons
+  const { data, execPost } = useSummons()
 
   return (
     <DefaultLayout>
@@ -33,11 +32,11 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
         <FormTitle>Gebruik dit formulier om aan te geven welke aanschrijving opgesteld is</FormTitle>
         <AddressHeading caseId={ id } />
         <FormWithExtraLabel>
-          <WorkflowForm 
-            caseId={ id! } 
-            endpoint={ summons }
-            postMethod={ execPost } 
-            scaffold= { scaffold } 
+          <WorkflowForm
+            caseId={ id! }
+            data={ data }
+            postMethod={ execPost }
+            scaffold= { scaffold }
           />
         </FormWithExtraLabel>
       </RowWithColumn>

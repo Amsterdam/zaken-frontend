@@ -18,9 +18,8 @@ type Props = {
 
 const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
   const id: Components.Schemas.Case["id"] = parseInt(idString!)
-  const decisions = useDecisions()
-  const { execPost } = decisions
-  
+  const { data, execPost } = useDecisions()
+
   return (
     <DefaultLayout>
       <RowWithColumn>
@@ -34,10 +33,10 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
         <AddressHeading caseId={ id } />
         <FormWithExtraLabel>
           <WorkflowForm
-            caseId={ id! } 
-            endpoint={ decisions } 
+            caseId={ id! }
+            data={ data }
             postMethod = { execPost }
-            scaffold= { scaffold } 
+            scaffold= { scaffold }
           />
         </FormWithExtraLabel>
       </RowWithColumn>
