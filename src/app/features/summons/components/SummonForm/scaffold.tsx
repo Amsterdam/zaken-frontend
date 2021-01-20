@@ -22,6 +22,14 @@ export default (caseId: Components.Schemas.Case["id"], summons: MockComponents.S
         options: summonsObject
       }
     },
+    text: {
+      type: "TextAreaField",
+      props: {
+        label: "Notitie",
+        extraLabel: "(Niet verplicht)",
+        name: "text"
+      }
+    },
     submit: {
       type: "SubmitButton",
       props: {
@@ -39,8 +47,9 @@ export default (caseId: Components.Schemas.Case["id"], summons: MockComponents.S
   }
 
   return new FormPositioner(fields as Fields)
-    .setGrid("laptop", "1fr 1fr 1fr 1fr", [
+    .setGrid("laptop", "1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr", [
       ["summons", "summons"],
+      ["text", "text"],
       ["submit", "secondaryButton"]
     ])
     .getScaffoldProps()
