@@ -10,6 +10,7 @@ import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/Br
 import PanoramaPreview from "app/features/shared/components/molecules/Panorama/PanoramaPreview"
 import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
 import to from "app/features/shared/routing/to"
+import CasesByBagId from "app/features/addresses/components/CasesByBagId/CasesByBagId"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -28,6 +29,9 @@ const IndexPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
     </RowWithColumn>
     <RowWithColumn>
       <AddressMenu bagId={ bagId! } />
+    </RowWithColumn>
+    <RowWithColumn>
+      <CasesByBagId bagId={ bagId! } />
     </RowWithColumn>
     <RowWithColumn>
       <ButtonLink to={ to("/adres/:bagId/zaken/nieuw", { bagId })}>
