@@ -1,6 +1,7 @@
 import React from "react"
 import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
 
+import { Fields } from "app/features/shared/components/molecules/Form/ScaffoldFields"
 import ScaffoldFields from "app/features/shared/components/molecules/Form/ScaffoldFields"
 import { Spinner } from "@amsterdam/asc-ui"
 import ConfirmScaffoldFields from "app/features/shared/components/molecules/ConfirmScaffoldFields/ConfirmScaffoldFields"
@@ -8,9 +9,9 @@ import useSubmitConfirmation from "app/features/shared/components/molecules/Conf
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
-  data: any
-  postMethod: (data: any) => Promise<any>
-  scaffold: (caseId: Components.Schemas.Case["id"], data: any, extraLabel?: string) => any
+  data?: Record<string, any>
+  postMethod: (data: any) => Promise<unknown>
+  scaffold: (caseId: Components.Schemas.Case["id"], data: any, extraLabel?: string) => { fields: Fields }
   extraLabel?: string
 }
 
