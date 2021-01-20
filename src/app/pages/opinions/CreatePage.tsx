@@ -10,6 +10,7 @@ import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import AddressHeading from "app/features/shared/components/molecules/AddressHeading/AddressHeading"
 import WorkflowForm from "app/features/cases/components/Workflow/WorkflowForm"
 import scaffold from "app/features/opinion/components/OpinionForm/scaffold"
+import FormWithExtraLabel from "app/features/shared/components/atoms/FormWithExtraLabel/FormWithExtraLabel"
 
 type Props = {
   id: string
@@ -39,13 +40,15 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
       <RowWithColumn>
         <FormTitle>Gebruik dit formulier om aan te geven wat de beoordeling van de zienswijze is</FormTitle>
         <AddressHeading caseId={ id } /> 
-        <WorkflowForm
-          caseId={ id! } 
-          endpoint={ opinions } 
-          postMethod={ execPost }
-          scaffold= { scaffold } 
-          extraLabel = { data?.title }
-        />
+        <FormWithExtraLabel>
+          <WorkflowForm
+            caseId={ id! } 
+            endpoint={ opinions } 
+            postMethod={ execPost }
+            scaffold= { scaffold } 
+            extraLabel = { data?.title }
+          />
+        </FormWithExtraLabel>
       </RowWithColumn>
     </DefaultLayout>
   )

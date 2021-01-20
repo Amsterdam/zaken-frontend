@@ -1,5 +1,4 @@
 import React from "react"
-import styled from "styled-components"
 import { RouteComponentProps } from "@reach/router"
 import { FormTitle } from "@amsterdam/asc-ui"
 
@@ -11,18 +10,11 @@ import AddressHeading from "app/features/shared/components/molecules/AddressHead
 import WorkflowForm from "app/features/cases/components/Workflow/WorkflowForm"
 import { useCorrespondence } from "app/state/rest"
 import scaffold from "app/features/correspondence/components/CorrespondenceForm/scaffold"
+import FormWithExtraLabel from "app/features/shared/components/atoms/FormWithExtraLabel/FormWithExtraLabel"
 
 type Props = {
   id: string
 }
-
-const FormWithTooltip = styled.div`
-form > div > div > div > div {
-  flex-grow: 0;
-  align-self: center;
-  white-space: nowrap;
-}
-`
 
 const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
   const id: Components.Schemas.Case["id"] = parseInt(idString!)
@@ -40,14 +32,14 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
       <RowWithColumn>
         <FormTitle>Gebruik dit formulier om notitie van correspondentie toe te voegen</FormTitle>
         <AddressHeading caseId={ id } />
-        <FormWithTooltip>
+        <FormWithExtraLabel>
           <WorkflowForm
             caseId={ id! } 
             endpoint={ correspondence }
             postMethod = { execPost }
             scaffold= { scaffold }
           />
-        </FormWithTooltip>  
+        </FormWithExtraLabel>  
       </RowWithColumn>
     </DefaultLayout>
   )

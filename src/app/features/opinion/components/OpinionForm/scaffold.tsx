@@ -19,6 +19,15 @@ const Scaffold = (caseId: Components.Schemas.Case["id"], opinions: MockComponent
         options: opinionsObject
       }
     },
+    text: {
+      type: "TextAreaField",
+      props: {
+        label: "Notitie",
+        extraLabel: "(Niet verplicht)",
+        name: "text",
+        isRequired: false
+      }
+    },
     submit: {
       type: "SubmitButton",
       props: {
@@ -36,8 +45,9 @@ const Scaffold = (caseId: Components.Schemas.Case["id"], opinions: MockComponent
   }
 
   return new FormPositioner(fields as Fields)
-    .setGrid("laptop", "1fr 1fr 1fr 1fr", [
-      ["opinions", "opinions"],
+    .setGrid("laptop", "1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr", [
+      ["opinions", "opinions", "opinions", "opinions"],
+      ["text", "text"],
       ["submit", "secondaryButton"]
     ])
     .getScaffoldProps()
