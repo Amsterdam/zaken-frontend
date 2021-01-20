@@ -23,7 +23,7 @@ export default (caseId: Components.Schemas.Case["id"], completeCase: MockCompone
     text: {
       type: "TextAreaField",
       props: {
-        label: "Toelichting",
+        label: "Korte toelichting",
         name: "text",
         isRequired: false
       }

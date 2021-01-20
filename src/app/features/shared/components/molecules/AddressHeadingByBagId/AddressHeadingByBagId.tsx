@@ -1,11 +1,17 @@
 import React from "react"
-import { Heading } from "@amsterdam/asc-ui"
+import styled from "styled-components"
+import { Heading, themeSpacing } from "@amsterdam/asc-ui"
 import { useBAG } from "app/state/rest/"
 import AddressDisplay from "app/features/shared/components/atoms/AddressDisplay/AddressDisplay"
+
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
 }
+
+const Div = styled.div`
+  margin-bottom: ${ themeSpacing(8) }
+`
 
 const AddressHeadingByBagId: React.FC<Props> = ({ bagId }) => {
   const { data } = useBAG(bagId)
@@ -15,10 +21,10 @@ const AddressHeadingByBagId: React.FC<Props> = ({ bagId }) => {
     <>
       <Heading as="h3">Adres</Heading>
       { address &&
-        <>
+        <Div>
           <p><AddressDisplay streetName={ address.straatnaam } streetNumber={ address.huisnummer } suffix={ address.bag_huisletter } etage={ address.bag_toevoeging } /></p>
           <p>{ address.postcode } { address.woonplaats }</p>
-        </>
+        </Div>
       }
     </>
   )

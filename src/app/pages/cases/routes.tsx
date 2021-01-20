@@ -27,7 +27,7 @@ export default {
       },
       ":id/correspondence": {
         Page: CorrespondenceCreatePage,
-        title: "Correspondentie toevoegen",
+        title: "Notitie toevoegen",
         icon: "Edit"
       },
       ":id/debriefing": {
