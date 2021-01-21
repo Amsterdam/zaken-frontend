@@ -61,7 +61,7 @@ const Workflow: React.FC<Props> = ({ caseId, summonId }) => {
   )
   const opinionString = `Zienswijze - ${ data?.title ?? "" }`
 
-  const mappedTaskData = useMemo(() => dataTasks?.map(mapTaskData), [ dataTasks ])
+  const mappedTaskData = useMemo(() => dataTasks?.map(mapTaskData), [ mapTaskData, dataTasks ])
 
 
   return (
