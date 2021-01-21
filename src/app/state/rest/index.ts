@@ -18,6 +18,7 @@ export type ApiGroup =
   | "supportContacts"
   | "teams"
   | "reasons"
+  | "tasks"
 
 export type Options = {
   keepUsingInvalidCache?: boolean
@@ -330,16 +331,25 @@ export const useCompleteCase = (options?: Options) => {
   })
 }
 
-
 export const useCaseTasks = (caseId: Components.Schemas.Case["id"], options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<MockComponents.Schemas.Task[]>({
+  return useApiRequest<Components.Schemas.CamundaTask[]>({
     ...options,
-    url: "tasks",
+    url: makeGatewayUrl("cases", caseId, "tasks"),
     groupName: "cases",
     handleError,
-    isProtected: true,
-    isMocked: true
+    isProtected: true
+  })
+}
+
+export const useCaseTaskComplete = (taskId: Components.Schemas.CamundaTask, options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<Components.Schemas.CamundaTaskComplete>({
+    ...options,
+    url: makeGatewayUrl("camunda","task", "complete"),
+    groupName: "tasks",
+    handleError,
+    isProtected: true
   })
 }
 

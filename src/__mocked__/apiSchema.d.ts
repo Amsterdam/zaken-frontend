@@ -54,5 +54,21 @@ declare namespace MockComponents {
       readonly title: string
       readonly enabled: boolean
     }
+
+    export type Visit = {
+      readonly id: number
+      situation?: string | null
+      observations?: string[] | null
+      start_time: string // date-time
+      description?: string | null
+      can_next_visit_go_ahead?: boolean | null
+      can_next_visit_go_ahead_description?: string | null
+      suggest_next_visit?: string | null
+      suggest_next_visit_description?: string | null
+      personal_notes?: string | null
+      case_id: number
+      itinerary_item?: null | number
+      author: string // uuid
+    }
   }
 }

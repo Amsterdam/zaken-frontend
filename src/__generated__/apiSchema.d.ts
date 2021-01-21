@@ -13,6 +13,14 @@ declare namespace Components {
             readonly lng: number; // float
         }
         /**
+         * Serializer for Camunda tasks
+         */
+        export interface CamundaTask {
+            camunda_task_id: string;
+            task_name_id: string;
+            name: string;
+        }
+        /**
          * Used to complete a task in Camunda.
          *
          * variables example
@@ -23,7 +31,7 @@ declare namespace Components {
          * }
          */
         export interface CamundaTaskComplete {
-            task_id: string;
+            camunda_task_id: string;
             variables: {
                 [name: string]: any;
             };
@@ -135,6 +143,24 @@ declare namespace Components {
         export type IndicatiePubliekrechtelijkEnum = "J" | "N";
         export interface OIDCAuthenticate {
             code: string;
+        }
+        export interface PaginatedCamundaTaskList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=4
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null; // uri
+            results?: /* Serializer for Camunda tasks */ CamundaTask[];
         }
         export interface PaginatedCaseList {
             /**
@@ -349,6 +375,23 @@ declare namespace Paths {
             export type $200 = Components.Schemas.Residents;
         }
     }
+    namespace CamundaTaskCompleteCreate {
+        export type RequestBody = /**
+         * Used to complete a task in Camunda.
+         *
+         * variables example
+         * {
+         *     "a_field": {
+         *         "value": true
+         *     }
+         * }
+         */
+        Components.Schemas.CamundaTaskComplete;
+        namespace Responses {
+            export interface $200 {
+            }
+        }
+    }
     namespace CaseStatesUpdateFromTopCreate {
         namespace Parameters {
             export type Id = string;
@@ -443,15 +486,21 @@ declare namespace Paths {
             export type $200 = Components.Schemas.Case;
         }
     }
-    namespace CasesTasksRetrieve {
+    namespace CasesTasksList {
         namespace Parameters {
             export type Id = number;
+            export type Page = number;
+            export type StateDate = string; // date
         }
         export interface PathParameters {
             id: Parameters.Id;
         }
+        export interface QueryParameters {
+            page?: Parameters.Page;
+            state_date?: Parameters.StateDate /* date */;
+        }
         namespace Responses {
-            export type $200 = Components.Schemas.Case;
+            export type $200 = Components.Schemas.PaginatedCamundaTaskList;
         }
     }
     namespace CasesUpdate {
@@ -572,32 +621,6 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedSupportContactList;
-        }
-    }
-    namespace TasksTaskCompleteCreate {
-        export type RequestBody = /**
-         * Used to complete a task in Camunda.
-         *
-         * variables example
-         * {
-         *     "a_field": {
-         *         "value": true
-         *     }
-         * }
-         */
-        Components.Schemas.CamundaTaskComplete;
-        namespace Responses {
-            export type $200 = /**
-             * Used to complete a task in Camunda.
-             *
-             * variables example
-             * {
-             *     "a_field": {
-             *         "value": true
-             *     }
-             * }
-             */
-            Components.Schemas.CamundaTaskComplete;
         }
     }
     namespace TestPermitsCheckmarksRetrieve {

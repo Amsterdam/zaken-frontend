@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from "react"
 import { Button, Icon } from "@amsterdam/asc-ui"
 
-import { Lock, LockOpen } from "app/features/shared/components/atoms/Icons"
+import { Lock } from "app/features/shared/components/atoms/Icons"
 
 import { useCaseEvents, useCaseTasks, useSummon } from "app/state/rest"
 import workflow from "app/state/workflow/workflow"
@@ -9,78 +9,21 @@ import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLi
 import to from "app/features/shared/routing/to"
 import WorkflowStatus from "./WorkflowStatus"
 import MockWrapper from "app/features/shared/components/molecules/MockWrapper/MockWrapper"
+import { workflowDebrief, workflowCloseCase, workflowDecision, workflowOpinion, workflowSummon, workflowViolation, workflowVisit } from "./WorkflowMocks"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
   summonId?: number
 }
 
-const workflowDebrief = (caseId: Components.Schemas.Case["id"]) => (
-  [
-    { itemList:
-      [ "Verwerken Debrief", "ProjectHandhaver", "-",
-      <ButtonLink to={ to("/cases/:id/debriefing", { id: caseId })}>
-        <Button variant="primary" as="span">Debrief verwerken</Button>
-      </ButtonLink>
-      ]
-    }
-  ]
-)
+type taskAction = {
+  title: string
+  target: string
+}
 
-const workflowVisit = (
-  [{ itemList: [ "Huisbezoek afleggen", "Toezichthouders", "-", "-" ] }]
-)
-
-const workflowViolation = (
-  [
-    { itemList: [ "Opstellen beeldverslag", "Toezichthouder", "-", "-" ] },
-    { itemList: [ "Opstellen rapport van bevindingen", "Toezichthouder", "-", "-" ] },
-    { itemList: [ "Opstellen aanschrijving", "Projecthandhaver", "-", "-" ] }
-  ]
-)
-
-const workflowCloseCase = (
-  [
-    { itemList: [ "Opstellen buitendienst rapport", "Toezichthouder", "-", "-" ] },
-    { itemList: [ "Afsluiten zaak", "Projectmederker", "-", "-" ] }
-  ]
-)
-
-const workflowOpinion = (caseId: Components.Schemas.Case["id"]) => (
-  [
-    { itemList:
-      [ "Beoordelen zienswijze", "ProjectHandhaver", "-",
-        <ButtonLink to={ to("/cases/:id/opinion", { id: caseId })}>
-          <Button variant="primary" as="span">Uitkomst zienswijze</Button>
-        </ButtonLink>
-      ]
-    }
-  ]
-)
-
-const workflowSummon = (caseId: Components.Schemas.Case["id"]) => (
-  [
-    { itemList:
-      [ "Verwerken aanschrijving", "ProjectHandhaver", "28-02-2021",
-        <ButtonLink to={ to("/cases/:id/summon", { id: caseId })}>
-          <Button variant="primary" as="span">Aanschrijving</Button>
-        </ButtonLink>
-      ]
-    }
-  ]
-)
-
-const workflowDecision = (caseId: Components.Schemas.Case["id"]) => (
-  [
-    { itemList:
-      [ "Verwerken besluit", "ProjectHandhaver", "28-02-2021",
-        <ButtonLink to={ to("/cases/:id/decision", { id: caseId })}>
-          <Button variant="primary" as="span">Besluit</Button>
-        </ButtonLink>
-      ]
-    }
-  ]
-)
+export const taskActionMap = {
+  "task_visit_succesful": { title: "Huisbezoek compleet", target: "visits" }
+} as Record<string, taskAction>
 
 const Workflow: React.FC<Props> = ({ caseId, summonId }) => {
   const dataCase = useCaseEvents(caseId).data
@@ -94,18 +37,22 @@ const Workflow: React.FC<Props> = ({ caseId, summonId }) => {
     shouldCreateAdditionalVisit
   } = workflow(dataCase)
 
-  console.log("tasks", dataTasks)
-  const mapTaskData = (data: MockComponents.Schemas.Task) => 
-
-  ({
+  const mapTaskData = (data: Components.Schemas.CamundaTask) => {
+    const action = taskActionMap[data.task_name_id]
+    
+  return ({
     itemList: [
-      <Icon size={32}>{ data.complete ? <Lock /> : <LockOpen /> }</Icon> ,
+      <Icon size={32}>{ <Lock /> }</Icon> ,
       data.name,
-      data.role,
-      data.end_date,
-      data.processing
+      "-uitvoerder-",
+      "-datum-",
+      
+      <ButtonLink to={ to(`/cases/:id/${ action.target }`, { id: caseId })}>
+      <Button variant="primary" as="span">{ action.title }</Button>
+    </ButtonLink>
     ]
   })
+}
 
   // TODO-MOCKED, get summonId/summonTitle from useCaseEvents(caseId)
   useEffect(() => {
