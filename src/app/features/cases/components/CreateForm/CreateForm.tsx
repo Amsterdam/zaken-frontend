@@ -7,6 +7,7 @@ import scaffold from "./scaffold"
 import { useTeams, useReasons, useCase } from "app/state/rest"
 import ConfirmScaffoldFields from "app/features/shared/components/molecules/ConfirmScaffoldFields/ConfirmScaffoldFields"
 import useSubmitConfirmation from "app/features/shared/components/molecules/ConfirmScaffoldFields/hooks/useSubmitConfirmation"
+import MockWrapper from "app/features/shared/components/molecules/MockWrapper/MockWrapper"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -30,19 +31,21 @@ const CreateForm: React.FC<Props> = ({ bagId }) => {
   const fields = scaffold(bagId, teams.data, reasons.data)
 
   return (
-    <ScaffoldForm onSubmit={ onSubmit }>
-      <ScaffoldFields { ...fields } />
-      { isSubmitted &&
-        <ConfirmScaffoldFields
-          fields={ fields.fields }
-          data={ confirmData }
-          onCancel={ onCancelConfirm }
-          submitTitle="Zaak aanmaken"
-          onSubmit={ onSubmitConfirm }
-          showInModal={ true }
-        />
-      }
-    </ScaffoldForm>
+    <MockWrapper>
+      <ScaffoldForm onSubmit={ onSubmit }>
+        <ScaffoldFields { ...fields } />
+        { isSubmitted &&
+          <ConfirmScaffoldFields
+            fields={ fields.fields }
+            data={ confirmData }
+            onCancel={ onCancelConfirm }
+            submitTitle="Zaak aanmaken"
+            onSubmit={ onSubmitConfirm }
+            showInModal={ true }
+          />
+        }
+      </ScaffoldForm>
+    </MockWrapper>
   )
 }
 export default CreateForm
