@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from "react"
 import styled from "styled-components"
-import { Button, Spinner } from "@amsterdam/asc-ui"
+import { Heading, Button, Spinner } from "@amsterdam/asc-ui"
 import { Fields } from "app/features/shared/components/molecules/Form/ScaffoldFields"
 
 import DefinitionList from "app/features/shared/components/molecules/DefinitionList/DefinitionList"
@@ -74,7 +74,7 @@ const ConfirmScaffoldFields: React.FC<Props> = ({
 
   const content = (
     <>
-      { !showInModal ? <h1>{ title }</h1> : null }
+      { !showInModal ? <Heading>{ title }</Heading> : null }
       <Wrap>
         <DefinitionList values={ values } />
         <ButtonWrap>
