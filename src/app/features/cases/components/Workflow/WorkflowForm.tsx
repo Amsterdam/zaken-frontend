@@ -34,7 +34,7 @@ const WorkflowForm: React.FC<Props> = ({ caseId, scaffold, data, postMethod, ext
     <ScaffoldForm onSubmit={ onSubmit }>
       <ScaffoldFields {...fields } />
       { isSubmitted &&
-        <ConfirmScaffoldFields
+        <ConfirmScaffoldFields<typeof data>
           fields={ fields.fields }
           data={ confirmData }
           onCancel= { onCancelConfirm }

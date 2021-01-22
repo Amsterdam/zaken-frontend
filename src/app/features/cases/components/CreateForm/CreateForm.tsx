@@ -35,7 +35,7 @@ const CreateForm: React.FC<Props> = ({ bagId }) => {
       <ScaffoldForm onSubmit={ onSubmit }>
         <ScaffoldFields { ...fields } />
         { isSubmitted &&
-          <ConfirmScaffoldFields
+          <ConfirmScaffoldFields<MockComponents.Schemas.CaseRequestBody>
             fields={ fields.fields }
             data={ confirmData }
             onCancel={ onCancelConfirm }
