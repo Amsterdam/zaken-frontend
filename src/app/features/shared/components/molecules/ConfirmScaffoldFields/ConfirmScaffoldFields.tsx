@@ -54,7 +54,7 @@ const createValuesObject = <T extends RequestBody>(fields: NamedFields<T>, data:
     return acc
   }, {} as Record<string, React.ReactNode>)
 
-const ConfirmScaffoldFields: <T extends RequestBody>(p: Props<T>) => React.ReactElement<Props<T>> = <T extends RequestBody>(props: Props<T>) => {
+const ConfirmScaffoldFields = <T extends RequestBody>(props: Props<T>) => {
   const {
     fields,
     data,
