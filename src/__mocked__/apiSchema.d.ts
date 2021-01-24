@@ -1,6 +1,11 @@
 declare namespace MockComponents {
   namespace Schemas {
 
+    export type CamundaTask = {
+      camunda_task_id: string
+      task_name_id: string
+      name: string
+  }
     export type Case = {
       id: number
       team: {id: number, title: string}

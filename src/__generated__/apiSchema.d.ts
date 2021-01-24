@@ -12,6 +12,30 @@ declare namespace Components {
             readonly lat: number; // float
             readonly lng: number; // float
         }
+        /**
+         * Serializer for Camunda tasks
+         */
+        export interface CamundaTask {
+            camunda_task_id: string;
+            task_name_id: string;
+            name: string;
+        }
+        /**
+         * Used to complete a task in Camunda.
+         *
+         * variables example
+         * {
+         *     "a_field": {
+         *         "value": true
+         *     }
+         * }
+         */
+        export interface CamundaTaskComplete {
+            camunda_task_id: string;
+            variables: {
+                [name: string]: any;
+            };
+        }
         export interface Case {
             readonly id: number;
             address: Address;
@@ -28,6 +52,7 @@ declare namespace Components {
             start_date?: string | null; // date
             end_date?: string | null; // date
             is_legacy_bwv?: boolean;
+            camunda_id?: string | null;
         }
         export interface CaseEvent {
             readonly id: number;
@@ -119,6 +144,24 @@ declare namespace Components {
         export interface OIDCAuthenticate {
             code: string;
         }
+        export interface PaginatedCamundaTaskList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=4
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null; // uri
+            results?: /* Serializer for Camunda tasks */ CamundaTask[];
+        }
         export interface PaginatedCaseList {
             /**
              * example:
@@ -173,22 +216,10 @@ declare namespace Components {
             previous?: string | null; // uri
             results?: Visit[];
         }
-        export interface PatchedAddress {
-            bag_id?: string;
-            readonly id?: number;
-            readonly full_address?: string;
-            readonly street_name?: string;
-            readonly number?: number;
-            readonly suffix_letter?: string;
-            readonly suffix?: string;
-            readonly postal_code?: string;
-            readonly lat?: number; // float
-            readonly lng?: number; // float
-        }
         export interface PatchedCase {
             readonly id?: number;
-            address?: PatchedAddress;
-            case_states?: PatchedCaseState[];
+            address?: Address;
+            case_states?: CaseState[];
             readonly current_state?: {
                 readonly id: number;
                 case: number;
@@ -201,14 +232,7 @@ declare namespace Components {
             start_date?: string | null; // date
             end_date?: string | null; // date
             is_legacy_bwv?: boolean;
-        }
-        export interface PatchedCaseState {
-            readonly id?: number;
-            case?: number;
-            readonly status_name?: string;
-            status?: number;
-            state_date?: string; // date
-            users?: string /* uuid */[];
+            camunda_id?: string | null;
         }
         export interface PatchedDebriefing {
             readonly id?: number;
@@ -221,17 +245,9 @@ declare namespace Components {
             readonly is_editable?: boolean;
             readonly is_editable_until?: string; // date-time
         }
-        export interface PatchedUser {
-            id?: string; // uuid
-            email?: string; // email
-            username?: string;
-            first_name?: string;
-            last_name?: string;
-            full_name?: string;
-        }
         export interface PatchedVisit {
             readonly id?: number;
-            authors?: PatchedUser[];
+            authors?: User[];
             start_time?: string; // date-time
             situation?: string;
             observations?: string[];
@@ -359,6 +375,23 @@ declare namespace Paths {
             export type $200 = Components.Schemas.Residents;
         }
     }
+    namespace CamundaTaskCompleteCreate {
+        export type RequestBody = /**
+         * Used to complete a task in Camunda.
+         *
+         * variables example
+         * {
+         *     "a_field": {
+         *         "value": true
+         *     }
+         * }
+         */
+        Components.Schemas.CamundaTaskComplete;
+        namespace Responses {
+            export interface $200 {
+            }
+        }
+    }
     namespace CaseStatesUpdateFromTopCreate {
         namespace Parameters {
             export type Id = string;
@@ -411,17 +444,6 @@ declare namespace Paths {
             export type $200 = Components.Schemas.CaseEvent;
         }
     }
-    namespace CasesFinesRetrieve {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export interface PathParameters {
-            id: Parameters.Id;
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.FineList;
-        }
-    }
     namespace CasesGenerateMockCreate {
         export type RequestBody = Components.Schemas.Case;
         namespace Responses {
@@ -431,11 +453,11 @@ declare namespace Paths {
     namespace CasesList {
         namespace Parameters {
             export type Page = number;
-            export type StateDate = string;
+            export type StateDate = string; // date
         }
         export interface QueryParameters {
             page?: Parameters.Page;
-            state_date?: Parameters.StateDate;
+            state_date?: Parameters.StateDate /* date */;
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCaseList;
@@ -462,6 +484,23 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.Case;
+        }
+    }
+    namespace CasesTasksList {
+        namespace Parameters {
+            export type Id = number;
+            export type Page = number;
+            export type StateDate = string; // date
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        export interface QueryParameters {
+            page?: Parameters.Page;
+            state_date?: Parameters.StateDate /* date */;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedCamundaTaskList;
         }
     }
     namespace CasesUpdate {
@@ -529,6 +568,17 @@ declare namespace Paths {
             export type $200 = Components.Schemas.Debriefing;
         }
     }
+    namespace FinesRetrieve {
+        namespace Parameters {
+            export type Id = string;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.FineList;
+        }
+    }
     namespace IsAuthorizedRetrieve {
         namespace Responses {
             export interface $200 {
@@ -593,6 +643,12 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.DecosPermit[];
+        }
+    }
+    namespace TestPermitsTestConnectRetrieve {
+        namespace Responses {
+            export interface $200 {
+            }
         }
     }
     namespace VisitsCreate {

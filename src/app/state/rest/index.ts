@@ -330,3 +330,15 @@ export const useCompleteCase = (options?: Options) => {
   })
 }
 
+export const useCaseTasks = (caseId: Components.Schemas.Case["id"], options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<MockComponents.Schemas.CamundaTask[]>({
+    ...options,
+    //url: makeGatewayUrl("cases", caseId, "tasks"),
+    url: "camundaTasks",
+    groupName: "cases",
+    handleError,
+    isProtected: true,
+    isMocked: true
+  })
+}
