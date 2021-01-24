@@ -1,84 +1,24 @@
 import React, { useEffect } from "react"
-import { Button } from "@amsterdam/asc-ui"
 
 import { useCaseEvents, useSummon } from "app/state/rest"
 import workflow from "app/state/workflow/workflow"
-import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
-import to from "app/features/shared/routing/to"
 import WorkflowStatus from "./WorkflowStatus"
 import MockWrapper from "app/features/shared/components/molecules/MockWrapper/MockWrapper"
+import { workflowDebrief, workflowCloseCase, workflowDecision, workflowOpinion, workflowSummon, workflowViolation, workflowVisit } from "./WorkflowMocks"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
   summonId?: number
 }
 
-const workflowDebrief = (caseId: Components.Schemas.Case["id"]) => (
-  [
-    { itemList:
-      [ "Verwerken Debrief", "ProjectHandhaver", "-", "-",
-      <ButtonLink to={ to("/cases/:id/debriefing", { id: caseId })}>
-        <Button variant="primary" as="span">Debrief verwerken</Button>
-      </ButtonLink>
-      ]
-    }
-  ]
-)
+type taskAction = {
+  title: string
+  target: string
+}
 
-const workflowVisit = (
-  [{ itemList: [ "Huisbezoek afleggen", "Toezichthouders", "-", "-", "-" ] }]
-)
-
-const workflowViolation = (
-  [
-    { itemList: [ "Opstellen beeldverslag", "Toezichthouder", "-", "-", "-" ] },
-    { itemList: [ "Opstellen rapport van bevindingen", "Toezichthouder", "-", "-", "-" ] },
-    { itemList: [ "Opstellen aanschrijving", "Projecthandhaver", "-", "-", "-" ] }
-  ]
-)
-
-const workflowCloseCase = (
-  [
-    { itemList: [ "Opstellen buitendienst rapport", "Toezichthouder", "-", "-", "-" ] },
-    { itemList: [ "Afsluiten zaak", "Projectmederker", "-", "-", "-" ] }
-  ]
-)
-
-const workflowOpinion = (caseId: Components.Schemas.Case["id"]) => (
-  [
-    { itemList:
-      [ "Beoordelen zienswijze", "ProjectHandhaver", "-", "-",
-        <ButtonLink to={ to("/cases/:id/opinion", { id: caseId })}>
-          <Button variant="primary" as="span">Uitkomst zienswijze</Button>
-        </ButtonLink>
-      ]
-    }
-  ]
-)
-
-const workflowSummon = (caseId: Components.Schemas.Case["id"]) => (
-  [
-    { itemList:
-      [ "Verwerken aanschrijving", "ProjectHandhaver", "28-02-2021", "14 dagen",
-        <ButtonLink to={ to("/cases/:id/summon", { id: caseId })}>
-          <Button variant="primary" as="span">Aanschrijving</Button>
-        </ButtonLink>
-      ]
-    }
-  ]
-)
-
-const workflowDecision = (caseId: Components.Schemas.Case["id"]) => (
-  [
-    { itemList:
-      [ "Verwerken besluit", "ProjectHandhaver", "28-02-2021", "14 dagen",
-        <ButtonLink to={ to("/cases/:id/decision", { id: caseId })}>
-          <Button variant="primary" as="span">Besluit</Button>
-        </ButtonLink>
-      ]
-    }
-  ]
-)
+export const taskActionMap = {
+  "task_visit_succesful": { title: "Huisbezoek compleet", target: "visits" }
+} as Record<string, taskAction>
 
 const Workflow: React.FC<Props> = ({ caseId, summonId }) => {
   const dataCase = useCaseEvents(caseId).data
@@ -100,13 +40,15 @@ const Workflow: React.FC<Props> = ({ caseId, summonId }) => {
 
   return (
     <div>
+
       <MockWrapper>
         <WorkflowStatus status={opinionString} data={workflowOpinion(caseId)} />
         <WorkflowStatus status="Aanschrijving" data={workflowSummon(caseId)} />
         <WorkflowStatus status="Besluit" data={workflowDecision(caseId)} />
+        <WorkflowStatus status="Visits" data={workflowVisit(caseId)} />
       </MockWrapper>
       { (shouldCreateVisit || shouldCreateAdditionalVisit) &&
-        <WorkflowStatus status="Huisbezoek" data={workflowVisit} />
+        <WorkflowStatus status="Huisbezoek" data={workflowVisit(caseId)} />
       }
       { shouldCreateDebriefing &&
         <WorkflowStatus status="Debrief" data={workflowDebrief(caseId)} />
