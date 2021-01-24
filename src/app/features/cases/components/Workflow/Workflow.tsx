@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react"
+import React, { useCallback, useEffect, useMemo } from "react"
 import { Button, Icon } from "@amsterdam/asc-ui"
 
 import { Lock } from "app/features/shared/components/atoms/Icons"
@@ -37,7 +37,7 @@ const Workflow: React.FC<Props> = ({ caseId, summonId }) => {
     shouldCreateAdditionalVisit
   } = workflow(dataCase)
 
-  const mapTaskData = (data: Components.Schemas.CamundaTask) => {
+  const mapTaskData = useCallback((data: Components.Schemas.CamundaTask) => {
     const action = taskActionMap[data.task_name_id]
     
   return ({
@@ -52,7 +52,7 @@ const Workflow: React.FC<Props> = ({ caseId, summonId }) => {
     </ButtonLink>
     ]
   })
-}
+}, [ caseId ])
 
   // TODO-MOCKED, get summonId/summonTitle from useCaseEvents(caseId)
   useEffect(() => {
