@@ -2,10 +2,10 @@ import { FormPositioner } from "@amsterdam/scaffold-form/package"
 import { navigate } from "@reach/router"
 import { Fields } from "app/features/shared/components/molecules/Form/ScaffoldFields"
 
-export default (bagId: Components.Schemas.Address["bag_id"], teams: MockComponents.Schemas.Team[], reasons: MockComponents.Schemas.Team[]) => {
+export default (bagId: Components.Schemas.Address["bag_id"], teams: Components.Schemas.CaseTeam[], reasons: MockComponents.Schemas.Reason[]) => {
 
   const teamsObject = teams.reduce((acc, cur) => {
-    acc[`team.${ cur.id }`] = cur.title
+    acc[`team.${ cur.id }`] = cur.name
     return acc
   }, {} as Record<string, string>)
 

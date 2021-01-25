@@ -28,7 +28,7 @@ const CreateForm: React.FC<Props> = ({ bagId }) => {
 
   if (teams.data === undefined || reasons.data === undefined) return <Spinner />
 
-  const fields = scaffold(bagId, teams.data, reasons.data)
+  const fields = scaffold(bagId, teams.data.results ?? [], reasons.data)
 
   return (
     <MockWrapper>

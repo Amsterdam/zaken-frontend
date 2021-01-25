@@ -223,13 +223,12 @@ export const useSupportContacts = (options?: Options) => {
 
 export const useTeams = (options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<MockComponents.Schemas.Team[]>({
+  return useApiRequest<Components.Schemas.PaginatedCaseTeamList>({
     ...options,
-    url: "teams",
+    url: makeGatewayUrl("teams"),
     groupName: "teams",
     handleError,
-    isProtected: true,
-    isMocked: true
+    isProtected: true
   })
 }
 
