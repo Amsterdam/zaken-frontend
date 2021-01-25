@@ -25,7 +25,7 @@ export const workflowDebrief = (caseId: Components.Schemas.Case["id"]) => (
       "Toezichthouders", 
       "-", 
       <ButtonLink to={ to("/cases/:id/visits", { id: caseId })}>
-        <Button variant="primary" as="span">Huisbezoek toevoegen</Button>
+        <Button variant="primary" as="span">Resultaat huisbezoek</Button>
     </ButtonLink> 
     ] }]
   )

@@ -59,7 +59,7 @@ export default {
       },
       ":id/visits": {
         Page: VisitCreatePage,
-        title: "Huisbezoek toevoegen",
+        title: "Resultaat huisbezoek",
         icon: "Edit"
       }
     }
