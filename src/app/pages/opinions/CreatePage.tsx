@@ -18,15 +18,17 @@ type Props = {
 
 const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
   const id: Components.Schemas.Case["id"] = parseInt(idString!)
-  
-  // TODO-MOCKED, get summonId/summonTitle from useCaseEvents(caseId)  
-  const summonId: number = 6
-  const { data, execGet } = useSummon(summonId, { lazy: true })
-  const opinions = useOpinions()
-  const { execPost } = opinions
+
+  const { data, execPost } = useOpinions()
+
+  // TODO-MOCKED, get summonId/summonTitle from useCaseEvents(caseId)
+  const summonId = 6
+  const { data: summonData, execGet } = useSummon(summonId, { lazy: true })
   useEffect(() => {
-    if (summonId === undefined) return
-    execGet() }, [summonId, execGet]
+      if (summonId === undefined) return
+      execGet()
+    },
+    [summonId, execGet]
   )
 
   return (
@@ -39,14 +41,14 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
       </RowWithColumn>
       <RowWithColumn>
         <FormTitle>Gebruik dit formulier om aan te geven wat de beoordeling van de zienswijze is</FormTitle>
-        <AddressHeading caseId={ id } /> 
+        <AddressHeading caseId={ id } />
         <FormWithExtraLabel>
           <WorkflowForm
-            caseId={ id! } 
-            endpoint={ opinions } 
+            caseId={ id! }
+            data={ data }
             postMethod={ execPost }
-            scaffold= { scaffold } 
-            extraLabel = { data?.title }
+            scaffold= { scaffold }
+            extraLabel = { summonData?.title }
           />
         </FormWithExtraLabel>
       </RowWithColumn>

@@ -2,13 +2,13 @@ import { FormPositioner } from "@amsterdam/scaffold-form/package"
 import { Fields } from "app/features/shared/components/molecules/Form/ScaffoldFields"
 import { navigate } from "@reach/router"
 
-const Scaffold = (caseId: Components.Schemas.Case["id"], opinions: MockComponents.Schemas.Opinion[], summonTitle: string) => {
-  
+const Scaffold = (caseId: Components.Schemas.Case["id"], opinions: MockComponents.Schemas.Opinion[], summonTitle = "") => {
+
   const opinionsObject = opinions.reduce((acc, cur) => {
     acc[`opinion.${ cur.id }`] = cur.title
     return acc
   }, {} as Record<string, string>)
-  
+
   const fields = {
     opinions: {
       type: "RadioFields",
