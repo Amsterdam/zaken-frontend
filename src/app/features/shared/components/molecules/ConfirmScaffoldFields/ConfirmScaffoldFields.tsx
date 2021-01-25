@@ -46,6 +46,7 @@ const SpinnerWrap = styled.div`
 
 const createValuesObject = <T extends RequestBody>(fields: NamedFields<T>, data: T) =>
   (Object.keys(data) as Array<keyof T>).reduce((acc, key) => {
+    if (fields.hasOwnProperty(key) === false) return acc
     const props = fields[key].props
     const { label } = props
     const v = data[key]

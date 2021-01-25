@@ -22,6 +22,7 @@ export type ApiGroup =
 export type Options = {
   keepUsingInvalidCache?: boolean
   lazy?: boolean
+  isMockExtended?: boolean
 }
 
 /**
@@ -73,6 +74,18 @@ export const useCase = (id?: Components.Schemas.Case["id"], options?: Options) =
     handleError,
     isProtected: true,
     isMockExtended: true
+  })
+}
+
+export const useCaseCreateUpdate = (options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<Components.Schemas.CaseCreateUpdate>({
+    lazy: true,
+    ...options,
+    url: makeGatewayUrl("cases"),
+    groupName: "cases",
+    handleError,
+    isProtected: true
   })
 }
 
@@ -244,15 +257,14 @@ export const useTeam = (id: number, options?: Options) => {
   })
 }
 
-export const useReasons = (options?: Options) => {
+export const useReasons = (teamId: Components.Schemas.CaseTeam["id"], options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<MockComponents.Schemas.Reason[]>({
+  return useApiRequest<Components.Schemas.PaginatedCaseReasonList>({
     ...options,
-    url: "reasons",
+    url: makeGatewayUrl("teams", teamId, "reasons"),
     groupName: "reasons",
     handleError,
-    isProtected: true,
-    isMocked: true
+    isProtected: true
   })
 }
 

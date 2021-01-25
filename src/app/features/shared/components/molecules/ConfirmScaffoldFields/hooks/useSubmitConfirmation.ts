@@ -1,6 +1,8 @@
 import { useState } from "react"
 
-export default <RequestBody>(postMethod: (data: RequestBody) => Promise<any>) => {
+const defaultMapData = (data: any) => data
+
+export default <RequestBody>(postMethod: (data: RequestBody) => Promise<any>, mapData: (data: any) => RequestBody = defaultMapData) => {
 
   const [isSubmitted, setSubmitted] = useState(false)
   const [data, setData] = useState<RequestBody | undefined>()
@@ -12,7 +14,7 @@ export default <RequestBody>(postMethod: (data: RequestBody) => Promise<any>) =>
 
   const onSubmitConfirm = async () => {
     if (data === undefined) return
-    await postMethod(data)
+    await postMethod(mapData(data))
     setSubmitted(false)
   }
 
