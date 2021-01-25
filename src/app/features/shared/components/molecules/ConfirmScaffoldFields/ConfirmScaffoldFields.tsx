@@ -1,19 +1,20 @@
 import React, { useState, useMemo } from "react"
 import styled from "styled-components"
-import { Button, Spinner } from "@amsterdam/asc-ui"
-import { Fields } from "app/features/shared/components/molecules/Form/ScaffoldFields"
+import { Heading, Button, Spinner } from "@amsterdam/asc-ui"
 
 import DefinitionList from "app/features/shared/components/molecules/DefinitionList/DefinitionList"
 import Modal, { ModalBlock } from "app/features/shared/components/molecules/Modal/Modal"
+import { Field } from "../Form/ScaffoldField"
 
-type RequestBody = any
-type Props = {
-  fields: Fields
+type RequestBody = Record<string, unknown>
+type NamedFields<T> = Record<keyof T, Field>
+type Props<RequestBody> = {
+  fields: NamedFields<RequestBody>
   data: RequestBody
   title?: string
   onCancel?: () => void
   cancelTitle?: string
-  onSubmit?: () => Promise<any>
+  onSubmit?: () => Promise<void>
   submitTitle?: string
   showInModal?: boolean
 }
@@ -43,38 +44,39 @@ const SpinnerWrap = styled.div`
 }
 `
 
-const createValuesObject = (fields: Fields, data: RequestBody) =>
-  Object.keys(data).reduce((acc, key) => {
+const createValuesObject = <T extends RequestBody>(fields: NamedFields<T>, data: T) =>
+  (Object.keys(data) as Array<keyof T>).reduce((acc, key) => {
     const props = fields[key].props
     const { label } = props
     const v = data[key]
-    const value = props.hasOwnProperty("options") ? (props as { options: any }).options[v] : v
-    acc[label as string] = value
+    const value = props.hasOwnProperty("options") ? (props as { options: Record<string, unknown> }).options[v as string] : v
+    acc[(label ?? key) as string] = value as React.ReactNode
     return acc
-  }, {} as Record<string, string>)
+  }, {} as Record<string, React.ReactNode>)
 
-const ConfirmScaffoldFields: React.FC<Props> = ({
-  fields,
-  data,
-  title = defaultTitle,
-  onCancel = noop,
-  cancelTitle = defaultCancelTitle,
-  onSubmit = noop,
-  submitTitle = defaultSubmitTitle,
-  showInModal = false
-}) => {
+const ConfirmScaffoldFields = <T extends RequestBody>(props: Props<T>) => {
+  const {
+    fields,
+    data,
+    title = defaultTitle,
+    onCancel = noop,
+    cancelTitle = defaultCancelTitle,
+    onSubmit = noop,
+    submitTitle = defaultSubmitTitle,
+    showInModal = false
+  } = props
   const [isSubmitting, setSubmitting] = useState(false)
-  const values = useMemo(() => createValuesObject(fields, data), [data, fields])
+  const values = useMemo(() => createValuesObject<T>(fields, data), [data, fields])
 
-  const onSubmitWrap = async () => {
+  const onSubmitWrap = () => {
     setSubmitting(true)
-    await onSubmit()
+    onSubmit()
     setSubmitting(false)
   }
 
   const content = (
     <>
-      { !showInModal ? <h1>{ title }</h1> : null }
+      { !showInModal ? <Heading>{ title }</Heading> : null }
       <Wrap>
         <DefinitionList values={ values } />
         <ButtonWrap>
