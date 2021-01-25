@@ -3,9 +3,13 @@ const camundaTasks: Components.Schemas.CamundaTask[] = [
     camunda_task_id: "6e792281-5b22-11eb-a1f9-0242ac110017",
     task_name_id: "task_create_visit",
     name: "Huisbezoek aanmaken"
+  },{
+    camunda_task_id: "6e792281-5b22-11eb-a1f9-0242ac110018",
+    task_name_id: "task_visit_succesful",
+    name: "Huisbezoek afgelegd"
   },
   {
-    camunda_task_id: "6e792281-5b22-11eb-a1f9-0242ac110018",
+    camunda_task_id: "6e792281-5b22-11eb-a1f9-0242ac110019",
     task_name_id: "task_create_debrief",
     name: "Debrief verwerken"
   }
