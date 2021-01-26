@@ -12,8 +12,9 @@ export default <RequestBody>(postMethod: (data: RequestBody) => Promise<unknown>
 
   const onSubmitConfirm = async () => {
     if (data === undefined) return
-    await postMethod(data)
+    const result = await postMethod(data)
     setSubmitted(false)
+    return result
   }
 
   const onCancelConfirm = () => {

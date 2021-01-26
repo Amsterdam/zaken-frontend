@@ -2,7 +2,7 @@ import { FormPositioner } from "@amsterdam/scaffold-form/package"
 import { navigate } from "@reach/router"
 import { Fields } from "app/features/shared/components/molecules/Form/ScaffoldFields"
 
-export default (bagId: Components.Schemas.Address["bag_id"], teams: Components.Schemas.CaseTeam[], onChangeTeams: (value: string) => void, reasons: Components.Schemas.CaseReason[]) => {
+export default (bagId: Components.Schemas.Address["bag_id"], teams: Components.Schemas.CaseTeam[], reasons: Components.Schemas.CaseReason[]) => {
 
   const teamsObject = teams.reduce((acc, cur) => {
     acc[`team.${ cur.id }`] = cur.name
@@ -21,8 +21,7 @@ export default (bagId: Components.Schemas.Address["bag_id"], teams: Components.S
         label: "Team wonen",
         name: "team",
         options: teamsObject,
-        isRequired: true,
-        onChange: onChangeTeams
+        isRequired: true
       }
     },
     reason: {

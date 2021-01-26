@@ -14,7 +14,7 @@ type Props<RequestBody> = {
   title?: string
   onCancel?: () => void
   cancelTitle?: string
-  onSubmit?: () => Promise<void>
+  onSubmit?: () => Promise<unknown>
   submitTitle?: string
   showInModal?: boolean
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useMemo } from "react"
 import { Spinner } from "@amsterdam/asc-ui"
 import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
 
@@ -19,23 +19,19 @@ type FormData =
   { team: string, reason: string }
 
 const parseRadioButtonValue = (key: string) => (value: string) => parseInt(value.replace(`${ key }.`, ""), 10)
-const mapData = (data: FormData): Components.Schemas.CaseCreateUpdate => ({
-  address: data.address,
+const mapData = (bagId: Components.Schemas.Address["bag_id"], data: FormData): Omit<Components.Schemas.CaseCreateUpdate, "id"> => ({
+  address: { bag_id: bagId } as Components.Schemas.Address,
   description: data.description,
   team: parseRadioButtonValue("team")(data.team),
-  reason: parseRadioButtonValue("team")(data.reason)
+  reason: parseRadioButtonValue("reason")(data.reason)
 })
 
 const CreateForm: React.FC<Props> = ({ bagId }) => {
 
   const teams = useTeams()
-  const [selectedTeam, selectTeam] = useState<number>()
-  const onChangeTeams = (value: string) => selectTeam(parseRadioButtonValue("team")(value))
-  const reasons = useReasons(selectedTeam)
+  const reasons = useReasons(teams.data?.results?.[0].id)
   const { execPost } = useCaseCreateUpdate()
-  const postMethod = async (data: FormData) => {
-    await execPost(mapData(data))
-  }
+  const postMethod = async (data: FormData) => await execPost(mapData(bagId, data))
   const {
     isSubmitted,
     data: confirmData,
@@ -44,18 +40,18 @@ const CreateForm: React.FC<Props> = ({ bagId }) => {
     onCancelConfirm
   } = useSubmitConfirmation<FormData>(postMethod)
 
-  if (teams.data === undefined) return <Spinner />
+  const fields = useMemo(() => scaffold(bagId, teams.data?.results ?? [], reasons.data?.results ?? []), [bagId, teams.data, reasons.data])
 
-  const fields = scaffold(bagId, teams.data.results ?? [], onChangeTeams, reasons.data?.results ?? [])
+  if (teams.data === undefined || reasons.data === undefined) return <Spinner />
 
   const onSubmitConfirmWrap = async () => {
-    await onSubmitConfirm()
-    // TODO-MOCKED: Redirect to `cases/:id`
-    navigate(to("/cases"))
+    const result = await onSubmitConfirm() as any
+    const caseData = result.data as Components.Schemas.CaseCreateUpdate
+    navigate(to(`/cases/${ caseData.id }`))
   }
 
   return (
-    <ScaffoldForm onSubmit={ onSubmit } initialValues={ { address: { bag_id: bagId } } }>
+    <ScaffoldForm onSubmit={ onSubmit }>
       <ScaffoldFields { ...fields } />
       { isSubmitted &&
         <ConfirmScaffoldFields<MockComponents.Schemas.CaseRequestBody>
