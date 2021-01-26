@@ -23,6 +23,7 @@ export type ApiGroup =
 export type Options = {
   keepUsingInvalidCache?: boolean
   lazy?: boolean
+  isMockExtended?: boolean
 }
 
 /**
@@ -77,16 +78,26 @@ export const useCase = (id?: Components.Schemas.Case["id"], options?: Options) =
   })
 }
 
+export const useCaseCreateUpdate = (options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<Components.Schemas.CaseCreateUpdate>({
+    lazy: true,
+    ...options,
+    url: makeGatewayUrl("cases"),
+    groupName: "cases",
+    handleError,
+    isProtected: true
+  })
+}
+
 export const useCasesByBagId = (bagId: Components.Schemas.Address["bag_id"], options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<Array<Components.Schemas.Case & MockComponents.Schemas.Case>>({
+  return useApiRequest<Components.Schemas.PaginatedCaseList>({
     ...options,
-    //url: makeGatewayUrl("address", bagId, "cases"),
-    url: "cases",
+    url: `${ makeGatewayUrl("addresses", bagId, "cases") }?open_cases=true`,
     groupName: "addresses",
     handleError,
-    isProtected: true,
-    isMocked: true
+    isProtected: true
   })
 }
 
@@ -224,13 +235,12 @@ export const useSupportContacts = (options?: Options) => {
 
 export const useTeams = (options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<MockComponents.Schemas.Team[]>({
+  return useApiRequest<Components.Schemas.PaginatedCaseTeamList>({
     ...options,
-    url: "teams",
+    url: makeGatewayUrl("teams"),
     groupName: "teams",
     handleError,
-    isProtected: true,
-    isMocked: true
+    isProtected: true
   })
 }
 
@@ -246,15 +256,15 @@ export const useTeam = (id: number, options?: Options) => {
   })
 }
 
-export const useReasons = (options?: Options) => {
+export const useReasons = (teamId?: Components.Schemas.CaseTeam["id"], options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<MockComponents.Schemas.Reason[]>({
+  return useApiRequest<Components.Schemas.PaginatedCaseReasonList>({
+    lazy: teamId === undefined,
     ...options,
-    url: "reasons",
+    url: makeGatewayUrl("teams", teamId, "reasons"),
     groupName: "reasons",
     handleError,
-    isProtected: true,
-    isMocked: true
+    isProtected: true
   })
 }
 

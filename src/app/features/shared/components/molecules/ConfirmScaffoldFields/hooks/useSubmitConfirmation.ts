@@ -1,9 +1,9 @@
 import { useState } from "react"
 
-export default <RequestBody>(postMethod: (data: RequestBody) => Promise<any>) => {
+export default <RequestBody>(postMethod: (data: RequestBody) => Promise<unknown>) => {
 
   const [isSubmitted, setSubmitted] = useState(false)
-  const [data, setData] = useState<RequestBody | undefined>()
+  const [data, setData] = useState<RequestBody>()
 
   const onSubmit = async (data: RequestBody) => {
     setSubmitted(true)
@@ -12,8 +12,9 @@ export default <RequestBody>(postMethod: (data: RequestBody) => Promise<any>) =>
 
   const onSubmitConfirm = async () => {
     if (data === undefined) return
-    await postMethod(data)
+    const result = await postMethod(data)
     setSubmitted(false)
+    return result
   }
 
   const onCancelConfirm = () => {

@@ -56,8 +56,10 @@ declare namespace Components {
             is_legacy_bwv?: boolean;
             camunda_id?: string | null;
             description?: string | null;
+            author?: string | null; // uuid
         }
         export interface CaseCreateUpdate {
+            readonly id: number;
             address: Address;
             team: number;
             reason: number;
@@ -234,6 +236,24 @@ declare namespace Components {
             previous?: string | null; // uri
             results?: CaseTeam[];
         }
+        export interface PaginatedDecosPermitList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=4
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null; // uri
+            results?: DecosPermit[];
+        }
         export interface PaginatedSupportContactList {
             /**
              * example:
@@ -290,6 +310,7 @@ declare namespace Components {
             is_legacy_bwv?: boolean;
             camunda_id?: string | null;
             description?: string | null;
+            author?: string | null; // uuid
         }
         export interface PatchedDebriefing {
             readonly id?: number;
@@ -399,6 +420,23 @@ declare namespace Components {
     }
 }
 declare namespace Paths {
+    namespace AddressesCasesList {
+        namespace Parameters {
+            export type BagId = string;
+            export type OpenCases = boolean;
+            export type Page = number;
+        }
+        export interface PathParameters {
+            bag_id: Parameters.BagId;
+        }
+        export interface QueryParameters {
+            open_cases?: Parameters.OpenCases;
+            page?: Parameters.Page;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedCaseList;
+        }
+    }
     namespace AddressesPermitsCheckmarksRetrieve {
         namespace Parameters {
             export type BagId = string;
@@ -413,12 +451,16 @@ declare namespace Paths {
     namespace AddressesPermitsList {
         namespace Parameters {
             export type BagId = string;
+            export type Page = number;
         }
         export interface PathParameters {
             bag_id: Parameters.BagId;
         }
+        export interface QueryParameters {
+            page?: Parameters.Page;
+        }
         namespace Responses {
-            export type $200 = Components.Schemas.DecosPermit[];
+            export type $200 = Components.Schemas.PaginatedDecosPermitList;
         }
     }
     namespace AddressesResidentsRetrieve {

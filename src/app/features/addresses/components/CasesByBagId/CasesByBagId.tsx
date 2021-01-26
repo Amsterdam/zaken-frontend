@@ -7,7 +7,6 @@ import to from "app/features/shared/routing/to"
 import Table from "app/features/shared/components/molecules/Table/Table"
 import OpenButton from "app/features/shared/components/atoms/OpenButton/OpenButton"
 import DateDisplay from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
-import MockWrapper from "app/features/shared/components/molecules/MockWrapper/MockWrapper"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -28,14 +27,14 @@ const columns = [
   { minWidth: 140 }
 ]
 
-const mapData = (data: Components.Schemas.Case & MockComponents.Schemas.Case) =>
+const mapData = (data: Components.Schemas.Case) =>
   ({
     href: to("/cases/:id", { id: data.id }),
     itemList: [
       data.id,
-      data.team.title,
-      data.current_state?.state_date ? <DateDisplay date={ data.current_state.state_date } /> : "-",
-      data.current_state?.state_date,
+      data.team.name,
+      data.start_date ? <DateDisplay date={ data.start_date } /> : "-",
+      data.current_state ?? "-",
       <OpenButton href={ to("/cases/:id", { id: data.id }) } text="Zaakdetails" />
     ]
   })
@@ -43,12 +42,12 @@ const mapData = (data: Components.Schemas.Case & MockComponents.Schemas.Case) =>
 const CasesByBagId: React.FC<Props> = ({ bagId }) => {
 
   const { data } = useCasesByBagId(bagId)
-  const mappedData = useMemo(() => data?.map(mapData), [ data ])
-  const length = data?.length
+  const mappedData = useMemo(() => data?.results?.map(mapData), [ data ])
+  const length = data?.results?.length
   const hasCases = length !== undefined && length > 0
 
   return (
-    <MockWrapper>
+    <>
       <StyledHeading>{ title }{ hasCases && ` (${ length })` }</StyledHeading>
       { data === undefined ?
           <Spinner /> :
@@ -63,7 +62,7 @@ const CasesByBagId: React.FC<Props> = ({ bagId }) => {
             /> :
             <p>{ emptyText }</p>
       }
-    </MockWrapper>
+    </>
   )
 }
 export default CasesByBagId
