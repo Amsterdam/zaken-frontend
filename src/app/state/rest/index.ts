@@ -79,14 +79,12 @@ export const useCase = (id?: Components.Schemas.Case["id"], options?: Options) =
 
 export const useCasesByBagId = (bagId: Components.Schemas.Address["bag_id"], options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<Array<Components.Schemas.Case & MockComponents.Schemas.Case>>({
+  return useApiRequest<Components.Schemas.PaginatedCaseList>({
     ...options,
-    //url: makeGatewayUrl("address", bagId, "cases"),
-    url: "cases",
+    url: `${ makeGatewayUrl("addresses", bagId, "cases") }?open_cases=true`,
     groupName: "addresses",
     handleError,
-    isProtected: true,
-    isMocked: true
+    isProtected: true
   })
 }
 
