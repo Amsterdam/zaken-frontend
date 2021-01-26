@@ -8,20 +8,21 @@ import to from "app/features/shared/routing/to"
 import WorkflowStatus from "./WorkflowStatus"
 import MockWrapper from "app/features/shared/components/molecules/MockWrapper/MockWrapper"
 import CompleteTaskForm from "app/features/tasks/components/CompleteTask/CompleteTaskForm"
+import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
   summonId?: number
 }
-type taskAction = {
+type TaskAction = {
   title: string
   target: string
 }
 
 export const taskActionMap = {
-  "task_create_visit": { title: "Huisbezoek aanmaken", target: "visits" },
-  "task_create_debrief": { title: "Debrief verwerken", target: "debriefing" }
-} as Record<string, taskAction>
+  task_create_visit: { title: "Huisbezoek aanmaken", target: "visits" },
+  task_create_debrief: { title: "Debrief verwerken", target: "debriefing" }
+} as Record<string, TaskAction>
 
 const workflowDebrief = (caseId: Components.Schemas.Case["id"]) => (
   [
@@ -93,6 +94,8 @@ const workflowDecision = (caseId: Components.Schemas.Case["id"]) => (
 const Workflow: React.FC<Props> = ({ caseId, summonId }) => {
   const dataCase = useCaseEvents(caseId).data
   const dataTasks = useCaseTasks(caseId).data
+  const { addSuccessFlashMessage } = useFlashMessages()
+  const path = `/cases/${ caseId }`
 
   const { data, execGet } = useSummon(summonId, { lazy: true })
   const { execPost } = useTaskComplete({ lazy: true })
@@ -107,8 +110,12 @@ const Workflow: React.FC<Props> = ({ caseId, summonId }) => {
 
   const mapTaskData = useCallback((data: Components.Schemas.CamundaTask) => {
     const action = taskActionMap[data.task_name_id] ?? {}
-    const onSubmitTaskComplete = () => 
-      execPost({ camunda_task_id: data.camunda_task_id, variables: {} })
+    
+    const onSubmitTaskComplete = () => (
+      execPost({ camunda_task_id: data.camunda_task_id, variables: {} }).then(() => {
+        addSuccessFlashMessage(path, "Succes", "De taak is succesvol afgerond")
+      })
+  )
 
   return ({
     itemList: [
@@ -122,7 +129,7 @@ const Workflow: React.FC<Props> = ({ caseId, summonId }) => {
       <CompleteTaskForm onSubmit={ onSubmitTaskComplete } />
     ]
   })
-}, [ caseId, execPost ])
+}, [ caseId, execPost, addSuccessFlashMessage, path ])
 
 
   // TODO-MOCKED, get summonId/summonTitle from useCaseEvents(caseId)
@@ -136,7 +143,7 @@ const Workflow: React.FC<Props> = ({ caseId, summonId }) => {
 
   return (
     <div>
-      <WorkflowStatus status="_van Camunda_" data={mappedTaskData} />
+      <WorkflowStatus status="" data={mappedTaskData} />
 
       <MockWrapper>
         <WorkflowStatus status={opinionString} data={workflowOpinion(caseId)} />
