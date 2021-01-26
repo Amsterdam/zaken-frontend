@@ -59,10 +59,6 @@ const ApiProvider: React.FC = ({ children }) => {
       ...useApiCache(),
       ...useRequestQueue()
     },
-    reasons: {
-      ...useApiCache(),
-      ...useRequestQueue()
-    },
     teams: {
       ...useApiCache(),
       ...useRequestQueue()

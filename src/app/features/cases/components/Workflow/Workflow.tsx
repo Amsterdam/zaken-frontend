@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from "react"
-import { Button } from "@amsterdam/asc-ui"
+import { Button, Icon } from "@amsterdam/asc-ui"
 
 import { useCaseTasks, useTaskComplete } from "app/state/rest"
 import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
@@ -7,6 +7,7 @@ import to from "app/features/shared/routing/to"
 import WorkflowStatus from "./WorkflowStatus"
 import CompleteTaskForm from "app/features/tasks/components/CompleteTask/CompleteTaskForm"
 import useInterval from "app/features/shared/hooks/useInterval/useInterval"
+import Lock from "@material-ui/icons/Lock"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
@@ -35,10 +36,11 @@ const Workflow: React.FC<Props> = ({ caseId }) => {
     
     const onSubmitTaskComplete = () => (
       execPost({ camunda_task_id: data.camunda_task_id, variables: {} })
-  )
+    )
 
   return ({
     itemList: [
+      <Icon size={32}>{ <Lock /> }</Icon>,
       data.name,
       "-uitvoerder-",
       "-datum-",
