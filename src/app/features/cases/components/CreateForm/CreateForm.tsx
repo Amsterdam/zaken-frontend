@@ -9,6 +9,7 @@ import ConfirmScaffoldFields from "app/features/shared/components/molecules/Conf
 import useSubmitConfirmation from "app/features/shared/components/molecules/ConfirmScaffoldFields/hooks/useSubmitConfirmation"
 import { navigate } from "@reach/router"
 import to from "app/features/shared/routing/to"
+import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -39,15 +40,18 @@ const CreateForm: React.FC<Props> = ({ bagId }) => {
     onSubmitConfirm,
     onCancelConfirm
   } = useSubmitConfirmation<FormData>(postMethod)
+  const { addSuccessFlashMessage } = useFlashMessages()
 
   const fields = useMemo(() => scaffold(bagId, teams.data?.results ?? [], reasons.data?.results ?? []), [bagId, teams.data, reasons.data])
 
   if (teams.data === undefined || reasons.data === undefined) return <Spinner />
 
   const onSubmitConfirmWrap = async () => {
-    const result = await onSubmitConfirm() as any
-    const caseData = result.data as Components.Schemas.CaseCreateUpdate
-    navigate(to(`/cases/${ caseData.id }`))
+    const result = await onSubmitConfirm()
+    const caseData = (result as { data: Components.Schemas.CaseCreateUpdate }).data
+    const path = `/cases/${ caseData.id }`
+    addSuccessFlashMessage(path, "Succes", "De zaak is succesvol toegevoegd")
+    navigate(to(path))
   }
 
   return (
