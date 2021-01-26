@@ -363,3 +363,13 @@ export const useTaskComplete = (options?: Options) => {
   })
 }
 
+export const useCaseVisits = (caseId: Components.Schemas.Case["id"], options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<Components.Schemas.Visit>({
+    ...options,
+    url: makeGatewayUrl("cases", caseId, "visits"),
+    groupName: "cases",
+    handleError,
+    isProtected: true
+  })
+}
