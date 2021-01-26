@@ -2,15 +2,15 @@ import { FormPositioner } from "@amsterdam/scaffold-form/package"
 import { navigate } from "@reach/router"
 import { Fields } from "app/features/shared/components/molecules/Form/ScaffoldFields"
 
-export default (bagId: Components.Schemas.Address["bag_id"], teams: MockComponents.Schemas.Team[], reasons: MockComponents.Schemas.Team[]) => {
+export default (bagId: Components.Schemas.Address["bag_id"], teams: Components.Schemas.CaseTeam[], reasons: Components.Schemas.CaseReason[]) => {
 
   const teamsObject = teams.reduce((acc, cur) => {
-    acc[`team.${ cur.id }`] = cur.title
+    acc[`team.${ cur.id }`] = cur.name
     return acc
   }, {} as Record<string, string>)
 
   const reasonsObject = reasons.reduce((acc, cur) => {
-    acc[`reason.${ cur.id }`] = cur.title
+    acc[`reason.${ cur.id }`] = cur.name
     return acc
   }, {} as Record<string, string>)
 
@@ -33,11 +33,11 @@ export default (bagId: Components.Schemas.Address["bag_id"], teams: MockComponen
         isRequired: true
       }
     },
-    text: {
+    description: {
       type: "TextAreaField",
       props: {
         label: "Korte toelichting",
-        name: "text",
+        name: "description",
         isRequired: true
       }
     },
@@ -62,7 +62,7 @@ export default (bagId: Components.Schemas.Address["bag_id"], teams: MockComponen
     .setGrid("laptop", "1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr", [
       ["team", "team"],
       ["reason", "reason"],
-      ["text", "text"],
+      ["description", "description"],
       ["submit", "cancel"]
     ])
     .getScaffoldProps()
