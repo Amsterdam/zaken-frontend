@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { Spinner } from "@amsterdam/asc-ui"
 import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
 
@@ -28,8 +28,9 @@ const mapData = (data: FormData): Components.Schemas.CaseCreateUpdate => ({
 const CreateForm: React.FC<Props> = ({ bagId }) => {
 
   const teams = useTeams()
-  // TODO: Switch per team
-  const reasons = useReasons(1)
+  const [selectedTeam, selectTeam] = useState<number>()
+  const onChangeTeams = (value: string) => selectTeam(parseInt(value.replace("team.", ""), 10))
+  const reasons = useReasons(selectedTeam)
   const { execPost } = useCaseCreateUpdate()
   const postMethod = async (data: FormData) => {
     await execPost(mapData(data))
@@ -42,9 +43,9 @@ const CreateForm: React.FC<Props> = ({ bagId }) => {
     onCancelConfirm
   } = useSubmitConfirmation<FormData>(postMethod)
 
-  if (teams.data === undefined || reasons.data === undefined) return <Spinner />
+  if (teams.data === undefined) return <Spinner />
 
-  const fields = scaffold(bagId, teams.data.results ?? [], reasons.data.results ?? [])
+  const fields = scaffold(bagId, teams.data.results ?? [], onChangeTeams, reasons.data?.results ?? [])
 
   const onSubmitConfirmWrap = async () => {
     await onSubmitConfirm()

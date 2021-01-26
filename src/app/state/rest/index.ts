@@ -257,9 +257,10 @@ export const useTeam = (id: number, options?: Options) => {
   })
 }
 
-export const useReasons = (teamId: Components.Schemas.CaseTeam["id"], options?: Options) => {
+export const useReasons = (teamId?: Components.Schemas.CaseTeam["id"], options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.PaginatedCaseReasonList>({
+    lazy: teamId === undefined,
     ...options,
     url: makeGatewayUrl("teams", teamId, "reasons"),
     groupName: "reasons",
