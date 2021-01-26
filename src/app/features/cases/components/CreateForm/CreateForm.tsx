@@ -14,7 +14,11 @@ type Props = {
   bagId: Components.Schemas.Address["bag_id"]
 }
 
-const mapData = (data: any) => ({
+type FormData =
+  Pick<Components.Schemas.CaseCreateUpdate, "address" | "description"> &
+  { team: string, reason: string }
+
+const mapData = (data: FormData): Components.Schemas.CaseCreateUpdate => ({
   address: data.address,
   description: data.description,
   team: parseInt(data.team.replace("team.", ""), 10),
@@ -27,13 +31,16 @@ const CreateForm: React.FC<Props> = ({ bagId }) => {
   // TODO: Switch per team
   const reasons = useReasons(1)
   const { execPost } = useCaseCreateUpdate()
+  const postMethod = async (data: FormData) => {
+    await execPost(mapData(data))
+  }
   const {
     isSubmitted,
     data: confirmData,
     onSubmit,
     onSubmitConfirm,
     onCancelConfirm
-  } = useSubmitConfirmation<Components.Schemas.CaseCreateUpdate>(execPost, mapData)
+  } = useSubmitConfirmation<FormData>(postMethod)
 
   if (teams.data === undefined || reasons.data === undefined) return <Spinner />
 
@@ -41,8 +48,8 @@ const CreateForm: React.FC<Props> = ({ bagId }) => {
 
   const onSubmitConfirmWrap = async () => {
     await onSubmitConfirm()
-    // TODO-MOCKED: remove hardcoded id
-    navigate(to("/cases/1200"))
+    // TODO-MOCKED: Redirect to `cases/:id`
+    navigate(to("/cases"))
   }
 
   return (
