@@ -2,7 +2,7 @@ import { FormPositioner } from "@amsterdam/scaffold-form/package"
 import { Fields } from "app/features/shared/components/molecules/Form/ScaffoldFields"
 import { navigate } from "@reach/router"
 
-const Scaffold = (caseId: Components.Schemas.Case["id"]) => {
+const scaffold = (caseId: Components.Schemas.Case["id"]) => {
   const fields = {
     author1: {
       type: "TextField",
@@ -135,4 +135,4 @@ const Scaffold = (caseId: Components.Schemas.Case["id"]) => {
     .getScaffoldProps()
 }
 
-export default Scaffold
+export default scaffold
