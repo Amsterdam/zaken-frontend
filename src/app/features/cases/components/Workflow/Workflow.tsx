@@ -22,7 +22,7 @@ export const taskActionMap = {
   task_create_debrief: { title: "Debrief verwerken", target: "debriefing" }
 } as Record<string, TaskAction>
 
-const Workflow: React.FC<Props> = ({ caseId, summonId }) => {
+const Workflow: React.FC<Props> = ({ caseId }) => {
   const dataTasks = useCaseTasks(caseId).data
   const { execGet } = useCaseTasks(caseId)
 
