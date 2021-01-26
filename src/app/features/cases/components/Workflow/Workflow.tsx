@@ -1,123 +1,60 @@
-import React, { useEffect } from "react"
+import React, { useCallback, useMemo } from "react"
 import { Button } from "@amsterdam/asc-ui"
 
-import { useCaseEvents, useSummon } from "app/state/rest"
-import workflow from "app/state/workflow/workflow"
+import { useCaseTasks, useTaskComplete } from "app/state/rest"
 import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
 import to from "app/features/shared/routing/to"
 import WorkflowStatus from "./WorkflowStatus"
-import MockWrapper from "app/features/shared/components/molecules/MockWrapper/MockWrapper"
+import CompleteTaskForm from "app/features/tasks/components/CompleteTask/CompleteTaskForm"
+import useInterval from "app/features/shared/hooks/useInterval/useInterval"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
   summonId?: number
 }
+type TaskAction = {
+  title: string
+  target: string
+}
 
-const workflowDebrief = (caseId: Components.Schemas.Case["id"]) => (
-  [
-    { itemList:
-      [ "Verwerken Debrief", "ProjectHandhaver", "-", "-",
-      <ButtonLink to={ to("/cases/:id/debriefing", { id: caseId })}>
-        <Button variant="primary" as="span">Debrief verwerken</Button>
-      </ButtonLink>
-      ]
-    }
-  ]
-)
+export const taskActionMap = {
+  task_create_visit: { title: "Huisbezoek aanmaken", target: "visits" },
+  task_create_debrief: { title: "Debrief verwerken", target: "debriefing" }
+} as Record<string, TaskAction>
 
-const workflowVisit = (
-  [{ itemList: [ "Huisbezoek afleggen", "Toezichthouders", "-", "-", "-" ] }]
-)
+const Workflow: React.FC<Props> = ({ caseId }) => {
+  const dataTasks = useCaseTasks(caseId).data
+  const { execGet } = useCaseTasks(caseId)
 
-const workflowViolation = (
-  [
-    { itemList: [ "Opstellen beeldverslag", "Toezichthouder", "-", "-", "-" ] },
-    { itemList: [ "Opstellen rapport van bevindingen", "Toezichthouder", "-", "-", "-" ] },
-    { itemList: [ "Opstellen aanschrijving", "Projecthandhaver", "-", "-", "-" ] }
-  ]
-)
+  const { execPost } = useTaskComplete({ lazy: true })
 
-const workflowCloseCase = (
-  [
-    { itemList: [ "Opstellen buitendienst rapport", "Toezichthouder", "-", "-", "-" ] },
-    { itemList: [ "Afsluiten zaak", "Projectmederker", "-", "-", "-" ] }
-  ]
-)
+  useInterval(execGet, 10000)
 
-const workflowOpinion = (caseId: Components.Schemas.Case["id"]) => (
-  [
-    { itemList:
-      [ "Beoordelen zienswijze", "ProjectHandhaver", "-", "-",
-        <ButtonLink to={ to("/cases/:id/opinion", { id: caseId })}>
-          <Button variant="primary" as="span">Uitkomst zienswijze</Button>
-        </ButtonLink>
-      ]
-    }
-  ]
-)
-
-const workflowSummon = (caseId: Components.Schemas.Case["id"]) => (
-  [
-    { itemList:
-      [ "Verwerken aanschrijving", "ProjectHandhaver", "28-02-2021", "14 dagen",
-        <ButtonLink to={ to("/cases/:id/summon", { id: caseId })}>
-          <Button variant="primary" as="span">Aanschrijving</Button>
-        </ButtonLink>
-      ]
-    }
-  ]
-)
-
-const workflowDecision = (caseId: Components.Schemas.Case["id"]) => (
-  [
-    { itemList:
-      [ "Verwerken besluit", "ProjectHandhaver", "28-02-2021", "14 dagen",
-        <ButtonLink to={ to("/cases/:id/decision", { id: caseId })}>
-          <Button variant="primary" as="span">Besluit</Button>
-        </ButtonLink>
-      ]
-    }
-  ]
-)
-
-const Workflow: React.FC<Props> = ({ caseId, summonId }) => {
-  const dataCase = useCaseEvents(caseId).data
-  const { data, execGet } = useSummon(summonId, { lazy: true })
-  const {
-    shouldCreateVisit,
-    shouldCreateDebriefing,
-    shouldCloseCase,
-    shouldCreateViolation,
-    shouldCreateAdditionalVisit
-  } = workflow(dataCase)
-
-  // TODO-MOCKED, get summonId/summonTitle from useCaseEvents(caseId)
-  useEffect(() => {
-    if (summonId === undefined) return
-    execGet() }, [summonId, execGet]
+  const mapTaskData = useCallback((data: Components.Schemas.CamundaTask) => {
+    const action = taskActionMap[data.task_name_id] ?? {}
+    
+    const onSubmitTaskComplete = () => (
+      execPost({ camunda_task_id: data.camunda_task_id, variables: {} })
   )
-  const opinionString = `Zienswijze - ${ data?.title ?? "" }`
+
+  return ({
+    itemList: [
+      data.name,
+      "-uitvoerder-",
+      "-datum-",
+      action.target ?
+      <ButtonLink to={ to(`/cases/:id/${ action.target }`, { id: caseId })}>
+        <Button variant="primary" as="span">{ action.title }</Button>
+      </ButtonLink> :
+      <CompleteTaskForm onSubmit={ onSubmitTaskComplete } />
+    ]
+  })
+}, [ caseId, execPost ])
+
+  const mappedTaskData = useMemo(() => dataTasks?.map(mapTaskData), [ mapTaskData, dataTasks ])
 
   return (
-    <div>
-      <MockWrapper>
-        <WorkflowStatus status={opinionString} data={workflowOpinion(caseId)} />
-        <WorkflowStatus status="Aanschrijving" data={workflowSummon(caseId)} />
-        <WorkflowStatus status="Besluit" data={workflowDecision(caseId)} />
-      </MockWrapper>
-      { (shouldCreateVisit || shouldCreateAdditionalVisit) &&
-        <WorkflowStatus status="Huisbezoek" data={workflowVisit} />
-      }
-      { shouldCreateDebriefing &&
-        <WorkflowStatus status="Debrief" data={workflowDebrief(caseId)} />
-      }
-      { shouldCloseCase &&
-        <WorkflowStatus status="Zaak afsluiten" data={workflowCloseCase} showBWVMessage={true} />
-      }
-      { shouldCreateViolation &&
-        <WorkflowStatus status="Overtreding" data={workflowViolation} showBWVMessage={true} />
-      }
-    </div>
+    <WorkflowStatus status="" data={mappedTaskData} />
   )
 }
 
