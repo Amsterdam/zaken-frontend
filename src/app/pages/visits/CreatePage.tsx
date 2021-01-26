@@ -8,9 +8,7 @@ import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/Br
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import AddressHeading from "app/features/shared/components/molecules/AddressHeading/AddressHeading"
 import VisitForm from "app/features/visits/components/CreateForm/CreateForm"
-// import WorkflowForm from "app/features/cases/components/Workflow/WorkflowForm"
-// import scaffold from "app/features/summons/components/SummonForm/scaffold"
-// import FormWithExtraLabel from "app/features/shared/components/atoms/FormWithExtraLabel/FormWithExtraLabel"
+import { useCaseVisits } from "app/state/rest"
 
 type Props = {
   id: string
@@ -18,11 +16,7 @@ type Props = {
 
 const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
   const id: Components.Schemas.Case["id"] = parseInt(idString!)
-//   const visits = useVisits()
-//   const { execPost } = visits
-
-
-console.log("id", id)
+  const { execPost } = useCaseVisits(id, { lazy: true })
 
   return (
     <DefaultLayout>
@@ -35,7 +29,7 @@ console.log("id", id)
       <RowWithColumn>
         <FormTitle>Gebruik dit formulier om een huisbezoek aan te maken</FormTitle>
         <AddressHeading caseId={ id } />
-        <VisitForm caseId={id!} />
+        <VisitForm caseId={id!} onSubmit={ execPost } />
       </RowWithColumn>
     </DefaultLayout>
   )

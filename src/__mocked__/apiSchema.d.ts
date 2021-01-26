@@ -60,10 +60,10 @@ declare namespace MockComponents {
       can_next_visit_go_ahead_description?: string | null
       suggest_next_visit?: string | null
       suggest_next_visit_description?: string | null
-      personal_notes?: string | null
-      case_id: number
+      notes?: string | null
+      id: number
       itinerary_item?: null | number
-      author: string // uuid
+      authors: User[]// uuid
     }
   }
 }

@@ -7,18 +7,17 @@ import createScaffoldProps from "./scaffold"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
-  initialValues?: Partial<MockComponents.Schemas.Visit>
-  // onSubmit: (data: MockComponents.Schemas.Visit) => Promise<void>
+  initialValues?: Partial<Components.Schemas.Visit>
+  onSubmit: (data: Components.Schemas.Visit) => Promise<unknown>
   isLoading?: boolean
 }
 
-const VisitForm: React.FC<Props> = ({ caseId, initialValues, isLoading }) => 
+const VisitForm: React.FC<Props> = ({ caseId, isLoading, onSubmit }) => 
   <ScaffoldForm
     showSpinner={ isLoading }
-    // onSubmit={ onSubmit }
-    initialValues={ initialValues ?? { case: caseId } }
+    onSubmit={ onSubmit }
   >
-    <ScaffoldFields {...createScaffoldProps(caseId, initialValues !== undefined) } />
+    <ScaffoldFields {...createScaffoldProps(caseId) } />
   </ScaffoldForm>  
 
 export default VisitForm
