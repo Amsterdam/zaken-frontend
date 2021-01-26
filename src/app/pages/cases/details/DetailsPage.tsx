@@ -11,7 +11,6 @@ import TimelineContainer from "app/features/cases/components/CaseTimeline/Timeli
 import CaseDetails from "app/features/cases/components/CaseDetails/CaseDetails"
 import Workflow from "app/features/cases/components/Workflow/Workflow"
 import { Column } from "app/features/shared/components/atoms/Grid"
-import MockWrapper from "app/features/shared/components/molecules/MockWrapper/MockWrapper"
 import styled from "styled-components"
 import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
 import to from "app/features/shared/routing/to"
@@ -51,9 +50,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
       </RowWithColumn>
       <Row>
         <Column spanLarge={50}>
-          <MockWrapper>
-            <CaseDetails caseId={ id! } />
-          </MockWrapper>
+          <CaseDetails caseId={ id! } />
         </Column>
       </Row>
       <RowWithColumn>

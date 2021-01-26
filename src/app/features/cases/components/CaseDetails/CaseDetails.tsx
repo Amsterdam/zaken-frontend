@@ -7,17 +7,19 @@ type Props = {
   caseId: Components.Schemas.Case["id"]
 }
 
+const mapData = (data: Components.Schemas.Case) => ({
+  "ZaakId": data.id,
+  "Team": data.team.name,
+  "Startdatum": data.start_date ? `${ displayDate(data.start_date) }` : "-"
+})
+
 const CaseDetails: React.FC<Props> = ({ caseId }) => {
   const { data } = useCase(caseId)
-  const values = useMemo(() => ({
-    // TODO-MOCKED use the right ID
-    "Zaak-ID": data?.id,
-    "Team": data?.team?.title,
-    "Startdatum": data?.start_date ? `${ displayDate(data.start_date) }` : "-"
-  }), [ data ])
+  const values = useMemo(() => data !== undefined ? mapData(data) : {}, [data])
   return <DefinitionList
-    numInitialVisibleRows={3}
-    values={values}
+    isLoading={ data === undefined }
+    numInitialVisibleRows={ 3 }
+    values={ values }
   />
 }
 
