@@ -10,7 +10,7 @@ type RequestBody = Record<string, unknown>
 type NamedFields<T> = Record<keyof T, Field>
 type Props<RequestBody> = {
   fields: NamedFields<RequestBody>
-  data: RequestBody
+  data: RequestBody | undefined
   title?: string
   onCancel?: () => void
   cancelTitle?: string
@@ -44,8 +44,9 @@ const SpinnerWrap = styled.div`
 }
 `
 
-const createValuesObject = <T extends RequestBody>(fields: NamedFields<T>, data: T) =>
-  (Object.keys(data) as Array<keyof T>).reduce((acc, key) => {
+const createValuesObject = <T extends RequestBody>(fields: NamedFields<T>, data?: T) => {
+  if (data === undefined) return {}
+  return (Object.keys(data) as Array<keyof T>).reduce((acc, key) => {
     if (fields.hasOwnProperty(key) === false) return acc
     const props = fields[key].props
     const { label } = props
@@ -54,6 +55,7 @@ const createValuesObject = <T extends RequestBody>(fields: NamedFields<T>, data:
     acc[(label ?? key) as string] = value as React.ReactNode
     return acc
   }, {} as Record<string, React.ReactNode>)
+}
 
 const ConfirmScaffoldFields = <T extends RequestBody>(props: Props<T>) => {
   const {
