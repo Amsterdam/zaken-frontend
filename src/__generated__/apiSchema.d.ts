@@ -48,11 +48,20 @@ declare namespace Components {
                 state_date: string; // date
                 users: string /* uuid */[];
             };
+            team: CaseTeam;
+            reason: CaseReason;
             identification?: string | null;
             start_date?: string | null; // date
             end_date?: string | null; // date
             is_legacy_bwv?: boolean;
             camunda_id?: string | null;
+            description?: string | null;
+        }
+        export interface CaseCreateUpdate {
+            address: Address;
+            team: number;
+            reason: number;
+            description?: string | null;
         }
         export interface CaseEvent {
             readonly id: number;
@@ -66,6 +75,11 @@ declare namespace Components {
             emitter_is_editable_until: string; // date-time
             case: number;
         }
+        export interface CaseReason {
+            readonly id: number;
+            name: string;
+            team: number;
+        }
         export interface CaseState {
             readonly id: number;
             case: number;
@@ -73,6 +87,10 @@ declare namespace Components {
             status: number;
             state_date: string; // date
             users: string /* uuid */[];
+        }
+        export interface CaseTeam {
+            readonly id: number;
+            name: string;
         }
         export interface Debriefing {
             readonly id: number;
@@ -180,6 +198,42 @@ declare namespace Components {
             previous?: string | null; // uri
             results?: Case[];
         }
+        export interface PaginatedCaseReasonList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=4
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null; // uri
+            results?: CaseReason[];
+        }
+        export interface PaginatedCaseTeamList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=4
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null; // uri
+            results?: CaseTeam[];
+        }
         export interface PaginatedSupportContactList {
             /**
              * example:
@@ -228,11 +282,14 @@ declare namespace Components {
                 state_date: string; // date
                 users: string /* uuid */[];
             };
+            team?: CaseTeam;
+            reason?: CaseReason;
             identification?: string | null;
             start_date?: string | null; // date
             end_date?: string | null; // date
             is_legacy_bwv?: boolean;
             camunda_id?: string | null;
+            description?: string | null;
         }
         export interface PatchedDebriefing {
             readonly id?: number;
@@ -394,7 +451,7 @@ declare namespace Paths {
     }
     namespace CaseStatesUpdateFromTopCreate {
         namespace Parameters {
-            export type Id = string;
+            export type Id = number;
         }
         export interface PathParameters {
             id: Parameters.Id;
@@ -405,9 +462,9 @@ declare namespace Paths {
         }
     }
     namespace CasesCreate {
-        export type RequestBody = Components.Schemas.Case;
+        export type RequestBody = Components.Schemas.CaseCreateUpdate;
         namespace Responses {
-            export type $201 = Components.Schemas.Case;
+            export type $201 = Components.Schemas.CaseCreateUpdate;
         }
     }
     namespace CasesDebriefingsRetrieve {
@@ -510,9 +567,9 @@ declare namespace Paths {
         export interface PathParameters {
             id: Parameters.Id;
         }
-        export type RequestBody = Components.Schemas.Case;
+        export type RequestBody = Components.Schemas.CaseCreateUpdate;
         namespace Responses {
-            export type $200 = Components.Schemas.Case;
+            export type $200 = Components.Schemas.CaseCreateUpdate;
         }
     }
     namespace DebriefingsCreate {
@@ -621,6 +678,32 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedSupportContactList;
+        }
+    }
+    namespace TeamsList {
+        namespace Parameters {
+            export type Page = number;
+        }
+        export interface QueryParameters {
+            page?: Parameters.Page;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedCaseTeamList;
+        }
+    }
+    namespace TeamsReasonsList {
+        namespace Parameters {
+            export type Id = number;
+            export type Page = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        export interface QueryParameters {
+            page?: Parameters.Page;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedCaseReasonList;
         }
     }
     namespace TestPermitsCheckmarksRetrieve {

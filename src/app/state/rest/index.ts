@@ -336,7 +336,6 @@ export const useCaseTasks = (caseId: Components.Schemas.Case["id"], options?: Op
   return useApiRequest<Components.Schemas.CamundaTask[]>({
     ...options,
     url: makeGatewayUrl("cases", caseId, "tasks"),
-    //url: "camundaTasks",
     groupName: "cases",
     handleError,
     isProtected: true

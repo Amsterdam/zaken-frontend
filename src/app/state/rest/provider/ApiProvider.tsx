@@ -51,6 +51,10 @@ const ApiProvider: React.FC = ({ children }) => {
       ...useApiCache(),
       ...useRequestQueue()
     },
+    reasons: {
+      ...useApiCache(),
+      ...useRequestQueue()
+    },
     supportContacts: {
       ...useApiCache(),
       ...useRequestQueue()
