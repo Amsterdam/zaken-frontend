@@ -18,18 +18,19 @@ type FormData =
   Pick<Components.Schemas.CaseCreateUpdate, "address" | "description"> &
   { team: string, reason: string }
 
+const parseRadioButtonValue = (key: string) => (value: string) => parseInt(value.replace(`${ key }.`, ""), 10)
 const mapData = (data: FormData): Components.Schemas.CaseCreateUpdate => ({
   address: data.address,
   description: data.description,
-  team: parseInt(data.team.replace("team.", ""), 10),
-  reason: parseInt(data.reason.replace("reason.", ""), 10)
+  team: parseRadioButtonValue("team")(data.team),
+  reason: parseRadioButtonValue("team")(data.reason)
 })
 
 const CreateForm: React.FC<Props> = ({ bagId }) => {
 
   const teams = useTeams()
   const [selectedTeam, selectTeam] = useState<number>()
-  const onChangeTeams = (value: string) => selectTeam(parseInt(value.replace("team.", ""), 10))
+  const onChangeTeams = (value: string) => selectTeam(parseRadioButtonValue("team")(value))
   const reasons = useReasons(selectedTeam)
   const { execPost } = useCaseCreateUpdate()
   const postMethod = async (data: FormData) => {
