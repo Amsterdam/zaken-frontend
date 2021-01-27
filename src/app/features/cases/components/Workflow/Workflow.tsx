@@ -6,8 +6,7 @@ import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLi
 import to from "app/features/shared/routing/to"
 import WorkflowStatus from "./WorkflowStatus"
 import CompleteTaskForm from "app/features/tasks/components/CompleteTask/CompleteTaskForm"
-import useInterval from "app/features/shared/hooks/useInterval/useInterval"
-import Lock from "@material-ui/icons/Lock"
+import LockOpen from "@material-ui/icons/LockOpen"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
@@ -25,11 +24,7 @@ export const taskActionMap = {
 
 const Workflow: React.FC<Props> = ({ caseId }) => {
   const dataTasks = useCaseTasks(caseId).data
-  const { execGet } = useCaseTasks(caseId)
-
   const { execPost } = useTaskComplete({ lazy: true })
-
-  useInterval(execGet, 10000)
 
   const mapTaskData = useCallback((data: Components.Schemas.CamundaTask) => {
     const action = taskActionMap[data.task_name_id] ?? {}
@@ -40,7 +35,7 @@ const Workflow: React.FC<Props> = ({ caseId }) => {
 
   return ({
     itemList: [
-      <Icon size={32}>{ <Lock /> }</Icon>,
+      <Icon size={32}>{ <LockOpen /> }</Icon>,
       data.name,
       "-uitvoerder-",
       "-datum-",
