@@ -47,7 +47,7 @@ declare namespace Components {
                 status: number;
                 state_date: string; // date
                 users: string /* uuid */[];
-            };
+            } | null;
             team: CaseTeam;
             reason: CaseReason;
             identification?: string | null;
@@ -272,6 +272,24 @@ declare namespace Components {
             previous?: string | null; // uri
             results?: SupportContact[];
         }
+        export interface PaginatedUserList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=4
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null; // uri
+            results?: User[];
+        }
         export interface PaginatedVisitList {
             /**
              * example:
@@ -301,7 +319,7 @@ declare namespace Components {
                 status: number;
                 state_date: string; // date
                 users: string /* uuid */[];
-            };
+            } | null;
             team?: CaseTeam;
             reason?: CaseReason;
             identification?: string | null;
@@ -325,7 +343,8 @@ declare namespace Components {
         }
         export interface PatchedVisit {
             readonly id?: number;
-            authors?: User[];
+            readonly authors?: User[];
+            author_ids?: string /* uuid */[];
             start_time?: string; // date-time
             situation?: string;
             observations?: string[];
@@ -406,7 +425,8 @@ declare namespace Components {
         export type ViolationEnum = "NO" | "YES" | "ADDITIONAL_RESEARCH_REQUIRED" | "ADDITIONAL_VISIT_REQUIRED";
         export interface Visit {
             readonly id: number;
-            authors: User[];
+            readonly authors: User[];
+            author_ids: string /* uuid */[];
             start_time: string; // date-time
             situation: string;
             observations?: string[];
@@ -472,6 +492,17 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.Residents;
+        }
+    }
+    namespace AuthorsList {
+        namespace Parameters {
+            export type Page = number;
+        }
+        export interface QueryParameters {
+            page?: Parameters.Page;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedUserList;
         }
     }
     namespace CamundaTaskCompleteCreate {

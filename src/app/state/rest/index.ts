@@ -362,3 +362,24 @@ export const useCaseVisits = (caseId: Components.Schemas.Case["id"], options?: O
     isProtected: true
   })
 }
+export const useVisitsCreate = (options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<Components.Schemas.Visit>({
+    ...options,
+    url: makeGatewayUrl("visits"),
+    groupName: "case",
+    handleError,
+    isProtected: true
+  })
+}
+export const useAuthors = (options?: Options) => {
+  const handleError = useErrorHandler()
+  
+  return useApiRequest<Components.Schemas.PaginatedUserList>({
+    ...options,
+    url: makeGatewayUrl("authors"),
+    groupName: "case",
+    handleError,
+    isProtected: true
+  })
+}
