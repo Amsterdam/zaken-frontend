@@ -53,31 +53,9 @@ const scaffold = (caseId: Components.Schemas.Case["id"]) => {
         }
       }
     },
-    next_visit: {
-      type: "RadioFields",
-      props: {
-        isRequired: true,
-        name: "can_next_visit_go_ahead",
-        label: "Kan het adres direct worden uitgezet?",
-        options: {
-          yes: "Ja, doorlaten",
-          no: "Nee, tegenhouden"
-        }
-      }
-    },
-    next_visit_description: {
-      type: "TextAreaField",
-      props: {
-        isRequired: false,
-        name: "can_next_visit_go_ahead_description",
-        label: "Geef toelichting",
-        extraLabel: "(niet verplicht)"
-      }
-    },
     suggest_next_visit: {
       type: "RadioFields",
       props: {
-        isRequired: true,
         name: "suggest_next_visit",
         label: "Suggestie nieuw bezoek",
         options: {
@@ -91,10 +69,28 @@ const scaffold = (caseId: Components.Schemas.Case["id"]) => {
     suggest_next_visit_description: {
       type: "TextAreaField",
       props: {
-        isRequired: false,
         label: "Geef toelichting",
         extraLabel: "(niet verplicht)",
         name: "suggest_next_visit_description"
+      }
+    },
+    next_visit: {
+      type: "RadioFields",
+      props: {
+        name: "can_next_visit_go_ahead",
+        label: "Kan het adres direct worden uitgezet?",
+        options: {
+          yes: "Ja, doorlaten",
+          no: "Nee, tegenhouden"
+        }
+      }
+    },
+    next_visit_description: {
+      type: "TextAreaField",
+      props: {
+        name: "can_next_visit_go_ahead_description",
+        label: "Geef toelichting",
+        extraLabel: "(niet verplicht)"
       }
     },
     description: {
