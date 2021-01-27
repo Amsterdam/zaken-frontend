@@ -1,8 +1,11 @@
 // REASON
 export const reasonLabelsMap = {
-  "reason": "Aanleiding"
+  "start_date": "Datum",
+  "author": "Projectmedewerker",
+  "reason": "Aanleiding",
+  "description": "Toelichting"
 } as Record<string, string>
-  
+
 // DEBRIEF
 export const debriefLabelsMap = {
   "date_added": "Datum",
