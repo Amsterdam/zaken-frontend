@@ -11,10 +11,12 @@ import DateDisplay from "app/features/shared/components/atoms/DateDisplay/DateDi
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
   openCases?: boolean
+  title?: string
+  emptyText?: string
 }
 
-const title = "Lopende zaken"
-const emptyText = "Op dit adres zijn er geen lopende zaken"
+const defaultTitle = "Zaken"
+const defaultEmptyText = "Op dit adres zijn er geen zaken"
 
 const StyledHeading = styled(Heading)`
   margin-bottom: ${ themeSpacing(4) };
@@ -40,7 +42,7 @@ const mapData = (data: Components.Schemas.Case) =>
     ]
   })
 
-const CasesByBagId: React.FC<Props> = ({ bagId, openCases }) => {
+const CasesByBagId: React.FC<Props> = ({ bagId, openCases, title = defaultTitle, emptyText = defaultEmptyText }) => {
 
   const { data } = useCasesByBagId(bagId, openCases)
   const mappedData = useMemo(() => data?.results?.map(mapData), [ data ])
