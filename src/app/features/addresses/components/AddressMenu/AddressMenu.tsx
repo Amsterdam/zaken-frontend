@@ -48,8 +48,7 @@ const routes = [
 
 const mockedRoutes = [
   "/adres/:bagId/personen/",
-  "/adres/:bagId/vergunningen/",
-  "/adres/:bagId/zaken/"
+  "/adres/:bagId/vergunningen/"
 ]
 
 const AddressMenu: React.FC<Props> = ({ bagId }) => {
