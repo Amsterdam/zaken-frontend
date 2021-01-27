@@ -34,7 +34,7 @@ const mapData = (data: Components.Schemas.Case) =>
       data.id,
       data.team.name,
       data.start_date ? <DateDisplay date={ data.start_date } /> : "-",
-      data.current_state?.status_name ?? "-",
+      data.current_state.status_name,
       <OpenButton href={ to("/cases/:id", { id: data.id }) } text="Zaakdetails" />
     ]
   })
