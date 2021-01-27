@@ -10,6 +10,7 @@ import { BAGObjectResponse } from "./types/BAGObjectResponse"
 export type ApiGroup =
   | "addresses"
   | "cases"
+  | "case"
   | "caseTypes"
   | "caseStates"
   | "dataPunt"
@@ -17,8 +18,6 @@ export type ApiGroup =
   | "auth"
   | "supportContacts"
   | "teams"
-  | "reasons"
-  | "tasks"
 
 export type Options = {
   keepUsingInvalidCache?: boolean
@@ -71,7 +70,7 @@ export const useCase = (id?: Components.Schemas.Case["id"], options?: Options) =
     lazy: id === undefined,
     ...options,
     url: makeGatewayUrl("cases", id),
-    groupName: "cases",
+    groupName: "case",
     handleError,
     isProtected: true,
     isMockExtended: true
@@ -106,18 +105,7 @@ export const useFine = (id: string, options?: Options) => {
   return useApiRequest<Components.Schemas.FineList>({
     ...options,
     url: makeGatewayUrl("fines", id),
-    groupName: "cases",
-    handleError,
-    isProtected: true
-  })
-}
-
-export const useCaseResidents = (id: Components.Schemas.Case["id"], options?: Options) => {
-  const handleError = useErrorHandler()
-  return useApiRequest<Components.Schemas.Residents>({
-    ...options,
-    url: makeGatewayUrl("cases", id, "residents"),
-    groupName: "cases",
+    groupName: "case",
     handleError,
     isProtected: true
   })
@@ -128,7 +116,7 @@ export const useDebriefings = (id?: number, options?: Options) => {
   return useApiRequest<Components.Schemas.Debriefing>({
     ...options,
     url: makeGatewayUrl("debriefings", id),
-    groupName: "cases",
+    groupName: "case",
     handleError,
     isProtected: true
   })
@@ -140,7 +128,7 @@ export const useCaseEvents = (caseId: Components.Schemas.Case["id"], options?: O
   return useApiRequest<Components.Schemas.CaseEvent[]>({
     ...options,
     url: makeGatewayUrl("cases", caseId, "events"),
-    groupName: "cases",
+    groupName: "case",
     handleError,
     isProtected: true
   })
@@ -262,7 +250,7 @@ export const useReasons = (teamId?: Components.Schemas.CaseTeam["id"], options?:
     lazy: teamId === undefined,
     ...options,
     url: makeGatewayUrl("teams", teamId, "reasons"),
-    groupName: "reasons",
+    groupName: "teams",
     handleError,
     isProtected: true
   })
@@ -273,7 +261,7 @@ export const useOpinions = (options?: Options) => {
   return useApiRequest<MockComponents.Schemas.Opinion[]>({
     ...options,
     url: "opinions",
-    groupName: "cases",
+    groupName: "case",
     handleError,
     isProtected: true,
     isMocked: true
@@ -285,7 +273,7 @@ export const useSummons = (options?: Options) => {
   return useApiRequest<MockComponents.Schemas.Summon[]>({
     ...options,
     url: "summons",
-    groupName: "cases",
+    groupName: "case",
     handleError,
     isProtected: true,
     isMocked: true
@@ -298,7 +286,7 @@ export const useSummon = (id?: number, options?: Options) => {
     ...options,
     url: `summons/${ id }`,
     lazy: id === undefined,
-    groupName: "cases",
+    groupName: "case",
     handleError,
     isProtected: true,
     isMocked: true
@@ -310,7 +298,7 @@ export const useDecisions = (options?: Options) => {
   return useApiRequest<MockComponents.Schemas.Decision[]>({
     ...options,
     url: "decisions",
-    groupName: "cases",
+    groupName: "case",
     handleError,
     isProtected: true,
     isMocked: true
@@ -322,7 +310,7 @@ export const useCorrespondence = (options?: Options) => {
   return useApiRequest<MockComponents.Schemas.Correspondence[]>({
     ...options,
     url: "correspondence",
-    groupName: "cases",
+    groupName: "case",
     handleError,
     isProtected: true,
     isMocked: true
@@ -334,7 +322,7 @@ export const useCompleteCase = (options?: Options) => {
   return useApiRequest<MockComponents.Schemas.CompleteCase[]>({
     ...options,
     url: "completeCases",
-    groupName: "cases",
+    groupName: "case",
     handleError,
     isProtected: true,
     isMocked: true
@@ -346,7 +334,7 @@ export const useCaseTasks = (caseId: Components.Schemas.Case["id"], options?: Op
   return useApiRequest<Components.Schemas.CamundaTask[]>({
     ...options,
     url: makeGatewayUrl("cases", caseId, "tasks"),
-    groupName: "cases",
+    groupName: "case",
     handleError,
     isProtected: true
   })
@@ -357,7 +345,7 @@ export const useTaskComplete = (options?: Options) => {
   return useApiRequest<Components.Schemas.CamundaTaskComplete>({
     ...options,
     url: makeGatewayUrl("camunda", "task", "complete"),
-    groupName: "tasks",
+    groupName: "case",
     handleError,
     isProtected: true
   })
@@ -368,7 +356,7 @@ export const useCaseVisits = (caseId: Components.Schemas.Case["id"], options?: O
   return useApiRequest<Components.Schemas.Visit>({
     ...options,
     url: makeGatewayUrl("cases", caseId, "visits"),
-    groupName: "cases",
+    groupName: "case",
     handleError,
     isProtected: true
   })
