@@ -8,15 +8,20 @@ export type Props = {
   taskName: string
   isOpen: boolean
   closeModal: () => void
-  onSubmit: any
+  onSubmit: (data: Components.Schemas.CamundaTaskComplete) => Promise<unknown>
 }
 
-const CompleteTaskModal: React.FC<Props> = ({ isOpen, closeModal, onSubmit, taskName }) => (
-  <Modal isOpen={isOpen} onClose={closeModal} title={taskName}>
-    <ModalBlock>
-        <CompleteTaskForm onSubmit={ onSubmit } />
-    </ModalBlock>
-  </Modal>
-)
+const CompleteTaskModal: React.FC<Props> = ({ isOpen, closeModal, onSubmit, taskName }) => {
+  const title = `Is de taak "${ taskName }" afgerond?`
+
+    return (
+      <Modal isOpen={isOpen} onClose={closeModal} title={title}>
+        <ModalBlock>
+            <CompleteTaskForm onSubmit={ onSubmit } onCancel={closeModal} />
+        </ModalBlock>
+    </Modal>      
+    )
+}
+  
 
 export default CompleteTaskModal
