@@ -5,7 +5,7 @@ import OpenButton from "app/features/shared/components/atoms/OpenButton/OpenButt
 import to from "app/features/shared/routing/to"
 import { BAGAddressResponse } from "app/state/rest/types/BAGAddressResponse"
 
-type SearchResult = Pick<BAGAddressResponse["results"][0], "adres" | "postcode" | "subtype_id">
+type SearchResult = Pick<BAGAddressResponse["results"][0], "adres" | "postcode" | "landelijk_id">
 type Props = {
   searchString: string
 }
@@ -21,13 +21,13 @@ const columns = [
 
 const filterData = (data: SearchResult) => typeof data?.postcode === "string"
 
-const mapData = (data: SearchResult) => 
-({ 
-  href: to("/adres/:bagId", { bagId: data.subtype_id }),
+const mapData = (data: SearchResult) =>
+({
+  href: to("/adres/:bagId", { bagId: data.landelijk_id }),
   itemList: [
     data.adres ?? "-",
     data.postcode ?? "-",
-    data.subtype_id ? <OpenButton href={to("/adres/:bagId", { bagId: data.subtype_id })} text="Bekijk" /> : null
+    data.landelijk_id ? <OpenButton href={to("/adres/:bagId", { bagId: data.landelijk_id })} text="Bekijk" /> : null
   ]
 })
 
