@@ -2,7 +2,7 @@ import { FormPositioner } from "@amsterdam/scaffold-form/package"
 import { Fields } from "app/features/shared/components/molecules/Form/ScaffoldFields"
 
 
-const Scaffold = (onCancel: any) => {
+const Scaffold = (onCancel: () => void) => {
   const fields = {
     completed: {
       type: "CheckboxFields",
