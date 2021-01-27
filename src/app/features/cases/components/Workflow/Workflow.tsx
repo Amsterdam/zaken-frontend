@@ -5,21 +5,21 @@ import { useCaseTasks, useTaskComplete } from "app/state/rest"
 import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
 import to from "app/features/shared/routing/to"
 import WorkflowStatus from "./WorkflowStatus"
-import CompleteTaskForm from "app/features/tasks/components/CompleteTask/CompleteTaskForm"
 import LockOpen from "@material-ui/icons/LockOpen"
+import CompleteTaskButton from "app/features/tasks/components/CompleteTask/CompleteTaskButton"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
   summonId?: number
 }
 type TaskAction = {
-  title: string
+  name: string
   target: string
 }
 
 export const taskActionMap = {
-  task_create_visit: { title: "Huisbezoek aanmaken", target: "visits" },
-  task_create_debrief: { title: "Debrief verwerken", target: "debriefing" }
+  task_create_visit: { name: "Huisbezoek aanmaken", target: "visits" },
+  task_create_debrief: { name: "Debrief verwerken", target: "debriefing" }
 } as Record<string, TaskAction>
 
 const Workflow: React.FC<Props> = ({ caseId }) => {
@@ -41,9 +41,10 @@ const Workflow: React.FC<Props> = ({ caseId }) => {
       "-datum-",
       action.target ?
       <ButtonLink to={ to(`/cases/:id/${ action.target }`, { id: caseId })}>
-        <Button variant="primary" as="span">{ action.title }</Button>
+        <Button variant="primary" as="span">{ action.name }</Button>
       </ButtonLink> :
-      <CompleteTaskForm onSubmit={ onSubmitTaskComplete } />
+      <CompleteTaskButton onSubmit={ onSubmitTaskComplete } taskName={data.name} />
+      
     ]
   })
 }, [ caseId, execPost ])
