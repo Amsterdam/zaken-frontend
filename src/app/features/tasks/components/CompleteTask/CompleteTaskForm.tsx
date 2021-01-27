@@ -3,6 +3,7 @@ import React from "react"
 import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
 import ScaffoldFields from "app/features/shared/components/molecules/Form/ScaffoldFields"
 import createScaffoldProps from "./scaffold"
+import styled from "styled-components"
 
 type Props = {
   onSubmit: (data: Components.Schemas.CamundaTaskComplete) => Promise<unknown>
@@ -10,13 +11,22 @@ type Props = {
   onCancel: () => void
 }
 
+const Div = styled.div`
+  button[type=submit] {
+    float: right;
+    clear: both;
+  }
+`
+
 const CompleteTaskForm: React.FC<Props> = ({ isLoading, onSubmit, onCancel }) => 
-  <ScaffoldForm
-    showSpinner={ isLoading }
-    onSubmit={ onSubmit }
-    onCancel={ onCancel }
-  >
-    <ScaffoldFields {...createScaffoldProps(onCancel) } />
-  </ScaffoldForm>
+  <Div>
+    <ScaffoldForm
+      showSpinner={ isLoading }
+      onSubmit={ onSubmit }
+      onCancel={ onCancel }
+    >
+      <ScaffoldFields {...createScaffoldProps(onCancel) } />
+    </ScaffoldForm>
+  </Div>
 
 export default CompleteTaskForm
