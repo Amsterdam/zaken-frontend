@@ -31,7 +31,7 @@ const IndexPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
       <AddressMenu bagId={ bagId! } />
     </RowWithColumn>
     <RowWithColumn>
-      <CasesByBagId bagId={ bagId! } />
+      <CasesByBagId bagId={ bagId! } openCases={ true } />
     </RowWithColumn>
     <RowWithColumn>
       <ButtonLink to={ to("/adres/:bagId/zaken/nieuw", { bagId })}>
