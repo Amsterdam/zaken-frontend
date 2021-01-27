@@ -5,16 +5,14 @@ import { reasonLabelsMap } from "../helpers/dictionaries"
 const fields = ["start_date", "author", "reason", "description"]
 
 const ReasonData: React.FC<DLProps> = ({ thread }) => (
-  <>
+  <Dl>
     { fields.map(field => (
-      <Dl>
-        <div>
-          <dt>{ reasonLabelsMap[field] }</dt>
-          <dd>{ thread.event_values[field] }</dd>
-        </div>
-      </Dl>
+      <div>
+        <dt>{ reasonLabelsMap[field] }</dt>
+        <dd>{ thread.event_values[field] }</dd>
+      </div>
     )) }
-  </>
+  </Dl>
 )
 
 export default ReasonData
