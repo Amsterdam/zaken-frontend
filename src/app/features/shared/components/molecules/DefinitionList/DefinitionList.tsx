@@ -66,7 +66,7 @@ const castValue = (value: Value): React.ReactNode => {
   return value
 }
 
-const DefinitionList: React.FC<Props> = ({ isLoading, numLoadingRows, numInitialVisibleRows = Number.MAX_VALUE, title, values, extraInfo, headingSize = "h2" }) => {
+const DefinitionList: React.FC<Props> = ({ isLoading, numLoadingRows = 5, numInitialVisibleRows = Number.MAX_VALUE, title, values, extraInfo, headingSize = "h2" }) => {
   const [isCollapsed, setIsCollapsed] = useState(true)
 
   const toggleCollapsed = useCallback(() => setIsCollapsed(!isCollapsed), [setIsCollapsed, isCollapsed])
@@ -91,7 +91,7 @@ const DefinitionList: React.FC<Props> = ({ isLoading, numLoadingRows, numInitial
       }
       <Dl>
         { isLoading ?
-          <LoadingRows numRows={numLoadingRows ?? 5} /> :
+          <LoadingRows numRows={ numLoadingRows } /> :
           <>
             { rows.map(([key, value]) => (
               <Div key={key}>
