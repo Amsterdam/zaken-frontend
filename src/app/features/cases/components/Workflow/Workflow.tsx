@@ -18,7 +18,7 @@ type TaskAction = {
 }
 
 export const taskActionMap = {
-  task_create_visit: { name: "Huisbezoek aanmaken", target: "visits" },
+  task_create_visit: { name: "Resultaat huisbezoek", target: "visits" },
   task_create_debrief: { name: "Debrief verwerken", target: "debriefing" }
 } as Record<string, TaskAction>
 

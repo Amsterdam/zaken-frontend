@@ -2,27 +2,40 @@ import { FormPositioner } from "@amsterdam/scaffold-form/package"
 import { Fields } from "app/features/shared/components/molecules/Form/ScaffoldFields"
 import { navigate } from "@reach/router"
 
-const scaffold = (caseId: Components.Schemas.Case["id"]) => {
+const scaffold = (caseId: Components.Schemas.Case["id"], authors: Components.Schemas.User[]) => {
+  
+  console.log("authors", authors)
+
+  const authorsObject = authors.reduce((acc, cur) => {
+    acc[`${ cur.id }`] = cur.full_name
+    return acc
+  }, {} as Record<string, string>)
   const fields = {
     author1: {
-      type: "TextField",
+      type: "SelectField",
       props: {
-        name: "author_1",
-        label: "Toezichthouder 1"
+        withEmptyOption: true,
+        name: "author1",
+        label: "Toezichthouder 1",
+        options: authorsObject
       }
     },
     author2: {
-      type: "TextField",
+      type: "SelectField",
       props: {
-        name: "author_2",
-        label: "Toezichthouder 2"
+        withEmptyOption: true,
+        name: "author2",
+        label: "Toezichthouder 2",
+        options: authorsObject
       }
     },
     time: {
       type: "CurrentTime",
       props: {
         name: "start_time",
-        label: "Starttijd onderzoek"
+        label: "Starttijd onderzoek",
+        pattern: "2[0-9]{3}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}",
+        title: "2021-12-30T12:34"
       }
     },
     status: {
@@ -43,7 +56,7 @@ const scaffold = (caseId: Components.Schemas.Case["id"]) => {
       props: {
         name: "observations",
         label: "Opvallende zaken",
-        extraLabel: "(niet verplicht)",
+        isRequired: true,
         options: {
           malfunctioning_doorbell: "Bel functioneert niet",
           intercom: "Contact via intercom",
@@ -53,31 +66,9 @@ const scaffold = (caseId: Components.Schemas.Case["id"]) => {
         }
       }
     },
-    next_visit: {
-      type: "RadioFields",
-      props: {
-        isRequired: true,
-        name: "can_next_visit_go_ahead",
-        label: "Kan het adres direct worden uitgezet?",
-        options: {
-          yes: "Ja, doorlaten",
-          no: "Nee, tegenhouden"
-        }
-      }
-    },
-    next_visit_description: {
-      type: "TextAreaField",
-      props: {
-        isRequired: false,
-        name: "can_next_visit_go_ahead_description",
-        label: "Geef toelichting",
-        extraLabel: "(niet verplicht)"
-      }
-    },
     suggest_next_visit: {
       type: "RadioFields",
       props: {
-        isRequired: true,
         name: "suggest_next_visit",
         label: "Suggestie nieuw bezoek",
         options: {
@@ -91,10 +82,28 @@ const scaffold = (caseId: Components.Schemas.Case["id"]) => {
     suggest_next_visit_description: {
       type: "TextAreaField",
       props: {
-        isRequired: false,
         label: "Geef toelichting",
         extraLabel: "(niet verplicht)",
         name: "suggest_next_visit_description"
+      }
+    },
+    next_visit: {
+      type: "RadioFields",
+      props: {
+        name: "can_next_visit_go_ahead",
+        label: "Kan het adres direct worden uitgezet?",
+        options: {
+          yes: "Ja, doorlaten",
+          no: "Nee, tegenhouden"
+        }
+      }
+    },
+    next_visit_description: {
+      type: "TextAreaField",
+      props: {
+        name: "can_next_visit_go_ahead_description",
+        label: "Geef toelichting",
+        extraLabel: "(niet verplicht)"
       }
     },
     description: {

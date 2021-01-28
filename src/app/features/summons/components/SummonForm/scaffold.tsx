@@ -10,7 +10,6 @@ export default (caseId: Components.Schemas.Case["id"], summons: MockComponents.S
     return acc
   }, {} as Record<string, string>)
 
-
   const fields = {
     summons: {
       type: "SelectField",
