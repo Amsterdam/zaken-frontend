@@ -43,7 +43,11 @@ export const visitEventValuesMap = {
   "inhabited": "Vermoedelijk bewoond",
   "nobody_present": "Niemand aanwezig",
   "no_cooperation": "Geen medewerking",
-  "access_granted": "Toegang verleend"
+  "access_granted": "Toegang verleend",
+  "daytime": "Overdag",
+  "weekend": "Weekend",
+  "evening": "'s Avonds",
+  "unknown": "Niet meer uitzetten"
 } as Record<string, string>
 
 export const visit_go_ahead = {

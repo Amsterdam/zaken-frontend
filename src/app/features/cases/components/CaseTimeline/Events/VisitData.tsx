@@ -41,7 +41,7 @@ const VisitData: React.FC<DLProps> = ({ thread, showDate }) => {
       { value.suggest_next_visit &&
         <div>
             <dt>{ visitLabelsMap["suggest_next_visit"] }</dt>
-            <dd>{ value.suggest_next_visit }</dd>
+            <dd>{ visitEventValuesMap[value.suggest_next_visit] }</dd>
         </div>
       }
       { value.suggest_next_visit && value.suggest_next_visit_description &&
