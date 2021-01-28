@@ -108,7 +108,7 @@ const scaffold = (caseId: Components.Schemas.Case["id"], authors: Components.Sch
       type: "TextAreaField",
       props: {
         isRequired: false,
-        name: "description",
+        name: "notes",
         label: "Opmerkingen"
       }
     },
