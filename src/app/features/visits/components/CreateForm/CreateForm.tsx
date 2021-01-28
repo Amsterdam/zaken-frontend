@@ -16,7 +16,6 @@ type Props = {
 
 const VisitForm: React.FC<Props> = ({ caseId, isLoading, onSubmit }) => {
   const { data } = useAuthors()
-  console.log("authors", data?.results)
   const authors = data?.results ?? []
   return (
     
