@@ -5,7 +5,7 @@ import { Icon, themeSpacing, themeColor, ascDefaultTheme } from "@amsterdam/asc-
 import { ChevronRight } from "app/features/shared/components/atoms/Icons"
 import to from "app/features/shared/routing/to"
 import find from "app/features/shared/routing/find"
-import routes from "app/config/routes"
+import routes from "app/routing/routes"
 
 type Props = {
   routeParams?: Record<string, unknown>

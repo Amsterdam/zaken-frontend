@@ -1,5 +1,5 @@
 import { ComponentProps, ComponentType } from "react"
-import routesObject, { Routes } from "app/config/routes"
+import routesObject, { Routes } from "app/routing/routes"
 import { RouteComponentProps } from "@reach/router"
 import slashSandwich from "slash-sandwich"
 

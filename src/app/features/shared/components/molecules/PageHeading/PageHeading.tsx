@@ -1,6 +1,6 @@
 import React from "react"
 
-import routes from "app/config/routes"
+import routes from "app/routing/routes"
 import find from "app/features/shared/routing/find"
 import HeadingWithIcon from "app/features/shared/components/molecules/HeadingWithIcon/HeadingWithIcon"
 
