@@ -3,8 +3,6 @@ import { Fields } from "app/features/shared/components/molecules/Form/ScaffoldFi
 import { navigate } from "@reach/router"
 
 const scaffold = (caseId: Components.Schemas.Case["id"], authors: Components.Schemas.User[]) => {
-  
-  console.log("authors", authors)
 
   const authorsObject = authors.reduce((acc, cur) => {
     acc[`${ cur.id }`] = cur.full_name
@@ -56,7 +54,7 @@ const scaffold = (caseId: Components.Schemas.Case["id"], authors: Components.Sch
       props: {
         name: "observations",
         label: "Opvallende zaken",
-        isRequired: true,
+        extraLabel: "(niet verplicht)",
         options: {
           malfunctioning_doorbell: "Bel functioneert niet",
           intercom: "Contact via intercom",
