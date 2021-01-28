@@ -7,7 +7,7 @@ const fields = ["start_date", "author", "reason", "description"]
 const ReasonData: React.FC<DLProps> = ({ thread }) => (
   <Dl>
     { fields.map(field => (
-      <div>
+      <div key={ field }>
         <dt>{ reasonLabelsMap[field] }</dt>
         <dd>{ thread.event_values[field] }</dd>
       </div>
