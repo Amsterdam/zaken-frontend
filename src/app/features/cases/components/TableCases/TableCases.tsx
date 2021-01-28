@@ -18,15 +18,15 @@ const columns = [
   { minWidth: 140 }
 ]
 
-const mapData = (data: Components.Schemas.Case) => 
+const mapData = (data: Components.Schemas.Case) =>
 
   ({
-    href: to("/cases/:id", { id: data.id }),
+    href: to("/zaken/:id", { id: data.id }),
     itemList: [
       data.address.full_address ?? "-",
       data.current_state?.status_name,
       data.current_state?.state_date ? <DateDisplay date={ data.current_state?.state_date } /> : "-",
-      <OpenButton href={to("/cases/:id", { id: data.id })} text="Zaakdetails" />
+      <OpenButton href={to("/zaken/:id", { id: data.id })} text="Zaakdetails" />
     ]
   })
 

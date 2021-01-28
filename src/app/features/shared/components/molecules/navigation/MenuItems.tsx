@@ -8,7 +8,7 @@ import to from "app/features/shared/routing/to"
 
 const items = [
   {
-    path: "/cases",
+    path: "/zaken",
     hiddenLaptopM: false
   },
   {

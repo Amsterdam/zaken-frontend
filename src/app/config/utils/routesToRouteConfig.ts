@@ -3,19 +3,20 @@ import type { RouteComponentProps } from "@reach/router"
 import * as Assets from "app/features/shared/components/atoms/Icons"
 import slashSandwich from "slash-sandwich"
 
+export type RouteConfigObject = Record<string, RouteConfig | Page>
 type Page = FC<RouteComponentProps>
 type RouteConfig = {
   Page: Page
   publicly?: boolean
   title?: string
   icon?: keyof typeof Assets
-  subRoutes?: Record<string, RouteConfig | Page>
+  subRoutes?: RouteConfigObject
 }
-export type RouteConfigObject = Record<string, RouteConfig | Page>
 type Path = (Pick<RouteConfig, "title" | "icon"> & { path: string })[]
 type RouteConfigWithPath = RouteConfig & { path: Path }
 
-const toRouteConfig = (config: RouteConfig | Page): RouteConfig => "Page" in config ?
+const toRouteConfig = (config: RouteConfig | Page): RouteConfig =>
+  "Page" in config ?
     { publicly: false, ...config } :
     { publicly: false, Page: config }
 
@@ -24,17 +25,14 @@ const addPathToRouteConfig = (config: RouteConfig, key: string, p: Path): RouteC
   return { ...config, path }
 }
 
-export default (routes: RouteConfigObject, path: Path) =>
-  Object.keys(routes).reduce((acc, key) => {
-    const route = routes[key]
-    const k = slashSandwich([key], { trailingSlash: true })
-    const routeConfigWithPath = addPathToRouteConfig(toRouteConfig(route), k, path)
-    acc[k] = routeConfigWithPath
-    Object.keys(routeConfigWithPath.subRoutes ?? {}).forEach(subKey => {
-      const config = routeConfigWithPath.subRoutes?.[subKey]
-      if (config === undefined) return
-      const k = slashSandwich([key, subKey], { trailingSlash: true })
-      acc[k] = addPathToRouteConfig(toRouteConfig(config), k, routeConfigWithPath.path)
-    })
-    return acc
-  }, {} as Record<string, RouteConfigWithPath>)
+const routesToRouteConfig =
+  (routes: RouteConfigObject, path: Path, routeConfig: Record<string, RouteConfigWithPath> = {}, basePath = "/"): Record<string, RouteConfigWithPath> =>
+    Object.keys(routes).reduce((acc, key) => {
+      const route = routes[key]
+      const k = slashSandwich([basePath, key], { trailingSlash: true })
+      const routeConfigWithPath = addPathToRouteConfig(toRouteConfig(route), k, path)
+      acc[k] = routeConfigWithPath
+      return routesToRouteConfig(routeConfigWithPath.subRoutes ?? {}, routeConfigWithPath.path, acc, k)
+    }, routeConfig)
+
+export default routesToRouteConfig

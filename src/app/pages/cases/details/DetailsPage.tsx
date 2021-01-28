@@ -57,10 +57,10 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
         <Heading as="h2">
           Status
           <ButtonWrapper>
-            <ButtonLink to={ to("/cases/:id/correspondence", { id: id })}>
+            <ButtonLink to={ to("/zaken/:id/correspondence", { id: id })}>
               <ButtonTertiary variant="tertiary">Correspondentie</ButtonTertiary>
             </ButtonLink>
-            <ButtonLink to={ to("/cases/:id/afronden", { id: id })}>
+            <ButtonLink to={ to("/zaken/:id/afronden", { id: id })}>
               <ButtonTertiary variant="tertiary">Afronden</ButtonTertiary>
             </ButtonLink>
           </ButtonWrapper>

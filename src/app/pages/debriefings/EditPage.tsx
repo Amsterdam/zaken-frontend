@@ -13,13 +13,13 @@ import DebriefForm from "app/features/debriefings/components/DebriefForm/Debrief
 import usePageDebriefing from "./hooks/usePageDebriefing"
 
 type Props = {
-  caseId: string
   id: string
+  debriefingId: string
 }
 
 const CONFIRM_TEXT = "Weet je zeker dat je deze debriefing wilt verwijderen?"
 
-const EditPage: React.FC<RouteComponentProps<Props>> = ({ caseId: caseIdString, id: idString }) => {
+const EditPage: React.FC<RouteComponentProps<Props>> = ({ id: caseIdString, debriefingId: idString }) => {
   // TODO: Fix showing 404 for NaN
   const caseId: Components.Schemas.Case["id"] = parseInt(caseIdString!)
   const id: Components.Schemas.Debriefing["id"] = parseInt(idString!)

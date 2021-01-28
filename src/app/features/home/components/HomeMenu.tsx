@@ -35,12 +35,11 @@ const Div = styled.div`
 `
 
 const items = [
-    "/cases/", 
-    "/invorderingen/"
-  ]
-  
+  "/zaken/",
+  "/invorderingen/"
+]
 
-const HomeMenu: React.FC = () => 
+const HomeMenu: React.FC = () => (
   <Menu>
     <Ul>
       { items.map((route) => {
@@ -58,5 +57,6 @@ const HomeMenu: React.FC = () =>
       }
     </Ul>
   </Menu>
-  
+)
+
 export default HomeMenu

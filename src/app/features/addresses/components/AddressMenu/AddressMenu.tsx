@@ -40,7 +40,7 @@ const Div = styled.div`
 `
 
 const routes = [
-  "/adres/:bagId/detail/",
+  "/adres/:bagId/details/",
   "/adres/:bagId/personen/",
   "/adres/:bagId/vergunningen/",
   "/adres/:bagId/zaken/"

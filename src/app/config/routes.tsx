@@ -10,13 +10,13 @@ import routesToRouteConfig, { RouteConfigObject } from "./utils/routesToRouteCon
 
 // NOTE: Add feature routes here
 const routes = {
+  ...homeRoutes,
   ...authRoutes,
-  ...addressesRoutes,
   ...searchRoutes,
+  ...addressesRoutes,
   ...casesRoutes,
   ...helpRoutes,
-  ...fineRoutes,
-  ...homeRoutes
+  ...fineRoutes
 }
 
 const routesObject = routesToRouteConfig(routes as RouteConfigObject, [{ title: "Home", path: "/" }])
