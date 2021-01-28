@@ -2,7 +2,6 @@ import React, { useRef } from "react"
 import styled from "styled-components"
 import { themeColor } from "@amsterdam/asc-ui"
 
-//import usePanoramaByBagId from "app/state/rest/custom/usePanoramaByBagId/usePanoramaByBagId"
 import useRect from "./hooks/useRect"
 
 type Props = {
@@ -26,7 +25,7 @@ const PanoramaPreview: React.FC<Props> = ({ bagId, width: w, aspect = 1.5, radiu
   const width = w ?? rect.width
   const height = width !== undefined ? width / aspect : undefined
   //const { data } = usePanoramaByBagId(bagId, width, aspect, radius, fov)
-  const data = { url: "/panorama-mock.jpg" }
+  const data = { url: "" }
 
   return (
     <Div ref={ ref } style={ { height } }>
