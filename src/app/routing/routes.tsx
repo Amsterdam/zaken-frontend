@@ -10,7 +10,6 @@ import routesToRouteConfig, { RouteConfigObject } from "./utils/routesToRouteCon
 
 // NOTE: Add feature routes here
 const routes = {
-  ...homeRoutes,
   ...authRoutes,
   ...searchRoutes,
   ...addressesRoutes,
@@ -19,7 +18,8 @@ const routes = {
   ...fineRoutes
 }
 
-const routesObject = routesToRouteConfig(routes as RouteConfigObject, [{ title: "Home", path: "/" }])
+const homeRoutesObject = routesToRouteConfig(homeRoutes, [])
+const routesObject = routesToRouteConfig(routes as RouteConfigObject, homeRoutesObject["/"].path, homeRoutesObject)
 if (process.env.NODE_ENV === "development") console.log("Routes:", routesObject)
 export type Routes = typeof routesObject
 export default routesObject
