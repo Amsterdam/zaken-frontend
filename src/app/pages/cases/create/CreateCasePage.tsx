@@ -12,7 +12,7 @@ import CreateForm from "app/features/cases/components/CreateForm/CreateForm"
 import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
 
 type Props = {
-  bagId: Components.Schemas.Address["bag_id"]
+  bagId: string
 }
 
 const CreateCasePage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
