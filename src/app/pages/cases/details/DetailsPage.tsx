@@ -14,9 +14,12 @@ import { Column } from "app/features/shared/components/atoms/Grid"
 import styled from "styled-components"
 import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
 import to from "app/features/shared/routing/to"
+import parseUrlParamId from "app/routing/utils/parseUrlParamId"
+import isValidUrlParamCaseId from "app/routing/utils/isValidUrlParamCaseId"
+import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
 
 type Props = {
-  id: Components.Schemas.Case["id"]
+  id: string
 }
 
 const ButtonWrapper = styled.div`
@@ -36,11 +39,14 @@ const ButtonTertiary = styled(Button)`
   color: black;
 `
 
-const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
-  const { data: caseData } = useCase(id!)
-  const bagId = caseData?.address.bag_id
+const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
+
+  const id = parseUrlParamId(idString)
+  const { data } = useCase(id)
+  const bagId = data?.address.bag_id
 
   return (
+    isValidUrlParamCaseId(id) ?
     <DefaultLayout>
       { bagId &&
         <DetailHeader bagId={ bagId } enableSwitch={ false } />
@@ -78,7 +84,8 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id }) => {
       <RowWithColumn>
         <TimelineContainer caseId={ id! } />
       </RowWithColumn>
-    </DefaultLayout>
+    </DefaultLayout> :
+    <NotFoundPage />
   )
 }
 

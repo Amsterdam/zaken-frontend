@@ -9,34 +9,38 @@ import PermitDetailsList from "app/features/permits/components/PermitDetails/Per
 import DetailHeader from "app/features/shared/components/molecules/DetailHeader/DetailHeader"
 import Column from "app/features/shared/components/atoms/Grid/Column"
 import MockWrapper from "app/features/shared/components/molecules/MockWrapper/MockWrapper"
+import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
+import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId"
 
 type Props = {
-  bagId: Components.Schemas.Address["bag_id"]
+  bagId: string
 }
 
 const IndexPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
-  <DefaultLayout>
-    <DetailHeader bagId={ bagId! } />
-    <RowWithColumn>
-      <PageHeading />
-    </RowWithColumn>
-    <RowWithColumn>
-      <Heading forwardedAs="h2">Vergunningen vakantieverhuur</Heading>
-    </RowWithColumn>
-    <Row>
-      <Column spanLarge={50}>
-        <MockWrapper>
-          <PermitDetailsList bagId={ bagId! }></PermitDetailsList>
-        </MockWrapper>
-      </Column>
-    </Row>
-    <RowWithColumn>
-      {/* TODO: make hardcoded link dynamic */}
-      <Link href="https://decosdvl.amsterdam.nl/" variant="inline" icon="external" target="_blank" rel="noreferer">
-          Alle vergunningen zie Decos Join
-      </Link>
-    </RowWithColumn>
-  </DefaultLayout>
+  isValidUrlParamBAGId(bagId) ?
+    <DefaultLayout>
+      <DetailHeader bagId={ bagId } />
+      <RowWithColumn>
+        <PageHeading />
+      </RowWithColumn>
+      <RowWithColumn>
+        <Heading forwardedAs="h2">Vergunningen vakantieverhuur</Heading>
+      </RowWithColumn>
+      <Row>
+        <Column spanLarge={50}>
+          <MockWrapper>
+            <PermitDetailsList bagId={ bagId }></PermitDetailsList>
+          </MockWrapper>
+        </Column>
+      </Row>
+      <RowWithColumn>
+        {/* TODO: make hardcoded link dynamic */}
+        <Link href="https://decosdvl.amsterdam.nl/" variant="inline" icon="external" target="_blank" rel="noreferer">
+            Alle vergunningen zie Decos Join
+        </Link>
+      </RowWithColumn>
+    </DefaultLayout> :
+    <NotFoundPage />
 )
 
 export default IndexPage

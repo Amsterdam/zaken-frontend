@@ -10,18 +10,22 @@ import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import DebriefForm from "app/features/debriefings/components/DebriefForm/DebriefForm"
 import AddressHeading from "app/features/shared/components/molecules/AddressHeading/AddressHeading"
 import usePageDebriefing from "./hooks/usePageDebriefing"
+import parseUrlParamId from "app/routing/utils/parseUrlParamId"
+import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
+import isValidUrlParamCaseId from "app/routing/utils/isValidUrlParamCaseId"
 
 type Props = {
   id: string
 }
 
 const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
-  const id: Components.Schemas.Case["id"] = parseInt(idString!)
+  const id = parseUrlParamId(idString)
 
   const { data } = useCase(id)
-  const { handleCreate } = usePageDebriefing(id)
+  const { handleCreate } = usePageDebriefing(id!)
 
   return (
+    isValidUrlParamCaseId(id) ?
     <DefaultLayout>
       <RowWithColumn>
         <BreadCrumbs />
@@ -39,7 +43,8 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
           </>
         }
       </RowWithColumn>
-    </DefaultLayout>
+    </DefaultLayout> :
+    <NotFoundPage />
   )
 }
 

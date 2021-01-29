@@ -11,6 +11,9 @@ import VisitForm from "app/features/visits/components/CreateForm/CreateForm"
 import { useVisitsCreate } from "app/state/rest"
 import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
 import to from "app/features/shared/routing/to"
+import parseUrlParamId from "app/routing/utils/parseUrlParamId"
+import isValidUrlParamCaseId from "app/routing/utils/isValidUrlParamCaseId"
+import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
 
 type Props = {
   id: string
@@ -20,11 +23,11 @@ export type VisitData = Omit<Components.Schemas.Visit, "author_ids"> & { author1
 const mapData = (data: VisitData) => ({ ...data, author_ids: [data.author1, data.author2] })
 
 const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
-  const id: Components.Schemas.Case["id"] = parseInt(idString!)
+  const id = parseUrlParamId(idString)
   const { execPost } = useVisitsCreate()
   const { addSuccessFlashMessage } = useFlashMessages()
 
-  const onSubmit = async(data: VisitData) => {
+  const onSubmit = async (data: VisitData) => {
     await execPost(mapData(data))
     const path = `/cases/${ data.case }`
     addSuccessFlashMessage(path, "Succes", "Het resultaat huisbezoek is succesvol verwerkt")
@@ -32,6 +35,7 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
   }
 
   return (
+    isValidUrlParamCaseId(id) ?
     <DefaultLayout>
       <RowWithColumn>
         <BreadCrumbs />
@@ -42,9 +46,10 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
       <RowWithColumn>
         <FormTitle>Gebruik dit formulier om een huisbezoek aan te maken</FormTitle>
         <AddressHeading caseId={ id } />
-        <VisitForm caseId={id!} onSubmit={ onSubmit } />
+        <VisitForm caseId={ id } onSubmit={ onSubmit } />
       </RowWithColumn>
-    </DefaultLayout>
+    </DefaultLayout> :
+    <NotFoundPage />
   )
 }
 

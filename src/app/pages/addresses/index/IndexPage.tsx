@@ -2,7 +2,7 @@ import React from "react"
 import { RouteComponentProps } from "@reach/router"
 import { Button } from "@amsterdam/asc-ui"
 
-import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
+import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId"
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 import AddressHeader from "app/features/addresses/components/AddressHeader/AddressHeader"
@@ -19,7 +19,7 @@ type Props = {
 }
 
 const IndexPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
-  isValidUrlParamId(bagId) ?
+  isValidUrlParamBAGId(bagId) ?
     <DefaultLayout>
       <RowWithColumn>
         <BreadCrumbs routeParams={ { bagId } } />

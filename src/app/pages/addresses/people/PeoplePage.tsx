@@ -1,7 +1,7 @@
 import React from "react"
 import { RouteComponentProps } from "@reach/router"
 
-import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
+import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 import Row, { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import Column from "app/features/shared/components/atoms/Grid/Column"
@@ -16,7 +16,7 @@ type Props = {
 }
 
 const PeoplePage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
-  isValidUrlParamId(bagId) ?
+  isValidUrlParamBAGId(bagId) ?
     <DefaultLayout>
       <DetailHeader bagId={ bagId } />
       <RowWithColumn>

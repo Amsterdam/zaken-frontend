@@ -1,0 +1,1 @@
+export default (param: Components.Schemas.Case["id"] | undefined): param is Components.Schemas.Case["id"] => param !== undefined
