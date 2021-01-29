@@ -10,7 +10,7 @@ import PageHeading from "app/features/shared/components/molecules/PageHeading/Pa
 import WorkflowForm from "app/features/cases/components/Workflow/WorkflowForm"
 import AddressHeading from "app/features/shared/components/molecules/AddressHeading/AddressHeading"
 import scaffold from "app/features/cases/components/CompleteForm/scaffold"
-import isValidUrlParamCaseId from "app/routing/utils/isValidUrlParamCaseId"
+import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
 
@@ -24,7 +24,7 @@ const CompleteCasePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }
   const { data, execPost } = useCompleteCase()
 
   return (
-    isValidUrlParamCaseId(id) ?
+    isValidUrlParamId<Components.Schemas.Case["id"]>(id) ?
     <DefaultLayout>
       <RowWithColumn>
         <Breadcrumbs />

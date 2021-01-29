@@ -12,7 +12,7 @@ import WorkflowForm from "app/features/cases/components/Workflow/WorkflowForm"
 import scaffold from "app/features/decisions/components/DecisionForm/scaffold"
 import FormWithExtraLabel from "app/features/shared/components/atoms/FormWithExtraLabel/FormWithExtraLabel"
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
-import isValidUrlParamCaseId from "app/routing/utils/isValidUrlParamCaseId"
+import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
 
 type Props = {
@@ -24,7 +24,7 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
   const { data, execPost } = useDecisions()
 
   return (
-    isValidUrlParamCaseId(id) ?
+    isValidUrlParamId<Components.Schemas.Case["id"]>(id) ?
     <DefaultLayout>
       <RowWithColumn>
         <BreadCrumbs />

@@ -12,7 +12,7 @@ import { useVisitsCreate } from "app/state/rest"
 import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
 import to from "app/features/shared/routing/to"
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
-import isValidUrlParamCaseId from "app/routing/utils/isValidUrlParamCaseId"
+import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
 
 type Props = {
@@ -35,7 +35,7 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
   }
 
   return (
-    isValidUrlParamCaseId(id) ?
+    isValidUrlParamId<Components.Schemas.Case["id"]>(id) ?
     <DefaultLayout>
       <RowWithColumn>
         <BreadCrumbs />

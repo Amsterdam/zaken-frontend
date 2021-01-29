@@ -1,1 +1,0 @@
-export default (param: Components.Schemas.Debriefing["id"] | undefined): param is Components.Schemas.Debriefing["id"] => param !== undefined

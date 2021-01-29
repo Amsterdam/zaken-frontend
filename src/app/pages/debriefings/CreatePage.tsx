@@ -12,7 +12,7 @@ import AddressHeading from "app/features/shared/components/molecules/AddressHead
 import usePageDebriefing from "./hooks/usePageDebriefing"
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
-import isValidUrlParamCaseId from "app/routing/utils/isValidUrlParamCaseId"
+import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 
 type Props = {
   id: string
@@ -25,7 +25,7 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
   const { handleCreate } = usePageDebriefing(id!)
 
   return (
-    isValidUrlParamCaseId(id) ?
+    isValidUrlParamId<Components.Schemas.Case["id"]>(id) ?
     <DefaultLayout>
       <RowWithColumn>
         <BreadCrumbs />

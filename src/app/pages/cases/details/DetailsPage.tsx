@@ -15,7 +15,7 @@ import styled from "styled-components"
 import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
 import to from "app/features/shared/routing/to"
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
-import isValidUrlParamCaseId from "app/routing/utils/isValidUrlParamCaseId"
+import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
 
 type Props = {
@@ -46,7 +46,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
   const bagId = data?.address.bag_id
 
   return (
-    isValidUrlParamCaseId(id) ?
+    isValidUrlParamId<Components.Schemas.Case["id"]>(id) ?
     <DefaultLayout>
       { bagId &&
         <DetailHeader bagId={ bagId } enableSwitch={ false } />

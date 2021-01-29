@@ -12,8 +12,7 @@ import AddressHeading from "app/features/shared/components/molecules/AddressHead
 import DebriefForm from "app/features/debriefings/components/DebriefForm/DebriefForm"
 import usePageDebriefing from "./hooks/usePageDebriefing"
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
-import isValidUrlParamCaseId from "app/routing/utils/isValidUrlParamCaseId"
-import isValidUrlParamDebriefingId from "app/routing/utils/isValidUrlParamDebriefingId"
+import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
 
 type Props = {
@@ -44,7 +43,7 @@ const EditPage: React.FC<RouteComponentProps<Props>> = ({ id: idString, debriefi
   const showForm = caseData !== undefined && data !== undefined
 
   return (
-    isValidUrlParamCaseId(id) && isValidUrlParamDebriefingId(debriefingId) ?
+    isValidUrlParamId<Components.Schemas.Case["id"]>(id) && isValidUrlParamId<Components.Schemas.Debriefing["id"]>(debriefingId) ?
     <DefaultLayout>
       <RowWithColumn>
         <BreadCrumbs />
