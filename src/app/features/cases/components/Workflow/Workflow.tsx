@@ -28,7 +28,7 @@ const Workflow: React.FC<Props> = ({ caseId }) => {
 
   const mapTaskData = useCallback((data: Components.Schemas.CamundaTask) => {
     const action = taskActionMap[data.task_name_id] ?? {}
-    
+
     const onSubmitTaskComplete = () => (
       execPost({ camunda_task_id: data.camunda_task_id, variables: {} })
     )
@@ -40,11 +40,11 @@ const Workflow: React.FC<Props> = ({ caseId }) => {
       "-uitvoerder-",
       "-datum-",
       action.target ?
-      <ButtonLink to={ to(`/cases/:id/${ action.target }`, { id: caseId })}>
+      <ButtonLink to={ to(`/zaken/:id/${ action.target }`, { id: caseId })}>
         <Button variant="primary" as="span">{ action.name }</Button>
       </ButtonLink> :
       <CompleteTaskButton onSubmit={ onSubmitTaskComplete } taskName={data.name} />
-      
+
     ]
   })
 }, [ caseId, execPost ])
