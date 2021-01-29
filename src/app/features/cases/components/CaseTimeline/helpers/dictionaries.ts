@@ -40,7 +40,7 @@ export const visitEventValuesMap = {
   "intercom": "Contact via intercom",
   "hotel_furnished": "Hotelmatig ingericht",
   "vacant": "Leegstaand",
-  "inhabited": "Vermoedelijk bewoond",
+  "likely_inhabited": "Vermoedelijk bewoond",
   "nobody_present": "Niemand aanwezig",
   "no_cooperation": "Geen medewerking",
   "access_granted": "Toegang verleend",

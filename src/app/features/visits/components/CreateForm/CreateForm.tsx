@@ -22,7 +22,7 @@ const VisitForm: React.FC<Props> = ({ caseId, isLoading, onSubmit }) => {
     <ScaffoldForm
     showSpinner={ isLoading }
     onSubmit={ onSubmit }
-    initialValues={ { case: caseId, start_time: "2021-01-01T12:34", observations: ["no observations"] } }
+    initialValues={ { case: caseId, start_time: "2021-01-01T12:34", observations: [] } }
   >
     
     <ScaffoldFields {...createScaffoldProps(caseId, authors) } />

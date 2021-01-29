@@ -32,7 +32,7 @@ const VisitData: React.FC<DLProps> = ({ thread, showDate }) => {
           <dd><i>{ value.notes }</i></dd>
         </div>
       }
-      { value.observations.length > 0 && !value.observations.includes("no observations") &&
+      { value.observations.length > 0 &&
         <div>
           <dt>{ visitLabelsMap["observations"] }</dt>
           <dd>{ mapArrayToUl(value.observations, true) }</dd>
