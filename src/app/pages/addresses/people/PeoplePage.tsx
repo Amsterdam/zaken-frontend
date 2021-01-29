@@ -12,7 +12,7 @@ import MockWrapper from "app/features/shared/components/molecules/MockWrapper/Mo
 import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
 
 type Props = {
-  bagId: Components.Schemas.Address["bag_id"]
+  bagId: string
 }
 
 const PeoplePage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
@@ -23,7 +23,7 @@ const PeoplePage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
         <PageHeading />
       </RowWithColumn>
       <Row>
-        <Column spanLarge={50}>
+        <Column spanLarge={ 50 }>
           <MockWrapper>
             <People bagId={ bagId } />
           </MockWrapper>

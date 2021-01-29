@@ -15,7 +15,7 @@ import CasesByBagId from "app/features/addresses/components/CasesByBagId/CasesBy
 import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
 
 type Props = {
-  bagId: Components.Schemas.Address["bag_id"]
+  bagId: string
 }
 
 const IndexPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (

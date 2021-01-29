@@ -13,7 +13,7 @@ import MockWrapper from "app/features/shared/components/molecules/MockWrapper/Mo
 import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
 
 type Props = {
-  bagId: Components.Schemas.Address["bag_id"]
+  bagId: string
 }
 
 const DetailPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
