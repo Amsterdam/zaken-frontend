@@ -35,14 +35,12 @@ export default {
           "debriefing": {
             Page: DebriefCreatePage,
             title: "Debrief terugkoppeling geven",
-            icon: "Edit",
-            subRoutes: {
-              ":debriefingId": {
-                Page: DebriefEditPage,
-                title: "Debrief terugkoppeling wijzigen",
-                icon: "Edit"
-              }
-            }
+            icon: "Edit"
+          },
+          "debriefing/:debriefingId": {
+            Page: DebriefEditPage,
+            title: "Debrief terugkoppeling wijzigen",
+            icon: "Edit"
           },
           "decision": {
             Page: DecisionCreatePage,
