@@ -1,12 +1,12 @@
 import React, { useCallback, useMemo } from "react"
-import { useLocation, navigate } from "@reach/router"
+import { useLocation } from "@reach/router"
 import { ChevronRight } from "app/features/shared/components/atoms/Icons"
 import { Button } from "@amsterdam/asc-ui"
 
 import useOtherAddressesByBagId from "app/state/rest/custom/useOtherAddresses/useOtherAddresses"
 import { BAGAddressResponse } from "app/state/rest/types/BAGAddressResponse"
 import Table from "app/features/shared/components/molecules/Table/Table"
-import to from "app/features/shared/routing/to"
+import navigateTo from "app/features/shared/routing/navigateTo"
 
 type Props = {
   onAddressChosen: () => void
@@ -39,7 +39,7 @@ const OtherAddressesTable: React.FC<Props> = ({ bagId, onAddressChosen }) => {
   const { results, isBusy } = useOtherAddressesByBagId(bagId)
   const onClick = useCallback((otherBagId: string) => {
     onAddressChosen()
-    return navigate(to(pathname.replace(bagId, otherBagId)))
+    return navigateTo(pathname.replace(bagId, otherBagId))
   }, [ onAddressChosen, bagId, pathname ])
 
   const mappedData = useMemo(

@@ -1,5 +1,5 @@
 import React from "react"
-import { navigate, RouteComponentProps } from "@reach/router"
+import { RouteComponentProps } from "@reach/router"
 import { FormTitle } from "@amsterdam/asc-ui"
 
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
@@ -10,10 +10,10 @@ import AddressHeading from "app/features/shared/components/molecules/AddressHead
 import VisitForm from "app/features/visits/components/CreateForm/CreateForm"
 import { useVisitsCreate } from "app/state/rest"
 import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
-import to from "app/features/shared/routing/to"
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
+import navigateTo from "app/features/shared/routing/navigateTo"
 
 type Props = {
   id: string
@@ -31,7 +31,7 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
     await execPost(mapData(data))
     const path = `/zaken/${ data.case }`
     addSuccessFlashMessage(path, "Succes", "Het resultaat huisbezoek is succesvol verwerkt")
-    navigate(to(path))
+    navigateTo(path)
   }
 
   return (
