@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { Heading, Spinner, themeSpacing } from "@amsterdam/asc-ui"
 
 import { useCasesByBagId } from "app/state/rest"
-import to from "app/features/shared/routing/to"
+import to from "app/routing/utils/to"
 import Table from "app/features/shared/components/molecules/Table/Table"
 import OpenButton from "app/features/shared/components/atoms/OpenButton/OpenButton"
 import DateDisplay from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
@@ -32,13 +32,13 @@ const columns = [
 
 const mapData = (data: Components.Schemas.Case) =>
   ({
-    href: to("/cases/:id", { id: data.id }),
+    href: to("/zaken/:id", { id: data.id }),
     itemList: [
       data.id,
       data.team.name,
       data.start_date ? <DateDisplay date={ data.start_date } /> : "-",
       data.current_state?.status_name ?? "-",
-      <OpenButton href={ to("/cases/:id", { id: data.id }) } text="Zaakdetails" />
+      <OpenButton href={ to("/zaken/:id", { id: data.id }) } text="Zaakdetails" />
     ]
   })
 

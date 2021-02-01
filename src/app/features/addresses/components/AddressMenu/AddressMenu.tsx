@@ -2,8 +2,8 @@ import React from "react"
 import styled from "styled-components"
 import { themeSpacing, breakpoint } from "@amsterdam/asc-ui"
 import NavBlock from "app/features/addresses/components/NavBlock/NavBlock"
-import to from "app/features/shared/routing/to"
-import routesObject from "app/config/routes"
+import to from "app/routing/utils/to"
+import routesObject from "app/routing/routes"
 import { usePermitDetails } from "app/state/rest"
 import { useResidents } from "app/state/rest/"
 import MockWrapper from "app/features/shared/components/molecules/MockWrapper/MockWrapper"
@@ -40,7 +40,7 @@ const Div = styled.div`
 `
 
 const routes = [
-  "/adres/:bagId/detail/",
+  "/adres/:bagId/details/",
   "/adres/:bagId/personen/",
   "/adres/:bagId/vergunningen/",
   "/adres/:bagId/zaken/"

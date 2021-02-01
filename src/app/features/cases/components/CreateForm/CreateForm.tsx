@@ -7,9 +7,8 @@ import scaffold from "./scaffold"
 import { useTeams, useReasons, useCaseCreateUpdate } from "app/state/rest"
 import ConfirmScaffoldFields from "app/features/shared/components/molecules/ConfirmScaffoldFields/ConfirmScaffoldFields"
 import useSubmitConfirmation from "app/features/shared/components/molecules/ConfirmScaffoldFields/hooks/useSubmitConfirmation"
-import { navigate } from "@reach/router"
-import to from "app/features/shared/routing/to"
 import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
+import navigateTo from "app/routing/navigateTo"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -50,9 +49,9 @@ const CreateForm: React.FC<Props> = ({ bagId }) => {
     const result = await onSubmitConfirm()
     if (result === undefined) return
     const caseData = (result as { data: Components.Schemas.CaseCreateUpdate }).data
-    const path = `/cases/${ caseData.id }`
+    const path = `/zaken/${ caseData.id }`
     addSuccessFlashMessage(path, "Succes", "De zaak is succesvol toegevoegd")
-    navigate(to(path))
+    navigateTo(path)
   }
 
   return (

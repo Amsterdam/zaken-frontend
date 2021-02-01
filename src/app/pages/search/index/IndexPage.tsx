@@ -7,13 +7,12 @@ import SearchWrapper from "app/features/search/components/SearchWrapper/SearchWr
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 
 const IndexPage: React.FC<RouteComponentProps> = () => (
-
-    <DefaultLayout showSearchButton={false}>
-      <RowWithColumn>
-        <Heading>Adres zoeken</Heading>
-      </RowWithColumn>
-      <SearchWrapper />
-    </DefaultLayout>
-  )
+  <DefaultLayout showSearchButton={false}>
+    <RowWithColumn>
+      <Heading>Adres zoeken</Heading>
+    </RowWithColumn>
+    <SearchWrapper />
+  </DefaultLayout>
+)
 
 export default IndexPage

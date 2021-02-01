@@ -1,9 +1,8 @@
 import { useCallback } from "react"
-import { navigate } from "@reach/router"
 
 import useKeycloak from "app/state/auth/keycloak/useKeycloak"
-import to from "app/features/shared/routing/to"
 import useRequest, { Method } from "./useRequest"
+import navigateTo from "app/routing/navigateTo"
 
 export default () => {
 
@@ -28,7 +27,7 @@ export default () => {
       } catch (error) {
         switch (error?.response?.status) {
           case 401: keycloak.logout(); break
-          case 403: navigate(to("/auth")); break
+          case 403: navigateTo("/auth"); break
         }
         throw error
       }

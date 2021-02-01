@@ -1,7 +1,7 @@
 import { FormPositioner } from "@amsterdam/scaffold-form/package"
 import { Fields } from "app/features/shared/components/molecules/Form/ScaffoldFields"
-import { navigate } from "@reach/router"
 import InfoButton from "app/features/shared/components/molecules/InfoHeading/InfoButton"
+import navigateTo from "app/routing/navigateTo"
 
 export default (caseId: Components.Schemas.Case["id"], correspondence: MockComponents.Schemas.Correspondence[]) => {
 
@@ -40,7 +40,7 @@ export default (caseId: Components.Schemas.Case["id"], correspondence: MockCompo
       props: {
         label: "Annuleren",
         variant: "primaryInverted",
-        onClick: () => navigate(`/cases/${ caseId }`)
+        onClick: () => navigateTo(`/zaken/${ caseId }`)
       }
     }
   }

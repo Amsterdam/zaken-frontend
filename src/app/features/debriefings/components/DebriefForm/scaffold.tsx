@@ -1,9 +1,9 @@
 import React from "react"
 import { FormPositioner } from "@amsterdam/scaffold-form/package"
 import { Fields } from "app/features/shared/components/molecules/Form/ScaffoldFields"
-import { navigate } from "@reach/router"
 import InfoButton from "app/features/shared/components/molecules/InfoHeading/InfoButton"
 import { helpTextViolation } from "./HelpContent"
+import navigateTo from "app/routing/navigateTo"
 
 const Scaffold = (caseId: Components.Schemas.Case["id"], isEditing = false) => {
   const fields = {
@@ -41,7 +41,7 @@ const Scaffold = (caseId: Components.Schemas.Case["id"], isEditing = false) => {
       props: {
         label: "Annuleer",
         variant: "primaryInverted",
-        onClick: () => navigate(`/cases/${ caseId }`)
+        onClick: () => navigateTo(`/zaken/${ caseId }`)
       }
     }
   }

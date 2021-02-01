@@ -10,7 +10,7 @@ import { FlashMessageContext } from "./FlashMessageProvider"
  * const { addSuccessFlashMessage } = useFlashMessages()
  *
  *
- * addSuccessFlashMessage("/cases", "Succesvol verwijderd", "De zaak is succesvol verwijderd" })
+ * addSuccessFlashMessage("/zaken", "Succesvol verwijderd", "De zaak is succesvol verwijderd" })
  *
  */
 export const useFlashMessages = () => {

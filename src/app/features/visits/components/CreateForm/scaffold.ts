@@ -1,6 +1,6 @@
 import { FormPositioner } from "@amsterdam/scaffold-form/package"
 import { Fields } from "app/features/shared/components/molecules/Form/ScaffoldFields"
-import { navigate } from "@reach/router"
+import navigateTo from "app/routing/navigateTo"
 
 const scaffold = (caseId: Components.Schemas.Case["id"], authors: Components.Schemas.User[]) => {
 
@@ -123,7 +123,7 @@ const scaffold = (caseId: Components.Schemas.Case["id"], authors: Components.Sch
       props: {
         label: "Annuleer",
         variant: "primaryInverted",
-        onClick: () => navigate(`/cases/${ caseId }`)
+        onClick: () => navigateTo(`/zaken/${ caseId }`)
       }
     }
   }

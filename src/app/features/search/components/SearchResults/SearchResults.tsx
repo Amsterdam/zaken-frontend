@@ -2,7 +2,7 @@ import React, { useEffect, useMemo } from "react"
 import { useBAGWithZipCode } from "app/state/rest"
 import Table from "app/features/shared/components/molecules/Table/Table"
 import OpenButton from "app/features/shared/components/atoms/OpenButton/OpenButton"
-import to from "app/features/shared/routing/to"
+import to from "app/routing/utils/to"
 import { BAGAddressResponse } from "app/state/rest/types/BAGAddressResponse"
 
 type SearchResult = Pick<BAGAddressResponse["results"][0], "adres" | "postcode" | "landelijk_id">

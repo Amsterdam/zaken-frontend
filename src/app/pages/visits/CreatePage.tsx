@@ -1,5 +1,5 @@
 import React from "react"
-import { navigate, RouteComponentProps } from "@reach/router"
+import { RouteComponentProps } from "@reach/router"
 import { FormTitle } from "@amsterdam/asc-ui"
 
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
@@ -10,7 +10,10 @@ import AddressHeading from "app/features/shared/components/molecules/AddressHead
 import VisitForm from "app/features/visits/components/CreateForm/CreateForm"
 import { useVisitsCreate } from "app/state/rest"
 import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
-import to from "app/features/shared/routing/to"
+import parseUrlParamId from "app/routing/utils/parseUrlParamId"
+import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
+import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
+import navigateTo from "app/routing/navigateTo"
 
 type Props = {
   id: string
@@ -20,18 +23,19 @@ export type VisitData = Omit<Components.Schemas.Visit, "author_ids"> & { author1
 const mapData = (data: VisitData) => ({ ...data, author_ids: [data.author1, data.author2] })
 
 const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
-  const id: Components.Schemas.Case["id"] = parseInt(idString!)
+  const id = parseUrlParamId(idString)
   const { execPost } = useVisitsCreate()
   const { addSuccessFlashMessage } = useFlashMessages()
 
-  const onSubmit = async(data: VisitData) => {
+  const onSubmit = async (data: VisitData) => {
     await execPost(mapData(data))
-    const path = `/cases/${ data.case }`
+    const path = `/zaken/${ data.case }`
     addSuccessFlashMessage(path, "Succes", "Het resultaat huisbezoek is succesvol verwerkt")
-    navigate(to(path))
+    navigateTo(path)
   }
 
   return (
+    isValidUrlParamId<Components.Schemas.Case["id"]>(id) ?
     <DefaultLayout>
       <RowWithColumn>
         <BreadCrumbs />
@@ -42,9 +46,10 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
       <RowWithColumn>
         <FormTitle>Gebruik dit formulier om een huisbezoek aan te maken</FormTitle>
         <AddressHeading caseId={ id } />
-        <VisitForm caseId={id!} onSubmit={ onSubmit } />
+        <VisitForm caseId={ id } onSubmit={ onSubmit } />
       </RowWithColumn>
-    </DefaultLayout>
+    </DefaultLayout> :
+    <NotFoundPage />
   )
 }
 

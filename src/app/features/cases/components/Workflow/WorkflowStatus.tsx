@@ -7,7 +7,7 @@ import Table from "app/features/shared/components/molecules/Table/Table"
 type CellContent = React.ReactNode
 
 type Props = {
-  status: string    
+  status: string
   data?: {
     href?: string
     itemList?: Array<CellContent>
@@ -20,7 +20,8 @@ const StyledTable = styled(Table)`
   th {
     color: ${ themeColor("tint", "level4") };
   }
-    td { line-height: ${ themeSpacing(12) };
+  td {
+    line-height: ${ themeSpacing(12) };
     padding: ${ themeSpacing(1) } ${ themeSpacing(3) };
     * {
       margin-top: 0;
@@ -41,9 +42,9 @@ const columns = [
   { header: "Verwerking taak", minWidth: 140 }
 ]
 
-const WorkflowStatus: React.FC<Props> = ({ status, data, showBWVMessage }) => 
+const WorkflowStatus: React.FC<Props> = ({ status, data, showBWVMessage }) =>
   <>
-    <StyledHeading as="h3" >{ status }</StyledHeading>
+    <StyledHeading as="h3">{ status }</StyledHeading>
     <StyledTable
       columns={columns}
       data={ data }

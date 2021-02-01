@@ -11,16 +11,20 @@ import AddressHeading from "app/features/shared/components/molecules/AddressHead
 import WorkflowForm from "app/features/cases/components/Workflow/WorkflowForm"
 import scaffold from "app/features/summons/components/SummonForm/scaffold"
 import FormWithExtraLabel from "app/features/shared/components/atoms/FormWithExtraLabel/FormWithExtraLabel"
+import parseUrlParamId from "app/routing/utils/parseUrlParamId"
+import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
+import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
 
 type Props = {
   id: string
 }
 
 const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
-  const id: Components.Schemas.Case["id"] = parseInt(idString!)
+  const id = parseUrlParamId(idString)
   const { data, execPost } = useSummons()
 
   return (
+    isValidUrlParamId<Components.Schemas.Case["id"]>(id) ?
     <DefaultLayout>
       <RowWithColumn>
         <BreadCrumbs />
@@ -40,7 +44,8 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
           />
         </FormWithExtraLabel>
       </RowWithColumn>
-    </DefaultLayout>
+    </DefaultLayout> :
+    <NotFoundPage />
   )
 }
 

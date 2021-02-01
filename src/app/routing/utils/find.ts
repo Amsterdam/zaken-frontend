@@ -1,4 +1,4 @@
-import { Routes } from "app/config/routes"
+import { Routes } from "app/routing/routes"
 
 const toSteps = (s: string) => s.split("/").filter(_ => _ !== "")
 

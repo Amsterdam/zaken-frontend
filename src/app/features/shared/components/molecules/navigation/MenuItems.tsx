@@ -2,13 +2,13 @@ import React from "react"
 import styled from "styled-components"
 import { MenuItem, MenuButton, Hidden } from "@amsterdam/asc-ui"
 
-import routes from "app/config/routes"
+import routes from "app/routing/routes"
 import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
-import to from "app/features/shared/routing/to"
+import to from "app/routing/utils/to"
 
 const items = [
   {
-    path: "/cases",
+    path: "/zaken",
     hiddenLaptopM: false
   },
   {

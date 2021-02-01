@@ -11,25 +11,28 @@ import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import AddressHeading from "app/features/shared/components/molecules/AddressHeading/AddressHeading"
 import DebriefForm from "app/features/debriefings/components/DebriefForm/DebriefForm"
 import usePageDebriefing from "./hooks/usePageDebriefing"
+import parseUrlParamId from "app/routing/utils/parseUrlParamId"
+import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
+import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
 
 type Props = {
-  caseId: string
   id: string
+  debriefingId: string
 }
 
 const CONFIRM_TEXT = "Weet je zeker dat je deze debriefing wilt verwijderen?"
 
-const EditPage: React.FC<RouteComponentProps<Props>> = ({ caseId: caseIdString, id: idString }) => {
-  // TODO: Fix showing 404 for NaN
-  const caseId: Components.Schemas.Case["id"] = parseInt(caseIdString!)
-  const id: Components.Schemas.Debriefing["id"] = parseInt(idString!)
+const EditPage: React.FC<RouteComponentProps<Props>> = ({ id: idString, debriefingId: debriefingIdString }) => {
+
+  const id = parseUrlParamId(idString)
+  const debriefingId = parseUrlParamId(debriefingIdString)
 
   // This is a hack used to make sure Debriefing is not refetched after being deleted and cache cleared
   // TODO: Fix in caching hook?
   const [isDeleted, setIsDeleted] = useState(false)
-  const { data: caseData } = useCase(caseId)
+  const { data: caseData } = useCase(id)
   const { data } = useDebriefings(id, { lazy: isDeleted })
-  const { handleUpdate, handleDelete } = usePageDebriefing(caseId!, id!)
+  const { handleUpdate, handleDelete } = usePageDebriefing(id!, debriefingId!)
 
   const onDelete = () => {
     if (!window.confirm(CONFIRM_TEXT)) return
@@ -40,6 +43,7 @@ const EditPage: React.FC<RouteComponentProps<Props>> = ({ caseId: caseIdString, 
   const showForm = caseData !== undefined && data !== undefined
 
   return (
+    isValidUrlParamId<Components.Schemas.Case["id"]>(id) && isValidUrlParamId<Components.Schemas.Debriefing["id"]>(debriefingId) ?
     <DefaultLayout>
       <RowWithColumn>
         <BreadCrumbs />
@@ -53,12 +57,13 @@ const EditPage: React.FC<RouteComponentProps<Props>> = ({ caseId: caseIdString, 
             <Heading as="h2">Debrief</Heading>
             <Button variant="primaryInverted" iconLeft={ <Delete /> } onClick={ onDelete }>Terugkoppeling verwijderen</Button>
             <FormTitle>Gebruik dit formulier om terugkoppeling te wijzigen</FormTitle>
-            <AddressHeading caseId={ caseId } />
-            <DebriefForm caseId={ caseId! } onSubmit={ handleUpdate } initialValues={ data } isLoading={ data === undefined } />
+            <AddressHeading caseId={ id } />
+            <DebriefForm caseId={ id } onSubmit={ handleUpdate } initialValues={ data } isLoading={ data === undefined } />
           </>
         }
       </RowWithColumn>
-    </DefaultLayout>
+    </DefaultLayout> :
+    <NotFoundPage />
   )
 }
 

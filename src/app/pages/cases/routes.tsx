@@ -12,7 +12,7 @@ import VisitCreatePage from "app/pages/visits/CreatePage"
 
 // NOTE: please add your own POC-specific routes here.
 export default {
-  "/cases": {
+  "/zaken": {
     title: "Zakenoverzicht",
     Page: IndexPage,
     icon: "Folder",
@@ -20,47 +20,49 @@ export default {
       ":id": {
         Page: DetailsPage,
         title: "Zaakdetails",
-        icon: "Folder"
-      },
-      ":id/afronden": {
-        Page: CompleteCasePage,
-        title: "Zaak afronden",
-        icon: "Edit"
-      },
-      ":id/correspondence": {
-        Page: CorrespondenceCreatePage,
-        title: "Notitie toevoegen",
-        icon: "Edit"
-      },
-      ":id/debriefing": {
-        Page: DebriefCreatePage,
-        title: "Debrief terugkoppeling geven",
-        icon: "Edit"
-      },
-      ":caseId/debriefing/:id": {
-        Page: DebriefEditPage,
-        title: "Debrief terugkoppeling wijzigen",
-        icon: "Edit"
-      },
-      ":id/decision": {
-        Page: DecisionCreatePage,
-        title: "Resultaat besluit",
-        icon: "Edit"
-      },
-      ":id/opinion": {
-        Page: OpinionCreatePage,
-        title: "Resultaat zienswijze",
-        icon: "Edit"
-      },
-      ":id/summon": {
-        Page: SummonCreatePage,
-        title: "Resultaat aanschrijving",
-        icon: "Edit"
-      },
-      ":id/visits": {
-        Page: VisitCreatePage,
-        title: "Resultaat huisbezoek",
-        icon: "Edit"
+        icon: "Folder",
+        subRoutes: {
+          "afronden": {
+            Page: CompleteCasePage,
+            title: "Zaak afronden",
+            icon: "Edit"
+          },
+          "correspondentie": {
+            Page: CorrespondenceCreatePage,
+            title: "Notitie toevoegen",
+            icon: "Edit"
+          },
+          "debriefing": {
+            Page: DebriefCreatePage,
+            title: "Debrief terugkoppeling geven",
+            icon: "Edit"
+          },
+          "debriefing/:debriefingId": {
+            Page: DebriefEditPage,
+            title: "Debrief terugkoppeling wijzigen",
+            icon: "Edit"
+          },
+          "besluit": {
+            Page: DecisionCreatePage,
+            title: "Resultaat besluit",
+            icon: "Edit"
+          },
+          "zienswijze": {
+            Page: OpinionCreatePage,
+            title: "Resultaat zienswijze",
+            icon: "Edit"
+          },
+          "aanschrijving": {
+            Page: SummonCreatePage,
+            title: "Resultaat aanschrijving",
+            icon: "Edit"
+          },
+          "huisbezoek": {
+            Page: VisitCreatePage,
+            title: "Resultaat huisbezoek",
+            icon: "Edit"
+          }
+        }
       }
     }
   }

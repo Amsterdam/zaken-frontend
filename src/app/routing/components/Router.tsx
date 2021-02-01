@@ -1,8 +1,8 @@
 import React from "react"
 import { Router as ReachRouter } from "@reach/router"
 
-import routes from "app/config/routes"
-import ProtectedRoute from "./components/ProtectedRoute"
+import routes from "app/routing/routes"
+import ProtectedRoute from "./ProtectedRoute"
 import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
 
 const Router: React.FC = () => (

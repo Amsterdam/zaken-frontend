@@ -7,11 +7,11 @@ import CreateCasePage from "app/pages/cases/create/CreateCasePage"
 
 // NOTE: please add your own POC-specific routes here.
 export default {
-  "/adres/:bagId": {
+  "adres/:bagId": {
     Page: IndexPage,
     title: "Adresoverzicht",
     subRoutes: {
-      "detail": {
+      "details": {
         Page: DetailsPage,
         icon: "Home",
         title: "Adresdetails"
@@ -29,13 +29,16 @@ export default {
       "zaken": {
         Page: CasesPage,
         icon: "Folder",
-        title: "Gerelateerde zaken"
-      },
-      "zaken/nieuw": {
-        Page: CreateCasePage,
-        icon: "Edit",
-        title: "Nieuwe zaak aanmaken"
+        title: "Gerelateerde zaken",
+        subRoutes: {
+          "nieuw": {
+            Page: CreateCasePage,
+            icon: "Edit",
+            title: "Nieuwe zaak aanmaken"
+          }
+        }
       }
+
     }
   }
 }
