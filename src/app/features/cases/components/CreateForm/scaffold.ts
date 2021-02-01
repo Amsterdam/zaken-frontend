@@ -1,6 +1,7 @@
 import { FormPositioner } from "@amsterdam/scaffold-form/package"
 import { navigate } from "@reach/router"
 import { Fields } from "app/features/shared/components/molecules/Form/ScaffoldFields"
+import to from "app/features/shared/routing/to"
 
 export default (bagId: Components.Schemas.Address["bag_id"], teams: Components.Schemas.CaseTeam[], reasons: Components.Schemas.CaseReason[]) => {
 
@@ -52,7 +53,7 @@ export default (bagId: Components.Schemas.Address["bag_id"], teams: Components.S
       props: {
         label: "Annuleer",
         variant: "primaryInverted",
-        onClick: () => navigate(`/adres/${ bagId }`)
+        onClick: () => navigate(to(`/adres/${ bagId }`))
       }
     }
   }

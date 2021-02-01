@@ -6,6 +6,7 @@ import { Button } from "@amsterdam/asc-ui"
 import useOtherAddressesByBagId from "app/state/rest/custom/useOtherAddresses/useOtherAddresses"
 import { BAGAddressResponse } from "app/state/rest/types/BAGAddressResponse"
 import Table from "app/features/shared/components/molecules/Table/Table"
+import to from "app/features/shared/routing/to"
 
 type Props = {
   onAddressChosen: () => void
@@ -18,7 +19,7 @@ const columns = [
 ]
 
 type SearchResult = Pick<BAGAddressResponse["results"][0], "adres" | "landelijk_id">
-const mapData = (onClick: (bagId: string) => void) => (data: SearchResult) => 
+const mapData = (onClick: (bagId: string) => void) => (data: SearchResult) =>
 ({
   itemList: [
     `${ data.adres }`,
@@ -38,7 +39,7 @@ const OtherAddressesTable: React.FC<Props> = ({ bagId, onAddressChosen }) => {
   const { results, isBusy } = useOtherAddressesByBagId(bagId)
   const onClick = useCallback((otherBagId: string) => {
     onAddressChosen()
-    return navigate(pathname.replace(bagId, otherBagId))
+    return navigate(to(pathname.replace(bagId, otherBagId)))
   }, [ onAddressChosen, bagId, pathname ])
 
   const mappedData = useMemo(

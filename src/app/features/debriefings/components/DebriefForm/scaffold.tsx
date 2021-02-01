@@ -4,6 +4,7 @@ import { Fields } from "app/features/shared/components/molecules/Form/ScaffoldFi
 import { navigate } from "@reach/router"
 import InfoButton from "app/features/shared/components/molecules/InfoHeading/InfoButton"
 import { helpTextViolation } from "./HelpContent"
+import to from "app/features/shared/routing/to"
 
 const Scaffold = (caseId: Components.Schemas.Case["id"], isEditing = false) => {
   const fields = {
@@ -41,7 +42,7 @@ const Scaffold = (caseId: Components.Schemas.Case["id"], isEditing = false) => {
       props: {
         label: "Annuleer",
         variant: "primaryInverted",
-        onClick: () => navigate(`/zaken/${ caseId }`)
+        onClick: () => navigate(to(`/zaken/${ caseId }`))
       }
     }
   }
