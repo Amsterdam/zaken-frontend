@@ -50,7 +50,7 @@ const CreateForm: React.FC<Props> = ({ bagId }) => {
     const result = await onSubmitConfirm()
     if (result === undefined) return
     const caseData = (result as { data: Components.Schemas.CaseCreateUpdate }).data
-    const path = `/cases/${ caseData.id }`
+    const path = `/zaken/${ caseData.id }`
     addSuccessFlashMessage(path, "Succes", "De zaak is succesvol toegevoegd")
     navigate(to(path))
   }

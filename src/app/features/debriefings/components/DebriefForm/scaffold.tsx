@@ -41,7 +41,7 @@ const Scaffold = (caseId: Components.Schemas.Case["id"], isEditing = false) => {
       props: {
         label: "Annuleer",
         variant: "primaryInverted",
-        onClick: () => navigate(`/cases/${ caseId }`)
+        onClick: () => navigate(`/zaken/${ caseId }`)
       }
     }
   }

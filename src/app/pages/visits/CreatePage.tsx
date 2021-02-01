@@ -29,7 +29,7 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
 
   const onSubmit = async (data: VisitData) => {
     await execPost(mapData(data))
-    const path = `/cases/${ data.case }`
+    const path = `/zaken/${ data.case }`
     addSuccessFlashMessage(path, "Succes", "Het resultaat huisbezoek is succesvol verwerkt")
     navigate(to(path))
   }

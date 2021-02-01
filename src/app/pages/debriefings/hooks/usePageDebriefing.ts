@@ -9,7 +9,7 @@ const usePageDebriefing = (caseId: Components.Schemas.Case["id"], id?: Component
   const { execPost, execPut, execDelete } = useDebriefings(id, { lazy: true })
   const { addSuccessFlashMessage } = useFlashMessages()
 
-  const path = `/cases/${ caseId }`
+  const path = `/zaken/${ caseId }`
 
   const handleCreate = useCallback(payload =>
     execPost(payload).then(() => {

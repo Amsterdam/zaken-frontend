@@ -123,7 +123,7 @@ const scaffold = (caseId: Components.Schemas.Case["id"], authors: Components.Sch
       props: {
         label: "Annuleer",
         variant: "primaryInverted",
-        onClick: () => navigate(`/cases/${ caseId }`)
+        onClick: () => navigate(`/zaken/${ caseId }`)
       }
     }
   }

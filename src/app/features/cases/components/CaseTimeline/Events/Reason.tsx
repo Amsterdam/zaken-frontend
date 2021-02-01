@@ -25,7 +25,7 @@ const Reason: React.FC<Props> = ({ caseEvents, isOpen }) => {
           thread={ thread }
           showDate={false}
         />
-        { thread.emitter_is_editable_until && <ButtonEditEvent target={ `/cases/${ thread.case }/case/${ thread.emitter_id }` } disabled={!thread.emitter_is_editable} editable_until={thread.emitter_is_editable_until} /> }
+        { thread.emitter_is_editable_until && <ButtonEditEvent target={ `/zaken/${ thread.case }/case/${ thread.emitter_id }` } disabled={!thread.emitter_is_editable} editable_until={thread.emitter_is_editable_until} /> }
       </Timeline>
       :
       <div key={ thread.id }>
@@ -33,8 +33,8 @@ const Reason: React.FC<Props> = ({ caseEvents, isOpen }) => {
           thread={ thread }
           showDate={true}
         />
-        { thread.emitter_is_editable_until && <ButtonEditEvent target={ `/cases/${ thread.case }/case/${ thread.emitter_id }` } disabled={!thread.emitter_is_editable} editable_until={thread.emitter_is_editable_until} /> }
-      </div>  
+        { thread.emitter_is_editable_until && <ButtonEditEvent target={ `/zaken/${ thread.case }/case/${ thread.emitter_id }` } disabled={!thread.emitter_is_editable} editable_until={thread.emitter_is_editable_until} /> }
+      </div>
   )
   const currentEvent = caseEvents[0]
   const counterString = caseEvents.length > 1 ? `(${ caseEvents.length })` : ""
@@ -47,7 +47,7 @@ const Reason: React.FC<Props> = ({ caseEvents, isOpen }) => {
       >
         { TimelineThread }
       </Timeline>
-    : 
+    :
       <Timeline
         title="Aanleiding ontbreekt"
         canBeOpened={false}

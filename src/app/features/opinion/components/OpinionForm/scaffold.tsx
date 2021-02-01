@@ -39,7 +39,7 @@ const Scaffold = (caseId: Components.Schemas.Case["id"], opinions: MockComponent
       props: {
         label: "Annuleren",
         variant: "primaryInverted",
-        onClick: () => navigate(`/cases/${ caseId }`)
+        onClick: () => navigate(`/zaken/${ caseId }`)
       }
     }
   }

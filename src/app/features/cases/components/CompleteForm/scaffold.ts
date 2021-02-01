@@ -39,7 +39,7 @@ export default (caseId: Components.Schemas.Case["id"], completeCase: MockCompone
       props: {
         label: "Annuleren",
         variant: "primaryInverted",
-        onClick: () => navigate(`/cases/${ caseId }`)
+        onClick: () => navigate(`/zaken/${ caseId }`)
       }
     }
   }

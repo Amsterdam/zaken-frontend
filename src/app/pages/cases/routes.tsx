@@ -27,7 +27,7 @@ export default {
             title: "Zaak afronden",
             icon: "Edit"
           },
-          "correspondence": {
+          "correspondentie": {
             Page: CorrespondenceCreatePage,
             title: "Notitie toevoegen",
             icon: "Edit"
@@ -42,22 +42,22 @@ export default {
             title: "Debrief terugkoppeling wijzigen",
             icon: "Edit"
           },
-          "decision": {
+          "besluit": {
             Page: DecisionCreatePage,
             title: "Resultaat besluit",
             icon: "Edit"
           },
-          "opinion": {
+          "zienswijze": {
             Page: OpinionCreatePage,
             title: "Resultaat zienswijze",
             icon: "Edit"
           },
-          "summon": {
+          "aanschrijving": {
             Page: SummonCreatePage,
             title: "Resultaat aanschrijving",
             icon: "Edit"
           },
-          "visits": {
+          "huisbezoek": {
             Page: VisitCreatePage,
             title: "Resultaat huisbezoek",
             icon: "Edit"
