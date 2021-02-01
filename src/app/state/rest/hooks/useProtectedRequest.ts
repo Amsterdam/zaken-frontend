@@ -2,7 +2,7 @@ import { useCallback } from "react"
 
 import useKeycloak from "app/state/auth/keycloak/useKeycloak"
 import useRequest, { Method } from "./useRequest"
-import navigateTo from "app/features/shared/routing/navigateTo"
+import navigateTo from "app/routing/navigateTo"
 
 export default () => {
 

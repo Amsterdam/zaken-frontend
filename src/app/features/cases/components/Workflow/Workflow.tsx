@@ -3,7 +3,7 @@ import { Button, Icon } from "@amsterdam/asc-ui"
 
 import { useCaseTasks, useTaskComplete } from "app/state/rest"
 import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
-import to from "app/features/shared/routing/to"
+import to from "app/routing/utils/to"
 import WorkflowStatus from "./WorkflowStatus"
 import LockOpen from "@material-ui/icons/LockOpen"
 import CompleteTaskButton from "app/features/tasks/components/CompleteTask/CompleteTaskButton"

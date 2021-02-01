@@ -10,7 +10,7 @@ import AddressMenu from "app/features/addresses/components/AddressMenu/AddressMe
 import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
 import PanoramaPreview from "app/features/shared/components/molecules/Panorama/PanoramaPreview"
 import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
-import to from "app/features/shared/routing/to"
+import to from "app/routing/utils/to"
 import CasesByBagId from "app/features/addresses/components/CasesByBagId/CasesByBagId"
 import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
 

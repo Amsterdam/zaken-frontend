@@ -1,6 +1,6 @@
 import { FormPositioner } from "@amsterdam/scaffold-form/package"
 import { Fields } from "app/features/shared/components/molecules/Form/ScaffoldFields"
-import navigateTo from "app/features/shared/routing/navigateTo"
+import navigateTo from "app/routing/navigateTo"
 
 export default (caseId: Components.Schemas.Case["id"], completeCase: MockComponents.Schemas.CompleteCase[]) => {
 

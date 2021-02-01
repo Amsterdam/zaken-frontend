@@ -2,7 +2,7 @@ import { KeycloakInstance } from "keycloak-js"
 
 import { makeGatewayUrl } from "app/state/rest/hooks/utils/utils"
 import createAuthHeaders from "app/state/rest/hooks/utils/createAuthHeaders"
-import navigateTo from "app/features/shared/routing/navigateTo"
+import navigateTo from "app/routing/navigateTo"
 
 export default async (keycloak: KeycloakInstance, isAuthenticated: boolean) => {
   if (isAuthenticated === false) return

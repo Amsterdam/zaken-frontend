@@ -3,8 +3,8 @@ import styled from "styled-components"
 import { Link } from "@reach/router"
 import { Icon, themeSpacing, themeColor, ascDefaultTheme } from "@amsterdam/asc-ui"
 import { ChevronRight } from "app/features/shared/components/atoms/Icons"
-import to from "app/features/shared/routing/to"
-import find from "app/features/shared/routing/find"
+import to from "app/routing/utils/to"
+import find from "app/routing/utils/find"
 import routes from "app/routing/routes"
 
 type Props = {

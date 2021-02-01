@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { themeSpacing, breakpoint } from "@amsterdam/asc-ui"
 import NavBlock from "app/features/addresses/components/NavBlock/NavBlock"
-import to from "app/features/shared/routing/to"
+import to from "app/routing/utils/to"
 import routesObject from "app/routing/routes"
 
 //TODO: styling is copied from "src/app/features/addresses/components/AddressMenu/AddressMenu.tsx"

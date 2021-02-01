@@ -8,7 +8,7 @@ import { useTeams, useReasons, useCaseCreateUpdate } from "app/state/rest"
 import ConfirmScaffoldFields from "app/features/shared/components/molecules/ConfirmScaffoldFields/ConfirmScaffoldFields"
 import useSubmitConfirmation from "app/features/shared/components/molecules/ConfirmScaffoldFields/hooks/useSubmitConfirmation"
 import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
-import navigateTo from "app/features/shared/routing/navigateTo"
+import navigateTo from "app/routing/navigateTo"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]

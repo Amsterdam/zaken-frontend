@@ -6,7 +6,7 @@ import { Button } from "@amsterdam/asc-ui"
 import useOtherAddressesByBagId from "app/state/rest/custom/useOtherAddresses/useOtherAddresses"
 import { BAGAddressResponse } from "app/state/rest/types/BAGAddressResponse"
 import Table from "app/features/shared/components/molecules/Table/Table"
-import navigateTo from "app/features/shared/routing/navigateTo"
+import navigateTo from "app/routing/navigateTo"
 
 type Props = {
   onAddressChosen: () => void

@@ -1,7 +1,7 @@
 import { FormPositioner } from "@amsterdam/scaffold-form/package"
 import { Fields } from "app/features/shared/components/molecules/Form/ScaffoldFields"
 import InfoButton from "app/features/shared/components/molecules/InfoHeading/InfoButton"
-import navigateTo from "app/features/shared/routing/navigateTo"
+import navigateTo from "app/routing/navigateTo"
 
 export default (caseId: Components.Schemas.Case["id"], correspondence: MockComponents.Schemas.Correspondence[]) => {
 

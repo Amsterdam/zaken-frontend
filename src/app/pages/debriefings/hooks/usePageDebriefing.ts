@@ -2,7 +2,7 @@ import { useCallback } from "react"
 
 import { useDebriefings } from "app/state/rest"
 import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
-import navigateTo from "app/features/shared/routing/navigateTo"
+import navigateTo from "app/routing/navigateTo"
 
 const usePageDebriefing = (caseId: Components.Schemas.Case["id"], id?: Components.Schemas.Debriefing["id"]) => {
   const { execPost, execPut, execDelete } = useDebriefings(id, { lazy: true })

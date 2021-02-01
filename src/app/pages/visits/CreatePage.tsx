@@ -13,7 +13,7 @@ import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
-import navigateTo from "app/features/shared/routing/navigateTo"
+import navigateTo from "app/routing/navigateTo"
 
 type Props = {
   id: string

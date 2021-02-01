@@ -1,7 +1,7 @@
 import React from "react"
 
 import routes from "app/routing/routes"
-import find from "app/features/shared/routing/find"
+import find from "app/routing/utils/find"
 import HeadingWithIcon from "app/features/shared/components/molecules/HeadingWithIcon/HeadingWithIcon"
 
 const PageHeading: React.FC = () => {

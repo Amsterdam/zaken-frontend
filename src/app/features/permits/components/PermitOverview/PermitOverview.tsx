@@ -2,7 +2,7 @@ import React, { useMemo } from "react"
 import { Link } from "@amsterdam/asc-ui"
 import { usePermitCheckmarks } from "app/state/rest"
 
-import to from "app/features/shared/routing/to"
+import to from "app/routing/utils/to"
 import DefinitionList from "app/features/shared/components/molecules/DefinitionList/DefinitionList"
 
 type Props = {
