@@ -13,6 +13,7 @@ import scaffold from "app/features/cases/components/CompleteForm/scaffold"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
+import CaseHeading from "app/features/cases/components/CaseHeading/CaseHeading"
 
 type Props = {
   id: string
@@ -35,6 +36,7 @@ const CompleteCasePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }
       <RowWithColumn>
         <FormTitle>Gebruik dit formulier om de zaak af te ronden</FormTitle>
         <AddressHeading caseId={ id } />
+        <CaseHeading id={ id } />
         <WorkflowForm
           caseId={ id }
           data={ data }
