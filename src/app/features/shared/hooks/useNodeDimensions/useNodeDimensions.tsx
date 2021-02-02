@@ -23,7 +23,7 @@ import ResizeObserver from "resize-observer-polyfill"
 const useNodeDimensions = (node?: Element) => {
   const [ dimensions, setDimensions ] = useState<DOMRectReadOnly>()
 
-  const resizeObserver = useMemo(() => new ResizeObserver(( entries ) => {
+  const resizeObserver = useMemo(() => new ResizeObserver((entries: any) => {
     setDimensions(entries[0].contentRect as DOMRectReadOnly)
   }), [ setDimensions ])
 
