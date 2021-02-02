@@ -15,9 +15,7 @@ const KeycloakValues: React.FC = () => {
     "Keycloak groepen": keycloak.realmAccess?.roles.join(", ") ?? "-"
   }
 
-  return (
-    <DefinitionList values={ values } />
-  )
+  return <DefinitionList values={ values } />
 }
 
 export default KeycloakValues
