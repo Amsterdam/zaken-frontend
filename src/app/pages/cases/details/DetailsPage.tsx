@@ -4,13 +4,12 @@ import { Button, Divider, Heading, themeSpacing } from "@amsterdam/asc-ui"
 
 import { useCase } from "app/state/rest"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
-import Row, { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
+import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import DetailHeader from "app/features/shared/components/molecules/DetailHeader/DetailHeader"
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
 import TimelineContainer from "app/features/cases/components/CaseTimeline/TimelineContainer"
 import CaseDetails from "app/features/cases/components/CaseDetails/CaseDetails"
 import Workflow from "app/features/cases/components/Workflow/Workflow"
-import { Column } from "app/features/shared/components/atoms/Grid"
 import styled from "styled-components"
 import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
 import to from "app/routing/utils/to"
@@ -54,19 +53,17 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
       <RowWithColumn>
         <PageHeading />
       </RowWithColumn>
-      <Row>
-        <Column spanLarge={50}>
-          <CaseDetails caseId={ id! } />
-        </Column>
-      </Row>
+      <RowWithColumn>
+        <CaseDetails caseId={ id } />
+      </RowWithColumn>
       <RowWithColumn>
         <Heading as="h2">
           Status
           <ButtonWrapper>
-            <ButtonLink to={ to("/zaken/:id/correspondentie", { id: id })}>
+            <ButtonLink to={ to("/zaken/:id/correspondentie", { id })}>
               <ButtonTertiary variant="tertiary">Correspondentie</ButtonTertiary>
             </ButtonLink>
-            <ButtonLink to={ to("/zaken/:id/afronden", { id: id })}>
+            <ButtonLink to={ to("/zaken/:id/afronden", { id })}>
               <ButtonTertiary variant="tertiary">Afronden</ButtonTertiary>
             </ButtonLink>
           </ButtonWrapper>
@@ -75,14 +72,14 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
       </RowWithColumn>
       <RowWithColumn>
         {/* TODO-MOCKED summonId has to come from useCaseEvents, so summonId can be removed here */}
-        <Workflow caseId={ id! } summonId={6} />
+        <Workflow caseId={ id } summonId={ 6 } />
       </RowWithColumn>
       <RowWithColumn>
         <Heading as="h2">Zaakhistorie</Heading>
         <Divider />
       </RowWithColumn>
       <RowWithColumn>
-        <TimelineContainer caseId={ id! } />
+        <TimelineContainer caseId={ id } />
       </RowWithColumn>
     </DefaultLayout> :
     <NotFoundPage />

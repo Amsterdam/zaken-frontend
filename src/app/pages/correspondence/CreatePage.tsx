@@ -14,6 +14,7 @@ import FormWithExtraLabel from "app/features/shared/components/atoms/FormWithExt
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
+import CaseHeading from "app/features/cases/components/CaseHeading/CaseHeading"
 
 type Props = {
   id: string
@@ -35,6 +36,7 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
       <RowWithColumn>
         <FormTitle>Gebruik dit formulier om notitie van correspondentie toe te voegen</FormTitle>
         <AddressHeading caseId={ id } />
+        <CaseHeading id={ id } />
         <FormWithExtraLabel>
           <WorkflowForm
             caseId={ id! }
