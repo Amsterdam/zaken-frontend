@@ -19,10 +19,6 @@
 .env.production.local
 .eslintcache
 
-cypress/videos
-cypress/screenshots
-cypress/fixtures
-
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
