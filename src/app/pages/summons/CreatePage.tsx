@@ -8,7 +8,7 @@ import PageHeading from "app/features/shared/components/molecules/PageHeading/Pa
 import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import AddressHeading from "app/features/shared/components/molecules/AddressHeading/AddressHeading"
-import WorkflowForm from "app/features/cases/components/Workflow/WorkflowForm"
+import SummonForm from "app/features/summons/components/SummonForm/SummonForm"
 import scaffold from "app/features/summons/components/SummonForm/scaffold"
 import FormWithExtraLabel from "app/features/shared/components/atoms/FormWithExtraLabel/FormWithExtraLabel"
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
@@ -33,10 +33,10 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
         <PageHeading />
       </RowWithColumn>
       <RowWithColumn>
-        <FormTitle>Gebruik dit formulier om aan te geven welke aanschrijving opgesteld is</FormTitle>
+        <FormTitle>Gebruik dit formulier om aan te geven welke aanschrijving(en) opgesteld is en voor wie. Vul dit in nadat brief verstuurd is!</FormTitle>
         <AddressHeading caseId={ id } />
         <FormWithExtraLabel>
-          <WorkflowForm
+          <SummonForm
             caseId={ id! }
             data={ data }
             postMethod={ execPost }

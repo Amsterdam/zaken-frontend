@@ -12,22 +12,70 @@ export default (caseId: Components.Schemas.Case["id"], summons: MockComponents.S
 
   const fields = {
     summons: {
-      type: "SelectField",
+      type: "ArrayField",
       props: {
-        isRequired: true,
-        withEmptyOption: true,
-        label: "Welke aanschrijving is opgesteld?",
-        extraLabel: <InfoButton infoTitle="TODO Aanschrijvingen" infoText="TODO Uitleg over aanschrijvingen"></InfoButton>,
-        name: "summons",
-        options: summonsObject
-      }
-    },
-    text: {
-      type: "TextAreaField",
-      props: {
-        label: "Korte toelichting",
-        extraLabel: "(Niet verplicht)",
-        name: "text"
+        columns: "auto",
+        name: "summonsArray",
+        allowAdd: true,
+        allowRemove: true,
+        minItems: 1,
+        maxItems: 2,
+        scaffoldFields: {
+          summon: {
+            type: "SelectField",
+            props: {
+              isRequired: true,
+              withEmptyOption: true,
+              label: "Welke aanschrijving is opgesteld?",
+              extraLabel: <InfoButton infoTitle="TODO Aanschrijvingen" infoText="TODO Uitleg over aanschrijvingen"></InfoButton>,
+              name: "summons",
+              options: summonsObject
+            }
+          },
+          receivers: {
+            type: "ArrayField",
+            props: {
+              label: "Aan wie is de aanschrijvng gericht?",
+              columns: "1fr 1fr 1fr auto",
+              name: "receivers",
+              allowAdd: true,
+              allowRemove: true,
+              minItems: 1,
+              maxItems: 2,
+              scaffoldFields: {
+                first_name: {
+                  type: "TextField",
+                  props: {
+                    name: "first_name",
+                    placeholder: "Voornaam"
+                  }
+                },
+                preposition: {
+                  type: "TextField",
+                  props: {
+                    name: "preposition",
+                    placeholder: "Tussenvoegsel"
+                  }
+                },
+                last_name: {
+                  type: "TextField",
+                  props: {
+                    name: "last_name",
+                    placeholder: "Achternaam"
+                  }
+                }
+              }
+            }
+          },
+          text: {
+            type: "TextAreaField",
+            props: {
+              label: "Korte toelichting",
+              extraLabel: "(Niet verplicht)",
+              name: "text"
+            }
+          }
+        }
       }
     },
     submit: {
@@ -48,8 +96,10 @@ export default (caseId: Components.Schemas.Case["id"], summons: MockComponents.S
 
   return new FormPositioner(fields as Fields)
     .setGrid("laptop", "1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr", [
-      ["summons", "summons"],
-      ["text", "text"],
+      // ["summon", "summon", "summon"],
+      // ["receivers", "receivers", "receivers"],
+      // ["text", "text", "text"],
+      ["summons", "summons", "summons"],
       ["submit", "secondaryButton"]
     ])
     .getScaffoldProps()
