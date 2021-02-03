@@ -7,6 +7,7 @@ import to from "app/routing/utils/to"
 import Table from "app/features/shared/components/molecules/Table/Table"
 import OpenButton from "app/features/shared/components/atoms/OpenButton/OpenButton"
 import DateDisplay from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
+import CaseIdDisplay from "app/features/cases/components/CaseIdDisplay/CaseIdDisplay"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -23,7 +24,7 @@ const StyledHeading = styled(Heading)`
 `
 
 const columns = [
-  { header: "ZaakId", minWidth: 100 },
+  { header: "Zaak Id", minWidth: 100 },
   { header: "Team", minWidth: 100 },
   { header: "Startdatum", minWidth: 100 },
   { header: "Huidige status", minWidth: 100 },
@@ -34,7 +35,7 @@ const mapData = (data: Components.Schemas.Case) =>
   ({
     href: to("/zaken/:id", { id: data.id }),
     itemList: [
-      data.id,
+      <CaseIdDisplay id={ data.identification } />,
       data.team.name,
       data.start_date ? <DateDisplay date={ data.start_date } /> : "-",
       data.current_state?.status_name ?? "-",

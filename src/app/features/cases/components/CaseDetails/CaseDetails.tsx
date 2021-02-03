@@ -1,5 +1,7 @@
 import React, { useMemo } from "react"
+
 import DefinitionList from "app/features/shared/components/molecules/DefinitionList/DefinitionList"
+import CaseIdDisplay from "../CaseIdDisplay/CaseIdDisplay"
 import { useCase } from "app/state/rest"
 import { displayDate } from "app/features/shared/components/atoms/DateDisplay/DateDisplay"
 
@@ -8,7 +10,7 @@ type Props = {
 }
 
 const mapData = (data: Components.Schemas.Case) => ({
-  "ZaakId": data.id,
+  "Zaak Id": <CaseIdDisplay id={ data.identification } />,
   "Team": data.team.name,
   "Startdatum": data.start_date ? `${ displayDate(data.start_date) }` : "-"
 })
