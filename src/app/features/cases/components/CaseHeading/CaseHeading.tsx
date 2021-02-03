@@ -4,8 +4,7 @@ import { Heading, Spinner, themeColor, themeSpacing } from "@amsterdam/asc-ui"
 
 import { useCase } from "app/state/rest"
 import CaseIdDisplay from "../CaseIdDisplay/CaseIdDisplay"
-import AddressDisplay from "app/features/shared/components/atoms/AddressDisplay/AddressDisplay"
-import PostalCodeDisplay from "app/features/shared/components/atoms/PostalCodeDisplay/PostalCodeDisplay"
+import FullAddressDisplay from "app/features/addresses/components/FullAddressDisplay/FullAddressDisplay"
 
 type Props = {
   id: Components.Schemas.Case["id"]
@@ -37,12 +36,14 @@ const CaseHeading: React.FC<Props> = ({ id }) => {
           <Div>
             <Dt>Adres</Dt>
             <dd>
-              <AddressDisplay
+              <FullAddressDisplay
                 streetName={ data.address.street_name }
                 streetNumber={ data.address.number }
                 suffix={ data.address.suffix_letter }
-                etage={ data.address.suffix } />
-              , <PostalCodeDisplay postalCode={ data.address.postal_code } />
+                etage={ data.address.suffix }
+                postalCode={ data.address.postal_code }
+                city={ "Amsterdam" }
+              />
             </dd>
           </Div>
           <Div>
