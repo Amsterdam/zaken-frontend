@@ -18,7 +18,7 @@ export default (caseId: Components.Schemas.Case["id"], summons: MockComponents.S
         withEmptyOption: true,
         label: "Welke aanschrijving is opgesteld?",
         extraLabel: <InfoButton infoTitle="TODO Aanschrijvingen" infoText="TODO Uitleg over aanschrijvingen"></InfoButton>,
-        name: "summons",
+        name: "summon",
         options: summonsObject
       }
     },
@@ -26,7 +26,7 @@ export default (caseId: Components.Schemas.Case["id"], summons: MockComponents.S
       type: "ArrayField",
       props: {
         label: "Aan wie is de aanschrijving gericht?",
-        name: "receivers",
+        name: "persons",
         allowAdd: true,
         allowRemove: true,
         minItems: 1,
