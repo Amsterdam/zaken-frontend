@@ -37,9 +37,9 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
         <FormTitle>Gebruik dit formulier om aan te geven welk besluit is genomen</FormTitle>
         <FormWithExtraLabel>
           <WorkflowForm
-            caseId={ id! }
+            caseId={ id }
             data={ data }
-            postMethod= { execPost }
+            postMethod={ execPost }
             scaffold={ scaffold }
           />
         </FormWithExtraLabel>
