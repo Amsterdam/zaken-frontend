@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { RouteComponentProps } from "@reach/router"
-import { FormTitle, Heading, Button } from "@amsterdam/asc-ui"
+import { FormTitle, Heading, Button, Spinner } from "@amsterdam/asc-ui"
 import { Delete } from "app/features/shared/components/atoms/Icons"
 
 import { useCase, useDebriefings } from "app/state/rest/"
@@ -8,12 +8,12 @@ import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
 import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
-import AddressHeading from "app/features/shared/components/molecules/AddressHeading/AddressHeading"
 import DebriefForm from "app/features/debriefings/components/DebriefForm/DebriefForm"
 import usePageDebriefing from "./hooks/usePageDebriefing"
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
+import CaseHeading from "app/features/cases/components/CaseHeading/CaseHeading"
 
 type Props = {
   id: string
@@ -52,12 +52,13 @@ const EditPage: React.FC<RouteComponentProps<Props>> = ({ id: idString, debriefi
         <PageHeading />
       </RowWithColumn>
       <RowWithColumn>
-        { showForm &&
+        { !showForm ?
+          <Spinner /> :
           <>
             <Heading as="h2">Debrief</Heading>
             <Button variant="primaryInverted" iconLeft={ <Delete /> } onClick={ onDelete }>Terugkoppeling verwijderen</Button>
+            <CaseHeading id={ id } />
             <FormTitle>Gebruik dit formulier om terugkoppeling te wijzigen</FormTitle>
-            <AddressHeading caseId={ id } />
             <DebriefForm caseId={ id } onSubmit={ handleUpdate } initialValues={ data } isLoading={ data === undefined } />
           </>
         }

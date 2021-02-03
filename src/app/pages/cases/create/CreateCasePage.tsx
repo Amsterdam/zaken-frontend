@@ -25,8 +25,8 @@ const CreateCasePage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
         <PageHeading />
       </RowWithColumn>
       <RowWithColumn>
-        <FormTitle>Gebruik dit formulier om een nieuwe zaak toe te voegen</FormTitle>
         <AddressHeadingByBagId bagId={ bagId } />
+        <FormTitle>Gebruik dit formulier om een nieuwe zaak toe te voegen</FormTitle>
         <CreateForm bagId={ bagId } />
       </RowWithColumn>
     </DefaultLayout> :
