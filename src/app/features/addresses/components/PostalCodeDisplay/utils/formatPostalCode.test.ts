@@ -4,6 +4,9 @@ describe("formatPostalCode", () => {
   it("format", () => {
     expect(formatPostalCode("1234 AB")).toBe("1234 AB")
   })
+  it("invalid", () => {
+    expect(formatPostalCode("123 AB")).toBeUndefined()
+  })
   it("add whitespace", () => {
     expect(formatPostalCode("1234AB")).toBe("1234 AB")
   })
