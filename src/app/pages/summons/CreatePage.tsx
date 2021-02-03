@@ -37,6 +37,7 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
         <FormTitle>Gebruik dit formulier om aan te geven welke aanschrijving(en) opgesteld is en voor wie. Vul dit in nadat brief verstuurd is!</FormTitle>
         <AddressHeading caseId={ id } />
         <CaseHeading id={ id } />
+        <FormTitle>Gebruik dit formulier om aan te geven welke aanschrijving opgesteld is</FormTitle>
         <FormWithExtraLabel>
           <SummonForm
             caseId={ id! }
