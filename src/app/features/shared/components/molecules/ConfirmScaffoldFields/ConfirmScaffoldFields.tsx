@@ -51,6 +51,7 @@ const createValuesObject = <T extends RequestBody>(fields: NamedFields<T>, data?
     if (fields.hasOwnProperty(key) === false) return acc
     const { type, props } = fields[key]
     const { label } = props
+    // TODO: Use field.name property vs key to access data
     const v = data[key]
     const value =
       type === "ArrayField" ?
