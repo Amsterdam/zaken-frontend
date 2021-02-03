@@ -7,7 +7,6 @@ import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
 import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
-import AddressHeading from "app/features/shared/components/molecules/AddressHeading/AddressHeading"
 import WorkflowForm from "app/features/cases/components/Workflow/WorkflowForm"
 import scaffold from "app/features/opinion/components/OpinionForm/scaffold"
 import FormWithExtraLabel from "app/features/shared/components/atoms/FormWithExtraLabel/FormWithExtraLabel"
@@ -45,9 +44,8 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
         <PageHeading />
       </RowWithColumn>
       <RowWithColumn>
-        <FormTitle>Gebruik dit formulier om aan te geven wat de beoordeling van de zienswijze is</FormTitle>
-        <AddressHeading caseId={ id } />
         <CaseHeading id={ id } />
+        <FormTitle>Gebruik dit formulier om aan te geven wat de beoordeling van de zienswijze is</FormTitle>
         <FormWithExtraLabel>
           <WorkflowForm
             caseId={ id! }

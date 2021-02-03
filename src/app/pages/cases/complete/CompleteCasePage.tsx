@@ -8,7 +8,6 @@ import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/
 import Breadcrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
 import WorkflowForm from "app/features/cases/components/Workflow/WorkflowForm"
-import AddressHeading from "app/features/shared/components/molecules/AddressHeading/AddressHeading"
 import scaffold from "app/features/cases/components/CompleteForm/scaffold"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
@@ -34,9 +33,8 @@ const CompleteCasePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }
         <PageHeading />
       </RowWithColumn>
       <RowWithColumn>
-        <FormTitle>Gebruik dit formulier om de zaak af te ronden</FormTitle>
-        <AddressHeading caseId={ id } />
         <CaseHeading id={ id } />
+        <FormTitle>Gebruik dit formulier om de zaak af te ronden</FormTitle>
         <WorkflowForm
           caseId={ id }
           data={ data }

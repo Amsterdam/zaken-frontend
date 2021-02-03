@@ -6,7 +6,6 @@ import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
 import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
-import AddressHeading from "app/features/shared/components/molecules/AddressHeading/AddressHeading"
 import WorkflowForm from "app/features/cases/components/Workflow/WorkflowForm"
 import { useCorrespondence } from "app/state/rest"
 import scaffold from "app/features/correspondence/components/CorrespondenceForm/scaffold"
@@ -34,9 +33,8 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
         <PageHeading />
       </RowWithColumn>
       <RowWithColumn>
-        <FormTitle>Gebruik dit formulier om notitie van correspondentie toe te voegen</FormTitle>
-        <AddressHeading caseId={ id } />
         <CaseHeading id={ id } />
+        <FormTitle>Gebruik dit formulier om notitie van correspondentie toe te voegen</FormTitle>
         <FormWithExtraLabel>
           <WorkflowForm
             caseId={ id! }

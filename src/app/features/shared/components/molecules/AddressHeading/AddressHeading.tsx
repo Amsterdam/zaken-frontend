@@ -1,7 +1,7 @@
 import React from "react"
 import { Heading, themeSpacing } from "@amsterdam/asc-ui"
 import { useCase } from "app/state/rest/"
-import AddressDisplay from "app/features/shared/components/atoms/AddressDisplay/AddressDisplay"
+import AddressDisplay from "app/features/addresses/components/AddressDisplay/AddressDisplay"
 import styled from "styled-components"
 
 type Props = {

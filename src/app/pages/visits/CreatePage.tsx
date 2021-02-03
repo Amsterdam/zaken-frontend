@@ -6,7 +6,6 @@ import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
 import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
-import AddressHeading from "app/features/shared/components/molecules/AddressHeading/AddressHeading"
 import VisitForm from "app/features/visits/components/CreateForm/CreateForm"
 import { useVisitsCreate } from "app/state/rest"
 import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
@@ -14,6 +13,7 @@ import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
 import navigateTo from "app/routing/navigateTo"
+import CaseHeading from "app/features/cases/components/CaseHeading/CaseHeading"
 
 type Props = {
   id: string
@@ -44,8 +44,8 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
         <PageHeading />
       </RowWithColumn>
       <RowWithColumn>
+        <CaseHeading id={ id } />
         <FormTitle>Gebruik dit formulier om een huisbezoek aan te maken</FormTitle>
-        <AddressHeading caseId={ id } />
         <VisitForm caseId={ id } onSubmit={ onSubmit } />
       </RowWithColumn>
     </DefaultLayout> :

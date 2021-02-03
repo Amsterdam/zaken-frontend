@@ -6,7 +6,6 @@ import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
 import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
-import AddressHeading from "app/features/shared/components/molecules/AddressHeading/AddressHeading"
 import { useDecisions } from "app/state/rest"
 import WorkflowForm from "app/features/cases/components/Workflow/WorkflowForm"
 import scaffold from "app/features/decisions/components/DecisionForm/scaffold"
@@ -34,15 +33,14 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
         <PageHeading />
       </RowWithColumn>
       <RowWithColumn>
-        <FormTitle>Gebruik dit formulier om aan te geven welk besluit is genomen</FormTitle>
-        <AddressHeading caseId={ id } />
         <CaseHeading id={ id } />
+        <FormTitle>Gebruik dit formulier om aan te geven welk besluit is genomen</FormTitle>
         <FormWithExtraLabel>
           <WorkflowForm
-            caseId={ id! }
+            caseId={ id }
             data={ data }
-            postMethod = { execPost }
-            scaffold= { scaffold }
+            postMethod={ execPost }
+            scaffold={ scaffold }
           />
         </FormWithExtraLabel>
       </RowWithColumn>
