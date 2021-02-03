@@ -5,6 +5,7 @@ import { Heading, Button, Spinner } from "@amsterdam/asc-ui"
 import DefinitionList from "app/features/shared/components/molecules/DefinitionList/DefinitionList"
 import Modal, { ModalBlock } from "app/features/shared/components/molecules/Modal/Modal"
 import { Field } from "../Form/ScaffoldField"
+import ArrayFieldList from "./ArrayFieldList"
 
 type RequestBody = Record<string, unknown>
 type NamedFields<T> = Record<keyof T, Field>
@@ -48,10 +49,16 @@ const createValuesObject = <T extends RequestBody>(fields: NamedFields<T>, data?
   if (data === undefined) return {}
   return (Object.keys(data) as Array<keyof T>).reduce((acc, key) => {
     if (fields.hasOwnProperty(key) === false) return acc
-    const props = fields[key].props
+    const { type, props } = fields[key]
     const { label } = props
+    // TODO: Use field.name property vs key to access data
     const v = data[key]
-    const value = props.hasOwnProperty("options") ? (props as { options: Record<string, unknown> }).options[v as string] : v
+    const value =
+      type === "ArrayField" ?
+      <ArrayFieldList fields={ v as Array<Record<string, string>> } /> :
+      props.hasOwnProperty("options") ?
+      (props as { options: Record<string, unknown> }).options[v as string] :
+      v
     acc[(label ?? key) as string] = value as React.ReactNode
     return acc
   }, {} as Record<string, React.ReactNode>)
