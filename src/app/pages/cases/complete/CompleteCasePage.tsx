@@ -1,18 +1,15 @@
 import React from "react"
 import { RouteComponentProps } from "@reach/router"
-import { FormTitle } from "@amsterdam/asc-ui"
 
-import { useCompleteCase } from "app/state/rest/"
-import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
+import parseUrlParamId from "app/routing/utils/parseUrlParamId"
+import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
+import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import Breadcrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
-import WorkflowForm from "app/features/cases/components/Workflow/WorkflowForm"
-import scaffold from "app/features/cases/components/CompleteForm/scaffold"
-import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
-import parseUrlParamId from "app/routing/utils/parseUrlParamId"
-import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
 import CaseHeading from "app/features/cases/components/CaseHeading/CaseHeading"
+import CaseCompleteForm from "app/features/cases/components/CompleteForm/CaseCompleteForm"
+import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
 
 type Props = {
   id: string
@@ -21,7 +18,6 @@ type Props = {
 const CompleteCasePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
 
   const id = parseUrlParamId(idString)
-  const { data, execPost } = useCompleteCase()
 
   return (
     isValidUrlParamId<Components.Schemas.Case["id"]>(id) ?
@@ -34,13 +30,7 @@ const CompleteCasePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }
       </RowWithColumn>
       <RowWithColumn>
         <CaseHeading id={ id } />
-        <FormTitle>Gebruik dit formulier om de zaak af te ronden</FormTitle>
-        <WorkflowForm
-          caseId={ id }
-          data={ data }
-          postMethod={ execPost }
-          scaffold={ scaffold }
-        />
+        <CaseCompleteForm id={ id } />
       </RowWithColumn>
     </DefaultLayout> :
     <NotFoundPage />
