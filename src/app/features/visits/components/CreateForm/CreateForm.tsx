@@ -5,7 +5,7 @@ import ScaffoldFields from "app/features/shared/components/molecules/Form/Scaffo
 
 import createScaffoldProps from "./scaffold"
 import { useAuthors } from "app/state/rest"
-import { VisitData } from "app/pages/visits/CreatePage"
+import { VisitData } from "app/pages/case/visits/CreatePage"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
