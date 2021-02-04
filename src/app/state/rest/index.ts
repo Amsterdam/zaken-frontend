@@ -135,10 +135,11 @@ export const useCaseEvents = (caseId: Components.Schemas.Case["id"], options?: O
   })
 }
 
-export const useBAG = (bagId: string | undefined, options?: Options) => {
+export const useBAG = (bagId?: Components.Schemas.Address["bag_id"], options?: Options) => {
   const handleError = useErrorHandler()
+  const queryString = bagId !== undefined ? qs.stringify({ q: bagId }, { addQueryPrefix: true }) : ""
   return useApiRequest<BAGAddressResponse>({
-    url: `https://api.data.amsterdam.nl/atlas/search/adres/?q=${ bagId }`,
+    url: `https://api.data.amsterdam.nl/atlas/search/adres/${ queryString }`,
     lazy: bagId === undefined,
     ...options,
     groupName: "dataPunt",
@@ -146,17 +147,18 @@ export const useBAG = (bagId: string | undefined, options?: Options) => {
   })
 }
 
-export const useBAGWithZipCode = (bagId: string, options?: Options) => {
+export const useBAGWithZipCode = (bagId: Components.Schemas.Address["bag_id"], options?: Options) => {
   const handleError = useErrorHandler()
+  const queryString = qs.stringify({ q: bagId }, { addQueryPrefix: true })
   return useApiRequest<BAGAddressResponse>({
-    url: `https://api.data.amsterdam.nl/atlas/search/postcode/?q=${ bagId }`,
+    url: `https://api.data.amsterdam.nl/atlas/search/postcode/${ queryString }`,
     ...options,
     groupName: "dataPunt",
     handleError
   })
 }
 
-export const useBAGLodging = (type: string | undefined, subTypeId: string | undefined, options?: Options) => {
+export const useBAGLodging = (type?: string, subTypeId?: string, options?: Options) => {
   const handleError = useErrorHandler()
   const url = slashSandwich(["https://api.data.amsterdam.nl/bag/v1.1", type, subTypeId], { trailingSlash: true })
 
@@ -233,7 +235,7 @@ export const useTeams = (options?: Options) => {
   })
 }
 
-export const useTeam = (id: number, options?: Options) => {
+export const useTeam = (id: Components.Schemas.CaseTeam["id"], options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<MockComponents.Schemas.Team>({
     ...options,
@@ -374,7 +376,7 @@ export const useVisitsCreate = (options?: Options) => {
 }
 export const useAuthors = (options?: Options) => {
   const handleError = useErrorHandler()
-  
+
   return useApiRequest<Components.Schemas.PaginatedUserList>({
     ...options,
     url: makeGatewayUrl("authors"),
