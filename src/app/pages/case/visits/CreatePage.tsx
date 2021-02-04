@@ -17,6 +17,7 @@ type Props = {
 }
 
 const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
+  
   const id = parseUrlParamId(idString)
 
   return (
