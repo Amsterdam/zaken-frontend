@@ -23,14 +23,14 @@ const isMutateOptions = (options: Options): options is MutateOptions =>
   ["post", "put", "patch", "delete"].includes(options.method)
 
 type Config = {
-  keepUsingInvalidCache?: boolean
-  lazy?: boolean
   url: string
   groupName: ApiGroup
-  handleError?: (error: RequestError) => void
   isProtected?: boolean
   isMocked?: boolean
   isMockExtended?: boolean
+  keepUsingInvalidCache?: boolean
+  lazy?: boolean
+  handleError?: (error: RequestError) => void
 }
 
 const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, handleError, isProtected, lazy, keepUsingInvalidCache, isMocked = false, isMockExtended = false }: Config) => {
