@@ -37,6 +37,7 @@ const WorkflowForm: React.FC<Props> = ({ caseId, scaffold, data, postMethod, ext
         <ConfirmScaffoldFields<typeof data>
           fields={ fields.fields }
           data={ confirmData }
+          showFields={ Object.keys(fields.fields) }
           onCancel= { onCancelConfirm }
           onSubmit={ onSubmitConfirm }
           submitTitle= { submitTitle ?? "Resultaat verwerken" }

@@ -12,6 +12,7 @@ type NamedFields<T> = Record<keyof T, Field>
 type Props<RequestBody> = {
   fields: NamedFields<RequestBody>
   data: RequestBody | undefined
+  showFields?: string[]
   title?: string
   onCancel?: () => void
   cancelTitle?: string
@@ -45,14 +46,15 @@ const SpinnerWrap = styled.div`
 }
 `
 
-const createValuesObject = <T extends RequestBody>(fields: NamedFields<T>, data?: T) => {
+const createValuesObject = <T extends RequestBody>(fields: NamedFields<T>, data: T | undefined, showFields: string[]) => {
   if (data === undefined) return {}
-  return (Object.keys(data) as Array<keyof T>).reduce((acc, key) => {
-    if (fields.hasOwnProperty(key) === false) return acc
-    const { type, props } = fields[key]
-    const { label } = props
-    // TODO: Use field.name property vs key to access data
-    const v = data[key]
+  return showFields.reduce((acc, key) => {
+    const field = Object.keys(fields).map(field => fields[field]).find(field => field.props.name === key)
+    if (field === undefined) return acc
+    const { type, props } = field
+    const { label, name } = props
+    if (name === undefined) return acc
+    const v = data[name]
     const value =
       type === "ArrayField" ?
       <ArrayFieldList fields={ v as Array<Record<string, string>> } /> :
@@ -68,6 +70,7 @@ const ConfirmScaffoldFields = <T extends RequestBody>(props: Props<T>) => {
   const {
     fields,
     data,
+    showFields = [],
     title = defaultTitle,
     onCancel = noop,
     cancelTitle = defaultCancelTitle,
@@ -76,7 +79,7 @@ const ConfirmScaffoldFields = <T extends RequestBody>(props: Props<T>) => {
     showInModal = false
   } = props
   const [isSubmitting, setSubmitting] = useState(false)
-  const values = useMemo(() => createValuesObject<T>(fields, data), [data, fields])
+  const values = useMemo(() => createValuesObject<T>(fields, data, showFields), [data, fields, showFields])
 
   const onSubmitWrap = () => {
     setSubmitting(true)
