@@ -2,10 +2,8 @@ import React from "react"
 import { RouteComponentProps } from "@reach/router"
 import { Button, Divider, Heading, themeSpacing } from "@amsterdam/asc-ui"
 
-import { useCase } from "app/state/rest"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
-import DetailHeader from "app/features/shared/components/molecules/DetailHeader/DetailHeader"
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
 import TimelineContainer from "app/features/cases/components/CaseTimeline/TimelineContainer"
 import CaseDetails from "app/features/cases/components/CaseDetails/CaseDetails"
@@ -16,6 +14,7 @@ import to from "app/routing/utils/to"
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
+import DetailHeaderByCaseId from "app/features/shared/components/molecules/DetailHeader/DetailHeaderByCaseId"
 
 type Props = {
   id: string
@@ -41,15 +40,11 @@ const ButtonTertiary = styled(Button)`
 const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
 
   const id = parseUrlParamId(idString)
-  const { data } = useCase(id)
-  const bagId = data?.address.bag_id
 
   return (
     isValidUrlParamId<Components.Schemas.Case["id"]>(id) ?
     <DefaultLayout>
-      { bagId &&
-        <DetailHeader bagId={ bagId } enableSwitch={ false } />
-      }
+      <DetailHeaderByCaseId caseId={ id } enableSwitch={ false } />
       <RowWithColumn>
         <PageHeading />
       </RowWithColumn>
