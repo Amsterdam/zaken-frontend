@@ -35,21 +35,21 @@ export default (caseId: Components.Schemas.Case["id"], summons: MockComponents.S
           first_name: {
             type: "TextField",
             props: {
-              label:"Voornaam",
+              placeholder:"Voornaam",
               name: "first_name"
             }
           },
           preposition: {
             type: "TextField",
             props: {
-              label:"Tussenvoegsel",
+              placeholder:"Tussenvoegsel",
               name: "preposition"
             }
           },
           last_name: {
             type: "TextField",
             props: {
-              label: "Achternaam",
+              placeholder: "Achternaam",
               name: "last_name"
             }
           }
