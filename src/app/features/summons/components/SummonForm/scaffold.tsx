@@ -11,15 +11,49 @@ export default (caseId: Components.Schemas.Case["id"], summons: MockComponents.S
   }, {} as Record<string, string>)
 
   const fields = {
-    summons: {
+    summon: {
       type: "SelectField",
       props: {
         isRequired: true,
         withEmptyOption: true,
         label: "Welke aanschrijving is opgesteld?",
         extraLabel: <InfoButton infoTitle="TODO Aanschrijvingen" infoText="TODO Uitleg over aanschrijvingen"></InfoButton>,
-        name: "summons",
+        name: "summon",
         options: summonsObject
+      }
+    },
+    persons: {
+      type: "ArrayField",
+      props: {
+        label: "Aan wie is de aanschrijving gericht?",
+        name: "persons",
+        allowAdd: true,
+        allowRemove: true,
+        minItems: 1,
+        maxItems: 2,
+        scaffoldFields: {
+          first_name: {
+            type: "TextField",
+            props: {
+              placeholder:"Voornaam",
+              name: "first_name"
+            }
+          },
+          preposition: {
+            type: "TextField",
+            props: {
+              placeholder:"Tussenvoegsel",
+              name: "preposition"
+            }
+          },
+          last_name: {
+            type: "TextField",
+            props: {
+              placeholder: "Achternaam",
+              name: "last_name"
+            }
+          }
+        }
       }
     },
     text: {
@@ -48,8 +82,9 @@ export default (caseId: Components.Schemas.Case["id"], summons: MockComponents.S
 
   return new FormPositioner(fields as Fields)
     .setGrid("laptop", "1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr", [
-      ["summons", "summons"],
-      ["text", "text"],
+      ["summon", "summon", "summon"],
+      ["persons", "persons", "persons"],
+      ["text", "text", "text"],
       ["submit", "secondaryButton"]
     ])
     .getScaffoldProps()
