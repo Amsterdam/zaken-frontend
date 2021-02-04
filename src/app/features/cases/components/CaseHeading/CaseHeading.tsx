@@ -11,7 +11,7 @@ type Props = {
 }
 
 const Wrap = styled.div`
-  margin-bottom: ${ themeSpacing(24) };
+  margin-bottom: ${ themeSpacing(12) };
 `
 
 const Div = styled.div`

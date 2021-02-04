@@ -5,7 +5,7 @@ import { FormTitle } from "@amsterdam/asc-ui"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
 import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
-import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
+import Row, { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import VisitForm from "app/features/visits/components/CreateForm/CreateForm"
 import { useVisitsCreate } from "app/state/rest"
 import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
@@ -14,6 +14,7 @@ import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
 import navigateTo from "app/routing/navigateTo"
 import CaseHeading from "app/features/cases/components/CaseHeading/CaseHeading"
+import { Column } from "app/features/shared/components/atoms/Grid"
 
 type Props = {
   id: string
@@ -45,9 +46,13 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
       </RowWithColumn>
       <RowWithColumn>
         <CaseHeading id={ id } />
-        <FormTitle>Gebruik dit formulier om een huisbezoek aan te maken</FormTitle>
-        <VisitForm caseId={ id } onSubmit={ onSubmit } />
       </RowWithColumn>
+      <Row>
+        <Column spanLarge={50}>
+          <FormTitle>Gebruik dit formulier om een huisbezoek aan te maken</FormTitle>
+          <VisitForm caseId={ id } onSubmit={ onSubmit } />
+        </Column>
+      </Row>
     </DefaultLayout> :
     <NotFoundPage />
   )

@@ -45,9 +45,9 @@ const Scaffold = (caseId: Components.Schemas.Case["id"], opinions: MockComponent
   }
 
   return new FormPositioner(fields as Fields)
-    .setGrid("laptop", "1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr", [
-      ["opinions", "opinions", "opinions", "opinions"],
-      ["text", "text"],
+    .setGrid("laptop", "1fr 1fr 1fr", [
+      ["opinions", "opinions", "opinions"],
+      ["text", "text", "text"],
       ["submit", "secondaryButton"]
     ])
     .getScaffoldProps()
