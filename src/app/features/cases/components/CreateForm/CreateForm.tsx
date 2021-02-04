@@ -61,6 +61,7 @@ const CreateForm: React.FC<Props> = ({ bagId }) => {
         <ConfirmScaffoldFields<FormData>
           fields={ fields.fields }
           data={ confirmData }
+          showFields={ Object.keys(fields.fields) }
           onCancel={ onCancelConfirm }
           submitTitle="Zaak aanmaken"
           onSubmit={ onSubmitConfirmWrap }
