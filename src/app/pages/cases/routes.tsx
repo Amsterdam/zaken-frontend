@@ -1,13 +1,13 @@
 import IndexPage from "app/pages/cases/index/IndexPage"
 import DetailsPage from "app/pages/cases/details/DetailsPage"
-import DebriefCreatePage from "app/pages/debriefings/CreatePage"
-import DebriefEditPage from "app/pages/debriefings/EditPage"
-import OpinionCreatePage from "app/pages/opinions/CreatePage"
-import SummonCreatePage from "app/pages/summons/CreatePage"
-import DecisionCreatePage from "app/pages/decisions/CreatePage"
-import CorrespondenceCreatePage from "app/pages/correspondence/CreatePage"
+import DebriefCreatePage from "app/pages/case/debriefings/CreatePage"
+import DebriefEditPage from "app/pages/case/debriefings/EditPage"
+import OpinionCreatePage from "app/pages/case/opinions/CreatePage"
+import SummonCreatePage from "app/pages/case/summons/CreatePage"
+import DecisionCreatePage from "app/pages/case/decisions/CreatePage"
+import CorrespondenceCreatePage from "app/pages/case/correspondence/CreatePage"
 import CompleteCasePage from "app/pages/cases/complete/CompleteCasePage"
-import VisitCreatePage from "app/pages/visits/CreatePage"
+import VisitCreatePage from "app/pages/case/visits/CreatePage"
 
 
 // NOTE: please add your own POC-specific routes here.
