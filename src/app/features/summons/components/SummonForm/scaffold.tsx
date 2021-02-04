@@ -36,7 +36,8 @@ export default (caseId: Components.Schemas.Case["id"], summons: MockComponents.S
             type: "TextField",
             props: {
               placeholder:"Voornaam",
-              name: "first_name"
+              name: "first_name",
+              isRequired: true
             }
           },
           preposition: {
@@ -50,7 +51,8 @@ export default (caseId: Components.Schemas.Case["id"], summons: MockComponents.S
             type: "TextField",
             props: {
               placeholder: "Achternaam",
-              name: "last_name"
+              name: "last_name",
+              isRequired: true
             }
           }
         }
@@ -81,7 +83,7 @@ export default (caseId: Components.Schemas.Case["id"], summons: MockComponents.S
   }
 
   return new FormPositioner(fields as Fields)
-    .setGrid("laptop", "1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr", [
+    .setGrid("laptop", "1fr 1fr 1fr", [
       ["summon", "summon", "summon"],
       ["persons", "persons", "persons"],
       ["text", "text", "text"],
