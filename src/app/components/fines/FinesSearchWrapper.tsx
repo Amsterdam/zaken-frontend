@@ -3,7 +3,7 @@ import { SearchBar } from "@amsterdam/asc-ui"
 
 import { Row, Column, RowWithColumn } from "app/components/shared/components/atoms/Grid"
 import FinesSearchResultsList from "app/components/fines/FinesSearchResultsList"
-import useURLState from "app/components/shared/hooks/useURLState/useURLState"
+import useURLState from "app/hooks/useURLState/useURLState"
 
 
 const FinesSearchWrapper: React.FC = () => {

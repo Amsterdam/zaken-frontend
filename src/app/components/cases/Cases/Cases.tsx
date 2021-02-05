@@ -5,7 +5,7 @@ import TableCases from "app/components/cases/TableCases/TableCases"
 import CasesFilter from "app/components/cases/CasesFilter/CasesFilter"
 import { getDate, createOptions } from "app/components/cases/CasesFilter/scaffold"
 import { useCases } from "app/state/rest"
-import useURLState from "app/components/shared/hooks/useURLState/useURLState"
+import useURLState from "app/hooks/useURLState/useURLState"
 import ButtonMockCases from "./ButtonMockCases"
 
 const parse = (value: string | null) => {

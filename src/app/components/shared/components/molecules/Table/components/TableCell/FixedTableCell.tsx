@@ -2,8 +2,8 @@ import React from "react"
 import styled from "styled-components"
 import { themeColor, themeSpacing } from "@amsterdam/asc-ui"
 
-import useNodeDimensions from "app/components/shared/hooks/useNodeDimensions/useNodeDimensions"
-import useNodeByReference from "app/components/shared/hooks/useNodeByReference/useNodeByReference"
+import useNodeDimensions from "app/hooks/useNodeDimensions/useNodeDimensions"
+import useNodeByReference from "app/hooks/useNodeByReference/useNodeByReference"
 
 type StyledTDProps = {
   width?: number
