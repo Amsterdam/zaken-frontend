@@ -5,10 +5,10 @@ import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
 import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
 import Row, { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
-import VisitForm from "app/features/visits/components/CreateForm/CreateForm"
+import VisitForm from "app/features/visits/CreateForm/CreateForm"
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
-import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
+import NotFoundPage from "app/pages/errors/NotFoundPage"
 import CaseHeading from "app/features/cases/CaseHeading/CaseHeading"
 import { Column } from "app/features/shared/components/atoms/Grid"
 

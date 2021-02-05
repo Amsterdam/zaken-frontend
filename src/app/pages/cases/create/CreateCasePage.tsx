@@ -9,7 +9,7 @@ import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/Br
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
 import AddressHeadingByBagId from "app/features/shared/components/molecules/AddressHeadingByBagId/AddressHeadingByBagId"
 import CreateForm from "app/features/cases/CreateForm/CreateForm"
-import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
+import NotFoundPage from "app/pages/errors/NotFoundPage"
 
 type Props = {
   bagId: string

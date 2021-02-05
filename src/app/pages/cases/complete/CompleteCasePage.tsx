@@ -9,7 +9,7 @@ import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/Br
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
 import CaseHeading from "app/features/cases/CaseHeading/CaseHeading"
 import CaseCompleteForm from "app/features/cases/CaseCompleteForm/CaseCompleteForm"
-import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
+import NotFoundPage from "app/pages/errors/NotFoundPage"
 import { Column } from "app/features/shared/components/atoms/Grid"
 
 type Props = {

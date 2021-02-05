@@ -6,7 +6,7 @@ import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/"
 import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
-import FinesSearchWrapper from "app/features/fines/components/FinesSearchWrapper"
+import FinesSearchWrapper from "app/features/fines/FinesSearchWrapper"
 
 const FinePage: React.FC<RouteComponentProps> = () => (
     <DefaultLayout>

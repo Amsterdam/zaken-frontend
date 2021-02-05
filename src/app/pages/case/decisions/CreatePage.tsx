@@ -7,10 +7,10 @@ import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/Br
 import Row, { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
-import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
+import NotFoundPage from "app/pages/errors/NotFoundPage"
 import CaseHeading from "app/features/cases/CaseHeading/CaseHeading"
 import { Column } from "app/features/shared/components/atoms/Grid"
-import DecisionForm from "app/features/decisions/components/DecisionForm/DecisionForm"
+import DecisionForm from "app/features/decisions/DecisionForm/DecisionForm"
 
 type Props = {
   id: string

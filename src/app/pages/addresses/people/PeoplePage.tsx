@@ -9,7 +9,7 @@ import DetailHeader from "app/features/shared/components/molecules/DetailHeader/
 import People from "app/features/addresses/People/People"
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
 import MockWrapper from "app/features/shared/components/molecules/MockWrapper/MockWrapper"
-import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
+import NotFoundPage from "app/pages/errors/NotFoundPage"
 
 type Props = {
   bagId: string

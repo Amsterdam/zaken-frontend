@@ -5,11 +5,11 @@ import { Link, Heading } from "@amsterdam/asc-ui"
 import Row, { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
-import PermitDetailsList from "app/features/permits/components/PermitDetails/PermitDetailsList"
+import PermitDetailsList from "app/features/permits/PermitDetails/PermitDetailsList"
 import DetailHeader from "app/features/shared/components/molecules/DetailHeader/DetailHeader"
 import Column from "app/features/shared/components/atoms/Grid/Column"
 import MockWrapper from "app/features/shared/components/molecules/MockWrapper/MockWrapper"
-import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
+import NotFoundPage from "app/pages/errors/NotFoundPage"
 import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId"
 
 type Props = {

@@ -12,7 +12,7 @@ import PanoramaPreview from "app/features/shared/components/molecules/Panorama/P
 import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLink"
 import to from "app/routing/utils/to"
 import CasesByBagId from "app/features/addresses/CasesByBagId/CasesByBagId"
-import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
+import NotFoundPage from "app/pages/errors/NotFoundPage"
 
 type Props = {
   bagId: string

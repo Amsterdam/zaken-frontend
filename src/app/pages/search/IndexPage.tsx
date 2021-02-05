@@ -3,7 +3,7 @@ import { RouteComponentProps } from "@reach/router"
 import { Heading } from "@amsterdam/asc-ui"
 
 import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
-import SearchWrapper from "app/features/search/components/SearchWrapper/SearchWrapper"
+import SearchWrapper from "app/features/search/SearchWrapper/SearchWrapper"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 
 const IndexPage: React.FC<RouteComponentProps> = () => (

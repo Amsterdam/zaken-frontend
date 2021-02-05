@@ -13,7 +13,7 @@ import ButtonLink from "app/features/shared/components/atoms/ButtonLink/ButtonLi
 import to from "app/routing/utils/to"
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
-import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
+import NotFoundPage from "app/pages/errors/NotFoundPage"
 import DetailHeaderByCaseId from "app/features/shared/components/molecules/DetailHeader/DetailHeaderByCaseId"
 
 type Props = {

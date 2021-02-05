@@ -7,7 +7,7 @@ import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/
 import DetailHeader from "app/features/shared/components/molecules/DetailHeader/DetailHeader"
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
 import CasesByBagId from "app/features/addresses/CasesByBagId/CasesByBagId"
-import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
+import NotFoundPage from "app/pages/errors/NotFoundPage"
 
 type Props = {
   bagId: string

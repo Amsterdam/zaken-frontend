@@ -3,7 +3,7 @@ import { FormTitle } from "@amsterdam/asc-ui"
 
 import { useSummons } from "app/state/rest/"
 import WorkflowForm from "app/features/cases/Workflow/WorkflowForm"
-import scaffold from "app/features/summons/components/SummonForm/scaffold"
+import scaffold from "app/features/summons/SummonForm/scaffold"
 import FormWithExtraLabel from "app/features/shared/components/atoms/FormWithExtraLabel/FormWithExtraLabel"
 
 type Props = {
