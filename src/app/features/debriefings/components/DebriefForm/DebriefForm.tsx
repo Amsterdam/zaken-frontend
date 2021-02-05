@@ -13,6 +13,7 @@ type Props = {
   isLoading?: boolean
 }
 
+// TODO: Find a cleaner solution for this
 const FormWithTooltip = styled.div`
   form > div > div > div > div {
     flex-grow: 0;
@@ -21,16 +22,15 @@ const FormWithTooltip = styled.div`
   }
 `
 
-const DebriefForm: React.FC<Props> = ({ caseId, initialValues, isLoading, onSubmit }) => 
-    <FormWithTooltip>
-      <ScaffoldForm
-        showSpinner={ isLoading }
-        onSubmit={ onSubmit }
-        initialValues={ initialValues ?? { case: caseId } }
-      >
-        <ScaffoldFields {...createScaffoldProps(caseId, initialValues !== undefined) } />
-      </ScaffoldForm>  
-    </FormWithTooltip>
-
+const DebriefForm: React.FC<Props> = ({ caseId, initialValues, isLoading, onSubmit }) =>
+  <FormWithTooltip>
+    <ScaffoldForm
+      showSpinner={ isLoading }
+      onSubmit={ onSubmit }
+      initialValues={ initialValues ?? { case: caseId } }
+    >
+      <ScaffoldFields {...createScaffoldProps(caseId, initialValues !== undefined) } />
+    </ScaffoldForm>
+  </FormWithTooltip>
 
 export default DebriefForm
