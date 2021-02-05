@@ -1,7 +1,7 @@
 import React from "react"
 
 import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
-import ScaffoldFields from "app/components/shared/components/molecules/Form/ScaffoldFields"
+import ScaffoldFields from "app/components/shared/Form/ScaffoldFields"
 import createScaffoldProps from "./scaffold"
 import styled from "styled-components"
 

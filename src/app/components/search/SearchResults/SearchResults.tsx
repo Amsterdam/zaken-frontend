@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from "react"
 import { useBAGWithZipCode } from "app/state/rest"
-import Table from "app/components/shared/components/molecules/Table/Table"
-import OpenButton from "app/components/shared/components/atoms/OpenButton/OpenButton"
+import Table from "app/components/shared/Table/Table"
+import OpenButton from "app/components/shared/OpenButton/OpenButton"
 import to from "app/routing/utils/to"
 import { BAGAddressResponse } from "app/state/rest/types/BAGAddressResponse"
 

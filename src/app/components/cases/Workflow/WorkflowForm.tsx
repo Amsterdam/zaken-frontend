@@ -1,11 +1,11 @@
 import React from "react"
 import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
 
-import { Fields } from "app/components/shared/components/molecules/Form/ScaffoldFields"
-import ScaffoldFields from "app/components/shared/components/molecules/Form/ScaffoldFields"
+import { Fields } from "app/components/shared/Form/ScaffoldFields"
+import ScaffoldFields from "app/components/shared/Form/ScaffoldFields"
 import { Spinner } from "@amsterdam/asc-ui"
-import ConfirmScaffoldFields from "app/components/shared/components/molecules/ConfirmScaffoldFields/ConfirmScaffoldFields"
-import useSubmitConfirmation from "app/components/shared/components/molecules/ConfirmScaffoldFields/hooks/useSubmitConfirmation"
+import ConfirmScaffoldFields from "app/components/shared/ConfirmScaffoldFields/ConfirmScaffoldFields"
+import useSubmitConfirmation from "app/components/shared/ConfirmScaffoldFields/hooks/useSubmitConfirmation"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]

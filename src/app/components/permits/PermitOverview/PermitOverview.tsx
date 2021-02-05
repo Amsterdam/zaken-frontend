@@ -3,7 +3,7 @@ import { Link } from "@amsterdam/asc-ui"
 import { usePermitCheckmarks } from "app/state/rest"
 
 import to from "app/routing/utils/to"
-import DefinitionList from "app/components/shared/components/molecules/DefinitionList/DefinitionList"
+import DefinitionList from "app/components/shared/DefinitionList/DefinitionList"
 
 type Props = {
   bagId: string

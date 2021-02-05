@@ -1,6 +1,6 @@
 import { FormPositioner } from "@amsterdam/scaffold-form/package"
-import { Fields } from "app/components/shared/components/molecules/Form/ScaffoldFields"
-import { displayDate } from "app/components/shared/components/atoms/DateDisplay/DateDisplay"
+import { Fields } from "app/components/shared/Form/ScaffoldFields"
+import { displayDate } from "app/components/shared/DateDisplay/DateDisplay"
 
 export const getDate = (backwards = 0) => {
   const d = new Date(new Date().setDate(new Date().getDate() - backwards))

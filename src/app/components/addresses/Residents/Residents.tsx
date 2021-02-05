@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { themeSpacing, Heading } from "@amsterdam/asc-ui"
 
 import { useResidents } from "app/state/rest"
-import LoadingDetails from "app/components/shared/components/molecules/Details/LoadingDetails"
+import LoadingDetails from "app/components/shared/Details/LoadingDetails"
 import Resident from "app/components/addresses/Residents/Resident"
 
 type Props = {

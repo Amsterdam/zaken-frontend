@@ -1,5 +1,5 @@
 import React from "react"
-import { displayDate, displayTime } from "app/components/shared/components/atoms/DateDisplay/DateDisplay"
+import { displayDate, displayTime } from "app/components/shared/DateDisplay/DateDisplay"
 import { Dl, DLProps, mapArrayToUl } from "../helpers/Helpers"
 import { visitEventValuesMap, visitLabelsMap, visit_go_ahead } from "../helpers/dictionaries"
 

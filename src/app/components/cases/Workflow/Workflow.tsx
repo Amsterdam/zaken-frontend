@@ -2,7 +2,7 @@ import React, { useCallback, useMemo } from "react"
 import { Button, Icon } from "@amsterdam/asc-ui"
 
 import { useCaseTasks, useTaskComplete } from "app/state/rest"
-import ButtonLink from "app/components/shared/components/atoms/ButtonLink/ButtonLink"
+import ButtonLink from "app/components/shared/ButtonLink/ButtonLink"
 import to from "app/routing/utils/to"
 import WorkflowStatus from "./WorkflowStatus"
 import LockOpen from "@material-ui/icons/LockOpen"

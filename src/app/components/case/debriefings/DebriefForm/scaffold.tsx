@@ -1,7 +1,7 @@
 import React from "react"
 import { FormPositioner } from "@amsterdam/scaffold-form/package"
-import { Fields } from "app/components/shared/components/molecules/Form/ScaffoldFields"
-import InfoButton from "app/components/shared/components/molecules/InfoHeading/InfoButton"
+import { Fields } from "app/components/shared/Form/ScaffoldFields"
+import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import { helpTextViolation } from "./HelpContent"
 import navigateTo from "app/routing/navigateTo"
 

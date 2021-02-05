@@ -1,6 +1,6 @@
 import React from "react"
 
-import Modal, { ModalBlock } from "app/components/shared/components/molecules/Modal/Modal"
+import Modal, { ModalBlock } from "app/components/shared/Modal/Modal"
 import CompleteTaskForm from "./CompleteTaskForm"
 
 

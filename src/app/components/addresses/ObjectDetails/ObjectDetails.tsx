@@ -1,6 +1,6 @@
 import React, { useMemo } from "react"
 import { useBAG, useBAGLodging } from "app/state/rest"
-import DefinitionList from "app/components/shared/components/molecules/DefinitionList/DefinitionList"
+import DefinitionList from "app/components/shared/DefinitionList/DefinitionList"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]

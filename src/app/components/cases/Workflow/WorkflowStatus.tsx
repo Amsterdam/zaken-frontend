@@ -2,7 +2,7 @@ import React from "react"
 import { Heading, themeColor, themeSpacing } from "@amsterdam/asc-ui"
 import styled from "styled-components"
 
-import Table from "app/components/shared/components/molecules/Table/Table"
+import Table from "app/components/shared/Table/Table"
 
 type CellContent = React.ReactNode
 

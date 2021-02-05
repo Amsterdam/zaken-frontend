@@ -1,9 +1,9 @@
 import React from "react"
 import styled from "styled-components"
-import { ExpandMore, ExpandLess } from "app/components/shared/components/atoms/Icons"
+import { ExpandMore, ExpandLess } from "app/components/shared/Icons"
 import { Button, Icon } from "@amsterdam/asc-ui"
 
-import { useModal } from "app/components/shared/components/molecules/Modal/hooks/useModal"
+import { useModal } from "app/components/shared/Modal/hooks/useModal"
 import OtherAddressesModal from "./OtherAddressesModal"
 
 type Index = "first" | "last" | undefined

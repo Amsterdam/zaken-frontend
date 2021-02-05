@@ -1,7 +1,7 @@
 import React from "react"
-import { getDay }from "app/components/shared/components/atoms/DayDisplay/DayDisplay"
+import { getDay }from "app/components/shared/DayDisplay/DayDisplay"
 
-import { Timeline } from "app/components/shared/components/molecules/Timeline"
+import { Timeline } from "app/components/shared/Timeline"
 import { mapCaseType } from "../helpers/Helpers"
 import ButtonEditEvent from "./ButtonEditEvent"
 import ReasonData from "./ReasonData"

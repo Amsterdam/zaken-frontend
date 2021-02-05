@@ -1,9 +1,9 @@
 import React, { useMemo } from "react"
 
 import to from "app/routing/utils/to"
-import Table from "app/components/shared/components/molecules/Table/Table"
-import OpenButton from "app/components/shared/components/atoms/OpenButton/OpenButton"
-import DateDisplay from "app/components/shared/components/atoms/DateDisplay/DateDisplay"
+import Table from "app/components/shared/Table/Table"
+import OpenButton from "app/components/shared/OpenButton/OpenButton"
+import DateDisplay from "app/components/shared/DateDisplay/DateDisplay"
 
 
 type Props = {

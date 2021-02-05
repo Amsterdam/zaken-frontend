@@ -2,7 +2,7 @@ import React from "react"
 import { Button } from "@amsterdam/asc-ui"
 
 import usePageDebriefing from "app/pages/case/debriefings/hooks/usePageDebriefing"
-import { Delete } from "app/components/shared/components/atoms/Icons"
+import { Delete } from "app/components/shared/Icons"
 
 type Props = {
   id: Components.Schemas.Case["id"]

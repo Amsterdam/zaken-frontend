@@ -3,7 +3,7 @@ import { useFine } from "app/state/rest"
 import { Heading, Spinner, themeSpacing } from "@amsterdam/asc-ui"
 import styled from "styled-components"
 import FinesSearchResult from "./FinesSearchResult"
-import InfoButton from "app/components/shared/components/molecules/InfoHeading/InfoButton"
+import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 
 type Props = {
   searchString: string

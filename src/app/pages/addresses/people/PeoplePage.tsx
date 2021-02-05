@@ -5,10 +5,10 @@ import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId"
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
 import Row, { RowWithColumn } from "app/components/layouts/Grid/Row"
 import Column from "app/components/layouts/Grid/Column"
-import DetailHeader from "app/components/shared/components/molecules/DetailHeader/DetailHeader"
+import DetailHeader from "app/components/shared/DetailHeader/DetailHeader"
 import People from "app/components/addresses/People/People"
-import PageHeading from "app/components/shared/components/molecules/PageHeading/PageHeading"
-import MockWrapper from "app/components/shared/components/molecules/MockWrapper/MockWrapper"
+import PageHeading from "app/components/shared/PageHeading/PageHeading"
+import MockWrapper from "app/components/shared/MockWrapper/MockWrapper"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
 
 type Props = {

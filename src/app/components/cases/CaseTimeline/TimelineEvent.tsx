@@ -1,5 +1,5 @@
 import React from "react"
-import { TimelineWrapper } from "app/components/shared/components/molecules/Timeline"
+import { TimelineWrapper } from "app/components/shared/Timeline"
 import Reason from "./Events/Reason"
 import Debrief from "./Events/Debrief"
 import Visit from "./Events/Visit"

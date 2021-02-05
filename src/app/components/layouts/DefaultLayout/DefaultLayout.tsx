@@ -1,11 +1,11 @@
 import React from "react"
 import { Header } from "@amsterdam/asc-ui"
 import styled from "styled-components"
-import DefaultNavigation from "app/components/shared/components/molecules/navigation/DefaultNavigation"
-import MainWrapper from "app/components/shared/components/atoms/MainWrapper/MainWrapper"
+import DefaultNavigation from "app/components/shared/navigation/DefaultNavigation"
+import MainWrapper from "app/components/layouts/MainWrapper/MainWrapper"
 import to from "app/routing/utils/to"
 import FlashMessages from "app/components/layouts/FlashMessages/FlashMessages"
-import UserInfo from "app/components/shared/components/molecules/UserInfo/UserInfo"
+import UserInfo from "app/components/shared/UserInfo/UserInfo"
 
 type Props = {
   showSearchButton?: boolean

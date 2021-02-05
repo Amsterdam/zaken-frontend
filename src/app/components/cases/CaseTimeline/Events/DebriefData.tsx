@@ -1,6 +1,6 @@
 import React from "react"
 import { Dl, DLProps } from "../helpers/Helpers"
-import { displayDate } from "app/components/shared/components/atoms/DateDisplay/DateDisplay"
+import { displayDate } from "app/components/shared/DateDisplay/DateDisplay"
 import { debriefViolationMap, debriefLabelsMap } from "../helpers/dictionaries"
 
 const DebriefData: React.FC<DLProps> = ({ thread, showDate }) => {

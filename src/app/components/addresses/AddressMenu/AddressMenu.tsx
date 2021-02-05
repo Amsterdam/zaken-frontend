@@ -6,7 +6,7 @@ import to from "app/routing/utils/to"
 import routesObject from "app/routing/routes"
 import { usePermitDetails } from "app/state/rest"
 import { useResidents } from "app/state/rest/"
-import MockWrapper from "app/components/shared/components/molecules/MockWrapper/MockWrapper"
+import MockWrapper from "app/components/shared/MockWrapper/MockWrapper"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]

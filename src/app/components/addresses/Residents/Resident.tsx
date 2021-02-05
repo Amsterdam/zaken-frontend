@@ -1,7 +1,7 @@
 import React, { useMemo } from "react"
-import PersonDisplay from "app/components/shared/components/atoms/PersonDisplay/PersonDisplay"
-import DateDisplay from "app/components/shared/components/atoms/DateDisplay/DateDisplay"
-import DefinitionList from "app/components/shared/components/molecules/DefinitionList/DefinitionList"
+import PersonDisplay from "app/components/shared/PersonDisplay/PersonDisplay"
+import DateDisplay from "app/components/shared/DateDisplay/DateDisplay"
+import DefinitionList from "app/components/shared/DefinitionList/DefinitionList"
 
 type Props = {
   resident: Components.Schemas.Resident

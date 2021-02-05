@@ -6,7 +6,7 @@ import EmailLink from "./EmailLink"
 import PhoneLink from "./PhoneLink"
 
 import { useSupportContacts } from "app/state/rest/"
-import { Refresh } from "app/components/shared/components/atoms/Icons"
+import { Refresh } from "app/components/shared/Icons"
 import styled from "styled-components"
 
 const showOptionalProperty = (prop: string | undefined) => prop ?? "(onbekend)"

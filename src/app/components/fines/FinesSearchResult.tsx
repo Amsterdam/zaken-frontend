@@ -1,6 +1,6 @@
 import React, { useMemo } from "react"
-import DateDisplay from "app/components/shared/components/atoms/DateDisplay/DateDisplay"
-import DefinitionList from "app/components/shared/components/molecules/DefinitionList/DefinitionList"
+import DateDisplay from "app/components/shared/DateDisplay/DateDisplay"
+import DefinitionList from "app/components/shared/DefinitionList/DefinitionList"
 
 type Props = {
   data: Components.Schemas.Fine

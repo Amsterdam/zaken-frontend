@@ -1,7 +1,7 @@
 import React from "react"
 import { Button } from "@amsterdam/asc-ui"
 
-import { useModal } from "app/components/shared/components/molecules/Modal/hooks/useModal"
+import { useModal } from "app/components/shared/Modal/hooks/useModal"
 import CompleteTaskModal from "./CompleteTaskModal"
 
 type Props = {

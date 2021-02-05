@@ -2,7 +2,7 @@ import React from "react"
 import { FormTitle } from "@amsterdam/asc-ui"
 import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
 
-import ScaffoldFields from "app/components/shared/components/molecules/Form/ScaffoldFields"
+import ScaffoldFields from "app/components/shared/Form/ScaffoldFields"
 import createScaffoldProps from "./scaffold"
 import { useAuthors, useVisitsCreate } from "app/state/rest"
 import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
