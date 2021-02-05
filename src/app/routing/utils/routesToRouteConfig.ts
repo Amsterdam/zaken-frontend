@@ -1,6 +1,6 @@
 import { FC } from "react"
 import type { RouteComponentProps } from "@reach/router"
-import * as Assets from "app/features/shared/components/atoms/Icons"
+import * as Assets from "app/components/shared/components/atoms/Icons"
 import slashSandwich from "slash-sandwich"
 
 export type RouteConfigObject = Record<string, RouteConfig | Page>

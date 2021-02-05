@@ -1,9 +1,9 @@
 import React from "react"
 import { Heading } from "@amsterdam/asc-ui"
 
-import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
-import NotAuthorizedAlert from "app/features/auth/NotAuthorizedAlert/NotAuthorizedAlert"
-import KeycloakValues from "app/features/auth/KeycloakValues/KeycloadValues"
+import DefaultLayout from "app/components/shared/components/layouts/DefaultLayout/DefaultLayout"
+import NotAuthorizedAlert from "app/components/auth/NotAuthorizedAlert/NotAuthorizedAlert"
+import KeycloakValues from "app/components/auth/KeycloakValues/KeycloadValues"
 
 const AuthPage: React.FC = () => (
   <DefaultLayout>
