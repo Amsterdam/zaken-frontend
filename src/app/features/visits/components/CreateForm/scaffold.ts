@@ -129,7 +129,7 @@ const scaffold = (caseId: Components.Schemas.Case["id"], authors: Components.Sch
   }
 
   return new FormPositioner(fields as Fields)
-    .setGrid("laptop", "1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr", [
+    .setGrid("laptop", "1fr 1fr 1fr 1fr", [
       ["author1", "author1", "author2", "author2"],
       ["time", "time"],
       ["status", "status"],
