@@ -1,7 +1,7 @@
 import React, { useMemo } from "react"
 import { Heading, Paragraph, Spinner } from "@amsterdam/asc-ui"
 
-import { RowWithColumn } from "app/components/shared/components/atoms/Grid"
+import { RowWithColumn } from "app/components/layouts/Grid"
 import EmailLink from "./EmailLink"
 import PhoneLink from "./PhoneLink"
 

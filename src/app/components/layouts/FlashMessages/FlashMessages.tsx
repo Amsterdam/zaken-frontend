@@ -3,7 +3,7 @@ import { useLocation } from "@reach/router"
 
 import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
 import { Alert } from "@amsterdam/asc-ui"
-import { Column, Row } from "app/components/shared/components/atoms/Grid"
+import { Column, Row } from "app/components/layouts/Grid"
 
 const FlashMessages: React.FC = () => {
   const { pathname } = useLocation()

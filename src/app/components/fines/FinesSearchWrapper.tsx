@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { SearchBar } from "@amsterdam/asc-ui"
 
-import { Row, Column, RowWithColumn } from "app/components/shared/components/atoms/Grid"
+import { Row, Column, RowWithColumn } from "app/components/layouts/Grid"
 import FinesSearchResultsList from "app/components/fines/FinesSearchResultsList"
 import useURLState from "app/hooks/useURLState/useURLState"
 

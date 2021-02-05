@@ -3,7 +3,7 @@ import { SearchBar } from "@amsterdam/asc-ui"
 import styled from "styled-components"
 import debounce from "lodash.debounce"
 
-import { RowWithColumn } from "app/components/shared/components/atoms/Grid/Row"
+import { RowWithColumn } from "app/components/layouts/Grid/Row"
 import SearchResults from "app/components/search/SearchResults/SearchResults"
 import useURLState from "app/hooks/useURLState/useURLState"
 

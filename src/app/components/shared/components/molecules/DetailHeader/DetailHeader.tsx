@@ -1,7 +1,7 @@
 import React from "react"
 
-import Row from "app/components/shared/components/atoms/Grid/Row"
-import Column from "app/components/shared/components/atoms/Grid/Column"
+import Row from "app/components/layouts/Grid/Row"
+import Column from "app/components/layouts/Grid/Column"
 import BreadCrumbs from "app/components/shared/components/molecules/BreadCrumbs/BreadCrumbs"
 import AddressHeader from "app/components/addresses/AddressHeader/AddressHeader"
 

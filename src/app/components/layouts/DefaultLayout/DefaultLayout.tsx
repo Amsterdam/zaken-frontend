@@ -4,7 +4,7 @@ import styled from "styled-components"
 import DefaultNavigation from "app/components/shared/components/molecules/navigation/DefaultNavigation"
 import MainWrapper from "app/components/shared/components/atoms/MainWrapper/MainWrapper"
 import to from "app/routing/utils/to"
-import FlashMessages from "app/components/shared/components/molecules/FlashMessages/FlashMessages"
+import FlashMessages from "app/components/layouts/FlashMessages/FlashMessages"
 import UserInfo from "app/components/shared/components/molecules/UserInfo/UserInfo"
 
 type Props = {

@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { breakpoint, themeSpacing } from "@amsterdam/asc-ui"
 import layouts from "@amsterdam/asc-ui/lib/theme/default/layouts"
 
-import Column from "app/components/shared/components/atoms/Grid/Column"
+import Column from "app/components/layouts/Grid/Column"
 
 /** Rows for page layout
  * optional props:

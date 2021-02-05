@@ -3,7 +3,7 @@ import { RouteComponentProps } from "@reach/router"
 import { Button } from "@amsterdam/asc-ui"
 
 import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId"
-import { RowWithColumn } from "app/components/shared/components/atoms/Grid/Row"
+import { RowWithColumn } from "app/components/layouts/Grid/Row"
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
 import AddressHeader from "app/components/addresses/AddressHeader/AddressHeader"
 import AddressMenu from "app/components/addresses/AddressMenu/AddressMenu"

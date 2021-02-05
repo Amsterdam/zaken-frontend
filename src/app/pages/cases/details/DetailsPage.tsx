@@ -3,7 +3,7 @@ import { RouteComponentProps } from "@reach/router"
 import { Button, Divider, Heading, themeSpacing } from "@amsterdam/asc-ui"
 
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
-import { RowWithColumn } from "app/components/shared/components/atoms/Grid/Row"
+import { RowWithColumn } from "app/components/layouts/Grid/Row"
 import PageHeading from "app/components/shared/components/molecules/PageHeading/PageHeading"
 import TimelineContainer from "app/components/cases/CaseTimeline/TimelineContainer"
 import CaseDetails from "app/components/cases/CaseDetails/CaseDetails"
