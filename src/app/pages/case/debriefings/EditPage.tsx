@@ -46,7 +46,7 @@ const EditPage: React.FC<RouteComponentProps<Props>> = ({ id: idString, debriefi
     isValidUrlParamId<Components.Schemas.Case["id"]>(id) && isValidUrlParamId<Components.Schemas.Debriefing["id"]>(debriefingId) ?
     <DefaultLayout>
       <RowWithColumn>
-        <BreadCrumbs />
+        <BreadCrumbs routeParams={ { id } } />
       </RowWithColumn>
       <RowWithColumn>
         <PageHeading />

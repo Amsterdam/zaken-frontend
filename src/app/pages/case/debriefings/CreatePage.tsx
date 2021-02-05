@@ -29,7 +29,7 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
     isValidUrlParamId<Components.Schemas.Case["id"]>(id) ?
     <DefaultLayout>
       <RowWithColumn>
-        <BreadCrumbs />
+        <BreadCrumbs routeParams={ { id } } />
       </RowWithColumn>
       <RowWithColumn>
         <PageHeading />

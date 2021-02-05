@@ -46,6 +46,7 @@ const BreadCrumbs: React.FC<Props> = ({ routeParams }) => {
   const pageConfig = route ? routes[route] : undefined
   const items = pageConfig?.path?.map(item => ({ ...item, to: to(item.path, routeParams) })) ?? []
 
+  // TODO: Use BreadCrumbs component provided by ASC https://amsterdam.github.io/amsterdam-styled-components/?path=/story/ui-breadcrumbs--default-story
   // TODO: Remove `({ theme: ascDefaultTheme })` after fix https://github.com/Amsterdam/amsterdam-styled-components/issues/1108
   return (
     <nav>

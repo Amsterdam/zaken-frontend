@@ -5,7 +5,7 @@ import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
 import Row, { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
-import Breadcrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
+import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
 import CaseHeading from "app/features/cases/components/CaseHeading/CaseHeading"
 import CaseCompleteForm from "app/features/cases/components/CaseCompleteForm/CaseCompleteForm"
@@ -24,7 +24,7 @@ const CompleteCasePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }
     isValidUrlParamId<Components.Schemas.Case["id"]>(id) ?
     <DefaultLayout>
       <RowWithColumn>
-        <Breadcrumbs />
+        <BreadCrumbs routeParams={ { id } } />
       </RowWithColumn>
       <RowWithColumn>
         <PageHeading />
