@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { Heading, themeSpacing } from "@amsterdam/asc-ui"
 import { useBAG } from "app/state/rest/"
-import AddressDisplay from "app/features/addresses/components/AddressDisplay/AddressDisplay"
+import AddressDisplay from "app/features/addresses/AddressDisplay/AddressDisplay"
 
 
 type Props = {

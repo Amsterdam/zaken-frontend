@@ -8,7 +8,7 @@ import Row, { RowWithColumn } from "app/features/shared/components/atoms/Grid/Ro
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
-import CaseHeading from "app/features/cases/components/CaseHeading/CaseHeading"
+import CaseHeading from "app/features/cases/CaseHeading/CaseHeading"
 import { Column } from "app/features/shared/components/atoms/Grid"
 import OpinionForm from "app/features/opinion/components/OpinionForm/OpinionForm"
 

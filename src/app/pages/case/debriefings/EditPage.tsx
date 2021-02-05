@@ -8,9 +8,9 @@ import { Row, RowWithColumn, Column } from "app/features/shared/components/atoms
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
-import CaseHeading from "app/features/cases/components/CaseHeading/CaseHeading"
-import DebriefDeleteButton from "app/features/debriefings/components/DebriefDeleteButton/DebriefDeleteButton"
-import DebriefEditForm from "app/features/debriefings/components/DebriefForm/DebriefEditForm"
+import CaseHeading from "app/features/cases/CaseHeading/CaseHeading"
+import DebriefDeleteButton from "app/features/debriefings/DebriefDeleteButton/DebriefDeleteButton"
+import DebriefEditForm from "app/features/debriefings/DebriefForm/DebriefEditForm"
 
 type Props = {
   id: string

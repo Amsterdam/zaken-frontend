@@ -7,8 +7,8 @@ import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/
 import Row, { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
 import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
-import CaseHeading from "app/features/cases/components/CaseHeading/CaseHeading"
-import CaseCompleteForm from "app/features/cases/components/CaseCompleteForm/CaseCompleteForm"
+import CaseHeading from "app/features/cases/CaseHeading/CaseHeading"
+import CaseCompleteForm from "app/features/cases/CaseCompleteForm/CaseCompleteForm"
 import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
 import { Column } from "app/features/shared/components/atoms/Grid"
 

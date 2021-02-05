@@ -9,7 +9,7 @@ import VisitForm from "app/features/visits/components/CreateForm/CreateForm"
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
-import CaseHeading from "app/features/cases/components/CaseHeading/CaseHeading"
+import CaseHeading from "app/features/cases/CaseHeading/CaseHeading"
 import { Column } from "app/features/shared/components/atoms/Grid"
 
 type Props = {

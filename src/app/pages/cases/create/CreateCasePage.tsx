@@ -8,7 +8,7 @@ import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/
 import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
 import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
 import AddressHeadingByBagId from "app/features/shared/components/molecules/AddressHeadingByBagId/AddressHeadingByBagId"
-import CreateForm from "app/features/cases/components/CreateForm/CreateForm"
+import CreateForm from "app/features/cases/CreateForm/CreateForm"
 import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
 
 type Props = {
