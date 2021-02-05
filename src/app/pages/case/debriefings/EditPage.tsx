@@ -9,8 +9,8 @@ import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
 import CaseHeading from "app/components/cases/CaseHeading/CaseHeading"
-import DebriefDeleteButton from "app/components/debriefings/DebriefDeleteButton/DebriefDeleteButton"
-import DebriefEditForm from "app/components/debriefings/DebriefForm/DebriefEditForm"
+import DebriefDeleteButton from "app/components/case/debriefings/DebriefDeleteButton/DebriefDeleteButton"
+import DebriefEditForm from "app/components/case/debriefings/DebriefForm/DebriefEditForm"
 
 type Props = {
   id: string

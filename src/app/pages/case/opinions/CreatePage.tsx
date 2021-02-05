@@ -10,7 +10,7 @@ import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
 import CaseHeading from "app/components/cases/CaseHeading/CaseHeading"
 import { Column } from "app/components/shared/components/atoms/Grid"
-import OpinionForm from "app/components/opinion/OpinionForm/OpinionForm"
+import OpinionForm from "app/components/case/opinions/OpinionForm/OpinionForm"
 
 type Props = {
   id: string

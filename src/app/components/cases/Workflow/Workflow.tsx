@@ -6,7 +6,7 @@ import ButtonLink from "app/components/shared/components/atoms/ButtonLink/Button
 import to from "app/routing/utils/to"
 import WorkflowStatus from "./WorkflowStatus"
 import LockOpen from "@material-ui/icons/LockOpen"
-import CompleteTaskButton from "app/components/tasks/CompleteTask/CompleteTaskButton"
+import CompleteTaskButton from "app/components/case/tasks/CompleteTask/CompleteTaskButton"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]

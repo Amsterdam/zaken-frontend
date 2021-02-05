@@ -5,7 +5,7 @@ import DefaultLayout from "app/components/shared/components/layouts/DefaultLayou
 import PageHeading from "app/components/shared/components/molecules/PageHeading/PageHeading"
 import BreadCrumbs from "app/components/shared/components/molecules/BreadCrumbs/BreadCrumbs"
 import Row, { RowWithColumn } from "app/components/shared/components/atoms/Grid/Row"
-import VisitForm from "app/components/visits/CreateForm/CreateForm"
+import VisitForm from "app/components/case/visits/CreateForm/CreateForm"
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 import NotFoundPage from "app/pages/errors/NotFoundPage"

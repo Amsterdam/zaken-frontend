@@ -10,7 +10,7 @@ import NotFoundPage from "app/pages/errors/NotFoundPage"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 import CaseHeading from "app/components/cases/CaseHeading/CaseHeading"
 import { Column } from "app/components/shared/components/atoms/Grid"
-import DebriefCreateForm from "app/components/debriefings/DebriefForm/DebriefCreateForm"
+import DebriefCreateForm from "app/components/case/debriefings/DebriefForm/DebriefCreateForm"
 
 type Props = {
   id: string
