@@ -2,7 +2,7 @@ import React from "react"
 import { RouteComponentProps } from "@reach/router"
 
 import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId"
-import DefaultLayout from "app/components/shared/components/layouts/DefaultLayout/DefaultLayout"
+import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
 import Row, { RowWithColumn } from "app/components/shared/components/atoms/Grid/Row"
 import Column from "app/components/shared/components/atoms/Grid/Column"
 import DetailHeader from "app/components/shared/components/molecules/DetailHeader/DetailHeader"

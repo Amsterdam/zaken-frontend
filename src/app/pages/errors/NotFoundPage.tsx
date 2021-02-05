@@ -1,7 +1,7 @@
 import React from "react"
 import { RouteComponentProps } from "@reach/router"
 import { Heading } from "@amsterdam/asc-ui"
-import DefaultLayout from "app/components/shared/components/layouts/DefaultLayout/DefaultLayout"
+import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
 
 const NotFoundPage: React.FC<RouteComponentProps> = () => (
   <DefaultLayout>

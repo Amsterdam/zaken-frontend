@@ -3,7 +3,7 @@ import { RouteComponentProps } from "@reach/router"
 
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
-import DefaultLayout from "app/components/shared/components/layouts/DefaultLayout/DefaultLayout"
+import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
 import Row, { RowWithColumn } from "app/components/shared/components/atoms/Grid/Row"
 import BreadCrumbs from "app/components/shared/components/molecules/BreadCrumbs/BreadCrumbs"
 import PageHeading from "app/components/shared/components/molecules/PageHeading/PageHeading"

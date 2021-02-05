@@ -2,7 +2,7 @@ import React from "react"
 import { RouteComponentProps } from "@reach/router"
 import { Button, Divider, Heading, themeSpacing } from "@amsterdam/asc-ui"
 
-import DefaultLayout from "app/components/shared/components/layouts/DefaultLayout/DefaultLayout"
+import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
 import { RowWithColumn } from "app/components/shared/components/atoms/Grid/Row"
 import PageHeading from "app/components/shared/components/molecules/PageHeading/PageHeading"
 import TimelineContainer from "app/components/cases/CaseTimeline/TimelineContainer"

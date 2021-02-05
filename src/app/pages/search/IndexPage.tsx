@@ -4,7 +4,7 @@ import { Heading } from "@amsterdam/asc-ui"
 
 import { RowWithColumn } from "app/components/shared/components/atoms/Grid/Row"
 import SearchWrapper from "app/components/search/SearchWrapper/SearchWrapper"
-import DefaultLayout from "app/components/shared/components/layouts/DefaultLayout/DefaultLayout"
+import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
 
 const IndexPage: React.FC<RouteComponentProps> = () => (
   <DefaultLayout showSearchButton={false}>

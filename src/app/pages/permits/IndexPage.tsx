@@ -4,7 +4,7 @@ import { Link, Heading } from "@amsterdam/asc-ui"
 
 import Row, { RowWithColumn } from "app/components/shared/components/atoms/Grid/Row"
 import PageHeading from "app/components/shared/components/molecules/PageHeading/PageHeading"
-import DefaultLayout from "app/components/shared/components/layouts/DefaultLayout/DefaultLayout"
+import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
 import PermitDetailsList from "app/components/permits/PermitDetails/PermitDetailsList"
 import DetailHeader from "app/components/shared/components/molecules/DetailHeader/DetailHeader"
 import Column from "app/components/shared/components/atoms/Grid/Column"

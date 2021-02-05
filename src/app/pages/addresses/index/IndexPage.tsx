@@ -4,7 +4,7 @@ import { Button } from "@amsterdam/asc-ui"
 
 import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId"
 import { RowWithColumn } from "app/components/shared/components/atoms/Grid/Row"
-import DefaultLayout from "app/components/shared/components/layouts/DefaultLayout/DefaultLayout"
+import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
 import AddressHeader from "app/components/addresses/AddressHeader/AddressHeader"
 import AddressMenu from "app/components/addresses/AddressMenu/AddressMenu"
 import BreadCrumbs from "app/components/shared/components/molecules/BreadCrumbs/BreadCrumbs"
