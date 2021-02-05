@@ -12,19 +12,19 @@ type Props = {
 
 const CorrespondenceForm: React.FC<Props> = ({ id }) => {
 
-    const { data, execPost } = useCorrespondence()
+  const { data, execPost } = useCorrespondence()
 
   return (
     <>
       <FormTitle>Gebruik dit formulier om notitie van correspondentie toe te voegen</FormTitle>
       <FormWithExtraLabel>
         <WorkflowForm
-          caseId={ id! }
+          caseId={ id }
           data={ data }
           postMethod={ execPost }
-          scaffold= { scaffold }
+          scaffold={ scaffold }
         />
-        </FormWithExtraLabel>
+      </FormWithExtraLabel>
     </>
   )
 }

@@ -24,7 +24,7 @@ const SummonForm: React.FC<Props> = ({ id }) => {
             postMethod={ execPost }
             scaffold={ scaffold }
         />
-        </FormWithExtraLabel>
+      </FormWithExtraLabel>
     </>
   )
 }

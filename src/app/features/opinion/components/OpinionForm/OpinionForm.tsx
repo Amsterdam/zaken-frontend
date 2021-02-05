@@ -30,13 +30,13 @@ const OpinionForm: React.FC<Props> = ({ id }) => {
       <FormTitle>Gebruik dit formulier om aan te geven wat de beoordeling van de zienswijze is</FormTitle>
       <FormWithExtraLabel>
         <WorkflowForm
-          caseId={ id! }
+          caseId={ id }
           data={ data }
           postMethod={ execPost }
-          scaffold= { scaffold }
-          extraLabel = { summonData?.title }
+          scaffold={ scaffold }
+          extraLabel={ summonData?.title }
         />
-        </FormWithExtraLabel>
+      </FormWithExtraLabel>
     </>
   )
 }

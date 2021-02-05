@@ -12,7 +12,7 @@ type Props = {
 
 const DecisionForm: React.FC<Props> = ({ id }) => {
 
-    const { data, execPost } = useDecisions()
+  const { data, execPost } = useDecisions()
 
   return (
     <>
@@ -24,7 +24,7 @@ const DecisionForm: React.FC<Props> = ({ id }) => {
             postMethod={ execPost }
             scaffold={ scaffold }
         />
-        </FormWithExtraLabel>
+      </FormWithExtraLabel>
     </>
   )
 }
