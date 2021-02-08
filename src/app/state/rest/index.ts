@@ -50,7 +50,8 @@ export const useResidents = (bagId: Components.Schemas.Address["bag_id"], option
 }
 
 export const useCases = (state_date?: string, options?: Options) => {
-  const url = `${ makeGatewayUrl("cases") }${ state_date !== undefined ? `?state_date=${ state_date }` : "" }`
+  const queryString = state_date !== undefined ? qs.stringify({ state_date }, { addQueryPrefix: true }) : ""
+  const url = `${ makeGatewayUrl("cases") }${ queryString }`
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.PaginatedCaseList>({
     ...options,
