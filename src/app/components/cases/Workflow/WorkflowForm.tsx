@@ -6,6 +6,8 @@ import ScaffoldFields from "app/components/shared/Form/ScaffoldFields"
 import { Spinner } from "@amsterdam/asc-ui"
 import ConfirmScaffoldFields from "app/components/shared/ConfirmScaffoldFields/ConfirmScaffoldFields"
 import useSubmitConfirmation from "app/components/shared/ConfirmScaffoldFields/hooks/useSubmitConfirmation"
+import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
+import navigateTo from "app/routing/navigateTo"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
@@ -25,11 +27,20 @@ const WorkflowForm: React.FC<Props> = ({ caseId, scaffold, data, postMethod, ext
     onSubmitConfirm,
     onCancelConfirm
   } = useSubmitConfirmation<MockComponents.Schemas.CaseRequestBody>(postMethod)
+  const { addSuccessFlashMessage } = useFlashMessages()
 
   if (data === undefined) return <Spinner />
 
   const fields = scaffold(caseId, data, extraLabel)
   const submitTitle = fields.fields.submit.props.label
+
+  const onSubmitConfirmWrap = async () => {
+    const result = await onSubmitConfirm()
+    if (result === undefined) return
+    const path = `/zaken/${ caseId }`
+    addSuccessFlashMessage(path, "Succes", "Het resultaat is verwerkt")
+    navigateTo(path)
+  }
 
   return (
     <ScaffoldForm onSubmit={ onSubmit } initialValues={initialValues}>
@@ -40,7 +51,7 @@ const WorkflowForm: React.FC<Props> = ({ caseId, scaffold, data, postMethod, ext
           data={ confirmData }
           showFields={ Object.keys(fields.fields) }
           onCancel= { onCancelConfirm }
-          onSubmit={ onSubmitConfirm }
+          onSubmit={ onSubmitConfirmWrap }
           submitTitle= { submitTitle ?? "Resultaat verwerken" }
           showInModal={ true }
         />

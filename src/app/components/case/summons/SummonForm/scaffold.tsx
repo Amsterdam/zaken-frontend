@@ -3,10 +3,10 @@ import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import navigateTo from "app/routing/navigateTo"
 
-export default (caseId: Components.Schemas.Case["id"], summons: MockComponents.Schemas.Summon[]) => {
+export default (caseId: Components.Schemas.Case["id"], summons: Components.Schemas.SummonType[]) => {
 
   const summonTypes = summons.reduce((acc, cur) => {
-    acc[`${ cur.id }`] = cur.title
+    acc[`${ cur.id }`] = cur.name
     return acc
   }, {} as Record<string, string>)
 

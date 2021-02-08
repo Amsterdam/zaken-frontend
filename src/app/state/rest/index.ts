@@ -282,7 +282,19 @@ export const useSummons = (options?: Options) => {
   })
 }
 
-//TODO-MOCKED remve thsi when Opinions is finished
+export const useSummonTypes = (teamId?: Components.Schemas.CaseTeam["id"], options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<Components.Schemas.PaginatedSummonTypeList>({
+    ...options,
+    lazy: teamId === undefined,
+    url: makeGatewayUrl("teams", teamId, "summon-types"),
+    groupName: "case",
+    handleError,
+    isProtected: true
+  })
+}
+
+//TODO-MOCKED remove this when Opinions is finished
 export const useSummonsMocked = (options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<MockComponents.Schemas.Summon[]>({
