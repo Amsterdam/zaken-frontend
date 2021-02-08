@@ -1,4 +1,4 @@
-import IndexPage from "app/pages/search/index/IndexPage"
+import IndexPage from "app/pages/search/IndexPage"
 
 export default {
   "zoeken": IndexPage

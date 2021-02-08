@@ -3,13 +3,13 @@ import { RouteComponentProps } from "@reach/router"
 import { FormTitle } from "@amsterdam/asc-ui"
 
 import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId"
-import { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
-import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
-import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
-import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
-import AddressHeadingByBagId from "app/features/shared/components/molecules/AddressHeadingByBagId/AddressHeadingByBagId"
-import CreateForm from "app/features/cases/components/CreateForm/CreateForm"
-import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
+import { RowWithColumn } from "app/components/layouts/Grid/Row"
+import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
+import BreadCrumbs from "app/components/shared/BreadCrumbs/BreadCrumbs"
+import PageHeading from "app/components/shared/PageHeading/PageHeading"
+import AddressHeadingByBagId from "app/components/shared/AddressHeadingByBagId/AddressHeadingByBagId"
+import CreateForm from "app/components/cases/CreateForm/CreateForm"
+import NotFoundPage from "app/pages/errors/NotFoundPage"
 
 type Props = {
   bagId: string

@@ -1,16 +1,16 @@
 import React from "react"
 import { RouteComponentProps } from "@reach/router"
 
-import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
-import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
-import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
-import Row, { RowWithColumn } from "app/features/shared/components/atoms/Grid/Row"
+import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
+import PageHeading from "app/components/shared/PageHeading/PageHeading"
+import BreadCrumbs from "app/components/shared/BreadCrumbs/BreadCrumbs"
+import Row, { RowWithColumn } from "app/components/layouts/Grid/Row"
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
-import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
+import NotFoundPage from "app/pages/errors/NotFoundPage"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
-import CaseHeading from "app/features/cases/components/CaseHeading/CaseHeading"
-import { Column } from "app/features/shared/components/atoms/Grid"
-import DebriefCreateForm from "app/features/debriefings/components/DebriefForm/DebriefCreateForm"
+import CaseHeading from "app/components/cases/CaseHeading/CaseHeading"
+import { Column } from "app/components/layouts/Grid"
+import DebriefCreateForm from "app/components/case/debriefings/DebriefForm/DebriefCreateForm"
 
 type Props = {
   id: string

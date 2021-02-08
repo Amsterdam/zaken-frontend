@@ -1,16 +1,16 @@
 import React from "react"
 import { RouteComponentProps } from "@reach/router"
 
-import DefaultLayout from "app/features/shared/components/layouts/DefaultLayout/DefaultLayout"
-import PageHeading from "app/features/shared/components/molecules/PageHeading/PageHeading"
-import BreadCrumbs from "app/features/shared/components/molecules/BreadCrumbs/BreadCrumbs"
-import { Row, RowWithColumn, Column } from "app/features/shared/components/atoms/Grid"
+import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
+import PageHeading from "app/components/shared/PageHeading/PageHeading"
+import BreadCrumbs from "app/components/shared/BreadCrumbs/BreadCrumbs"
+import { Row, RowWithColumn, Column } from "app/components/layouts/Grid"
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
-import NotFoundPage from "app/features/shared/components/pages/NotFoundPage"
-import CaseHeading from "app/features/cases/components/CaseHeading/CaseHeading"
-import DebriefDeleteButton from "app/features/debriefings/components/DebriefDeleteButton/DebriefDeleteButton"
-import DebriefEditForm from "app/features/debriefings/components/DebriefForm/DebriefEditForm"
+import NotFoundPage from "app/pages/errors/NotFoundPage"
+import CaseHeading from "app/components/cases/CaseHeading/CaseHeading"
+import DebriefDeleteButton from "app/components/case/debriefings/DebriefDeleteButton/DebriefDeleteButton"
+import DebriefEditForm from "app/components/case/debriefings/DebriefForm/DebriefEditForm"
 
 type Props = {
   id: string
