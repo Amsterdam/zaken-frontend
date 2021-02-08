@@ -29,7 +29,7 @@ export type Options = {
 
 export const useIsAuthorized = (options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<any>({
+  return useApiRequest<IsAuthorizedResponse>({
     ...options,
     url: makeGatewayUrl("is-authorized"),
     groupName: "auth",
