@@ -273,6 +273,18 @@ export const useOpinions = (options?: Options) => {
 
 export const useSummons = (options?: Options) => {
   const handleError = useErrorHandler()
+  return useApiRequest<Components.Schemas.Summon[]>({
+    ...options,
+    url: makeGatewayUrl("summons"),
+    groupName: "case",
+    handleError,
+    isProtected: true
+  })
+}
+
+//TODO-MOCKED remve thsi when Opinions is finished
+export const useSummonsMocked = (options?: Options) => {
+  const handleError = useErrorHandler()
   return useApiRequest<MockComponents.Schemas.Summon[]>({
     ...options,
     url: "summons",

@@ -1,18 +1,20 @@
 import React from "react"
 import { FormTitle } from "@amsterdam/asc-ui"
 
-import { useSummons } from "app/state/rest/"
+import { useSummons, useSummonsMocked } from "app/state/rest/"
 import WorkflowForm from "app/components/cases/Workflow/WorkflowForm"
 import scaffold from "app/components/case/summons/SummonForm/scaffold"
 import FormWithExtraLabel from "app/components/shared/FormWithExtraLabel/FormWithExtraLabel"
 
 type Props = {
   id: Components.Schemas.Case["id"]
+  initialValues?: Partial<Components.Schemas.Summon>
 }
 
 const SummonForm: React.FC<Props> = ({ id }) => {
 
-  const { data, execPost } = useSummons()
+  const { data } = useSummonsMocked()
+  const { execPost } = useSummons()
 
   return (
     <>
@@ -23,6 +25,7 @@ const SummonForm: React.FC<Props> = ({ id }) => {
             data={ data }
             postMethod={ execPost }
             scaffold={ scaffold }
+            initialValues = { { case: id } }
         />
       </FormWithExtraLabel>
     </>

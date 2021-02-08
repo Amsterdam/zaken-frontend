@@ -13,9 +13,10 @@ type Props = {
   postMethod: (data: any) => Promise<unknown>
   scaffold: (caseId: Components.Schemas.Case["id"], data: any, extraLabel?: string) => { fields: Fields }
   extraLabel?: string
+  initialValues?: unknown
 }
 
-const WorkflowForm: React.FC<Props> = ({ caseId, scaffold, data, postMethod, extraLabel }) => {
+const WorkflowForm: React.FC<Props> = ({ caseId, scaffold, data, postMethod, extraLabel, initialValues }) => {
 
   const {
     isSubmitted,
@@ -31,7 +32,7 @@ const WorkflowForm: React.FC<Props> = ({ caseId, scaffold, data, postMethod, ext
   const submitTitle = fields.fields.submit.props.label
 
   return (
-    <ScaffoldForm onSubmit={ onSubmit }>
+    <ScaffoldForm onSubmit={ onSubmit } initialValues={initialValues}>
       <ScaffoldFields {...fields } />
       { isSubmitted &&
         <ConfirmScaffoldFields<typeof data>

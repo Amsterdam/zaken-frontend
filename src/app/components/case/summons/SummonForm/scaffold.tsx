@@ -5,21 +5,21 @@ import navigateTo from "app/routing/navigateTo"
 
 export default (caseId: Components.Schemas.Case["id"], summons: MockComponents.Schemas.Summon[]) => {
 
-  const summonsObject = summons.reduce((acc, cur) => {
-    acc[`summon.${ cur.id }`] = cur.title
+  const summonTypes = summons.reduce((acc, cur) => {
+    acc[`${ cur.id }`] = cur.title
     return acc
   }, {} as Record<string, string>)
 
   const fields = {
-    summon: {
+    type: {
       type: "SelectField",
       props: {
         isRequired: true,
         withEmptyOption: true,
         label: "Welke aanschrijving is opgesteld?",
         extraLabel: <InfoButton infoTitle="TODO Aanschrijvingen" infoText="TODO Uitleg over aanschrijvingen"></InfoButton>,
-        name: "summon",
-        options: summonsObject
+        name: "type",
+        options: summonTypes
       }
     },
     persons: {
@@ -58,12 +58,12 @@ export default (caseId: Components.Schemas.Case["id"], summons: MockComponents.S
         }
       }
     },
-    text: {
+    description: {
       type: "TextAreaField",
       props: {
         label: "Korte toelichting",
         extraLabel: "(Niet verplicht)",
-        name: "text"
+        name: "description"
       }
     },
     submit: {
@@ -84,9 +84,9 @@ export default (caseId: Components.Schemas.Case["id"], summons: MockComponents.S
 
   return new FormPositioner(fields as Fields)
     .setGrid("laptop", "1fr 1fr 1fr", [
-      ["summon", "summon", "summon"],
+      ["type", "type", "type"],
       ["persons", "persons", "persons"],
-      ["text", "text", "text"],
+      ["description", "description", "description"],
       ["submit", "secondaryButton"]
     ])
     .getScaffoldProps()
