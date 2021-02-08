@@ -3,9 +3,6 @@ import slashSandwich from "slash-sandwich"
 
 import useApiRequest from "./hooks/useApiRequest"
 import { makeGatewayUrl, useErrorHandler } from "./hooks/utils/utils"
-import { APIListResponse } from "./types/ApiListResponse"
-import { BAGAddressResponse } from "./types/BAGAddressResponse"
-import { BAGObjectResponse } from "./types/BAGObjectResponse"
 
 export type ApiGroup =
   | "addresses"
@@ -55,7 +52,7 @@ export const useResidents = (bagId: Components.Schemas.Address["bag_id"], option
 export const useCases = (state_date?: string, options?: Options) => {
   const url = `${ makeGatewayUrl("cases") }${ state_date !== undefined ? `?state_date=${ state_date }` : "" }`
   const handleError = useErrorHandler()
-  return useApiRequest<APIListResponse<Components.Schemas.Case>>({
+  return useApiRequest<Components.Schemas.PaginatedCaseList>({
     ...options,
     url,
     groupName: "cases",

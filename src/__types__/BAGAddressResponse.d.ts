@@ -1,4 +1,4 @@
-export type BAGAddressResponse = {
+declare type BAGAddressResponse = {
   results: Array<{
     _links: Array<any>
     adres: string

@@ -3,7 +3,6 @@ import { useBAGWithZipCode } from "app/state/rest"
 import Table from "app/components/shared/Table/Table"
 import OpenButton from "app/components/shared/OpenButton/OpenButton"
 import to from "app/routing/utils/to"
-import { BAGAddressResponse } from "app/state/rest/types/BAGAddressResponse"
 
 type SearchResult = Pick<BAGAddressResponse["results"][0], "adres" | "postcode" | "landelijk_id">
 type Props = {

@@ -4,7 +4,6 @@ import { ChevronRight } from "app/components/shared/Icons"
 import { Button } from "@amsterdam/asc-ui"
 
 import useOtherAddressesByBagId from "app/state/rest/custom/useOtherAddresses/useOtherAddresses"
-import { BAGAddressResponse } from "app/state/rest/types/BAGAddressResponse"
 import Table from "app/components/shared/Table/Table"
 import navigateTo from "app/routing/navigateTo"
 
