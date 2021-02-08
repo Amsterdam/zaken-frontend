@@ -294,19 +294,6 @@ export const useSummonTypes = (teamId?: Components.Schemas.CaseTeam["id"], optio
   })
 }
 
-//TODO-MOCKED remove this when Opinions is finished
-export const useSummonsMocked = (options?: Options) => {
-  const handleError = useErrorHandler()
-  return useApiRequest<MockComponents.Schemas.Summon[]>({
-    ...options,
-    url: "summons",
-    groupName: "case",
-    handleError,
-    isProtected: true,
-    isMocked: true
-  })
-}
-
 export const useSummon = (id?: number, options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<MockComponents.Schemas.Summon>({

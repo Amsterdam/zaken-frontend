@@ -89,6 +89,57 @@ const reasons: MockComponents.Schemas.Reason[] = [
   }
 ]
 
+const summons: MockComponents.Schemas.Summon[] = [
+  {
+    id: 1,
+    title: "Waarschuwing VV-vergunning aaaa"
+  },
+  {
+    id: 2,
+    title: "Waarschuwing SS-vergunning bbbb"
+  },
+  {
+    id: 3,
+    title: "Waarschuwing BB-vergunning"
+  },
+  {
+    id: 4,
+    title: "Legalisatiebrief"
+  },
+  {
+    id: 5,
+    title: "Vooraankondiging dwangsom"
+  },
+  {
+    id: 6,
+    title: "Voornemen boete"
+  },
+  {
+    id: 7,
+    title: "Voornemen invordering dwangsom"
+  },
+  {
+    id: 8,
+    title: "Meldplicht voornemen boete"
+  },
+  {
+    id: 9,
+    title: "Voornemen preventieve last"
+  },
+  {
+    id: 10,
+    title: "Voornemen tot intrekking shortstay"
+  },
+  {
+    id: 11,
+    title: "Voornemen intrekking BB-vergunning"
+  },
+  {
+    id: 12,
+    title: "Voornemen intrekking VV-vergunning"
+  }
+]
+
 const teams: MockComponents.Schemas.Team[] = [
   {
     id: 1,
@@ -135,5 +186,6 @@ export default {
   decisions,
   opinions,
   reasons,
+  summons,
   teams
 }
