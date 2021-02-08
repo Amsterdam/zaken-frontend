@@ -92,11 +92,11 @@ const reasons: MockComponents.Schemas.Reason[] = [
 const summons: MockComponents.Schemas.Summon[] = [
   {
     id: 1,
-    title: "Waarschuwing VV-vergunning aaaa"
+    title: "Waarschuwing VV-vergunning"
   },
   {
     id: 2,
-    title: "Waarschuwing SS-vergunning bbbb"
+    title: "Waarschuwing SS-vergunning"
   },
   {
     id: 3,
