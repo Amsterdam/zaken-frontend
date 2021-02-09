@@ -7,7 +7,7 @@ export default (caseId: Components.Schemas.CaseEvent["id"]) => {
 
   const allEventsInTime = data?.reduce((acc, item, index) => {
     const last = acc[acc.length - 1]
-    if (last.type !== item.type) {
+    if (last?.type !== item.type) {
       acc.push({ index, type: item.type, eventList: [item] })
     } else {
       last.eventList.push(item)
