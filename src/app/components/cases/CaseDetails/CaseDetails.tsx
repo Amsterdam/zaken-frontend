@@ -21,6 +21,7 @@ const CaseDetails: React.FC<Props> = ({ caseId }) => {
   return <DefinitionList
     isLoading={ data === undefined }
     numInitialVisibleRows={ 3 }
+    numLoadingRows={3}
     values={ values }
   />
 }

@@ -3,7 +3,7 @@ import { RouteComponentProps } from "@reach/router"
 import { Button, Divider, Heading, themeSpacing } from "@amsterdam/asc-ui"
 
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
-import { RowWithColumn } from "app/components/layouts/Grid/Row"
+import Row, { RowWithColumn } from "app/components/layouts/Grid/Row"
 import PageHeading from "app/components/shared/PageHeading/PageHeading"
 import TimelineContainer from "app/components/cases/CaseTimeline/TimelineContainer"
 import CaseDetails from "app/components/cases/CaseDetails/CaseDetails"
@@ -15,6 +15,7 @@ import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
 import DetailHeaderByCaseId from "app/components/shared/DetailHeader/DetailHeaderByCaseId"
+import { Column } from "app/components/layouts/Grid"
 
 type Props = {
   id: string
@@ -48,9 +49,11 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
       <RowWithColumn>
         <PageHeading />
       </RowWithColumn>
-      <RowWithColumn>
-        <CaseDetails caseId={ id } />
-      </RowWithColumn>
+      <Row>
+        <Column spanLarge={48}>
+          <CaseDetails caseId={ id } />
+        </Column>
+      </Row>
       <RowWithColumn>
         <Heading as="h2">
           Status
@@ -67,7 +70,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
       </RowWithColumn>
       <RowWithColumn>
         {/* TODO-MOCKED summonId has to come from useCaseEvents, so summonId can be removed here */}
-        <Workflow caseId={ id } summonId={ 6 } />
+        <Workflow caseId={ id } />
       </RowWithColumn>
       <RowWithColumn>
         <Heading as="h2">Zaakhistorie</Heading>
