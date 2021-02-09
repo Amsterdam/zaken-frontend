@@ -7,7 +7,7 @@ import DateDisplay from "app/components/shared/DateDisplay/DateDisplay"
 
 
 type Props = {
-  data?: { results: Components.Schemas.Case[] }
+  data?: Components.Schemas.PaginatedCaseList
   isBusy: boolean
 }
 

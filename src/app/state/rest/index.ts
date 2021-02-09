@@ -3,9 +3,6 @@ import slashSandwich from "slash-sandwich"
 
 import useApiRequest from "./hooks/useApiRequest"
 import { makeGatewayUrl, useErrorHandler } from "./hooks/utils/utils"
-import { APIListResponse } from "./types/ApiListResponse"
-import { BAGAddressResponse } from "./types/BAGAddressResponse"
-import { BAGObjectResponse } from "./types/BAGObjectResponse"
 
 export type ApiGroup =
   | "addresses"
@@ -32,7 +29,7 @@ export type Options = {
 
 export const useIsAuthorized = (options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<any>({
+  return useApiRequest<IsAuthorizedResponse>({
     ...options,
     url: makeGatewayUrl("is-authorized"),
     groupName: "auth",
@@ -53,9 +50,10 @@ export const useResidents = (bagId: Components.Schemas.Address["bag_id"], option
 }
 
 export const useCases = (state_date?: string, options?: Options) => {
-  const url = `${ makeGatewayUrl("cases") }${ state_date !== undefined ? `?state_date=${ state_date }` : "" }`
+  const queryString = state_date !== undefined ? qs.stringify({ state_date }, { addQueryPrefix: true }) : ""
+  const url = `${ makeGatewayUrl("cases") }${ queryString }`
   const handleError = useErrorHandler()
-  return useApiRequest<APIListResponse<Components.Schemas.Case>>({
+  return useApiRequest<Components.Schemas.PaginatedCaseList>({
     ...options,
     url,
     groupName: "cases",
