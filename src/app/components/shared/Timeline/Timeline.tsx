@@ -33,39 +33,39 @@ type ButtonVariant =
   | "application"
 
 
-  type ButtonStyleProps = {
-    /**
-     * @deprecated Use variant instead. Pass the theme-color.
-     */
-    color?: Theme.ColorType
-    /**
-     * @deprecated Use size to create a button with equal width and height
-     */
-    square?: boolean
-    /**
-     * Set an equal height and width
-     */
-    size?: number
-    /**
-     * A variant, usually different background-color and color of a button
-     */
-    variant?: ButtonVariant
-    /**
-     * Add narrow arrow on the right side of the secondary button
-     */
-    taskflow?: boolean
-  }
+type ButtonStyleProps = {
+  /**
+   * @deprecated Use variant instead. Pass the theme-color.
+   */
+  color?: Theme.ColorType
+  /**
+   * @deprecated Use size to create a button with equal width and height
+   */
+  square?: boolean
+  /**
+   * Set an equal height and width
+   */
+  size?: number
+  /**
+   * A variant, usually different background-color and color of a button
+   */
+  variant?: ButtonVariant
+  /**
+   * Add narrow arrow on the right side of the secondary button
+   */
+  taskflow?: boolean
+}
 
-  const Label = styled.span`
-    display: inline-block;
-    padding: ${ themeSpacing(3) } 0;
-  `
+const Label = styled.span`
+  display: inline-block;
+  padding: ${ themeSpacing(3) } 0;
+`
 
 const Timeline: React.FC<
   Props &
-    ButtonStyleProps &
-    React.ButtonHTMLAttributes<HTMLButtonElement> &
-    React.AnchorHTMLAttributes<HTMLAnchorElement>
+  ButtonStyleProps &
+  React.ButtonHTMLAttributes<HTMLButtonElement> &
+  React.AnchorHTMLAttributes<HTMLAnchorElement>
 > = ({
   children,
   title,
