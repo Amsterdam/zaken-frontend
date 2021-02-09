@@ -21,6 +21,14 @@ export const debriefViolationMap = {
   "ADDITIONAL_VISIT_REQUIRED": "Aanvullend huisbezoek nodig"
 } as Record<string, string>
 
+// SUMMON
+export const summonLabelsMap = {
+  "date_added": "Datum",
+  "author": "Projecthandhaver",
+  "persons": "Ontvanger(s)",
+  "description": "Toelichting"
+} as Record<string, string>
+
 
 // VISIT
 export const visitLabelsMap = {
