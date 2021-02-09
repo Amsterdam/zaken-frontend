@@ -32,6 +32,7 @@ declare namespace Components {
          */
         export interface CamundaTaskComplete {
             camunda_task_id: string;
+            case: number;
             variables: {
                 [name: string]: any;
             };
