@@ -12,7 +12,7 @@ export const debriefLabelsMap = {
   "author": "Projecthandhaver",
   "violation": "Overtreding",
   "feedback": "Terugkoppeling"
-} as Record<string, string>
+}
 
 export const debriefViolationMap = {
   "YES": "Ja, overtreding",
@@ -20,6 +20,14 @@ export const debriefViolationMap = {
   "ADDITIONAL_RESEARCH_REQUIRED": "Nader intern onderzoek nodig",
   "ADDITIONAL_VISIT_REQUIRED": "Aanvullend huisbezoek nodig"
 } as Record<string, string>
+
+// SUMMON
+export const summonLabelsMap = {
+  "date_added": "Datum",
+  "author": "Projecthandhaver",
+  "persons": "Ontvanger(s)",
+  "description": "Toelichting"
+}
 
 
 // VISIT
@@ -33,7 +41,7 @@ export const visitLabelsMap = {
   "suggest_next_visit": "Volgend bezoek",
   "suggest_next_visit_description": "Toelichting",
   "notes": "Toelichting"
-} as Record<string, string>
+}
 
 export const visitEventValuesMap = {
   "malfunctioning_doorbel": "Bel functioneert niet",

@@ -11,6 +11,7 @@ export type DLProps = {
 // FUNCTIONS
 export const mapCaseType = (type: Components.Schemas.TypeEnum) => {
   switch (type) {
+    case "SUMMON": return "Aanschrijving"
     case "DEBRIEFING": return "Debrief"
     case "VISIT": return "Huisbezoek(en)"
     case "CASE": return "Aanleiding"

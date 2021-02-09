@@ -3,6 +3,7 @@ import { TimelineWrapper } from "app/components/shared/Timeline"
 import Reason from "./Events/Reason"
 import Debrief from "./Events/Debrief"
 import Visit from "./Events/Visit"
+import Summon from "./Events/Summon"
 
 export type TimelineEventItem = {
   index: number
@@ -25,6 +26,11 @@ const TimelineEvent: React.FC<Props> = ({ timelineEventItem: { index, type, even
         /> :
       type === "DEBRIEFING" ?
         <Debrief
+          caseEvents={ eventList }
+          isOpen={ index === 0 }
+        /> :
+      type === "SUMMON" ?
+        <Summon
           caseEvents={ eventList }
           isOpen={ index === 0 }
         /> :
