@@ -273,13 +273,24 @@ export const useOpinions = (options?: Options) => {
 
 export const useSummons = (options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<MockComponents.Schemas.Summon[]>({
+  return useApiRequest<Components.Schemas.Summon[]>({
     ...options,
-    url: "summons",
+    url: makeGatewayUrl("summons"),
     groupName: "case",
     handleError,
-    isProtected: true,
-    isMocked: true
+    isProtected: true
+  })
+}
+
+export const useSummonTypes = (teamId?: Components.Schemas.CaseTeam["id"], options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<Components.Schemas.PaginatedSummonTypeList>({
+    ...options,
+    lazy: teamId === undefined,
+    url: makeGatewayUrl("teams", teamId, "summon-types"),
+    groupName: "case",
+    handleError,
+    isProtected: true
   })
 }
 

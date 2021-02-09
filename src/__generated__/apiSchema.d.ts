@@ -254,6 +254,24 @@ declare namespace Components {
             previous?: string | null; // uri
             results?: DecosPermit[];
         }
+        export interface PaginatedSummonTypeList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=4
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null; // uri
+            results?: SummonType[];
+        }
         export interface PaginatedSupportContactList {
             /**
              * example:
@@ -394,6 +412,24 @@ declare namespace Components {
             results: Resident[];
         }
         export type SoortVorderingEnum = "PBF" | "PBN" | "PRV" | "SOC";
+        export interface Summon {
+            readonly id: number;
+            description: string;
+            case: number;
+            type: number;
+            persons: SummonedPerson[];
+        }
+        export interface SummonType {
+            readonly id: number;
+            name: string;
+        }
+        export interface SummonedPerson {
+            readonly id: number;
+            first_name: string;
+            preposition?: string | null;
+            last_name: string;
+            readonly summon: number;
+        }
         export interface SupportContact {
             readonly id: number;
             name: string;
@@ -413,7 +449,7 @@ declare namespace Components {
             suggest_next_visit_description: string | null;
             notes: string | null;
         }
-        export type TypeEnum = "DEBRIEFING" | "VISIT" | "CASE";
+        export type TypeEnum = "DEBRIEFING" | "VISIT" | "CASE" | "SUMMON";
         export interface User {
             id: string; // uuid
             email: string; // email
@@ -742,6 +778,12 @@ declare namespace Paths {
             }
         }
     }
+    namespace SummonsCreate {
+        export type RequestBody = Components.Schemas.Summon;
+        namespace Responses {
+            export type $201 = Components.Schemas.Summon;
+        }
+    }
     namespace SupportContactsList {
         namespace Parameters {
             export type Page = number;
@@ -777,6 +819,21 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCaseReasonList;
+        }
+    }
+    namespace TeamsSummonTypesList {
+        namespace Parameters {
+            export type Id = number;
+            export type Page = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        export interface QueryParameters {
+            page?: Parameters.Page;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedSummonTypeList;
         }
     }
     namespace TestPermitsCheckmarksRetrieve {
