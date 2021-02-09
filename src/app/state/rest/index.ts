@@ -66,14 +66,13 @@ export const useCases = (state_date?: string, options?: Options) => {
 
 export const useCase = (id?: Components.Schemas.Case["id"], options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<Components.Schemas.Case & MockComponents.Schemas.Case>({
+  return useApiRequest<Components.Schemas.Case>({
     lazy: id === undefined,
     ...options,
     url: makeGatewayUrl("cases", id),
     groupName: "case",
     handleError,
-    isProtected: true,
-    isMockExtended: true
+    isProtected: true
   })
 }
 
@@ -234,19 +233,6 @@ export const useTeams = (options?: Options) => {
     isProtected: true
   })
 }
-
-export const useTeam = (id: Components.Schemas.CaseTeam["id"], options?: Options) => {
-  const handleError = useErrorHandler()
-  return useApiRequest<MockComponents.Schemas.Team>({
-    ...options,
-    url: `teams/${ id }`,
-    groupName: "teams",
-    handleError,
-    isProtected: true,
-    isMocked: true
-  })
-}
-
 export const useReasons = (teamId?: Components.Schemas.CaseTeam["id"], options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.PaginatedCaseReasonList>({
@@ -259,6 +245,7 @@ export const useReasons = (teamId?: Components.Schemas.CaseTeam["id"], options?:
   })
 }
 
+// TODO-MOCKED replace with real endpoint
 export const useOpinions = (options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<MockComponents.Schemas.Opinion[]>({
@@ -294,6 +281,7 @@ export const useSummonTypes = (teamId?: Components.Schemas.CaseTeam["id"], optio
   })
 }
 
+// TODO-MOCKED used to show the summon in OpinionForm
 export const useSummon = (id?: number, options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<MockComponents.Schemas.Summon>({
@@ -307,6 +295,7 @@ export const useSummon = (id?: number, options?: Options) => {
   })
 }
 
+// TODO-MOCKED replace with real endpoint
 export const useDecisions = (options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<MockComponents.Schemas.Decision[]>({
@@ -319,6 +308,7 @@ export const useDecisions = (options?: Options) => {
   })
 }
 
+// TODO-MOCKED replace with real endpoint
 export const useCorrespondence = (options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<MockComponents.Schemas.Correspondence[]>({
@@ -331,6 +321,7 @@ export const useCorrespondence = (options?: Options) => {
   })
 }
 
+// TODO-MOCKED replace with real endpoint
 export const useCompleteCase = (options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<MockComponents.Schemas.CompleteCase[]>({
