@@ -19,7 +19,8 @@ type TaskAction = {
 
 export const taskActionMap = {
   task_create_visit: { name: "Resultaat huisbezoek", target: "huisbezoek" },
-  task_create_debrief: { name: "Debrief verwerken", target: "debriefing" }
+  task_create_debrief: { name: "Debrief verwerken", target: "debriefing" },
+  task_create_summon: { name: "Aanschrijving verwerken", target: "aanschrijving" }
 } as Record<string, TaskAction>
 
 const Workflow: React.FC<Props> = ({ caseId }) => {
