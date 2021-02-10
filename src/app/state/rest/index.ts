@@ -18,10 +18,10 @@ export type Options = {
 }
 
 export { useIsAuthorized } from "./auth"
-export { useResidents, useCasesByBagId } from "./addresses"
+export { useResidents } from "./addresses"
 export { useBAG, useBAGLodging, useBAGWithZipCode, usePanorama } from "./dataPunt"
 export { usePermitCheckmarks, usePermitDetails } from "./permits"
-export { useCases, useMockCases } from "./cases"
+export { useCases, useMockCases, useCasesByBagId } from "./cases"
 export { useSupportContacts } from "./help"
 export { useFine } from "./fines"
 export {

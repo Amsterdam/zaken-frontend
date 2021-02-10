@@ -27,3 +27,15 @@ export const useMockCases = (options?: Options) => {
     isProtected: true
   })
 }
+
+export const useCasesByBagId = (bagId: Components.Schemas.Address["bag_id"], openCases?: boolean, options?: Options) => {
+  const handleError = useErrorHandler()
+  const queryString = openCases === true ? qs.stringify({ open_cases: true }, { addQueryPrefix: true }) : ""
+  return useApiRequest<Components.Schemas.PaginatedCaseList>({
+    ...options,
+    url: `${ makeGatewayUrl("addresses", bagId, "cases") }${ queryString }`,
+    groupName: "cases",
+    handleError,
+    isProtected: true
+  })
+}

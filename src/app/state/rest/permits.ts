@@ -21,4 +21,3 @@ export const usePermitDetails = (bagId: string) => {
     isProtected: true
   })
 }
-
