@@ -8,6 +8,8 @@ import WorkflowStatus from "./WorkflowStatus"
 import LockOpen from "@material-ui/icons/LockOpen"
 import CompleteTaskButton from "app/components/case/tasks/CompleteTask/CompleteTaskButton"
 import styled from "styled-components"
+import { mapArrayToUl } from "../CaseTimeline/helpers/Helpers"
+import { displayDate } from "app/components/shared/DateDisplay/DateDisplay"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
@@ -42,8 +44,8 @@ const Workflow: React.FC<Props> = ({ caseId }) => {
     itemList: [
       <StyledIcon size={32}>{ <LockOpen /> }</StyledIcon>,
       data.name,
-      "-uitvoerder-",
-      "-datum-",
+      data.roles ? mapArrayToUl(data.roles) : "-",
+      data.due_date ? `${ displayDate(data.due_date) }` : "-",
       action.target ?
       <ButtonLink to={ to(`/zaken/:id/${ action.target }`, { id: caseId })}>
         <Button variant="primary" as="span">{ action.name }</Button>
