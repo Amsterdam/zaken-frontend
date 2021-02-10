@@ -35,16 +35,17 @@ const UnstyledList = styled.ul`
     line-height: 1.15;
   }
 `
+
+const DateInPast = styled.span<DateProps>`
+color: ${ props => props.isDateInPast ? "red" : "black" };
+`
+
 const mapArrayToList = (list: any[]) =>
   <UnstyledList>
     { list.map((item: any, index: number) =>
         <li key={ index }>{ item }</li>
     )}
   </UnstyledList>
-
-  const DateInPast = styled.span<DateProps>`
-    color: ${ props => props.isDateInPast ? "red" : "black" };
-  `
 
 export const taskActionMap = {
   task_create_visit: { name: "Resultaat huisbezoek", target: "huisbezoek" },
