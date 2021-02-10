@@ -9,11 +9,6 @@ type Props = {
   id: Components.Schemas.Case["id"]
 }
 
-const StyledHeading = styled(Heading)`
-  display: flex;
-  justify-content: space-between;
-`
-
 const StyledButton = styled(Button)`
   color: ${ themeColor("tint", "level0") };
   margin-left: ${ themeSpacing(2) };
