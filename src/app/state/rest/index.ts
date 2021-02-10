@@ -1,15 +1,13 @@
 export type ApiGroup =
+  | "auth"
   | "addresses"
+  | "dataPunt"
+  | "permits"
+  | "fines"
+  | "teams"
+  | "supportContacts"
   | "cases"
   | "case"
-  | "caseTypes"
-  | "caseStates"
-  | "dataPunt"
-  | "fines"
-  | "permits"
-  | "auth"
-  | "supportContacts"
-  | "teams"
 
 export type Options = {
   keepUsingInvalidCache?: boolean
@@ -21,15 +19,15 @@ export { useIsAuthorized } from "./auth"
 export { useResidents } from "./addresses"
 export { useBAG, useBAGLodging, useBAGWithZipCode, usePanorama } from "./dataPunt"
 export { usePermitCheckmarks, usePermitDetails } from "./permits"
-export { useCases, useMockCases, useCasesByBagId } from "./cases"
-export { useSupportContacts } from "./help"
 export { useFine } from "./fines"
+export { useTeams, useReasons, useSummonTypes } from "./teams"
+export { useSupportContacts } from "./help"
+export { useCases, useMockCases, useCasesByBagId } from "./cases"
 export {
   useCase,
   useCaseCreateUpdate,
   useCaseEvents,
   useCompleteCase,
-  useTeams,
   useCaseTasks,
   useTaskComplete,
   useAuthors,
@@ -39,8 +37,6 @@ export {
   useDebriefings,
   useDecisions,
   useOpinions,
-  useReasons,
   useSummon,
-  useSummons,
-  useSummonTypes
+  useSummons
 } from "./case"
