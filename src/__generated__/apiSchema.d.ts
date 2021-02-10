@@ -34,6 +34,7 @@ declare namespace Components {
          */
         export interface CamundaTaskComplete {
             camunda_task_id: string;
+            case: number;
             variables: {
                 [name: string]: any;
             };
@@ -451,7 +452,7 @@ declare namespace Components {
             suggest_next_visit_description: string | null;
             notes: string | null;
         }
-        export type TypeEnum = "DEBRIEFING" | "VISIT" | "CASE" | "SUMMON";
+        export type TypeEnum = "DEBRIEFING" | "VISIT" | "CASE" | "SUMMON" | "GENERIC_TASK";
         export interface User {
             id: string; // uuid
             email: string; // email
