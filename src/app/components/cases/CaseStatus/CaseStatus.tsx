@@ -10,7 +10,7 @@ type Props = {
 }
 
 const StyledHeading = styled(Heading)`
-  display: flex
+  display: flex;
   justify-content: space-between;
 `
 
