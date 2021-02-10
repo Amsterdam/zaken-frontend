@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from "react"
-import { Button, Icon, themeSpacing } from "@amsterdam/asc-ui"
+import { Button, Icon, Spinner, themeSpacing } from "@amsterdam/asc-ui"
 
 import { useCaseTasks, useTaskComplete } from "app/state/rest"
 import ButtonLink from "app/components/shared/ButtonLink/ButtonLink"
@@ -28,7 +28,8 @@ export const taskActionMap = {
 } as Record<string, TaskAction>
 
 const Workflow: React.FC<Props> = ({ caseId }) => {
-  const dataTasks = useCaseTasks(caseId).data
+
+  const { data } = useCaseTasks(caseId)
   const { execPost } = useTaskComplete({ lazy: true })
 
   const mapTaskData = useCallback((data: Components.Schemas.CamundaTask) => {
@@ -38,26 +39,28 @@ const Workflow: React.FC<Props> = ({ caseId }) => {
       execPost({ camunda_task_id: data.camunda_task_id, variables: {} })
     )
 
-  return ({
-    itemList: [
-      <StyledIcon size={32}>{ <LockOpen /> }</StyledIcon>,
-      data.name,
-      "-uitvoerder-",
-      "-datum-",
-      action.target ?
-      <ButtonLink to={ to(`/zaken/:id/${ action.target }`, { id: caseId })}>
-        <Button variant="primary" as="span">{ action.name }</Button>
-      </ButtonLink> :
-      <CompleteTaskButton onSubmit={ onSubmitTaskComplete } taskName={data.name} />
+    return ({
+      itemList: [
+        <StyledIcon size={32}>{ <LockOpen /> }</StyledIcon>,
+        data.name,
+        "-uitvoerder-",
+        "-datum-",
+        action.target ?
+        <ButtonLink to={ to(`/zaken/:id/${ action.target }`, { id: caseId })}>
+          <Button variant="primary" as="span">{ action.name }</Button>
+        </ButtonLink> :
+        <CompleteTaskButton onSubmit={ onSubmitTaskComplete } taskName={data.name} />
 
-    ]
-  })
-}, [ caseId, execPost ])
+      ]
+    })
+  }, [ caseId, execPost ])
 
-  const mappedTaskData = useMemo(() => dataTasks?.map(mapTaskData), [ mapTaskData, dataTasks ])
+  const mappedTaskData = useMemo(() => data?.map(mapTaskData), [ mapTaskData, data ])
 
   return (
-    <WorkflowStatus status="" data={mappedTaskData} />
+    mappedTaskData === undefined ?
+      <Spinner /> :
+      <WorkflowStatus status="" data={mappedTaskData} />
   )
 }
 
