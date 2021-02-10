@@ -63,7 +63,7 @@ export const useOpinions = (options?: Options) => {
 
 export const useSummons = (options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<Components.Schemas.Summon[]>({
+  return useApiRequest<Components.Schemas.Summon>({
     ...options,
     url: makeGatewayUrl("summons"),
     groupName: "cases",
