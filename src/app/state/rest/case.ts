@@ -168,14 +168,3 @@ export const useVisitsCreate = (options?: Options) => {
     isProtected: true
   })
 }
-
-export const useAuthors = (options?: Options) => {
-  const handleError = useErrorHandler()
-  return useApiRequest<Components.Schemas.PaginatedUserList>({
-    ...options,
-    url: makeGatewayUrl("authors"),
-    groupName: "cases",
-    handleError,
-    isProtected: true
-  })
-}

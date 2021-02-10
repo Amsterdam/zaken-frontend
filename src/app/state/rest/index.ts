@@ -5,6 +5,7 @@ export type ApiGroup =
   | "permits"
   | "fines"
   | "teams"
+  | "authors"
   | "supportContacts"
   | "cases"
   | "case"
@@ -21,6 +22,7 @@ export { useBAG, useBAGLodging, useBAGWithZipCode, usePanorama } from "./dataPun
 export { useFine } from "./fines"
 export { useTeams, useReasons, useSummonTypes } from "./teams"
 export { useSupportContacts } from "./help"
+export { useAuthors } from "./authors"
 export { useCases, useMockCases, useCasesByBagId } from "./cases"
 export {
   useCase,
@@ -29,7 +31,6 @@ export {
   useCompleteCase,
   useCaseTasks,
   useTaskComplete,
-  useAuthors,
   useCaseVisits,
   useVisitsCreate,
   useCorrespondence,

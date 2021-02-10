@@ -1,4 +1,3 @@
-
 import type { Options } from "./"
 import { makeGatewayUrl, useErrorHandler } from "./hooks/utils/utils"
 import useApiRequest from "./hooks/useApiRequest"
