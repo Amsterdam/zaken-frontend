@@ -35,7 +35,7 @@ const Workflow: React.FC<Props> = ({ caseId }) => {
     const action = taskActionMap[data.task_name_id] ?? {}
 
     const onSubmitTaskComplete = () => (
-      execPost({ case: caseId, camunda_task_id: data.camunda_task_id, variables: {} })
+      execPost({ camunda_task_id: data.camunda_task_id, variables: {} })
     )
 
   return ({
