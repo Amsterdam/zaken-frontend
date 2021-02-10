@@ -16,9 +16,8 @@ export type Options = {
 }
 
 export { useIsAuthorized } from "./auth"
-export { useResidents } from "./addresses"
+export { useResidents, usePermitCheckmarks, usePermitDetails } from "./addresses"
 export { useBAG, useBAGLodging, useBAGWithZipCode, usePanorama } from "./dataPunt"
-export { usePermitCheckmarks, usePermitDetails } from "./permits"
 export { useFine } from "./fines"
 export { useTeams, useReasons, useSummonTypes } from "./teams"
 export { useSupportContacts } from "./help"
