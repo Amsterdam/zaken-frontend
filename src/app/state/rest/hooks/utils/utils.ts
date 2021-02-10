@@ -13,7 +13,7 @@ export const useErrorHandler = () => {
   return useCallback((error: AxiosError) =>
       addErrorFlashMessage(
         "Oeps er ging iets mis!",
-        `${ error?.response?.data?.detail ?? error.message } (URL: ${ error?.config?.url })`
+        `${ error?.response?.data?.detail ?? error?.message ?? "-" } (URL: ${ error?.config?.url ?? "-" })`
       ),
     [addErrorFlashMessage]
   )
