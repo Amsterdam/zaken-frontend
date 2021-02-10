@@ -8,8 +8,11 @@ import FormWithExtraLabel from "app/components/shared/FormWithExtraLabel/FormWit
 
 type Props = {
   id: Components.Schemas.Case["id"]
-  initialValues?: Partial<Components.Schemas.Summon>
 }
+
+type SummonData = Omit<Components.Schemas.Summon, "type"> & { type: string }
+
+const mapData = (data: SummonData) => ({ ...data, type: parseInt(data.type.replace("summonType.", ""), 10) })
 
 const SummonForm: React.FC<Props> = ({ id }) => {
 
@@ -17,17 +20,18 @@ const SummonForm: React.FC<Props> = ({ id }) => {
   const { data } = useSummonTypes(teamId)
   const summonTypes = data?.results ?? []
   const { execPost } = useSummons({ lazy: true })
+  const postMethod = async (data: SummonData) => await execPost(mapData(data))
 
   return (
     <>
       <FormTitle>Gebruik dit formulier om aan te geven welke aanschrijving(en) opgesteld is en voor wie. Vul dit in nadat brief verstuurd is!</FormTitle>
       <FormWithExtraLabel>
         <WorkflowForm
-            caseId={ id }
-            data={ summonTypes }
-            postMethod={ execPost }
-            scaffold={ scaffold }
-            initialValues = { { case: id } }
+          caseId={ id }
+          data={ summonTypes }
+          postMethod={ postMethod }
+          scaffold={ scaffold }
+          initialValues={ { case: id } }
         />
       </FormWithExtraLabel>
     </>
