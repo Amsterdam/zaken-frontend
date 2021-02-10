@@ -22,14 +22,14 @@ const StyledButton = styled(Button)`
 const CaseStatus: React.FC<Props> = ({ id }) => (
   <Heading as="h2">
     Status
-    <div>
+    <span>
       <ButtonLink to={ to("/zaken/:id/correspondentie", { id }) }>
         <StyledButton variant="tertiary">Correspondentie</StyledButton>
       </ButtonLink>
       <ButtonLink to={ to("/zaken/:id/afronden", { id }) }>
         <StyledButton variant="tertiary">Afronden</StyledButton>
       </ButtonLink>
-    </div>
+    </span>
   </Heading>
 )
 
