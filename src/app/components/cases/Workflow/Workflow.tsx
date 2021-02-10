@@ -8,7 +8,6 @@ import WorkflowStatus from "./WorkflowStatus"
 import LockOpen from "@material-ui/icons/LockOpen"
 import CompleteTaskButton from "app/components/case/tasks/CompleteTask/CompleteTaskButton"
 import styled from "styled-components"
-import { mapArrayToUl } from "../CaseTimeline/helpers/Helpers"
 import { displayDate } from "app/components/shared/DateDisplay/DateDisplay"
 
 type Props = {
@@ -22,6 +21,21 @@ type TaskAction = {
 const StyledIcon = styled(Icon)`
   padding-top: ${ themeSpacing(2) };
 `
+const UnstyledList = styled.ul`
+  list-style: none;
+  padding: 15px 0 0;
+  margin: 0;
+  li {
+    padding: 0 0 ${ themeSpacing(1) } 0;
+    line-height: 1.15;
+  }
+`
+const mapArrayToList = (list: any) =>
+  <UnstyledList>
+    { list.map((item: any, index: number) =>
+        <li key={ index }>{ item }</li>
+    )}
+  </UnstyledList>
 
 export const taskActionMap = {
   task_create_visit: { name: "Resultaat huisbezoek", target: "huisbezoek" },
@@ -44,7 +58,7 @@ const Workflow: React.FC<Props> = ({ caseId }) => {
     itemList: [
       <StyledIcon size={32}>{ <LockOpen /> }</StyledIcon>,
       data.name,
-      data.roles ? mapArrayToUl(data.roles) : "-",
+      data.roles ? mapArrayToList(data.roles) : "-",
       data.due_date ? `${ displayDate(data.due_date) }` : "-",
       action.target ?
       <ButtonLink to={ to(`/zaken/:id/${ action.target }`, { id: caseId })}>
