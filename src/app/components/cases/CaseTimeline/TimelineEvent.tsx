@@ -34,12 +34,12 @@ const TimelineEvent: React.FC<Props> = ({ timelineEventItem: { index, type, even
           <Summon
             caseEvents={ eventList }
             isOpen={ index === 0 }
-          /> :
-          type === "GENERIC_TASK" ?
-            <GenericTask
-              caseEvents={ eventList }
-              isOpen={ index === 0 }
-            /> :
+        /> :
+        type === "GENERIC_TASK" ?
+          <GenericTask
+            caseEvents={ eventList }
+            isOpen={ index === 0 }
+        /> :
       null
     }
   </TimelineWrapper>

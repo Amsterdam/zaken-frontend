@@ -9,7 +9,7 @@ type Props = {
   isOpen?: boolean
 }
 
-const Summon: React.FC<Props> = ({ caseEvents, isOpen }) => {
+const GenericTask: React.FC<Props> = ({ caseEvents, isOpen }) => {
   const TimelineThread = caseEvents.map(thread =>
     caseEvents.length > 1 ?
       <Timeline
@@ -54,4 +54,4 @@ const Summon: React.FC<Props> = ({ caseEvents, isOpen }) => {
   )
 }
 
-export default Summon
+export default GenericTask

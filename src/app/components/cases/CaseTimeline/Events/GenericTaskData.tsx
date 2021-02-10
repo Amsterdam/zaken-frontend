@@ -3,7 +3,7 @@ import { Dl, DLProps } from "../helpers/Helpers"
 import { displayDate } from "app/components/shared/DateDisplay/DateDisplay"
 import { genericLabelsMap } from "../helpers/dictionaries"
 
-const SummonData: React.FC<DLProps> = ({ thread, showDate }) => {
+const GenericData: React.FC<DLProps> = ({ thread, showDate }) => {
   const value = thread.event_values
   return (
     <Dl>
@@ -16,4 +16,4 @@ const SummonData: React.FC<DLProps> = ({ thread, showDate }) => {
   )
 }
 
-  export default SummonData
+  export default GenericData
