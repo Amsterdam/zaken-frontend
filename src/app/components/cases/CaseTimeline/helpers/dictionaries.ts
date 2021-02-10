@@ -29,6 +29,12 @@ export const summonLabelsMap = {
   "description": "Toelichting"
 }
 
+// GENERIC EVENT
+export const genericLabelsMap = {
+  "date_added": "Datum",
+  "author": "Uitvoerder"
+}
+
 
 // VISIT
 export const visitLabelsMap = {

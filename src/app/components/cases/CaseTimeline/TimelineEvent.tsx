@@ -4,6 +4,7 @@ import Reason from "./Events/Reason"
 import Debrief from "./Events/Debrief"
 import Visit from "./Events/Visit"
 import Summon from "./Events/Summon"
+import GenericTask from "./Events/GenericTask"
 
 export type TimelineEventItem = {
   index: number
@@ -29,11 +30,16 @@ const TimelineEvent: React.FC<Props> = ({ timelineEventItem: { index, type, even
           caseEvents={ eventList }
           isOpen={ index === 0 }
         /> :
-      type === "SUMMON" ?
-        <Summon
-          caseEvents={ eventList }
-          isOpen={ index === 0 }
-        /> :
+        type === "SUMMON" ?
+          <Summon
+            caseEvents={ eventList }
+            isOpen={ index === 0 }
+          /> :
+          type === "GENERIC_TASK" ?
+            <GenericTask
+              caseEvents={ eventList }
+              isOpen={ index === 0 }
+            /> :
       null
     }
   </TimelineWrapper>
