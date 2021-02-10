@@ -1,5 +1,5 @@
 import React from "react"
-import { Dl, DLProps } from "../helpers/Helpers"
+import { Dl, DLProps, mapArrayToUl } from "../helpers/Helpers"
 import { displayDate } from "app/components/shared/DateDisplay/DateDisplay"
 import { summonLabelsMap } from "../helpers/dictionaries"
 
@@ -14,7 +14,7 @@ const SummonData: React.FC<DLProps> = ({ thread, showDate }) => {
       </div>
       <div>
         <dt>{ summonLabelsMap["persons"] }</dt>
-        <dd>{ value.persons ? [value.persons] : "-" }</dd>
+        <dd>{ value.persons ? mapArrayToUl(value.persons) : "-" }</dd>
       </div>
       <div>
         <dt>{ summonLabelsMap["description"] }</dt>
