@@ -1,9 +1,7 @@
-export const isDateinPast = (dateToCheck: Date) => {
+export const isDateInPast = (dateToCheck: Date) => {
 
-  const currentDate: number = new Date().getTime()
-  const dateToCheckEndOfDay: number = dateToCheck.setHours(23,59,59)
+  const currentDate = new Date().getTime()
+  const dateToCheckEndOfDay = dateToCheck.setHours(23,59,59)
 
-  return (
-    dateToCheckEndOfDay - currentDate < 0
-  )
+  return ( dateToCheckEndOfDay - currentDate ) < 0
 }
