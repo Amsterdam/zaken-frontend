@@ -9,6 +9,7 @@ import LockOpen from "@material-ui/icons/LockOpen"
 import CompleteTaskButton from "app/components/case/tasks/CompleteTask/CompleteTaskButton"
 import styled from "styled-components"
 import { displayDate } from "app/components/shared/DateDisplay/DateDisplay"
+import { isDateinPast } from "app/components/shared/Date/Helpers"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
@@ -16,6 +17,10 @@ type Props = {
 type TaskAction = {
   name: string
   target: string
+}
+
+type DateProps = {
+  isDateInPast: boolean
 }
 
 const StyledIcon = styled(Icon)`
@@ -30,12 +35,16 @@ const UnstyledList = styled.ul`
     line-height: 1.15;
   }
 `
-const mapArrayToList = (list: any) =>
+const mapArrayToList = (list: any[]) =>
   <UnstyledList>
     { list.map((item: any, index: number) =>
         <li key={ index }>{ item }</li>
     )}
   </UnstyledList>
+
+  const DateInPast = styled.span<DateProps>`
+    color: ${ props => props.isDateInPast ? "red" : "black" };
+  `
 
 export const taskActionMap = {
   task_create_visit: { name: "Resultaat huisbezoek", target: "huisbezoek" },
@@ -59,7 +68,9 @@ const Workflow: React.FC<Props> = ({ caseId }) => {
       <StyledIcon size={32}>{ <LockOpen /> }</StyledIcon>,
       data.name,
       data.roles ? mapArrayToList(data.roles) : "-",
-      data.due_date ? `${ displayDate(data.due_date) }` : "-",
+      data.due_date ?
+         <DateInPast isDateInPast={ isDateinPast(new Date(data.due_date)) } >{ displayDate(data.due_date) } </DateInPast> :
+        "-",
       action.target ?
       <ButtonLink to={ to(`/zaken/:id/${ action.target }`, { id: caseId })}>
         <Button variant="primary" as="span">{ action.name }</Button>
