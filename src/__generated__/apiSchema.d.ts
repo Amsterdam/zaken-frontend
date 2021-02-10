@@ -19,6 +19,8 @@ declare namespace Components {
             camunda_task_id: string;
             task_name_id: string;
             name: string;
+            due_date: string; // date
+            readonly roles: any[];
         }
         /**
          * Used to complete a task in Camunda.
