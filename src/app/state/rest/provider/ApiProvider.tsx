@@ -9,12 +9,12 @@ import { ApiGroup } from "../index"
 type GroupedContext = Record<ApiGroup, ApiCache & RequestQueue>
 export const ApiContext = React.createContext<GroupedContext>({
   auth: noopContext,
+  authors: noopContext,
   addresses: noopContext,
   cases: noopContext,
   case: noopContext,
-  caseTypes: noopContext,
-  caseStates: noopContext,
   dataPunt: noopContext,
+  fines: noopContext,
   permits: noopContext,
   supportContacts: noopContext,
   teams: noopContext
@@ -23,6 +23,10 @@ export const ApiContext = React.createContext<GroupedContext>({
 const ApiProvider: React.FC = ({ children }) => {
   const value: GroupedContext = {
     auth: {
+      ...useApiCache(),
+      ...useRequestQueue()
+    },
+    authors: {
       ...useApiCache(),
       ...useRequestQueue()
     },
@@ -38,11 +42,7 @@ const ApiProvider: React.FC = ({ children }) => {
       ...useApiCache(),
       ...useRequestQueue()
     },
-    caseTypes: {
-      ...useApiCache(),
-      ...useRequestQueue()
-    },
-    caseStates: {
+    fines: {
       ...useApiCache(),
       ...useRequestQueue()
     },
