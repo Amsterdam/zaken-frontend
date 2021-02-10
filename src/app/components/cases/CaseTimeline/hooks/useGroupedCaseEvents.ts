@@ -15,5 +15,5 @@ export default (caseId: Components.Schemas.CaseEvent["id"]) => {
     return acc
   }, [] as TimelineEventItem[])
 
-  return allEventsInTime ?? []
+  return allEventsInTime
 }
