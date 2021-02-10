@@ -59,6 +59,7 @@ export const useTeams = (options?: Options) => {
     isProtected: true
   })
 }
+
 export const useReasons = (teamId?: Components.Schemas.CaseTeam["id"], options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.PaginatedCaseReasonList>({

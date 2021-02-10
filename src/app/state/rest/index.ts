@@ -1,5 +1,3 @@
-
-
 export type ApiGroup =
   | "addresses"
   | "cases"
@@ -7,6 +5,7 @@ export type ApiGroup =
   | "caseTypes"
   | "caseStates"
   | "dataPunt"
+  | "fines"
   | "permits"
   | "auth"
   | "supportContacts"

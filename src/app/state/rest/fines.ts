@@ -8,7 +8,7 @@ export const useFine = (id: string, options?: Options) => {
   return useApiRequest<Components.Schemas.FineList>({
     ...options,
     url: makeGatewayUrl("fines", id),
-    groupName: "case",
+    groupName: "fines",
     handleError,
     isProtected: true
   })
