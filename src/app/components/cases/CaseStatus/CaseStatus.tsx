@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { Button, Heading, themeSpacing } from "@amsterdam/asc-ui"
+import { Button, Heading, themeColor, themeSpacing } from "@amsterdam/asc-ui"
 
 import ButtonLink from "app/components/shared/ButtonLink/ButtonLink"
 import to from "app/routing/utils/to"
@@ -15,7 +15,7 @@ const StyledHeading = styled(Heading)`
 `
 
 const StyledButton = styled(Button)`
-  color: black;
+  color: ${ themeColor("tint", "level0") };
   margin-left: ${ themeSpacing(2) };
 `
 
