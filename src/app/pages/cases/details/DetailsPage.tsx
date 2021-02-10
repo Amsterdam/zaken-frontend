@@ -50,7 +50,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
         <PageHeading />
       </RowWithColumn>
       <Row>
-        <Column spanLarge={48}>
+        <Column spanLarge={ 48 }>
           <CaseDetails caseId={ id } />
         </Column>
       </Row>
@@ -58,10 +58,10 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
         <Heading as="h2">
           Status
           <ButtonWrapper>
-            <ButtonLink to={ to("/zaken/:id/correspondentie", { id })}>
+            <ButtonLink to={ to("/zaken/:id/correspondentie", { id }) }>
               <ButtonTertiary variant="tertiary">Correspondentie</ButtonTertiary>
             </ButtonLink>
-            <ButtonLink to={ to("/zaken/:id/afronden", { id })}>
+            <ButtonLink to={ to("/zaken/:id/afronden", { id }) }>
               <ButtonTertiary variant="tertiary">Afronden</ButtonTertiary>
             </ButtonLink>
           </ButtonWrapper>
