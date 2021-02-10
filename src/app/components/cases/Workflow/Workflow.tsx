@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from "react"
-import { Button, Icon } from "@amsterdam/asc-ui"
+import { Button, Icon, themeSpacing } from "@amsterdam/asc-ui"
 
 import { useCaseTasks, useTaskComplete } from "app/state/rest"
 import ButtonLink from "app/components/shared/ButtonLink/ButtonLink"
@@ -7,15 +7,19 @@ import to from "app/routing/utils/to"
 import WorkflowStatus from "./WorkflowStatus"
 import LockOpen from "@material-ui/icons/LockOpen"
 import CompleteTaskButton from "app/components/case/tasks/CompleteTask/CompleteTaskButton"
+import styled from "styled-components"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
-  summonId?: number
 }
 type TaskAction = {
   name: string
   target: string
 }
+
+const StyledIcon = styled(Icon)`
+  padding-top: ${ themeSpacing(2) };
+`
 
 export const taskActionMap = {
   task_create_visit: { name: "Resultaat huisbezoek", target: "huisbezoek" },
@@ -36,7 +40,7 @@ const Workflow: React.FC<Props> = ({ caseId }) => {
 
   return ({
     itemList: [
-      <Icon size={32}>{ <LockOpen /> }</Icon>,
+      <StyledIcon size={32}>{ <LockOpen /> }</StyledIcon>,
       data.name,
       "-uitvoerder-",
       "-datum-",
