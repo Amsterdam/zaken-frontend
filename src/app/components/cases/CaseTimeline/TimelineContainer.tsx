@@ -4,6 +4,7 @@ import styled from "styled-components"
 import { useCaseEvents } from "app/state/rest"
 import useGroupedCaseEvents from "./hooks/useGroupedCaseEvents"
 import TimelineEvent from "./TimelineEvent"
+import { Spinner, themeSpacing } from "@amsterdam/asc-ui"
 
 type Props = {
   caseId: Components.Schemas.CaseEvent["id"]
@@ -12,8 +13,7 @@ type Props = {
 const Div = styled.div`
   >div[role="button"] {
     position: relative;
-    display: flex;
-    border-bottom: 20px solid white;
+    margin-bottom: ${ themeSpacing(6) };
 
     &:last-child {
       // hide the thin line in the last timelinecontainer
@@ -24,6 +24,10 @@ const Div = styled.div`
           }
         }
       }
+    }
+
+    button {
+      outline: none;
     }
   }
 `
@@ -36,11 +40,14 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
   return (
     <>
       <Div>
-        { allEventsInTime.map(item =>
-            <TimelineEvent
-              key={ item.index }
-              timelineEventItem={ item }
-              />)
+        {
+          allEventsInTime === undefined ?
+            <Spinner /> :
+            allEventsInTime.map(item =>
+              <TimelineEvent
+                key={ item.index }
+                timelineEventItem={ item }
+                />)
         }
       </Div>
       { data?.length === 0 &&
