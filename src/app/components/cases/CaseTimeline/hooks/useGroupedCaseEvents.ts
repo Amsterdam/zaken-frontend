@@ -16,11 +16,11 @@ export default (caseId: CaseEvent["id"]) => {
 
     // group
     if (shouldBeGrouped(item) && equalItems(last, item)) {
-      last.eventList.push(item)
+      last.caseEvents.push(item)
     }
     // new row
     else {
-      acc.push({ type: item.type, eventList: [item] })
+      acc.push({ type: item.type, caseEvents: [item] })
     }
 
     return acc

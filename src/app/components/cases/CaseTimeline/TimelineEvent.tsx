@@ -7,7 +7,7 @@ import GenericTask from "./Events/GenericTask"
 
 export type TimelineEventItem = {
   type: string
-  eventList: Components.Schemas.CaseEvent[]
+  caseEvents: Components.Schemas.CaseEvent[]
 }
 
 type Props = {
@@ -15,36 +15,41 @@ type Props = {
   isOpen?: boolean
 }
 
-const TimelineEvent: React.FC<Props> = ({ timelineEventItem: { type, eventList }, isOpen = false }) => (
-  <>
-    { type === "CASE" ?
-        <Reason
-          caseEvents={ eventList }
-          isOpen={ isOpen }
-        /> :
-      type === "VISIT" ?
-        <Visit
-          caseEvents={ eventList }
-          isOpen={ isOpen }
-        /> :
-      type === "DEBRIEFING" ?
-        <Debrief
-          caseEvents={ eventList }
-          isOpen={ isOpen }
-        /> :
-      type === "SUMMON" ?
-        <Summon
-          caseEvents={ eventList }
-          isOpen={ isOpen }
-        /> :
-      type === "GENERIC_TASK" ?
-        <GenericTask
-          caseEvents={ eventList }
-          isOpen={ isOpen }
-        /> :
-      null
-    }
-  </>
-)
+const TimelineEvent: React.FC<Props> = ({ timelineEventItem: { type, caseEvents }, isOpen = false }) => {
+
+  if (caseEvents.length === 0) return null
+
+  return (
+    <>
+      { type === "CASE" ?
+          <Reason
+            caseEvents={ caseEvents }
+            isOpen={ isOpen }
+          /> :
+        type === "VISIT" ?
+          <Visit
+            caseEvents={ caseEvents }
+            isOpen={ isOpen }
+          /> :
+        type === "DEBRIEFING" ?
+          <Debrief
+            caseEvents={ caseEvents }
+            isOpen={ isOpen }
+          /> :
+        type === "SUMMON" ?
+          <Summon
+            caseEvents={ caseEvents }
+            isOpen={ isOpen }
+          /> :
+        type === "GENERIC_TASK" ?
+          <GenericTask
+            caseEvents={ caseEvents }
+            isOpen={ isOpen }
+          /> :
+        null
+      }
+    </>
+  )
+}
 
 export default TimelineEvent
