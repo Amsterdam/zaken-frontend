@@ -1,5 +1,6 @@
 import React from "react"
 import { isValidDate, invalidDateText } from "app/components/shared/DateDisplay/DateDisplay"
+import { capitalizeString } from "../Helpers/helpers"
 
 type Props = {
   date: string
@@ -15,8 +16,6 @@ const days = [
   "vrijdag",
   "zaterdag"
 ]
-
-const capitalizeString = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
 
 export const getDay = (date: string | Date, capitalize = false) => {
   const d = typeof date === "string" ? new Date(date) : date
