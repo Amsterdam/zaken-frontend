@@ -3,7 +3,7 @@ import { getDay }from "app/components/shared/DayDisplay/DayDisplay"
 import { displayDate } from "app/components/shared/DateDisplay/DateDisplay"
 import { Timeline } from "app/components/shared/Timeline"
 import { mapCaseType } from "../helpers/Helpers"
-import ButtonEditEvent from "./ButtonEditEvent"
+import ButtonEditEvent from "../ButtonEditEvent"
 import DebriefData from "./DebriefData"
 
 type Props = {
