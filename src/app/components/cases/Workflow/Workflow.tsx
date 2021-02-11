@@ -10,6 +10,7 @@ import CompleteTaskButton from "app/components/case/tasks/CompleteTask/CompleteT
 import styled from "styled-components"
 import { displayDate } from "app/components/shared/DateDisplay/DateDisplay"
 import { isDateInPast } from "app/components/shared/Date/helpers"
+import { capitalizeString } from "app/components/shared/Helpers/helpers"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
@@ -43,7 +44,7 @@ color: ${ props => props.isDateInPast ? "red" : "black" };
 const mapArrayToList = (list: any[]) =>
   <Ul>
     { list.map((item: any, index: number) =>
-        <li key={ index }>{ item }</li>
+        <li key={ index }>{ capitalizeString(item) }</li>
     )}
   </Ul>
 
