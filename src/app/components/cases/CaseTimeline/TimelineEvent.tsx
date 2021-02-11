@@ -17,7 +17,7 @@ type Props = {
 }
 
 const TimelineEvent: React.FC<Props> = ({ timelineEventItem: { index, type, eventList } }) => (
-  <TimelineWrapper key={ eventList[0].id }>
+  <TimelineWrapper>
     { type === "CASE" ?
         <Reason caseEvents={ eventList } /> :
       type === "VISIT" ?

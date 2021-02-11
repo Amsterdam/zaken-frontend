@@ -9,7 +9,7 @@ const TimelineEvents: React.FC<Props> = ({ items }) => (
   <>
   { items.map(item =>
     <TimelineEvent
-      key={ item.index }
+      key={ item.eventList[0].id }
       timelineEventItem={ item }
     />)
   }
