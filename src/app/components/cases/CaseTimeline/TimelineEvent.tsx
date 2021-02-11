@@ -1,5 +1,4 @@
 import React from "react"
-import { TimelineWrapper } from "app/components/shared/Timeline"
 import Reason from "./Events/Reason"
 import Debrief from "./Events/Debrief"
 import Visit from "./Events/Visit"
@@ -17,7 +16,7 @@ type Props = {
 }
 
 const TimelineEvent: React.FC<Props> = ({ timelineEventItem: { index, type, eventList } }) => (
-  <TimelineWrapper>
+  <>
     { type === "CASE" ?
         <Reason caseEvents={ eventList } /> :
       type === "VISIT" ?
@@ -42,7 +41,7 @@ const TimelineEvent: React.FC<Props> = ({ timelineEventItem: { index, type, even
       /> :
       null
     }
-  </TimelineWrapper>
+  </>
 )
 
 export default TimelineEvent

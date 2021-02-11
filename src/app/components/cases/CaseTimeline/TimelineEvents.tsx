@@ -1,5 +1,6 @@
 import React from "react"
 import TimelineEvent, { TimelineEventItem } from "./TimelineEvent"
+import { TimelineWrapper } from "app/components/shared/Timeline"
 
 type Props = {
   items: TimelineEventItem[]
@@ -7,12 +8,13 @@ type Props = {
 
 const TimelineEvents: React.FC<Props> = ({ items }) => (
   <>
-  { items.map(item =>
-    <TimelineEvent
-      key={ item.eventList[0].id }
-      timelineEventItem={ item }
-    />)
-  }
+  { items.map(item => (
+    <TimelineWrapper key={ item.eventList[0].id }>
+      <TimelineEvent
+        timelineEventItem={ item }
+      />
+    </TimelineWrapper>
+  )) }
   </>
 )
 
