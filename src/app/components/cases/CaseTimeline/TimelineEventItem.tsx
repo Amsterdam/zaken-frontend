@@ -2,9 +2,9 @@ import React from "react"
 import { getDay }from "app/components/shared/DayDisplay/DayDisplay"
 
 import { Timeline } from "app/components/shared/Timeline"
-import { mapCaseType } from "../helpers/Helpers"
-import ButtonEditEvent from "../ButtonEditEvent"
-import EventData from "../EventData"
+import { mapCaseType } from "./helpers/Helpers"
+import ButtonEditEvent from "./ButtonEditEvent"
+import EventData from "./EventData"
 
 type Props = {
   fields: string[]
@@ -13,9 +13,9 @@ type Props = {
   isOpen?: boolean
 }
 
-const Reason: React.FC<Props> = ({ fields, labelsMap, caseEvents, isOpen }) => {
+const TimelineEventItem: React.FC<Props> = ({ fields, labelsMap, caseEvents, isOpen }) => {
 
-  // This situation would indicate a problem within the data returned from the API
+  // This situation would be considered a problem within the data returned from the API
   if (caseEvents.length === 0) return null
 
   const hasPluralEvents = caseEvents.length > 1
@@ -57,4 +57,4 @@ const Reason: React.FC<Props> = ({ fields, labelsMap, caseEvents, isOpen }) => {
   )
 }
 
-export default Reason
+export default TimelineEventItem
