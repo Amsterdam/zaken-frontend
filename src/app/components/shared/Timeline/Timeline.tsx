@@ -87,8 +87,7 @@ const Timeline: React.FC<
     if (isOpen !== undefined && isOpen !== open) {
       setOpen(isOpen)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpen])
+  }, [isOpen, setOpen])
 
   const handleClick = useCallback(() => {
     const newOpenState = !open
