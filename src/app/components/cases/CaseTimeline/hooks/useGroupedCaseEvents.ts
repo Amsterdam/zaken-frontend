@@ -1,19 +1,28 @@
 import { useCaseEvents } from "app/state/rest"
 import { TimelineEventItem } from "../TimelineEvent"
 
-export default (caseId: Components.Schemas.CaseEvent["id"]) => {
+type CaseEvent = Components.Schemas.CaseEvent
+
+const shouldBeGrouped = (item: CaseEvent) => item.type !== "GENERIC_TASK"
+const equalItems = (i: TimelineEventItem | undefined, ii: CaseEvent) => i !== undefined && i.type === ii.type
+
+export default (caseId: CaseEvent["id"]) => {
 
   const { data } = useCaseEvents(caseId)
 
-  const allEventsInTime = data?.reduce((acc, item, index) => {
+  return data?.reduce((acc, item, index) => {
+
     const last = acc[acc.length - 1]
-    if (last?.type !== item.type) {
-      acc.push({ index, type: item.type, eventList: [item] })
-    } else {
+
+    // group
+    if (shouldBeGrouped(item) && equalItems(last, item)) {
       last.eventList.push(item)
     }
+    // new row
+    else {
+      acc.push({ index, type: item.type, eventList: [item] })
+    }
+
     return acc
   }, [] as TimelineEventItem[])
-
-  return allEventsInTime
 }
