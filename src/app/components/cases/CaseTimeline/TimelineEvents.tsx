@@ -8,10 +8,11 @@ type Props = {
 
 const TimelineEvents: React.FC<Props> = ({ items }) => (
   <>
-  { items.map(item => (
+  { items.map((item, index) => (
     <TimelineWrapper key={ item.eventList[0].id }>
       <TimelineEvent
         timelineEventItem={ item }
+        isOpen={ index === 0 }
       />
     </TimelineWrapper>
   )) }

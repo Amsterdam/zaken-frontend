@@ -10,7 +10,7 @@ export default (caseId: CaseEvent["id"]) => {
 
   const { data } = useCaseEvents(caseId)
 
-  return data?.reduce((acc, item, index) => {
+  return data?.reduce((acc, item) => {
 
     const last = acc[acc.length - 1]
 
@@ -20,7 +20,7 @@ export default (caseId: CaseEvent["id"]) => {
     }
     // new row
     else {
-      acc.push({ index, type: item.type, eventList: [item] })
+      acc.push({ type: item.type, eventList: [item] })
     }
 
     return acc
