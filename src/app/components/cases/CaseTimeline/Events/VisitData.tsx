@@ -53,7 +53,7 @@ const VisitData: React.FC<DLProps> = ({ thread, showDate }) => {
       { value.can_next_visit_go_ahead && value.situation !== "access_granted" &&
         <div>
             <dt>{ visitLabelsMap["can_next_visit_go_ahead"] }</dt>
-            <dd>{ visit_go_ahead[value.can_next_visit_go_ahead as string] }</dd>
+            <dd>{ visit_go_ahead[value.can_next_visit_go_ahead] }</dd>
         </div>
       }
       { value.can_next_visit_go_ahead && value.can_next_visit_go_ahead_description &&
