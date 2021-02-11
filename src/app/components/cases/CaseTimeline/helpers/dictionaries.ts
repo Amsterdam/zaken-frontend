@@ -35,7 +35,6 @@ export const genericLabelsMap = {
   "author": "Uitvoerder"
 }
 
-
 // VISIT
 export const visitLabelsMap = {
   "start_time": "Starttijd",

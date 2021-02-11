@@ -3,8 +3,7 @@ import TimelineEventItem from "./TimelineEventItem"
 import Debrief from "./Events/Debrief"
 import Visit from "./Events/Visit"
 import Summon from "./Events/Summon"
-import GenericTask from "./Events/GenericTask"
-import { reasonLabelsMap } from "./helpers/dictionaries"
+import { genericLabelsMap, reasonLabelsMap } from "./helpers/dictionaries"
 
 export type TimelineEventItem = {
   type: string
@@ -41,7 +40,9 @@ const TimelineEvent: React.FC<Props> = ({ timelineEventItem: { type, caseEvents 
           isOpen={ isOpen }
         /> :
       type === "GENERIC_TASK" ?
-        <GenericTask
+        <TimelineEventItem
+          fields={ ["author"] }
+          labelsMap={ genericLabelsMap }
           caseEvents={ caseEvents }
           isOpen={ isOpen }
         /> :

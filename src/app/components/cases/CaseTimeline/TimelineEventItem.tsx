@@ -19,8 +19,9 @@ const TimelineEventItem: React.FC<Props> = ({ fields, labelsMap, caseEvents, isO
   if (caseEvents.length === 0) return null
 
   const hasPluralEvents = caseEvents.length > 1
-  const typeLabel = mapCaseType(caseEvents[0].type)
-  const title = `${ typeLabel } ${ hasPluralEvents ? `(${ caseEvents.length })` : "" } `
+  const { type } = caseEvents[0]
+  const typeLabel = type === "GENERIC_TASK" ? caseEvents[0].event_values.description : mapCaseType(type)
+  const title = `${ typeLabel } ${ hasPluralEvents ? `(${ caseEvents.length })` : "" }`
 
   return (
     <Timeline title={ title }>
