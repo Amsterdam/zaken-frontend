@@ -30,18 +30,19 @@ const TimelineEvent: React.FC<Props> = ({ timelineEventItem: { index, type, even
           caseEvents={ eventList }
           isOpen={ index === 0 }
         /> :
-        type === "SUMMON" ?
-          <Summon
-            caseEvents={ eventList }
-            isOpen={ index === 0 }
-        /> :
-        type === "GENERIC_TASK" ?
-          <GenericTask
-            caseEvents={ eventList }
-            isOpen={ index === 0 }
-        /> :
+      type === "SUMMON" ?
+        <Summon
+          caseEvents={ eventList }
+          isOpen={ index === 0 }
+      /> :
+      type === "GENERIC_TASK" ?
+        <GenericTask
+          caseEvents={ eventList }
+          isOpen={ index === 0 }
+      /> :
       null
     }
   </TimelineWrapper>
 )
+
 export default TimelineEvent
