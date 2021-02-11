@@ -14,6 +14,7 @@ import NotFoundPage from "app/pages/errors/NotFoundPage"
 import DetailHeaderByCaseId from "app/components/shared/DetailHeader/DetailHeaderByCaseId"
 import { Column } from "app/components/layouts/Grid"
 import CaseStatus from "app/components/cases/CaseStatus/CaseStatus"
+import { useCaseTasks } from "app/state/rest"
 
 type Props = {
   id: string
@@ -22,6 +23,8 @@ type Props = {
 const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
 
   const id = parseUrlParamId(idString)
+
+  const { data } = useCaseTasks(id!)
 
   return (
     isValidUrlParamId<Components.Schemas.Case["id"]>(id) ?
@@ -35,14 +38,20 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
           <CaseDetails caseId={ id } />
         </Column>
       </Row>
-      <RowWithColumn>
-        <CaseStatus id={ id }/>
-        <Divider />
-      </RowWithColumn>
-      <RowWithColumn>
-        {/* TODO-MOCKED summonId has to come from useCaseEvents, so summonId can be removed here */}
-        <Workflow caseId={ id } />
-      </RowWithColumn>
+      { data !== undefined && data.length > 0 ?
+        <>
+          <RowWithColumn>
+            <CaseStatus id={ id }/>
+            <Divider />
+          </RowWithColumn>
+          <RowWithColumn>
+            <Workflow caseId={ id } tasks={ data } />
+          </RowWithColumn>
+        </> :
+        <RowWithColumn>
+          <p>Deze zaak is afgerond.</p>  
+        </RowWithColumn>
+      }
       <RowWithColumn>
         <Heading as="h2">Zaakhistorie</Heading>
         <Divider />
