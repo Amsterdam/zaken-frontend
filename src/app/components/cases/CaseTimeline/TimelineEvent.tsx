@@ -15,41 +15,36 @@ type Props = {
   isOpen?: boolean
 }
 
-const TimelineEvent: React.FC<Props> = ({ timelineEventItem: { type, caseEvents }, isOpen = false }) => {
-
-  if (caseEvents.length === 0) return null
-
-  return (
-    <>
-      { type === "CASE" ?
-          <Reason
-            caseEvents={ caseEvents }
-            isOpen={ isOpen }
-          /> :
-        type === "VISIT" ?
-          <Visit
-            caseEvents={ caseEvents }
-            isOpen={ isOpen }
-          /> :
-        type === "DEBRIEFING" ?
-          <Debrief
-            caseEvents={ caseEvents }
-            isOpen={ isOpen }
-          /> :
-        type === "SUMMON" ?
-          <Summon
-            caseEvents={ caseEvents }
-            isOpen={ isOpen }
-          /> :
-        type === "GENERIC_TASK" ?
-          <GenericTask
-            caseEvents={ caseEvents }
-            isOpen={ isOpen }
-          /> :
-        null
-      }
-    </>
-  )
-}
+const TimelineEvent: React.FC<Props> = ({ timelineEventItem: { type, caseEvents }, isOpen = false }) => (
+  <>
+    { type === "CASE" ?
+        <Reason
+          caseEvents={ caseEvents }
+          isOpen={ isOpen }
+        /> :
+      type === "VISIT" ?
+        <Visit
+          caseEvents={ caseEvents }
+          isOpen={ isOpen }
+        /> :
+      type === "DEBRIEFING" ?
+        <Debrief
+          caseEvents={ caseEvents }
+          isOpen={ isOpen }
+        /> :
+      type === "SUMMON" ?
+        <Summon
+          caseEvents={ caseEvents }
+          isOpen={ isOpen }
+        /> :
+      type === "GENERIC_TASK" ?
+        <GenericTask
+          caseEvents={ caseEvents }
+          isOpen={ isOpen }
+        /> :
+      null
+    }
+  </>
+)
 
 export default TimelineEvent

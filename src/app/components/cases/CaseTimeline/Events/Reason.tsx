@@ -4,7 +4,8 @@ import { getDay }from "app/components/shared/DayDisplay/DayDisplay"
 import { Timeline } from "app/components/shared/Timeline"
 import { mapCaseType } from "../helpers/Helpers"
 import ButtonEditEvent from "../ButtonEditEvent"
-import ReasonData from "./ReasonData"
+import EventData from "../EventData"
+import { reasonLabelsMap } from "../helpers/dictionaries"
 
 type Props = {
   caseEvents: Components.Schemas.CaseEvent[]
@@ -12,48 +13,46 @@ type Props = {
 }
 
 const Reason: React.FC<Props> = ({ caseEvents, isOpen }) => {
-  const TimelineThread = caseEvents.map(thread =>
-    caseEvents.length > 1 ?
-      <Timeline
-        title= { thread.event_values.date_created ? `${ getDay(thread.event_values.date_created, true) }` : `${ mapCaseType(thread.type) }` }
-        key={thread.id}
-        isOpen={isOpen}
-        largeCircle={false}
-        isNested={true}
-      >
-        <ReasonData
-          thread={ thread }
-          showDate={false}
-        />
-        { thread.emitter_is_editable_until && <ButtonEditEvent target={ `/zaken/${ thread.case }/case/${ thread.emitter_id }` } disabled={!thread.emitter_is_editable} editable_until={thread.emitter_is_editable_until} /> }
-      </Timeline>
-      :
-      <div key={ thread.id }>
-        <ReasonData
-          thread={ thread }
-          showDate={true}
-        />
-        { thread.emitter_is_editable_until && <ButtonEditEvent target={ `/zaken/${ thread.case }/case/${ thread.emitter_id }` } disabled={!thread.emitter_is_editable} editable_until={thread.emitter_is_editable_until} /> }
-      </div>
-  )
-  const currentEvent = caseEvents[0]
-  const counterString = caseEvents.length > 1 ? `(${ caseEvents.length })` : ""
+
+  // This situation would be considered a problem within the data returned from the API
+  if (caseEvents.length === 0) return null
+
+  const hasPluralEvents = caseEvents.length > 1
+  const typeLabel = mapCaseType(caseEvents[0].type)
+  const title = `${ typeLabel } ${ hasPluralEvents ? `(${ caseEvents.length })` : "" } `
 
   return (
-    <>
-    { currentEvent ?
-      <Timeline
-        title={ `${ mapCaseType(currentEvent.type) } ${ counterString } `}
-      >
-        { TimelineThread }
-      </Timeline>
-    :
-      <Timeline
-        title="Aanleiding ontbreekt"
-        canBeOpened={false}
-      />
-    }
-    </>
+    <Timeline title={ title }>
+      { caseEvents.map(({ case: caseId, id, event_values, emitter_id, emitter_is_editable, emitter_is_editable_until, date_created }) => {
+        const eventWrapper = <>
+          <EventData
+            values={ event_values }
+            fields={ ["start_date", "author", "reason", "description"] }
+            labelsMap={ reasonLabelsMap }
+          />
+          { emitter_is_editable_until &&
+            <ButtonEditEvent
+              target={ `/zaken/${ caseId }/case/${ emitter_id }` }
+              disabled={ !emitter_is_editable }
+              editable_until={ emitter_is_editable_until }
+            />
+          }
+        </>
+        return hasPluralEvents ?
+          <Timeline
+            title= { event_values.date_created ? `${ getDay(event_values.date_created, true) }` : `${ typeLabel }` }
+            key={ id }
+            isOpen={ isOpen }
+            largeCircle={ false }
+            isNested={ true }
+            >
+            { eventWrapper }
+          </Timeline> :
+          <div key={ id }>
+            { eventWrapper }
+          </div>
+      }) }
+    </Timeline>
   )
 }
 
