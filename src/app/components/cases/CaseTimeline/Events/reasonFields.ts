@@ -1,7 +1,9 @@
+import { displayDate } from "app/components/shared/DateDisplay/DateDisplay"
+
 export default [
   {
     key: "start_date",
-    type: "Date"
+    mapValue: (v: string) => displayDate(v)
   },
   "author",
   "reason",

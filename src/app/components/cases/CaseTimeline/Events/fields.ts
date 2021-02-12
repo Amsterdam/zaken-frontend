@@ -1,16 +1,14 @@
 export type Field = {
   key: string
   label: string
-  type: string
   italic?: boolean
-  mapValue?: (v: unknown) => unknown
+  mapValue?: (v: any) => any
 }
-type FieldConfig = Pick<Field, "key"> & Partial<Pick<Field, "type" | "italic">>
+type FieldConfig = Pick<Field, "key"> & Partial<Pick<Field, "italic" | "mapValue">>
 
 export default (fields: Array<FieldConfig | string>, translations: Record<string, string>) =>
   fields.map(value => {
-    const o = typeof value === "string" ? { key: value, type: "string" } : value
-    const type = o.type ?? "string"
+    const o = typeof value === "string" ? { key: value } : value
     const label = translations[o.key]
-    return { ...o, type, label }
+    return { ...o, label }
   })
