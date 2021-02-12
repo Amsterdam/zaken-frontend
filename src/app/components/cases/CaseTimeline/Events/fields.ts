@@ -3,6 +3,7 @@ export type Field = {
   label: string
   type: string
   italic?: boolean
+  mapValue?: (v: unknown) => unknown
 }
 type FieldConfig = Pick<Field, "key"> & Partial<Pick<Field, "type" | "italic">>
 

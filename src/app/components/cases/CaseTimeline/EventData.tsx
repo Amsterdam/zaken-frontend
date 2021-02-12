@@ -9,15 +9,15 @@ type Props = {
   date?: string
 }
 
-const displayValue = (value: unknown, type: string) => {
-  if (value == null) return "-"
-  if (type === "string") return value as string
-  if (type === "array") return mapArrayToUl(value)
-  return <>{ value }</>
+const defaultMapValue = (value: unknown) => value
+const displayValue = (value: unknown, mapValue = defaultMapValue) => {
+  if (Array.isArray(value)) return mapArrayToUl(value.map(mapValue))
+  return <>{ mapValue(value) }</>
 }
 
 type ValueProps = { value: React.ReactNode, displayItalic?: boolean }
 const Value: React.FC<ValueProps> = ({ value, displayItalic = false }) => displayItalic ? <i>{ value }</i> : <>{ value }</>
+
 
 const EventData: React.FC<Props> = ({ fields, values, date }) => (
   <Dl>
@@ -30,10 +30,10 @@ const EventData: React.FC<Props> = ({ fields, values, date }) => (
     { fields.map(field => {
         const value = values[field.key]
         return (
-          value !== undefined ?
+          value != null ?
           <div key={ field.key }>
             <dt>{ field.label ?? "-" }</dt>
-            <dd><Value value={ displayValue(value, field.type) } displayItalic={ field.italic } /></dd>
+            <dd><Value value={ displayValue(value, field.mapValue) } displayItalic={ field.italic } /></dd>
           </div> :
           null
         )
