@@ -1,5 +1,5 @@
 import React from "react"
-import { Dl } from "./helpers/Helpers"
+import { Dl, mapArrayToUl } from "./helpers/Helpers"
 import { displayDate } from "app/components/shared/DateDisplay/DateDisplay"
 
 type Props = {
@@ -7,6 +7,19 @@ type Props = {
   fields: string[]
   labelsMap: Record<string, string>
   showDate?: boolean
+}
+
+const italicFields = ["description", "feedback"]
+const displayItalic = (field: string) => italicFields.includes(field)
+const displayValue = (value: unknown) => {
+  if (value === undefined || value === null) return "-"
+  if (typeof value === "string") return value
+  if (Array.isArray(value)) return mapArrayToUl(value)
+  return value as React.ReactNode
+}
+const display = (field: string, value: any) => {
+  const v = displayValue(value)
+  return displayItalic(field) ? <i>{ v }</i> : v
 }
 
 const EventData: React.FC<Props> = ({ values, fields, labelsMap, showDate = false }) => (
@@ -20,7 +33,7 @@ const EventData: React.FC<Props> = ({ values, fields, labelsMap, showDate = fals
     { fields.map(field => (
       <div key={ field }>
         <dt>{ labelsMap[field] ?? "-" }</dt>
-        <dd>{ values[field] ?? "-" }</dd>
+        <dd>{ displayValue(values[field]) }</dd>
       </div>
     )) }
   </Dl>

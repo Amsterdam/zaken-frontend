@@ -2,8 +2,7 @@ import React from "react"
 import TimelineEventItem from "./TimelineEventItem"
 import Debrief from "./Events/Debrief"
 import Visit from "./Events/Visit"
-import Summon from "./Events/Summon"
-import { genericLabelsMap, reasonLabelsMap } from "./helpers/dictionaries"
+import { genericLabelsMap, reasonLabelsMap, summonLabelsMap } from "./helpers/dictionaries"
 
 export type TimelineEventItem = {
   type: string
@@ -35,7 +34,9 @@ const TimelineEvent: React.FC<Props> = ({ timelineEventItem: { type, caseEvents 
           isOpen={ isOpen }
         /> :
       type === "SUMMON" ?
-        <Summon
+        <TimelineEventItem
+          fields={ ["author", "persons", "description"] }
+          labelsMap={ summonLabelsMap }
           caseEvents={ caseEvents }
           isOpen={ isOpen }
         /> :
