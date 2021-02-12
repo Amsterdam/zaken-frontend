@@ -1,41 +1,43 @@
 import React from "react"
 import { Dl, mapArrayToUl } from "./helpers/Helpers"
 import { displayDate } from "app/components/shared/DateDisplay/DateDisplay"
+import type { Field } from "./Events/fields"
 
 type Props = {
-  values: Record<string, any>
-  fields: string[]
-  labelsMap: Record<string, string>
-  showDate?: boolean
+  fields: Field[]
+  values: Record<string, unknown>
+  date?: string
 }
 
-const italicFields = ["description", "feedback"]
-const displayItalic = (field: string) => italicFields.includes(field)
-const displayValue = (value: unknown) => {
-  if (value === undefined || value === null) return "-"
-  if (typeof value === "string") return value
-  if (Array.isArray(value)) return mapArrayToUl(value)
-  return value as React.ReactNode
-}
-const display = (field: string, value: any) => {
-  const v = displayValue(value)
-  return displayItalic(field) ? <i>{ v }</i> : v
+const displayValue = (value: unknown, type: string) => {
+  if (value == null) return "-"
+  if (type === "string") return value as string
+  if (type === "array") return mapArrayToUl(value)
+  return <>{ value }</>
 }
 
-const EventData: React.FC<Props> = ({ values, fields, labelsMap, showDate = false }) => (
+type ValueProps = { value: React.ReactNode, displayItalic?: boolean }
+const Value: React.FC<ValueProps> = ({ value, displayItalic = false }) => displayItalic ? <i>{ value }</i> : <>{ value }</>
+
+const EventData: React.FC<Props> = ({ fields, values, date }) => (
   <Dl>
-    { showDate && values.date_added &&
+    { date &&
       <div>
         <dt>Datum</dt>
-        <dd>{ displayDate(values.date_added) }</dd>
+        <dd>{ displayDate(date) }</dd>
       </div>
     }
-    { fields.map(field => (
-      <div key={ field }>
-        <dt>{ labelsMap[field] ?? "-" }</dt>
-        <dd>{ displayValue(values[field]) }</dd>
-      </div>
-    )) }
+    { fields.map(field => {
+        const value = values[field.key]
+        return (
+          value !== undefined ?
+          <div key={ field.key }>
+            <dt>{ field.label ?? "-" }</dt>
+            <dd><Value value={ displayValue(value, field.type) } displayItalic={ field.italic } /></dd>
+          </div> :
+          null
+        )
+    }) }
   </Dl>
 )
 

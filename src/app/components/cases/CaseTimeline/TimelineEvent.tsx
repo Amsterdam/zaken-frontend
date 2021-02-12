@@ -1,8 +1,12 @@
 import React from "react"
 import TimelineEventItem from "./TimelineEventItem"
-import Debrief from "./Events/Debrief"
-import Visit from "./Events/Visit"
-import { genericLabelsMap, reasonLabelsMap, summonLabelsMap } from "./helpers/dictionaries"
+import { debriefLabelsMap, genericLabelsMap, reasonLabelsMap, summonLabelsMap, visitLabelsMap } from "./helpers/dictionaries"
+import fields from "./Events/fields"
+import reasonFields from "./Events/reasonFields"
+import genericTaskFields from "./Events/genericTaskFields"
+import summonFields from "./Events/summonFields"
+import debriefingFields from "./Events/debriefingFields"
+import visitFields from "./Events/visitFields"
 
 export type TimelineEventItem = {
   type: string
@@ -18,32 +22,31 @@ const TimelineEvent: React.FC<Props> = ({ timelineEventItem: { type, caseEvents 
   <>
     { type === "CASE" ?
         <TimelineEventItem
-          fields={ ["start_date", "author", "reason", "description"] }
-          labelsMap={ reasonLabelsMap }
+          fields={ fields(reasonFields, reasonLabelsMap) }
           caseEvents={ caseEvents }
           isOpen={ isOpen }
         /> :
       type === "VISIT" ?
-        <Visit
+        <TimelineEventItem
+          fields={ fields(visitFields, visitLabelsMap) }
           caseEvents={ caseEvents }
           isOpen={ isOpen }
         /> :
       type === "DEBRIEFING" ?
-        <Debrief
+        <TimelineEventItem
+          fields={ fields(debriefingFields, debriefLabelsMap) }
           caseEvents={ caseEvents }
           isOpen={ isOpen }
         /> :
       type === "SUMMON" ?
         <TimelineEventItem
-          fields={ ["author", "persons", "description"] }
-          labelsMap={ summonLabelsMap }
+          fields={ fields(summonFields, summonLabelsMap) }
           caseEvents={ caseEvents }
           isOpen={ isOpen }
         /> :
       type === "GENERIC_TASK" ?
         <TimelineEventItem
-          fields={ ["author"] }
-          labelsMap={ genericLabelsMap }
+          fields={ fields(genericTaskFields, genericLabelsMap) }
           caseEvents={ caseEvents }
           isOpen={ isOpen }
         /> :
