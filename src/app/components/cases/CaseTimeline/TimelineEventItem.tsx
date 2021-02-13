@@ -3,9 +3,8 @@ import { getDay }from "app/components/shared/DayDisplay/DayDisplay"
 
 import { Timeline } from "app/components/shared/Timeline"
 import { mapCaseType } from "./helpers/Helpers"
-import ButtonEditEvent from "./ButtonEditEvent"
 import type { Field } from "./Events/fields"
-import EventData from "./EventData"
+import EventWrapper from "./EventWrapper"
 
 type Props = {
   fields: Field[]
@@ -25,34 +24,22 @@ const TimelineEventItem: React.FC<Props> = ({ fields, caseEvents, isOpen }) => {
 
   return (
     <Timeline title={ title }>
-      { caseEvents.map(({ case: caseId, id, event_values, emitter_id, emitter_is_editable, emitter_is_editable_until, date_created }) => {
-        const eventWrapper = <>
-          <EventData
-            fields={ fields }
-            values={ event_values }
-          />
-          { emitter_is_editable_until &&
-            <ButtonEditEvent
-              target={ `/zaken/${ caseId }/case/${ emitter_id }` }
-              disabled={ !emitter_is_editable }
-              editable_until={ emitter_is_editable_until }
-            />
-          }
-        </>
-        return hasPluralEvents ?
-          <Timeline
-            title= { event_values.date_created ? `${ getDay(event_values.date_created, true) }` : `${ typeLabel }` }
-            key={ id }
-            isOpen={ isOpen }
-            largeCircle={ false }
-            isNested={ true }
-            >
-            { eventWrapper }
-          </Timeline> :
-          <div key={ id }>
-            { eventWrapper }
-          </div>
-      }) }
+      { caseEvents.map(caseEvent => (
+          hasPluralEvents ?
+            <Timeline
+              title= { caseEvent.event_values.date_created ? `${ getDay(caseEvent.event_values.date_created, true) }` : `${ typeLabel }` }
+              key={ caseEvent.id }
+              isOpen={ isOpen }
+              largeCircle={ false }
+              isNested={ true }
+              >
+              <EventWrapper fields={ fields } caseEvent={ caseEvent } />
+            </Timeline> :
+            <div key={ caseEvent.id }>
+              <EventWrapper fields={ fields } caseEvent={ caseEvent } />
+            </div>
+          )
+      ) }
     </Timeline>
   )
 }
