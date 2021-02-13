@@ -48,6 +48,7 @@ const TimelineEvent: React.FC<Props> = ({ timelineEventItem: { type, caseEvents 
         <TimelineEventItem
           fields={ fields(genericTaskFields, genericLabelsMap) }
           caseEvents={ caseEvents }
+          dateField="date"
           isOpen={ isOpen }
         /> :
       null

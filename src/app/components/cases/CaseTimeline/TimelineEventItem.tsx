@@ -9,10 +9,11 @@ import EventWrapper from "./EventWrapper"
 type Props = {
   fields: Field[]
   caseEvents: Components.Schemas.CaseEvent[]
+  dateField?: string
   isOpen?: boolean
 }
 
-const TimelineEventItem: React.FC<Props> = ({ fields, caseEvents, isOpen }) => {
+const TimelineEventItem: React.FC<Props> = ({ fields, caseEvents, dateField = "date_created", isOpen = false }) => {
 
   // This situation would be considered a problem within the data returned from the API
   if (caseEvents.length === 0) return null
@@ -27,7 +28,7 @@ const TimelineEventItem: React.FC<Props> = ({ fields, caseEvents, isOpen }) => {
       { caseEvents.map(caseEvent => (
           hasPluralEvents ?
             <Timeline
-              title= { caseEvent.event_values.date_created ? `${ getDay(caseEvent.event_values.date_created, true) }` : `${ typeLabel }` }
+              title={ caseEvent.event_values[dateField] ? `${ getDay(caseEvent.event_values[dateField], true) }` : `${ typeLabel }` }
               key={ caseEvent.id }
               isOpen={ isOpen }
               largeCircle={ false }
