@@ -25,7 +25,7 @@ export default (caseId: Components.Schemas.Case["id"], completeCase: MockCompone
       props: {
         label: "Korte toelichting",
         name: "text",
-        isRequired: false
+        isRequired: true
       }
     },
     submit: {
