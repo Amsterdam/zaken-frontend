@@ -1,7 +1,7 @@
 import React from "react"
 import TimelineEventItem from "./TimelineEventItem"
 import { debriefLabelsMap, genericLabelsMap, reasonLabelsMap, summonLabelsMap, visitLabelsMap } from "../helpers/dictionaries"
-import fields from "../events/fields"
+import fields from "../helpers/fields"
 import reasonFields from "../events/reasonFields"
 import genericTaskFields from "../events/genericTaskFields"
 import summonFields from "../events/summonFields"

@@ -2,7 +2,7 @@ import React from "react"
 import { getDay }from "app/components/shared/DayDisplay/DayDisplay"
 
 import { Timeline } from "app/components/shared/Timeline"
-import type { Field } from "../events/fields"
+import type { Field } from "../helpers/fields"
 import EventWrapper from "./EventWrapper"
 import { displayDate } from "app/components/shared/DateDisplay/DateDisplay"
 
