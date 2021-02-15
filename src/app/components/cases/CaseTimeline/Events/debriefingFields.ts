@@ -9,7 +9,7 @@ export default [
   "author",
   {
     key: "violation",
-    mapValue: (v: string) => debriefViolationMap[v]
+    mapValue: (v: keyof typeof debriefViolationMap) => debriefViolationMap[v]
   },
   {
     key: "feedback",

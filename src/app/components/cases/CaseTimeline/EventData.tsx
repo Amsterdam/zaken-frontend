@@ -1,6 +1,7 @@
 import React from "react"
-import { Dl, mapArrayToUl } from "./helpers/Helpers"
+import Dl from "./Dl"
 import type { Field } from "./Events/fields"
+import UnstyledList from "./UnstyledList"
 
 type Props = {
   fields: Field[]
@@ -10,7 +11,7 @@ type Props = {
 
 const defaultMapValue = (value: unknown) => value
 const displayValue = (value: unknown, mapValue = defaultMapValue) => {
-  if (Array.isArray(value)) return mapArrayToUl(value.map(mapValue))
+  if (Array.isArray(value)) return <UnstyledList>{ value.map(mapValue).map(item => <li>{ item } </li>) }</UnstyledList>
   return <>{ mapValue(value) }</>
 }
 

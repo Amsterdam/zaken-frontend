@@ -1,10 +1,18 @@
+// Events
+export const caseTypesMap = {
+  "CASE": "Aanleiding",
+  "DEBRIEFING": "Debrief",
+  "SUMMON": "Aanschrijving",
+  "VISIT": "Huisbezoek(en)"
+}
+
 // REASON
 export const reasonLabelsMap = {
   "start_date": "Datum",
   "author": "Projectmedewerker",
   "reason": "Aanleiding",
   "description": "Toelichting"
-} as Record<string, string>
+}
 
 // DEBRIEF
 export const debriefLabelsMap = {
@@ -19,7 +27,7 @@ export const debriefViolationMap = {
   "NO": "Nee, geen overtreding",
   "ADDITIONAL_RESEARCH_REQUIRED": "Nader intern onderzoek nodig",
   "ADDITIONAL_VISIT_REQUIRED": "Aanvullend huisbezoek nodig"
-} as Record<string, string>
+}
 
 // SUMMON
 export const summonLabelsMap = {
@@ -62,10 +70,10 @@ export const visitEventValuesMap = {
   "weekend": "Weekend",
   "evening": "'s Avonds",
   "unknown": "Niet meer uitzetten"
-} as Record<string, string>
+}
 
 export const visit_go_ahead = {
   "true": "Ja, doorlaten",
   "false": "Nee, tegenhouden"
-} as Record<string, string>
+}
 
