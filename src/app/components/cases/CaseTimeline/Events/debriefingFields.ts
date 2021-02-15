@@ -1,4 +1,5 @@
 import { displayDate } from "app/components/shared/DateDisplay/DateDisplay"
+import { debriefViolationMap } from "../helpers/dictionaries"
 
 export default [
   {
@@ -6,7 +7,10 @@ export default [
     mapValue: (v: string) => displayDate(v)
   },
   "author",
-  "violation",
+  {
+    key: "violation",
+    mapValue: (v: string) => debriefViolationMap[v]
+  },
   {
     key: "feedback",
     italic: true
