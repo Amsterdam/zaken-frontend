@@ -5,6 +5,7 @@ import type { Field } from "./Events/fields"
 type Props = {
   fields: Field[]
   values: Record<string, unknown>
+  isNested?: boolean
 }
 
 const defaultMapValue = (value: unknown) => value
@@ -16,16 +17,15 @@ const displayValue = (value: unknown, mapValue = defaultMapValue) => {
 type ValueProps = { value: React.ReactNode, displayItalic?: boolean }
 const Value: React.FC<ValueProps> = ({ value, displayItalic = false }) => displayItalic ? <i>{ value }</i> : <>{ value }</>
 
-
-const EventData: React.FC<Props> = ({ fields, values }) => (
+const EventData: React.FC<Props> = ({ fields, values, isNested = false }) => (
   <Dl>
-    { fields.map(field => {
-        const value = values[field.key]
+    { fields.map(({ key, label, shouldShow, mapValue, italic }) => {
+        const value = values[key]
         return (
-          value != null ?
-          <div key={ field.key }>
-            <dt>{ field.label ?? "-" }</dt>
-            <dd><Value value={ displayValue(value, field.mapValue) } displayItalic={ field.italic } /></dd>
+          value != null && shouldShow(value, isNested) ?
+          <div key={ key }>
+            <dt>{ label ?? "-" }</dt>
+            <dd><Value value={ displayValue(value, mapValue) } displayItalic={ italic } /></dd>
           </div> :
           null
         )

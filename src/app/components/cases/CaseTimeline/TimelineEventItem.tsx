@@ -38,9 +38,9 @@ const TimelineEventItem: React.FC<Props> = ({ fields, caseEvents, title = "", da
               largeCircle={ false }
               isNested={ true }
               >
-              <EventWrapper fields={ fields } caseEvent={ caseEvent } pathName={ pathName } />
+              <EventWrapper fields={ fields } caseEvent={ caseEvent } pathName={ pathName } isNested={ true } />
             </Timeline> :
-            <EventWrapper fields={ fields } caseEvent={ caseEvent }  pathName={ pathName } />
+            <EventWrapper fields={ fields } caseEvent={ caseEvent } pathName={ pathName } />
           }
           </div>
       ) ) }

@@ -1,7 +1,13 @@
-import { displayTime } from "app/components/shared/DateDisplay/DateDisplay"
-import { visitEventValuesMap, visit_go_ahead } from "../helpers/dictionaries"
+import { displayDate, displayTime } from "app/components/shared/DateDisplay/DateDisplay"
+import { visitLabelsMap, visitEventValuesMap, visit_go_ahead } from "../helpers/dictionaries"
 
 export default [
+  {
+    key: "start_time",
+    label: visitLabelsMap["date"],
+    mapValue: (v: string) => displayDate(v),
+    shouldShow: (value: any, isNested: boolean) => !isNested
+  },
   {
     key: "start_time",
     mapValue: (v: string) => displayTime(v, true)
