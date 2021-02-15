@@ -26,21 +26,20 @@ const TimelineEventItem: React.FC<Props> = ({ fields, caseEvents, dateField = "d
   return (
     <Timeline title={ title }>
       { caseEvents.map(caseEvent => (
-          hasPluralEvents ?
+          <div key={ caseEvent.id }>
+          { hasPluralEvents ?
             <Timeline
               title={ caseEvent.event_values[dateField] ? `${ getDay(caseEvent.event_values[dateField], true) }` : `${ typeLabel }` }
-              key={ caseEvent.id }
               isOpen={ isOpen }
               largeCircle={ false }
               isNested={ true }
               >
               <EventWrapper fields={ fields } caseEvent={ caseEvent } />
             </Timeline> :
-            <div key={ caseEvent.id }>
-              <EventWrapper fields={ fields } caseEvent={ caseEvent } />
-            </div>
-          )
-      ) }
+            <EventWrapper fields={ fields } caseEvent={ caseEvent } />
+          }
+          </div>
+      ) ) }
     </Timeline>
   )
 }
