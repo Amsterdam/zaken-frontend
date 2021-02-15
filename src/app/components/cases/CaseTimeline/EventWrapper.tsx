@@ -1,5 +1,5 @@
 import React from "react"
-import type { Field } from "./Events/fields"
+import type { Field } from "./events/fields"
 import EventData from "./EventData"
 import ButtonEditEvent from "./ButtonEditEvent"
 
