@@ -1,5 +1,5 @@
 import React from "react"
-import TimelineEventItem from "./TimelineEventItem"
+import TimelineEventItemComponent from "./TimelineEventItem"
 import { debriefLabelsMap, genericLabelsMap, reasonLabelsMap, summonLabelsMap, visitLabelsMap } from "../helpers/dictionaries"
 import fields from "../helpers/fields"
 import reasonFields from "../events/reasonFields"
@@ -22,14 +22,14 @@ type Props = {
 const TimelineEvent: React.FC<Props> = ({ timelineEventItem: { type, caseEvents }, isOpen = false }) => (
   <>
     { type === "CASE" ?
-        <TimelineEventItem
+        <TimelineEventItemComponent
           fields={ fields(reasonFields, reasonLabelsMap) }
           caseEvents={ caseEvents }
           title={ caseTypesMap[type] }
           isOpen={ isOpen }
         /> :
       type === "VISIT" ?
-        <TimelineEventItem
+        <TimelineEventItemComponent
           fields={ fields(visitFields, visitLabelsMap) }
           caseEvents={ caseEvents }
           title={ caseTypesMap[type] }
@@ -37,7 +37,7 @@ const TimelineEvent: React.FC<Props> = ({ timelineEventItem: { type, caseEvents 
           isOpen={ isOpen }
         /> :
       type === "DEBRIEFING" ?
-        <TimelineEventItem
+        <TimelineEventItemComponent
           fields={ fields(debriefingFields, debriefLabelsMap) }
           caseEvents={ caseEvents }
           title={ caseTypesMap[type] }
@@ -45,14 +45,14 @@ const TimelineEvent: React.FC<Props> = ({ timelineEventItem: { type, caseEvents 
           pathName="debriefing"
         /> :
       type === "SUMMON" ?
-        <TimelineEventItem
+        <TimelineEventItemComponent
           fields={ fields(summonFields, summonLabelsMap) }
           caseEvents={ caseEvents }
           title={ caseTypesMap[type] }
           isOpen={ isOpen }
         /> :
       type === "GENERIC_TASK" ?
-        <TimelineEventItem
+        <TimelineEventItemComponent
           fields={ fields(genericTaskFields, genericLabelsMap) }
           caseEvents={ caseEvents }
           title={ caseEvents[0]?.event_values.description }
