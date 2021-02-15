@@ -84,9 +84,7 @@ const Timeline: React.FC<
   const [open, setOpen] = useState(isOpen ?? false)
 
   useEffect(() => {
-    if (isOpen !== undefined && isOpen !== open) {
-      setOpen(isOpen)
-    }
+    setOpen(isOpen ?? false)
   }, [isOpen, setOpen])
 
   const handleClick = useCallback(() => {
