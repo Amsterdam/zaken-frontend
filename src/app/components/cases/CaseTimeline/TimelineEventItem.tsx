@@ -10,10 +10,11 @@ type Props = {
   fields: Field[]
   caseEvents: Components.Schemas.CaseEvent[]
   dateField?: string
+  pathName?: string
   isOpen?: boolean
 }
 
-const TimelineEventItem: React.FC<Props> = ({ fields, caseEvents, dateField = "date_created", isOpen = false }) => {
+const TimelineEventItem: React.FC<Props> = ({ fields, caseEvents, dateField = "date_created", pathName, isOpen = false }) => {
 
   // This situation would be considered a problem within the data returned from the API
   if (caseEvents.length === 0) return null
@@ -34,9 +35,9 @@ const TimelineEventItem: React.FC<Props> = ({ fields, caseEvents, dateField = "d
               largeCircle={ false }
               isNested={ true }
               >
-              <EventWrapper fields={ fields } caseEvent={ caseEvent } />
+              <EventWrapper fields={ fields } caseEvent={ caseEvent } pathName={ pathName } />
             </Timeline> :
-            <EventWrapper fields={ fields } caseEvent={ caseEvent } />
+            <EventWrapper fields={ fields } caseEvent={ caseEvent }  pathName={ pathName } />
           }
           </div>
       ) ) }

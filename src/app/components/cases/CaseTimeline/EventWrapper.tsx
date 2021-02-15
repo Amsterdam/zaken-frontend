@@ -6,17 +6,19 @@ import ButtonEditEvent from "./ButtonEditEvent"
 type Props = {
   fields: Field[]
   caseEvent: Components.Schemas.CaseEvent
+  pathName?: string
 }
 
-const EventWrapper: React.FC<Props> = ({ fields, caseEvent: { case: caseId, id, event_values, emitter_id, emitter_is_editable, emitter_is_editable_until } }) => (
+const EventWrapper: React.FC<Props> = ({ fields, caseEvent: { case: caseId, event_values, emitter_id, emitter_is_editable, emitter_is_editable_until }, pathName }) => (
   <>
+    { console.log(pathName, emitter_is_editable_until, emitter_is_editable )}
     <EventData
       fields={ fields }
       values={ event_values }
     />
-    { emitter_is_editable_until &&
+    { emitter_is_editable_until && pathName !== undefined &&
       <ButtonEditEvent
-        target={ `/zaken/${ caseId }/case/${ emitter_id }` }
+        target={ `/zaken/${ caseId }/${ pathName }/${ emitter_id }` }
         disabled={ !emitter_is_editable }
         editable_until={ emitter_is_editable_until }
       />
