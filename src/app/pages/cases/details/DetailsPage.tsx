@@ -7,7 +7,6 @@ import Row, { RowWithColumn } from "app/components/layouts/Grid/Row"
 import PageHeading from "app/components/shared/PageHeading/PageHeading"
 import TimelineContainer from "app/components/cases/CaseTimeline/TimelineContainer"
 import CaseDetails from "app/components/cases/CaseDetails/CaseDetails"
-import Workflow from "app/components/cases/Workflow/Workflow"
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
@@ -37,11 +36,6 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
       </Row>
       <RowWithColumn>
         <CaseStatus id={ id }/>
-        <Divider />
-      </RowWithColumn>
-      <RowWithColumn>
-        {/* TODO-MOCKED summonId has to come from useCaseEvents, so summonId can be removed here */}
-        <Workflow caseId={ id } />
       </RowWithColumn>
       <RowWithColumn>
         <Heading as="h2">Zaakhistorie</Heading>
