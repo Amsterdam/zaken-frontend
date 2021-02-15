@@ -17,13 +17,13 @@ const columns = [
   { minWidth: 100 }
 ]
 
-type SearchResult = Pick<BAGAddressResponse["results"][0], "adres" | "landelijk_id">
+type SearchResult = Pick<BAGAddressResponse["results"][0], "adres" | "adresseerbaar_object_id">
 const mapData = (onClick: (bagId: string) => void) => (data: SearchResult) =>
 ({
   itemList: [
     `${ data.adres }`,
     <Button
-      onClick={() => onClick(data.landelijk_id)}
+      onClick={() => onClick(data.adresseerbaar_object_id)}
       as="span"
       variant="textButton"
       iconSize={24}
