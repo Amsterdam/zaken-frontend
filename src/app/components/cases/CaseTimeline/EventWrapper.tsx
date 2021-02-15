@@ -11,7 +11,6 @@ type Props = {
 
 const EventWrapper: React.FC<Props> = ({ fields, caseEvent: { case: caseId, event_values, emitter_id, emitter_is_editable, emitter_is_editable_until }, pathName }) => (
   <>
-    { console.log(pathName, emitter_is_editable_until, emitter_is_editable )}
     <EventData
       fields={ fields }
       values={ event_values }

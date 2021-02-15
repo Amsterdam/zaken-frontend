@@ -7,6 +7,7 @@ import genericTaskFields from "./Events/genericTaskFields"
 import summonFields from "./Events/summonFields"
 import debriefingFields from "./Events/debriefingFields"
 import visitFields from "./Events/visitFields"
+import { mapCaseType } from "./helpers/Helpers"
 
 export type TimelineEventItem = {
   type: string
@@ -24,18 +25,22 @@ const TimelineEvent: React.FC<Props> = ({ timelineEventItem: { type, caseEvents 
         <TimelineEventItem
           fields={ fields(reasonFields, reasonLabelsMap) }
           caseEvents={ caseEvents }
+          title={ mapCaseType(type) }
           isOpen={ isOpen }
         /> :
       type === "VISIT" ?
         <TimelineEventItem
           fields={ fields(visitFields, visitLabelsMap) }
           caseEvents={ caseEvents }
+          title={ mapCaseType(type) }
+          dateField="start_time"
           isOpen={ isOpen }
         /> :
       type === "DEBRIEFING" ?
         <TimelineEventItem
           fields={ fields(debriefingFields, debriefLabelsMap) }
           caseEvents={ caseEvents }
+          title={ mapCaseType(type) }
           isOpen={ isOpen }
           pathName="debriefing"
         /> :
@@ -43,12 +48,14 @@ const TimelineEvent: React.FC<Props> = ({ timelineEventItem: { type, caseEvents 
         <TimelineEventItem
           fields={ fields(summonFields, summonLabelsMap) }
           caseEvents={ caseEvents }
+          title={ mapCaseType(type) }
           isOpen={ isOpen }
         /> :
       type === "GENERIC_TASK" ?
         <TimelineEventItem
           fields={ fields(genericTaskFields, genericLabelsMap) }
           caseEvents={ caseEvents }
+          title={ caseEvents[0]?.event_values.description }
           dateField="date"
           isOpen={ isOpen }
         /> :

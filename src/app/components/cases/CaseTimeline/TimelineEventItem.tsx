@@ -2,35 +2,38 @@ import React from "react"
 import { getDay }from "app/components/shared/DayDisplay/DayDisplay"
 
 import { Timeline } from "app/components/shared/Timeline"
-import { mapCaseType } from "./helpers/Helpers"
 import type { Field } from "./Events/fields"
 import EventWrapper from "./EventWrapper"
+import { displayDate } from "app/components/shared/DateDisplay/DateDisplay"
 
 type Props = {
   fields: Field[]
   caseEvents: Components.Schemas.CaseEvent[]
+  title?: string
   dateField?: string
   pathName?: string
   isOpen?: boolean
 }
 
-const TimelineEventItem: React.FC<Props> = ({ fields, caseEvents, dateField = "date_created", pathName, isOpen = false }) => {
+const TimelineEventItem: React.FC<Props> = ({ fields, caseEvents, title = "", dateField = "date_created", pathName, isOpen = false }) => {
 
   // This situation would be considered a problem within the data returned from the API
   if (caseEvents.length === 0) return null
 
   const hasPluralEvents = caseEvents.length > 1
-  const { type } = caseEvents[0]
-  const typeLabel = type === "GENERIC_TASK" ? caseEvents[0].event_values.description : mapCaseType(type)
-  const title = `${ typeLabel } ${ hasPluralEvents ? `(${ caseEvents.length })` : "" }`
+  const titleWithCounter = `${ title } ${ hasPluralEvents ? `(${ caseEvents.length })` : "" }`
 
   return (
-    <Timeline title={ title } isOpen={ isOpen }>
+    <Timeline title={ titleWithCounter } isOpen={ isOpen }>
       { caseEvents.map(caseEvent => (
           <div key={ caseEvent.id }>
           { hasPluralEvents ?
             <Timeline
-              title={ caseEvent.event_values[dateField] ? `${ getDay(caseEvent.event_values[dateField], true) }` : `${ typeLabel }` }
+              title={
+                caseEvent.event_values[dateField] ?
+                  `${ getDay(caseEvent.event_values[dateField], true) } ${ displayDate(caseEvent.event_values[dateField]) }` :
+                  `${ title }`
+              }
               isOpen={ isOpen }
               largeCircle={ false }
               isNested={ true }
