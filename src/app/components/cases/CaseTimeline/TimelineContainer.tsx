@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 
 import useGroupedCaseEvents from "./hooks/useGroupedCaseEvents"
-import TimelineEvents from "./TimelineEvents"
+import TimelineEvents from "./components/TimelineEvents"
 import { Spinner, themeSpacing } from "@amsterdam/asc-ui"
 
 type Props = {

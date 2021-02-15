@@ -1,13 +1,13 @@
 import React from "react"
 import TimelineEventItem from "./TimelineEventItem"
-import { debriefLabelsMap, genericLabelsMap, reasonLabelsMap, summonLabelsMap, visitLabelsMap } from "./helpers/dictionaries"
-import fields from "./events/fields"
-import reasonFields from "./events/reasonFields"
-import genericTaskFields from "./events/genericTaskFields"
-import summonFields from "./events/summonFields"
-import debriefingFields from "./events/debriefingFields"
-import visitFields from "./events/visitFields"
-import { caseTypesMap } from "./helpers/dictionaries"
+import { debriefLabelsMap, genericLabelsMap, reasonLabelsMap, summonLabelsMap, visitLabelsMap } from "../helpers/dictionaries"
+import fields from "../events/fields"
+import reasonFields from "../events/reasonFields"
+import genericTaskFields from "../events/genericTaskFields"
+import summonFields from "../events/summonFields"
+import debriefingFields from "../events/debriefingFields"
+import visitFields from "../events/visitFields"
+import { caseTypesMap } from "../helpers/dictionaries"
 
 export type TimelineEventItem = {
   type: string

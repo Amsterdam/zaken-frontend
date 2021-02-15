@@ -1,6 +1,6 @@
 import React from "react"
 import Dl from "./Dl"
-import type { Field } from "./events/fields"
+import type { Field } from "../events/fields"
 import UnstyledList from "./UnstyledList"
 
 type Props = {
