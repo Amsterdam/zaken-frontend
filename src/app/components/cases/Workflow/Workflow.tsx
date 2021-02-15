@@ -59,8 +59,6 @@ const Workflow: React.FC<Props> = ({ caseId }) => {
   const { data } = useCaseTasks(caseId)
   const { execPost } = useTaskComplete({ lazy: true })
 
-  console.log("data", data)
-
   const mapTaskData = useCallback((data: Components.Schemas.CamundaTask) => {
     const action = taskActionMap[data.task_name_id] ?? {}
 
