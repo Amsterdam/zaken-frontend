@@ -24,7 +24,7 @@ const TimelineEventItem: React.FC<Props> = ({ fields, caseEvents, dateField = "d
   const title = `${ typeLabel } ${ hasPluralEvents ? `(${ caseEvents.length })` : "" }`
 
   return (
-    <Timeline title={ title }>
+    <Timeline title={ title } isOpen={ isOpen }>
       { caseEvents.map(caseEvent => (
           <div key={ caseEvent.id }>
           { hasPluralEvents ?
