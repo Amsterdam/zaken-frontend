@@ -84,7 +84,7 @@ const Workflow: React.FC<Props> = ({ caseId }) => {
 
   const mappedTaskData = useMemo(() => data?.map(mapTaskData), [ mapTaskData, data ])
 
-  if (data !== undefined && data.length === 0) return (<p>Deze zaak is afgerond.</p>)
+  if (data?.length === 0) return (<p>Deze zaak is afgerond.</p>)
   return (
 
     mappedTaskData === undefined ?
