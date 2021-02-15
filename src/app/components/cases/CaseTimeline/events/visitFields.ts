@@ -1,6 +1,8 @@
 import { displayDate, displayTime } from "app/components/shared/DateDisplay/DateDisplay"
 import { visitLabelsMap, visitEventValuesMap, visit_go_ahead } from "../helpers/dictionaries"
 
+const mapValue = (v: keyof typeof visitEventValuesMap) => visitEventValuesMap[v]
+
 export default [
   {
     key: "start_time",
@@ -15,7 +17,7 @@ export default [
   "authors",
   {
     key: "situation",
-    mapValue: (v: keyof typeof visitEventValuesMap) => visitEventValuesMap[v]
+    mapValue
   },
   {
     key: "notes",
@@ -23,11 +25,11 @@ export default [
   },
   {
     key: "observations",
-    mapValue: (v: keyof typeof visitEventValuesMap) => visitEventValuesMap[v]
+    mapValue
   },
   {
     key: "suggest_next_visit",
-    mapValue: (v: keyof typeof visitEventValuesMap) => visitEventValuesMap[v]
+    mapValue
   },
   {
     key: "suggest_next_visit_description",
