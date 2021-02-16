@@ -1,5 +1,5 @@
 import React, { useMemo } from "react"
-import { Button, Icon, Paragraph, Spinner, themeColor, themeSpacing } from "@amsterdam/asc-ui"
+import { Button, Icon, Spinner, themeColor, themeSpacing } from "@amsterdam/asc-ui"
 
 import { useCaseTasks, useTaskComplete } from "app/state/rest"
 import ButtonLink from "app/components/shared/ButtonLink/ButtonLink"
@@ -95,12 +95,9 @@ const Workflow: React.FC<Props> = ({ caseId }) => {
   const { execPost } = useTaskComplete({ lazy: true })
 
   const mappedData = useMemo(() => data?.map(mapTaskData(caseId, execPost)), [data, caseId, execPost])
-  const caseClosed = data?.length === 0
   const showSpinner = mappedData === undefined
 
   return (
-    caseClosed ?
-      <Paragraph>Deze zaak is afgerond.</Paragraph> :
     showSpinner ?
       <Spinner /> :
       <StyledTable
