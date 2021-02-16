@@ -1,16 +1,16 @@
 import React, { useMemo } from "react"
-import { Button, Icon, Spinner, themeSpacing } from "@amsterdam/asc-ui"
+import { Button, Icon, Paragraph, Spinner, themeColor, themeSpacing } from "@amsterdam/asc-ui"
 
 import { useCaseTasks, useTaskComplete } from "app/state/rest"
 import ButtonLink from "app/components/shared/ButtonLink/ButtonLink"
 import to from "app/routing/utils/to"
-import WorkflowStatus from "./components/WorkflowStatus"
 import LockOpen from "@material-ui/icons/LockOpen"
 import CompleteTaskButton from "app/components/case/tasks/CompleteTask/CompleteTaskButton"
 import styled from "styled-components"
 import { displayDate } from "app/components/shared/DateDisplay/DateDisplay"
 import { isDateInPast } from "app/components/shared/Date/helpers"
 import { capitalizeString } from "app/components/shared/Helpers/helpers"
+import StyledTable from "./components/StyledTable"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
@@ -39,7 +39,7 @@ const Ul = styled.ul`
 `
 
 const DateInPast = styled.span<DateProps>`
-  color: ${ props => props.isDateInPast ? "red" : "black" };
+  color: ${ props => props.isDateInPast ? themeColor("secondary") : themeColor("tint", "level0") };
 `
 
 const mapArrayToList = (list: any[]) =>
@@ -81,18 +81,33 @@ const mapTaskData =
       })
     }
 
+const columns = [
+  { minWidth: 50 },
+  { header: "Actuele taken", minWidth: 100 },
+  { header: "Uitvoerder", minWidth: 100 },
+  { header: "Slotdatum", minWidth: 100 },
+  { header: "Verwerking taak", minWidth: 140 }
+]
+
 const Workflow: React.FC<Props> = ({ caseId }) => {
 
   const { data } = useCaseTasks(caseId)
   const { execPost } = useTaskComplete({ lazy: true })
 
-  const mappedTaskData = useMemo(() => data?.map(mapTaskData(caseId, execPost)), [ data ])
+  const mappedData = useMemo(() => data?.map(mapTaskData(caseId, execPost)), [ data ])
+  const caseClosed = data?.length === 0
+  const showSpinner = mappedData === undefined
 
-  if (data?.length === 0) return (<p>Deze zaak is afgerond.</p>)
   return (
-    mappedTaskData === undefined ?
+    caseClosed ?
+      <Paragraph>Deze zaak is afgerond.</Paragraph> :
+    showSpinner ?
       <Spinner /> :
-      <WorkflowStatus data={ mappedTaskData } />
+      <StyledTable
+        columns={ columns }
+        data={ mappedData }
+        noValuesPlaceholder=""
+      />
   )
 }
 
