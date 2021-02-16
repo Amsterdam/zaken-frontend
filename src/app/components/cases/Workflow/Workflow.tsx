@@ -56,7 +56,7 @@ export const taskActionMap = {
 } as Record<string, TaskAction>
 
 const mapTaskData =
-  (caseId: Components.Schemas.Case["id"], execPost: (a: any) => Promise<any>) =>
+  (caseId: Components.Schemas.Case["id"], execPost: (data: Partial<Components.Schemas.CamundaTaskComplete>) => Promise<unknown>) =>
     (data: Components.Schemas.CamundaTask) => {
 
       const { task_name_id, camunda_task_id, name, roles, due_date } = data
