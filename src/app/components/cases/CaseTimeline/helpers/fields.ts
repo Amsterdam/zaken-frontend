@@ -7,7 +7,6 @@ export type Field = {
 }
 type FieldConfig = Pick<Field, "key"> & Partial<Pick<Field, "italic" | "mapValue">>
 
-
 export default (fields: Array<FieldConfig | string>, translations: Record<string, string>) =>
   fields.map(field => {
     const o = typeof field === "string" ? { key: field } : field

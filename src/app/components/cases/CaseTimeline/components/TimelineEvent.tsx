@@ -49,6 +49,7 @@ const TimelineEvent: React.FC<Props> = ({ timelineEventItem: { type, caseEvents 
           fields={ fields(summonFields, summonLabelsMap) }
           caseEvents={ caseEvents }
           title={ caseTypesMap[type] }
+          dateField="date_added"
           isOpen={ isOpen }
         /> :
       type === "GENERIC_TASK" ?
