@@ -87,10 +87,9 @@ const Workflow: React.FC<Props> = ({ caseId }) => {
 
   if (data?.length === 0) return (<p>Deze zaak is afgerond.</p>)
   return (
-
     mappedTaskData === undefined ?
       <Spinner /> :
-      <WorkflowStatus status="" data={mappedTaskData} />
+      <WorkflowStatus data={ mappedTaskData } />
   )
 }
 

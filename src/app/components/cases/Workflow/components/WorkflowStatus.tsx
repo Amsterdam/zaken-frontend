@@ -5,12 +5,10 @@ import styled from "styled-components"
 import Table from "app/components/shared/Table/Table"
 
 type Props = {
-  status: string
   data?: {
     href?: string
     itemList?: React.ReactNode[]
   }[]
-  showBWVMessage?: boolean
 }
 
 const StyledTable = styled(Table)`
@@ -40,14 +38,11 @@ const columns = [
   { header: "Verwerking taak", minWidth: 140 }
 ]
 
-const WorkflowStatus: React.FC<Props> = ({ status, data }) =>
-  <>
-    <StyledHeading as="h3">{ status }</StyledHeading>
-    <StyledTable
-      columns={ columns }
-      data={ data }
-      noValuesPlaceholder=""
-    />
-  </>
+const WorkflowStatus: React.FC<Props> = ({ data }) =>
+  <StyledTable
+    columns={ columns }
+    data={ data }
+    noValuesPlaceholder=""
+  />
 
 export default WorkflowStatus
