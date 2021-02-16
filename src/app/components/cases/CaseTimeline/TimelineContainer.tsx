@@ -1,9 +1,8 @@
 import React from "react"
 import styled from "styled-components"
 
-import { useCaseEvents } from "app/state/rest"
 import useGroupedCaseEvents from "./hooks/useGroupedCaseEvents"
-import TimelineEvent from "./TimelineEvent"
+import TimelineEvents from "./components/TimelineEvents"
 import { Spinner, themeSpacing } from "@amsterdam/asc-ui"
 
 type Props = {
@@ -34,23 +33,17 @@ const Div = styled.div`
 
 const TimelineContainer: React.FC<Props> = ({ caseId }) => {
 
-  const { data } = useCaseEvents(caseId)
-  const allEventsInTime = useGroupedCaseEvents(caseId)
+  const timelineEvents = useGroupedCaseEvents(caseId)
 
   return (
     <>
       <Div>
-        {
-          allEventsInTime === undefined ?
+        { timelineEvents === undefined ?
             <Spinner /> :
-            allEventsInTime.map(item =>
-              <TimelineEvent
-                key={ item.index }
-                timelineEventItem={ item }
-                />)
+            <TimelineEvents items={ timelineEvents } />
         }
       </Div>
-      { data?.length === 0 &&
+      { timelineEvents?.length === 0 &&
         <p>Geen tijdlijn evenementen beschikbaar</p>
       }
     </>

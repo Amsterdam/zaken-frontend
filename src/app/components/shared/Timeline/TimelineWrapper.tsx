@@ -1,12 +1,9 @@
-import React, { useRef } from "react"
+import React from "react"
 
-const TimelineWrapper: React.FC = ({ children }) => {
-  const ref = useRef<HTMLDivElement>(null)
-  return (
-    <div role="button" tabIndex={-1} ref={ref}>
-      {children}
-    </div>
-  )
-}
+const TimelineWrapper: React.FC = ({ children }) => (
+  <div role="button" tabIndex={ -1 }>
+    { children }
+  </div>
+)
 
 export default TimelineWrapper

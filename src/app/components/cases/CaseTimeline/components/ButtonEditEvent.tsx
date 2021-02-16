@@ -4,6 +4,7 @@ import { breakpoint, Button } from "@amsterdam/asc-ui"
 import { displayDate, displayTime } from "app/components/shared/DateDisplay/DateDisplay"
 import ButtonLink from "app/components/shared/ButtonLink/ButtonLink"
 import { Edit } from "app/components/shared/Icons"
+import to from "app/routing/utils/to"
 
 type Props = {
   target: string
@@ -33,7 +34,7 @@ const ButtonEditEvent: React.FC<Props> = ({ target, disabled = false, editable_u
       <ButtonWrap>
         {
         !disabled ?
-          <ButtonLink to={ target } >
+          <ButtonLink to={ to(target) } >
             <StyledButton size={60} variant="blank" iconSize={36} icon={<Edit /> } disabled={disabled} title={editableUntilText} />
           </ButtonLink>
           :

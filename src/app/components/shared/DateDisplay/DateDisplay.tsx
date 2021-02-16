@@ -31,10 +31,10 @@ export const displayDate = (date: string | Date, full = false) => {
     `${ twoCharNum(d.getDate()) } ${ months[d.getMonth()] } ${ d.getFullYear() }` :
     `${ twoCharNum(d.getDate()) }-${ twoCharNum(d.getMonth() + 1) }-${ d.getFullYear() }`
 }
-export const displayTime = (date: string | Date) => {
+export const displayTime = (date: string | Date, addSuffix?: boolean) => {
   const d = typeof date === "string" ? new Date(date) : date
   if (!isValidDate(d)) return invalidDateText
-  return `${ twoCharNum(d.getHours()) }:${ twoCharNum(d.getMinutes()) }` 
+  return `${ twoCharNum(d.getHours()) }:${ twoCharNum(d.getMinutes()) }${ addSuffix ? " uur" : "" }`
 }
 
 const Span = styled.span`
