@@ -11,13 +11,19 @@ type Props = {
   id: Components.Schemas.Case["id"]
 }
 
+const Div = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: ${ themeSpacing(2) };
+`
+
 const StyledButton = styled(Button)`
   color: ${ themeColor("tint", "level0") };
   margin-left: ${ themeSpacing(2) };
 `
 
 const StyledDivider = styled(Divider)`
-  margin-bottom: ${ themeSpacing(16) }
+  margin-bottom: ${ themeSpacing(16) };
 `
 
 const CaseStatus: React.FC<Props> = ({ id }) => {
@@ -28,8 +34,10 @@ const CaseStatus: React.FC<Props> = ({ id }) => {
 
   return (
     <>
-      <Heading as="h2">
-        Status
+      <Div>
+        <Heading as="h2">
+          Status
+        </Heading>
         <span>
           <ButtonLink to={ to("/zaken/:id/correspondentie", { id }) }>
             <StyledButton variant="tertiary">Correspondentie</StyledButton>
@@ -38,7 +46,7 @@ const CaseStatus: React.FC<Props> = ({ id }) => {
             <StyledButton variant="tertiary">Afronden</StyledButton>
           </ButtonLink>
         </span>
-      </Heading>
+      </Div>
       <StyledDivider />
       <Workflow caseId={ id } />
     </>
