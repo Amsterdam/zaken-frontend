@@ -10,7 +10,13 @@ type Props = {
 }
 
 const displayValue = (value: unknown, mapValue: Field["mapValue"]) => {
-  if (Array.isArray(value)) return <UnstyledList>{ value.map(mapValue).map(item => <li>{ item }</li>) }</UnstyledList>
+  if (Array.isArray(value)) return (
+    <UnstyledList>
+      { value.map(mapValue).map((item, index) =>
+        <li key={ index }>{ item }</li>
+      ) }
+    </UnstyledList>
+  )
   return <>{ mapValue(value) }</>
 }
 
