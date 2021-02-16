@@ -3,6 +3,7 @@ import { useLocation } from "@reach/router"
 import { ChevronRight } from "app/components/shared/Icons"
 import { Button } from "@amsterdam/asc-ui"
 
+import type { SearchResult } from "app/components/search/SearchResults/SearchResults"
 import useOtherAddressesByBagId from "app/state/rest/custom/useOtherAddresses/useOtherAddresses"
 import Table from "app/components/shared/Table/Table"
 import navigateTo from "app/routing/navigateTo"
@@ -17,7 +18,6 @@ const columns = [
   { minWidth: 100 }
 ]
 
-type SearchResult = Pick<BAGAddressResponse["results"][0], "adres" | "adresseerbaar_object_id">
 const mapData = (onClick: (bagId: string) => void) => (data: SearchResult) =>
 ({
   itemList: [
