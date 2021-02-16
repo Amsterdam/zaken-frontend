@@ -27,5 +27,10 @@ declare namespace MockComponents {
       readonly id: number
       readonly title: string
     }
+
+    export type DueDate = {
+      readonly id: number
+      readonly dueDate: string
+    }
   }
 }

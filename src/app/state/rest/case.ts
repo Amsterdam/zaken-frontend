@@ -168,3 +168,15 @@ export const useVisitsCreate = (options?: Options) => {
     isProtected: true
   })
 }
+
+export const useDueDate = (options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<MockComponents.Schemas.DueDate>({
+    ...options,
+    url: "dueDate",
+    groupName: "cases",
+    handleError,
+    isProtected: true,
+    isMocked: true
+  })
+}

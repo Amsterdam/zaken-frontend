@@ -8,9 +8,9 @@ import WorkflowStatus from "./WorkflowStatus"
 import LockOpen from "@material-ui/icons/LockOpen"
 import CompleteTaskButton from "app/components/case/tasks/CompleteTask/CompleteTaskButton"
 import styled from "styled-components"
-import { displayDate } from "app/components/shared/DateDisplay/DateDisplay"
-import { isDateInPast } from "app/components/shared/Date/helpers"
 import { capitalizeString } from "app/components/shared/Helpers/helpers"
+import ChangeableDueDate from "app/components/case/tasks/ChangeDueDate/ChangebleDueDate"
+import { useDueDate } from "app/state/rest/case"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
@@ -20,13 +20,10 @@ type TaskAction = {
   target: string
 }
 
-type DateProps = {
-  isDateInPast: boolean
-}
-
 const StyledIcon = styled(Icon)`
   padding-top: ${ themeSpacing(2) };
 `
+
 const Ul = styled.ul`
   list-style: none;
   padding: 15px 0 0;
@@ -35,10 +32,6 @@ const Ul = styled.ul`
     padding: 0 0 ${ themeSpacing(1) } 0;
     line-height: 1.15;
   }
-`
-
-const DateInPast = styled.span<DateProps>`
-color: ${ props => props.isDateInPast ? "red" : "black" };
 `
 
 const mapArrayToList = (list: any[]) =>
@@ -58,6 +51,7 @@ const Workflow: React.FC<Props> = ({ caseId }) => {
 
   const { data } = useCaseTasks(caseId)
   const { execPost } = useTaskComplete({ lazy: true })
+  const postDueDate = useDueDate({ lazy: true }).execPost
 
   const mapTaskData = useCallback((data: Components.Schemas.CamundaTask) => {
     const action = taskActionMap[data.task_name_id] ?? {}
@@ -65,14 +59,20 @@ const Workflow: React.FC<Props> = ({ caseId }) => {
     const onSubmitTaskComplete = () => (
       execPost({ case: caseId, camunda_task_id: data.camunda_task_id, variables: {} })
     )
+
+    const onSubmitDueDate = () => (
+      console.info( "postDueDate", postDueDate )
+      // execPost({ case: caseId, camunda_task_id: data.camunda_task_id, variables: {} })
+    )
+
     return ({
       itemList: [
         <StyledIcon size={32}>{ <LockOpen /> }</StyledIcon>,
         data.name,
         data.roles ? mapArrayToList(data.roles) : "-",
         data.due_date ?
-           <DateInPast isDateInPast={ isDateInPast(new Date(data.due_date)) } >{ displayDate(data.due_date) } </DateInPast> :
-          "-",
+          <ChangeableDueDate onSubmit={onSubmitDueDate} dueDate={data.due_date} /> :
+        "-",
         action.target ?
         <ButtonLink to={ to(`/zaken/:id/${ action.target }`, { id: caseId })}>
           <Button variant="primary" as="span">{ action.name }</Button>
@@ -80,11 +80,10 @@ const Workflow: React.FC<Props> = ({ caseId }) => {
         <CompleteTaskButton onSubmit={ onSubmitTaskComplete } taskName={data.name} />
       ]
     })
-  }, [ caseId, execPost ])
+  }, [ caseId, execPost, postDueDate ])
 
   const mappedTaskData = useMemo(() => data?.map(mapTaskData), [ mapTaskData, data ])
 
-  if (data?.length === 0) return (<p>Deze zaak is afgerond.</p>)
   return (
 
     mappedTaskData === undefined ?
