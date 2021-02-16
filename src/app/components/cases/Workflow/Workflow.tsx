@@ -65,7 +65,6 @@ const Workflow: React.FC<Props> = ({ caseId }) => {
     const onSubmitTaskComplete = () => (
       execPost({ case: caseId, camunda_task_id: data.camunda_task_id, variables: {} })
     )
-
     return ({
       itemList: [
         <StyledIcon size={32}>{ <LockOpen /> }</StyledIcon>,
@@ -85,7 +84,9 @@ const Workflow: React.FC<Props> = ({ caseId }) => {
 
   const mappedTaskData = useMemo(() => data?.map(mapTaskData), [ mapTaskData, data ])
 
+  if (data?.length === 0) return (<p>Deze zaak is afgerond.</p>)
   return (
+
     mappedTaskData === undefined ?
       <Spinner /> :
       <WorkflowStatus status="" data={mappedTaskData} />

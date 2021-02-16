@@ -4,7 +4,7 @@ import Table from "app/components/shared/Table/Table"
 import OpenButton from "app/components/shared/OpenButton/OpenButton"
 import to from "app/routing/utils/to"
 
-type SearchResult = Pick<BAGAddressResponse["results"][0], "adres" | "postcode" | "landelijk_id">
+export type SearchResult = Pick<BAGAddressResponse["results"][0], "adres" | "postcode" | "adresseerbaar_object_id">
 type Props = {
   searchString: string
 }
@@ -22,11 +22,11 @@ const filterData = (data: SearchResult) => typeof data?.postcode === "string"
 
 const mapData = (data: SearchResult) =>
 ({
-  href: to("/adres/:bagId", { bagId: data.landelijk_id }),
+  href: to("/adres/:bagId", { bagId: data.adresseerbaar_object_id }),
   itemList: [
     data.adres ?? "-",
     data.postcode ?? "-",
-    data.landelijk_id ? <OpenButton href={to("/adres/:bagId", { bagId: data.landelijk_id })} text="Bekijk" /> : null
+    data.adresseerbaar_object_id ? <OpenButton href={to("/adres/:bagId", { bagId: data.adresseerbaar_object_id })} text="Bekijk" /> : null
   ]
 })
 
