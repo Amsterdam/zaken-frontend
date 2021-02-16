@@ -40,9 +40,7 @@ const columns = [
   { header: "Verwerking taak", minWidth: 140 }
 ]
 
-const BWV_MESSAGE = "Het zaaksysteem geeft voor nu alleen een weergave van de taken. De uitvoering/verwerking vindt dus gewoon nog plaats in BWV."
-
-const WorkflowStatus: React.FC<Props> = ({ status, data, showBWVMessage }) =>
+const WorkflowStatus: React.FC<Props> = ({ status, data }) =>
   <>
     <StyledHeading as="h3">{ status }</StyledHeading>
     <StyledTable
@@ -50,9 +48,6 @@ const WorkflowStatus: React.FC<Props> = ({ status, data, showBWVMessage }) =>
       data={ data }
       noValuesPlaceholder=""
     />
-    { showBWVMessage &&
-      <small>{ BWV_MESSAGE }</small>
-    }
   </>
 
 export default WorkflowStatus
