@@ -15,6 +15,7 @@ import { capitalizeString } from "app/components/shared/Helpers/helpers"
 type Props = {
   caseId: Components.Schemas.Case["id"]
 }
+
 type TaskAction = {
   name: string
   target: string
@@ -38,7 +39,7 @@ const Ul = styled.ul`
 `
 
 const DateInPast = styled.span<DateProps>`
-color: ${ props => props.isDateInPast ? "red" : "black" };
+  color: ${ props => props.isDateInPast ? "red" : "black" };
 `
 
 const mapArrayToList = (list: any[]) =>
