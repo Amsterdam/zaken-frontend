@@ -94,7 +94,7 @@ const Workflow: React.FC<Props> = ({ caseId }) => {
   const { data } = useCaseTasks(caseId)
   const { execPost } = useTaskComplete({ lazy: true })
 
-  const mappedData = useMemo(() => data?.map(mapTaskData(caseId, execPost)), [ data ])
+  const mappedData = useMemo(() => data?.map(mapTaskData(caseId, execPost)), [data, caseId, execPost])
   const caseClosed = data?.length === 0
   const showSpinner = mappedData === undefined
 
