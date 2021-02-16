@@ -72,13 +72,13 @@ const Workflow: React.FC<Props> = ({ caseId }) => {
         data.name,
         data.roles ? mapArrayToList(data.roles) : "-",
         data.due_date ?
-           <DateInPast isDateInPast={ isDateInPast(new Date(data.due_date)) } >{ displayDate(data.due_date) } </DateInPast> :
+          <DateInPast isDateInPast={ isDateInPast(new Date(data.due_date)) }>{ displayDate(data.due_date) }</DateInPast> :
           "-",
         action.target ?
-        <ButtonLink to={ to(`/zaken/:id/${ action.target }`, { id: caseId })}>
-          <Button variant="primary" as="span">{ action.name }</Button>
-        </ButtonLink> :
-        <CompleteTaskButton onSubmit={ onSubmitTaskComplete } taskName={data.name} />
+          <ButtonLink to={ to(`/zaken/:id/${ action.target }`, { id: caseId }) }>
+            <Button variant="primary" as="span">{ action.name }</Button>
+          </ButtonLink> :
+          <CompleteTaskButton onSubmit={ onSubmitTaskComplete } taskName={ data.name } />
       ]
     })
   }, [ caseId, execPost ])

@@ -5,10 +5,7 @@ import styled from "styled-components"
 import Table from "app/components/shared/Table/Table"
 
 type Props = {
-  data?: {
-    href?: string
-    itemList?: React.ReactNode[]
-  }[]
+  data: Array<{ itemList: Array<React.ReactNode> }>
 }
 
 const StyledTable = styled(Table)`
