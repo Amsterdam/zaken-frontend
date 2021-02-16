@@ -4,13 +4,11 @@ import styled from "styled-components"
 
 import Table from "app/components/shared/Table/Table"
 
-type CellContent = React.ReactNode
-
 type Props = {
   status: string
   data?: {
     href?: string
-    itemList?: Array<CellContent>
+    itemList?: React.ReactNode[]
   }[]
   showBWVMessage?: boolean
 }
@@ -42,15 +40,19 @@ const columns = [
   { header: "Verwerking taak", minWidth: 140 }
 ]
 
+const BWV_MESSAGE = "Het zaaksysteem geeft voor nu alleen een weergave van de taken. De uitvoering/verwerking vindt dus gewoon nog plaats in BWV."
+
 const WorkflowStatus: React.FC<Props> = ({ status, data, showBWVMessage }) =>
   <>
     <StyledHeading as="h3">{ status }</StyledHeading>
     <StyledTable
-      columns={columns}
+      columns={ columns }
       data={ data }
       noValuesPlaceholder=""
     />
-    { showBWVMessage && <small>Het zaaksysteem geeft voor nu alleen een weergave van de taken. De uitvoering/verwerking vindt dus gewoon nog plaats in BWV.</small>}
+    { showBWVMessage &&
+      <small>{ BWV_MESSAGE }</small>
+    }
   </>
 
 export default WorkflowStatus
