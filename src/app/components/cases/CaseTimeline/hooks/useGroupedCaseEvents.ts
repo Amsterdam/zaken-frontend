@@ -1,5 +1,5 @@
 import { useCaseEvents } from "app/state/rest"
-import { TimelineEventItem } from "../TimelineEvent"
+import { TimelineEventItem } from "../components/TimelineEvent"
 
 type CaseEvent = Components.Schemas.CaseEvent
 
@@ -10,17 +10,17 @@ export default (caseId: CaseEvent["id"]) => {
 
   const { data } = useCaseEvents(caseId)
 
-  return data?.reduce((acc, item, index) => {
+  return data?.reduce((acc, item) => {
 
     const last = acc[acc.length - 1]
 
     // group
     if (shouldBeGrouped(item) && equalItems(last, item)) {
-      last.eventList.push(item)
+      last.caseEvents.push(item)
     }
     // new row
     else {
-      acc.push({ index, type: item.type, eventList: [item] })
+      acc.push({ type: item.type, caseEvents: [item] })
     }
 
     return acc
