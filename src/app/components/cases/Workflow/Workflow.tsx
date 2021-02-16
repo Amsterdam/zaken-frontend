@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react"
+import React, { useMemo } from "react"
 import { Button, Icon, Spinner, themeSpacing } from "@amsterdam/asc-ui"
 
 import { useCaseTasks, useTaskComplete } from "app/state/rest"
@@ -55,35 +55,38 @@ export const taskActionMap = {
   task_create_summon: { name: "Aanschrijving verwerken", target: "aanschrijving" }
 } as Record<string, TaskAction>
 
+const mapTaskData =
+  (caseId: Components.Schemas.Case["id"], execPost: (a: any) => Promise<any>) =>
+    (data: Components.Schemas.CamundaTask) => {
+
+      const { task_name_id, camunda_task_id, name, roles, due_date } = data
+      const action = taskActionMap[task_name_id]
+
+      const onSubmitTaskComplete = () => execPost({ case: caseId, camunda_task_id, variables: {} })
+
+      return ({
+        itemList: [
+          <StyledIcon size={32}>{ <LockOpen /> }</StyledIcon>,
+          name,
+          roles ? mapArrayToList(roles) : "-",
+          due_date ?
+            <DateInPast isDateInPast={ isDateInPast(new Date(due_date)) }>{ displayDate(due_date) }</DateInPast> :
+            "-",
+          action !== undefined ?
+            <ButtonLink to={ to(`/zaken/:id/${ action.target }`, { id: caseId }) }>
+              <Button variant="primary" as="span">{ action.name }</Button>
+            </ButtonLink> :
+            <CompleteTaskButton onSubmit={ onSubmitTaskComplete } taskName={ name } />
+        ]
+      })
+    }
+
 const Workflow: React.FC<Props> = ({ caseId }) => {
 
   const { data } = useCaseTasks(caseId)
   const { execPost } = useTaskComplete({ lazy: true })
 
-  const mapTaskData = useCallback((data: Components.Schemas.CamundaTask) => {
-    const action = taskActionMap[data.task_name_id] ?? {}
-
-    const onSubmitTaskComplete = () => (
-      execPost({ case: caseId, camunda_task_id: data.camunda_task_id, variables: {} })
-    )
-    return ({
-      itemList: [
-        <StyledIcon size={32}>{ <LockOpen /> }</StyledIcon>,
-        data.name,
-        data.roles ? mapArrayToList(data.roles) : "-",
-        data.due_date ?
-          <DateInPast isDateInPast={ isDateInPast(new Date(data.due_date)) }>{ displayDate(data.due_date) }</DateInPast> :
-          "-",
-        action.target ?
-          <ButtonLink to={ to(`/zaken/:id/${ action.target }`, { id: caseId }) }>
-            <Button variant="primary" as="span">{ action.name }</Button>
-          </ButtonLink> :
-          <CompleteTaskButton onSubmit={ onSubmitTaskComplete } taskName={ data.name } />
-      ]
-    })
-  }, [ caseId, execPost ])
-
-  const mappedTaskData = useMemo(() => data?.map(mapTaskData), [ mapTaskData, data ])
+  const mappedTaskData = useMemo(() => data?.map(mapTaskData(caseId, execPost)), [ data ])
 
   if (data?.length === 0) return (<p>Deze zaak is afgerond.</p>)
   return (
