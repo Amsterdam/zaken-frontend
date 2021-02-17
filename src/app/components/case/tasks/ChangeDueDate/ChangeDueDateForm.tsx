@@ -27,11 +27,11 @@ const Input = styled.input`
 
 const formatDate = (dateStr: string) => {
   const date = new Date(dateStr)
-  let day = ("0" + date.getDate()).slice(-2)
-  let month = ("0" + (date.getMonth() + 1)).slice(-2)
-  let year = date.getFullYear()
+  const day = ("0" + date.getDate()).slice(-2)
+  const month = ("0" + (date.getMonth() + 1)).slice(-2)
+  const year = date.getFullYear()
 
-  return (year + "-" + month + "-" + day)
+  return `${ year }-${ month }-${ day }`
 }
 
 const ChangeDueDateForm: React.FC<Props> = ({ isLoading, onSubmit, onCancel , dueDate }) => {
