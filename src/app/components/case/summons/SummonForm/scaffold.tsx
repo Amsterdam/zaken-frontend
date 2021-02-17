@@ -5,21 +5,17 @@ import navigateTo from "app/routing/navigateTo"
 
 export default (caseId: Components.Schemas.Case["id"], summonTypes: Components.Schemas.SummonType[]) => {
 
-  const summonTypesObject = summonTypes.reduce((acc, cur) => {
-    acc[`summonType.${ cur.id }`] = cur.name
-    return acc
-  }, {} as Record<string, string>)
-
   const fields = {
     type: {
-      type: "SelectField",
+      type: "ComplexSelectField",
       props: {
         isRequired: true,
         withEmptyOption: true,
         label: "Welke aanschrijving is opgesteld?",
         extraLabel: <InfoButton infoTitle="TODO Aanschrijvingen" infoText="TODO Uitleg over aanschrijvingen"></InfoButton>,
         name: "type",
-        options: summonTypesObject
+        optionLabelField: "name",
+        options: summonTypes
       }
     },
     persons: {

@@ -10,9 +10,9 @@ type Props = {
   id: Components.Schemas.Case["id"]
 }
 
-type SummonData = Omit<Components.Schemas.Summon, "type"> & { type: string }
+type SummonData = Omit<Components.Schemas.Summon, "type"> & { type: { id: number } }
 
-const mapData = (data: SummonData) => ({ ...data, type: parseInt(data.type.replace("summonType.", ""), 10) })
+const mapData = (data: SummonData) => ({ ...data, type: data.type.id })
 
 const SummonForm: React.FC<Props> = ({ id }) => {
 

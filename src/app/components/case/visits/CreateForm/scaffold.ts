@@ -4,27 +4,25 @@ import navigateTo from "app/routing/navigateTo"
 
 const scaffold = (caseId: Components.Schemas.Case["id"], authors: Components.Schemas.User[]) => {
 
-  const authorsObject = authors.reduce((acc, cur) => {
-    acc[`${ cur.id }`] = cur.full_name
-    return acc
-  }, {} as Record<string, string>)
   const fields = {
     author1: {
-      type: "SelectField",
+      type: "ComplexSelectField",
       props: {
         withEmptyOption: true,
         name: "author1",
         label: "Toezichthouder 1",
-        options: authorsObject
+        optionLabelField: "full_name",
+        options: authors
       }
     },
     author2: {
-      type: "SelectField",
+      type: "ComplexSelectField",
       props: {
         withEmptyOption: true,
         name: "author2",
         label: "Toezichthouder 2",
-        options: authorsObject
+        optionLabelField: "full_name",
+        options: authors
       }
     },
     time: {

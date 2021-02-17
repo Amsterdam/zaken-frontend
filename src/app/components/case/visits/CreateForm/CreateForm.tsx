@@ -14,12 +14,13 @@ type Props = {
   isLoading?: boolean
 }
 
-export type VisitData = Omit<Components.Schemas.Visit, "author_ids"> & { author1: string, author2: string }
+type AuthorData = { id: string }
+export type VisitData = Omit<Components.Schemas.Visit, "author_ids"> & { author1: AuthorData, author2: AuthorData }
 
-const mapData = (data: VisitData) => ({ ...data, author_ids: [data.author1, data.author2] })
-
+const mapData = (data: VisitData) => ({ ...data, author_ids: [data.author1.id, data.author2.id] })
 
 const VisitForm: React.FC<Props> = ({ caseId, isLoading }) => {
+
   const { data } = useAuthors()
   const authors = data?.results ?? []
 
@@ -32,6 +33,7 @@ const VisitForm: React.FC<Props> = ({ caseId, isLoading }) => {
     addSuccessFlashMessage(path, "Succes", "Het resultaat huisbezoek is succesvol verwerkt")
     navigateTo(path)
   }
+
   return (
     <>
       <FormTitle>Gebruik dit formulier om een huisbezoek aan te maken</FormTitle>
