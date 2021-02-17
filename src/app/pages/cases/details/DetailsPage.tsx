@@ -35,7 +35,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
         </Column>
       </Row>
       <RowWithColumn>
-        <CaseStatus id={ id }/>
+        <CaseStatus id={ id } />
       </RowWithColumn>
       <RowWithColumn>
         <Heading as="h2">Zaakhistorie</Heading>
