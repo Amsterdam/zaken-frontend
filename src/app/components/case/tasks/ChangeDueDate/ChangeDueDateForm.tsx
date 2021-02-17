@@ -36,8 +36,9 @@ const formatDate = (dateStr: string) => {
 
 const ChangeDueDateForm: React.FC<Props> = ({ isLoading, onSubmit, onCancel , dueDate }) => {
 
-  const [newDueDate, setNewDueDate] = useState(dueDate)
+  const [newDueDate, setNewDueDate] = useState(formatDate(dueDate))
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if(event.target.value === "") return
     setNewDueDate(event.target.value)
   }
 
@@ -48,11 +49,10 @@ const ChangeDueDateForm: React.FC<Props> = ({ isLoading, onSubmit, onCancel , du
         onSubmit={ onSubmit }
         onCancel={ onCancel }
       >
-        <Input type="date" value={formatDate(newDueDate)} name="date" id="date" onChange = {onChange} />
+        <Input type="date" value={newDueDate} name="date" id="date" onChange={onChange} />
         <ScaffoldFields { ...createScaffoldProps(onCancel, dueDate) } />
       </ScaffoldForm>
     </Div>
-
   )
 }
   
