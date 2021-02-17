@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { Button, Divider, Heading, themeColor, themeSpacing } from "@amsterdam/asc-ui"
+import { Button, Divider, Heading, Paragraph, themeColor, themeSpacing } from "@amsterdam/asc-ui"
 
 import ButtonLink from "app/components/shared/ButtonLink/ButtonLink"
 import to from "app/routing/utils/to"
@@ -11,24 +11,33 @@ type Props = {
   id: Components.Schemas.Case["id"]
 }
 
+const Div = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: ${ themeSpacing(2) };
+`
+
 const StyledButton = styled(Button)`
   color: ${ themeColor("tint", "level0") };
   margin-left: ${ themeSpacing(2) };
 `
 
 const StyledDivider = styled(Divider)`
-  margin-bottom: ${ themeSpacing(16) }
+  margin-bottom: ${ themeSpacing(16) };
 `
 
 const CaseStatus: React.FC<Props> = ({ id }) => {
 
   const { data } = useCaseTasks(id)
 
-  return(
-     data?.length !== 0 ?
+  if (data?.length === 0) return <Paragraph>Deze zaak is afgerond.</Paragraph>
+
+  return (
     <>
-      <Heading as="h2">
-        Status
+      <Div>
+        <Heading as="h2">
+          Status
+        </Heading>
         <span>
           <ButtonLink to={ to("/zaken/:id/correspondentie", { id }) }>
             <StyledButton variant="tertiary">Correspondentie</StyledButton>
@@ -37,13 +46,11 @@ const CaseStatus: React.FC<Props> = ({ id }) => {
             <StyledButton variant="tertiary">Afronden</StyledButton>
           </ButtonLink>
         </span>
-      </Heading>
+      </Div>
       <StyledDivider />
       <Workflow caseId={ id } />
-    </> :
-    <p>Deze zaak is afgerond.</p>
+    </>
   )
 }
-  
 
 export default CaseStatus
