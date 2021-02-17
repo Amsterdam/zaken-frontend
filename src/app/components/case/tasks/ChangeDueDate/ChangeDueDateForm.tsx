@@ -7,7 +7,7 @@ import styled from "styled-components"
 import { themeSpacing } from "@amsterdam/asc-ui"
 
 type Props = {
-  onSubmit: () => void //Promise<unknown>
+  onSubmit: (data: any) => void
   isLoading?: boolean
   onCancel: () => void
   dueDate: string

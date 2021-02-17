@@ -5,10 +5,12 @@ import ChangeDueDateModal from "./ChangeDueDateModal"
 import { displayDate } from "app/components/shared/DateDisplay/DateDisplay"
 import { isDateInPast } from "app/components/shared/Date/helpers"
 import styled from "styled-components"
+import { useDueDate } from "app/state/rest/case"
 
 
 type Props = {
-  onSubmit: () => void // Promise<unknown>
+  caseId: Components.Schemas.Case["id"]
+  camundaTaskId: Components.Schemas.CamundaTask["camunda_task_id"]
   dueDate: string
 }
 
@@ -18,7 +20,7 @@ type DateProps = {
   }
   
 const DateInPast = styled.span<DateProps>`
-  font-weight: 300;
+  font-weight: 400;
   cursor: pointer;
   color: ${ props => props.isDateInPast ? "red" : "black" };
   &:hover {
@@ -26,8 +28,14 @@ const DateInPast = styled.span<DateProps>`
   }
   `
 
-const ChangeableDueDate: React.FC<Props> = ({ onSubmit, dueDate }) => {
+const ChangeableDueDate: React.FC<Props> = ({ dueDate, camundaTaskId, caseId }) => {
   const { isModalOpen, openModal, closeModal } = useModal()
+
+  const { execPost } = useDueDate({ lazy: true })
+  const onSubmit = (data: any) => {
+    console.log(data, camundaTaskId, caseId)
+    execPost()
+  }
 
   return (
     <>

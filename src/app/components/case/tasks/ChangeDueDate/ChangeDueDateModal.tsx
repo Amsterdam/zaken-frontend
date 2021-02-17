@@ -6,7 +6,7 @@ import ChangeDueDateForm from "./ChangeDueDateForm"
 export type Props = {
   isOpen: boolean
   closeModal: () => void
-  onSubmit: () => void// Promise<unknown>
+  onSubmit: (data: any) => void
   dueDate: string
 }
 

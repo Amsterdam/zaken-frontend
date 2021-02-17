@@ -9,7 +9,6 @@ import CompleteTaskButton from "app/components/case/tasks/CompleteTask/CompleteT
 import styled from "styled-components"
 import { capitalizeString } from "app/components/shared/Helpers/helpers"
 import ChangeableDueDate from "app/components/case/tasks/ChangeDueDate/ChangebleDueDate"
-import { useDueDate } from "app/state/rest/case"
 import StyledTable from "./components/StyledTable"
 
 type Props = {
@@ -49,24 +48,20 @@ export const taskActionMap = {
 } as Record<string, TaskAction>
 
 const mapTaskData =
-  (caseId: Components.Schemas.Case["id"], execPost: (data: Partial<Components.Schemas.CamundaTaskComplete>) => Promise<unknown>, postDueDate: unknown) =>
-    (data: Components.Schemas.CamundaTask) => {
+  (caseId: Components.Schemas.Case["id"], execPost: (data: Partial<Components.Schemas.CamundaTaskComplete>) => Promise<unknown> ) =>
+    (data: Components.Schemas.CamundaTask ) => {
 
       const { task_name_id, camunda_task_id, name, roles, due_date } = data
       const action = taskActionMap[task_name_id]
-
       const onSubmitTaskComplete = () => execPost({ case: caseId, camunda_task_id, variables: {} })
-      const onSubmitDueDate = () => (
-        console.info( "postDueDate", postDueDate )
-        // execPost({ case: caseId, camunda_task_id: data.camunda_task_id, variables: {} })
-      )
+
       return ({
         itemList: [
           <StyledIcon size={32}>{ <LockOpen /> }</StyledIcon>,
           name,
           roles ? mapArrayToList(roles) : "-",
           due_date ?
-          <ChangeableDueDate onSubmit={onSubmitDueDate} dueDate={data.due_date} /> :
+          <ChangeableDueDate dueDate={data.due_date} caseId={caseId} camundaTaskId = {camunda_task_id} /> :
             "-",
           action !== undefined ?
             <ButtonLink to={ to(`/zaken/:id/${ action.target }`, { id: caseId }) }>
@@ -89,9 +84,8 @@ const Workflow: React.FC<Props> = ({ caseId }) => {
 
   const { data } = useCaseTasks(caseId)
   const { execPost } = useTaskComplete({ lazy: true })
-  const postDueDate = useDueDate({ lazy: true }).execPost
 
-  const mappedData = useMemo(() => data?.map(mapTaskData(caseId, execPost, postDueDate)), [data, caseId, execPost, postDueDate])
+  const mappedData = useMemo(() => data?.map(mapTaskData(caseId, execPost )), [data, caseId, execPost])
   const showSpinner = mappedData === undefined
 
   return (

@@ -4,7 +4,6 @@ import { Fields } from "app/components/shared/Form/ScaffoldFields"
 
 const Scaffold = (onCancel: () => void, dueDate: string) => {
   const fields = {
-    
     submit: {
       type: "SubmitButton",
       variant: "primary",
