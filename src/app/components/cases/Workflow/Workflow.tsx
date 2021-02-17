@@ -1,5 +1,5 @@
 import React, { useMemo } from "react"
-import { Button, Icon, Spinner, themeColor, themeSpacing } from "@amsterdam/asc-ui"
+import { Button, Icon, Spinner, themeSpacing } from "@amsterdam/asc-ui"
 
 import { useCaseTasks, useTaskComplete } from "app/state/rest"
 import ButtonLink from "app/components/shared/ButtonLink/ButtonLink"
@@ -7,9 +7,8 @@ import to from "app/routing/utils/to"
 import LockOpen from "@material-ui/icons/LockOpen"
 import CompleteTaskButton from "app/components/case/tasks/CompleteTask/CompleteTaskButton"
 import styled from "styled-components"
-import { displayDate } from "app/components/shared/DateDisplay/DateDisplay"
-import { isDateInPast } from "app/components/shared/Date/helpers"
 import { capitalizeString } from "app/components/shared/Helpers/helpers"
+import ChangeableDueDate from "app/components/case/tasks/ChangeDueDate/ChangebleDueDate"
 import StyledTable from "./components/StyledTable"
 
 type Props = {
@@ -21,13 +20,10 @@ type TaskAction = {
   target: string
 }
 
-type DateProps = {
-  isDateInPast: boolean
-}
-
 const StyledIcon = styled(Icon)`
   padding-top: ${ themeSpacing(2) };
 `
+
 const Ul = styled.ul`
   list-style: none;
   padding: 15px 0 0;
@@ -36,10 +32,6 @@ const Ul = styled.ul`
     padding: 0 0 ${ themeSpacing(1) } 0;
     line-height: 1.15;
   }
-`
-
-const DateInPast = styled.span<DateProps>`
-  color: ${ props => props.isDateInPast ? themeColor("secondary") : themeColor("tint", "level0") };
 `
 
 const mapArrayToList = (list: any[]) =>
@@ -56,12 +48,11 @@ export const taskActionMap = {
 } as Record<string, TaskAction>
 
 const mapTaskData =
-  (caseId: Components.Schemas.Case["id"], execPost: (data: Partial<Components.Schemas.CamundaTaskComplete>) => Promise<unknown>) =>
-    (data: Components.Schemas.CamundaTask) => {
+  (caseId: Components.Schemas.Case["id"], execPost: (data: Partial<Components.Schemas.CamundaTaskComplete>) => Promise<unknown> ) =>
+    (data: Components.Schemas.CamundaTask ) => {
 
       const { task_name_id, camunda_task_id, name, roles, due_date } = data
       const action = taskActionMap[task_name_id]
-
       const onSubmitTaskComplete = () => execPost({ case: caseId, camunda_task_id, variables: {} })
 
       return ({
@@ -70,7 +61,7 @@ const mapTaskData =
           name,
           roles ? mapArrayToList(roles) : "-",
           due_date ?
-            <DateInPast isDateInPast={ isDateInPast(new Date(due_date)) }>{ displayDate(due_date) }</DateInPast> :
+          <ChangeableDueDate dueDate={data.due_date} caseId={caseId} camundaTaskId = {camunda_task_id} /> :
             "-",
           action !== undefined ?
             <ButtonLink to={ to(`/zaken/:id/${ action.target }`, { id: caseId }) }>
@@ -94,7 +85,7 @@ const Workflow: React.FC<Props> = ({ caseId }) => {
   const { data } = useCaseTasks(caseId)
   const { execPost } = useTaskComplete({ lazy: true })
 
-  const mappedData = useMemo(() => data?.map(mapTaskData(caseId, execPost)), [data, caseId, execPost])
+  const mappedData = useMemo(() => data?.map(mapTaskData(caseId, execPost )), [data, caseId, execPost])
   const showSpinner = mappedData === undefined
 
   return (
