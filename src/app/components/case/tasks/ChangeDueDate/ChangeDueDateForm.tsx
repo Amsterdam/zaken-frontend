@@ -1,16 +1,17 @@
-import React, { useState } from "react"
+import React from "react"
 
 import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
 import ScaffoldFields from "app/components/shared/Form/ScaffoldFields"
 import createScaffoldProps from "./scaffold"
 import styled from "styled-components"
-import { themeSpacing } from "@amsterdam/asc-ui"
+// import { themeSpacing } from "@amsterdam/asc-ui"
 
 type Props = {
   onSubmit: (data: any) => void
   isLoading?: boolean
   onCancel: () => void
   dueDate: string
+  minDate?: Date
 }
 
 const Div = styled.div`
@@ -20,12 +21,7 @@ const Div = styled.div`
   }
 `
 
-const Input = styled.input`
-  margin: ${ themeSpacing(6) } 0;
-  padding: ${ themeSpacing(2) } ${ themeSpacing(3) };
-`
-
-const formatDate = (dateStr: string) => {
+const formatDate = (dateStr: string | Date) => {
   const date = new Date(dateStr)
   const day = ("0" + date.getDate()).slice(-2)
   const month = ("0" + (date.getMonth() + 1)).slice(-2)
@@ -34,26 +30,17 @@ const formatDate = (dateStr: string) => {
   return `${ year }-${ month }-${ day }`
 }
 
-const ChangeDueDateForm: React.FC<Props> = ({ isLoading, onSubmit, onCancel , dueDate }) => {
-
-  const [newDueDate, setNewDueDate] = useState(formatDate(dueDate))
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if(event.target.value === "") return
-    setNewDueDate(event.target.value)
-  }
-
-  return (
+const ChangeDueDateForm: React.FC<Props> = ({ isLoading, onSubmit, onCancel , dueDate, minDate = new Date() }) => 
+  
     <Div>
       <ScaffoldForm
         showSpinner={ isLoading }
         onSubmit={ onSubmit }
         onCancel={ onCancel }
+        initialValues={ { due_date: formatDate(dueDate) } }
       >
-        <Input type="date" value={newDueDate} name="date" id="date" onChange={onChange} />
-        <ScaffoldFields { ...createScaffoldProps(onCancel, dueDate) } />
+        <ScaffoldFields { ...createScaffoldProps(onCancel, formatDate(minDate) ) } />
       </ScaffoldForm>
     </Div>
-  )
-}
   
 export default ChangeDueDateForm
