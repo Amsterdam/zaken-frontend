@@ -57,10 +57,12 @@ const createValuesObject = <T extends RequestBody>(fields: NamedFields<T>, data:
     const v = data[name]
     const value =
       type === "ArrayField" ?
-      <ArrayFieldList fields={ v as Array<Record<string, string>> } /> :
+        <ArrayFieldList fields={ v as Array<Record<string, string>> } /> :
+      type === "ComplexSelectField" ?
+        (v as Record<string, string>)[(props as { optionLabelField: string }).optionLabelField] :
       props.hasOwnProperty("options") ?
-      (props as { options: Record<string, unknown> }).options[v as string] :
-      v
+        (props as { options: Record<string, unknown> }).options[v as string] :
+        v
     acc[(label ?? key) as string] = value as React.ReactNode
     return acc
   }, {} as Record<string, React.ReactNode>)
