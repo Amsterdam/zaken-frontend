@@ -4,7 +4,6 @@ import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
 import ScaffoldFields from "app/components/shared/Form/ScaffoldFields"
 import createScaffoldProps from "./scaffold"
 import styled from "styled-components"
-// import { themeSpacing } from "@amsterdam/asc-ui"
 
 type Props = {
   onSubmit: (data: any) => void
@@ -23,8 +22,8 @@ const Div = styled.div`
 
 const formatDate = (dateStr: string | Date) => {
   const date = new Date(dateStr)
-  const day = ("0" + date.getDate()).slice(-2)
-  const month = ("0" + (date.getMonth() + 1)).slice(-2)
+  const day = `0${ date.getDate() }`.slice(-2)
+  const month = `0${ date.getMonth() + 1 }`.slice(-2)
   const year = date.getFullYear()
 
   return `${ year }-${ month }-${ day }`
