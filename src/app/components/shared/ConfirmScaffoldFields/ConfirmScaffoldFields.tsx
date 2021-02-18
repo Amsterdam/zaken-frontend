@@ -58,7 +58,7 @@ const createValuesObject = <T extends RequestBody>(fields: NamedFields<T>, data:
     const value =
       type === "ArrayField" ?
         <ArrayFieldList fields={ v as Array<Record<string, string>> } /> :
-      type === "ComplexSelectField" ?
+      type === "ComplexSelectField" || type === "ComplexRadioFields" ?
         (v as Record<string, string>)[(props as { optionLabelField: string }).optionLabelField] :
       props.hasOwnProperty("options") ?
         (props as { options: Record<string, unknown> }).options[v as string] :

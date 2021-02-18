@@ -2,22 +2,17 @@ import { FormPositioner } from "@amsterdam/scaffold-form/package"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import navigateTo from "app/routing/navigateTo"
 
-export default (caseId: Components.Schemas.Case["id"], completeCase: MockComponents.Schemas.CompleteCase[]) => {
-
-  const completeCaseObject = completeCase.reduce((acc, cur) => {
-    acc[`completecase.${ cur.id }`] = cur.title
-    return acc
-  }, {} as Record<string, string>)
-
+export default (caseId: Components.Schemas.Case["id"], completeCases: MockComponents.Schemas.CompleteCase[]) => {
 
   const fields = {
     complete: {
-      type: "RadioFields",
+      type: "ComplexRadioFields",
       props: {
         isRequired: true,
         label: "Wat is de vervolgstap in deze zaak?",
         name: "complete",
-        options: completeCaseObject
+        optionLabelField: "title",
+        options: completeCases
       }
     },
     text: {

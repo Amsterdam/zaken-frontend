@@ -3,22 +3,18 @@ import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import navigateTo from "app/routing/navigateTo"
 
-export default (caseId: Components.Schemas.Case["id"], correspondence: MockComponents.Schemas.Correspondence[]) => {
-
-  const correspondenceObject = correspondence.reduce((acc, cur) => {
-    acc[`correspondence.${ cur.id }`] = cur.title
-    return acc
-  }, {} as Record<string, string>)
+export default (caseId: Components.Schemas.Case["id"], correspondences: MockComponents.Schemas.Correspondence[]) => {
 
   const fields = {
     correspondence: {
-      type: "RadioFields",
+      type: "ComplexRadioFields",
       props: {
         isRequired: true,
         label: "Welk type notitie is van toepassing?",
         extraLabel:<InfoButton infoTitle="Let op" infoText="Zorg dat je eventueel binnengekomen correspondentie correct opslaat in decos."></InfoButton>,
         name: "correspondence",
-        options: correspondenceObject
+        optionLabelField: "title",
+        options: correspondences
       }
     },
     text: {
