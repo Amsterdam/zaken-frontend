@@ -48,10 +48,9 @@ const CreateForm: React.FC<Props> = ({ bagId }) => {
   const onSubmitConfirmWrap = async () => {
     const result = await onSubmitConfirm()
     if (result === undefined) return
-    const caseData = (result as { data: Components.Schemas.CaseCreateUpdate }).data
-    const path = `/zaken/${ caseData.id }`
-    addSuccessFlashMessage(path, "Succes", "De zaak is succesvol toegevoegd")
-    navigateTo(path)
+    const { data: { id } } = result as { data: Components.Schemas.CaseCreateUpdate }
+    addSuccessFlashMessage(`/zaken/${ id }`, "Succes", "De zaak is succesvol toegevoegd")
+    navigateTo("/zaken/:id", { id })
   }
 
   return (
