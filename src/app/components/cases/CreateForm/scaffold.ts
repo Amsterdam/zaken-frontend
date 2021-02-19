@@ -4,32 +4,24 @@ import navigateTo from "app/routing/navigateTo"
 
 export default (bagId: Components.Schemas.Address["bag_id"], teams: Components.Schemas.CaseTeam[], reasons: Components.Schemas.CaseReason[]) => {
 
-  const teamsObject = teams.reduce((acc, cur) => {
-    acc[`team.${ cur.id }`] = cur.name
-    return acc
-  }, {} as Record<string, string>)
-
-  const reasonsObject = reasons.reduce((acc, cur) => {
-    acc[`reason.${ cur.id }`] = cur.name
-    return acc
-  }, {} as Record<string, string>)
-
   const fields = {
     team: {
-      type: "RadioFields",
+      type: "ComplexRadioFields",
       props: {
         label: "Team wonen",
         name: "team",
-        options: teamsObject,
+        options: teams,
+        optionLabelField: "name",
         isRequired: true
       }
     },
     reason: {
-      type: "RadioFields",
+      type: "ComplexRadioFields",
       props: {
         label: "Aanleiding",
         name: "reason",
-        options: reasonsObject,
+        options: reasons,
+        optionLabelField: "name",
         isRequired: true
       }
     },
