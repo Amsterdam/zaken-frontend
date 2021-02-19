@@ -16,14 +16,13 @@ type Props = {
 
 type FormData =
   Pick<Components.Schemas.CaseCreateUpdate, "address" | "description"> &
-  { team: string, reason: string }
+  { team: Components.Schemas.CaseTeam, reason: Components.Schemas.CaseReason }
 
-const parseRadioButtonValue = (key: string) => (value: string) => parseInt(value.replace(`${ key }.`, ""), 10)
-const mapData = (bagId: Components.Schemas.Address["bag_id"], data: FormData): Omit<Components.Schemas.CaseCreateUpdate, "id"> => ({
+const mapData = (bagId: Components.Schemas.Address["bag_id"], data: FormData, defaultTeam: number, defaultReason: number): Omit<Components.Schemas.CaseCreateUpdate, "id"> => ({
   address: { bag_id: bagId } as Components.Schemas.Address,
   description: data.description,
-  team: parseRadioButtonValue("team")(data.team),
-  reason: parseRadioButtonValue("reason")(data.reason)
+  team: data.team?.id ?? defaultTeam,
+  reason: data.reason?.id ?? defaultReason
 })
 
 const CreateForm: React.FC<Props> = ({ bagId }) => {
@@ -31,7 +30,12 @@ const CreateForm: React.FC<Props> = ({ bagId }) => {
   const teams = useTeams()
   const reasons = useReasons(teams.data?.results?.[0].id)
   const { execPost } = useCaseCreateUpdate()
-  const postMethod = async (data: FormData) => await execPost(mapData(bagId, data))
+  const postMethod = async (data: FormData) => {
+    const defaultTeam = teams?.data?.results?.[0]
+    const defaultReason = reasons?.data?.results?.[0]
+    if (defaultTeam === undefined || defaultReason === undefined) return
+    return await execPost(mapData(bagId, data, defaultTeam.id, defaultReason.id))
+  }
   const {
     isSubmitted,
     data: confirmData,
