@@ -55,6 +55,7 @@ const createValuesObject = <T extends RequestBody>(fields: NamedFields<T>, data:
     const { label, name } = props
     if (name === undefined) return acc
     const v = data[name]
+    if (v === undefined) return acc
     const value =
       type === "ArrayField" ?
         <ArrayFieldList fields={ v as Array<Record<string, string>> } /> :
