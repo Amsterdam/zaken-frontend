@@ -1,5 +1,6 @@
 import type { Options } from "./"
-import { makeGatewayUrl, useErrorHandler } from "./hooks/utils/utils"
+import { useErrorHandler } from "./hooks/utils/errorHandler"
+import { makeApiUrl } from "./hooks/utils/apiUrl"
 import useApiRequest from "./hooks/useApiRequest"
 
 export const useCase = (id?: Components.Schemas.Case["id"], options?: Options) => {
@@ -7,7 +8,7 @@ export const useCase = (id?: Components.Schemas.Case["id"], options?: Options) =
   return useApiRequest<Components.Schemas.Case>({
     lazy: id === undefined,
     ...options,
-    url: makeGatewayUrl("cases", id),
+    url: makeApiUrl("cases", id),
     groupName: "cases",
     handleError,
     isProtected: true
@@ -19,7 +20,7 @@ export const useCaseCreateUpdate = (options?: Options) => {
   return useApiRequest<Components.Schemas.CaseCreateUpdate>({
     lazy: true,
     ...options,
-    url: makeGatewayUrl("cases"),
+    url: makeApiUrl("cases"),
     groupName: "cases",
     handleError,
     isProtected: true
@@ -30,7 +31,7 @@ export const useCaseEvents = (caseId: Components.Schemas.Case["id"], options?: O
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.CaseEvent[]>({
     ...options,
-    url: makeGatewayUrl("cases", caseId, "events"),
+    url: makeApiUrl("cases", caseId, "events"),
     groupName: "cases",
     handleError,
     isProtected: true
@@ -41,7 +42,7 @@ export const useDebriefings = (id?: number, options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.Debriefing>({
     ...options,
-    url: makeGatewayUrl("debriefings", id),
+    url: makeApiUrl("debriefings", id),
     groupName: "cases",
     handleError,
     isProtected: true
@@ -65,7 +66,7 @@ export const useSummons = (options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.Summon>({
     ...options,
-    url: makeGatewayUrl("summons"),
+    url: makeApiUrl("summons"),
     groupName: "cases",
     handleError,
     isProtected: true
@@ -129,7 +130,7 @@ export const useCaseTasks = (caseId: Components.Schemas.Case["id"], options?: Op
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.CamundaTask[]>({
     ...options,
-    url: makeGatewayUrl("cases", caseId, "tasks"),
+    url: makeApiUrl("cases", caseId, "tasks"),
     groupName: "cases",
     handleError,
     isProtected: true
@@ -140,7 +141,7 @@ export const useTaskComplete = (options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.CamundaTaskComplete>({
     ...options,
-    url: makeGatewayUrl("camunda", "task", "complete"),
+    url: makeApiUrl("camunda", "task", "complete"),
     groupName: "cases",
     handleError,
     isProtected: true
@@ -151,7 +152,7 @@ export const useCaseVisits = (caseId: Components.Schemas.Case["id"], options?: O
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.Visit>({
     ...options,
-    url: makeGatewayUrl("cases", caseId, "visits"),
+    url: makeApiUrl("cases", caseId, "visits"),
     groupName: "cases",
     handleError,
     isProtected: true
@@ -162,7 +163,7 @@ export const useVisitsCreate = (options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.Visit>({
     ...options,
-    url: makeGatewayUrl("visits"),
+    url: makeApiUrl("visits"),
     groupName: "cases",
     handleError,
     isProtected: true

@@ -1,12 +1,13 @@
 
 import type { Options } from "./"
-import { makeGatewayUrl, useErrorHandler } from "./hooks/utils/utils"
+import { useErrorHandler, useSuppressErrorHandler } from "./hooks/utils/errorHandler"
+import { makeApiUrl } from "./hooks/utils/apiUrl"
 import useApiRequest from "./hooks/useApiRequest"
 
 export const usePermitCheckmarks = (bagId: string) => {
   const handleError = useErrorHandler()
   return useApiRequest<{ has_b_and_b_permit: boolean, has_vacation_rental_permit: boolean }>({
-    url: makeGatewayUrl("addresses", bagId, "permits", "checkmarks"),
+    url: makeApiUrl("addresses", bagId, "permits", "checkmarks"),
     groupName: "addresses",
     handleError,
     isProtected: true
@@ -14,9 +15,9 @@ export const usePermitCheckmarks = (bagId: string) => {
 }
 
 export const usePermitDetails = (bagId: string) => {
-  const handleError = useErrorHandler()
+  const handleError = useSuppressErrorHandler()
   return useApiRequest<Components.Schemas.DecosPermit[]>({
-    url: makeGatewayUrl("addresses", bagId, "permits"),
+    url: makeApiUrl("addresses", bagId, "permits"),
     groupName: "addresses",
     handleError,
     isProtected: true
@@ -27,7 +28,7 @@ export const useResidents = (bagId: Components.Schemas.Address["bag_id"], option
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.Residents>({
     ...options,
-    url: makeGatewayUrl("addresses", bagId, "residents"),
+    url: makeApiUrl("addresses", bagId, "residents"),
     groupName: "addresses",
     handleError,
     isProtected: true
