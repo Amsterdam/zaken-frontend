@@ -2,7 +2,7 @@ import qs from "qs"
 import slashSandwich from "slash-sandwich"
 
 import type { Options } from "./"
-import { useErrorHandler, useSuppressErrorHandler } from "./hooks/utils/utils"
+import { useErrorHandler, useSuppressErrorHandler } from "./hooks/utils/errorHandler"
 import useApiRequest from "./hooks/useApiRequest"
 
 export const useBAG = (bagId?: Components.Schemas.Address["bag_id"], options?: Options) => {
