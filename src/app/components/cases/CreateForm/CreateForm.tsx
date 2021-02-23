@@ -18,24 +18,20 @@ type FormData =
   Pick<Components.Schemas.CaseCreateUpdate, "address" | "description"> &
   { team: Components.Schemas.CaseTeam, reason: Components.Schemas.CaseReason }
 
-const mapData = (bagId: Components.Schemas.Address["bag_id"], data: FormData, defaultTeam: number, defaultReason: number): Omit<Components.Schemas.CaseCreateUpdate, "id"> => ({
+const mapData = (bagId: Components.Schemas.Address["bag_id"], data: FormData): Omit<Components.Schemas.CaseCreateUpdate, "id"> => ({
   address: { bag_id: bagId } as Components.Schemas.Address,
   description: data.description,
-  team: data.team?.id ?? defaultTeam,
-  reason: data.reason?.id ?? defaultReason
+  team: data.team.id,
+  reason: data.reason.id
 })
 
 const CreateForm: React.FC<Props> = ({ bagId }) => {
 
-  const teams = useTeams()
-  const reasons = useReasons(teams.data?.results?.[0].id)
+  const { data: teams } = useTeams()
+  const { data: reasons } = useReasons(teams?.results?.[0].id)
   const { execPost } = useCaseCreateUpdate()
-  const postMethod = async (data: FormData) => {
-    const defaultTeam = teams?.data?.results?.[0]
-    const defaultReason = reasons?.data?.results?.[0]
-    if (defaultTeam === undefined || defaultReason === undefined) return
-    return await execPost(mapData(bagId, data, defaultTeam.id, defaultReason.id))
-  }
+  const postMethod = async (data: FormData) => await execPost(mapData(bagId, data))
+
   const {
     isSubmitted,
     data: confirmData,
@@ -45,9 +41,9 @@ const CreateForm: React.FC<Props> = ({ bagId }) => {
   } = useSubmitConfirmation<FormData>(postMethod)
   const { addSuccessFlashMessage } = useFlashMessages()
 
-  const fields = useMemo(() => scaffold(bagId, teams.data?.results ?? [], reasons.data?.results ?? []), [bagId, teams.data, reasons.data])
+  const fields = useMemo(() => scaffold(bagId, teams?.results ?? [], reasons?.results ?? []), [bagId, teams, reasons])
 
-  if (teams.data === undefined || reasons.data === undefined) return <Spinner />
+  if (teams === undefined || reasons === undefined) return <Spinner />
 
   const onSubmitConfirmWrap = async () => {
     const result = await onSubmitConfirm()
