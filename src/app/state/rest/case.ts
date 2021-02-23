@@ -174,10 +174,9 @@ export const useDueDate = (options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<MockComponents.Schemas.DueDate>({
     ...options,
-    url: "dueDate",
+    url: makeApiUrl("camunda/task/date"),
     groupName: "cases",
     handleError,
-    isProtected: true,
-    isMocked: true
+    isProtected: true
   })
 }

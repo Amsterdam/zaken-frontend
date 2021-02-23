@@ -1,7 +1,6 @@
 import { FormPositioner } from "@amsterdam/scaffold-form/package"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 
-
 const Scaffold = (onCancel: () => void, minDate: string) => {
   const fields = {
     dueDate: {
