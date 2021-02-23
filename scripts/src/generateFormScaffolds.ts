@@ -44,7 +44,7 @@ const writeSchemas = (schema: any) => {
 }
 
 fetchSchema(
-  slashSandwich([process.env.REACT_APP_API_HOST, "schema"])
+  slashSandwich([process.env.REACT_APP_API_HOST, process.env.REACT_APP_API_PATH, "schema"])
 ).then(
   writeSchemas,
   () => process.exit(1)
