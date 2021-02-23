@@ -1,9 +1,8 @@
 import React from "react"
-
 import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
+
 import ScaffoldFields from "app/components/shared/Form/ScaffoldFields"
 import createScaffoldProps from "./scaffold"
-import styled from "styled-components"
 
 type Props = {
   onSubmit: (data: any) => void
@@ -12,13 +11,6 @@ type Props = {
   dueDate: string
   minDate?: Date
 }
-
-const Div = styled.div`
-  button[type=submit] {
-    float: right;
-    clear: both;
-  }
-`
 
 const formatDate = (dateStr: string | Date) => {
   const date = new Date(dateStr)
@@ -29,17 +21,16 @@ const formatDate = (dateStr: string | Date) => {
   return `${ year }-${ month }-${ day }`
 }
 
-const ChangeDueDateForm: React.FC<Props> = ({ isLoading, onSubmit, onCancel , dueDate, minDate = new Date() }) => 
-  
-    <Div>
-      <ScaffoldForm
-        showSpinner={ isLoading }
-        onSubmit={ onSubmit }
-        onCancel={ onCancel }
-        initialValues={ { due_date: formatDate(dueDate) } }
-      >
-        <ScaffoldFields { ...createScaffoldProps(onCancel, formatDate(minDate) ) } />
-      </ScaffoldForm>
-    </Div>
-  
+const ChangeDueDateForm: React.FC<Props> = ({ isLoading, onSubmit, onCancel , dueDate, minDate = new Date() }) =>
+  <div>
+    <ScaffoldForm
+      showSpinner={ isLoading }
+      onSubmit={ onSubmit }
+      onCancel={ onCancel }
+      initialValues={ { due_date: formatDate(dueDate) } }
+    >
+      <ScaffoldFields { ...createScaffoldProps(onCancel, formatDate(minDate) ) } />
+    </ScaffoldForm>
+  </div>
+
 export default ChangeDueDateForm

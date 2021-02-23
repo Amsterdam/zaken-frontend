@@ -19,21 +19,20 @@ type Props = {
 type DateProps = {
   isDateInPast: boolean
 }
-  
+
 const DateInPast = styled.span<DateProps>`
-  font-weight: 400;
   cursor: pointer;
   color: ${ props => props.isDateInPast ? themeColor("secondary") : themeColor("tint", "level0") };
   &:hover {
     text-decoration: underline;
   }
-  `
+`
 
-  const StyledIcon = styled(Icon)`
-    display: inline-block;
-    margin-left: ${ themeSpacing(2) };
-    transform: translateY(2px);
-  `
+const StyledIcon = styled(Icon)`
+  display: inline-block;
+  margin-left: ${ themeSpacing(2) };
+  transform: translateY(2px);
+`
 
 const ChangeableDueDate: React.FC<Props> = ({ dueDate, camundaTaskId, caseId }) => {
   const { isModalOpen, openModal, closeModal } = useModal()
@@ -46,9 +45,9 @@ const ChangeableDueDate: React.FC<Props> = ({ dueDate, camundaTaskId, caseId }) 
 
   return (
     <>
-      <DateInPast 
-        isDateInPast={ isDateInPast(new Date(dueDate)) } 
-        role="link" 
+      <DateInPast
+        isDateInPast={ isDateInPast(new Date(dueDate)) }
+        role="link"
         onClick={openModal}
       >
         { displayDate(dueDate) }
