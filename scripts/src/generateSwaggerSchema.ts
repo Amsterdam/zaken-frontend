@@ -6,7 +6,7 @@ import slashSandwich from "slash-sandwich"
 // Loads .env.development or .env.production based on NODE_ENV
 config()
 
-const url = slashSandwich([process.env.REACT_APP_GATEWAY, "schema"])
+const url = slashSandwich([process.env.REACT_APP_API_HOST, "schema"])
 
 exec(`dtsgen -o ./src/__generated__/apiSchema.d.ts --url ${ url }`,
   (error, stdout, stderr) => {

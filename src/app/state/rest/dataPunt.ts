@@ -2,7 +2,7 @@ import qs from "qs"
 import slashSandwich from "slash-sandwich"
 
 import type { Options } from "./"
-import { useErrorHandler } from "./hooks/utils/utils"
+import { useErrorHandler, useSuppressErrorHandler } from "./hooks/utils/utils"
 import useApiRequest from "./hooks/useApiRequest"
 
 export const useBAG = (bagId?: Components.Schemas.Address["bag_id"], options?: Options) => {
@@ -42,7 +42,7 @@ export const useBAGLodging = (type?: string, subTypeId?: string, options?: Optio
 }
 
 export const usePanorama = (lat?: number, lon?: number, width?: number, aspect?: number, radius?: number, fov?: number, options?: Options) => {
-  const handleError = useErrorHandler()
+  const handleError = useSuppressErrorHandler()
   const queryString = qs.stringify({ lat, lon, width, fov, aspect, radius }, { addQueryPrefix: true })
   return useApiRequest<{ url: string }>({
     ...options,

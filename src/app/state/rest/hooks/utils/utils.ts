@@ -1,6 +1,5 @@
 import { useCallback } from "react"
 import { AxiosError } from "axios"
-import slashSandwich from "slash-sandwich"
 
 import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
 
@@ -20,9 +19,9 @@ export const useErrorHandler = () => {
 }
 
 /**
- * Utility function to create a gateway URL.
+ * Suppress error handler:
  */
-export const makeGatewayUrl = (...paths: Array<number|string|undefined>) =>
-  slashSandwich([process.env.REACT_APP_GATEWAY, ...paths])
+export const useSuppressErrorHandler = () =>
+  useCallback((error: AxiosError) => console.error(error), [])
 
-export const stripGatewayFromUrl = (url: string) => url.replace(new RegExp(`^${ process.env.REACT_APP_GATEWAY }`), "")
+

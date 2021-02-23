@@ -3,7 +3,7 @@
 import { renderHook } from "@testing-library/react-hooks"
 import { AxiosError } from "axios"
 
-import { makeGatewayUrl, useErrorHandler } from "./utils"
+import { makeApiUrl, useErrorHandler } from "./utils"
 
 const mockAddErrorFlashMessage = jest.fn()
 jest.mock("app/state/flashMessages/useFlashMessages", () => ({
@@ -35,7 +35,7 @@ describe("rest hook utils", () => {
 
   describe("makeGatewayURL", () => {
     it("should make a GATEWAY url", () => {
-      expect(makeGatewayUrl("foo", "bar")).toEqual("http://localhost:8080/api/v1/foo/bar/")
+      expect(makeApiUrl("foo", "bar")).toEqual("http://localhost:8080/api/v1/foo/bar/")
     })
   })
 })

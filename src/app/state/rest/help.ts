@@ -1,13 +1,14 @@
 
 import type { Options } from "./"
-import { makeGatewayUrl, useErrorHandler } from "./hooks/utils/utils"
+import { useErrorHandler } from "./hooks/utils/utils"
+import { makeApiUrl } from "./hooks/utils/apiUrl"
 import useApiRequest from "./hooks/useApiRequest"
 
 export const useSupportContacts = (options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.PaginatedSupportContactList>({
     ...options,
-    url: makeGatewayUrl("support-contacts"),
+    url: makeApiUrl("support-contacts"),
     groupName: "supportContacts",
     handleError,
     isProtected: true
