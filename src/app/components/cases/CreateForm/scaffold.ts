@@ -30,13 +30,8 @@ export default (bagId: Components.Schemas.Address["bag_id"], teams: Components.S
       props: {
         label: "Korte toelichting",
         name: "description",
-        isRequired: true
-      }
-    },
-    submit: {
-      type: "SubmitButton",
-      props: {
-        label: "Zaak aanmaken"
+        isRequired: true,
+        rows: 7
       }
     },
     cancel: {
@@ -46,16 +41,22 @@ export default (bagId: Components.Schemas.Address["bag_id"], teams: Components.S
         variant: "primaryInverted",
         onClick: () => navigateTo(`/adres/${ bagId }`)
       }
+    },
+    submit: {
+      type: "SubmitButton",
+      props: {
+        label: "Zaak aanmaken",
+        align: "right"
+      }
     }
   }
 
   return new FormPositioner(fields as Fields)
-    .setVertical("mobileS")
-    .setGrid("laptop", "1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr", [
+    .setGrid("mobileS", "1fr 1fr", [
       ["team", "team"],
       ["reason", "reason"],
       ["description", "description"],
-      ["submit", "cancel"]
+      ["cancel", "submit"]
     ])
     .getScaffoldProps()
 }
