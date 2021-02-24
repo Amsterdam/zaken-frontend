@@ -10,7 +10,7 @@ type Props = {
 }
 
 const mapData = (data: Components.Schemas.Case) => ({
-  "Zaak Id": <CaseIdDisplay id={ data.identification } />,
+  "Zaak ID": <CaseIdDisplay id={ data.identification } />,
   "Team": data.team.name,
   "Startdatum": data.start_date ? `${ displayDate(data.start_date) }` : "-"
 })
