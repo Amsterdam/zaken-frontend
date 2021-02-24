@@ -24,7 +24,7 @@ const StyledHeading = styled(Heading)`
 `
 
 const columns = [
-  { header: "Zaak Id", minWidth: 100 },
+  { header: "Zaak ID", minWidth: 100 },
   { header: "Team", minWidth: 100 },
   { header: "Startdatum", minWidth: 100 },
   { header: "Huidige status", minWidth: 100 },
