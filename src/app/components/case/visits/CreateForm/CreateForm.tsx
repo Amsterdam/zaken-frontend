@@ -19,7 +19,7 @@ export type VisitData = Omit<Components.Schemas.Visit, "author_ids"> & { author1
 
 const mapData = (data: VisitData) => ({ ...data, author_ids: [data.author1.id, data.author2.id] })
 
-const VisitForm: React.FC<Props> = ({ caseId, isLoading }) => {
+const CreateForm: React.FC<Props> = ({ caseId, isLoading }) => {
 
   const { data } = useAuthors()
   const authors = data?.results ?? []
@@ -42,11 +42,10 @@ const VisitForm: React.FC<Props> = ({ caseId, isLoading }) => {
         onSubmit={ onSubmit }
         initialValues={ { case: caseId, start_time: "2021-01-01T12:34", observations: [] } }
       >
-
         <ScaffoldFields {...createScaffoldProps(caseId, authors) } />
       </ScaffoldForm>
     </>
   )
 }
 
-export default VisitForm
+export default CreateForm
