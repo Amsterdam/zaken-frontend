@@ -51,8 +51,7 @@ const scaffold = (caseId: Components.Schemas.Case["id"], authors: Components.Sch
       type: "CheckboxFields",
       props: {
         name: "observations",
-        label: "Opvallende zaken",
-        extraLabel: "(niet verplicht)",
+        label: "Opvallende zaken (niet verplicht)",
         options: {
           malfunctioning_doorbell: "Bel functioneert niet",
           intercom: "Contact via intercom",
@@ -78,8 +77,7 @@ const scaffold = (caseId: Components.Schemas.Case["id"], authors: Components.Sch
     suggest_next_visit_description: {
       type: "TextAreaField",
       props: {
-        label: "Geef toelichting",
-        extraLabel: "(niet verplicht)",
+        label: "Geef toelichting (niet verplicht)",
         name: "suggest_next_visit_description"
       }
     },
@@ -98,8 +96,7 @@ const scaffold = (caseId: Components.Schemas.Case["id"], authors: Components.Sch
       type: "TextAreaField",
       props: {
         name: "can_next_visit_go_ahead_description",
-        label: "Geef toelichting",
-        extraLabel: "(niet verplicht)"
+        label: "Geef toelichting (niet verplicht)"
       }
     },
     description: {
@@ -110,12 +107,6 @@ const scaffold = (caseId: Components.Schemas.Case["id"], authors: Components.Sch
         label: "Opmerkingen"
       }
     },
-    submit: {
-      type: "SubmitButton",
-      props: {
-        label: "Toevoegen"
-      }
-    },
     secondaryButton: {
       type: "Button",
       props: {
@@ -123,19 +114,39 @@ const scaffold = (caseId: Components.Schemas.Case["id"], authors: Components.Sch
         variant: "primaryInverted",
         onClick: () => navigateTo(`/zaken/${ caseId }`)
       }
+    },
+    submit: {
+      type: "SubmitButton",
+      props: {
+        label: "Toevoegen",
+        align: "right"
+      }
     }
   }
 
   return new FormPositioner(fields as Fields)
-    .setGrid("laptop", "1fr 1fr 1fr 1fr", [
-      ["author1", "author1", "author2", "author2"],
+    .setGrid("mobileS", "1fr 1fr", [
+      ["author1", "author1"],
+      ["author2", "author2"],
       ["time", "time"],
       ["status", "status"],
       ["observations", "observations"],
-      ["next_visit", "next_visit", "next_visit_description", "next_visit_description"],
-      ["suggest_next_visit", "suggest_next_visit", "suggest_next_visit_description", "suggest_next_visit_description"],
+      ["next_visit", "next_visit"],
+      ["next_visit_description", "next_visit_description"],
+      ["suggest_next_visit", "suggest_next_visit"],
+      ["suggest_next_visit_description", "suggest_next_visit_description"],
       ["description", "description"],
-      ["submit", "secondaryButton"]
+      ["secondaryButton", "submit"]
+    ])
+    .setGrid("laptop", "1fr 1fr", [
+      ["author1", "author2"],
+      ["time", "time"],
+      ["status", "status"],
+      ["observations", "observations"],
+      ["next_visit", "next_visit_description"],
+      ["suggest_next_visit", "suggest_next_visit_description"],
+      ["description", "description"],
+      ["secondaryButton", "submit"]
     ])
     .getScaffoldProps()
 }
