@@ -11,7 +11,7 @@ type Props = {
 
 const CaseCompleteForm: React.FC<Props> = ({ id }) => {
 
-  const { data, execPost } = useCompleteCase()
+  const [data, { execPost }] = useCompleteCase()
 
   return (
     <>

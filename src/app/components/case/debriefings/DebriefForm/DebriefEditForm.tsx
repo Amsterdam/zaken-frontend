@@ -12,7 +12,7 @@ type Props = {
 
 const DebriefEditForm: React.FC<Props> = ({ id, debriefingId }) => {
 
-  const { data, isBusy } = useDebriefings(debriefingId)
+  const [data, { isBusy }] = useDebriefings(debriefingId)
   const { handleUpdate } = usePageDebriefing(id, debriefingId)
 
   return (

@@ -21,10 +21,10 @@ const mapData = (data: VisitData) => ({ ...data, author_ids: [data.author1.id, d
 
 const CreateForm: React.FC<Props> = ({ caseId, isLoading }) => {
 
-  const { data } = useAuthors()
+  const [data] = useAuthors()
   const authors = data?.results ?? []
 
-  const { execPost } = useVisitsCreate()
+  const [, { execPost }] = useVisitsCreate()
   const { addSuccessFlashMessage } = useFlashMessages()
 
   const onSubmit = async (data: VisitData) => {

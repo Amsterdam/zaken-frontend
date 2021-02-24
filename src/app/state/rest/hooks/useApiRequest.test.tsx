@@ -31,16 +31,16 @@ describe("useApiRequest", () => {
     const { result, waitForNextUpdate } = renderHook(usePet, { wrapper: Wrapper })
 
     // Busy... no results yet.
-    expect(result.current.isBusy).toEqual(true)
-    expect(result.current.data).toEqual(undefined)
+    expect(result.current[1].isBusy).toEqual(true)
+    expect(result.current[0]).toEqual(undefined)
 
     // Make API respond:
     await act(() => waitForNextUpdate())
     await act(() => waitForNextUpdate())
 
     // not busy anymore... results are in!
-    expect(result.current.isBusy).toEqual(false)
-    expect(result.current.data).toEqual({ name: "Fifi", type: "dog" })
+    expect(result.current[1].isBusy).toEqual(false)
+    expect(result.current[0]).toEqual({ name: "Fifi", type: "dog" })
 
     expect(scope.isDone()).toEqual(true) // <- all scoped endpoints are called
   })
@@ -61,21 +61,21 @@ describe("useApiRequest", () => {
     const { result, waitForNextUpdate } = renderHook(useTwoHooks, { wrapper: Wrapper })
 
     // Busy...
-    expect(result.current.first.isBusy).toEqual(true)
-    expect(result.current.second.isBusy).toEqual(true)
+    expect(result.current.first[1].isBusy).toEqual(true)
+    expect(result.current.second[1].isBusy).toEqual(true)
     // no results yet....
-    expect(result.current.first.data).toEqual(undefined)
-    expect(result.current.second.data).toEqual(undefined)
+    expect(result.current.first[0]).toEqual(undefined)
+    expect(result.current.second[0]).toEqual(undefined)
 
     await act(() => waitForNextUpdate())
     await act(() => waitForNextUpdate())
 
     // not busy anymore
-    expect(result.current.first.isBusy).toEqual(false)
-    expect(result.current.second.isBusy).toEqual(false)
+    expect(result.current.first[1].isBusy).toEqual(false)
+    expect(result.current.second[1].isBusy).toEqual(false)
     // Results are in!
-    expect(result.current.first.data).toEqual({ name: "Fifi", type: "dog" })
-    expect(result.current.second.data).toEqual({ name: "Fifi", type: "dog" })
+    expect(result.current.first[0]).toEqual({ name: "Fifi", type: "dog" })
+    expect(result.current.second[0]).toEqual({ name: "Fifi", type: "dog" })
 
     expect(scope.isDone()).toEqual(true) // <- all scoped endpoints are called
   })
@@ -83,19 +83,19 @@ describe("useApiRequest", () => {
   test.each([
     [ "POST",
       (scope: nock.Scope) => scope.post("/pet").reply(200),
-      (hook: any) => hook.execPost({ name: "popo" })
+      (hook: any) => hook[1].execPost({ name: "popo" })
     ],
     [ "PUT",
       (scope: nock.Scope) => scope.put("/pet").reply(200),
-      (hook: any) => hook.execPut({ name: "popo" })
+      (hook: any) => hook[1].execPut({ name: "popo" })
     ],
     [ "PATCH",
       (scope: nock.Scope) => scope.patch("/pet").reply(200),
-      (hook: any) => hook.execPatch({ name: "popo" })
+      (hook: any) => hook[1].execPatch({ name: "popo" })
     ],
     [ "DELETE",
       (scope: nock.Scope) => scope.delete("/pet").reply(200),
-      (hook: any) => hook.execDelete()
+      (hook: any) => hook[1].execDelete()
     ]
   ])("should re-execute a GET after a %s", async (method, prepareScope, exec) => {
     const usePet = () => useApiRequest<Pet>({ url: "http://localhost/pet", groupName: "cases" })
@@ -114,7 +114,7 @@ describe("useApiRequest", () => {
     await act(() => waitForNextUpdate())
 
     // On mount, "Fifi" should be fetched
-    expect(result.current.data).toEqual({ name: "Fifi", type: "dog" })
+    expect(result.current[0]).toEqual({ name: "Fifi", type: "dog" })
 
     await act(async () => {
       await exec(result.current).then(onSuccess)
@@ -122,11 +122,11 @@ describe("useApiRequest", () => {
     })
 
     // Cache was cleared. Data should be undefined now:
-    expect(result.current.data).toEqual(undefined)
+    expect(result.current[0]).toEqual(undefined)
 
     // New fetch should happen
     await act(() => waitForNextUpdate())
-    expect(result.current.data).toEqual({ name: "Popo", type: "dog" })
+    expect(result.current[0]).toEqual({ name: "Popo", type: "dog" })
 
     expect(onSuccess).toHaveBeenCalled()
     expect(scope.isDone()).toEqual(true) // <- all scoped endpoints are called

@@ -12,11 +12,11 @@ type Props = {
 
 const OpinionForm: React.FC<Props> = ({ id }) => {
 
-  const { data, execPost } = useOpinions()
+  const [opinions, { execPost }] = useOpinions()
 
   // TODO-MOCKED, get summonId/summonTitle from useCaseEvents(caseId)
   const summonId = 6
-  const { data: summonData, execGet } = useSummon(summonId, { lazy: true })
+  const [summon, { execGet }] = useSummon(summonId, { lazy: true })
 
   useEffect(() => {
       if (summonId === undefined) return
@@ -31,10 +31,10 @@ const OpinionForm: React.FC<Props> = ({ id }) => {
       <FormWithExtraLabel>
         <WorkflowForm
           caseId={ id }
-          data={ data }
+          data={ opinions }
           postMethod={ execPost }
           scaffold={ scaffold }
-          extraLabel={ summonData?.title }
+          extraLabel={ summon?.title }
         />
       </FormWithExtraLabel>
     </>

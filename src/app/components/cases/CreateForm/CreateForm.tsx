@@ -27,9 +27,9 @@ const mapData = (bagId: Components.Schemas.Address["bag_id"], data: FormData): O
 
 const CreateForm: React.FC<Props> = ({ bagId }) => {
 
-  const { data: teams } = useTeams()
-  const { data: reasons } = useReasons(teams?.results?.[0].id)
-  const { execPost } = useCaseCreateUpdate()
+  const [teams] = useTeams()
+  const [reasons] = useReasons(teams?.results?.[0].id)
+  const [, { execPost }] = useCaseCreateUpdate()
   const postMethod = async (data: FormData) => await execPost(mapData(bagId, data))
 
   const {

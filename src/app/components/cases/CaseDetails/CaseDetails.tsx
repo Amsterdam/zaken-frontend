@@ -16,8 +16,9 @@ const mapData = (data: Components.Schemas.Case) => ({
 })
 
 const CaseDetails: React.FC<Props> = ({ caseId }) => {
-  const { data } = useCase(caseId)
+  const [data] = useCase(caseId)
   const values = useMemo(() => data !== undefined ? mapData(data) : {}, [data])
+
   return <DefinitionList
     isLoading={ data === undefined }
     numInitialVisibleRows={ 3 }

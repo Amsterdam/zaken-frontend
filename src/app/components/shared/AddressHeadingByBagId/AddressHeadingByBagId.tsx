@@ -14,7 +14,7 @@ const Div = styled.div`
 `
 
 const AddressHeadingByBagId: React.FC<Props> = ({ bagId }) => {
-  const { data } = useBAG(bagId)
+  const [data] = useBAG(bagId)
   const address = data?.results[0]
 
   return (

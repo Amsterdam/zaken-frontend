@@ -35,15 +35,15 @@ const mapData = (onClick: (bagId: string) => void) => (data: SearchResult) =>
 
 const OtherAddressesTable: React.FC<Props> = ({ bagId, onAddressChosen }) => {
   const { pathname } = useLocation()
-  const { results, isBusy } = useOtherAddressesByBagId(bagId)
+  const [data, { isBusy }] = useOtherAddressesByBagId(bagId)
   const onClick = useCallback((otherBagId: string) => {
     onAddressChosen()
     return navigateTo(pathname.replace(bagId, otherBagId))
   }, [ onAddressChosen, bagId, pathname ])
 
   const mappedData = useMemo(
-    () => results?.map(mapData(onClick)),
-    [results, onClick]
+    () => data?.map(mapData(onClick)),
+    [data, onClick]
   )
 
   return (<Table

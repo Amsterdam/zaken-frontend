@@ -19,18 +19,18 @@ const Ul = styled.ul`
 `
 
 const PermitDetailsList: React.FC<Props> = ({ bagId }) => {
-  const { data, isBusy } = usePermitDetails(bagId)
-  const listItems = data?.map((detail) => 
-  
+  const [data, { isBusy }] = usePermitDetails(bagId)
+  const listItems = data?.map((detail) =>
+
     <li key={detail.permit_type}>
       <PermitDetails detail={ detail } />
     </li>
   )
-  
+
   return (
     <>
         { isBusy && <Spinner /> }
-        { !isBusy && 
+        { !isBusy &&
           <Ul>
             {listItems}
           </Ul>

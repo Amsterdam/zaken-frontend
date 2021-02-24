@@ -45,7 +45,7 @@ const mapData = (data: Components.Schemas.Case) =>
 
 const CasesByBagId: React.FC<Props> = ({ bagId, openCases, title = defaultTitle, emptyText = defaultEmptyText }) => {
 
-  const { data } = useCasesByBagId(bagId, openCases)
+  const [data] = useCasesByBagId(bagId, openCases)
   const mappedData = useMemo(() => data?.results?.map(mapData), [ data ])
   const length = data?.results?.length
   const hasCases = length !== undefined && length > 0
