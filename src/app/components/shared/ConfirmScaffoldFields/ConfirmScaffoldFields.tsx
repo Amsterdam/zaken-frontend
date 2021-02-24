@@ -84,15 +84,18 @@ const ConfirmScaffoldFields = <T extends RequestBody>(props: Props<T>) => {
   const [isSubmitting, setSubmitting] = useState(false)
   const values = useMemo(() => createValuesObject<T>(fields, data, showFields), [data, fields, showFields])
 
-  const onSubmitWrap = () => {
+  const onSubmitWrap = async () => {
     setSubmitting(true)
-    onSubmit()
-    setSubmitting(false)
+    await onSubmit()
+    // TODO: Fix this. When the `onSubmit` handler causes this component to be removed. It throws a warning.
+    //setSubmitting(false)
   }
 
   const content = (
     <>
-      { !showInModal ? <Heading>{ title }</Heading> : null }
+      { showInModal === false &&
+        <Heading>{ title }</Heading>
+      }
       <Wrap>
         <DefinitionList values={ values } />
         <ButtonWrap>
@@ -116,4 +119,5 @@ const ConfirmScaffoldFields = <T extends RequestBody>(props: Props<T>) => {
     </Modal> :
     content
 }
+
 export default ConfirmScaffoldFields
