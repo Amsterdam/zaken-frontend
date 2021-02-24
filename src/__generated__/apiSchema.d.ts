@@ -57,7 +57,7 @@ declare namespace Components {
                 status: number;
                 start_date: string; // date
                 users: string /* uuid */[];
-            }[] | null;
+            }[];
             team: CaseTeam;
             reason: CaseReason;
             identification?: string | null;

@@ -38,7 +38,7 @@ const mapData = (data: Components.Schemas.Case) =>
       <CaseIdDisplay id={ data.identification } />,
       data.team.name,
       data.start_date ? <DateDisplay date={ data.start_date } /> : "-",
-      data.current_states && data.current_states.length > 0 ? data.current_states.map(({ status_name }) => status_name).join(", ") : "-",
+      data.current_states.length > 0 ? data.current_states.map(({ status_name }) => status_name).join(", ") : "-",
       <OpenButton href={ to("/zaken/:id", { id: data.id }) } text="Zaakdetails" />
     ]
   })
