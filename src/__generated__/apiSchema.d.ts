@@ -50,14 +50,14 @@ declare namespace Components {
             readonly id: number;
             address: Address;
             case_states: CaseState[];
-            readonly current_state: {
+            readonly current_states: {
                 readonly id: number;
                 case: number;
                 readonly status_name: string;
                 status: number;
-                state_date: string; // date
+                start_date: string; // date
                 users: string /* uuid */[];
-            } | null;
+            }[] | null;
             team: CaseTeam;
             reason: CaseReason;
             identification?: string | null;
