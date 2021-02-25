@@ -1,5 +1,5 @@
 import React, { useMemo } from "react"
-import { Button, Icon, Spinner, themeSpacing } from "@amsterdam/asc-ui"
+import { Button, Icon, Spinner, themeSpacing, ErrorMessage } from "@amsterdam/asc-ui"
 
 import { useCaseTasks, useTaskComplete } from "app/state/rest"
 import ButtonLink from "app/components/shared/ButtonLink/ButtonLink"
@@ -100,7 +100,7 @@ const Workflow: React.FC<Props> = ({ id }) => {
         noValuesPlaceholder=""
       /> :
     hasError ?
-      <p>Laden van taken mislukt</p> :
+      <ErrorMessage message="Laden van taken mislukt" /> :
       null
   )
 }

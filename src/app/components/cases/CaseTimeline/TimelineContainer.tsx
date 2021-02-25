@@ -3,7 +3,7 @@ import styled from "styled-components"
 
 import useGroupedCaseEvents from "./hooks/useGroupedCaseEvents"
 import TimelineEvents from "./components/TimelineEvents"
-import { Spinner, themeSpacing } from "@amsterdam/asc-ui"
+import { Spinner, themeSpacing, ErrorMessage } from "@amsterdam/asc-ui"
 
 type Props = {
   caseId: Components.Schemas.CaseEvent["id"]
@@ -46,7 +46,7 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
         }
       </Div>
       { showError &&
-        <p>Laden van tijdlijn evenementen mislukt</p>
+        <ErrorMessage message="Laden van tijdlijn evenementen mislukt" />
       }
       { showEmpty &&
         <p>Geen tijdlijn evenementen beschikbaar</p>
