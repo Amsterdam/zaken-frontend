@@ -17,7 +17,7 @@ const StyledButton = styled(Button)`
 `
 
 const ButtonMockCases: React.FC = () => {
-  const { execPost } = useMockCases({ lazy: true })
+  const [, { execPost }] = useMockCases({ lazy: true })
   const onClick = () => {
     execPost()
   }

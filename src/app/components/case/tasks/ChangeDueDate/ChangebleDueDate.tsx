@@ -37,7 +37,7 @@ const StyledIcon = styled(Icon)`
 const ChangeableDueDate: React.FC<Props> = ({ dueDate, camundaTaskId, caseId }) => {
   const { isModalOpen, openModal, closeModal } = useModal()
 
-  const { execPost } = useDueDate({ lazy: true })
+  const [, { execPost }] = useDueDate({ lazy: true })
   const onSubmit = (data: any) => {
     console.log(data, camundaTaskId, caseId)
     execPost()

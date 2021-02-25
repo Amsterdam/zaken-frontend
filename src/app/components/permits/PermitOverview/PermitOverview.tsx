@@ -10,7 +10,7 @@ type Props = {
 }
 
 const PermitOverview: React.FC<Props> = ({ bagId }) => {
-  const { data, isBusy } = usePermitCheckmarks(bagId)
+  const [data, { isBusy }] = usePermitCheckmarks(bagId)
 
   const values = useMemo(() => ({
     "Bed & Breakfast": data?.has_b_and_b_permit ? "Ja" : "Nee",

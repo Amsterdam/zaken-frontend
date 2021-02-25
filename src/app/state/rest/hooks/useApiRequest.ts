@@ -117,16 +117,18 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
     }
   }, [ execGet, cacheItem, lazy ])
 
-  return {
+  return [
     data,
-    isBusy: isRequestPendingInQueue(url, "get"),
-    execGet,
-    execPost,
-    execPut,
-    execPatch,
-    execDelete,
-    updateCache
-  }
+    {
+      isBusy: isRequestPendingInQueue(url, "get"),
+      execGet,
+      execPost,
+      execPut,
+      execPatch,
+      execDelete,
+      updateCache
+    }
+  ] as const
 }
 
 export default useApiRequest

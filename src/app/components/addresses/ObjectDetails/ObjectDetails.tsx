@@ -7,11 +7,11 @@ type Props = {
 }
 
 const ObjectDetails: React.FC<Props> = ({ bagId }) => {
-  const BAGData = useBAG(bagId)
-  const result = BAGData?.data?.results[0]
+  const [BAGData] = useBAG(bagId)
+  const result = BAGData?.results[0]
   const type = result?.type
   const subTypeId = result?.subtype_id
-  const { data } = useBAGLodging( type , subTypeId )
+  const [data] = useBAGLodging( type , subTypeId )
 
   const values = useMemo(() => ({
     "Bestemming": result?.type,

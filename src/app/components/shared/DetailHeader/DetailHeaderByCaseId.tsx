@@ -10,7 +10,7 @@ type Props = {
 
 const DetailHeaderByCaseId: React.FC<Props> = ({ caseId, enableSwitch }) => {
 
-  const { data } = useCase(caseId)
+  const [data] = useCase(caseId)
   const bagId = data?.address.bag_id
 
   return bagId !== undefined ? <DetailHeader bagId={ bagId } enableSwitch={ enableSwitch } /> : null

@@ -82,8 +82,8 @@ const columns = [
 
 const Workflow: React.FC<Props> = ({ caseId }) => {
 
-  const { data } = useCaseTasks(caseId)
-  const { execPost } = useTaskComplete({ lazy: true })
+  const [data] = useCaseTasks(caseId)
+  const [, { execPost }] = useTaskComplete({ lazy: true })
 
   const mappedData = useMemo(() => data?.map(mapTaskData(caseId, execPost )), [data, caseId, execPost])
   const showSpinner = mappedData === undefined

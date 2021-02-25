@@ -21,7 +21,7 @@ const Ul = styled.ul`
 `
 
 const Residents: React.FC<Props> = ({ bagId }) => {
-  const { data: residents } = useResidents(bagId)
+  const [residents] = useResidents(bagId)
 
   return (
     <>

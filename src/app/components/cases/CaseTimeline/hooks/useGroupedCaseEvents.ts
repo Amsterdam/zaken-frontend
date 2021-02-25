@@ -8,7 +8,7 @@ const equalItems = (i: TimelineEventItem | undefined, ii: CaseEvent) => i !== un
 
 export default (caseId: CaseEvent["id"]) => {
 
-  const { data } = useCaseEvents(caseId)
+  const [data] = useCaseEvents(caseId)
 
   return data?.reduce((acc, item) => {
 

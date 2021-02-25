@@ -25,7 +25,7 @@ const Dt = styled.dt`
 
 const CaseHeading: React.FC<Props> = ({ id }) => {
 
-  const { data } = useCase(id)
+  const [data] = useCase(id)
 
   return (
     <Wrap>

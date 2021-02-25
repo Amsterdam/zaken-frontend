@@ -33,8 +33,8 @@ const ButtonWrap = styled.div`
 `
 
 const AddressHeader: React.FC<Props> = ({ bagId, headingSize = "h2", isHeader = false, enableSwitch = true }) => {
-  const { data } = useBAG(bagId)
-  const filteredAddresses = useOtherAddressesByBagId(bagId).results
+  const [data] = useBAG(bagId)
+  const [filteredAddresses] = useOtherAddressesByBagId(bagId)
   const title = data ? `${ data.results[0].adres }, ${ data.results[0].postcode }` : undefined
   const showTitle = title !== undefined
   const showButton = enableSwitch && (filteredAddresses !== undefined && filteredAddresses.length > 1)

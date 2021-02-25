@@ -5,10 +5,10 @@ import { useBAG } from "app/state/rest/index"
  * @param bagId
  */
 const useOtherAddressesByBagId = (bagId: string) => {
-  const { data } = useBAG(bagId)
+  const [data] = useBAG(bagId)
   const firstResult = data?.results?.[0]
   const searchQuery = `${ firstResult?.postcode } ${ firstResult?.huisnummer }`
-  const otherAddresses = useBAG(searchQuery, { lazy: data === undefined })
-  return ({ ...otherAddresses, results: otherAddresses.data?.results?.filter(({ huisnummer }) => huisnummer === firstResult?.huisnummer) })
+  const [otherAddresses, otherAddressesMethods] = useBAG(searchQuery, { lazy: data === undefined })
+  return [otherAddresses?.results?.filter(({ huisnummer }) => huisnummer === firstResult?.huisnummer), otherAddressesMethods] as const
 }
 export default useOtherAddressesByBagId
