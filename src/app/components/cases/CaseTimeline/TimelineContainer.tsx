@@ -33,7 +33,9 @@ const Div = styled.div`
 
 const TimelineContainer: React.FC<Props> = ({ caseId }) => {
 
-  const timelineEvents = useGroupedCaseEvents(caseId)
+  const [timelineEvents,, errors] = useGroupedCaseEvents(caseId)
+  const showError = errors.length > 0
+  const showEmpty = timelineEvents?.length === 0
 
   return (
     <>
@@ -43,7 +45,10 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
             <TimelineEvents items={ timelineEvents } />
         }
       </Div>
-      { timelineEvents?.length === 0 &&
+      { showError &&
+        <p>Laden van tijdlijn evenementen mislukt</p>
+      }
+      { showEmpty &&
         <p>Geen tijdlijn evenementen beschikbaar</p>
       }
     </>

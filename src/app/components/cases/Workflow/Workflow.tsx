@@ -82,12 +82,13 @@ const columns = [
 
 const Workflow: React.FC<Props> = ({ id }) => {
 
-  const [data, { isBusy }] = useCaseTasks(id)
+  const [data, { isBusy }, errors] = useCaseTasks(id)
   const [, { execPost }] = useTaskComplete({ lazy: true })
   const mappedData = useMemo(() => data?.map(mapTaskData(id, execPost)), [data, id, execPost])
 
   const showSpinner = isBusy
   const hasData = mappedData !== undefined
+  const hasError = errors.length > 0
 
   return (
     showSpinner ?
@@ -98,6 +99,8 @@ const Workflow: React.FC<Props> = ({ id }) => {
         data={ mappedData }
         noValuesPlaceholder=""
       /> :
+    hasError ?
+      <p>Laden van taken mislukt</p> :
       null
   )
 }

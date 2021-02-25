@@ -38,6 +38,7 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
     getCacheItem,
     setCacheItem,
     updateCacheItem,
+    addErrorToCacheItem,
     clearCache,
     pushRequestInQueue,
     isRequestPendingInQueue
@@ -62,6 +63,7 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
 
       return response
     } catch (error) {
+      addErrorToCacheItem(url, error)
       if (handleError) {
         handleError(error)
       } else {
@@ -111,6 +113,8 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
     ? cacheItem.value as Schema
     : undefined
 
+  const errors = cacheItem?.errors ?? []
+
   useEffect(() => {
     if ((!cacheItem || !cacheItem.valid) && !lazy) {
       execGet()
@@ -127,7 +131,8 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
       execPatch,
       execDelete,
       updateCache
-    }
+    },
+    errors
   ] as const
 }
 
