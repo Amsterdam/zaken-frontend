@@ -70,7 +70,7 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
         throw error
       }
     }
-  }, [request, url, clearCache, setCacheItem, handleError])
+  }, [request, url, clearCache, setCacheItem, handleError, addErrorToCacheItem])
 
   /**
    * Queues an API request
