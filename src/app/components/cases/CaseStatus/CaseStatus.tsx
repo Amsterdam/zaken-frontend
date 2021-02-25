@@ -48,7 +48,7 @@ const CaseStatus: React.FC<Props> = ({ id }) => {
         </span>
       </Div>
       <StyledDivider />
-      <Workflow caseId={ id } />
+      <Workflow id={ id } />
     </>
   )
 }

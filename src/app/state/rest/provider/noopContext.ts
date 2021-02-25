@@ -1,13 +1,11 @@
-import { ApiCache } from "../hooks/useApiCache"
-import { RequestQueue } from "../hooks/useRequestQueue"
-
 const noop = () => {}
 
-export const noopContext: ApiCache & RequestQueue = {
+export const noopContext = {
   isRequestPendingInQueue: () => false,
   pushRequestInQueue: noop,
-  getCacheItem: () => ({ valid: false, value: undefined }),
+  getCacheItem: () => ({ valid: false, value: undefined, errors: [] }),
   setCacheItem: noop,
   updateCacheItem: noop,
+  addErrorToCacheItem: noop,
   clearCache: noop
 }

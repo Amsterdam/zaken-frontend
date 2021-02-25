@@ -3,7 +3,7 @@ import styled from "styled-components"
 
 import useGroupedCaseEvents from "./hooks/useGroupedCaseEvents"
 import TimelineEvents from "./components/TimelineEvents"
-import { Spinner, themeSpacing } from "@amsterdam/asc-ui"
+import { Spinner, themeSpacing, ErrorMessage } from "@amsterdam/asc-ui"
 
 type Props = {
   caseId: Components.Schemas.CaseEvent["id"]
@@ -33,7 +33,9 @@ const Div = styled.div`
 
 const TimelineContainer: React.FC<Props> = ({ caseId }) => {
 
-  const timelineEvents = useGroupedCaseEvents(caseId)
+  const [timelineEvents,, errors] = useGroupedCaseEvents(caseId)
+  const showError = errors.length > 0
+  const showEmpty = timelineEvents?.length === 0
 
   return (
     <>
@@ -43,7 +45,10 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
             <TimelineEvents items={ timelineEvents } />
         }
       </Div>
-      { timelineEvents?.length === 0 &&
+      { showError &&
+        <ErrorMessage message="Laden van tijdlijn evenementen mislukt" />
+      }
+      { showEmpty &&
         <p>Geen tijdlijn evenementen beschikbaar</p>
       }
     </>

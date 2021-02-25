@@ -1,5 +1,5 @@
 import React, { useMemo } from "react"
-import { Button, Icon, Spinner, themeSpacing } from "@amsterdam/asc-ui"
+import { Button, Icon, Spinner, themeSpacing, ErrorMessage } from "@amsterdam/asc-ui"
 
 import { useCaseTasks, useTaskComplete } from "app/state/rest"
 import ButtonLink from "app/components/shared/ButtonLink/ButtonLink"
@@ -12,7 +12,7 @@ import ChangeableDueDate from "app/components/case/tasks/ChangeDueDate/Changeble
 import StyledTable from "./components/StyledTable"
 
 type Props = {
-  caseId: Components.Schemas.Case["id"]
+  id: Components.Schemas.Case["id"]
 }
 
 type TaskAction = {
@@ -48,12 +48,12 @@ export const taskActionMap = {
 } as Record<string, TaskAction>
 
 const mapTaskData =
-  (caseId: Components.Schemas.Case["id"], execPost: (data: Partial<Components.Schemas.CamundaTaskComplete>) => Promise<unknown> ) =>
-    (data: Components.Schemas.CamundaTask ) => {
+  (id: Components.Schemas.Case["id"], execPost: (data: Partial<Components.Schemas.CamundaTaskComplete>) => Promise<unknown> ) =>
+    (data: Components.Schemas.CamundaTask) => {
 
       const { task_name_id, camunda_task_id, name, roles, due_date } = data
       const action = taskActionMap[task_name_id]
-      const onSubmitTaskComplete = () => execPost({ case: caseId, camunda_task_id, variables: {} })
+      const onSubmitTaskComplete = () => execPost({ case: id, camunda_task_id, variables: {} })
 
       return ({
         itemList: [
@@ -61,10 +61,10 @@ const mapTaskData =
           name,
           roles ? mapArrayToList(roles) : "-",
           due_date ?
-          <ChangeableDueDate dueDate={data.due_date} caseId={caseId} camundaTaskId = {camunda_task_id} /> :
+          <ChangeableDueDate dueDate={data.due_date} caseId={id} camundaTaskId = {camunda_task_id} /> :
             "-",
           action !== undefined ?
-            <ButtonLink to={ to(`/zaken/:id/${ action.target }`, { id: caseId }) }>
+            <ButtonLink to={ to(`/zaken/:id/${ action.target }`, { id: id }) }>
               <Button variant="primary" as="span">{ action.name }</Button>
             </ButtonLink> :
             <CompleteTaskButton onSubmit={ onSubmitTaskComplete } taskName={ name } />
@@ -80,22 +80,28 @@ const columns = [
   { header: "Verwerking taak", minWidth: 140 }
 ]
 
-const Workflow: React.FC<Props> = ({ caseId }) => {
+const Workflow: React.FC<Props> = ({ id }) => {
 
-  const [data] = useCaseTasks(caseId)
+  const [data, { isBusy }, errors] = useCaseTasks(id)
   const [, { execPost }] = useTaskComplete({ lazy: true })
+  const mappedData = useMemo(() => data?.map(mapTaskData(id, execPost)), [data, id, execPost])
 
-  const mappedData = useMemo(() => data?.map(mapTaskData(caseId, execPost )), [data, caseId, execPost])
-  const showSpinner = mappedData === undefined
+  const showSpinner = isBusy
+  const hasData = mappedData !== undefined
+  const hasError = errors.length > 0
 
   return (
     showSpinner ?
       <Spinner /> :
+    hasData ?
       <StyledTable
         columns={ columns }
         data={ mappedData }
         noValuesPlaceholder=""
-      />
+      /> :
+    hasError ?
+      <ErrorMessage message="Laden van taken mislukt" /> :
+      null
   )
 }
 
