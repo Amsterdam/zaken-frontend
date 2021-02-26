@@ -125,6 +125,7 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
     data,
     {
       isBusy: isRequestPendingInQueue(url, "get"),
+      hasErrors: errors.length > 0,
       execGet,
       execPost,
       execPut,
