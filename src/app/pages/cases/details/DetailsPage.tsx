@@ -21,32 +21,31 @@ type Props = {
 
 const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
 
-  const id = parseUrlParamId(idString)
-  const caseExists = useExistingCase(id)
-  const showCase = caseExists === true
-  const showNotFound = caseExists === false
+  const [exists, isBusy, id] = useExistingCase(parseUrlParamId(idString))
+  const showCase = exists
+  const showNotFound = !isBusy && !exists
 
   return (
     showCase ?
       <DefaultLayout>
-        <DetailHeaderByCaseId caseId={ id! } enableSwitch={ false } />
+        <DetailHeaderByCaseId caseId={ id } enableSwitch={ false } />
         <RowWithColumn>
           <PageHeading />
         </RowWithColumn>
         <Row>
           <Column spanLarge={ 78 }>
-            <CaseDetails caseId={ id! } />
+            <CaseDetails caseId={ id } />
           </Column>
         </Row>
         <RowWithColumn>
-          <CaseStatus id={ id! } />
+          <CaseStatus id={ id } />
         </RowWithColumn>
         <RowWithColumn>
           <Heading as="h2">Zaakhistorie</Heading>
           <Divider />
         </RowWithColumn>
         <RowWithColumn>
-          <TimelineContainer caseId={ id! } />
+          <TimelineContainer caseId={ id } />
         </RowWithColumn>
       </DefaultLayout> :
     showNotFound ?
