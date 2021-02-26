@@ -24,6 +24,7 @@
     "@types/resize-observer-browser": "^0.1.5",
     "@types/styled-components": "^5.1.7",
     "axios": "^0.21.1",
+    "dompurify": "^2.2.6",
     "env-cmd": "^10.1.0",
     "eslint-plugin-unused-imports": "^1.1.0",
     "final-form": "^4.20.1",
@@ -72,6 +73,7 @@
     ]
   },
   "devDependencies": {
+    "@types/dompurify": "^2.2.1",
     "@types/dotenv-flow": "^3.1.0",
     "@types/enzyme": "^3.10.8",
     "@types/enzyme-adapter-react-16": "^1.0.6",

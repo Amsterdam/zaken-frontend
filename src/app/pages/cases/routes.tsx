@@ -8,6 +8,7 @@ import DecisionCreatePage from "app/pages/case/decisions/CreatePage"
 import CorrespondenceCreatePage from "app/pages/case/correspondence/CreatePage"
 import CompleteCasePage from "app/pages/cases/complete/CompleteCasePage"
 import VisitCreatePage from "app/pages/case/visits/CreatePage"
+import FormPage from "../forms/FormPage"
 
 
 // NOTE: please add your own POC-specific routes here.
@@ -60,6 +61,11 @@ export default {
           "huisbezoek": {
             Page: VisitCreatePage,
             title: "Resultaat huisbezoek",
+            icon: "Edit"
+          },
+          "form": {
+            Page: FormPage,
+            title: "Form",
             icon: "Edit"
           }
         }
