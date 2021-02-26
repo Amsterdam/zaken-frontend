@@ -30,7 +30,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
         <PageHeading />
       </RowWithColumn>
       <Row>
-        <Column spanLarge={ 48 }>
+        <Column spanLarge={ 78 }>
           <CaseDetails caseId={ id } />
         </Column>
       </Row>
