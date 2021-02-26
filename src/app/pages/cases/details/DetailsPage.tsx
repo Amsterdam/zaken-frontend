@@ -23,13 +23,10 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
 
   const id = parseUrlParamId(idString)
   const caseExists = useExistingCase(id)
-  const showSpinner = caseExists === undefined
   const showCase = caseExists === true
   const showNotFound = caseExists === false
 
   return (
-    showSpinner ?
-      <PageSpinner /> :
     showCase ?
       <DefaultLayout>
         <DetailHeaderByCaseId caseId={ id! } enableSwitch={ false } />
@@ -54,7 +51,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
       </DefaultLayout> :
     showNotFound ?
       <NotFoundPage /> :
-      null
+      <PageSpinner />
   )
 }
 
