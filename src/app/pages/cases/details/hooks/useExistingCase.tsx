@@ -12,7 +12,7 @@ export default (id: number | undefined) => {
   useEffect(() => {
     if (valid === false) return
     execGet()
-  }, [])
+  }, [valid, execGet])
 
   if (valid === false) return false
   if (isBusy) return undefined
