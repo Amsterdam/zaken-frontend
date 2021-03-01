@@ -13,7 +13,7 @@ const displayValue = (value: unknown, mapValue: Field["mapValue"]) => {
   if (Array.isArray(value)) return (
     <UnstyledList>
       { value.map(mapValue).map((item, index) =>
-        <li key={ index }>{ item }</li>
+        <li key={ `${ JSON.stringify(item) }_${ index }` }>{ item }</li>
       ) }
     </UnstyledList>
   )
@@ -29,7 +29,7 @@ const EventData: React.FC<Props> = ({ fields, values, isNested = false }) => (
         const value = values[key]
         return (
           value != null && shouldShow(value, isNested) ?
-          <div key={ key }>
+          <div key={ JSON.stringify(value) }>
             <dt>{ label }</dt>
             <dd><Value value={ displayValue(value, mapValue) } displayItalic={ italic } /></dd>
           </div> :

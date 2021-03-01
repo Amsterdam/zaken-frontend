@@ -10,16 +10,16 @@ type Props = {
   id: Components.Schemas.Case["id"]
 }
 
-type SummonData = Omit<Components.Schemas.Summon, "type"> & { type: string }
+type SummonData = Omit<Components.Schemas.Summon, "type"> & { type: { id: number } }
 
-const mapData = (data: SummonData) => ({ ...data, type: parseInt(data.type.replace("summonType.", ""), 10) })
+const mapData = (data: SummonData) => ({ ...data, type: data.type.id })
 
 const SummonForm: React.FC<Props> = ({ id }) => {
 
-  const teamId = useCase(id).data?.team.id
-  const { data } = useSummonTypes(teamId)
+  const teamId = useCase(id)[0]?.team.id
+  const [data] = useSummonTypes(teamId)
   const summonTypes = data?.results ?? []
-  const { execPost } = useSummons({ lazy: true })
+  const [, { execPost }] = useSummons({ lazy: true })
   const postMethod = async (data: SummonData) => await execPost(mapData(data))
 
   return (

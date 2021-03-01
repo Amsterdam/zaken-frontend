@@ -55,12 +55,15 @@ const createValuesObject = <T extends RequestBody>(fields: NamedFields<T>, data:
     const { label, name } = props
     if (name === undefined) return acc
     const v = data[name]
+    if (v === undefined) return acc
     const value =
       type === "ArrayField" ?
-      <ArrayFieldList fields={ v as Array<Record<string, string>> } /> :
+        <ArrayFieldList fields={ v as Array<Record<string, string>> } /> :
+      type === "ComplexSelectField" || type === "ComplexRadioFields" ?
+        (v as Record<string, string>)[(props as { optionLabelField: string }).optionLabelField] :
       props.hasOwnProperty("options") ?
-      (props as { options: Record<string, unknown> }).options[v as string] :
-      v
+        (props as { options: Record<string, unknown> }).options[v as string] :
+        v
     acc[(label ?? key) as string] = value as React.ReactNode
     return acc
   }, {} as Record<string, React.ReactNode>)
@@ -81,15 +84,18 @@ const ConfirmScaffoldFields = <T extends RequestBody>(props: Props<T>) => {
   const [isSubmitting, setSubmitting] = useState(false)
   const values = useMemo(() => createValuesObject<T>(fields, data, showFields), [data, fields, showFields])
 
-  const onSubmitWrap = () => {
+  const onSubmitWrap = async () => {
     setSubmitting(true)
-    onSubmit()
-    setSubmitting(false)
+    await onSubmit()
+    // TODO: Fix this. When the `onSubmit` handler causes this component to be removed. It throws a warning.
+    //setSubmitting(false)
   }
 
   const content = (
     <>
-      { !showInModal ? <Heading>{ title }</Heading> : null }
+      { showInModal === false &&
+        <Heading>{ title }</Heading>
+      }
       <Wrap>
         <DefinitionList values={ values } />
         <ButtonWrap>
@@ -113,4 +119,5 @@ const ConfirmScaffoldFields = <T extends RequestBody>(props: Props<T>) => {
     </Modal> :
     content
 }
+
 export default ConfirmScaffoldFields

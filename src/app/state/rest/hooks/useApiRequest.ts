@@ -38,6 +38,7 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
     getCacheItem,
     setCacheItem,
     updateCacheItem,
+    addErrorToCacheItem,
     clearCache,
     pushRequestInQueue,
     isRequestPendingInQueue
@@ -62,13 +63,14 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
 
       return response
     } catch (error) {
+      addErrorToCacheItem(url, error)
       if (handleError) {
         handleError(error)
       } else {
         throw error
       }
     }
-  }, [request, url, clearCache, setCacheItem, handleError])
+  }, [request, url, clearCache, setCacheItem, handleError, addErrorToCacheItem])
 
   /**
    * Queues an API request
@@ -111,22 +113,28 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
     ? cacheItem.value as Schema
     : undefined
 
+  const errors = cacheItem?.errors ?? []
+
   useEffect(() => {
     if ((!cacheItem || !cacheItem.valid) && !lazy) {
       execGet()
     }
   }, [ execGet, cacheItem, lazy ])
 
-  return {
+  return [
     data,
-    isBusy: isRequestPendingInQueue(url, "get"),
-    execGet,
-    execPost,
-    execPut,
-    execPatch,
-    execDelete,
-    updateCache
-  }
+    {
+      isBusy: isRequestPendingInQueue(url, "get"),
+      hasErrors: errors.length > 0,
+      execGet,
+      execPost,
+      execPut,
+      execPatch,
+      execDelete,
+      updateCache
+    },
+    errors
+  ] as const
 }
 
 export default useApiRequest

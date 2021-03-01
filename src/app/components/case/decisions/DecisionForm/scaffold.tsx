@@ -4,20 +4,15 @@ import navigateTo from "app/routing/navigateTo"
 
 export default (caseId: Components.Schemas.Case["id"], decisions: MockComponents.Schemas.Decision[]) => {
 
-  const decisionsObject = decisions.reduce((acc, cur) => {
-    acc[`decision.${ cur.id }`] = cur.title
-    return acc
-  }, {} as Record<string, string>)
-
-
   const fields = {
     decisions: {
-      type: "RadioFields",
+      type: "ComplexRadioFields",
       props: {
         isRequired: true,
         label: "Wat is het resultaat besluit?",
         name: "decisions",
-        options: decisionsObject
+        optionLabelField: "title",
+        options: decisions
       }
     },
     text: {

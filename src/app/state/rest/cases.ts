@@ -1,12 +1,13 @@
 import qs from "qs"
 
 import type { Options } from "./"
-import { makeGatewayUrl, useErrorHandler } from "./hooks/utils/utils"
+import { useErrorHandler } from "./hooks/utils/errorHandler"
+import { makeApiUrl } from "./hooks/utils/apiUrl"
 import useApiRequest from "./hooks/useApiRequest"
 
-export const useCases = (state_date?: string, options?: Options) => {
-  const queryString = state_date !== undefined ? qs.stringify({ state_date }, { addQueryPrefix: true }) : ""
-  const url = `${ makeGatewayUrl("cases") }${ queryString }`
+export const useCases = (start_date?: string, options?: Options) => {
+  const queryString = start_date !== undefined ? qs.stringify({ start_date }, { addQueryPrefix: true }) : ""
+  const url = `${ makeApiUrl("cases") }${ queryString }`
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.PaginatedCaseList>({
     ...options,
@@ -21,7 +22,7 @@ export const useMockCases = (options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest({
     ...options,
-    url: makeGatewayUrl("cases", "generate-mock"),
+    url: makeApiUrl("cases", "generate-mock"),
     groupName: "cases",
     handleError,
     isProtected: true
@@ -33,7 +34,7 @@ export const useCasesByBagId = (bagId: Components.Schemas.Address["bag_id"], ope
   const queryString = openCases === true ? qs.stringify({ open_cases: true }, { addQueryPrefix: true }) : ""
   return useApiRequest<Components.Schemas.PaginatedCaseList>({
     ...options,
-    url: `${ makeGatewayUrl("addresses", bagId, "cases") }${ queryString }`,
+    url: `${ makeApiUrl("addresses", bagId, "cases") }${ queryString }`,
     groupName: "cases",
     handleError,
     isProtected: true

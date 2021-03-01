@@ -13,6 +13,13 @@ declare namespace Components {
             readonly lng: number; // float
         }
         /**
+         * Serializer for Worker Data
+         */
+        export interface CamundaStateWorker {
+            state: string;
+            case_identification: string;
+        }
+        /**
          * Serializer for Camunda tasks
          */
         export interface CamundaTask {
@@ -43,14 +50,14 @@ declare namespace Components {
             readonly id: number;
             address: Address;
             case_states: CaseState[];
-            readonly current_state: {
+            readonly current_states: {
                 readonly id: number;
                 case: number;
                 readonly status_name: string;
                 status: number;
-                state_date: string; // date
+                start_date: string; // date
                 users: string /* uuid */[];
-            } | null;
+            }[];
             team: CaseTeam;
             reason: CaseReason;
             identification?: string | null;
@@ -556,6 +563,13 @@ declare namespace Paths {
          * }
          */
         Components.Schemas.CamundaTaskComplete;
+        namespace Responses {
+            export interface $200 {
+            }
+        }
+    }
+    namespace CamundaWorkerStateCreate {
+        export type RequestBody = /* Serializer for Worker Data */ Components.Schemas.CamundaStateWorker;
         namespace Responses {
             export interface $200 {
             }

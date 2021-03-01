@@ -10,14 +10,15 @@ type Props = {
 }
 
 const mapData = (data: Components.Schemas.Case) => ({
-  "Zaak Id": <CaseIdDisplay id={ data.identification } />,
+  "Zaak ID": <CaseIdDisplay id={ data.identification } />,
   "Team": data.team.name,
   "Startdatum": data.start_date ? `${ displayDate(data.start_date) }` : "-"
 })
 
 const CaseDetails: React.FC<Props> = ({ caseId }) => {
-  const { data } = useCase(caseId)
+  const [data] = useCase(caseId)
   const values = useMemo(() => data !== undefined ? mapData(data) : {}, [data])
+
   return <DefinitionList
     isLoading={ data === undefined }
     numInitialVisibleRows={ 3 }

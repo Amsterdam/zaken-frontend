@@ -4,7 +4,7 @@ import merge from "lodash.merge"
 import useRequest, { Method } from "./useRequest"
 import useProtectedRequest from "./useProtectedRequest"
 import useMockedRequest from "./useMockedRequest"
-import { stripGatewayFromUrl } from "./utils/utils"
+import { stripApiHostFromUrl } from "./utils/apiUrl"
 
 export default (isProtected?: boolean) => {
   const request = useRequest()
@@ -16,7 +16,7 @@ export default (isProtected?: boolean) => {
     async <Schema>(method: Method, url: string, data?: unknown, headers = {}) => {
       const response = await requestMethod<Schema>(method, url, data, headers)
       if (method !== "get") return response
-      const mockedResponse = await mockedRequest(method, stripGatewayFromUrl(url), data, headers)
+      const mockedResponse = await mockedRequest(method, stripApiHostFromUrl(url), data, headers)
       return merge(response, mockedResponse)
     },
     [requestMethod, mockedRequest]

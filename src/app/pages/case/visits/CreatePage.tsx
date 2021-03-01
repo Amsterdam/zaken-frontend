@@ -5,7 +5,7 @@ import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
 import PageHeading from "app/components/shared/PageHeading/PageHeading"
 import BreadCrumbs from "app/components/shared/BreadCrumbs/BreadCrumbs"
 import Row, { RowWithColumn } from "app/components/layouts/Grid/Row"
-import VisitForm from "app/components/case/visits/CreateForm/CreateForm"
+import VisitCreateForm from "app/components/case/visits/CreateForm/CreateForm"
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
@@ -33,8 +33,8 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
         <CaseHeading id={ id } />
       </RowWithColumn>
       <Row>
-        <Column spanLarge={50}>
-          <VisitForm caseId={ id } />
+        <Column>
+          <VisitCreateForm caseId={ id } />
         </Column>
       </Row>
     </DefaultLayout> :

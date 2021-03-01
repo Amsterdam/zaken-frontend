@@ -25,7 +25,7 @@ const PanoramaPreview: React.FC<Props> = ({ bagId, width: w, aspect = 1.5, radiu
   const rect = useRect(ref, 100)
   const width = w ?? rect.width
   const height = width !== undefined ? width / aspect : undefined
-  const { data } = usePanoramaByBagId(bagId, width, aspect, radius, fov)
+  const [data] = usePanoramaByBagId(bagId, width, aspect, radius, fov)
 
   return (
     <Div ref={ ref } style={ { height } }>

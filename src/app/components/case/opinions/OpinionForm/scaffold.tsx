@@ -4,19 +4,15 @@ import navigateTo from "app/routing/navigateTo"
 
 const Scaffold = (caseId: Components.Schemas.Case["id"], opinions: MockComponents.Schemas.Opinion[], summonTitle = "") => {
 
-  const opinionsObject = opinions.reduce((acc, cur) => {
-    acc[`opinion.${ cur.id }`] = cur.title
-    return acc
-  }, {} as Record<string, string>)
-
   const fields = {
     opinions: {
-      type: "RadioFields",
+      type: "ComplexRadioFields",
       props: {
         isRequired: true,
         label: `Wat is de uitkomst van de zienswijze: ${ summonTitle }?`,
         name: "opinions",
-        options: opinionsObject
+        optionLabelField: "title",
+        options: opinions
       }
     },
     text: {

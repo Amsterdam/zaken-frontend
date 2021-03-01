@@ -8,21 +8,25 @@ const equalItems = (i: TimelineEventItem | undefined, ii: CaseEvent) => i !== un
 
 export default (caseId: CaseEvent["id"]) => {
 
-  const { data } = useCaseEvents(caseId)
+  const [data, methods, errors] = useCaseEvents(caseId)
 
-  return data?.reduce((acc, item) => {
+  return [
+    data?.reduce((acc, item) => {
 
-    const last = acc[acc.length - 1]
+      const last = acc[acc.length - 1]
 
-    // group
-    if (shouldBeGrouped(item) && equalItems(last, item)) {
-      last.caseEvents.push(item)
-    }
-    // new row
-    else {
-      acc.push({ type: item.type, caseEvents: [item] })
-    }
+      // group
+      if (shouldBeGrouped(item) && equalItems(last, item)) {
+        last.caseEvents.push(item)
+      }
+      // new row
+      else {
+        acc.push({ type: item.type, caseEvents: [item] })
+      }
 
-    return acc
-  }, [] as TimelineEventItem[])
+      return acc
+    }, [] as TimelineEventItem[]),
+    methods,
+    errors
+  ] as const
 }

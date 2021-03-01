@@ -1,9 +1,8 @@
 import React from "react"
-
 import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
+
 import ScaffoldFields from "app/components/shared/Form/ScaffoldFields"
 import createScaffoldProps from "./scaffold"
-import styled from "styled-components"
 
 type Props = {
   onSubmit: (data: any) => void
@@ -13,13 +12,6 @@ type Props = {
   minDate?: Date
   taskId: string
 }
-
-const Div = styled.div`
-  button[type=submit] {
-    float: right;
-    clear: both;
-  }
-`
 
 const formatDate = (dateStr: string | Date) => {
   const date = new Date(dateStr)

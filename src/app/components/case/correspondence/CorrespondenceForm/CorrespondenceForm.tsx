@@ -12,7 +12,7 @@ type Props = {
 
 const CorrespondenceForm: React.FC<Props> = ({ id }) => {
 
-  const { data, execPost } = useCorrespondence()
+  const [correspondences, { execPost }] = useCorrespondence()
 
   return (
     <>
@@ -20,7 +20,7 @@ const CorrespondenceForm: React.FC<Props> = ({ id }) => {
       <FormWithExtraLabel>
         <WorkflowForm
           caseId={ id }
-          data={ data }
+          data={ correspondences }
           postMethod={ execPost }
           scaffold={ scaffold }
         />

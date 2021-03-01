@@ -20,7 +20,7 @@ const Ul = styled.ul`
 `
 
 const FinesSearchResultsList: React.FC<Props> = ({ searchString }) => {
-  const { data, isBusy, execGet } = useFine(searchString, { lazy: true })
+  const [data, { isBusy, execGet }] = useFine(searchString, { lazy: true })
   useEffect(() => {
     if (searchString.length === 0) return
     execGet()

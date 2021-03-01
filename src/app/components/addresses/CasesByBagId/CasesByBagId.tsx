@@ -24,7 +24,7 @@ const StyledHeading = styled(Heading)`
 `
 
 const columns = [
-  { header: "Zaak Id", minWidth: 100 },
+  { header: "Zaak ID", minWidth: 100 },
   { header: "Team", minWidth: 100 },
   { header: "Startdatum", minWidth: 100 },
   { header: "Huidige status", minWidth: 100 },
@@ -38,14 +38,14 @@ const mapData = (data: Components.Schemas.Case) =>
       <CaseIdDisplay id={ data.identification } />,
       data.team.name,
       data.start_date ? <DateDisplay date={ data.start_date } /> : "-",
-      data.current_state?.status_name ?? "-",
+      data.current_states.length > 0 ? data.current_states.map(({ status_name }) => status_name).join(", ") : "-",
       <OpenButton href={ to("/zaken/:id", { id: data.id }) } text="Zaakdetails" />
     ]
   })
 
 const CasesByBagId: React.FC<Props> = ({ bagId, openCases, title = defaultTitle, emptyText = defaultEmptyText }) => {
 
-  const { data } = useCasesByBagId(bagId, openCases)
+  const [data] = useCasesByBagId(bagId, openCases)
   const mappedData = useMemo(() => data?.results?.map(mapData), [ data ])
   const length = data?.results?.length
   const hasCases = length !== undefined && length > 0

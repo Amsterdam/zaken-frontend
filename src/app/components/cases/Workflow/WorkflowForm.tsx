@@ -18,6 +18,8 @@ type Props = {
   initialValues?: unknown
 }
 
+const DEFAULT_SUBMIT_TITLE = "Resultaat verwerken"
+
 const WorkflowForm: React.FC<Props> = ({ caseId, scaffold, data, postMethod, extraLabel, initialValues }) => {
 
   const {
@@ -32,7 +34,7 @@ const WorkflowForm: React.FC<Props> = ({ caseId, scaffold, data, postMethod, ext
   if (data === undefined) return <Spinner />
 
   const fields = scaffold(caseId, data, extraLabel)
-  const submitTitle = fields.fields.submit.props.label
+  const submitTitle = fields.fields.submit.props.label ?? DEFAULT_SUBMIT_TITLE
 
   const onSubmitConfirmWrap = async () => {
     const result = await onSubmitConfirm()
@@ -52,7 +54,7 @@ const WorkflowForm: React.FC<Props> = ({ caseId, scaffold, data, postMethod, ext
           showFields={ Object.keys(fields.fields) }
           onCancel= { onCancelConfirm }
           onSubmit={ onSubmitConfirmWrap }
-          submitTitle= { submitTitle ?? "Resultaat verwerken" }
+          submitTitle= { submitTitle }
           showInModal={ true }
         />
       }

@@ -28,7 +28,7 @@ const StyledDivider = styled(Divider)`
 
 const CaseStatus: React.FC<Props> = ({ id }) => {
 
-  const { data } = useCaseTasks(id)
+  const [data] = useCaseTasks(id)
 
   if (data?.length === 0) return <Paragraph>Deze zaak is afgerond.</Paragraph>
 
@@ -48,7 +48,7 @@ const CaseStatus: React.FC<Props> = ({ id }) => {
         </span>
       </Div>
       <StyledDivider />
-      <Workflow caseId={ id } />
+      <Workflow id={ id } />
     </>
   )
 }

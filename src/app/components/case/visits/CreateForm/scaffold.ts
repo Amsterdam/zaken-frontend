@@ -4,27 +4,25 @@ import navigateTo from "app/routing/navigateTo"
 
 const scaffold = (caseId: Components.Schemas.Case["id"], authors: Components.Schemas.User[]) => {
 
-  const authorsObject = authors.reduce((acc, cur) => {
-    acc[`${ cur.id }`] = cur.full_name
-    return acc
-  }, {} as Record<string, string>)
   const fields = {
     author1: {
-      type: "SelectField",
+      type: "ComplexSelectField",
       props: {
         withEmptyOption: true,
         name: "author1",
         label: "Toezichthouder 1",
-        options: authorsObject
+        optionLabelField: "full_name",
+        options: authors
       }
     },
     author2: {
-      type: "SelectField",
+      type: "ComplexSelectField",
       props: {
         withEmptyOption: true,
         name: "author2",
         label: "Toezichthouder 2",
-        options: authorsObject
+        optionLabelField: "full_name",
+        options: authors
       }
     },
     time: {
@@ -53,8 +51,7 @@ const scaffold = (caseId: Components.Schemas.Case["id"], authors: Components.Sch
       type: "CheckboxFields",
       props: {
         name: "observations",
-        label: "Opvallende zaken",
-        extraLabel: "(niet verplicht)",
+        label: "Opvallende zaken (niet verplicht)",
         options: {
           malfunctioning_doorbell: "Bel functioneert niet",
           intercom: "Contact via intercom",
@@ -80,8 +77,7 @@ const scaffold = (caseId: Components.Schemas.Case["id"], authors: Components.Sch
     suggest_next_visit_description: {
       type: "TextAreaField",
       props: {
-        label: "Geef toelichting",
-        extraLabel: "(niet verplicht)",
+        label: "Geef toelichting (niet verplicht)",
         name: "suggest_next_visit_description"
       }
     },
@@ -100,8 +96,7 @@ const scaffold = (caseId: Components.Schemas.Case["id"], authors: Components.Sch
       type: "TextAreaField",
       props: {
         name: "can_next_visit_go_ahead_description",
-        label: "Geef toelichting",
-        extraLabel: "(niet verplicht)"
+        label: "Geef toelichting (niet verplicht)"
       }
     },
     description: {
@@ -112,12 +107,6 @@ const scaffold = (caseId: Components.Schemas.Case["id"], authors: Components.Sch
         label: "Opmerkingen"
       }
     },
-    submit: {
-      type: "SubmitButton",
-      props: {
-        label: "Toevoegen"
-      }
-    },
     secondaryButton: {
       type: "Button",
       props: {
@@ -125,19 +114,39 @@ const scaffold = (caseId: Components.Schemas.Case["id"], authors: Components.Sch
         variant: "primaryInverted",
         onClick: () => navigateTo(`/zaken/${ caseId }`)
       }
+    },
+    submit: {
+      type: "SubmitButton",
+      props: {
+        label: "Toevoegen",
+        align: "right"
+      }
     }
   }
 
   return new FormPositioner(fields as Fields)
-    .setGrid("laptop", "1fr 1fr 1fr 1fr", [
-      ["author1", "author1", "author2", "author2"],
+    .setGrid("mobileS", "1fr 1fr", [
+      ["author1", "author1"],
+      ["author2", "author2"],
       ["time", "time"],
       ["status", "status"],
       ["observations", "observations"],
-      ["next_visit", "next_visit", "next_visit_description", "next_visit_description"],
-      ["suggest_next_visit", "suggest_next_visit", "suggest_next_visit_description", "suggest_next_visit_description"],
+      ["next_visit", "next_visit"],
+      ["next_visit_description", "next_visit_description"],
+      ["suggest_next_visit", "suggest_next_visit"],
+      ["suggest_next_visit_description", "suggest_next_visit_description"],
       ["description", "description"],
-      ["submit", "secondaryButton"]
+      ["secondaryButton", "submit"]
+    ])
+    .setGrid("laptop", "1fr 1fr", [
+      ["author1", "author2"],
+      ["time", "time"],
+      ["status", "status"],
+      ["observations", "observations"],
+      ["next_visit", "next_visit_description"],
+      ["suggest_next_visit", "suggest_next_visit_description"],
+      ["description", "description"],
+      ["secondaryButton", "submit"]
     ])
     .getScaffoldProps()
 }

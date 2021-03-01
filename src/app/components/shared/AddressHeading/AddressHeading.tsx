@@ -13,7 +13,7 @@ const Div = styled.div`
 `
 
 const AddressHeading: React.FC<Props> = ({ caseId }) => {
-  const { data } = useCase(caseId)
+  const [data] = useCase(caseId)
 
   return (
     <>

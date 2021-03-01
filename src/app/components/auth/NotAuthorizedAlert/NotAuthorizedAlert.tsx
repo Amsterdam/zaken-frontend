@@ -5,7 +5,7 @@ import { useIsAuthorized } from "app/state/rest/"
 
 const NotAuthorizedAlert = () => {
 
-  const { data } = useIsAuthorized()
+  const [data] = useIsAuthorized()
   const showUnauthorized = data?.is_authorized === false
 
   return showUnauthorized ?

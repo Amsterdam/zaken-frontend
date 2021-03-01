@@ -25,7 +25,7 @@ const Dt = styled.dt`
 
 const CaseHeading: React.FC<Props> = ({ id }) => {
 
-  const { data } = useCase(id)
+  const [data] = useCase(id)
 
   return (
     <Wrap>
@@ -47,7 +47,7 @@ const CaseHeading: React.FC<Props> = ({ id }) => {
             </dd>
           </Div>
           <Div>
-            <Dt>Zaak Id</Dt>
+            <Dt>Zaak ID</Dt>
             <dd>
               <CaseIdDisplay id={ data?.identification } />
             </dd>

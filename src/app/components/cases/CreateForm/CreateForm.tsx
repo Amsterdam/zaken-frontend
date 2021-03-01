@@ -16,22 +16,22 @@ type Props = {
 
 type FormData =
   Pick<Components.Schemas.CaseCreateUpdate, "address" | "description"> &
-  { team: string, reason: string }
+  { team: Components.Schemas.CaseTeam, reason: Components.Schemas.CaseReason }
 
-const parseRadioButtonValue = (key: string) => (value: string) => parseInt(value.replace(`${ key }.`, ""), 10)
 const mapData = (bagId: Components.Schemas.Address["bag_id"], data: FormData): Omit<Components.Schemas.CaseCreateUpdate, "id"> => ({
   address: { bag_id: bagId } as Components.Schemas.Address,
   description: data.description,
-  team: parseRadioButtonValue("team")(data.team),
-  reason: parseRadioButtonValue("reason")(data.reason)
+  team: data.team.id,
+  reason: data.reason.id
 })
 
 const CreateForm: React.FC<Props> = ({ bagId }) => {
 
-  const teams = useTeams()
-  const reasons = useReasons(teams.data?.results?.[0].id)
-  const { execPost } = useCaseCreateUpdate()
+  const [teams] = useTeams()
+  const [reasons] = useReasons(teams?.results?.[0].id)
+  const [, { execPost }] = useCaseCreateUpdate()
   const postMethod = async (data: FormData) => await execPost(mapData(bagId, data))
+
   const {
     isSubmitted,
     data: confirmData,
@@ -41,17 +41,16 @@ const CreateForm: React.FC<Props> = ({ bagId }) => {
   } = useSubmitConfirmation<FormData>(postMethod)
   const { addSuccessFlashMessage } = useFlashMessages()
 
-  const fields = useMemo(() => scaffold(bagId, teams.data?.results ?? [], reasons.data?.results ?? []), [bagId, teams.data, reasons.data])
+  const fields = useMemo(() => scaffold(bagId, teams?.results ?? [], reasons?.results ?? []), [bagId, teams, reasons])
 
-  if (teams.data === undefined || reasons.data === undefined) return <Spinner />
+  if (teams === undefined || reasons === undefined) return <Spinner />
 
   const onSubmitConfirmWrap = async () => {
     const result = await onSubmitConfirm()
     if (result === undefined) return
-    const caseData = (result as { data: Components.Schemas.CaseCreateUpdate }).data
-    const path = `/zaken/${ caseData.id }`
-    addSuccessFlashMessage(path, "Succes", "De zaak is succesvol toegevoegd")
-    navigateTo(path)
+    const { data: { id } } = result as { data: Components.Schemas.CaseCreateUpdate }
+    addSuccessFlashMessage(`/zaken/${ id }`, "Succes", "De zaak is succesvol toegevoegd")
+    navigateTo("/zaken/:id", { id })
   }
 
   return (
