@@ -10,6 +10,7 @@ import styled from "styled-components"
 import { capitalizeString } from "app/components/shared/Helpers/helpers"
 import ChangeableDueDate from "app/components/case/tasks/ChangeDueDate/ChangebleDueDate"
 import StyledTable from "./components/StyledTable"
+import CamundaFormButton from "app/components/case/tasks/CamundaTask/CamundaFormButton"
 
 type Props = {
   id: Components.Schemas.Case["id"]
@@ -51,7 +52,7 @@ const mapTaskData =
   (id: Components.Schemas.Case["id"], execPost: (data: Partial<Components.Schemas.CamundaTaskComplete>) => Promise<unknown> ) =>
     (data: Components.Schemas.CamundaTask) => {
 
-      const { task_name_id, camunda_task_id, name, roles, due_date } = data
+      const { task_name_id, camunda_task_id, name, roles, due_date, form } = data as any
       const action = taskActionMap[task_name_id]
       const onSubmitTaskComplete = () => execPost({ case: id, camunda_task_id, variables: {} })
 
@@ -67,6 +68,8 @@ const mapTaskData =
             <ButtonLink to={ to(`/zaken/:id/${ action.target }`, { id: id }) }>
               <Button variant="primary" as="span">{ action.name }</Button>
             </ButtonLink> :
+          form ?
+            <CamundaFormButton onSubmit={ onSubmitTaskComplete } taskName={ name } form={ form } /> :
             <CompleteTaskButton onSubmit={ onSubmitTaskComplete } taskName={ name } />
         ]
       })
@@ -83,6 +86,7 @@ const columns = [
 const Workflow: React.FC<Props> = ({ id }) => {
 
   const [data, { isBusy, hasErrors }] = useCaseTasks(id)
+  console.log(data)
   const [, { execPost }] = useTaskComplete({ lazy: true })
   const mappedData = useMemo(() => data?.map(mapTaskData(id, execPost)), [data, id, execPost])
 
