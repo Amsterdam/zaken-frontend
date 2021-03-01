@@ -7,7 +7,7 @@ import CamundaFormModal from "./CamundaFormModal"
 type Props = {
   onSubmit: (data: Components.Schemas.CamundaTaskComplete) => Promise<unknown>
   taskName: string
-  form: any
+  form: Components.Schemas.CamundaTask["form"]
 }
 
 const CamundaFormButton: React.FC<Props> = ({ onSubmit, taskName, form }) => {

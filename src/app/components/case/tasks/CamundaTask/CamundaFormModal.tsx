@@ -5,7 +5,7 @@ import CamundaForm from "./CamundaForm"
 
 export type Props = {
   taskName: string
-  form: any
+  form: Components.Schemas.CamundaTask["form"]
   isOpen: boolean
   closeModal: () => void
   onSubmit: (data: Components.Schemas.CamundaTaskComplete) => Promise<unknown>

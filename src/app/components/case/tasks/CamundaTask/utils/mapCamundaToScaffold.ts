@@ -1,7 +1,8 @@
 import { FormPositioner } from "@amsterdam/scaffold-form"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
+import { Field } from "app/components/shared/Form/ScaffoldField"
 
-const mapItemToType = (item: any) => {
+const mapItemToType = (item: Components.Schemas.CamundaTask["form"]["name"]) => {
   if (item.is_date) return "DateField"
   if (item.type === "checkbox") return "CheckboxFields"
   if (item.type === "select") return "ComplexSelectField"
@@ -9,13 +10,13 @@ const mapItemToType = (item: any) => {
   return "TextField"
 }
 
-const mapItemToOptions = (item: any) =>
+const mapItemToOptions = (item: Components.Schemas.CamundaTask["form"]["name"]) =>
   item.type === "checkbox" ?
     { true: item.label } :
     item.options ?? undefined
 
-export default (camundaForm: any, onCancel = () => {}) => {
-  const fields = camundaForm.reduce((acc: any, item: any) => {
+export default (camundaForm: Components.Schemas.CamundaTask["form"], onCancel = () => {}) => {
+  const fields = camundaForm.reduce((acc: Fields, item: Components.Schemas.CamundaTask["form"]["name"]) => {
     if (item === undefined) return acc
     acc[item.name] = {
       type: mapItemToType(item),
@@ -26,9 +27,9 @@ export default (camundaForm: any, onCancel = () => {}) => {
         options: mapItemToOptions(item),
         optionLabelField: "label"
       }
-    }
+    } as Field
     return acc
-  }, {} as any)
+  }, {} as Fields)
 
   const buttons = {
     cancel: {
