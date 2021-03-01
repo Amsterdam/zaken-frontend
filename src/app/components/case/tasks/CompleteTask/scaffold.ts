@@ -1,8 +1,7 @@
 import { FormPositioner } from "@amsterdam/scaffold-form/package"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 
-
-const Scaffold = (onCancel: () => void) => {
+const scaffold = (onCancel: () => void) => {
   const fields = {
     completed: {
       type: "CheckboxFields",
@@ -40,4 +39,4 @@ const Scaffold = (onCancel: () => void) => {
     .getScaffoldProps()
 }
 
-export default Scaffold
+export default scaffold
