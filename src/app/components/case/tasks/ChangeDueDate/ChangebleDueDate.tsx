@@ -40,8 +40,10 @@ const ChangeableDueDate: React.FC<Props> = ({ dueDate, camundaTaskId, caseId }) 
 
   const { execPost } = useDueDate({ lazy: true })
   const onSubmit = (data: any) => {
+    if( data.date) { data.date += "T00:00:01Z" }
     console.log(data, camundaTaskId, caseId)
-    execPost()
+    
+    execPost(data)
   }
 
   return (
@@ -54,7 +56,7 @@ const ChangeableDueDate: React.FC<Props> = ({ dueDate, camundaTaskId, caseId }) 
         { displayDate(dueDate) }
         <StyledIcon size={20}>{ <Edit /> }</StyledIcon>
       </DateInPast>
-      <ChangeDueDateModal onSubmit={onSubmit} isOpen={isModalOpen} closeModal={closeModal} dueDate={dueDate}  />
+      <ChangeDueDateModal onSubmit={onSubmit} isOpen={isModalOpen} closeModal={closeModal} dueDate={dueDate} taskId={camundaTaskId}  />
     </>
   )
 }

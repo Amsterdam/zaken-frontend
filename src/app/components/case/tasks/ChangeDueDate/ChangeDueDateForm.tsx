@@ -11,6 +11,7 @@ type Props = {
   onCancel: () => void
   dueDate: string
   minDate?: Date
+  taskId: string
 }
 
 const Div = styled.div`
@@ -29,17 +30,16 @@ const formatDate = (dateStr: string | Date) => {
   return `${ year }-${ month }-${ day }`
 }
 
-const ChangeDueDateForm: React.FC<Props> = ({ isLoading, onSubmit, onCancel , dueDate, minDate = new Date() }) => 
-  
-    <Div>
-      <ScaffoldForm
-        showSpinner={ isLoading }
-        onSubmit={ onSubmit }
-        onCancel={ onCancel }
-        initialValues={ { due_date: formatDate(dueDate) } }
-      >
-        <ScaffoldFields { ...createScaffoldProps(onCancel, formatDate(minDate) ) } />
-      </ScaffoldForm>
-    </Div>
-  
+const ChangeDueDateForm: React.FC<Props> = ({ isLoading, onSubmit, onCancel , dueDate, minDate = new Date(), taskId }) =>
+  <div>
+    <ScaffoldForm
+      showSpinner={ isLoading }
+      onSubmit={ onSubmit }
+      onCancel={ onCancel }
+      initialValues={ { date: formatDate(dueDate), camunda_task_id: taskId } }
+    >
+      <ScaffoldFields { ...createScaffoldProps(onCancel, formatDate(minDate) ) } />
+    </ScaffoldForm>
+  </div>
+
 export default ChangeDueDateForm
