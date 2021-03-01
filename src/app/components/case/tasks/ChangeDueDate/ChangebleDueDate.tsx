@@ -8,6 +8,7 @@ import styled from "styled-components"
 import { useDueDate } from "app/state/rest/case"
 import { Icon, themeColor, themeSpacing } from "@amsterdam/asc-ui"
 import { Edit } from "app/components/shared/Icons"
+import { appendTimeToDate } from "app/components/shared/Helpers/helpers"
 
 
 type Props = {
@@ -39,9 +40,7 @@ const ChangeableDueDate: React.FC<Props> = ({ dueDate, camundaTaskId, caseId }) 
 
   const [, { execPost }] = useDueDate({ lazy: true })
   const onSubmit = (data: any) => {
-    if( data.date) { data.date += "T00:00:01Z" }
-    console.log(data, camundaTaskId, caseId)
-    
+    if( data.date) { data.date = appendTimeToDate(data.date) }
     execPost(data)
   }
 
