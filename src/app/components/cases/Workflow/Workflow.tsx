@@ -54,7 +54,7 @@ const mapTaskData =
 
       const { task_name_id, camunda_task_id, name, roles, due_date, form } = data
       const action = taskActionMap[task_name_id]
-      const onSubmitTaskComplete = () => execPost({ case: id, camunda_task_id, variables: {} })
+      const onSubmitTaskComplete = (variables: Components.Schemas.CamundaTask["form"] = {}) => execPost({ case: id, camunda_task_id, variables })
 
       return ({
         itemList: [
