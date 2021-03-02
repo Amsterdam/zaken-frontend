@@ -27,9 +27,11 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
   const showNotFound = has404
 
   return (
-    showSpinner ?
-      <PageSpinner /> :
-    showCase ?
+    <>
+    { showSpinner &&
+      <PageSpinner />
+    }
+    { showCase &&
       <DefaultLayout>
         <DetailHeaderByCaseId caseId={ id } enableSwitch={ false } />
         <RowWithColumn>
@@ -50,10 +52,12 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
         <RowWithColumn>
           <TimelineContainer caseId={ id } />
         </RowWithColumn>
-      </DefaultLayout> :
-    showNotFound ?
-      <NotFoundPage /> :
-      null
+      </DefaultLayout>
+    }
+    { showNotFound &&
+      <NotFoundPage />
+    }
+    </>
   )
 }
 
