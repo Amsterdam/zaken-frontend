@@ -24,7 +24,7 @@ const SummonForm: React.FC<Props> = ({ id }) => {
 
   return (
     <>
-      <FormTitle>Gebruik dit formulier om aan te geven welke aanschrijving(en) opgesteld is en voor wie. Vul dit in nadat brief verstuurd is!</FormTitle>
+      <FormTitle>Meld welke aanschrijving is opgesteld en voor wie. Doe dit nadat de brief daadwerkelijk verstuurd is.</FormTitle>
       <FormWithExtraLabel>
         <WorkflowForm
           caseId={ id }
