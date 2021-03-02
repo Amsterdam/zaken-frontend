@@ -17,6 +17,7 @@ export type TypeProps = {
   children: React.ReactNode
   // TODO: Make both mobile and desktop spacing settable
   bottomSpacing?: number
+  topSpacing?: number
 }
 
 const GUTTER = layouts.large.gutter
@@ -34,6 +35,7 @@ const RowStyle = styled.div<TypeProps>`
   /* Column */
   > div {
     margin-bottom: ${ props => themeSpacing(props.bottomSpacing ?? 6) };
+    margin-top: ${ props => themeSpacing(props.topSpacing ?? 0) };
   }
 
   @media screen and ${ breakpoint("min-width", "laptop") } {
