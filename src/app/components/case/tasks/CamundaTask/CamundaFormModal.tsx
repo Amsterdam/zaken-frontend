@@ -1,26 +1,27 @@
 import React from "react"
 
 import Modal, { ModalBlock } from "app/components/shared/Modal/Modal"
-import CompleteTaskForm from "./CompleteTaskForm"
+import CamundaForm from "./CamundaForm"
 
 export type Props = {
   taskName: string
+  form: Components.Schemas.CamundaTask["form"]
   isOpen: boolean
   closeModal: () => void
   onSubmit: (data: Components.Schemas.CamundaTaskComplete) => Promise<unknown>
 }
 
-const CompleteTaskModal: React.FC<Props> = ({ isOpen, closeModal, onSubmit, taskName }) => {
+const CamundaFormModal: React.FC<Props> = ({ isOpen, closeModal, onSubmit, taskName, form }) => {
   const title = `Is de taak "${ taskName }" afgerond?`
 
   return (
     <Modal isOpen={isOpen} onClose={closeModal} title={title}>
       <ModalBlock>
-        <CompleteTaskForm onSubmit={ onSubmit } onCancel={closeModal} />
+        <CamundaForm onSubmit={ onSubmit } onCancel={closeModal} camundaForm={ form } />
       </ModalBlock>
     </Modal>
   )
 }
 
 
-export default CompleteTaskModal
+export default CamundaFormModal

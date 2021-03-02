@@ -1,13 +1,13 @@
 import { FormPositioner } from "@amsterdam/scaffold-form/package"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 
-const Scaffold = (onCancel: () => void, minDate: string) => {
+const scaffold = (onCancel: () => void, minDate: string) => {
   const fields = {
     dueDate: {
       type: "DateField",
       props: {
         label: "Nieuwe datum",
-        name: "due_date",
+        name: "date",
         min: minDate,
         isRequired: true
       }
@@ -37,4 +37,4 @@ const Scaffold = (onCancel: () => void, minDate: string) => {
     .getScaffoldProps()
 }
 
-export default Scaffold
+export default scaffold

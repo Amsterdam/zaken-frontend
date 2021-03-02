@@ -172,7 +172,7 @@ export const useVisitsCreate = (options?: Options) => {
 
 export const useDueDate = (options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<MockComponents.Schemas.DueDate>({
+  return useApiRequest<Components.Schemas.CamundaDateUpdate>({
     ...options,
     url: makeApiUrl("camunda/task/date"),
     groupName: "cases",

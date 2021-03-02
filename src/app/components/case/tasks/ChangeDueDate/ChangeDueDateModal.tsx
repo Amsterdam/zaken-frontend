@@ -8,16 +8,17 @@ export type Props = {
   closeModal: () => void
   onSubmit: (data: any) => void
   dueDate: string
+  taskId: string
 }
 
-const ChangeDueDateModal: React.FC<Props> = ({ isOpen, closeModal, onSubmit, dueDate }) => 
+const ChangeDueDateModal: React.FC<Props> = ({ isOpen, closeModal, onSubmit, dueDate, taskId }) => 
   <Modal 
     isOpen={isOpen} 
     onClose={closeModal} 
     title="Wat is de nieuwe datum?"
   >
     <ModalBlock>
-      <ChangeDueDateForm onSubmit={ onSubmit } onCancel={closeModal} dueDate={dueDate} />
+      <ChangeDueDateForm onSubmit={ onSubmit } onCancel={closeModal} dueDate={dueDate} taskId={taskId} />
     </ModalBlock>
   </Modal>
 
