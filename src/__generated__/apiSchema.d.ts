@@ -12,6 +12,13 @@ declare namespace Components {
             readonly lat: number; // float
             readonly lng: number; // float
         }
+        export interface CamundaDateUpdate {
+            camunda_task_id: string;
+            date: string; // date-time
+        }
+        export interface CamundaEndStateWorker {
+            state_identification: number;
+        }
         /**
          * Serializer for Worker Data
          */
@@ -28,6 +35,13 @@ declare namespace Components {
             name: string;
             due_date: string; // date
             readonly roles: any[];
+            form: {
+                [name: string]: any;
+            };
+            render_form: string;
+            form_variables: {
+                [name: string]: any;
+            };
         }
         /**
          * Used to complete a task in Camunda.
@@ -50,14 +64,7 @@ declare namespace Components {
             readonly id: number;
             address: Address;
             case_states: CaseState[];
-            readonly current_states: {
-                readonly id: number;
-                case: number;
-                readonly status_name: string;
-                status: number;
-                start_date: string; // date
-                users: string /* uuid */[];
-            }[];
+            readonly current_states: CaseState[];
             team: CaseTeam;
             reason: CaseReason;
             identification?: string | null;
@@ -97,7 +104,8 @@ declare namespace Components {
             case: number;
             readonly status_name: string;
             status: number;
-            state_date: string; // date
+            start_date: string; // date
+            end_date?: string | null; // date
             users: string /* uuid */[];
         }
         export interface CaseTeam {
@@ -340,14 +348,7 @@ declare namespace Components {
             readonly id?: number;
             address?: Address;
             case_states?: CaseState[];
-            readonly current_state?: {
-                readonly id: number;
-                case: number;
-                readonly status_name: string;
-                status: number;
-                state_date: string; // date
-                users: string /* uuid */[];
-            } | null;
+            readonly current_states?: CaseState[];
             team?: CaseTeam;
             reason?: CaseReason;
             identification?: string | null;
@@ -568,6 +569,19 @@ declare namespace Paths {
             }
         }
     }
+    namespace CamundaTaskDateCreate {
+        export type RequestBody = Components.Schemas.CamundaDateUpdate;
+        namespace Responses {
+            export type $200 = Components.Schemas.CamundaDateUpdate;
+        }
+    }
+    namespace CamundaWorkerEndStateCreate {
+        export type RequestBody = Components.Schemas.CamundaEndStateWorker;
+        namespace Responses {
+            export interface $200 {
+            }
+        }
+    }
     namespace CamundaWorkerStateCreate {
         export type RequestBody = /* Serializer for Worker Data */ Components.Schemas.CamundaStateWorker;
         namespace Responses {
@@ -636,11 +650,11 @@ declare namespace Paths {
     namespace CasesList {
         namespace Parameters {
             export type Page = number;
-            export type StateDate = string; // date
+            export type StartDate = string; // date
         }
         export interface QueryParameters {
             page?: Parameters.Page;
-            state_date?: Parameters.StateDate /* date */;
+            start_date?: Parameters.StartDate /* date */;
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCaseList;
@@ -673,14 +687,14 @@ declare namespace Paths {
         namespace Parameters {
             export type Id = number;
             export type Page = number;
-            export type StateDate = string; // date
+            export type StartDate = string; // date
         }
         export interface PathParameters {
             id: Parameters.Id;
         }
         export interface QueryParameters {
             page?: Parameters.Page;
-            state_date?: Parameters.StateDate /* date */;
+            start_date?: Parameters.StartDate /* date */;
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCamundaTaskList;

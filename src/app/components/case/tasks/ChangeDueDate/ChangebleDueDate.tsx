@@ -35,13 +35,17 @@ const StyledIcon = styled(Icon)`
   transform: translateY(2px);
 `
 
-const ChangeableDueDate: React.FC<Props> = ({ dueDate, camundaTaskId, caseId }) => {
+const mapSubmitData = (data: Components.Schemas.CamundaDateUpdate) => ({
+  ...data,
+  date: appendTimeToDate(data.date)
+})
+
+const ChangeableDueDate: React.FC<Props> = ({ dueDate, camundaTaskId }) => {
   const { isModalOpen, openModal, closeModal } = useModal()
 
   const [, { execPost }] = useDueDate({ lazy: true })
-  const onSubmit = (data: any) => {
-    if( data.date) { data.date = appendTimeToDate(data.date) }
-    execPost(data)
+  const onSubmit = (data: Components.Schemas.CamundaDateUpdate) => {
+    execPost(mapSubmitData(data))
   }
 
   return (
