@@ -17,7 +17,7 @@ const DebriefEditForm: React.FC<Props> = ({ id, debriefingId }) => {
 
   return (
     <>
-      <FormTitle>Gebruik dit formulier om terugkoppeling te wijzigen</FormTitle>
+      <FormTitle>Wijzig de terugkoppeling van de gehouden debrief</FormTitle>
       <DebriefForm caseId={ id } onSubmit={ handleUpdate } initialValues={ data } isLoading={ isBusy } />
     </>
   )
