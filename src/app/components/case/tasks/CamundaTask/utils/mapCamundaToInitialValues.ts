@@ -1,8 +1,8 @@
 export default (camundaForm: Components.Schemas.CamundaTask["form"]) =>
   camundaForm.reduce((acc: Record<string, string>, item: Components.Schemas.CamundaTask["form"]["name"]) => {
-    const { default_value, name, type } = item
+    const { default_value, name, label, type } = item
     if (type === "checkbox" && default_value === "true") {
-      acc[name] = default_value
+      acc[name] = label
       return acc
     }
     if (type === "select") {
