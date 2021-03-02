@@ -8,6 +8,7 @@ import styled from "styled-components"
 import { useDueDate } from "app/state/rest/case"
 import { Icon, themeColor, themeSpacing } from "@amsterdam/asc-ui"
 import { Edit } from "app/components/shared/Icons"
+import { appendTimeToDate } from "app/components/shared/Helpers/helpers"
 
 
 type Props = {
@@ -34,13 +35,17 @@ const StyledIcon = styled(Icon)`
   transform: translateY(2px);
 `
 
-const ChangeableDueDate: React.FC<Props> = ({ dueDate, camundaTaskId, caseId }) => {
+const mapSubmitData = (data: Components.Schemas.CamundaDateUpdate) => ({
+  ...data,
+  date: appendTimeToDate(data.date)
+})
+
+const ChangeableDueDate: React.FC<Props> = ({ dueDate, camundaTaskId }) => {
   const { isModalOpen, openModal, closeModal } = useModal()
 
   const [, { execPost }] = useDueDate({ lazy: true })
-  const onSubmit = (data: any) => {
-    console.log(data, camundaTaskId, caseId)
-    execPost()
+  const onSubmit = (data: Components.Schemas.CamundaDateUpdate) => {
+    execPost(mapSubmitData(data))
   }
 
   return (
@@ -53,7 +58,7 @@ const ChangeableDueDate: React.FC<Props> = ({ dueDate, camundaTaskId, caseId }) 
         { displayDate(dueDate) }
         <StyledIcon size={20}>{ <Edit /> }</StyledIcon>
       </DateInPast>
-      <ChangeDueDateModal onSubmit={onSubmit} isOpen={isModalOpen} closeModal={closeModal} dueDate={dueDate}  />
+      <ChangeDueDateModal onSubmit={onSubmit} isOpen={isModalOpen} closeModal={closeModal} dueDate={dueDate} taskId={camundaTaskId}  />
     </>
   )
 }

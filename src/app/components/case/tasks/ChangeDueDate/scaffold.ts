@@ -7,7 +7,7 @@ const scaffold = (onCancel: () => void, minDate: string) => {
       type: "DateField",
       props: {
         label: "Nieuwe datum",
-        name: "due_date",
+        name: "date",
         min: minDate,
         isRequired: true
       }
