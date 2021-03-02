@@ -21,11 +21,14 @@ type Props = {
 
 const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
 
-  const [exists, isBusy, id] = useExistingCase(parseUrlParamId(idString))
+  const [exists, isBusy, has404, id] = useExistingCase(parseUrlParamId(idString))
+  const showSpinner = isBusy
   const showCase = exists
-  const showNotFound = !isBusy && !exists
+  const showNotFound = has404
 
   return (
+    showSpinner ?
+      <PageSpinner /> :
     showCase ?
       <DefaultLayout>
         <DetailHeaderByCaseId caseId={ id } enableSwitch={ false } />
@@ -50,7 +53,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
       </DefaultLayout> :
     showNotFound ?
       <NotFoundPage /> :
-      <PageSpinner />
+      null
   )
 }
 
