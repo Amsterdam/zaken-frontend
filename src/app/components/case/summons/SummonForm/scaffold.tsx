@@ -12,7 +12,7 @@ export default (caseId: Components.Schemas.Case["id"], summonTypes: Components.S
         isRequired: true,
         withEmptyOption: true,
         label: "Welke aanschrijving is opgesteld?",
-        extraLabel: <InfoButton infoTitle="TODO Aanschrijvingen" infoText="TODO Uitleg over aanschrijvingen"></InfoButton>,
+        extraLabel: <InfoButton infoTitle="Meerdere aanschrijvingen?" infoText="Kies de aanschrijving die verstuurd is. Zijn er meerdere aanschrijvingen verstuurd, dan is het mogelijk na de afronding van dit formulier nog een aanschrijving toe te voegen. Geef hier tevens weer aan, aan wie de aanschrijving gericht is."></InfoButton>,
         name: "type",
         optionLabelField: "name",
         options: summonTypes
