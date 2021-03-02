@@ -3,23 +3,17 @@ import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
 
 import ScaffoldFields from "app/components/shared/Form/ScaffoldFields"
 import scaffold from "./scaffold"
-import navigateTo from "app/routing/navigateTo"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
 }
 
-const goToUrl = (value: string, caseId: Components.Schemas.Case["id"]) => {
-  switch(value) {
-    case "1":
-      return navigateTo(`/zaken/${ caseId }/aanschrijving`)
-    default:
-      return navigateTo(`/zaken/${ caseId }`)
-  }
+const addTask = (task: string, caseId: Components.Schemas.Case["id"]) => {
+  console.log(`taak ${ task } toegevoegd aan ${ caseId }`)
 }
 
 const AddTaskForm: React.FC<Props> = ({ caseId }) => {
-  const onChange = (event: any) => goToUrl(event.target.value, caseId)
+  const onChange = (event: any) => addTask(event.target.value, caseId)
 
   return (
     <div>

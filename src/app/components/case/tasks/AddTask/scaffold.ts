@@ -9,7 +9,6 @@ export default (onChange: (value: string) => void) => {
       type: "SelectField",
       props: {
         name: "task",
-        withEmptyOption: false,
         options: tasks,
         onChange: onChange
       }
