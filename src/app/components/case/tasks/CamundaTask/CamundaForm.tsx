@@ -4,6 +4,7 @@ import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
 import ScaffoldFields from "app/components/shared/Form/ScaffoldFields"
 import createScaffoldProps from "./utils/mapCamundaToScaffold"
 import mapCamundaToInitialValues from "./utils/mapCamundaToInitialValues"
+import mapSubmitData from "./utils/mapSubmitData"
 
 type Props = {
   camundaForm: any
@@ -16,7 +17,7 @@ const CamundaForm: React.FC<Props> = ({ camundaForm, isLoading, onSubmit, onCanc
   <div>
     <ScaffoldForm
       showSpinner={ isLoading }
-      onSubmit={ onSubmit }
+      onSubmit={ (data: any) => { onSubmit(mapSubmitData(camundaForm, data)) } }
       onCancel={ onCancel }
       initialValues={ mapCamundaToInitialValues(camundaForm) }
     >

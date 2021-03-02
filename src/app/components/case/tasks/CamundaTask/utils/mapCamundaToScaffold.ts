@@ -12,7 +12,7 @@ const mapItemToType = (item: Components.Schemas.CamundaTask["form"]["name"]) => 
 
 const mapItemToOptions = (item: Components.Schemas.CamundaTask["form"]["name"]) =>
   item.type === "checkbox" ?
-    { true: item.label } :
+    { [item.name]: item.label } :
     item.options ?? undefined
 
 export default (camundaForm: Components.Schemas.CamundaTask["form"], onCancel = () => {}) => {

@@ -86,7 +86,6 @@ const columns = [
 const Workflow: React.FC<Props> = ({ id }) => {
 
   const [data, { isBusy, hasErrors }] = useCaseTasks(id)
-  console.log(data)
   const [, { execPost }] = useTaskComplete({ lazy: true })
   const mappedData = useMemo(() => data?.map(mapTaskData(id, execPost)), [data, id, execPost])
 
