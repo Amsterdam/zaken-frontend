@@ -54,7 +54,7 @@ const CreateForm: React.FC<Props> = ({ bagId }) => {
   }
 
   return (
-    <ScaffoldForm onSubmit={ onSubmit }>
+    <ScaffoldForm onSubmit={ onSubmit } initialValues={ { team: teams?.results?.[0], reason: reasons?.results?.[0] } }>
       <ScaffoldFields { ...fields } />
       { isSubmitted &&
         <ConfirmScaffoldFields<FormData>
