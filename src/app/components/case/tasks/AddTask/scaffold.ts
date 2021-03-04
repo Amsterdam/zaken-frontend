@@ -9,7 +9,7 @@ export default (onChange: (value: string) => void) => {
       props: {
         name: "task",
         options: ["Taak opvoeren", "Opstellen concept aanschrijving"], // TODO use endpoint
-        onChange: onChange
+        onChange
       }
     }
   }
