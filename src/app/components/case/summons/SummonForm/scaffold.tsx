@@ -12,7 +12,7 @@ export default (caseId: Components.Schemas.Case["id"], summonTypes: Components.S
         isRequired: true,
         withEmptyOption: true,
         label: "Welke aanschrijving is opgesteld?",
-        extraLabel: <InfoButton infoTitle="Meerdere aanschrijvingen?" infoText="Kies de aanschrijving die verstuurd is. Zijn er meerdere aanschrijvingen verstuurd, dan is het mogelijk na de afronding van dit formulier nog een aanschrijving toe te voegen. Geef hier tevens weer aan, aan wie de aanschrijving gericht is."></InfoButton>,
+        extraLabel: <InfoButton infoTitle="Meerdere aanschrijvingen?" infoText="Verwerk eerst deze aanschrijving. Selecteer vervolgens bij ‘Taak opvoeren' op de zaakdetail pagina 'Opstellen concept aanschrijving’. Vul vervolgens het formulier in en rond af met de knop resultaat verwerken. Herhaal deze actie per opgestelde aanschrijving."></InfoButton>,
         name: "type",
         optionLabelField: "name",
         options: summonTypes

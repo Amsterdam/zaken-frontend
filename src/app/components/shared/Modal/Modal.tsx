@@ -13,6 +13,7 @@ export const ModalBlock = styled.div`
   display: block;
   padding: 0 ${ themeSpacing(4) };
   margin: ${ themeSpacing(4) } 0;
+  line-height: 1.5;
 `
 
 const Modal: React.FC<Props> = ({ children, title, isOpen, onClose }) => (
