@@ -1,7 +1,6 @@
 import { FormPositioner } from "@amsterdam/scaffold-form/package"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 
-const tasks = ["Taak opvoeren", "Opstellen concept aanschrijving"]
 export default (onChange: (value: string) => void) => {
 
   const fields = {
@@ -9,7 +8,7 @@ export default (onChange: (value: string) => void) => {
       type: "SelectField",
       props: {
         name: "task",
-        options: tasks,
+        options: ["Taak opvoeren", "Opstellen concept aanschrijving"], // TODO use endpoint
         onChange: onChange
       }
     }
