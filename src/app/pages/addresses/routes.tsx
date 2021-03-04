@@ -29,7 +29,7 @@ export default {
       "zaken": {
         Page: CasesPage,
         icon: "Folder",
-        title: "Gerelateerde zaken",
+        title: "Zaken op dit adres",
         subRoutes: {
           "nieuw": {
             Page: CreateCasePage,
