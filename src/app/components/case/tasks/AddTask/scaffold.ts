@@ -4,11 +4,16 @@ import { Fields } from "app/components/shared/Form/ScaffoldFields"
 export default (onChange: (value: string) => void) => {
 
   const fields = {
-    task: {
-      type: "SelectField",
+    task: { 
+      type: "ComplexSelectField", 
       props: {
         name: "task",
-        options: ["Taak opvoeren", "Opstellen concept aanschrijving"], // TODO use endpoint
+        optionLabelField: "label",
+        withEmptyOption: true,
+        emptyOptionLabel: "Taak opvoeren",
+        options: [
+          { label: "Opstellen concept aanschrijving", value: "1" }
+        ],
         onChange
       }
     }
@@ -17,4 +22,3 @@ export default (onChange: (value: string) => void) => {
   return new FormPositioner(fields as Fields)
     .getScaffoldProps()
 }
-
