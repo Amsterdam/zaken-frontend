@@ -11,7 +11,7 @@ import { Heading } from "@amsterdam/asc-ui"
 
 const IndexPage: React.FC<RouteComponentProps> = () => (
     <DefaultLayout>
-      <RowWithColumn>
+      <RowWithColumn topSpacing={ 12 }>
         <PageHeading />
       </RowWithColumn>
       <RowWithColumn>

@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { Link } from "@reach/router"
-import { Icon, themeSpacing, themeColor, ascDefaultTheme } from "@amsterdam/asc-ui"
+import { Icon, themeSpacing, themeColor, ascDefaultTheme, breakpoint } from "@amsterdam/asc-ui"
 import { ChevronRight } from "app/components/shared/Icons"
 import to from "app/routing/utils/to"
 import find from "app/routing/utils/find"
@@ -30,6 +30,9 @@ const Ul = styled.ul`
         text-decoration: underline;
       }
     }
+  }
+  @media screen and ${ breakpoint("min-width", "tabletM") } {
+    margin-left: -6px;
   }
 `
 const StyledSeperator = styled(Icon)`

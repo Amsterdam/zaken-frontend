@@ -8,7 +8,7 @@ import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
 
 const IndexPage: React.FC<RouteComponentProps> = () => (
   <DefaultLayout showSearchButton={false}>
-    <RowWithColumn>
+    <RowWithColumn topSpacing={ 12 }>
       <Heading>Adres zoeken</Heading>
     </RowWithColumn>
     <SearchWrapper />

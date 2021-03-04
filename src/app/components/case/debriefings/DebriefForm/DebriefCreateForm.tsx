@@ -14,7 +14,7 @@ const DebriefCreateForm: React.FC<Props> = ({ id }) => {
 
   return (
     <>
-      <FormTitle>Gebruik dit formulier om terugkoppeling te geven van een debrief</FormTitle>
+      <FormTitle>Geef terugkoppeling van de gehouden debrief</FormTitle>
       <DebriefForm caseId={ id } onSubmit={ handleCreate } />
     </>
   )
