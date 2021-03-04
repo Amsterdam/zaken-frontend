@@ -58,7 +58,7 @@ const CreateForm: React.FC<Props> = ({ bagId }) => {
       <ScaffoldFields { ...fields } />
       { isSubmitted &&
         <ConfirmScaffoldFields<FormData>
-          fields={ fields.fields }
+          fields={ fields.fields as any }
           data={ confirmData }
           showFields={ Object.keys(fields.fields) }
           onCancel={ onCancelConfirm }
