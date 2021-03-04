@@ -4,13 +4,14 @@ import { Fields } from "app/components/shared/Form/ScaffoldFields"
 export default (onChange: (value: string) => void) => {
 
   const fields = {
-    select: { 
+    task: { 
       type: "ComplexSelectField", 
       props: {
-        name: "select",
+        name: "task",
         optionLabelField: "label",
+        withEmptyOption: true,
+        emptyOptionLabel: "Taak opvoeren",
         options: [
-          { label: "Taak opvoeren", value: "0" },
           { label: "Opstellen concept aanschrijving", value: "1" }
         ],
         onChange
