@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@amsterdam/amsterdam-react-final-form": "^0.1.114",
+    "@amsterdam/amsterdam-react-final-form": "^0.1.116",
     "@amsterdam/asc-assets": "^0.28.0",
     "@amsterdam/asc-ui": "^0.28.0",
     "@amsterdam/scaffold-form": "^0.1.35",
