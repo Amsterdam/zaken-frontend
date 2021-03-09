@@ -18,7 +18,7 @@ export default (caseId: Components.Schemas.Case["id"], decisions: MockComponents
     amount: {
       type: "ShowHide",
       props: {
-        shouldShow: ({ values: { decision } }: { values: { decision: MockComponents.Schemas.Decision } }) => decision && decision.title === "Ja",
+        shouldShow: ({ values: { decision } }: { values: { decision: MockComponents.Schemas.Decision } }) => { console.log("decision", decision); return (decision && decision.title === "Ja") },
         field: {
           type: "NumberField",
           props: {
