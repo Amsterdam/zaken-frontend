@@ -5,14 +5,28 @@ import navigateTo from "app/routing/navigateTo"
 export default (caseId: Components.Schemas.Case["id"], decisions: MockComponents.Schemas.Decision[]) => {
 
   const fields = {
-    decisions: {
+    decision: {
       type: "ComplexRadioFields",
       props: {
         isRequired: true,
-        label: "Wat is het resultaat besluit?",
-        name: "decisions",
+        label: "Is er sprake van een sanctie?",
+        name: "decision",
         optionLabelField: "title",
         options: decisions
+      }
+    },
+    amount: {
+      type: "ShowHide",
+      props: {
+        shouldShow: ({ values: { decision } }: { values: { decision: MockComponents.Schemas.Decision } }) => decision && decision.title === "Ja",
+        field: {
+          type: "NumberField",
+          props: {
+            isRequired: true,
+            label: "Wat is het bedrag",
+            name: "sanction_amount"
+          }
+        }
       }
     },
     text: {
@@ -42,7 +56,8 @@ export default (caseId: Components.Schemas.Case["id"], decisions: MockComponents
 
   return new FormPositioner(fields as Fields)
     .setGrid("laptop", "1fr 1fr 1fr", [
-      ["decisions", "decisions", "decisions"],
+      ["decision", "decision", "decision"],
+      ["amount", "amount", "amount"],
       ["text", "text", "text"],
       ["submit", "secondaryButton"]
     ])
