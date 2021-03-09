@@ -20,7 +20,7 @@
     "@types/qs": "^6.9.6",
     "@types/reach__router": "^1.3.7",
     "@types/react": "^17.0.3",
-    "@types/react-dom": "^17.0.1",
+    "@types/react-dom": "^17.0.2",
     "@types/resize-observer-browser": "^0.1.5",
     "@types/styled-components": "^5.1.7",
     "axios": "^0.21.1",
@@ -53,7 +53,8 @@
     "lint": "eslint --max-warnings 0 --cache --ext .ts,.tsx src",
     "lint:fix": "eslint --fix --ext .ts,.tsx src",
     "swagger:generate-schema": "TS_NODE_PROJECT='./scripts/tsconfig.json' NODE_ENV='development' ts-node scripts/src/generateSwaggerSchema.ts",
-    "form-scaffolds:generate": "TS_NODE_PROJECT='./scripts/tsconfig.json' NODE_ENV='development' ts-node scripts/src/generateFormScaffolds.ts"
+    "form-scaffolds:generate": "TS_NODE_PROJECT='./scripts/tsconfig.json' NODE_ENV='development' ts-node scripts/src/generateFormScaffolds.ts",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -80,23 +81,12 @@
     "dtsgenerator": "^3.7.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
-    "husky": "4.3.8",
+    "husky": "^5.1.3",
     "lint-staged": "^10.5.4",
     "nock": "^13.0.11",
     "react-hooks-testing-library": "^0.6.0",
     "ts-loader": "^8.0.17",
     "ts-node": "^9.1.1"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "npm test"
-    }
-  },
-  "lint-staged": {
-    "**/*.ts?(x)": [
-      "npm run lint:fix"
-    ]
   },
   "jest": {
     "collectCoverageFrom": [
