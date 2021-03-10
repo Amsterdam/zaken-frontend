@@ -12,19 +12,20 @@ const scaffold = (onCancel: () => void, minDate: string) => {
         isRequired: true
       }
     },
-    submit: {
-      type: "SubmitButton",
-      variant: "primary",
-      props: {
-        label: "Verwerken"
-      }
-    },
     cancel: {
       type: "Button",
       props: {
         label: "Annuleer",
         variant: "primaryInverted",
         onClick: onCancel
+      }
+    },
+    submit: {
+      type: "SubmitButton",
+      variant: "primary",
+      props: {
+        label: "Verwerken",
+        align: "right"
       }
     }
   }
