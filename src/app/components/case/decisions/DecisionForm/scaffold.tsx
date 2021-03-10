@@ -23,8 +23,10 @@ export default (caseId: Components.Schemas.Case["id"], decisions: MockComponents
           type: "NumberField",
           props: {
             isRequired: true,
-            label: "Wat is het bedrag",
-            name: "sanction_amount"
+            label: "Wat is het bedrag?",
+            name: "sanction_amount",
+            pattern: "[0-9]",
+            title: "Vul alleen cijfers in, geen punten en komma's"
           }
         }
       }
