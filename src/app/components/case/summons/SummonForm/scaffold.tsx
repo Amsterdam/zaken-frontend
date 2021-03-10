@@ -67,7 +67,7 @@ export default (caseId: Components.Schemas.Case["id"], summonTypes: Components.S
       props: {
         label: "Annuleren",
         variant: "primaryInverted",
-        onClick: () => navigateTo(`/zaken/${ caseId }`)
+        onClick: () => navigateTo("/zaken/:id", { id: caseId })
       }
     },
     submit: {

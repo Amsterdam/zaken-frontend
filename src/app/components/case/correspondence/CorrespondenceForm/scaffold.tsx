@@ -30,7 +30,7 @@ export default (caseId: Components.Schemas.Case["id"], correspondences: MockComp
       props: {
         label: "Annuleren",
         variant: "primaryInverted",
-        onClick: () => navigateTo(`/zaken/${ caseId }`)
+        onClick: () => navigateTo("/zaken/:id", { id: caseId })
       }
     },
     submit: {

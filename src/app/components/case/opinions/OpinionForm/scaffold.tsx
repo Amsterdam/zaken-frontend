@@ -29,7 +29,7 @@ const Scaffold = (caseId: Components.Schemas.Case["id"], opinions: MockComponent
       props: {
         label: "Annuleren",
         variant: "primaryInverted",
-        onClick: () => navigateTo(`/zaken/${ caseId }`)
+        onClick: () => navigateTo("/zaken/:id", { id: caseId })
       }
     },
     submit: {
