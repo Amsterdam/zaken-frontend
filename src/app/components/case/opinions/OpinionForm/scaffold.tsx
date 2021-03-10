@@ -24,12 +24,6 @@ const Scaffold = (caseId: Components.Schemas.Case["id"], opinions: MockComponent
         isRequired: false
       }
     },
-    submit: {
-      type: "SubmitButton",
-      props: {
-        label: "Resultaat verwerken"
-      }
-    },
     secondaryButton: {
       type: "Button",
       props: {
@@ -37,14 +31,21 @@ const Scaffold = (caseId: Components.Schemas.Case["id"], opinions: MockComponent
         variant: "primaryInverted",
         onClick: () => navigateTo(`/zaken/${ caseId }`)
       }
+    },
+    submit: {
+      type: "SubmitButton",
+      props: {
+        label: "Resultaat verwerken",
+        align: "right"
+      }
     }
   }
 
   return new FormPositioner(fields as Fields)
-    .setGrid("laptop", "1fr 1fr 1fr", [
-      ["opinions", "opinions", "opinions"],
-      ["text", "text", "text"],
-      ["submit", "secondaryButton"]
+    .setGrid("mobileS", "1fr 1fr", [
+      ["opinions", "opinions"],
+      ["text", "text"],
+      ["secondaryButton", "submit"]
     ])
     .getScaffoldProps()
 }

@@ -23,12 +23,6 @@ export default (caseId: Components.Schemas.Case["id"], completeCases: MockCompon
         isRequired: true
       }
     },
-    submit: {
-      type: "SubmitButton",
-      props: {
-        label: "Verwerken"
-      }
-    },
     secondaryButton: {
       type: "Button",
       props: {
@@ -36,14 +30,21 @@ export default (caseId: Components.Schemas.Case["id"], completeCases: MockCompon
         variant: "primaryInverted",
         onClick: () => navigateTo(`/zaken/${ caseId }`)
       }
+    },
+    submit: {
+      type: "SubmitButton",
+      props: {
+        label: "Verwerken",
+        align: "right"
+      }
     }
   }
 
   return new FormPositioner(fields as Fields)
-    .setGrid("laptop", "1fr 1fr 1fr 1fr", [
-      ["complete", "complete", "complete", "complete"],
-      ["text", "text", "text", "text"],
-      ["submit", "secondaryButton"]
+    .setGrid("laptop", "1fr 1fr", [
+      ["complete", "complete"],
+      ["text", "text"],
+      ["secondaryButton", "submit"]
     ])
     .getScaffoldProps()
 }

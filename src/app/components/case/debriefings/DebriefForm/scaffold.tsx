@@ -30,12 +30,6 @@ const Scaffold = (caseId: Components.Schemas.Case["id"], isEditing = false) => {
         label: "Korte toelichting"
       }
     },
-    submit: {
-      type: "SubmitButton",
-      props: {
-        label: isEditing ? "Terugkoppeling wijzigen" : "Terugkoppeling toevoegen"
-      }
-    },
     secondaryButton: {
       type: "Button",
       props: {
@@ -43,14 +37,21 @@ const Scaffold = (caseId: Components.Schemas.Case["id"], isEditing = false) => {
         variant: "primaryInverted",
         onClick: () => navigateTo(`/zaken/${ caseId }`)
       }
+    },
+    submit: {
+      type: "SubmitButton",
+      props: {
+        label: isEditing ? "Terugkoppeling wijzigen" : "Terugkoppeling toevoegen",
+        align: "right"
+      }
     }
   }
 
   return new FormPositioner(fields as Fields)
-    .setGrid("laptop", "1fr 1fr 1fr", [
-      ["violation", "violation", "violation"],
-      ["feedback", "feedback", "feedback"],
-      ["submit", "secondaryButton"]
+    .setGrid("mobileS", "1fr 1fr", [
+      ["violation", "violation"],
+      ["feedback", "feedback"],
+      ["secondaryButton", "submit"]
     ])
     .getScaffoldProps()
 }

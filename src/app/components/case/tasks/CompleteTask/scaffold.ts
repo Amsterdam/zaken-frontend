@@ -32,8 +32,8 @@ const scaffold = (onCancel: () => void) => {
   }
 
   return new FormPositioner(fields as Fields)
-    .setGrid("laptop", "1fr 1fr", [
-      ["completed","completed"],
+    .setGrid("mobileS", "1fr 1fr", [
+      ["completed", "completed"],
       ["cancel", "submit"]
     ])
     .getScaffoldProps()

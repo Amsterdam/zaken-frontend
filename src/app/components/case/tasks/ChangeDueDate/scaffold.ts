@@ -30,6 +30,10 @@ const scaffold = (onCancel: () => void, minDate: string) => {
   }
 
   return new FormPositioner(fields as Fields)
+    .setGrid("mobileS", "1fr 1fr", [
+      ["dueDate", "dueDate"],
+      ["cancel", "submit"]
+    ])
     .setGrid("laptop", "1fr 1fr", [
       ["dueDate"],
       ["cancel", "submit"]
