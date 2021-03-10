@@ -5,7 +5,7 @@ import { useModal } from "app/components/shared/Modal/hooks/useModal"
 import CompleteTaskModal from "./CompleteTaskModal"
 
 type Props = {
-  onSubmit: (data: Components.Schemas.CamundaTaskComplete) => Promise<unknown>
+  onSubmit: (variables: Components.Schemas.CamundaTaskComplete["variables"]) => Promise<unknown>
   taskName: string
 }
 
