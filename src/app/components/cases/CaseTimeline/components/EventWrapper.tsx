@@ -2,6 +2,7 @@ import React from "react"
 import type { Field } from "../helpers/fields"
 import EventData from "./EventData"
 import ButtonEditEvent from "./ButtonEditEvent"
+import to from "app/routing/utils/to"
 
 type Props = {
   fields: Field[]
@@ -19,7 +20,7 @@ const EventWrapper: React.FC<Props> = ({ fields, caseEvent: { case: caseId, even
     />
     { emitter_is_editable_until && pathName !== undefined &&
       <ButtonEditEvent
-        target={ `/zaken/${ caseId }/${ pathName }/${ emitter_id }` }
+        target={ to(`/zaken/:id/${ pathName }/:${ pathName }Id`, { id: caseId, [`${ pathName }Id`]: emitter_id }) }
         disabled={ !emitter_is_editable }
         editable_until={ emitter_is_editable_until }
       />

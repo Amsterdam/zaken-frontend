@@ -12,13 +12,6 @@ const scaffold = (onCancel: () => void, minDate: string) => {
         isRequired: true
       }
     },
-    submit: {
-      type: "SubmitButton",
-      variant: "primary",
-      props: {
-        label: "Verwerken"
-      }
-    },
     cancel: {
       type: "Button",
       props: {
@@ -26,10 +19,22 @@ const scaffold = (onCancel: () => void, minDate: string) => {
         variant: "primaryInverted",
         onClick: onCancel
       }
+    },
+    submit: {
+      type: "SubmitButton",
+      variant: "primary",
+      props: {
+        label: "Verwerken",
+        align: "right"
+      }
     }
   }
 
   return new FormPositioner(fields as Fields)
+    .setGrid("mobileS", "1fr 1fr", [
+      ["dueDate", "dueDate"],
+      ["cancel", "submit"]
+    ])
     .setGrid("laptop", "1fr 1fr", [
       ["dueDate"],
       ["cancel", "submit"]
