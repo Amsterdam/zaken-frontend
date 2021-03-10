@@ -4,7 +4,6 @@
 // learn more: https://github.com/testing-library/jest-dom
 import "@testing-library/jest-dom/extend-expect"
 import { configure } from "enzyme"
-// TODO: Use official enzyme adapter when available
-import Adapter from "@wojtekmaj/enzyme-adapter-react-17"
+import Adapter from "enzyme-adapter-react-16"
 
 configure({ adapter: new Adapter() })
