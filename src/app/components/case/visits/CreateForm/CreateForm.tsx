@@ -29,9 +29,10 @@ const CreateForm: React.FC<Props> = ({ caseId, isLoading }) => {
 
   const onSubmit = async (data: VisitData) => {
     await execPost(mapData(data))
-    const path = `/zaken/${ data.case }`
+    const id = data.case
+    const path = `/zaken/${ id }`
     addSuccessFlashMessage(path, "Succes", "Het resultaat huisbezoek is succesvol verwerkt")
-    navigateTo(path)
+    navigateTo("/zaken/:id", { id })
   }
 
   return (

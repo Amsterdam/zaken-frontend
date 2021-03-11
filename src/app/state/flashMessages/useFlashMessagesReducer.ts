@@ -37,12 +37,17 @@ export const useFlashMessagesReducer = () => {
   )
 
   const addSuccessFlashMessage = useCallback(
-    (path: string, title: string, body?: React.ReactNode) => dispatch({
-      path,
-      type: "add",
-      props: { title, children: body, level: "info", dismissible: true }
-    }),
-    [dispatch]
+    (path: string, title: string, body?: React.ReactNode, shouldClear = false) => {
+      if (shouldClear) {
+        clearFlashMessages(path)
+      }
+      return dispatch({
+        path,
+        type: "add",
+        props: { title, children: body, level: "info", dismissible: true }
+      })
+    },
+    [dispatch, clearFlashMessages]
   )
 
   const addErrorFlashMessage = useCallback(

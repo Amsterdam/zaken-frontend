@@ -25,11 +25,11 @@ const Value: React.FC<ValueProps> = ({ value, displayItalic = false }) => displa
 
 const EventData: React.FC<Props> = ({ fields, values, isNested = false }) => (
   <Dl>
-    { fields.map(({ key, label, shouldShow, mapValue, italic }) => {
+    { fields.map(({ key, label, shouldShow, mapValue, italic }, index) => {
         const value = values[key]
         return (
           value != null && shouldShow(value, isNested) ?
-          <div key={ JSON.stringify(value) }>
+          <div key={ `${ key }_${ index }` }>
             <dt>{ label }</dt>
             <dd><Value value={ displayValue(value, mapValue) } displayItalic={ italic } /></dd>
           </div> :

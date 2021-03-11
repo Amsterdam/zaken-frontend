@@ -25,27 +25,28 @@ export default (caseId: Components.Schemas.Case["id"], correspondences: MockComp
         isRequired: true
       }
     },
-    submit: {
-      type: "SubmitButton",
-      props: {
-        label: "Notitie verwerken"
-      }
-    },
     secondaryButton: {
       type: "Button",
       props: {
         label: "Annuleren",
         variant: "primaryInverted",
-        onClick: () => navigateTo(`/zaken/${ caseId }`)
+        onClick: () => navigateTo("/zaken/:id", { id: caseId })
+      }
+    },
+    submit: {
+      type: "SubmitButton",
+      props: {
+        label: "Notitie verwerken",
+        align: "right"
       }
     }
   }
 
   return new FormPositioner(fields as Fields)
-    .setGrid("laptop", "1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr", [
+    .setGrid("mobileS", "1fr 1fr", [
       ["correspondence", "correspondence"],
       ["text", "text"],
-      ["submit", "secondaryButton"]
+      ["secondaryButton", "submit"]
     ])
     .getScaffoldProps()
 }

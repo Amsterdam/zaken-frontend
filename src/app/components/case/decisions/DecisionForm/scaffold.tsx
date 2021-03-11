@@ -40,28 +40,29 @@ export default (caseId: Components.Schemas.Case["id"], decisions: MockComponents
         isRequired: false
       }
     },
-    submit: {
-      type: "SubmitButton",
-      props: {
-        label: "Resultaat verwerken"
-      }
-    },
     secondaryButton: {
       type: "Button",
       props: {
         label: "Annuleren",
         variant: "primaryInverted",
-        onClick: () => navigateTo(`/zaken/${ caseId }`)
+        onClick: () => navigateTo("/zaken/:id", { id: caseId })
+      }
+    },
+    submit: {
+      type: "SubmitButton",
+      props: {
+        label: "Resultaat verwerken",
+        align: "right"
       }
     }
   }
 
   return new FormPositioner(fields as Fields)
-    .setGrid("laptop", "1fr 1fr 1fr", [
-      ["decision", "decision", "decision"],
-      ["amount", "amount", "amount"],
-      ["text", "text", "text"],
-      ["submit", "secondaryButton"]
+    .setGrid("mobileS", "1fr 1fr", [
+      ["decisions", "decisions"],
+      ["amount", "amount"],
+      ["text", "text"],
+      ["secondaryButton", "submit"]
     ])
     .getScaffoldProps()
 }

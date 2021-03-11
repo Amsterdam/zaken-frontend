@@ -41,7 +41,7 @@ const WorkflowForm: React.FC<Props> = ({ caseId, scaffold, data, postMethod, ext
     if (result === undefined) return
     const path = `/zaken/${ caseId }`
     addSuccessFlashMessage(path, "Succes", "Het resultaat is verwerkt")
-    navigateTo(path)
+    navigateTo("/zaken/:id", { id: caseId })
   }
 
   return (
