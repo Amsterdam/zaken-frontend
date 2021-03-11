@@ -69,7 +69,7 @@ const mapTaskData =
               <Button variant="primary" as="span">{ action.name }</Button>
             </ButtonLink> :
           form ?
-            <CamundaFormButton onSubmit={ onSubmitTaskComplete } taskName={ name } form={ form } /> :
+            <CamundaFormButton onSubmit={ onSubmitTaskComplete } taskName={ name } caseId={ id } form={ form } /> :
             <CompleteTaskButton onSubmit={ onSubmitTaskComplete } taskName={ name } caseId={ id } />
         ]
       })

@@ -8,7 +8,7 @@ import mapSubmitData from "./utils/mapSubmitData"
 
 type Props = {
   camundaForm: any
-  onSubmit: (data: any) => void
+  onSubmit: (data: Components.Schemas.CamundaTaskComplete) => void
   isLoading?: boolean
   onCancel: () => void
 }

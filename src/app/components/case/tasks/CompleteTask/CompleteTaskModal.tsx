@@ -14,14 +14,13 @@ export type Props = {
 
 const CompleteTaskModal: React.FC<Props> = ({ isOpen, closeModal, onSubmit, taskName, caseId }) => {
   const title = `Is de taak "${ taskName }" afgerond?`
-  const { clearFlashMessages, addSuccessFlashMessage } = useFlashMessages()
+  const { addSuccessFlashMessage } = useFlashMessages()
 
   const onSubmitWrap = async () => {
     const result = await onSubmit( {} )
     if (result === undefined) return
     const path = `/zaken/${ caseId }`
-    clearFlashMessages(path)
-    addSuccessFlashMessage(path, "Succes", `De taak "${ taskName }" is succesvol afgerond`)
+    addSuccessFlashMessage(path, "Succes", `De taak "${ taskName }" is succesvol afgerond`, true)
   }
   return (
     <Modal isOpen={isOpen} onClose={closeModal} title={title}>
