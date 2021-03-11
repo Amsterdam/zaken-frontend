@@ -15,7 +15,7 @@ const CamundaFormButton: React.FC<Props> = ({ onSubmit, taskName, caseId, form }
   const { isModalOpen, openModal, closeModal } = useModal()
 
   return <>
-    <Button variant="primary" onClick={ openModal } >Camunda afronden</Button>
+    <Button variant="primary" onClick={ openModal } >Uitkomst</Button>
     <CamundaFormModal taskName={taskName} caseId={caseId} onSubmit={ onSubmit } isOpen={ isModalOpen } closeModal={ closeModal } form={ form } />
   </>
 }
