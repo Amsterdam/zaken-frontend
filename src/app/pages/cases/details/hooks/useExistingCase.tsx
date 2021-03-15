@@ -8,7 +8,7 @@ export default (oId: number | undefined) => {
   const valid = isValidUrlParamId<Components.Schemas.Case["id"]>(oId)
 
   const [caseItem, { execGet, isBusy }, errors] = useCase(oId, { lazy: true })
-  const has404 = errors.find(error => error.response.status === 404) !== undefined
+  const has404 = errors.find(error => error.response?.status === 404) !== undefined
   const exists = caseItem !== undefined && has404 === false
 
   useEffect(() => {
