@@ -22,6 +22,24 @@ const Scaffold = (caseId: Components.Schemas.Case["id"], isEditing = false) => {
         }
       }
     },
+    sanction_amount: {
+      type: "ShowHide",
+      props: {
+        name: "sanction_amount",
+        label: "Wat is het bedrag?",
+        shouldShow: ({ values: { violation } }: { values: { violation: any } }) => violation && violation === "YES",
+        field: {
+          type: "NumberField",
+          props: {
+            isRequired: true,
+            label: "Wat is het bedrag?",
+            extraLabel: <InfoButton infoTitle="Hoe vul ik het bedrag in?" infoText="Vul hier alleen cijfers in, geen punten en komma's."></InfoButton>,
+            name: "sanction_amount",
+            pattern: "[0-9]"
+          }
+        }
+      }
+    },
     feedback: {
       type: "TextAreaField",
       props: {
@@ -50,6 +68,7 @@ const Scaffold = (caseId: Components.Schemas.Case["id"], isEditing = false) => {
   return new FormPositioner(fields as Fields)
     .setGrid("mobileS", "1fr 1fr", [
       ["violation", "violation"],
+      ["sanction_amount", "sanction_amount"],
       ["feedback", "feedback"],
       ["secondaryButton", "submit"]
     ])

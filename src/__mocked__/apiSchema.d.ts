@@ -16,6 +16,7 @@ declare namespace MockComponents {
     export type Decision = {
       readonly id: number
       readonly title: string
+      isSanction?: boolean
     }
 
     export type Opinion = {

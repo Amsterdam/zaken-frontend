@@ -7,13 +7,15 @@ export default (caseId: Components.Schemas.Case["id"], decisions: MockComponents
 
   const fields = {
     decision: {
-      type: "ComplexRadioFields",
+      type: "ComplexSelectField",
       props: {
         isRequired: true,
-        label: "Is er sprake van een sanctie?",
+        label: "Welk besluit is opgesteld?",
         name: "decision",
         optionLabelField: "title",
-        options: decisions
+        options: decisions,
+        withEmptyOption: true,
+        emptyOptionLabel: "Maak een keuze"
       }
     },
     sanction_amount: {
@@ -21,7 +23,7 @@ export default (caseId: Components.Schemas.Case["id"], decisions: MockComponents
       props: {
         name: "sanction_amount",
         label: "Wat is het bedrag?",
-        shouldShow: ({ values: { decision } }: { values: { decision: MockComponents.Schemas.Decision } }) => decision && decision.title === "Ja",
+        shouldShow: ({ values: { decision } }: { values: { decision: MockComponents.Schemas.Decision } }) => decision && decision.title === "Boete",
         field: {
           type: "NumberField",
           props: {

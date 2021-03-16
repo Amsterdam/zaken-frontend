@@ -27,11 +27,12 @@ const correspondence: MockComponents.Schemas.Correspondence[] = [
 const decisions: MockComponents.Schemas.Decision[] = [
   {
     id: 1,
-    title: "Nee"
+    title: "Boete",
+    isSanction: true
   },
   {
     id: 2,
-    title: "Ja"
+    title: "Intrekken BB-vergunning"
   }
 ]
 
