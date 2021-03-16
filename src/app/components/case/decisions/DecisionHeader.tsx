@@ -13,7 +13,7 @@ const DecisionHeader: React.FC<Props> = ({ caseId }) => {
   const values = useMemo(() => ({
     "Aanschrijving": "Voornemen boete",
     "Aangeschrevene(n)": mapArrayToList(["Donald Duck", "katrien duck"])
-  }), [data])
+  }), [])
 
   return (
     <>
