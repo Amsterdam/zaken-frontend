@@ -90,8 +90,6 @@ declare namespace Components {
             readonly date_created: string; // date-time
             type: TypeEnum;
             emitter_id: number;
-            emitter_is_editable: boolean;
-            emitter_is_editable_until: string; // date-time
             case: number;
         }
         export interface CaseReason {
@@ -120,8 +118,6 @@ declare namespace Components {
             readonly date_modified: string; // date-time
             violation?: ViolationEnum;
             feedback: string;
-            readonly is_editable: boolean;
-            readonly is_editable_until: string; // date-time
         }
         export interface DebriefingCreate {
             readonly id: number;
@@ -385,8 +381,6 @@ declare namespace Components {
             readonly date_modified?: string; // date-time
             violation?: ViolationEnum;
             feedback?: string;
-            readonly is_editable?: boolean;
-            readonly is_editable_until?: string; // date-time
         }
         export interface PatchedSummon {
             readonly id?: number;
@@ -708,6 +702,29 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.Case;
+        }
+    }
+    namespace CasesSearchList {
+        namespace Parameters {
+            export type Page = number;
+            export type PostalCode = string;
+            export type StartDate = string; // date
+            export type StreetName = string;
+            export type StreetNumber = string;
+            export type Suffix = string;
+            export type Team = string;
+        }
+        export interface QueryParameters {
+            page?: Parameters.Page;
+            postalCode?: Parameters.PostalCode;
+            start_date?: Parameters.StartDate /* date */;
+            streetName?: Parameters.StreetName;
+            streetNumber?: Parameters.StreetNumber;
+            suffix?: Parameters.Suffix;
+            team?: Parameters.Team;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedCaseList;
         }
     }
     namespace CasesTasksList {
