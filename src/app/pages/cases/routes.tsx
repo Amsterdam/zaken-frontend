@@ -1,14 +1,12 @@
 import IndexPage from "app/pages/cases/index/IndexPage"
 import DetailsPage from "app/pages/cases/details/DetailsPage"
 import DebriefCreatePage from "app/pages/case/debriefings/CreatePage"
-import DebriefEditPage from "app/pages/case/debriefings/EditPage"
 import OpinionCreatePage from "app/pages/case/opinions/CreatePage"
 import SummonCreatePage from "app/pages/case/summons/CreatePage"
 import DecisionCreatePage from "app/pages/case/decisions/CreatePage"
 import CorrespondenceCreatePage from "app/pages/case/correspondence/CreatePage"
 import CompleteCasePage from "app/pages/cases/complete/CompleteCasePage"
 import VisitCreatePage from "app/pages/case/visits/CreatePage"
-
 
 // NOTE: please add your own POC-specific routes here.
 export default {
@@ -35,11 +33,6 @@ export default {
           "debriefing": {
             Page: DebriefCreatePage,
             title: "Debrief terugkoppeling geven",
-            icon: "Edit"
-          },
-          "debriefing/:debriefingId": {
-            Page: DebriefEditPage,
-            title: "Debrief terugkoppeling wijzigen",
             icon: "Edit"
           },
           "besluit": {
