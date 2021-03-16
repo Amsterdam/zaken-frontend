@@ -23,12 +23,14 @@ const DecisionForm: React.FC<Props> = ({ id }) => {
       </MockWrapper>
       <FormTitle>Gebruik dit formulier om aan te geven welk besluit is genomen</FormTitle>
       <FormWithExtraLabel>
+      <MockWrapper>
         <WorkflowForm
             caseId={ id }
             data={ decisions }
             postMethod={ execPost }
             scaffold={ scaffold }
         />
+        </MockWrapper>
       </FormWithExtraLabel>
     </>
   )
