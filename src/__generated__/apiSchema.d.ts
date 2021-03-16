@@ -272,6 +272,24 @@ declare namespace Components {
             previous?: string | null; // uri
             results?: DecosPermit[];
         }
+        export interface PaginatedSummonList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=4
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null; // uri
+            results?: Summon[];
+        }
         export interface PaginatedSummonTypeList {
             /**
              * example:
@@ -370,6 +388,14 @@ declare namespace Components {
             readonly is_editable?: boolean;
             readonly is_editable_until?: string; // date-time
         }
+        export interface PatchedSummon {
+            readonly id?: number;
+            type?: number;
+            case?: number;
+            persons?: SummonedPerson[];
+            readonly date_added?: string; // date-time
+            description?: string | null;
+        }
         export interface PatchedVisit {
             readonly id?: number;
             readonly authors?: User[];
@@ -425,10 +451,11 @@ declare namespace Components {
         export type SoortVorderingEnum = "PBF" | "PBN" | "PRV" | "SOC";
         export interface Summon {
             readonly id: number;
-            description: string;
-            case: number;
             type: number;
+            case: number;
             persons: SummonedPerson[];
+            readonly date_added: string; // date-time
+            description?: string | null;
         }
         export interface SummonType {
             readonly id: number;
@@ -813,6 +840,64 @@ declare namespace Paths {
         export type RequestBody = Components.Schemas.Summon;
         namespace Responses {
             export type $201 = Components.Schemas.Summon;
+        }
+    }
+    namespace SummonsDestroy {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        namespace Responses {
+            export interface $204 {
+            }
+        }
+    }
+    namespace SummonsList {
+        namespace Parameters {
+            export type Page = number;
+        }
+        export interface QueryParameters {
+            page?: Parameters.Page;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedSummonList;
+        }
+    }
+    namespace SummonsPartialUpdate {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        export type RequestBody = Components.Schemas.PatchedSummon;
+        namespace Responses {
+            export type $200 = Components.Schemas.Summon;
+        }
+    }
+    namespace SummonsRetrieve {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.Summon;
+        }
+    }
+    namespace SummonsUpdate {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        export type RequestBody = Components.Schemas.Summon;
+        namespace Responses {
+            export type $200 = Components.Schemas.Summon;
         }
     }
     namespace SupportContactsList {

@@ -10,8 +10,6 @@ import navigateTo from "app/routing/navigateTo"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
-  initialValues?: Partial<Components.Schemas.Visit>
-  isLoading?: boolean
 }
 
 type AuthorData = { id: string }
@@ -19,13 +17,15 @@ export type VisitData = Omit<Components.Schemas.Visit, "author_ids"> & { author1
 
 const mapData = (data: VisitData) => ({ ...data, author_ids: [data.author1.id, data.author2.id] })
 
-const CreateForm: React.FC<Props> = ({ caseId, isLoading }) => {
+const CreateForm: React.FC<Props> = ({ caseId }) => {
 
   const [data] = useAuthors()
   const authors = data?.results ?? []
 
   const [, { execPost }] = useVisitsCreate()
   const { addSuccessFlashMessage } = useFlashMessages()
+
+  const showSpinner = data === undefined
 
   const onSubmit = async (data: VisitData) => {
     await execPost(mapData(data))
@@ -35,13 +35,15 @@ const CreateForm: React.FC<Props> = ({ caseId, isLoading }) => {
     navigateTo("/zaken/:id", { id })
   }
 
+  const initialValues = { case: caseId, start_time: "2021-01-01T12:34", observations: [] }
+
   return (
     <>
       <FormTitle>Gebruik dit formulier om een huisbezoek aan te maken</FormTitle>
       <ScaffoldForm
-        showSpinner={ isLoading }
+        showSpinner={ showSpinner }
         onSubmit={ onSubmit }
-        initialValues={ { case: caseId, start_time: "2021-01-01T12:34", observations: [] } }
+        initialValues={ initialValues }
       >
         <ScaffoldFields {...createScaffoldProps(caseId, authors) } />
       </ScaffoldForm>
