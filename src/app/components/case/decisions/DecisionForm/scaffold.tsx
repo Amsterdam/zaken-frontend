@@ -20,7 +20,6 @@ export default (caseId: Components.Schemas.Case["id"], decisions: MockComponents
       type: "ShowHide",
       props: {
         name: "sanction_amount",
-        label: "Wat is het bedrag?",
         shouldShow: ({ values: { decision } }: { values: { decision: MockComponents.Schemas.Decision } }) => decision && decision.title === "Ja",
         field: {
           type: "NumberField",
