@@ -32,6 +32,11 @@ const decisions: MockComponents.Schemas.Decision[] = [
   },
   {
     id: 2,
+    title: "Invordering dwangsom",
+    isSanction: true
+  },
+  {
+    id: 3,
     title: "Intrekken BB-vergunning"
   }
 ]
