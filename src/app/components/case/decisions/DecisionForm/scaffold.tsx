@@ -16,9 +16,11 @@ export default (caseId: Components.Schemas.Case["id"], decisions: MockComponents
         options: decisions
       }
     },
-    amount: {
+    sanction_amount: {
       type: "ShowHide",
       props: {
+        name: "sanction_amount",
+        label: "Wat is het bedrag?",
         shouldShow: ({ values: { decision } }: { values: { decision: MockComponents.Schemas.Decision } }) => decision && decision.title === "Ja",
         field: {
           type: "NumberField",
@@ -61,7 +63,7 @@ export default (caseId: Components.Schemas.Case["id"], decisions: MockComponents
   return new FormPositioner(fields as Fields)
     .setGrid("mobileS", "1fr 1fr", [
       ["decision", "decision"],
-      ["amount", "amount"],
+      ["sanction_amount", "sanction_amount"],
       ["text", "text"],
       ["secondaryButton", "submit"]
     ])

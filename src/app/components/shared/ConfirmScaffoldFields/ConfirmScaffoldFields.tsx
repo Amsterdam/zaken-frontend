@@ -50,13 +50,21 @@ const createValuesObject = <T extends RequestBody>(fields: NamedFields<T>, data:
   if (data === undefined) return {}
   return showFields.reduce((acc, key) => {
     const field = Object.keys(fields).map(field => fields[field]).find(field => field.props.name === key)
+    
     if (field === undefined) return acc
+
     const { type, props } = field
     const { label, name } = props
+
     if (name === undefined) return acc
+
     const v = data[name]
+    
     if (v === undefined) return acc
+
     const value =
+      type === "ShowHide" ?
+        v :
       type === "ArrayField" ?
         <ArrayFieldList fields={ v as Array<Record<string, string>> } /> :
       type === "ComplexSelectField" || type === "ComplexRadioFields" ?
