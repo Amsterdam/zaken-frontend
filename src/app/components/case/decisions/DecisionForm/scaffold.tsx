@@ -1,18 +1,35 @@
 import { FormPositioner } from "@amsterdam/scaffold-form/package"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
+import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import navigateTo from "app/routing/navigateTo"
 
 export default (caseId: Components.Schemas.Case["id"], decisions: MockComponents.Schemas.Decision[]) => {
 
   const fields = {
-    decisions: {
+    decision: {
       type: "ComplexRadioFields",
       props: {
         isRequired: true,
-        label: "Wat is het resultaat besluit?",
-        name: "decisions",
+        label: "Is er sprake van een sanctie?",
+        name: "decision",
         optionLabelField: "title",
         options: decisions
+      }
+    },
+    amount: {
+      type: "ShowHide",
+      props: {
+        shouldShow: ({ values: { decision } }: { values: { decision: MockComponents.Schemas.Decision } }) => decision && decision.title === "Ja",
+        field: {
+          type: "NumberField",
+          props: {
+            isRequired: true,
+            label: "Wat is het bedrag?",
+            extraLabel: <InfoButton infoTitle="Hoe vul ik het bedrag in?" infoText="Vul hier alleen cijfers in, geen punten en komma's."></InfoButton>,
+            name: "sanction_amount",
+            pattern: "[0-9]"
+          }
+        }
       }
     },
     text: {
@@ -43,7 +60,8 @@ export default (caseId: Components.Schemas.Case["id"], decisions: MockComponents
 
   return new FormPositioner(fields as Fields)
     .setGrid("mobileS", "1fr 1fr", [
-      ["decisions", "decisions"],
+      ["decision", "decision"],
+      ["amount", "amount"],
       ["text", "text"],
       ["secondaryButton", "submit"]
     ])
