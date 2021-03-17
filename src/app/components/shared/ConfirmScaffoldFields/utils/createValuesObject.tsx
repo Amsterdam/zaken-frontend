@@ -26,10 +26,14 @@ const mapField = <T extends RequestBody>(field: Field, key: string, data: T) => 
 
 export default <T extends RequestBody>(fields: NamedFields<T>, data: T | undefined, showFields: string[]) => {
   if (data === undefined) return {}
+  const mappedFields = Object.keys(fields).map(key => {
+    const field = fields[key]
+    const nestedField = (field.props as { field: Field })?.field
+    return nestedField !== undefined ? nestedField : field
+  })
   return showFields.reduce((acc, key) => {
-    const f = Object.keys(fields).map(field => fields[field]).find(field => field.props.name === key)
-    if (f === undefined) return acc
-    const field = f.type === "ShowHide" ? f.props.field : f
+    const field = mappedFields.find(field => field.props.name === key)
+    if (field === undefined) return acc
     const keyValuePair = mapField<T>(field, key, data)
     if (keyValuePair === undefined) return acc
     const [label, value] = keyValuePair
