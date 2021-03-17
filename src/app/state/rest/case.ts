@@ -62,23 +62,34 @@ export const useOpinions = (options?: Options) => {
   })
 }
 
-export const useSummons = (options?: Options) => {
+export const useSummons = (id?: number, options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.Summon>({
     ...options,
-    url: makeApiUrl("summons"),
+    url: makeApiUrl("summons", id),
     groupName: "cases",
     handleError,
     isProtected: true
   })
 }
 
-// TODO-MOCKED used to show the summon in OpinionForm
-export const useSummon = (id?: number, options?: Options) => {
+export const useSummon = (caseId?: number, options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<MockComponents.Schemas.Summon>({
     ...options,
-    url: `summons/${ id }`,
+    url: "summon",
+    groupName: "cases",
+    handleError,
+    isProtected: true,
+    isMocked: true
+  })
+}
+// TODO-MOCKED used to show the summon in OpinionForm
+export const useSummonTypes = (id?: number, options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<MockComponents.Schemas.SummonType>({
+    ...options,
+    url: `summonTypes/${ id }`,
     lazy: id === undefined,
     groupName: "cases",
     handleError,
@@ -87,7 +98,6 @@ export const useSummon = (id?: number, options?: Options) => {
   })
 }
 
-// TODO-MOCKED replace with real endpoint
 export const useDecisions = (options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.Decision>({

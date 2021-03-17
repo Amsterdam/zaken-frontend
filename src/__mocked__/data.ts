@@ -35,7 +35,23 @@ const opinions: MockComponents.Schemas.Opinion[] = [
   }
 ]
 
-const summons: MockComponents.Schemas.Summon[] = [
+const summon: MockComponents.Schemas.Summon = {
+  
+  id: 1,
+  type: 1,
+  case: 3395,
+  persons: [
+    {
+      id: 1,
+      first_name: "Voornaam",
+      preposition: "van",
+      last_name: "Achter",
+      summon: 0
+    }
+  ],
+  date_added: "01/01/2021"
+}
+const summonTypes: MockComponents.Schemas.SummonType[] = [
   {
     id: 1,
     title: "Waarschuwing VV-vergunning"
@@ -65,5 +81,6 @@ export default {
   completeCases,
   correspondence,
   opinions,
-  summons
+  summon,
+  summonTypes
 }

@@ -126,11 +126,9 @@ declare namespace Components {
             case: number;
         }
         export interface Decision {
-            readonly id: number;
-            description?: string | null;
             case: number;
-            summon: number;
             decision_type: number;
+            description?: string | null;
         }
         export interface DecisionType {
             readonly id: number;
@@ -433,11 +431,9 @@ declare namespace Components {
             feedback?: string;
         }
         export interface PatchedDecision {
-            readonly id?: number;
-            description?: string | null;
             case?: number;
-            summon?: number;
             decision_type?: number;
+            description?: string | null;
         }
         export interface PatchedSummon {
             readonly id?: number;
@@ -727,12 +723,20 @@ declare namespace Paths {
     }
     namespace CasesList {
         namespace Parameters {
+            export type OpenCases = boolean;
+            export type OpenStatus = string;
             export type Page = number;
+            export type Reason = string;
             export type StartDate = string; // date
+            export type Team = string;
         }
         export interface QueryParameters {
+            openCases?: Parameters.OpenCases;
+            openStatus?: Parameters.OpenStatus;
             page?: Parameters.Page;
-            start_date?: Parameters.StartDate /* date */;
+            reason?: Parameters.Reason;
+            startDate?: Parameters.StartDate /* date */;
+            team?: Parameters.Team;
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCaseList;
@@ -765,7 +769,6 @@ declare namespace Paths {
         namespace Parameters {
             export type Page = number;
             export type PostalCode = string;
-            export type StartDate = string; // date
             export type StreetName = string;
             export type StreetNumber = string;
             export type Suffix = string;
@@ -774,7 +777,6 @@ declare namespace Paths {
         export interface QueryParameters {
             page?: Parameters.Page;
             postalCode?: Parameters.PostalCode;
-            start_date?: Parameters.StartDate /* date */;
             streetName?: Parameters.StreetName;
             streetNumber?: Parameters.StreetNumber;
             suffix?: Parameters.Suffix;
@@ -788,14 +790,12 @@ declare namespace Paths {
         namespace Parameters {
             export type Id = number;
             export type Page = number;
-            export type StartDate = string; // date
         }
         export interface PathParameters {
             id: Parameters.Id;
         }
         export interface QueryParameters {
             page?: Parameters.Page;
-            start_date?: Parameters.StartDate /* date */;
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCamundaTaskList;
