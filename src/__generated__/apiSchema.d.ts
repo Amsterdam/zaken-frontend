@@ -125,6 +125,20 @@ declare namespace Components {
             feedback: string;
             case: number;
         }
+        export interface Decision {
+            readonly id: number;
+            description?: string | null;
+            case: number;
+            summon: number;
+            decision_type: number;
+        }
+        export interface DecisionType {
+            readonly id: number;
+            camunda_option: string;
+            name: string;
+            is_sanction?: boolean;
+            team: number;
+        }
         export interface DecosPermit {
             permit_granted?: boolean;
             permit_type?: "BED_AND_BREAKFAST" | "VAKANTIEVERHUUR" | "PERMIT_UNKNOWN";
@@ -249,6 +263,42 @@ declare namespace Components {
              */
             previous?: string | null; // uri
             results?: CaseTeam[];
+        }
+        export interface PaginatedDecisionList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=4
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null; // uri
+            results?: Decision[];
+        }
+        export interface PaginatedDecisionTypeList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=4
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null; // uri
+            results?: DecisionType[];
         }
         export interface PaginatedDecosPermitList {
             /**
@@ -381,6 +431,13 @@ declare namespace Components {
             readonly date_modified?: string; // date-time
             violation?: ViolationEnum;
             feedback?: string;
+        }
+        export interface PatchedDecision {
+            readonly id?: number;
+            description?: string | null;
+            case?: number;
+            summon?: number;
+            decision_type?: number;
         }
         export interface PatchedSummon {
             readonly id?: number;
@@ -809,6 +866,70 @@ declare namespace Paths {
             export type $200 = Components.Schemas.Debriefing;
         }
     }
+    namespace DecisionsCreate {
+        export type RequestBody = Components.Schemas.Decision;
+        namespace Responses {
+            export type $201 = Components.Schemas.Decision;
+        }
+    }
+    namespace DecisionsDestroy {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        namespace Responses {
+            export interface $204 {
+            }
+        }
+    }
+    namespace DecisionsList {
+        namespace Parameters {
+            export type Page = number;
+        }
+        export interface QueryParameters {
+            page?: Parameters.Page;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedDecisionList;
+        }
+    }
+    namespace DecisionsPartialUpdate {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        export type RequestBody = Components.Schemas.PatchedDecision;
+        namespace Responses {
+            export type $200 = Components.Schemas.Decision;
+        }
+    }
+    namespace DecisionsRetrieve {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.Decision;
+        }
+    }
+    namespace DecisionsUpdate {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        export type RequestBody = Components.Schemas.Decision;
+        namespace Responses {
+            export type $200 = Components.Schemas.Decision;
+        }
+    }
     namespace FinesRetrieve {
         namespace Parameters {
             export type Id = string;
@@ -926,6 +1047,21 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedSupportContactList;
+        }
+    }
+    namespace TeamsDecisionTypesList {
+        namespace Parameters {
+            export type Id = number;
+            export type Page = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        export interface QueryParameters {
+            page?: Parameters.Page;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedDecisionTypeList;
         }
     }
     namespace TeamsList {

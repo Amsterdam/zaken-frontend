@@ -90,13 +90,12 @@ export const useSummon = (id?: number, options?: Options) => {
 // TODO-MOCKED replace with real endpoint
 export const useDecisions = (options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<MockComponents.Schemas.Decision[]>({
+  return useApiRequest<Components.Schemas.Decision>({
     ...options,
-    url: "decisions",
+    url: makeApiUrl("decisions"),
     groupName: "cases",
     handleError,
-    isProtected: true,
-    isMocked: true
+    isProtected: true
   })
 }
 

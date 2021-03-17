@@ -3,16 +3,16 @@ import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import navigateTo from "app/routing/navigateTo"
 
-export default (caseId: Components.Schemas.Case["id"], decisions: MockComponents.Schemas.Decision[]) => {
+export default (caseId: Components.Schemas.Case["id"], decisions: Components.Schemas.DecisionType[]) => {
 
   const fields = {
-    decision: {
+    decision_type: {
       type: "ComplexSelectField",
       props: {
         isRequired: true,
         label: "Welk besluit is opgesteld?",
-        name: "decision",
-        optionLabelField: "title",
+        name: "decision_type",
+        optionLabelField: "name",
         options: decisions,
         withEmptyOption: true,
         emptyOptionLabel: "Maak een keuze"
@@ -23,7 +23,7 @@ export default (caseId: Components.Schemas.Case["id"], decisions: MockComponents
       props: {
         name: "sanction_amount",
         label: "Wat is het bedrag?",
-        shouldShow: ({ values: { decision } }: { values: { decision: MockComponents.Schemas.Decision } }) => decision && decision.isSanction === true,
+        shouldShow: ({ values: { decision } }: { values: { decision: Components.Schemas.DecisionType } }) => decision && decision.is_sanction === true,
         field: {
           type: "NumberField",
           props: {
@@ -36,12 +36,12 @@ export default (caseId: Components.Schemas.Case["id"], decisions: MockComponents
         }
       }
     },
-    text: {
+    description: {
       type: "TextAreaField",
       props: {
         label: "Korte toelichting",
         extraLabel: "(niet verplicht)",
-        name: "text",
+        name: "description",
         isRequired: false
       }
     },
@@ -64,9 +64,9 @@ export default (caseId: Components.Schemas.Case["id"], decisions: MockComponents
 
   return new FormPositioner(fields as Fields)
     .setGrid("mobileS", "1fr 1fr", [
-      ["decision", "decision"],
+      ["decision_type", "decision_type"],
       ["sanction_amount", "sanction_amount"],
-      ["text", "text"],
+      ["description", "description"],
       ["secondaryButton", "submit"]
     ])
     .getScaffoldProps()

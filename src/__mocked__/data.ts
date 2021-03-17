@@ -24,23 +24,6 @@ const correspondence: MockComponents.Schemas.Correspondence[] = [
   }
 ]
 
-const decisions: MockComponents.Schemas.Decision[] = [
-  {
-    id: 1,
-    title: "Boete",
-    isSanction: true
-  },
-  {
-    id: 2,
-    title: "Invordering dwangsom",
-    isSanction: true
-  },
-  {
-    id: 3,
-    title: "Intrekken BB-vergunning"
-  }
-]
-
 const opinions: MockComponents.Schemas.Opinion[] = [
   {
     id: 1,
@@ -81,7 +64,6 @@ const summons: MockComponents.Schemas.Summon[] = [
 export default {
   completeCases,
   correspondence,
-  decisions,
   opinions,
   summons
 }
