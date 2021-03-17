@@ -21,9 +21,7 @@ export default (caseId: Components.Schemas.Case["id"], decisions: Components.Sch
     sanction_amount: {
       type: "ShowHide",
       props: {
-        name: "sanction_amount",
-        label: "Wat is het bedrag?",
-        shouldShow: ({ values: { decision } }: { values: { decision: Components.Schemas.DecisionType } }) => decision && decision.is_sanction === true,
+        shouldShow: ({ values: { decision_type } }: { values: { decision_type: Components.Schemas.DecisionType } }) => decision_type && decision_type.is_sanction === true,
         field: {
           type: "NumberField",
           props: {

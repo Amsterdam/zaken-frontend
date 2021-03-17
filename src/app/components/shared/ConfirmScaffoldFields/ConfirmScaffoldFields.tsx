@@ -5,10 +5,10 @@ import { Heading, Button, Spinner } from "@amsterdam/asc-ui"
 import DefinitionList from "app/components/shared/DefinitionList/DefinitionList"
 import Modal, { ModalBlock } from "app/components/shared/Modal/Modal"
 import { Field } from "../Form/ScaffoldField"
-import ArrayFieldList from "./ArrayFieldList"
+import createValuesObject from "./utils/createValuesObject"
 
-type RequestBody = Record<string, unknown>
-type NamedFields<T> = Record<keyof T, Field>
+export type RequestBody = Record<string, unknown>
+export type NamedFields<T> = Record<keyof T, Field>
 type Props<RequestBody> = {
   fields: NamedFields<RequestBody>
   data: RequestBody | undefined
@@ -45,37 +45,6 @@ const SpinnerWrap = styled.div`
   align-items: center;
 }
 `
-
-const createValuesObject = <T extends RequestBody>(fields: NamedFields<T>, data: T | undefined, showFields: string[]) => {
-  if (data === undefined) return {}
-  return showFields.reduce((acc, key) => {
-    const field = Object.keys(fields).map(field => fields[field]).find(field => field.props.name === key)
-    
-    if (field === undefined) return acc
-
-    const { type, props } = field
-    const { label, name } = props
-
-    if (name === undefined) return acc
-
-    const v = data[name]
-    
-    if (v === undefined) return acc
-
-    const value =
-      type === "ShowHide" ?
-        v :
-      type === "ArrayField" ?
-        <ArrayFieldList fields={ v as Array<Record<string, string>> } /> :
-      type === "ComplexSelectField" || type === "ComplexRadioFields" ?
-        (v as Record<string, string>)[(props as { optionLabelField: string }).optionLabelField] :
-      props.hasOwnProperty("options") ?
-        (props as { options: Record<string, unknown> }).options[v as string] :
-        v
-    acc[(label ?? key) as string] = value as React.ReactNode
-    return acc
-  }, {} as Record<string, React.ReactNode>)
-}
 
 const ConfirmScaffoldFields = <T extends RequestBody>(props: Props<T>) => {
   const {
