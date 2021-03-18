@@ -17,12 +17,12 @@ const DecisionHeader: React.FC<Props> = ({ caseId }) => {
   const summonTypeName = summon?.type_name
 
   const mapPersons = summonedPersons?.map((person) => 
-    `${ person.first_name || "" } ${ person.preposition || "" } ${ person.last_name || "" }`
+    `${ person.first_name } ${ person.preposition ? person.preposition : "" } ${ person.last_name }`
   )
 
   const values = {
     "Aanschrijving": summonTypeName,
-    "Aangeschrevene(n)": mapArrayToList( mapPersons || [] )
+    "Aangeschrevene(n)": mapArrayToList( mapPersons || ["Onbekend"] )
   }
 
   return (
