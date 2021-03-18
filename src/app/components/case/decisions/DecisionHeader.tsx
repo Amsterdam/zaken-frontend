@@ -1,8 +1,9 @@
 import React from "react"
 import { Heading, Spinner } from "@amsterdam/asc-ui"
 import DefinitionList from "app/components/shared/DefinitionList/DefinitionList"
-import { mapArrayToList } from "app/components/shared/Helpers/helpers"
+import MapArrayToList from "app/components/shared/Helpers/MapArrayToList"
 import { useSummonsWithCaseId } from "app/state/rest/case"
+import { capitalizeString } from "app/components/shared/Helpers/helpers"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
@@ -17,12 +18,12 @@ const DecisionHeader: React.FC<Props> = ({ caseId }) => {
   const summonTypeName = summon?.type_name
 
   const mapPersons = summonedPersons?.map((person) => 
-    `${ person.first_name } ${ person.preposition ? person.preposition : "" } ${ person.last_name }`
+    `${ capitalizeString(person.first_name) } ${ person.preposition ? person.preposition : "" } ${ capitalizeString(person.last_name) }`
   )
 
   const values = {
     "Aanschrijving": summonTypeName,
-    "Aangeschrevene(n)": mapArrayToList( mapPersons || ["Onbekend"] )
+    "Aangeschrevene(n)": mapPersons !== undefined ? MapArrayToList(mapPersons) : "-"
   }
 
   return (

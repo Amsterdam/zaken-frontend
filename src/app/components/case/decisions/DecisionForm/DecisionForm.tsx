@@ -17,7 +17,8 @@ type DecisionData = Omit<Components.Schemas.Decision, "decision_type"> & { decis
 const mapData = (data: DecisionData) => ({ ...data, decision_type: data.decision_type.id })
 const DecisionForm: React.FC<Props> = ({ id }) => {
 
-  const teamId = useCase(id)[0]?.team.id
+  const [caseItem] = useCase(id)
+  const teamId = caseItem?.team.id
   const [data] = useDecisionTypes(teamId)
   const decisionTypes = data?.results ?? []
   const [, { execPost }] = useDecisions({ lazy: true })
