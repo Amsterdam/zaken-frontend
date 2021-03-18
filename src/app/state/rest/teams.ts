@@ -26,12 +26,25 @@ export const useReasons = (teamId?: Components.Schemas.CaseTeam["id"], options?:
   })
 }
 
+// useSummonTypes for getting the available summonTypes for a specific team
 export const useSummonTypes = (teamId?: Components.Schemas.CaseTeam["id"], options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.PaginatedSummonTypeList>({
     ...options,
     lazy: teamId === undefined,
     url: makeApiUrl("teams", teamId, "summon-types"),
+    groupName: "cases",
+    handleError,
+    isProtected: true
+  })
+}
+
+export const useDecisionTypes = (teamId?: Components.Schemas.CaseTeam["id"], options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<Components.Schemas.PaginatedDecisionTypeList>({
+    ...options,
+    lazy: teamId === undefined,
+    url: makeApiUrl("teams", teamId, "decision-types"),
     groupName: "cases",
     handleError,
     isProtected: true

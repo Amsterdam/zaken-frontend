@@ -1,7 +1,6 @@
 import IndexPage from "app/pages/cases/index/IndexPage"
 import DetailsPage from "app/pages/cases/details/DetailsPage"
 import DebriefCreatePage from "app/pages/case/debriefings/CreatePage"
-import OpinionCreatePage from "app/pages/case/opinions/CreatePage"
 import SummonCreatePage from "app/pages/case/summons/CreatePage"
 import DecisionCreatePage from "app/pages/case/decisions/CreatePage"
 import CorrespondenceCreatePage from "app/pages/case/correspondence/CreatePage"
@@ -38,11 +37,6 @@ export default {
           "besluit": {
             Page: DecisionCreatePage,
             title: "Resultaat besluit",
-            icon: "Edit"
-          },
-          "zienswijze": {
-            Page: OpinionCreatePage,
-            title: "Resultaat zienswijze",
             icon: "Edit"
           },
           "aanschrijving": {

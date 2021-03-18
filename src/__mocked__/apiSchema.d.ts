@@ -12,25 +12,5 @@ declare namespace MockComponents {
       readonly id: number
       readonly title: string
     }
-
-    export type Decision = {
-      readonly id: number
-      readonly title: string
-    }
-
-    export type Opinion = {
-      readonly id: number
-      readonly title: string
-    }
-
-    export type Summon = { // used to show summonTitle at OpinionForm
-      readonly id: number
-      readonly title: string
-    }
-
-    export type DueDate = {
-      readonly id: number
-      readonly dueDate: string
-    }
   }
 }

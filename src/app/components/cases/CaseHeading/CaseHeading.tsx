@@ -10,10 +10,6 @@ type Props = {
   id: Components.Schemas.Case["id"]
 }
 
-const Wrap = styled.div`
-  margin-bottom: ${ themeSpacing(12) };
-`
-
 const Div = styled.div`
   display: flex;
   margin-bottom: ${ themeSpacing(3) };
@@ -28,7 +24,7 @@ const CaseHeading: React.FC<Props> = ({ id }) => {
   const [data] = useCase(id)
 
   return (
-    <Wrap>
+    <>
       <Heading as="h3">Zaak</Heading>
       { data === undefined ?
         <Spinner /> :
@@ -54,7 +50,7 @@ const CaseHeading: React.FC<Props> = ({ id }) => {
           </Div>
         </dl>
       }
-    </Wrap>
+    </>
   )
 }
 export default CaseHeading

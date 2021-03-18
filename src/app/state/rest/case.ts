@@ -2,6 +2,7 @@ import type { Options } from "./"
 import { useErrorHandler } from "./hooks/utils/errorHandler"
 import { makeApiUrl } from "./hooks/utils/apiUrl"
 import useApiRequest from "./hooks/useApiRequest"
+import qs from "qs"
 
 export const useCase = (id?: Components.Schemas.Case["id"], options?: Options) => {
   const handleError = useErrorHandler()
@@ -49,19 +50,7 @@ export const useDebriefings = (id?: number, options?: Options) => {
   })
 }
 
-// TODO-MOCKED replace with real endpoint
-export const useOpinions = (options?: Options) => {
-  const handleError = useErrorHandler()
-  return useApiRequest<MockComponents.Schemas.Opinion[]>({
-    ...options,
-    url: "opinions",
-    groupName: "cases",
-    handleError,
-    isProtected: true,
-    isMocked: true
-  })
-}
-
+// useSummons for posting a new summon
 export const useSummons = (options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.Summon>({
@@ -73,30 +62,28 @@ export const useSummons = (options?: Options) => {
   })
 }
 
-// TODO-MOCKED used to show the summon in OpinionForm
-export const useSummon = (id?: number, options?: Options) => {
+// useSummonsWithCaseId for getting the posted summon(s) for a case
+export const useSummonsWithCaseId = (caseId?: Components.Schemas.Case["id"], options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<MockComponents.Schemas.Summon>({
+  const queryString = qs.stringify({ case: caseId }, { addQueryPrefix: true })
+  return useApiRequest<Components.Schemas.PaginatedSummonList>({
     ...options,
-    url: `summons/${ id }`,
-    lazy: id === undefined,
+    url: `${ makeApiUrl("summons") }${ queryString }`,
+    lazy: caseId === undefined,
     groupName: "cases",
     handleError,
-    isProtected: true,
-    isMocked: true
+    isProtected: true
   })
 }
 
-// TODO-MOCKED replace with real endpoint
 export const useDecisions = (options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<MockComponents.Schemas.Decision[]>({
+  return useApiRequest<Components.Schemas.Decision>({
     ...options,
-    url: "decisions",
+    url: makeApiUrl("decisions"),
     groupName: "cases",
     handleError,
-    isProtected: true,
-    isMocked: true
+    isProtected: true
   })
 }
 
