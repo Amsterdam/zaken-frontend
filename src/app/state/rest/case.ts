@@ -50,19 +50,7 @@ export const useDebriefings = (id?: number, options?: Options) => {
   })
 }
 
-// TODO-MOCKED replace with real endpoint
-export const useOpinions = (options?: Options) => {
-  const handleError = useErrorHandler()
-  return useApiRequest<MockComponents.Schemas.Opinion[]>({
-    ...options,
-    url: "opinions",
-    groupName: "cases",
-    handleError,
-    isProtected: true,
-    isMocked: true
-  })
-}
-
+// useSummons for posting a new summon
 export const useSummons = (options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.Summon>({
@@ -73,6 +61,8 @@ export const useSummons = (options?: Options) => {
     isProtected: true
   })
 }
+
+// useSummonsWithCaseId for getting the posted summon(s) for a case
 export const useSummonsWithCaseId = (caseId?: Components.Schemas.Case["id"], options?: Options) => {
   const handleError = useErrorHandler()
   const queryString = qs.stringify({ case: caseId }, { addQueryPrefix: true })
@@ -83,20 +73,6 @@ export const useSummonsWithCaseId = (caseId?: Components.Schemas.Case["id"], opt
     groupName: "cases",
     handleError,
     isProtected: true
-  })
-}
-
-// TODO-MOCKED used to show the summon in OpinionForm
-export const useSummonTypes = (id?: number, options?: Options) => {
-  const handleError = useErrorHandler()
-  return useApiRequest<MockComponents.Schemas.SummonType>({
-    ...options,
-    url: `summonTypes/${ id }`,
-    lazy: id === undefined,
-    groupName: "cases",
-    handleError,
-    isProtected: true,
-    isMocked: true
   })
 }
 

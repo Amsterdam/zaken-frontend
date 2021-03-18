@@ -19,11 +19,6 @@ declare namespace MockComponents {
       isSanction?: boolean
     }
 
-    export type Opinion = {
-      readonly id: number
-      readonly title: string
-    }
-
     export type Summon = {
       readonly id: number
       type: number
@@ -31,11 +26,6 @@ declare namespace MockComponents {
       persons: SummonedPerson[]
       readonly date_added: string // date-time
       description?: string | null
-  }
-
-    export type SummonType = { // used to show summonTitle at OpinionForm
-      readonly id: number
-      readonly title: string
     }
 
     export type DueDate = {

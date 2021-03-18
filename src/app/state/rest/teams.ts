@@ -26,6 +26,7 @@ export const useReasons = (teamId?: Components.Schemas.CaseTeam["id"], options?:
   })
 }
 
+// useSummonTypes for getting the available summonTypes for a specific team
 export const useSummonTypes = (teamId?: Components.Schemas.CaseTeam["id"], options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.PaginatedSummonTypeList>({
