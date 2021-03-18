@@ -6,7 +6,6 @@ import WorkflowForm from "app/components/cases/Workflow/WorkflowForm"
 import scaffold from "app/components/case/decisions/DecisionForm/scaffold"
 import FormWithExtraLabel from "app/components/shared/FormWithExtraLabel/FormWithExtraLabel"
 import DecisionHeader from "../DecisionHeader"
-import MockWrapper from "app/components/shared/MockWrapper/MockWrapper"
 import { useDecisionTypes } from "app/state/rest/teams"
 
 type Props = {
@@ -26,9 +25,7 @@ const DecisionForm: React.FC<Props> = ({ id }) => {
   
   return (
     <>
-      <MockWrapper>
-        <DecisionHeader caseId={ id }/>
-      </MockWrapper>
+      <DecisionHeader caseId={ id }/>
       <FormTitle>Gebruik dit formulier om aan te geven welk besluit is genomen</FormTitle>
       <FormWithExtraLabel>
       <WorkflowForm

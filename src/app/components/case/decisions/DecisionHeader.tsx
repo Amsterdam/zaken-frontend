@@ -1,39 +1,36 @@
-import React, { useEffect, useMemo } from "react"
-import { Heading } from "@amsterdam/asc-ui"
-import { useCase } from "app/state/rest/"
+import React from "react"
+import { Heading, Spinner } from "@amsterdam/asc-ui"
 import DefinitionList from "app/components/shared/DefinitionList/DefinitionList"
 import { mapArrayToList } from "app/components/shared/Helpers/helpers"
-import { useSummonTypes } from "app/state/rest/case"
+import { useSummonsWithCaseId } from "app/state/rest/case"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
 }
 
 const DecisionHeader: React.FC<Props> = ({ caseId }) => {
-  const [data] = useCase(caseId)
 
-  // TODO-MOCKED, get summonId/summonTitle from useCaseEvents(caseId)
-  const summonId = 6
-  const [summonType, { execGet }] = useSummonTypes(summonId, { lazy: true })
+  const [data] = useSummonsWithCaseId(caseId)
+  const summon = data?.results?.[0]
 
-  useEffect(() => {
-      if (summonId === undefined) return
-      execGet()
-    },
-    [summonId, execGet]
+  const summonedPersons = summon?.persons
+  const summonTypeName = summon?.type_name
+
+  const mapPersons = summonedPersons?.map((person) => 
+    `${ person.first_name || "" } ${ person.preposition || "" } ${ person.last_name || "" }`
   )
 
-  const values = useMemo(() => ({
-    "Aanschrijving": summonType?.title,
-    "Aangeschrevene(n)": mapArrayToList(["Donald Duck", "katrien duck"])
-  }), [summonType])
+  const values = {
+    "Aanschrijving": summonTypeName,
+    "Aangeschrevene(n)": mapArrayToList( mapPersons || [] )
+  }
 
   return (
     <>
       <Heading as="h4">Besluit naar aanleiding van:</Heading>
-      { data &&
+      { data === undefined ?
+        <Spinner /> :
         <DefinitionList
-          isLoading={data === undefined }
           numLoadingRows={2}
           values={values} />
       }

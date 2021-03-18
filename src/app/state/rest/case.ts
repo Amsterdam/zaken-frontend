@@ -2,6 +2,7 @@ import type { Options } from "./"
 import { useErrorHandler } from "./hooks/utils/errorHandler"
 import { makeApiUrl } from "./hooks/utils/apiUrl"
 import useApiRequest from "./hooks/useApiRequest"
+import qs from "qs"
 
 export const useCase = (id?: Components.Schemas.Case["id"], options?: Options) => {
   const handleError = useErrorHandler()
@@ -62,28 +63,29 @@ export const useOpinions = (options?: Options) => {
   })
 }
 
-export const useSummons = (id?: number, options?: Options) => {
+export const useSummons = (options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.Summon>({
     ...options,
-    url: makeApiUrl("summons", id),
+    url: makeApiUrl("summons"),
+    groupName: "cases",
+    handleError,
+    isProtected: true
+  })
+}
+export const useSummonsWithCaseId = (caseId?: Components.Schemas.Case["id"], options?: Options) => {
+  const handleError = useErrorHandler()
+  const queryString = qs.stringify({ case: caseId }, { addQueryPrefix: true })
+  return useApiRequest<Components.Schemas.PaginatedSummonList>({
+    ...options,
+    url: `${ makeApiUrl("summons") }${ queryString }`,
+    lazy: caseId === undefined,
     groupName: "cases",
     handleError,
     isProtected: true
   })
 }
 
-export const useSummon = (caseId?: number, options?: Options) => {
-  const handleError = useErrorHandler()
-  return useApiRequest<MockComponents.Schemas.Summon>({
-    ...options,
-    url: "summon",
-    groupName: "cases",
-    handleError,
-    isProtected: true,
-    isMocked: true
-  })
-}
 // TODO-MOCKED used to show the summon in OpinionForm
 export const useSummonTypes = (id?: number, options?: Options) => {
   const handleError = useErrorHandler()

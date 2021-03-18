@@ -126,9 +126,12 @@ declare namespace Components {
             case: number;
         }
         export interface Decision {
+            readonly id: number;
+            sanction_amount?: string | null; // decimal
+            description?: string | null;
+            readonly date_added: string; // date-time
             case: number;
             decision_type: number;
-            description?: string | null;
         }
         export interface DecisionType {
             readonly id: number;
@@ -431,13 +434,17 @@ declare namespace Components {
             feedback?: string;
         }
         export interface PatchedDecision {
+            readonly id?: number;
+            sanction_amount?: string | null; // decimal
+            description?: string | null;
+            readonly date_added?: string; // date-time
             case?: number;
             decision_type?: number;
-            description?: string | null;
         }
         export interface PatchedSummon {
             readonly id?: number;
             type?: number;
+            readonly type_name?: string;
             case?: number;
             persons?: SummonedPerson[];
             readonly date_added?: string; // date-time
@@ -499,6 +506,7 @@ declare namespace Components {
         export interface Summon {
             readonly id: number;
             type: number;
+            readonly type_name: string;
             case: number;
             persons: SummonedPerson[];
             readonly date_added: string; // date-time
@@ -886,9 +894,11 @@ declare namespace Paths {
     }
     namespace DecisionsList {
         namespace Parameters {
+            export type Case = number;
             export type Page = number;
         }
         export interface QueryParameters {
+            case?: Parameters.Case;
             page?: Parameters.Page;
         }
         namespace Responses {
@@ -994,9 +1004,11 @@ declare namespace Paths {
     }
     namespace SummonsList {
         namespace Parameters {
+            export type Case = number;
             export type Page = number;
         }
         export interface QueryParameters {
+            case?: Parameters.Case;
             page?: Parameters.Page;
         }
         namespace Responses {

@@ -19,7 +19,7 @@ const SummonForm: React.FC<Props> = ({ id }) => {
   const teamId = useCase(id)[0]?.team.id
   const [data] = useSummonTypes(teamId)
   const summonTypes = data?.results ?? []
-  const [, { execPost }] = useSummons(id, { lazy: true })
+  const [, { execPost }] = useSummons({ lazy: true })
   const postMethod = async (data: SummonData) => await execPost(mapData(data))
 
   return (
