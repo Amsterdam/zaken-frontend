@@ -45,7 +45,7 @@ const CaseHeading: React.FC<Props> = ({ id }) => {
           <Div>
             <Dt>Zaak ID</Dt>
             <dd>
-              <CaseIdDisplay id={ data?.identification } />
+              <CaseIdDisplay id={ data?.id } />
             </dd>
           </Div>
         </dl>
