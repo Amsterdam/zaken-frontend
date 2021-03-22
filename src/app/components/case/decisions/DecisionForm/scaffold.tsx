@@ -26,8 +26,8 @@ export default (caseId: Components.Schemas.Case["id"], decisions: Components.Sch
           type: "NumberField",
           props: {
             isRequired: true,
-            label: "Wat is het bedrag?",
-            extraLabel: <InfoButton infoTitle="Hoe vul ik het bedrag in?" infoText="Vul hier alleen cijfers in, geen punten en komma's."></InfoButton>,
+            label: "Wat is het opgelegde bedrag?",
+            extraLabel: <InfoButton infoTitle="Hoe vul ik het bedrag in?" infoText="Vul hier alleen cijfers in, geen punten, komma's of tekens."></InfoButton>,
             name: "sanction_amount",
             pattern: "[0-9]"
           }
