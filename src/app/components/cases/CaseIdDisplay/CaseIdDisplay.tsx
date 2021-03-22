@@ -11,7 +11,7 @@ const CaseIdDisplay: React.FC<Props> = ({ id }) => {
   return (
     <>
     {id ? 
-      `${ IdPrefix }${ id?.toString().padStart(IdLength, "0") }` : 
+      `${ IdPrefix }${ id.toString().padStart(IdLength, "0") }` : 
       "-" }
     </>
   )
