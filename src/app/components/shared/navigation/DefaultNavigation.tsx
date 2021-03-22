@@ -35,7 +35,7 @@ const DefaultNavigation: React.FC<Props> = ({ showSearchButton }) => {
           </ButtonLink>
         </Hidden>
         { showSearchButton &&
-          <ButtonLink to={to("/zoeken")}>
+          <ButtonLink to={to("/")}>
             <IconButton size={50} variant="blank" iconSize={28} icon={<Search />} />
           </ButtonLink>
         }
