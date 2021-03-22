@@ -35,7 +35,7 @@ const mapData = (data: Components.Schemas.Case) =>
   ({
     href: to("/zaken/:id", { id: data.id }),
     itemList: [
-      <CaseIdDisplay id={ data.identification } />,
+      <CaseIdDisplay id={ data.id } />,
       data.team.name,
       data.start_date ? <DateDisplay date={ data.start_date } /> : "-",
       data.current_states.length > 0 ? data.current_states.map(({ status_name }) => status_name).join(", ") : "-",
