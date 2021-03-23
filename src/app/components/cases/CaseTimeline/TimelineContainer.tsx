@@ -39,14 +39,16 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
   return (
     <>
       <Div>
-        { timelineEvents === undefined ?
-            <Spinner /> :
-            <TimelineEvents items={ timelineEvents } />
+      { hasErrors ?
+        <ErrorMessage message="Laden van tijdlijn evenementen mislukt" /> :
+        <>
+            { timelineEvents === undefined ?
+                <Spinner /> :
+                <TimelineEvents items={ timelineEvents } />
+            }
+          </>
         }
       </Div>
-      { hasErrors &&
-        <ErrorMessage message="Laden van tijdlijn evenementen mislukt" />
-      }
       { showEmpty &&
         <p>Geen tijdlijn evenementen beschikbaar</p>
       }
