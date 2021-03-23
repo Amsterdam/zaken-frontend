@@ -59,7 +59,7 @@ export const visitLabelsMap = {
 }
 
 export const visitEventValuesMap = {
-  "malfunctioning_doorbel": "Bel functioneert niet",
+  "malfunctioning_doorbell": "Bel functioneert niet",
   "intercom": "Contact via intercom",
   "hotel_furnished": "Hotelmatig ingericht",
   "vacant": "Leegstaand",
