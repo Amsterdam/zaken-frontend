@@ -31,7 +31,7 @@ const CaseStatus: React.FC<Props> = ({ id }) => {
 
   const [data] = useCaseTasks(id)
 
-  if (data?.length === 0) return <Paragraph>Deze zaak is afgerond.</Paragraph>
+  if (data?.length === 0) return <Paragraph>Geen taken beschikbaar</Paragraph>
 
   return (
     <>
