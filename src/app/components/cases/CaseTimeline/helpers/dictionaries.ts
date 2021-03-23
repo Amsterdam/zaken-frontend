@@ -33,7 +33,7 @@ export const debriefViolationMap = {
 export const summonLabelsMap = {
   "date_added": "Datum",
   "author": "Projecthandhaver",
-  "persons": "Ontvanger(s)",
+  "persons": "Aangeschrevene(n)",
   "description": "Toelichting",
   "type": "Aanschrijving"
 }
