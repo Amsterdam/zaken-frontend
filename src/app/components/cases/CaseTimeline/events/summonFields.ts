@@ -7,6 +7,7 @@ export default [
     shouldShow: (value: any, isNested: boolean) => !isNested
   },
   "author",
+  "type",
   "persons",
   {
     key: "description",

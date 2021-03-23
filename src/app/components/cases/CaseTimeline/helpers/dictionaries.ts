@@ -34,7 +34,8 @@ export const summonLabelsMap = {
   "date_added": "Datum",
   "author": "Projecthandhaver",
   "persons": "Ontvanger(s)",
-  "description": "Toelichting"
+  "description": "Toelichting",
+  "type": "Aanschrijving"
 }
 
 // GENERIC EVENT
