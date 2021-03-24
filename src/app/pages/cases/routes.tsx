@@ -5,6 +5,7 @@ import SummonCreatePage from "app/pages/case/summons/CreatePage"
 import DecisionCreatePage from "app/pages/case/decisions/CreatePage"
 import CorrespondenceCreatePage from "app/pages/case/correspondence/CreatePage"
 import CompleteCasePage from "app/pages/cases/complete/CompleteCasePage"
+import SignalCreatePage from "app/pages/case/signals/CreatePage"
 import VisitCreatePage from "app/pages/case/visits/CreatePage"
 
 // NOTE: please add your own POC-specific routes here.
@@ -47,6 +48,11 @@ export default {
           "huisbezoek": {
             Page: VisitCreatePage,
             title: "Resultaat huisbezoek",
+            icon: "Edit"
+          },
+          "melding": {
+            Page: SignalCreatePage,
+            title: "Melding rapporteren",
             icon: "Edit"
           }
         }

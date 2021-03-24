@@ -36,5 +36,6 @@ export {
   useCorrespondence,
   useDebriefings,
   useDecisions,
+  useSignal,
   useSummons
 } from "./case"

@@ -12,5 +12,7 @@ declare namespace MockComponents {
       readonly id: number
       readonly title: string
     }
+
+    export type Signal = {}
   }
 }

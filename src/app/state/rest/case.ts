@@ -113,6 +113,19 @@ export const useCompleteCase = (options?: Options) => {
   })
 }
 
+// TODO-MOCKED replace with real endpoint
+export const useSignal = (options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<MockComponents.Schemas.Signal[]>({
+    ...options,
+    url: "signal",
+    groupName: "cases",
+    handleError,
+    isProtected: true,
+    isMocked: true
+  })
+}
+
 export const useCaseTasks = (caseId: Components.Schemas.Case["id"], options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.CamundaTask[]>({
