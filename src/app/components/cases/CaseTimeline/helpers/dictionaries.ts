@@ -33,7 +33,7 @@ export const debriefViolationMap = {
 export const summonLabelsMap = {
   "date_added": "Datum",
   "author": "Projecthandhaver",
-  "persons": "Ontvanger(s)",
+  "persons": "Aangeschrevene(n)",
   "description": "Toelichting",
   "type": "Aanschrijving"
 }
@@ -59,7 +59,7 @@ export const visitLabelsMap = {
 }
 
 export const visitEventValuesMap = {
-  "malfunctioning_doorbel": "Bel functioneert niet",
+  "malfunctioning_doorbell": "Bel functioneert niet",
   "intercom": "Contact via intercom",
   "hotel_furnished": "Hotelmatig ingericht",
   "vacant": "Leegstaand",
