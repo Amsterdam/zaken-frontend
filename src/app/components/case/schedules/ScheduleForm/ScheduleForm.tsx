@@ -10,13 +10,14 @@ type Props = {
   id: Components.Schemas.Case["id"]
 }
 
+// TODO: data type
 const mapData = (data: any) => (
   {
     ...data,
     action: data.action.id,
     week_segment: data.week_segment.id,
     day_segment: data.day_segment.id,
-    priority: data.priority.weight
+    priority: data.priority.id
   }
 )
 
