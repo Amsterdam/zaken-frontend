@@ -29,7 +29,6 @@ const ScheduleForm: React.FC<Props> = ({ id }) => {
   const [, { execPost }] = useSchedules()
   // TODO: data type
   const postMethod = async (data: any) => {
-    console.log(data)
     execPost(mapData(data))
   }
   const initialValues = {
