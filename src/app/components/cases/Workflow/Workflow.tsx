@@ -43,6 +43,7 @@ const mapArrayToList = (list: any[]) =>
   </Ul>
 
 export const taskActionMap = {
+  task_create_schedule: { name: "Huisbezoek inplannen", target: "inplanning" },
   task_create_visit: { name: "Resultaat huisbezoek", target: "huisbezoek" },
   task_create_debrief: { name: "Debrief verwerken", target: "debriefing" },
   task_create_summon: { name: "Aanschrijving verwerken", target: "aanschrijving" }
