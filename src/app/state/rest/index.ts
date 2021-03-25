@@ -20,7 +20,7 @@ export { useIsAuthorized } from "./auth"
 export { useResidents, usePermitCheckmarks, usePermitDetails } from "./addresses"
 export { useBAG, useBAGLodging, useBAGWithZipCode, usePanorama } from "./dataPunt"
 export { useFine } from "./fines"
-export { useTeams, useReasons, useSummonTypes } from "./teams"
+export { useTeams, useReasons, useSummonTypes, useDecisionTypes, useScheduleTypes } from "./teams"
 export { useSupportContacts } from "./help"
 export { useAuthors } from "./authors"
 export { useCases, useMockCases, useCasesByBagId } from "./cases"
@@ -38,3 +38,4 @@ export {
   useDecisions,
   useSummons
 } from "./case"
+export { useSchedules } from "./schedules"
