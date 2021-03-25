@@ -10,12 +10,27 @@ type Props = {
   id: Components.Schemas.Case["id"]
 }
 
+const mapData = (data: any) => (
+  {
+    ...data,
+    action: data.action.id,
+    week_segment: data.week_segment.id,
+    day_segment: data.day_segment.id,
+    priority: data.priority.weight
+  }
+)
+
 const ScheduleForm: React.FC<Props> = ({ id }) => {
 
   const [caseItem] = useCase(id)
   const teamId = caseItem?.team.id
   const [scheduleTypes] = useScheduleTypes(teamId)
   const [, { execPost }] = useSchedules()
+  // TODO: data type
+  const postMethod = async (data: any) => {
+    console.log(data)
+    execPost(mapData(data))
+  }
   const initialValues = {
     case: id,
     action: scheduleTypes?.actions[0],
@@ -31,7 +46,7 @@ const ScheduleForm: React.FC<Props> = ({ id }) => {
         <WorkflowForm
           caseId={ id }
           data={ scheduleTypes }
-          postMethod={ execPost }
+          postMethod={ postMethod }
           scaffold={ scaffold }
           initialValues={ initialValues }
         />
