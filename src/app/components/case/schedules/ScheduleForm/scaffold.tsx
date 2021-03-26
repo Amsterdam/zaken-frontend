@@ -57,7 +57,7 @@ export default (caseId: Components.Schemas.Case["id"], scheduleTypes: any) => {
     submit: {
       type: "SubmitButton",
       props: {
-        label: "Notitie verwerken",
+        label: "Huisbezoek inplannen",
         align: "right"
       }
     }
