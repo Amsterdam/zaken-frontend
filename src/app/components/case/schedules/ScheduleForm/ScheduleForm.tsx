@@ -32,9 +32,7 @@ const ScheduleForm: React.FC<Props> = ({ id }) => {
   const teamId = caseItem?.team.id
   const [scheduleTypes] = useScheduleTypes(teamId)
   const [, { execPost }] = useSchedules()
-  const postMethod = async (data: ScheduleTypeFormData) => {
-    execPost(mapData(data))
-  }
+  const postMethod = async (data: ScheduleTypeFormData) => await execPost(mapData(data))
   const initialValues = {
     case: id,
     action: scheduleTypes?.actions[0],
