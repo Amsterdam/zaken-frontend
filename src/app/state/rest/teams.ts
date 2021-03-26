@@ -50,3 +50,15 @@ export const useDecisionTypes = (teamId?: Components.Schemas.CaseTeam["id"], opt
     isProtected: true
   })
 }
+
+export const useScheduleTypes = (teamId?: Components.Schemas.CaseTeam["id"], options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<Components.Schemas.TeamScheduleTypes>({
+    ...options,
+    lazy: teamId === undefined,
+    url: makeApiUrl("teams", teamId, "schedule-types"),
+    groupName: "cases",
+    handleError,
+    isProtected: true
+  })
+}
