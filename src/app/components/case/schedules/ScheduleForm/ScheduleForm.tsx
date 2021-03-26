@@ -10,8 +10,13 @@ type Props = {
   id: Components.Schemas.Case["id"]
 }
 
-// TODO: data type
-const mapData = (data: any) => (
+type ScheduleTypeFormData = Omit<Components.Schemas.ScheduleCreate, "action" | "week_segment" | "day_segment" | "priority"> & {
+  action: Components.Schemas.TeamScheduleTypes["actions"][0]
+  week_segment: Components.Schemas.TeamScheduleTypes["week_segments"][0]
+  day_segment: Components.Schemas.TeamScheduleTypes["day_segments"][0]
+  priority: Components.Schemas.TeamScheduleTypes["priorities"][0]
+}
+const mapData = (data: ScheduleTypeFormData): Components.Schemas.ScheduleCreate => (
   {
     ...data,
     action: data.action.id,
@@ -27,8 +32,7 @@ const ScheduleForm: React.FC<Props> = ({ id }) => {
   const teamId = caseItem?.team.id
   const [scheduleTypes] = useScheduleTypes(teamId)
   const [, { execPost }] = useSchedules()
-  // TODO: data type
-  const postMethod = async (data: any) => {
+  const postMethod = async (data: ScheduleTypeFormData) => {
     execPost(mapData(data))
   }
   const initialValues = {

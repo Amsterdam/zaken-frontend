@@ -2,8 +2,7 @@ import { FormPositioner } from "@amsterdam/scaffold-form/package"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import navigateTo from "app/routing/navigateTo"
 
-// TODO: scheduleTypes type
-export default (caseId: Components.Schemas.Case["id"], scheduleTypes: any) => {
+export default (caseId: Components.Schemas.Case["id"], scheduleTypes: Components.Schemas.TeamScheduleTypes) => {
 
   const fields = {
     action: {

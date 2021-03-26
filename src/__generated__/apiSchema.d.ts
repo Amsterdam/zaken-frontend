@@ -423,6 +423,24 @@ declare namespace Components {
             previous?: string | null; // uri
             results?: SupportContact[];
         }
+        export interface PaginatedTeamScheduleTypesList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=4
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null; // uri
+            results?: TeamScheduleTypes[];
+        }
         export interface PaginatedUserList {
             /**
              * example:
@@ -514,8 +532,8 @@ declare namespace Components {
             authors?: User[];
             author_ids?: string /* uuid */[];
             start_time?: string; // date-time
-            situation?: string;
-            observations?: string[];
+            situation?: string | null;
+            observations?: string[] | null;
             can_next_visit_go_ahead?: boolean;
             can_next_visit_go_ahead_description?: string | null;
             suggest_next_visit?: string | null;
@@ -574,6 +592,13 @@ declare namespace Components {
             priority: Priority;
             case: number;
         }
+        export interface ScheduleCreate {
+            action: number;
+            week_segment: number;
+            day_segment: number;
+            priority: number;
+            case: number;
+        }
         export type SoortVorderingEnum = "PBF" | "PBN" | "PRV" | "SOC";
         export interface Summon {
             readonly id: number;
@@ -602,6 +627,12 @@ declare namespace Components {
             email: string;
             title: string;
         }
+        export interface TeamScheduleTypes {
+            actions: Action[];
+            week_segments: WeekSegment[];
+            day_segments: DaySegment[];
+            priorities: Priority[];
+        }
         export type TypeEnum = "DEBRIEFING" | "VISIT" | "CASE" | "SUMMON" | "GENERIC_TASK";
         export interface User {
             id?: string; // uuid
@@ -617,8 +648,8 @@ declare namespace Components {
             authors?: User[];
             author_ids?: string /* uuid */[];
             start_time: string; // date-time
-            situation: string;
-            observations?: string[];
+            situation?: string | null;
+            observations?: string[] | null;
             can_next_visit_go_ahead?: boolean;
             can_next_visit_go_ahead_description?: string | null;
             suggest_next_visit?: string | null;
@@ -795,6 +826,7 @@ declare namespace Paths {
     }
     namespace CasesList {
         namespace Parameters {
+            export type NoPagination = boolean;
             export type OpenCases = boolean;
             export type OpenStatus = string;
             export type Page = number;
@@ -803,6 +835,7 @@ declare namespace Paths {
             export type Team = number;
         }
         export interface QueryParameters {
+            noPagination?: Parameters.NoPagination;
             openCases?: Parameters.OpenCases;
             openStatus?: Parameters.OpenStatus;
             page?: Parameters.Page;
@@ -1034,9 +1067,9 @@ declare namespace Paths {
         }
     }
     namespace SchedulesCreate {
-        export type RequestBody = Components.Schemas.Schedule;
+        export type RequestBody = Components.Schemas.ScheduleCreate;
         namespace Responses {
-            export type $201 = Components.Schemas.Schedule;
+            export type $201 = Components.Schemas.ScheduleCreate;
         }
     }
     namespace SchedulesDestroy {
@@ -1242,7 +1275,7 @@ declare namespace Paths {
             page?: Parameters.Page;
         }
         namespace Responses {
-            export type $200 = Components.Schemas.PaginatedDecisionTypeList;
+            export type $200 = Components.Schemas.PaginatedTeamScheduleTypesList;
         }
     }
     namespace TeamsStateTypesList {
