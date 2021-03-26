@@ -150,6 +150,7 @@ export const useVisitsCreate = (options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.Visit>({
     ...options,
+    lazy: true,
     url: makeApiUrl("visits"),
     groupName: "cases",
     handleError,
