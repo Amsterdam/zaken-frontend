@@ -38,4 +38,4 @@ export {
   useDecisions,
   useSummons
 } from "./case"
-export { useSchedules } from "./schedules"
+export { useScheduleCreate } from "./schedules"

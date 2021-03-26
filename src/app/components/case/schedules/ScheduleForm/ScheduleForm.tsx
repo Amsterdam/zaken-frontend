@@ -1,7 +1,7 @@
 import React from "react"
 import { FormTitle } from "@amsterdam/asc-ui"
 
-import { useCase, useScheduleTypes, useSchedules } from "app/state/rest/"
+import { useCase, useScheduleTypes, useScheduleCreate } from "app/state/rest/"
 import WorkflowForm from "app/components/cases/Workflow/WorkflowForm"
 import scaffold from "./scaffold"
 import FormWithExtraLabel from "app/components/shared/FormWithExtraLabel/FormWithExtraLabel"
@@ -31,7 +31,7 @@ const ScheduleForm: React.FC<Props> = ({ id }) => {
   const [caseItem] = useCase(id)
   const teamId = caseItem?.team.id
   const [scheduleTypes] = useScheduleTypes(teamId)
-  const [, { execPost }] = useSchedules()
+  const [, { execPost }] = useScheduleCreate()
   const postMethod = async (data: ScheduleTypeFormData) => await execPost(mapData(data))
   const initialValues = {
     case: id,
