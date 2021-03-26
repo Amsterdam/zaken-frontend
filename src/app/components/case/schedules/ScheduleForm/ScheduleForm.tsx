@@ -16,7 +16,7 @@ type ScheduleTypeFormData = Omit<Components.Schemas.ScheduleCreate, "action" | "
   day_segment: Components.Schemas.TeamScheduleTypes["day_segments"][0]
   priority: Components.Schemas.TeamScheduleTypes["priorities"][0]
 }
-const mapData = (data: ScheduleTypeFormData): Components.Schemas.ScheduleCreate => (
+const mapData = (data: ScheduleTypeFormData) => (
   {
     ...data,
     action: data.action.id,
