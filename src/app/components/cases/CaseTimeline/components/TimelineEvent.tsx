@@ -20,7 +20,7 @@ type Props = {
 }
 
 const TimelineEvent: React.FC<Props> = ({ timelineEventItem: { type, caseEvents }, isOpen = false }) => (
-  <>
+  <div role="button" tabIndex={ -1 } >
     { type === "CASE" ?
         <TimelineEventItemComponent
           fields={ fields(reasonFields, reasonLabelsMap) }
@@ -63,7 +63,7 @@ const TimelineEvent: React.FC<Props> = ({ timelineEventItem: { type, caseEvents 
         /> :
       null
     }
-  </>
+  </div>
 )
 
 export default TimelineEvent
