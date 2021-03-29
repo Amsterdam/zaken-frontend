@@ -33,7 +33,7 @@
     "lodash.debounce": "^4.0.8",
     "lodash.merge": "^4.6.2",
     "qs": "^6.10.1",
-    "react": "^16.14.0",
+    "react": "^17.0.2",
     "react-app-polyfill": "^2.0.0",
     "react-dom": "^16.14.0",
     "react-final-form": "^6.5.3",
