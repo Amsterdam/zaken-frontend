@@ -6,7 +6,7 @@ import { makeApiUrl } from "./hooks/utils/apiUrl"
 import useApiRequest from "./hooks/useApiRequest"
 
 export const useCases = (start_date?: string, options?: Options) => {
-  const queryString = start_date !== undefined ? qs.stringify({ start_date }, { addQueryPrefix: true }) : ""
+  const queryString = start_date !== undefined ? qs.stringify({ date: start_date }, { addQueryPrefix: true }) : ""
   const url = `${ makeApiUrl("cases") }${ queryString }`
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.PaginatedCaseList>({
