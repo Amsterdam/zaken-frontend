@@ -16,7 +16,7 @@ const parse = (value: string | null) => {
 const Cases: React.FC = () => {
 
   const [date, setDate] = useURLState("date", parse)
-  const [data, { isBusy, execGet }] = useCases(date)
+  const [cases, { isBusy, execGet }] = useCases(date)
 
   useEffect(() => {
     (async () => await execGet())()
@@ -26,7 +26,7 @@ const Cases: React.FC = () => {
     <>
       <Row>
         <Column spanLarge={ 80 }>
-          <TableCases data={ data } isBusy={ isBusy } />
+          <TableCases data={ cases } isBusy={ isBusy } />
         </Column>
         <Column spanLarge={ 20 }>
           <CasesFilter date={ date } setDate={ setDate } />
