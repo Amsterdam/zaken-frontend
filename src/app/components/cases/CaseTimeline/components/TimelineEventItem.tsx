@@ -1,7 +1,7 @@
 import React from "react"
 import { getDay }from "app/components/shared/DayDisplay/DayDisplay"
 
-import { Timeline } from "app/components/shared/Timeline"
+import Timeline from "@amsterdam/wonen-ui/components/timeline/Timeline/Timeline"
 import type { Field } from "../helpers/fields"
 import EventWrapper from "./EventWrapper"
 import { displayDate } from "app/components/shared/DateDisplay/DateDisplay"

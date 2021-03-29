@@ -42,6 +42,7 @@ const TimelineEvent: React.FC<Props> = ({ timelineEventItem: { type, caseEvents 
           caseEvents={ caseEvents }
           title={ caseTypesMap[type] }
           isOpen={ isOpen }
+          dateField="date_added"
           pathName="debriefing"
         /> :
       type === "SUMMON" ?
