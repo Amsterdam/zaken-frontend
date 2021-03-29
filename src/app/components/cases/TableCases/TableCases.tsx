@@ -14,7 +14,7 @@ type Props = {
 const columns = [
   { header: "Adres", minWidth: 300 },
   { header: "Status", minWidth: 100 },
-  { header: "Laatst gewijzigd", minWidth: 100 },
+  { header: "Zaak aangemaakt", minWidth: 100 },
   { minWidth: 140 }
 ]
 
