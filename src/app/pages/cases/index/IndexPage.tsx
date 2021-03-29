@@ -8,15 +8,15 @@ import BreadCrumbs from "app/components/shared/BreadCrumbs/BreadCrumbs"
 import Cases from "app/components/cases/Cases/Cases"
 
 const IndexPage: React.FC<RouteComponentProps> = () => (
-    <DefaultLayout>
-      <RowWithColumn>
-        <BreadCrumbs />
-      </RowWithColumn>
-      <RowWithColumn>
-        <Heading>Overzicht zaken looplijst(en)</Heading>
-      </RowWithColumn>
-      <Cases />
-    </DefaultLayout>
-  )
+  <DefaultLayout>
+    <RowWithColumn>
+      <BreadCrumbs />
+    </RowWithColumn>
+    <RowWithColumn>
+      <Heading>Zakenoverzicht</Heading>
+    </RowWithColumn>
+    <Cases />
+  </DefaultLayout>
+)
 
 export default IndexPage
