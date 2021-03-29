@@ -1,5 +1,9 @@
 import { useCaseEvents } from "app/state/rest"
-import { TimelineEventItem } from "../components/TimelineEvent"
+
+type TimelineEventItem = {
+  type: string
+  caseEvents: Components.Schemas.CaseEvent[]
+}
 
 type CaseEvent = Components.Schemas.CaseEvent
 
