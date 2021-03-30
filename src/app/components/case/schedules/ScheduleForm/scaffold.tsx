@@ -1,48 +1,43 @@
 import { FormPositioner } from "@amsterdam/scaffold-form/package"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
+import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import navigateTo from "app/routing/navigateTo"
 
 export default (caseId: Components.Schemas.Case["id"], scheduleTypes: Components.Schemas.TeamScheduleTypes) => {
 
   const fields = {
-    action: {
-      type: "ComplexSelectField",
-      props: {
-        label: "Welke actie moet worden ingepland?",
-        name: "action",
-        optionLabelField: "name",
-        options: scheduleTypes?.actions,
-        isRequired: true
-      }
-    },
     week_segment: {
       type: "ComplexSelectField",
       props: {
-        label: "Op welke dagen kan de actie het best worden ingepland?",
+        label: "Op welke dagen kan het huisbezoek het beste worden ingepland?",
         name: "week_segment",
         optionLabelField: "name",
-        options: scheduleTypes?.week_segments,
-        isRequired: true
+        isRequired: true,
+        withEmptyOption: true,
+        options: scheduleTypes?.week_segments
       }
     },
     day_segment: {
       type: "ComplexSelectField",
       props: {
-        label: "Tijdens welk dagdeel kan de actie het beste worden ingepland?",
+        label: "Tijdens welk dagdeel kan het huisbezoek het beste worden ingepland?",
         name: "day_segment",
         optionLabelField: "name",
-        options: scheduleTypes?.day_segments,
-        isRequired: true
+        isRequired: true,
+        withEmptyOption: true,
+        options: scheduleTypes?.day_segments
       }
     },
     priority: {
       type: "ComplexSelectField",
       props: {
-        label: "Wat is de urgentie?",
+        label: "Wat is de urgentie voor het huisbezoek?",
         name: "priority",
         optionLabelField: "name",
-        options: scheduleTypes?.priorities,
-        isRequired: true
+        extraLabel: <InfoButton infoTitle="Urgentie huisbezoek" infoText="Gebruik hoge urgentie indien er nu toeristen aanwezig zijn of als er bijvoorbeeld een machtiging van kracht is."></InfoButton>,
+        isRequired: true,
+        withEmptyOption: true,
+        options: scheduleTypes?.priorities
       }
     },
     secondaryButton: {
@@ -56,7 +51,7 @@ export default (caseId: Components.Schemas.Case["id"], scheduleTypes: Components
     submit: {
       type: "SubmitButton",
       props: {
-        label: "Actie inplannen",
+        label: "Huisbezoek inplannen",
         align: "right"
       }
     }
@@ -64,7 +59,6 @@ export default (caseId: Components.Schemas.Case["id"], scheduleTypes: Components
 
   return new FormPositioner(fields as Fields)
     .setGrid("mobileS", "1fr 1fr", [
-      ["action", "action"],
       ["week_segment", "week_segment"],
       ["day_segment", "day_segment"],
       ["priority", "priority"],
