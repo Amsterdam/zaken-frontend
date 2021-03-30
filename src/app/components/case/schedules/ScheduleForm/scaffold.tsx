@@ -8,7 +8,7 @@ export default (caseId: Components.Schemas.Case["id"], scheduleTypes: Components
     action: {
       type: "ComplexSelectField",
       props: {
-        label: "action",
+        label: "Welke actie moet worden ingepland?",
         name: "action",
         optionLabelField: "name",
         options: scheduleTypes?.actions,
@@ -18,7 +18,7 @@ export default (caseId: Components.Schemas.Case["id"], scheduleTypes: Components
     week_segment: {
       type: "ComplexSelectField",
       props: {
-        label: "week_segment",
+        label: "Op welke dagen kan de actie het best worden ingepland?",
         name: "week_segment",
         optionLabelField: "name",
         options: scheduleTypes?.week_segments,
@@ -28,7 +28,7 @@ export default (caseId: Components.Schemas.Case["id"], scheduleTypes: Components
     day_segment: {
       type: "ComplexSelectField",
       props: {
-        label: "day_segment",
+        label: "Tijdens welk dagdeel kan de actie het beste worden ingepland?",
         name: "day_segment",
         optionLabelField: "name",
         options: scheduleTypes?.day_segments,
@@ -38,7 +38,7 @@ export default (caseId: Components.Schemas.Case["id"], scheduleTypes: Components
     priority: {
       type: "ComplexSelectField",
       props: {
-        label: "priority",
+        label: "Wat is de urgentie?",
         name: "priority",
         optionLabelField: "name",
         options: scheduleTypes?.priorities,
@@ -56,7 +56,7 @@ export default (caseId: Components.Schemas.Case["id"], scheduleTypes: Components
     submit: {
       type: "SubmitButton",
       props: {
-        label: "Huisbezoek inplannen",
+        label: "Actie inplannen",
         align: "right"
       }
     }

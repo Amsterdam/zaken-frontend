@@ -43,7 +43,7 @@ const ScheduleForm: React.FC<Props> = ({ id }) => {
 
   return (
     <>
-      <FormTitle>Gebruik dit formulier om een huisbezoek in te plannen</FormTitle>
+      <FormTitle>Gebruik dit formulier om een actie in te plannen</FormTitle>
       <FormWithExtraLabel>
         <WorkflowForm
           caseId={ id }
