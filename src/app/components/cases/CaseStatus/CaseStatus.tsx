@@ -1,10 +1,9 @@
 import React from "react"
 import styled from "styled-components"
-import { Button, Divider, Heading, Paragraph, themeColor, themeSpacing } from "@amsterdam/asc-ui"
+import { Button, Divider, Heading, themeColor, themeSpacing } from "@amsterdam/asc-ui"
 
 import ButtonLink from "app/components/shared/ButtonLink/ButtonLink"
 import to from "app/routing/utils/to"
-import { useCaseTasks } from "app/state/rest"
 import Workflow from "../Workflow/Workflow"
 import AddTaskForm from "app/components/case/tasks/AddTask/AddTaskForm"
 
@@ -27,29 +26,23 @@ const StyledDivider = styled(Divider)`
   margin-bottom: ${ themeSpacing(16) };
 `
 
-const CaseStatus: React.FC<Props> = ({ id }) => {
-
-  const [data] = useCaseTasks(id)
-
-  if (data?.length === 0) return <Paragraph>Geen taken beschikbaar</Paragraph>
-
-  return (
-    <>
+const CaseStatus: React.FC<Props> = ({ id }) => (
+  <>
+    <Div>
+      <Heading as="h2">
+        Status
+      </Heading>
       <Div>
-        <Heading as="h2">
-          Status
-        </Heading>
-        <Div>
-          <AddTaskForm caseId={ id } />
-          <ButtonLink to={ to("/zaken/:id/afronden", { id }) }>
-            <StyledButton variant="tertiary">Afronden</StyledButton>
-          </ButtonLink>
-        </Div>
+        <AddTaskForm caseId={ id } />
+        <ButtonLink to={ to("/zaken/:id/afronden", { id }) }>
+          <StyledButton variant="tertiary">Afronden</StyledButton>
+        </ButtonLink>
       </Div>
-      <StyledDivider />
-      <Workflow id={ id } />
-    </>
-  )
-}
+    </Div>
+    <StyledDivider />
+    <Workflow id={ id } />
+  </>
+)
+
 
 export default CaseStatus
