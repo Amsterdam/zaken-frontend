@@ -1,4 +1,4 @@
-import { displayDate, displayTime } from "app/components/shared/DateDisplay/DateDisplay"
+import { displayDate, displayTime } from "@amsterdam/wonen-ui"
 import { visitLabelsMap, visitEventValuesMap, visit_go_ahead } from "../helpers/dictionaries"
 
 const mapValue = (v: keyof typeof visitEventValuesMap) => visitEventValuesMap[v]

@@ -1,4 +1,4 @@
-import { displayDate } from "app/components/shared/DateDisplay/DateDisplay"
+import { displayDate } from "@amsterdam/wonen-ui"
 
 export default [
   {

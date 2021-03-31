@@ -1,9 +1,9 @@
 import React from "react"
 import styled from "styled-components"
 import { Heading, Spinner, themeColor, themeSpacing } from "@amsterdam/asc-ui"
+import { CaseIdDisplay } from "@amsterdam/wonen-ui"
 
 import { useCase } from "app/state/rest"
-import CaseIdDisplay from "../CaseIdDisplay/CaseIdDisplay"
 import FullAddressDisplay from "app/components/addresses/FullAddressDisplay/FullAddressDisplay"
 
 type Props = {

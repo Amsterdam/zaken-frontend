@@ -1,5 +1,5 @@
 import React, { useMemo } from "react"
-import DateDisplay from "app/components/shared/DateDisplay/DateDisplay"
+import { DateDisplay } from "@amsterdam/wonen-ui"
 import DefinitionList from "app/components/shared/DefinitionList/DefinitionList"
 
 type Props = {

@@ -1,8 +1,7 @@
 import React, { useMemo } from "react"
 import { Link } from "@amsterdam/asc-ui"
+import { DateDisplay } from "@amsterdam/wonen-ui"
 import DefinitionList from "app/components/shared/DefinitionList/DefinitionList"
-import DateDisplay from "app/components/shared/DateDisplay/DateDisplay"
-
 
 type Props = {detail: Components.Schemas.DecosPermit}
 
