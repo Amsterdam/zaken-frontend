@@ -100,7 +100,7 @@ const Workflow: React.FC<Props> = ({ id }) => {
       <StyledTable
         columns={ columns }
         data={ mappedData }
-        noValuesPlaceholder=""
+        noValuesPlaceholder={ <>Geen taken beschikbaar. <a href={ window.location.pathname }>Herlaad</a></> }
       /> :
     hasErrors ?
       <ErrorMessage message="Laden van taken mislukt" /> :
