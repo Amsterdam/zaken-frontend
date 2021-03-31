@@ -1,4 +1,4 @@
-import React from "react"
+import { Fragment } from "react"
 import { ThemeProvider, GlobalStyle } from "@amsterdam/asc-ui"
 import { LocationProvider } from "@reach/router"
 
@@ -10,9 +10,9 @@ import ApiProvider from "./app/state/rest/provider/ApiProvider"
 import isLocalDevelopment from "./app/state/auth/keycloak/isLocalDevelopment"
 import { ErrorBoundary } from "@sentry/react"
 
-const SentryErrorBoundary = process.env.REACT_APP_ENVIRONMENT !== undefined ? ErrorBoundary : React.Fragment
+const SentryErrorBoundary = process.env.REACT_APP_ENVIRONMENT !== undefined ? ErrorBoundary : Fragment
 
-const App: React.FC = () => (
+const App = () => (
   <SentryErrorBoundary>
     <ThemeProvider>
       <GlobalStyle />
