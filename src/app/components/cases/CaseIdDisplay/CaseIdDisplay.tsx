@@ -5,16 +5,8 @@ type Props = {
 }
 
 const CaseIdDisplay: React.FC<Props> = ({ id }) => {
-  const IdPrefix = "WV-" //TODO make dynamic, based on teamId?
-  const IdLength = 6
-
-  return (
-    <>
-    {id ? 
-      `${ IdPrefix }${ id.toString().padStart(IdLength, "0") }` : 
-      "-" }
-    </>
-  )
+  const idLength = 6
+  return <>{ id?.toString().padStart(idLength, "0") ?? "-" }</>
 }
 
 export default CaseIdDisplay
