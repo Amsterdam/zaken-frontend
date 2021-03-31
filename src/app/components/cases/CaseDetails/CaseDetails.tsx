@@ -1,9 +1,8 @@
 import React, { useMemo } from "react"
+import { CaseIdDisplay, displayDate } from "@amsterdam/wonen-ui"
 
 import DefinitionList from "app/components/shared/DefinitionList/DefinitionList"
-import CaseIdDisplay from "../CaseIdDisplay/CaseIdDisplay"
 import { useCase } from "app/state/rest"
-import { displayDate } from "app/components/shared/DateDisplay/DateDisplay"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]

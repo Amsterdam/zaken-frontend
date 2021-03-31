@@ -2,7 +2,7 @@ import React from "react"
 
 import { useModal } from "app/components/shared/Modal/hooks/useModal"
 import ChangeDueDateModal from "./ChangeDueDateModal"
-import { displayDate } from "app/components/shared/DateDisplay/DateDisplay"
+import { displayDate } from "@amsterdam/wonen-ui"
 import { isDateInPast } from "app/components/shared/Date/helpers"
 import styled from "styled-components"
 import { useDueDate } from "app/state/rest/case"
