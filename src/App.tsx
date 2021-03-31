@@ -10,8 +10,10 @@ import ApiProvider from "./app/state/rest/provider/ApiProvider"
 import isLocalDevelopment from "./app/state/auth/keycloak/isLocalDevelopment"
 import { ErrorBoundary } from "@sentry/react"
 
+const SentryErrorBoundary = process.env.REACT_APP_ENVIRONMENT !== undefined ? ErrorBoundary : React.Fragment
+
 const App: React.FC = () => (
-  <ErrorBoundary>
+  <SentryErrorBoundary>
     <ThemeProvider>
       <GlobalStyle />
       <KeycloakProvider shouldInitialize={ isLocalDevelopment === false } initializedCallback={ initializedCallback }>
@@ -24,7 +26,7 @@ const App: React.FC = () => (
         </LocationProvider>
       </KeycloakProvider>
     </ThemeProvider>
-  </ErrorBoundary>
+  </SentryErrorBoundary>
 )
 
 export default App
