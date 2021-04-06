@@ -19,6 +19,7 @@ type Props = {
 type TaskAction = {
   name: string
   target: string
+  disabled?: boolean
 }
 
 const StyledIcon = styled(Icon)`
@@ -44,7 +45,7 @@ const mapArrayToList = (list: any[]) =>
 
 export const taskActionMap = {
   task_create_schedule: { name: "Huisbezoek inplannen", target: "inplanning" },
-  task_create_visit: { name: "Resultaat huisbezoek", target: "huisbezoek" },
+  task_create_visit: { name: "Resultaat huisbezoek", target: "huisbezoek", disabled: true },
   task_create_debrief: { name: "Debrief verwerken", target: "debriefing" },
   task_create_summon: { name: "Aanschrijving verwerken", target: "aanschrijving" }
 } as Record<string, TaskAction>
@@ -66,9 +67,12 @@ const mapTaskData =
           <ChangeableDueDate dueDate={data.due_date} caseId={id} camundaTaskId = {camunda_task_id} /> :
             "-",
           action !== undefined ?
-            <ButtonLink to={ to(`/zaken/:id/${ action.target }`, { id: id }) }>
-              <Button variant="primary" as="span">{ action.name }</Button>
-            </ButtonLink> :
+            action.disabled ?
+              <Button variant="primary" disabled={ true } title={ to(`/zaken/:id/${ action.target }`) }>{ action.name }</Button> :
+              <ButtonLink to={ to(`/zaken/:id/${ action.target }`, { id: id }) }>
+                <Button variant="primary" as="span">{ action.name }</Button>
+              </ButtonLink>
+          :
           form ?
             <CamundaFormButton onSubmit={ onSubmitTaskComplete } taskName={ name } caseId={ id } form={ form } /> :
             <CompleteTaskButton onSubmit={ onSubmitTaskComplete } taskName={ name } caseId={ id } />
