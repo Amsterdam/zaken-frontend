@@ -25,9 +25,15 @@ const mapData = (data: Components.Schemas.Case) => (
       data.current_states.length > 0 ? data.current_states.map(({ status_name }) => status_name).join(", ") : undefined,
       data.current_states.length > 0 ? (
         <>
-          { data.current_states.map(({ start_date }, index) => (
-            <DateDisplay key={ `${ start_date }_${ index }` } date={ start_date } />
-          ) ) }
+          { data.current_states
+            .map(({ start_date }, index) => (
+              <DateDisplay key={ `${ start_date }_${ index }` } date={ start_date } />
+            ))
+            .reduce((acc, elem) =>
+              acc.length === 0 ? [elem] : [...acc, ", ", elem],
+              [] as React.ReactChild[]
+            )
+          }
         </>) :
         "-",
       <OpenButton href={to("/zaken/:id", { id: data.id })} text="Zaakdetails" />
