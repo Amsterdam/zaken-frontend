@@ -1,5 +1,5 @@
 import React from "react"
-import { Heading, Paragraph, SearchBar } from "@amsterdam/asc-ui"
+import { Heading, FormTitle, SearchBar } from "@amsterdam/asc-ui"
 import styled from "styled-components"
 import debounce from "lodash.debounce"
 
@@ -8,9 +8,13 @@ import SearchResults from "app/components/search/SearchResults/SearchResults"
 import useURLState from "app/hooks/useURLState/useURLState"
 
 const DELAY = 750
+const MAX_WIDTH = "500px"
 
+const StyledFormTitle = styled(FormTitle)`
+  max-width: ${ MAX_WIDTH };
+`
 const SearchBarWrap = styled.div`
-  max-width: 500px;
+  max-width: ${ MAX_WIDTH };
 `
 
 const SearchWrapper: React.FC = () => {
@@ -23,7 +27,7 @@ const SearchWrapper: React.FC = () => {
     <>
       <RowWithColumn>
         <Heading>Adres zoeken</Heading>
-        <Paragraph>Ook om een zaak aan te maken op dit adres</Paragraph>
+        <StyledFormTitle>Ook om een zaak aan te maken op dit adres</StyledFormTitle>
         <SearchBarWrap>
           <SearchBar
             placeholder="Zoek op postcode en huisnummer"
