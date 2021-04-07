@@ -47,7 +47,8 @@ export const taskActionMap = {
   task_create_schedule: { name: "Huisbezoek inplannen", target: "inplanning" },
   task_create_visit: { name: "Resultaat huisbezoek", target: "huisbezoek", disabled: true },
   task_create_debrief: { name: "Debrief verwerken", target: "debriefing" },
-  task_create_summon: { name: "Aanschrijving verwerken", target: "aanschrijving" }
+  task_create_summon: { name: "Aanschrijving verwerken", target: "aanschrijving" },
+  task_create_decision: { name: "Besluit verwerken", target: "besluit" }
 } as Record<string, TaskAction>
 
 const mapTaskData =
