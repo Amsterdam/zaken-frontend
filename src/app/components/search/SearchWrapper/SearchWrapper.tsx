@@ -8,13 +8,9 @@ import SearchResults from "app/components/search/SearchResults/SearchResults"
 import useURLState from "app/hooks/useURLState/useURLState"
 
 const DELAY = 750
-const MAX_WIDTH = "500px"
 
-const StyledFormTitle = styled(FormTitle)`
-  max-width: ${ MAX_WIDTH };
-`
 const SearchBarWrap = styled.div`
-  max-width: ${ MAX_WIDTH };
+  max-width: 500px;
 `
 
 const SearchWrapper: React.FC = () => {
@@ -27,8 +23,8 @@ const SearchWrapper: React.FC = () => {
     <>
       <RowWithColumn>
         <Heading>Adres zoeken</Heading>
-        <StyledFormTitle>Ook om een zaak aan te maken op dit adres</StyledFormTitle>
         <SearchBarWrap>
+          <FormTitle>Ook om een nieuwe zaak aan te maken op een specifiek adres</FormTitle>
           <SearchBar
             placeholder="Zoek op postcode en huisnummer"
             value={ searchString }
