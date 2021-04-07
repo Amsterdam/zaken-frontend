@@ -1,11 +1,11 @@
 import { themeSpacing } from "@amsterdam/asc-ui"
-import React from "react"
 import styled from "styled-components"
 
 const Ul = styled.ul`
   margin-bottom: ${ themeSpacing(6) }
 `
-export const helpTextViolation = 
+
+export default (
   <ol>
     <li>
       <b>Nader intern onderzoek nodig</b>
@@ -23,3 +23,4 @@ export const helpTextViolation =
       </Ul>
     </li>
   </ol>
+)
