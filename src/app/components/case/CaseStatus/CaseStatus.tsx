@@ -34,8 +34,8 @@ const CaseStatus: React.FC<Props> = ({ id }) => (
       </Heading>
       <Div>
         <AddTaskForm caseId={ id } />
-        <ButtonLink to={ to("/zaken/:id/afronden", { id }) }>
-          <StyledButton variant="tertiary">Afronden</StyledButton>
+        <ButtonLink to={ to("/zaken/:id/melding", { id }) }>
+          <StyledButton variant="tertiary">Melding</StyledButton>
         </ButtonLink>
       </Div>
     </Div>
