@@ -40,7 +40,7 @@ const AddressHeader: FC<Props> = ({ bagId, headingSize = "h2", isHeader = false,
 
   const [filteredAddresses] = useOtherAddressesByBagId(bagId)
   const showButton = enableSwitch && (filteredAddresses?.length ?? 0) > 1
-  const isCurrentAddress = (address: { adres: string }) => address.adres.trim() === data?.results[0].adres.trim()
+  const isCurrentAddress = (address: { adres: string }) => address.adres.trim() === data?.results[0]?.adres.trim()
   const addressIndex = filteredAddresses?.findIndex(isCurrentAddress) ?? -1
   const index =
     addressIndex === 0 ? "first" :
