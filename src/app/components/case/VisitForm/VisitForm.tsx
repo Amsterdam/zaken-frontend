@@ -16,7 +16,7 @@ export type VisitData = Omit<Components.Schemas.Visit, "author_ids"> & { author1
 const filterUndefined = <T extends unknown>(arr: Array<T | undefined>) => arr.filter((item): item is T => item !== undefined)
 const mapData = (data: VisitData) => ({ ...data, author_ids: filterUndefined([data.author1?.id, data.author2?.id]) })
 
-const CreateForm: React.FC<Props> = ({ caseId }) => {
+const VisitForm: React.FC<Props> = ({ caseId }) => {
 
   const [data] = useAuthors()
   const authors = data?.results ?? []
@@ -50,4 +50,4 @@ const CreateForm: React.FC<Props> = ({ caseId }) => {
   )
 }
 
-export default CreateForm
+export default VisitForm

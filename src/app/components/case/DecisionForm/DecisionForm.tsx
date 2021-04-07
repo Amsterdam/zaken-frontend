@@ -2,10 +2,10 @@ import React from "react"
 import { FormTitle } from "@amsterdam/asc-ui"
 
 import { useCase, useDecisions } from "app/state/rest/"
-import WorkflowForm from "app/components/cases/Workflow/WorkflowForm"
-import scaffold from "app/components/case/decisions/DecisionForm/scaffold"
+import WorkflowForm from "app/components/case/Workflow/WorkflowForm"
+import scaffold from "app/components/case/DecisionForm/scaffold"
 import FormWithExtraLabel from "app/components/shared/FormWithExtraLabel/FormWithExtraLabel"
-import DecisionHeader from "../DecisionHeader"
+import DecisionHeader from "./DecisionHeader"
 import { useDecisionTypes } from "app/state/rest/teams"
 
 type Props = {
@@ -23,7 +23,7 @@ const DecisionForm: React.FC<Props> = ({ id }) => {
   const decisionTypes = data?.results ?? []
   const [, { execPost }] = useDecisions({ lazy: true })
   const postMethod = async (data: DecisionData) => await execPost(mapData(data))
-  
+
   return (
     <>
       <DecisionHeader caseId={ id }/>

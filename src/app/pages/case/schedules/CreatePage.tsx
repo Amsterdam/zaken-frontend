@@ -8,9 +8,9 @@ import Row, { RowWithColumn } from "app/components/layouts/Grid/Row"
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
-import CaseHeading from "app/components/cases/CaseHeading/CaseHeading"
+import CaseHeading from "app/components/case/CaseHeading/CaseHeading"
 import { Column } from "app/components/layouts/Grid"
-import ScheduleForm from "app/components/case/schedules/ScheduleForm/ScheduleForm"
+import ScheduleForm from "app/components/case/ScheduleForm/ScheduleForm"
 
 type Props = {
   id: string

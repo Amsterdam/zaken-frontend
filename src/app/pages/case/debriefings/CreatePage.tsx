@@ -8,9 +8,9 @@ import Row, { RowWithColumn } from "app/components/layouts/Grid/Row"
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
-import CaseHeading from "app/components/cases/CaseHeading/CaseHeading"
+import CaseHeading from "app/components/case/CaseHeading/CaseHeading"
 import { Column } from "app/components/layouts/Grid"
-import DebriefCreateForm from "app/components/case/debriefings/DebriefForm/DebriefForm"
+import DebriefCreateForm from "app/components/case/DebriefForm/DebriefForm"
 
 type Props = {
   id: string

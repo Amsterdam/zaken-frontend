@@ -2,7 +2,7 @@ import React from "react"
 import { FormTitle } from "@amsterdam/asc-ui"
 
 import { useCompleteCase } from "app/state/rest/"
-import WorkflowForm from "app/components/cases/Workflow/WorkflowForm"
+import WorkflowForm from "app/components/case/Workflow/WorkflowForm"
 import scaffold from "app/components/cases/CaseCompleteForm/scaffold"
 
 type Props = {

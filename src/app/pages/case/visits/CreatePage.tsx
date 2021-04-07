@@ -5,11 +5,11 @@ import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
 import PageHeading from "app/components/shared/PageHeading/PageHeading"
 import BreadCrumbs from "app/components/shared/BreadCrumbs/BreadCrumbs"
 import { RowWithColumn } from "app/components/layouts/Grid/Row"
-import VisitCreateForm from "app/components/case/visits/CreateForm/CreateForm"
+import VisitCreateForm from "app/components/case/VisitForm/VisitForm"
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
-import CaseHeading from "app/components/cases/CaseHeading/CaseHeading"
+import CaseHeading from "app/components/case/CaseHeading/CaseHeading"
 
 type Props = {
   id: string
