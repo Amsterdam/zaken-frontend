@@ -16,7 +16,7 @@ type Props = {
   bagId: string
 }
 
-const IndexPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
+const PermitsPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
   isValidUrlParamBAGId(bagId) ?
     <DefaultLayout>
       <DetailHeader bagId={ bagId } />
@@ -43,4 +43,4 @@ const IndexPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
     <NotFoundPage />
 )
 
-export default IndexPage
+export default  PermitsPage
