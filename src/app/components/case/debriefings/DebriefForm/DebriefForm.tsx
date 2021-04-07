@@ -29,7 +29,7 @@ const DebriefForm: React.FC<Props> = ({ caseId, initialValues, isLoading, onSubm
       onSubmit={ onSubmit }
       initialValues={ initialValues ?? { case: caseId } }
     >
-      <ScaffoldFields {...createScaffoldProps(caseId, initialValues !== undefined) } />
+      <ScaffoldFields {...createScaffoldProps(caseId) } />
     </ScaffoldForm>
   </FormWithTooltip>
 

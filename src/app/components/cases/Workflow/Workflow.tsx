@@ -68,8 +68,8 @@ const mapTaskData =
             "-",
           action !== undefined ?
             action.disabled ?
-              <Button variant="primary" disabled={ true } title={ to(`/zaken/:id/${ action.target }`) }>{ action.name }</Button> :
-              <ButtonLink to={ to(`/zaken/:id/${ action.target }`, { id: id }) }>
+              <Button variant="primary" disabled={ true } title={ to(`/zaken/:id/${ action.target }`, { id }) }>{ action.name }</Button> :
+              <ButtonLink to={ to(`/zaken/:id/${ action.target }`, { id }) }>
                 <Button variant="primary" as="span">{ action.name }</Button>
               </ButtonLink>
           :
