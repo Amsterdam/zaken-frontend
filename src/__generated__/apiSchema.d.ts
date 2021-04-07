@@ -23,6 +23,13 @@ declare namespace Components {
         export interface CamundaEndStateWorker {
             state_identification: number;
         }
+        export interface CamundaMessager {
+            message_name: string;
+            process_variables?: {
+                [name: string]: any;
+            };
+            case_id: string;
+        }
         /**
          * Serializer for Worker Data
          */
@@ -124,15 +131,6 @@ declare namespace Components {
             readonly id: number;
             name: string;
         }
-        export interface Debriefing {
-            readonly id: number;
-            case: number;
-            author: string; // uuid
-            readonly date_added: string; // date-time
-            readonly date_modified: string; // date-time
-            violation?: ViolationEnum;
-            feedback: string;
-        }
         export interface DebriefingCreate {
             readonly id: number;
             violation?: ViolationEnum;
@@ -141,7 +139,7 @@ declare namespace Components {
         }
         export interface Decision {
             readonly id: number;
-            sanction_amount?: string | null; // decimal
+            sanction_amount?: string | null; // decimal ^\d{0,98}(\.\d{0,2})?$
             description?: string | null;
             readonly date_added: string; // date-time
             case: number;
@@ -187,10 +185,10 @@ declare namespace Components {
             landcode: string | null;
             kenteken: string | null;
             bonnummer: string | null;
-            bedrag_opgelegd: string; // decimal
-            bedrag_open_post_incl_rente: string; // decimal
-            totaalbedrag_open_kosten: string; // decimal
-            bedrag_open_rente: string; // decimal
+            bedrag_opgelegd: string; // decimal ^\d{0,10}(\.\d{0,2})?$
+            bedrag_open_post_incl_rente: string; // decimal ^\d{0,10}(\.\d{0,2})?$
+            totaalbedrag_open_kosten: string; // decimal ^\d{0,10}(\.\d{0,2})?$
+            bedrag_open_rente: string; // decimal ^\d{0,10}(\.\d{0,2})?$
             reden_opschorting: string | null;
             omschrijving_1: string | null;
             omschrijving_2: string | null;
@@ -297,6 +295,24 @@ declare namespace Components {
             previous?: string | null; // uri
             results?: CaseTeam[];
         }
+        export interface PaginatedDebriefingCreateList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=4
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null; // uri
+            results?: DebriefingCreate[];
+        }
         export interface PaginatedDecisionList {
             /**
              * example:
@@ -350,24 +366,6 @@ declare namespace Components {
              */
             previous?: string | null; // uri
             results?: DecosPermit[];
-        }
-        export interface PaginatedScheduleList {
-            /**
-             * example:
-             * 123
-             */
-            count?: number;
-            /**
-             * example:
-             * http://api.example.org/accounts/?page=4
-             */
-            next?: string | null; // uri
-            /**
-             * example:
-             * http://api.example.org/accounts/?page=2
-             */
-            previous?: string | null; // uri
-            results?: Schedule[];
         }
         export interface PaginatedSummonList {
             /**
@@ -477,70 +475,6 @@ declare namespace Components {
             previous?: string | null; // uri
             results?: Visit[];
         }
-        export interface PatchedCase {
-            readonly id?: number;
-            address?: Address;
-            case_states?: CaseState[];
-            readonly current_states?: CaseState[];
-            team?: CaseTeam;
-            reason?: CaseReason;
-            readonly schedules?: Schedule[];
-            identification?: string | null;
-            start_date?: string | null; // date
-            end_date?: string | null; // date
-            is_legacy_bwv?: boolean;
-            camunda_id?: string | null;
-            description?: string | null;
-            author?: string | null; // uuid
-        }
-        export interface PatchedDebriefing {
-            readonly id?: number;
-            case?: number;
-            author?: string; // uuid
-            readonly date_added?: string; // date-time
-            readonly date_modified?: string; // date-time
-            violation?: ViolationEnum;
-            feedback?: string;
-        }
-        export interface PatchedDecision {
-            readonly id?: number;
-            sanction_amount?: string | null; // decimal
-            description?: string | null;
-            readonly date_added?: string; // date-time
-            case?: number;
-            decision_type?: number;
-        }
-        export interface PatchedSchedule {
-            readonly id?: number;
-            action?: Action;
-            week_segment?: WeekSegment;
-            day_segment?: DaySegment;
-            priority?: Priority;
-            case?: number;
-        }
-        export interface PatchedSummon {
-            readonly id?: number;
-            type?: number;
-            readonly type_name?: string;
-            case?: number;
-            persons?: SummonedPerson[];
-            readonly date_added?: string; // date-time
-            description?: string | null;
-        }
-        export interface PatchedVisit {
-            readonly id?: number;
-            authors?: User[];
-            author_ids?: string /* uuid */[];
-            start_time?: string; // date-time
-            situation?: string | null;
-            observations?: string[] | null;
-            can_next_visit_go_ahead?: boolean;
-            can_next_visit_go_ahead_description?: string | null;
-            suggest_next_visit?: string | null;
-            suggest_next_visit_description?: string | null;
-            notes?: string | null;
-            case?: number;
-        }
         export interface PermitCheckmark {
             has_b_and_b_permit: HasBAndBPermitEnum;
             has_vacation_rental_permit: HasVacationRentalPermitEnum;
@@ -590,6 +524,8 @@ declare namespace Components {
             week_segment: WeekSegment;
             day_segment: DaySegment;
             priority: Priority;
+            readonly date_added: string; // date-time
+            readonly date_modified: string; // date-time
             case: number;
         }
         export interface ScheduleCreate {
@@ -633,10 +569,10 @@ declare namespace Components {
             day_segments: DaySegment[];
             priorities: Priority[];
         }
-        export type TypeEnum = "DEBRIEFING" | "VISIT" | "CASE" | "SUMMON" | "GENERIC_TASK";
+        export type TypeEnum = "DEBRIEFING" | "VISIT" | "CASE" | "SUMMON" | "GENERIC_TASK" | "SCHEDULE";
         export interface User {
             id?: string; // uuid
-            email: string; // email
+            email?: string; // email
             username?: string;
             first_name?: string;
             last_name?: string;
@@ -650,7 +586,7 @@ declare namespace Components {
             start_time: string; // date-time
             situation?: string | null;
             observations?: string[] | null;
-            can_next_visit_go_ahead?: boolean;
+            can_next_visit_go_ahead?: boolean | null;
             can_next_visit_go_ahead_description?: string | null;
             suggest_next_visit?: string | null;
             suggest_next_visit_description?: string | null;
@@ -759,6 +695,13 @@ declare namespace Paths {
             }
         }
     }
+    namespace CamundaWorkerSendMessageStartProcessCreate {
+        export type RequestBody = Components.Schemas.CamundaMessager;
+        namespace Responses {
+            export interface $200 {
+            }
+        }
+    }
     namespace CamundaWorkerStateCreate {
         export type RequestBody = /* Serializer for Worker Data */ Components.Schemas.CamundaStateWorker;
         namespace Responses {
@@ -784,29 +727,6 @@ declare namespace Paths {
             export type $201 = Components.Schemas.CaseCreateUpdate;
         }
     }
-    namespace CasesDebriefingsRetrieve {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export interface PathParameters {
-            id: Parameters.Id;
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.Debriefing;
-        }
-    }
-    namespace CasesDestroy {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export interface PathParameters {
-            id: Parameters.Id;
-        }
-        namespace Responses {
-            export interface $204 {
-            }
-        }
-    }
     namespace CasesEventsRetrieve {
         namespace Parameters {
             export type Id = number;
@@ -826,6 +746,7 @@ declare namespace Paths {
     }
     namespace CasesList {
         namespace Parameters {
+            export type Date = string; // date
             export type NoPagination = boolean;
             export type OpenCases = boolean;
             export type OpenStatus = string;
@@ -835,6 +756,7 @@ declare namespace Paths {
             export type Team = number;
         }
         export interface QueryParameters {
+            date?: Parameters.Date /* date */;
             noPagination?: Parameters.NoPagination;
             openCases?: Parameters.OpenCases;
             openStatus?: Parameters.OpenStatus;
@@ -845,18 +767,6 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCaseList;
-        }
-    }
-    namespace CasesPartialUpdate {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export interface PathParameters {
-            id: Parameters.Id;
-        }
-        export type RequestBody = Components.Schemas.PatchedCase;
-        namespace Responses {
-            export type $200 = Components.Schemas.Case;
         }
     }
     namespace CasesRetrieve {
@@ -906,87 +816,27 @@ declare namespace Paths {
             export type $200 = Components.Schemas.PaginatedCamundaTaskList;
         }
     }
-    namespace CasesUpdate {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export interface PathParameters {
-            id: Parameters.Id;
-        }
-        export type RequestBody = Components.Schemas.CaseCreateUpdate;
-        namespace Responses {
-            export type $200 = Components.Schemas.CaseCreateUpdate;
-        }
-    }
     namespace DebriefingsCreate {
         export type RequestBody = Components.Schemas.DebriefingCreate;
         namespace Responses {
             export type $201 = Components.Schemas.DebriefingCreate;
         }
     }
-    namespace DebriefingsDestroy {
+    namespace DebriefingsList {
         namespace Parameters {
-            export type Id = number;
+            export type Page = number;
         }
-        export interface PathParameters {
-            id: Parameters.Id;
+        export interface QueryParameters {
+            page?: Parameters.Page;
         }
         namespace Responses {
-            export interface $204 {
-            }
-        }
-    }
-    namespace DebriefingsPartialUpdate {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export interface PathParameters {
-            id: Parameters.Id;
-        }
-        export type RequestBody = Components.Schemas.PatchedDebriefing;
-        namespace Responses {
-            export type $200 = Components.Schemas.Debriefing;
-        }
-    }
-    namespace DebriefingsRetrieve {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export interface PathParameters {
-            id: Parameters.Id;
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.Debriefing;
-        }
-    }
-    namespace DebriefingsUpdate {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export interface PathParameters {
-            id: Parameters.Id;
-        }
-        export type RequestBody = Components.Schemas.Debriefing;
-        namespace Responses {
-            export type $200 = Components.Schemas.Debriefing;
+            export type $200 = Components.Schemas.PaginatedDebriefingCreateList;
         }
     }
     namespace DecisionsCreate {
         export type RequestBody = Components.Schemas.Decision;
         namespace Responses {
             export type $201 = Components.Schemas.Decision;
-        }
-    }
-    namespace DecisionsDestroy {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export interface PathParameters {
-            id: Parameters.Id;
-        }
-        namespace Responses {
-            export interface $204 {
-            }
         }
     }
     namespace DecisionsList {
@@ -1000,41 +850,6 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedDecisionList;
-        }
-    }
-    namespace DecisionsPartialUpdate {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export interface PathParameters {
-            id: Parameters.Id;
-        }
-        export type RequestBody = Components.Schemas.PatchedDecision;
-        namespace Responses {
-            export type $200 = Components.Schemas.Decision;
-        }
-    }
-    namespace DecisionsRetrieve {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export interface PathParameters {
-            id: Parameters.Id;
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.Decision;
-        }
-    }
-    namespace DecisionsUpdate {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export interface PathParameters {
-            id: Parameters.Id;
-        }
-        export type RequestBody = Components.Schemas.Decision;
-        namespace Responses {
-            export type $200 = Components.Schemas.Decision;
         }
     }
     namespace FinesRetrieve {
@@ -1072,64 +887,6 @@ declare namespace Paths {
             export type $201 = Components.Schemas.ScheduleCreate;
         }
     }
-    namespace SchedulesDestroy {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export interface PathParameters {
-            id: Parameters.Id;
-        }
-        namespace Responses {
-            export interface $204 {
-            }
-        }
-    }
-    namespace SchedulesList {
-        namespace Parameters {
-            export type Page = number;
-        }
-        export interface QueryParameters {
-            page?: Parameters.Page;
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.PaginatedScheduleList;
-        }
-    }
-    namespace SchedulesPartialUpdate {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export interface PathParameters {
-            id: Parameters.Id;
-        }
-        export type RequestBody = Components.Schemas.PatchedSchedule;
-        namespace Responses {
-            export type $200 = Components.Schemas.Schedule;
-        }
-    }
-    namespace SchedulesRetrieve {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export interface PathParameters {
-            id: Parameters.Id;
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.Schedule;
-        }
-    }
-    namespace SchedulesUpdate {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export interface PathParameters {
-            id: Parameters.Id;
-        }
-        export type RequestBody = Components.Schemas.Schedule;
-        namespace Responses {
-            export type $200 = Components.Schemas.Schedule;
-        }
-    }
     namespace SchemaRetrieve {
         namespace Parameters {
             export type Format = "json" | "yaml";
@@ -1151,18 +908,6 @@ declare namespace Paths {
             export type $201 = Components.Schemas.Summon;
         }
     }
-    namespace SummonsDestroy {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export interface PathParameters {
-            id: Parameters.Id;
-        }
-        namespace Responses {
-            export interface $204 {
-            }
-        }
-    }
     namespace SummonsList {
         namespace Parameters {
             export type Case = number;
@@ -1174,41 +919,6 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedSummonList;
-        }
-    }
-    namespace SummonsPartialUpdate {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export interface PathParameters {
-            id: Parameters.Id;
-        }
-        export type RequestBody = Components.Schemas.PatchedSummon;
-        namespace Responses {
-            export type $200 = Components.Schemas.Summon;
-        }
-    }
-    namespace SummonsRetrieve {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export interface PathParameters {
-            id: Parameters.Id;
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.Summon;
-        }
-    }
-    namespace SummonsUpdate {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export interface PathParameters {
-            id: Parameters.Id;
-        }
-        export type RequestBody = Components.Schemas.Summon;
-        namespace Responses {
-            export type $200 = Components.Schemas.Summon;
         }
     }
     namespace SupportContactsList {
@@ -1342,18 +1052,6 @@ declare namespace Paths {
             export type $201 = Components.Schemas.Visit;
         }
     }
-    namespace VisitsDestroy {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export interface PathParameters {
-            id: Parameters.Id;
-        }
-        namespace Responses {
-            export interface $204 {
-            }
-        }
-    }
     namespace VisitsList {
         namespace Parameters {
             export type Page = number;
@@ -1363,41 +1061,6 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedVisitList;
-        }
-    }
-    namespace VisitsPartialUpdate {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export interface PathParameters {
-            id: Parameters.Id;
-        }
-        export type RequestBody = Components.Schemas.PatchedVisit;
-        namespace Responses {
-            export type $200 = Components.Schemas.Visit;
-        }
-    }
-    namespace VisitsRetrieve {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export interface PathParameters {
-            id: Parameters.Id;
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.Visit;
-        }
-    }
-    namespace VisitsUpdate {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export interface PathParameters {
-            id: Parameters.Id;
-        }
-        export type RequestBody = Components.Schemas.Visit;
-        namespace Responses {
-            export type $200 = Components.Schemas.Visit;
         }
     }
 }
