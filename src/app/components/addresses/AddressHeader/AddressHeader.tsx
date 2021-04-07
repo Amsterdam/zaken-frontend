@@ -1,4 +1,4 @@
-import React from "react"
+import { FC } from "react"
 import styled from "styled-components"
 import { Typography, breakpoint, themeSpacing } from "@amsterdam/asc-ui"
 
@@ -32,15 +32,20 @@ const ButtonWrap = styled.div`
   margin-left: ${ themeSpacing(3) };
 `
 
-const AddressHeader: React.FC<Props> = ({ bagId, headingSize = "h2", isHeader = false, enableSwitch = true }) => {
+const AddressHeader: FC<Props> = ({ bagId, headingSize = "h2", isHeader = false, enableSwitch = true }) => {
+
   const [data] = useBAG(bagId)
-  const [filteredAddresses] = useOtherAddressesByBagId(bagId)
-  const title = data ? `${ data.results[0].adres }, ${ data.results[0].postcode }` : undefined
+  const title = data?.results[0] !== undefined ? `${ data.results[0].adres }, ${ data.results[0].postcode }` : undefined
   const showTitle = title !== undefined
-  const showButton = enableSwitch && (filteredAddresses !== undefined && filteredAddresses.length > 1)
-  const isCurrentAddress = (address: { adres: string }) => address.adres.trim() === data?.results[0].adres.trim()
-  const addressIndex = filteredAddresses?.findIndex(isCurrentAddress)
-  const index = addressIndex === 0 ? "first" : addressIndex === (filteredAddresses?.length ! - 1) ? "last" : undefined
+
+  const [filteredAddresses] = useOtherAddressesByBagId(bagId)
+  const showButton = enableSwitch && (filteredAddresses?.length ?? 0) > 1
+  const isCurrentAddress = (address: { adres: string }) => address.adres.trim() === data?.results[0]?.adres.trim()
+  const addressIndex = filteredAddresses?.findIndex(isCurrentAddress) ?? -1
+  const index =
+    addressIndex === 0 ? "first" :
+    addressIndex > 0 && addressIndex === (filteredAddresses?.length ?? 0) - 1 ? "last" :
+    undefined
 
   // TODO: Show loading status visually
   return (
@@ -52,7 +57,7 @@ const AddressHeader: React.FC<Props> = ({ bagId, headingSize = "h2", isHeader = 
       }
       { showButton &&
         <ButtonWrap>
-          <ShowOtherAddressesButton bagId={bagId} index={index} />
+          <ShowOtherAddressesButton bagId={ bagId } index={ index } />
         </ButtonWrap>
       }
     </Div>

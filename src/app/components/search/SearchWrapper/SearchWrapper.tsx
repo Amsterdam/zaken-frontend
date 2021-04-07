@@ -1,5 +1,5 @@
 import React from "react"
-import { SearchBar } from "@amsterdam/asc-ui"
+import { Heading, FormTitle, SearchBar } from "@amsterdam/asc-ui"
 import styled from "styled-components"
 import debounce from "lodash.debounce"
 
@@ -22,7 +22,9 @@ const SearchWrapper: React.FC = () => {
   return (
     <>
       <RowWithColumn>
+        <Heading>Adres zoeken</Heading>
         <SearchBarWrap>
+          <FormTitle>Ook om een nieuwe zaak aan te maken op een specifiek adres</FormTitle>
           <SearchBar
             placeholder="Zoek op postcode en huisnummer"
             value={ searchString }

@@ -39,11 +39,12 @@ export const useCaseEvents = (caseId: Components.Schemas.Case["id"], options?: O
   })
 }
 
-export const useDebriefings = (id?: number, options?: Options) => {
+export const useDebriefings = (options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.Debriefing>({
+    lazy: true,
     ...options,
-    url: makeApiUrl("debriefings", id),
+    url: makeApiUrl("debriefings"),
     groupName: "cases",
     handleError,
     isProtected: true
@@ -163,6 +164,7 @@ export const useVisitsCreate = (options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.Visit>({
     ...options,
+    lazy: true,
     url: makeApiUrl("visits"),
     groupName: "cases",
     handleError,

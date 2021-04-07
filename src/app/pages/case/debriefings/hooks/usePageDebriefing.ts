@@ -4,18 +4,16 @@ import { useDebriefings } from "app/state/rest"
 import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
 import navigateTo from "app/routing/navigateTo"
 
-const usePageDebriefing = (caseId?: Components.Schemas.Case["id"], id?: Components.Schemas.Debriefing["id"]) => {
-  const [, { execPost }] = useDebriefings(id, { lazy: true })
+const usePageDebriefing = (caseId: Components.Schemas.Case["id"]) => {
+  const [, { execPost }] = useDebriefings()
   const { addSuccessFlashMessage } = useFlashMessages()
-
-  const path = `/zaken/${ caseId ?? "" }`
 
   const handleCreate = useCallback(payload =>
     execPost(payload).then(() => {
-      addSuccessFlashMessage(path, "Succes", "De debriefing is succesvol toegevoegd")
-      return navigateTo(path)
+      addSuccessFlashMessage(`/zaken/${ caseId }`, "Succes", "De debriefing is succesvol toegevoegd")
+      return navigateTo("/zaken/:id", { id: caseId })
     }),
-    [addSuccessFlashMessage, path, execPost]
+    [addSuccessFlashMessage, caseId, execPost]
   )
 
   return { handleCreate }
