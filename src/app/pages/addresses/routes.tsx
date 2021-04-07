@@ -1,11 +1,10 @@
 import IndexPage from "app/pages/addresses/index/IndexPage"
 import DetailsPage from "app/pages/addresses/details/DetailsPage"
 import PeoplePage from "app/pages/addresses/people/PeoplePage"
-import PermitIndexPage from "app/pages/permits/IndexPage"
+import PermitsPage from "app/pages/addresses/permits/PermitsPage"
 import CasesPage from "app/pages/addresses/cases/CasesPage"
 import CreateCasePage from "app/pages/cases/create/CreateCasePage"
 
-// NOTE: please add your own POC-specific routes here.
 export default {
   "adres/:bagId": {
     Page: IndexPage,
@@ -22,7 +21,7 @@ export default {
         title: "Persoonsgegevens"
       },
       "vergunningen": {
-        Page: PermitIndexPage,
+        Page: PermitsPage,
         icon: "AssignmentTurnedIn",
         title: "Vergunningen"
       },
