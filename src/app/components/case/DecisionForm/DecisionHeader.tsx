@@ -17,7 +17,7 @@ const DecisionHeader: React.FC<Props> = ({ caseId }) => {
   const summonedPersons = summon?.persons
   const summonTypeName = summon?.type_name
 
-  const mapPersons = summonedPersons?.map((person) => 
+  const mapPersons = summonedPersons?.map((person) =>
     `${ capitalizeString(person.first_name) } ${ person.preposition ? person.preposition : "" } ${ capitalizeString(person.last_name) }`
   )
 

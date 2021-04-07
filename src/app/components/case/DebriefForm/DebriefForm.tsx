@@ -3,7 +3,7 @@ import { FormTitle } from "@amsterdam/asc-ui"
 
 import usePageDebriefing from "app/pages/case/debriefings/hooks/usePageDebriefing"
 import FormWithExtraLabel from "app/components/shared/FormWithExtraLabel/FormWithExtraLabel"
-import WorkflowForm from "app/components/cases/Workflow/WorkflowForm"
+import WorkflowForm from "app/components/case/Workflow/WorkflowForm"
 import scaffold from "./scaffold"
 
 type Props = {
