@@ -1,4 +1,4 @@
-import React, { useMemo } from "react"
+import { FC, useMemo } from "react"
 import { Spinner } from "@amsterdam/asc-ui"
 import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
 
@@ -25,7 +25,7 @@ const mapData = (bagId: Components.Schemas.Address["bag_id"], data: FormData): O
   reason: data.reason.id
 })
 
-const CreateForm: React.FC<Props> = ({ bagId }) => {
+const CreateForm: FC<Props> = ({ bagId }) => {
 
   const [teams] = useTeams()
   const [reasons] = useReasons(teams?.results?.[0].id)

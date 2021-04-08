@@ -1,4 +1,4 @@
-import React from "react"
+import { FC, ReactNode, MouseEvent } from "react"
 
 import { themeColor } from "@amsterdam/asc-ui"
 import styled, { css } from "styled-components"
@@ -11,9 +11,9 @@ import FixedTableCell from "./components/TableCell/FixedTableCell"
 import { navigate } from "@reach/router"
 
 
-type CellContent = React.ReactNode
+type CellContent = ReactNode
 
-type TableData = Array<{href?: string, itemList?: React.ReactNode[]}>
+type TableData = Array<{href?: string, itemList?: ReactNode[]}>
 
 type Props = {
   numLoadingRows?: number
@@ -21,7 +21,7 @@ type Props = {
   hasFixedColumn?: boolean
   columns: Array<{header?: CellContent, minWidth: number}>
   data?: TableData
-  noValuesPlaceholder: React.ReactNode
+  noValuesPlaceholder: ReactNode
   className?: string
 }
 
@@ -67,14 +67,14 @@ const NoValuesPlaceholder = styled(TableCell)`
 const createLoadingData = (numColumns: number, numRows: number = 5) =>
   [...Array(numRows)].map(_ => [...Array(numColumns)].map(_ => ""))
 
-const Table: React.FC<Props> = ({ columns, loading, numLoadingRows, hasFixedColumn, noValuesPlaceholder, className, ...restProps }) => {
+const Table: FC<Props> = ({ columns, loading, numLoadingRows, hasFixedColumn, noValuesPlaceholder, className, ...restProps }) => {
   const { data } = restProps
 
   const fixedColumnWidth = hasFixedColumn
     ? columns[columns.length - 1].minWidth
     : undefined
 
-const onClick = (href: string | undefined, e: React.MouseEvent<HTMLTableRowElement>) => {
+const onClick = (href: string | undefined, e: MouseEvent<HTMLTableRowElement>) => {
   if (href) {
     e.stopPropagation()
     navigate(href)
@@ -95,7 +95,7 @@ const onClick = (href: string | undefined, e: React.MouseEvent<HTMLTableRowEleme
           </Row>
           </thead>
           <tbody>
-            { !loading && data?.map( (row: {href?: string, itemList?: React.ReactNode[]}, index: number) =>
+            { !loading && data?.map( (row: {href?: string, itemList?: ReactNode[]}, index: number) =>
               <Row key={index} onClick={(e) => onClick( row.href , e )} isClickable={row.href !== undefined } >
                 { row.itemList?.map( (cell: CellContent, index: number) => hasFixedColumn && index === (row.itemList?.length ?? 0 ) - 1
                       ? <FixedTableCell key={index} width={ fixedColumnWidth }>{ cell ?? <>&nbsp;</> }</FixedTableCell>

@@ -1,4 +1,4 @@
-import React from "react"
+import { FC } from "react"
 import { Heading, Spinner } from "@amsterdam/asc-ui"
 import DefinitionList from "app/components/shared/DefinitionList/DefinitionList"
 import MapArrayToList from "app/components/shared/Helpers/MapArrayToList"
@@ -9,7 +9,7 @@ type Props = {
   caseId: Components.Schemas.Case["id"]
 }
 
-const DecisionHeader: React.FC<Props> = ({ caseId }) => {
+const DecisionHeader: FC<Props> = ({ caseId }) => {
 
   const [data] = useSummonsWithCaseId(caseId)
   const summon = data?.results?.[0]

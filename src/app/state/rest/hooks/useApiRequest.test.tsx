@@ -1,4 +1,4 @@
-import React from "react"
+import { FC } from "react"
 import nock from "nock"
 
 import { renderHook, act } from "@testing-library/react-hooks"
@@ -11,7 +11,7 @@ type Pet = {
   type: string
 }
 
-const Wrapper: React.FC = ({ children }) => (
+const Wrapper: FC = ({ children }) => (
     <KeycloakProvider>
       <ApiProvider>
         { children }

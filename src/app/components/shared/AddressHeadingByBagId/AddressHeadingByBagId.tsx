@@ -1,4 +1,4 @@
-import React from "react"
+import { FC } from "react"
 import styled from "styled-components"
 import { Heading, themeSpacing } from "@amsterdam/asc-ui"
 import { useBAG } from "app/state/rest/"
@@ -13,7 +13,7 @@ const Div = styled.div`
   margin-bottom: ${ themeSpacing(8) }
 `
 
-const AddressHeadingByBagId: React.FC<Props> = ({ bagId }) => {
+const AddressHeadingByBagId: FC<Props> = ({ bagId }) => {
   const [data] = useBAG(bagId)
   const address = data?.results[0]
 

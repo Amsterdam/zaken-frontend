@@ -1,4 +1,4 @@
-import React from "react"
+import { FC } from "react"
 import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
 
 import ScaffoldFields from "app/components/shared/Form/ScaffoldFields"
@@ -13,7 +13,7 @@ type Props = {
   onCancel: () => void
 }
 
-const CamundaForm: React.FC<Props> = ({ camundaForm, isLoading, onSubmit, onCancel }) =>
+const CamundaForm: FC<Props> = ({ camundaForm, isLoading, onSubmit, onCancel }) =>
   <div>
     <ScaffoldForm
       showSpinner={ isLoading }

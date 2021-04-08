@@ -1,4 +1,4 @@
-import React, { useMemo } from "react"
+import { FC, useMemo } from "react"
 import { Button, Icon, Spinner, themeSpacing, ErrorMessage } from "@amsterdam/asc-ui"
 
 import { useCaseTasks, useTaskComplete } from "app/state/rest"
@@ -89,7 +89,7 @@ const columns = [
   { header: "Verwerking taak", minWidth: 140 }
 ]
 
-const Workflow: React.FC<Props> = ({ id }) => {
+const Workflow: FC<Props> = ({ id }) => {
 
   const [data, { isBusy, hasErrors }] = useCaseTasks(id)
   const [, { execPost }] = useTaskComplete({ lazy: true })

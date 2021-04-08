@@ -1,4 +1,4 @@
-import React from "react"
+import { FC } from "react"
 import { Header } from "@amsterdam/asc-ui"
 import styled from "styled-components"
 import DefaultNavigation from "app/components/shared/navigation/DefaultNavigation"
@@ -25,7 +25,7 @@ const MenuWrap = styled.div`
   width: 100%;
 `
 
-const DefaultLayout: React.FC<Props> = ({ showSearchButton = true, children }) => (
+const DefaultLayout: FC<Props> = ({ showSearchButton = true, children }) => (
   <>
     <HeaderWrap>
       <Header

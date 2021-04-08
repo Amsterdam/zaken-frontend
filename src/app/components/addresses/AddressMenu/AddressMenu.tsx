@@ -1,4 +1,4 @@
-import React from "react"
+import { FC } from "react"
 import styled from "styled-components"
 import { themeSpacing, breakpoint } from "@amsterdam/asc-ui"
 import NavBlock from "app/components/addresses/NavBlock/NavBlock"
@@ -51,7 +51,7 @@ const mockedRoutes = [
   "/adres/:bagId/vergunningen/"
 ]
 
-const AddressMenu: React.FC<Props> = ({ bagId }) => {
+const AddressMenu: FC<Props> = ({ bagId }) => {
   const [permitDetails] = usePermitDetails(bagId)
   // TODO: Do show Residents by BAG_id
   const [residents] = useResidents(bagId)

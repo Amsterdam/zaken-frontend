@@ -1,4 +1,4 @@
-import React from "react"
+import { FC } from "react"
 import styled from "styled-components"
 import { Link } from "@reach/router"
 import { Card, CardContent, Icon, Heading, themeColor, themeSpacing } from "@amsterdam/asc-ui"
@@ -28,7 +28,7 @@ const StyledHeading = styled(Heading)`
   margin-top: ${ themeSpacing(4) };
 `
 
-const NavBlock: React.FC<Props> = ({ to: toPath, icon, header, count }) => {
+const NavBlock: FC<Props> = ({ to: toPath, icon, header, count }) => {
   const Asset = Assets[icon] ?? <span></span>
   return (
     <StyledLink to={ toPath }>

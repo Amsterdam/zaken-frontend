@@ -1,4 +1,4 @@
-import React from "react"
+import { FC } from "react"
 import styled from "styled-components"
 import { Modal as AscModal, TopBar, Heading, Button, Icon, Divider, themeSpacing } from "@amsterdam/asc-ui"
 import { Close } from "app/components/shared/Icons"
@@ -16,7 +16,7 @@ export const ModalBlock = styled.div`
   line-height: 1.5;
 `
 
-const Modal: React.FC<Props> = ({ children, title, isOpen, onClose }) => (
+const Modal: FC<Props> = ({ children, title, isOpen, onClose }) => (
   <AscModal open={isOpen} onClose={onClose}>
     <TopBar>
       <Heading forwardedAs="h4" style={{ flexGrow: 1 }}>

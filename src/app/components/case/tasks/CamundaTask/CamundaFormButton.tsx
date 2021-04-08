@@ -1,4 +1,4 @@
-import React from "react"
+import { FC } from "react"
 import { Button } from "@amsterdam/asc-ui"
 
 import { useModal } from "app/components/shared/Modal/hooks/useModal"
@@ -7,11 +7,11 @@ import CamundaFormModal from "./CamundaFormModal"
 type Props = {
   onSubmit: (variables: Components.Schemas.CamundaTaskComplete["variables"]) => Promise<unknown>
   taskName: string
-  caseId: number 
+  caseId: number
   form: Components.Schemas.CamundaTask["form"]
 }
 
-const CamundaFormButton: React.FC<Props> = ({ onSubmit, taskName, caseId, form }) => {
+const CamundaFormButton: FC<Props> = ({ onSubmit, taskName, caseId, form }) => {
   const { isModalOpen, openModal, closeModal } = useModal()
 
   return <>

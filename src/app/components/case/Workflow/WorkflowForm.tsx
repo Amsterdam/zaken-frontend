@@ -1,4 +1,4 @@
-import React from "react"
+import { FC } from "react"
 import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
 
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
@@ -20,7 +20,7 @@ type Props = {
 
 const DEFAULT_SUBMIT_TITLE = "Resultaat verwerken"
 
-const WorkflowForm: React.FC<Props> = ({ caseId, scaffold, data, postMethod, extraLabel, initialValues }) => {
+const WorkflowForm: FC<Props> = ({ caseId, scaffold, data, postMethod, extraLabel, initialValues }) => {
 
   const {
     isSubmitted,

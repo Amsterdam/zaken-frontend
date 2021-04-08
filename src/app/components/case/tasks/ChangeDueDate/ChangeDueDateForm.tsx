@@ -1,4 +1,4 @@
-import React from "react"
+import { FC } from "react"
 import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
 
 import ScaffoldFields from "app/components/shared/Form/ScaffoldFields"
@@ -22,7 +22,7 @@ const formatDate = (dateStr: string | Date) => {
   return `${ year }-${ month }-${ day }`
 }
 
-const ChangeDueDateForm: React.FC<Props> = ({ isLoading, onSubmit, onCancel , dueDate, minDate = new Date(), taskId }) =>
+const ChangeDueDateForm: FC<Props> = ({ isLoading, onSubmit, onCancel , dueDate, minDate = new Date(), taskId }) =>
   <div>
     <ScaffoldForm
       showSpinner={ isLoading }

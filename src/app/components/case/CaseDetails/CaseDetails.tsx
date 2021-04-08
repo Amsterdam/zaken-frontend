@@ -1,4 +1,4 @@
-import React, { useMemo } from "react"
+import { FC, useMemo } from "react"
 import { CaseIdDisplay, displayDate } from "@amsterdam/wonen-ui"
 
 import DefinitionList from "app/components/shared/DefinitionList/DefinitionList"
@@ -14,7 +14,7 @@ const mapData = (data: Components.Schemas.Case) => ({
   "Startdatum": data.start_date ? `${ displayDate(data.start_date) }` : "-"
 })
 
-const CaseDetails: React.FC<Props> = ({ caseId }) => {
+const CaseDetails: FC<Props> = ({ caseId }) => {
   const [data] = useCase(caseId)
   const values = useMemo(() => data !== undefined ? mapData(data) : {}, [data])
 

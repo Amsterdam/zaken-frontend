@@ -1,4 +1,4 @@
-import React from "react"
+import { FC } from "react"
 import produce from "immer"
 
 import ScaffoldField, { Field } from "../ScaffoldField"
@@ -14,7 +14,7 @@ export type ShowHideProps = {
   name?: string
 }
 
-const ShowHide: React.FC<ShowHideProps> = ({ shouldShow, field, position }) => {
+const ShowHide: FC<ShowHideProps> = ({ shouldShow, field, position }) => {
 
   const formState = useFormState()
   const form = useForm()

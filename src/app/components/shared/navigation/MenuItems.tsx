@@ -1,4 +1,4 @@
-import React from "react"
+import { FC } from "react"
 import styled from "styled-components"
 import { MenuItem, MenuButton, Hidden } from "@amsterdam/asc-ui"
 
@@ -27,7 +27,7 @@ const StyledButtonLink = styled(ButtonLink)`
   }
 `
 
-const MenuItems: React.FC = () => (
+const MenuItems: FC = () => (
   <>
   { items.map(({ path, hiddenLaptopM }) => {
       const { title } = routes[`${ path }/`]

@@ -8,7 +8,7 @@ type NodeModifier<NODE> = (node: NODE) => HTMLElement | undefined
  * Example:
  *
  * ```
- * const Foo:React.FC = () => {
+ * const Foo:FC = () => {
  *   const { ref, node } = useNodeRef()
  *   console.log(node) // Div-node
  *
@@ -17,7 +17,7 @@ type NodeModifier<NODE> = (node: NODE) => HTMLElement | undefined
  * ```
  *
  * ```
- * const ParentNode:React.FC = () => {
+ * const ParentNode:FC = () => {
  *   const { ref, node } = useNodeRef(() => node.parentNode)
  *   console.log(node) // The parent-node of this node.
  *

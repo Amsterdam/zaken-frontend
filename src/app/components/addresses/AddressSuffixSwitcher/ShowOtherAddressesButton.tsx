@@ -1,4 +1,4 @@
-import React from "react"
+import { FC } from "react"
 import styled from "styled-components"
 import { ExpandMore, ExpandLess } from "app/components/shared/Icons"
 import { Button, Icon } from "@amsterdam/asc-ui"
@@ -33,7 +33,7 @@ const renderIcon = (index: Index) => {
   }
 }
 
-const ShowOtherAddressesButton: React.FC<Props> = ({ bagId, index }) => {
+const ShowOtherAddressesButton: FC<Props> = ({ bagId, index }) => {
   const { isModalOpen, openModal, closeModal } = useModal()
 
   return <>

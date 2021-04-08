@@ -1,4 +1,4 @@
-import React, { ComponentType } from "react"
+import { FC, ComponentType } from "react"
 import { RouteComponentProps } from "@reach/router"
 
 import useKeycloak from "app/state/auth/keycloak/useKeycloak"
@@ -10,7 +10,7 @@ type Props = {
 /**
  * The user needs to be logged on to visit this route
  */
-const ProtectedRoute: React.FC<Props> = ({ page: Page, ...restProps }) => {
+const ProtectedRoute: FC<Props> = ({ page: Page, ...restProps }) => {
   const { token } = useKeycloak()
 
   return token

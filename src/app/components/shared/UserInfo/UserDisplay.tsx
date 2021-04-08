@@ -1,4 +1,4 @@
-import React from "react"
+import { FC } from "react"
 import styled from "styled-components"
 import { breakpoint, Icon, MenuButton } from "@amsterdam/asc-ui"
 import { PermIdentity, Logout } from "app/components/shared/Icons"
@@ -36,7 +36,7 @@ const StyledMenuButton = styled(MenuButton)`
   padding: 12px 16px 9px;
 `
 
-const UserDisplay: React.FC<Props> = ({ name, onClick }) =>
+const UserDisplay: FC<Props> = ({ name, onClick }) =>
   <>
     { name &&
       <Div>
