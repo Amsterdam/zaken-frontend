@@ -55,7 +55,6 @@
     "lint": "eslint --max-warnings 0 --cache --ext .ts,.tsx src",
     "lint:fix": "eslint --fix --ext .ts,.tsx src",
     "swagger:generate-schema": "TS_NODE_PROJECT='./scripts/tsconfig.json' NODE_ENV='development' ts-node scripts/src/generateSwaggerSchema.ts",
-    "form-scaffolds:generate": "TS_NODE_PROJECT='./scripts/tsconfig.json' NODE_ENV='development' ts-node scripts/src/generateFormScaffolds.ts",
     "prepare": "husky install"
   },
   "eslintConfig": {

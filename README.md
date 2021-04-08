@@ -13,7 +13,6 @@
 - `cd zaken-frontend`
 - `npm install`
 - `npm run swagger:generate-schema`
-- `npm run form-scaffolds:generate`
 - `npm run start`
 
 ### Bypassing authentication
