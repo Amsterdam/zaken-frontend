@@ -1,4 +1,4 @@
-import React from "react"
+import { FC } from "react"
 import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
 
 import ScaffoldFields from "app/components/shared/Form/ScaffoldFields"
@@ -12,7 +12,7 @@ const addTask = (task: string, caseId: Components.Schemas.Case["id"]) => {
   console.log(`taak ${ task } toegevoegd aan ${ caseId }`)
 }
 
-const AddTaskForm: React.FC<Props> = ({ caseId }) => {
+const AddTaskForm: FC<Props> = ({ caseId }) => {
   const onChange = (event: any) => addTask(event.target.value, caseId)
 
   return (

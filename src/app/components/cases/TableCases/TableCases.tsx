@@ -1,4 +1,4 @@
-import React, { useMemo } from "react"
+import { FC, useMemo } from "react"
 import { DateDisplay } from "@amsterdam/wonen-ui"
 
 import to from "app/routing/utils/to"
@@ -35,7 +35,7 @@ const mapData = (data: Components.Schemas.Case) => {
   }
 }
 
-const TableCases: React.FC<Props> = ({ data, isBusy }) => {
+const TableCases: FC<Props> = ({ data, isBusy }) => {
   const mappedData = useMemo(() => data?.results?.map(mapData), [ data ])
 
   return (<Table

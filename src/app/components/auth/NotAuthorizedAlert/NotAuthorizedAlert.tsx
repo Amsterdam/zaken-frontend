@@ -1,11 +1,10 @@
-import React from "react"
 import { Alert, themeSpacing } from "@amsterdam/asc-ui"
 
 import { useIsAuthorized } from "app/state/rest/"
 import styled from "styled-components"
 
 const StyledAlert = styled(Alert)`
-  margin: ${ themeSpacing(12) } 0 
+  margin: ${ themeSpacing(12) } 0
 `
 
 const NotAuthorizedAlert = () => {

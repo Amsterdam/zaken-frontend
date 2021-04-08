@@ -1,4 +1,4 @@
-import React from "react"
+import { FC } from "react"
 import { FormTitle } from "@amsterdam/asc-ui"
 
 import { useCase, useScheduleTypes, useScheduleCreate } from "app/state/rest/"
@@ -24,7 +24,7 @@ const mapData = (data: ScheduleTypeFormData) => (
   }
 )
 
-const ScheduleForm: React.FC<Props> = ({ id }) => {
+const ScheduleForm: FC<Props> = ({ id }) => {
 
   const [caseItem] = useCase(id)
   const teamId = caseItem?.team.id

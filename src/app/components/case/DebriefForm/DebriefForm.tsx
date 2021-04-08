@@ -1,4 +1,4 @@
-import React from "react"
+import { FC } from "react"
 import { FormTitle } from "@amsterdam/asc-ui"
 
 import usePageDebriefing from "app/pages/case/debriefings/hooks/usePageDebriefing"
@@ -10,7 +10,7 @@ type Props = {
   id: Components.Schemas.Case["id"]
 }
 
-const DebriefCreateForm: React.FC<Props> = ({ id }) => {
+const DebriefCreateForm: FC<Props> = ({ id }) => {
 
   const { handleCreate } = usePageDebriefing(id)
   const initialValues = { case: id }

@@ -1,4 +1,4 @@
-import React from "react"
+import { FC } from "react"
 import { useMockCases } from "app/state/rest"
 import { Button, themeColor } from "@amsterdam/asc-ui"
 import styled from "styled-components"
@@ -16,7 +16,7 @@ const StyledButton = styled(Button)`
     }
 `
 
-const ButtonMockCases: React.FC = () => {
+const ButtonMockCases: FC = () => {
   const [, { execPost }] = useMockCases({ lazy: true })
   const onClick = () => {
     execPost()

@@ -1,4 +1,4 @@
-import React from "react"
+import { FC } from "react"
 import { RouteComponentProps } from "@reach/router"
 
 import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId"
@@ -15,7 +15,7 @@ type Props = {
   bagId: string
 }
 
-const PeoplePage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
+const PeoplePage: FC<RouteComponentProps<Props>> = ({ bagId }) => (
   isValidUrlParamBAGId(bagId) ?
     <DefaultLayout>
       <DetailHeader bagId={ bagId } />

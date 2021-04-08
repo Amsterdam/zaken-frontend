@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import { FC, useEffect } from "react"
 import { useFine } from "app/state/rest"
 import { Heading, Spinner, themeSpacing } from "@amsterdam/asc-ui"
 import styled from "styled-components"
@@ -19,7 +19,7 @@ const Ul = styled.ul`
   }
 `
 
-const FinesSearchResultsList: React.FC<Props> = ({ searchString }) => {
+const FinesSearchResultsList: FC<Props> = ({ searchString }) => {
   const [data, { isBusy, execGet }] = useFine(searchString, { lazy: true })
   useEffect(() => {
     if (searchString.length === 0) return

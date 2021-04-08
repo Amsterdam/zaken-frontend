@@ -7,7 +7,7 @@ import ResizeObserver from "resize-observer-polyfill"
  *
  * Example usage:
  * ```
- * const Foo:React.FC = () => {
+ * const Foo:FC = () => {
  *   const { ref, node } = useNodeByReference()
  *   const dimensions = useNodeDimensions(node)
  *

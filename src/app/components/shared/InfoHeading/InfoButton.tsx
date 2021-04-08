@@ -1,4 +1,4 @@
-import React, { ComponentProps, FC } from "react"
+import { ReactNode, FC, ComponentProps } from "react"
 import { Button, Icon } from "@amsterdam/asc-ui"
 import { Info } from "app/components/shared/Icons"
 
@@ -7,7 +7,7 @@ import { useModal } from "app/components/shared/Modal/hooks/useModal"
 
 type Props = {
   infoTitle: string
-  infoText: React.ReactNode
+  infoText: ReactNode
   onClick?: ComponentProps<typeof Button>["onClick"]
 }
 

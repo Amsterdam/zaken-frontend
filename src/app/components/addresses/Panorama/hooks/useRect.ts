@@ -1,5 +1,5 @@
 // LINK: https://codesandbox.io/s/userect-hook-1y5t7?file=/src/useRect.tsx:0-1521
-import { useLayoutEffect, useCallback, useState } from "react"
+import { RefObject, useLayoutEffect, useCallback, useState } from "react"
 import debounce from "lodash.debounce"
 
 type RectResult = {
@@ -25,7 +25,7 @@ const getRect = <T extends HTMLElement>(element?: T): RectResult => {
 }
 
 export default <T extends HTMLElement>(
-  ref: React.RefObject<T>,
+  ref: RefObject<T>,
   delay = 0
 ): RectResult => {
   const [rect, setRect] = useState<RectResult>(

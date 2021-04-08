@@ -1,4 +1,4 @@
-import React from "react"
+import { FC } from "react"
 import { ScaffoldAvailableFields, ScaffoldField as AmsterdamScaffoldField } from "@amsterdam/amsterdam-react-final-form"
 
 import AutoFillButton, { AutoFillButtonProps } from "./AutoFillButton/AutoFillButton"
@@ -14,7 +14,7 @@ type ScaffoldFieldProps = {
   field: Field
 }
 
-const ScaffoldField: React.FC<ScaffoldFieldProps> = ({ field }) => {
+const ScaffoldField: FC<ScaffoldFieldProps> = ({ field }) => {
   switch (field.type) {
     case "AutoFillButton":
       return <AutoFillButton {...field.props} />

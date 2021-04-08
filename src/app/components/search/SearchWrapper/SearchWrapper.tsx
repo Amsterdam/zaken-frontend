@@ -1,4 +1,4 @@
-import React from "react"
+import { FC, ChangeEvent } from "react"
 import { Heading, FormTitle, SearchBar } from "@amsterdam/asc-ui"
 import styled from "styled-components"
 import debounce from "lodash.debounce"
@@ -13,10 +13,10 @@ const SearchBarWrap = styled.div`
   max-width: 500px;
 `
 
-const SearchWrapper: React.FC = () => {
+const SearchWrapper: FC = () => {
   const [searchString, setSearchString] = useURLState("query")
   const debouncedSetSearchString = debounce(setSearchString, DELAY)
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => debouncedSetSearchString(event.target.value.trim())
+  const onChange = (event: ChangeEvent<HTMLInputElement>) => debouncedSetSearchString(event.target.value.trim())
   const onClear = () => debouncedSetSearchString("")
 
   return (

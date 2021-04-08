@@ -1,4 +1,4 @@
-import React from "react"
+import { FC } from "react"
 import { FormTitle } from "@amsterdam/asc-ui"
 
 import { useCompleteCase } from "app/state/rest/"
@@ -9,7 +9,7 @@ type Props = {
   id: Components.Schemas.Case["id"]
 }
 
-const CaseCompleteForm: React.FC<Props> = ({ id }) => {
+const CaseCompleteForm: FC<Props> = ({ id }) => {
 
   const [data, { execPost }] = useCompleteCase()
 

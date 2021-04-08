@@ -1,4 +1,4 @@
-import React, { useMemo } from "react"
+import { FC, useMemo } from "react"
 import { Heading, Paragraph, Spinner } from "@amsterdam/asc-ui"
 
 import { RowWithColumn } from "app/components/layouts/Grid"
@@ -21,7 +21,7 @@ const RefreshIcon = styled (Refresh)`
   vertical-align: text-top;
 `
 
-const HelpContent: React.FC = () => {
+const HelpContent: FC = () => {
   const [data] = useSupportContacts()
   const showSpinner = data === undefined
   const title = "Zaaksysteem Wonen"

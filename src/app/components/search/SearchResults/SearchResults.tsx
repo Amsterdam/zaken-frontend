@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react"
+import { FC, useEffect, useMemo } from "react"
 import { useBAGWithZipCode } from "app/state/rest"
 import Table from "app/components/shared/Table/Table"
 import OpenButton from "app/components/shared/OpenButton/OpenButton"
@@ -30,7 +30,7 @@ const mapData = (data: SearchResult) =>
   ]
 })
 
-const SearchResults: React.FC<Props> = ({ searchString }) => {
+const SearchResults: FC<Props> = ({ searchString }) => {
   const [data, { isBusy, execGet }] = useBAGWithZipCode(searchString, { lazy: true })
 
   useEffect(() => {

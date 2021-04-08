@@ -1,4 +1,4 @@
-import React from "react"
+import { FC } from "react"
 import { RouteComponentProps } from "@reach/router"
 import { Divider, Heading } from "@amsterdam/asc-ui"
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
@@ -18,7 +18,7 @@ type Props = {
   id: string
 }
 
-const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
+const DetailsPage: FC<RouteComponentProps<Props>> = ({ id: idString }) => {
 
   const [exists, isBusy, has404, id] = useExistingCase(parseUrlParamId(idString))
   const showSpinner = isBusy

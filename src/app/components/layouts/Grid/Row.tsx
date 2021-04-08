@@ -1,4 +1,4 @@
-import React from "react"
+import { FC, ReactNode } from "react"
 import styled from "styled-components"
 import { breakpoint, themeSpacing } from "@amsterdam/asc-ui"
 import layouts from "@amsterdam/asc-ui/lib/theme/default/layouts"
@@ -14,7 +14,7 @@ import Column from "app/components/layouts/Grid/Column"
  */
 
 export type TypeProps = {
-  children: React.ReactNode
+  children: ReactNode
   // TODO: Make both mobile and desktop spacing settable
   bottomSpacing?: number
   topSpacing?: number
@@ -50,14 +50,14 @@ const RowStyle = styled.div<TypeProps>`
   }
 `
 
-export const RowWithColumn: React.FC<TypeProps> = ({ children, ...props }) => (
+export const RowWithColumn: FC<TypeProps> = ({ children, ...props }) => (
   <RowStyle { ...props }>
     <Column>
       { children }
     </Column>
   </RowStyle>
 )
-const Row: React.FC<TypeProps> = ({ children, ...props }) => (
+const Row: FC<TypeProps> = ({ children, ...props }) => (
   <RowStyle { ...props }>
     { children }
   </RowStyle>

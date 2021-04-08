@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react"
+import { FC, ReactNode, useCallback, useState } from "react"
 import {  Heading, themeColor, themeSpacing } from "@amsterdam/asc-ui"
 import styled from "styled-components"
 
@@ -6,12 +6,12 @@ import SmallSkeleton from "app/components/shared/Skeleton/SmallSkeleton"
 import ToggleCollapse from "app/components/shared/ToggleCollapse/ToggleCollapse"
 import InfoButton from "../InfoHeading/InfoButton"
 
-type Value = React.ReactNode
+type Value = ReactNode
 type Props = {
   numLoadingRows?: number
   numInitialVisibleRows?: number
   isLoading?: boolean
-  title?: React.ReactNode
+  title?: ReactNode
   extraInfo?: {infoTitle: string, infoText: string}
   values: Record<string, Value>
   headingSize?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6"
@@ -51,7 +51,7 @@ const Dl = styled.dl`
 type LoadingRowsProps = {
   numRows: number
 }
-const LoadingRows: React.FC<LoadingRowsProps> = ({ numRows }) => <>
+const LoadingRows: FC<LoadingRowsProps> = ({ numRows }) => <>
   { [...Array(numRows)].map((_, index) => (
     <div key={ index }>
       <dt><SmallSkeleton /></dt>
@@ -60,13 +60,13 @@ const LoadingRows: React.FC<LoadingRowsProps> = ({ numRows }) => <>
   )) }
 </>
 
-const castValue = (value: Value): React.ReactNode => {
+const castValue = (value: Value): ReactNode => {
   if (value == null) return "-"
   if (typeof value === "number") return `${ value }`
   return value
 }
 
-const DefinitionList: React.FC<Props> = ({ isLoading, numLoadingRows = 5, numInitialVisibleRows = Number.MAX_VALUE, title, values, extraInfo, headingSize = "h2" }) => {
+const DefinitionList: FC<Props> = ({ isLoading, numLoadingRows = 5, numInitialVisibleRows = Number.MAX_VALUE, title, values, extraInfo, headingSize = "h2" }) => {
   const [isCollapsed, setIsCollapsed] = useState(true)
 
   const toggleCollapsed = useCallback(() => setIsCollapsed(!isCollapsed), [setIsCollapsed, isCollapsed])

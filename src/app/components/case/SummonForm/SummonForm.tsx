@@ -1,4 +1,4 @@
-import React from "react"
+import { FC } from "react"
 import { FormTitle } from "@amsterdam/asc-ui"
 
 import { useCase, useSummons, useSummonTypes } from "app/state/rest/"
@@ -14,7 +14,7 @@ type SummonData = Omit<Components.Schemas.Summon, "type"> & { type: { id: number
 
 const mapData = (data: SummonData) => ({ ...data, type: data.type.id })
 
-const SummonForm: React.FC<Props> = ({ id }) => {
+const SummonForm: FC<Props> = ({ id }) => {
 
   const teamId = useCase(id)[0]?.team.id
   const [data] = useSummonTypes(teamId)

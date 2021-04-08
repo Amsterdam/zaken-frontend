@@ -1,4 +1,4 @@
-import React from "react"
+import { FC } from "react"
 import styled from "styled-components"
 
 import useGroupedCaseEvents from "./hooks/useGroupedCaseEvents"
@@ -31,7 +31,7 @@ const Div = styled.div`
   }
 `
 
-const TimelineContainer: React.FC<Props> = ({ caseId }) => {
+const TimelineContainer: FC<Props> = ({ caseId }) => {
 
   const [timelineEvents, { hasErrors }] = useGroupedCaseEvents(caseId)
   const showEmpty = timelineEvents?.length === 0

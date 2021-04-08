@@ -1,4 +1,4 @@
-import React from "react"
+import { FC } from "react"
 import { Button } from "@amsterdam/asc-ui"
 import { ChevronRight } from "app/components/shared/Icons"
 import ButtonLink from "app/components/shared/ButtonLink/ButtonLink"
@@ -8,7 +8,7 @@ type ButtonProps = {
   text: string
 }
 
-const OpenButton: React.FC<ButtonProps> = ({ href, text }) =>
+const OpenButton: FC<ButtonProps> = ({ href, text }) =>
   <ButtonLink to={href}>
     <Button as="span" variant="textButton" iconSize={24} iconLeft={<ChevronRight />}>{ text }</Button>
   </ButtonLink>

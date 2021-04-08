@@ -1,4 +1,4 @@
-import React from "react"
+import { FC } from "react"
 import styled from "styled-components"
 import { themeSpacing, Heading } from "@amsterdam/asc-ui"
 
@@ -20,7 +20,7 @@ const Ul = styled.ul`
   }
 `
 
-const Residents: React.FC<Props> = ({ bagId }) => {
+const Residents: FC<Props> = ({ bagId }) => {
   const [residents] = useResidents(bagId)
 
   return (
