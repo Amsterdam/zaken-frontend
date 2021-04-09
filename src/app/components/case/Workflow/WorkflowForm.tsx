@@ -11,17 +11,17 @@ import navigateTo from "app/routing/navigateTo"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
-  scaffoldData?: Record<string, any>
-  hasScaffoldData?: boolean
-  postMethod: (data: any) => Promise<unknown>
   scaffold: (caseId: Components.Schemas.Case["id"], data: any, extraLabel?: string) => { fields: Fields }
+  hasScaffoldData?: boolean
+  scaffoldData?: unknown
   extraLabel?: string
+  postMethod: (data: any) => Promise<unknown>
   initialValues?: unknown
 }
 
 const DEFAULT_SUBMIT_TITLE = "Resultaat verwerken"
 
-const WorkflowForm: FC<Props> = ({ caseId, scaffold, scaffoldData, hasScaffoldData = false, postMethod, extraLabel, initialValues }) => {
+const WorkflowForm: FC<Props> = ({ caseId, scaffold, hasScaffoldData = false, scaffoldData, extraLabel, postMethod, initialValues }) => {
 
   const {
     isSubmitted,
@@ -29,7 +29,7 @@ const WorkflowForm: FC<Props> = ({ caseId, scaffold, scaffoldData, hasScaffoldDa
     onSubmit,
     onSubmitConfirm,
     onCancelConfirm
-  } = useSubmitConfirmation<MockComponents.Schemas.CaseRequestBody>(postMethod)
+  } = useSubmitConfirmation<any>(postMethod)
   const { addSuccessFlashMessage } = useFlashMessages()
 
   if (hasScaffoldData && scaffoldData === undefined) return <Spinner />
