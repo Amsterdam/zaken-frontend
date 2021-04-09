@@ -1,5 +1,5 @@
 import { ReactNode } from "react"
-import ArrayFieldList from "../ArrayFieldList"
+import ArrayFieldList from "../components/ArrayFieldList"
 import type { RequestBody, NamedFields } from "../ConfirmScaffoldFields"
 import { Field } from "../../Form/ScaffoldField"
 
