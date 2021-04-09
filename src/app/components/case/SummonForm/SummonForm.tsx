@@ -29,6 +29,7 @@ const SummonForm: FC<Props> = ({ id }) => {
         <WorkflowForm
           caseId={ id }
           scaffoldData={ summonTypes }
+          hasScaffoldData={ true }
           postMethod={ postMethod }
           scaffold={ scaffold }
           initialValues={ { case: id } }

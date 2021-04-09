@@ -32,6 +32,7 @@ const DecisionForm: FC<Props> = ({ id }) => {
       <WorkflowForm
           caseId={ id }
           scaffoldData={ decisionTypes }
+          hasScaffoldData={ true }
           postMethod={ postMethod }
           scaffold={ scaffold }
           initialValues={ { case: id } }

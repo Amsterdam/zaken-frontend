@@ -21,6 +21,7 @@ const CorrespondenceForm: FC<Props> = ({ id }) => {
         <WorkflowForm
           caseId={ id }
           scaffoldData={ correspondences }
+          hasScaffoldData={ true }
           postMethod={ execPost }
           scaffold={ scaffold }
         />

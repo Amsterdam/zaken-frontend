@@ -22,7 +22,6 @@ const DebriefCreateForm: FC<Props> = ({ id }) => {
         <WorkflowForm
           caseId={ id }
           postMethod={ handleCreate }
-          scaffoldData={ {} }
           scaffold={ scaffold }
           initialValues={ initialValues }
         />

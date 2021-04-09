@@ -19,6 +19,7 @@ const CaseCompleteForm: FC<Props> = ({ id }) => {
       <WorkflowForm
         caseId={ id }
         scaffoldData={ data }
+        hasScaffoldData={ true }
         postMethod={ execPost }
         scaffold={ scaffold }
       />

@@ -43,6 +43,7 @@ const ScheduleForm: FC<Props> = ({ id }) => {
         <WorkflowForm
           caseId={ id }
           scaffoldData={ scheduleTypes }
+          hasScaffoldData={ true }
           postMethod={ postMethod }
           scaffold={ scaffold }
           initialValues={ initialValues }
