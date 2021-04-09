@@ -11,17 +11,16 @@ import navigateTo from "app/routing/navigateTo"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
-  scaffold: (caseId: Components.Schemas.Case["id"], data: any, extraLabel?: string) => { fields: Fields }
+  scaffold: (caseId: Components.Schemas.Case["id"], data: any) => { fields: Fields }
   hasScaffoldData?: boolean
   scaffoldData?: unknown
-  extraLabel?: string
   postMethod: (data: any) => Promise<unknown>
   initialValues?: unknown
 }
 
 const DEFAULT_SUBMIT_TITLE = "Resultaat verwerken"
 
-const WorkflowForm: FC<Props> = ({ caseId, scaffold, hasScaffoldData = false, scaffoldData, extraLabel, postMethod, initialValues }) => {
+const WorkflowForm: FC<Props> = ({ caseId, scaffold, hasScaffoldData = false, scaffoldData, postMethod, initialValues }) => {
 
   const {
     isSubmitted,
@@ -34,7 +33,7 @@ const WorkflowForm: FC<Props> = ({ caseId, scaffold, hasScaffoldData = false, sc
 
   if (hasScaffoldData && scaffoldData === undefined) return <Spinner />
 
-  const fields = scaffold(caseId, scaffoldData, extraLabel)
+  const fields = scaffold(caseId, scaffoldData)
   const submitTitle = fields.fields.submit.props.label ?? DEFAULT_SUBMIT_TITLE
 
   const onSubmitConfirmWrap = async () => {
