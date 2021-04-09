@@ -25,7 +25,7 @@ const WorkflowForm: FC<Props> = ({ caseId, scaffold, hasScaffoldData = false, sc
 
   const {
     isSubmitted,
-    data: confirmData,
+    data,
     onSubmit,
     onSubmitConfirm,
     onCancelConfirm
@@ -51,7 +51,7 @@ const WorkflowForm: FC<Props> = ({ caseId, scaffold, hasScaffoldData = false, sc
       { isSubmitted &&
         <ConfirmScaffoldFields<typeof fields.fields>
           fields={ fields.fields }
-          data={ confirmData }
+          data={ data }
           showFields={ Object.keys(fields.fields) }
           onCancel= { onCancelConfirm }
           onSubmit={ onSubmitConfirmWrap }
