@@ -18,7 +18,7 @@ const CaseCompleteForm: FC<Props> = ({ id }) => {
       <FormTitle>Gebruik dit formulier om de zaak af te ronden</FormTitle>
       <WorkflowForm
         caseId={ id }
-        data={ data }
+        scaffoldData={ data }
         postMethod={ execPost }
         scaffold={ scaffold }
       />

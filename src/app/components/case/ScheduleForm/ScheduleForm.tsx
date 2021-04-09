@@ -42,7 +42,7 @@ const ScheduleForm: FC<Props> = ({ id }) => {
       <FormWithExtraLabel>
         <WorkflowForm
           caseId={ id }
-          data={ scheduleTypes }
+          scaffoldData={ scheduleTypes }
           postMethod={ postMethod }
           scaffold={ scaffold }
           initialValues={ initialValues }

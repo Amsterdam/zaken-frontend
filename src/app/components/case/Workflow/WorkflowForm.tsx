@@ -11,7 +11,7 @@ import navigateTo from "app/routing/navigateTo"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
-  data?: Record<string, any>
+  scaffoldData?: Record<string, any>
   postMethod: (data: any) => Promise<unknown>
   scaffold: (caseId: Components.Schemas.Case["id"], data: any, extraLabel?: string) => { fields: Fields }
   extraLabel?: string
@@ -20,7 +20,7 @@ type Props = {
 
 const DEFAULT_SUBMIT_TITLE = "Resultaat verwerken"
 
-const WorkflowForm: FC<Props> = ({ caseId, scaffold, data, postMethod, extraLabel, initialValues }) => {
+const WorkflowForm: FC<Props> = ({ caseId, scaffold, scaffoldData, postMethod, extraLabel, initialValues }) => {
 
   const {
     isSubmitted,
@@ -31,9 +31,9 @@ const WorkflowForm: FC<Props> = ({ caseId, scaffold, data, postMethod, extraLabe
   } = useSubmitConfirmation<MockComponents.Schemas.CaseRequestBody>(postMethod)
   const { addSuccessFlashMessage } = useFlashMessages()
 
-  if (data === undefined) return <Spinner />
+  if (scaffoldData === undefined) return <Spinner />
 
-  const fields = scaffold(caseId, data, extraLabel)
+  const fields = scaffold(caseId, scaffoldData, extraLabel)
   const submitTitle = fields.fields.submit.props.label ?? DEFAULT_SUBMIT_TITLE
 
   const onSubmitConfirmWrap = async () => {
@@ -45,10 +45,10 @@ const WorkflowForm: FC<Props> = ({ caseId, scaffold, data, postMethod, extraLabe
   }
 
   return (
-    <ScaffoldForm onSubmit={ onSubmit } initialValues={initialValues}>
-      <ScaffoldFields {...fields } />
+    <ScaffoldForm onSubmit={ onSubmit } initialValues={ initialValues }>
+      <ScaffoldFields { ...fields } />
       { isSubmitted &&
-        <ConfirmScaffoldFields<typeof data>
+        <ConfirmScaffoldFields<typeof scaffoldData>
           fields={ fields.fields }
           data={ confirmData }
           showFields={ Object.keys(fields.fields) }

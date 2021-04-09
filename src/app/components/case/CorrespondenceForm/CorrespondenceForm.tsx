@@ -20,7 +20,7 @@ const CorrespondenceForm: FC<Props> = ({ id }) => {
       <FormWithExtraLabel>
         <WorkflowForm
           caseId={ id }
-          data={ correspondences }
+          scaffoldData={ correspondences }
           postMethod={ execPost }
           scaffold={ scaffold }
         />
