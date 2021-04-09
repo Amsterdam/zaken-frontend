@@ -1,11 +1,12 @@
 import { useState, useMemo } from "react"
 import styled from "styled-components"
-import { Heading, Button, Spinner } from "@amsterdam/asc-ui"
+import { Heading, Button } from "@amsterdam/asc-ui"
 
-import DefinitionList from "app/components/shared/DefinitionList/DefinitionList"
 import Modal, { ModalBlock } from "app/components/shared/Modal/Modal"
 import { Field } from "../Form/ScaffoldField"
 import createValuesObject from "./utils/createValuesObject"
+import DefinitionList from "app/components/shared/DefinitionList/DefinitionList"
+import SpinnerWrap from "./components/SpinnerWrap"
 
 export type RequestBody = Record<string, unknown>
 export type NamedFields<T> = Record<keyof T, Field>
@@ -32,18 +33,6 @@ const ButtonWrap = styled.div`
 `
 const Wrap = styled.div`
   position: relative;
-`
-const SpinnerWrap = styled.div`
-  position: absolute;
-  background: rgba(255, 255, 255, 0.8);
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 `
 
 const ConfirmScaffoldFields = <T extends RequestBody>(props: Props<T>) => {
@@ -80,9 +69,7 @@ const ConfirmScaffoldFields = <T extends RequestBody>(props: Props<T>) => {
           <Button variant="secondary" onClick={ onSubmitWrap }>{ submitTitle }</Button>
         </ButtonWrap>
         { isSubmitting &&
-          <SpinnerWrap>
-            <Spinner size={ 36 } />
-          </SpinnerWrap>
+          <SpinnerWrap />
         }
       </Wrap>
     </>
