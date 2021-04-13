@@ -18,10 +18,10 @@ const TimelineContainer: FC<Props> = ({ caseId }) => {
     { hasErrors ?
       <ErrorMessage message="Laden van tijdlijn evenementen mislukt" /> :
       <>
-          { timelineEvents === undefined ?
-              <Spinner /> :
-              <TimelineEvents items={ timelineEvents } />
-          }
+        { timelineEvents === undefined ?
+          <Spinner /> :
+          <TimelineEvents items={ timelineEvents } countItemType="VISIT" />
+        }
         </>
       }
       { showEmpty &&
