@@ -2,9 +2,9 @@ import { FC } from "react"
 import { FormTitle } from "@amsterdam/asc-ui"
 
 import usePageDebriefing from "app/pages/case/debriefings/hooks/usePageDebriefing"
+import scaffold from "./scaffold"
 import FormWithExtraLabel from "app/components/shared/FormWithExtraLabel/FormWithExtraLabel"
 import WorkflowForm from "app/components/case/Workflow/WorkflowForm"
-import scaffold from "./scaffold"
 
 type Props = {
   id: Components.Schemas.Case["id"]
@@ -13,6 +13,7 @@ type Props = {
 const DebriefCreateForm: FC<Props> = ({ id }) => {
 
   const { handleCreate } = usePageDebriefing(id)
+  const fields = scaffold(id)
   const initialValues = { case: id }
 
   return (
@@ -21,8 +22,8 @@ const DebriefCreateForm: FC<Props> = ({ id }) => {
       <FormWithExtraLabel>
         <WorkflowForm
           caseId={ id }
+          fields={ fields }
           postMethod={ handleCreate }
-          scaffold={ scaffold }
           initialValues={ initialValues }
         />
       </FormWithExtraLabel>

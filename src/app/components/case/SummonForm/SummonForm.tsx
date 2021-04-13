@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { FC, useMemo } from "react"
 import { FormTitle } from "@amsterdam/asc-ui"
 
 import { useCase, useSummons, useSummonTypes } from "app/state/rest/"
@@ -18,9 +18,16 @@ const SummonForm: FC<Props> = ({ id }) => {
 
   const teamId = useCase(id)[0]?.team.id
   const [data] = useSummonTypes(teamId)
-  const summonTypes = data?.results ?? []
+  const summonTypes = data?.results
+  const fields = useMemo(
+    () => summonTypes !== undefined ? scaffold(id, summonTypes) : undefined,
+    [id, summonTypes]
+  )
+
   const [, { execPost }] = useSummons({ lazy: true })
   const postMethod = async (data: SummonData) => await execPost(mapData(data))
+
+  const initialValues = { case: id }
 
   return (
     <>
@@ -28,11 +35,9 @@ const SummonForm: FC<Props> = ({ id }) => {
       <FormWithExtraLabel>
         <WorkflowForm
           caseId={ id }
-          scaffoldData={ summonTypes }
-          hasScaffoldData={ true }
+          fields={ fields }
           postMethod={ postMethod }
-          scaffold={ scaffold }
-          initialValues={ { case: id } }
+          initialValues={ initialValues }
         />
       </FormWithExtraLabel>
     </>

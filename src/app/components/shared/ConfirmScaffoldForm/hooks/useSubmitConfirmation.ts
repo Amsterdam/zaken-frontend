@@ -1,11 +1,11 @@
 import { useState } from "react"
 
-export default <RequestBody>(postMethod: (data: RequestBody) => Promise<unknown>) => {
+export default <T, U>(postMethod: (data: T) => Promise<U>) => {
 
   const [isSubmitted, setSubmitted] = useState(false)
-  const [data, setData] = useState<RequestBody>()
+  const [data, setData] = useState<T>()
 
-  const onSubmit = async (data: RequestBody) => {
+  const onSubmit = async (data: T) => {
     setSubmitted(true)
     setData(data)
   }

@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { FC, useMemo } from "react"
 import { FormTitle } from "@amsterdam/asc-ui"
 
 import { useCase, useScheduleTypes, useScheduleCreate } from "app/state/rest/"
@@ -29,8 +29,14 @@ const ScheduleForm: FC<Props> = ({ id }) => {
   const [caseItem] = useCase(id)
   const teamId = caseItem?.team.id
   const [scheduleTypes] = useScheduleTypes(teamId)
+  const fields = useMemo(
+    () => scheduleTypes !== undefined ? scaffold(id, scheduleTypes) : undefined,
+    [id, scheduleTypes]
+  )
+
   const [, { execPost }] = useScheduleCreate()
   const postMethod = async (data: ScheduleTypeFormData) => await execPost(mapData(data))
+
   const initialValues = {
     case: id,
     action: scheduleTypes?.actions[0].id
@@ -42,10 +48,8 @@ const ScheduleForm: FC<Props> = ({ id }) => {
       <FormWithExtraLabel>
         <WorkflowForm
           caseId={ id }
-          scaffoldData={ scheduleTypes }
-          hasScaffoldData={ true }
+          fields={ fields }
           postMethod={ postMethod }
-          scaffold={ scaffold }
           initialValues={ initialValues }
         />
       </FormWithExtraLabel>

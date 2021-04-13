@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { FC, useMemo } from "react"
 import { FormTitle } from "@amsterdam/asc-ui"
 
 import { useCompleteCase } from "app/state/rest/"
@@ -11,17 +11,19 @@ type Props = {
 
 const CaseCompleteForm: FC<Props> = ({ id }) => {
 
-  const [data, { execPost }] = useCompleteCase()
+  const [completeCases, { execPost }] = useCompleteCase()
+  const fields = useMemo(
+    () => completeCases !== undefined ? scaffold(id, completeCases) : undefined,
+    [id, completeCases]
+  )
 
   return (
     <>
       <FormTitle>Gebruik dit formulier om de zaak af te ronden</FormTitle>
       <WorkflowForm
         caseId={ id }
-        scaffoldData={ data }
-        hasScaffoldData={ true }
+        fields={ fields }
         postMethod={ execPost }
-        scaffold={ scaffold }
       />
     </>
   )
