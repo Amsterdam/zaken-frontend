@@ -61,7 +61,7 @@ const mapTaskData =
 
       return ({
         itemList: [
-          <StyledIcon size={32}>{ <LockOpen /> }</StyledIcon>,
+          <StyledIcon size={32}>{ <LockOpen titleAccess="Openstaande taak" /> }</StyledIcon>,
           name,
           roles ? mapArrayToList(roles) : "-",
           due_date ?
