@@ -7,22 +7,22 @@ import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
 import navigateTo from "app/routing/navigateTo"
 
 type Props = {
-  caseId: Components.Schemas.Case["id"]
+  id: Components.Schemas.Case["id"]
   fields?: { fields: Fields }
   postMethod: (data: any) => Promise<any>
   initialValues?: Record<string, unknown>
 }
 
-const WorkflowForm: FC<Props> = ({ caseId, fields, postMethod, initialValues }) => {
+const WorkflowForm: FC<Props> = ({ id, fields, postMethod, initialValues }) => {
 
   const { addSuccessFlashMessage } = useFlashMessages()
 
   if (fields === undefined) return <Spinner />
 
   const afterSubmit = async () => {
-    const path = `/zaken/${ caseId }`
+    const path = `/zaken/${ id }`
     addSuccessFlashMessage(path, "Succes", "Het resultaat is verwerkt")
-    navigateTo("/zaken/:id", { id: caseId })
+    navigateTo("/zaken/:id", { id })
   }
 
   return (
@@ -30,7 +30,7 @@ const WorkflowForm: FC<Props> = ({ caseId, fields, postMethod, initialValues }) 
       fields={ fields }
       postMethod={ postMethod }
       afterSubmit={ afterSubmit }
-      initialValues={ initialValues }
+      initialValues={ { case: id, ...initialValues ?? {} } }
     />
   )
 }

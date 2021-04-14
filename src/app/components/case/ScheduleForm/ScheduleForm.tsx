@@ -38,7 +38,6 @@ const ScheduleForm: FC<Props> = ({ id }) => {
   const postMethod = async (data: ScheduleTypeFormData) => await execPost(mapData(data))
 
   const initialValues = {
-    case: id,
     action: scheduleTypes?.actions[0].id
   }
 
@@ -47,7 +46,7 @@ const ScheduleForm: FC<Props> = ({ id }) => {
       <FormTitle>Gebruik dit formulier om een huisbezoek in te plannen</FormTitle>
       <FormWithExtraLabel>
         <WorkflowForm
-          caseId={ id }
+          id={ id }
           fields={ fields }
           postMethod={ postMethod }
           initialValues={ initialValues }

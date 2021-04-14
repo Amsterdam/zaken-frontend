@@ -30,18 +30,15 @@ const DecisionForm: FC<Props> = ({ id }) => {
   const [, { execPost }] = useDecisions({ lazy: true })
   const postMethod = async (data: DecisionData) => await execPost(mapData(data))
 
-  const initialValues = { case: id }
-
   return (
     <>
       <DecisionHeader caseId={ id }/>
       <FormTitle>Gebruik dit formulier om aan te geven welk besluit is genomen</FormTitle>
       <FormWithExtraLabel>
       <WorkflowForm
-          caseId={ id }
+          id={ id }
           fields={ fields }
           postMethod={ postMethod }
-          initialValues={ initialValues }
       />
       </FormWithExtraLabel>
     </>

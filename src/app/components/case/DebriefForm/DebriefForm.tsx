@@ -14,17 +14,15 @@ const DebriefCreateForm: FC<Props> = ({ id }) => {
 
   const { handleCreate } = usePageDebriefing(id)
   const fields = scaffold(id)
-  const initialValues = { case: id }
 
   return (
     <>
       <FormTitle>Geef terugkoppeling van de gehouden debrief</FormTitle>
       <FormWithExtraLabel>
         <WorkflowForm
-          caseId={ id }
+          id={ id }
           fields={ fields }
           postMethod={ handleCreate }
-          initialValues={ initialValues }
         />
       </FormWithExtraLabel>
     </>

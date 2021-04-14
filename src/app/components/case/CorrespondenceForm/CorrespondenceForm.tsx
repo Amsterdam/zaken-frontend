@@ -24,7 +24,7 @@ const CorrespondenceForm: FC<Props> = ({ id }) => {
       <FormTitle>Gebruik dit formulier om notitie van correspondentie toe te voegen</FormTitle>
       <FormWithExtraLabel>
         <WorkflowForm
-          caseId={ id }
+          id={ id }
           fields={ fields }
           postMethod={ execPost }
         />

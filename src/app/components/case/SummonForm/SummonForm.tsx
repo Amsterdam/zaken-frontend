@@ -27,17 +27,14 @@ const SummonForm: FC<Props> = ({ id }) => {
   const [, { execPost }] = useSummons({ lazy: true })
   const postMethod = async (data: SummonData) => await execPost(mapData(data))
 
-  const initialValues = { case: id }
-
   return (
     <>
       <FormTitle>Meld welke aanschrijving is opgesteld en voor wie. Doe dit nadat de brief daadwerkelijk verstuurd is.</FormTitle>
       <FormWithExtraLabel>
         <WorkflowForm
-          caseId={ id }
+          id={ id }
           fields={ fields }
           postMethod={ postMethod }
-          initialValues={ initialValues }
         />
       </FormWithExtraLabel>
     </>
