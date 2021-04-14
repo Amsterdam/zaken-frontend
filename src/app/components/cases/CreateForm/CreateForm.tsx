@@ -29,19 +29,22 @@ const CreateForm: FC<Props> = ({ bagId }) => {
   const [, { execPost }] = useCaseCreateUpdate()
   const postMethod = async (data: FormData) =>
     await execPost(mapData(bagId, data)) as Components.Schemas.CaseCreateUpdate
-  const fields = useMemo(() => scaffold(bagId, teams?.results ?? [], reasons?.results ?? []), [bagId, teams, reasons])
+
+  const fields = useMemo(
+    () => teams !== undefined && reasons !== undefined ? scaffold(bagId, teams.results ?? [], reasons.results ?? []) : undefined,
+    [bagId, teams, reasons]
+  )
 
   const { addSuccessFlashMessage } = useFlashMessages()
-
-  if (teams === undefined || reasons === undefined) return <Spinner />
-
   const afterSubmit = async (result: Components.Schemas.CaseCreateUpdate) => {
     const { id } = result
     addSuccessFlashMessage(`/zaken/${ id }`, "Succes", "De zaak is succesvol toegevoegd")
     navigateTo("/zaken/:id", { id })
   }
 
-  const initialValues = { team: teams.results?.[0], reason: reasons.results?.[0] }
+  const initialValues = { team: teams?.results?.[0], reason: reasons?.results?.[0] }
+
+  if (fields === undefined) return <Spinner />
 
   return (
     <ConfirmScaffoldForm
