@@ -56,7 +56,7 @@ const ChangeableDueDate: FC<Props> = ({ dueDate, camundaTaskId }) => {
         onClick={openModal}
       >
         { displayDate(dueDate) }
-        <StyledIcon size={20}>{ <Edit titleAccess="Pas datum aan" /> }</StyledIcon>
+        <StyledIcon size={20}>{ <Edit titleAccess="Pas de slotdatum aan" /> }</StyledIcon>
       </DateInPast>
       <ChangeDueDateModal onSubmit={onSubmit} isOpen={isModalOpen} closeModal={closeModal} dueDate={dueDate} taskId={camundaTaskId}  />
     </>
