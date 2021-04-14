@@ -1,5 +1,5 @@
 import { FC } from "react"
-import { FormTitle } from "@amsterdam/asc-ui"
+import { Alert, FormTitle } from "@amsterdam/asc-ui"
 import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
 
 import ScaffoldFields from "app/components/shared/Form/ScaffoldFields"
@@ -38,6 +38,7 @@ const VisitForm: FC<Props> = ({ caseId }) => {
 
   return (
     <>
+      <Alert level="warning">Dit formulier niet gebruiken! Het huisbezoek wordt door de toezichthouder in de TOP app verwerkt, waarna deze taak automatisch wordt opgepakt</Alert>
       <FormTitle>Gebruik dit formulier om een huisbezoek aan te maken</FormTitle>
       <ScaffoldForm
         showSpinner={ showSpinner }
