@@ -6,7 +6,6 @@ import CasesFilter from "app/components/cases/CasesFilter/CasesFilter"
 import { getDate, createOptions } from "app/components/cases/CasesFilter/scaffold"
 import { useCases } from "app/state/rest"
 import useURLState from "app/hooks/useURLState/useURLState"
-import ButtonMockCases from "./ButtonMockCases"
 
 const parse = (value: string | null) => {
   const options = Object.keys(createOptions())
@@ -32,9 +31,6 @@ const Cases: FC = () => {
           <CasesFilter date={ date } setDate={ setDate } />
         </Column>
       </Row>
-      { process.env.REACT_APP_ENVIRONMENT !== "production" &&
-        <ButtonMockCases />
-      }
     </>
   )
 }
