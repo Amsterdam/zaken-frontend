@@ -4,8 +4,7 @@ import { Spinner } from "@amsterdam/asc-ui"
 import scaffold from "./scaffold"
 import { useTeams, useReasons, useCaseCreateUpdate } from "app/state/rest"
 import ConfirmScaffoldForm from "app/components/shared/ConfirmScaffoldForm/ConfirmScaffoldForm"
-import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
-import navigateTo from "app/routing/navigateTo"
+import useNavigateWithFlashMessage from "app/state/flashMessages/useNavigateWithFlashMessage"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -35,12 +34,14 @@ const CreateForm: FC<Props> = ({ bagId }) => {
     [bagId, teams, reasons]
   )
 
-  const { addSuccessFlashMessage } = useFlashMessages()
-  const afterSubmit = async (result: Components.Schemas.CaseCreateUpdate) => {
-    const { id } = result
-    addSuccessFlashMessage(`/zaken/${ id }`, "Succes", "De zaak is succesvol toegevoegd")
-    navigateTo("/zaken/:id", { id })
-  }
+  const navigateWithFlashMessage = useNavigateWithFlashMessage()
+  const afterSubmit = async (result: Components.Schemas.CaseCreateUpdate) => await navigateWithFlashMessage(
+    "/zaken/:id",
+    { id: result.id },
+    "info",
+    "Succes",
+    "De zaak is succesvol toegevoegd"
+  )
 
   const initialValues = { team: teams?.results?.[0], reason: reasons?.results?.[0] }
 

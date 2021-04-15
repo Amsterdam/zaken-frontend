@@ -3,8 +3,7 @@ import { FC } from "react"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import ConfirmScaffoldForm from "app/components/shared/ConfirmScaffoldForm/ConfirmScaffoldForm"
 import { Spinner } from "@amsterdam/asc-ui"
-import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
-import navigateTo from "app/routing/navigateTo"
+import useNavigateWithFlashMessage from "app/state/flashMessages/useNavigateWithFlashMessage"
 
 type Props = {
   id: Components.Schemas.Case["id"]
@@ -13,24 +12,25 @@ type Props = {
   initialValues?: Record<string, unknown>
 }
 
-const WorkflowForm: FC<Props> = ({ id, fields, postMethod, initialValues }) => {
+const WorkflowForm: FC<Props> = ({ id, fields, postMethod, initialValues = {} }) => {
 
-  const { addSuccessFlashMessage } = useFlashMessages()
+  const navigateWithFlashMessage = useNavigateWithFlashMessage()
+  const afterSubmit = async () => await navigateWithFlashMessage(
+    "/zaken/:id",
+    { id },
+    "info",
+    "Succes",
+    "Het resultaat is verwerkt"
+  )
 
   if (fields === undefined) return <Spinner />
-
-  const afterSubmit = async () => {
-    const path = `/zaken/${ id }`
-    addSuccessFlashMessage(path, "Succes", "Het resultaat is verwerkt")
-    navigateTo("/zaken/:id", { id })
-  }
 
   return (
     <ConfirmScaffoldForm
       fields={ fields }
       postMethod={ postMethod }
       afterSubmit={ afterSubmit }
-      initialValues={ { case: id, ...initialValues ?? {} } }
+      initialValues={ { case: id, ...initialValues } }
     />
   )
 }
