@@ -1,6 +1,6 @@
 import { createContext, FC } from "react"
 
-import { useFlashMessagesReducer } from "./useFlashMessagesReducer"
+import { useFlashMessagesReducer } from "./hooks/useFlashMessagesReducer"
 
 export type Context = ReturnType<typeof useFlashMessagesReducer>
 export const FlashMessageContext = createContext<Context|undefined>(undefined)
