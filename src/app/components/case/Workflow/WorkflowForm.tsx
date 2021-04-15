@@ -2,7 +2,6 @@ import { FC } from "react"
 
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import ConfirmScaffoldForm from "app/components/shared/ConfirmScaffoldForm/ConfirmScaffoldForm"
-import { Spinner } from "@amsterdam/asc-ui"
 import useNavigateWithFlashMessage from "app/state/flashMessages/useNavigateWithFlashMessage"
 
 type Props = {
@@ -22,8 +21,6 @@ const WorkflowForm: FC<Props> = ({ id, fields, postMethod, initialValues = {} })
     "Succes",
     "Het resultaat is verwerkt"
   )
-
-  if (fields === undefined) return <Spinner />
 
   return (
     <ConfirmScaffoldForm

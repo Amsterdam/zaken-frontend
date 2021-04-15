@@ -1,10 +1,11 @@
+import { Spinner } from "@amsterdam/asc-ui"
 import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
 import ScaffoldFields, { Fields } from "app/components/shared/Form/ScaffoldFields"
 import ConfirmScaffoldFields from "./ConfirmScaffoldFields"
 import useSubmitConfirmation from "./hooks/useSubmitConfirmation"
 
 type Props<T, U> = {
-  fields: { fields: Fields }
+  fields: { fields: Fields } | undefined
   postMethod: (data: T) => Promise<U>
   afterSubmit?: (result: U) => Promise<unknown>
   initialValues?: Record<string, unknown>
@@ -21,7 +22,7 @@ const ConfirmScaffoldForm = <T extends Record<string, any>, U extends Record<str
     onCancelConfirm
   } = useSubmitConfirmation(postMethod)
 
-  const submitTitle = fields.fields.submit?.props?.label
+  const submitTitle = fields?.fields.submit?.props?.label
 
   const onSubmitConfirmWrap = async () => {
     const result = await onSubmitConfirm()
@@ -31,6 +32,8 @@ const ConfirmScaffoldForm = <T extends Record<string, any>, U extends Record<str
   }
 
   return (
+    fields === undefined ?
+    <Spinner /> :
     <ScaffoldForm onSubmit={ onSubmit } initialValues={ initialValues }>
       <ScaffoldFields { ...fields }/>
       { isSubmitted &&

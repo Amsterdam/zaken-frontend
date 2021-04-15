@@ -1,5 +1,4 @@
 import { FC, useMemo } from "react"
-import { Spinner } from "@amsterdam/asc-ui"
 
 import scaffold from "./scaffold"
 import { useTeams, useReasons, useCaseCreateUpdate } from "app/state/rest"
@@ -44,8 +43,6 @@ const CreateForm: FC<Props> = ({ bagId }) => {
   )
 
   const initialValues = { team: teams?.results?.[0], reason: reasons?.results?.[0] }
-
-  if (fields === undefined) return <Spinner />
 
   return (
     <ConfirmScaffoldForm
