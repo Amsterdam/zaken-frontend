@@ -5,6 +5,7 @@ import { Alert } from "@amsterdam/asc-ui"
 
 export type FlashMessage = ComponentProps<typeof Alert>
 export type State = Record<string, FlashMessage[]>
+export type FlashMessageLevel = "info" | "error"
 
 type Action =
   | { type: "add", path: string, props: FlashMessage }

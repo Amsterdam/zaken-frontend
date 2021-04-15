@@ -1,5 +1,6 @@
 import { useContext } from "react"
 import { FlashMessageContext } from "./FlashMessageProvider"
+export type { FlashMessageLevel } from "./useFlashMessagesReducer"
 
 /**
  * A flash message is a message that is only shown once.
