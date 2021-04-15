@@ -10,8 +10,6 @@ type Props<T, U> = {
   initialValues?: Record<string, unknown>
 }
 
-const DEFAULT_SUBMIT_TITLE = "Opslaan"
-
 const ConfirmScaffoldForm = <T extends Record<string, any>, U extends Record<string, any>>(props: Props<T, U>) => {
 
   const { fields, postMethod, afterSubmit, initialValues } = props
@@ -23,7 +21,7 @@ const ConfirmScaffoldForm = <T extends Record<string, any>, U extends Record<str
     onCancelConfirm
   } = useSubmitConfirmation(postMethod)
 
-  const submitTitle = fields.fields.submit?.props?.label ?? DEFAULT_SUBMIT_TITLE
+  const submitTitle = fields.fields.submit?.props?.label
 
   const onSubmitConfirmWrap = async () => {
     const result = await onSubmitConfirm()

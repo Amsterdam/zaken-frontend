@@ -22,9 +22,9 @@ type Props<RequestBody> = {
   showInModal?: boolean
 }
 
-const defaultTitle = "Controleer of onderstaande gegevens kloppen"
-const defaultCancelTitle = "Wijzig"
-const defaultSubmitTitle = "Opslaan"
+const DEFAULT_TITLE = "Controleer of onderstaande gegevens kloppen"
+const DEFAULT_CANCEL_TITLE = "Wijzig"
+const DEFAULT_SUBMIT_TITLE = "Opslaan"
 const noop = () => {}
 
 const ButtonWrap = styled.div`
@@ -40,11 +40,11 @@ const ConfirmScaffoldFields = <T extends RequestBody>(props: Props<T>) => {
     fields,
     data,
     showFields = [],
-    title = defaultTitle,
+    title = DEFAULT_TITLE,
     onCancel = noop,
-    cancelTitle = defaultCancelTitle,
+    cancelTitle = DEFAULT_CANCEL_TITLE,
     onSubmit = noop,
-    submitTitle = defaultSubmitTitle,
+    submitTitle = DEFAULT_SUBMIT_TITLE,
     showInModal = false
   } = props
   const [isSubmitting, setSubmitting] = useState(false)
