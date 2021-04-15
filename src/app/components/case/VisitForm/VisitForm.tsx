@@ -38,7 +38,7 @@ const VisitForm: FC<Props> = ({ caseId }) => {
 
   return (
     <>
-      <Alert level="warning">Dit formulier niet gebruiken! Het huisbezoek wordt door de toezichthouder in de TOP app verwerkt, waarna deze taak automatisch wordt opgepakt</Alert>
+      <Alert level="warning">Dit formulier niet gebruiken! Het huisbezoek wordt door de toezichthouder in de TOP app verwerkt, waarna deze taak automatisch wordt opgepakt.</Alert>
       <FormTitle>Gebruik dit formulier om een huisbezoek aan te maken</FormTitle>
       <ScaffoldForm
         showSpinner={ showSpinner }
