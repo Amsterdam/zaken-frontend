@@ -23,7 +23,7 @@ const ConfirmScaffoldForm = <T extends Record<string, any>, U extends Record<str
     onCancelConfirm
   } = useSubmitConfirmation(postMethod)
 
-  const submitTitle = fields.fields.submit.props.label ?? DEFAULT_SUBMIT_TITLE
+  const submitTitle = fields.fields.submit?.props?.label ?? DEFAULT_SUBMIT_TITLE
 
   const onSubmitConfirmWrap = async () => {
     const result = await onSubmitConfirm()
@@ -34,15 +34,15 @@ const ConfirmScaffoldForm = <T extends Record<string, any>, U extends Record<str
 
   return (
     <ScaffoldForm onSubmit={ onSubmit } initialValues={ initialValues }>
-      <ScaffoldFields { ...fields } />
+      <ScaffoldFields { ...fields }/>
       { isSubmitted &&
         <ConfirmScaffoldFields<typeof fields.fields>
           fields={ fields.fields }
           data={ data }
           showFields={ Object.keys(fields.fields) }
-          onCancel= { onCancelConfirm }
+          onCancel={ onCancelConfirm }
           onSubmit={ onSubmitConfirmWrap }
-          submitTitle= { submitTitle }
+          submitTitle={ submitTitle }
           showInModal={ true }
         />
       }
