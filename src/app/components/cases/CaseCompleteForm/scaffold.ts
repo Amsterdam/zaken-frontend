@@ -2,7 +2,7 @@ import { FormPositioner } from "@amsterdam/scaffold-form/package"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import navigateTo from "app/routing/navigateTo"
 
-export default (caseId: Components.Schemas.Case["id"], completeCases: MockComponents.Schemas.CompleteCase[]) => {
+export default (caseId: Components.Schemas.Case["id"], completeCases?: MockComponents.Schemas.CompleteCase[]) => {
 
   const fields = {
     complete: {
@@ -12,7 +12,7 @@ export default (caseId: Components.Schemas.Case["id"], completeCases: MockCompon
         label: "Wat is de vervolgstap in deze zaak?",
         name: "complete",
         optionLabelField: "title",
-        options: completeCases
+        options: completeCases ?? []
       }
     },
     text: {

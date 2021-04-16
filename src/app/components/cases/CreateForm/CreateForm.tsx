@@ -1,9 +1,10 @@
-import { FC, useMemo } from "react"
+import { FC } from "react"
 
 import scaffold from "./scaffold"
 import { useTeams, useReasons, useCaseCreateUpdate } from "app/state/rest"
 import ConfirmScaffoldForm from "app/components/shared/ConfirmScaffoldForm/ConfirmScaffoldForm"
 import useNavigateWithFlashMessage from "app/state/flashMessages/useNavigateWithFlashMessage"
+import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -28,10 +29,7 @@ const CreateForm: FC<Props> = ({ bagId }) => {
   const postMethod = async (data: FormData) =>
     await execPost(mapData(bagId, data)) as Components.Schemas.CaseCreateUpdate
 
-  const fields = useMemo(
-    () => teams !== undefined && reasons !== undefined ? scaffold(bagId, teams.results ?? [], reasons.results ?? []) : undefined,
-    [bagId, teams, reasons]
-  )
+  const fields = useScaffoldedFields(scaffold, bagId, teams?.results, reasons?.results)
 
   const navigateWithFlashMessage = useNavigateWithFlashMessage()
   const afterSubmit = async (result: Components.Schemas.CaseCreateUpdate) => await navigateWithFlashMessage(

@@ -1,9 +1,10 @@
-import { FC, useMemo } from "react"
+import { FC } from "react"
 import { FormTitle } from "@amsterdam/asc-ui"
 
 import { useCase, useScheduleTypes, useScheduleCreate } from "app/state/rest/"
 import WorkflowForm from "app/components/case/Workflow/WorkflowForm"
 import scaffold from "./scaffold"
+import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
 import FormWithExtraLabel from "app/components/shared/FormWithExtraLabel/FormWithExtraLabel"
 
 type Props = {
@@ -29,10 +30,7 @@ const ScheduleForm: FC<Props> = ({ id }) => {
   const [caseItem] = useCase(id)
   const teamId = caseItem?.team.id
   const [scheduleTypes] = useScheduleTypes(teamId)
-  const fields = useMemo(
-    () => scheduleTypes !== undefined ? scaffold(id, scheduleTypes) : undefined,
-    [id, scheduleTypes]
-  )
+  const fields = useScaffoldedFields(scaffold, id, scheduleTypes)
 
   const [, { execPost }] = useScheduleCreate()
   const postMethod = async (data: ScheduleTypeFormData) => await execPost(mapData(data))

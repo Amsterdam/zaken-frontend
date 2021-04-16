@@ -3,7 +3,7 @@ import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import navigateTo from "app/routing/navigateTo"
 
-export default (caseId: Components.Schemas.Case["id"], scheduleTypes: Components.Schemas.TeamScheduleTypes) => {
+export default (caseId: Components.Schemas.Case["id"], scheduleTypes?: Components.Schemas.TeamScheduleTypes) => {
 
   const fields = {
     week_segment: {
@@ -14,7 +14,7 @@ export default (caseId: Components.Schemas.Case["id"], scheduleTypes: Components
         optionLabelField: "name",
         isRequired: true,
         withEmptyOption: true,
-        options: scheduleTypes?.week_segments
+        options: scheduleTypes?.week_segments ?? []
       }
     },
     day_segment: {
@@ -25,7 +25,7 @@ export default (caseId: Components.Schemas.Case["id"], scheduleTypes: Components
         optionLabelField: "name",
         isRequired: true,
         withEmptyOption: true,
-        options: scheduleTypes?.day_segments
+        options: scheduleTypes?.day_segments ?? []
       }
     },
     priority: {
@@ -37,7 +37,7 @@ export default (caseId: Components.Schemas.Case["id"], scheduleTypes: Components
         extraLabel: <InfoButton infoTitle="Urgentie huisbezoek" infoText="Gebruik hoge urgentie indien er nu toeristen aanwezig zijn of als er bijvoorbeeld een machtiging van kracht is."></InfoButton>,
         isRequired: true,
         withEmptyOption: true,
-        options: scheduleTypes?.priorities
+        options: scheduleTypes?.priorities ?? []
       }
     },
     secondaryButton: {
