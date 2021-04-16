@@ -53,8 +53,6 @@ const ConfirmScaffoldFields = <T extends RequestBody>(props: Props<T>) => {
   const onSubmitWrap = async () => {
     setSubmitting(true)
     await onSubmit()
-    // TODO: Fix this. When the `onSubmit` handler causes this component to be removed. It throws a warning.
-    //setSubmitting(false)
   }
 
   const content = (
