@@ -1,9 +1,10 @@
-import { FC, useMemo } from "react"
+import { FC } from "react"
 import { FormTitle } from "@amsterdam/asc-ui"
 
 import { useCase, useSummons, useSummonTypes } from "app/state/rest/"
 import WorkflowForm from "app/components/case/Workflow/WorkflowForm"
 import scaffold from "app/components/case/SummonForm/scaffold"
+import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
 import FormWithExtraLabel from "app/components/shared/FormWithExtraLabel/FormWithExtraLabel"
 
 type Props = {
@@ -19,10 +20,7 @@ const SummonForm: FC<Props> = ({ id }) => {
   const teamId = useCase(id)[0]?.team.id
   const [data] = useSummonTypes(teamId)
   const summonTypes = data?.results
-  const fields = useMemo(
-    () => summonTypes !== undefined ? scaffold(id, summonTypes) : undefined,
-    [id, summonTypes]
-  )
+  const fields = useScaffoldedFields(scaffold, id, summonTypes)
 
   const [, { execPost }] = useSummons({ lazy: true })
   const postMethod = async (data: SummonData) => await execPost(mapData(data))

@@ -12,7 +12,7 @@ export default (caseId: Components.Schemas.Case["id"], completeCases?: MockCompo
         label: "Wat is de vervolgstap in deze zaak?",
         name: "complete",
         optionLabelField: "title",
-        options: completeCases ?? []
+        options: completeCases
       }
     },
     text: {

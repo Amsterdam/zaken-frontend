@@ -14,7 +14,7 @@ export default (caseId: Components.Schemas.Case["id"], scheduleTypes?: Component
         optionLabelField: "name",
         isRequired: true,
         withEmptyOption: true,
-        options: scheduleTypes?.week_segments ?? []
+        options: scheduleTypes?.week_segments
       }
     },
     day_segment: {
@@ -25,7 +25,7 @@ export default (caseId: Components.Schemas.Case["id"], scheduleTypes?: Component
         optionLabelField: "name",
         isRequired: true,
         withEmptyOption: true,
-        options: scheduleTypes?.day_segments ?? []
+        options: scheduleTypes?.day_segments
       }
     },
     priority: {
@@ -37,7 +37,7 @@ export default (caseId: Components.Schemas.Case["id"], scheduleTypes?: Component
         extraLabel: <InfoButton infoTitle="Urgentie huisbezoek" infoText="Gebruik hoge urgentie indien er nu toeristen aanwezig zijn of als er bijvoorbeeld een machtiging van kracht is."></InfoButton>,
         isRequired: true,
         withEmptyOption: true,
-        options: scheduleTypes?.priorities ?? []
+        options: scheduleTypes?.priorities
       }
     },
     secondaryButton: {

@@ -3,7 +3,7 @@ import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import navigateTo from "app/routing/navigateTo"
 
-export default (caseId: Components.Schemas.Case["id"], summonTypes: Components.Schemas.SummonType[]) => {
+export default (caseId: Components.Schemas.Case["id"], summonTypes?: Components.Schemas.SummonType[]) => {
 
   const fields = {
     type: {
