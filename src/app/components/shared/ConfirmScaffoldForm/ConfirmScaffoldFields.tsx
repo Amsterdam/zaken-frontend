@@ -1,11 +1,12 @@
 import { useState, useMemo } from "react"
 import styled from "styled-components"
-import { Heading, Button, Spinner } from "@amsterdam/asc-ui"
+import { Heading, Button } from "@amsterdam/asc-ui"
 
-import DefinitionList from "app/components/shared/DefinitionList/DefinitionList"
 import Modal, { ModalBlock } from "app/components/shared/Modal/Modal"
 import { Field } from "../Form/ScaffoldField"
 import createValuesObject from "./utils/createValuesObject"
+import DefinitionList from "app/components/shared/DefinitionList/DefinitionList"
+import SpinnerWrap from "./components/SpinnerWrap"
 
 export type RequestBody = Record<string, unknown>
 export type NamedFields<T> = Record<keyof T, Field>
@@ -21,9 +22,9 @@ type Props<RequestBody> = {
   showInModal?: boolean
 }
 
-const defaultTitle = "Controleer of onderstaande gegevens kloppen"
-const defaultCancelTitle = "Wijzig"
-const defaultSubmitTitle = "Opslaan"
+const DEFAULT_TITLE = "Controleer of onderstaande gegevens kloppen"
+const DEFAULT_CANCEL_TITLE = "Wijzig"
+const DEFAULT_SUBMIT_TITLE = "Opslaan"
 const noop = () => {}
 
 const ButtonWrap = styled.div`
@@ -33,29 +34,17 @@ const ButtonWrap = styled.div`
 const Wrap = styled.div`
   position: relative;
 `
-const SpinnerWrap = styled.div`
-  position: absolute;
-  background: rgba(255, 255, 255, 0.8);
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-`
 
 const ConfirmScaffoldFields = <T extends RequestBody>(props: Props<T>) => {
   const {
     fields,
     data,
     showFields = [],
-    title = defaultTitle,
+    title = DEFAULT_TITLE,
     onCancel = noop,
-    cancelTitle = defaultCancelTitle,
+    cancelTitle = DEFAULT_CANCEL_TITLE,
     onSubmit = noop,
-    submitTitle = defaultSubmitTitle,
+    submitTitle = DEFAULT_SUBMIT_TITLE,
     showInModal = false
   } = props
   const [isSubmitting, setSubmitting] = useState(false)
@@ -64,8 +53,6 @@ const ConfirmScaffoldFields = <T extends RequestBody>(props: Props<T>) => {
   const onSubmitWrap = async () => {
     setSubmitting(true)
     await onSubmit()
-    // TODO: Fix this. When the `onSubmit` handler causes this component to be removed. It throws a warning.
-    //setSubmitting(false)
   }
 
   const content = (
@@ -80,9 +67,7 @@ const ConfirmScaffoldFields = <T extends RequestBody>(props: Props<T>) => {
           <Button variant="secondary" onClick={ onSubmitWrap }>{ submitTitle }</Button>
         </ButtonWrap>
         { isSubmitting &&
-          <SpinnerWrap>
-            <Spinner size={ 36 } />
-          </SpinnerWrap>
+          <SpinnerWrap />
         }
       </Wrap>
     </>

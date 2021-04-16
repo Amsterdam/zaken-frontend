@@ -8,7 +8,7 @@ import Row, { RowWithColumn } from "app/components/layouts/Grid/Row"
 import BreadCrumbs from "app/components/shared/BreadCrumbs/BreadCrumbs"
 import PageHeading from "app/components/shared/PageHeading/PageHeading"
 import CaseHeading from "app/components/case/CaseHeading/CaseHeading"
-import CaseCompleteForm from "app/components/cases/CaseCompleteForm/CaseCompleteForm"
+import CaseCompleteForm from "app/components/case/CaseCompleteForm/CaseCompleteForm"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
 import { Column } from "app/components/layouts/Grid"
 

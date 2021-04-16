@@ -9,12 +9,12 @@ type Props = Omit<ComponentProps<typeof AmsterdamScaffold>, "fields"> & {
   fields: Fields
 }
 
-const fieldRenderer: FieldRenderer = field => <ScaffoldField field={field} />
+const fieldRenderer: FieldRenderer = field => <ScaffoldField field={ field } />
 
 /**
  * Scaffolds the default amsterdam-react-final-form fields, as well as custom defined fields for zaken-frontend
  */
 // @ts-ignore
-const ScaffoldFields: FC<Props> = (props) => (<AmsterdamScaffold fieldRenderer={fieldRenderer} {...props} />)
+const ScaffoldFields: FC<Props> = props => <AmsterdamScaffold fieldRenderer={ fieldRenderer } { ...props } />
 
 export default ScaffoldFields

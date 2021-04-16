@@ -4,7 +4,7 @@ import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import InfoContent from "./InfoContent"
 import navigateTo from "app/routing/navigateTo"
 
-const Scaffold = (caseId: Components.Schemas.Case["id"]) => {
+export default (caseId: Components.Schemas.Case["id"]) => {
   const fields = {
     violation: {
       type: "RadioFields",
@@ -54,5 +54,3 @@ const Scaffold = (caseId: Components.Schemas.Case["id"]) => {
     ])
     .getScaffoldProps()
 }
-
-export default Scaffold
