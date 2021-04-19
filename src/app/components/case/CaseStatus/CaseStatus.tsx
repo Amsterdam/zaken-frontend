@@ -2,8 +2,7 @@ import { FC } from "react"
 import styled from "styled-components"
 import { Divider, Heading, themeSpacing } from "@amsterdam/asc-ui"
 
-// TODO: Show
-// import TaskForm from "./TaskForm"
+import TaskForm from "./TaskForm"
 import Workflow from "../Workflow/Workflow"
 
 type Props = {
@@ -23,7 +22,7 @@ const CaseStatus: FC<Props> = ({ id }) => (
   <>
     <Div>
       <Heading as="h2">Status</Heading>
-      { /* <TaskForm id={ id } /> */ }
+      <TaskForm id={ id } />
     </Div>
     <StyledDivider />
     <Workflow id={ id } />
