@@ -1,4 +1,3 @@
-import React from "react"
 import { mount } from "enzyme"
 import { Form } from "react-final-form"
 import { FormState } from "final-form"

@@ -1,7 +1,7 @@
-import React from "react"
+import { FC } from "react"
 import { List, ListItem } from "@amsterdam/asc-ui"
 
-const ArrayFieldList: React.FC<{ fields: Array<Record<string, string>> }> = ({ fields }) => (
+const ArrayFieldList: FC<{ fields: Array<Record<string, string>> }> = ({ fields }) => (
   <List>
     { fields.map(field => {
         const s = Object.keys(field).map(key => field[key]).join(" ")

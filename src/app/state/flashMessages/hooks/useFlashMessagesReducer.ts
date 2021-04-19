@@ -1,10 +1,11 @@
-import React, { useCallback, useEffect, useReducer } from "react"
+import { ComponentProps, ReactNode, useCallback, useEffect, useReducer } from "react"
 import { globalHistory, useLocation } from "@reach/router"
 import produce from "immer"
 import { Alert } from "@amsterdam/asc-ui"
 
-export type FlashMessage = React.ComponentProps<typeof Alert>
+export type FlashMessage = ComponentProps<typeof Alert>
 export type State = Record<string, FlashMessage[]>
+export type FlashMessageLevel = "info" | "error"
 
 type Action =
   | { type: "add", path: string, props: FlashMessage }
@@ -25,8 +26,6 @@ export const reducer = produce((draft, action: Action) => {
   }
 })
 
-///////////////////////////////////////////////////////////////////////////////////////////
-
 export const useFlashMessagesReducer = () => {
   const [state, dispatch] = useReducer(reducer, {} as State)
   const { pathname } = useLocation()
@@ -37,7 +36,7 @@ export const useFlashMessagesReducer = () => {
   )
 
   const addSuccessFlashMessage = useCallback(
-    (path: string, title: string, body?: React.ReactNode, shouldClear = false) => {
+    (path: string, title: string, body?: ReactNode, shouldClear = false) => {
       if (shouldClear) {
         clearFlashMessages(path)
       }
@@ -51,7 +50,7 @@ export const useFlashMessagesReducer = () => {
   )
 
   const addErrorFlashMessage = useCallback(
-    (title: string, body?: React.ReactNode) => dispatch({
+    (title: string, body?: ReactNode) => dispatch({
       path: "current",
       type: "add",
       props: { title, children: body, level: "error", dismissible: true }

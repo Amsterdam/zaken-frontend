@@ -1,4 +1,4 @@
-import React from "react"
+import { FC } from "react"
 import { Icon, Heading, themeSpacing } from "@amsterdam/asc-ui"
 import * as Assets from "app/components/shared/Icons"
 import styled from "styled-components"
@@ -17,7 +17,7 @@ const StyledIcon = styled(Icon)`
   margin: -${ themeSpacing(1) } ${ themeSpacing(2) } 0 0;
 `
 
-const HeadingWithIcon: React.FC<Props> = ({ icon, header, headingSize = "h1", iconSize = 48 }) => {
+const HeadingWithIcon: FC<Props> = ({ icon, header, headingSize = "h1", iconSize = 48 }) => {
   const Asset = icon ? Assets[icon] : null
   return (
     <Div>

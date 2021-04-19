@@ -1,21 +1,21 @@
-import React from "react"
+import { FC, ComponentProps, ReactNode } from "react"
 import { Button } from "@amsterdam/asc-ui"
 
 import { useModal } from "../Modal/hooks/useModal"
 import ConfirmModal, { Props as ConfirmModalProps } from "../Modal/ConfirmModal"
 
 type Props =
-  Omit<React.ComponentProps<typeof Button>, "onClick"> &
+  Omit<ComponentProps<typeof Button>, "onClick"> &
   {
     modalTitle: ConfirmModalProps["title"]
-    modalContent: React.ReactNode
+    modalContent: ReactNode
     onConfirm: ConfirmModalProps["onConfirm"]
   }
 
 /**
  * Button that opens a modal onClick
  */
-const ConfirmButton: React.FC<Props> = ({ modalTitle, onConfirm, modalContent, children, ...restProps }) => {
+const ConfirmButton: FC<Props> = ({ modalTitle, onConfirm, modalContent, children, ...restProps }) => {
   const { isModalOpen, openModal, closeModal } = useModal()
   return <>
     <Button onClick={openModal} {...restProps}>

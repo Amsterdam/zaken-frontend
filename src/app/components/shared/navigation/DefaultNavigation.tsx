@@ -1,4 +1,4 @@
-import React from "react"
+import { FC } from "react"
 import { MenuInline, Button, MenuToggle, Hidden } from "@amsterdam/asc-ui"
 import styled from "styled-components"
 import ButtonLink from "app/components/shared/ButtonLink/ButtonLink"
@@ -16,7 +16,7 @@ const IconButton = styled(Button)`
   background-color: transparent;
 `
 
-const DefaultNavigation: React.FC<Props> = ({ showSearchButton }) => {
+const DefaultNavigation: FC<Props> = ({ showSearchButton }) => {
   const { token } = useKeycloak()
 
   if (!token) return null
@@ -30,13 +30,14 @@ const DefaultNavigation: React.FC<Props> = ({ showSearchButton }) => {
       </Hidden>
       <div>
         <Hidden maxBreakpoint="laptopM">
-          <ButtonLink to={to("/hulp")}>
-            <IconButton size={50} variant="blank" iconSize={28} icon={<Help />} />
+          <ButtonLink to={to("/hulp")} title="Help">
+            <IconButton size={50} variant="blank" iconSize={28} icon={<Help />} tabIndex={-1}>
+              </IconButton>
           </ButtonLink>
         </Hidden>
         { showSearchButton &&
-          <ButtonLink to={to("/")}>
-            <IconButton size={50} variant="blank" iconSize={28} icon={<Search />} />
+          <ButtonLink to={to("/")} title="Zoeken">
+            <IconButton size={50} variant="blank" iconSize={28} icon={<Search />} tabIndex={-1}/>
           </ButtonLink>
         }
       </div>

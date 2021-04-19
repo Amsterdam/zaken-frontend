@@ -18,17 +18,6 @@ export const useCases = (start_date?: string, options?: Options) => {
   })
 }
 
-export const useMockCases = (options?: Options) => {
-  const handleError = useErrorHandler()
-  return useApiRequest({
-    ...options,
-    url: makeApiUrl("cases", "generate-mock"),
-    groupName: "cases",
-    handleError,
-    isProtected: true
-  })
-}
-
 export const useCasesByBagId = (bagId: Components.Schemas.Address["bag_id"], openCases?: boolean, options?: Options) => {
   const handleError = useErrorHandler()
   const queryString = openCases === true ? qs.stringify({ open_cases: true }, { addQueryPrefix: true }) : ""

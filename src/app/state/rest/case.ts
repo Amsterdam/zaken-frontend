@@ -39,9 +39,9 @@ export const useCaseEvents = (caseId: Components.Schemas.Case["id"], options?: O
   })
 }
 
-export const useDebriefings = (options?: Options) => {
+export const useDebriefingCreate = (options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<Components.Schemas.Debriefing>({
+  return useApiRequest<Components.Schemas.DebriefingCreate>({
     lazy: true,
     ...options,
     url: makeApiUrl("debriefings"),

@@ -1,14 +1,10 @@
-import React, { useMemo } from "react"
-import { Spinner } from "@amsterdam/asc-ui"
-import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
+import { FC } from "react"
 
-import ScaffoldFields from "app/components/shared/Form/ScaffoldFields"
 import scaffold from "./scaffold"
 import { useTeams, useReasons, useCaseCreateUpdate } from "app/state/rest"
-import ConfirmScaffoldFields from "app/components/shared/ConfirmScaffoldFields/ConfirmScaffoldFields"
-import useSubmitConfirmation from "app/components/shared/ConfirmScaffoldFields/hooks/useSubmitConfirmation"
-import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
-import navigateTo from "app/routing/navigateTo"
+import ConfirmScaffoldForm from "app/components/shared/ConfirmScaffoldForm/ConfirmScaffoldForm"
+import useNavigateWithFlashMessage from "app/state/flashMessages/useNavigateWithFlashMessage"
+import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -25,49 +21,35 @@ const mapData = (bagId: Components.Schemas.Address["bag_id"], data: FormData): O
   reason: data.reason.id
 })
 
-const CreateForm: React.FC<Props> = ({ bagId }) => {
+const CreateForm: FC<Props> = ({ bagId }) => {
 
   const [teams] = useTeams()
   const [reasons] = useReasons(teams?.results?.[0].id)
   const [, { execPost }] = useCaseCreateUpdate()
-  const postMethod = async (data: FormData) => await execPost(mapData(bagId, data))
+  const postMethod = async (data: FormData) =>
+    await execPost(mapData(bagId, data)) as Components.Schemas.CaseCreateUpdate
 
-  const {
-    isSubmitted,
-    data: confirmData,
-    onSubmit,
-    onSubmitConfirm,
-    onCancelConfirm
-  } = useSubmitConfirmation<FormData>(postMethod)
-  const { addSuccessFlashMessage } = useFlashMessages()
+  const fields = useScaffoldedFields(scaffold, bagId, teams?.results, reasons?.results)
 
-  const fields = useMemo(() => scaffold(bagId, teams?.results ?? [], reasons?.results ?? []), [bagId, teams, reasons])
+  const navigateWithFlashMessage = useNavigateWithFlashMessage()
+  const afterSubmit = async (result: Components.Schemas.CaseCreateUpdate) => await navigateWithFlashMessage(
+    "/zaken/:id",
+    { id: result.id },
+    "info",
+    "Succes",
+    "De zaak is succesvol toegevoegd"
+  )
 
-  if (teams === undefined || reasons === undefined) return <Spinner />
-
-  const onSubmitConfirmWrap = async () => {
-    const result = await onSubmitConfirm()
-    if (result === undefined) return
-    const { data: { id } } = result as { data: Components.Schemas.CaseCreateUpdate }
-    addSuccessFlashMessage(`/zaken/${ id }`, "Succes", "De zaak is succesvol toegevoegd")
-    navigateTo("/zaken/:id", { id })
-  }
+  const initialValues = { team: teams?.results?.[0], reason: reasons?.results?.[0] }
 
   return (
-    <ScaffoldForm onSubmit={ onSubmit } initialValues={ { team: teams?.results?.[0], reason: reasons?.results?.[0] } }>
-      <ScaffoldFields { ...fields } />
-      { isSubmitted &&
-        <ConfirmScaffoldFields<FormData>
-          fields={ fields.fields as any }
-          data={ confirmData }
-          showFields={ Object.keys(fields.fields) }
-          onCancel={ onCancelConfirm }
-          submitTitle="Zaak aanmaken"
-          onSubmit={ onSubmitConfirmWrap }
-          showInModal={ true }
-        />
-      }
-    </ScaffoldForm>
+    <ConfirmScaffoldForm
+      fields={ fields }
+      postMethod={ postMethod }
+      afterSubmit={ afterSubmit }
+      initialValues={ initialValues }
+    />
   )
 }
+
 export default CreateForm

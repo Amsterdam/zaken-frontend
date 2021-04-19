@@ -1,10 +1,10 @@
-import React from "react"
+import { FC } from "react"
 
 import type KeycloakTokenParsedExtended from "app/state/auth/keycloak/KeycloakTokenParsedExtended"
 import useKeycloak from "app/state/auth/keycloak/useKeycloak"
 import DefinitionList from "app/components/shared/DefinitionList/DefinitionList"
 
-const KeycloakValues: React.FC = () => {
+const KeycloakValues: FC = () => {
   const keycloak = useKeycloak()
   const tokenParsed = keycloak.tokenParsed as KeycloakTokenParsedExtended
 

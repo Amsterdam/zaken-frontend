@@ -1,4 +1,4 @@
-import React from "react"
+import { FC } from "react"
 import styled from "styled-components"
 import { breakpoint, themeSpacing } from "@amsterdam/asc-ui"
 import { sizes } from "@amsterdam/asc-ui/lib/theme/default/breakpoints"
@@ -14,7 +14,7 @@ const Main = styled.main`
     padding: ${ themeSpacing(2) } ${ themeSpacing(14) } ${ themeSpacing(12) };
   }
 `
-const MainWrapper: React.FC = ({ children }) => (
+const MainWrapper: FC = ({ children }) => (
   <Main>
     { children }
   </Main>

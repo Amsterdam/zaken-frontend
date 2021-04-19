@@ -1,30 +1,29 @@
-import React from "react"
+import { FC } from "react"
 import { FormTitle } from "@amsterdam/asc-ui"
 
-import usePageDebriefing from "app/pages/case/debriefings/hooks/usePageDebriefing"
+import scaffold from "./scaffold"
+import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
 import FormWithExtraLabel from "app/components/shared/FormWithExtraLabel/FormWithExtraLabel"
 import WorkflowForm from "app/components/case/Workflow/WorkflowForm"
-import scaffold from "./scaffold"
+import { useDebriefingCreate } from "app/state/rest"
 
 type Props = {
   id: Components.Schemas.Case["id"]
 }
 
-const DebriefCreateForm: React.FC<Props> = ({ id }) => {
+const DebriefCreateForm: FC<Props> = ({ id }) => {
 
-  const { handleCreate } = usePageDebriefing(id)
-  const initialValues = { case: id }
+  const [, { execPost }] = useDebriefingCreate()
+  const fields = useScaffoldedFields(scaffold, id)
 
   return (
     <>
       <FormTitle>Geef terugkoppeling van de gehouden debrief</FormTitle>
       <FormWithExtraLabel>
         <WorkflowForm
-          caseId={ id }
-          postMethod={ handleCreate }
-          data={ {} }
-          scaffold={ scaffold }
-          initialValues={ initialValues }
+          id={ id }
+          fields={ fields }
+          postMethod={ execPost }
         />
       </FormWithExtraLabel>
     </>

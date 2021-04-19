@@ -3,7 +3,7 @@ import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import navigateTo from "app/routing/navigateTo"
 
-export default (caseId: Components.Schemas.Case["id"], scheduleTypes: Components.Schemas.TeamScheduleTypes) => {
+export default (caseId: Components.Schemas.Case["id"], scheduleTypes?: Components.Schemas.TeamScheduleTypes) => {
 
   const fields = {
     week_segment: {

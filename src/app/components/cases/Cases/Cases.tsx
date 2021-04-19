@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import { FC, useEffect } from "react"
 
 import { Row, Column } from "app/components/layouts/Grid"
 import TableCases from "app/components/cases/TableCases/TableCases"
@@ -6,14 +6,13 @@ import CasesFilter from "app/components/cases/CasesFilter/CasesFilter"
 import { getDate, createOptions } from "app/components/cases/CasesFilter/scaffold"
 import { useCases } from "app/state/rest"
 import useURLState from "app/hooks/useURLState/useURLState"
-import ButtonMockCases from "./ButtonMockCases"
 
 const parse = (value: string | null) => {
   const options = Object.keys(createOptions())
   return value !== null && options.includes(value) ? value : getDate()[0]
 }
 
-const Cases: React.FC = () => {
+const Cases: FC = () => {
 
   const [date, setDate] = useURLState("date", parse)
   const [cases, { isBusy, execGet }] = useCases(date)
@@ -32,9 +31,6 @@ const Cases: React.FC = () => {
           <CasesFilter date={ date } setDate={ setDate } />
         </Column>
       </Row>
-      { process.env.REACT_APP_ENVIRONMENT !== "production" &&
-        <ButtonMockCases />
-      }
     </>
   )
 }

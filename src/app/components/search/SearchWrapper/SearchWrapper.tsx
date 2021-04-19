@@ -1,29 +1,25 @@
-import React from "react"
+import { FC, ChangeEvent } from "react"
 import { Heading, FormTitle, SearchBar } from "@amsterdam/asc-ui"
-import styled from "styled-components"
 import debounce from "lodash.debounce"
 
-import { RowWithColumn } from "app/components/layouts/Grid/Row"
+import Row, { RowWithColumn } from "app/components/layouts/Grid/Row"
+import Column from "app/components/layouts/Grid/Column"
 import SearchResults from "app/components/search/SearchResults/SearchResults"
 import useURLState from "app/hooks/useURLState/useURLState"
 
 const DELAY = 750
 
-const SearchBarWrap = styled.div`
-  max-width: 500px;
-`
-
-const SearchWrapper: React.FC = () => {
+const SearchWrapper: FC = () => {
   const [searchString, setSearchString] = useURLState("query")
   const debouncedSetSearchString = debounce(setSearchString, DELAY)
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => debouncedSetSearchString(event.target.value.trim())
+  const onChange = (event: ChangeEvent<HTMLInputElement>) => debouncedSetSearchString(event.target.value.trim())
   const onClear = () => debouncedSetSearchString("")
 
   return (
     <>
-      <RowWithColumn>
-        <Heading>Adres zoeken</Heading>
-        <SearchBarWrap>
+      <Row>
+        <Column spanLarge={ 50 }>
+          <Heading>Adres zoeken</Heading>
           <FormTitle>Ook om een nieuwe zaak aan te maken op een specifiek adres</FormTitle>
           <SearchBar
             placeholder="Zoek op postcode en huisnummer"
@@ -32,8 +28,8 @@ const SearchWrapper: React.FC = () => {
             onClear={ onClear }
             autoFocus={ true }
           />
-        </SearchBarWrap>
-      </RowWithColumn>
+        </Column>
+      </Row>
       <RowWithColumn>
         <SearchResults searchString={ searchString } />
       </RowWithColumn>

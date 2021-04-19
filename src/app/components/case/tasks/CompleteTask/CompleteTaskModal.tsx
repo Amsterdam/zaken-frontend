@@ -1,4 +1,4 @@
-import React from "react"
+import { FC } from "react"
 
 import Modal, { ModalBlock } from "app/components/shared/Modal/Modal"
 import CompleteTaskForm from "./CompleteTaskForm"
@@ -12,7 +12,7 @@ export type Props = {
   onSubmit: (variables: Components.Schemas.CamundaTaskComplete["variables"]) => Promise<unknown>
 }
 
-const CompleteTaskModal: React.FC<Props> = ({ isOpen, closeModal, onSubmit, taskName, caseId }) => {
+const CompleteTaskModal: FC<Props> = ({ isOpen, closeModal, onSubmit, taskName, caseId }) => {
   const title = `Is de taak "${ taskName }" afgerond?`
   const { addSuccessFlashMessage } = useFlashMessages()
 

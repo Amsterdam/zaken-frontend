@@ -1,4 +1,4 @@
-import React, { useRef } from "react"
+import { FC, useRef } from "react"
 import styled from "styled-components"
 import { themeColor } from "@amsterdam/asc-ui"
 
@@ -20,7 +20,7 @@ const Img = styled.img`
   width: 100%;
 `
 
-const PanoramaPreview: React.FC<Props> = ({ bagId, width: w, aspect = 1.5, radius = 180, fov = 80 }) => {
+const PanoramaPreview: FC<Props> = ({ bagId, width: w, aspect = 1.5, radius = 180, fov = 80 }) => {
   const ref = useRef<HTMLDivElement>(null)
   const rect = useRect(ref, 100)
   const width = w ?? rect.width

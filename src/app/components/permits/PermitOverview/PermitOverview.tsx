@@ -1,4 +1,4 @@
-import React, { useMemo } from "react"
+import { FC, useMemo } from "react"
 import { Link } from "@amsterdam/asc-ui"
 import { usePermitCheckmarks } from "app/state/rest"
 
@@ -9,7 +9,7 @@ type Props = {
   bagId: string
 }
 
-const PermitOverview: React.FC<Props> = ({ bagId }) => {
+const PermitOverview: FC<Props> = ({ bagId }) => {
   const [data, { isBusy }] = usePermitCheckmarks(bagId)
 
   const values = useMemo(() => ({

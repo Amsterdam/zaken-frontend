@@ -1,10 +1,10 @@
-import React from "react"
+import { FC, ReactNode } from "react"
 import styled from "styled-components"
 import { themeColor, ascDefaultTheme } from "@amsterdam/asc-ui"
 
 type Props = {
   hasPadding?: boolean
-  children: React.ReactNode
+  children: ReactNode
 }
 
 type DivProps = {
@@ -19,7 +19,7 @@ const Div = styled.div<DivProps>`
   display: ${ ({ isProduction }) => isProduction ? "none" : "block" };
 `
 
-const MockWrapper: React.FC<Props> = ({ hasPadding = true, children }) => (
+const MockWrapper: FC<Props> = ({ hasPadding = true, children }) => (
   <Div isProduction={ process.env.REACT_APP_ENVIRONMENT === "production" } hasPadding={ hasPadding }>
     { children }
   </Div>

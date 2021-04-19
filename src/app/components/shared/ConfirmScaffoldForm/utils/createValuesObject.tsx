@@ -1,4 +1,5 @@
-import ArrayFieldList from "../ArrayFieldList"
+import { ReactNode } from "react"
+import ArrayFieldList from "../components/ArrayFieldList"
 import type { RequestBody, NamedFields } from "../ConfirmScaffoldFields"
 import { Field } from "../../Form/ScaffoldField"
 
@@ -21,7 +22,7 @@ const mapField = <T extends RequestBody>(field: Field, key: string, data: T) => 
       (props as { options: Record<string, unknown> }).options[v as string] :
       v
 
-  return [label ?? key, value as React.ReactNode] as const
+  return [label ?? key, value as ReactNode] as const
 }
 
 export default <T extends RequestBody>(fields: NamedFields<T>, data: T | undefined, showFields: string[]) => {
@@ -39,5 +40,5 @@ export default <T extends RequestBody>(fields: NamedFields<T>, data: T | undefin
     const [label, value] = keyValuePair
     acc[label] = value
     return acc
-  }, {} as Record<string, React.ReactNode>)
+  }, {} as Record<string, ReactNode>)
 }

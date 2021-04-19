@@ -1,4 +1,4 @@
-import React from "react"
+import { FC } from "react"
 import { RouteComponentProps } from "@reach/router"
 
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
@@ -7,7 +7,7 @@ import PageHeading from "app/components/shared/PageHeading/PageHeading"
 import HomeMenu from "app/components/home/HomeMenu/HomeMenu"
 import SearchWrapper from "app/components/search/SearchWrapper/SearchWrapper"
 
-const IndexPage: React.FC<RouteComponentProps> = () => (
+const IndexPage: FC<RouteComponentProps> = () => (
   <DefaultLayout>
     <RowWithColumn topSpacing={ 12 }>
       <PageHeading />

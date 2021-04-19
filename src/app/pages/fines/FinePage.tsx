@@ -1,4 +1,4 @@
-import React from "react"
+import { FC } from "react"
 import { RouteComponentProps } from "@reach/router"
 
 
@@ -8,7 +8,7 @@ import BreadCrumbs from "app/components/shared/BreadCrumbs/BreadCrumbs"
 import PageHeading from "app/components/shared/PageHeading/PageHeading"
 import FinesSearchWrapper from "app/components/fines/FinesSearchWrapper"
 
-const FinePage: React.FC<RouteComponentProps> = () => (
+const FinePage: FC<RouteComponentProps> = () => (
     <DefaultLayout>
       <RowWithColumn>
         <BreadCrumbs />

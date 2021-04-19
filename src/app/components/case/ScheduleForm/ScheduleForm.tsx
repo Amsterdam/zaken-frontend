@@ -1,9 +1,10 @@
-import React from "react"
+import { FC } from "react"
 import { FormTitle } from "@amsterdam/asc-ui"
 
 import { useCase, useScheduleTypes, useScheduleCreate } from "app/state/rest/"
 import WorkflowForm from "app/components/case/Workflow/WorkflowForm"
 import scaffold from "./scaffold"
+import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
 import FormWithExtraLabel from "app/components/shared/FormWithExtraLabel/FormWithExtraLabel"
 
 type Props = {
@@ -24,15 +25,17 @@ const mapData = (data: ScheduleTypeFormData) => (
   }
 )
 
-const ScheduleForm: React.FC<Props> = ({ id }) => {
+const ScheduleForm: FC<Props> = ({ id }) => {
 
   const [caseItem] = useCase(id)
   const teamId = caseItem?.team.id
   const [scheduleTypes] = useScheduleTypes(teamId)
+  const fields = useScaffoldedFields(scaffold, id, scheduleTypes)
+
   const [, { execPost }] = useScheduleCreate()
   const postMethod = async (data: ScheduleTypeFormData) => await execPost(mapData(data))
+
   const initialValues = {
-    case: id,
     action: scheduleTypes?.actions[0].id
   }
 
@@ -41,10 +44,9 @@ const ScheduleForm: React.FC<Props> = ({ id }) => {
       <FormTitle>Gebruik dit formulier om een huisbezoek in te plannen</FormTitle>
       <FormWithExtraLabel>
         <WorkflowForm
-          caseId={ id }
-          data={ scheduleTypes }
+          id={ id }
+          fields={ fields }
           postMethod={ postMethod }
-          scaffold={ scaffold }
           initialValues={ initialValues }
         />
       </FormWithExtraLabel>

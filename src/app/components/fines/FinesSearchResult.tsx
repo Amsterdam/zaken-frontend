@@ -1,4 +1,4 @@
-import React, { useMemo } from "react"
+import { FC, useMemo } from "react"
 import { DateDisplay } from "@amsterdam/wonen-ui"
 import DefinitionList from "app/components/shared/DefinitionList/DefinitionList"
 
@@ -6,7 +6,7 @@ type Props = {
   data: Components.Schemas.Fine
 }
 
-const FinesSearchResult: React.FC<Props> = ( data ) => {
+const FinesSearchResult: FC<Props> = ( data ) => {
   const fine = data.data
   const values = useMemo(() => ({
     "Kenmerk": fine.identificatienummer,

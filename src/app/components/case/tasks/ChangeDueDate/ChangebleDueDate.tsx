@@ -1,4 +1,4 @@
-import React from "react"
+import { FC } from "react"
 
 import { useModal } from "app/components/shared/Modal/hooks/useModal"
 import ChangeDueDateModal from "./ChangeDueDateModal"
@@ -40,7 +40,7 @@ const mapSubmitData = (data: Components.Schemas.CamundaDateUpdate) => ({
   date: appendTimeToDate(data.date)
 })
 
-const ChangeableDueDate: React.FC<Props> = ({ dueDate, camundaTaskId }) => {
+const ChangeableDueDate: FC<Props> = ({ dueDate, camundaTaskId }) => {
   const { isModalOpen, openModal, closeModal } = useModal()
 
   const [, { execPost }] = useDueDate({ lazy: true })
@@ -56,7 +56,7 @@ const ChangeableDueDate: React.FC<Props> = ({ dueDate, camundaTaskId }) => {
         onClick={openModal}
       >
         { displayDate(dueDate) }
-        <StyledIcon size={20}>{ <Edit /> }</StyledIcon>
+        <StyledIcon size={20}>{ <Edit titleAccess="Pas de slotdatum aan" /> }</StyledIcon>
       </DateInPast>
       <ChangeDueDateModal onSubmit={onSubmit} isOpen={isModalOpen} closeModal={closeModal} dueDate={dueDate} taskId={camundaTaskId}  />
     </>

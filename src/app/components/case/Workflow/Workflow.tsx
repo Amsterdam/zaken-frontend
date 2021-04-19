@@ -1,4 +1,4 @@
-import React, { useMemo } from "react"
+import { FC, useMemo } from "react"
 import { Button, Icon, Spinner, themeSpacing, ErrorMessage } from "@amsterdam/asc-ui"
 
 import { useCaseTasks, useTaskComplete } from "app/state/rest"
@@ -45,7 +45,7 @@ const mapArrayToList = (list: any[]) =>
 
 export const taskActionMap = {
   task_create_schedule: { name: "Huisbezoek inplannen", target: "inplanning" },
-  task_create_visit: { name: "Resultaat huisbezoek", target: "huisbezoek", disabled: true },
+  task_create_visit: { name: "Doorgeven huisbezoek TOP", target: "huisbezoek", disabled: true },
   task_create_debrief: { name: "Debrief verwerken", target: "debriefing" },
   task_create_summon: { name: "Aanschrijving verwerken", target: "aanschrijving" },
   task_create_decision: { name: "Besluit verwerken", target: "besluit" }
@@ -61,7 +61,7 @@ const mapTaskData =
 
       return ({
         itemList: [
-          <StyledIcon size={32}>{ <LockOpen /> }</StyledIcon>,
+          <StyledIcon size={32}>{ <LockOpen titleAccess="Openstaande taak" /> }</StyledIcon>,
           name,
           roles ? mapArrayToList(roles) : "-",
           due_date ?
@@ -89,7 +89,7 @@ const columns = [
   { header: "Verwerking taak", minWidth: 140 }
 ]
 
-const Workflow: React.FC<Props> = ({ id }) => {
+const Workflow: FC<Props> = ({ id }) => {
 
   const [data, { isBusy, hasErrors }] = useCaseTasks(id)
   const [, { execPost }] = useTaskComplete({ lazy: true })

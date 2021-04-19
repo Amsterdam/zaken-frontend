@@ -1,5 +1,5 @@
-import React from "react"
-import { FormTitle } from "@amsterdam/asc-ui"
+import { FC } from "react"
+import { Alert, FormTitle } from "@amsterdam/asc-ui"
 import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
 
 import ScaffoldFields from "app/components/shared/Form/ScaffoldFields"
@@ -16,7 +16,7 @@ export type VisitData = Omit<Components.Schemas.Visit, "author_ids"> & { author1
 const filterUndefined = <T extends unknown>(arr: Array<T | undefined>) => arr.filter((item): item is T => item !== undefined)
 const mapData = (data: VisitData) => ({ ...data, author_ids: filterUndefined([data.author1?.id, data.author2?.id]) })
 
-const VisitForm: React.FC<Props> = ({ caseId }) => {
+const VisitForm: FC<Props> = ({ caseId }) => {
 
   const [data] = useAuthors()
   const authors = data?.results ?? []
@@ -38,6 +38,7 @@ const VisitForm: React.FC<Props> = ({ caseId }) => {
 
   return (
     <>
+      <Alert level="warning">Dit formulier niet gebruiken! Het huisbezoek wordt door de toezichthouder in de TOP app verwerkt, waarna deze taak automatisch wordt opgepakt.</Alert>
       <FormTitle>Gebruik dit formulier om een huisbezoek aan te maken</FormTitle>
       <ScaffoldForm
         showSpinner={ showSpinner }
