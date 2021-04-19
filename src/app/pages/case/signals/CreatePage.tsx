@@ -35,8 +35,8 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
       <Row>
         <Column spanLarge={50}>
           <SignalForm id={ id } />
-          </Column>
-        </Row>
+        </Column>
+      </Row>
     </DefaultLayout> :
     <NotFoundPage />
   )

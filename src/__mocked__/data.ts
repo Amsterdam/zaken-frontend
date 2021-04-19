@@ -24,11 +24,7 @@ const correspondence: MockComponents.Schemas.Correspondence[] = [
   }
 ]
 
-const signal: MockComponents.Schemas.Signal[] = [{}]
-
-
 export default {
   completeCases,
-  correspondence,
-  signal
+  correspondence
 }
