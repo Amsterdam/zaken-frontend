@@ -55,6 +55,7 @@ export default (caseId: Components.Schemas.Case["id"], decisions?: Components.Sc
       type: "SubmitButton",
       props: {
         label: "Resultaat verwerken",
+        variant: "secondary",
         align: "right"
       }
     }
