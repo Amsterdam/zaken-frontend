@@ -1,27 +1,41 @@
 import { FC } from "react"
-import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
 
-import ScaffoldFields from "app/components/shared/Form/ScaffoldFields"
+import ConfirmScaffoldForm from "app/components/shared/ConfirmScaffoldForm/ConfirmScaffoldForm"
 import scaffold from "./scaffold"
+import styled from "styled-components"
 
 type Props = {
-  caseId: Components.Schemas.Case["id"]
+  id: Components.Schemas.Case["id"]
 }
 
-const addTask = (task: string, caseId: Components.Schemas.Case["id"]) => {
-  console.log(`taak ${ task } toegevoegd aan ${ caseId }`)
+// Scaffolded label is needed for ConfirmFields
+const Div = styled.div`
+  label {
+    display: none;
+  }
+  button {
+    margin-top: 0;
+  }
+`
+
+type Values = { task: { label: string, value: number } }
+const postMethod = async (values: Values) => {
+  console.log("AddTaskFormPost", values)
+  return values
 }
 
-const AddTaskForm: FC<Props> = ({ caseId }) => {
-  const onChange = (event: React.ChangeEvent<HTMLSelectElement>) => addTask(event.target.value, caseId)
-  const fields = scaffold(onChange)
+const AddTaskForm: FC<Props> = ({ id }) => {
+  const fields = scaffold()
+  const initialValues = { case: id }
 
   return (
-    <div>
-      <ScaffoldForm >
-        <ScaffoldFields { ...fields } />
-      </ScaffoldForm>
-    </div>
+    <Div>
+      <ConfirmScaffoldForm
+        postMethod={ postMethod }
+        fields={ fields }
+        initialValues={ initialValues }
+      />
+    </Div>
   )
 }
 
