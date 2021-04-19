@@ -10,6 +10,9 @@ export default () => {
         name: "task",
         label: "Taak",
         optionLabelField: "label",
+        withEmptyOption: true,
+        emptyOptionLabel: "Selecteer een taak",
+        isRequired: true,
         options: [
           { label: "Bezwaardossier", value: 1 },
           { label: "Correspondentie", value: 2 },
@@ -27,8 +30,8 @@ export default () => {
   }
 
   return new FormPositioner(fields as Fields)
-    .setGrid("mobileS", "1fr 1fr", [
-      ["task", "submit"]
+    .setGrid("mobileS", "1fr 1fr 1fr 1fr", [
+      ["task", "task", "task", "submit"]
     ])
     .getScaffoldProps()
 }

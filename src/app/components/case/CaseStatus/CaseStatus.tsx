@@ -10,17 +10,22 @@ type Props = {
   id: Components.Schemas.Case["id"]
 }
 
+const StyledHeading = styled(Heading)`
+  margin-top: 30px;
+  margin-bottom: 0;
+`
+
 const StyledDivider = styled(Divider)`
   margin-bottom: ${ themeSpacing(16) };
 `
 
-const FORM_WIDTH = 35
+const FORM_WIDTH = 40
 
 const CaseStatus: FC<Props> = ({ id }) => (
   <>
     <Row bottomSpacing={ 0 }>
       <Column spanLarge={ 100 - FORM_WIDTH }>
-        <Heading as="h2">Status</Heading>
+        <StyledHeading as="h2">Status</StyledHeading>
       </Column>
       <Column spanLarge={ FORM_WIDTH }>
         <AddTaskForm id={ id } />
