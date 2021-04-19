@@ -10,6 +10,7 @@ type Props = {
 
 // Scaffolded label is needed for ConfirmFields
 const Div = styled.div`
+  width: 100%;
   label {
     display: none;
   }
