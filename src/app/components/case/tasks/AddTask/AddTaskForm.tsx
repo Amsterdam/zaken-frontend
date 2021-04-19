@@ -13,12 +13,13 @@ const addTask = (task: string, caseId: Components.Schemas.Case["id"]) => {
 }
 
 const AddTaskForm: FC<Props> = ({ caseId }) => {
-  const onChange = (event: any) => addTask(event.target.value, caseId)
+  const onChange = (event: React.ChangeEvent<HTMLSelectElement>) => addTask(event.target.value, caseId)
+  const fields = scaffold(onChange)
 
   return (
     <div>
       <ScaffoldForm >
-        <ScaffoldFields { ...scaffold(onChange) } />
+        <ScaffoldFields { ...fields } />
       </ScaffoldForm>
     </div>
   )

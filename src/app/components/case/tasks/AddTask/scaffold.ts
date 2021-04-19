@@ -1,18 +1,18 @@
 import { FormPositioner } from "@amsterdam/scaffold-form/package"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 
-export default (onChange: (value: string) => void) => {
+export default (onChange: (value: React.ChangeEvent<HTMLSelectElement>) => void) => {
 
   const fields = {
-    task: { 
-      type: "ComplexSelectField", 
+    task: {
+      type: "ComplexSelectField",
       props: {
         name: "task",
         optionLabelField: "label",
-        withEmptyOption: true,
-        emptyOptionLabel: "Taak opvoeren",
         options: [
-          { label: "Opstellen concept aanschrijving", value: "1" }
+          { label: "Bezwaardossier", value: 1 },
+          { label: "Correspondentie", value: 2 },
+          { label: "Terugbelverzoek", value: 3 }
         ],
         onChange
       }
