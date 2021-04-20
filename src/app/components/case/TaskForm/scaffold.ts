@@ -2,7 +2,7 @@ import { FormPositioner } from "@amsterdam/scaffold-form/package"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import navigateTo from "app/routing/navigateTo"
 
-export default (id: Components.Schemas.Case["id"], tasks?: MockComponents.Schemas.Task[]) => {
+export default (id: Components.Schemas.Case["id"], tasks?: Components.Schemas.CamundaProcess[]) => {
 
   const fields = {
     task: {
@@ -10,7 +10,7 @@ export default (id: Components.Schemas.Case["id"], tasks?: MockComponents.Schema
       props: {
         name: "task",
         label: "Taak",
-        optionLabelField: "label",
+        optionLabelField: "name",
         withEmptyOption: true,
         emptyOptionLabel: "Selecteer een taak",
         isRequired: true,

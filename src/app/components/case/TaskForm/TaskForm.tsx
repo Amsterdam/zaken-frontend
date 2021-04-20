@@ -1,7 +1,7 @@
 import { FC } from "react"
 import { FormTitle } from "@amsterdam/asc-ui"
 
-import { useTasks } from "app/state/rest"
+import { useCamundaProcesses, useCamundaProcess } from "app/state/rest"
 import scaffold from "./scaffold"
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
 import FormWithExtraLabel from "app/components/shared/FormWithExtraLabel/FormWithExtraLabel"
@@ -13,12 +13,10 @@ type Props = {
 
 const TaskForm: FC<Props> = ({ id }) => {
 
-  const [tasks] = useTasks(id)
-
-  const fields = useScaffoldedFields(scaffold, id, tasks)
-
-  //const [, { execPost }] = useTasks({ lazy: true })
-  const postMethod = async (data: any) => {} //await execPost(data)
+  const [processes] = useCamundaProcesses()
+  const fields = useScaffoldedFields(scaffold, id, processes?.results)
+  const [, { execPost }] = useCamundaProcess(id, { lazy: true })
+  const postMethod = async (data: Components.Schemas.CamundaProcess) => await execPost(data)
 
   return (
     <>

@@ -30,6 +30,11 @@ declare namespace Components {
             };
             case_id: string;
         }
+        export interface CamundaProcess {
+            readonly id: number;
+            name: string;
+            camunda_message_name: string;
+        }
         /**
          * Serializer for Worker Data
          */
@@ -83,7 +88,7 @@ declare namespace Components {
             start_date?: string | null; // date
             end_date?: string | null; // date
             is_legacy_bwv?: boolean;
-            camunda_id?: string | null;
+            camunda_ids?: string[] | null;
             description?: string | null;
             author?: string | null; // uuid
         }
@@ -204,6 +209,24 @@ declare namespace Components {
         export type IndicatiePubliekrechtelijkEnum = "J" | "N";
         export interface OIDCAuthenticate {
             code: string;
+        }
+        export interface PaginatedCamundaProcessList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=4
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null; // uri
+            results?: CamundaProcess[];
         }
         export interface PaginatedCamundaTaskList {
             /**
@@ -663,6 +686,29 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedUserList;
+        }
+    }
+    namespace CamundaProcessList {
+        namespace Parameters {
+            export type Page = number;
+        }
+        export interface QueryParameters {
+            page?: Parameters.Page;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedCamundaProcessList;
+        }
+    }
+    namespace CamundaProcessStartSubProcessCreate {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        export type RequestBody = Components.Schemas.CamundaProcess;
+        namespace Responses {
+            export type $200 = Components.Schemas.CamundaProcess;
         }
     }
     namespace CamundaTaskCompleteCreate {
