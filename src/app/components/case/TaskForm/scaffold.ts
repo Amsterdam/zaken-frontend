@@ -1,7 +1,8 @@
 import { FormPositioner } from "@amsterdam/scaffold-form/package"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
+import navigateTo from "app/routing/navigateTo"
 
-export default () => {
+export default (id: Components.Schemas.Case["id"], tasks?: MockComponents.Schemas.Task[]) => {
 
   const fields = {
     task: {
@@ -13,25 +14,31 @@ export default () => {
         withEmptyOption: true,
         emptyOptionLabel: "Selecteer een taak",
         isRequired: true,
-        options: [
-          { label: "Bezwaardossier", value: 1 },
-          { label: "Correspondentie", value: 2 },
-          { label: "Terugbelverzoek", value: 3 }
-        ]
+        options: tasks
+      }
+    },
+    cancel: {
+      type: "Button",
+      props: {
+        label: "Annuleren",
+        variant: "primaryInverted",
+        onClick: () => navigateTo("/zaken/:id", { id })
       }
     },
     submit: {
       type: "SubmitButton",
       props: {
         variant: "tertiary",
-        label: "Taak opvoeren"
+        label: "Taak opvoeren",
+        align: "right"
       }
     }
   }
 
   return new FormPositioner(fields as Fields)
-    .setGrid("mobileS", "1fr 1fr 1fr 1fr", [
-      ["task", "task", "task", "submit"]
+    .setGrid("mobileS", "1fr 1fr", [
+      ["task", "task"],
+      ["cancel", "submit"]
     ])
     .getScaffoldProps()
 }

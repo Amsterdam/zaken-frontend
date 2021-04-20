@@ -24,7 +24,15 @@ const correspondence: MockComponents.Schemas.Correspondence[] = [
   }
 ]
 
+const tasks: MockComponents.Schemas.Task[] = [
+  { label: "Bezwaardossier", value: 1 },
+  { label: "Correspondentie", value: 2 },
+  { label: "Melding toevoegen", value: 3 },
+  { label: "Terugbelverzoek", value: 4 }
+]
+
 export default {
   completeCases,
-  correspondence
+  correspondence,
+  tasks
 }
