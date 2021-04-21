@@ -7,6 +7,46 @@ export default (caseId: Components.Schemas.Case["id"]) => {
 
 
   const fields = {
+    reporter_anonymous: {
+      type: "RadioFields",
+      props: {
+        isRequired: true,
+        name: "reporter_anonymous",
+        label: "Is de melder anoniem?",
+        options: {
+          yes: "Ja, de melder is anoniem",
+          no: "Nee, de melder is niet anoniem"
+        }
+      }
+    },
+    reporter_name: {
+      type: "ShowHide",
+      props: {
+        shouldShow: ({ values: { reporter_anonymous } }: { values: { reporter_anonymous: string } }) => reporter_anonymous === "no",
+        field: {
+          type: "TextField",
+          props: {
+            label: "Naam melder",
+            name: "reporter_name",
+            isRequired: true
+          }
+        }
+      }
+    },
+    reporter_phone: {
+      type: "ShowHide",
+      props: {
+        shouldShow: ({ values: { reporter_anonymous } }: { values: { reporter_anonymous: string } }) => reporter_anonymous === "no",
+        field: {
+          type: "TextField",
+          props: {
+            label: "Telefoonnummer melder",
+            name: "reporter_phone",
+            isRequired: true
+          }
+        }
+      }
+    },
     identification: {
       type: "TextField",
       props: {
@@ -44,6 +84,8 @@ export default (caseId: Components.Schemas.Case["id"]) => {
 
   return new FormPositioner(fields as Fields)
     .setGrid("mobileS", "1fr 1fr", [
+      ["reporter_anonymous", "reporter_anonymous"],
+      ["reporter_name", "reporter_phone"],
       ["identification", "identification"],
       ["description", "description"],
       ["secondaryButton", "submit"]

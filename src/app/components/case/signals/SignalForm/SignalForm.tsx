@@ -1,5 +1,5 @@
 import React from "react"
-import { FormTitle } from "@amsterdam/asc-ui"
+import { Alert, FormTitle } from "@amsterdam/asc-ui"
 
 import { useSignal } from "app/state/rest/"
 import WorkflowForm from "app/components/case/Workflow/WorkflowForm"
@@ -19,6 +19,7 @@ const SignalForm: React.FC<Props> = ({ id }) => {
   
   return (
     <>
+    <Alert level="warning">Dit formulier nog niet gebruiken! Formulier moet eerst nog werkend gemaakt worden in de back-end</Alert>
       <FormTitle>Rapporteer de extra melding</FormTitle>
       <FormWithExtraLabel>
         <WorkflowForm
