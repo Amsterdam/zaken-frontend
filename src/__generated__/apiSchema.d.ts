@@ -30,6 +30,14 @@ declare namespace Components {
             };
             case_id: string;
         }
+        export interface CamundaProcess {
+            readonly id: number;
+            name: string;
+            camunda_message_name: string;
+        }
+        export interface CamundaStartProcess {
+            camunda_process_id: number;
+        }
         /**
          * Serializer for Worker Data
          */
@@ -83,7 +91,7 @@ declare namespace Components {
             start_date?: string | null; // date
             end_date?: string | null; // date
             is_legacy_bwv?: boolean;
-            camunda_id?: string | null;
+            camunda_ids?: string[] | null;
             description?: string | null;
             author?: string | null; // uuid
         }
@@ -204,6 +212,24 @@ declare namespace Components {
         export type IndicatiePubliekrechtelijkEnum = "J" | "N";
         export interface OIDCAuthenticate {
             code: string;
+        }
+        export interface PaginatedCamundaProcessList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=4
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null; // uri
+            results?: CamundaProcess[];
         }
         export interface PaginatedCamundaTaskList {
             /**
@@ -767,6 +793,33 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCaseList;
+        }
+    }
+    namespace CasesProcessesList {
+        namespace Parameters {
+            export type Id = number;
+            export type Page = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        export interface QueryParameters {
+            page?: Parameters.Page;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedCamundaProcessList;
+        }
+    }
+    namespace CasesProcessesStartCreate {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        export type RequestBody = Components.Schemas.CamundaStartProcess;
+        namespace Responses {
+            export type $200 = Components.Schemas.CamundaStartProcess;
         }
     }
     namespace CasesRetrieve {
