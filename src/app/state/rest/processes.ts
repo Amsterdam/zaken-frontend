@@ -5,7 +5,7 @@ import useApiRequest from "./hooks/useApiRequest"
 
 export const useCamundaProcesses = (id: Components.Schemas.Case["id"], options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<Components.Schemas.PaginatedCamundaProcessList>({
+  return useApiRequest<Components.Schemas.CamundaProcess[]>({
     ...options,
     url: makeApiUrl(`cases/${ id }/processes`),
     groupName: "cases",

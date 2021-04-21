@@ -16,9 +16,8 @@ const mapData = (data: { camundaProcess: Components.Schemas.CamundaProcess }) =>
 const TaskForm: FC<Props> = ({ id }) => {
 
   const [processes] = useCamundaProcesses(id)
-  const fields = useScaffoldedFields(scaffold, id, processes as Components.Schemas.CamundaProcess[])
+  const fields = useScaffoldedFields(scaffold, id, processes)
   const [, { execPost }] = useCamundaProcess(id, { lazy: true })
-  const postMethod = async (data: { camundaProcess: Components.Schemas.CamundaProcess }) => await execPost(mapData(data))
 
   return (
     <>
@@ -27,7 +26,8 @@ const TaskForm: FC<Props> = ({ id }) => {
         <WorkflowForm
           id={ id }
           fields={ fields }
-          postMethod={ postMethod }
+          postMethod={ execPost }
+          mapData={ mapData }
         />
       </FormWithExtraLabel>
     </>

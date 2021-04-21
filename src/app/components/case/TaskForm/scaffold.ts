@@ -2,19 +2,19 @@ import { FormPositioner } from "@amsterdam/scaffold-form/package"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import navigateTo from "app/routing/navigateTo"
 
-export default (id: Components.Schemas.Case["id"], tasks?: Components.Schemas.CamundaProcess[]) => {
+export default (id: Components.Schemas.Case["id"], processes?: Components.Schemas.CamundaProcess[]) => {
 
   const fields = {
     camundaProcess: {
       type: "ComplexSelectField",
       props: {
         name: "camundaProcess",
-        label: "Taak",
+        label: "Taak opvoeren",
         optionLabelField: "name",
         withEmptyOption: true,
         emptyOptionLabel: "Selecteer een taak",
         isRequired: true,
-        options: tasks
+        options: processes
       }
     },
     cancel: {

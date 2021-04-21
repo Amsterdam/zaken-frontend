@@ -7,20 +7,21 @@ import useSubmitConfirmation from "./hooks/useSubmitConfirmation"
 type Props<T, U> = {
   fields: { fields: Fields } | undefined
   postMethod: (data: T) => Promise<U>
+  mapData?: (data: any) => any
   afterSubmit?: (result: U) => Promise<unknown>
   initialValues?: Record<string, unknown>
 }
 
 const ConfirmScaffoldForm = <T extends Record<string, any>, U extends Record<string, any>>(props: Props<T, U>) => {
 
-  const { fields, postMethod, afterSubmit, initialValues } = props
+  const { fields, postMethod, mapData, afterSubmit, initialValues } = props
   const {
     isSubmitted,
     data,
     onSubmit,
     onSubmitConfirm,
     onCancelConfirm
-  } = useSubmitConfirmation(postMethod)
+  } = useSubmitConfirmation(postMethod, mapData)
 
   const submitTitle = fields?.fields.submit?.props?.label
 
