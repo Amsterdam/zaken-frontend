@@ -1,34 +1,38 @@
 import { FC } from "react"
 import styled from "styled-components"
-import { Divider, Heading, themeSpacing } from "@amsterdam/asc-ui"
+import { Button, Divider, Heading, themeSpacing } from "@amsterdam/asc-ui"
 
-import AddTaskForm from "app/components/case/tasks/AddTask/AddTaskForm"
 import Workflow from "../Workflow/Workflow"
 import { Row, Column, RowWithColumn } from "app/components/layouts/Grid"
+import ButtonLink from "app/components/shared/ButtonLink/ButtonLink"
+import to from "app/routing/utils/to"
 
 type Props = {
   id: Components.Schemas.Case["id"]
 }
 
-const StyledHeading = styled(Heading)`
-  margin-top: 30px;
-  margin-bottom: 0;
+const ButtonWrap = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: ${ themeSpacing(2) };
 `
 
 const StyledDivider = styled(Divider)`
   margin-bottom: ${ themeSpacing(16) };
 `
 
-const FORM_WIDTH = 40
-
 const CaseStatus: FC<Props> = ({ id }) => (
   <>
     <Row bottomSpacing={ 0 }>
-      <Column spanLarge={ 100 - FORM_WIDTH }>
-        <StyledHeading as="h2">Status</StyledHeading>
+      <Column spanSmall={ 50 } spanLarge={ 50 }>
+        <Heading as="h2">Status</Heading>
       </Column>
-      <Column spanLarge={ FORM_WIDTH }>
-        <AddTaskForm id={ id } />
+      <Column spanSmall={ 50 } spanLarge={ 50 }>
+        <ButtonWrap>
+          <ButtonLink to={ to("/zaken/:id/taak", { id }) }>
+            <Button as="span" variant="tertiary">Taak opvoeren</Button>
+          </ButtonLink>
+        </ButtonWrap>
       </Column>
     </Row>
     <RowWithColumn>

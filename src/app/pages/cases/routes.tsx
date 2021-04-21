@@ -8,6 +8,7 @@ import CompleteCasePage from "app/pages/case/complete/CompleteCasePage"
 import SignalCreatePage from "app/pages/case/signals/CreatePage"
 import VisitCreatePage from "app/pages/case/visits/CreatePage"
 import ScheduleCreatePage from "app/pages/case/schedules/CreatePage"
+import TaskCreatePage from "app/pages/case/task/CreatePage"
 
 // NOTE: please add your own POC-specific routes here.
 export default {
@@ -24,6 +25,11 @@ export default {
           "afronden": {
             Page: CompleteCasePage,
             title: "Zaak afronden",
+            icon: "Edit"
+          },
+          "taak": {
+            Page: TaskCreatePage,
+            title: "Taak opvoeren",
             icon: "Edit"
           },
           "correspondentie": {

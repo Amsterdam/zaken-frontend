@@ -1,6 +1,8 @@
 import { useState } from "react"
 
-export default <T, U>(postMethod: (data: T) => Promise<U>) => {
+const defaultMapData = (data: any) => data
+
+export default <T, U>(postMethod: (data: T) => Promise<U>, mapData: (data: any) => T = defaultMapData) => {
 
   const [isSubmitted, setSubmitted] = useState(false)
   const [data, setData] = useState<T>()
@@ -12,7 +14,7 @@ export default <T, U>(postMethod: (data: T) => Promise<U>) => {
 
   const onSubmitConfirm = async () => {
     if (data === undefined) return
-    const result = await postMethod(data)
+    const result = await postMethod(mapData(data))
     setSubmitted(false)
     return result
   }

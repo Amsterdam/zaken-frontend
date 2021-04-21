@@ -8,10 +8,11 @@ type Props = {
   id: Components.Schemas.Case["id"]
   fields?: { fields: Fields }
   postMethod: (data: any) => Promise<any>
+  mapData?: (data: any) => any
   initialValues?: Record<string, unknown>
 }
 
-const WorkflowForm: FC<Props> = ({ id, fields, postMethod, initialValues = {} }) => {
+const WorkflowForm: FC<Props> = ({ id, fields, postMethod, mapData, initialValues = {} }) => {
 
   const navigateWithFlashMessage = useNavigateWithFlashMessage()
   const afterSubmit = async () => await navigateWithFlashMessage(
@@ -26,6 +27,7 @@ const WorkflowForm: FC<Props> = ({ id, fields, postMethod, initialValues = {} })
     <ConfirmScaffoldForm
       fields={ fields }
       postMethod={ postMethod }
+      mapData={ mapData }
       afterSubmit={ afterSubmit }
       initialValues={ { case: id, ...initialValues } }
     />
