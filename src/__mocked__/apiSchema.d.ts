@@ -11,11 +11,6 @@ declare namespace MockComponents {
       readonly title: string
     }
 
-    export type Task = {
-      label: string
-      value: number
-    }
-
     export type Signal = {}
   }
 }
