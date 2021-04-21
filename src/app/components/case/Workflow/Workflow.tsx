@@ -66,7 +66,7 @@ const mapTaskData =
           name,
           roles ? mapArrayToList(roles) : "-",
           due_date ?
-          <ChangeableDueDate dueDate={data.due_date} caseId={id} camundaTaskId = {camunda_task_id} /> :
+            <ChangeableDueDate dueDate={ data.due_date } caseId={ id } camundaTaskId={ camunda_task_id } /> :
             "-",
           action !== undefined ?
             action.disabled ?
