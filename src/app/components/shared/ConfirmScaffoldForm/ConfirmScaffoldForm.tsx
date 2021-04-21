@@ -26,6 +26,7 @@ const ConfirmScaffoldForm = <T extends Record<string, any>, U extends Record<str
 
   const onSubmitConfirmWrap = async () => {
     const result = await onSubmitConfirm()
+    if (result === undefined) return
     if (afterSubmit === undefined) return
     await afterSubmit(result?.data)
   }
