@@ -35,6 +35,9 @@ declare namespace Components {
             name: string;
             camunda_message_name: string;
         }
+        export interface CamundaStartProcess {
+            camunda_process_id: number;
+        }
         /**
          * Serializer for Worker Data
          */
@@ -688,29 +691,6 @@ declare namespace Paths {
             export type $200 = Components.Schemas.PaginatedUserList;
         }
     }
-    namespace CamundaProcessList {
-        namespace Parameters {
-            export type Page = number;
-        }
-        export interface QueryParameters {
-            page?: Parameters.Page;
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.PaginatedCamundaProcessList;
-        }
-    }
-    namespace CamundaProcessStartSubProcessCreate {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export interface PathParameters {
-            id: Parameters.Id;
-        }
-        export type RequestBody = Components.Schemas.CamundaProcess;
-        namespace Responses {
-            export type $200 = Components.Schemas.CamundaProcess;
-        }
-    }
     namespace CamundaTaskCompleteCreate {
         export type RequestBody = /**
          * Used to complete a task in Camunda.
@@ -813,6 +793,33 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCaseList;
+        }
+    }
+    namespace CasesProcessesList {
+        namespace Parameters {
+            export type Id = number;
+            export type Page = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        export interface QueryParameters {
+            page?: Parameters.Page;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedCamundaProcessList;
+        }
+    }
+    namespace CasesProcessesStartCreate {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        export type RequestBody = Components.Schemas.CamundaStartProcess;
+        namespace Responses {
+            export type $200 = Components.Schemas.CamundaStartProcess;
         }
     }
     namespace CasesRetrieve {

@@ -5,10 +5,10 @@ import navigateTo from "app/routing/navigateTo"
 export default (id: Components.Schemas.Case["id"], tasks?: Components.Schemas.CamundaProcess[]) => {
 
   const fields = {
-    task: {
+    camundaProcess: {
       type: "ComplexSelectField",
       props: {
-        name: "task",
+        name: "camundaProcess",
         label: "Taak",
         optionLabelField: "name",
         withEmptyOption: true,
@@ -37,7 +37,7 @@ export default (id: Components.Schemas.Case["id"], tasks?: Components.Schemas.Ca
 
   return new FormPositioner(fields as Fields)
     .setGrid("mobileS", "1fr 1fr", [
-      ["task", "task"],
+      ["camundaProcess", "camundaProcess"],
       ["cancel", "submit"]
     ])
     .getScaffoldProps()
