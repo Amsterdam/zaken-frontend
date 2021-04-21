@@ -30,7 +30,7 @@ const CaseStatus: FC<Props> = ({ id }) => (
       <Column spanSmall={ 50 } spanLarge={ 50 }>
         <ButtonWrap>
           <ButtonLink to={ to("/zaken/:id/taak", { id }) }>
-            <Button as="a" variant="tertiary">Taak opvoeren</Button>
+            <Button as="span" variant="tertiary">Taak opvoeren</Button>
           </ButtonLink>
         </ButtonWrap>
       </Column>
