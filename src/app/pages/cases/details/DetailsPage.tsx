@@ -1,11 +1,10 @@
 import { FC } from "react"
 import { RouteComponentProps } from "@reach/router"
-import styled from "styled-components"
 import { Divider, Heading } from "@amsterdam/asc-ui"
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
 import Row, { RowWithColumn } from "app/components/layouts/Grid/Row"
 import PageHeading from "app/components/shared/PageHeading/PageHeading"
-import TimelineContainer from "app/components/cases/CaseTimeline/TimelineContainer"
+import TimelineContainer from "app/components/case/CaseTimeline/TimelineContainer"
 import CaseDetails from "app/components/case/CaseDetails/CaseDetails"
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
@@ -19,15 +18,6 @@ import PageSpinner from "app/components/shared/PageSpinner/PageSpinner"
 type Props = {
   id: string
 }
-
-const Div = styled.div`
-  display: flex;
-  justify-content: space-between;
-`
-//TODO show button "Melding"
-// const StyledButton = styled(Button)`
-//   margin-bottom: ${ themeSpacing(3) };
-// `
 
 const DetailsPage: FC<RouteComponentProps<Props>> = ({ id: idString }) => {
 
@@ -56,13 +46,7 @@ const DetailsPage: FC<RouteComponentProps<Props>> = ({ id: idString }) => {
           <CaseStatus id={ id } />
         </RowWithColumn>
         <RowWithColumn>
-          <Div>
-            <Heading as="h2">Zaakhistorie</Heading>
-            {/* TODO show button "Melding" */}
-            {/* <ButtonLink to={ to("/zaken/:id/melding", { id }) }>
-              <StyledButton variant="tertiary">Melding toevoegen</StyledButton>
-            </ButtonLink> */}
-          </Div>
+          <Heading as="h2">Zaakhistorie</Heading>
           <Divider />
         </RowWithColumn>
         <RowWithColumn>
