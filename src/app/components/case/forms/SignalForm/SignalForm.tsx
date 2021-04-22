@@ -2,7 +2,7 @@ import { Alert, FormTitle } from "@amsterdam/asc-ui"
 
 import { useSignal } from "app/state/rest/"
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
-import scaffold from "app/components/case/SignalForm/scaffold"
+import scaffold from "app/components/case/forms/SignalForm/scaffold"
 import FormWithExtraLabel from "app/components/shared/FormWithExtraLabel/FormWithExtraLabel"
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
 

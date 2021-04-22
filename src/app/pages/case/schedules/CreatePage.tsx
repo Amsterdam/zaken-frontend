@@ -10,7 +10,7 @@ import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
 import CaseHeading from "app/components/case/CaseHeading/CaseHeading"
 import { Column } from "app/components/layouts/Grid"
-import ScheduleForm from "app/components/case/ScheduleForm/ScheduleForm"
+import ScheduleForm from "app/components/case/forms/ScheduleForm/ScheduleForm"
 
 type Props = {
   id: string
