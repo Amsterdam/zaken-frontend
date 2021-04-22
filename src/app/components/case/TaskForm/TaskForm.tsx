@@ -5,7 +5,7 @@ import { useCamundaProcesses, useCamundaProcess } from "app/state/rest"
 import scaffold from "./scaffold"
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
 import FormWithExtraLabel from "app/components/shared/FormWithExtraLabel/FormWithExtraLabel"
-import WorkflowForm from "app/components/case/Workflow/WorkflowForm"
+import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
 
 type Props = {
   id: Components.Schemas.Case["id"]
