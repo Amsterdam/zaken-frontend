@@ -1,4 +1,4 @@
-import { FC, useMemo } from "react"
+import { useMemo } from "react"
 import { Link } from "@amsterdam/asc-ui"
 import { DateDisplay } from "@amsterdam/wonen-ui"
 import DefinitionList from "app/components/shared/DefinitionList/DefinitionList"
@@ -11,7 +11,7 @@ const permitType = {
   PERMIT_UNKNOWN: "Onbekend"
 }
 
-const PermitDetail: FC<Props> = ({ detail }) => {
+const PermitDetail: React.FC<Props> = ({ detail }) => {
   const { permit_granted, permit_type, date_from, date_to, decos_join_web_url } = detail
   const values = useMemo(() => ({
     "Vergunning": permit_granted ? "ja" : "nee" ,

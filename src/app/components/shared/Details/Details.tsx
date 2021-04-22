@@ -1,4 +1,4 @@
-import { FC, ReactNode, useCallback, useState } from "react"
+import { ReactNode, useCallback, useState } from "react"
 import { Button, Heading, themeColor, themeSpacing } from "@amsterdam/asc-ui"
 import styled from "styled-components"
 
@@ -39,7 +39,7 @@ const StyledButton = styled(Button)`
 type LoadingRowsProps = {
   numRows: number
 }
-const LoadingRows: FC<LoadingRowsProps> = ({ numRows }) => <>
+const LoadingRows: React.FC<LoadingRowsProps> = ({ numRows }) => <>
   { [...Array(numRows)].map((_, index) => (
     <StyledTR key={ index }>
       <StyledTD><SmallSkeleton /></StyledTD>
@@ -54,7 +54,7 @@ const castValue = (value: Value): ReactNode => {
   return value
 }
 
-const Details: FC<Props> = ({ isLoading, numLoadingRows, numInitialVisibleRows = Number.MAX_VALUE, title, values, startAlternative = true, headingSize = "h2" }) => {
+const Details: React.FC<Props> = ({ isLoading, numLoadingRows, numInitialVisibleRows = Number.MAX_VALUE, title, values, startAlternative = true, headingSize = "h2" }) => {
   const [isCollapsed, setIsCollapsed] = useState(true)
 
   const toggleCollapsed = useCallback(() => setIsCollapsed(!isCollapsed), [setIsCollapsed, isCollapsed])

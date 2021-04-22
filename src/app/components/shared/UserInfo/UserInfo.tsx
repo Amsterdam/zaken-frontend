@@ -1,4 +1,4 @@
-import { FC } from "react"
+
 import type KeycloakTokenParsedExtended from "app/state/auth/keycloak/KeycloakTokenParsedExtended"
 
 import useKeycloak from "app/state/auth/keycloak/useKeycloak"
@@ -8,7 +8,7 @@ type Props = {
   showAsListItem?: boolean
 }
 
-const UserInfo: FC<Props> = ({ showAsListItem = false }) => {
+const UserInfo: React.FC<Props> = ({ showAsListItem = false }) => {
   const { tokenParsed, logout } = useKeycloak()
   const name = (tokenParsed as KeycloakTokenParsedExtended)?.name
   const userDisplay = <UserDisplay name={ name } onClick={ logout } />

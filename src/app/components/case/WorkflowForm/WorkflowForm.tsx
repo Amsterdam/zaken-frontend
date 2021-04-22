@@ -1,4 +1,4 @@
-import { FC } from "react"
+
 
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import ConfirmScaffoldForm from "app/components/shared/ConfirmScaffoldForm/ConfirmScaffoldForm"
@@ -12,7 +12,7 @@ type Props = {
   initialValues?: Record<string, unknown>
 }
 
-const WorkflowForm: FC<Props> = ({ id, fields, postMethod, mapData, initialValues = {} }) => {
+const WorkflowForm: React.FC<Props> = ({ id, fields, postMethod, mapData, initialValues = {} }) => {
 
   const navigateWithFlashMessage = useNavigateWithFlashMessage()
   const afterSubmit = async () => await navigateWithFlashMessage(

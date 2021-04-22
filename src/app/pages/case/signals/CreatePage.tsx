@@ -1,4 +1,3 @@
-import React from "react"
 import { RouteComponentProps } from "@reach/router"
 
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"

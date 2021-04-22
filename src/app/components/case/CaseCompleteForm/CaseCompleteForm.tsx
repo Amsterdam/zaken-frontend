@@ -1,4 +1,4 @@
-import { FC } from "react"
+
 import { FormTitle } from "@amsterdam/asc-ui"
 
 import { useCompleteCase } from "app/state/rest/"
@@ -10,7 +10,7 @@ type Props = {
   id: Components.Schemas.Case["id"]
 }
 
-const CaseCompleteForm: FC<Props> = ({ id }) => {
+const CaseCompleteForm: React.FC<Props> = ({ id }) => {
 
   const [completeCases, { execPost }] = useCompleteCase()
   const fields = useScaffoldedFields(scaffold, id, completeCases)

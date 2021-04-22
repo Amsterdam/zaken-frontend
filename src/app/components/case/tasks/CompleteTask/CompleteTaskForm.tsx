@@ -1,4 +1,4 @@
-import { FC } from "react"
+
 
 import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
 import ScaffoldFields from "app/components/shared/Form/ScaffoldFields"
@@ -18,7 +18,7 @@ const Div = styled.div`
   }
 `
 
-const CompleteTaskForm: FC<Props> = ({ isLoading, onSubmit, onCancel }) =>
+const CompleteTaskForm: React.FC<Props> = ({ isLoading, onSubmit, onCancel }) =>
   <Div>
     <ScaffoldForm
       showSpinner={ isLoading }

@@ -1,4 +1,4 @@
-import { FC } from "react"
+
 
 import useGroupedCaseEvents from "./hooks/useGroupedCaseEvents"
 import { TimelineEvents } from "@amsterdam/wonen-ui"
@@ -8,7 +8,7 @@ type Props = {
   caseId: Components.Schemas.CaseEvent["id"]
 }
 
-const TimelineContainer: FC<Props> = ({ caseId }) => {
+const TimelineContainer: React.FC<Props> = ({ caseId }) => {
 
   const [timelineEvents, { hasErrors }] = useGroupedCaseEvents(caseId)
   const showEmpty = timelineEvents?.length === 0

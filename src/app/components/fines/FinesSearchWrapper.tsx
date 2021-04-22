@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useState } from "react"
+import { useState } from "react"
 import { SearchBar } from "@amsterdam/asc-ui"
 
 import { Row, Column, RowWithColumn } from "app/components/layouts/Grid"
@@ -6,12 +6,12 @@ import FinesSearchResultsList from "app/components/fines/FinesSearchResultsList"
 import useURLState from "app/hooks/useURLState/useURLState"
 
 
-const FinesSearchWrapper: FC = () => {
+const FinesSearchWrapper: React.FC = () => {
   const [searchString, setSearchString] = useState("")
   const [searchQuery, setSearchQuery] = useURLState("query")
   const onSubmit = () => setSearchQuery(searchString)
   const onClear = () => setSearchString("")
-  const onChange = (event: ChangeEvent<HTMLInputElement>) => setSearchString(event.target.value.trim())
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => setSearchString(event.target.value.trim())
 
   return (
     <>

@@ -1,4 +1,4 @@
-import { FC } from "react"
+
 import styled from "styled-components"
 import { themeSpacing, Spinner } from "@amsterdam/asc-ui"
 
@@ -18,7 +18,7 @@ const Ul = styled.ul`
   }
 `
 
-const PermitDetailsList: FC<Props> = ({ bagId }) => {
+const PermitDetailsList: React.FC<Props> = ({ bagId }) => {
   const [data, { isBusy }] = usePermitDetails(bagId)
   const listItems = data?.map((detail) =>
 

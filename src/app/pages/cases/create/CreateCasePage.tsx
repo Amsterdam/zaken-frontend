@@ -1,4 +1,4 @@
-import { FC } from "react"
+
 import { RouteComponentProps } from "@reach/router"
 import { FormTitle } from "@amsterdam/asc-ui"
 
@@ -15,7 +15,7 @@ type Props = {
   bagId: string
 }
 
-const CreateCasePage: FC<RouteComponentProps<Props>> = ({ bagId }) => (
+const CreateCasePage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
   isValidUrlParamBAGId(bagId) ?
     <DefaultLayout>
       <RowWithColumn>

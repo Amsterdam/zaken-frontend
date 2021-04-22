@@ -1,11 +1,11 @@
-import { FC } from "react"
+
 import { Router as ReachRouter } from "@reach/router"
 
 import routes from "app/routing/routes"
 import ProtectedRoute from "./ProtectedRoute"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
 
-const Router: FC = () => (
+const Router: React.FC = () => (
   <ReachRouter>
     {
       Object

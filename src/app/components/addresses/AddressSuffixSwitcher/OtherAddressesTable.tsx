@@ -1,4 +1,4 @@
-import { FC, useCallback, useMemo } from "react"
+import { useCallback, useMemo } from "react"
 import { useLocation } from "@reach/router"
 import { ChevronRight } from "app/components/shared/Icons"
 import { Button } from "@amsterdam/asc-ui"
@@ -33,7 +33,7 @@ const mapData = (onClick: (bagId: string) => void) => (data: SearchResult) =>
   ]
 })
 
-const OtherAddressesTable: FC<Props> = ({ bagId, onAddressChosen }) => {
+const OtherAddressesTable: React.FC<Props> = ({ bagId, onAddressChosen }) => {
   const { pathname } = useLocation()
   const [data, { isBusy }] = useOtherAddressesByBagId(bagId)
   const onClick = useCallback((otherBagId: string) => {

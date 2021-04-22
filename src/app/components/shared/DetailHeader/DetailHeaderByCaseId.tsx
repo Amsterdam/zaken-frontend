@@ -1,4 +1,4 @@
-import { FC } from "react"
+
 
 import DetailHeader from "./DetailHeader"
 import { useCase } from "app/state/rest"
@@ -8,7 +8,7 @@ type Props = {
   enableSwitch?: boolean
 }
 
-const DetailHeaderByCaseId: FC<Props> = ({ caseId, enableSwitch }) => {
+const DetailHeaderByCaseId: React.FC<Props> = ({ caseId, enableSwitch }) => {
 
   const [data] = useCase(caseId)
   const bagId = data?.address.bag_id

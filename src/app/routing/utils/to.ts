@@ -1,4 +1,3 @@
-import { ComponentProps, ComponentType } from "react"
 import routesObject, { Routes } from "app/routing/routes"
 import { RouteComponentProps } from "@reach/router"
 import slashSandwich from "slash-sandwich"
@@ -6,9 +5,9 @@ import slashSandwich from "slash-sandwich"
 // RouteParams for given K in Routes
 type RouteParams<T extends Routes, K extends keyof T> =
   // ... value for K should be a Component:
-  T[K]["Page"] extends ComponentType
+  T[K]["Page"] extends React.ComponentType
     // Omit default RouteComponentProps, we're not interested in those. (E.g location, navigate, etc)
-    ? Omit<ComponentProps<T[K]["Page"]>, keyof RouteComponentProps | "children">
+    ? Omit<React.ComponentProps<T[K]["Page"]>, keyof RouteComponentProps | "children">
     // Don't allow anything else than Components. As we cannot safely extract component-props on anything other than a Component
     : never
 

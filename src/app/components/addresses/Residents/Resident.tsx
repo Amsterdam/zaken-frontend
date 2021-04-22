@@ -1,4 +1,4 @@
-import { FC, useMemo } from "react"
+import { useMemo } from "react"
 import { DateDisplay } from "@amsterdam/wonen-ui"
 
 import PersonDisplay from "app/components/shared/PersonDisplay/PersonDisplay"
@@ -9,7 +9,7 @@ type Props = {
   num: number
 }
 
-const Resident: FC<Props> = ({ resident, num }) => {
+const Resident: React.FC<Props> = ({ resident, num }) => {
   const title = <>{ `${ num }. ` } <PersonDisplay sex={ resident.geslachtsaanduiding } firstName={ `${ resident.voorletters }.` } namePrefix={ resident.voorvoegsel_geslachtsnaam } name={ resident.geslachtsnaam } /></>
   const values = useMemo(() => ({
     "Geboren": <DateDisplay date={ resident.geboortedatum } />,

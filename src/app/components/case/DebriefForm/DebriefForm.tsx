@@ -1,4 +1,4 @@
-import { FC } from "react"
+
 import { FormTitle } from "@amsterdam/asc-ui"
 
 import scaffold from "./scaffold"
@@ -11,7 +11,7 @@ type Props = {
   id: Components.Schemas.Case["id"]
 }
 
-const DebriefCreateForm: FC<Props> = ({ id }) => {
+const DebriefCreateForm: React.FC<Props> = ({ id }) => {
 
   const [, { execPost }] = useDebriefingCreate()
   const fields = useScaffoldedFields(scaffold, id)

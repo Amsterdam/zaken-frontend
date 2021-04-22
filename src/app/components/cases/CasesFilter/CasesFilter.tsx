@@ -1,4 +1,4 @@
-import { FC } from "react"
+
 import styled from "styled-components"
 import { themeColor, themeSpacing } from "@amsterdam/asc-ui"
 import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
@@ -17,7 +17,7 @@ const Menu = styled.menu`
   padding: ${ themeSpacing(4) } ${ themeSpacing(6) };
 `
 
-const CasesFilter: FC<Props> = ({ date, setDate }) => {
+const CasesFilter: React.FC<Props> = ({ date, setDate }) => {
   const onChange = (value: string) => setDate(value)
   return (
     <Menu>

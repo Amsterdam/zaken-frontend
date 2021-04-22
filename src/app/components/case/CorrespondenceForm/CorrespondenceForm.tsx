@@ -1,4 +1,4 @@
-import { FC } from "react"
+
 import { FormTitle } from "@amsterdam/asc-ui"
 
 import { useCorrespondence } from "app/state/rest/"
@@ -11,7 +11,7 @@ type Props = {
   id: Components.Schemas.Case["id"]
 }
 
-const CorrespondenceForm: FC<Props> = ({ id }) => {
+const CorrespondenceForm: React.FC<Props> = ({ id }) => {
 
   const [correspondences, { execPost }] = useCorrespondence()
 

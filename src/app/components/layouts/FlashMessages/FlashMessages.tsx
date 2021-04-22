@@ -1,4 +1,4 @@
-import { FC } from "react"
+
 import { useLocation } from "@reach/router"
 
 import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
@@ -10,7 +10,7 @@ const StyledAlert = styled(Alert)`
   margin: ${ themeSpacing(12) } 0
 `
 
-const FlashMessages: FC = () => {
+const FlashMessages: React.FC = () => {
   const { pathname } = useLocation()
   const { state } = useFlashMessages()
 

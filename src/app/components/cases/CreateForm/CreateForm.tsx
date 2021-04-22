@@ -1,4 +1,4 @@
-import { FC } from "react"
+
 
 import scaffold from "./scaffold"
 import { useTeams, useReasons, useCaseCreateUpdate } from "app/state/rest"
@@ -21,7 +21,7 @@ const mapData = (bagId: Components.Schemas.Address["bag_id"], data: FormData): O
   reason: data.reason.id
 })
 
-const CreateForm: FC<Props> = ({ bagId }) => {
+const CreateForm: React.FC<Props> = ({ bagId }) => {
 
   const [teams] = useTeams()
   const [reasons] = useReasons(teams?.results?.[0].id)

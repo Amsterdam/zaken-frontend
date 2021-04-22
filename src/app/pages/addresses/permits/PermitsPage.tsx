@@ -1,4 +1,4 @@
-import { FC } from "react"
+
 import { RouteComponentProps } from "@reach/router"
 import { Link, Heading } from "@amsterdam/asc-ui"
 
@@ -16,7 +16,7 @@ type Props = {
   bagId: string
 }
 
-const PermitsPage: FC<RouteComponentProps<Props>> = ({ bagId }) => (
+const PermitsPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
   isValidUrlParamBAGId(bagId) ?
     <DefaultLayout>
       <DetailHeader bagId={ bagId } />

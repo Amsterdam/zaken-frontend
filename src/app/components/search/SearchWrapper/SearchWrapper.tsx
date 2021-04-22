@@ -1,4 +1,3 @@
-import { FC, ChangeEvent } from "react"
 import { Heading, FormTitle, SearchBar } from "@amsterdam/asc-ui"
 import debounce from "lodash.debounce"
 
@@ -9,10 +8,10 @@ import useURLState from "app/hooks/useURLState/useURLState"
 
 const DELAY = 750
 
-const SearchWrapper: FC = () => {
+const SearchWrapper: React.FC = () => {
   const [searchString, setSearchString] = useURLState("query")
   const debouncedSetSearchString = debounce(setSearchString, DELAY)
-  const onChange = (event: ChangeEvent<HTMLInputElement>) => debouncedSetSearchString(event.target.value.trim())
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => debouncedSetSearchString(event.target.value.trim())
   const onClear = () => debouncedSetSearchString("")
 
   return (

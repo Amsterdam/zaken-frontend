@@ -1,4 +1,4 @@
-import { FC, ComponentProps, useState, useCallback } from "react"
+import { ComponentProps, useState, useCallback } from "react"
 import { useForm } from "react-final-form"
 import { Button } from "@amsterdam/amsterdam-react-final-form"
 
@@ -7,7 +7,7 @@ export type AutoFillButtonProps = ComponentProps<typeof Button> & {
   target: string
 }
 
-const AutoFillButton: FC<AutoFillButtonProps> = ({ field, target, ...restProps }) => {
+const AutoFillButton: React.FC<AutoFillButtonProps> = ({ field, target, ...restProps }) => {
   const [ isDisabled, setIsDisabled ] = useState(false)
   const { getFieldState, change } = useForm()
 

@@ -1,4 +1,4 @@
-import { FC } from "react"
+
 import styled from "styled-components"
 import { Heading, Spinner, themeColor, themeSpacing } from "@amsterdam/asc-ui"
 import { CaseIdDisplay } from "@amsterdam/wonen-ui"
@@ -19,7 +19,7 @@ const Dt = styled.dt`
   min-width: 120px;
 `
 
-const CaseHeading: FC<Props> = ({ id }) => {
+const CaseHeading: React.FC<Props> = ({ id }) => {
 
   const [data] = useCase(id)
 

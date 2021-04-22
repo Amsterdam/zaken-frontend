@@ -1,4 +1,4 @@
-import { FC } from "react"
+
 import styled from "styled-components"
 import { Link } from "@reach/router"
 import { Icon, themeSpacing, themeColor, ascDefaultTheme, breakpoint } from "@amsterdam/asc-ui"
@@ -43,7 +43,7 @@ const StyledSeperator = styled(Icon)`
   }
 `
 
-const BreadCrumbs: FC<Props> = ({ routeParams }) => {
+const BreadCrumbs: React.FC<Props> = ({ routeParams }) => {
   const route = find(routes, window.location.pathname)
 
   const pageConfig = route ? routes[route] : undefined

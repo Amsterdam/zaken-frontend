@@ -1,4 +1,4 @@
-import { FC, useMemo } from "react"
+import { useMemo } from "react"
 import { useBAG, useBAGLodging } from "app/state/rest"
 import DefinitionList from "app/components/shared/DefinitionList/DefinitionList"
 
@@ -6,7 +6,7 @@ type Props = {
   bagId: Components.Schemas.Address["bag_id"]
 }
 
-const ObjectDetails: FC<Props> = ({ bagId }) => {
+const ObjectDetails: React.FC<Props> = ({ bagId }) => {
   const [BAGData] = useBAG(bagId)
   const result = BAGData?.results[0]
   const type = result?.type

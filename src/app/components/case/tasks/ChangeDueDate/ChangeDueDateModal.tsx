@@ -1,4 +1,4 @@
-import { FC } from "react"
+
 
 import Modal, { ModalBlock } from "app/components/shared/Modal/Modal"
 import ChangeDueDateForm from "./ChangeDueDateForm"
@@ -11,7 +11,7 @@ export type Props = {
   taskId: string
 }
 
-const ChangeDueDateModal: FC<Props> = ({ isOpen, closeModal, onSubmit, dueDate, taskId }) =>
+const ChangeDueDateModal: React.FC<Props> = ({ isOpen, closeModal, onSubmit, dueDate, taskId }) =>
   <Modal
     isOpen={isOpen}
     onClose={closeModal}

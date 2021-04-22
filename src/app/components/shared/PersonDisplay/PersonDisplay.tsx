@@ -1,4 +1,4 @@
-import { FC } from "react"
+
 
 type Sex = Components.Schemas.Resident["geslachtsaanduiding"]
 type Props = {
@@ -16,7 +16,7 @@ const mapSex = (value: Sex) => {
   }
 }
 
-const PersonDisplay: FC<Props> = ({ sex, firstName, namePrefix, name }) =>
+const PersonDisplay: React.FC<Props> = ({ sex, firstName, namePrefix, name }) =>
   <>{ `${ mapSex(sex) }${ firstName } ${ namePrefix ? `${ namePrefix } ` : "" }${ name }` }</>
 
 export default PersonDisplay

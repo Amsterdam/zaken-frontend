@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react"
+import { useEffect } from "react"
 
 import { Row, Column } from "app/components/layouts/Grid"
 import TableCases from "app/components/cases/TableCases/TableCases"
@@ -12,7 +12,7 @@ const parse = (value: string | null) => {
   return value !== null && options.includes(value) ? value : getDate()[0]
 }
 
-const Cases: FC = () => {
+const Cases: React.FC = () => {
 
   const [date, setDate] = useURLState("date", parse)
   const [cases, { isBusy, execGet }] = useCases(date)

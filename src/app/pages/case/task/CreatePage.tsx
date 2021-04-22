@@ -1,4 +1,4 @@
-import { FC } from "react"
+
 import { RouteComponentProps } from "@reach/router"
 
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
@@ -16,7 +16,7 @@ type Props = {
   id: string
 }
 
-const CreatePage: FC<RouteComponentProps<Props>> = ({ id: idString }) => {
+const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
 
   const id = parseUrlParamId(idString)
 

@@ -1,4 +1,4 @@
-import { FC } from "react"
+
 import styled from "styled-components"
 import { themeColor, themeSpacing } from "@amsterdam/asc-ui"
 
@@ -35,7 +35,7 @@ type Props = {
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flow_Layout/In_Flow_and_Out_of_Flow
  */
-const FixedTableCell: FC<Props> = ({ children, width }) => {
+const FixedTableCell: React.FC<Props> = ({ children, width }) => {
   // Grab parent node, a table-row element (TR).
   const { ref, node } = useNodeByReference<HTMLTableCellElement>(node => node?.parentElement ?? undefined)
   // Grab dimensions of the table-row.

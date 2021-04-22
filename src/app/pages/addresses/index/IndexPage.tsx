@@ -1,4 +1,4 @@
-import { FC } from "react"
+
 import { RouteComponentProps } from "@reach/router"
 import { Button } from "@amsterdam/asc-ui"
 
@@ -18,7 +18,7 @@ type Props = {
   bagId: string
 }
 
-const IndexPage: FC<RouteComponentProps<Props>> = ({ bagId }) => (
+const IndexPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
   isValidUrlParamBAGId(bagId) ?
     <DefaultLayout>
       <RowWithColumn>

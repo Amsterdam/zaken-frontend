@@ -1,4 +1,4 @@
-import { FC } from "react"
+
 import styled from "styled-components"
 import { Button, Paragraph } from "@amsterdam/asc-ui"
 
@@ -23,7 +23,7 @@ const Flex = styled.div`
   flex: 1;
 `
 
-const ConfirmModal: FC<Props> = ({ isOpen, onClose, title, children, okValue = "Ok", cancelValue = "Annuleren", onConfirm }) => (
+const ConfirmModal: React.FC<Props> = ({ isOpen, onClose, title, children, okValue = "Ok", cancelValue = "Annuleren", onConfirm }) => (
   <Modal isOpen={isOpen} onClose={onClose} title={title}>
     <ModalBlock>
       <Paragraph>{ children }</Paragraph>

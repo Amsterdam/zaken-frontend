@@ -1,4 +1,4 @@
-import { FC } from "react"
+
 
 import Row from "app/components/layouts/Grid/Row"
 import Column from "app/components/layouts/Grid/Column"
@@ -10,7 +10,7 @@ type Props = {
   enableSwitch?: boolean
 }
 
-const DetailHeader: FC<Props> = ({ bagId, enableSwitch }) => (
+const DetailHeader: React.FC<Props> = ({ bagId, enableSwitch }) => (
   <Row>
     <Column spanLarge={50}>
       <BreadCrumbs routeParams={ { bagId } } />
