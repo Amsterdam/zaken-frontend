@@ -9,12 +9,16 @@ import taskActionMap from "./taskActionMap"
 import LockIcon from "../components/LockIcon"
 import List from "../components/List"
 
-export default (id: Components.Schemas.Case["id"], execPost: (data: Partial<Components.Schemas.CamundaTaskComplete>) => Promise<unknown>) =>
+export default (
+    id: Components.Schemas.Case["id"],
+    execPost: (data: Partial<Components.Schemas.CamundaTaskComplete>) => Promise<unknown>
+  ) =>
   (data: Components.Schemas.CamundaTask) => {
 
     const { task_name_id, camunda_task_id, name, roles, due_date, form } = data
     const action = taskActionMap[task_name_id]
-    const onSubmitTaskComplete = (variables: Components.Schemas.CamundaTask["form"] = {}) => execPost({ case: id, camunda_task_id, variables })
+    const onSubmitTaskComplete = (variables: Components.Schemas.CamundaTask["form"] = {}) =>
+      execPost({ case: id, camunda_task_id, variables })
 
     return ({
       itemList: [
@@ -26,7 +30,11 @@ export default (id: Components.Schemas.Case["id"], execPost: (data: Partial<Comp
           "-",
         action !== undefined ?
           action.disabled ?
-            <Button variant="primary" disabled={ true } title={ to(`/zaken/:id/${ action.target }`, { id }) }>{ action.name }</Button> :
+            <Button
+              variant="primary"
+              disabled={ true }
+              title={ to(`/zaken/:id/${ action.target }`, { id }) }
+            >{ action.name }</Button> :
             <ButtonLink to={ to(`/zaken/:id/${ action.target }`, { id }) }>
               <Button variant="primary" as="span">{ action.name }</Button>
             </ButtonLink>
