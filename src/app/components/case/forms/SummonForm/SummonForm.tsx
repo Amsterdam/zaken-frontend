@@ -12,7 +12,6 @@ type Props = {
 }
 
 type SummonData = Omit<Components.Schemas.Summon, "type"> & { type: { id: number } }
-
 const mapData = (data: SummonData) => ({ ...data, type: data.type.id })
 
 const SummonForm: React.FC<Props> = ({ id }) => {
@@ -23,7 +22,6 @@ const SummonForm: React.FC<Props> = ({ id }) => {
   const fields = useScaffoldedFields(scaffold, id, summonTypes)
 
   const [, { execPost }] = useSummons({ lazy: true })
-  const postMethod = async (data: SummonData) => await execPost(mapData(data))
 
   return (
     <>
@@ -32,7 +30,8 @@ const SummonForm: React.FC<Props> = ({ id }) => {
         <WorkflowForm
           id={ id }
           fields={ fields }
-          postMethod={ postMethod }
+          mapData={ mapData }
+          postMethod={ execPost }
         />
       </FormWithExtraLabel>
     </>

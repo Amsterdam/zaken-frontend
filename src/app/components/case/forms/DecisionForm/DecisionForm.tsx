@@ -6,7 +6,7 @@ import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
 import scaffold from "app/components/case/forms/DecisionForm/scaffold"
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
 import FormWithExtraLabel from "app/components/shared/FormWithExtraLabel/FormWithExtraLabel"
-import DecisionHeader from "./DecisionHeader"
+import DecisionHeader from "./components/DecisionHeader"
 import { useDecisionTypes } from "app/state/rest/teams"
 
 type Props = {
@@ -26,7 +26,6 @@ const DecisionForm: React.FC<Props> = ({ id }) => {
   const fields = useScaffoldedFields(scaffold, id, decisionTypes)
 
   const [, { execPost }] = useDecisions({ lazy: true })
-  const postMethod = async (data: DecisionData) => await execPost(mapData(data))
 
   return (
     <>
@@ -36,7 +35,8 @@ const DecisionForm: React.FC<Props> = ({ id }) => {
       <WorkflowForm
           id={ id }
           fields={ fields }
-          postMethod={ postMethod }
+          mapData={ mapData }
+          postMethod={ execPost }
       />
       </FormWithExtraLabel>
     </>

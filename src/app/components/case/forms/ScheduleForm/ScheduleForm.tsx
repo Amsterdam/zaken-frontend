@@ -33,7 +33,6 @@ const ScheduleForm: React.FC<Props> = ({ id }) => {
   const fields = useScaffoldedFields(scaffold, id, scheduleTypes)
 
   const [, { execPost }] = useScheduleCreate()
-  const postMethod = async (data: ScheduleTypeFormData) => await execPost(mapData(data))
 
   const initialValues = {
     action: scheduleTypes?.actions[0].id
@@ -46,7 +45,8 @@ const ScheduleForm: React.FC<Props> = ({ id }) => {
         <WorkflowForm
           id={ id }
           fields={ fields }
-          postMethod={ postMethod }
+          mapData={ mapData }
+          postMethod={ execPost }
           initialValues={ initialValues }
         />
       </FormWithExtraLabel>

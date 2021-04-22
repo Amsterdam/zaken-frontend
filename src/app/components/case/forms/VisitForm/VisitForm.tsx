@@ -3,20 +3,20 @@ import { Alert, FormTitle } from "@amsterdam/asc-ui"
 import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
 
 import ScaffoldFields from "app/components/shared/Form/ScaffoldFields"
-import createScaffoldProps from "./scaffold"
+import scaffold from "./scaffold"
 import { useAuthors, useVisitsCreate } from "app/state/rest"
 import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
 import navigateTo from "app/routing/navigateTo"
 
 type Props = {
-  caseId: Components.Schemas.Case["id"]
+  id: Components.Schemas.Case["id"]
 }
 
 export type VisitData = Omit<Components.Schemas.Visit, "author_ids"> & { author1: Components.Schemas.User, author2: Components.Schemas.User }
 const filterUndefined = <T extends unknown>(arr: Array<T | undefined>) => arr.filter((item): item is T => item !== undefined)
 const mapData = (data: VisitData) => ({ ...data, author_ids: filterUndefined([data.author1?.id, data.author2?.id]) })
 
-const VisitForm: React.FC<Props> = ({ caseId }) => {
+const VisitForm: React.FC<Props> = ({ id }) => {
 
   const [data] = useAuthors()
   const authors = data?.results ?? []
@@ -27,14 +27,15 @@ const VisitForm: React.FC<Props> = ({ caseId }) => {
   const showSpinner = data === undefined
 
   const onSubmit = async (data: VisitData) => {
-    await execPost(mapData(data))
-    const id = data.case
+    const result = await execPost(mapData(data))
+    if (result === undefined) return
     const path = `/zaken/${ id }`
     addSuccessFlashMessage(path, "Succes", "Het resultaat huisbezoek is succesvol verwerkt")
     navigateTo("/zaken/:id", { id })
   }
 
-  const initialValues = { case: caseId, start_time: "2021-01-01T12:34", observations: [] }
+  const initialValues = { case: id, start_time: "2021-01-01T12:34", observations: [] }
+  const fields = scaffold(id, authors)
 
   return (
     <>
@@ -45,7 +46,7 @@ const VisitForm: React.FC<Props> = ({ caseId }) => {
         onSubmit={ onSubmit }
         initialValues={ initialValues }
       >
-        <ScaffoldFields { ...createScaffoldProps(caseId, authors) } />
+        <ScaffoldFields { ...fields } />
       </ScaffoldForm>
     </>
   )

@@ -32,7 +32,7 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
         <CaseHeading id={ id } />
       </RowWithColumn>
       <RowWithColumn>
-        <VisitCreateForm caseId={ id } />
+        <VisitCreateForm id={ id } />
       </RowWithColumn>
     </DefaultLayout> :
     <NotFoundPage />
