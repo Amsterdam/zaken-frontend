@@ -8,9 +8,9 @@ type Rec = Record<string, any>
 type Props<T, U, V> = {
   fields: { fields: Fields } | undefined
   mapData?: (data: T) => U
-  // TODO: Specify return type as Promise<V>
+  // TODO: Specify return type instead of any
   postMethod: (data: U) => Promise<any>
-  afterSubmit?: (result: V) => Promise<void>
+  afterSubmit?: (result: V) => Promise<unknown>
   initialValues?: Record<string, unknown>
 }
 
