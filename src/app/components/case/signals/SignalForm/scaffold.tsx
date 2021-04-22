@@ -52,8 +52,6 @@ export default (caseId: Components.Schemas.Case["id"]) => {
       type: "NumberField",
       props: {
         label: "SIA-nummer",
-        hint:"123456",
-        placeholder:"123456",
         extraLabel: <InfoButton infoTitle="SIA-nummer" infoText="Vermeld hier het corresponderende SIA-nummer, zodat de melding makkelijk terug te vindein is in SIA."></InfoButton>,
         name: "identification",
         isRequired: true,
