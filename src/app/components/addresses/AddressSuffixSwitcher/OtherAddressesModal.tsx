@@ -1,4 +1,4 @@
-import { FC } from "react"
+
 
 import Modal, { ModalBlock } from "app/components/shared/Modal/Modal"
 import OtherAddressesTable from "./OtherAddressesTable"
@@ -9,7 +9,7 @@ export type Props = {
   closeModal: () => void
 }
 
-const OtherAddressesModal: FC<Props> = ({ isOpen, closeModal, bagId }) => (
+const OtherAddressesModal: React.FC<Props> = ({ isOpen, closeModal, bagId }) => (
   <Modal isOpen={isOpen} onClose={closeModal} title="Andere adressen">
     <ModalBlock>
       <OtherAddressesTable bagId={bagId} onAddressChosen={closeModal}  />

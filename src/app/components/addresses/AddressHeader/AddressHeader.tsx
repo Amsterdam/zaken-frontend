@@ -1,4 +1,4 @@
-import { FC } from "react"
+
 import styled from "styled-components"
 import { Typography, breakpoint, themeSpacing } from "@amsterdam/asc-ui"
 
@@ -32,7 +32,7 @@ const ButtonWrap = styled.div`
   margin-left: ${ themeSpacing(3) };
 `
 
-const AddressHeader: FC<Props> = ({ bagId, headingSize = "h2", isHeader = false, enableSwitch = true }) => {
+const AddressHeader: React.FC<Props> = ({ bagId, headingSize = "h2", isHeader = false, enableSwitch = true }) => {
 
   const [data] = useBAG(bagId)
   const title = data?.results[0] !== undefined ? `${ data.results[0].adres }, ${ data.results[0].postcode }` : undefined

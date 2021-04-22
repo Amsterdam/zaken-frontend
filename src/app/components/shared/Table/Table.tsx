@@ -1,4 +1,4 @@
-import { FC, ReactNode, MouseEvent } from "react"
+import { ReactNode, MouseEvent } from "react"
 
 import { themeColor } from "@amsterdam/asc-ui"
 import styled, { css } from "styled-components"
@@ -67,7 +67,7 @@ const NoValuesPlaceholder = styled(TableCell)`
 const createLoadingData = (numColumns: number, numRows: number = 5) =>
   [...Array(numRows)].map(_ => [...Array(numColumns)].map(_ => ""))
 
-const Table: FC<Props> = ({ columns, loading, numLoadingRows, hasFixedColumn, noValuesPlaceholder, className, ...restProps }) => {
+const Table: React.FC<Props> = ({ columns, loading, numLoadingRows, hasFixedColumn, noValuesPlaceholder, className, ...restProps }) => {
   const { data } = restProps
 
   const fixedColumnWidth = hasFixedColumn

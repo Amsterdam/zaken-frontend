@@ -1,9 +1,9 @@
-import { FC } from "react"
+
 import { Link } from "@amsterdam/asc-ui"
 
 type Props = {
   email: string
 }
 
-const EmailLink: FC<Props> = ({ email }) => (<Link href={ `mailto:${ email }` }>{ email }</Link>)
+const EmailLink: React.FC<Props> = ({ email }) => (<Link href={ `mailto:${ email }` }>{ email }</Link>)
 export default EmailLink

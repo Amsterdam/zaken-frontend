@@ -1,4 +1,4 @@
-import { FC, ComponentProps, useCallback, useState } from "react"
+import { ComponentProps, useCallback, useState } from "react"
 import { Button } from "@amsterdam/asc-ui"
 import Spinner from "@amsterdam/asc-ui/lib/components/Spinner"
 import useIsMounted from "app/hooks/useIsMounted/useIsMounted"
@@ -7,7 +7,7 @@ type Props = Omit<ComponentProps<typeof Button>, "onClick"> & {
   onClick: () => Promise<any>
 }
 
-const SpinnerButton: FC<Props> = ({ onClick, ...restProps }) => {
+const SpinnerButton: React.FC<Props> = ({ onClick, ...restProps }) => {
   const isMounted = useIsMounted()
   const [isSpinning, setIsSpinning] = useState(false)
 

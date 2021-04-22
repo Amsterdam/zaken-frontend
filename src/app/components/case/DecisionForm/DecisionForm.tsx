@@ -1,4 +1,4 @@
-import { FC } from "react"
+
 import { FormTitle } from "@amsterdam/asc-ui"
 
 import { useCase, useDecisions } from "app/state/rest/"
@@ -16,7 +16,7 @@ type Props = {
 type DecisionData = Omit<Components.Schemas.Decision, "decision_type"> & { decision_type: { id: number } }
 const mapData = (data: DecisionData) => ({ ...data, decision_type: data.decision_type.id })
 
-const DecisionForm: FC<Props> = ({ id }) => {
+const DecisionForm: React.FC<Props> = ({ id }) => {
 
   const [caseItem] = useCase(id)
   const teamId = caseItem?.team.id

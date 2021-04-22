@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react"
+import { useEffect } from "react"
 import { globalHistory } from "@reach/router"
 import find from "../utils/find"
 import routes from "app/routing/routes"
@@ -12,7 +12,7 @@ const setPageTitle = () => {
   document.title = title
 }
 
-const PageTitle: FC = () => {
+const PageTitle: React.FC = () => {
 
   useEffect(() => {
     setPageTitle()

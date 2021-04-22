@@ -1,4 +1,3 @@
-import { ReactNode, FC, ComponentProps } from "react"
 import { Button, Icon } from "@amsterdam/asc-ui"
 import { Info } from "app/components/shared/Icons"
 
@@ -7,11 +6,11 @@ import { useModal } from "app/components/shared/Modal/hooks/useModal"
 
 type Props = {
   infoTitle: string
-  infoText: ReactNode
-  onClick?: ComponentProps<typeof Button>["onClick"]
+  infoText: React.ReactNode
+  onClick?: React.ComponentProps<typeof Button>["onClick"]
 }
 
-const InfoButton: FC<Props> = ({ infoTitle, infoText }) => {
+const InfoButton: React.FC<Props> = ({ infoTitle, infoText }) => {
   const { isModalOpen, openModal, closeModal } = useModal()
   return (
     <>

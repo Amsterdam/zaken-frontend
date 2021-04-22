@@ -1,4 +1,4 @@
-import { FC, createContext } from "react"
+import { createContext } from "react"
 
 import { ApiCache, useApiCache } from "../hooks/useApiCache"
 import { RequestQueue, useRequestQueue } from "../hooks/useRequestQueue"
@@ -20,7 +20,7 @@ export const ApiContext = createContext<GroupedContext>({
   teams: noopContext
 })
 
-const ApiProvider: FC = ({ children }) => {
+const ApiProvider: React.FC = ({ children }) => {
   const value: GroupedContext = {
     auth: {
       ...useApiCache(),

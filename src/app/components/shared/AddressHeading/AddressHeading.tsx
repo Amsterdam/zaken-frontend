@@ -1,4 +1,4 @@
-import { FC } from "react"
+
 import { Heading, themeSpacing } from "@amsterdam/asc-ui"
 import { useCase } from "app/state/rest/"
 import AddressDisplay from "app/components/addresses/AddressDisplay/AddressDisplay"
@@ -12,7 +12,7 @@ const Div = styled.div`
   margin-bottom: ${ themeSpacing(7) }
 `
 
-const AddressHeading: FC<Props> = ({ caseId }) => {
+const AddressHeading: React.FC<Props> = ({ caseId }) => {
   const [data] = useCase(caseId)
 
   return (

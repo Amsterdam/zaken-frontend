@@ -1,4 +1,4 @@
-import { FC, useMemo } from "react"
+import { useMemo } from "react"
 import styled from "styled-components"
 import { Heading, Spinner, themeSpacing } from "@amsterdam/asc-ui"
 import { CaseIdDisplay, DateDisplay } from "@amsterdam/wonen-ui"
@@ -42,7 +42,7 @@ const mapData = (data: Components.Schemas.Case) =>
     ]
   })
 
-const CasesByBagId: FC<Props> = ({ bagId, openCases, title = defaultTitle, emptyText = defaultEmptyText }) => {
+const CasesByBagId: React.FC<Props> = ({ bagId, openCases, title = defaultTitle, emptyText = defaultEmptyText }) => {
 
   const [data] = useCasesByBagId(bagId, openCases)
   const mappedData = useMemo(() => data?.results?.map(mapData), [ data ])

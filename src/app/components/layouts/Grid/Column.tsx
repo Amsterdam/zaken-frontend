@@ -1,4 +1,3 @@
-import { FC, ReactNode } from "react"
 import styled from "styled-components"
 import { breakpoint } from "@amsterdam/asc-ui"
 import layouts from "@amsterdam/asc-ui/lib/theme/default/layouts"
@@ -12,7 +11,7 @@ import layouts from "@amsterdam/asc-ui/lib/theme/default/layouts"
  */
 
 export type TypeProps = {
-  children: ReactNode
+  children: React.ReactNode
   spanSmall?: number
   spanLarge?: number
 }
@@ -32,7 +31,7 @@ const ColumnStyle = styled.div<TypeProps>`
   }
 `
 
-const Column: FC<TypeProps> = ({ children, ...props }) => (
+const Column: React.FC<TypeProps> = ({ children, ...props }) => (
   <ColumnStyle { ...props } >
     {children}
   </ColumnStyle>

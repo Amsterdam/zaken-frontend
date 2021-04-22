@@ -1,4 +1,3 @@
-import React from "react"
 import { Alert, FormTitle } from "@amsterdam/asc-ui"
 
 import { useSignal } from "app/state/rest/"
@@ -10,7 +9,6 @@ import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks
 type Props = {
   id: Components.Schemas.Case["id"]
 }
-
 
 const SignalForm: React.FC<Props> = ({ id }) => {
 

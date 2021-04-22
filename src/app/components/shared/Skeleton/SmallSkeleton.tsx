@@ -1,4 +1,4 @@
-import { FC, useMemo } from "react"
+import { useMemo } from "react"
 import styled, { keyframes } from "styled-components"
 import { themeColor, themeSpacing } from "@amsterdam/asc-ui"
 
@@ -29,7 +29,7 @@ type Props = {
   maxRandomWidth?: number
 }
 
-const SmallSkeleton: FC<Props> = ({ maxRandomWidth = 100, height = 5 }) => {
+const SmallSkeleton: React.FC<Props> = ({ maxRandomWidth = 100, height = 5 }) => {
   const width = useMemo(() => Math.round(Math.random() * (maxRandomWidth - 50) ) + 50, [maxRandomWidth])
   return <StyledDiv width={width} height={height} />
 }

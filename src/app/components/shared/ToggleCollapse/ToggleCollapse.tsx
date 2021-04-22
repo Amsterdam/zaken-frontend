@@ -1,4 +1,4 @@
-import { FC, ComponentProps } from "react"
+import { ComponentProps } from "react"
 import { Button, themeSpacing } from "@amsterdam/asc-ui"
 import { ButtonVariant } from "@amsterdam/asc-ui/lib/components/Button/Button"
 import styled from "styled-components"
@@ -15,7 +15,7 @@ const StyledButton = styled(Button)`
   margin-bottom: ${ themeSpacing(5) };
 `
 
-const ToggleCollapse: FC<Props> = (
+const ToggleCollapse: React.FC<Props> = (
   { onClick,
     isCollapsed,
     variant = "textButton",

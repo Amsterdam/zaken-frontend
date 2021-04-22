@@ -1,4 +1,4 @@
-import { FC } from "react"
+
 
 // Be careful
 // ==========
@@ -13,7 +13,7 @@ type Props = {
   etage?: string | number
 }
 
-const AddressDisplay: FC<Props> = ({ streetName, streetNumber, suffix, etage }) =>
+const AddressDisplay: React.FC<Props> = ({ streetName, streetNumber, suffix, etage }) =>
   <>{ `${ streetName } ${ streetNumber }${ suffix ? suffix : "" }${ etage ? `-${ etage }` : "" }`.trim() }</>
 
 export default AddressDisplay

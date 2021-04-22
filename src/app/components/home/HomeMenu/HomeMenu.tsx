@@ -1,4 +1,4 @@
-import { FC } from "react"
+
 import styled from "styled-components"
 import { themeSpacing, breakpoint } from "@amsterdam/asc-ui"
 import NavBlock from "app/components/addresses/NavBlock/NavBlock"
@@ -39,7 +39,7 @@ const items = [
   "/invorderingen/"
 ]
 
-const HomeMenu: FC = () => (
+const HomeMenu: React.FC = () => (
   <Menu>
     <Ul>
       { items.map((route) => {

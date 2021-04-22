@@ -1,4 +1,4 @@
-import { FC } from "react"
+
 import { RouteComponentProps } from "@reach/router"
 
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
@@ -16,7 +16,7 @@ type Props = {
   id: string
 }
 
-const CompleteCasePage: FC<RouteComponentProps<Props>> = ({ id: idString }) => {
+const CompleteCasePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
 
   const id = parseUrlParamId(idString)
 

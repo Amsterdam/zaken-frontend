@@ -1,4 +1,4 @@
-import { FC } from "react"
+
 import AddressDisplay from "../AddressDisplay/AddressDisplay"
 import PostalCodeDisplay from "../PostalCodeDisplay/PostalCodeDisplay"
 
@@ -11,7 +11,7 @@ type Props = {
   city?: string
 }
 
-const FullAddressDisplay: FC<Props> = ({ streetName, streetNumber, suffix, etage, postalCode, city }) => (
+const FullAddressDisplay: React.FC<Props> = ({ streetName, streetNumber, suffix, etage, postalCode, city }) => (
   <>
     <AddressDisplay streetName={ streetName } streetNumber={ streetNumber } suffix={ suffix } etage={ etage } />
     { postalCode && <>, <PostalCodeDisplay postalCode={ postalCode } /></> }

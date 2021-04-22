@@ -1,4 +1,4 @@
-import { FC } from "react"
+
 import { Button } from "@amsterdam/asc-ui"
 
 import { useModal } from "app/components/shared/Modal/hooks/useModal"
@@ -10,7 +10,7 @@ type Props = {
   caseId: number
 }
 
-const CompleteTaskButton: FC<Props> = ({ onSubmit, taskName, caseId }) => {
+const CompleteTaskButton: React.FC<Props> = ({ onSubmit, taskName, caseId }) => {
   const { isModalOpen, openModal, closeModal } = useModal()
 
   return <>

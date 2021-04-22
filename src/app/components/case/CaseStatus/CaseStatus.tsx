@@ -1,4 +1,4 @@
-import { FC } from "react"
+
 import styled from "styled-components"
 import { Button, Divider, Heading, themeSpacing } from "@amsterdam/asc-ui"
 
@@ -21,7 +21,7 @@ const StyledDivider = styled(Divider)`
   margin-bottom: ${ themeSpacing(16) };
 `
 
-const CaseStatus: FC<Props> = ({ id }) => (
+const CaseStatus: React.FC<Props> = ({ id }) => (
   <>
     <Row bottomSpacing={ 0 }>
       <Column spanSmall={ 50 } spanLarge={ 50 }>

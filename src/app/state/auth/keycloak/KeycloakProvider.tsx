@@ -1,4 +1,4 @@
-import { FC, createContext, useState, useEffect } from "react"
+import { createContext, useState, useEffect } from "react"
 
 import { KeycloakInstance } from "keycloak-js"
 import { keycloak } from "./keycloak"
@@ -16,7 +16,7 @@ type Props = {
   initializedCallback?: (keycloak: KeycloakInstance, isAuthenticated: boolean) => Promise<void>
 }
 
-const KeycloakProvider: FC<Props> = ({ shouldInitialize = true, initializedCallback, children }) => {
+const KeycloakProvider: React.FC<Props> = ({ shouldInitialize = true, initializedCallback, children }) => {
   const [isInitialized, setIsInitialized] = useState(false)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 

@@ -1,4 +1,4 @@
-import { FC } from "react"
+
 import Residents from "app/components/addresses/Residents/Residents"
 
 type Props = {
@@ -6,5 +6,5 @@ type Props = {
 }
 
 // TODO: Do show Residents by BAG_id
-const People: FC<Props> = ({ bagId }) => <Residents bagId={ bagId } />
+const People: React.FC<Props> = ({ bagId }) => <Residents bagId={ bagId } />
 export default People
