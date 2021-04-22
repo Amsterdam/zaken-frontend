@@ -2,7 +2,7 @@ import { FC } from "react"
 import { FormTitle } from "@amsterdam/asc-ui"
 
 import { useCase, useSummons, useSummonTypes } from "app/state/rest/"
-import WorkflowForm from "app/components/case/Workflow/WorkflowForm"
+import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
 import scaffold from "app/components/case/SummonForm/scaffold"
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
 import FormWithExtraLabel from "app/components/shared/FormWithExtraLabel/FormWithExtraLabel"
