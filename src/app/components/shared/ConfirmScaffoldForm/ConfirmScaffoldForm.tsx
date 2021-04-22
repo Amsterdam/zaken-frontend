@@ -4,15 +4,18 @@ import ScaffoldFields, { Fields } from "app/components/shared/Form/ScaffoldField
 import ConfirmScaffoldFields from "./ConfirmScaffoldFields"
 import useSubmitConfirmation from "./hooks/useSubmitConfirmation"
 
-type Props<T, U> = {
+type Rec = Record<string, any>
+type Props<T, U, V> = {
   fields: { fields: Fields } | undefined
-  postMethod: (data: T) => Promise<U>
-  mapData?: (data: any) => any
-  afterSubmit?: (result: U) => Promise<unknown>
+  mapData?: (data: T) => U
+  // TODO: Specify return type as Promise<V>
+  postMethod: (data: U) => Promise<any>
+  afterSubmit?: (result: V) => Promise<void>
   initialValues?: Record<string, unknown>
 }
 
-const ConfirmScaffoldForm = <T extends Record<string, any>, U extends Record<string, any>>(props: Props<T, U>) => {
+
+const ConfirmScaffoldForm = <T extends Rec, U extends Rec, V extends Rec>(props: Props<T, U, V>) => {
 
   const { fields, postMethod, mapData, afterSubmit, initialValues } = props
   const {

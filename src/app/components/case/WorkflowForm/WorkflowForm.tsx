@@ -4,15 +4,17 @@ import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import ConfirmScaffoldForm from "app/components/shared/ConfirmScaffoldForm/ConfirmScaffoldForm"
 import useNavigateWithFlashMessage from "app/state/flashMessages/useNavigateWithFlashMessage"
 
-type Props = {
+type Rec = Record<string, any>
+type Props<T, U, V> = {
   id: Components.Schemas.Case["id"]
   fields?: { fields: Fields }
-  postMethod: (data: any) => Promise<any>
-  mapData?: (data: any) => any
+  mapData?: (data: T) => U
+  postMethod: (data: U) => Promise<V>
   initialValues?: Record<string, unknown>
 }
 
-const WorkflowForm: React.FC<Props> = ({ id, fields, postMethod, mapData, initialValues = {} }) => {
+const WorkflowForm = <T extends Rec, U extends Rec, V extends Rec>(props: Props<T, U, V>) => {
+  const { id, fields, postMethod, mapData, initialValues = {} } = props
 
   const navigateWithFlashMessage = useNavigateWithFlashMessage()
   const afterSubmit = async () => await navigateWithFlashMessage(
