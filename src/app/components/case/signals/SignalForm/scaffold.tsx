@@ -38,24 +38,26 @@ export default (caseId: Components.Schemas.Case["id"]) => {
       props: {
         shouldShow: ({ values: { reporter_anonymous } }: { values: { reporter_anonymous: string } }) => reporter_anonymous === "no",
         field: {
-          type: "TextField",
+          type: "NumberField",
           props: {
             label: "Telefoonnummer melder",
             name: "reporter_phone",
-            isRequired: true
+            isRequired: true,
+            hideNumberSpinner: true
           }
         }
       }
     },
     identification: {
-      type: "TextField",
+      type: "NumberField",
       props: {
         label: "SIA-nummer",
         hint:"123456",
         placeholder:"123456",
         extraLabel: <InfoButton infoTitle="SIA-nummer" infoText="Vermeld hier het corresponderende SIA-nummer, zodat de melding makkelijk terug te vindein is in SIA."></InfoButton>,
         name: "identification",
-        isRequired: true
+        isRequired: true,
+        hideNumberSpinner: true
       }
     },
     description: {
