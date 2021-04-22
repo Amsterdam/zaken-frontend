@@ -20,7 +20,7 @@ const SignalForm: React.FC<Props> = ({ id }) => {
   return (
     <>
     <Alert level="warning">Dit formulier nog niet gebruiken! Formulier moet eerst nog werkend gemaakt worden in de back-end</Alert>
-      <FormTitle>Rapporteer de extra melding</FormTitle>
+      <FormTitle>&nbsp;</FormTitle>
       <FormWithExtraLabel>
         <WorkflowForm
           id={ id }

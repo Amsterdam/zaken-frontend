@@ -64,7 +64,7 @@ export default {
           },
           "melding": {
             Page: SignalCreatePage,
-            title: "Melding rapporteren",
+            title: "Melding verwerken",
             icon: "Edit"
           }
         }
