@@ -51,6 +51,8 @@ export default (caseId: Components.Schemas.Case["id"]) => {
       type: "TextField",
       props: {
         label: "SIA-nummer",
+        hint:"123456",
+        placeholder:"123456",
         extraLabel: <InfoButton infoTitle="SIA-nummer" infoText="Vermeld hier het corresponderende SIA-nummer, zodat de melding makkelijk terug te vindein is in SIA."></InfoButton>,
         name: "identification",
         isRequired: true
@@ -60,7 +62,7 @@ export default (caseId: Components.Schemas.Case["id"]) => {
       type: "TextAreaField",
       props: {
         label: "Korte toelichting melding",
-        extraLabel: <InfoButton infoTitle="Korte toelichting melding" infoText="Geef korte toelichting betreft de melding. De melding zelf kan opgezocht worden in SIA."></InfoButton>,
+        extraLabel: <InfoButton infoTitle="Korte toelichting melding" infoText="Geef een korte beschrijving van de melding. Deze informatie komt ook door in TOP voor de toezichthouder."></InfoButton>,
         name: "description",
         isRequired: true
       }
