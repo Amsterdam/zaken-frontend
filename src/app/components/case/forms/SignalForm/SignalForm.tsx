@@ -18,13 +18,13 @@ const SignalForm: React.FC<Props> = ({ id }) => {
   return (
     <>
       <Alert level="warning">Dit formulier nog niet gebruiken! Formulier moet eerst nog werkend gemaakt worden in de back-end</Alert>
+      { /* TODO: Add form title or remove */ }
       <FormTitle>&nbsp;</FormTitle>
       <FormWithExtraLabel>
         <WorkflowForm
           id={ id }
           postMethod={ execPost }
           fields={ fields }
-          initialValues={ { case: id } }
         />
       </FormWithExtraLabel>
     </>
