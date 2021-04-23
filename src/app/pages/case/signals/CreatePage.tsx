@@ -9,7 +9,7 @@ import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
 import CaseHeading from "app/components/case/CaseHeading/CaseHeading"
 import { Column } from "app/components/layouts/Grid"
-import SignalForm from "app/components/case/SignalForm/SignalForm"
+import SignalForm from "app/components/case/forms/SignalForm/SignalForm"
 
 type Props = {
   id: string

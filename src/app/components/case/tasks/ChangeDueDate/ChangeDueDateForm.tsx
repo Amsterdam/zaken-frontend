@@ -13,6 +13,7 @@ type Props = {
   taskId: string
 }
 
+// TODO: Move to util file
 const formatDate = (dateStr: string | Date) => {
   const date = new Date(dateStr)
   const day = `0${ date.getDate() }`.slice(-2)

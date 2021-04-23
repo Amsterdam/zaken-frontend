@@ -3,7 +3,7 @@ import { FormTitle } from "@amsterdam/asc-ui"
 
 import { useCase, useSummons, useSummonTypes } from "app/state/rest/"
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
-import scaffold from "app/components/case/SummonForm/scaffold"
+import scaffold from "app/components/case/forms/SummonForm/scaffold"
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
 import FormWithExtraLabel from "app/components/shared/FormWithExtraLabel/FormWithExtraLabel"
 
@@ -12,7 +12,6 @@ type Props = {
 }
 
 type SummonData = Omit<Components.Schemas.Summon, "type"> & { type: { id: number } }
-
 const mapData = (data: SummonData) => ({ ...data, type: data.type.id })
 
 const SummonForm: React.FC<Props> = ({ id }) => {
@@ -23,7 +22,6 @@ const SummonForm: React.FC<Props> = ({ id }) => {
   const fields = useScaffoldedFields(scaffold, id, summonTypes)
 
   const [, { execPost }] = useSummons({ lazy: true })
-  const postMethod = async (data: SummonData) => await execPost(mapData(data))
 
   return (
     <>
@@ -32,7 +30,8 @@ const SummonForm: React.FC<Props> = ({ id }) => {
         <WorkflowForm
           id={ id }
           fields={ fields }
-          postMethod={ postMethod }
+          mapData={ mapData }
+          postMethod={ execPost }
         />
       </FormWithExtraLabel>
     </>
