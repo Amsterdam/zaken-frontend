@@ -147,6 +147,7 @@ export const useSignal = (options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<MockComponents.Schemas.Signal>({
     ...options,
+    lazy: true,
     url: "signal",
     groupName: "cases",
     handleError,

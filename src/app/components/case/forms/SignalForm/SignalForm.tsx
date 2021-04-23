@@ -12,7 +12,7 @@ type Props = {
 
 const SignalForm: React.FC<Props> = ({ id }) => {
 
-  const [, { execPost }] = useSignal({ lazy: true })
+  const [, { execPost }] = useSignal()
   const fields = useScaffoldedFields(scaffold, id)
 
   return (
