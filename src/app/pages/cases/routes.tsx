@@ -37,22 +37,22 @@ export default {
             title: "Notitie toevoegen",
             icon: "Edit"
           },
-          "debriefing": {
+          "debriefing/:camunda_task_id": {
             Page: DebriefCreatePage,
             title: "Debrief terugkoppeling geven",
             icon: "Edit"
           },
-          "besluit": {
+          "besluit/:camunda_task_id": {
             Page: DecisionCreatePage,
             title: "Resultaat besluit",
             icon: "Edit"
           },
-          "aanschrijving": {
+          "aanschrijving/:camunda_task_id": {
             Page: SummonCreatePage,
             title: "Resultaat aanschrijving",
             icon: "Edit"
           },
-          "inplanning": {
+          "inplanning/:camunda_task_id": {
             Page: ScheduleCreatePage,
             title: "Huisbezoek inplannen",
             icon: "Edit"
@@ -62,7 +62,7 @@ export default {
             title: "Resultaat huisbezoek",
             icon: "Edit"
           },
-          "melding": {
+          "melding/:camunda_task_id": {
             Page: SignalCreatePage,
             title: "Melding verwerken",
             icon: "Edit"

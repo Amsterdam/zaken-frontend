@@ -35,7 +35,7 @@ export default (
               disabled={ true }
               title={ to(`/zaken/:id/${ action.target }`, { id }) }
             >{ action.name }</Button> :
-            <ButtonLink to={ to(`/zaken/:id/${ action.target }`, { id }) }>
+            <ButtonLink to={ to(`/zaken/:id/${ action.target }/:camunda_task_id`, { id, camunda_task_id }) }>
               <Button variant="primary" as="span">{ action.name }</Button>
             </ButtonLink>
         :
