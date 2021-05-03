@@ -51,7 +51,7 @@ export default {
             title: "Huisbezoek inplannen",
             icon: "Edit"
           },
-          "huisbezoek": {
+          "huisbezoek/:camunda_task_id": {
             Page: VisitCreatePage,
             title: "Resultaat huisbezoek",
             icon: "Edit"
