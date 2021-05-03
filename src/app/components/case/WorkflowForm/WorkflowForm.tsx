@@ -3,7 +3,6 @@
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import ConfirmScaffoldForm from "app/components/shared/ConfirmScaffoldForm/ConfirmScaffoldForm"
 import useNavigateWithFlashMessage from "app/state/flashMessages/useNavigateWithFlashMessage"
-import useURLState from "app/hooks/useURLState/useURLState"
 import { useParams } from "@reach/router"
 
 type Rec = Record<string, any>
@@ -18,7 +17,6 @@ type Props<T, U> = {
 const WorkflowForm = <T extends Rec, U extends Rec>(props: Props<T, U>) => {
   const { id, fields, postMethod, mapData, initialValues = {} } = props
 
-  // const taskId = useURLState("taakid")[0]
   const taskId = useParams().camunda_task_id
   const navigateWithFlashMessage = useNavigateWithFlashMessage()
   const afterSubmit = async () => await navigateWithFlashMessage(
