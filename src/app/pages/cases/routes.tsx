@@ -32,11 +32,6 @@ export default {
             title: "Taak opvoeren",
             icon: "Edit"
           },
-          "correspondentie": {
-            Page: CorrespondenceCreatePage,
-            title: "Notitie toevoegen",
-            icon: "Edit"
-          },
           "debriefing/:camunda_task_id": {
             Page: DebriefCreatePage,
             title: "Debrief terugkoppeling geven",
