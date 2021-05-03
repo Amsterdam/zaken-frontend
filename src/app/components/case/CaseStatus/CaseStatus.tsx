@@ -14,7 +14,7 @@ type Props = {
 const ButtonWrap = styled.div`
   display: flex;
   justify-content: flex-end;
-  margin-bottom: ${ themeSpacing(2) };
+  margin-top: -${ themeSpacing(3) };
 `
 
 const StyledDivider = styled(Divider)`
