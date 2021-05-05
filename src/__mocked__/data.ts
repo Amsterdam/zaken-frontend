@@ -1,11 +1,51 @@
 const completeCases: MockComponents.Schemas.CompleteCase[] = [
   {
     id: 1,
-    title: "Zaak afsluiten"
+    title: "Ja, resultaat",
+    value: "result_yes"
   },
   {
     id: 2,
-    title: "Hercontrole uitzetten"
+    title: "Nee, geen resultaat",
+    value: "result_no"
+  }
+]
+
+const completeCaseReasonsYes: MockComponents.Schemas.CompleteCaseReason[] = [
+  {
+    id: 1,
+    name: "Regulier bewoond"
+  },
+  {
+    id: 2,
+    name: "Regulier verhuurd"
+  },
+  {
+    id: 3,
+    name: "Gelegaliseerd"
+  }
+]
+
+const completeCaseReasonsNo: MockComponents.Schemas.CompleteCaseReason[] = [
+  {
+    id: 1,
+    name: "Niemand thuis"
+  },
+  {
+    id: 2,
+    name: "Geen woonfraude"
+  },
+  {
+    id: 3,
+    name: "Doorzetten naar ander team"
+  },
+  {
+    id: 4,
+    name: "Onvoldoende bewijs"
+  },
+  {
+    id: 5,
+    name: "Anders, vermeld in toelichting"
   }
 ]
 
@@ -26,5 +66,7 @@ const correspondence: MockComponents.Schemas.Correspondence[] = [
 
 export default {
   completeCases,
+  completeCaseReasonsNo,
+  completeCaseReasonsYes,
   correspondence
 }

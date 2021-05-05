@@ -129,6 +129,32 @@ export const useCompleteCases = (options?: Options) => {
 }
 
 // TODO-MOCKED replace with real endpoint
+export const useCompleteCasesReasonsYes = (options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<MockComponents.Schemas.CompleteCaseReason[]>({
+    ...options,
+    url: "completeCaseReasonsYes",
+    groupName: "cases",
+    handleError,
+    isProtected: true,
+    isMocked: true
+  })
+}
+
+// TODO-MOCKED replace with real endpoint
+export const useCompleteCasesReasonsNo = (options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<MockComponents.Schemas.CompleteCaseReason[]>({
+    ...options,
+    url: "completeCaseReasonsNo",
+    groupName: "cases",
+    handleError,
+    isProtected: true,
+    isMocked: true
+  })
+}
+
+// TODO-MOCKED replace with real endpoint
 export const useCompleteCase = (options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<MockComponents.Schemas.CompleteCase>({
