@@ -27,69 +27,6 @@ export default (bagId: Components.Schemas.Address["bag_id"], teams?: Components.
         isRequired: true
       }
     },
-    reporter_anonymous: {
-      type: "ShowHide",
-      props: {
-        shouldShow: ({ values: { reason } }: { values: { reason: Components.Schemas.CaseReason } }) => reason?.name === "Melding",
-        field: {
-          type: "RadioFields",
-          props: {
-            isRequired: true,
-            name: "reporter_anonymous",
-            label: "Is de melder anoniem?",
-            options: {
-              yes: "Ja, de melder is anoniem",
-              no: "Nee, de melder is niet anoniem"
-            }
-          }
-        }
-      }
-    },
-    reporter_name: {
-      type: "ShowHide",
-      props: {
-        shouldShow: ({ values: { reporter_anonymous } }: { values: { reporter_anonymous: string } }) => reporter_anonymous === "no",
-        field: {
-          type: "TextField",
-          props: {
-            label: "Naam melder",
-            name: "reporter_name",
-            isRequired: true
-          }
-        }
-      }
-    },
-    reporter_phone: {
-      type: "ShowHide",
-      props: {
-        shouldShow: ({ values: { reporter_anonymous } }: { values: { reporter_anonymous: string } }) => reporter_anonymous === "no",
-        field: {
-          type: "NumberField",
-          props: {
-            label: "Telefoonnummer melder",
-            name: "reporter_phone",
-            isRequired: true,
-            hideNumberSpinner: true
-          }
-        }
-      }
-    },
-    identification: {
-      type: "ShowHide",
-      props: {
-        shouldShow: ({ values: { reason } }: { values: { reason: Components.Schemas.CaseReason } }) => reason?.name === "Melding",
-        field: {
-          type: "NumberField",
-          props: {
-            label: "SIA-nummer",
-            extraLabel: <InfoButton infoTitle="SIA-nummer" infoText="Vermeld hier het corresponderende SIA-nummer, zodat de melding makkelijk terug te vindein is in SIA."></InfoButton>,
-            name: "identification",
-            isRequired: true,
-            hideNumberSpinner: true
-          }
-        }
-      }
-    },
     description: {
       type: "TextAreaField",
       props: {
@@ -120,9 +57,6 @@ export default (bagId: Components.Schemas.Address["bag_id"], teams?: Components.
     .setGrid("mobileS", "1fr 1fr", [
       ["team", "team"],
       ["reason", "reason"],
-      ["reporter_anonymous", "reporter_anonymous"],
-      ["reporter_name", "reporter_phone"],
-      ["identification", "identification"],
       ["description", "description"],
       ["cancel", "submit"]
     ])
