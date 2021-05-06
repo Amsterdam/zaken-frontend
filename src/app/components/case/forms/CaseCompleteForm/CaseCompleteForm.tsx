@@ -1,9 +1,9 @@
 
 import { FormTitle } from "@amsterdam/asc-ui"
 
-import { useCompleteCase } from "app/state/rest/"
+import { useCompleteCases, useCompleteCase } from "app/state/rest/"
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
-import scaffold from "app/components/case/CaseCompleteForm/scaffold"
+import scaffold from "app/components/case/forms/CaseCompleteForm/scaffold"
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
 
 type Props = {
@@ -12,7 +12,8 @@ type Props = {
 
 const CaseCompleteForm: React.FC<Props> = ({ id }) => {
 
-  const [completeCases, { execPost }] = useCompleteCase()
+  const [completeCases] = useCompleteCases()
+  const [, { execPost }] = useCompleteCase()
   const fields = useScaffoldedFields(scaffold, id, completeCases)
 
   return (

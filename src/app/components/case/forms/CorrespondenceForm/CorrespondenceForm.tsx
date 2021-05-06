@@ -1,8 +1,8 @@
 
 import { FormTitle } from "@amsterdam/asc-ui"
 
-import { useCorrespondence } from "app/state/rest/"
-import scaffold from "app/components/case/CorrespondenceForm/scaffold"
+import { useCorrespondences, useCorrespondence } from "app/state/rest/"
+import scaffold from "app/components/case/forms/CorrespondenceForm/scaffold"
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
 import FormWithExtraLabel from "app/components/shared/FormWithExtraLabel/FormWithExtraLabel"
@@ -13,7 +13,8 @@ type Props = {
 
 const CorrespondenceForm: React.FC<Props> = ({ id }) => {
 
-  const [correspondences, { execPost }] = useCorrespondence()
+  const [correspondences] = useCorrespondences()
+  const [, { execPost }] = useCorrespondence()
 
   const fields = useScaffoldedFields(scaffold, id, correspondences)
 

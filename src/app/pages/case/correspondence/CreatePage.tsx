@@ -10,7 +10,7 @@ import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
 import CaseHeading from "app/components/case/CaseHeading/CaseHeading"
 import { Column } from "app/components/layouts/Grid"
-import CorrespondenceForm from "app/components/case/CorrespondenceForm/CorrespondenceForm"
+import CorrespondenceForm from "app/components/case/forms/CorrespondenceForm/CorrespondenceForm"
 
 type Props = {
   id: string
