@@ -58,6 +58,45 @@ export default (caseId: Components.Schemas.Case["id"]) => {
         hideNumberSpinner: true
       }
     },
+    advertisement: {
+      type: "RadioFields",
+      props: {
+        isRequired: true,
+        name: "advertisement",
+        label: "Is er sprake van een advertentie?",
+        options: {
+          yes: "Ja, er is een advertentie",
+          no: "Nee, er is geen advertentie"
+        }
+      }
+    },
+    advertisement_linklist: {
+      type: "ShowHide",
+      props: {
+        shouldShow: ({ values: { advertisement } }: { values: { advertisement: string } }) => advertisement === "yes",
+        field: {
+          type: "ArrayField",
+          props: {
+            label: "Link(s) naar de advertentie",
+            name: "advertisement_linklist",
+            isRequired: true,
+            allowAdd: true,
+            allowRemove: true,
+            minItems: 1,
+            scaffoldFields: {
+              advertisement_link: {
+                type: "TextField",
+                props: {
+                  placeholder: "Link naar de advertentie",
+                  name: "advertisement_link",
+                  isRequired: true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     description: {
       type: "TextAreaField",
       props: {
@@ -88,7 +127,9 @@ export default (caseId: Components.Schemas.Case["id"]) => {
     .setGrid("mobileS", "1fr 1fr", [
       ["reporter_anonymous", "reporter_anonymous"],
       ["reporter_name", "reporter_phone"],
-      ["identification", "identification"],
+      ["identification"],
+      ["advertisement", "advertisement"],
+      ["advertisement_linklist", "advertisement_linklist"],
       ["description", "description"],
       ["secondaryButton", "submit"]
     ])
