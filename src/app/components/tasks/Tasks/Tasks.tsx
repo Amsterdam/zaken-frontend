@@ -8,12 +8,14 @@ import { useRoles, useTasks } from "app/state/rest"
 const Tasks: React.FC = () => {
 
   const [roles] = useRoles()
-  const [role, setRole] = useState(roles?.[0])
-  const [tasks, { isBusy, execGet }] = useTasks(role)
+  const [role, setRole] = useState<MockComponents.Schemas.Role>()
+  const [tasks, { isBusy }] = useTasks(role)
 
   useEffect(() => {
-    (async () => await execGet())()
-  }, [execGet])
+    if (role !== undefined) return
+    if (roles === undefined) return
+    setRole(roles[0])
+  }, [role, roles, setRole])
 
   return (
     <Row>

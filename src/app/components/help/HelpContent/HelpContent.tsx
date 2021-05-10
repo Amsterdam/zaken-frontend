@@ -24,7 +24,7 @@ const RefreshIcon = styled (Refresh)`
 const HelpContent: React.FC = () => {
   const [data] = useSupportContacts()
   const showSpinner = data === undefined
-  const title = "Zaaksysteem Wonen"
+  const title = "Amsterdamse Zaak Administratie"
   const contacts = useMemo(() => mapData(data), [data])
 
   return showSpinner ?
