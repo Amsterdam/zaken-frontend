@@ -1,6 +1,7 @@
 import authRoutes from "../pages/auth/routes"
 import addressesRoutes from "../pages/addresses/routes"
 import casesRoutes from "../pages/cases/routes"
+import tasksRoutes from "../pages/tasks/routes"
 import helpRoutes from "../pages/help/routes"
 import fineRoutes from "../pages/fines/routes"
 import homeRoutes from "../pages/home/routes"
@@ -12,6 +13,7 @@ const routes = {
   ...authRoutes,
   ...addressesRoutes,
   ...casesRoutes,
+  ...tasksRoutes,
   ...helpRoutes,
   ...fineRoutes
 }
