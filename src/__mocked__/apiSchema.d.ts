@@ -17,6 +17,8 @@ declare namespace MockComponents {
       readonly title: string
     }
 
+    export type Role = string
+
     export type Signal = {}
   }
 }
