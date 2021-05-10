@@ -3,6 +3,8 @@ import { Fields } from "app/components/shared/Form/ScaffoldFields"
 
 export const ROLE = "Projectmedewerker"
 
+const createOptions = () => ({ [ROLE]: ROLE })
+
 export default (value: string, onChange: (value: string) => void) => {
   const fields = {
     period: {
@@ -11,7 +13,7 @@ export default (value: string, onChange: (value: string) => void) => {
         label: "rol",
         name: "role",
         optionLabelField: "title",
-        options: { [ROLE]: ROLE },
+        options: createOptions(),
         onChange,
         value
       }
