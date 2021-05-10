@@ -8,12 +8,13 @@ import to from "app/routing/utils/to"
 
 const items = [
   {
-    path: "/zaken",
-    hiddenLaptopM: false
+    path: "/zaken"
   },
   {
-    path: "/invorderingen",
-    hiddenLaptopM: false
+    path: "/taken"
+  },
+  {
+    path: "/invorderingen"
   },
   {
     path: "/hulp",

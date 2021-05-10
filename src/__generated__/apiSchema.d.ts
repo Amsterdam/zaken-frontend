@@ -16,6 +16,16 @@ declare namespace Components {
             readonly lat: number; // float
             readonly lng: number; // float
         }
+        export interface BaseAddress {
+            readonly full_address: string;
+        }
+        /**
+         * xxxx
+         */
+        export interface CamundaBaseCase {
+            readonly id: number;
+            address: BaseAddress;
+        }
         export interface CamundaDateUpdate {
             camunda_task_id: string;
             date: string; // date-time
@@ -28,7 +38,7 @@ declare namespace Components {
             process_variables?: {
                 [name: string]: any;
             };
-            case_id: string;
+            case_identification: string;
         }
         export interface CamundaProcess {
             readonly id: number;
@@ -78,6 +88,18 @@ declare namespace Components {
             variables: {
                 [name: string]: any;
             };
+        }
+        /**
+         * xxxx
+         */
+        export interface CamundaTaskList {
+            camunda_task_id: string;
+            task_name_id: string;
+            name: string;
+            due_date: string; // date
+            readonly roles: any[];
+            case: /* xxxx */ CamundaBaseCase;
+            process_instance_id: string;
         }
         export interface Case {
             readonly id: number;
@@ -147,7 +169,7 @@ declare namespace Components {
         }
         export interface Decision {
             readonly id: number;
-            sanction_amount?: string | null; // decimal ^\d{0,98}(\.\d{0,2})?$
+            sanction_amount?: string | null; // decimal
             description?: string | null;
             readonly date_added: string; // date-time
             case: number;
@@ -193,10 +215,10 @@ declare namespace Components {
             landcode: string | null;
             kenteken: string | null;
             bonnummer: string | null;
-            bedrag_opgelegd: string; // decimal ^\d{0,10}(\.\d{0,2})?$
-            bedrag_open_post_incl_rente: string; // decimal ^\d{0,10}(\.\d{0,2})?$
-            totaalbedrag_open_kosten: string; // decimal ^\d{0,10}(\.\d{0,2})?$
-            bedrag_open_rente: string; // decimal ^\d{0,10}(\.\d{0,2})?$
+            bedrag_opgelegd: string; // decimal
+            bedrag_open_post_incl_rente: string; // decimal
+            totaalbedrag_open_kosten: string; // decimal
+            bedrag_open_rente: string; // decimal
             reden_opschorting: string | null;
             omschrijving_1: string | null;
             omschrijving_2: string | null;
@@ -983,6 +1005,21 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedSupportContactList;
+        }
+    }
+    namespace TasksList {
+        namespace Parameters {
+            export type Page = number;
+            export type Role = string;
+            export type Sort = string;
+        }
+        export interface QueryParameters {
+            page?: Parameters.Page;
+            role: Parameters.Role;
+            sort?: Parameters.Sort;
+        }
+        namespace Responses {
+            export type $200 = /* xxxx */ Components.Schemas.CamundaTaskList[];
         }
     }
     namespace TeamsDecisionTypesList {

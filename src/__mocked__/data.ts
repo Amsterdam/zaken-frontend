@@ -24,7 +24,15 @@ const correspondence: MockComponents.Schemas.Correspondence[] = [
   }
 ]
 
+const roles: MockComponents.Schemas.Role[] = [
+  "Projectmedewerker",
+  "Toezichthouder",
+  "Projecthandhaver",
+  "Handhavingsjurist"
+]
+
 export default {
   completeCases,
-  correspondence
+  correspondence,
+  roles
 }
