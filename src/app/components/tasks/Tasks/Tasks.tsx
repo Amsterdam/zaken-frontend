@@ -3,12 +3,12 @@ import { useState, useEffect } from "react"
 import { Row, Column } from "app/components/layouts/Grid"
 import TableTasks from "app/components/tasks/TableTasks/TableTasks"
 import TasksFilter from "../TasksFilter/TasksFilter"
-import { ROLE } from "../TasksFilter/scaffold"
-import { useTasks } from "app/state/rest"
+import { useRoles, useTasks } from "app/state/rest"
 
 const Tasks: React.FC = () => {
 
-  const [role, setRole] = useState(ROLE)
+  const [roles] = useRoles()
+  const [role, setRole] = useState(roles?.[0])
   const [tasks, { isBusy, execGet }] = useTasks(role)
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const Tasks: React.FC = () => {
         <TableTasks data={ tasks } isBusy={ isBusy } />
       </Column>
       <Column spanLarge={ 20 }>
-        <TasksFilter role={ role } setRole={ setRole } />
+        <TasksFilter roles={ roles } setRole={ setRole } />
       </Column>
     </Row>
   )

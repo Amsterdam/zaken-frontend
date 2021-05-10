@@ -9,6 +9,7 @@ export type ApiGroup =
   | "permits"
   | "teams"
   | "supportContacts"
+  | "roles"
 
 export type Options = {
   keepUsingInvalidCache?: boolean
@@ -28,3 +29,4 @@ export * from "./help"
 export * from "./schedules"
 export * from "./teams"
 export * from "./processes"
+export * from "./roles"
