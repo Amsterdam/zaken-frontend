@@ -19,12 +19,12 @@ const columns = [
 
 const mapData = (data: Components.Schemas.CamundaTaskList) => {
 
-  const { name, due_date, case: { address, id } } = data
+  const { name, due_date, case: { address: { full_address }, id } } = data
 
   return {
     href: to("/zaken/:id", { id }),
     itemList: [
-      address.full_address ?? "-",
+      full_address ?? "-",
       name,
       due_date !== undefined ? <DateDisplay date={ due_date } /> : "-",
       <OpenButton href={ to("/zaken/:id", { id }) } text="Zaakdetails" />
@@ -33,6 +33,7 @@ const mapData = (data: Components.Schemas.CamundaTaskList) => {
 }
 
 const TableTasks: React.FC<Props> = ({ data, isBusy }) => {
+
   const mappedData = useMemo(() => data?.map(mapData), [data])
 
   return (
