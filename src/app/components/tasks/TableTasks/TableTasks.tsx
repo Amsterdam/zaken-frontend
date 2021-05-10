@@ -36,14 +36,16 @@ const mapData = (data: Components.Schemas.CamundaTaskList) => {
 const TableTasks: React.FC<Props> = ({ data, isBusy }) => {
   const mappedData = useMemo(() => data?.map(mapData), [data])
 
-  return (<Table
-    columns={columns}
-    data={mappedData}
-    loading={data === undefined || isBusy}
-    numLoadingRows={20}
-    hasFixedColumn={true}
-    noValuesPlaceholder={"Er zijn geen taken"}
-  />)
+  return (
+    <Table
+      columns={ columns }
+      data={ mappedData }
+      loading={ isBusy }
+      numLoadingRows={ 20 }
+      hasFixedColumn={ true }
+      noValuesPlaceholder="Er zijn geen taken"
+    />
+  )
 }
 
 export default TableTasks

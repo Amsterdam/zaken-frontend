@@ -27,7 +27,7 @@ export default (value: string, onChange: (value: string) => void) => {
         label: "Periode",
         name: "period",
         options: createOptions(),
-        onChange: onChange,
+        onChange,
         value
       }
     }

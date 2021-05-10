@@ -5,19 +5,18 @@ import ScaffoldFields from "app/components/shared/Form/ScaffoldFields"
 import scaffold from "./scaffold"
 
 type Props = {
-  date: string
-  setDate: (value: string) => void
+  role: string
+  setRole: (value: string) => void
 }
 
-
-const CasesFilter: React.FC<Props> = ({ date, setDate }) => {
-  const onChange = (value: string) => setDate(value)
+const TasksFilter: React.FC<Props> = ({ role, setRole }) => {
+  const onChange = (value: string) => setRole(value)
   return (
     <FilterMenu>
       <ScaffoldForm>
-        <ScaffoldFields { ...scaffold(date, onChange) } />
+        <ScaffoldFields { ...scaffold(role, onChange) } />
       </ScaffoldForm>
     </FilterMenu>
   )
 }
-export default CasesFilter
+export default TasksFilter
