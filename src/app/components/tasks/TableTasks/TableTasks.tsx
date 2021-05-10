@@ -11,8 +11,8 @@ type Props = {
 }
 
 const columns = [
-  { header: "Adres", minWidth: 300 },
-  { header: "Open taak", minWidth: 300 },
+  { header: "Adres", minWidth: 250 },
+  { header: "Open taak", minWidth: 150 },
   { header: "Slotdatum", minWidth: 100 },
   { minWidth: 140 }
 ]

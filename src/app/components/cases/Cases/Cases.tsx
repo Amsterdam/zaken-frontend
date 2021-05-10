@@ -24,10 +24,10 @@ const Cases: React.FC = () => {
   return (
     <>
       <Row>
-        <Column spanLarge={ 80 }>
+        <Column spanLarge={ 75 }>
           <TableCases data={ cases } isBusy={ isBusy } />
         </Column>
-        <Column spanLarge={ 20 }>
+        <Column spanLarge={ 25 }>
           <CasesFilter date={ date } setDate={ setDate } />
         </Column>
       </Row>

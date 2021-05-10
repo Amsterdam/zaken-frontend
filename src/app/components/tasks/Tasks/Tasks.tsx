@@ -17,10 +17,10 @@ const Tasks: React.FC = () => {
 
   return (
     <Row>
-      <Column spanLarge={ 80 }>
+      <Column spanLarge={ 75 }>
         <TableTasks data={ tasks } isBusy={ isBusy } />
       </Column>
-      <Column spanLarge={ 20 }>
+      <Column spanLarge={ 25 }>
         <TasksFilter roles={ roles } setRole={ setRole } />
       </Column>
     </Row>
