@@ -6,7 +6,7 @@ import { useTasks } from "app/state/rest"
 
 const Tasks: React.FC = () => {
 
-  const [tasks, { isBusy, execGet }] = useTasks()
+  const [tasks, { isBusy, execGet }] = useTasks("Projectmedewerker")
 
   useEffect(() => {
     (async () => await execGet())()

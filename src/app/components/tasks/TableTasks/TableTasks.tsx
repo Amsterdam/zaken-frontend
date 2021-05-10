@@ -6,7 +6,7 @@ import Table from "app/components/shared/Table/Table"
 import OpenButton from "app/components/shared/OpenButton/OpenButton"
 
 type Props = {
-  data?: Components.Schemas.PaginatedCamundaTaskList
+  data?: Components.Schemas.CamundaTaskList[]
   isBusy: boolean
 }
 
@@ -17,12 +17,10 @@ const columns = [
   { minWidth: 140 }
 ]
 
-const mapData = (data: Components.Schemas.CamundaTask) => {
+const mapData = (data: Components.Schemas.CamundaTaskList) => {
 
   const { name, due_date } = data
-  // TODO: Generate Task type
-  const id = 0
-  const address = { full_address: "Mock adress" }
+  const { address, id } = data.case
 
   return {
     href: to("/zaken/:id", { id }),
@@ -36,7 +34,7 @@ const mapData = (data: Components.Schemas.CamundaTask) => {
 }
 
 const TableTasks: React.FC<Props> = ({ data, isBusy }) => {
-  const mappedData = useMemo(() => data?.results?.map(mapData), [data])
+  const mappedData = useMemo(() => data?.map(mapData), [data])
 
   return (<Table
     columns={columns}
