@@ -1,5 +1,6 @@
 
 import { FormTitle } from "@amsterdam/asc-ui"
+import { useParams } from "@reach/router"
 
 import { useCase, useScheduleTypes, useScheduleCreate } from "app/state/rest/"
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
@@ -31,8 +32,8 @@ const ScheduleForm: React.FC<Props> = ({ id }) => {
   const teamId = caseItem?.team.id
   const [scheduleTypes] = useScheduleTypes(teamId)
   const fields = useScaffoldedFields(scaffold, id, scheduleTypes)
-
   const [, { execPost }] = useScheduleCreate()
+  const taskId = useParams().camunda_task_id
 
   const initialValues = {
     action: scheduleTypes?.actions[0].id
@@ -48,6 +49,7 @@ const ScheduleForm: React.FC<Props> = ({ id }) => {
           mapData={ mapData }
           postMethod={ execPost }
           initialValues={ initialValues }
+          camundaTaskId={ taskId }
         />
       </FormWithExtraLabel>
     </>

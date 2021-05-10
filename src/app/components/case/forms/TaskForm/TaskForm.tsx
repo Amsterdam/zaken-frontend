@@ -1,5 +1,6 @@
 
 import { FormTitle } from "@amsterdam/asc-ui"
+import { useParams } from "@reach/router"
 
 import { useCamundaProcesses, useCamundaProcess } from "app/state/rest"
 import scaffold from "./scaffold"
@@ -18,6 +19,7 @@ const TaskForm: React.FC<Props> = ({ id }) => {
   const [processes] = useCamundaProcesses(id)
   const fields = useScaffoldedFields(scaffold, id, processes)
   const [, { execPost }] = useCamundaProcess(id, { lazy: true })
+  const taskId = useParams().camunda_task_id
 
   return (
     <>
@@ -28,6 +30,7 @@ const TaskForm: React.FC<Props> = ({ id }) => {
           fields={ fields }
           postMethod={ execPost }
           mapData={ mapData }
+          camundaTaskId={ taskId }
         />
       </FormWithExtraLabel>
     </>

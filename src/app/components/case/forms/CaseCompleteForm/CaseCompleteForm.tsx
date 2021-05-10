@@ -1,5 +1,6 @@
 
 import { FormTitle } from "@amsterdam/asc-ui"
+import { useParams } from "@reach/router"
 
 import { useCompleteCases, useCompleteCase } from "app/state/rest/"
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
@@ -14,6 +15,7 @@ const CaseCompleteForm: React.FC<Props> = ({ id }) => {
 
   const [completeCases] = useCompleteCases()
   const [, { execPost }] = useCompleteCase()
+  const taskId = useParams().camunda_task_id
   const fields = useScaffoldedFields(scaffold, id, completeCases)
 
   return (
@@ -23,6 +25,7 @@ const CaseCompleteForm: React.FC<Props> = ({ id }) => {
         id={ id }
         fields={ fields }
         postMethod={ execPost }
+        camundaTaskId={ taskId }
       />
     </>
   )

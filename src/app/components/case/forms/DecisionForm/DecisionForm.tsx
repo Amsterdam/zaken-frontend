@@ -1,5 +1,5 @@
-
 import { FormTitle } from "@amsterdam/asc-ui"
+import { useParams } from "@reach/router"
 
 import { useCase, useDecisions } from "app/state/rest/"
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
@@ -22,6 +22,7 @@ const DecisionForm: React.FC<Props> = ({ id }) => {
   const teamId = caseItem?.team.id
   const [data] = useDecisionTypes(teamId)
   const decisionTypes = data?.results
+  const taskId = useParams().camunda_task_id
 
   const fields = useScaffoldedFields(scaffold, id, decisionTypes)
 
@@ -37,6 +38,7 @@ const DecisionForm: React.FC<Props> = ({ id }) => {
           fields={ fields }
           mapData={ mapData }
           postMethod={ execPost }
+          camundaTaskId={ taskId }
       />
       </FormWithExtraLabel>
     </>

@@ -1,6 +1,7 @@
 
 import { Alert, FormTitle } from "@amsterdam/asc-ui"
 import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
+import { useParams } from "@reach/router"
 
 import ScaffoldFields from "app/components/shared/Form/ScaffoldFields"
 import scaffold from "./scaffold"
@@ -36,6 +37,7 @@ const VisitForm: React.FC<Props> = ({ id }) => {
 
   const initialValues = { case: id, start_time: "2021-01-01T12:34", observations: [] }
   const fields = scaffold(id, authors)
+  const taskId = useParams().camunda_task_id
 
   return (
     <>
@@ -45,6 +47,7 @@ const VisitForm: React.FC<Props> = ({ id }) => {
         showSpinner={ showSpinner }
         onSubmit={ onSubmit }
         initialValues={ initialValues }
+        camundaTaskId={ taskId }
       >
         <ScaffoldFields { ...fields } />
       </ScaffoldForm>

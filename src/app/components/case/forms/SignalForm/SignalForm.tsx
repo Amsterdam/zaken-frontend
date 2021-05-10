@@ -1,4 +1,5 @@
 import { Alert, FormTitle } from "@amsterdam/asc-ui"
+import { useParams } from "@reach/router"
 
 import { useSignal } from "app/state/rest/"
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
@@ -14,6 +15,7 @@ const SignalForm: React.FC<Props> = ({ id }) => {
 
   const [, { execPost }] = useSignal()
   const fields = useScaffoldedFields(scaffold, id)
+  const taskId = useParams().camunda_task_id
 
   return (
     <>
@@ -25,6 +27,7 @@ const SignalForm: React.FC<Props> = ({ id }) => {
           id={ id }
           postMethod={ execPost }
           fields={ fields }
+          camundaTaskId={ taskId }
         />
       </FormWithExtraLabel>
     </>
