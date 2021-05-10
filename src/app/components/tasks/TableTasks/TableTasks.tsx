@@ -19,8 +19,7 @@ const columns = [
 
 const mapData = (data: Components.Schemas.CamundaTaskList) => {
 
-  const { name, due_date } = data
-  const { address, id } = data.case
+  const { name, due_date, case: { address, id } } = data
 
   return {
     href: to("/zaken/:id", { id }),
