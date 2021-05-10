@@ -77,7 +77,7 @@
     "@types/dotenv-flow": "^3.1.0",
     "@types/enzyme": "^3.10.8",
     "@types/enzyme-adapter-react-16": "^1.0.6",
-    "@types/jest": "^26.0.22",
+    "@types/jest": "^26.0.23",
     "dotenv-flow": "^3.2.0",
     "dtsgenerator": "^3.9.1",
     "enzyme": "^3.11.0",
