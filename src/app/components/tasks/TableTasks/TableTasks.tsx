@@ -43,7 +43,7 @@ const TableTasks: React.FC<Props> = ({ data, isBusy }) => {
       loading={ isBusy }
       numLoadingRows={ 20 }
       hasFixedColumn={ true }
-      noValuesPlaceholder="Er zijn geen taken"
+      noValuesPlaceholder="Er zijn momenteel geen open taken voor de gekozen filters"
     />
   )
 }
