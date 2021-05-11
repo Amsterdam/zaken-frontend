@@ -19,10 +19,10 @@ const Tasks: React.FC = () => {
 
   return (
     <Row>
-      <Column spanLarge={ 75 }>
+      <Column spanLarge={ 72 }>
         <TableTasks data={ tasks } isBusy={ isBusy } />
       </Column>
-      <Column spanLarge={ 25 }>
+      <Column spanLarge={ 28 }>
         <TasksFilter roles={ roles } setRole={ setRole } />
       </Column>
     </Row>

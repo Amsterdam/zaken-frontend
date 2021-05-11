@@ -11,9 +11,9 @@ type Props = {
 }
 
 const columns = [
-  { header: "Adres", minWidth: 250 },
-  { header: "Open taak", minWidth: 150 },
-  { header: "Slotdatum", minWidth: 100 },
+  { header: "Adres", minWidth: 150 },
+  { header: "Open taak", minWidth: 100 },
+  { header: "Slotdatum", minWidth: 50 },
   { minWidth: 140 }
 ]
 
@@ -41,7 +41,7 @@ const TableTasks: React.FC<Props> = ({ data, isBusy }) => {
       columns={ columns }
       data={ mappedData }
       loading={ isBusy }
-      numLoadingRows={ 20 }
+      numLoadingRows={ 10 }
       hasFixedColumn={ true }
       noValuesPlaceholder="Er zijn momenteel geen open taken voor de gekozen filters"
     />

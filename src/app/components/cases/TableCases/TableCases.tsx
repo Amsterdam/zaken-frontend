@@ -44,7 +44,7 @@ const TableCases: React.FC<Props> = ({ data, isBusy }) => {
     loading={data === undefined || isBusy}
     numLoadingRows={10}
     hasFixedColumn={true}
-    noValuesPlaceholder={"Er zijn geen zaken voor deze dag"}
+    noValuesPlaceholder="Er zijn geen zaken voor deze dag"
   />)
 }
 
