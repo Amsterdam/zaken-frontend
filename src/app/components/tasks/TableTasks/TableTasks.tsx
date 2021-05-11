@@ -1,9 +1,9 @@
 import { useMemo } from "react"
-import { DateDisplay } from "@amsterdam/wonen-ui"
 
 import to from "app/routing/utils/to"
 import Table from "app/components/shared/Table/Table"
 import OpenButton from "app/components/shared/OpenButton/OpenButton"
+import DueDate from "app/components/shared/DueDate/DueDate"
 
 type Props = {
   data?: Components.Schemas.CamundaTaskList[]
@@ -11,9 +11,9 @@ type Props = {
 }
 
 const columns = [
-  { header: "Adres", minWidth: 250 },
-  { header: "Open taak", minWidth: 150 },
-  { header: "Slotdatum", minWidth: 100 },
+  { header: "Adres", minWidth: 150 },
+  { header: "Open taak", minWidth: 100 },
+  { header: "Slotdatum", minWidth: 50 },
   { minWidth: 140 }
 ]
 
@@ -26,7 +26,7 @@ const mapData = (data: Components.Schemas.CamundaTaskList) => {
     itemList: [
       full_address ?? "-",
       name,
-      due_date !== undefined ? <DateDisplay date={ due_date } /> : "-",
+      due_date ? <DueDate date={ due_date } /> : "-",
       <OpenButton href={ to("/zaken/:id", { id }) } text="Zaakdetails" />
     ]
   }
@@ -41,9 +41,9 @@ const TableTasks: React.FC<Props> = ({ data, isBusy }) => {
       columns={ columns }
       data={ mappedData }
       loading={ isBusy }
-      numLoadingRows={ 20 }
+      numLoadingRows={ 10 }
       hasFixedColumn={ true }
-      noValuesPlaceholder="Er zijn geen taken"
+      noValuesPlaceholder="Er zijn momenteel geen open taken voor de gekozen filters"
     />
   )
 }

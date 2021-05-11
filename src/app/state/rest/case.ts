@@ -89,33 +89,6 @@ export const useDecisions = (options?: Options) => {
 }
 
 // TODO-MOCKED replace with real endpoint
-export const useCorrespondences = (options?: Options) => {
-  const handleError = useErrorHandler()
-  return useApiRequest<MockComponents.Schemas.Correspondence[]>({
-    ...options,
-    url: "correspondence",
-    groupName: "cases",
-    handleError,
-    isProtected: true,
-    isMocked: true
-  })
-}
-
-// TODO-MOCKED replace with real endpoint
-export const useCorrespondence = (options?: Options) => {
-  const handleError = useErrorHandler()
-  return useApiRequest<MockComponents.Schemas.Correspondence>({
-    ...options,
-    lazy: true,
-    url: "correspondence",
-    groupName: "cases",
-    handleError,
-    isProtected: true,
-    isMocked: true
-  })
-}
-
-// TODO-MOCKED replace with real endpoint
 export const useCompleteCases = (options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<MockComponents.Schemas.CompleteCase[]>({
