@@ -37,7 +37,7 @@ const VisitForm: React.FC<Props> = ({ id }) => {
 
   const initialValues = { case: id, start_time: "2021-01-01T12:34", observations: [] }
   const fields = scaffold(id, authors)
-  const taskId = useParams().camunda_task_id
+  const taskId = useParams().camundaTaskId
 
   return (
     <>

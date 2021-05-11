@@ -19,7 +19,7 @@ const TaskForm: React.FC<Props> = ({ id }) => {
   const [processes] = useCamundaProcesses(id)
   const fields = useScaffoldedFields(scaffold, id, processes)
   const [, { execPost }] = useCamundaProcess(id, { lazy: true })
-  const taskId = useParams().camunda_task_id
+  const taskId = useParams().camundaTaskId
 
   return (
     <>

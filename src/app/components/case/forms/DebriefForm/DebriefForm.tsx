@@ -15,7 +15,7 @@ const DebriefCreateForm: React.FC<Props> = ({ id }) => {
 
   const [, { execPost }] = useDebriefingCreate()
   const fields = useScaffoldedFields(scaffold, id)
-  const taskId = useParams().camunda_task_id
+  const taskId = useParams().camundaTaskId
 
   return (
     <>

@@ -33,7 +33,7 @@ const ScheduleForm: React.FC<Props> = ({ id }) => {
   const [scheduleTypes] = useScheduleTypes(teamId)
   const fields = useScaffoldedFields(scaffold, id, scheduleTypes)
   const [, { execPost }] = useScheduleCreate()
-  const taskId = useParams().camunda_task_id
+  const taskId = useParams().camundaTaskId
 
   const initialValues = {
     action: scheduleTypes?.actions[0].id

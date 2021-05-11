@@ -21,7 +21,7 @@ export default {
         title: "Zaakdetails",
         icon: "Folder",
         subRoutes: {
-          "afronden/:camunda_task_id": {
+          "afronden/:camundaTaskId": {
             Page: CompleteCasePage,
             title: "Zaak afronden",
             icon: "Edit"
@@ -31,32 +31,32 @@ export default {
             title: "Taak opvoeren",
             icon: "Edit"
           },
-          "debriefing/:camunda_task_id": {
+          "debriefing/:camundaTaskId": {
             Page: DebriefCreatePage,
             title: "Debrief terugkoppeling geven",
             icon: "Edit"
           },
-          "besluit/:camunda_task_id": {
+          "besluit/:camundaTaskId": {
             Page: DecisionCreatePage,
             title: "Resultaat besluit",
             icon: "Edit"
           },
-          "aanschrijving/:camunda_task_id": {
+          "aanschrijving/:camundaTaskId": {
             Page: SummonCreatePage,
             title: "Resultaat aanschrijving",
             icon: "Edit"
           },
-          "inplanning/:camunda_task_id": {
+          "inplanning/:camundaTaskId": {
             Page: ScheduleCreatePage,
             title: "Huisbezoek inplannen",
             icon: "Edit"
           },
-          "huisbezoek/:camunda_task_id": {
+          "huisbezoek/:camundaTaskId": {
             Page: VisitCreatePage,
             title: "Resultaat huisbezoek",
             icon: "Edit"
           },
-          "melding/:camunda_task_id": {
+          "melding/:camundaTaskId": {
             Page: SignalCreatePage,
             title: "Melding verwerken",
             icon: "Edit"

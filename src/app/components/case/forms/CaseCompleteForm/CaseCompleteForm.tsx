@@ -15,7 +15,7 @@ const CaseCompleteForm: React.FC<Props> = ({ id }) => {
 
   const [completeCases] = useCompleteCases()
   const [, { execPost }] = useCompleteCase()
-  const taskId = useParams().camunda_task_id
+  const taskId = useParams().camundaTaskId
   const fields = useScaffoldedFields(scaffold, id, completeCases)
 
   return (

@@ -22,7 +22,7 @@ const DecisionForm: React.FC<Props> = ({ id }) => {
   const teamId = caseItem?.team.id
   const [data] = useDecisionTypes(teamId)
   const decisionTypes = data?.results
-  const taskId = useParams().camunda_task_id
+  const taskId = useParams().camundaTaskId
 
   const fields = useScaffoldedFields(scaffold, id, decisionTypes)
 

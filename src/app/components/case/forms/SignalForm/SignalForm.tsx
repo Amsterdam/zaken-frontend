@@ -15,7 +15,7 @@ const SignalForm: React.FC<Props> = ({ id }) => {
 
   const [, { execPost }] = useSignal()
   const fields = useScaffoldedFields(scaffold, id)
-  const taskId = useParams().camunda_task_id
+  const taskId = useParams().camundaTaskId
 
   return (
     <>

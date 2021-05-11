@@ -21,7 +21,7 @@ const SummonForm: React.FC<Props> = ({ id }) => {
   const [data] = useSummonTypes(teamId)
   const summonTypes = data?.results
   const fields = useScaffoldedFields(scaffold, id, summonTypes)
-  const taskId = useParams().camunda_task_id
+  const taskId = useParams().camundaTaskId
   const [, { execPost }] = useSummons({ lazy: true })
 
   return (
