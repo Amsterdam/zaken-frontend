@@ -1,9 +1,9 @@
 import { useMemo } from "react"
-import { DateDisplay } from "@amsterdam/wonen-ui"
 
 import to from "app/routing/utils/to"
 import Table from "app/components/shared/Table/Table"
 import OpenButton from "app/components/shared/OpenButton/OpenButton"
+import DueDate from "app/components/shared/DueDate/DueDate"
 
 type Props = {
   data?: Components.Schemas.CamundaTaskList[]
@@ -26,7 +26,7 @@ const mapData = (data: Components.Schemas.CamundaTaskList) => {
     itemList: [
       full_address ?? "-",
       name,
-      due_date !== undefined ? <DateDisplay date={ due_date } /> : "-",
+      due_date !== undefined ? <DueDate date={ due_date } /> : "-",
       <OpenButton href={ to("/zaken/:id", { id }) } text="Zaakdetails" />
     ]
   }
