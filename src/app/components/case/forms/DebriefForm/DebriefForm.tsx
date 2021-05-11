@@ -1,5 +1,5 @@
-
 import { FormTitle } from "@amsterdam/asc-ui"
+import { useParams } from "@reach/router"
 
 import scaffold from "./scaffold"
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
@@ -15,6 +15,7 @@ const DebriefCreateForm: React.FC<Props> = ({ id }) => {
 
   const [, { execPost }] = useDebriefingCreate()
   const fields = useScaffoldedFields(scaffold, id)
+  const taskId = useParams().camundaTaskId
 
   return (
     <>
@@ -24,6 +25,7 @@ const DebriefCreateForm: React.FC<Props> = ({ id }) => {
           id={ id }
           fields={ fields }
           postMethod={ execPost }
+          camundaTaskId={ taskId }
         />
       </FormWithExtraLabel>
     </>

@@ -1,5 +1,6 @@
 
 import { FormTitle } from "@amsterdam/asc-ui"
+import { useParams } from "@reach/router"
 
 import { useCase, useSummons, useSummonTypes } from "app/state/rest/"
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
@@ -20,7 +21,7 @@ const SummonForm: React.FC<Props> = ({ id }) => {
   const [data] = useSummonTypes(teamId)
   const summonTypes = data?.results
   const fields = useScaffoldedFields(scaffold, id, summonTypes)
-
+  const taskId = useParams().camundaTaskId
   const [, { execPost }] = useSummons({ lazy: true })
 
   return (
@@ -32,6 +33,7 @@ const SummonForm: React.FC<Props> = ({ id }) => {
           fields={ fields }
           mapData={ mapData }
           postMethod={ execPost }
+          camundaTaskId={ taskId }
         />
       </FormWithExtraLabel>
     </>
