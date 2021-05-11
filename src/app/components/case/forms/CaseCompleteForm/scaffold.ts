@@ -2,52 +2,33 @@ import { FormPositioner } from "@amsterdam/scaffold-form/package"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import navigateTo from "app/routing/navigateTo"
 
-export default (caseId: Components.Schemas.Case["id"], completeCases?: MockComponents.Schemas.CompleteCase[], completeCaseReasonsNo?: MockComponents.Schemas.CompleteCaseReason[], completeCaseReasonsYes?: MockComponents.Schemas.CompleteCaseReason[]) => {
+export default (caseId: Components.Schemas.Case["id"], completeCases?: MockComponents.Schemas.CompleteCaseResult[], completeCaseReasons?: MockComponents.Schemas.CompleteCaseReason[]) => {
 
   const fields = {
-    result: {
+    reason: {
       type: "ComplexRadioFields",
-      props: {
-        isRequired: true,
-        label: "Is er resultaat geboekt?",
-        name: "result",
-        optionLabelField: "title",
-        options: completeCases
-      }
+          props: {
+            isRequired: true,
+            label: "Wat is de reden?",
+            name: "reason",
+            optionLabelField: "name",
+            options: completeCaseReasons
+          }
     },
-    reasons_result_yes: {
+    result: {
       type: "ShowHide",
       props: {
-        shouldShow: ({ values: { result } }: { values: { result: MockComponents.Schemas.CompleteCase } }) => result?.value === "result_yes",
+        shouldShow: ({ values: { result } }: { values: { result: MockComponents.Schemas.CompleteCaseReason } }) => result?.value === "result_revisit",
         field: {
           type: "ComplexRadioFields",
           props: {
             isRequired: true,
-            label: "Wat is de reden?",
-            name: "reasons_result_yes",
-            optionLabelField: "name",
-            options: completeCaseReasonsYes,
-            withEmptyOption: true,
-            emptyOptionLabel: "Maak een keuze"
+            label: "Wat is het resultaat?",
+            name: "result",
+            optionLabelField: "title",
+            options: completeCases
           }
-        }
-      }
-    },
-    reasons_result_no: {
-      type: "ShowHide",
-      props: {
-        shouldShow: ({ values: { result } }: { values: { result: MockComponents.Schemas.CompleteCase } }) => result?.value === "result_no",
-        field: {
-          type: "ComplexRadioFields",
-          props: {
-            isRequired: true,
-            label: "Wat is de reden?",
-            name: "reasons_result_no",
-            optionLabelField: "name",
-            options: completeCaseReasonsNo,
-            withEmptyOption: true,
-            emptyOptionLabel: "Maak een keuze"
-          }
+          
         }
       }
     },
