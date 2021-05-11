@@ -26,7 +26,7 @@ const mapData = (data: Components.Schemas.CamundaTaskList) => {
     itemList: [
       full_address ?? "-",
       name,
-      due_date !== undefined ? <DueDate date={ due_date } /> : "-",
+      due_date ? <DueDate date={ due_date } /> : "-",
       <OpenButton href={ to("/zaken/:id", { id }) } text="Zaakdetails" />
     ]
   }

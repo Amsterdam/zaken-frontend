@@ -7,7 +7,7 @@ const createOptions = (roles: MockComponents.Schemas.Role[]) =>
   roles.reduce((acc, cur) => {
     acc[cur] = cur
     return acc
-  }, {} as Record<string, MockComponents.Schemas.Role>)
+  }, { "": "Alle rollen" } as Record<string, MockComponents.Schemas.Role>)
 
 export default (roles: MockComponents.Schemas.Role[], onChange: (value: string) => void) => {
   const fields = {
@@ -19,7 +19,7 @@ export default (roles: MockComponents.Schemas.Role[], onChange: (value: string) 
         optionLabelField: "title",
         options: createOptions(roles),
         onChange,
-        value: roles[0]
+        value: ""
       }
     }
   }
