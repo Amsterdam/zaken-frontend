@@ -1,29 +1,20 @@
-
-
-import { useModal } from "app/components/shared/Modal/hooks/useModal"
-import ChangeDueDateModal from "./ChangeDueDateModal"
-import { displayDate } from "@amsterdam/wonen-ui"
-import { isDateInPast } from "app/components/shared/Date/helpers"
 import styled from "styled-components"
+import { Icon, themeSpacing } from "@amsterdam/asc-ui"
+import { useModal } from "app/components/shared/Modal/hooks/useModal"
 import { useDueDate } from "app/state/rest/case"
-import { Icon, themeColor, themeSpacing } from "@amsterdam/asc-ui"
 import { Edit } from "app/components/shared/Icons"
 import { appendTimeToDate } from "app/components/shared/Helpers/helpers"
-
+import DueDate from "app/components/shared/DueDate/DueDate"
+import ChangeDueDateModal from "./ChangeDueDateModal"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
   camundaTaskId: Components.Schemas.CamundaTask["camunda_task_id"]
-  dueDate: string
+  dueDate: Components.Schemas.CamundaTask["due_date"]
 }
 
-type DateProps = {
-  isDateInPast: boolean
-}
-
-const DateInPast = styled.span<DateProps>`
+const Span = styled.span`
   cursor: pointer;
-  color: ${ props => props.isDateInPast ? themeColor("secondary") : themeColor("tint", "level0") };
   &:hover {
     text-decoration: underline;
   }
@@ -41,24 +32,28 @@ const mapSubmitData = (data: Components.Schemas.CamundaDateUpdate) => ({
 })
 
 const ChangeableDueDate: React.FC<Props> = ({ dueDate, camundaTaskId }) => {
+
   const { isModalOpen, openModal, closeModal } = useModal()
 
   const [, { execPost }] = useDueDate({ lazy: true })
-  const onSubmit = (data: Components.Schemas.CamundaDateUpdate) => {
-    execPost(mapSubmitData(data))
-  }
+  const onSubmit = (data: Components.Schemas.CamundaDateUpdate) => execPost(mapSubmitData(data))
 
   return (
     <>
-      <DateInPast
-        isDateInPast={ isDateInPast(new Date(dueDate)) }
+      <Span
         role="link"
-        onClick={openModal}
-      >
-        { displayDate(dueDate) }
-        <StyledIcon size={20}>{ <Edit titleAccess="Pas de slotdatum aan" /> }</StyledIcon>
-      </DateInPast>
-      <ChangeDueDateModal onSubmit={onSubmit} isOpen={isModalOpen} closeModal={closeModal} dueDate={dueDate} taskId={camundaTaskId}  />
+        onClick={ openModal }
+        >
+        <DueDate date={ dueDate } />
+        <StyledIcon size={ 20 }><Edit titleAccess="Pas de slotdatum aan" /></StyledIcon>
+      </Span>
+      <ChangeDueDateModal
+        onSubmit={ onSubmit }
+        isOpen={ isModalOpen }
+        closeModal={ closeModal }
+        dueDate={ dueDate }
+        taskId={ camundaTaskId }
+        />
     </>
   )
 }
