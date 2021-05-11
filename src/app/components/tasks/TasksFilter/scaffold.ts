@@ -14,7 +14,7 @@ export default (roles: MockComponents.Schemas.Role[], onChange: (value: string) 
     period: {
       type: "RadioFields",
       props: {
-        label: "rol",
+        label: "Rol",
         name: "role",
         optionLabelField: "title",
         options: createOptions(roles),
