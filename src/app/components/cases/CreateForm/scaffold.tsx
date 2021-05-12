@@ -4,7 +4,6 @@ import navigateTo from "app/routing/navigateTo"
 
 export default (bagId: Components.Schemas.Address["bag_id"], teams?: Components.Schemas.CaseTeam[], reasons?: Components.Schemas.CaseReason[]) => {
 
-  console.log("reasons", reasons)
   const fields = {
     team: {
       type: "ComplexRadioFields",
