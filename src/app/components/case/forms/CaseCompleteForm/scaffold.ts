@@ -18,7 +18,7 @@ export default (caseId: Components.Schemas.Case["id"], completeCases?: MockCompo
     result: {
       type: "ShowHide",
       props: {
-        shouldShow: ({ values: { result } }: { values: { result: MockComponents.Schemas.CompleteCaseReason } }) => result?.value === "result_revisit",
+        shouldShow: ({ values: { reason } }: { values: { reason: MockComponents.Schemas.CompleteCaseReason } }) => reason?.value === 4,
         field: {
           type: "ComplexRadioFields",
           props: {
@@ -59,9 +59,8 @@ export default (caseId: Components.Schemas.Case["id"], completeCases?: MockCompo
 
   return new FormPositioner(fields as Fields)
     .setGrid("laptop", "1fr 1fr", [
+      ["reason", "reason"],
       ["result", "result"],
-      ["reasons_result_yes", "reasons_result_yes"],
-      ["reasons_result_no", "reasons_result_no"],
       ["description", "description"],
       ["secondaryButton", "submit"]
     ])

@@ -15,34 +15,34 @@ const completeCaseResults: MockComponents.Schemas.CompleteCaseResult[] = [
 
 const completeCaseReasons: MockComponents.Schemas.CompleteCaseReason[] = [
   {
+    id: 0,
+    name: "Geen aanleiding adres opnieuw te bezoeken",
+    value: 0
+  },
+  {
     id: 1,
-    title: "Geen aanleiding adres opnieuw te bezoeken",
-    value: "no_more_visits"
+    name: "Doorgezet naar ander team",
+    value: 1
   },
   {
     id: 2,
-    title: "Doorgezet naar ander team",
-    value: "other_team"
+    name: "Geen woonfraude",
+    value: 2
   },
   {
     id: 3,
-    title: "Geen woonfraude",
-    value: "no_fraud"
+    name: "Onvoldoende bewijs",
+    value: 3
   },
   {
     id: 4,
-    title: "Onvoldoende bewijs",
-    value: "no_evidence"
+    name: "Resultaat na hercontrole",
+    value: 4
   },
   {
     id: 5,
-    title: "Resultaat na hercontrole",
-    value: "result_revisit"
-  },
-  {
-    id: 6,
-    title: "Anders, vermeld in toelichting",
-    value: "other"
+    name: "Anders, vermeld in toelichting",
+    value: 5
   }
 ]
 

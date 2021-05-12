@@ -120,7 +120,7 @@ export const useCompleteCaseResults = (options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<MockComponents.Schemas.CompleteCaseResult[]>({
     ...options,
-    url: "completeCases",
+    url: "completeCaseResults",
     groupName: "cases",
     handleError,
     isProtected: true,
@@ -133,7 +133,7 @@ export const useCompleteCasesReasons = (options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<MockComponents.Schemas.CompleteCaseReason[]>({
     ...options,
-    url: "completeCaseReason",
+    url: "completeCaseReasons",
     groupName: "cases",
     handleError,
     isProtected: true,
@@ -142,18 +142,18 @@ export const useCompleteCasesReasons = (options?: Options) => {
 }
 
 // TODO-MOCKED replace with real endpoint
-// export const useCompleteCase = (options?: Options) => {
-//   const handleError = useErrorHandler()
-//   return useApiRequest<MockComponents.Schemas.CompleteCase>({
-//     ...options,
-//     lazy: true,
-//     url: "completeCases",
-//     groupName: "cases",
-//     handleError,
-//     isProtected: true,
-//     isMocked: true
-//   })
-// }
+export const useCompleteCase = (options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<MockComponents.Schemas.CompleteCase>({
+    ...options,
+    lazy: true,
+    url: "completeCases",
+    groupName: "cases",
+    handleError,
+    isProtected: true,
+    isMocked: true
+  })
+}
 
 // TODO-MOCKED replace with real endpoint
 export const useSignal = (options?: Options) => {
