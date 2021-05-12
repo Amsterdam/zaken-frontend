@@ -6,6 +6,8 @@ import MainWrapper from "app/components/layouts/MainWrapper/MainWrapper"
 import to from "app/routing/utils/to"
 import FlashMessages from "app/components/layouts/FlashMessages/FlashMessages"
 import UserInfo from "app/components/shared/UserInfo/UserInfo"
+import SkipLink from "app/components/shared/SkipLinks/SkipLink"
+import BreadCrumbs from "app/components/shared/BreadCrumbs/BreadCrumbs"
 
 type Props = {
   showSearchButton?: boolean
@@ -24,9 +26,18 @@ const MenuWrap = styled.div`
   justify-content: space-between;
   width: 100%;
 `
+const BreadCrumbWrap = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  max-width: 1430px;
+  margin: 0 auto;
+  padding: 12px 50px;
+`
 
 const DefaultLayout: React.FC<Props> = ({ showSearchButton = true, children }) => (
   <>
+    <SkipLink/>
     <HeaderWrap>
       <Header
         tall
@@ -40,6 +51,9 @@ const DefaultLayout: React.FC<Props> = ({ showSearchButton = true, children }) =
         }
         links={ <UserInfo /> }
       />
+      <BreadCrumbWrap>
+        <BreadCrumbs />
+      </BreadCrumbWrap>
     </HeaderWrap>
     <MainWrapper>
       <FlashMessages />

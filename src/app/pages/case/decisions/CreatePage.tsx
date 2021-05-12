@@ -3,7 +3,6 @@ import { RouteComponentProps } from "@reach/router"
 
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
 import PageHeading from "app/components/shared/PageHeading/PageHeading"
-import BreadCrumbs from "app/components/shared/BreadCrumbs/BreadCrumbs"
 import Row, { RowWithColumn } from "app/components/layouts/Grid/Row"
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
@@ -26,9 +25,6 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString, camund
     isValidUrlParamId<Components.Schemas.Case["id"]>(id) &&
     isValidUrlParamUUID<Components.Schemas.CamundaTask["camunda_task_id"]>(camundaTaskId) ?
     <DefaultLayout>
-      <RowWithColumn>
-        <BreadCrumbs routeParams={ { id } } />
-      </RowWithColumn>
       <RowWithColumn>
         <PageHeading />
       </RowWithColumn>

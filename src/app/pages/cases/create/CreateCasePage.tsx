@@ -1,11 +1,9 @@
-
 import { RouteComponentProps } from "@reach/router"
 import { FormTitle } from "@amsterdam/asc-ui"
 
 import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId"
 import Row, { RowWithColumn } from "app/components/layouts/Grid/Row"
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
-import BreadCrumbs from "app/components/shared/BreadCrumbs/BreadCrumbs"
 import PageHeading from "app/components/shared/PageHeading/PageHeading"
 import AddressHeadingByBagId from "app/components/shared/AddressHeadingByBagId/AddressHeadingByBagId"
 import CreateForm from "app/components/cases/CreateForm/CreateForm"
@@ -19,9 +17,6 @@ type Props = {
 const CreateCasePage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
   isValidUrlParamBAGId(bagId) ?
     <DefaultLayout>
-      <RowWithColumn>
-        <BreadCrumbs routeParams={ { bagId } } />
-      </RowWithColumn>
       <RowWithColumn>
         <PageHeading />
       </RowWithColumn>
