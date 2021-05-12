@@ -405,24 +405,6 @@ declare namespace Components {
             previous?: string | null; // uri
             results?: DecisionType[];
         }
-        export interface PaginatedDecosPermitList {
-            /**
-             * example:
-             * 123
-             */
-            count?: number;
-            /**
-             * example:
-             * http://api.example.org/accounts/?page=4
-             */
-            next?: string | null; // uri
-            /**
-             * example:
-             * http://api.example.org/accounts/?page=2
-             */
-            previous?: string | null; // uri
-            results?: DecosPermit[];
-        }
         export interface PaginatedSummonList {
             /**
              * example:
@@ -531,7 +513,7 @@ declare namespace Components {
             previous?: string | null; // uri
             results?: Visit[];
         }
-        export type PermitGrantedEnum = "True" | "False" | "UNKNOWN";
+        export type PermitGrantedEnum = "GRANTED" | "NOT_GRANTED" | "UNKNOWN";
         export interface Priority {
             readonly id: number;
             name: string;
@@ -681,19 +663,15 @@ declare namespace Paths {
             export type $200 = Components.Schemas.PaginatedCaseList;
         }
     }
-    namespace AddressesPermitsList {
+    namespace AddressesPermitsRetrieve {
         namespace Parameters {
             export type BagId = string;
-            export type Page = number;
         }
         export interface PathParameters {
             bag_id: Parameters.BagId;
         }
-        export interface QueryParameters {
-            page?: Parameters.Page;
-        }
         namespace Responses {
-            export type $200 = Components.Schemas.PaginatedDecosPermitList;
+            export type $200 = Components.Schemas.Decos;
         }
     }
     namespace AddressesResidentsRetrieve {
@@ -954,23 +932,6 @@ declare namespace Paths {
         export type RequestBody = Components.Schemas.OIDCAuthenticate;
         namespace Responses {
             export type $200 = Components.Schemas.OIDCAuthenticate;
-        }
-    }
-    namespace PermitsDetailsRetrieve {
-        namespace Parameters {
-            export type BagId = string;
-        }
-        export interface QueryParameters {
-            bag_id: Parameters.BagId;
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.Decos;
-        }
-    }
-    namespace PermitsTestConnectRetrieve {
-        namespace Responses {
-            export interface $200 {
-            }
         }
     }
     namespace PushCreate {
