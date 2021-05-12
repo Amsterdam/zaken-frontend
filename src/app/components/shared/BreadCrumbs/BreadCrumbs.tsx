@@ -1,7 +1,7 @@
 
 import styled from "styled-components"
 import { Link, useParams } from "@reach/router"
-import { Icon, themeSpacing, themeColor, ascDefaultTheme, breakpoint } from "@amsterdam/asc-ui"
+import { Icon, themeSpacing, themeColor, ascDefaultTheme } from "@amsterdam/asc-ui"
 import { ChevronRight } from "app/components/shared/Icons"
 import to from "app/routing/utils/to"
 import find from "app/routing/utils/find"

@@ -3,7 +3,7 @@ import { RouteComponentProps } from "@reach/router"
 
 import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId"
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
-import Row, { RowWithColumn } from "app/components/layouts/Grid/Row"
+import Row from "app/components/layouts/Grid/Row"
 import Column from "app/components/layouts/Grid/Column"
 import DetailHeader from "app/components/shared/DetailHeader/DetailHeader"
 import PageHeading from "app/components/shared/PageHeading/PageHeading"
@@ -19,10 +19,14 @@ type Props = {
 const DetailPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
   isValidUrlParamBAGId(bagId) ?
     <DefaultLayout>
-      <DetailHeader bagId={ bagId } />
-      <RowWithColumn>
-        <PageHeading />
-      </RowWithColumn>
+      <Row>
+        <Column spanLarge={ 50 }>
+          <PageHeading />
+        </Column>
+        <Column spanLarge={ 50 }>
+          <DetailHeader bagId={ bagId } />
+        </Column>
+      </Row>  
       <Row>
         <Column spanLarge={50}>
           <ObjectDetails bagId={ bagId } />

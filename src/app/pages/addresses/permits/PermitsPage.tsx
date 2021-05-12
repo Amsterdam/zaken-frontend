@@ -20,10 +20,14 @@ type Props = {
 const PermitsPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
   isValidUrlParamBAGId(bagId) ?
     <DefaultLayout>
-      <DetailHeader bagId={ bagId } />
-      <RowWithColumn>
-        <PageHeading />
-      </RowWithColumn>
+      <Row>
+        <Column spanLarge={ 50 }>
+          <PageHeading />
+        </Column>
+        <Column spanLarge={ 50 }>
+          <DetailHeader bagId={ bagId } />
+        </Column>
+      </Row> 
       <Row>
         <Column spanLarge={50}>
           <MockWrapper>
