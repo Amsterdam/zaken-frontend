@@ -67,7 +67,7 @@ const NoValuesPlaceholder = styled(TableCell)`
 const createLoadingData = (numColumns: number, numRows: number = 5) =>
   [...Array(numRows)].map(_ => [...Array(numColumns)].map(_ => ""))
 
-const Table: React.FC<Props> = ({ columns, loading, numLoadingRows, hasFixedColumn, noValuesPlaceholder, className, ...restProps }) => {
+const Table: React.FC<Props> = ({ columns, loading = false, numLoadingRows, hasFixedColumn, noValuesPlaceholder, className, ...restProps }) => {
   const { data } = restProps
 
   const fixedColumnWidth = hasFixedColumn
@@ -111,7 +111,7 @@ const onClick = (href: string | undefined, e: MouseEvent<HTMLTableRowElement>) =
               ) }
             </Row>
           ) }
-            { (data === undefined || data.length === 0) && (
+            { !loading && (data === undefined || data.length === 0) && (
               <tr>
                 <NoValuesPlaceholder colSpan={columns.length}>
                   { noValuesPlaceholder }
