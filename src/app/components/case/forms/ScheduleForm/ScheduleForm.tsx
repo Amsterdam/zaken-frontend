@@ -1,6 +1,5 @@
 
 import { FormTitle } from "@amsterdam/asc-ui"
-import { useParams } from "@reach/router"
 
 import { useCase, useScheduleTypes, useScheduleCreate } from "app/state/rest/"
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
@@ -10,6 +9,7 @@ import FormWithExtraLabel from "app/components/shared/FormWithExtraLabel/FormWit
 
 type Props = {
   id: Components.Schemas.Case["id"]
+  camundaTaskId: Components.Schemas.CamundaTask["camunda_task_id"]
 }
 
 type ScheduleTypeFormData = Omit<Components.Schemas.ScheduleCreate, "week_segment" | "day_segment" | "priority"> & {
@@ -26,14 +26,13 @@ const mapData = (data: ScheduleTypeFormData) => (
   }
 )
 
-const ScheduleForm: React.FC<Props> = ({ id }) => {
+const ScheduleForm: React.FC<Props> = ({ id, camundaTaskId }) => {
 
   const [caseItem] = useCase(id)
   const teamId = caseItem?.team.id
   const [scheduleTypes] = useScheduleTypes(teamId)
   const fields = useScaffoldedFields(scaffold, id, scheduleTypes)
   const [, { execPost }] = useScheduleCreate()
-  const taskId = useParams().camundaTaskId
 
   const initialValues = {
     action: scheduleTypes?.actions[0].id
@@ -49,7 +48,7 @@ const ScheduleForm: React.FC<Props> = ({ id }) => {
           mapData={ mapData }
           postMethod={ execPost }
           initialValues={ initialValues }
-          camundaTaskId={ taskId }
+          camundaTaskId={ camundaTaskId }
         />
       </FormWithExtraLabel>
     </>
