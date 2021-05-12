@@ -7,6 +7,9 @@ export default () => {
   const release = process.env.REACT_APP_GIT_COMMIT_HASH ?? ""
   if (dsn === undefined || environment === undefined) return
 
+  // TODO: Enable Sentry for acceptance (when CORS warnings are fixed)
+  if (environment !== "production") return
+
   init({
     dsn,
     environment,
