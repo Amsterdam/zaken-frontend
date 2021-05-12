@@ -13,14 +13,19 @@ type Props = {
 const TasksFilter: React.FC<Props> = ({ roles, setRole }) => {
   const onChange = (value: string) => setRole(value)
   return (
-    <FilterMenu>
-      { roles === undefined ?
-        <Spinner /> :
-        <ScaffoldForm>
-          <ScaffoldFields { ...scaffold(roles, onChange) } />
-        </ScaffoldForm>
-      }
-    </FilterMenu>
+    <>
+      <FilterMenu>
+        { roles === undefined ?
+          <Spinner /> :
+          <ScaffoldForm>
+            <ScaffoldFields { ...scaffold(roles, onChange) } />
+          </ScaffoldForm>
+        }
+      </FilterMenu>
+      <FilterMenu>
+        <i><a href={ window.location.pathname }>Herlaad taken</a></i>
+      </FilterMenu>
+    </>
   )
 }
 export default TasksFilter
