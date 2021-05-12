@@ -8,7 +8,7 @@ type Props = {
   to: string
   icon: keyof typeof Assets
   header: string
-  count?: number
+  count?: string | number
 }
 
 const StyledLink = styled(Link)`

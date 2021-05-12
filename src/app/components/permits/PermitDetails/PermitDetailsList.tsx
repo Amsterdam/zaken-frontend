@@ -20,8 +20,7 @@ const Ul = styled.ul`
 
 const PermitDetailsList: React.FC<Props> = ({ bagId }) => {
   const [data, { isBusy }] = usePermitDetails(bagId)
-  const listItems = data?.map((detail) =>
-
+  const listItems = data?.permits?.filter((permit: Components.Schemas.DecosPermit) => permit.permit_granted !== "UNKNOWN").map((detail) =>
     <li key={detail.permit_type}>
       <PermitDetails detail={ detail } />
     </li>
@@ -31,9 +30,11 @@ const PermitDetailsList: React.FC<Props> = ({ bagId }) => {
     <>
         { isBusy && <Spinner /> }
         { !isBusy &&
+          <>
           <Ul>
             {listItems}
           </Ul>
+        </>
         }
     </>
   )
