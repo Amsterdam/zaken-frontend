@@ -3,6 +3,7 @@ import { RouteComponentProps } from "@reach/router"
 
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
+import isValidUrlParamUUID from "app/routing/utils/isValidUrlParamUUID"
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
 import Row, { RowWithColumn } from "app/components/layouts/Grid/Row"
 import BreadCrumbs from "app/components/shared/BreadCrumbs/BreadCrumbs"
@@ -14,14 +15,16 @@ import { Column } from "app/components/layouts/Grid"
 
 type Props = {
   id: string
+  camundaTaskId: string
 }
 
-const CompleteCasePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
+const CompleteCasePage: React.FC<RouteComponentProps<Props>> = ({ id: idString, camundaTaskId }) => {
 
   const id = parseUrlParamId(idString)
 
   return (
-    isValidUrlParamId<Components.Schemas.Case["id"]>(id) ?
+    isValidUrlParamId<Components.Schemas.Case["id"]>(id) &&
+    isValidUrlParamUUID<Components.Schemas.CamundaTask["camunda_task_id"]>(camundaTaskId) ?
     <DefaultLayout>
       <RowWithColumn>
         <BreadCrumbs routeParams={ { id } } />
@@ -34,7 +37,7 @@ const CompleteCasePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }
       </RowWithColumn>
       <Row>
         <Column spanLarge={50}>
-          <CaseCompleteForm id={ id } />
+          <CaseCompleteForm id={ id } camundaTaskId={ camundaTaskId } />
         </Column>
       </Row>
     </DefaultLayout> :

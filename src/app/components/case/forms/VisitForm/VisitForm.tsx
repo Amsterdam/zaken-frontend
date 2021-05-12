@@ -1,7 +1,6 @@
 
 import { Alert, FormTitle } from "@amsterdam/asc-ui"
 import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
-import { useParams } from "@reach/router"
 
 import ScaffoldFields from "app/components/shared/Form/ScaffoldFields"
 import scaffold from "./scaffold"
@@ -11,13 +10,14 @@ import navigateTo from "app/routing/navigateTo"
 
 type Props = {
   id: Components.Schemas.Case["id"]
+  camundaTaskId: Components.Schemas.CamundaTask["camunda_task_id"]
 }
 
 export type VisitData = Omit<Components.Schemas.Visit, "author_ids"> & { author1: Components.Schemas.User, author2: Components.Schemas.User }
 const filterUndefined = <T extends unknown>(arr: Array<T | undefined>) => arr.filter((item): item is T => item !== undefined)
 const mapData = (data: VisitData) => ({ ...data, author_ids: filterUndefined([data.author1?.id, data.author2?.id]) })
 
-const VisitForm: React.FC<Props> = ({ id }) => {
+const VisitForm: React.FC<Props> = ({ id, camundaTaskId }) => {
 
   const [data] = useAuthors()
   const authors = data?.results ?? []
@@ -37,7 +37,6 @@ const VisitForm: React.FC<Props> = ({ id }) => {
 
   const initialValues = { case: id, start_time: "2021-01-01T12:34", observations: [] }
   const fields = scaffold(id, authors)
-  const taskId = useParams().camundaTaskId
 
   return (
     <>
@@ -47,7 +46,7 @@ const VisitForm: React.FC<Props> = ({ id }) => {
         showSpinner={ showSpinner }
         onSubmit={ onSubmit }
         initialValues={ initialValues }
-        camundaTaskId={ taskId }
+        camundaTaskId={ camundaTaskId }
       >
         <ScaffoldFields { ...fields } />
       </ScaffoldForm>

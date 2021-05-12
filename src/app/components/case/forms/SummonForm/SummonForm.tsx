@@ -1,6 +1,5 @@
 
 import { FormTitle } from "@amsterdam/asc-ui"
-import { useParams } from "@reach/router"
 
 import { useCase, useSummons, useSummonTypes } from "app/state/rest/"
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
@@ -10,18 +9,18 @@ import FormWithExtraLabel from "app/components/shared/FormWithExtraLabel/FormWit
 
 type Props = {
   id: Components.Schemas.Case["id"]
+  camundaTaskId: Components.Schemas.CamundaTask["camunda_task_id"]
 }
 
 type SummonData = Omit<Components.Schemas.Summon, "type"> & { type: { id: number } }
 const mapData = (data: SummonData) => ({ ...data, type: data.type.id })
 
-const SummonForm: React.FC<Props> = ({ id }) => {
+const SummonForm: React.FC<Props> = ({ id, camundaTaskId }) => {
 
   const teamId = useCase(id)[0]?.team.id
   const [data] = useSummonTypes(teamId)
   const summonTypes = data?.results
   const fields = useScaffoldedFields(scaffold, id, summonTypes)
-  const taskId = useParams().camundaTaskId
   const [, { execPost }] = useSummons({ lazy: true })
 
   return (
@@ -33,7 +32,7 @@ const SummonForm: React.FC<Props> = ({ id }) => {
           fields={ fields }
           mapData={ mapData }
           postMethod={ execPost }
-          camundaTaskId={ taskId }
+          camundaTaskId={ camundaTaskId }
         />
       </FormWithExtraLabel>
     </>

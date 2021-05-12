@@ -16,7 +16,7 @@ export const usePermitCheckmarks = (bagId: string) => {
 
 export const usePermitDetails = (bagId: string) => {
   const handleError = useSuppressErrorHandler()
-  return useApiRequest<Components.Schemas.DecosPermit[]>({
+  return useApiRequest<Components.Schemas.Decos>({
     url: makeApiUrl("addresses", bagId, "permits"),
     groupName: "addresses",
     handleError,

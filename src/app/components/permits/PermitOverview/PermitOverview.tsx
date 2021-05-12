@@ -1,6 +1,6 @@
 import { useMemo } from "react"
 import { Link } from "@amsterdam/asc-ui"
-import { usePermitCheckmarks } from "app/state/rest"
+import { usePermitDetails } from "app/state/rest"
 
 import to from "app/routing/utils/to"
 import DefinitionList from "app/components/shared/DefinitionList/DefinitionList"
@@ -10,12 +10,13 @@ type Props = {
 }
 
 const PermitOverview: React.FC<Props> = ({ bagId }) => {
-  const [data, { isBusy }] = usePermitCheckmarks(bagId)
+  const [data, { isBusy }] = usePermitDetails(bagId)
 
-  const values = useMemo(() => ({
-    "Bed & Breakfast": data?.has_b_and_b_permit ? "Ja" : "Nee",
-    "Vakantieverhuur": data?.has_vacation_rental_permit ? "Ja" : "Nee"
-  }), [data])
+  const values = useMemo(() => (data ? data.permits.filter(p => ["True", "False"].includes(p.permit_granted)).reduce((t: any, c) => {
+    t[c.permit_type] = (c.permit_granted === "True" ? "ja" : "nee")
+      return t
+    }, {})
+  : []), [data])
 
   return (
     <>
