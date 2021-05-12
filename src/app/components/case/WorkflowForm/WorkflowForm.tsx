@@ -11,7 +11,7 @@ type Props<T, U> = {
   mapData?: (data: T) => U
   postMethod: (data: U) => Promise<any>
   initialValues?: Record<string, unknown>
-  camundaTaskId: Components.Schemas.CamundaTask["camunda_task_id"]
+  camundaTaskId?: Components.Schemas.CamundaTask["camunda_task_id"]
 }
 
 const WorkflowForm = <T extends Rec, U extends Rec>(props: Props<T, U>) => {

@@ -3,7 +3,6 @@ import { RouteComponentProps } from "@reach/router"
 
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
-import isValidUrlParamUUID from "app/routing/utils/isValidUrlParamUUID"
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
 import PageHeading from "app/components/shared/PageHeading/PageHeading"
 import BreadCrumbs from "app/components/shared/BreadCrumbs/BreadCrumbs"
@@ -15,16 +14,14 @@ import NotFoundPage from "app/pages/errors/NotFoundPage"
 
 type Props = {
   id: string
-  camundaTaskId: string
 }
 
-const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString, camundaTaskId }) => {
+const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
 
   const id = parseUrlParamId(idString)
 
   return (
-    isValidUrlParamId<Components.Schemas.Case["id"]>(id) &&
-    isValidUrlParamUUID<Components.Schemas.CamundaTask["camunda_task_id"]>(camundaTaskId) ?
+    isValidUrlParamId<Components.Schemas.Case["id"]>(id) ?
     <DefaultLayout>
       <RowWithColumn>
         <BreadCrumbs routeParams={ { id } } />
@@ -37,7 +34,7 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString, camund
       </RowWithColumn>
       <Row>
         <Column spanLarge={50}>
-          <TaskForm id={ id } camundaTaskId={ camundaTaskId } />
+          <TaskForm id={ id } />
         </Column>
       </Row>
     </DefaultLayout> :

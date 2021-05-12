@@ -9,12 +9,11 @@ import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
 
 type Props = {
   id: Components.Schemas.Case["id"]
-  camundaTaskId: Components.Schemas.CamundaTask["camunda_task_id"]
 }
 
 const mapData = (data: { camundaProcess: Components.Schemas.CamundaProcess }) => ({ camunda_process_id: data.camundaProcess.id })
 
-const TaskForm: React.FC<Props> = ({ id, camundaTaskId }) => {
+const TaskForm: React.FC<Props> = ({ id }) => {
 
   const [processes] = useCamundaProcesses(id)
   const fields = useScaffoldedFields(scaffold, id, processes)
@@ -29,7 +28,6 @@ const TaskForm: React.FC<Props> = ({ id, camundaTaskId }) => {
           fields={ fields }
           postMethod={ execPost }
           mapData={ mapData }
-          camundaTaskId={ camundaTaskId }
         />
       </FormWithExtraLabel>
     </>
