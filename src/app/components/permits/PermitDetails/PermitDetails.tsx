@@ -24,7 +24,7 @@ export const Grid = styled.div`
 const PermitDetail: React.FC<Props> = ({ detail }) => {
   const { permit_granted, permit_type, details, decos_join_web_url } = detail
 
-  const permitHasBeenGranted = (permit: Components.Schemas.DecosPermit) => permit.permit_granted === "True"
+  const permitHasBeenGranted = (permit: Components.Schemas.DecosPermit) => permit.permit_granted === "GRANTED"
   const permitIsForBAndB = (permit: Components.Schemas.DecosPermit) => permit.permit_type.startsWith("B&B")
   const permitHasEndDate = (permit: Components.Schemas.DecosPermit) => permit.details?.DATE_VALID_TO || permit.details?.DATE_VALID_UNTIL
 
@@ -33,7 +33,7 @@ const PermitDetail: React.FC<Props> = ({ detail }) => {
             <Heading forwardedAs="h4">{ permit_type }</Heading>
             <Grid>
               <Label>Conclusie</Label>
-              <Text>{ permit_granted === "True" ? "Geldig" : "Niet geldig" }</Text>
+              <Text>{ permit_granted === "GRANTED" ? "Geldig" : "Niet geldig" }</Text>
               <Label>Resultaat</Label>
               <Text>{details?.RESULT}</Text>
               <Label>Omschrijving zaak</Label>
@@ -67,7 +67,7 @@ const PermitDetail: React.FC<Props> = ({ detail }) => {
                 }
               </>
               }
-              { permit_granted === "False" &&
+              { permit_granted === "NOT_GRANTED" && details?.DATE_DECISION &&
               <>
                 <Label>Datum besluit</Label>
                 <Text><DateDisplay date= { details?.DATE_DECISION } /></Text>

@@ -12,8 +12,8 @@ type Props = {
 const PermitOverview: React.FC<Props> = ({ bagId }) => {
   const [data, { isBusy }] = usePermitDetails(bagId)
 
-  const values = useMemo(() => (data ? data.permits.filter(p => ["True", "False"].includes(p.permit_granted)).reduce((t: any, c) => {
-    t[c.permit_type] = (c.permit_granted === "True" ? "ja" : "nee")
+  const values = useMemo(() => (data ? data.permits.filter(p => ["GRANTED", "NOT_GRANTED"].includes(p.permit_granted)).reduce((t: any, c) => {
+    t[c.permit_type] = (c.permit_granted === "GRANTED" ? "ja" : "nee")
       return t
     }, {})
   : []), [data])
