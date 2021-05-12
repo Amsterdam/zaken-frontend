@@ -55,7 +55,13 @@ const AddressMenu: React.FC<Props> = ({ bagId }) => {
   const [permitDetails] = usePermitDetails(bagId)
   // TODO: Do show Residents by BAG_id
   const [residents] = useResidents(bagId)
-  const counts = [undefined, residents?.results.length, permitDetails?.length]
+  const permitsGranted = permitDetails?.permits.filter(p => p.permit_granted === "True").length
+  const permitsFound = permitDetails?.permits.filter(p => ["True", "False"].includes(p.permit_granted)).length
+  const counts = [
+    undefined, 
+    residents?.results.length, 
+    permitsFound === permitsGranted ? permitsGranted : permitsGranted + "/" + permitsFound
+  ]
 
   return (
     <Menu>

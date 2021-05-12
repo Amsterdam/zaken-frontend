@@ -1,11 +1,12 @@
 
 import { RouteComponentProps } from "@reach/router"
-import { Link, Heading } from "@amsterdam/asc-ui"
+import { Link } from "@amsterdam/asc-ui"
 
 import Row, { RowWithColumn } from "app/components/layouts/Grid/Row"
 import PageHeading from "app/components/shared/PageHeading/PageHeading"
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
 import PermitDetailsList from "app/components/permits/PermitDetails/PermitDetailsList"
+import VacationRentalThisYear from "app/components/permits/PermitDetails/VacationRentalThisYear"
 import DetailHeader from "app/components/shared/DetailHeader/DetailHeader"
 import Column from "app/components/layouts/Grid/Column"
 import MockWrapper from "app/components/shared/MockWrapper/MockWrapper"
@@ -23,13 +24,15 @@ const PermitsPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
       <RowWithColumn>
         <PageHeading />
       </RowWithColumn>
-      <RowWithColumn>
-        <Heading forwardedAs="h2">Vergunningen vakantieverhuur</Heading>
-      </RowWithColumn>
       <Row>
         <Column spanLarge={50}>
           <MockWrapper>
             <PermitDetailsList bagId={ bagId }></PermitDetailsList>
+          </MockWrapper>
+        </Column>
+        <Column spanLarge={50}>
+          <MockWrapper>
+            <VacationRentalThisYear bagId={ bagId }></VacationRentalThisYear>
           </MockWrapper>
         </Column>
       </Row>

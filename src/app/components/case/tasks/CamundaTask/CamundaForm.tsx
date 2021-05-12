@@ -12,8 +12,7 @@ type Props = {
   isLoading?: boolean
   onCancel: () => void
 }
-
-const CamundaForm: React.FC<Props> = ({ camundaForm, isLoading, onSubmit, onCancel }) =>
+const CamundaForm: React.FC<Props> = ({ camundaForm, isLoading, onSubmit, onCancel }) => (
   <div>
     <ScaffoldForm
       showSpinner={ isLoading }
@@ -24,5 +23,6 @@ const CamundaForm: React.FC<Props> = ({ camundaForm, isLoading, onSubmit, onCanc
       <ScaffoldFields { ...createScaffoldProps(camundaForm, onCancel) } />
     </ScaffoldForm>
   </div>
+)
 
 export default CamundaForm

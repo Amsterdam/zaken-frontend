@@ -16,15 +16,12 @@ declare namespace Components {
             readonly lat: number; // float
             readonly lng: number; // float
         }
-        export interface BaseAddress {
-            readonly full_address: string;
-        }
         /**
-         * xxxx
+         * Case-address serializer for camunda tasks
          */
-        export interface CamundaBaseCase {
+        export interface CamundaCaseAddress {
             readonly id: number;
-            address: BaseAddress;
+            address: Address;
         }
         export interface CamundaDateUpdate {
             camunda_task_id: string;
@@ -78,7 +75,8 @@ declare namespace Components {
          * variables example
          * {
          *     "a_field": {
-         *         "value": true
+         *         "value": true,
+         *         "label": "Label for a field"
          *     }
          * }
          */
@@ -90,7 +88,7 @@ declare namespace Components {
             };
         }
         /**
-         * xxxx
+         * Camunda task serializer for the list-endpoint
          */
         export interface CamundaTaskList {
             camunda_task_id: string;
@@ -98,7 +96,7 @@ declare namespace Components {
             name: string;
             due_date: string; // date
             readonly roles: any[];
-            case: /* xxxx */ CamundaBaseCase;
+            case: /* Case-address serializer for camunda tasks */ CamundaCaseAddress;
             process_instance_id: string;
         }
         export interface Case {
@@ -169,7 +167,7 @@ declare namespace Components {
         }
         export interface Decision {
             readonly id: number;
-            sanction_amount?: string | null; // decimal
+            sanction_amount?: string | null; // decimal ^\d{0,98}(\.\d{0,2})?$
             description?: string | null;
             readonly date_added: string; // date-time
             case: number;
@@ -182,13 +180,25 @@ declare namespace Components {
             is_sanction?: boolean;
             team: number;
         }
+        export interface Decos {
+            permits: DecosPermit[];
+            vakantieverhuur_meldingen: {
+                rented_days_count: null | number;
+                planned_days_count: null | number;
+                is_rented_today: boolean;
+                meldingen: VakantieverhuurMelding[];
+            } | null;
+        }
         export interface DecosPermit {
-            permit_granted?: boolean;
-            permit_type?: "BED_AND_BREAKFAST" | "VAKANTIEVERHUUR" | "PERMIT_UNKNOWN";
-            processed: string | null;
-            date_from: string | null; // date
-            date_to?: string | null; // date
+            permit_granted: PermitGrantedEnum;
+            permit_type: string;
             decos_join_web_url?: string; // uri
+            raw_data?: {
+                [name: string]: any;
+            } | null;
+            details?: {
+                [name: string]: any;
+            } | null;
         }
         export interface Fine {
             identificatienummer: string;
@@ -215,10 +225,10 @@ declare namespace Components {
             landcode: string | null;
             kenteken: string | null;
             bonnummer: string | null;
-            bedrag_opgelegd: string; // decimal
-            bedrag_open_post_incl_rente: string; // decimal
-            totaalbedrag_open_kosten: string; // decimal
-            bedrag_open_rente: string; // decimal
+            bedrag_opgelegd: string; // decimal ^\d{0,10}(\.\d{0,2})?$
+            bedrag_open_post_incl_rente: string; // decimal ^\d{0,10}(\.\d{0,2})?$
+            totaalbedrag_open_kosten: string; // decimal ^\d{0,10}(\.\d{0,2})?$
+            bedrag_open_rente: string; // decimal ^\d{0,10}(\.\d{0,2})?$
             reden_opschorting: string | null;
             omschrijving_1: string | null;
             omschrijving_2: string | null;
@@ -227,8 +237,6 @@ declare namespace Components {
             items: Fine[];
         }
         export type GeslachtsaanduidingEnum = "M" | "V" | "X";
-        export type HasBAndBPermitEnum = "True" | "False" | "UNKNOWN";
-        export type HasVacationRentalPermitEnum = "True" | "False" | "UNKNOWN";
         export type IndicatieBetHernBevelEnum = "J" | "N";
         export type IndicatieCombiDwangbevelEnum = "J" | "N" | "O";
         export type IndicatiePubliekrechtelijkEnum = "J" | "N";
@@ -523,11 +531,7 @@ declare namespace Components {
             previous?: string | null; // uri
             results?: Visit[];
         }
-        export interface PermitCheckmark {
-            has_b_and_b_permit: HasBAndBPermitEnum;
-            has_vacation_rental_permit: HasVacationRentalPermitEnum;
-        }
-        export type PermitTypeEnum = "BED_AND_BREAKFAST" | "VAKANTIEVERHUUR" | "PERMIT_UNKNOWN";
+        export type PermitGrantedEnum = "True" | "False" | "UNKNOWN";
         export interface Priority {
             readonly id: number;
             name: string;
@@ -626,6 +630,18 @@ declare namespace Components {
             last_name?: string;
             full_name?: string;
         }
+        export interface VakantieverhuurMelding {
+            is_afmelding: boolean;
+            melding_date: string; // date-time
+            check_in_date: string; // date-time
+            check_out_date: string; // date-time
+        }
+        export interface VakantieverhuurRentalInformation {
+            rented_days_count: null | number;
+            planned_days_count: null | number;
+            is_rented_today: boolean;
+            meldingen: VakantieverhuurMelding[];
+        }
         export type ViolationEnum = "NO" | "YES" | "ADDITIONAL_RESEARCH_REQUIRED" | "ADDITIONAL_VISIT_REQUIRED";
         export interface Visit {
             readonly id: number;
@@ -663,17 +679,6 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCaseList;
-        }
-    }
-    namespace AddressesPermitsCheckmarksRetrieve {
-        namespace Parameters {
-            export type BagId = string;
-        }
-        export interface PathParameters {
-            bag_id: Parameters.BagId;
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.PermitCheckmark;
         }
     }
     namespace AddressesPermitsList {
@@ -720,7 +725,8 @@ declare namespace Paths {
          * variables example
          * {
          *     "a_field": {
-         *         "value": true
+         *         "value": true,
+         *         "label": "Label for a field"
          *     }
          * }
          */
@@ -950,6 +956,23 @@ declare namespace Paths {
             export type $200 = Components.Schemas.OIDCAuthenticate;
         }
     }
+    namespace PermitsDetailsRetrieve {
+        namespace Parameters {
+            export type BagId = string;
+        }
+        export interface QueryParameters {
+            bag_id: Parameters.BagId;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.Decos;
+        }
+    }
+    namespace PermitsTestConnectRetrieve {
+        namespace Responses {
+            export interface $200 {
+            }
+        }
+    }
     namespace PushCreate {
         export type RequestBody = Components.Schemas.Push;
         namespace Responses {
@@ -1009,17 +1032,13 @@ declare namespace Paths {
     }
     namespace TasksList {
         namespace Parameters {
-            export type Page = number;
             export type Role = string;
-            export type Sort = string;
         }
         export interface QueryParameters {
-            page?: Parameters.Page;
-            role: Parameters.Role;
-            sort?: Parameters.Sort;
+            role?: Parameters.Role;
         }
         namespace Responses {
-            export type $200 = /* xxxx */ Components.Schemas.CamundaTaskList[];
+            export type $200 = /* Camunda task serializer for the list-endpoint */ Components.Schemas.CamundaTaskList[];
         }
     }
     namespace TeamsDecisionTypesList {
@@ -1106,34 +1125,6 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedSummonTypeList;
-        }
-    }
-    namespace TestPermitsCheckmarksRetrieve {
-        namespace Parameters {
-            export type BagId = string;
-        }
-        export interface QueryParameters {
-            bag_id: Parameters.BagId;
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.PermitCheckmark;
-        }
-    }
-    namespace TestPermitsDetailsList {
-        namespace Parameters {
-            export type BagId = string;
-        }
-        export interface QueryParameters {
-            bag_id: Parameters.BagId;
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.DecosPermit[];
-        }
-    }
-    namespace TestPermitsTestConnectRetrieve {
-        namespace Responses {
-            export interface $200 {
-            }
         }
     }
     namespace VisitsCreate {
