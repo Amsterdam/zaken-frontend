@@ -1,5 +1,3 @@
-import { useState } from "react"
-
 import { useRoles, useTasks } from "app/state/rest"
 import { Row, Column } from "app/components/layouts/Grid"
 import TableTasks from "app/components/tasks/TableTasks/TableTasks"
@@ -9,14 +7,8 @@ import useURLState from "app/hooks/useURLState/useURLState"
 const Tasks: React.FC = () => {
 
   const [roles] = useRoles()
-  const [roleParam, setRoleParam] = useURLState("rol")
-  const [role, setRole] = useState<MockComponents.Schemas.Role>(roleParam)
+  const [role, setRole] = useURLState("rol")
   const [tasks, { isBusy }] = useTasks(role)
-
-  const updateRole = (value: MockComponents.Schemas.Role) => {
-    setRoleParam(value)
-    setRole(value)
-  }
 
   return (
     <Row>
@@ -24,7 +16,7 @@ const Tasks: React.FC = () => {
         <TableTasks data={ tasks } isBusy={ isBusy } />
       </Column>
       <Column spanLarge={ 28 }>
-        <TasksFilter role={ role } roles={ roles } setRole={ updateRole } />
+        <TasksFilter role={ role } roles={ roles } setRole={ setRole } />
       </Column>
     </Row>
   )

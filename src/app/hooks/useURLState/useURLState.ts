@@ -1,8 +1,6 @@
 import { useState, useCallback } from "react"
 
-// TODO: Polyfill for URLSearchParams for IE11
-// LINK: https://caniuse.com/urlsearchparams
-
+// TODO: Generic type
 const defaultParse = (value: string | null) => value ?? ""
 
 export default (key: string, parse = defaultParse) => {
