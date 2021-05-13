@@ -9,7 +9,7 @@ import useURLState from "app/hooks/useURLState/useURLState"
 const Tasks: React.FC = () => {
 
   const [roles] = useRoles()
-  const [roleParam, setRoleParam] = useURLState("role")
+  const [roleParam, setRoleParam] = useURLState("rol")
   const [role, setRole] = useState<MockComponents.Schemas.Role>(roleParam)
   const [tasks, { isBusy }] = useTasks(role)
 
