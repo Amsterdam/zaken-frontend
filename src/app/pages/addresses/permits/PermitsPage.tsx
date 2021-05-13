@@ -6,7 +6,7 @@ import Row, { RowWithColumn } from "app/components/layouts/Grid/Row"
 import PageHeading from "app/components/shared/PageHeading/PageHeading"
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
 import PermitDetailsList from "app/components/permits/PermitDetails/PermitDetailsList"
-import VacationRentalThisYear from "app/components/permits/PermitDetails/VacationRentalThisYear"
+import VacationRental from "app/components/permits/VacationRental/VacationRental"
 import DetailHeader from "app/components/shared/DetailHeader/DetailHeader"
 import Column from "app/components/layouts/Grid/Column"
 import MockWrapper from "app/components/shared/MockWrapper/MockWrapper"
@@ -27,7 +27,7 @@ const PermitsPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
         <Column spanLarge={ 50 }>
           <DetailHeader bagId={ bagId } />
         </Column>
-      </Row> 
+      </Row>
       <Row>
         <Column spanLarge={50}>
           <MockWrapper>
@@ -36,7 +36,7 @@ const PermitsPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
         </Column>
         <Column spanLarge={50}>
           <MockWrapper>
-            <VacationRentalThisYear bagId={ bagId }></VacationRentalThisYear>
+            <VacationRental bagId={ bagId }></VacationRental>
           </MockWrapper>
         </Column>
       </Row>

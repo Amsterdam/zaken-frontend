@@ -53,13 +53,13 @@ const Hr = styled.hr`
   background: ${ themeColor("tint", "level4") };
 `
 
-const VacationRentalThisYear: FC<Props> = ({ bagId }) => {
+const VacationRental: FC<Props> = ({ bagId }) => {
+
   const [data, { isBusy }] = usePermitDetails(bagId)
   const verhuur = data?.vakantieverhuur_meldingen
 
-
   return (
-      <>
+    <>
       { isBusy && <Spinner /> }
       { !isBusy &&
       <Grid>
@@ -83,6 +83,7 @@ const VacationRentalThisYear: FC<Props> = ({ bagId }) => {
                 verhuur.meldingen.map((melding: Components.Schemas.VakantieverhuurMelding, index: number) => {
                   const checkIn = new Date(melding.check_in_date)
                   const checkOut = new Date(melding.check_out_date)
+                  // TODO: Document that magic number
                   const nightsRented = (checkOut.getTime() - checkIn.getTime()) / 8.64e+7
 
                   return (
@@ -94,9 +95,9 @@ const VacationRentalThisYear: FC<Props> = ({ bagId }) => {
                         </strong>
                       </TwoColumns>
                       <Label>Check in</Label>
-                      <Text><DateDisplay date= { melding.check_in_date } /></Text>
+                      <Text><DateDisplay date={ melding.check_in_date } /></Text>
                       <Label>Check out</Label>
-                      <Text><DateDisplay date= { melding.check_out_date } /></Text>
+                      <Text><DateDisplay date={ melding.check_out_date } /></Text>
                     </React.Fragment>
                   )
                 })
@@ -107,8 +108,8 @@ const VacationRentalThisYear: FC<Props> = ({ bagId }) => {
         }
       </Grid>
       }
-      </>
+    </>
   )
 }
 
-export default VacationRentalThisYear
+export default VacationRental
