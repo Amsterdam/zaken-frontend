@@ -9,7 +9,6 @@ import PermitDetailsList from "app/components/permits/PermitDetails/PermitDetail
 import VacationRental from "app/components/permits/VacationRental/VacationRental"
 import DetailHeader from "app/components/shared/DetailHeader/DetailHeader"
 import Column from "app/components/layouts/Grid/Column"
-import MockWrapper from "app/components/shared/MockWrapper/MockWrapper"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
 import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId"
 
@@ -30,14 +29,10 @@ const PermitsPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
       </Row>
       <Row>
         <Column spanLarge={50}>
-          <MockWrapper>
-            <PermitDetailsList bagId={ bagId }></PermitDetailsList>
-          </MockWrapper>
+          <PermitDetailsList bagId={ bagId }></PermitDetailsList>
         </Column>
         <Column spanLarge={50}>
-          <MockWrapper>
-            <VacationRental bagId={ bagId }></VacationRental>
-          </MockWrapper>
+          <VacationRental bagId={ bagId }></VacationRental>
         </Column>
       </Row>
       <RowWithColumn>
