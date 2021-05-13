@@ -6,11 +6,12 @@ import ScaffoldFields from "app/components/shared/Form/ScaffoldFields"
 import scaffold from "./scaffold"
 
 type Props = {
-  roles?: string[]
+  role: MockComponents.Schemas.Role
+  roles?: MockComponents.Schemas.Role[]
   setRole: (value: string) => void
 }
 
-const TasksFilter: React.FC<Props> = ({ roles, setRole }) => {
+const TasksFilter: React.FC<Props> = ({ role, roles, setRole }) => {
   const onChange = (value: string) => setRole(value)
   return (
     <>
@@ -18,12 +19,12 @@ const TasksFilter: React.FC<Props> = ({ roles, setRole }) => {
         { roles === undefined ?
           <Spinner /> :
           <ScaffoldForm>
-            <ScaffoldFields { ...scaffold(roles, onChange) } />
+            <ScaffoldFields { ...scaffold(role, roles, onChange) } />
           </ScaffoldForm>
         }
       </FilterMenu>
       <FilterMenu>
-        <i><a href={ window.location.pathname }>Herlaad taken</a></i>
+        <i><a href={ `${ window.location.pathname }${ window.location.search }` }>Herlaad taken</a></i>
       </FilterMenu>
     </>
   )

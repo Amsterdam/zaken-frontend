@@ -9,7 +9,7 @@ const createOptions = (roles: MockComponents.Schemas.Role[]) =>
     return acc
   }, { "": "Alle rollen" } as Record<string, MockComponents.Schemas.Role>)
 
-export default (roles: MockComponents.Schemas.Role[], onChange: (value: string) => void) => {
+export default (role: MockComponents.Schemas.Role, roles: MockComponents.Schemas.Role[], onChange: (value: string) => void) => {
   const fields = {
     period: {
       type: "RadioFields",
@@ -19,7 +19,7 @@ export default (roles: MockComponents.Schemas.Role[], onChange: (value: string) 
         optionLabelField: "title",
         options: createOptions(roles),
         onChange,
-        value: ""
+        value: role
       }
     }
   }
