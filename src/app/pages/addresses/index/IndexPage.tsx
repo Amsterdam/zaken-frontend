@@ -7,7 +7,6 @@ import { RowWithColumn } from "app/components/layouts/Grid/Row"
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
 import AddressHeader from "app/components/addresses/AddressHeader/AddressHeader"
 import AddressMenu from "app/components/addresses/AddressMenu/AddressMenu"
-import BreadCrumbs from "app/components/shared/BreadCrumbs/BreadCrumbs"
 import PanoramaPreview from "app/components/addresses/Panorama/PanoramaPreview"
 import ButtonLink from "app/components/shared/ButtonLink/ButtonLink"
 import to from "app/routing/utils/to"
@@ -21,9 +20,6 @@ type Props = {
 const IndexPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
   isValidUrlParamBAGId(bagId) ?
     <DefaultLayout>
-      <RowWithColumn>
-        <BreadCrumbs routeParams={ { bagId } } />
-      </RowWithColumn>
       <RowWithColumn>
         <AddressHeader bagId={ bagId } headingSize="h1" isHeader={true} />
       </RowWithColumn>

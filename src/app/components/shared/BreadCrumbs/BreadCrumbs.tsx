@@ -1,7 +1,7 @@
 
 import styled from "styled-components"
-import { Link } from "@reach/router"
-import { Icon, themeSpacing, themeColor, ascDefaultTheme, breakpoint } from "@amsterdam/asc-ui"
+import { Link, useParams } from "@reach/router"
+import { Icon, themeSpacing, themeColor, ascDefaultTheme } from "@amsterdam/asc-ui"
 import { ChevronRight } from "app/components/shared/Icons"
 import to from "app/routing/utils/to"
 import find from "app/routing/utils/find"
@@ -31,9 +31,7 @@ const Ul = styled.ul`
       }
     }
   }
-  @media screen and ${ breakpoint("min-width", "tabletM") } {
-    margin-left: -6px;
-  }
+  
 `
 const StyledSeperator = styled(Icon)`
   display: inline;
@@ -43,7 +41,9 @@ const StyledSeperator = styled(Icon)`
   }
 `
 
-const BreadCrumbs: React.FC<Props> = ({ routeParams }) => {
+const BreadCrumbs: React.FC<Props> = () => {
+  const params = useParams() ?? {}
+  const routeParams = { id: params.id, bagId: params.bagId }
   const route = find(routes, window.location.pathname)
 
   const pageConfig = route ? routes[route] : undefined
