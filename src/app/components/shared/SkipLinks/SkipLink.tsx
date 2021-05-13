@@ -15,11 +15,10 @@ a {
 
     &:focus {
       transform: translateY(0%);
-      z-INDEX: 999;
+      z-index: 999;
     }
   }
 `
-
 
 const SkipLink: React.FC = () => (
   <Nav>
