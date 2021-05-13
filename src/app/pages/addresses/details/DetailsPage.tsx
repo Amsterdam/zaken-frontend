@@ -9,7 +9,6 @@ import DetailHeader from "app/components/shared/DetailHeader/DetailHeader"
 import PageHeading from "app/components/shared/PageHeading/PageHeading"
 import ObjectDetails from "app/components/addresses/ObjectDetails/ObjectDetails"
 import PermitOverview from "app/components/permits/PermitOverview/PermitOverview"
-import MockWrapper from "app/components/shared/MockWrapper/MockWrapper"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
 
 type Props = {
@@ -26,7 +25,7 @@ const DetailPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
         <Column spanLarge={ 50 }>
           <DetailHeader bagId={ bagId } />
         </Column>
-      </Row>  
+      </Row>
       <Row>
         <Column spanLarge={50}>
           <ObjectDetails bagId={ bagId } />
@@ -34,9 +33,7 @@ const DetailPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
       </Row>
       <Row>
         <Column spanLarge={50}>
-          <MockWrapper>
-            <PermitOverview bagId={ bagId }></PermitOverview>
-          </MockWrapper>
+          <PermitOverview bagId={ bagId }></PermitOverview>
         </Column>
       </Row>
     </DefaultLayout> :
