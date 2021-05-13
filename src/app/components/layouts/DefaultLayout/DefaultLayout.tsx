@@ -1,5 +1,5 @@
 
-import { Header, themeSpacing } from "@amsterdam/asc-ui"
+import { Header } from "@amsterdam/asc-ui"
 import styled from "styled-components"
 import DefaultNavigation from "app/components/shared/navigation/DefaultNavigation"
 import MainWrapper from "app/components/layouts/MainWrapper/MainWrapper"
@@ -7,8 +7,7 @@ import to from "app/routing/utils/to"
 import FlashMessages from "app/components/layouts/FlashMessages/FlashMessages"
 import UserInfo from "app/components/shared/UserInfo/UserInfo"
 import SkipLink from "app/components/shared/SkipLinks/SkipLink"
-import BreadCrumbs from "app/components/shared/BreadCrumbs/BreadCrumbs"
-import { sizes } from "@amsterdam/asc-ui/lib/theme/default/breakpoints"
+import BreadCrumbsWrap from "app/components/shared/BreadCrumbs/BreadCrumbsWrap"
 
 type Props = {
   showSearchButton?: boolean
@@ -27,14 +26,6 @@ const MenuWrap = styled.div`
   justify-content: space-between;
   width: 100%;
 `
-const BreadCrumbWrap = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  width: 100%;
-  max-width: ${ sizes.laptopL }px;
-  margin: 0 auto ${ themeSpacing(9) };
-  padding: ${ themeSpacing(3) } ${ themeSpacing(12) };
-`
 
 const DefaultLayout: React.FC<Props> = ({ showSearchButton = true, children }) => (
   <>
@@ -52,9 +43,7 @@ const DefaultLayout: React.FC<Props> = ({ showSearchButton = true, children }) =
         }
         links={ <UserInfo /> }
       />
-      <BreadCrumbWrap>
-        <BreadCrumbs />
-      </BreadCrumbWrap>
+      <BreadCrumbsWrap />
     </HeaderWrap>
     <MainWrapper>
       <FlashMessages />
