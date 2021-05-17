@@ -8,7 +8,7 @@ import PageHeading from "app/components/shared/PageHeading/PageHeading"
 import Row, { RowWithColumn } from "app/components/layouts/Grid/Row"
 import CaseHeading from "app/components/case/CaseHeading/CaseHeading"
 import { Column } from "app/components/layouts/Grid"
-import SignalForm from "app/components/case/forms/SignalForm/SignalForm"
+import CitizenReportForm from "app/components/case/forms/CitizenReportForm/CitizenReportForm"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
 
 type Props = {
@@ -32,7 +32,7 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString, camund
       </RowWithColumn>
       <Row>
         <Column spanLarge={50}>
-          <SignalForm id={ id } camundaTaskId={ camundaTaskId } />
+          <CitizenReportForm id={ id } camundaTaskId={ camundaTaskId } />
         </Column>
       </Row>
     </DefaultLayout> :
