@@ -67,11 +67,11 @@ const PermitDetail: React.FC<Props> = ({ detail }) => {
           { permitHasEndDate && permitIsForBAndB ?
             <>
               <Label>Geldig tot en met</Label>
-              <Text><DateDisplay date= { details?.DATE_VALID_UNTIL ?? details?.DATE_VALID_TO } /></Text>
+              <Text><DateDisplay date={ details?.DATE_VALID_UNTIL ?? details?.DATE_VALID_TO } /></Text>
             </> :
             <>
               <Label>Geldig tot</Label>
-              <Text><DateDisplay date= { details?.DATE_VALID_TO ?? details?.DATE_VALID_UNTIL } /></Text>
+              <Text><DateDisplay date={ details?.DATE_VALID_TO ?? details?.DATE_VALID_UNTIL } /></Text>
             </>
           }
         </>

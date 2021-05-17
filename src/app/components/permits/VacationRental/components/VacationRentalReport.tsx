@@ -1,5 +1,6 @@
 import { DateDisplay } from "@amsterdam/wonen-ui"
 
+import useNumberOfDaysBetweenDates from "./hooks/useNumberOfDaysBetweenDates"
 import TwoColumns from "./TwoColumns"
 import Label from "./Label"
 import Text from "./Text"
@@ -12,17 +13,13 @@ type Props = {
 
 const VactionRentalReport: React.FC<Props> = ({ checkInDate, checkOutDate, isAfmelding }) => {
 
-  const checkIn = new Date(checkInDate)
-  const checkOut = new Date(checkOutDate)
-  // TODO: Document that magic number
-  const nightsRented = (checkOut.getTime() - checkIn.getTime()) / 8.64e+7
+  const nightsRented = useNumberOfDaysBetweenDates(checkInDate, checkOutDate)
 
   return (
     <>
       <TwoColumns>
         <strong>
-          { isAfmelding ? "Afmelding " : "Melding " }
-          { nightsRented } nachten
+          { `${ isAfmelding ? "Afmelding" : "Melding" } ${ nightsRented } nachten` }
         </strong>
       </TwoColumns>
       <Label>Check in</Label>
