@@ -18,7 +18,6 @@ const CitizenReportForm: React.FC<Props> = ({ id, camundaTaskId }) => {
 
   return (
     <>
-      <FormTitle>&nbsp;</FormTitle>
       <FormWithExtraLabel>
         <WorkflowForm
           id={ id }
