@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react"
+import { useCallback, useState } from "react"
 import { Heading, themeSpacing } from "@amsterdam/asc-ui"
 import styled from "styled-components"
 
