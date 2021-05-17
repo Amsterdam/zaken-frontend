@@ -15,7 +15,7 @@ type Props = {
   title?: React.ReactNode
   extraInfo?: { infoTitle: string, infoText: string }
   values: Record<string, React.ReactNode>
-  headingSize?: React.ComponentProps<typeof Heading>["as"]
+  headingSize?: React.ComponentProps<typeof Heading>["forwardedAs"]
 }
 
 const Dl = styled.dl`
