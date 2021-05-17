@@ -47,8 +47,7 @@ const routes = [
 ]
 
 const mockedRoutes = [
-  "/adres/:bagId/personen/",
-  "/adres/:bagId/vergunningen/"
+  "/adres/:bagId/personen/"
 ]
 
 const AddressMenu: React.FC<Props> = ({ bagId }) => {
@@ -58,8 +57,8 @@ const AddressMenu: React.FC<Props> = ({ bagId }) => {
   const permitsGranted = permitDetails?.permits.filter(p => p.permit_granted === "GRANTED").length
   const permitsFound = permitDetails?.permits.filter(p => ["GRANTED", "NOT_GRANTED"].includes(p.permit_granted)).length
   const counts = [
-    undefined, 
-    residents?.results.length, 
+    undefined,
+    residents?.results.length,
     permitsFound === permitsGranted ? permitsGranted : permitsGranted + "/" + permitsFound
   ]
 

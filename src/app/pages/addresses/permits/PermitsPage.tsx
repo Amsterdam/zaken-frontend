@@ -6,10 +6,9 @@ import Row, { RowWithColumn } from "app/components/layouts/Grid/Row"
 import PageHeading from "app/components/shared/PageHeading/PageHeading"
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
 import PermitDetailsList from "app/components/permits/PermitDetails/PermitDetailsList"
-import VacationRentalThisYear from "app/components/permits/PermitDetails/VacationRentalThisYear"
+import VacationRental from "app/components/permits/VacationRental/VacationRental"
 import DetailHeader from "app/components/shared/DetailHeader/DetailHeader"
 import Column from "app/components/layouts/Grid/Column"
-import MockWrapper from "app/components/shared/MockWrapper/MockWrapper"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
 import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId"
 
@@ -27,23 +26,19 @@ const PermitsPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
         <Column spanLarge={ 50 }>
           <DetailHeader bagId={ bagId } />
         </Column>
-      </Row> 
+      </Row>
       <Row>
-        <Column spanLarge={50}>
-          <MockWrapper>
-            <PermitDetailsList bagId={ bagId }></PermitDetailsList>
-          </MockWrapper>
+        <Column spanLarge={ 50 }>
+          <PermitDetailsList bagId={ bagId }></PermitDetailsList>
         </Column>
-        <Column spanLarge={50}>
-          <MockWrapper>
-            <VacationRentalThisYear bagId={ bagId }></VacationRentalThisYear>
-          </MockWrapper>
+        <Column spanLarge={ 50 }>
+          <VacationRental bagId={ bagId }></VacationRental>
         </Column>
       </Row>
       <RowWithColumn>
         {/* TODO: make hardcoded link dynamic */}
         <Link href="https://decosdvl.amsterdam.nl/" variant="inline" icon="external" target="_blank" rel="noreferer">
-            Alle vergunningen zie Decos Join
+          Alle vergunningen zie Decos Join
         </Link>
       </RowWithColumn>
     </DefaultLayout> :

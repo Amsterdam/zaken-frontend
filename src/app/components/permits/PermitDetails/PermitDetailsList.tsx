@@ -1,8 +1,9 @@
 
 import styled from "styled-components"
-import { themeSpacing, Spinner } from "@amsterdam/asc-ui"
+import { themeSpacing, Spinner, Paragraph } from "@amsterdam/asc-ui"
 
 import { usePermitDetails } from "app/state/rest"
+import useKnownPermits from "./hooks/useKnownPermits"
 import PermitDetails from "./PermitDetails"
 
 type Props = {
@@ -10,33 +11,37 @@ type Props = {
 }
 
 const Ul = styled.ul`
+  margin: 0;
   padding: 0;
   list-style: none;
 
   li {
-    margin-bottom: ${ themeSpacing(14) };
+    margin-bottom: ${ themeSpacing(8) };
   }
 `
 
 const PermitDetailsList: React.FC<Props> = ({ bagId }) => {
+
   const [data, { isBusy }] = usePermitDetails(bagId)
-  const listItems = data?.permits?.filter((permit: Components.Schemas.DecosPermit) => permit.permit_granted !== "UNKNOWN").map((detail) =>
-    <li key={detail.permit_type}>
-      <PermitDetails detail={ detail } />
-    </li>
-  )
+  const permits = useKnownPermits(data)
 
   return (
     <>
-        { isBusy && <Spinner /> }
-        { !isBusy &&
-          <>
+      { isBusy ?
+          <Spinner /> :
+        permits === undefined ?
+          <Paragraph>Geen vergunningen gevonden</Paragraph> :
           <Ul>
-            {listItems}
+            { permits.map(permit => (
+                <li key={ permit.permit_type }>
+                  <PermitDetails detail={ permit } />
+                </li>
+              ))
+            }
           </Ul>
-        </>
-        }
+      }
     </>
   )
 }
+
 export default PermitDetailsList
