@@ -80,7 +80,7 @@ const PermitDetail: React.FC<Props> = ({ detail }) => {
         { permit_granted === "NOT_GRANTED" && details?.DATE_DECISION &&
           <>
             <Label>Datum besluit</Label>
-            <Text><DateDisplay date={ details?.DATE_DECISION } /></Text>
+            <Text><DateDisplay date={ details.DATE_DECISION } /></Text>
           </>
         }
       </Grid>
