@@ -6,7 +6,7 @@ import MainWrapper from "app/components/layouts/MainWrapper/MainWrapper"
 import to from "app/routing/utils/to"
 import FlashMessages from "app/components/layouts/FlashMessages/FlashMessages"
 import UserInfo from "app/components/shared/UserInfo/UserInfo"
-import SkipLink from "app/components/shared/SkipLinks/SkipLink"
+import SkipLinks from "app/components/shared/SkipLinks/SkipLinks"
 import BreadCrumbsWrap from "app/components/shared/BreadCrumbs/BreadCrumbsWrap"
 
 type Props = {
@@ -29,7 +29,9 @@ const MenuWrap = styled.div`
 
 const DefaultLayout: React.FC<Props> = ({ showSearchButton = true, children }) => (
   <>
-    <SkipLink/>
+    <SkipLinks linkList={ [
+      { title:"Ga naar de content", target: "a11y-content" }
+    ] }/>
     <HeaderWrap>
       <Header
         tall
