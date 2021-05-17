@@ -12,7 +12,6 @@ declare namespace MockComponents {
     }
 
     export type Role = string
-
-    export type Signal = {}
+    
   }
 }

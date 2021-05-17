@@ -4,7 +4,7 @@ import DebriefCreatePage from "app/pages/case/debriefings/CreatePage"
 import SummonCreatePage from "app/pages/case/summons/CreatePage"
 import DecisionCreatePage from "app/pages/case/decisions/CreatePage"
 import CompleteCasePage from "app/pages/case/complete/CompleteCasePage"
-import SignalCreatePage from "app/pages/case/signals/CreatePage"
+import CitizenReportPage from "app/pages/case/citizenreports/CreatePage"
 import VisitCreatePage from "app/pages/case/visits/CreatePage"
 import ScheduleCreatePage from "app/pages/case/schedules/CreatePage"
 import TaskCreatePage from "app/pages/case/task/CreatePage"
@@ -57,7 +57,7 @@ export default {
             icon: "Edit"
           },
           "melding/:camundaTaskId": {
-            Page: SignalCreatePage,
+            Page: CitizenReportPage,
             title: "Melding verwerken",
             icon: "Edit"
           }

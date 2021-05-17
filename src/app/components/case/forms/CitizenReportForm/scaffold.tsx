@@ -102,8 +102,7 @@ export default (caseId: Components.Schemas.Case["id"]) => {
       props: {
         label: "Korte toelichting melding",
         extraLabel: <InfoButton infoTitle="Korte toelichting melding" infoText="Geef een korte beschrijving van de melding. Deze informatie komt ook door in TOP voor de toezichthouder."></InfoButton>,
-        name: "description",
-        isRequired: true
+        name: "description"
       }
     },
     secondaryButton: {
