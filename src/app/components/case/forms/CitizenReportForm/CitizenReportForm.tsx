@@ -1,4 +1,3 @@
-import { FormTitle } from "@amsterdam/asc-ui"
 
 import { useCitizenReports } from "app/state/rest/"
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
