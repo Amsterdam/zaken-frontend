@@ -30,7 +30,7 @@ const VacationRental: React.FC<Props> = ({ bagId }) => {
         <Spinner /> :
         <>
           <StyledHeading forwardedAs="h4">Vakantieverhuur meldingen</StyledHeading>
-          { reports === undefined ?
+          { reports === undefined || reports?.meldingen.length === 0 ?
             <Paragraph>Geen vakantieverhuur meldingen</Paragraph> :
             <Grid>
               <Label>Nachten verhuurd</Label>
