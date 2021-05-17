@@ -11,11 +11,12 @@ type Props = {
 }
 
 const Ul = styled.ul`
+  margin: 0;
   padding: 0;
   list-style: none;
 
   li {
-    margin-bottom: ${ themeSpacing(14) };
+    margin-bottom: ${ themeSpacing(8) };
   }
 `
 

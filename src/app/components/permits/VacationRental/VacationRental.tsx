@@ -1,4 +1,5 @@
-import { Spinner, Paragraph, Heading } from "@amsterdam/asc-ui"
+import { Spinner, Paragraph, Heading, themeSpacing } from "@amsterdam/asc-ui"
+import styled from "styled-components"
 
 import { usePermitDetails } from "app/state/rest"
 import TwoColumns from "./components/TwoColumns"
@@ -14,6 +15,10 @@ type Props = {
   bagId: string
 }
 
+const StyledHeading = styled(Heading)`
+  margin-bottom: ${ themeSpacing(3) }
+`
+
 const VacationRental: React.FC<Props> = ({ bagId }) => {
 
   const [data, { isBusy }] = usePermitDetails(bagId)
@@ -24,7 +29,7 @@ const VacationRental: React.FC<Props> = ({ bagId }) => {
       { isBusy ?
         <Spinner /> :
         <>
-          <Heading forwardedAs="h4">Vakantieverhuur meldingen</Heading>
+          <StyledHeading forwardedAs="h4">Vakantieverhuur meldingen</StyledHeading>
           { reports === undefined ?
             <Paragraph>Geen vakantieverhuur meldingen</Paragraph> :
             <Grid>

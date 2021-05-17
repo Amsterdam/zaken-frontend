@@ -28,17 +28,17 @@ const PermitsPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
         </Column>
       </Row>
       <Row>
-        <Column spanLarge={50}>
+        <Column spanLarge={ 50 }>
           <PermitDetailsList bagId={ bagId }></PermitDetailsList>
         </Column>
-        <Column spanLarge={50}>
+        <Column spanLarge={ 50 }>
           <VacationRental bagId={ bagId }></VacationRental>
         </Column>
       </Row>
       <RowWithColumn>
         {/* TODO: make hardcoded link dynamic */}
         <Link href="https://decosdvl.amsterdam.nl/" variant="inline" icon="external" target="_blank" rel="noreferer">
-            Alle vergunningen zie Decos Join
+          Alle vergunningen zie Decos Join
         </Link>
       </RowWithColumn>
     </DefaultLayout> :
