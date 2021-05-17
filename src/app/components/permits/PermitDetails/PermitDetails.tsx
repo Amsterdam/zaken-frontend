@@ -36,7 +36,8 @@ const PermitDetail: React.FC<Props> = ({ detail }) => {
   const { permit_granted, permit_type, details, decos_join_web_url } = detail
 
   const permitIsForBAndB = permit_type.startsWith("B&B")
-  const permitHasEndDate = details?.DATE_VALID_TO !== undefined || details?.DATE_VALID_UNTIL !== undefined
+  const endDateBAndB = details?.DATE_VALID_UNTIL ?? details?.DATE_VALID_TO
+  const endDate = details?.DATE_VALID_TO ?? details?.DATE_VALID_UNTIL
 
   return (
     <>
@@ -63,15 +64,15 @@ const PermitDetail: React.FC<Props> = ({ detail }) => {
         { permit_granted === "GRANTED" &&
         <>
           <Label>Verleend per</Label>
-          <Text><DateDisplay date= { details?.DATE_VALID_FROM } /></Text>
-          { permitHasEndDate && permitIsForBAndB ?
+          <Text>{ details?.DATE_VALID_FROM ? <DateDisplay date={ details.DATE_VALID_FROM } /> : "-" }</Text>
+          { permitIsForBAndB && endDateBAndB ?
             <>
               <Label>Geldig tot en met</Label>
-              <Text><DateDisplay date={ details?.DATE_VALID_UNTIL ?? details?.DATE_VALID_TO } /></Text>
+              <Text><DateDisplay date={ endDateBAndB } /></Text>
             </> :
             <>
               <Label>Geldig tot</Label>
-              <Text><DateDisplay date={ details?.DATE_VALID_TO ?? details?.DATE_VALID_UNTIL } /></Text>
+              <Text>{ endDate ? <DateDisplay date={ endDate } /> : "-" }</Text>
             </>
           }
         </>
@@ -79,7 +80,7 @@ const PermitDetail: React.FC<Props> = ({ detail }) => {
         { permit_granted === "NOT_GRANTED" && details?.DATE_DECISION &&
           <>
             <Label>Datum besluit</Label>
-            <Text><DateDisplay date={ details?.DATE_DECISION } /></Text>
+            <Text><DateDisplay date={ details.DATE_DECISION } /></Text>
           </>
         }
       </Grid>
