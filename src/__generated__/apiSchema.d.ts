@@ -155,6 +155,16 @@ declare namespace Components {
             readonly id: number;
             name: string;
         }
+        export interface CitizenReport {
+            readonly id: number;
+            camunda_task_id?: string | null;
+            reporter_name?: string | null;
+            reporter_phone?: string | null;
+            identification: number;
+            advertisement_linklist?: string[] | null;
+            description?: string | null;
+            case: number;
+        }
         export interface DaySegment {
             readonly id: number;
             name: string;
@@ -751,6 +761,18 @@ declare namespace Paths {
         export type RequestBody = Components.Schemas.PushCaseState;
         namespace Responses {
             export type $200 = Components.Schemas.PushCaseState;
+        }
+    }
+    namespace CasesCitizenReportsCreate {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        export type RequestBody = Components.Schemas.CitizenReport;
+        namespace Responses {
+            export type $200 = Components.Schemas.CitizenReport;
         }
     }
     namespace CasesCreate {
