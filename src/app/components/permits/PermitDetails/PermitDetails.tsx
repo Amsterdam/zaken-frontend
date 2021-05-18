@@ -18,6 +18,7 @@ const Label = styled.label`
 
 const Text = styled.span`
   word-break: break-word;
+  margin-right: ${ themeSpacing(4) };
 `
 
 const Grid = styled.div`
