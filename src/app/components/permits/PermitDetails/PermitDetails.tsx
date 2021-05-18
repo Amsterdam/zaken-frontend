@@ -4,7 +4,7 @@ import { DateDisplay } from "@amsterdam/wonen-ui"
 import { Check, Close } from "app/components/shared/Icons"
 
 type Props = {
-  detail: Components.Schemas.DecosPermit
+  detail: Components.Schemas.Permit
 }
 
 const StyledHeading = styled(Heading)`
