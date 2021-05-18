@@ -1,13 +1,15 @@
 import styled from "styled-components"
-import { Heading, themeColor, themeSpacing } from "@amsterdam/asc-ui"
+import { Heading, themeColor, themeSpacing, Icon } from "@amsterdam/asc-ui"
 import { DateDisplay } from "@amsterdam/wonen-ui"
+import { Check, Close } from "app/components/shared/Icons"
 
 type Props = {
   detail: Components.Schemas.DecosPermit
 }
 
 const StyledHeading = styled(Heading)`
-  margin-bottom: ${ themeSpacing(3) }
+  margin-bottom: ${ themeSpacing(3) };
+  justify-content: start;
 `
 
 const Label = styled.label`
@@ -21,11 +23,16 @@ const Text = styled.span`
   margin-right: ${ themeSpacing(4) };
 `
 
-const Grid = styled.div`
+const Grid = styled.div<{ opaque: boolean }>`
   display: grid;
   grid-template-columns: minmax(140px, 1fr) 3fr;
   grid-gap: ${ themeSpacing(3) } ${ themeSpacing(4) };
   place-items: baseline start;
+  opacity: ${ ({ opaque }) => opaque ? 1 : 0.2 };
+`
+
+const StyledIcon = styled(Icon)`
+  margin-left: ${ themeSpacing(2) };
 `
 
 const PermitDetail: React.FC<Props> = ({ detail }) => {
@@ -35,13 +42,12 @@ const PermitDetail: React.FC<Props> = ({ detail }) => {
   const permitIsForBAndB = permit_type.startsWith("B&B")
   const endDateBAndB = details?.DATE_VALID_UNTIL ?? details?.DATE_VALID_TO
   const endDate = details?.DATE_VALID_TO ?? details?.DATE_VALID_UNTIL
+  const isGranted = permit_granted === "GRANTED"
 
   return (
     <>
-      <StyledHeading forwardedAs="h4">{ permit_type }</StyledHeading>
-      <Grid>
-        <Label>Conclusie</Label>
-        <Text>{ permit_granted === "GRANTED" ? "Geldig" : "Niet geldig" }</Text>
+      <StyledHeading forwardedAs="h4">{ permit_type }<StyledIcon>{ isGranted ? <Check /> : <Close /> }</StyledIcon></StyledHeading>
+      <Grid opaque={ isGranted }>
         <Label>Resultaat</Label>
         <Text>{ details?.RESULT ?? "-" }</Text>
         <Label>Omschrijving zaak</Label>
@@ -58,7 +64,7 @@ const PermitDetail: React.FC<Props> = ({ detail }) => {
         }
         <Label>Locatie</Label>
         <Text>{ details?.ADDRESS }</Text>
-        { permit_granted === "GRANTED" &&
+        { isGranted &&
         <>
           <Label>Verleend per</Label>
           <Text>{ details?.DATE_VALID_FROM ? <DateDisplay date={ details.DATE_VALID_FROM } /> : "-" }</Text>
