@@ -1,26 +1,26 @@
 declare namespace Components {
     namespace Schemas {
         export interface Action {
-            readonly id: number;
+            id: number;
             name: string;
         }
         export interface Address {
             bag_id: string;
-            readonly id: number;
-            readonly full_address: string;
-            readonly street_name: string;
-            readonly number: number;
-            readonly suffix_letter: string;
-            readonly suffix: string;
-            readonly postal_code: string;
-            readonly lat: number; // float
-            readonly lng: number; // float
+            id: number;
+            full_address: string;
+            street_name: string;
+            number: number;
+            suffix_letter: string;
+            suffix: string;
+            postal_code: string;
+            lat: number; // float
+            lng: number; // float
         }
         /**
          * Case-address serializer for camunda tasks
          */
         export interface CamundaCaseAddress {
-            readonly id: number;
+            id: number;
             address: Address;
         }
         export interface CamundaDateUpdate {
@@ -38,7 +38,7 @@ declare namespace Components {
             case_identification: string;
         }
         export interface CamundaProcess {
-            readonly id: number;
+            id: number;
             name: string;
             camunda_message_name: string;
         }
@@ -60,7 +60,7 @@ declare namespace Components {
             task_name_id: string;
             name: string;
             due_date: string; // date
-            readonly roles: any[];
+            roles: any[];
             form: {
                 [name: string]: any;
             };
@@ -95,18 +95,18 @@ declare namespace Components {
             task_name_id: string;
             name: string;
             due_date: string; // date
-            readonly roles: any[];
+            roles: any[];
             case: /* Case-address serializer for camunda tasks */ CamundaCaseAddress;
             process_instance_id: string;
         }
         export interface Case {
-            readonly id: number;
+            id: number;
             address: Address;
             case_states: CaseState[];
-            readonly current_states: CaseState[];
+            current_states: CaseState[];
             team: CaseTeam;
             reason: CaseReason;
-            readonly schedules: Schedule[];
+            schedules: Schedule[];
             identification?: string | null;
             start_date?: string | null; // date
             end_date?: string | null; // date
@@ -116,98 +116,88 @@ declare namespace Components {
             author?: string | null; // uuid
         }
         export interface CaseCreateUpdate {
-            readonly id: number;
+            id: number;
             address: Address;
             team: number;
             reason: number;
             description?: string | null;
         }
         export interface CaseEvent {
-            readonly id: number;
+            id: number;
             event_values: {
                 [name: string]: any;
             };
-            readonly date_created: string; // date-time
+            date_created: string; // date-time
             type: TypeEnum;
             emitter_id: number;
             case: number;
         }
         export interface CaseReason {
-            readonly id: number;
+            id: number;
             name: string;
             team: number;
         }
         export interface CaseState {
-            readonly id: number;
+            id: number;
             case: number;
-            readonly status_name: string;
+            status_name: string;
             status: number;
             start_date: string; // date
             end_date?: string | null; // date
             users: string /* uuid */[];
         }
         export interface CaseStateType {
-            readonly id: number;
+            id: number;
             name: string;
             team?: number;
         }
         export interface CaseTeam {
-            readonly id: number;
+            id: number;
             name: string;
         }
         export interface CitizenReport {
-            readonly id: number;
+            id: number;
+            advertisement_linklist?: string;
             camunda_task_id?: string | null;
             reporter_name?: string | null;
             reporter_phone?: string | null;
             identification: number;
-            advertisement_linklist?: string[] | null;
             description?: string | null;
+            date_added: string; // date-time
             case: number;
         }
         export interface DaySegment {
-            readonly id: number;
+            id: number;
             name: string;
         }
         export interface DebriefingCreate {
-            readonly id: number;
+            id: number;
             violation?: ViolationEnum;
             feedback: string;
             case: number;
         }
         export interface Decision {
-            readonly id: number;
+            id: number;
             sanction_amount?: string | null; // decimal ^\d{0,98}(\.\d{0,2})?$
             description?: string | null;
-            readonly date_added: string; // date-time
+            date_added: string; // date-time
             case: number;
             decision_type: number;
         }
         export interface DecisionType {
-            readonly id: number;
+            id: number;
             camunda_option: string;
             name: string;
             is_sanction?: boolean;
             team: number;
         }
         export interface Decos {
-            permits: DecosPermit[];
-            vakantieverhuur_meldingen: {
+            permits: Permit[];
+            vakantieverhuur_reports: {
                 rented_days_count: null | number;
                 planned_days_count: null | number;
                 is_rented_today: boolean;
-                meldingen: VakantieverhuurMelding[];
-            } | null;
-        }
-        export interface DecosPermit {
-            permit_granted: PermitGrantedEnum;
-            permit_type: string;
-            decos_join_web_url?: string; // uri
-            raw_data?: {
-                [name: string]: any;
-            } | null;
-            details?: {
-                [name: string]: any;
+                reports: VakantieverhuurReport[];
             } | null;
         }
         export interface Fine {
@@ -523,9 +513,19 @@ declare namespace Components {
             previous?: string | null; // uri
             results?: Visit[];
         }
+        export interface Permit {
+            permit_granted: PermitGrantedEnum;
+            permit_type: string;
+            raw_data: {
+                [name: string]: any;
+            } | null;
+            details: {
+                [name: string]: any;
+            } | null;
+        }
         export type PermitGrantedEnum = "GRANTED" | "NOT_GRANTED" | "UNKNOWN";
         export interface Priority {
-            readonly id: number;
+            id: number;
             name: string;
             weight: number; // float
         }
@@ -563,13 +563,13 @@ declare namespace Components {
             results: Resident[];
         }
         export interface Schedule {
-            readonly id: number;
+            id: number;
             action: Action;
             week_segment: WeekSegment;
             day_segment: DaySegment;
             priority: Priority;
-            readonly date_added: string; // date-time
-            readonly date_modified: string; // date-time
+            date_added: string; // date-time
+            date_modified: string; // date-time
             case: number;
         }
         export interface ScheduleCreate {
@@ -581,27 +581,27 @@ declare namespace Components {
         }
         export type SoortVorderingEnum = "PBF" | "PBN" | "PRV" | "SOC";
         export interface Summon {
-            readonly id: number;
+            id: number;
             type: number;
-            readonly type_name: string;
+            type_name: string;
             case: number;
             persons: SummonedPerson[];
-            readonly date_added: string; // date-time
+            date_added: string; // date-time
             description?: string | null;
         }
         export interface SummonType {
-            readonly id: number;
+            id: number;
             name: string;
         }
         export interface SummonedPerson {
-            readonly id: number;
+            id: number;
             first_name: string;
             preposition?: string | null;
             last_name: string;
-            readonly summon: number;
+            summon: number;
         }
         export interface SupportContact {
-            readonly id: number;
+            id: number;
             name: string;
             phone_number: string;
             email: string;
@@ -613,7 +613,7 @@ declare namespace Components {
             day_segments: DaySegment[];
             priorities: Priority[];
         }
-        export type TypeEnum = "DEBRIEFING" | "VISIT" | "CASE" | "SUMMON" | "GENERIC_TASK" | "SCHEDULE";
+        export type TypeEnum = "DEBRIEFING" | "VISIT" | "CASE" | "SUMMON" | "GENERIC_TASK" | "SCHEDULE" | "CITIZEN_REPORT";
         export interface User {
             id?: string; // uuid
             email?: string; // email
@@ -622,21 +622,21 @@ declare namespace Components {
             last_name?: string;
             full_name?: string;
         }
-        export interface VakantieverhuurMelding {
-            is_afmelding: boolean;
-            melding_date: string; // date-time
+        export interface VakantieverhuurReport {
+            is_cancellation: boolean;
+            report_date: string; // date-time
             check_in_date: string; // date-time
             check_out_date: string; // date-time
         }
-        export interface VakantieverhuurRentalInformation {
+        export interface VakantieverhuurReportInformation {
             rented_days_count: null | number;
             planned_days_count: null | number;
             is_rented_today: boolean;
-            meldingen: VakantieverhuurMelding[];
+            reports: VakantieverhuurReport[];
         }
         export type ViolationEnum = "NO" | "YES" | "ADDITIONAL_RESEARCH_REQUIRED" | "ADDITIONAL_VISIT_REQUIRED";
         export interface Visit {
-            readonly id: number;
+            id: number;
             authors?: User[];
             author_ids?: string /* uuid */[];
             start_time: string; // date-time
@@ -650,7 +650,7 @@ declare namespace Components {
             case: number;
         }
         export interface WeekSegment {
-            readonly id: number;
+            id: number;
             name: string;
         }
     }
