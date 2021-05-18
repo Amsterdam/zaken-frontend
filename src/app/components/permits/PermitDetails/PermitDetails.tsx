@@ -3,7 +3,7 @@ import { Heading, themeColor, themeSpacing } from "@amsterdam/asc-ui"
 import { DateDisplay } from "@amsterdam/wonen-ui"
 
 type Props = {
-  detail: Components.Schemas.DecosPermit
+  detail: Components.Schemas.Permit
 }
 
 const StyledHeading = styled(Heading)`

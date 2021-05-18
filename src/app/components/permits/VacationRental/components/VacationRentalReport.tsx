@@ -8,10 +8,10 @@ import Text from "./Text"
 type Props = {
   checkInDate: string
   checkOutDate: string
-  isAfmelding: boolean
+  isCancellation: boolean
 }
 
-const VactionRentalReport: React.FC<Props> = ({ checkInDate, checkOutDate, isAfmelding }) => {
+const VactionRentalReport: React.FC<Props> = ({ checkInDate, checkOutDate, isCancellation }) => {
 
   const nightsRented = useNumberOfDaysBetweenDates(checkInDate, checkOutDate)
 
@@ -19,7 +19,7 @@ const VactionRentalReport: React.FC<Props> = ({ checkInDate, checkOutDate, isAfm
     <>
       <TwoColumns>
         <strong>
-          { `${ isAfmelding ? "Afmelding" : "Melding" } ${ nightsRented } nachten` }
+          { `${ isCancellation ? "Afmelding" : "Melding" } ${ nightsRented } nachten` }
         </strong>
       </TwoColumns>
       <Label>Check in</Label>

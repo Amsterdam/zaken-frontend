@@ -17,7 +17,7 @@ type Props = {
 const VacationRental: React.FC<Props> = ({ bagId }) => {
 
   const [data, { isBusy }] = usePermitDetails(bagId)
-  const reports = data?.vakantieverhuur_meldingen ?? undefined
+  const reports = data?.vakantieverhuur_reports ?? undefined
 
   return (
     <>
@@ -25,8 +25,8 @@ const VacationRental: React.FC<Props> = ({ bagId }) => {
         <Spinner /> :
         <>
           <Heading forwardedAs="h4">Vakantieverhuur meldingen</Heading>
-          { reports === undefined || reports?.meldingen.length === 0 ?
-            <Paragraph>Geen vakantieverhuur meldingen</Paragraph> :
+          { reports === undefined || reports?.reports.length === 0 ?
+            <Paragraph>Geen vakantieverhuur reports</Paragraph> :
             <Grid>
               <Label>Nachten verhuurd</Label>
               <Text>
@@ -42,10 +42,10 @@ const VacationRental: React.FC<Props> = ({ bagId }) => {
                   <Hr />
                 </TwoColumns>
                 <Details>
-                  <Summary>Alle meldingen</Summary>
+                  <Summary>Alle reports</Summary>
                   <Grid>
-                    { reports.meldingen.map(({ check_in_date, check_out_date, is_afmelding }, index: number) =>
-                        <VacationRentalReport checkInDate={ check_in_date } checkOutDate={ check_out_date } isAfmelding={ is_afmelding } key={ index } />
+                    { reports.reports.map(({ check_in_date, check_out_date, is_cancellation }, index: number) =>
+                        <VacationRentalReport checkInDate={ check_in_date } checkOutDate={ check_out_date } isCancellation={ is_cancellation } key={ index } />
                     ) }
                   </Grid>
                 </Details>
