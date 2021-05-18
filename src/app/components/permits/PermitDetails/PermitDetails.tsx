@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { Heading, Link, themeColor, themeSpacing } from "@amsterdam/asc-ui"
+import { Heading, themeColor, themeSpacing } from "@amsterdam/asc-ui"
 import { DateDisplay } from "@amsterdam/wonen-ui"
 
 type Props = {
@@ -27,13 +27,9 @@ const Grid = styled.div`
   place-items: baseline start;
 `
 
-const LinkWrap = styled.div`
-  margin-top: ${ themeSpacing(4) };
-`
-
 const PermitDetail: React.FC<Props> = ({ detail }) => {
 
-  const { permit_granted, permit_type, details, decos_join_web_url } = detail
+  const { permit_granted, permit_type, details } = detail
 
   const permitIsForBAndB = permit_type.startsWith("B&B")
   const endDateBAndB = details?.DATE_VALID_UNTIL ?? details?.DATE_VALID_TO
@@ -84,14 +80,6 @@ const PermitDetail: React.FC<Props> = ({ detail }) => {
           </>
         }
       </Grid>
-
-      { decos_join_web_url &&
-        <LinkWrap>
-          <Link href={ decos_join_web_url } variant="inline" icon="external" target="_blank" rel="noreferer">
-            { permit_type }
-          </Link>
-        </LinkWrap>
-      }
     </>
   )
 }

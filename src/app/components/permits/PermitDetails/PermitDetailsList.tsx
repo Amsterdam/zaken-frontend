@@ -1,6 +1,6 @@
 
 import styled from "styled-components"
-import { themeSpacing, Spinner, Paragraph } from "@amsterdam/asc-ui"
+import { themeSpacing, Spinner, Heading, Paragraph } from "@amsterdam/asc-ui"
 
 import { usePermitDetails } from "app/state/rest"
 import useKnownPermits from "./hooks/useKnownPermits"
@@ -30,7 +30,10 @@ const PermitDetailsList: React.FC<Props> = ({ bagId }) => {
       { isBusy ?
           <Spinner /> :
         permits === undefined ?
-          <Paragraph>Geen vergunningen gevonden</Paragraph> :
+          <>
+            <Heading forwardedAs="h4">Vergunningen</Heading>
+            <Paragraph>Geen vergunningen gevonden</Paragraph>
+          </> :
           <Ul>
             { permits.map(permit => (
                 <li key={ permit.permit_type }>
