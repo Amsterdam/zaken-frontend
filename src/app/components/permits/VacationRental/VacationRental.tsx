@@ -1,5 +1,4 @@
-import { Spinner, Paragraph, Heading, themeSpacing } from "@amsterdam/asc-ui"
-import styled from "styled-components"
+import { Spinner, Paragraph, Heading } from "@amsterdam/asc-ui"
 
 import { usePermitDetails } from "app/state/rest"
 import TwoColumns from "./components/TwoColumns"
@@ -15,22 +14,18 @@ type Props = {
   bagId: string
 }
 
-const StyledHeading = styled(Heading)`
-  margin-bottom: ${ themeSpacing(3) }
-`
-
 const VacationRental: React.FC<Props> = ({ bagId }) => {
 
   const [data, { isBusy }] = usePermitDetails(bagId)
-  const reports = data?.vakantieverhuur_meldingen ?? undefined
+  const reports = data?.vakantieverhuur_reports ?? undefined
 
   return (
     <>
       { isBusy ?
         <Spinner /> :
         <>
-          <StyledHeading forwardedAs="h4">Vakantieverhuur meldingen</StyledHeading>
-          { reports === undefined || reports?.meldingen.length === 0 ?
+          <Heading forwardedAs="h4">Vakantieverhuur meldingen</Heading>
+          { reports === undefined || reports?.reports.length === 0 ?
             <Paragraph>Geen vakantieverhuur meldingen</Paragraph> :
             <Grid>
               <Label>Nachten verhuurd</Label>
@@ -49,8 +44,8 @@ const VacationRental: React.FC<Props> = ({ bagId }) => {
                 <Details>
                   <Summary>Alle meldingen</Summary>
                   <Grid>
-                    { reports.meldingen.map(({ check_in_date, check_out_date, is_afmelding }, index: number) =>
-                        <VacationRentalReport checkInDate={ check_in_date } checkOutDate={ check_out_date } isAfmelding={ is_afmelding } key={ index } />
+                    { reports.reports.map(({ check_in_date, check_out_date, is_cancellation }, index: number) =>
+                        <VacationRentalReport checkInDate={ check_in_date } checkOutDate={ check_out_date } isCancellation={ is_cancellation } key={ index } />
                     ) }
                   </Grid>
                 </Details>

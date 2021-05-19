@@ -1,6 +1,5 @@
 
 import { RouteComponentProps } from "@reach/router"
-import { Link } from "@amsterdam/asc-ui"
 
 import Row, { RowWithColumn } from "app/components/layouts/Grid/Row"
 import PageHeading from "app/components/shared/PageHeading/PageHeading"
@@ -11,6 +10,7 @@ import DetailHeader from "app/components/shared/DetailHeader/DetailHeader"
 import Column from "app/components/layouts/Grid/Column"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
 import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId"
+import DecosLink from "app/components/permits/DecosLink/DecosLink"
 
 type Props = {
   bagId: string
@@ -36,10 +36,7 @@ const PermitsPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
         </Column>
       </Row>
       <RowWithColumn>
-        {/* TODO: make hardcoded link dynamic */}
-        <Link href="https://decosdvl.amsterdam.nl/" variant="inline" icon="external" target="_blank" rel="noreferer">
-          Alle vergunningen zie Decos Join
-        </Link>
+        <DecosLink bagId={ bagId } />
       </RowWithColumn>
     </DefaultLayout> :
     <NotFoundPage />
