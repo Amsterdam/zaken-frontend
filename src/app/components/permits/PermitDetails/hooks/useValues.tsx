@@ -23,7 +23,7 @@ export default (permit: Components.Schemas.Permit) => {
     permit_granted === "NOT_GRANTED" ? ["Datum besluit", details?.DATE_DECISION ? <DateDisplay date={ details.DATE_DECISION } /> : "-"] : undefined
   ]
 
-  const values = optionalValues.filter(value => value !== undefined) as [string, React.ReactNode][]
+  const values = optionalValues.filter((value): value is [string, React.ReactNode] => value !== undefined)
 
   return Object.fromEntries(values)
 }
