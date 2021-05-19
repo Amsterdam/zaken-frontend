@@ -14,7 +14,7 @@ type Props = {
   isLoading?: boolean
   title?: React.ReactNode
   extraInfo?: { infoTitle: string, infoText: string }
-  values: Record<string, React.ReactNode>
+  values: Record<string, React.ReactNode> | undefined
   headingSize?: React.ComponentProps<typeof Heading>["forwardedAs"]
 }
 
@@ -36,7 +36,7 @@ const DefinitionList: React.FC<Props> = ({
 
   const toggleCollapsed = useCallback(() => setIsCollapsed(!isCollapsed), [setIsCollapsed, isCollapsed])
 
-  const valueEntries = Object.entries(values)
+  const valueEntries = Object.entries(values ?? {})
 
   const isCollapsible = valueEntries.length > numInitialVisibleRows
 
