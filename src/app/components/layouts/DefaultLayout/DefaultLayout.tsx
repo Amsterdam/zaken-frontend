@@ -30,7 +30,7 @@ const MenuWrap = styled.div`
 const DefaultLayout: React.FC<Props> = ({ showSearchButton = true, children }) => (
   <>
     <SkipLinks linkList={ [
-      { title:"Ga naar de content", target: "a11y-content" }
+      { title:"Direct naar: inhoud", target: "a11y_content" }
     ] }/>
     <HeaderWrap>
       <Header

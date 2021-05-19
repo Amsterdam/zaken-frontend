@@ -28,6 +28,7 @@ const StyledLink = styled(Link)`
 
     &:hover {
       color: ${ themeColor("tint", "level1") };
+      text-decoration: none;
     }
     &:focus {
       transform: translate(-50%, 0%);
@@ -38,8 +39,8 @@ const StyledLink = styled(Link)`
 const SkipLinks: React.FC<Props> = ( { linkList }) => (
   <nav>
     <StyledList >
-      {linkList.map((link) => 
-        <ListItem>
+      {linkList.map((link, index) => 
+        <ListItem key={ `${ link.target }_${ index }` }>
           <StyledLink href={ `#${ link.target }` }>{ link.title }</StyledLink>
         </ListItem>
       )}
