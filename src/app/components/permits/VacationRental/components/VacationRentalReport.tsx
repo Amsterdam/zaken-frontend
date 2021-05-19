@@ -1,9 +1,6 @@
-import { DateDisplay } from "@amsterdam/wonen-ui"
-
 import useNumberOfDaysBetweenDates from "./hooks/useNumberOfDaysBetweenDates"
-import TwoColumns from "./TwoColumns"
-import Label from "./Label"
-import Text from "./Text"
+import useVacationRentalReportValues from "./hooks/useVacationRentalReportValues"
+import DefinitionList from "app/components/shared/DefinitionList/DefinitionList"
 
 type Props = {
   checkInDate: string
@@ -14,20 +11,10 @@ type Props = {
 const VactionRentalReport: React.FC<Props> = ({ checkInDate, checkOutDate, isCancellation }) => {
 
   const nightsRented = useNumberOfDaysBetweenDates(checkInDate, checkOutDate)
+  const title = `${ isCancellation ? "Afmelding" : "Melding" } ${ nightsRented } nachten`
+  const values = useVacationRentalReportValues(checkInDate, checkOutDate)
 
-  return (
-    <>
-      <TwoColumns>
-        <strong>
-          { `${ isCancellation ? "Afmelding" : "Melding" } ${ nightsRented } nachten` }
-        </strong>
-      </TwoColumns>
-      <Label>Check in</Label>
-      <Text><DateDisplay date={ checkInDate } /></Text>
-      <Label>Check out</Label>
-      <Text><DateDisplay date={ checkOutDate } /></Text>
-    </>
-  )
+  return <DefinitionList title={ title } values={ values } />
 }
 
 export default VactionRentalReport
