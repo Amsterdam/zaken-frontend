@@ -8,8 +8,11 @@ type Props = {
   permit: Components.Schemas.Permit
 }
 
-const Div = styled.div`
+const Div = styled.div<{ isOpaque?: boolean }>`
   margin-bottom: ${ themeSpacing(8) };
+  dl {
+    opacity: ${ ({ isOpaque = true }) => isOpaque ? 1 : 0.3 };
+  }
 `
 
 const HeadingSpan = styled.span`
@@ -25,13 +28,14 @@ const PermitDetail: React.FC<Props> = ({ permit }) => {
 
   const values = useValues(permit)
   const { permit_type, permit_granted } = permit
+  const isGranted = permit_granted === "GRANTED"
 
   return (
-    <Div>
+    <Div isOpaque={ isGranted }>
       <DefinitionList
         title={
           <HeadingSpan>
-            { permit_type } <StyledIcon>{ permit_granted === "GRANTED" ? <Check /> : <Close /> }</StyledIcon>
+            { permit_type } <StyledIcon>{ isGranted ? <Check /> : <Close /> }</StyledIcon>
           </HeadingSpan>
         }
         headingSize="h4"
