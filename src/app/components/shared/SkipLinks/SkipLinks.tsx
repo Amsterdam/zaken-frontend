@@ -28,6 +28,7 @@ const StyledLink = styled(Link)`
 
     &:hover {
       color: ${ themeColor("tint", "level1") };
+      text-decoration: none;
     }
     &:focus {
       transform: translate(-50%, 0%);
