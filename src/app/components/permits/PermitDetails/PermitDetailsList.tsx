@@ -10,16 +10,6 @@ type Props = {
   bagId: string
 }
 
-const Ul = styled.ul`
-  margin: 0;
-  padding: 0;
-  list-style: none;
-
-  li {
-    margin-bottom: ${ themeSpacing(8) };
-  }
-`
-
 const PermitDetailsList: React.FC<Props> = ({ bagId }) => {
 
   const [data, { isBusy }] = usePermitDetails(bagId)
@@ -34,14 +24,11 @@ const PermitDetailsList: React.FC<Props> = ({ bagId }) => {
             <Heading forwardedAs="h4">Vergunningen</Heading>
             <Paragraph>Geen vergunningen gevonden</Paragraph>
           </> :
-          <Ul>
-            { permits.map(permit => (
-                <li key={ permit.permit_type }>
-                  <PermitDetails detail={ permit } />
-                </li>
-              ))
-            }
-          </Ul>
+          <div>
+            { permits.map(permit =>
+                <PermitDetails key={ permit.permit_type } detail={ permit } />
+            ) }
+          </div>
       }
     </>
   )

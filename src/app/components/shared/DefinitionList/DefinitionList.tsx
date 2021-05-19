@@ -23,7 +23,7 @@ const Dl = styled.dl`
 `
 
 const DefinitionList: React.FC<Props> = ({
-  isLoading,
+  isLoading = false,
   numLoadingRows = 5,
   numInitialVisibleRows = Number.MAX_VALUE,
   title,

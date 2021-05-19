@@ -7,6 +7,10 @@ type Props = {
   detail: Components.Schemas.Permit
 }
 
+const Div = styled.div`
+  margin-bottom: ${ themeSpacing(8) };
+`
+
 const StyledHeading = styled(Heading)`
   margin-bottom: ${ themeSpacing(3) };
   justify-content: start;
@@ -45,7 +49,7 @@ const PermitDetail: React.FC<Props> = ({ detail }) => {
   const isGranted = permit_granted === "GRANTED"
 
   return (
-    <>
+    <Div>
       <StyledHeading forwardedAs="h4">{ permit_type }<StyledIcon>{ isGranted ? <Check /> : <Close /> }</StyledIcon></StyledHeading>
       <Grid opaque={ isGranted }>
         <Label>Resultaat</Label>
@@ -87,7 +91,7 @@ const PermitDetail: React.FC<Props> = ({ detail }) => {
           </>
         }
       </Grid>
-    </>
+    </Div>
   )
 }
 export default PermitDetail
