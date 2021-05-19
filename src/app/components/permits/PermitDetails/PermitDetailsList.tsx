@@ -1,6 +1,5 @@
 
-import styled from "styled-components"
-import { themeSpacing, Spinner, Heading, Paragraph } from "@amsterdam/asc-ui"
+import { Spinner, Heading, Paragraph } from "@amsterdam/asc-ui"
 
 import { usePermitDetails } from "app/state/rest"
 import useKnownPermits from "./hooks/useKnownPermits"
@@ -9,16 +8,6 @@ import PermitDetails from "./PermitDetails"
 type Props = {
   bagId: string
 }
-
-const Ul = styled.ul`
-  margin: 0;
-  padding: 0;
-  list-style: none;
-
-  li {
-    margin-bottom: ${ themeSpacing(8) };
-  }
-`
 
 const PermitDetailsList: React.FC<Props> = ({ bagId }) => {
 
@@ -34,14 +23,11 @@ const PermitDetailsList: React.FC<Props> = ({ bagId }) => {
             <Heading forwardedAs="h4">Vergunningen</Heading>
             <Paragraph>Geen vergunningen gevonden</Paragraph>
           </> :
-          <Ul>
-            { permits.map(permit => (
-                <li key={ permit.permit_type }>
-                  <PermitDetails detail={ permit } />
-                </li>
-              ))
-            }
-          </Ul>
+          <div>
+            { permits.map(permit =>
+                <PermitDetails key={ permit.permit_type } permit={ permit } />
+            ) }
+          </div>
       }
     </>
   )
