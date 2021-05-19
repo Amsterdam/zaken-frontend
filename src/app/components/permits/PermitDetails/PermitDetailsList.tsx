@@ -1,6 +1,5 @@
 
-import styled from "styled-components"
-import { themeSpacing, Spinner, Heading, Paragraph } from "@amsterdam/asc-ui"
+import { Spinner, Heading, Paragraph } from "@amsterdam/asc-ui"
 
 import { usePermitDetails } from "app/state/rest"
 import useKnownPermits from "./hooks/useKnownPermits"
@@ -26,7 +25,7 @@ const PermitDetailsList: React.FC<Props> = ({ bagId }) => {
           </> :
           <div>
             { permits.map(permit =>
-                <PermitDetails key={ permit.permit_type } detail={ permit } />
+                <PermitDetails key={ permit.permit_type } permit={ permit } />
             ) }
           </div>
       }
