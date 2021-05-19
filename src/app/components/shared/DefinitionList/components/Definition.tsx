@@ -22,6 +22,7 @@ const Dt = styled.dt`
 
 const Dd = styled.dd`
   padding: ${ themeSpacing(3) } 0;
+  width: 70%;
 `
 
 const castValue = (value: React.ReactNode) => {

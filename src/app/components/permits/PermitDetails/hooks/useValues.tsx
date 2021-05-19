@@ -11,6 +11,7 @@ export default (permit: Components.Schemas.Permit) => {
 
   const optionalValues = [
     ["Resultaat", details?.RESULT],
+    ["Omschrijving zaak", details?.SUBJECT],
     ["Soort vergunning", details?.PERMIT_TYPE],
     ["Aangevraagd door", details?.APPLICANT],
     permitIsForBAndB ? ["Vergunninghouder", details?.HOLDER] : undefined,
@@ -19,7 +20,7 @@ export default (permit: Components.Schemas.Permit) => {
     isGranted && permitIsForBAndB && endDateBAndB ?
       ["Geldig tot en met", <DateDisplay date={ endDateBAndB } />] :
       ["Geldig tot", endDate ? <DateDisplay date={ endDate } /> : "-"],
-    permit_granted === "NOT_GRANTED" && details?.DATE_DECISION ? ["Datum besluit", details.DATE_DECISION] : undefined
+    permit_granted === "NOT_GRANTED" ? ["Datum besluit", details?.DATE_DECISION ? <DateDisplay date={ details.DATE_DECISION } /> : "-"] : undefined
   ]
 
   const values = optionalValues.filter(value => value !== undefined) as [string, React.ReactNode][]
