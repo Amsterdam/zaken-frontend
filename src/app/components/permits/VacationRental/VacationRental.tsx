@@ -22,7 +22,7 @@ const VacationRental: React.FC<Props> = ({ bagId }) => {
       { isBusy ?
         <Spinner /> :
         <>
-          { reports.length > 0 ?
+          { reports.length === 0 ?
             <>
               <Heading forwardedAs="h4">{ title }</Heading>
               <Paragraph>Geen vakantieverhuur meldingen</Paragraph>
