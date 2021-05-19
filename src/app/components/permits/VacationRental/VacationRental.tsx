@@ -22,13 +22,13 @@ const VacationRental: React.FC<Props> = ({ bagId }) => {
       { isBusy ?
         <Spinner /> :
         <>
-          { values === undefined ?
+          { reports.length > 0 ?
             <>
               <Heading forwardedAs="h4">{ title }</Heading>
               <Paragraph>Geen vakantieverhuur meldingen</Paragraph>
             </> :
             <>
-              <DefinitionList title={ title } values={ values } />
+              <DefinitionList title={ title } values={ values } headingSize="h4" />
               { reports.map(({ check_in_date, check_out_date, is_cancellation }, index: number) =>
                   <VacationRentalReport
                     key={ index }
