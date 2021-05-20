@@ -2,7 +2,7 @@ import { themeSpacing } from "@amsterdam/asc-ui"
 import styled from "styled-components"
 
 type Props = {
-  items: string[]
+  items: React.ReactNode[]
   emptyValue?: string
 }
 
@@ -20,7 +20,7 @@ const List: React.FC<Props> = ({ items, emptyValue = "-" }) => (
   <>
     { items.length > 0 ?
       <Ul>
-        { items.map((item: string, index: number) =>
+        { items.map((item: React.ReactNode, index: number) =>
           <li key={ index }>{ item }</li>
         )}
       </Ul> :
