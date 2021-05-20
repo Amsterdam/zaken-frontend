@@ -19,13 +19,14 @@ export const ModalBlock = styled.div`
 const Modal: React.FC<Props> = ({ children, title, isOpen, onClose }) => (
   <AscModal open={isOpen} onClose={onClose}>
     <TopBar>
-      <Heading forwardedAs="h4" style={{ flexGrow: 1 }}>
+      <Heading forwardedAs="h4" style={{ flexGrow: 1, padding: "12px 0" } }>
         { title }
         <Button
           type="button"
           size={30}
           onClick={onClose}
           variant="blank"
+          style={{ alignSelf: "flex-start" }}
         >
           <Icon size={28}><Close /></Icon>
         </Button>
