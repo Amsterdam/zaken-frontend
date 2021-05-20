@@ -8,7 +8,7 @@ import useOtherAddressesByBagId from "app/state/rest/custom/useOtherAddresses/us
 import AddressLink from "./components/AddressLink"
 
 type Props = {
-  bagId: string
+  bagId: Components.Schemas.Address["bag_id"]
   headingSize?: "h1" | "h2"
   isHeader?: boolean
   enableSwitch?: boolean
@@ -24,7 +24,7 @@ const Div = styled.div<{ isHeader: boolean }>`
 `
 
 const ButtonWrap = styled.div`
-  margin-left: ${ themeSpacing(3) };
+  margin: -${ themeSpacing(2) } 0 0 ${ themeSpacing(3) };
 `
 
 const AddressHeader: React.FC<Props> = ({ bagId, headingSize = "h2", isHeader = false, enableSwitch = true }) => {
@@ -46,7 +46,7 @@ const AddressHeader: React.FC<Props> = ({ bagId, headingSize = "h2", isHeader = 
   return (
     <Div isHeader={ isHeader }>
       { showTitle &&
-        <AddressLink title={ title } bagId={ bagId } headingSize={ headingSize ?? "span" } />
+        <AddressLink title={ title } bagId={ bagId } as={ headingSize ?? "span" } />
       }
       { showButton &&
         <ButtonWrap>
