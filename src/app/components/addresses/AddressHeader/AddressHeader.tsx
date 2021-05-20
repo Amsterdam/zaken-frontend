@@ -1,6 +1,6 @@
 
 import styled from "styled-components"
-import { Typography, breakpoint, themeSpacing } from "@amsterdam/asc-ui"
+import { breakpoint, themeSpacing } from "@amsterdam/asc-ui"
 
 import { useBAG } from "app/state/rest"
 import ShowOtherAddressesButton from "app/components/addresses/AddressSuffixSwitcher/ShowOtherAddressesButton"
