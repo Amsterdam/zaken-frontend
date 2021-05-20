@@ -1,10 +1,11 @@
 
 import styled from "styled-components"
-import { Typography, breakpoint, themeSpacing } from "@amsterdam/asc-ui"
+import { breakpoint, themeSpacing } from "@amsterdam/asc-ui"
 
 import { useBAG } from "app/state/rest"
 import ShowOtherAddressesButton from "app/components/addresses/AddressSuffixSwitcher/ShowOtherAddressesButton"
 import useOtherAddressesByBagId from "app/state/rest/custom/useOtherAddresses/useOtherAddresses"
+import AddressLink from "./components/AddressLink"
 
 type Props = {
   bagId: string
@@ -19,12 +20,6 @@ const Div = styled.div<{ isHeader: boolean }>`
   justify-content: flex-start;
   @media screen and ${ breakpoint("min-width", "laptop") } {
     justify-content: ${ props => props.isHeader ? "flex-start" : "flex-end" };
-  }
-`
-
-const TypographyWrap = styled.div`
-  span {
-    margin-bottom: 0;
   }
 `
 
@@ -51,9 +46,7 @@ const AddressHeader: React.FC<Props> = ({ bagId, headingSize = "h2", isHeader = 
   return (
     <Div isHeader={ isHeader }>
       { showTitle &&
-        <TypographyWrap>
-          <Typography as={ isHeader ? headingSize : "span" } styleAs={ headingSize }>{ title }</Typography>
-        </TypographyWrap>
+        <AddressLink title={ title } bagId={ bagId } headingSize={ headingSize ?? "span" } />
       }
       { showButton &&
         <ButtonWrap>

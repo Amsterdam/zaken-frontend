@@ -6,9 +6,7 @@ type Props = {
 }
 
 const DetailHeader: React.FC<Props> = ({ bagId, enableSwitch }) => (
-  
-  <AddressHeader bagId={ bagId! } enableSwitch = { enableSwitch } />
-
+  <AddressHeader bagId={ bagId! } enableSwitch={ enableSwitch } headingSize="h2" />
 )
 
 export default DetailHeader
