@@ -1,6 +1,11 @@
 import { themeSpacing } from "@amsterdam/asc-ui"
 import styled from "styled-components"
 
+type Props = {
+  items: string[]
+  emptyValue?: string
+}
+
 const Ul = styled.ul`
   list-style: none;
   padding: 0;
@@ -10,12 +15,18 @@ const Ul = styled.ul`
     line-height: 1.15;
   }
 `
-const MapArrayToList = (list: string[]) => (
-  <Ul>
-    { list.map((item: string, index: number) =>
-      <li key={ index }>{ item }</li>
-    )}
-  </Ul>
+
+const List: React.FC<Props> = ({ items, emptyValue = "-" }) => (
+  <>
+    { items.length > 0 ?
+      <Ul>
+        { items.map((item: string, index: number) =>
+          <li key={ index }>{ item }</li>
+        )}
+      </Ul> :
+      emptyValue
+    }
+  </>
 )
 
-export default MapArrayToList
+export default List
