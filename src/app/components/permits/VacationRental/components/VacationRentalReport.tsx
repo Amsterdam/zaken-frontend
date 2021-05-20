@@ -11,10 +11,10 @@ type Props = {
 const VactionRentalReport: React.FC<Props> = ({ checkInDate, checkOutDate, isCancellation }) => {
 
   const nightsRented = useNumberOfDaysBetweenDates(checkInDate, checkOutDate)
-  const title = `${ isCancellation ? "Afmelding" : "Melding" } ${ nightsRented } nachten`
+  const title = `${ isCancellation ? "Afmelding" : "Melding" } (${ nightsRented } nachten)`
   const values = useVacationRentalReportValues(checkInDate, checkOutDate)
 
-  return <DefinitionList title={ title } values={ values } />
+  return <DefinitionList title={ title } values={ values } headingSize="h4" />
 }
 
 export default VactionRentalReport
