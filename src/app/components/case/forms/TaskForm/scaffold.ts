@@ -28,7 +28,7 @@ export default (id: Components.Schemas.Case["id"], processes?: Components.Schema
     submit: {
       type: "SubmitButton",
       props: {
-        variant: "tertiary",
+        variant: "secondary",
         label: "Taak opvoeren",
         align: "right"
       }
