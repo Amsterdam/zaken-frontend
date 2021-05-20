@@ -1,13 +1,11 @@
-
-
 type Props = {
-  sex: Components.Schemas.Resident["geslachtsaanduiding"]
+  sex?: Components.Schemas.Resident["geslachtsaanduiding"]
   firstName: string
   namePrefix?: string
   name: string
 }
 
-const mapSex = (value: Components.Schemas.Resident["geslachtsaanduiding"]) => {
+const mapSex = (value?: Components.Schemas.Resident["geslachtsaanduiding"]) => {
   switch (value) {
     case "M": return "Dhr. "
     case "V": return "Mvr. "
