@@ -18,6 +18,7 @@ const Div = styled.div<{ isOpaque?: boolean }>`
 const HeadingSpan = styled.span`
   display: flex;
   justify-content: start;
+  align-items: center;
 `
 
 const StyledIcon = styled(Icon)`
