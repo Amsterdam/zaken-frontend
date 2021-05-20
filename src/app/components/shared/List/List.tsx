@@ -20,7 +20,7 @@ const List: React.FC<Props> = ({ items, emptyValue = "-" }) => (
   <>
     { items.length > 0 ?
       <Ul>
-        { items.map((item: React.ReactNode, index: number) =>
+        { items.map((item, index) =>
           <li key={ index }>{ item }</li>
         )}
       </Ul> :
