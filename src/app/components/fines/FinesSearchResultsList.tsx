@@ -9,7 +9,6 @@ type Props = {
   searchString: string
 }
 
-
 const Ul = styled.ul`
   padding: 0;
   list-style: none;
@@ -20,21 +19,24 @@ const Ul = styled.ul`
 `
 
 const FinesSearchResultsList: React.FC<Props> = ({ searchString }) => {
+
   const [data, { isBusy, execGet }] = useFine(searchString, { lazy: true })
+
+  // TODO: Make search string optional and remove this useEffect. And instead use lazyness of cache hook.
   useEffect(() => {
     if (searchString.length === 0) return
     execGet()
   }, [searchString, execGet])
 
+  // TODO: Use List component
   const listItems = data?.items.map((fine) =>
-
     <li key={fine.identificatienummer}>
-      <FinesSearchResult data={ fine } />
+      <FinesSearchResult fine={ fine } />
     </li>
   )
 
   const info = {
-    infoTitle:"Facturatie",
+    infoTitle: "Facturatie",
     infoText: "Binnen de termijn wordt de eerste factuur naar de overtreder verstuurd."
   }
 
