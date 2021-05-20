@@ -1,4 +1,3 @@
-import { useEffect } from "react"
 import { useFine } from "app/state/rest"
 import { Heading, Spinner } from "@amsterdam/asc-ui"
 import List from "app/components/shared/List/List"
@@ -11,14 +10,7 @@ type Props = {
 
 const FinesSearchResultsList: React.FC<Props> = ({ searchString }) => {
 
-  const [data, { isBusy, execGet }] = useFine(searchString, { lazy: true })
-
-  // TODO: Make search string optional and remove this useEffect. And instead use lazyness of cache hook.
-  useEffect(() => {
-    if (searchString.length === 0) return
-    execGet()
-  }, [searchString, execGet])
-
+  const [data, { isBusy }] = useFine(searchString.length > 0 ? searchString : undefined)
   const items = data?.items.map((fine) => <FinesSearchResult fine={ fine } />) ?? []
 
   return (
