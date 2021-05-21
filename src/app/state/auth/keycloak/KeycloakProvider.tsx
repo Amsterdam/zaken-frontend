@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from "react"
-
 import { KeycloakInstance } from "keycloak-js"
+
 import { keycloak } from "./keycloak"
 import options from "./options"
 

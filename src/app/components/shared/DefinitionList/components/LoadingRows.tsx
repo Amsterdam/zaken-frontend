@@ -6,6 +6,8 @@ type Props = {
 }
 
 const LoadingRows: React.FC<Props> = ({ numRows }) => <>
-  { [...Array(numRows)].map((_, index) => <Definition term={ <SmallSkeleton /> } value={ <SmallSkeleton /> } />) }
+  { [...Array(numRows)].map((_, index) =>
+    <Definition key={ index } term={ <SmallSkeleton /> } value={ <SmallSkeleton /> } />
+  ) }
 </>
 export default LoadingRows
