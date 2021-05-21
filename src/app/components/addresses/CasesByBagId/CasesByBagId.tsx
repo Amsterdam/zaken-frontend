@@ -31,10 +31,11 @@ const CasesByBagId: React.FC<Props> = ({ bagId, openCases = false, title = defau
 
   const [data, { isBusy }] = useCasesByBagId(bagId, openCases)
   const values = useValues(data?.results)
+  const numCases = data?.results?.length ?? 0
 
   return (
     <>
-      <StyledHeading>{ title }{ (data?.results?.length ?? 0) > 0 && ` (${ data?.results?.length })` }</StyledHeading>
+      <StyledHeading>{ title }{ numCases > 0 && ` (${ numCases })` }</StyledHeading>
       <Table
         loading={ isBusy }
         numLoadingRows={ 1 }
