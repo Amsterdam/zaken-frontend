@@ -8,7 +8,7 @@ export default (caseItem?: Components.Schemas.Case) => {
 
   const values = [
     ["Zaak ID", <CaseIdDisplay id={ id } />],
-    ["Team", name],
+    ["Thema", name],
     ["Startdatum", start_date ? <DateDisplay date={ start_date } /> : "-"]
   ]
 
