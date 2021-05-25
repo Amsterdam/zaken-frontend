@@ -1,10 +1,17 @@
 import to from "app/routing/utils/to"
 import { CaseIdDisplay, DateDisplay } from "@amsterdam/wonen-ui"
 import OpenButton from "app/components/shared/OpenButton/OpenButton"
+import navigateTo from "app/routing/navigateTo"
+import React from "react"
+
+const onClick = (id: Components.Schemas.Case["id"]) => (e: React.MouseEvent) => {
+  e.stopPropagation()
+  navigateTo("/zaken/:id", { id })
+}
 
 export default (cases?: Components.Schemas.Case[]) =>
   cases?.map(({ id, team, start_date, current_states }) => ({
-    href: to("/zaken/:id", { id }),
+    onClick: onClick(id),
     itemList: [
       <CaseIdDisplay id={ id } />,
       team.name,

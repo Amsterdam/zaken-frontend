@@ -9,7 +9,8 @@ type ButtonProps = {
 }
 
 const OpenButton: React.FC<ButtonProps> = ({ href, text }) =>
-  <ButtonLink to={href}>
-    <Button as="span" variant="textButton" iconSize={24} iconLeft={<ChevronRight />}>{ text }</Button>
+  <ButtonLink to={ href }>
+    <Button as="span" variant="textButton" iconSize={ 24 } iconLeft={ <ChevronRight /> }>{ text }</Button>
   </ButtonLink>
+
 export default OpenButton

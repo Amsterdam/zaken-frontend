@@ -15,7 +15,6 @@ export default (cases?: Components.Schemas.Case[]) =>
     const startDate = first(current_states.map(({ start_date }) => start_date).sort(sortByDate("DESC")))
 
     return {
-      href: to("/zaken/:id", { id }),
       onClick: onClick(id),
       itemList: [
         address.full_address ?? "-",

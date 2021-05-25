@@ -17,12 +17,11 @@ export default (
 
   return response?.map(({ adres, adresseerbaar_object_id }) => (
     {
-      href: to("/adres/:bagId", { bagId: adresseerbaar_object_id }),
       onClick: onClick(adresseerbaar_object_id),
       itemList: [
-        adres, 
-        <OpenButton 
-          href={ to("/adres/:bagId", { bagId: adresseerbaar_object_id }) } 
+        adres,
+        <OpenButton
+          href={ to("/adres/:bagId", { bagId: adresseerbaar_object_id }) }
           text="Open"
         />
       ]

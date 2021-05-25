@@ -11,7 +11,10 @@ type Props = {
   loading?: boolean
   hasFixedColumn?: boolean
   columns: { header?: React.ReactNode, minWidth: number }[]
-  data?: { href?: string, itemList?: React.ReactNode[] }[]
+  data?: {
+    onClick?: (e: React.MouseEvent) => void
+    itemList?: React.ReactNode[]
+  }[]
   noValuesPlaceholder?: React.ReactNode
   showHeadWhenEmpty?: boolean
   className?: string
@@ -93,11 +96,14 @@ const Table: React.FC<Props> = ({
             </thead>
           }
           <tbody>
-            { !loading && data?.map( (row: {href?: string, onClick?: (e: React.MouseEvent) => {} , itemList?: React.ReactNode[]}, index: number) =>
-              <Row key={index} onClick={ row.onClick ?? (() => undefined) } isClickable={row.href !== undefined } >
-                { row.itemList?.map( (cell: React.ReactNode, index: number) => hasFixedColumn && index === (row.itemList?.length ?? 0 ) - 1
-                      ? <FixedTableCell key={index} width={ fixedColumnWidth }>{ cell ?? <>&nbsp;</> }</FixedTableCell>
-                      : <TableCell key={index}>{ loading ? <SmallSkeleton maxRandomWidth={columns[index].minWidth - 30} /> : cell ?? <>&nbsp;</> }</TableCell>
+            { !loading && data?.map(({ onClick, itemList }, index) =>
+              <Row key={ index } onClick={ onClick ?? (() => {}) } isClickable={ onClick !== undefined } >
+                { itemList?.map((cell: React.ReactNode, index: number) =>
+                    hasFixedColumn && index === (itemList?.length ?? 0) - 1
+                      ? <FixedTableCell key={ index } width={ fixedColumnWidth }>{ cell ?? <>&nbsp;</> }</FixedTableCell>
+                      : <TableCell key={ index }>
+                          { loading ? <SmallSkeleton maxRandomWidth={columns[index].minWidth - 30} /> : cell ?? <>&nbsp;</> }
+                        </TableCell>
                 ) }
               </Row>
             ) }
