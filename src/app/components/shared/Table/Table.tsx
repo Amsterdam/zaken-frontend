@@ -1,6 +1,5 @@
 import { themeColor } from "@amsterdam/asc-ui"
 import styled, { css } from "styled-components"
-import { navigate } from "@reach/router"
 
 import SmallSkeleton from "app/components/shared/Skeleton/SmallSkeleton"
 import TableCell from "./components/TableCell/TableCell"
@@ -78,12 +77,6 @@ const Table: React.FC<Props> = ({
     ? columns[columns.length - 1].minWidth
     : undefined
 
-  const onClick = (href: string | undefined, event: React.MouseEvent<HTMLTableRowElement>) => {
-    if (href === undefined) return
-    event.stopPropagation()
-    navigate(href)
-  }
-
   return (
     <Wrap className={ className }>
       <HorizontalScrollContainer fixedColumnWidth={ fixedColumnWidth }>
@@ -100,9 +93,9 @@ const Table: React.FC<Props> = ({
             </thead>
           }
           <tbody>
-            { !loading && data?.map((row: {href?: string, itemList?: React.ReactNode[]}, index: number) =>
-              <Row key={index} onClick={(e) => onClick( row.href , e )} isClickable={row.href !== undefined } >
-                { row.itemList?.map((cell: React.ReactNode, index: number) => hasFixedColumn && index === (row.itemList?.length ?? 0 ) - 1
+            { !loading && data?.map( (row: {href?: string, onClick?: (e: React.MouseEvent) => {} , itemList?: React.ReactNode[]}, index: number) =>
+              <Row key={index} onClick={ row.onClick ?? (() => undefined) } isClickable={row.href !== undefined } >
+                { row.itemList?.map( (cell: React.ReactNode, index: number) => hasFixedColumn && index === (row.itemList?.length ?? 0 ) - 1
                       ? <FixedTableCell key={index} width={ fixedColumnWidth }>{ cell ?? <>&nbsp;</> }</FixedTableCell>
                       : <TableCell key={index}>{ loading ? <SmallSkeleton maxRandomWidth={columns[index].minWidth - 30} /> : cell ?? <>&nbsp;</> }</TableCell>
                 ) }
