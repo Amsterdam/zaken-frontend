@@ -12,7 +12,7 @@ export type Props = {
 const OtherAddressesModal: React.FC<Props> = ({ isOpen, closeModal, bagId }) => (
   <Modal isOpen={isOpen} onClose={closeModal} title="Andere adressen">
     <ModalBlock>
-      <OtherAddressesTable bagId={bagId} onAddressChosen={closeModal}  />
+      <OtherAddressesTable bagId={bagId} onAddressChosen={closeModal} />
     </ModalBlock>
   </Modal>
 )

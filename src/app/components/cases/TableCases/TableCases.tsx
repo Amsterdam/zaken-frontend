@@ -6,6 +6,7 @@ import Table from "app/components/shared/Table/Table"
 import OpenButton from "app/components/shared/OpenButton/OpenButton"
 import sortByDate from "./utils/sortByDate"
 import first from "./utils/first"
+import navigateTo from "app/routing/navigateTo"
 
 type Props = {
   data?: Components.Schemas.PaginatedCaseList
@@ -19,6 +20,10 @@ const columns = [
   { minWidth: 140 }
 ]
 
+const onClick = (id: Components.Schemas.Case["id"]) => (e: React.MouseEvent) => {
+  navigateTo("/zaken/:id", { id })
+}
+
 const mapData = (data: Components.Schemas.Case) => {
 
   const { id, address, current_states } = data
@@ -26,6 +31,7 @@ const mapData = (data: Components.Schemas.Case) => {
 
   return {
     href: to("/zaken/:id", { id }),
+    onClick: onClick(id),
     itemList: [
       address.full_address ?? "-",
       current_states.length > 0 ? current_states.map(({ status_name }) => status_name).join(", ") : "-",
