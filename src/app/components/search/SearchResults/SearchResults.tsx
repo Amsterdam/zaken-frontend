@@ -3,6 +3,7 @@ import { useBAGWithZipCode } from "app/state/rest"
 import Table from "app/components/shared/Table/Table"
 import OpenButton from "app/components/shared/OpenButton/OpenButton"
 import to from "app/routing/utils/to"
+import navigateTo from "app/routing/navigateTo"
 
 export type SearchResult = Pick<BAGAddressResponse["results"][0], "adres" | "postcode" | "adresseerbaar_object_id">
 type Props = {
@@ -18,11 +19,17 @@ const columns = [
   { minWidth: 100 }
 ]
 
+
+const onClick = (id: Components.Schemas.Address["bag_id"]) => (e: React.MouseEvent) => {
+  navigateTo("/adres/:bagId", { bagId: id })
+}
+
 const filterData = (data: SearchResult) => typeof data?.postcode === "string"
 
 const mapData = (data: SearchResult) =>
 ({
   href: to("/adres/:bagId", { bagId: data.adresseerbaar_object_id }),
+  onClick: onClick(data.adresseerbaar_object_id),
   itemList: [
     data.adres ?? "-",
     data.postcode ?? "-",

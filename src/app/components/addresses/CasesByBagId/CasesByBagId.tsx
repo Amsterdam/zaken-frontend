@@ -7,6 +7,7 @@ import { useCasesByBagId } from "app/state/rest"
 import to from "app/routing/utils/to"
 import Table from "app/components/shared/Table/Table"
 import OpenButton from "app/components/shared/OpenButton/OpenButton"
+import navigateTo from "app/routing/navigateTo"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -30,9 +31,14 @@ const columns = [
   { minWidth: 140 }
 ]
 
+const onClick = (id: Components.Schemas.Case["id"]) => (e: React.MouseEvent) => {
+  navigateTo("/zaken/:id", { id })
+}
+
 const mapData = (data: Components.Schemas.Case) =>
   ({
     href: to("/zaken/:id", { id: data.id }),
+    onClick: onClick(data.id),
     itemList: [
       <CaseIdDisplay id={ data.id } />,
       data.team.name,
