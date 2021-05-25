@@ -1,4 +1,4 @@
-import { ReactNode, MouseEvent } from "react"
+import React, { ReactNode } from "react"
 
 import { themeColor } from "@amsterdam/asc-ui"
 import styled, { css } from "styled-components"
@@ -8,8 +8,6 @@ import SmallSkeleton from "app/components/shared/Skeleton/SmallSkeleton"
 import TableCell from "./components/TableCell/TableCell"
 import TableHeading from "./components/TableHeading/TableHeading"
 import FixedTableCell from "./components/TableCell/FixedTableCell"
-import { navigate } from "@reach/router"
-
 
 type CellContent = ReactNode
 
@@ -74,13 +72,6 @@ const Table: React.FC<Props> = ({ columns, loading = false, numLoadingRows, hasF
     ? columns[columns.length - 1].minWidth
     : undefined
 
-const onClick = (href: string | undefined, e: MouseEvent<HTMLTableRowElement>) => {
-  if (href) {
-    e.stopPropagation()
-    navigate(href)
-  }
-}
-
   return (
     <Wrap className={ className }>
       <HorizontalScrollContainer fixedColumnWidth={ fixedColumnWidth }>
@@ -95,8 +86,8 @@ const onClick = (href: string | undefined, e: MouseEvent<HTMLTableRowElement>) =
           </Row>
           </thead>
           <tbody>
-            { !loading && data?.map( (row: {href?: string, itemList?: ReactNode[]}, index: number) =>
-              <Row key={index} onClick={(e) => onClick( row.href , e )} isClickable={row.href !== undefined } >
+            { !loading && data?.map( (row: {href?: string, onClick?: (e: React.MouseEvent) => {} , itemList?: ReactNode[]}, index: number) =>
+              <Row key={index} onClick={ row.onClick ?? (() => undefined) } isClickable={row.href !== undefined } >
                 { row.itemList?.map( (cell: CellContent, index: number) => hasFixedColumn && index === (row.itemList?.length ?? 0 ) - 1
                       ? <FixedTableCell key={index} width={ fixedColumnWidth }>{ cell ?? <>&nbsp;</> }</FixedTableCell>
                       : <TableCell key={index}>{ loading ? <SmallSkeleton maxRandomWidth={columns[index].minWidth - 30} /> : cell ?? <>&nbsp;</> }</TableCell>

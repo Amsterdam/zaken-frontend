@@ -15,7 +15,7 @@ const columns = [
 const OtherAddressesTable: React.FC<Props> = ({ bagId, onAddressChosen }) => {
 
   const [response, { isBusy }] = useOtherAddressesByBagId(bagId)
-  const values = useValues(bagId, response, onAddressChosen)
+  const values = useValues(response, onAddressChosen)
 
   return (
     <Table
