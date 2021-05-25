@@ -22,8 +22,9 @@ export default (
       itemList: [
         adres, 
         <OpenButton 
-        href={ to("/adres/:bagId", { bagId: adresseerbaar_object_id }) } 
-        text="Open" />
+          href={ to("/adres/:bagId", { bagId: adresseerbaar_object_id }) } 
+          text="Open"
+        />
       ]
     }
   ))

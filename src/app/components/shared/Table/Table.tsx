@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react"
+import { ReactNode } from "react"
 
 import { themeColor } from "@amsterdam/asc-ui"
 import styled, { css } from "styled-components"
