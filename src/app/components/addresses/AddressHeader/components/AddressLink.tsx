@@ -1,4 +1,6 @@
-import { Link, Typography } from "@amsterdam/asc-ui"
+import { Link } from "@reach/router"
+import { Typography, themeColor } from "@amsterdam/asc-ui"
+import styled from "styled-components"
 import to from "app/routing/utils/to"
 
 type Props = {
@@ -7,9 +9,17 @@ type Props = {
   title?: string
 }
 
-const AddressLink: React.FC<Props> = ({ title, bagId, as = "h2" }) => 
-  <Link href={ to("/adres/:bagId", { bagId }) }>
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+    color: ${ themeColor("secondary") };
+  }
+`
+
+const AddressLink: React.FC<Props> = ({ title, bagId, as = "h2" }) =>
+  <StyledLink to={ to("/adres/:bagId", { bagId }) }>
     <Typography as={ as } styleAs={ as }>{ title }</Typography>
-  </Link>
- 
+  </StyledLink>
+
 export default AddressLink
