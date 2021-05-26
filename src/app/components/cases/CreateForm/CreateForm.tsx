@@ -48,6 +48,7 @@ const CreateForm: React.FC<Props> = ({ bagId }) => {
       mapData={ mapData(bagId) }
       afterSubmit={ afterSubmit }
       initialValues={ initialValues }
+      submittingTitle="De zaak wordt aangemaakt. Wacht met sluiten van dit venster."
     />
   )
 }

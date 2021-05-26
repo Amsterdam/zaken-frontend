@@ -20,6 +20,7 @@ type Props<RequestBody> = {
   onSubmit?: () => Promise<unknown>
   submitTitle?: string
   showInModal?: boolean
+  submittingTitle?: string
 }
 
 const DEFAULT_TITLE = "Controleer of onderstaande gegevens kloppen"
@@ -45,7 +46,8 @@ const ConfirmScaffoldFields = <T extends RequestBody>(props: Props<T>) => {
     cancelTitle = DEFAULT_CANCEL_TITLE,
     onSubmit = noop,
     submitTitle = DEFAULT_SUBMIT_TITLE,
-    showInModal = false
+    showInModal = false,
+    submittingTitle
   } = props
   const [isSubmitting, setSubmitting] = useState(false)
   const values = useMemo(() => createValuesObject<T>(fields, data, showFields), [data, fields, showFields])
@@ -74,7 +76,12 @@ const ConfirmScaffoldFields = <T extends RequestBody>(props: Props<T>) => {
   )
 
   return showInModal ?
-    <Modal title={ title } isOpen={ true } onClose={ onCancel }>
+    <Modal
+      title={ isSubmitting && submittingTitle ? submittingTitle : title }
+      isOpen={ true }
+      showCloseButton={ !isSubmitting }
+      onClose={ onCancel }
+    >
       <ModalBlock>
         { content }
       </ModalBlock>
