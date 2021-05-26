@@ -17,11 +17,12 @@ export const useBAG = (bagId?: Components.Schemas.Address["bag_id"], options?: O
   })
 }
 
-export const useBAGWithZipCode = (bagId: Components.Schemas.Address["bag_id"], options?: Options) => {
+export const useBAGWithZipCode = (bagId?: Components.Schemas.Address["bag_id"], options?: Options) => {
   const handleError = useErrorHandler()
   const queryString = qs.stringify({ q: bagId }, { addQueryPrefix: true })
   return useApiRequest<BAGAddressResponse>({
     url: `https://api.data.amsterdam.nl/atlas/search/postcode/${ queryString }`,
+    lazy: bagId === undefined,
     ...options,
     groupName: "dataPunt",
     handleError
