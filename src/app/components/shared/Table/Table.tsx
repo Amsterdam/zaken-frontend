@@ -43,7 +43,7 @@ type ClickableRowProps = {
 }
 
 const Row = styled.tr<ClickableRowProps>`
-  ${ (isClickable) => isClickable && css`
+  ${ ({ isClickable }) => isClickable && css`
     cursor: pointer;
     &:hover td {
       background-color: ${ themeColor("tint", "level3") };
