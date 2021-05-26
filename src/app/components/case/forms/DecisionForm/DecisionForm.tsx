@@ -6,7 +6,7 @@ import scaffold from "app/components/case/forms/DecisionForm/scaffold"
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
 import FormWithExtraLabel from "app/components/shared/FormWithExtraLabel/FormWithExtraLabel"
 import DecisionHeader from "./components/DecisionHeader"
-import { useDecisionTypes } from "app/state/rest/teams"
+import { useDecisionTypes } from "app/state/rest/themes"
 
 type Props = {
   id: Components.Schemas.Case["id"]
@@ -19,8 +19,8 @@ const mapData = (data: DecisionData) => ({ ...data, decision_type: data.decision
 const DecisionForm: React.FC<Props> = ({ id, camundaTaskId }) => {
 
   const [caseItem] = useCase(id)
-  const teamId = caseItem?.team.id
-  const [data] = useDecisionTypes(teamId)
+  const themeId = caseItem?.theme.id
+  const [data] = useDecisionTypes(themeId)
   const decisionTypes = data?.results
 
   const fields = useScaffoldedFields(scaffold, id, decisionTypes)

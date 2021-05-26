@@ -51,6 +51,7 @@ declare namespace Components {
         export interface CamundaStateWorker {
             state: string;
             case_identification: string;
+            information?: string;
         }
         /**
          * Serializer for Camunda tasks
@@ -104,7 +105,7 @@ declare namespace Components {
             address: Address;
             case_states: CaseState[];
             current_states: CaseState[];
-            team: CaseTeam;
+            theme: CaseTheme;
             reason: CaseReason;
             schedules: Schedule[];
             identification?: string | null;
@@ -118,7 +119,7 @@ declare namespace Components {
         export interface CaseCreateUpdate {
             id: number;
             address: Address;
-            team: number;
+            theme: number;
             reason: number;
             description?: string | null;
         }
@@ -135,7 +136,7 @@ declare namespace Components {
         export interface CaseReason {
             id: number;
             name: string;
-            team: number;
+            theme: number;
         }
         export interface CaseState {
             id: number;
@@ -149,16 +150,16 @@ declare namespace Components {
         export interface CaseStateType {
             id: number;
             name: string;
-            team?: number;
+            theme?: number;
         }
-        export interface CaseTeam {
+        export interface CaseTheme {
             id: number;
             name: string;
         }
         export interface CitizenReport {
             id: number;
             advertisement_linklist?: string;
-            camunda_task_id?: string | null;
+            camunda_task_id?: string;
             reporter_name?: string | null;
             reporter_phone?: string | null;
             identification: number;
@@ -178,6 +179,7 @@ declare namespace Components {
         }
         export interface Decision {
             id: number;
+            camunda_task_id?: string;
             sanction_amount?: string | null; // decimal ^\d{0,98}(\.\d{0,2})?$
             description?: string | null;
             date_added: string; // date-time
@@ -189,7 +191,7 @@ declare namespace Components {
             camunda_option: string;
             name: string;
             is_sanction?: boolean;
-            team: number;
+            theme: number;
         }
         export interface Decos {
             permits: Permit[];
@@ -333,7 +335,7 @@ declare namespace Components {
             previous?: string | null; // uri
             results?: CaseStateType[];
         }
-        export interface PaginatedCaseTeamList {
+        export interface PaginatedCaseThemeList {
             /**
              * example:
              * 123
@@ -349,7 +351,7 @@ declare namespace Components {
              * http://api.example.org/accounts/?page=2
              */
             previous?: string | null; // uri
-            results?: CaseTeam[];
+            results?: CaseTheme[];
         }
         export interface PaginatedDebriefingCreateList {
             /**
@@ -459,7 +461,7 @@ declare namespace Components {
             previous?: string | null; // uri
             results?: SupportContact[];
         }
-        export interface PaginatedTeamScheduleTypesList {
+        export interface PaginatedThemeScheduleTypesList {
             /**
              * example:
              * 123
@@ -475,7 +477,7 @@ declare namespace Components {
              * http://api.example.org/accounts/?page=2
              */
             previous?: string | null; // uri
-            results?: TeamScheduleTypes[];
+            results?: ThemeScheduleTypes[];
         }
         export interface PaginatedUserList {
             /**
@@ -568,6 +570,7 @@ declare namespace Components {
             week_segment: WeekSegment;
             day_segment: DaySegment;
             priority: Priority;
+            camunda_task_id?: string;
             date_added: string; // date-time
             date_modified: string; // date-time
             case: number;
@@ -578,6 +581,7 @@ declare namespace Components {
             day_segment: number;
             priority: number;
             case: number;
+            camunda_task_id?: string;
         }
         export type SoortVorderingEnum = "PBF" | "PBN" | "PRV" | "SOC";
         export interface Summon {
@@ -586,6 +590,7 @@ declare namespace Components {
             type_name: string;
             case: number;
             persons: SummonedPerson[];
+            camunda_task_id?: string;
             date_added: string; // date-time
             description?: string | null;
         }
@@ -607,7 +612,7 @@ declare namespace Components {
             email: string;
             title: string;
         }
-        export interface TeamScheduleTypes {
+        export interface ThemeScheduleTypes {
             actions: Action[];
             week_segments: WeekSegment[];
             day_segments: DaySegment[];
@@ -807,7 +812,7 @@ declare namespace Paths {
             export type Page = number;
             export type Reason = number;
             export type StartDate = string; // date
-            export type Team = number;
+            export type Theme = number;
         }
         export interface QueryParameters {
             date?: Parameters.Date /* date */;
@@ -817,7 +822,7 @@ declare namespace Paths {
             page?: Parameters.Page;
             reason?: Parameters.Reason;
             startDate?: Parameters.StartDate /* date */;
-            team?: Parameters.Team;
+            theme?: Parameters.Theme;
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCaseList;
@@ -868,7 +873,7 @@ declare namespace Paths {
             export type StreetName = string;
             export type StreetNumber = string;
             export type Suffix = string;
-            export type Team = number;
+            export type Theme = number;
         }
         export interface QueryParameters {
             page?: Parameters.Page;
@@ -876,7 +881,7 @@ declare namespace Paths {
             streetName?: Parameters.StreetName;
             streetNumber?: Parameters.StreetNumber;
             suffix?: Parameters.Suffix;
-            team?: Parameters.Team;
+            theme?: Parameters.Theme;
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCaseList;
@@ -1024,7 +1029,7 @@ declare namespace Paths {
             export type $200 = /* Camunda task serializer for the list-endpoint */ Components.Schemas.CamundaTaskList[];
         }
     }
-    namespace TeamsDecisionTypesList {
+    namespace ThemesDecisionTypesList {
         namespace Parameters {
             export type Id = number;
             export type Page = number;
@@ -1039,7 +1044,7 @@ declare namespace Paths {
             export type $200 = Components.Schemas.PaginatedDecisionTypeList;
         }
     }
-    namespace TeamsList {
+    namespace ThemesList {
         namespace Parameters {
             export type Page = number;
         }
@@ -1047,10 +1052,10 @@ declare namespace Paths {
             page?: Parameters.Page;
         }
         namespace Responses {
-            export type $200 = Components.Schemas.PaginatedCaseTeamList;
+            export type $200 = Components.Schemas.PaginatedCaseThemeList;
         }
     }
-    namespace TeamsReasonsList {
+    namespace ThemesReasonsList {
         namespace Parameters {
             export type Id = number;
             export type Page = number;
@@ -1065,7 +1070,7 @@ declare namespace Paths {
             export type $200 = Components.Schemas.PaginatedCaseReasonList;
         }
     }
-    namespace TeamsScheduleTypesList {
+    namespace ThemesScheduleTypesList {
         namespace Parameters {
             export type Id = number;
             export type Page = number;
@@ -1077,10 +1082,10 @@ declare namespace Paths {
             page?: Parameters.Page;
         }
         namespace Responses {
-            export type $200 = Components.Schemas.PaginatedTeamScheduleTypesList;
+            export type $200 = Components.Schemas.PaginatedThemeScheduleTypesList;
         }
     }
-    namespace TeamsStateTypesList {
+    namespace ThemesStateTypesList {
         namespace Parameters {
             export type Id = number;
             export type Page = number;
@@ -1095,7 +1100,7 @@ declare namespace Paths {
             export type $200 = Components.Schemas.PaginatedCaseStateTypeList;
         }
     }
-    namespace TeamsSummonTypesList {
+    namespace ThemesSummonTypesList {
         namespace Parameters {
             export type Id = number;
             export type Page = number;

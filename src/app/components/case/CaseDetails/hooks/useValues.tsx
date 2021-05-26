@@ -4,11 +4,11 @@ export default (caseItem?: Components.Schemas.Case) => {
 
   if (caseItem === undefined) return
 
-  const { id, team: { name }, start_date } = caseItem
+  const { id, theme: { name }, start_date } = caseItem
 
   const values = [
     ["Zaak ID", <CaseIdDisplay id={ id } />],
-    ["Team", name],
+    ["Thema", name],
     ["Startdatum", start_date ? <DateDisplay date={ start_date } /> : "-"]
   ]
 
