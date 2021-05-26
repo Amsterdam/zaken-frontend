@@ -65,7 +65,7 @@ export default (caseId: Components.Schemas.Case["id"]) => {
       props: {
         isRequired: true,
         name: "advertisement",
-        label: "Is er sprake van een advertentie?",
+        label: "Is er een advertentie bekend?",
         options: {
           yes: "Ja, er is een advertentie",
           no: "Nee, er is geen advertentie"

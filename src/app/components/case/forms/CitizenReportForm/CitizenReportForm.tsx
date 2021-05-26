@@ -16,16 +16,14 @@ const CitizenReportForm: React.FC<Props> = ({ id, camundaTaskId }) => {
   const fields = useScaffoldedFields(scaffold, id)
 
   return (
-    <>
-      <FormWithExtraLabel>
-        <WorkflowForm
-          id={ id }
-          postMethod={ execPost }
-          fields={ fields }
-          camundaTaskId={ camundaTaskId }
-        />
-      </FormWithExtraLabel>
-    </>
+    <FormWithExtraLabel>
+      <WorkflowForm
+        id={ id }
+        postMethod={ execPost }
+        fields={ fields }
+        camundaTaskId={ camundaTaskId }
+      />
+    </FormWithExtraLabel>
   )
 }
 
