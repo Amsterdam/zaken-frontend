@@ -12,13 +12,13 @@ type Props = {
 
 type FormData =
   Pick<CaseCreate, "address" | "description"> &
-  { caseTheme: Components.Schemas.CaseTheme, reason: Components.Schemas.CaseReason }
+  { theme: Components.Schemas.CaseTheme, reason: Components.Schemas.CaseReason }
 
 const mapData = (bagId: Components.Schemas.Address["bag_id"]) =>
   (data: FormData): CaseCreate => ({
     address: { bag_id: bagId },
     description: data.description,
-    theme: data.caseTheme.id,
+    theme: data.theme.id,
     reason: data.reason.id
   })
 
@@ -39,7 +39,7 @@ const CreateForm: React.FC<Props> = ({ bagId }) => {
     "De zaak is succesvol toegevoegd"
   )
 
-  const initialValues = { caseTheme: caseThemes?.results?.[0], reason: reasons?.results?.[0] }
+  const initialValues = { theme: caseThemes?.results?.[0], reason: reasons?.results?.[0] }
 
   return (
     <ConfirmScaffoldForm
