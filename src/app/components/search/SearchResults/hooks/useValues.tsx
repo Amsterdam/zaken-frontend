@@ -3,8 +3,7 @@ import OpenButton from "app/components/shared/OpenButton/OpenButton"
 import to from "app/routing/utils/to"
 import navigateTo from "app/routing/navigateTo"
 
-const onClick = (bagId: Components.Schemas.Address["bag_id"]) => (e: React.MouseEvent) => {
-  e.stopPropagation()
+const onClick = (bagId: Components.Schemas.Address["bag_id"]) => (event: React.MouseEvent) => {
   navigateTo("/adres/:bagId", { bagId })
 }
 

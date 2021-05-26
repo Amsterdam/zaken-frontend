@@ -5,7 +5,7 @@ import OpenButton from "app/components/shared/OpenButton/OpenButton"
 import to from "app/routing/utils/to"
 import navigateTo from "app/routing/navigateTo"
 
-const onClick = (id: Components.Schemas.Case["id"]) => (e: React.MouseEvent) => {
+const onClick = (id: Components.Schemas.Case["id"]) => (event: React.MouseEvent) => {
   navigateTo("/zaken/:id", { id })
 }
 

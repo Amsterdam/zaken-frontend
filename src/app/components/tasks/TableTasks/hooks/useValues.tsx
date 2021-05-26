@@ -3,7 +3,7 @@ import DueDate from "app/components/shared/DueDate/DueDate"
 import OpenButton from "app/components/shared/OpenButton/OpenButton"
 import navigateTo from "app/routing/navigateTo"
 
-const onClick = (id: Components.Schemas.Case["id"]) => (e: React.MouseEvent) => {
+const onClick = (id: Components.Schemas.Case["id"]) => (event: React.MouseEvent) => {
   navigateTo("/zaken/:id", { id })
 }
 

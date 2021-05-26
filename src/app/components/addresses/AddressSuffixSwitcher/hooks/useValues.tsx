@@ -5,12 +5,10 @@ import OpenButton from "app/components/shared/OpenButton/OpenButton"
 
 export default (
   response: SearchResult[] | undefined,
-  onAddressChosen: () => void
+  onAddressChosen: () => unknown
 ) => {
 
-  const onClick = (newBagId: Components.Schemas.Address["bag_id"]) => (e: React.MouseEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
+  const onClick = (newBagId: Components.Schemas.Address["bag_id"]) => (event: React.MouseEvent) => {
     onAddressChosen()
     navigateTo("/adres/:bagId", { bagId: newBagId })
   }

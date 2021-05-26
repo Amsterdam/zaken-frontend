@@ -12,7 +12,7 @@ type Props = {
   hasFixedColumn?: boolean
   columns: { header?: React.ReactNode, minWidth: number }[]
   data?: {
-    onClick?: (e: React.MouseEvent) => void
+    onClick?: (event: React.MouseEvent) => void
     itemList?: React.ReactNode[]
   }[]
   noValuesPlaceholder?: React.ReactNode
@@ -102,7 +102,7 @@ const Table: React.FC<Props> = ({
                     hasFixedColumn && index === (itemList?.length ?? 0) - 1
                       ? <FixedTableCell key={ index } width={ fixedColumnWidth }>{ cell ?? <>&nbsp;</> }</FixedTableCell>
                       : <TableCell key={ index }>
-                          { loading ? <SmallSkeleton maxRandomWidth={columns[index].minWidth - 30} /> : cell ?? <>&nbsp;</> }
+                          { loading ? <SmallSkeleton maxRandomWidth={ columns[index].minWidth - 30 } /> : cell ?? <>&nbsp;</> }
                         </TableCell>
                 ) }
               </Row>

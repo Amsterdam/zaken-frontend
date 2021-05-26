@@ -4,8 +4,7 @@ import OpenButton from "app/components/shared/OpenButton/OpenButton"
 import navigateTo from "app/routing/navigateTo"
 import React from "react"
 
-const onClick = (id: Components.Schemas.Case["id"]) => (e: React.MouseEvent) => {
-  e.stopPropagation()
+const onClick = (id: Components.Schemas.Case["id"]) => (event: React.MouseEvent) => {
   navigateTo("/zaken/:id", { id })
 }
 
