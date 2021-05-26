@@ -1,10 +1,5 @@
-import { useMemo } from "react"
-
-import to from "app/routing/utils/to"
 import Table from "app/components/shared/Table/Table"
-import OpenButton from "app/components/shared/OpenButton/OpenButton"
-import DueDate from "app/components/shared/DueDate/DueDate"
-import navigateTo from "app/routing/navigateTo"
+import useValues from "./hooks/useValues"
 
 type Props = {
   data?: Components.Schemas.CamundaTaskList[]
@@ -18,34 +13,14 @@ const columns = [
   { minWidth: 140 }
 ]
 
-const onClick = (id: Components.Schemas.Case["id"]) => (e: React.MouseEvent) => {
-  navigateTo("/zaken/:id", { id })
-}
-
-const mapData = (data: Components.Schemas.CamundaTaskList) => {
-
-  const { name, due_date, case: { address: { full_address }, id } } = data
-
-  return {
-    href: to("/zaken/:id", { id }),
-    onClick: onClick(id),
-    itemList: [
-      full_address ?? "-",
-      name,
-      due_date ? <DueDate date={ due_date } /> : "-",
-      <OpenButton href={ to("/zaken/:id", { id }) } text="Zaakdetails" />
-    ]
-  }
-}
-
 const TableTasks: React.FC<Props> = ({ data, isBusy }) => {
 
-  const mappedData = useMemo(() => data?.map(mapData), [data])
+  const values = useValues(data)
 
   return (
     <Table
       columns={ columns }
-      data={ mappedData }
+      data={ values }
       loading={ isBusy }
       numLoadingRows={ 10 }
       hasFixedColumn={ true }

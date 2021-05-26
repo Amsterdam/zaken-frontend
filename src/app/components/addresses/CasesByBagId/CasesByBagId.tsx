@@ -1,13 +1,9 @@
-import { useMemo } from "react"
 import styled from "styled-components"
-import { Heading, Spinner, themeSpacing } from "@amsterdam/asc-ui"
-import { CaseIdDisplay, DateDisplay } from "@amsterdam/wonen-ui"
+import { Heading, themeSpacing } from "@amsterdam/asc-ui"
 
 import { useCasesByBagId } from "app/state/rest"
-import to from "app/routing/utils/to"
+import useValues from "./hooks/useValues"
 import Table from "app/components/shared/Table/Table"
-import OpenButton from "app/components/shared/OpenButton/OpenButton"
-import navigateTo from "app/routing/navigateTo"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -31,46 +27,24 @@ const columns = [
   { minWidth: 140 }
 ]
 
-const onClick = (id: Components.Schemas.Case["id"]) => (e: React.MouseEvent) => {
-  navigateTo("/zaken/:id", { id })
-}
+const CasesByBagId: React.FC<Props> = ({ bagId, openCases = false, title = defaultTitle, emptyText = defaultEmptyText }) => {
 
-const mapData = (data: Components.Schemas.Case) =>
-  ({
-    href: to("/zaken/:id", { id: data.id }),
-    onClick: onClick(data.id),
-    itemList: [
-      <CaseIdDisplay id={ data.id } />,
-      data.team.name,
-      data.start_date ? <DateDisplay date={ data.start_date } /> : "-",
-      data.current_states.length > 0 ? data.current_states.map(({ status_name }) => status_name).join(", ") : "-",
-      <OpenButton href={ to("/zaken/:id", { id: data.id }) } text="Zaakdetails" />
-    ]
-  })
-
-const CasesByBagId: React.FC<Props> = ({ bagId, openCases, title = defaultTitle, emptyText = defaultEmptyText }) => {
-
-  const [data] = useCasesByBagId(bagId, openCases)
-  const mappedData = useMemo(() => data?.results?.map(mapData), [ data ])
-  const length = data?.results?.length
-  const hasCases = length !== undefined && length > 0
+  const [data, { isBusy }] = useCasesByBagId(bagId, openCases)
+  const values = useValues(data?.results)
+  const numCases = data?.results?.length ?? 0
 
   return (
     <>
-      <StyledHeading>{ title }{ hasCases && ` (${ length })` }</StyledHeading>
-      { data === undefined ?
-          <Spinner /> :
-          hasCases ?
-            <Table
-              columns={ columns }
-              data={ mappedData }
-              loading={ false }
-              numLoadingRows={ 1 }
-              hasFixedColumn={ true }
-              noValuesPlaceholder=""
-            /> :
-            <p>{ emptyText }</p>
-      }
+      <StyledHeading>{ title }{ numCases > 0 && ` (${ numCases })` }</StyledHeading>
+      <Table
+        loading={ isBusy }
+        numLoadingRows={ 1 }
+        columns={ columns }
+        hasFixedColumn
+        data={ values }
+        showHeadWhenEmpty={ false }
+        noValuesPlaceholder={ emptyText }
+      />
     </>
   )
 }

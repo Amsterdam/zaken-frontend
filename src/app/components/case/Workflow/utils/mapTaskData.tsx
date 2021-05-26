@@ -26,7 +26,7 @@ export default (
         name,
         roles ? <List items={ roles } /> : "-",
         due_date ?
-          <ChangeableDueDate dueDate={ data.due_date } caseId={ id } camundaTaskId={ camunda_task_id } /> :
+          <ChangeableDueDate dueDate={ due_date } caseId={ id } camundaTaskId={ camunda_task_id } /> :
           "-",
         action !== undefined ?
           action.disabled ?
