@@ -2,15 +2,15 @@ import { FormPositioner } from "@amsterdam/scaffold-form/package"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import navigateTo from "app/routing/navigateTo"
 
-export default (bagId: Components.Schemas.Address["bag_id"], teams?: Components.Schemas.CaseTeam[], reasons?: Components.Schemas.CaseReason[]) => {
+export default (bagId: Components.Schemas.Address["bag_id"], themes?: Components.Schemas.CaseTheme[], reasons?: Components.Schemas.CaseReason[]) => {
 
   const fields = {
-    team: {
+    theme: {
       type: "ComplexRadioFields",
       props: {
-        label: "Team wonen",
-        name: "team",
-        options: teams,
+        label: "Thema wonen",
+        name: "theme",
+        options: themes,
         optionLabelField: "name",
         isRequired: true
       }
@@ -53,7 +53,7 @@ export default (bagId: Components.Schemas.Address["bag_id"], teams?: Components.
 
   return new FormPositioner(fields as Fields)
     .setGrid("mobileS", "1fr 1fr", [
-      ["team", "team"],
+      ["theme", "theme"],
       ["reason", "reason"],
       ["description", "description"],
       ["cancel", "submit"]
