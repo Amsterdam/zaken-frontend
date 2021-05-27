@@ -40,6 +40,13 @@ export default (caseId: Components.Schemas.Case["id"], scheduleTypes?: Component
         options: scheduleTypes?.priorities
       }
     },
+    description: {
+      type: "TextAreaField",
+      props: {
+        label: "Korte toelichting",
+        name: "description"
+      }
+    },
     secondaryButton: {
       type: "Button",
       props: {
@@ -62,6 +69,7 @@ export default (caseId: Components.Schemas.Case["id"], scheduleTypes?: Component
       ["week_segment", "week_segment"],
       ["day_segment", "day_segment"],
       ["priority", "priority"],
+      ["description", "description"],
       ["secondaryButton", "submit"]
     ])
     .getScaffoldProps()
