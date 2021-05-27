@@ -1,5 +1,3 @@
-
-
 import scaffold from "./scaffold"
 import { useCaseThemes, useReasons, useCaseCreate } from "app/state/rest"
 import ConfirmScaffoldForm from "app/components/shared/ConfirmScaffoldForm/ConfirmScaffoldForm"
@@ -17,8 +15,8 @@ type FormData =
 
 const mapData = (bagId: Components.Schemas.Address["bag_id"]) =>
   (data: FormData): CaseCreate => ({
+    ...data,
     address: { bag_id: bagId },
-    description: data.description,
     theme: data.theme.id,
     reason: data.reason.id
   })
@@ -34,15 +32,19 @@ const CreateForm: React.FC<Props> = ({ bagId }) => {
   console.log("fields", fields)
 
   const navigateWithFlashMessage = useNavigateWithFlashMessage()
-  const afterSubmit = async (result: Components.Schemas.CaseCreateUpdate) => await navigateWithFlashMessage(
-    "/zaken/:id",
-    { id: result.id },
-    "info",
-    "Succes",
-    "De zaak is succesvol toegevoegd"
-  )
+  const afterSubmit = async (result: Components.Schemas.CaseCreateUpdate) =>
+    await navigateWithFlashMessage(
+      "/zaken/:id",
+      { id: result.id },
+      "info",
+      "Succes",
+      "De zaak is succesvol toegevoegd"
+    )
 
-  const initialValues = { theme: caseThemes?.results?.[0], reason: reasons?.results?.[0] }
+  const initialValues = {
+    theme: caseThemes?.results?.[0],
+    reason: reasons?.results?.[0]
+  }
 
   return (
     <FormWithExtraLabel>
