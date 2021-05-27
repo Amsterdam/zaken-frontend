@@ -29,8 +29,6 @@ const CreateForm: React.FC<Props> = ({ bagId }) => {
 
   const fields = useScaffoldedFields(scaffold, bagId, caseThemes?.results, reasons?.results)
 
-  console.log("fields", fields)
-
   const navigateWithFlashMessage = useNavigateWithFlashMessage()
   const afterSubmit = async (result: Components.Schemas.CaseCreateUpdate) =>
     await navigateWithFlashMessage(
