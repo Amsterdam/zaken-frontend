@@ -56,6 +56,8 @@ export default (caseId: Components.Schemas.Case["id"]) => {
         name: "identification",
         placeholder: "123456",
         max: 999999,
+        min: 1,
+        step: 1,
         isRequired: true,
         hideNumberSpinner: true
       }
