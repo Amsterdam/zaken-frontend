@@ -1,21 +1,19 @@
 
 import styled from "styled-components"
-import { themeSpacing } from "@amsterdam/asc-ui"
-import { sizes } from "@amsterdam/asc-ui/lib/theme/default/breakpoints"
+import { breakpoint, themeSpacing } from "@amsterdam/asc-ui"
 import BreadCrumbs from "./BreadCrumbs"
 
-const BreadCrumbsWrap = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  width: 100%;
-  max-width: ${ sizes.laptopL }px;
-  margin: 0 auto ${ themeSpacing(9) };
-  padding: ${ themeSpacing(3) } ${ themeSpacing(12) };
+const Wrap = styled.div`
+  padding: ${ themeSpacing(3) };
+  @media screen and ${ breakpoint("min-width", "laptopM") } {
+    padding: ${ themeSpacing(3) } ${ themeSpacing(12) };
+  }
 `
+
 const MainWrapper: React.FC = ({ children }) => (
-  <BreadCrumbsWrap>
+  <Wrap>
     <BreadCrumbs />
-  </BreadCrumbsWrap>
+  </Wrap>
 )
 
 export default MainWrapper
