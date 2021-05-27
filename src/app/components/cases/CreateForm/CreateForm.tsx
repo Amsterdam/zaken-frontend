@@ -3,6 +3,7 @@ import { useCaseThemes, useReasons, useCaseCreate } from "app/state/rest"
 import ConfirmScaffoldForm from "app/components/shared/ConfirmScaffoldForm/ConfirmScaffoldForm"
 import useNavigateWithFlashMessage from "app/state/flashMessages/useNavigateWithFlashMessage"
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
+import FormWithExtraLabel from "app/components/shared/FormWithExtraLabel/FormWithExtraLabel"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -44,14 +45,16 @@ const CreateForm: React.FC<Props> = ({ bagId }) => {
   }
 
   return (
-    <ConfirmScaffoldForm
-      fields={ fields }
-      postMethod={ execPost }
-      mapData={ mapData(bagId) }
-      afterSubmit={ afterSubmit }
-      initialValues={ initialValues }
-      submittingTitle="De zaak wordt aangemaakt. Wacht met sluiten van dit venster."
-    />
+    <FormWithExtraLabel>
+      <ConfirmScaffoldForm
+        fields={ fields }
+        postMethod={ execPost }
+        mapData={ mapData(bagId) }
+        afterSubmit={ afterSubmit }
+        initialValues={ initialValues }
+        submittingTitle="De zaak wordt aangemaakt. Wacht met sluiten van dit venster."
+      />
+    </FormWithExtraLabel>
   )
 }
 

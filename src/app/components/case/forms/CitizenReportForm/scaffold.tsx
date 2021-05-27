@@ -56,6 +56,8 @@ export default (caseId: Components.Schemas.Case["id"]) => {
         name: "identification",
         placeholder: "123456",
         max: 999999,
+        min: 1,
+        step: 1,
         isRequired: true,
         hideNumberSpinner: true
       }
@@ -65,7 +67,7 @@ export default (caseId: Components.Schemas.Case["id"]) => {
       props: {
         isRequired: true,
         name: "advertisement",
-        label: "Is er sprake van een advertentie?",
+        label: "Is er een advertentie bekend?",
         options: {
           yes: "Ja, er is een advertentie",
           no: "Nee, er is geen advertentie"
