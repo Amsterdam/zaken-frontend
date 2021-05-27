@@ -33,10 +33,14 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
     }
     { showCase &&
       <DefaultLayout>
-        <DetailHeaderByCaseId caseId={ id } enableSwitch={ false } />
-        <RowWithColumn>
-          <PageHeading />
-        </RowWithColumn>
+        <Row>
+          <Column spanLarge={ 50 }>
+            <PageHeading />
+          </Column>
+          <Column spanLarge={ 50 }>
+            <DetailHeaderByCaseId caseId={ id } enableSwitch={ false } />
+          </Column>
+        </Row>  
         <Row>
           <Column spanLarge={ 50 }>
             <CaseDetails caseId={ id } />

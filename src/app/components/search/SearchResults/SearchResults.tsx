@@ -1,10 +1,9 @@
-import { useEffect, useMemo } from "react"
 import { useBAGWithZipCode } from "app/state/rest"
+import useValues from "./hooks/useValues"
 import Table from "app/components/shared/Table/Table"
-import OpenButton from "app/components/shared/OpenButton/OpenButton"
-import to from "app/routing/utils/to"
 
 export type SearchResult = Pick<BAGAddressResponse["results"][0], "adres" | "postcode" | "adresseerbaar_object_id">
+
 type Props = {
   searchString: string
 }
@@ -18,42 +17,22 @@ const columns = [
   { minWidth: 100 }
 ]
 
-const filterData = (data: SearchResult) => typeof data?.postcode === "string"
-
-const mapData = (data: SearchResult) =>
-({
-  href: to("/adres/:bagId", { bagId: data.adresseerbaar_object_id }),
-  itemList: [
-    data.adres ?? "-",
-    data.postcode ?? "-",
-    data.adresseerbaar_object_id ? <OpenButton href={to("/adres/:bagId", { bagId: data.adresseerbaar_object_id })} text="Bekijk" /> : null
-  ]
-})
-
 const SearchResults: React.FC<Props> = ({ searchString }) => {
-  const [data, { isBusy, execGet }] = useBAGWithZipCode(searchString, { lazy: true })
 
-  useEffect(() => {
-    if (isValidSearchString(searchString) === false) return
-    execGet()
-  }, [searchString, execGet])
+  const [data, { isBusy }] = useBAGWithZipCode(isValidSearchString(searchString) ? searchString : undefined)
+  const values = useValues(Array.isArray(data?.results) ? data!.results : undefined)
 
-  const mappedData = useMemo(() =>
-    Array.isArray(data?.results) ?
-      data!.results.filter(filterData).map(mapData) :
-      undefined,
-    [ data ]
-  )
-
-  return isValidSearchString(searchString) ?
+  return (
+    isValidSearchString(searchString) ?
     <Table
-      columns={columns}
-      data={mappedData}
-      loading={data === undefined || isBusy}
+      columns={ columns }
+      data={ values }
+      loading={ isBusy }
       numLoadingRows={ 1 }
       hasFixedColumn={ true }
-      noValuesPlaceholder="Er zijn (nog) geen adressen gevonden"
+      noValuesPlaceholder="Er zijn geen adressen gevonden"
     /> :
     null
+  )
 }
 export default SearchResults

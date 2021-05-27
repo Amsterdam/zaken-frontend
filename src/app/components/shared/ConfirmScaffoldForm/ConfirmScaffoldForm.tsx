@@ -12,12 +12,12 @@ type Props<T, U, V> = {
   postMethod: (data: U) => Promise<any>
   afterSubmit?: (result: V) => Promise<unknown>
   initialValues?: Record<string, unknown>
+  submittingTitle?: string
 }
-
 
 const ConfirmScaffoldForm = <T extends Rec, U extends Rec, V extends Rec>(props: Props<T, U, V>) => {
 
-  const { fields, postMethod, mapData, afterSubmit, initialValues } = props
+  const { fields, postMethod, mapData, afterSubmit, initialValues, submittingTitle } = props
   const {
     isSubmitted,
     data,
@@ -32,7 +32,7 @@ const ConfirmScaffoldForm = <T extends Rec, U extends Rec, V extends Rec>(props:
     const result = await onSubmitConfirm()
     if (result === undefined) return
     if (afterSubmit === undefined) return
-    await afterSubmit(result?.data)
+    await afterSubmit(result.data)
   }
 
   return (
@@ -49,6 +49,7 @@ const ConfirmScaffoldForm = <T extends Rec, U extends Rec, V extends Rec>(props:
           onSubmit={ onSubmitConfirmWrap }
           submitTitle={ submitTitle }
           showInModal={ true }
+          submittingTitle={ submittingTitle }
         />
       }
     </ScaffoldForm>

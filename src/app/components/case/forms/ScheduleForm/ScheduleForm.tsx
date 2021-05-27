@@ -13,9 +13,9 @@ type Props = {
 }
 
 type ScheduleTypeFormData = Omit<Components.Schemas.ScheduleCreate, "week_segment" | "day_segment" | "priority"> & {
-  week_segment: Components.Schemas.TeamScheduleTypes["week_segments"][0]
-  day_segment: Components.Schemas.TeamScheduleTypes["day_segments"][0]
-  priority: Components.Schemas.TeamScheduleTypes["priorities"][0]
+  week_segment: Components.Schemas.ThemeScheduleTypes["week_segments"][0]
+  day_segment: Components.Schemas.ThemeScheduleTypes["day_segments"][0]
+  priority: Components.Schemas.ThemeScheduleTypes["priorities"][0]
 }
 const mapData = (data: ScheduleTypeFormData) => (
   {
@@ -29,8 +29,8 @@ const mapData = (data: ScheduleTypeFormData) => (
 const ScheduleForm: React.FC<Props> = ({ id, camundaTaskId }) => {
 
   const [caseItem] = useCase(id)
-  const teamId = caseItem?.team.id
-  const [scheduleTypes] = useScheduleTypes(teamId)
+  const themeId = caseItem?.theme.id
+  const [scheduleTypes] = useScheduleTypes(themeId)
   const fields = useScaffoldedFields(scaffold, id, scheduleTypes)
   const [, { execPost }] = useScheduleCreate()
 

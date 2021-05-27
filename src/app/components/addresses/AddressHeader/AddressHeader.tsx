@@ -1,13 +1,14 @@
 
 import styled from "styled-components"
-import { Typography, breakpoint, themeSpacing } from "@amsterdam/asc-ui"
+import { breakpoint, themeSpacing } from "@amsterdam/asc-ui"
 
 import { useBAG } from "app/state/rest"
 import ShowOtherAddressesButton from "app/components/addresses/AddressSuffixSwitcher/ShowOtherAddressesButton"
 import useOtherAddressesByBagId from "app/state/rest/custom/useOtherAddresses/useOtherAddresses"
+import AddressLink from "./components/AddressLink"
 
 type Props = {
-  bagId: string
+  bagId: Components.Schemas.Address["bag_id"]
   headingSize?: "h1" | "h2"
   isHeader?: boolean
   enableSwitch?: boolean
@@ -22,14 +23,8 @@ const Div = styled.div<{ isHeader: boolean }>`
   }
 `
 
-const TypographyWrap = styled.div`
-  span {
-    margin-bottom: 0;
-  }
-`
-
 const ButtonWrap = styled.div`
-  margin-left: ${ themeSpacing(3) };
+  margin: -${ themeSpacing(2) } 0 0 ${ themeSpacing(3) };
 `
 
 const AddressHeader: React.FC<Props> = ({ bagId, headingSize = "h2", isHeader = false, enableSwitch = true }) => {
@@ -51,9 +46,7 @@ const AddressHeader: React.FC<Props> = ({ bagId, headingSize = "h2", isHeader = 
   return (
     <Div isHeader={ isHeader }>
       { showTitle &&
-        <TypographyWrap>
-          <Typography as={ isHeader ? headingSize : "span" } styleAs={ headingSize }>{ title }</Typography>
-        </TypographyWrap>
+        <AddressLink title={ title } bagId={ bagId } as={ headingSize ?? "span" } />
       }
       { showButton &&
         <ButtonWrap>

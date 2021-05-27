@@ -15,7 +15,7 @@ const Main = styled.main`
   }
 `
 const MainWrapper: React.FC = ({ children }) => (
-  <Main>
+  <Main id="a11y_content">
     { children }
   </Main>
 )

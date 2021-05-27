@@ -17,8 +17,8 @@ const mapData = (data: SummonData) => ({ ...data, type: data.type.id })
 
 const SummonForm: React.FC<Props> = ({ id, camundaTaskId }) => {
 
-  const teamId = useCase(id)[0]?.team.id
-  const [data] = useSummonTypes(teamId)
+  const themeId = useCase(id)[0]?.theme.id
+  const [data] = useSummonTypes(themeId)
   const summonTypes = data?.results
   const fields = useScaffoldedFields(scaffold, id, summonTypes)
   const [, { execPost }] = useSummons({ lazy: true })

@@ -155,17 +155,15 @@ export const useCompleteCase = (options?: Options) => {
   })
 }
 
-// TODO-MOCKED replace with real endpoint
-export const useSignal = (options?: Options) => {
+export const useCitizenReports = (caseId: Components.Schemas.Case["id"], options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<MockComponents.Schemas.Signal>({
+  return useApiRequest<Components.Schemas.CitizenReport>({
     ...options,
     lazy: true,
-    url: "signal",
+    url: makeApiUrl("cases", caseId, "citizen-reports"),
     groupName: "cases",
     handleError,
-    isProtected: true,
-    isMocked: true
+    isProtected: true
   })
 }
 

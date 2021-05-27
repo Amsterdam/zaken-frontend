@@ -1,26 +1,26 @@
 declare namespace Components {
     namespace Schemas {
         export interface Action {
-            readonly id: number;
+            id: number;
             name: string;
         }
         export interface Address {
             bag_id: string;
-            readonly id: number;
-            readonly full_address: string;
-            readonly street_name: string;
-            readonly number: number;
-            readonly suffix_letter: string;
-            readonly suffix: string;
-            readonly postal_code: string;
-            readonly lat: number; // float
-            readonly lng: number; // float
+            id: number;
+            full_address: string;
+            street_name: string;
+            number: number;
+            suffix_letter: string;
+            suffix: string;
+            postal_code: string;
+            lat: number; // float
+            lng: number; // float
         }
         /**
          * Case-address serializer for camunda tasks
          */
         export interface CamundaCaseAddress {
-            readonly id: number;
+            id: number;
             address: Address;
         }
         export interface CamundaDateUpdate {
@@ -38,7 +38,7 @@ declare namespace Components {
             case_identification: string;
         }
         export interface CamundaProcess {
-            readonly id: number;
+            id: number;
             name: string;
             camunda_message_name: string;
         }
@@ -51,6 +51,7 @@ declare namespace Components {
         export interface CamundaStateWorker {
             state: string;
             case_identification: string;
+            information?: string;
         }
         /**
          * Serializer for Camunda tasks
@@ -60,7 +61,7 @@ declare namespace Components {
             task_name_id: string;
             name: string;
             due_date: string; // date
-            readonly roles: any[];
+            roles: any[];
             form: {
                 [name: string]: any;
             };
@@ -95,18 +96,18 @@ declare namespace Components {
             task_name_id: string;
             name: string;
             due_date: string; // date
-            readonly roles: any[];
+            roles: any[];
             case: /* Case-address serializer for camunda tasks */ CamundaCaseAddress;
             process_instance_id: string;
         }
         export interface Case {
-            readonly id: number;
+            id: number;
             address: Address;
             case_states: CaseState[];
-            readonly current_states: CaseState[];
-            team: CaseTeam;
+            current_states: CaseState[];
+            theme: CaseTheme;
             reason: CaseReason;
-            readonly schedules: Schedule[];
+            schedules: Schedule[];
             identification?: string | null;
             start_date?: string | null; // date
             end_date?: string | null; // date
@@ -116,88 +117,90 @@ declare namespace Components {
             author?: string | null; // uuid
         }
         export interface CaseCreateUpdate {
-            readonly id: number;
+            id: number;
             address: Address;
-            team: number;
+            theme: number;
             reason: number;
             description?: string | null;
         }
         export interface CaseEvent {
-            readonly id: number;
+            id: number;
             event_values: {
                 [name: string]: any;
             };
-            readonly date_created: string; // date-time
+            date_created: string; // date-time
             type: TypeEnum;
             emitter_id: number;
             case: number;
         }
         export interface CaseReason {
-            readonly id: number;
+            id: number;
             name: string;
-            team: number;
+            theme: number;
         }
         export interface CaseState {
-            readonly id: number;
+            id: number;
             case: number;
-            readonly status_name: string;
+            status_name: string;
             status: number;
             start_date: string; // date
             end_date?: string | null; // date
             users: string /* uuid */[];
         }
         export interface CaseStateType {
-            readonly id: number;
+            id: number;
             name: string;
-            team?: number;
+            theme?: number;
         }
-        export interface CaseTeam {
-            readonly id: number;
+        export interface CaseTheme {
+            id: number;
             name: string;
+        }
+        export interface CitizenReport {
+            id: number;
+            advertisement_linklist?: string;
+            camunda_task_id?: string;
+            reporter_name?: string | null;
+            reporter_phone?: string | null;
+            identification: number;
+            description?: string | null;
+            date_added: string; // date-time
+            case: number;
         }
         export interface DaySegment {
-            readonly id: number;
+            id: number;
             name: string;
         }
         export interface DebriefingCreate {
-            readonly id: number;
+            id: number;
+            camunda_task_id?: string;
             violation?: ViolationEnum;
             feedback: string;
             case: number;
         }
         export interface Decision {
-            readonly id: number;
+            id: number;
+            camunda_task_id?: string;
             sanction_amount?: string | null; // decimal ^\d{0,98}(\.\d{0,2})?$
             description?: string | null;
-            readonly date_added: string; // date-time
+            date_added: string; // date-time
             case: number;
             decision_type: number;
         }
         export interface DecisionType {
-            readonly id: number;
+            id: number;
             camunda_option: string;
             name: string;
             is_sanction?: boolean;
-            team: number;
+            theme: number;
         }
         export interface Decos {
-            permits: DecosPermit[];
-            vakantieverhuur_meldingen: {
+            permits: Permit[];
+            vakantieverhuur_reports: {
                 rented_days_count: null | number;
                 planned_days_count: null | number;
                 is_rented_today: boolean;
-                meldingen: VakantieverhuurMelding[];
-            } | null;
-        }
-        export interface DecosPermit {
-            permit_granted: PermitGrantedEnum;
-            permit_type: string;
-            decos_join_web_url?: string; // uri
-            raw_data?: {
-                [name: string]: any;
-            } | null;
-            details?: {
-                [name: string]: any;
+                reports: VakantieverhuurReport[];
             } | null;
         }
         export interface Fine {
@@ -333,7 +336,7 @@ declare namespace Components {
             previous?: string | null; // uri
             results?: CaseStateType[];
         }
-        export interface PaginatedCaseTeamList {
+        export interface PaginatedCaseThemeList {
             /**
              * example:
              * 123
@@ -349,7 +352,7 @@ declare namespace Components {
              * http://api.example.org/accounts/?page=2
              */
             previous?: string | null; // uri
-            results?: CaseTeam[];
+            results?: CaseTheme[];
         }
         export interface PaginatedDebriefingCreateList {
             /**
@@ -405,24 +408,6 @@ declare namespace Components {
             previous?: string | null; // uri
             results?: DecisionType[];
         }
-        export interface PaginatedDecosPermitList {
-            /**
-             * example:
-             * 123
-             */
-            count?: number;
-            /**
-             * example:
-             * http://api.example.org/accounts/?page=4
-             */
-            next?: string | null; // uri
-            /**
-             * example:
-             * http://api.example.org/accounts/?page=2
-             */
-            previous?: string | null; // uri
-            results?: DecosPermit[];
-        }
         export interface PaginatedSummonList {
             /**
              * example:
@@ -477,7 +462,7 @@ declare namespace Components {
             previous?: string | null; // uri
             results?: SupportContact[];
         }
-        export interface PaginatedTeamScheduleTypesList {
+        export interface PaginatedThemeScheduleTypesList {
             /**
              * example:
              * 123
@@ -493,7 +478,7 @@ declare namespace Components {
              * http://api.example.org/accounts/?page=2
              */
             previous?: string | null; // uri
-            results?: TeamScheduleTypes[];
+            results?: ThemeScheduleTypes[];
         }
         export interface PaginatedUserList {
             /**
@@ -531,9 +516,19 @@ declare namespace Components {
             previous?: string | null; // uri
             results?: Visit[];
         }
-        export type PermitGrantedEnum = "True" | "False" | "UNKNOWN";
+        export interface Permit {
+            permit_granted: PermitGrantedEnum;
+            permit_type: string;
+            raw_data: {
+                [name: string]: any;
+            } | null;
+            details: {
+                [name: string]: any;
+            } | null;
+        }
+        export type PermitGrantedEnum = "GRANTED" | "NOT_GRANTED" | "UNKNOWN";
         export interface Priority {
-            readonly id: number;
+            id: number;
             name: string;
             weight: number; // float
         }
@@ -571,13 +566,14 @@ declare namespace Components {
             results: Resident[];
         }
         export interface Schedule {
-            readonly id: number;
+            id: number;
             action: Action;
             week_segment: WeekSegment;
             day_segment: DaySegment;
             priority: Priority;
-            readonly date_added: string; // date-time
-            readonly date_modified: string; // date-time
+            camunda_task_id?: string;
+            date_added: string; // date-time
+            date_modified: string; // date-time
             case: number;
         }
         export interface ScheduleCreate {
@@ -586,42 +582,44 @@ declare namespace Components {
             day_segment: number;
             priority: number;
             case: number;
+            camunda_task_id?: string;
         }
         export type SoortVorderingEnum = "PBF" | "PBN" | "PRV" | "SOC";
         export interface Summon {
-            readonly id: number;
+            id: number;
             type: number;
-            readonly type_name: string;
+            type_name: string;
             case: number;
             persons: SummonedPerson[];
-            readonly date_added: string; // date-time
+            camunda_task_id?: string;
+            date_added: string; // date-time
             description?: string | null;
         }
         export interface SummonType {
-            readonly id: number;
+            id: number;
             name: string;
         }
         export interface SummonedPerson {
-            readonly id: number;
+            id: number;
             first_name: string;
             preposition?: string | null;
             last_name: string;
-            readonly summon: number;
+            summon: number;
         }
         export interface SupportContact {
-            readonly id: number;
+            id: number;
             name: string;
             phone_number: string;
             email: string;
             title: string;
         }
-        export interface TeamScheduleTypes {
+        export interface ThemeScheduleTypes {
             actions: Action[];
             week_segments: WeekSegment[];
             day_segments: DaySegment[];
             priorities: Priority[];
         }
-        export type TypeEnum = "DEBRIEFING" | "VISIT" | "CASE" | "SUMMON" | "GENERIC_TASK" | "SCHEDULE";
+        export type TypeEnum = "DEBRIEFING" | "VISIT" | "CASE" | "SUMMON" | "GENERIC_TASK" | "SCHEDULE" | "CITIZEN_REPORT";
         export interface User {
             id?: string; // uuid
             email?: string; // email
@@ -630,21 +628,21 @@ declare namespace Components {
             last_name?: string;
             full_name?: string;
         }
-        export interface VakantieverhuurMelding {
-            is_afmelding: boolean;
-            melding_date: string; // date-time
+        export interface VakantieverhuurReport {
+            is_cancellation: boolean;
+            report_date: string; // date-time
             check_in_date: string; // date-time
             check_out_date: string; // date-time
         }
-        export interface VakantieverhuurRentalInformation {
+        export interface VakantieverhuurReportInformation {
             rented_days_count: null | number;
             planned_days_count: null | number;
             is_rented_today: boolean;
-            meldingen: VakantieverhuurMelding[];
+            reports: VakantieverhuurReport[];
         }
         export type ViolationEnum = "NO" | "YES" | "ADDITIONAL_RESEARCH_REQUIRED" | "ADDITIONAL_VISIT_REQUIRED";
         export interface Visit {
-            readonly id: number;
+            id: number;
             authors?: User[];
             author_ids?: string /* uuid */[];
             start_time: string; // date-time
@@ -658,7 +656,7 @@ declare namespace Components {
             case: number;
         }
         export interface WeekSegment {
-            readonly id: number;
+            id: number;
             name: string;
         }
     }
@@ -681,19 +679,15 @@ declare namespace Paths {
             export type $200 = Components.Schemas.PaginatedCaseList;
         }
     }
-    namespace AddressesPermitsList {
+    namespace AddressesPermitsRetrieve {
         namespace Parameters {
             export type BagId = string;
-            export type Page = number;
         }
         export interface PathParameters {
             bag_id: Parameters.BagId;
         }
-        export interface QueryParameters {
-            page?: Parameters.Page;
-        }
         namespace Responses {
-            export type $200 = Components.Schemas.PaginatedDecosPermitList;
+            export type $200 = Components.Schemas.Decos;
         }
     }
     namespace AddressesResidentsRetrieve {
@@ -775,6 +769,18 @@ declare namespace Paths {
             export type $200 = Components.Schemas.PushCaseState;
         }
     }
+    namespace CasesCitizenReportsCreate {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        export type RequestBody = Components.Schemas.CitizenReport;
+        namespace Responses {
+            export type $200 = Components.Schemas.CitizenReport;
+        }
+    }
     namespace CasesCreate {
         export type RequestBody = Components.Schemas.CaseCreateUpdate;
         namespace Responses {
@@ -807,7 +813,7 @@ declare namespace Paths {
             export type Page = number;
             export type Reason = number;
             export type StartDate = string; // date
-            export type Team = number;
+            export type Theme = number;
         }
         export interface QueryParameters {
             date?: Parameters.Date /* date */;
@@ -817,7 +823,7 @@ declare namespace Paths {
             page?: Parameters.Page;
             reason?: Parameters.Reason;
             startDate?: Parameters.StartDate /* date */;
-            team?: Parameters.Team;
+            theme?: Parameters.Theme;
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCaseList;
@@ -868,7 +874,7 @@ declare namespace Paths {
             export type StreetName = string;
             export type StreetNumber = string;
             export type Suffix = string;
-            export type Team = number;
+            export type Theme = number;
         }
         export interface QueryParameters {
             page?: Parameters.Page;
@@ -876,7 +882,7 @@ declare namespace Paths {
             streetName?: Parameters.StreetName;
             streetNumber?: Parameters.StreetNumber;
             suffix?: Parameters.Suffix;
-            team?: Parameters.Team;
+            theme?: Parameters.Theme;
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCaseList;
@@ -956,23 +962,6 @@ declare namespace Paths {
             export type $200 = Components.Schemas.OIDCAuthenticate;
         }
     }
-    namespace PermitsDetailsRetrieve {
-        namespace Parameters {
-            export type BagId = string;
-        }
-        export interface QueryParameters {
-            bag_id: Parameters.BagId;
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.Decos;
-        }
-    }
-    namespace PermitsTestConnectRetrieve {
-        namespace Responses {
-            export interface $200 {
-            }
-        }
-    }
     namespace PushCreate {
         export type RequestBody = Components.Schemas.Push;
         namespace Responses {
@@ -1041,7 +1030,7 @@ declare namespace Paths {
             export type $200 = /* Camunda task serializer for the list-endpoint */ Components.Schemas.CamundaTaskList[];
         }
     }
-    namespace TeamsDecisionTypesList {
+    namespace ThemesDecisionTypesList {
         namespace Parameters {
             export type Id = number;
             export type Page = number;
@@ -1056,7 +1045,7 @@ declare namespace Paths {
             export type $200 = Components.Schemas.PaginatedDecisionTypeList;
         }
     }
-    namespace TeamsList {
+    namespace ThemesList {
         namespace Parameters {
             export type Page = number;
         }
@@ -1064,10 +1053,10 @@ declare namespace Paths {
             page?: Parameters.Page;
         }
         namespace Responses {
-            export type $200 = Components.Schemas.PaginatedCaseTeamList;
+            export type $200 = Components.Schemas.PaginatedCaseThemeList;
         }
     }
-    namespace TeamsReasonsList {
+    namespace ThemesReasonsList {
         namespace Parameters {
             export type Id = number;
             export type Page = number;
@@ -1082,7 +1071,7 @@ declare namespace Paths {
             export type $200 = Components.Schemas.PaginatedCaseReasonList;
         }
     }
-    namespace TeamsScheduleTypesList {
+    namespace ThemesScheduleTypesList {
         namespace Parameters {
             export type Id = number;
             export type Page = number;
@@ -1094,10 +1083,10 @@ declare namespace Paths {
             page?: Parameters.Page;
         }
         namespace Responses {
-            export type $200 = Components.Schemas.PaginatedTeamScheduleTypesList;
+            export type $200 = Components.Schemas.PaginatedThemeScheduleTypesList;
         }
     }
-    namespace TeamsStateTypesList {
+    namespace ThemesStateTypesList {
         namespace Parameters {
             export type Id = number;
             export type Page = number;
@@ -1112,7 +1101,7 @@ declare namespace Paths {
             export type $200 = Components.Schemas.PaginatedCaseStateTypeList;
         }
     }
-    namespace TeamsSummonTypesList {
+    namespace ThemesSummonTypesList {
         namespace Parameters {
             export type Id = number;
             export type Page = number;

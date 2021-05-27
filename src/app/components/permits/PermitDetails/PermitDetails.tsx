@@ -1,86 +1,48 @@
-import { Link } from "@amsterdam/asc-ui"
-import { DateDisplay } from "@amsterdam/wonen-ui"
 import styled from "styled-components"
-import { themeColor, themeSpacing } from "@amsterdam/asc-ui"
-import { Heading } from "@amsterdam/asc-ui"
+import { themeSpacing, Icon } from "@amsterdam/asc-ui"
+import { Check, Close } from "app/components/shared/Icons"
+import useValues from "./hooks/useValues"
+import DefinitionList from "app/components/shared/DefinitionList/DefinitionList"
 
-type Props = {detail: Components.Schemas.DecosPermit}
+type Props = {
+  permit: Components.Schemas.Permit
+}
 
-const Label = styled.label`
-  color: ${ themeColor("tint", "level5") };
-  font-weight: 500;
-  word-break: break-word;
-`
-const Text = styled.span`
-  word-break: break-word;
-`
-export const Grid = styled.div`
-  display: grid;
-  grid-template-columns: minmax(140px, 1fr) 3fr;
-  grid-gap: ${ themeSpacing(3) } ${ themeSpacing(4) };
-  place-items: baseline start;
+const Div = styled.div<{ isOpaque?: boolean }>`
+  margin-bottom: ${ themeSpacing(8) };
+  dl {
+    opacity: ${ ({ isOpaque = true }) => isOpaque ? 1 : 0.3 };
+  }
 `
 
-const PermitDetail: React.FC<Props> = ({ detail }) => {
-  const { permit_granted, permit_type, details, decos_join_web_url } = detail
+const HeadingSpan = styled.span`
+  display: flex;
+  justify-content: start;
+  align-items: center;
+`
 
-  const permitHasBeenGranted = (permit: Components.Schemas.DecosPermit) => permit.permit_granted === "True"
-  const permitIsForBAndB = (permit: Components.Schemas.DecosPermit) => permit.permit_type.startsWith("B&B")
-  const permitHasEndDate = (permit: Components.Schemas.DecosPermit) => permit.details?.DATE_VALID_TO || permit.details?.DATE_VALID_UNTIL
+const StyledIcon = styled(Icon)`
+  margin-left: ${ themeSpacing(2) };
+`
+
+const PermitDetail: React.FC<Props> = ({ permit }) => {
+
+  const values = useValues(permit)
+  const { permit_type, permit_granted } = permit
+  const isGranted = permit_granted === "GRANTED"
 
   return (
-  <>
-            <Heading forwardedAs="h4">{ permit_type }</Heading>
-            <Grid>
-              <Label>Conclusie</Label>
-              <Text>{ permit_granted === "True" ? "Geldig" : "Niet geldig" }</Text>
-              <Label>Resultaat</Label>
-              <Text>{details?.RESULT}</Text>
-              <Label>Omschrijving zaak</Label>
-              <Text>{ details?.SUBJECT }</Text>
-              <Label>Soort vergunning</Label>
-              <Text>{details?.PERMIT_TYPE}</Text>
-              <Label>Aangevraagd door</Label>
-              <Text>{ details?.APPLICANT }</Text>
-              { permitIsForBAndB(detail) &&
-              <>
-                <Label>Vergunninghouder</Label>
-                <Text>{ details?.HOLDER }</Text>
-              </>
-              }
-              <Label>Locatie</Label>
-              <Text>{ details?.ADDRESS }</Text>
-              { permitHasBeenGranted(detail) &&
-              <>
-                <Label>Verleend per</Label>
-                <Text><DateDisplay date= { details?.DATE_VALID_FROM } /></Text>
-                { permitHasEndDate(detail) &&
-                permitIsForBAndB(detail) ?
-                  <>
-                    <Label>Geldig tot en met</Label>
-                    <Text><DateDisplay date= { details?.DATE_VALID_UNTIL ?? details?.DATE_VALID_TO } /></Text>
-                  </> :
-                  <>
-                    <Label>Geldig tot</Label>
-                    <Text><DateDisplay date= { details?.DATE_VALID_TO ?? details?.DATE_VALID_UNTIL } /></Text>
-                  </>
-                }
-              </>
-              }
-              { permit_granted === "False" &&
-              <>
-                <Label>Datum besluit</Label>
-                <Text><DateDisplay date= { details?.DATE_DECISION } /></Text>
-              </>
-              }
-            </Grid>
-
-    { decos_join_web_url && permit_type &&
-      <Link href={ decos_join_web_url } variant="inline" icon="external" target="_blank" rel="noreferer">
-        { permit_type }
-      </Link>
-    }
-  </>
+    <Div isOpaque={ isGranted }>
+      <DefinitionList
+        title={
+          <HeadingSpan>
+            { permit_type } <StyledIcon>{ isGranted ? <Check /> : <Close /> }</StyledIcon>
+          </HeadingSpan>
+        }
+        headingSize="h4"
+        values={ values }
+      />
+    </Div>
   )
 }
 export default PermitDetail

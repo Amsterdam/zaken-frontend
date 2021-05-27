@@ -6,6 +6,7 @@ import { Close } from "app/components/shared/Icons"
 type Props = {
   title: string
   isOpen: boolean
+  showCloseButton?: boolean
   onClose: () => void
 }
 
@@ -16,19 +17,22 @@ export const ModalBlock = styled.div`
   line-height: 1.5;
 `
 
-const Modal: React.FC<Props> = ({ children, title, isOpen, onClose }) => (
+const Modal: React.FC<Props> = ({ children, title, isOpen, showCloseButton = true, onClose }) => (
   <AscModal open={isOpen} onClose={onClose}>
     <TopBar>
-      <Heading forwardedAs="h4" style={{ flexGrow: 1 }}>
+      <Heading forwardedAs="h4" style={{ flexGrow: 1, padding: "12px 0" } }>
         { title }
-        <Button
-          type="button"
-          size={30}
-          onClick={onClose}
-          variant="blank"
-        >
-          <Icon size={28}><Close /></Icon>
-        </Button>
+        { showCloseButton &&
+          <Button
+            type="button"
+            size={30}
+            onClick={onClose}
+            variant="blank"
+            style={{ alignSelf: "flex-start" }}
+          >
+            <Icon size={28}><Close /></Icon>
+          </Button>
+        }
       </Heading>
     </TopBar>
     <Divider />
