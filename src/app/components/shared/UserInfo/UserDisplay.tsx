@@ -23,7 +23,7 @@ const Div = styled.div`
     transform: translateY(-2px);
   }
 
-  svg[aria-hidden='true'] {
+  svg[aria-hidden="true"] {
     display: inline-block !important;
   }
 
