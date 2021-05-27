@@ -41,7 +41,7 @@ export default (caseId: Components.Schemas.Case["id"], completeCases?: MockCompo
   }
 
   return new FormPositioner(fields as Fields)
-    .setGrid("laptop", "1fr 1fr", [
+    .setGrid("laptopM", "1fr 1fr", [
       ["complete", "complete"],
       ["text", "text"],
       ["secondaryButton", "submit"]
