@@ -173,6 +173,7 @@ declare namespace Components {
         }
         export interface DebriefingCreate {
             id: number;
+            camunda_task_id?: string;
             violation?: ViolationEnum;
             feedback: string;
             case: number;
