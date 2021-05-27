@@ -10,7 +10,7 @@ const Main = styled.main`
   width: 100%;
   max-width: ${ sizes.laptopL }px;
 
-  @media screen and ${ breakpoint("min-width", "laptop") } {
+  @media screen and ${ breakpoint("min-width", "laptopM") } {
     padding: ${ themeSpacing(2) } ${ themeSpacing(14) } ${ themeSpacing(12) };
   }
 `

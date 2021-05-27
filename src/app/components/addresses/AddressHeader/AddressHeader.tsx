@@ -18,7 +18,7 @@ const Div = styled.div<{ isHeader: boolean }>`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  @media screen and ${ breakpoint("min-width", "laptop") } {
+  @media screen and ${ breakpoint("min-width", "laptopM") } {
     justify-content: ${ props => props.isHeader ? "flex-start" : "flex-end" };
   }
 `

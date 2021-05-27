@@ -26,7 +26,7 @@ const Li = styled.li`
   @media screen and ${ breakpoint("min-width", "tabletS") } {
     width: 50%;
   }
-  @media screen and ${ breakpoint("min-width", "laptop") } {
+  @media screen and ${ breakpoint("min-width", "laptopM") } {
     width: 25%;
   }
 `
