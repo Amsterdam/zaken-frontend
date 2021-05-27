@@ -138,7 +138,7 @@ const scaffold = (caseId: Components.Schemas.Case["id"], authors: Components.Sch
       ["description", "description"],
       ["secondaryButton", "submit"]
     ])
-    .setGrid("laptop", "1fr 1fr", [
+    .setGrid("laptopM", "1fr 1fr", [
       ["author1", "author2"],
       ["time", "time"],
       ["status", "status"],
