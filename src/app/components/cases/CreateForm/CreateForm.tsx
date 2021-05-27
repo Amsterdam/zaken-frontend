@@ -14,8 +14,8 @@ type FormData =
 
 const mapData = (bagId: Components.Schemas.Address["bag_id"]) =>
   (data: FormData): CaseCreate => ({
+    ...data,
     address: { bag_id: bagId },
-    description: data.description,
     theme: data.theme.id,
     reason: data.reason.id
   })
