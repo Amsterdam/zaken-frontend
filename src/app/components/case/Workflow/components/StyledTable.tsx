@@ -11,9 +11,9 @@ export default styled(Table)`
   td {
     line-height: ${ themeSpacing(12) };
     padding: ${ themeSpacing(1) } ${ themeSpacing(3) };
-    * {
-      margin-top: 0;
-      margin-bottom: 0;
+
+    &:first-child {
+      width: 32px;
     }
   }
 `
