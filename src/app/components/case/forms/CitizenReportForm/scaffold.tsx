@@ -55,7 +55,6 @@ export default (caseId: Components.Schemas.Case["id"]) => {
         extraLabel: <InfoButton infoTitle="SIA-nummer" infoText="Vermeld hier het corresponderende SIA-nummer, zodat de melding makkelijk terug te vinden is in SIA."></InfoButton>,
         name: "identification",
         placeholder: "123456",
-        max: 999999,
         min: 1,
         step: 1,
         isRequired: true,
