@@ -28,7 +28,9 @@ const Workflow: React.FC<Props> = ({ id }) => {
   const [, { execPost }] = useTaskComplete({ lazy: true })
   const mappedData = useMemo(
     () => data?.map(
-      ({ state, tasks }) => [state.status_name, ["Donald Duck, Katrien Duck"], tasks.map(mapTaskData(id, execPost))] as const),
+      ({ state: { status_name, users }, tasks }) =>
+        [status_name, users, tasks.map(mapTaskData(id, execPost))] as const
+    ),
     [data, id, execPost]
   )
 
@@ -40,12 +42,14 @@ const Workflow: React.FC<Props> = ({ id }) => {
       { mappedData.map(([title, users, tasks]) =>
         <>
           <Heading as="h4">{ title }</Heading>
-          <Div>
-          { users
-              .map(user => <span>{ user }</span>)
-              .reduce((acc, item) => <>{ acc }{ acc !== undefined && ", " }{ item }</>) // React join
+          { users.length > 0 &&
+            <Div>
+            { users
+                .map(user => <span>{ user }</span>)
+                .reduce((acc, item) => <>{ acc }{ acc !== undefined && ", " }{ item }</>) // React join
+            }
+            </Div>
           }
-          </Div>
           <StyledTable
             columns={ columns }
             data={ tasks }
