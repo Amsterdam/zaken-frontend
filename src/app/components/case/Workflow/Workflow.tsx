@@ -26,7 +26,6 @@ const Workflow: React.FC<Props> = ({ id }) => {
 
   const [data, { isBusy, hasErrors }] = useCaseTasks(id)
   const [, { execPost }] = useTaskComplete({ lazy: true })
-  console.log(data)
   const mappedData = useMemo(
     () => data?.map(
       ({ state, tasks }) => [state.status_name, ["Donald Duck, Katrien Duck"], tasks.map(mapTaskData(id, execPost))] as const),
