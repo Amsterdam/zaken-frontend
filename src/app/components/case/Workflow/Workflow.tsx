@@ -43,7 +43,7 @@ const Workflow: React.FC<Props> = ({ id }) => {
           <Div>
           { users
               .map(user => <span>{ user }</span>)
-              .reduce((acc, item) => <>{ acc }{ acc !== undefined ? ", " : " " }{ item }</>)
+              .reduce((acc, item) => <>{ acc }{ acc !== undefined && ", " }{ item }</>) // React join
           }
           </Div>
           <StyledTable
