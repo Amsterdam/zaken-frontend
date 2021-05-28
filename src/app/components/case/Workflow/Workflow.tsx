@@ -28,8 +28,8 @@ const Workflow: React.FC<Props> = ({ id }) => {
   const [, { execPost }] = useTaskComplete({ lazy: true })
   const mappedData = useMemo(
     () => data?.map(
-      ({ state: { status_name, users }, tasks }) =>
-        [status_name, users, tasks.map(mapTaskData(id, execPost))] as const
+      ({ state: { status_name, information }, tasks }) =>
+        [status_name, information, tasks.map(mapTaskData(id, execPost))] as const
     ),
     [data, id, execPost]
   )
@@ -39,17 +39,10 @@ const Workflow: React.FC<Props> = ({ id }) => {
       <Spinner /> :
     mappedData !== undefined ?
       <>
-      { mappedData.map(([title, users, tasks]) =>
+      { mappedData.map(([title, information, tasks]) =>
         <>
           <Heading as="h4">{ title }</Heading>
-          { users.length > 0 &&
-            <Div>
-            { users
-                .map(user => <span>{ user }</span>)
-                .reduce((acc, item) => <>{ acc }{ acc !== undefined && ", " }{ item }</>) // React join
-            }
-            </Div>
-          }
+          { information && <Div>{ information }</Div> }
           <StyledTable
             columns={ columns }
             data={ tasks }

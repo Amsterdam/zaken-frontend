@@ -145,13 +145,14 @@ declare namespace Components {
         }
         export interface CaseState {
             id: number;
-            case: number;
             status_name: string;
-            status: number;
             start_date: string; // date
             end_date?: string | null; // date
-            users: string /* uuid */[];
+            information?: string | null;
             case_process_id?: string | null;
+            case: number;
+            status: number;
+            users: string /* uuid */[];
         }
         export interface CaseStateType {
             id: number;
