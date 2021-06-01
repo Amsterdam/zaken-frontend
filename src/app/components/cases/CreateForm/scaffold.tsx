@@ -93,6 +93,14 @@ export default (bagId: Components.Schemas.Address["bag_id"], themes?: Components
         }
       }
     },
+    description_citizenreport: {
+      type: "TextAreaField",
+      props: {
+        label: "Korte samenvatting melding",
+        name: "description_citizenreport",
+        isRequired: true
+      }
+    },
     advertisement: {
       type: "ShowHide",
       props: {
@@ -144,8 +152,7 @@ export default (bagId: Components.Schemas.Address["bag_id"], themes?: Components
       props: {
         label: "Korte toelichting",
         name: "description",
-        extraLabel: "(Niet verplicht)",
-        rows: 7
+        extraLabel: "(Niet verplicht)"
       }
     },
     cancel: {
@@ -172,6 +179,7 @@ export default (bagId: Components.Schemas.Address["bag_id"], themes?: Components
       ["reporter_anonymous", "reporter_anonymous"],
       ["reporter_name", "reporter_phone"],
       ["identification"],
+      ["description_citizenreport", "description_citizenreport"],
       ["advertisement", "advertisement"],
       ["advertisement_linklist", "advertisement_linklist"],
       ["description", "description"],
