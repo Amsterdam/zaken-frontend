@@ -38,7 +38,7 @@ export default (caseId: Components.Schemas.Case["id"]) => {
       props: {
         shouldShow: ({ values: { reporter_anonymous } }: { values: { reporter_anonymous: string } }) => reporter_anonymous === "no",
         field: {
-          type: "NumberField",
+          type: "TelField",
           props: {
             label: "Telefoonnummer melder",
             name: "reporter_phone",
