@@ -35,7 +35,7 @@ const scaffold = (onCancel: () => void, minDate: string) => {
       ["dueDate", "dueDate"],
       ["cancel", "submit"]
     ])
-    .setGrid("laptop", "1fr 1fr", [
+    .setGrid("laptopM", "1fr 1fr", [
       ["dueDate"],
       ["cancel", "submit"]
     ])

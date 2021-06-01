@@ -37,7 +37,7 @@ const RowStyle = styled.div<TypeProps>`
     margin-top: ${ props => themeSpacing(props.topSpacing ?? 0) };
   }
 
-  @media screen and ${ breakpoint("min-width", "laptop") } {
+  @media screen and ${ breakpoint("min-width", "laptopM") } {
     width: calc(100% + ${ GUTTER }px);
     margin-left: -${ GUTTER / 2 }px;
     margin-right: -${ GUTTER  / 2 }px;

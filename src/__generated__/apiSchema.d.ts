@@ -52,6 +52,7 @@ declare namespace Components {
             state: string;
             case_identification: string;
             information?: string;
+            case_process_id: string;
         }
         /**
          * Serializer for Camunda tasks
@@ -100,6 +101,10 @@ declare namespace Components {
             case: /* Case-address serializer for camunda tasks */ CamundaCaseAddress;
             process_instance_id: string;
         }
+        export interface CamundaTaskWithState {
+            state: CaseState;
+            tasks: /* Serializer for Camunda tasks */ CamundaTask[];
+        }
         export interface Case {
             id: number;
             address: Address;
@@ -140,11 +145,13 @@ declare namespace Components {
         }
         export interface CaseState {
             id: number;
-            case: number;
             status_name: string;
-            status: number;
             start_date: string; // date
             end_date?: string | null; // date
+            information?: string | null;
+            case_process_id?: string | null;
+            case: number;
+            status: number;
             users: string /* uuid */[];
         }
         export interface CaseStateType {
@@ -264,7 +271,7 @@ declare namespace Components {
             previous?: string | null; // uri
             results?: CamundaProcess[];
         }
-        export interface PaginatedCamundaTaskList {
+        export interface PaginatedCamundaTaskWithStateList {
             /**
              * example:
              * 123
@@ -280,7 +287,7 @@ declare namespace Components {
              * http://api.example.org/accounts/?page=2
              */
             previous?: string | null; // uri
-            results?: /* Serializer for Camunda tasks */ CamundaTask[];
+            results?: CamundaTaskWithState[];
         }
         export interface PaginatedCaseList {
             /**
@@ -900,7 +907,7 @@ declare namespace Paths {
             page?: Parameters.Page;
         }
         namespace Responses {
-            export type $200 = Components.Schemas.PaginatedCamundaTaskList;
+            export type $200 = Components.Schemas.PaginatedCamundaTaskWithStateList;
         }
     }
     namespace DebriefingsCreate {

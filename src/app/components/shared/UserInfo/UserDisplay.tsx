@@ -1,4 +1,3 @@
-
 import styled from "styled-components"
 import { breakpoint, Icon, MenuButton } from "@amsterdam/asc-ui"
 import { PermIdentity, Logout } from "app/components/shared/Icons"
@@ -24,6 +23,10 @@ const Div = styled.div`
     transform: translateY(-2px);
   }
 
+  svg[aria-hidden="true"] {
+    display: inline-block !important;
+  }
+
   @media screen and ${ breakpoint("min-width", "laptopM") } {
     display: inline-block;
     padding: 8px 0 0 24px;
@@ -45,11 +48,11 @@ const UserDisplay: React.FC<Props> = ({ name, onClick }) =>
       </Div>
     }
     <StyledMenuButton
-      tabIndex={0}
+      tabIndex={ 0 }
       onClick={ onClick }
-      iconLeft={<Logout/>}
+      iconLeft={ <Logout/> }
       title="Uitloggen"
-      iconSize={24}
+      iconSize={ 24 }
     >Uitloggen</StyledMenuButton>
   </>
 export default UserDisplay

@@ -1,4 +1,3 @@
-
 import { Header } from "@amsterdam/asc-ui"
 import styled from "styled-components"
 import DefaultNavigation from "app/components/shared/navigation/DefaultNavigation"

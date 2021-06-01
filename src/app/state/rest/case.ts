@@ -169,7 +169,7 @@ export const useCitizenReports = (caseId: Components.Schemas.Case["id"], options
 
 export const useCaseTasks = (caseId: Components.Schemas.Case["id"], options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<Components.Schemas.CamundaTask[]>({
+  return useApiRequest<Components.Schemas.CamundaTaskWithState[]>({
     ...options,
     url: makeApiUrl("cases", caseId, "tasks"),
     groupName: "cases",
