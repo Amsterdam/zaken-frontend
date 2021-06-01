@@ -44,7 +44,8 @@ export default (caseId: Components.Schemas.Case["id"], scheduleTypes?: Component
       type: "TextAreaField",
       props: {
         label: "Korte toelichting",
-        name: "description"
+        name: "description",
+        extraLabel: "(niet verplicht)"
       }
     },
     secondaryButton: {
