@@ -144,7 +144,7 @@ export default (bagId: Components.Schemas.Address["bag_id"], themes?: Components
       props: {
         label: "Korte toelichting",
         name: "description",
-        isRequired: true,
+        extraLabel: "(Niet verplicht)",
         rows: 7
       }
     },
