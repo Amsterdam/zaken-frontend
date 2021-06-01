@@ -44,7 +44,7 @@ const Workflow: React.FC<Props> = ({ id }) => {
     mappedData !== undefined ?
       <>
       { mappedData.map(([title, information, tasks], index) =>
-        <Wrap key={ index }>
+        <Wrap key={ `${ title }_${ index }` }>
           <Div>
             <Heading as="h4">{ title }</Heading>
             { information && <p>{ information }</p> }
