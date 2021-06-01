@@ -10,10 +10,10 @@ type Props = {
   numLoadingRows?: number
   loading?: boolean
   hasFixedColumn?: boolean
-  columns: { header?: React.ReactNode, minWidth: number }[]
+  columns: { header?: React.ReactNode, minWidth?: number, width?: number }[]
   data?: {
     onClick?: (event: React.MouseEvent) => void
-    itemList?: React.ReactNode[]
+    itemList: React.ReactNode[]
   }[]
   noValuesPlaceholder?: React.ReactNode
   showHeadWhenEmpty?: boolean
@@ -87,9 +87,9 @@ const Table: React.FC<Props> = ({
           { (showHeadWhenEmpty || !isEmpty) &&
             <thead>
               <Row>
-                { columns.map((column, index) =>
-                  <TableHeading key={index} minWidth={column.minWidth} isFixed={ hasFixedColumn && index === columns.length - 1 }>
-                    { column.header ?? <>&nbsp;</> }
+                { columns.map(({ header, minWidth, width }, index) =>
+                  <TableHeading key={ index } minWidth={ minWidth } width={ width } isFixed={ hasFixedColumn && index === columns.length - 1 }>
+                    { header ?? <>&nbsp;</> }
                   </TableHeading>
                 ) }
               </Row>
@@ -102,7 +102,7 @@ const Table: React.FC<Props> = ({
                     hasFixedColumn && index === (itemList?.length ?? 0) - 1
                       ? <FixedTableCell key={ index } width={ fixedColumnWidth }>{ cell ?? <>&nbsp;</> }</FixedTableCell>
                       : <TableCell key={ index }>
-                          { loading ? <SmallSkeleton maxRandomWidth={ columns[index].minWidth - 30 } /> : cell ?? <>&nbsp;</> }
+                          { loading ? <SmallSkeleton maxRandomWidth={ (columns[index].minWidth ?? 30) - 30 } /> : cell ?? <>&nbsp;</> }
                         </TableCell>
                 ) }
               </Row>
@@ -111,7 +111,7 @@ const Table: React.FC<Props> = ({
             <Row key={index}>
               { row.map( (cell, index) => hasFixedColumn && index === row.length - 1
                     ? <FixedTableCell key={index} width={ fixedColumnWidth }>{ cell ?? <>&nbsp;</> }</FixedTableCell>
-                    : <TableCell key={index}>{ loading ? <SmallSkeleton maxRandomWidth={columns[index].minWidth - 30} /> : cell ?? <>&nbsp;</> }</TableCell>
+                    : <TableCell key={index}>{ loading ? <SmallSkeleton maxRandomWidth={ (columns[index].minWidth ?? 30) - 30} /> : cell ?? <>&nbsp;</> }</TableCell>
               ) }
             </Row>
           ) }

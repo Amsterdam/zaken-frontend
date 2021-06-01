@@ -10,15 +10,19 @@ type Props = {
   id: Components.Schemas.Case["id"]
 }
 
+const Wrap = styled.div`
+  margin-bottom: ${ themeSpacing(12) };
+`
+
 const Div = styled.div`
-  margin-bottom: ${ themeSpacing(6) };
+  margin-bottom: ${ themeSpacing(4) };
 `
 
 const columns = [
   { minWidth: 50 },
-  { header: "Actuele taken", minWidth: 100 },
-  { header: "Uitvoerder", minWidth: 100 },
-  { header: "Slotdatum", minWidth: 100 },
+  { header: "Actuele taken", width: 400 },
+  { header: "Uitvoerder", width: 200 },
+  { header: "Slotdatum", width: 160 },
   { header: "Verwerking taak", minWidth: 140 }
 ]
 
@@ -40,9 +44,11 @@ const Workflow: React.FC<Props> = ({ id }) => {
     mappedData !== undefined ?
       <>
       { mappedData.map(([title, information, tasks]) =>
-        <>
-          <Heading as="h4">{ title }</Heading>
-          { information && <Div>{ information }</Div> }
+        <Wrap>
+          <Div>
+            <Heading as="h4">{ title }</Heading>
+            { information && <p>{ information }</p> }
+          </Div>
           <StyledTable
             columns={ columns }
             data={ tasks }
@@ -50,7 +56,7 @@ const Workflow: React.FC<Props> = ({ id }) => {
               <>Geen taken beschikbaar. <a href={ window.location.pathname }>Herlaad</a></>
             }
           />
-        </>
+        </Wrap>
       ) }
       </> :
     hasErrors ?
