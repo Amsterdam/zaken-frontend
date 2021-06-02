@@ -17,7 +17,22 @@ export default (caseId: Components.Schemas.Case["id"]) => {
           "YES": "Overtreding",
           "NO": "Geen overtreding",
           "ADDITIONAL_RESEARCH_REQUIRED": "Nader intern onderzoek nodig",
-          "ADDITIONAL_VISIT_REQUIRED": "Aanvullend huisbezoek nodig"
+          "ADDITIONAL_VISIT_REQUIRED": "Aanvullend huisbezoek nodig",
+          "SEND_TO_OTHER_THEME": "Naar ander thema"
+        }
+      }
+    },
+    theme: {
+      type: "ShowHide",
+      props: {
+        shouldShow: ({ values: { violation } }: { values: { violation: any } }) => violation === "SEND_TO_OTHER_THEME",
+        field: {
+          type: "TextField",
+          props: {
+            isRequired: true,
+            name: "advertithemesement",
+            label: "Naar welk thema overdragen?"
+          }
         }
       }
     },
@@ -49,6 +64,7 @@ export default (caseId: Components.Schemas.Case["id"]) => {
   return new FormPositioner(fields as Fields)
     .setGrid("mobileS", "1fr 1fr", [
       ["violation", "violation"],
+      ["theme"],
       ["feedback", "feedback"],
       ["secondaryButton", "submit"]
     ])
