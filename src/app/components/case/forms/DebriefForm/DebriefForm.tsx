@@ -4,7 +4,7 @@ import scaffold from "./scaffold"
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
 import FormWithExtraLabel from "app/components/shared/FormWithExtraLabel/FormWithExtraLabel"
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
-import { useDebriefingCreate } from "app/state/rest"
+import { useCase, useDebriefingCreate, useViolationTypes } from "app/state/rest"
 
 type Props = {
   id: Components.Schemas.Case["id"]
@@ -13,8 +13,12 @@ type Props = {
 
 const DebriefCreateForm: React.FC<Props> = ({ id, camundaTaskId }) => {
 
+  const [caseItem] = useCase(id)
+  const themeId = caseItem?.theme.id
+  const [data] = useViolationTypes(themeId)
+  const violationTypes = data?.results
   const [, { execPost }] = useDebriefingCreate()
-  const fields = useScaffoldedFields(scaffold, id)
+  const fields = useScaffoldedFields(scaffold, id, violationTypes)
 
   return (
     <>

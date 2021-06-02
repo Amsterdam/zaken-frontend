@@ -117,6 +117,7 @@ declare namespace Components {
             start_date?: string | null; // date
             end_date?: string | null; // date
             is_legacy_bwv?: boolean;
+            legacy_bwv_case_id?: string | null;
             camunda_ids?: string[] | null;
             description?: string | null;
             author?: string | null; // uuid
@@ -170,7 +171,7 @@ declare namespace Components {
             reporter_name?: string | null;
             reporter_phone?: string | null;
             identification: number;
-            description?: string | null;
+            description_citizenreport?: string | null;
             date_added: string; // date-time
             case: number;
         }
@@ -505,6 +506,24 @@ declare namespace Components {
             previous?: string | null; // uri
             results?: User[];
         }
+        export interface PaginatedViolationTypeList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=4
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null; // uri
+            results?: ViolationType[];
+        }
         export interface PaginatedVisitList {
             /**
              * example:
@@ -579,6 +598,7 @@ declare namespace Components {
             day_segment: DaySegment;
             priority: Priority;
             camunda_task_id?: string;
+            description?: string | null;
             date_added: string; // date-time
             date_modified: string; // date-time
             case: number;
@@ -588,6 +608,7 @@ declare namespace Components {
             week_segment: number;
             day_segment: number;
             priority: number;
+            description?: string | null;
             case: number;
             camunda_task_id?: string;
         }
@@ -647,7 +668,10 @@ declare namespace Components {
             is_rented_today: boolean;
             reports: VakantieverhuurReport[];
         }
-        export type ViolationEnum = "NO" | "YES" | "ADDITIONAL_RESEARCH_REQUIRED" | "ADDITIONAL_VISIT_REQUIRED";
+        export type ViolationEnum = "NO" | "YES" | "ADDITIONAL_RESEARCH_REQUIRED" | "ADDITIONAL_VISIT_REQUIRED" | "SEND_TO_OTHER_THEME" | "AUTHORIZATION_REQUEST";
+        export interface ViolationType {
+            key: string;
+        }
         export interface Visit {
             id: number;
             authors?: User[];
@@ -1121,6 +1145,21 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedSummonTypeList;
+        }
+    }
+    namespace ThemesViolationTypesList {
+        namespace Parameters {
+            export type Id = number;
+            export type Page = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        export interface QueryParameters {
+            page?: Parameters.Page;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedViolationTypeList;
         }
     }
     namespace VisitsCreate {
