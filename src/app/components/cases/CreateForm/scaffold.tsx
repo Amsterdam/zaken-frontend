@@ -102,20 +102,14 @@ export default (bagId: Components.Schemas.Address["bag_id"], themes?: Components
       }
     },
     advertisement: {
-      type: "ShowHide",
+      type: "RadioFields",
       props: {
-        shouldShow: ({ values: { reason } }: { values: { reason: any } }) => reason.name === "Melding",
-        field: {
-          type: "RadioFields",
-          props: {
-            isRequired: true,
-            name: "advertisement",
-            label: "Is er een advertentie bekend?",
-            options: {
-              yes: "Ja, er is een advertentie",
-              no: "Nee, er is geen advertentie"
-            }
-          }
+        isRequired: true,
+        name: "advertisement",
+        label: "Is er een advertentie bekend?",
+        options: {
+          yes: "Ja, er is een advertentie",
+          no: "Nee, er is geen advertentie"
         }
       }
     },
