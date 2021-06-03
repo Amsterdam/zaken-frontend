@@ -32,6 +32,7 @@ export default (caseId: Components.Schemas.Case["id"], violationTypes: Component
             name: "theme",
             label: "Naar welk thema overdragen?",
             options: { 
+              "-": "-",
               "Kamerverhuur": "Kamerverhuur",
               "Leegstand": "Leegstand",
               "Onderhuur": "Onderhuur",
