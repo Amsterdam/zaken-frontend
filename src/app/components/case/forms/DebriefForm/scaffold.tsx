@@ -3,17 +3,7 @@ import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import InfoContent from "./components/InfoContent"
 import navigateTo from "app/routing/navigateTo"
-
-const translations: Record<string, string> = {
-  "YES": "Overtreding",
-  "NO": "Geen overtreding",
-  "ADDITIONAL_RESEARCH_REQUIRED": "Nader intern onderzoek nodig",
-  "ADDITIONAL_VISIT_REQUIRED": "Aanvullend huisbezoek nodig",
-  "AUTHORIZATION_REQUEST": "Aanvraag machtiging",
-  "SEND_TO_OTHER_THEME": "Naar ander thema"
-}
-
-const translationsMap = (key: string) => translations[key] ?? key
+import { translationsMap } from "app/translations/translations"
 
 export default (caseId: Components.Schemas.Case["id"], violationTypes: Components.Schemas.PaginatedViolationTypeList["results"]) => {
 
