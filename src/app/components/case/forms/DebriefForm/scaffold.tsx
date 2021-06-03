@@ -3,11 +3,12 @@ import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import InfoContent from "./components/InfoContent"
 import navigateTo from "app/routing/navigateTo"
-import { translationsMap } from "app/translations/translations"
+import translationsViolationTypes from "app/translations/translationsViolationTypes"
+import translationsMap from "app/translations/translationsMap"
 
 export default (caseId: Components.Schemas.Case["id"], violationTypes: Components.Schemas.PaginatedViolationTypeList["results"]) => {
 
-  const violationOptions = violationTypes?.map(({ key }) => key).reduce((acc, item) => { acc[item] = translationsMap(item); return acc }, {} as Record<string, string>)
+  const violationOptions = violationTypes?.map(({ key }) => key).reduce((acc, item) => { acc[item] = translationsMap(translationsViolationTypes, item); return acc }, {} as Record<string, string>)
 
   const fields = {
     violation: {

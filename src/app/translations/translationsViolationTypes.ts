@@ -1,4 +1,4 @@
-const translations: Record<string, string> = {
+const translationsViolationTypes: Record<string, string> = {
     "YES": "Overtreding",
     "NO": "Geen overtreding",
     "ADDITIONAL_RESEARCH_REQUIRED": "Nader intern onderzoek nodig",
@@ -7,5 +7,5 @@ const translations: Record<string, string> = {
     "SEND_TO_OTHER_THEME": "Naar ander thema"
   }
   
-  export const translationsMap = (key: string) => translations[key] ?? key
+  export default translationsViolationTypes
   
