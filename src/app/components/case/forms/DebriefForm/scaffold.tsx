@@ -29,7 +29,7 @@ export default (caseId: Components.Schemas.Case["id"], violationTypes: Component
           type: "SelectField",
           props: {
             isRequired: true,
-            name: "theme",
+            name: "violation_result.theme",
             label: "Naar welk thema overdragen?",
             options: { 
               "-": "-",
