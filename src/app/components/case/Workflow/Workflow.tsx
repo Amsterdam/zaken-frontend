@@ -20,9 +20,9 @@ const Div = styled.div`
 
 const columns = [
   { minWidth: 50 },
-  { header: "Actuele taken", width: 400 },
-  { header: "Uitvoerder", width: 200 },
-  { header: "Slotdatum", width: 160 },
+  { header: "Actuele taken", width: 500 },
+  { header: "Uitvoerder", width: 260 },
+  { header: "Slotdatum", width: 200 },
   { header: "Verwerking taak", minWidth: 140 }
 ]
 
