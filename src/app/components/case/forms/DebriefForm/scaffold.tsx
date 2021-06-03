@@ -26,11 +26,17 @@ export default (caseId: Components.Schemas.Case["id"], violationTypes: Component
       props: {
         shouldShow: ({ values: { violation } }: { values: { violation: any } }) => violation === "SEND_TO_OTHER_THEME",
         field: {
-          type: "TextField",
+          type: "SelectField",
           props: {
             isRequired: true,
             name: "theme",
-            label: "Naar welk thema overdragen?"
+            label: "Naar welk thema overdragen?",
+            options: { 
+              "Vakantieverhuur en onderhuur": "Vakantieverhuur en onderhuur",
+              "Kamerverhuur": "Kamerverhuur",
+              "Leegstand en ondermijning": "Leegstand en ondermijning",
+              "Woningverbetering": "Woningverbetering"
+            }
           }
         }
       }
