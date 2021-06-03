@@ -28,7 +28,7 @@ export default (caseId: Components.Schemas.Case["id"], violationTypes: Component
           type: "TextField",
           props: {
             isRequired: true,
-            name: "advertithemesement",
+            name: "theme",
             label: "Naar welk thema overdragen?"
           }
         }
@@ -62,7 +62,7 @@ export default (caseId: Components.Schemas.Case["id"], violationTypes: Component
   return new FormPositioner(fields as Fields)
     .setGrid("mobileS", "1fr 1fr", [
       ["violation", "violation"],
-      ["theme"],
+      ["theme", "theme"],
       ["feedback", "feedback"],
       ["secondaryButton", "submit"]
     ])
