@@ -129,7 +129,8 @@ export default (caseId: Components.Schemas.Case["id"]) => {
   return new FormPositioner(fields as Fields)
     .setGrid("mobileS", "1fr 1fr", [
       ["reporter_anonymous", "reporter_anonymous"],
-      ["reporter_name", "reporter_phone"],
+      ["reporter_name"],
+      ["reporter_phone"],
       ["identification"],
       ["advertisement", "advertisement"],
       ["advertisement_linklist", "advertisement_linklist"],
