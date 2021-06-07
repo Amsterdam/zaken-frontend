@@ -163,6 +163,7 @@ declare namespace Components {
         export interface CaseTheme {
             id: number;
             name: string;
+            case_state_types_top?: number[];
         }
         export interface CitizenReport {
             id: number;
@@ -183,6 +184,9 @@ declare namespace Components {
             id: number;
             camunda_task_id?: string;
             violation?: ViolationEnum;
+            violation_result?: {
+                [name: string]: any;
+            } | null;
             feedback: string;
             case: number;
         }
@@ -192,6 +196,7 @@ declare namespace Components {
             sanction_amount?: string | null; // decimal ^\d{0,98}(\.\d{0,2})?$
             description?: string | null;
             date_added: string; // date-time
+            sanction_id: string;
             case: number;
             decision_type: number;
         }
