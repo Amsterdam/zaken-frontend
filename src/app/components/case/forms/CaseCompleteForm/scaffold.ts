@@ -2,8 +2,7 @@ import { FormPositioner } from "@amsterdam/scaffold-form/package"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import navigateTo from "app/routing/navigateTo"
 
-export default (caseId: Components.Schemas.Case["id"], completeCases?: MockComponents.Schemas.CompleteCaseResult[], completeCaseReasons?: MockComponents.Schemas.CompleteCaseReason[]) => {
-
+export default (caseId: Components.Schemas.Case["id"], completeCases?: Components.Schemas.CaseClose[], completeCaseReasons?: Components.Schemas.CaseCloseReason[]) => {
   const fields = {
     reason: {
       type: "ComplexRadioFields",
@@ -15,23 +14,23 @@ export default (caseId: Components.Schemas.Case["id"], completeCases?: MockCompo
             options: completeCaseReasons
           }
     },
-    result: {
-      type: "ShowHide",
-      props: {
-        shouldShow: ({ values: { reason } }: { values: { reason: MockComponents.Schemas.CompleteCaseReason } }) => reason?.value === 4,
-        field: {
-          type: "ComplexRadioFields",
-          props: {
-            isRequired: true,
-            label: "Wat is het resultaat?",
-            name: "result",
-            optionLabelField: "title",
-            options: completeCases
-          }
+    // result: {
+    //   type: "ShowHide",
+    //   props: {
+    //     shouldShow: ({ values: { reason } }: { values: { reason: Components.Schemas.CaseCloseReason } }) => reason?.name !== "",
+    //     field: {
+    //       type: "ComplexRadioFields",
+    //       props: {
+    //         isRequired: true,
+    //         label: "Wat is het resultaat?",
+    //         name: "result",
+    //         optionLabelField: "title",
+    //         options: completeCases
+    //       }
           
-        }
-      }
-    },
+    //     }
+    //   }
+    // },
     description: {
       type: "TextAreaField",
       props: {
@@ -60,7 +59,7 @@ export default (caseId: Components.Schemas.Case["id"], completeCases?: MockCompo
   return new FormPositioner(fields as Fields)
     .setGrid("laptop", "1fr 1fr", [
       ["reason", "reason"],
-      ["result", "result"],
+      // ["result", "result"],
       ["description", "description"],
       ["secondaryButton", "submit"]
     ])

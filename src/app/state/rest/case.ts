@@ -118,26 +118,24 @@ export const useCorrespondence = (options?: Options) => {
 // TODO-MOCKED replace with real endpoint
 export const useCompleteCaseResults = (options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<MockComponents.Schemas.CompleteCaseResult[]>({
+  return useApiRequest<Components.Schemas.CaseClose[]>({
     ...options,
-    url: "completeCaseResults",
+    url: makeApiUrl("case-close"),
     groupName: "cases",
     handleError,
-    isProtected: true,
-    isMocked: true
+    isProtected: true
   })
 }
 
 // TODO-MOCKED replace with real endpoint
 export const useCompleteCasesReasons = (options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<MockComponents.Schemas.CompleteCaseReason[]>({
+  return useApiRequest<Components.Schemas.PaginatedCaseCloseReasonList>({
     ...options,
-    url: "completeCaseReasons",
+    url: makeApiUrl("case-close-reason"),
     groupName: "cases",
     handleError,
-    isProtected: true,
-    isMocked: true
+    isProtected: true
   })
 }
 

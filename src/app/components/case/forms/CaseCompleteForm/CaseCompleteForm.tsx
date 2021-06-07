@@ -13,10 +13,10 @@ type Props = {
 
 const CaseCompleteForm: React.FC<Props> = ({ id, camundaTaskId }) => {
 
-  const [completeCaseResults] = useCompleteCaseResults()
-  const [completeCaseReasons] = useCompleteCasesReasons()
+  const [caseClose] = useCompleteCaseResults()
+  const [caseCloseReasons] = useCompleteCasesReasons()
   const [, { execPost }] = useCompleteCase()
-  const fields = useScaffoldedFields(scaffold, id, completeCaseResults, completeCaseReasons)
+  const fields = useScaffoldedFields(scaffold, id, caseClose, caseCloseReasons?.results)
 
   return (
     <>
