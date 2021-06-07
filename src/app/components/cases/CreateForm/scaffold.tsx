@@ -64,7 +64,7 @@ export default (bagId: Components.Schemas.Address["bag_id"], themes?: Components
       props: {
         shouldShow: ({ values: { reporter_anonymous } }: { values: { reporter_anonymous: string } }) => reporter_anonymous === "no",
         field: {
-          type: "NumberField",
+          type: "TelField",
           props: {
             label: "Telefoonnummer melder",
             name: "reporter_phone",
@@ -93,21 +93,23 @@ export default (bagId: Components.Schemas.Address["bag_id"], themes?: Components
         }
       }
     },
-    advertisement: {
-      type: "ShowHide",
+    description_citizenreport: {
+      type: "TextAreaField",
       props: {
-        shouldShow: ({ values: { reason } }: { values: { reason: any } }) => reason.name === "Melding",
-        field: {
-          type: "RadioFields",
-          props: {
-            isRequired: true,
-            name: "advertisement",
-            label: "Is er een advertentie bekend?",
-            options: {
-              yes: "Ja, er is een advertentie",
-              no: "Nee, er is geen advertentie"
-            }
-          }
+        label: "Korte samenvatting melding",
+        name: "description_citizenreport",
+        isRequired: true
+      }
+    },
+    advertisement: {
+      type: "RadioFields",
+      props: {
+        isRequired: true,
+        name: "advertisement",
+        label: "Is er een advertentie bekend?",
+        options: {
+          yes: "Ja, er is een advertentie",
+          no: "Nee, er is geen advertentie"
         }
       }
     },
@@ -144,8 +146,7 @@ export default (bagId: Components.Schemas.Address["bag_id"], themes?: Components
       props: {
         label: "Korte toelichting",
         name: "description",
-        isRequired: true,
-        rows: 7
+        extraLabel: "(Niet verplicht)"
       }
     },
     cancel: {
@@ -172,6 +173,7 @@ export default (bagId: Components.Schemas.Address["bag_id"], themes?: Components
       ["reporter_anonymous", "reporter_anonymous"],
       ["reporter_name", "reporter_phone"],
       ["identification"],
+      ["description_citizenreport", "description_citizenreport"],
       ["advertisement", "advertisement"],
       ["advertisement_linklist", "advertisement_linklist"],
       ["description", "description"],

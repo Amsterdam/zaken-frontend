@@ -62,3 +62,16 @@ export const useScheduleTypes = (themeId?: Components.Schemas.CaseTheme["id"], o
     isProtected: true
   })
 }
+
+export const useViolationTypes = (themeId?: Components.Schemas.CaseTheme["id"], options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<Components.Schemas.PaginatedViolationTypeList>({
+    ...options,
+    lazy: themeId === undefined,
+    url: makeApiUrl("themes", themeId, "violation-types"),
+    groupName: "cases",
+    handleError,
+    isProtected: true
+  })
+}
+

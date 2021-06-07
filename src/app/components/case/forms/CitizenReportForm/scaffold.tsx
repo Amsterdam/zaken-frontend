@@ -38,7 +38,7 @@ export default (caseId: Components.Schemas.Case["id"]) => {
       props: {
         shouldShow: ({ values: { reporter_anonymous } }: { values: { reporter_anonymous: string } }) => reporter_anonymous === "no",
         field: {
-          type: "NumberField",
+          type: "TelField",
           props: {
             label: "Telefoonnummer melder",
             name: "reporter_phone",
@@ -100,12 +100,12 @@ export default (caseId: Components.Schemas.Case["id"]) => {
         }
       }
     },
-    description: {
+    description_citizenreport: {
       type: "TextAreaField",
       props: {
-        label: "Korte toelichting melding",
-        extraLabel: <InfoButton infoTitle="Korte toelichting melding" infoText="Geef een korte beschrijving van de melding. Deze informatie komt ook door in TOP voor de toezichthouder."></InfoButton>,
-        name: "description",
+        label: "Korte samenvatting melding",
+        extraLabel: <InfoButton infoTitle="Korte samenvatting melding" infoText="Geef een korte beschrijving van de melding. Deze informatie komt ook door in TOP voor de toezichthouder."></InfoButton>,
+        name: "description_citizenreport",
         isRequired: true
       }
     },
@@ -133,7 +133,7 @@ export default (caseId: Components.Schemas.Case["id"]) => {
       ["identification"],
       ["advertisement", "advertisement"],
       ["advertisement_linklist", "advertisement_linklist"],
-      ["description", "description"],
+      ["description_citizenreport", "description_citizenreport"],
       ["secondaryButton", "submit"]
     ])
     .getScaffoldProps()
