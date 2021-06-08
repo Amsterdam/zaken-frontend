@@ -15,7 +15,7 @@ export default (
       </Ul>
     </li>
     <li>
-      <b>Aanvullend huisbezoek nodig</b>
+      <b>Aanvullend bezoek nodig</b>
       <Ul>
         <li>Nader onderzoek nodig op het adres zelf door de toezichthouders.</li>
         <li>Zet dit bezoek uit via de projectmedewerker.</li>

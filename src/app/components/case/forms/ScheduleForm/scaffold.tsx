@@ -9,7 +9,7 @@ export default (caseId: Components.Schemas.Case["id"], scheduleTypes?: Component
     week_segment: {
       type: "ComplexSelectField",
       props: {
-        label: "Op welke dagen kan het huisbezoek het beste worden ingepland?",
+        label: "Op welke dagen kan het bezoek het beste worden ingepland?",
         name: "week_segment",
         optionLabelField: "name",
         isRequired: true,
@@ -20,7 +20,7 @@ export default (caseId: Components.Schemas.Case["id"], scheduleTypes?: Component
     day_segment: {
       type: "ComplexSelectField",
       props: {
-        label: "Tijdens welk dagdeel kan het huisbezoek het beste worden ingepland?",
+        label: "Tijdens welk dagdeel kan het bezoek het beste worden ingepland?",
         name: "day_segment",
         optionLabelField: "name",
         isRequired: true,
@@ -31,10 +31,10 @@ export default (caseId: Components.Schemas.Case["id"], scheduleTypes?: Component
     priority: {
       type: "ComplexSelectField",
       props: {
-        label: "Wat is de urgentie voor het huisbezoek?",
+        label: "Wat is de urgentie voor het bezoek?",
         name: "priority",
         optionLabelField: "name",
-        extraLabel: <InfoButton infoTitle="Urgentie huisbezoek" infoText="Gebruik hoge urgentie indien er nu toeristen aanwezig zijn of als er bijvoorbeeld een machtiging van kracht is."></InfoButton>,
+        extraLabel: <InfoButton infoTitle="Urgentie bezoek" infoText="Gebruik hoge urgentie indien er nu toeristen aanwezig zijn of als er bijvoorbeeld een machtiging van kracht is."></InfoButton>,
         isRequired: true,
         withEmptyOption: true,
         options: scheduleTypes?.priorities
@@ -59,7 +59,7 @@ export default (caseId: Components.Schemas.Case["id"], scheduleTypes?: Component
     submit: {
       type: "SubmitButton",
       props: {
-        label: "Huisbezoek inplannen",
+        label: "Bezoek inplannen",
         align: "right"
       }
     }
