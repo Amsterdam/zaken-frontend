@@ -8,8 +8,8 @@ type Props = {
 
 const Ul = styled.ul`
   list-style: none;
-  padding: 15px 0 0;
   margin: 0;
+  padding: 0;
   li {
     padding: 0 0 ${ themeSpacing(1) } 0;
     line-height: 1.15;

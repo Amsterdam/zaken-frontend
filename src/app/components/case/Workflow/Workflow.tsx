@@ -20,10 +20,10 @@ const Div = styled.div`
 
 const columns = [
   { minWidth: 50 },
-  { header: "Actuele taken", width: 500 },
-  { header: "Uitvoerder", width: 260 },
-  { header: "Slotdatum", width: 200 },
-  { header: "Verwerking taak", minWidth: 140 }
+  { header: "Actuele taken", minWidth: 420 },
+  { header: "Uitvoerder", minWidth: 240 },
+  { header: "Slotdatum" },
+  { header: "Verwerking taak" }
 ]
 
 const Workflow: React.FC<Props> = ({ id }) => {

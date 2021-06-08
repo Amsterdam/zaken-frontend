@@ -14,6 +14,10 @@ type Props = {
 }
 
 const Span = styled.span`
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  height: 20px;
   cursor: pointer;
   &:hover {
     text-decoration: underline;
@@ -23,7 +27,6 @@ const Span = styled.span`
 const StyledIcon = styled(Icon)`
   display: inline-block;
   margin-left: ${ themeSpacing(2) };
-  transform: translateY(2px);
 `
 
 const mapSubmitData = (data: Components.Schemas.CamundaDateUpdate) => ({

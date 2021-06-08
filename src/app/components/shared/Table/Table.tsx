@@ -10,7 +10,7 @@ type Props = {
   numLoadingRows?: number
   loading?: boolean
   hasFixedColumn?: boolean
-  columns: { header?: React.ReactNode, minWidth?: number, width?: number }[]
+  columns: { header?: React.ReactNode, minWidth?: number }[]
   data?: {
     onClick?: (event: React.MouseEvent) => void
     itemList: React.ReactNode[]
@@ -87,8 +87,8 @@ const Table: React.FC<Props> = ({
           { (showHeadWhenEmpty || !isEmpty) &&
             <thead>
               <Row>
-                { columns.map(({ header, minWidth, width }, index) =>
-                  <TableHeading key={ index } minWidth={ minWidth } width={ width } isFixed={ hasFixedColumn && index === columns.length - 1 }>
+                { columns.map(({ header, minWidth }, index) =>
+                  <TableHeading key={ index } minWidth={ minWidth } isFixed={ hasFixedColumn && index === columns.length - 1 }>
                     { header ?? <>&nbsp;</> }
                   </TableHeading>
                 ) }
