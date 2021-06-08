@@ -48,12 +48,12 @@ export default {
           },
           "inplanning/:camundaTaskId": {
             Page: ScheduleCreatePage,
-            title: "Huisbezoek inplannen",
+            title: "Bezoek inplannen",
             icon: "Edit"
           },
           "huisbezoek/:camundaTaskId": {
             Page: VisitCreatePage,
-            title: "Resultaat huisbezoek",
+            title: "Resultaat bezoek",
             icon: "Edit"
           },
           "melding/:camundaTaskId": {
