@@ -1,5 +1,5 @@
 import { useModal } from "app/components/shared/Modal/hooks/useModal"
-import TableButton from "app/components/shared/Table/components/TableAction/TableAction"
+import TableAction from "app/components/shared/Table/components/TableAction/TableAction"
 import CompleteTaskModal from "./CompleteTaskModal"
 
 type Props = {
@@ -14,7 +14,7 @@ const CompleteTaskButton: React.FC<Props> = ({ onSubmit, taskName, caseId }) => 
 
   return (
     <>
-      <TableButton onClick={ openModal }>Taak afronden</TableButton>
+      <TableAction onClick={ openModal }>Taak afronden</TableAction>
       <CompleteTaskModal
         taskName={ taskName }
         caseId={ caseId }

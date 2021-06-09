@@ -5,7 +5,7 @@ import CamundaFormButton from "app/components/case/tasks/CamundaTask/CamundaForm
 import taskActionMap from "./taskActionMap"
 import LockIcon from "../components/LockIcon"
 import List from "../components/List"
-import TableButton from "app/components/shared/Table/components/TableAction/TableAction"
+import TableAction from "app/components/shared/Table/components/TableAction/TableAction"
 
 export default (
     id: Components.Schemas.Case["id"],
@@ -28,13 +28,13 @@ export default (
           "-",
         action !== undefined ?
           action.disabled ?
-            <TableButton
+            <TableAction
               title={ to(`/zaken/:id/${ action.target }/:camundaTaskId`, { id, camundaTaskId: camunda_task_id }) }
               disabled={ true }
-            >{ action.name }</TableButton> :
-            <TableButton
+            >{ action.name }</TableAction> :
+            <TableAction
               to={ to(`/zaken/:id/${ action.target }/:camundaTaskId`, { id, camundaTaskId: camunda_task_id }) }
-            >{ action.name }</TableButton>
+            >{ action.name }</TableAction>
         :
         form ?
           <CamundaFormButton onSubmit={ onSubmitTaskComplete } taskName={ name } caseId={ id } form={ form } /> :

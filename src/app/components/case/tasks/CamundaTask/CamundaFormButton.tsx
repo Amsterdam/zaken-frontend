@@ -1,5 +1,5 @@
 import { useModal } from "app/components/shared/Modal/hooks/useModal"
-import TableButton from "app/components/shared/Table/components/TableAction/TableAction"
+import TableAction from "app/components/shared/Table/components/TableAction/TableAction"
 import CamundaFormModal from "./CamundaFormModal"
 
 type Props = {
@@ -15,7 +15,7 @@ const CamundaFormButton: React.FC<Props> = ({ onSubmit, taskName, caseId, form }
 
   return (
     <>
-      <TableButton onClick={ openModal }>Uitkomst</TableButton>
+      <TableAction onClick={ openModal }>Uitkomst</TableAction>
       <CamundaFormModal
         taskName={ taskName }
         caseId={ caseId }
