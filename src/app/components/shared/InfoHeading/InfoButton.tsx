@@ -1,3 +1,4 @@
+import styled from "styled-components"
 import { Button, Icon } from "@amsterdam/asc-ui"
 import { Info } from "app/components/shared/Icons"
 
@@ -10,16 +11,26 @@ type Props = {
   onClick?: React.ComponentProps<typeof Button>["onClick"]
 }
 
+const ButtonWrap = styled.div`
+  span {
+    padding: 0;
+    height: 20px;
+    border-radius: 10px;
+  }
+`
+
 const InfoButton: React.FC<Props> = ({ infoTitle, infoText }) => {
   const { isModalOpen, openModal, closeModal } = useModal()
   return (
     <>
-      <Button
-        as="span"
-        variant="blank"
-        onClick={ openModal }
-        icon={ <Icon><Info /></Icon> }
-      />
+      <ButtonWrap>
+        <Button
+          as="span"
+          variant="blank"
+          onClick={ openModal }
+          icon={ <Icon><Info /></Icon> }
+        />
+      </ButtonWrap>
       <Modal title={ infoTitle } isOpen={ isModalOpen } onClose={ closeModal }>
         <ModalBlock>
           { infoText }
