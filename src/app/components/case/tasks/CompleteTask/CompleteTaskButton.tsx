@@ -1,7 +1,5 @@
-
-import { Button } from "@amsterdam/asc-ui"
-
 import { useModal } from "app/components/shared/Modal/hooks/useModal"
+import TableButton from "app/components/shared/Table/components/TableAction/TableAction"
 import CompleteTaskModal from "./CompleteTaskModal"
 
 type Props = {
@@ -11,12 +9,21 @@ type Props = {
 }
 
 const CompleteTaskButton: React.FC<Props> = ({ onSubmit, taskName, caseId }) => {
+
   const { isModalOpen, openModal, closeModal } = useModal()
 
-  return <>
-    <Button variant="primary" onClick={openModal} >Taak afronden</Button>
-    <CompleteTaskModal taskName={taskName} caseId={caseId} onSubmit={onSubmit} isOpen={isModalOpen} closeModal={closeModal} />
-  </>
+  return (
+    <>
+      <TableButton onClick={ openModal }>Taak afronden</TableButton>
+      <CompleteTaskModal
+        taskName={ taskName }
+        caseId={ caseId }
+        onSubmit={ onSubmit }
+        isOpen={ isModalOpen }
+        closeModal={ closeModal }
+      />
+    </>
+  )
 }
 
 export default CompleteTaskButton

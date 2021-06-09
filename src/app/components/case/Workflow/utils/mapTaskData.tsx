@@ -1,13 +1,11 @@
-import { Button } from "@amsterdam/asc-ui"
-
 import to from "app/routing/utils/to"
 import ChangeableDueDate from "app/components/case/tasks/ChangeDueDate/ChangebleDueDate"
 import CompleteTaskButton from "app/components/case/tasks/CompleteTask/CompleteTaskButton"
-import ButtonLink from "app/components/shared/ButtonLink/ButtonLink"
 import CamundaFormButton from "app/components/case/tasks/CamundaTask/CamundaFormButton"
 import taskActionMap from "./taskActionMap"
 import LockIcon from "../components/LockIcon"
 import List from "../components/List"
+import TableButton from "app/components/shared/Table/components/TableAction/TableAction"
 
 export default (
     id: Components.Schemas.Case["id"],
@@ -30,14 +28,13 @@ export default (
           "-",
         action !== undefined ?
           action.disabled ?
-            <Button
-              variant="primary"
-              disabled={ true }
+            <TableButton
               title={ to(`/zaken/:id/${ action.target }/:camundaTaskId`, { id, camundaTaskId: camunda_task_id }) }
-            >{ action.name }</Button> :
-            <ButtonLink to={ to(`/zaken/:id/${ action.target }/:camundaTaskId`, { id, camundaTaskId: camunda_task_id }) }>
-              <Button variant="primary" as="span">{ action.name }</Button>
-            </ButtonLink>
+              disabled={ true }
+            >{ action.name }</TableButton> :
+            <TableButton
+              to={ to(`/zaken/:id/${ action.target }/:camundaTaskId`, { id, camundaTaskId: camunda_task_id }) }
+            >{ action.name }</TableButton>
         :
         form ?
           <CamundaFormButton onSubmit={ onSubmitTaskComplete } taskName={ name } caseId={ id } form={ form } /> :

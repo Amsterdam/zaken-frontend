@@ -23,7 +23,7 @@ const columns = [
   { header: "Actuele taken", minWidth: 420 },
   { header: "Uitvoerder", minWidth: 240 },
   { header: "Slotdatum" },
-  { header: "Verwerking taak" }
+  { header: "Verwerking taak", minWidth: 280 }
 ]
 
 const Workflow: React.FC<Props> = ({ id }) => {
@@ -51,6 +51,7 @@ const Workflow: React.FC<Props> = ({ id }) => {
           </Div>
           <StyledTable
             columns={ columns }
+            hasFixedColumn
             data={ tasks }
             noValuesPlaceholder={
               <>Geen taken beschikbaar. <a href={ window.location.pathname }>Herlaad</a></>

@@ -1,10 +1,10 @@
-import { themeColor } from "@amsterdam/asc-ui"
+import { breakpoint, themeColor } from "@amsterdam/asc-ui"
 import styled, { css } from "styled-components"
 
 import SmallSkeleton from "app/components/shared/Skeleton/SmallSkeleton"
 import TableCell from "./components/TableCell/TableCell"
 import TableHeading from "./components/TableHeading/TableHeading"
-import FixedTableCell from "./components/TableCell/FixedTableCell"
+import FixedTableCell, { widthMobile as fixedColumnWidthMobile } from "./components/TableCell/FixedTableCell"
 
 type Props = {
   numLoadingRows?: number
@@ -30,7 +30,10 @@ type HorizontalScrollContainerProps = {
 
 const HorizontalScrollContainer = styled.div<HorizontalScrollContainerProps>`
   overflow-x: auto;
-  margin-right: ${ ({ fixedColumnWidth }) => fixedColumnWidth ? `${ fixedColumnWidth }px` : "auto" };
+  margin-right: ${ fixedColumnWidthMobile }px;
+  @media screen and ${ breakpoint("min-width", "laptopM") } {
+    margin-right: ${ ({ fixedColumnWidth }) => fixedColumnWidth ? `${ fixedColumnWidth }px` : "auto" };
+  }
 `
 
 const StyledTable = styled.table`
