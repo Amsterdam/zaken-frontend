@@ -13,8 +13,8 @@ const showOptionalProperty = (prop: string | undefined) => prop ?? "(onbekend)"
 
 const mapData = (data: Components.Schemas.PaginatedSupportContactList | undefined) => ([
   data?.results?.find(({ title }) => title === "Coördinator Ontwikkelkamer"),
-  data?.results?.find(({ title }) => title === "ICT Beheerder Team Basis"),
-  data?.results?.find(({ title }) => title === "UX Designer")
+  data?.results?.find(({ title }) => title === "Datapunt"),
+  data?.results?.find(({ title }) => title === "UX Specialist")
 ])
 
 const RefreshIcon = styled (Refresh)`
@@ -35,6 +35,7 @@ const HelpContent: React.FC = () => {
         <Heading as="h2">Wat kan je met de { title } ({ titleShort })?</Heading>
         <Paragraph>
           De belangrijkste functionaliteiten van { titleShort } staan omschreven in een factsheet. <br/>
+          {/* TODO add url */}
           Deze is te raadplegen via de bijgevoegde link: volgt nog
         </Paragraph>
       </RowWithColumn>
@@ -59,11 +60,11 @@ const HelpContent: React.FC = () => {
             </Paragraph>
             <Paragraph>
               Werkt { titleShort } dan nog steeds niet, neem dan contact op met:
-              <ul>
-                <li>Tijdens kantooruren ontwikkelteam { titleShort }, { showOptionalProperty(contacts[0]?.name) } <PhoneLink phoneNumber={ showOptionalProperty(contacts[0]?.phone_number) } /></li>
-                <li>Buiten kantoortijden Datapunt, { showOptionalProperty(contacts[1]?.name) } <PhoneLink phoneNumber={ showOptionalProperty(contacts[1]?.phone_number) } /></li>
-              </ul>
             </Paragraph>
+            <ul>
+              <li>Tijdens kantooruren ontwikkelteam { titleShort }, { showOptionalProperty(contacts[0]?.name) } <PhoneLink phoneNumber={ showOptionalProperty(contacts[0]?.phone_number) } /></li>
+              <li>Buiten kantoortijden Datapunt, { showOptionalProperty(contacts[1]?.name) } <PhoneLink phoneNumber={ showOptionalProperty(contacts[1]?.phone_number) } /></li>
+            </ul>
           </Accordion>
           <Accordion title={`Feedback ${ titleShort }`}>
             <Paragraph>
@@ -71,11 +72,11 @@ const HelpContent: React.FC = () => {
             </Paragraph>
             <Paragraph>
               Liever persoonlijk contact? Neem contact op met { showOptionalProperty(contacts[2]?.name) }, { showOptionalProperty(contacts[2]?.title) }:
-              <ul>
-                <li>Telefonisch: te bereiken op ma, di, wo en do tijdens kantooruren op <PhoneLink phoneNumber={ showOptionalProperty(contacts[2]?.phone_number) } /></li>
-                <li><EmailLink email={ showOptionalProperty(contacts[2]?.email) } /></li>
-              </ul>
             </Paragraph>
+            <ul>
+              <li>Telefonisch: te bereiken op ma, di, wo en do tijdens kantooruren op <PhoneLink phoneNumber={ showOptionalProperty(contacts[2]?.phone_number) } /></li>
+              <li><EmailLink email={ showOptionalProperty(contacts[2]?.email) } /></li>
+            </ul>
           </Accordion>
         </AccordionWrapper>
       </RowWithColumn>
