@@ -1,4 +1,4 @@
-import { Header } from "@amsterdam/asc-ui"
+import { breakpoint, Header } from "@amsterdam/asc-ui"
 import styled from "styled-components"
 import DefaultNavigation from "app/components/shared/navigation/DefaultNavigation"
 import MainWrapper from "app/components/layouts/MainWrapper/MainWrapper"
@@ -22,8 +22,12 @@ const HeaderWrap = styled.div`
 
 const MenuWrap = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   width: 100%;
+
+  @media screen and ${ breakpoint("min-width", "laptopM") } {
+    justify-content: space-between;
+  }
 `
 
 const DefaultLayout: React.FC<Props> = ({ showSearchButton = true, children }) => (
