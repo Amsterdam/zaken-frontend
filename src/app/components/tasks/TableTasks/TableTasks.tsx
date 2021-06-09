@@ -19,11 +19,11 @@ const TableTasks: React.FC<Props> = ({ data, isBusy }) => {
 
   return (
     <Table
+      hasFixedColumn
       columns={ columns }
       data={ values }
       loading={ isBusy }
       numLoadingRows={ 10 }
-      hasFixedColumn={ true }
       noValuesPlaceholder="Er zijn momenteel geen open taken voor de gekozen filters"
     />
   )

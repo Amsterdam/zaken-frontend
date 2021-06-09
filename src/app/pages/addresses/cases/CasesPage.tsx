@@ -1,6 +1,6 @@
 
 import { RouteComponentProps } from "@reach/router"
-
+import { Button } from "@amsterdam/asc-ui"
 import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId"
 import Row, { RowWithColumn } from "app/components/layouts/Grid/Row"
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
@@ -9,6 +9,8 @@ import PageHeading from "app/components/shared/PageHeading/PageHeading"
 import CasesByBagId from "app/components/addresses/CasesByBagId/CasesByBagId"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
 import Column from "app/components/layouts/Grid/Column"
+import ButtonLink from "app/components/shared/ButtonLink/ButtonLink"
+import to from "app/routing/utils/to"
 
 type Props = {
   bagId: string
@@ -24,9 +26,14 @@ const CasesPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
         <Column spanLarge={ 50 }>
           <DetailHeader bagId={ bagId } />
         </Column>
-      </Row> 
+      </Row>
       <RowWithColumn>
         <CasesByBagId bagId={ bagId } />
+      </RowWithColumn>
+      <RowWithColumn>
+        <ButtonLink to={ to("/adres/:bagId/zaken/nieuw", { bagId })}>
+          <Button variant="primary" as="span">Nieuwe zaak aanmaken</Button>
+        </ButtonLink>
       </RowWithColumn>
     </DefaultLayout> :
     <NotFoundPage />

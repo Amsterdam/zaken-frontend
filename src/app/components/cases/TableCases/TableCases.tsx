@@ -19,10 +19,10 @@ const TableCases: React.FC<Props> = ({ data, isBusy }) => {
 
   return (
     <Table
+      hasFixedColumn
       loading={ isBusy }
       numLoadingRows={ 10 }
       columns={ columns }
-      hasFixedColumn
       data={ values }
       noValuesPlaceholder="Er zijn geen zaken voor deze dag"
     />

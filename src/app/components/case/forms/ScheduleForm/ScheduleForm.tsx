@@ -40,7 +40,7 @@ const ScheduleForm: React.FC<Props> = ({ id, camundaTaskId }) => {
 
   return (
     <>
-      <FormTitle>Gebruik dit formulier om een huisbezoek in te plannen</FormTitle>
+      <FormTitle>Gebruik dit formulier om een bezoek in te plannen</FormTitle>
       <FormWithExtraLabel>
         <WorkflowForm
           id={ id }

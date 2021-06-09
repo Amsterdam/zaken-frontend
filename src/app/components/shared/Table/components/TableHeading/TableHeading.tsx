@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components"
-import { themeColor, themeSpacing } from "@amsterdam/asc-ui"
+import { breakpoint, themeColor, themeSpacing } from "@amsterdam/asc-ui"
 
 type Props = {
   isFixed?: boolean
@@ -18,9 +18,17 @@ const TableHeading = styled.th<Props>`
   ${ ({ isFixed, minWidth }) => isFixed && css`
       position: absolute;
       right: 0;
-
       width: ${ minWidth ? `${ minWidth }px` : "auto" } };
+
+      /* hide text on mobile for fixed column */
+      opacity: 0;
+      @media screen and ${ breakpoint("min-width", "laptopM") } {
+        opacity: 100;
+      })
   ` }
+
+
+
 `
 
 export default TableHeading

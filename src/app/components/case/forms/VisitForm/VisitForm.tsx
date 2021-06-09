@@ -31,7 +31,7 @@ const VisitForm: React.FC<Props> = ({ id, camundaTaskId }) => {
     const result = await execPost(mapData(data))
     if (result === undefined) return
     const path = `/zaken/${ id }`
-    addSuccessFlashMessage(path, "Succes", "Het resultaat huisbezoek is succesvol verwerkt")
+    addSuccessFlashMessage(path, "Succes", "Het resultaat bezoek is succesvol verwerkt")
     navigateTo("/zaken/:id", { id })
   }
 
@@ -40,8 +40,8 @@ const VisitForm: React.FC<Props> = ({ id, camundaTaskId }) => {
 
   return (
     <>
-      <Alert level="warning">Dit formulier niet gebruiken! Het huisbezoek wordt door de toezichthouder in de TOP app verwerkt, waarna deze taak automatisch wordt opgepakt.</Alert>
-      <FormTitle>Gebruik dit formulier om een huisbezoek aan te maken</FormTitle>
+      <Alert level="warning">Dit formulier niet gebruiken! Het bezoek wordt door de toezichthouder in de TOP app verwerkt, waarna deze taak automatisch wordt opgepakt.</Alert>
+      <FormTitle>Gebruik dit formulier om een bezoek aan te maken</FormTitle>
       <ScaffoldForm
         showSpinner={ showSpinner }
         onSubmit={ onSubmit }

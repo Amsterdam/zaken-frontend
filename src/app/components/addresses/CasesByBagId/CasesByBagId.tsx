@@ -37,10 +37,10 @@ const CasesByBagId: React.FC<Props> = ({ bagId, openCases = false, title = defau
     <>
       <StyledHeading>{ title }{ numCases > 0 && ` (${ numCases })` }</StyledHeading>
       <Table
+        hasFixedColumn
+        columns={ columns }
         loading={ isBusy }
         numLoadingRows={ 1 }
-        columns={ columns }
-        hasFixedColumn
         data={ values }
         showHeadWhenEmpty={ false }
         noValuesPlaceholder={ emptyText }

@@ -12,6 +12,9 @@ type Props = {
 
 const Wrap = styled.div`
   margin-bottom: ${ themeSpacing(12) };
+  &:last-child {
+    margin-bottom: 0;
+  }
 `
 
 const Div = styled.div`
@@ -20,10 +23,10 @@ const Div = styled.div`
 
 const columns = [
   { minWidth: 50 },
-  { header: "Actuele taken", width: 500 },
-  { header: "Uitvoerder", width: 260 },
-  { header: "Slotdatum", width: 200 },
-  { header: "Verwerking taak", minWidth: 140 }
+  { header: "Actuele taken", minWidth: 420 },
+  { header: "Uitvoerder", minWidth: 240 },
+  { header: "Slotdatum" },
+  { header: "Verwerking taak", minWidth: 280 }
 ]
 
 const Workflow: React.FC<Props> = ({ id }) => {
@@ -43,21 +46,22 @@ const Workflow: React.FC<Props> = ({ id }) => {
       <Spinner /> :
     mappedData !== undefined ?
       <>
-      { mappedData.map(([title, information, tasks], index) =>
-        <Wrap key={ `${ title }_${ index }` }>
-          <Div>
-            <Heading as="h4">{ title }</Heading>
-            { information && <p>{ information }</p> }
-          </Div>
-          <StyledTable
-            columns={ columns }
-            data={ tasks }
-            noValuesPlaceholder={
-              <>Geen taken beschikbaar. <a href={ window.location.pathname }>Herlaad</a></>
-            }
-          />
-        </Wrap>
-      ) }
+      { mappedData.length > 0 ?
+        mappedData.map(([title, information, tasks], index) =>
+          <Wrap key={ `${ title }_${ index }` }>
+            <Div>
+              <Heading as="h4">{ title }</Heading>
+              { information && <p>{ information }</p> }
+            </Div>
+            <StyledTable
+              columns={ columns }
+              hasFixedColumn
+              data={ tasks }
+            />
+          </Wrap>
+        ) :
+        <>Geen taken beschikbaar. <a href={ window.location.pathname }>Herlaad</a></>
+      }
       </> :
     hasErrors ?
       <ErrorMessage message="Laden van taken mislukt" /> :

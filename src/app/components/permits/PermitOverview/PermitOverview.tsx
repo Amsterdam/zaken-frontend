@@ -1,13 +1,23 @@
-import { Spinner, Heading, Paragraph, Link } from "@amsterdam/asc-ui"
+import { Spinner, Heading, Paragraph, themeColor } from "@amsterdam/asc-ui"
+import { Link } from "@reach/router"
 
 import to from "app/routing/utils/to"
 import { usePermitDetails } from "app/state/rest"
 import usePermitValues from "./hooks/usePermitValues"
 import DefinitionList from "app/components/shared/DefinitionList/DefinitionList"
+import styled from "styled-components"
 
 type Props = {
   bagId: string
 }
+
+const StyledLink = styled(Link)`
+  color: ${ themeColor("primary") };
+  font-size: 18px;
+  &:hover {
+    color: ${ themeColor("secondary") };
+  }
+`
 
 const PermitOverview: React.FC<Props> = ({ bagId }) => {
 
@@ -26,7 +36,7 @@ const PermitOverview: React.FC<Props> = ({ bagId }) => {
             </> :
             <DefinitionList isLoading={ isBusy } numLoadingRows={ 2 } values={ values } title="Vergunningen" />
           }
-          <Link href={ to("/adres/:bagId/vergunningen", { bagId }) } variant="inline" inList>Alle vergunningen details</Link>
+          <StyledLink to={ to("/adres/:bagId/vergunningen", { bagId })} >Alle vergunningen details</StyledLink>
         </>
       }
     </>
