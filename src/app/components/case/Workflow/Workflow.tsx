@@ -1,5 +1,5 @@
 import { useMemo } from "react"
-import { Spinner, Heading, Paragraph, ErrorMessage, themeSpacing } from "@amsterdam/asc-ui"
+import { Spinner, Heading, ErrorMessage, themeSpacing } from "@amsterdam/asc-ui"
 
 import { useCaseTasks, useTaskComplete } from "app/state/rest"
 import mapTaskData from "./utils/mapTaskData"
@@ -57,13 +57,10 @@ const Workflow: React.FC<Props> = ({ id }) => {
               columns={ columns }
               hasFixedColumn
               data={ tasks }
-              noValuesPlaceholder={
-                <>Geen taken beschikbaar. <a href={ window.location.pathname }>Herlaad</a></>
-              }
             />
           </Wrap>
         ) :
-        <Paragraph>Geen taken beschikbaar</Paragraph>
+        <>Geen taken beschikbaar. <a href={ window.location.pathname }>Herlaad</a></>
       }
       </> :
     hasErrors ?
