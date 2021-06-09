@@ -20,7 +20,7 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
       <>
         { timelineEvents === undefined ?
           <Spinner /> :
-          <TimelineEvents items={ timelineEvents } countItemType="VISIT" />
+          <TimelineEvents items={ timelineEvents } countItemType="VISIT" spacingHorizontal={3} />
         }
         </>
       }
