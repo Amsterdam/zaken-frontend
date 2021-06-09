@@ -5,7 +5,7 @@ import { sizes } from "@amsterdam/asc-ui/lib/theme/default/breakpoints"
 
 const Main = styled.main`
   box-sizing: border-box;
-  margin: 0 auto;
+  margin: 0 auto ${ themeSpacing(8) };
   padding: ${ themeSpacing(6) } ${ themeSpacing(3) };
   width: 100%;
   max-width: ${ sizes.laptopL }px;
