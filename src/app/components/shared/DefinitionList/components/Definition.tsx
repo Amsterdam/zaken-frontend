@@ -1,4 +1,4 @@
-import { themeColor, themeSpacing } from "@amsterdam/asc-ui"
+import { breakpoint, themeColor, themeSpacing } from "@amsterdam/asc-ui"
 import styled from "styled-components"
 
 type Props = {
@@ -15,7 +15,10 @@ const Div = styled.div`
 `
 
 const Dt = styled.dt`
-  width: 30%;
+  width: 45%;
+  @media screen and ${ breakpoint("min-width", "laptopM") } {
+    width: 30%;
+  }
   padding: ${ themeSpacing(3) } 0;
   color: ${ themeColor("tint", "level5") };
 `
