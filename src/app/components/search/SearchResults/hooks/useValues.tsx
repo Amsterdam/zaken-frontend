@@ -1,5 +1,5 @@
 import { SearchResult } from "../SearchResults"
-import OpenButton from "app/components/shared/OpenButton/OpenButton"
+import TableAction from "app/components/shared/Table/components/TableAction/TableAction"
 import to from "app/routing/utils/to"
 import navigateTo from "app/routing/navigateTo"
 
@@ -15,7 +15,7 @@ export default (results?: SearchResult[]) =>
         adres ?? "-",
         postcode ?? "-",
         adresseerbaar_object_id ?
-          <OpenButton href={ to("/adres/:bagId", { bagId: adresseerbaar_object_id }) } text="Bekijk" /> :
+          <TableAction to={ to("/adres/:bagId", { bagId: adresseerbaar_object_id }) }>Bekijk</TableAction> :
           null
       ]
     }))

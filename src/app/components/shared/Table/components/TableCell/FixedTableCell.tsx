@@ -1,6 +1,6 @@
 
 import styled from "styled-components"
-import { themeColor, themeSpacing } from "@amsterdam/asc-ui"
+import { breakpoint, themeColor, themeSpacing } from "@amsterdam/asc-ui"
 
 import useNodeDimensions from "app/hooks/useNodeDimensions/useNodeDimensions"
 import useNodeByReference from "app/hooks/useNodeByReference/useNodeByReference"
@@ -9,6 +9,8 @@ type StyledTDProps = {
   width?: number
   height?: number
 }
+
+export const widthMobile = 48
 
 const StyledTd = styled.td<StyledTDProps>`
   padding: ${ themeSpacing(4) } ${ themeSpacing(3) };
@@ -19,8 +21,12 @@ const StyledTd = styled.td<StyledTDProps>`
 
   border-left: 1px solid ${ themeColor("tint", "level3") };
 
-  width: ${ props => `${ props.width }px;` ?? "auto" };
-  height: ${ props => `${ props.height }px;` ?? "auto" };
+  width: ${ widthMobile }px;
+  @media screen and ${ breakpoint("min-width", "laptopM") } {
+    width: ${ ({ width }) => `${ width ?? widthMobile }px;` };
+  }
+
+  height: ${ ({ height }) => height ? `${ height }px;` : "auto" };
 `
 
 type Props = {

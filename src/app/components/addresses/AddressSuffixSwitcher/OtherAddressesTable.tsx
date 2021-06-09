@@ -19,10 +19,10 @@ const OtherAddressesTable: React.FC<Props> = ({ bagId, onAddressChosen }) => {
 
   return (
     <Table
+      hasFixedColumn
+      columns={ columns }
       loading={ isBusy }
       numLoadingRows={ 3 }
-      columns={ columns }
-      hasFixedColumn
       data={ values }
       noValuesPlaceholder="Er zijn geen andere adressen gevonden"
     />

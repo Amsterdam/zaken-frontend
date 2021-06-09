@@ -9,9 +9,9 @@ export default styled(Table)`
     color: ${ themeColor("tint", "level4") };
   }
   td {
-    line-height: ${ themeSpacing(12) };
-    padding: ${ themeSpacing(1) } ${ themeSpacing(3) };
-
+    padding: ${ themeSpacing(3) };
+    line-height: ${ themeSpacing(5) };
+    vertical-align: middle;
     &:first-child {
       width: 32px;
     }

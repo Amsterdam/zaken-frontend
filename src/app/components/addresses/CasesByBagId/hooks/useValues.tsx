@@ -1,6 +1,6 @@
 import to from "app/routing/utils/to"
 import { CaseIdDisplay, DateDisplay } from "@amsterdam/wonen-ui"
-import OpenButton from "app/components/shared/OpenButton/OpenButton"
+import TableAction from "app/components/shared/Table/components/TableAction/TableAction"
 import navigateTo from "app/routing/navigateTo"
 import React from "react"
 
@@ -16,6 +16,6 @@ export default (cases?: Components.Schemas.Case[]) =>
       theme.name,
       start_date ? <DateDisplay date={ start_date } /> : "-",
       current_states.length > 0 ? current_states.map(({ status_name }) => status_name).join(", ") : "-",
-      <OpenButton href={ to("/zaken/:id", { id }) } text="Zaakdetails" />
+      <TableAction to={ to("/zaken/:id", { id }) }>Zaakdetails</TableAction>
     ]
   }))

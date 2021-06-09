@@ -1,16 +1,16 @@
-import { themeColor } from "@amsterdam/asc-ui"
+import { breakpoint, themeColor } from "@amsterdam/asc-ui"
 import styled, { css } from "styled-components"
 
 import SmallSkeleton from "app/components/shared/Skeleton/SmallSkeleton"
 import TableCell from "./components/TableCell/TableCell"
 import TableHeading from "./components/TableHeading/TableHeading"
-import FixedTableCell from "./components/TableCell/FixedTableCell"
+import FixedTableCell, { widthMobile as fixedColumnWidthMobile } from "./components/TableCell/FixedTableCell"
 
 type Props = {
   numLoadingRows?: number
   loading?: boolean
   hasFixedColumn?: boolean
-  columns: { header?: React.ReactNode, minWidth?: number, width?: number }[]
+  columns: { header?: React.ReactNode, minWidth?: number }[]
   data?: {
     onClick?: (event: React.MouseEvent) => void
     itemList: React.ReactNode[]
@@ -30,7 +30,10 @@ type HorizontalScrollContainerProps = {
 
 const HorizontalScrollContainer = styled.div<HorizontalScrollContainerProps>`
   overflow-x: auto;
-  margin-right: ${ ({ fixedColumnWidth }) => fixedColumnWidth ? `${ fixedColumnWidth }px` : "auto" };
+  margin-right: ${ fixedColumnWidthMobile }px;
+  @media screen and ${ breakpoint("min-width", "laptopM") } {
+    margin-right: ${ ({ fixedColumnWidth }) => fixedColumnWidth ? `${ fixedColumnWidth }px` : "auto" };
+  }
 `
 
 const StyledTable = styled.table`
@@ -87,8 +90,8 @@ const Table: React.FC<Props> = ({
           { (showHeadWhenEmpty || !isEmpty) &&
             <thead>
               <Row>
-                { columns.map(({ header, minWidth, width }, index) =>
-                  <TableHeading key={ index } minWidth={ minWidth } width={ width } isFixed={ hasFixedColumn && index === columns.length - 1 }>
+                { columns.map(({ header, minWidth }, index) =>
+                  <TableHeading key={ index } minWidth={ minWidth } isFixed={ hasFixedColumn && index === columns.length - 1 }>
                     { header ?? <>&nbsp;</> }
                   </TableHeading>
                 ) }

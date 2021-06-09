@@ -18,7 +18,7 @@ const ButtonWrap = styled.div`
 `
 
 const StyledDivider = styled(Divider)`
-  margin-bottom: ${ themeSpacing(16) };
+  margin-bottom: ${ themeSpacing(8) };
 `
 
 const CaseStatus: React.FC<Props> = ({ id }) => (

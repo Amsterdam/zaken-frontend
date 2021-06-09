@@ -1,7 +1,5 @@
-
-import { Button } from "@amsterdam/asc-ui"
-
 import { useModal } from "app/components/shared/Modal/hooks/useModal"
+import TableAction from "app/components/shared/Table/components/TableAction/TableAction"
 import CamundaFormModal from "./CamundaFormModal"
 
 type Props = {
@@ -12,12 +10,22 @@ type Props = {
 }
 
 const CamundaFormButton: React.FC<Props> = ({ onSubmit, taskName, caseId, form }) => {
+
   const { isModalOpen, openModal, closeModal } = useModal()
 
-  return <>
-    <Button variant="primary" onClick={ openModal } >Uitkomst</Button>
-    <CamundaFormModal taskName={taskName} caseId={caseId} onSubmit={ onSubmit } isOpen={ isModalOpen } closeModal={ closeModal } form={ form } />
-  </>
+  return (
+    <>
+      <TableAction onClick={ openModal }>Uitkomst</TableAction>
+      <CamundaFormModal
+        taskName={ taskName }
+        caseId={ caseId }
+        onSubmit={ onSubmit }
+        isOpen={ isModalOpen }
+        closeModal={ closeModal }
+        form={ form }
+      />
+    </>
+  )
 }
 
 export default CamundaFormButton

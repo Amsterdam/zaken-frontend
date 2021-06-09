@@ -1,7 +1,7 @@
 import to from "app/routing/utils/to"
-import DueDate from "app/components/shared/DueDate/DueDate"
-import OpenButton from "app/components/shared/OpenButton/OpenButton"
 import navigateTo from "app/routing/navigateTo"
+import DueDate from "app/components/shared/DueDate/DueDate"
+import TableAction from "app/components/shared/Table/components/TableAction/TableAction"
 
 const onClick = (id: Components.Schemas.Case["id"]) => (event: React.MouseEvent) => {
   navigateTo("/zaken/:id", { id })
@@ -21,7 +21,7 @@ export default (tasks?: Components.Schemas.CamundaTaskList[]) =>
         full_address ?? "-",
         name,
         due_date ? <DueDate date={ due_date } /> : "-",
-        <OpenButton href={ href } text="Zaakdetails" />
+        <TableAction to={ href }>Zaakdetails</TableAction>
       ]
     }
   })

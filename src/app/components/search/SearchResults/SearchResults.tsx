@@ -25,11 +25,11 @@ const SearchResults: React.FC<Props> = ({ searchString }) => {
   return (
     isValidSearchString(searchString) ?
     <Table
+      hasFixedColumn
       columns={ columns }
       data={ values }
       loading={ isBusy }
       numLoadingRows={ 1 }
-      hasFixedColumn={ true }
       noValuesPlaceholder="Er zijn geen adressen gevonden"
     /> :
     null

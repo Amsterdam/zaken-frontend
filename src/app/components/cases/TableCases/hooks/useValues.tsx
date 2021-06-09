@@ -1,7 +1,7 @@
 import first from "../utils/first"
 import sortByDate from "../utils/sortByDate"
 import { DateDisplay } from "@amsterdam/wonen-ui"
-import OpenButton from "app/components/shared/OpenButton/OpenButton"
+import TableAction from "app/components/shared/Table/components/TableAction/TableAction"
 import to from "app/routing/utils/to"
 import navigateTo from "app/routing/navigateTo"
 
@@ -20,7 +20,7 @@ export default (cases?: Components.Schemas.Case[]) =>
         address.full_address ?? "-",
         current_states.length > 0 ? current_states.map(({ status_name }) => status_name).join(", ") : "-",
         startDate !== undefined ? <DateDisplay date={ startDate } /> : "-",
-        <OpenButton href={ to("/zaken/:id", { id }) } text="Zaakdetails" />
+        <TableAction to={ to("/zaken/:id", { id }) }>Zaakdetails</TableAction>
       ]
     }
   })

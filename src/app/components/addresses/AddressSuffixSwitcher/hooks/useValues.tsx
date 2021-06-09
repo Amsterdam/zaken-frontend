@@ -1,7 +1,7 @@
 import type { SearchResult } from "app/components/search/SearchResults/SearchResults"
 import navigateTo from "app/routing/navigateTo"
 import to from "app/routing/utils/to"
-import OpenButton from "app/components/shared/OpenButton/OpenButton"
+import TableAction from "app/components/shared/Table/components/TableAction/TableAction"
 
 export default (
   response: SearchResult[] | undefined,
@@ -18,10 +18,7 @@ export default (
       onClick: onClick(adresseerbaar_object_id),
       itemList: [
         adres,
-        <OpenButton
-          href={ to("/adres/:bagId", { bagId: adresseerbaar_object_id }) }
-          text="Open"
-        />
+        <TableAction to={ to("/adres/:bagId", { bagId: adresseerbaar_object_id }) }>Open</TableAction>
       ]
     }
   ))
