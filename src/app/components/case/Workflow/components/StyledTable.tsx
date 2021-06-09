@@ -10,7 +10,7 @@ export default styled(Table)`
   }
   td {
     padding: ${ themeSpacing(3) };
-    line-height: 20px;
+    line-height: ${ themeSpacing(5) };
     vertical-align: middle;
     &:first-child {
       width: 32px;

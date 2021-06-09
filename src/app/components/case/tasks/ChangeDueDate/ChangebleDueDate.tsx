@@ -17,7 +17,7 @@ const Span = styled.span`
   display: flex;
   align-items: center;
   white-space: nowrap;
-  height: 20px;
+  height: ${ themeSpacing(5) };
   cursor: pointer;
   &:hover {
     text-decoration: underline;
