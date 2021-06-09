@@ -62,8 +62,8 @@ const HelpContent: React.FC = () => {
               Werkt { titleShort } dan nog steeds niet, neem dan contact op met:
             </Paragraph>
             <ul>
-              <li>Tijdens kantooruren ontwikkelteam { titleShort }, { showOptionalProperty(contacts[0]?.name) } <PhoneLink phoneNumber={ showOptionalProperty(contacts[0]?.phone_number) } /></li>
-              <li>Buiten kantoortijden Datapunt, { showOptionalProperty(contacts[1]?.name) } <PhoneLink phoneNumber={ showOptionalProperty(contacts[1]?.phone_number) } /></li>
+              <li>Tijdens kantooruren ontwikkelteam { titleShort }, { showOptionalProperty(contacts[0]?.name) } { contacts[0]?.phone_number ? <PhoneLink phoneNumber={ contacts[0].phone_number } /> : showOptionalProperty(undefined) }</li>
+              <li>Buiten kantoortijden Datapunt, { showOptionalProperty(contacts[1]?.name) } { contacts[1]?.phone_number ? <PhoneLink phoneNumber={ contacts[1].phone_number } /> : showOptionalProperty(undefined) }</li>
             </ul>
           </Accordion>
           <Accordion title={`Feedback ${ titleShort }`}>
@@ -74,8 +74,8 @@ const HelpContent: React.FC = () => {
               Liever persoonlijk contact? Neem contact op met { showOptionalProperty(contacts[2]?.name) }, { showOptionalProperty(contacts[2]?.title) }:
             </Paragraph>
             <ul>
-              <li>Telefonisch: te bereiken op ma, di, wo en do tijdens kantooruren op <PhoneLink phoneNumber={ showOptionalProperty(contacts[2]?.phone_number) } /></li>
-              <li><EmailLink email={ showOptionalProperty(contacts[2]?.email) } /></li>
+              <li>Telefonisch: te bereiken op ma, di, wo en do tijdens kantooruren op { contacts[2]?.phone_number ? <PhoneLink phoneNumber={ contacts[2].phone_number } /> : showOptionalProperty(undefined) }</li>
+              <li>Per e-mail: { contacts[2]?.email ? <EmailLink email={ contacts[2].email } /> : showOptionalProperty(undefined) }</li>
             </ul>
           </Accordion>
         </AccordionWrapper>
