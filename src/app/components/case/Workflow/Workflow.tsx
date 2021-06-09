@@ -12,6 +12,9 @@ type Props = {
 
 const Wrap = styled.div`
   margin-bottom: ${ themeSpacing(12) };
+  &:last-child {
+    margin-bottom: 0;
+  }
 `
 
 const Div = styled.div`
