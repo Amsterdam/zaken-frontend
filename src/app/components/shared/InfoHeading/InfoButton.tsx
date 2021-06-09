@@ -11,7 +11,7 @@ type Props = {
   onClick?: React.ComponentProps<typeof Button>["onClick"]
 }
 
-const ButtonWrap = styled.div`
+const ButtonWrap = styled.span`
   span {
     padding: 0;
     height: 20px;
