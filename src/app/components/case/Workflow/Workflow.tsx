@@ -1,5 +1,5 @@
 import { useMemo } from "react"
-import { Spinner, Heading, ErrorMessage, themeSpacing } from "@amsterdam/asc-ui"
+import { Spinner, Heading, Paragraph, ErrorMessage, themeSpacing } from "@amsterdam/asc-ui"
 
 import { useCaseTasks, useTaskComplete } from "app/state/rest"
 import mapTaskData from "./utils/mapTaskData"
@@ -46,22 +46,25 @@ const Workflow: React.FC<Props> = ({ id }) => {
       <Spinner /> :
     mappedData !== undefined ?
       <>
-      { mappedData.map(([title, information, tasks], index) =>
-        <Wrap key={ `${ title }_${ index }` }>
-          <Div>
-            <Heading as="h4">{ title }</Heading>
-            { information && <p>{ information }</p> }
-          </Div>
-          <StyledTable
-            columns={ columns }
-            hasFixedColumn
-            data={ tasks }
-            noValuesPlaceholder={
-              <>Geen taken beschikbaar. <a href={ window.location.pathname }>Herlaad</a></>
-            }
-          />
-        </Wrap>
-      ) }
+      { mappedData.length > 0 ?
+        mappedData.map(([title, information, tasks], index) =>
+          <Wrap key={ `${ title }_${ index }` }>
+            <Div>
+              <Heading as="h4">{ title }</Heading>
+              { information && <p>{ information }</p> }
+            </Div>
+            <StyledTable
+              columns={ columns }
+              hasFixedColumn
+              data={ tasks }
+              noValuesPlaceholder={
+                <>Geen taken beschikbaar. <a href={ window.location.pathname }>Herlaad</a></>
+              }
+            />
+          </Wrap>
+        ) :
+        <Paragraph>Geen taken beschikbaar</Paragraph>
+      }
       </> :
     hasErrors ?
       <ErrorMessage message="Laden van taken mislukt" /> :
