@@ -1,4 +1,4 @@
-type Rec = Record<string, boolean | string | { name: string } | { label: string, value: string }>
+type Rec = Record<string, boolean | string | { label: string, value: string }>
 export default (camundaForm: Components.Schemas.CamundaTask["form"]) =>
   camundaForm.reduce((acc: Rec, item: Components.Schemas.CamundaTask["form"]["name"]) => {
     const { default_value, label, name, type, options } = item
