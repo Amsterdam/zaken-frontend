@@ -5,7 +5,6 @@ import { useCase, useSummons, useSummonTypes } from "app/state/rest/"
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
 import scaffold from "app/components/case/forms/SummonForm/scaffold"
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
-import FormWithExtraLabel from "app/components/shared/FormWithExtraLabel/FormWithExtraLabel"
 
 type Props = {
   id: Components.Schemas.Case["id"]
@@ -26,15 +25,13 @@ const SummonForm: React.FC<Props> = ({ id, camundaTaskId }) => {
   return (
     <>
       <FormTitle>Meld welke aanschrijving is opgesteld en voor wie. Doe dit nadat de brief daadwerkelijk verstuurd is.</FormTitle>
-      <FormWithExtraLabel>
-        <WorkflowForm
-          id={ id }
-          fields={ fields }
-          mapData={ mapData }
-          postMethod={ execPost }
-          camundaTaskId={ camundaTaskId }
-        />
-      </FormWithExtraLabel>
+      <WorkflowForm
+        id={ id }
+        fields={ fields }
+        mapData={ mapData }
+        postMethod={ execPost }
+        camundaTaskId={ camundaTaskId }
+      />
     </>
   )
 }
