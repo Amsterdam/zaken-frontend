@@ -4,7 +4,6 @@ import { useCase, useDecisions } from "app/state/rest/"
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
 import scaffold from "app/components/case/forms/DecisionForm/scaffold"
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
-import FormWithExtraLabel from "app/components/shared/FormWithExtraLabel/FormWithExtraLabel"
 import DecisionHeader from "./components/DecisionHeader"
 import { useDecisionTypes } from "app/state/rest/themes"
 
@@ -31,7 +30,6 @@ const DecisionForm: React.FC<Props> = ({ id, camundaTaskId }) => {
     <>
       <DecisionHeader caseId={ id }/>
       <FormTitle>Gebruik dit formulier om aan te geven welk besluit is genomen</FormTitle>
-      <FormWithExtraLabel>
       <WorkflowForm
           id={ id }
           fields={ fields }
@@ -39,7 +37,6 @@ const DecisionForm: React.FC<Props> = ({ id, camundaTaskId }) => {
           postMethod={ execPost }
           camundaTaskId={ camundaTaskId }
       />
-      </FormWithExtraLabel>
     </>
   )
 }
