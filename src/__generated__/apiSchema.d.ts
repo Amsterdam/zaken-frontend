@@ -122,6 +122,17 @@ declare namespace Components {
             description?: string | null;
             author?: string | null; // uuid
         }
+        export interface CaseClose {
+            id: number;
+            explanation: string;
+            case: number;
+            reason: number;
+        }
+        export interface CaseCloseReason {
+            id: number;
+            result: boolean;
+            name: string;
+        }
         export interface CaseCreateUpdate {
             id: number;
             address: Address;
@@ -163,6 +174,7 @@ declare namespace Components {
         export interface CaseTheme {
             id: number;
             name: string;
+            case_state_types_top?: number[];
         }
         export interface CitizenReport {
             id: number;
@@ -183,6 +195,9 @@ declare namespace Components {
             id: number;
             camunda_task_id?: string;
             violation?: ViolationEnum;
+            violation_result?: {
+                [name: string]: any;
+            } | null;
             feedback: string;
             case: number;
         }
@@ -192,6 +207,7 @@ declare namespace Components {
             sanction_amount?: string | null; // decimal ^\d{0,98}(\.\d{0,2})?$
             description?: string | null;
             date_added: string; // date-time
+            sanction_id: string;
             case: number;
             decision_type: number;
         }
@@ -289,6 +305,42 @@ declare namespace Components {
              */
             previous?: string | null; // uri
             results?: CamundaTaskWithState[];
+        }
+        export interface PaginatedCaseCloseList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=4
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null; // uri
+            results?: CaseClose[];
+        }
+        export interface PaginatedCaseCloseReasonList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=4
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null; // uri
+            results?: CaseCloseReason[];
         }
         export interface PaginatedCaseList {
             /**
@@ -668,7 +720,7 @@ declare namespace Components {
             is_rented_today: boolean;
             reports: VakantieverhuurReport[];
         }
-        export type ViolationEnum = "NO" | "YES" | "ADDITIONAL_RESEARCH_REQUIRED" | "ADDITIONAL_VISIT_REQUIRED" | "SEND_TO_OTHER_THEME" | "AUTHORIZATION_REQUEST";
+        export type ViolationEnum = "NO" | "YES" | "ADDITIONAL_RESEARCH_REQUIRED" | "ADDITIONAL_VISIT_REQUIRED" | "ADDITIONAL_VISIT_WITH_AUTHORIZATION" | "SEND_TO_OTHER_THEME";
         export interface ViolationType {
             key: string;
         }
@@ -786,6 +838,56 @@ declare namespace Paths {
         namespace Responses {
             export interface $200 {
             }
+        }
+    }
+    namespace CaseCloseCreate {
+        export type RequestBody = Components.Schemas.CaseClose;
+        namespace Responses {
+            export type $201 = Components.Schemas.CaseClose;
+        }
+    }
+    namespace CaseCloseList {
+        namespace Parameters {
+            export type Page = number;
+        }
+        export interface QueryParameters {
+            page?: Parameters.Page;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedCaseCloseList;
+        }
+    }
+    namespace CaseCloseReasonList {
+        namespace Parameters {
+            export type Page = number;
+        }
+        export interface QueryParameters {
+            page?: Parameters.Page;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedCaseCloseReasonList;
+        }
+    }
+    namespace CaseCloseReasonRetrieve {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.CaseCloseReason;
+        }
+    }
+    namespace CaseCloseRetrieve {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.CaseClose;
         }
     }
     namespace CaseStatesUpdateFromTopCreate {
