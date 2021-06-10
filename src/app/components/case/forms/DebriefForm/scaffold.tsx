@@ -37,7 +37,6 @@ export default (caseId: Components.Schemas.Case["id"], violationTypes: Component
               "Leegstand": "Leegstand",
               "Onderhuur": "Onderhuur",
               "Ondermijning": "Ondermijning",
-              "Vakantieverhuur": "Vakantieverhuur",
               "Woningverbetering": "Woningverbetering"
             }
           }
