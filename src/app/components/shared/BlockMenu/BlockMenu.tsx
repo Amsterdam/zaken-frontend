@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { themeSpacing, breakpoint } from "@amsterdam/asc-ui"
 
-const Menu = styled.div`
+const Div = styled.div`
   width: 100%;
   margin: 0;
   padding: 0;
@@ -32,5 +32,5 @@ const Menu = styled.div`
   }
 `
 
-const BlockMenu: React.FC = ({ children }) => <Menu>{ children }</Menu>
+const BlockMenu: React.FC = ({ children }) => <Div>{ children }</Div>
 export default BlockMenu
