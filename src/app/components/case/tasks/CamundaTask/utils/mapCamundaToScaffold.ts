@@ -23,7 +23,7 @@ export default (camundaForm: Components.Schemas.CamundaTask["form"], onCancel = 
       props: {
         name: item.name,
         label: item.type !== "checkbox" ? item.label : undefined,
-        isRequired: item.is_required ?? false,
+        isRequired: item.required ?? false,
         options: mapItemToOptions(item),
         optionLabelField: "label"
       }

@@ -1,4 +1,4 @@
-type Rec = Record<string, boolean | string | { label: string, value: string }>
+type Rec = Record<string, Array<string> | string | { label: string, value: string }>
 export default (camundaForm: Components.Schemas.CamundaTask["form"]) =>
   camundaForm.reduce((acc: Rec, item: Components.Schemas.CamundaTask["form"]["name"]) => {
     const { default_value, label, name, type, options } = item
@@ -6,7 +6,7 @@ export default (camundaForm: Components.Schemas.CamundaTask["form"]) =>
     // default_value == "false" means checked
     // default_value == "" means unchecked
     if (type === "checkbox" && default_value === "false") {
-      acc[name] = true
+      acc[name] = [name]
       return acc
     }
     if (type === "select") {
