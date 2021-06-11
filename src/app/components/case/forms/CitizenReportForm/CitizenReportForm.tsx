@@ -2,7 +2,6 @@
 import { useCitizenReports } from "app/state/rest/"
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
 import scaffold from "app/components/case/forms/CitizenReportForm/scaffold"
-import FormWithExtraLabel from "app/components/shared/FormWithExtraLabel/FormWithExtraLabel"
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
 
 type Props = {
@@ -16,14 +15,12 @@ const CitizenReportForm: React.FC<Props> = ({ id, camundaTaskId }) => {
   const fields = useScaffoldedFields(scaffold, id)
 
   return (
-    <FormWithExtraLabel>
-      <WorkflowForm
-        id={ id }
-        postMethod={ execPost }
-        fields={ fields }
-        camundaTaskId={ camundaTaskId }
-      />
-    </FormWithExtraLabel>
+    <WorkflowForm
+      id={ id }
+      postMethod={ execPost }
+      fields={ fields }
+      camundaTaskId={ camundaTaskId }
+    />
   )
 }
 

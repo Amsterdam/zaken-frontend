@@ -4,7 +4,6 @@ import { FormTitle } from "@amsterdam/asc-ui"
 import { useCamundaProcesses, useCamundaProcess } from "app/state/rest"
 import scaffold from "./scaffold"
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
-import FormWithExtraLabel from "app/components/shared/FormWithExtraLabel/FormWithExtraLabel"
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
 
 type Props = {
@@ -22,14 +21,12 @@ const TaskForm: React.FC<Props> = ({ id }) => {
   return (
     <>
       <FormTitle>Gebruik dit formulier om een taak op te voeren</FormTitle>
-      <FormWithExtraLabel>
-        <WorkflowForm
-          id={ id }
-          fields={ fields }
-          postMethod={ execPost }
-          mapData={ mapData }
-        />
-      </FormWithExtraLabel>
+      <WorkflowForm
+        id={ id }
+        fields={ fields }
+        postMethod={ execPost }
+        mapData={ mapData }
+      />
     </>
   )
 }
