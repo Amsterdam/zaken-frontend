@@ -1,6 +1,4 @@
-
-import styled from "styled-components"
-import { themeSpacing, breakpoint } from "@amsterdam/asc-ui"
+import BlockMenu from "app/components/shared/BlockMenu/BlockMenu"
 import NavBlock from "app/components/addresses/NavBlock/NavBlock"
 import to from "app/routing/utils/to"
 import routesObject from "app/routing/routes"
@@ -11,33 +9,6 @@ import MockWrapper from "app/components/shared/MockWrapper/MockWrapper"
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
 }
-const Menu = styled.menu`
-  width: 100%;
-  margin: 0;
-  padding: 0;
-`
-const Ul = styled.ul`
-  margin: 0 -${ themeSpacing(1.5) };
-  padding: 0;
-  list-style: none;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-`
-const Li = styled.li`
-  display: inline-block;
-  width: 100%;
-  margin-bottom: ${ themeSpacing(3) };
-  @media screen and ${ breakpoint("min-width", "tabletS") } {
-    width: 50%;
-  }
-  @media screen and ${ breakpoint("min-width", "laptopM") } {
-    width: 25%;
-  }
-`
-const Div = styled.div`
-  margin: 0 ${ themeSpacing(1.5) };
-`
 
 const routes = [
   "/adres/:bagId/details/",
@@ -52,7 +23,6 @@ const mockedRoutes = [
 
 const AddressMenu: React.FC<Props> = ({ bagId }) => {
   const [permitDetails] = usePermitDetails(bagId)
-  // TODO: Do show Residents by BAG_id
   const [residents] = useResidents(bagId)
   const permitsGranted = permitDetails?.permits.filter(p => p.permit_granted === "GRANTED").length
   const permitsFound = permitDetails?.permits.filter(p => ["GRANTED", "NOT_GRANTED"].includes(p.permit_granted)).length
@@ -63,26 +33,26 @@ const AddressMenu: React.FC<Props> = ({ bagId }) => {
   ]
 
   return (
-    <Menu>
-      <Ul>
+    <BlockMenu>
+      <ul>
         { routes.map((route, index) => {
             const page = routesObject[route]
             if (page?.icon === undefined || page?.title === undefined) return null
             const navBlock = <NavBlock to={ to(route, { bagId }) } icon={ page.icon } header={ page.title } count={ counts[index] }/>
             return (
-              <Li key={ route }>
-                <Div>
+              <li key={ route }>
+                <div>
                   { mockedRoutes.includes(route) ?
                     <MockWrapper hasPadding={ false }>{ navBlock }</MockWrapper> :
                     navBlock
                   }
-                </Div>
-              </Li>
+                </div>
+              </li>
             )
           })
         }
-      </Ul>
-    </Menu>
+      </ul>
+    </BlockMenu>
   )
 }
 export default AddressMenu

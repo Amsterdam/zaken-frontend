@@ -1,11 +1,9 @@
-
 import { FormTitle } from "@amsterdam/asc-ui"
 
 import { useCase, useScheduleTypes, useScheduleCreate } from "app/state/rest/"
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
 import scaffold from "./scaffold"
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
-import FormWithExtraLabel from "app/components/shared/FormWithExtraLabel/FormWithExtraLabel"
 
 type Props = {
   id: Components.Schemas.Case["id"]
@@ -41,16 +39,14 @@ const ScheduleForm: React.FC<Props> = ({ id, camundaTaskId }) => {
   return (
     <>
       <FormTitle>Gebruik dit formulier om een bezoek in te plannen</FormTitle>
-      <FormWithExtraLabel>
-        <WorkflowForm
-          id={ id }
-          fields={ fields }
-          mapData={ mapData }
-          postMethod={ execPost }
-          initialValues={ initialValues }
-          camundaTaskId={ camundaTaskId }
-        />
-      </FormWithExtraLabel>
+      <WorkflowForm
+        id={ id }
+        fields={ fields }
+        mapData={ mapData }
+        postMethod={ execPost }
+        initialValues={ initialValues }
+        camundaTaskId={ camundaTaskId }
+      />
     </>
   )
 }

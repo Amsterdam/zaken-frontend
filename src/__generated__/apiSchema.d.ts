@@ -720,7 +720,7 @@ declare namespace Components {
             is_rented_today: boolean;
             reports: VakantieverhuurReport[];
         }
-        export type ViolationEnum = "NO" | "YES" | "ADDITIONAL_RESEARCH_REQUIRED" | "ADDITIONAL_VISIT_REQUIRED" | "SEND_TO_OTHER_THEME" | "AUTHORIZATION_REQUEST";
+        export type ViolationEnum = "NO" | "YES" | "ADDITIONAL_RESEARCH_REQUIRED" | "ADDITIONAL_VISIT_REQUIRED" | "ADDITIONAL_VISIT_WITH_AUTHORIZATION" | "SEND_TO_OTHER_THEME";
         export interface ViolationType {
             key: string;
         }

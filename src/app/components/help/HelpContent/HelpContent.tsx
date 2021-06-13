@@ -1,5 +1,5 @@
 import { useMemo } from "react"
-import { Accordion, AccordionWrapper, Heading, Paragraph, Spinner } from "@amsterdam/asc-ui"
+import { Accordion, Heading, Paragraph, Spinner, themeSpacing } from "@amsterdam/asc-ui"
 
 import { RowWithColumn } from "app/components/layouts/Grid"
 import EmailLink from "./EmailLink"
@@ -19,6 +19,10 @@ const mapData = (data: Components.Schemas.PaginatedSupportContactList | undefine
 
 const RefreshIcon = styled (Refresh)`
   vertical-align: text-top;
+`
+
+const AccordionWrapper = styled.div`
+  margin-bottom: ${ themeSpacing(1) };
 `
 
 const HelpContent: React.FC = () => {
@@ -49,11 +53,15 @@ const HelpContent: React.FC = () => {
               Voor het werkproces, oftewel hoe { titleShort } te gebruiken, is een aparte werkinstructie geschreven. Deze kan je opvragen bij je teamleider. De teamleider is er verder ook om vragen en suggesties betreft het werkproces te beantwoorden.
             </Paragraph>
           </Accordion>
+        </AccordionWrapper>
+        <AccordionWrapper>
           <Accordion title="Algemeen gebruik zaaksysteem">
             <Paragraph>
               In de factsheet, waar bovenaan deze pagina naar verwezen wordt, lees je wat je in { titleShort } kan vinden. Heb je specifiekere vragen hoe { titleShort } werkt of kom je ergens niet uit, neem dan contact op met een van de key-users. Dit zijn directe collega’s die veel kennis hebben van { titleShort } en hier speciaal voor getraind zijn. Zij helpen je graag verder. Vraag aan je teamleider bij wie jij het beste terecht kan.  
             </Paragraph>
           </Accordion>
+        </AccordionWrapper>
+        <AccordionWrapper>
           <Accordion title="Technisch support" >
             <Paragraph>
               Werkt { titleShort } niet (goed)? Probeer de pagina opnieuw te laden door op het refresh icoon <RefreshIcon /> te klikken.
@@ -66,6 +74,8 @@ const HelpContent: React.FC = () => {
               <li>Buiten kantoortijden Datapunt, { showOptionalProperty(contacts[1]?.name) } { contacts[1]?.phone_number ? <PhoneLink phoneNumber={ contacts[1].phone_number } /> : showOptionalProperty(undefined) }</li>
             </ul>
           </Accordion>
+        </AccordionWrapper>
+        <AccordionWrapper>
           <Accordion title={`Feedback ${ titleShort }`}>
             <Paragraph>
               Ontdek je dingen die niet kloppen of heb je suggesties om { titleShort } nog beter te maken? Dan hoort het ontwikkelteam dit graag. Op elke pagina van { titleShort } zie je aan de rechterkant een rood label: Feedback. Via dit formulier kan je alles aan ons kwijt. We nemen daarna zo snel mogelijk contact met je op om je vragen te beantwoorden.<br/>
