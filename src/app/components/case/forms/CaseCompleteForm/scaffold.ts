@@ -2,7 +2,7 @@ import { FormPositioner } from "@amsterdam/scaffold-form/package"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import navigateTo from "app/routing/navigateTo"
 
-export default (caseId: Components.Schemas.Case["id"], completeCaseReasons?: MockComponents.Schemas.CaseCloseReason[], completeCaseResults?: MockComponents.Schemas.CaseCloseResult[]) => {
+export default (caseId: Components.Schemas.Case["id"], completeCaseReasons?: Components.Schemas.CaseCloseReason[], completeCaseResults?: Components.Schemas.CaseCloseResult[]) => {
   
   const fields = {
     reason: {
@@ -18,7 +18,7 @@ export default (caseId: Components.Schemas.Case["id"], completeCaseReasons?: Moc
     result: {
       type: "ShowHide",
       props: {
-        shouldShow: ({ values: { reason } }: { values: { reason: MockComponents.Schemas.CaseCloseReason } }) => reason?.result === true,
+        shouldShow: ({ values: { reason } }: { values: { reason: Components.Schemas.CaseCloseReason } }) => reason?.result === true,
         field: {
           type: "ComplexRadioFields",
           props: {
