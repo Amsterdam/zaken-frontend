@@ -115,7 +115,6 @@ export const useCorrespondence = (options?: Options) => {
   })
 }
 
-// TODO-MOCKED replace with real endpoint POST
 export const useCaseClose = (options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.CaseClose>({
