@@ -1,50 +1,60 @@
-const completeCaseResults: MockComponents.Schemas.CompleteCaseResult[] = [
-  {
-    id: 1,
-    title: "Regulier bewoond"
-  },
-  {
-    id: 2,
-    title: "Regulier verhuurd"
-  },
-  {
-    id: 3,
-    title: "Gelegaliseerd"
-  }
-]
-
-const completeCaseReasons: MockComponents.Schemas.CompleteCaseReason[] = [
+const caseCloseReasons: MockComponents.Schemas.CaseCloseReason[] = [
   {
     id: 0,
     name: "Geen aanleiding adres opnieuw te bezoeken",
-    value: 0
+    result: false,
+    case_theme: 58
   },
   {
     id: 1,
     name: "Doorgezet naar ander team",
-    value: 1
+    result: false,
+    case_theme: 58
   },
   {
     id: 2,
     name: "Geen woonfraude",
-    value: 2
+    result: false,
+    case_theme: 58
   },
   {
     id: 3,
     name: "Onvoldoende bewijs",
-    value: 3
+    result: false,
+    case_theme: 58
   },
   {
     id: 4,
     name: "Resultaat na hercontrole",
-    value: 4
+    result: true,
+    case_theme: 58
   },
   {
     id: 5,
     name: "Anders, vermeld in toelichting",
-    value: 5
+    result: false,
+    case_theme: 58
   }
 ]
+
+const caseCloseResults: MockComponents.Schemas.CaseCloseResult[] = [
+  {
+    id: 1,
+    name: "Regulier bewoond",
+    case_theme: 58
+  },
+  {
+    id: 2,
+    name: "Regulier verhuurd",
+    case_theme: 58
+  },
+  {
+    id: 3,
+    name: "Gelegaliseerd",
+    case_theme: 58
+  }
+]
+
 
 const correspondence: MockComponents.Schemas.Correspondence[] = [
   {
@@ -69,8 +79,8 @@ const roles: MockComponents.Schemas.Role[] = [
 ]
 
 export default {
-  completeCaseResults,
-  completeCaseReasons,
+  caseCloseReasons,
+  caseCloseResults,
   correspondence,
   roles
 }

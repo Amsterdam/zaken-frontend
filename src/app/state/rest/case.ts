@@ -115,37 +115,39 @@ export const useCorrespondence = (options?: Options) => {
   })
 }
 
-// TODO-MOCKED replace with real endpoint
-export const useCompleteCaseResults = (options?: Options) => {
-  const handleError = useErrorHandler()
-  return useApiRequest<Components.Schemas.CaseClose[]>({
-    ...options,
-    url: makeApiUrl("case-close"),
-    groupName: "cases",
-    handleError,
-    isProtected: true
-  })
-}
-
-// TODO-MOCKED replace with real endpoint
-export const useCompleteCasesReasons = (options?: Options) => {
-  const handleError = useErrorHandler()
-  return useApiRequest<Components.Schemas.PaginatedCaseCloseReasonList>({
-    ...options,
-    url: makeApiUrl("case-close-reason"),
-    groupName: "cases",
-    handleError,
-    isProtected: true
-  })
-}
-
-// TODO-MOCKED replace with real endpoint
-export const useCompleteCase = (options?: Options) => {
+// TODO-MOCKED replace with real endpoint POST
+export const useCaseClose = (options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<MockComponents.Schemas.CompleteCase>({
     ...options,
     lazy: true,
     url: "completeCases",
+    groupName: "cases",
+    handleError,
+    isProtected: true,
+    isMocked: true
+  })
+}
+
+// TODO-MOCKED replace with real endpoint
+export const useCaseCloseResults = (options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<MockComponents.Schemas.CaseCloseResult[]>({
+    ...options,
+    url: "caseCloseResults",
+    groupName: "cases",
+    handleError,
+    isProtected: true,
+    isMocked: true
+  })
+}
+
+// TODO-MOCKED replace with real endpoint
+export const useCaseCloseReasons = (options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<MockComponents.Schemas.CaseCloseReason[]>({
+    ...options,
+    url: "caseCloseReasons",
     groupName: "cases",
     handleError,
     isProtected: true,

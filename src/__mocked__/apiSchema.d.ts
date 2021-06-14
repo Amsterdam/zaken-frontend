@@ -3,18 +3,23 @@ declare namespace MockComponents {
 
     export type CompleteCase = {
       readonly id: number
-      readonly title: string
+      readonly explanation: string
+      readonly case: number
+      readonly reason: number
+      readonly result: number
     }
 
-    export type CompleteCaseResult = {
+    export type CaseCloseReason = {
       readonly id: number
-      readonly title: string
+      readonly result: boolean
+      readonly name: string
+      readonly case_theme: number
     }
 
-    export type CompleteCaseReason = {
+    export type CaseCloseResult = {
       readonly id: number
       readonly name: string
-      readonly value: number
+      readonly case_theme: number
     }
 
     export type Correspondence = {

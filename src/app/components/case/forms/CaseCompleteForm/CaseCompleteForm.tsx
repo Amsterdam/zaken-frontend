@@ -1,7 +1,7 @@
 
 import { FormTitle } from "@amsterdam/asc-ui"
 
-import { useCompleteCase, useCompleteCaseResults, useCompleteCasesReasons } from "app/state/rest/"
+import { useCaseClose, useCaseCloseResults, useCaseCloseReasons } from "app/state/rest/"
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
 import scaffold from "app/components/case/forms/CaseCompleteForm/scaffold"
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
@@ -13,10 +13,10 @@ type Props = {
 
 const CaseCompleteForm: React.FC<Props> = ({ id, camundaTaskId }) => {
 
-  const [caseClose] = useCompleteCaseResults()
-  const [caseCloseReasons] = useCompleteCasesReasons()
-  const [, { execPost }] = useCompleteCase()
-  const fields = useScaffoldedFields(scaffold, id, caseClose, caseCloseReasons?.results)
+  const [caseCloseResults] = useCaseCloseResults()
+  const [caseCloseReasons] = useCaseCloseReasons()
+  const [, { execPost }] = useCaseClose()
+  const fields = useScaffoldedFields(scaffold, id, caseCloseReasons, caseCloseResults)
 
   return (
     <>
