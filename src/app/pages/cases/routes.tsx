@@ -21,7 +21,7 @@ export default {
         title: "Zaakdetails",
         icon: "Folder",
         subRoutes: {
-          "afronden/:camundaTaskId": {
+          "afronding/:camundaTaskId": {
             Page: CompleteCasePage,
             title: "Zaak afronden",
             icon: "Edit"

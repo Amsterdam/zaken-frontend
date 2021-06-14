@@ -1,13 +1,3 @@
-const completeCases: MockComponents.Schemas.CompleteCase[] = [
-  {
-    id: 1,
-    title: "Zaak afsluiten"
-  },
-  {
-    id: 2,
-    title: "Hercontrole uitzetten"
-  }
-]
 
 const correspondence: MockComponents.Schemas.Correspondence[] = [
   {
@@ -32,7 +22,6 @@ const roles: MockComponents.Schemas.Role[] = [
 ]
 
 export default {
-  completeCases,
   correspondence,
   roles
 }

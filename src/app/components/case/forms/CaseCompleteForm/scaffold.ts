@@ -2,24 +2,41 @@ import { FormPositioner } from "@amsterdam/scaffold-form/package"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import navigateTo from "app/routing/navigateTo"
 
-export default (caseId: Components.Schemas.Case["id"], completeCases?: MockComponents.Schemas.CompleteCase[]) => {
-
+export default (caseId: Components.Schemas.Case["id"], completeCaseReasons?: Components.Schemas.CaseCloseReason[], completeCaseResults?: Components.Schemas.CaseCloseResult[]) => {
+  
   const fields = {
-    complete: {
+    reason: {
       type: "ComplexRadioFields",
+          props: {
+            isRequired: true,
+            label: "Wat is de reden?",
+            name: "reason",
+            optionLabelField: "name",
+            options: completeCaseReasons
+          }
+    },
+    result: {
+      type: "ShowHide",
       props: {
-        isRequired: true,
-        label: "Wat is de vervolgstap in deze zaak?",
-        name: "complete",
-        optionLabelField: "title",
-        options: completeCases
+        shouldShow: ({ values: { reason } }: { values: { reason: Components.Schemas.CaseCloseReason } }) => reason?.result === true,
+        field: {
+          type: "ComplexRadioFields",
+          props: {
+            isRequired: true,
+            label: "Wat is het resultaat?",
+            name: "result",
+            optionLabelField: "name",
+            options: completeCaseResults
+          }
+          
+        }
       }
     },
-    text: {
+    description: {
       type: "TextAreaField",
       props: {
-        label: "Korte toelichting",
-        name: "text",
+        label: "Toelichting",
+        name: "description",
         isRequired: true
       }
     },
@@ -41,9 +58,10 @@ export default (caseId: Components.Schemas.Case["id"], completeCases?: MockCompo
   }
 
   return new FormPositioner(fields as Fields)
-    .setGrid("laptopM", "1fr 1fr", [
-      ["complete", "complete"],
-      ["text", "text"],
+    .setGrid("laptop", "1fr 1fr", [
+      ["reason", "reason"],
+      ["result", "result"],
+      ["description", "description"],
       ["secondaryButton", "submit"]
     ])
     .getScaffoldProps()

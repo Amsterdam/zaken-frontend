@@ -1,7 +1,7 @@
 
 import { FormTitle } from "@amsterdam/asc-ui"
 
-import { useCompleteCases, useCompleteCase } from "app/state/rest/"
+import { useCaseClose, useCaseCloseResults, useCaseCloseReasons, useCase } from "app/state/rest/"
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
 import scaffold from "app/components/case/forms/CaseCompleteForm/scaffold"
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
@@ -11,11 +11,26 @@ type Props = {
   camundaTaskId: Components.Schemas.CamundaTask["camunda_task_id"]
 }
 
+type CaseCloseTypeFormData = Omit<Components.Schemas.CaseClose, "reason" | "result"> & {
+  reason: Components.Schemas.CaseCloseReason
+  result: Components.Schemas.CaseCloseResult | null
+}
+const mapData = (data: CaseCloseTypeFormData): Components.Schemas.CaseClose => (
+  {
+    ...data,
+    reason: data.reason.id,
+    result: data.result?.id ?? null
+  }
+)
+
 const CaseCompleteForm: React.FC<Props> = ({ id, camundaTaskId }) => {
 
-  const [completeCases] = useCompleteCases()
-  const [, { execPost }] = useCompleteCase()
-  const fields = useScaffoldedFields(scaffold, id, completeCases)
+  const [caseItem] = useCase(id)
+  const themeId = caseItem?.theme.id
+  const [caseCloseReasons] = useCaseCloseReasons(themeId)
+  const [caseCloseResults] = useCaseCloseResults(themeId)
+  const [, { execPost }] = useCaseClose()
+  const fields = useScaffoldedFields(scaffold, id, caseCloseReasons?.results, caseCloseResults?.results)
 
   return (
     <>
@@ -23,6 +38,7 @@ const CaseCompleteForm: React.FC<Props> = ({ id, camundaTaskId }) => {
       <WorkflowForm
         id={ id }
         fields={ fields }
+        mapData={ mapData }
         postMethod={ execPost }
         camundaTaskId={ camundaTaskId }
       />

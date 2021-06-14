@@ -89,11 +89,11 @@ export const useDecisions = (options?: Options) => {
 }
 
 // TODO-MOCKED replace with real endpoint
-export const useCompleteCases = (options?: Options) => {
+export const useCorrespondences = (options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<MockComponents.Schemas.CompleteCase[]>({
+  return useApiRequest<MockComponents.Schemas.Correspondence[]>({
     ...options,
-    url: "completeCases",
+    url: "correspondence",
     groupName: "cases",
     handleError,
     isProtected: true,
@@ -102,16 +102,52 @@ export const useCompleteCases = (options?: Options) => {
 }
 
 // TODO-MOCKED replace with real endpoint
-export const useCompleteCase = (options?: Options) => {
+export const useCorrespondence = (options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<MockComponents.Schemas.CompleteCase>({
+  return useApiRequest<MockComponents.Schemas.Correspondence>({
     ...options,
     lazy: true,
-    url: "completeCases",
+    url: "correspondence",
     groupName: "cases",
     handleError,
     isProtected: true,
     isMocked: true
+  })
+}
+
+export const useCaseClose = (options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<Components.Schemas.CaseClose>({
+    ...options,
+    lazy: true,
+    url: makeApiUrl("case-close"),
+    groupName: "cases",
+    handleError,
+    isProtected: true
+  })
+}
+
+export const useCaseCloseReasons = (themeId?: Components.Schemas.CaseTheme["id"], options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<Components.Schemas.PaginatedCaseCloseReasonList>({
+    ...options,
+    lazy: themeId === undefined,
+    url: makeApiUrl("themes", themeId, "case-close-reasons"),
+    groupName: "cases",
+    handleError,
+    isProtected: true
+  })
+}
+
+export const useCaseCloseResults = (themeId?: Components.Schemas.CaseTheme["id"], options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<Components.Schemas.PaginatedCaseCloseResultList>({
+    ...options,
+    lazy: themeId === undefined,
+    url: makeApiUrl("themes", themeId, "case-close-results"),
+    groupName: "cases",
+    handleError,
+    isProtected: true
   })
 }
 
