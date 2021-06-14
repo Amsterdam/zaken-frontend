@@ -9,15 +9,11 @@ type Props = {
   setDate: (value: string) => void
 }
 
-
-const CasesFilter: React.FC<Props> = ({ date, setDate }) => {
-  const onChange = (value: string) => setDate(value)
-  return (
-    <FilterMenu>
-      <ScaffoldForm>
-        <ScaffoldFields { ...scaffold(date, onChange) } />
-      </ScaffoldForm>
-    </FilterMenu>
-  )
-}
+const CasesFilter: React.FC<Props> = ({ date, setDate }) => (
+  <FilterMenu>
+    <ScaffoldForm>
+      <ScaffoldFields { ...scaffold(date, setDate) } />
+    </ScaffoldForm>
+  </FilterMenu>
+)
 export default CasesFilter

@@ -3,7 +3,7 @@ import { useState, useCallback } from "react"
 // TODO: Generic type
 const defaultParse = (value: string | null) => value ?? ""
 
-export default (key: string, parse = defaultParse) => {
+export default (key: string, parse = defaultParse, allowEmptyString = false) => {
   // TODO: enable
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const urlParams = new URLSearchParams(window.location.search)
@@ -15,7 +15,7 @@ export default (key: string, parse = defaultParse) => {
   const set = useCallback((value: string) => {
     const v = stableParse(value)
     setValue(v)
-    if (v === "") {
+    if (!allowEmptyString && v === "") {
       urlParams.delete(key)
     } else {
       urlParams.set(key, v)
@@ -24,6 +24,6 @@ export default (key: string, parse = defaultParse) => {
     const queryString = s !== "" ? `?${ s }` : ""
     const url = `${ window.location.pathname }${ queryString }`
     window.history.replaceState({}, "", url)
-  }, [key, stableParse, urlParams])
+  }, [key, stableParse, urlParams, allowEmptyString])
   return [value, set] as const
 }
