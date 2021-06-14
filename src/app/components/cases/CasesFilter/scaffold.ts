@@ -8,8 +8,8 @@ export const getDate = (backwards = 0) => {
   return [`${ d.getFullYear() }-${ d.getMonth() + 1 }-${ d.getDate() }`, displayDate(d)]
 }
 
-export const createOptions = () =>
-  [...Array(7)].reduce((acc, _, index) => {
+export const createOptions = () => {
+  const options = [...Array(7)].reduce((acc, _, index) => {
     const [date, displayDate] = getDate(index)
     switch (index) {
       case 0: acc[date] = "Vandaag"; break
@@ -18,8 +18,12 @@ export const createOptions = () =>
     }
     return acc
   }, {} as Record<string, string>)
+  options[""] = "Alle zaken"
+  return options
+}
 
 export default (value: string, onChange: (value: string) => void) => {
+
   const fields = {
     period: {
       type: "RadioFields",
