@@ -30,6 +30,10 @@ declare namespace Components {
         export interface CamundaEndStateWorker {
             state_identification: number;
         }
+        export interface CamundaMessageForProcessInstance {
+            message_name: string;
+            business_key: string;
+        }
         export interface CamundaMessager {
             message_name: string;
             process_variables?: {
@@ -127,11 +131,18 @@ declare namespace Components {
             explanation: string;
             case: number;
             reason: number;
+            result?: null | number;
         }
         export interface CaseCloseReason {
             id: number;
             result: boolean;
             name: string;
+            case_theme: number;
+        }
+        export interface CaseCloseResult {
+            id: number;
+            name: string;
+            case_theme: number;
         }
         export interface CaseCreateUpdate {
             id: number;
@@ -341,6 +352,24 @@ declare namespace Components {
              */
             previous?: string | null; // uri
             results?: CaseCloseReason[];
+        }
+        export interface PaginatedCaseCloseResultList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=4
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null; // uri
+            results?: CaseCloseResult[];
         }
         export interface PaginatedCaseList {
             /**
@@ -826,6 +855,13 @@ declare namespace Paths {
             }
         }
     }
+    namespace CamundaWorkerSendMessageInsideProcessCreate {
+        export type RequestBody = Components.Schemas.CamundaMessageForProcessInstance;
+        namespace Responses {
+            export interface $200 {
+            }
+        }
+    }
     namespace CamundaWorkerSendMessageStartProcessCreate {
         export type RequestBody = Components.Schemas.CamundaMessager;
         namespace Responses {
@@ -855,28 +891,6 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCaseCloseList;
-        }
-    }
-    namespace CaseCloseReasonList {
-        namespace Parameters {
-            export type Page = number;
-        }
-        export interface QueryParameters {
-            page?: Parameters.Page;
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.PaginatedCaseCloseReasonList;
-        }
-    }
-    namespace CaseCloseReasonRetrieve {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export interface PathParameters {
-            id: Parameters.Id;
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.CaseCloseReason;
         }
     }
     namespace CaseCloseRetrieve {
@@ -1161,6 +1175,36 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = /* Camunda task serializer for the list-endpoint */ Components.Schemas.CamundaTaskList[];
+        }
+    }
+    namespace ThemesCaseCloseReasonsList {
+        namespace Parameters {
+            export type Id = number;
+            export type Page = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        export interface QueryParameters {
+            page?: Parameters.Page;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedCaseCloseReasonList;
+        }
+    }
+    namespace ThemesCaseCloseResultsList {
+        namespace Parameters {
+            export type Id = number;
+            export type Page = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        export interface QueryParameters {
+            page?: Parameters.Page;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedCaseCloseResultList;
         }
     }
     namespace ThemesDecisionTypesList {

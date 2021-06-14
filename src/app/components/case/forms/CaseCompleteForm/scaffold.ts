@@ -36,7 +36,7 @@ export default (caseId: Components.Schemas.Case["id"], completeCaseReasons?: Moc
       type: "TextAreaField",
       props: {
         label: "Toelichting",
-        name: "description",
+        name: "explanation",
         isRequired: true
       }
     },
