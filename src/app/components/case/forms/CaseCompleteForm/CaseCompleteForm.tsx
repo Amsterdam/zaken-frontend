@@ -13,13 +13,13 @@ type Props = {
 
 type CaseCloseTypeFormData = Omit<Components.Schemas.CaseClose, "reason" | "result"> & {
   reason: Components.Schemas.CaseCloseReason
-  result: Components.Schemas.CaseCloseResult
+  result: Components.Schemas.CaseCloseResult | null
 }
 const mapData = (data: CaseCloseTypeFormData): Components.Schemas.CaseClose => (
   {
     ...data,
     reason: data.reason.id,
-    result: data.result.id
+    result: data.result?.id ?? null
   }
 )
 
