@@ -17,5 +17,5 @@ export default (oId: number | undefined) => {
     execGet()
   }, [oId, caseItem, valid, execGet])
 
-  return [exists, isBusy, has404, oId!] as const
+  return [exists, isBusy, has404, oId!, caseItem] as const
 }
