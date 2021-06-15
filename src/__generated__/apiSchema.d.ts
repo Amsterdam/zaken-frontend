@@ -128,7 +128,7 @@ declare namespace Components {
         }
         export interface CaseClose {
             id: number;
-            explanation: string;
+            description: string;
             case: number;
             reason: number;
             result?: null | number;
@@ -728,7 +728,7 @@ declare namespace Components {
             day_segments: DaySegment[];
             priorities: Priority[];
         }
-        export type TypeEnum = "DEBRIEFING" | "VISIT" | "CASE" | "SUMMON" | "GENERIC_TASK" | "SCHEDULE" | "CITIZEN_REPORT";
+        export type TypeEnum = "DEBRIEFING" | "VISIT" | "CASE" | "CASE_CLOSE" | "SUMMON" | "GENERIC_TASK" | "SCHEDULE" | "CITIZEN_REPORT";
         export interface User {
             id?: string; // uuid
             email?: string; // email
