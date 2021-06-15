@@ -6,7 +6,7 @@ import scaffold from "app/components/case/forms/DecisionForm/scaffold"
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
 import DecisionHeader from "./components/DecisionHeader"
 import { useDecisionTypes } from "app/state/rest/themes"
-import stripThousandSeparator from "./utils/stripThousandSeparator"
+//import stripThousandSeparator from "./utils/stripThousandSeparator"
 
 type Props = {
   id: Components.Schemas.Case["id"]
@@ -16,12 +16,13 @@ type Props = {
 type DecisionData = Omit<Components.Schemas.Decision, "decision_type"> & { decision_type: { id: number } }
 const mapData = (data: DecisionData) => {
   const decision_type = data.decision_type.id
-  const sanctionAmount = data.sanction_amount ? Math.round(parseFloat(stripThousandSeparator(data.sanction_amount))) : Number.NaN
-  const sanction_amount = !Number.isNaN(sanctionAmount) ? sanctionAmount : undefined
+  // TODO: Move this to amsterdam-react-final-form
+  //const sanctionAmount = data.sanction_amount ? Math.round(parseFloat(stripThousandSeparator(data.sanction_amount))) : Number.NaN
+  //const sanction_amount = !Number.isNaN(sanctionAmount) ? sanctionAmount : undefined
   return {
     ...data,
-    decision_type,
-    sanction_amount
+    decision_type//,
+    //sanction_amount
   }
 }
 
