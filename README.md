@@ -34,3 +34,5 @@ The `master` branch is automatically deployed to [acceptance](https://acc.wonen.
 
 Tag any branch, but preferably master, with a tag like `v1.0.0` to deploy that specific commit
 to [production](https://wonen.zaken.amsterdam.nl/).
+
+A `npm run deploy:prod` convenience script is also available.
