@@ -54,7 +54,8 @@
     "start": "PORT=2999 react-scripts start",
     "swagger:generate-schema": "TS_NODE_PROJECT='./scripts/tsconfig.json' NODE_ENV='development' ts-node scripts/src/generateSwaggerSchema.ts",
     "build": "react-scripts build",
-    "build:acc": "env-cmd -f .env.acceptance react-scripts build"
+    "build:acc": "env-cmd -f .env.acceptance react-scripts build",
+    "deploy:prod": "npm version patch && git push origin HEAD --follow-tags"
   },
   "eslintConfig": {
     "extends": "react-app"
