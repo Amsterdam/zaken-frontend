@@ -21,10 +21,11 @@ type Props = {
 
 const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
 
-  const [exists, isBusy, has404, id] = useExistingCase(parseUrlParamId(idString))
+  const [exists, isBusy, has404, id, caseItem] = useExistingCase(parseUrlParamId(idString))
   const showSpinner = isBusy
   const showCase = exists
   const showNotFound = has404
+  const isClosed = typeof caseItem?.end_date === "string"
 
   return (
     <>
@@ -40,15 +41,18 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
           <Column spanLarge={ 50 }>
             <DetailHeaderByCaseId caseId={ id } enableSwitch={ false } />
           </Column>
-        </Row>  
+        </Row>
         <Row>
           <Column spanLarge={ 50 }>
             <CaseDetails caseId={ id } />
           </Column>
         </Row>
-        <RowWithColumn>
-          <CaseStatus id={ id } />
-        </RowWithColumn>
+        {
+          isClosed === false &&
+          <RowWithColumn>
+            <CaseStatus id={ id } />
+          </RowWithColumn>
+        }
         <RowWithColumn>
           <Heading as="h2">Zaakhistorie</Heading>
           <Divider />
