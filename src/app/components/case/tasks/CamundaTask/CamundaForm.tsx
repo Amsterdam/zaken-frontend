@@ -22,7 +22,7 @@ const CamundaForm: React.FC<Props> = ({ camundaForm, isLoading, onSubmit, onCanc
     <div>
       <ScaffoldForm
         showSpinner={ isLoading }
-        onSubmit={ (data: any) => { onSubmit(mapSubmitData(camundaForm, data)) } }
+        onSubmit={ (data: unknown) => { onSubmit(mapSubmitData(camundaForm, data)) } }
         onCancel={ onCancel }
         initialValues={ mapCamundaToInitialValues(camundaForm) }
       >
