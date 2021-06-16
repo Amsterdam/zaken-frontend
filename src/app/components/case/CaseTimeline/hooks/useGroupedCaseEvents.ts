@@ -1,16 +1,14 @@
 import { useCaseEvents } from "app/state/rest"
 
 type TimelineEventItem = {
-  type: string
+  type: Components.Schemas.TypeEnum
   caseEvents: Components.Schemas.CaseEvent[]
 }
 
-type CaseEvent = Components.Schemas.CaseEvent
+const shouldBeGrouped = (item: Components.Schemas.CaseEvent) => item.type !== "GENERIC_TASK"
+const equalItems = (i: TimelineEventItem | undefined, ii: Components.Schemas.CaseEvent) => i !== undefined && i.type === ii.type
 
-const shouldBeGrouped = (item: CaseEvent) => item.type !== "GENERIC_TASK"
-const equalItems = (i: TimelineEventItem | undefined, ii: CaseEvent) => i !== undefined && i.type === ii.type
-
-export default (caseId: CaseEvent["id"]) => {
+export default (caseId: Components.Schemas.CaseEvent["id"]) => {
 
   const [data, methods, errors] = useCaseEvents(caseId)
 
