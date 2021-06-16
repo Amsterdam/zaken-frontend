@@ -7,22 +7,29 @@ import mapCamundaToInitialValues from "./utils/mapCamundaToInitialValues"
 import mapSubmitData from "./utils/mapSubmitData"
 
 type Props = {
-  camundaForm: any
+  camundaForm: Components.Schemas.CamundaTask["form"]
   onSubmit: (data: Components.Schemas.CamundaTaskComplete) => void
   isLoading?: boolean
   onCancel: () => void
 }
-const CamundaForm: React.FC<Props> = ({ camundaForm, isLoading, onSubmit, onCancel }) => (
-  <div>
-    <ScaffoldForm
-      showSpinner={ isLoading }
-      onSubmit={ (data: any) => { onSubmit(mapSubmitData(camundaForm, data)) } }
-      onCancel={ onCancel }
-      initialValues={ mapCamundaToInitialValues(camundaForm) }
-    >
-      <ScaffoldFields { ...createScaffoldProps(camundaForm, onCancel) } />
-    </ScaffoldForm>
-  </div>
-)
+const CamundaForm: React.FC<Props> = ({ camundaForm, isLoading, onSubmit, onCancel }) => {
+  console.log(camundaForm)
+  if (camundaForm[0].type === "select" && camundaForm[0].options.length === 1) {
+    camundaForm[0] = { ...camundaForm[0], type: "checkbox", default_value: null, required: true }
+  }
+
+  return (
+    <div>
+      <ScaffoldForm
+        showSpinner={ isLoading }
+        onSubmit={ (data: any) => { onSubmit(mapSubmitData(camundaForm, data)) } }
+        onCancel={ onCancel }
+        initialValues={ mapCamundaToInitialValues(camundaForm) }
+      >
+        <ScaffoldFields { ...createScaffoldProps(camundaForm, onCancel) } />
+      </ScaffoldForm>
+    </div>
+  )
+}
 
 export default CamundaForm
