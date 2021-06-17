@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@amsterdam/amsterdam-react-final-form": "^0.1.124",
-    "@amsterdam/asc-assets": "^0.29.3",
+    "@amsterdam/asc-assets": "^0.30.0",
     "@amsterdam/asc-ui": "^0.29.3",
     "@amsterdam/scaffold-form": "^0.1.36",
     "@amsterdam/wonen-ui": "^0.0.45",
