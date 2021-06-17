@@ -15,7 +15,7 @@ type Props = {
 const CamundaForm: React.FC<Props> = ({ camundaForm, isLoading, onSubmit, onCancel }) => {
   console.log(camundaForm)
   if (camundaForm.length === 1 && camundaForm[0].type === "select" && camundaForm[0].options.length === 1) {
-    camundaForm[0] = { ...camundaForm[0], type: "checkbox", default_value: null, required: true }
+    camundaForm[0] = { ...camundaForm[0], type: "checkbox", default_value: "", required: true }
   }
 
   return (
