@@ -5,8 +5,8 @@ export default (camundaForm: Components.Schemas.CamundaTask["form"]) =>
     // The API response is somewhat inconsistent
     // default_value == "false" means checked
     // default_value == "" means unchecked
-    if (type === "checkbox" && default_value === "false") {
-      acc[name] = [name]
+    if (type === "checkbox") {
+      if (default_value === "false") acc[name] = [name]
       return acc
     }
     if (type === "select") {

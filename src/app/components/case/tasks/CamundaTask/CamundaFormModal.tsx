@@ -25,7 +25,7 @@ const CamundaFormModal: React.FC<Props> = ({ isOpen, closeModal, onSubmit, taskN
   }
 
   return (
-    <Modal isOpen={isOpen} onClose={closeModal} title={title}>
+    <Modal isOpen={ isOpen } onClose={ closeModal } title={ title }>
       <ModalBlock>
         <CamundaForm onSubmit={ onSubmitWrap } onCancel={closeModal} camundaForm={ form } />
       </ModalBlock>
