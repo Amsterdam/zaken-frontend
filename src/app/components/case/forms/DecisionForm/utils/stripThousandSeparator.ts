@@ -1,5 +1,6 @@
 type Separator = "." | "," | "_"
-export default (str: string, separator: Separator = ".") => {
+export default (value: string | number, separator: Separator = ".") => {
+  if (typeof value === "number") return String(value)
   const regex = new RegExp(`\\${ separator }(?=\\d{3})`, "g")
-  return str.replace(regex, "")
+  return value.replace(regex, "")
 }
