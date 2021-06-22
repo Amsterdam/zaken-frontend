@@ -10,6 +10,7 @@ export default () => {
   init({
     dsn,
     environment,
-    release: `${ name }@${ release }`
+    release: `${ name }@${ release }`,
+    autoSessionTracking: false
   })
 }
