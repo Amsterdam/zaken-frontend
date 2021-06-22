@@ -68,8 +68,9 @@ export default (bagId: Components.Schemas.Address["bag_id"], themes?: Components
           props: {
             label: "Telefoonnummer melder",
             name: "reporter_phone",
+            hint: "Vul hier alleen cijfers in",
             isRequired: true,
-            hideNumberSpinner: true
+            validate: (value: string) => /^\d{10}$/.test(value) ? false : "Vul hier enkel 10 cijfers in"
           }
         }
       }
