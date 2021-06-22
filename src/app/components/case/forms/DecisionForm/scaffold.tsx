@@ -3,6 +3,8 @@ import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import navigateTo from "app/routing/navigateTo"
 
+const descriptionRequired = (idDecision: number, shouldMatch = true) => shouldMatch ? idDecision === 9 : idDecision !== 9
+
 export default (caseId: Components.Schemas.Case["id"], decisions?: Components.Schemas.DecisionType[]) => {
 
   const fields = {
@@ -35,12 +37,32 @@ export default (caseId: Components.Schemas.Case["id"], decisions?: Components.Sc
       }
     },
     description: {
-      type: "TextAreaField",
+      type: "ShowHide",
       props: {
-        label: "Korte toelichting",
-        extraLabel: "(niet verplicht)",
-        name: "description",
-        isRequired: false
+        shouldShow: ({ values: { decision_type } }: { values: { decision_type: Components.Schemas.DecisionType } }) => descriptionRequired(decision_type?.id, false),
+        field: {
+          type: "TextAreaField",
+          props: {
+            label: "Korte toelichting",
+            extraLabel: "(niet verplicht)",
+            name: "description",
+            isRequired: false
+          }
+        }
+      }
+    },
+    description_closing: {
+      type: "ShowHide",
+      props: {
+        shouldShow: ({ values: { decision_type } }: { values: { decision_type: Components.Schemas.DecisionType } }) => descriptionRequired(decision_type?.id),
+        field: {
+          type: "TextAreaField",
+          props: {
+            label: "Korte toelichting",
+            name: "description_closing",
+            isRequired: true
+          }
+        }
       }
     },
     secondaryButton: {
@@ -66,6 +88,7 @@ export default (caseId: Components.Schemas.Case["id"], decisions?: Components.Sc
       ["decision_type", "decision_type"],
       ["sanction_amount", "sanction_amount"],
       ["description", "description"],
+      ["description_closing", "description_closing"],
       ["secondaryButton", "submit"]
     ])
     .getScaffoldProps()
