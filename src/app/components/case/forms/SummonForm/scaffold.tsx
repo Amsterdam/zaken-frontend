@@ -18,6 +18,20 @@ export default (caseId: Components.Schemas.Case["id"], summonTypes?: Components.
         options: summonTypes
       }
     },
+    number_of_accommodations: {
+      type: "ShowHide",
+      props: {
+        shouldShow: ({ values: { type } }: { values: { type: Components.Schemas.SummonType } }) => type?.id === 14,
+        field: {
+          type: "NumberField",
+          props: {
+            isRequired: true,
+            label: "Aantal gesloten logiesverblijven",
+            name: "type_result.number_of_accommodations"
+          }
+        }
+      }
+    },
     persons: {
       type: "ArrayField",
       props: {
@@ -82,6 +96,7 @@ export default (caseId: Components.Schemas.Case["id"], summonTypes?: Components.
   return new FormPositioner(fields as Fields)
     .setGrid("mobileS", "1fr 1fr", [
       ["type", "type"],
+      ["number_of_accommodations"],
       ["persons", "persons"],
       ["description", "description"],
       ["secondaryButton", "submit"]
