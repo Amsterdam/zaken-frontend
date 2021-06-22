@@ -13,15 +13,18 @@ type Props = {
   camundaTaskId: Components.Schemas.CamundaTask["camunda_task_id"]
 }
 
-type DecisionData = Omit<Components.Schemas.Decision, "decision_type"> & { decision_type: { id: number } }
+type DecisionData = Omit<Components.Schemas.Decision, "decision_type"> & { decision_type: { id: number }, description_closing?: string }
 const mapData = (data: DecisionData) => {
+
   const decision_type = data.decision_type.id
   const sanctionAmount = data.sanction_amount ? Math.round(parseFloat(stripThousandSeparator(data.sanction_amount))) : Number.NaN
   const sanction_amount = !Number.isNaN(sanctionAmount) ? sanctionAmount : undefined
+  const description = data.description ?? data.description_closing
   return {
     ...data,
     decision_type,
-    sanction_amount
+    sanction_amount,
+    description
   }
 }
 
