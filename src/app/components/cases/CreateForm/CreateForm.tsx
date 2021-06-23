@@ -1,5 +1,5 @@
 import scaffold from "./scaffold"
-import { useCaseThemes, useReasons, useCaseCreate } from "app/state/rest"
+import { useCaseThemes, useReasons, useCaseCreate, useProjects } from "app/state/rest"
 import ConfirmScaffoldForm from "app/components/shared/ConfirmScaffoldForm/ConfirmScaffoldForm"
 import useNavigateWithFlashMessage from "app/state/flashMessages/useNavigateWithFlashMessage"
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
@@ -24,9 +24,10 @@ const CreateForm: React.FC<Props> = ({ bagId }) => {
 
   const [caseThemes] = useCaseThemes()
   const [reasons] = useReasons(caseThemes?.results?.[0].id)
+  const [projects] = useProjects(caseThemes?.results?.[0].id)
   const [, { execPost }] = useCaseCreate()
 
-  const fields = useScaffoldedFields(scaffold, bagId, caseThemes?.results, reasons?.results)
+  const fields = useScaffoldedFields(scaffold, bagId, caseThemes?.results, reasons?.results, projects?.results)
 
   const navigateWithFlashMessage = useNavigateWithFlashMessage()
   const afterSubmit = async (result: Components.Schemas.CaseCreateUpdate) =>

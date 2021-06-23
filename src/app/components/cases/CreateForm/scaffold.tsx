@@ -3,8 +3,9 @@ import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import navigateTo from "app/routing/navigateTo"
 
-export default (bagId: Components.Schemas.Address["bag_id"], themes?: Components.Schemas.CaseTheme[], reasons?: Components.Schemas.CaseReason[]) => {
-
+export default (bagId: Components.Schemas.Address["bag_id"], themes?: Components.Schemas.CaseTheme[], reasons?: Components.Schemas.CaseReason[], projects?: MockComponents.Schemas.CaseProject[]) => {
+  console.log("themes", themes)
+  console.log("reasons", reasons)
   const fields = {
     theme: {
       type: "ComplexRadioFields",
@@ -95,22 +96,34 @@ export default (bagId: Components.Schemas.Address["bag_id"], themes?: Components
       }
     },
     description_citizenreport: {
-      type: "TextAreaField",
+      type: "ShowHide",
       props: {
-        label: "Korte samenvatting melding",
-        name: "description_citizenreport",
-        isRequired: true
+        shouldShow: ({ values: { reason } }: { values: { reason: any } }) => reason.name === "Melding",
+        field: {
+          type: "TextAreaField",
+          props: {
+            label: "Korte samenvatting melding",
+            name: "description_citizenreport",
+            isRequired: true
+          }
+        }
       }
     },
     advertisement: {
-      type: "RadioFields",
+      type: "ShowHide",
       props: {
-        isRequired: true,
-        name: "advertisement",
-        label: "Is er een advertentie bekend?",
-        options: {
-          yes: "Ja, er is een advertentie",
-          no: "Nee, er is geen advertentie"
+        shouldShow: ({ values: { reason } }: { values: { reason: any } }) => reason.name === "Melding",
+        field: {
+          type: "RadioFields",
+          props: {
+            isRequired: true,
+            name: "advertisement",
+            label: "Is er een advertentie bekend?",
+            options: {
+              yes: "Ja, er is een advertentie",
+              no: "Nee, er is geen advertentie"
+            }
+          }
         }
       }
     },
@@ -141,7 +154,24 @@ export default (bagId: Components.Schemas.Address["bag_id"], themes?: Components
         }
       }
     },
-
+    projects: {
+      type: "ShowHide",
+      props: {
+        shouldShow: ({ values: { reason } }: { values: { reason: any } }) => reason.name === "Project",
+        field: {
+          type: "ComplexSelectField",
+          props: {
+            label: "Projectnaam",
+            name: "projects",
+            options: projects,
+            optionLabelField: "name",
+            withEmptyOption: true,
+            emptyOptionLabel: "Maak een keuze",
+            isRequired: true
+          }
+        }
+      }
+    },
     description: {
       type: "TextAreaField",
       props: {
@@ -178,6 +208,7 @@ export default (bagId: Components.Schemas.Address["bag_id"], themes?: Components
       ["description_citizenreport", "description_citizenreport"],
       ["advertisement", "advertisement"],
       ["advertisement_linklist", "advertisement_linklist"],
+      ["projects"],
       ["description", "description"],
       ["cancel", "submit"]
     ])
