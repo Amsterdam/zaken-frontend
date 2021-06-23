@@ -133,6 +133,7 @@ export default (bagId: Components.Schemas.Address["bag_id"], themes?: Components
                 props: {
                   placeholder: "Link naar de advertentie",
                   name: "advertisement_link",
+                  hint: "Vul hier de volledige url in, inclusief http(s)://",
                   isRequired: true
                 }
               }

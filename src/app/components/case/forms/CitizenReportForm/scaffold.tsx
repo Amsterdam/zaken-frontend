@@ -93,6 +93,7 @@ export default (caseId: Components.Schemas.Case["id"]) => {
                 props: {
                   placeholder: "Link naar de advertentie",
                   name: "advertisement_link",
+                  hint: "Vul hier de volledige url in, inclusief http(s)://",
                   isRequired: true
                 }
               }
