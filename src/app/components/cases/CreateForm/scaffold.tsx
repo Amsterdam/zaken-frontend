@@ -109,21 +109,33 @@ export default (bagId: Components.Schemas.Address["bag_id"], themes?: Components
         }
       }
     },
-    advertisement: {
+    project: {
       type: "ShowHide",
       props: {
-        shouldShow: ({ values: { reason } }: { values: { reason: any } }) => reason.name === "Melding",
+        shouldShow: ({ values: { reason } }: { values: { reason: any } }) => reason.name === "Project",
         field: {
-          type: "RadioFields",
+          type: "ComplexSelectField",
           props: {
-            isRequired: true,
-            name: "advertisement",
-            label: "Is er een advertentie bekend?",
-            options: {
-              yes: "Ja, er is een advertentie",
-              no: "Nee, er is geen advertentie"
-            }
+            label: "Projectnaam",
+            name: "project",
+            options: projects,
+            optionLabelField: "name",
+            withEmptyOption: true,
+            emptyOptionLabel: "Maak een keuze",
+            isRequired: true
           }
+        }
+      }
+    },
+    advertisement: {
+      type: "RadioFields",
+      props: {
+        isRequired: true,
+        name: "advertisement",
+        label: "Is er een advertentie bekend?",
+        options: {
+          yes: "Ja, er is een advertentie",
+          no: "Nee, er is geen advertentie"
         }
       }
     },
@@ -150,24 +162,6 @@ export default (bagId: Components.Schemas.Address["bag_id"], themes?: Components
                 }
               }
             }
-          }
-        }
-      }
-    },
-    projects: {
-      type: "ShowHide",
-      props: {
-        shouldShow: ({ values: { reason } }: { values: { reason: any } }) => reason.name === "Project",
-        field: {
-          type: "ComplexSelectField",
-          props: {
-            label: "Projectnaam",
-            name: "projects",
-            options: projects,
-            optionLabelField: "name",
-            withEmptyOption: true,
-            emptyOptionLabel: "Maak een keuze",
-            isRequired: true
           }
         }
       }
@@ -206,9 +200,9 @@ export default (bagId: Components.Schemas.Address["bag_id"], themes?: Components
       ["reporter_phone"],
       ["identification"],
       ["description_citizenreport", "description_citizenreport"],
+      ["project"],
       ["advertisement", "advertisement"],
       ["advertisement_linklist", "advertisement_linklist"],
-      ["projects"],
       ["description", "description"],
       ["cancel", "submit"]
     ])
