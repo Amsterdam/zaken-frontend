@@ -24,12 +24,12 @@ const mapData = (bagId: Components.Schemas.Address["bag_id"]) =>
 const CreateForm: React.FC<Props> = ({ bagId }) => {
 
   const [caseThemes] = useCaseThemes()
-  const [theme, setTheme] = useState<Components.Schemas.CaseTheme["id"]>()
-  useEffect(() => setTheme(caseThemes?.results?.[0].id), [caseThemes, setTheme])
-  const [reasons] = useReasons(theme)
+  const [themeId, setThemeId] = useState<Components.Schemas.CaseTheme["id"]>()
+  useEffect(() => setThemeId(caseThemes?.results?.[0].id), [caseThemes, setThemeId])
+  const [reasons] = useReasons(themeId)
   const [, { execPost }] = useCaseCreate()
 
-  const fields = useScaffoldedFields(scaffold, bagId, setTheme, caseThemes?.results, reasons?.results)
+  const fields = useScaffoldedFields(scaffold, bagId, setThemeId, caseThemes?.results, reasons?.results)
 
   const navigateWithFlashMessage = useNavigateWithFlashMessage()
   const afterSubmit = async (result: Components.Schemas.CaseCreateUpdate) =>
@@ -42,7 +42,7 @@ const CreateForm: React.FC<Props> = ({ bagId }) => {
     )
 
   const initialValues = {
-    theme: caseThemes?.results?.find(result => result.id === theme),
+    theme: caseThemes?.results?.find(({ id }) => id === themeId),
     reason: reasons?.results?.[0]
   }
 
