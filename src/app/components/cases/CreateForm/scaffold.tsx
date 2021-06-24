@@ -3,9 +3,14 @@ import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import navigateTo from "app/routing/navigateTo"
 
-export default (bagId: Components.Schemas.Address["bag_id"], themes?: Components.Schemas.CaseTheme[], reasons?: Components.Schemas.CaseReason[], projects?: MockComponents.Schemas.CaseProject[]) => {
-  console.log("themes", themes)
-  console.log("reasons", reasons)
+export default (
+  bagId: Components.Schemas.Address["bag_id"],
+  setTheme: (id?: Components.Schemas.CaseTheme["id"]) => void,
+  themes?: Components.Schemas.CaseTheme[],
+  reasons?: Components.Schemas.CaseReason[],
+  projects?: MockComponents.Schemas.CaseProject[]
+  ) => {
+
   const fields = {
     theme: {
       type: "ComplexRadioFields",
@@ -14,7 +19,8 @@ export default (bagId: Components.Schemas.Address["bag_id"], themes?: Components
         name: "theme",
         options: themes,
         optionLabelField: "name",
-        isRequired: true
+        isRequired: true,
+        onChange: (index: string) => setTheme(themes?.[parseInt(index, 10)]?.id)
       }
     },
     reason: {
@@ -31,7 +37,7 @@ export default (bagId: Components.Schemas.Address["bag_id"], themes?: Components
     reporter_anonymous: {
       type: "ShowHide",
       props: {
-        shouldShow: ({ values: { reason } }: { values: { reason: any } }) => reason.name === "Melding",
+        shouldShow: ({ values: { reason } }: { values: { reason?: Components.Schemas.CaseReason } }) => reason?.name === "Melding",
         field: {
           type: "RadioFields",
           props: {
@@ -79,7 +85,7 @@ export default (bagId: Components.Schemas.Address["bag_id"], themes?: Components
     identification: {
       type: "ShowHide",
       props: {
-        shouldShow: ({ values: { reason } }: { values: { reason: any } }) => reason.name === "Melding",
+        shouldShow: ({ values: { reason } }: { values: { reason?: Components.Schemas.CaseReason } }) => reason?.name === "Melding",
         field: {
           type: "NumberField",
           props: {
@@ -158,6 +164,7 @@ export default (bagId: Components.Schemas.Address["bag_id"], themes?: Components
                 props: {
                   placeholder: "Link naar de advertentie",
                   name: "advertisement_link",
+                  hint: "Vul hier de volledige url in, inclusief http(s)://",
                   isRequired: true
                 }
               }
