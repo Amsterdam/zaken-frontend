@@ -5,7 +5,7 @@ import navigateTo from "app/routing/navigateTo"
 
 export default (
   bagId: Components.Schemas.Address["bag_id"],
-  setTheme: (id: number | undefined) => void,
+  setTheme: (id?: Components.Schemas.CaseTheme["id"]) => void,
   themes?: Components.Schemas.CaseTheme[],
   reasons?: Components.Schemas.CaseReason[]
   ) => {

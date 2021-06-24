@@ -24,7 +24,7 @@ const mapData = (bagId: Components.Schemas.Address["bag_id"]) =>
 const CreateForm: React.FC<Props> = ({ bagId }) => {
 
   const [caseThemes] = useCaseThemes()
-  const [theme, setTheme] = useState(caseThemes?.results?.[0].id)
+  const [theme, setTheme] = useState<Components.Schemas.CaseTheme["id"]>()
   useEffect(() => setTheme(caseThemes?.results?.[0].id), [caseThemes, setTheme])
   const [reasons] = useReasons(theme)
   const [, { execPost }] = useCaseCreate()
