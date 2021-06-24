@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import scaffold from "./scaffold"
 import { useCaseThemes, useReasons, useCaseCreate } from "app/state/rest"
 import ConfirmScaffoldForm from "app/components/shared/ConfirmScaffoldForm/ConfirmScaffoldForm"
@@ -25,10 +25,11 @@ const CreateForm: React.FC<Props> = ({ bagId }) => {
 
   const [caseThemes] = useCaseThemes()
   const [theme, setTheme] = useState(caseThemes?.results?.[0].id)
+  useEffect(() => setTheme(caseThemes?.results?.[0].id), [caseThemes, setTheme])
   const [reasons] = useReasons(theme)
   const [, { execPost }] = useCaseCreate()
 
-  const fields = useScaffoldedFields(scaffold, bagId, setTheme, caseThemes?.results, reasons?.results ?? [])
+  const fields = useScaffoldedFields(scaffold, bagId, setTheme, caseThemes?.results, reasons?.results)
 
   const navigateWithFlashMessage = useNavigateWithFlashMessage()
   const afterSubmit = async (result: Components.Schemas.CaseCreateUpdate) =>
@@ -41,7 +42,7 @@ const CreateForm: React.FC<Props> = ({ bagId }) => {
     )
 
   const initialValues = {
-    theme: caseThemes?.results?.[0],
+    theme: caseThemes?.results?.find(result => result.id === theme),
     reason: reasons?.results?.[0]
   }
 
