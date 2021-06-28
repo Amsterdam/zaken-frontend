@@ -1,4 +1,4 @@
-import { FormPositioner } from "@amsterdam/scaffold-form/package"
+import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 
 const scaffold = (onCancel: () => void, minDate: string) => {
