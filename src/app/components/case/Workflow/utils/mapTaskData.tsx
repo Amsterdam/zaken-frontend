@@ -10,6 +10,7 @@ import TableAction from "app/components/shared/Table/components/TableAction/Tabl
 
 // This width value (113px) is the width of a date + edit icon including the spacing between them
 const Span = styled.span`
+  display: inline-block;
   min-width: 113px;
 `
 
