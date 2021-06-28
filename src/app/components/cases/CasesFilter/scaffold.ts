@@ -1,6 +1,6 @@
 import { displayDate } from "@amsterdam/wonen-ui"
 
-import { FormPositioner } from "@amsterdam/scaffold-form/package"
+import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 
 export const getDate = (backwards = 0) => {

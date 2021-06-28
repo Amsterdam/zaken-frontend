@@ -1,4 +1,4 @@
-import { FormPositioner } from "@amsterdam/scaffold-form"
+import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import { Field } from "app/components/shared/Form/ScaffoldField"
 
