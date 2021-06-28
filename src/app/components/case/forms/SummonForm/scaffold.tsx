@@ -27,7 +27,8 @@ export default (caseId: Components.Schemas.Case["id"], summonTypes?: Components.
           props: {
             isRequired: true,
             label: "Aantal gesloten logiesverblijven",
-            name: "type_result.number_of_accommodations"
+            name: "type_result.number_of_accommodations",
+            min: 0
           }
         }
       }
