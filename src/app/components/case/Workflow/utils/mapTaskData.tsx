@@ -1,3 +1,4 @@
+import styled from "styled-components"
 import to from "app/routing/utils/to"
 import ChangeableDueDate from "app/components/case/tasks/ChangeDueDate/ChangebleDueDate"
 import CompleteTaskButton from "app/components/case/tasks/CompleteTask/CompleteTaskButton"
@@ -6,6 +7,11 @@ import taskActionMap from "./taskActionMap"
 import LockIcon from "../components/LockIcon"
 import List from "../components/List"
 import TableAction from "app/components/shared/Table/components/TableAction/TableAction"
+
+// This width value (113px) is the width of a date + edit icon including the spacing between them
+const Span = styled.span`
+  min-width: 113px;
+`
 
 export default (
     id: Components.Schemas.Case["id"],
@@ -25,7 +31,7 @@ export default (
         roles ? <List items={ roles } /> : "-",
         due_date ?
           <ChangeableDueDate dueDate={ due_date } caseId={ id } camundaTaskId={ camunda_task_id } /> :
-          "-",
+          <Span>-</Span>,
         action !== undefined ?
           action.disabled ?
             <TableAction
