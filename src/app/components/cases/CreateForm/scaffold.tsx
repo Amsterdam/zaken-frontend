@@ -71,7 +71,7 @@ export default (bagId: Components.Schemas.Address["bag_id"], themes?: Components
             name: "reporter_phone",
             hint: "Vul hier alleen cijfers in",
             isRequired: false,
-            validate: (value: string) => (value === undefined || /^[0-9]{10}$/.test(value.trim())) ? false : "Vul hier enkel 10 cijfers in"
+            validate: (value: string | undefined) => (value === undefined || /^[0-9]{10}$/.test(value.trim())) ? false : "Vul hier enkel 10 cijfers in"
           }
         }
       }
