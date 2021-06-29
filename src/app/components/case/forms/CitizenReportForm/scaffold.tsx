@@ -41,10 +41,11 @@ export default (caseId: Components.Schemas.Case["id"]) => {
           type: "TelField",
           props: {
             label: "Telefoonnummer melder",
+            extraLabel: "(indien bekend)",
             name: "reporter_phone",
             hint: "Vul hier alleen cijfers in",
-            isRequired: true,
-            validate: (value: string) => (value === undefined || /^[0-9]{10}$/.test(value.trim())) ? false : "Vul hier enkel 10 cijfers in"
+            isRequired: false,
+            validate: (value: string | undefined) => (value === undefined || /^[0-9]{10}$/.test(value.trim())) ? false : "Vul hier enkel 10 cijfers in"
           }
         }
       }
