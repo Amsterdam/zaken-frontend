@@ -10,16 +10,15 @@ const onClick = (id: Components.Schemas.Case["id"]) => (event: React.MouseEvent)
 }
 
 export default (cases?: Components.Schemas.Case[]) =>
-  cases?.map(({ id, address, current_states }) => {
-
+  cases?.map(({ id, address, current_states, end_date }) => {
     const startDate = first(current_states.map(({ start_date }) => start_date).sort(sortByDate("DESC")))
-
+    
     return {
       onClick: onClick(id),
       itemList: [
         address.full_address ?? "-",
-        current_states.length > 0 ? current_states.map(({ status_name }) => status_name).join(", ") : "-",
-        startDate !== undefined ? <DateDisplay date={ startDate } /> : "-",
+        current_states.length > 0 ? current_states.map(({ status_name }) => status_name).join(", ") : typeof end_date === "string" ? "Afgerond" : "-",
+        typeof end_date === "string" ? <DateDisplay date={ end_date } /> : startDate !== undefined ? <DateDisplay date={ startDate } />  : "-",
         <TableAction to={ to("/zaken/:id", { id }) }>Zaakdetails</TableAction>
       ]
     }
