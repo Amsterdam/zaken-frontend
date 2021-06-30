@@ -8,7 +8,7 @@ export default (
   setTheme: (id?: Components.Schemas.CaseTheme["id"]) => void,
   themes?: Components.Schemas.CaseTheme[],
   reasons?: Components.Schemas.CaseReason[],
-  projects?: MockComponents.Schemas.CaseProject[]
+  projects?: Components.Schemas.CaseProject[]
   ) => {
 
   const fields = {

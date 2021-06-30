@@ -11,7 +11,7 @@ type Props = {
 
 type FormData =
   Pick<CaseCreate, "address" | "description"> &
-  { theme: Components.Schemas.CaseTheme, reason: Components.Schemas.CaseReason, project: MockComponents.Schemas.CaseProject }
+  { theme: Components.Schemas.CaseTheme, reason: Components.Schemas.CaseReason, project: Components.Schemas.CaseProject }
 
 const mapData = (bagId: Components.Schemas.Address["bag_id"]) =>
   (data: FormData): CaseCreate => ({
