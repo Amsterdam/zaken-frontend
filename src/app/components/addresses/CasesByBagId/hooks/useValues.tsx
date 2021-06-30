@@ -14,7 +14,7 @@ export default (cases?: Components.Schemas.Case[]) =>
     itemList: [
       <CaseIdDisplay id={ id } />,
       theme.name,
-      start_date ? <DateDisplay date={ start_date } /> : "-",
+      <DateDisplay date={ start_date ?? undefined } emptyText="-" />,
       current_states.length > 0 ? current_states.map(({ status_name }) => status_name).join(", ") : "-",
       <TableAction to={ to("/zaken/:id", { id }) }>Zaakdetails</TableAction>
     ]

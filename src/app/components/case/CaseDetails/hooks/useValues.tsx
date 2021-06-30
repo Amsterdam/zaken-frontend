@@ -9,7 +9,7 @@ export default (caseItem?: Components.Schemas.Case) => {
   const values = [
     ["Zaak ID", <CaseIdDisplay id={ id } />],
     ["Thema", name],
-    ["Startdatum", start_date ? <DateDisplay date={ start_date } /> : "-"]
+    ["Startdatum", <DateDisplay date={ start_date ?? undefined } emptyText="-" />]
   ]
 
   return Object.fromEntries(values)

@@ -7,7 +7,7 @@ export default (fine: Components.Schemas.Fine) => {
   const values = [
     ["Kenmerk", identificatienummer],
     ["Status", invorderingstatus !== undefined ? "Opgepakt" : "Onbekend"],
-    ["Datum", dagtekening ? <DateDisplay date={ fine.dagtekening } /> : "-"]
+    ["Datum", <DateDisplay date={ dagtekening } emptyText="-" />]
   ]
 
   return Object.fromEntries(values)
