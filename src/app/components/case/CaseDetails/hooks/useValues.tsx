@@ -4,13 +4,15 @@ export default (caseItem?: Components.Schemas.Case) => {
 
   if (caseItem === undefined) return
 
-  const { id, theme: { name }, start_date } = caseItem
+  const { id, theme: { name }, start_date, reason, project } = caseItem
 
   const values = [
     ["Zaak ID", <CaseIdDisplay id={ id } />],
     ["Thema", name],
-    ["Startdatum", <DateDisplay date={ start_date ?? undefined } emptyText="-" />]
+    ["Startdatum", <DateDisplay date={ start_date ?? undefined } emptyText="-" />],
+    ["Aanleiding", reason.name]
   ]
+  project?.name && values.push(["Project", project.name])
 
   return Object.fromEntries(values)
 }
