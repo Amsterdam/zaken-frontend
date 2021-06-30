@@ -25,7 +25,7 @@ const columns = [
   { minWidth: 50 },
   { header: "Actuele taken", minWidth: 420 },
   { header: "Uitvoerder", minWidth: 240 },
-  { header: "Slotdatum" },
+  { header: "Slotdatum", minWidth: 120 },
   { header: "Verwerking taak", minWidth: 280 }
 ]
 

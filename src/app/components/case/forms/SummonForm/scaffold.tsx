@@ -1,4 +1,4 @@
-import { FormPositioner } from "@amsterdam/scaffold-form/package"
+import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import navigateTo from "app/routing/navigateTo"
@@ -27,7 +27,8 @@ export default (caseId: Components.Schemas.Case["id"], summonTypes?: Components.
           props: {
             isRequired: true,
             label: "Aantal gesloten logiesverblijven",
-            name: "type_result.number_of_accommodations"
+            name: "type_result.number_of_accommodations",
+            min: 0
           }
         }
       }

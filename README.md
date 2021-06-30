@@ -21,6 +21,8 @@
 ### Required access to services for development
 - ADW account (@amsterdam.nl)
 - GitHub repository (https://github.com/Amsterdam/zaken-frontend) OIS Basis
+- GitHub repository dependency (https://github.com/Amsterdam/wonen-ui) OIS Basis
+- GitHub repository dependency (https://github.com/Amsterdam/amsterdam-react-final-form) OIS Basis
 - Jenkins (https://ci.secure.amsterdam.nl/job/fixxx/job/zaken-frontend/) (over VPN) OIS Basis
 - Sentry (https://sentry.data.amsterdam.nl/sentry/zaken-frontend/) OIS Basis
 - NPM (https://www.npmjs.com/settings/amsterdam/packages) OIS Slack #frontend-amsterdam

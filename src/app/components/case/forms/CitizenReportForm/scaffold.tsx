@@ -1,4 +1,4 @@
-import { FormPositioner } from "@amsterdam/scaffold-form/package"
+import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import navigateTo from "app/routing/navigateTo"
@@ -41,10 +41,11 @@ export default (caseId: Components.Schemas.Case["id"]) => {
           type: "TelField",
           props: {
             label: "Telefoonnummer melder",
+            extraLabel: "(indien bekend)",
             name: "reporter_phone",
             hint: "Vul hier alleen cijfers in",
-            isRequired: true,
-            validate: (value: string) => /^\d{10}$/.test(value) ? false : "Vul hier enkel 10 cijfers in"
+            isRequired: false,
+            validate: (value: string | undefined) => (value === undefined || /^[0-9]{10}$/.test(value.trim())) ? false : "Vul hier enkel 10 cijfers in"
           }
         }
       }
