@@ -29,7 +29,7 @@ export default () => {
           case 401: keycloak.logout(); break
           case 403: navigateTo("/auth"); break
         }
-        throw error
+        if (error !== undefined) throw error
       }
     },
     [keycloak, request]
