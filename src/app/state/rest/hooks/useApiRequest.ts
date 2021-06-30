@@ -58,7 +58,7 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
       const response = await request<Schema>(options.method, url, payload)
 
       if (isGetOptions(options) || (isMutateOptions(options) && options.useResponseAsCache)) {
-        setCacheItem(url, response.data)
+        setCacheItem(url, response?.data)
       }
 
       return response
