@@ -1,6 +1,7 @@
 
 import { RouteComponentProps } from "@reach/router"
 import { Divider, Heading } from "@amsterdam/asc-ui"
+import { isDate } from "@amsterdam/wonen-ui"
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
 import Row, { RowWithColumn } from "app/components/layouts/Grid/Row"
 import PageHeading from "app/components/shared/PageHeading/PageHeading"
@@ -25,7 +26,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
   const showSpinner = isBusy
   const showCase = exists
   const showNotFound = has404
-  const isClosed = typeof caseItem?.end_date === "string"
+  const isClosed = isDate(caseItem?.end_date)
 
   return (
     <>
