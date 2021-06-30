@@ -26,18 +26,15 @@ export const useReasons = (themeId?: Components.Schemas.CaseTheme["id"], options
   })
 }
 
-// TODO-MOCKED replace with real endpoint
 export const useProjects = (themeId?: Components.Schemas.CaseTheme["id"], options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<MockComponents.Schemas.PaginatedCaseProjectList>({
+  return useApiRequest<Components.Schemas.PaginatedCaseProjectList>({
     lazy: themeId === undefined,
     ...options,
-    // url: makeApiUrl("themes", themeId, "reasons"),
-    url: "caseprojects",
+    url: makeApiUrl("themes", themeId, "case-projects"),
     groupName: "themes",
     handleError,
-    isProtected: true,
-    isMocked: true
+    isProtected: true
   })
 }
 

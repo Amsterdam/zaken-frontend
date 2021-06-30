@@ -1,21 +1,3 @@
-const caseprojects: MockComponents.Schemas.PaginatedCaseProjectList = {
-  count: 1,
-  next: null,
-  previous: null,
-  results: [
-    {
-      id: 1,
-      name: "Project 1",
-      theme: 58
-    },
-    {
-      id: 2,
-      name: "Project 2",
-      theme: 58
-    }
-  ]
-}
-
 const correspondence: MockComponents.Schemas.Correspondence[] = [
   {
     id: 1,
@@ -39,7 +21,6 @@ const roles: MockComponents.Schemas.Role[] = [
 ]
 
 export default {
-  caseprojects,
   correspondence,
   roles
 }

@@ -11,14 +11,15 @@ type Props = {
 
 type FormData =
   Pick<CaseCreate, "address" | "description"> &
-  { theme: Components.Schemas.CaseTheme, reason: Components.Schemas.CaseReason }
+  { theme: Components.Schemas.CaseTheme, reason: Components.Schemas.CaseReason, project: MockComponents.Schemas.CaseProject }
 
 const mapData = (bagId: Components.Schemas.Address["bag_id"]) =>
   (data: FormData): CaseCreate => ({
     ...data,
     address: { bag_id: bagId },
     theme: data.theme.id,
-    reason: data.reason.id
+    reason: data.reason.id,
+    project: data.project.id
   })
 
 const CreateForm: React.FC<Props> = ({ bagId }) => {
