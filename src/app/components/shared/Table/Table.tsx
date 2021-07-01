@@ -1,7 +1,7 @@
 import { breakpoint, themeColor } from "@amsterdam/asc-ui"
 import styled, { css } from "styled-components"
+import { SmallSkeleton } from "@amsterdam/wonen-ui"
 
-import SmallSkeleton from "app/components/shared/Skeleton/SmallSkeleton"
 import TableCell from "./components/TableCell/TableCell"
 import TableHeading from "./components/TableHeading/TableHeading"
 import FixedTableCell, { widthMobile as fixedColumnWidthMobile } from "./components/TableCell/FixedTableCell"

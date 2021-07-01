@@ -1,8 +1,8 @@
 import { ReactNode, useCallback, useState } from "react"
 import { Button, Heading, themeColor, themeSpacing } from "@amsterdam/asc-ui"
+import { SmallSkeleton } from "@amsterdam/wonen-ui"
 import styled from "styled-components"
 
-import SmallSkeleton from "app/components/shared/Skeleton/SmallSkeleton"
 
 type Value = ReactNode
 type Props = {
