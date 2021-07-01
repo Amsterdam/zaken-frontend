@@ -19,7 +19,7 @@ const mapData = (bagId: Components.Schemas.Address["bag_id"]) =>
     address: { bag_id: bagId },
     theme: data.theme.id,
     reason: data.reason.id,
-    project: data.project.id
+    project: data.project?.id
   })
 
 const CreateForm: React.FC<Props> = ({ bagId }) => {
