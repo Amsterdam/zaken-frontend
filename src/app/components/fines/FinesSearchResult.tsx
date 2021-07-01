@@ -1,5 +1,5 @@
 import useValues from "./hooks/useValues"
-import DefinitionList from "app/components/shared/DefinitionList/DefinitionList"
+import { DefinitionList } from "@amsterdam/wonen-ui"
 
 type Props = {
   fine: Components.Schemas.Fine
@@ -11,7 +11,7 @@ const FinesSearchResult: React.FC<Props> = ({ fine }) => {
 
   return (
     <DefinitionList
-      numInitialVisibleRows={ 3 }
+      numLoadingRows={ 3 }
       values={ values }
     />
   )

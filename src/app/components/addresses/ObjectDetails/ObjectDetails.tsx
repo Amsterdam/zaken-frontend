@@ -1,5 +1,5 @@
 import { useBAG, useBAGLodging } from "app/state/rest"
-import DefinitionList from "app/components/shared/DefinitionList/DefinitionList"
+import { DefinitionList } from "@amsterdam/wonen-ui"
 import useValues from "./hooks/useValues"
 
 type Props = {
@@ -17,7 +17,6 @@ const ObjectDetails: React.FC<Props> = ({ bagId }) => {
 
   return <DefinitionList
     isLoading={ isBusy }
-    numInitialVisibleRows={ 4 }
     title="Objectdetails"
     values={ values }
   />

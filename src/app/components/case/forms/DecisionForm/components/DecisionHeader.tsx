@@ -1,7 +1,7 @@
 
 import { useSummonsWithCaseId } from "app/state/rest/case"
 import useValues from "../hooks/useValues"
-import DefinitionList from "app/components/shared/DefinitionList/DefinitionList"
+import { DefinitionList } from "@amsterdam/wonen-ui"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]

@@ -1,4 +1,3 @@
-
 import { Spinner, ErrorMessage } from "@amsterdam/asc-ui"
 import { EventsTimeline } from "@amsterdam/wonen-ui"
 import useGroupedCaseEvents from "./hooks/useGroupedCaseEvents"
