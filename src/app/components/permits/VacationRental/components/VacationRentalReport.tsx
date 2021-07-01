@@ -1,6 +1,6 @@
 import useNumberOfDaysBetweenDates from "./hooks/useNumberOfDaysBetweenDates"
 import useVacationRentalReportValues from "./hooks/useVacationRentalReportValues"
-import DefinitionList from "app/components/shared/DefinitionList/DefinitionList"
+import { DefinitionList } from "@amsterdam/wonen-ui"
 
 type Props = {
   checkInDate: string

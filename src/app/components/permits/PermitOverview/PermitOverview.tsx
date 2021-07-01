@@ -4,7 +4,7 @@ import { Link } from "@reach/router"
 import to from "app/routing/utils/to"
 import { usePermitDetails } from "app/state/rest"
 import usePermitValues from "./hooks/usePermitValues"
-import DefinitionList from "app/components/shared/DefinitionList/DefinitionList"
+import { DefinitionList } from "@amsterdam/wonen-ui"
 import styled from "styled-components"
 
 type Props = {

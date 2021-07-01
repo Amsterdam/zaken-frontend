@@ -2,7 +2,7 @@ import styled from "styled-components"
 import { themeSpacing, Icon } from "@amsterdam/asc-ui"
 import { Check, Close } from "app/components/shared/Icons"
 import useValues from "./hooks/useValues"
-import DefinitionList from "app/components/shared/DefinitionList/DefinitionList"
+import { DefinitionList } from "@amsterdam/wonen-ui"
 
 type Props = {
   permit: Components.Schemas.Permit

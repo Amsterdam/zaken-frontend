@@ -1,6 +1,6 @@
 import type KeycloakTokenParsedExtended from "app/state/auth/keycloak/KeycloakTokenParsedExtended"
 import useKeycloak from "app/state/auth/keycloak/useKeycloak"
-import DefinitionList from "app/components/shared/DefinitionList/DefinitionList"
+import { DefinitionList } from "@amsterdam/wonen-ui"
 import useValues from "./hooks/useValues"
 
 const KeycloakValues: React.FC = () => {
