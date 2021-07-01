@@ -21,7 +21,7 @@ export default (caseId: Components.Schemas.Case["id"], summonTypes?: Components.
     number_of_accommodations: {
       type: "ShowHide",
       props: {
-        shouldShow: ({ values: { type } }: { values: { type: Components.Schemas.SummonType } }) => type?.id === 14,
+        shouldShow: ({ values: { type } }: { values: { type: Components.Schemas.SummonType } }) => type?.camunda_option === "sluiting",
         field: {
           type: "NumberField",
           props: {
