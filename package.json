@@ -6,7 +6,7 @@
     "@amsterdam/amsterdam-react-final-form": "^0.1.126",
     "@amsterdam/asc-assets": "^0.30.0",
     "@amsterdam/asc-ui": "^0.30.0",
-    "@amsterdam/wonen-ui": "^0.0.51",
+    "@amsterdam/wonen-ui": "^0.0.52",
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
     "@reach/router": "^1.3.4",
