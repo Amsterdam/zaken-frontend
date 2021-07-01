@@ -12,7 +12,7 @@ export default (caseItem?: Components.Schemas.Case) => {
     ["Startdatum", <DateDisplay date={ start_date ?? undefined } emptyText="-" />],
     ["Aanleiding", reason.name],
     project?.name !== undefined ? ["Project", project.name] : undefined
-  ].filter((value): value is [string, JSX.Element] => value !== undefined)
+  ].filter((value): value is [string, React.ReactElement] => value !== undefined)
 
   return Object.fromEntries(values)
 }
