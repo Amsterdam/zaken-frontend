@@ -128,6 +128,7 @@ declare namespace Components {
         }
         export interface CaseClose {
             id: number;
+            camunda_task_id?: string;
             description: string;
             date_added: string; // date-time
             case: number;
@@ -216,7 +217,7 @@ declare namespace Components {
         export interface Decision {
             id: number;
             camunda_task_id?: string;
-            sanction_amount?: string | null; // decimal
+            sanction_amount?: string | null; // decimal ^\d{0,98}(\.\d{0,2})?$
             description?: string | null;
             date_added: string; // date-time
             sanction_id: string;
@@ -264,10 +265,10 @@ declare namespace Components {
             landcode: string | null;
             kenteken: string | null;
             bonnummer: string | null;
-            bedrag_opgelegd: string; // decimal
-            bedrag_open_post_incl_rente: string; // decimal
-            totaalbedrag_open_kosten: string; // decimal
-            bedrag_open_rente: string; // decimal
+            bedrag_opgelegd: string; // decimal ^\d{0,10}(\.\d{0,2})?$
+            bedrag_open_post_incl_rente: string; // decimal ^\d{0,10}(\.\d{0,2})?$
+            totaalbedrag_open_kosten: string; // decimal ^\d{0,10}(\.\d{0,2})?$
+            bedrag_open_rente: string; // decimal ^\d{0,10}(\.\d{0,2})?$
             reden_opschorting: string | null;
             omschrijving_1: string | null;
             omschrijving_2: string | null;
@@ -702,12 +703,16 @@ declare namespace Components {
             case: number;
             persons: SummonedPerson[];
             camunda_task_id?: string;
+            type_result?: {
+                [name: string]: any;
+            } | null;
             date_added: string; // date-time
             description?: string | null;
         }
         export interface SummonType {
             id: number;
             name: string;
+            camunda_option?: string;
         }
         export interface SummonedPerson {
             id: number;
