@@ -65,6 +65,14 @@ export default (caseId: Components.Schemas.Case["id"], summonTypes?: Components.
               name: "last_name",
               isRequired: true
             }
+          },
+          person_role: {
+            type: "TextField",
+            props: {
+              placeholder: "Rol",
+              name: "person_role",
+              isRequired: true
+            }
           }
         }
       }
