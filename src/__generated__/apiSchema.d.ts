@@ -16,6 +16,7 @@ declare namespace Components {
             lat: number; // float
             lng: number; // float
         }
+        export type BlankEnum = "";
         /**
          * Case-address serializer for camunda tasks
          */
@@ -280,6 +281,7 @@ declare namespace Components {
         export type IndicatieBetHernBevelEnum = "J" | "N";
         export type IndicatieCombiDwangbevelEnum = "J" | "N" | "O";
         export type IndicatiePubliekrechtelijkEnum = "J" | "N";
+        export type NullEnum = null;
         export interface OIDCAuthenticate {
             code: string;
         }
@@ -636,6 +638,7 @@ declare namespace Components {
             } | null;
         }
         export type PermitGrantedEnum = "GRANTED" | "NOT_GRANTED" | "UNKNOWN";
+        export type PersonRoleEnum = "PERSON_ROLE_OWNER" | "PERSON_ROLE_RESIDENT" | "PERSON_ROLE_MIDDLEMAN";
         export interface Priority {
             id: number;
             name: string;
@@ -719,6 +722,7 @@ declare namespace Components {
             first_name: string;
             preposition?: string | null;
             last_name: string;
+            person_role?: PersonRoleEnum | BlankEnum | NullEnum;
             summon: number;
         }
         export interface SupportContact {

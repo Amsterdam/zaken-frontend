@@ -67,11 +67,18 @@ export default (caseId: Components.Schemas.Case["id"], summonTypes?: Components.
             }
           },
           person_role: {
-            type: "TextField",
+            type: "SelectField",
             props: {
-              placeholder: "Rol",
+              options: {
+                PERSON_ROLE_RESIDENT: "Bewoner",
+                PERSON_ROLE_OWNER: "Eigenaar",
+                PERSON_ROLE_MIDDLEMAN: "Verhuurder"
+              },
               name: "person_role",
-              isRequired: true
+              optionLabelField: "name",
+              isRequired: true,
+              withEmptyOption: true,
+              emptyOptionLabel: "Rol"
             }
           }
         }
