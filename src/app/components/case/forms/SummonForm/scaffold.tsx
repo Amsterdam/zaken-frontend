@@ -67,15 +67,15 @@ export default (caseId: Components.Schemas.Case["id"], summonTypes?: Components.
             }
           },
           person_role: {
-            type: "SelectField",
+            type: "ComplexSelectField",
             props: {
-              options: {
-                PERSON_ROLE_RESIDENT: "Bewoner",
-                PERSON_ROLE_OWNER: "Eigenaar",
-                PERSON_ROLE_MIDDLEMAN: "Verhuurder"
-              },
+              options: [
+                { key: "PERSON_ROLE_RESIDENT", label: "Bewoner" },
+                { key: "PERSON_ROLE_OWNER", label: "Eigenaar" },
+                { key: "PERSON_ROLE_MIDDLEMAN", label: "Verhuurder" }
+              ],
               name: "person_role",
-              optionLabelField: "name",
+              optionLabelField: "label",
               isRequired: true,
               withEmptyOption: true,
               emptyOptionLabel: "Rol"
