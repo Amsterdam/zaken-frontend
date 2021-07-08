@@ -1,4 +1,4 @@
-import DefinitionList from "app/components/shared/DefinitionList/DefinitionList"
+import { DefinitionList } from "@amsterdam/wonen-ui"
 import { useCase } from "app/state/rest"
 import useValues from "./hooks/useValues"
 

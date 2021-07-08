@@ -5,7 +5,7 @@ import { Heading, Button } from "@amsterdam/asc-ui"
 import Modal, { ModalBlock } from "app/components/shared/Modal/Modal"
 import { Field } from "../Form/ScaffoldField"
 import createValuesObject from "./utils/createValuesObject"
-import DefinitionList from "app/components/shared/DefinitionList/DefinitionList"
+import { DefinitionList } from "@amsterdam/wonen-ui"
 import SpinnerWrap from "./components/SpinnerWrap"
 
 export type RequestBody = Record<string, unknown>

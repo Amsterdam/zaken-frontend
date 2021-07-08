@@ -1,8 +1,8 @@
 import { mount } from "enzyme"
+import { SmallSkeleton } from "@amsterdam/wonen-ui"
 
 import TableCell from "./components/TableCell/TableCell"
 import Table from "./Table"
-import SmallSkeleton from "app/components/shared/Skeleton/SmallSkeleton"
 import FixedTableCell from "./components/TableCell/FixedTableCell"
 
 describe("Table", () => {

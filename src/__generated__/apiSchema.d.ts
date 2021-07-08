@@ -737,6 +737,7 @@ declare namespace Components {
         export interface SummonType {
             id: number;
             name: string;
+            camunda_option?: string;
         }
         export interface SummonedPerson {
             id: number;
