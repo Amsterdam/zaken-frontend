@@ -11,8 +11,18 @@ type Props = {
   camundaTaskId: Components.Schemas.CamundaTask["camunda_task_id"]
 }
 
+//TODO Schema from backend should be improved
 type SummonData = Omit<Components.Schemas.Summon, "type"> & { type: { id: number } }
-const mapData = (data: SummonData) => ({ ...data, type: data.type.id })
+const mapData = (data: SummonData) => {
+  
+  const persons = data.persons.map(person => { 
+    const p = person
+    p.person_role = (person.person_role as any).key
+    return p
+  })
+  return ({ ...data, type: data.type.id, persons })
+
+}
 
 const SummonForm: React.FC<Props> = ({ id, camundaTaskId }) => {
 
