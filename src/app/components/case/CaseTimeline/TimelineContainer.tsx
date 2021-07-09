@@ -1,6 +1,6 @@
 import { Spinner, ErrorMessage } from "@amsterdam/asc-ui"
 import { EventsTimeline } from "@amsterdam/wonen-ui"
-import useGroupedCaseEvents from "./hooks/useGroupedCaseEvents"
+import { useCaseEvents } from "app/state/rest"
 
 type Props = {
   caseId: Components.Schemas.CaseEvent["id"]
@@ -8,7 +8,7 @@ type Props = {
 
 const TimelineContainer: React.FC<Props> = ({ caseId }) => {
 
-  const [timelineEvents, { hasErrors }] = useGroupedCaseEvents(caseId)
+  const [timelineEvents, { hasErrors }] = useCaseEvents(caseId)
   const showEmpty = timelineEvents?.length === 0
 
   return (
@@ -18,7 +18,7 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
       <>
         { timelineEvents === undefined ?
           <Spinner /> :
-          <EventsTimeline items={ timelineEvents } spacingHorizontal={ 3 } />
+          <EventsTimeline events={ timelineEvents } spacingHorizontal={ 3 } />
         }
         </>
       }
