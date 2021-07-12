@@ -16,7 +16,6 @@ declare namespace Components {
             lat: number; // float
             lng: number; // float
         }
-        export type BlankEnum = "";
         /**
          * Case-address serializer for camunda tasks
          */
@@ -33,7 +32,7 @@ declare namespace Components {
         }
         export interface CamundaMessageForProcessInstance {
             message_name: string;
-            business_key: string;
+            camunda_process_id: string;
         }
         export interface CamundaMessager {
             message_name: string;
@@ -46,6 +45,7 @@ declare namespace Components {
             id: number;
             name: string;
             camunda_message_name: string;
+            to_directing_proccess?: boolean;
         }
         export interface CamundaStartProcess {
             camunda_process_id: number;
@@ -123,6 +123,7 @@ declare namespace Components {
             end_date?: string | null; // date
             is_legacy_bwv?: boolean;
             legacy_bwv_case_id?: string | null;
+            directing_process?: string | null;
             camunda_ids?: string[] | null;
             description?: string | null;
             author?: string | null; // uuid
@@ -157,6 +158,9 @@ declare namespace Components {
         export interface CaseEvent {
             id: number;
             event_values: {
+                [name: string]: any;
+            };
+            event_variables: {
                 [name: string]: any;
             };
             date_created: string; // date-time
@@ -281,7 +285,6 @@ declare namespace Components {
         export type IndicatieBetHernBevelEnum = "J" | "N";
         export type IndicatieCombiDwangbevelEnum = "J" | "N" | "O";
         export type IndicatiePubliekrechtelijkEnum = "J" | "N";
-        export type NullEnum = null;
         export interface OIDCAuthenticate {
             code: string;
         }
@@ -722,7 +725,7 @@ declare namespace Components {
             first_name: string;
             preposition?: string | null;
             last_name: string;
-            person_role?: PersonRoleEnum | BlankEnum | NullEnum;
+            person_role?: PersonRoleEnum;
             summon: number;
         }
         export interface SupportContact {

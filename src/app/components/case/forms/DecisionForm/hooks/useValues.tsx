@@ -1,6 +1,7 @@
 import List from "app/components/shared/List/List"
 import { capitalizeString } from "app/components/shared/Helpers/helpers"
 import PersonDisplay from "app/components/shared/PersonDisplay/PersonDisplay"
+import { personRoleMap } from "app/components/case/CaseTimeline/helpers/dictionaries"
 
 export default (summon?: Components.Schemas.Summon) => {
 
@@ -8,11 +9,15 @@ export default (summon?: Components.Schemas.Summon) => {
 
   const { persons, type_name } = summon
 
-  const personNames = persons.map(({ first_name, last_name, preposition }) =>
+  const personRole = (person_role: Components.Schemas.PersonRoleEnum ) => 
+    person_role ? (personRoleMap[person_role]).toLowerCase() : ""
+
+  const personNames = persons.map(({ first_name, last_name, preposition, person_role }) => 
     <PersonDisplay
       firstName={ capitalizeString(first_name) }
       namePrefix={ preposition ?? undefined }
       name={ capitalizeString(last_name) }
+      personRole={ personRole( person_role as Components.Schemas.PersonRoleEnum)}
     />
   )
 
