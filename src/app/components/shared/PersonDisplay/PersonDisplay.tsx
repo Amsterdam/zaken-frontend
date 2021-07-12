@@ -14,6 +14,6 @@ const mapSex = (value?: Components.Schemas.Resident["geslachtsaanduiding"]) => {
 }
 
 const PersonDisplay: React.FC<Props> = ({ sex, firstName, namePrefix, name }) =>
-  <>{ `${ mapSex(sex) }${ firstName } ${ namePrefix ? `${ namePrefix } ` : "" }${ name } ` }</>
+  <>{ `${ mapSex(sex) }${ firstName } ${ namePrefix ? `${ namePrefix } ` : "" }${ name }` }</>
 
 export default PersonDisplay
