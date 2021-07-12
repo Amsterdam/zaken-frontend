@@ -2,9 +2,11 @@ import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import navigateTo from "app/routing/navigateTo"
+import { personRoleMap } from "../../CaseTimeline/helpers/dictionaries"
 
 export default (caseId: Components.Schemas.Case["id"], summonTypes?: Components.Schemas.SummonType[]) => {
 
+  const personRoles = Object.entries(personRoleMap).map(([key, label]) => ({ key, label }))
   const fields = {
     type: {
       type: "ComplexSelectField",
@@ -69,11 +71,7 @@ export default (caseId: Components.Schemas.Case["id"], summonTypes?: Components.
           person_role: {
             type: "ComplexSelectField",
             props: {
-              options: [
-                { key: "PERSON_ROLE_RESIDENT", label: "Bewoner" },
-                { key: "PERSON_ROLE_OWNER", label: "Eigenaar" },
-                { key: "PERSON_ROLE_MIDDLEMAN", label: "Verhuurder" }
-              ],
+              options: personRoles,
               name: "person_role",
               optionLabelField: "label",
               isRequired: true,

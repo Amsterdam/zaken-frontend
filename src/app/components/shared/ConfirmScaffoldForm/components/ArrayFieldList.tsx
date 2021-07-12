@@ -13,7 +13,7 @@ const ArrayFieldList: React.FC<Props> = ({ fields }) => (
     { fields.map(field => {
         const s = Object.keys(field).map(key => {
           const f = field[key]
-          return isComplexField(f) ? f.label : f
+          return isComplexField(f) ? `- ${ f.label }` : f
         }).join(" ")
         return <ListItem key={ s }>{ s }</ListItem>
       })
