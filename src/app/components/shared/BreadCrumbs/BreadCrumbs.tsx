@@ -1,4 +1,3 @@
-import styled from "styled-components"
 import { Link, useParams } from "@reach/router"
 import { Breadcrumbs } from "@amsterdam/asc-ui"
 import to from "app/routing/utils/to"
@@ -10,10 +9,6 @@ type BreadCrumbsItem = {
   to: string
   path: string
 }
-
-const StyledBreadcrumbs = styled(Breadcrumbs)`
-  padding-inline-start: 0;
-`
 
 const BreadCrumbs: React.FC = () => {
 
@@ -27,9 +22,9 @@ const BreadCrumbs: React.FC = () => {
   return (
     items.length > 1 ?
     <nav>
-      <StyledBreadcrumbs>
+      <Breadcrumbs>
         { items.map(({ title, to }, index) => <Link key={ index } to={ to }>{ title }</Link>) }
-      </StyledBreadcrumbs>
+      </Breadcrumbs>
     </nav> :
     null
   )
