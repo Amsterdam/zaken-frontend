@@ -2,7 +2,7 @@ import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import navigateTo from "app/routing/navigateTo"
-import { personRoleMap } from "../../CaseTimeline/helpers/dictionaries"
+import { personRoleMap } from "@amsterdam/wonen-ui/components/Helpers/dictionaries"
 
 export default (caseId: Components.Schemas.Case["id"], summonTypes?: Components.Schemas.SummonType[]) => {
 
