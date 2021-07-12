@@ -3,7 +3,6 @@ type Props = {
   firstName: string
   namePrefix?: string
   name: string
-  personRole?: string
 }
 
 const mapSex = (value?: Components.Schemas.Resident["geslachtsaanduiding"]) => {
@@ -14,7 +13,7 @@ const mapSex = (value?: Components.Schemas.Resident["geslachtsaanduiding"]) => {
   }
 }
 
-const PersonDisplay: React.FC<Props> = ({ sex, firstName, namePrefix, name, personRole }) =>
-  <>{ `${ mapSex(sex) }${ firstName } ${ namePrefix ? `${ namePrefix } ` : "" }${ name }${ personRole ? `, ${ personRole } ` : "" }` }</>
+const PersonDisplay: React.FC<Props> = ({ sex, firstName, namePrefix, name }) =>
+  <>{ `${ mapSex(sex) }${ firstName } ${ namePrefix ? `${ namePrefix } ` : "" }${ name } ` }</>
 
 export default PersonDisplay
