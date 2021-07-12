@@ -12,8 +12,6 @@ const mapField = <T extends RequestBody>(field: Field, key: string, data: T) => 
 
   if (v === undefined) return
 
-  console.log(type, v)
-
   const value =
     type === "ArrayField" ?
       <ArrayFieldList fields={ v as Array<Record<string, string>> } /> :
