@@ -1,6 +1,5 @@
 import useValues from "./hooks/useValues"
-import { PersonNameDisplay } from "@amsterdam/wonen-ui"
-import { DefinitionList } from "@amsterdam/wonen-ui"
+import { PersonNameDisplay, DefinitionList } from "@amsterdam/wonen-ui"
 
 type Props = {
   resident: Components.Schemas.Resident
