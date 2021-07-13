@@ -1,5 +1,5 @@
 import useValues from "./hooks/useValues"
-import PersonDisplay from "app/components/shared/PersonDisplay/PersonDisplay"
+import { PersonNameDisplay } from "@amsterdam/wonen-ui"
 import { DefinitionList } from "@amsterdam/wonen-ui"
 
 type Props = {
@@ -10,7 +10,7 @@ type Props = {
 const Resident: React.FC<Props> = ({ resident, num }) => {
   const title = <>
     { `${ num }. ` }
-    <PersonDisplay
+    <PersonNameDisplay
       sex={ resident.geslachtsaanduiding }
       firstName={ `${ resident.voorletters }.` }
       namePrefix={ resident.voorvoegsel_geslachtsnaam }

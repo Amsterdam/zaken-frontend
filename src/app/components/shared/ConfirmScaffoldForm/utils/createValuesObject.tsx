@@ -4,7 +4,7 @@ import { Field } from "../../Form/ScaffoldField"
 
 const mapField = <T extends RequestBody>(field: Field, key: string, data: T) => {
   const { type, props } = field
-  const { label, name } = props
+  const { label = key, name } = props
 
   if (name === undefined) return
 
@@ -21,7 +21,7 @@ const mapField = <T extends RequestBody>(field: Field, key: string, data: T) => 
       (props as { options: Record<string, unknown> }).options[v as string] :
       v
 
-  return [label ?? key, value as React.ReactNode] as const
+  return [label, value as React.ReactNode] as const
 }
 
 export default <T extends RequestBody>(fields: NamedFields<T>, data: T | undefined, showFields: string[]) => {
