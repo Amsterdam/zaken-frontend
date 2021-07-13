@@ -82,6 +82,22 @@ export default (
         }
       }
     },
+    reporter_email: {
+      type: "ShowHide",
+      props: {
+        shouldShow: ({ values: { reporter_anonymous } }: { values: { reporter_anonymous: string } }) => reporter_anonymous === "no",
+        field: {
+          type: "EmailField",
+          props: {
+            label: "E-mailadres melder",
+            extraLabel: "(indien bekend)",
+            name: "reporter_email",
+            isRequired: false,
+            validate: (value: string | undefined) => (value === undefined || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim())) ? false : "Vul een geldig e-mailadres in"
+          }
+        }
+      }
+    },
     identification: {
       type: "ShowHide",
       props: {
@@ -182,6 +198,7 @@ export default (
       ["reporter_anonymous", "reporter_anonymous"],
       ["reporter_name"],
       ["reporter_phone"],
+      ["reporter_email"],
       ["identification"],
       ["description_citizenreport", "description_citizenreport"],
       ["advertisement", "advertisement"],

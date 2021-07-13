@@ -50,6 +50,22 @@ export default (caseId: Components.Schemas.Case["id"]) => {
         }
       }
     },
+    reporter_email: {
+      type: "ShowHide",
+      props: {
+        shouldShow: ({ values: { reporter_anonymous } }: { values: { reporter_anonymous: string } }) => reporter_anonymous === "no",
+        field: {
+          type: "EmailField",
+          props: {
+            label: "E-mailadres melder",
+            extraLabel: "(indien bekend)",
+            name: "reporter_email",
+            isRequired: false,
+            validate: (value: string | undefined) => (value === undefined || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim())) ? false : "Vul een geldig e-mailadres in"
+          }
+        }
+      }
+    },
     identification: {
       type: "NumberField",
       props: {
@@ -134,6 +150,7 @@ export default (caseId: Components.Schemas.Case["id"]) => {
       ["reporter_anonymous", "reporter_anonymous"],
       ["reporter_name"],
       ["reporter_phone"],
+      ["reporter_email"],
       ["identification"],
       ["advertisement", "advertisement"],
       ["advertisement_linklist", "advertisement_linklist"],
