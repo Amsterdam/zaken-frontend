@@ -59,8 +59,8 @@ export default (
           type: "TextField",
           props: {
             label: "Naam melder",
-            name: "reporter_name",
-            isRequired: true
+            extraLabel: "(indien bekend)",
+            name: "reporter_name"
           }
         }
       }

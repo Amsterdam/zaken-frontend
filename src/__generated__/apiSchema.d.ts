@@ -200,6 +200,7 @@ declare namespace Components {
             camunda_task_id?: string;
             reporter_name?: string | null;
             reporter_phone?: string | null;
+            reporter_email?: string | null;
             identification: number;
             description_citizenreport?: string | null;
             date_added: string; // date-time
