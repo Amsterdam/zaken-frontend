@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import scaffold from "./scaffold"
-import { useCaseThemes, useReasons, useCaseCreate } from "app/state/rest"
+import { useCaseThemes, useReasons, useCaseCreate, useProjects } from "app/state/rest"
 import ConfirmScaffoldForm from "app/components/shared/ConfirmScaffoldForm/ConfirmScaffoldForm"
 import useNavigateWithFlashMessage from "app/state/flashMessages/useNavigateWithFlashMessage"
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
@@ -11,14 +11,15 @@ type Props = {
 
 type FormData =
   Pick<CaseCreate, "address" | "description"> &
-  { theme: Components.Schemas.CaseTheme, reason: Components.Schemas.CaseReason }
+  { theme: Components.Schemas.CaseTheme, reason: Components.Schemas.CaseReason, project: Components.Schemas.CaseProject }
 
 const mapData = (bagId: Components.Schemas.Address["bag_id"]) =>
   (data: FormData): CaseCreate => ({
     ...data,
     address: { bag_id: bagId },
     theme: data.theme.id,
-    reason: data.reason.id
+    reason: data.reason.id,
+    project: data.project?.id
   })
 
 const CreateForm: React.FC<Props> = ({ bagId }) => {
@@ -27,9 +28,10 @@ const CreateForm: React.FC<Props> = ({ bagId }) => {
   const [themeId, setThemeId] = useState<Components.Schemas.CaseTheme["id"]>()
   useEffect(() => setThemeId(caseThemes?.results?.[0].id), [caseThemes, setThemeId])
   const [reasons] = useReasons(themeId)
+  const [projects] = useProjects(themeId)
   const [, { execPost }] = useCaseCreate()
 
-  const fields = useScaffoldedFields(scaffold, bagId, setThemeId, caseThemes?.results, reasons?.results)
+  const fields = useScaffoldedFields(scaffold, bagId, setThemeId, caseThemes?.results, reasons?.results, projects?.results)
 
   const navigateWithFlashMessage = useNavigateWithFlashMessage()
   const afterSubmit = async (result: Components.Schemas.CaseCreateUpdate) =>

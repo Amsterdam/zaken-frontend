@@ -118,6 +118,7 @@ declare namespace Components {
             theme: CaseTheme;
             reason: CaseReason;
             schedules: Schedule[];
+            project: CaseProject;
             identification?: string | null;
             start_date?: string | null; // date
             end_date?: string | null; // date
@@ -154,6 +155,7 @@ declare namespace Components {
             theme: number;
             reason: number;
             description?: string | null;
+            project?: number;
         }
         export interface CaseEvent {
             id: number;
@@ -167,6 +169,11 @@ declare namespace Components {
             type: TypeEnum;
             emitter_id: number;
             case: number;
+        }
+        export interface CaseProject {
+            id: number;
+            name: string;
+            theme: number;
         }
         export interface CaseReason {
             id: number;
@@ -395,6 +402,24 @@ declare namespace Components {
              */
             previous?: string | null; // uri
             results?: Case[];
+        }
+        export interface PaginatedCaseProjectList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=4
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null; // uri
+            results?: CaseProject[];
         }
         export interface PaginatedCaseReasonList {
             /**
@@ -1218,6 +1243,21 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCaseCloseResultList;
+        }
+    }
+    namespace ThemesCaseProjectsList {
+        namespace Parameters {
+            export type Id = number;
+            export type Page = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        export interface QueryParameters {
+            page?: Parameters.Page;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedCaseProjectList;
         }
     }
     namespace ThemesDecisionTypesList {
