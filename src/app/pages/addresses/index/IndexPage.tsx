@@ -12,6 +12,7 @@ import ButtonLink from "app/components/shared/ButtonLink/ButtonLink"
 import to from "app/routing/utils/to"
 import CasesByBagId from "app/components/addresses/CasesByBagId/CasesByBagId"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
+import AuthorizedWrap from "app/components/shared/AuthorizedWrap/AuthorizedWrap"
 
 type Props = {
   bagId: string
@@ -38,9 +39,11 @@ const IndexPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
         />
       </RowWithColumn>
       <RowWithColumn>
-        <ButtonLink to={ to("/adres/:bagId/zaken/nieuw", { bagId })}>
-          <Button variant="primary" as="span">Nieuwe zaak aanmaken</Button>
-        </ButtonLink>
+        <AuthorizedWrap>
+          <ButtonLink to={ to("/adres/:bagId/zaken/nieuw", { bagId })}>
+            <Button variant="primary" as="span">Nieuwe zaak aanmaken</Button>
+          </ButtonLink>
+        </AuthorizedWrap>
       </RowWithColumn>
     </DefaultLayout> :
     <NotFoundPage />
