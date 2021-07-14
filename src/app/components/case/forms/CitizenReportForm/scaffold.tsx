@@ -27,8 +27,8 @@ export default (caseId: Components.Schemas.Case["id"]) => {
           type: "TextField",
           props: {
             label: "Naam melder",
-            name: "reporter_name",
-            isRequired: true
+            extraLabel: "(indien bekend)",
+            name: "reporter_name"
           }
         }
       }
