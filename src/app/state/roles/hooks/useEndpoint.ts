@@ -20,6 +20,7 @@ export default (path: string, method: Method = "POST") => {
       }
       const response = await fetch(url, { method: "OPTIONS", mode: "cors", headers })
       console.log("response", response)
+      console.log("response status", response.status)
       const body = await response.text()
       console.log("response body", body)
 
