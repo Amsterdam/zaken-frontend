@@ -10,16 +10,18 @@ const onClick = (id: Components.Schemas.Case["id"]) => (event: React.MouseEvent)
 }
 
 export default (cases?: Components.Schemas.Case[]) =>
-  cases?.map(({ id, address, current_states, end_date }) => {
-    const startDate = first(current_states.map(({ start_date }) => start_date).sort(sortByDate("DESC")))
+  cases
+    ?.sort((a, b) => a.address.full_address.localeCompare(b.address.full_address))
+    .map(({ id, address, current_states, end_date }) => {
+      const startDate = first(current_states.map(({ start_date }) => start_date).sort(sortByDate("DESC")))
 
-    return {
-      onClick: onClick(id),
-      itemList: [
-        address.full_address ?? "-",
-        current_states.length > 0 ? current_states.map(({ status_name }) => status_name).join(", ") : isDate(end_date) ? "Afgerond" : "-",
-        <DateDisplay date={ end_date ?? startDate } emptyText="-" />,
-        <TableAction to={ to("/zaken/:id", { id }) }>Zaakdetails</TableAction>
-      ]
-    }
-  })
+      return {
+        onClick: onClick(id),
+        itemList: [
+          address.full_address ?? "-",
+          current_states.length > 0 ? current_states.map(({ status_name }) => status_name).join(", ") : isDate(end_date) ? "Afgerond" : "-",
+          <DateDisplay date={ end_date ?? startDate } emptyText="-" />,
+          <TableAction to={ to("/zaken/:id", { id }) }>Zaakdetails</TableAction>
+        ]
+      }
+    })
