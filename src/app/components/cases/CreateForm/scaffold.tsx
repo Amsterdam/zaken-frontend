@@ -37,7 +37,7 @@ export default (
     reporter_anonymous: {
       type: "ShowHide",
       props: {
-        shouldShow: ({ values: { reason } }: { values: { reason?: Components.Schemas.CaseReason } }) => reason?.name === "Melding",
+        shouldShow: (formValues: { values?: { reason?: Components.Schemas.CaseReason } }) => formValues?.values?.reason?.name === "Melding",
         field: {
           type: "RadioFields",
           props: {
@@ -55,7 +55,7 @@ export default (
     reporter_name: {
       type: "ShowHide",
       props: {
-        shouldShow: ({ values: { reporter_anonymous } }: { values: { reporter_anonymous: string } }) => reporter_anonymous === "no",
+        shouldShow: (formValues: { values?:  { reporter_anonymous: string } }) => formValues?.values?.reporter_anonymous === "no",
         field: {
           type: "TextField",
           props: {
@@ -69,7 +69,7 @@ export default (
     reporter_phone: {
       type: "ShowHide",
       props: {
-        shouldShow: ({ values: { reporter_anonymous } }: { values: { reporter_anonymous: string } }) => reporter_anonymous === "no",
+        shouldShow: (formValues: { values?:  { reporter_anonymous: string } }) => formValues?.values?.reporter_anonymous === "no",
         field: {
           type: "TelField",
           props: {
@@ -85,7 +85,7 @@ export default (
     reporter_email: {
       type: "ShowHide",
       props: {
-        shouldShow: ({ values: { reporter_anonymous } }: { values: { reporter_anonymous: string } }) => reporter_anonymous === "no",
+        shouldShow: (formValues: { values?:  { reporter_anonymous: string } }) => formValues?.values?.reporter_anonymous === "no",
         field: {
           type: "EmailField",
           props: {
@@ -99,7 +99,7 @@ export default (
     identification: {
       type: "ShowHide",
       props: {
-        shouldShow: ({ values: { reason } }: { values: { reason?: Components.Schemas.CaseReason } }) => reason?.name === "Melding",
+        shouldShow: (formValues: { values?: { reason?: Components.Schemas.CaseReason } }) => formValues?.values?.reason?.name === "Melding",
         field: {
           type: "NumberField",
           props: {
@@ -118,7 +118,7 @@ export default (
     description_citizenreport: {
       type: "ShowHide",
       props: {
-        shouldShow: ({ values: { reason } }: { values: { reason: any } }) => reason.name === "Melding",
+        shouldShow: (formValues: { values?: { reason?: Components.Schemas.CaseReason } }) => formValues?.values?.reason?.name === "Melding",
         field: {
           type: "TextAreaField",
           props: {
@@ -132,7 +132,7 @@ export default (
     project: {
       type: "ShowHide",
       props: {
-        shouldShow: ({ values: { reason } }: { values: { reason: any } }) => reason.name === "Project",
+        shouldShow: (formValues: { values?: { reason?: Components.Schemas.CaseReason } }) => formValues?.values?.reason?.name === "Project",
         field: {
           type: "ComplexSelectField",
           props: {
@@ -162,7 +162,7 @@ export default (
     advertisement_linklist: {
       type: "ShowHide",
       props: {
-        shouldShow: ({ values: { advertisement } }: { values: { advertisement: string } }) => advertisement === "yes",
+        shouldShow: (formValues: { values?: { advertisement: string } }) => formValues?.values?.advertisement === "yes",
         field: {
           type: "ArrayField",
           props: {

@@ -22,7 +22,7 @@ export default (caseId: Components.Schemas.Case["id"]) => {
     reporter_name: {
       type: "ShowHide",
       props: {
-        shouldShow: ({ values: { reporter_anonymous } }: { values: { reporter_anonymous: string } }) => reporter_anonymous === "no",
+        shouldShow: (formValues: { values?:  { reporter_anonymous: string } }) => formValues?.values?.reporter_anonymous === "no",
         field: {
           type: "TextField",
           props: {
@@ -36,7 +36,7 @@ export default (caseId: Components.Schemas.Case["id"]) => {
     reporter_phone: {
       type: "ShowHide",
       props: {
-        shouldShow: ({ values: { reporter_anonymous } }: { values: { reporter_anonymous: string } }) => reporter_anonymous === "no",
+        shouldShow: (formValues: { values?:  { reporter_anonymous: string } }) => formValues?.values?.reporter_anonymous === "no",
         field: {
           type: "TelField",
           props: {
@@ -52,7 +52,7 @@ export default (caseId: Components.Schemas.Case["id"]) => {
     reporter_email: {
       type: "ShowHide",
       props: {
-        shouldShow: ({ values: { reporter_anonymous } }: { values: { reporter_anonymous: string } }) => reporter_anonymous === "no",
+        shouldShow: (formValues: { values?:  { reporter_anonymous: string } }) => formValues?.values?.reporter_anonymous === "no",
         field: {
           type: "EmailField",
           props: {
@@ -91,7 +91,7 @@ export default (caseId: Components.Schemas.Case["id"]) => {
     advertisement_linklist: {
       type: "ShowHide",
       props: {
-        shouldShow: ({ values: { advertisement } }: { values: { advertisement: string } }) => advertisement === "yes",
+        shouldShow: (formValues: { values?: { advertisement: string } }) => formValues?.values?.advertisement === "yes",
         field: {
           type: "ArrayField",
           props: {

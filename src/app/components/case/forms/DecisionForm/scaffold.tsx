@@ -23,7 +23,7 @@ export default (caseId: Components.Schemas.Case["id"], decisions?: Components.Sc
     sanction_amount: {
       type: "ShowHide",
       props: {
-        shouldShow: ({ values: { decision_type } }: { values: { decision_type: Components.Schemas.DecisionType } }) => decision_type?.is_sanction === true,
+        shouldShow: (formValues: { values: { decision_type: Components.Schemas.DecisionType } }) => formValues?.values?.decision_type?.is_sanction === true,
         field: {
           type: "NumberField",
           props: {
@@ -39,14 +39,13 @@ export default (caseId: Components.Schemas.Case["id"], decisions?: Components.Sc
     description: {
       type: "ShowHide",
       props: {
-        shouldShow: ({ values: { decision_type } }: { values: { decision_type: Components.Schemas.DecisionType } }) => descriptionRequired(decision_type?.id, false),
+        shouldShow: (formValues: { values: { decision_type: Components.Schemas.DecisionType } }) => descriptionRequired(formValues?.values?.decision_type?.id, false),
         field: {
           type: "TextAreaField",
           props: {
             label: "Korte toelichting",
             extraLabel: "(niet verplicht)",
-            name: "description",
-            isRequired: false
+            name: "description"
           }
         }
       }
@@ -54,7 +53,7 @@ export default (caseId: Components.Schemas.Case["id"], decisions?: Components.Sc
     description_closing: {
       type: "ShowHide",
       props: {
-        shouldShow: ({ values: { decision_type } }: { values: { decision_type: Components.Schemas.DecisionType } }) => descriptionRequired(decision_type?.id),
+        shouldShow: (formValues: { values: { decision_type: Components.Schemas.DecisionType } }) => descriptionRequired(formValues?.values?.decision_type?.id),
         field: {
           type: "TextAreaField",
           props: {

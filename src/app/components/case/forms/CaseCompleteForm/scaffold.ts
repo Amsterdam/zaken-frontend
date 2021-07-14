@@ -18,7 +18,7 @@ export default (caseId: Components.Schemas.Case["id"], completeCaseReasons?: Com
     result: {
       type: "ShowHide",
       props: {
-        shouldShow: ({ values: { reason } }: { values: { reason: Components.Schemas.CaseCloseReason } }) => reason?.result === true,
+        shouldShow: (formValues: { values: { reason: Components.Schemas.CaseCloseReason } }) => formValues?.values?.reason?.result === true,
         field: {
           type: "ComplexRadioFields",
           props: {
