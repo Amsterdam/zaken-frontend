@@ -1,4 +1,3 @@
-
 const correspondence: MockComponents.Schemas.Correspondence[] = [
   {
     id: 1,

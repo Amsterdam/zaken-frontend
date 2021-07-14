@@ -7,7 +7,8 @@ export default (
   bagId: Components.Schemas.Address["bag_id"],
   setTheme: (id?: Components.Schemas.CaseTheme["id"]) => void,
   themes?: Components.Schemas.CaseTheme[],
-  reasons?: Components.Schemas.CaseReason[]
+  reasons?: Components.Schemas.CaseReason[],
+  projects?: Components.Schemas.CaseProject[]
   ) => {
 
   const fields = {
@@ -115,11 +116,35 @@ export default (
       }
     },
     description_citizenreport: {
-      type: "TextAreaField",
+      type: "ShowHide",
       props: {
-        label: "Korte samenvatting melding",
-        name: "description_citizenreport",
-        isRequired: true
+        shouldShow: ({ values: { reason } }: { values: { reason: any } }) => reason.name === "Melding",
+        field: {
+          type: "TextAreaField",
+          props: {
+            label: "Korte samenvatting melding",
+            name: "description_citizenreport",
+            isRequired: true
+          }
+        }
+      }
+    },
+    project: {
+      type: "ShowHide",
+      props: {
+        shouldShow: ({ values: { reason } }: { values: { reason: any } }) => reason.name === "Project",
+        field: {
+          type: "ComplexSelectField",
+          props: {
+            label: "Projectnaam",
+            name: "project",
+            options: projects,
+            optionLabelField: "name",
+            withEmptyOption: true,
+            emptyOptionLabel: "Maak een keuze",
+            isRequired: true
+          }
+        }
       }
     },
     advertisement: {
@@ -162,7 +187,6 @@ export default (
         }
       }
     },
-
     description: {
       type: "TextAreaField",
       props: {
@@ -198,6 +222,7 @@ export default (
       ["reporter_email"],
       ["identification"],
       ["description_citizenreport", "description_citizenreport"],
+      ["project"],
       ["advertisement", "advertisement"],
       ["advertisement_linklist", "advertisement_linklist"],
       ["description", "description"],
