@@ -77,8 +77,21 @@ export default (
             extraLabel: "(indien bekend)",
             name: "reporter_phone",
             hint: "Vul hier alleen cijfers in",
-            isRequired: false,
             validate: (value: string | undefined) => (value === undefined || /^[0-9]{10}$/.test(value.trim())) ? false : "Vul hier enkel 10 cijfers in"
+          }
+        }
+      }
+    },
+    reporter_email: {
+      type: "ShowHide",
+      props: {
+        shouldShow: ({ values: { reporter_anonymous } }: { values: { reporter_anonymous: string } }) => reporter_anonymous === "no",
+        field: {
+          type: "EmailField",
+          props: {
+            label: "E-mailadres melder",
+            extraLabel: "(indien bekend)",
+            name: "reporter_email"
           }
         }
       }
@@ -206,6 +219,7 @@ export default (
       ["reporter_anonymous", "reporter_anonymous"],
       ["reporter_name"],
       ["reporter_phone"],
+      ["reporter_email"],
       ["identification"],
       ["description_citizenreport", "description_citizenreport"],
       ["project"],
