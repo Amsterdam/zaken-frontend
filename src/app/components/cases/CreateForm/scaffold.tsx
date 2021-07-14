@@ -76,7 +76,6 @@ export default (
             extraLabel: "(indien bekend)",
             name: "reporter_phone",
             hint: "Vul hier alleen cijfers in",
-            isRequired: false,
             validate: (value: string | undefined) => (value === undefined || /^[0-9]{10}$/.test(value.trim())) ? false : "Vul hier enkel 10 cijfers in"
           }
         }
@@ -91,9 +90,7 @@ export default (
           props: {
             label: "E-mailadres melder",
             extraLabel: "(indien bekend)",
-            name: "reporter_email",
-            isRequired: false,
-            validate: (value: string | undefined) => (value === undefined || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim())) ? false : "Vul een geldig e-mailadres in"
+            name: "reporter_email"
           }
         }
       }
