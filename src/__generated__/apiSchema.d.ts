@@ -32,7 +32,7 @@ declare namespace Components {
         }
         export interface CamundaMessageForProcessInstance {
             message_name: string;
-            business_key: string;
+            camunda_process_id: string;
         }
         export interface CamundaMessager {
             message_name: string;
@@ -45,6 +45,7 @@ declare namespace Components {
             id: number;
             name: string;
             camunda_message_name: string;
+            to_directing_proccess?: boolean;
         }
         export interface CamundaStartProcess {
             camunda_process_id: number;
@@ -123,6 +124,7 @@ declare namespace Components {
             end_date?: string | null; // date
             is_legacy_bwv?: boolean;
             legacy_bwv_case_id?: string | null;
+            directing_process?: string | null;
             camunda_ids?: string[] | null;
             description?: string | null;
             author?: string | null; // uuid
@@ -158,6 +160,9 @@ declare namespace Components {
         export interface CaseEvent {
             id: number;
             event_values: {
+                [name: string]: any;
+            };
+            event_variables: {
                 [name: string]: any;
             };
             date_created: string; // date-time
@@ -661,6 +666,7 @@ declare namespace Components {
             } | null;
         }
         export type PermitGrantedEnum = "GRANTED" | "NOT_GRANTED" | "UNKNOWN";
+        export type PersonRoleEnum = "PERSON_ROLE_OWNER" | "PERSON_ROLE_RESIDENT" | "PERSON_ROLE_MIDDLEMAN";
         export interface Priority {
             id: number;
             name: string;
@@ -744,6 +750,7 @@ declare namespace Components {
             first_name: string;
             preposition?: string | null;
             last_name: string;
+            person_role?: PersonRoleEnum;
             summon: number;
         }
         export interface SupportContact {
