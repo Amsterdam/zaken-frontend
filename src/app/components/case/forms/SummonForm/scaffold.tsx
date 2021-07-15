@@ -76,7 +76,7 @@ export default (caseId: Components.Schemas.Case["id"], summonTypes?: Components.
               optionLabelField: "label",
               isRequired: true,
               withEmptyOption: true,
-              emptyOptionLabel: "Rol"
+              emptyOptionLabel: "Kies rol"
             }
           }
         }
