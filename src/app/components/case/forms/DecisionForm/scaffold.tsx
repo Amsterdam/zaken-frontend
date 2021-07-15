@@ -3,7 +3,7 @@ import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import navigateTo from "app/routing/navigateTo"
 
-const descriptionRequired = (idDecision: number, shouldMatch = true) => shouldMatch ? idDecision === 9 : idDecision !== 9
+const descriptionRequired = (idDecision: number | undefined, shouldMatch = true) => shouldMatch ? idDecision === 9 : idDecision !== 9
 
 export default (caseId: Components.Schemas.Case["id"], decisions?: Components.Schemas.DecisionType[]) => {
 
@@ -23,7 +23,7 @@ export default (caseId: Components.Schemas.Case["id"], decisions?: Components.Sc
     sanction_amount: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values: { decision_type: Components.Schemas.DecisionType } }) => formValues?.values?.decision_type?.is_sanction === true,
+        shouldShow: (formValues: { values?: { decision_type: Components.Schemas.DecisionType } }) => formValues?.values?.decision_type?.is_sanction === true,
         field: {
           type: "NumberField",
           props: {
@@ -39,7 +39,7 @@ export default (caseId: Components.Schemas.Case["id"], decisions?: Components.Sc
     description: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values: { decision_type: Components.Schemas.DecisionType } }) => descriptionRequired(formValues?.values?.decision_type?.id, false),
+        shouldShow: (formValues: { values?: { decision_type: Components.Schemas.DecisionType } }) => descriptionRequired(formValues?.values?.decision_type?.id, false),
         field: {
           type: "TextAreaField",
           props: {
@@ -53,7 +53,7 @@ export default (caseId: Components.Schemas.Case["id"], decisions?: Components.Sc
     description_closing: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values: { decision_type: Components.Schemas.DecisionType } }) => descriptionRequired(formValues?.values?.decision_type?.id),
+        shouldShow: (formValues: { values?: { decision_type: Components.Schemas.DecisionType } }) => descriptionRequired(formValues?.values?.decision_type?.id),
         field: {
           type: "TextAreaField",
           props: {
