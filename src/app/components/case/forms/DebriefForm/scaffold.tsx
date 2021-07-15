@@ -24,7 +24,7 @@ export default (caseId: Components.Schemas.Case["id"], violationTypes: Component
     theme: {
       type: "ShowHide",
       props: {
-        shouldShow: ({ values: { violation } }: { values: { violation: any } }) => violation === "SEND_TO_OTHER_THEME",
+        shouldShow: (formValues: { values?: { violation: Components.Schemas.ViolationEnum } }) => formValues?.values?.violation === "SEND_TO_OTHER_THEME",
         field: {
           type: "SelectField",
           props: {
