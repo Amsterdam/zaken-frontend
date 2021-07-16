@@ -46,6 +46,7 @@ declare namespace Components {
             name: string;
             camunda_message_name: string;
             to_directing_proccess?: boolean;
+            theme: number;
         }
         export interface CamundaStartProcess {
             camunda_process_id: number;
