@@ -41,7 +41,7 @@ const DecisionForm: React.FC<Props> = ({ id, camundaTaskId }) => {
 
   return (
     <>
-      <DecisionHeader caseId={ id }/>
+      <DecisionHeader caseId={ id } camundaTaskId={ camundaTaskId } />
       <FormTitle>Gebruik dit formulier om aan te geven welk besluit is genomen</FormTitle>
       <WorkflowForm
           id={ id }
