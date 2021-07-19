@@ -11,7 +11,7 @@ const taskActionMap: Record<string, TaskAction> = {
   task_create_summon: { name: "Aanschrijving verwerken", target: "aanschrijving" },
   task_create_decision: { name: "Besluit verwerken", target: "besluit" },
   task_create_signal: { name: "Melding verwerken", target: "melding" },
-  task_close_case: { name: "Zaak afsluiten", target: "afronding" }
+  create_case_closing: { name: "Zaak afsluiten", target: "afronding" }
 }
 
 export default taskActionMap
