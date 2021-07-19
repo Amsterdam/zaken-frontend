@@ -51,7 +51,7 @@ export const useDebriefingCreate = (options?: Options) => {
   })
 }
 
-// useSummons for posting a new summon
+// Post a summon
 export const useSummons = (options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.Summon>({
@@ -63,7 +63,7 @@ export const useSummons = (options?: Options) => {
   })
 }
 
-// useSummonsWithCaseId for getting the posted summon(s) for a case
+// Get summons for a specific case
 export const useSummonsWithCaseId = (caseId?: Components.Schemas.Case["id"], options?: Options) => {
   const handleError = useErrorHandler()
   const queryString = qs.stringify({ case: caseId }, { addQueryPrefix: true })
