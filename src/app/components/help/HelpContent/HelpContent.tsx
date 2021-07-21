@@ -38,9 +38,10 @@ const HelpContent: React.FC = () => {
       <RowWithColumn>
         <Heading as="h2">Wat kan je met de { title } ({ titleShort })?</Heading>
         <Paragraph>
-          De belangrijkste functionaliteiten van { titleShort } staan omschreven in een factsheet. <br/>
-          {/* TODO add url */}
-          Deze is te raadplegen via de bijgevoegde link: volgt nog
+          De belangrijkste functionaliteiten van { titleShort } staan omschreven in een factsheet.
+        </Paragraph>
+        <Paragraph>
+          Je vindt de factsheet op de G-schijf:<br /><i>G:\WZS\Organisatie\VNH\Werkinstructie AZA</i>
         </Paragraph>
       </RowWithColumn>
       <RowWithColumn>
