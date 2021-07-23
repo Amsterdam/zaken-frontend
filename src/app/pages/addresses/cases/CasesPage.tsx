@@ -11,6 +11,7 @@ import NotFoundPage from "app/pages/errors/NotFoundPage"
 import Column from "app/components/layouts/Grid/Column"
 import ButtonLink from "app/components/shared/ButtonLink/ButtonLink"
 import to from "app/routing/utils/to"
+import IsAuthorizedWrapper from "app/components/auth/IsAuthorizedWrapper/IsAuthorizedWrapper"
 
 type Props = {
   bagId: string
@@ -30,11 +31,13 @@ const CasesPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
       <RowWithColumn>
         <CasesByBagId bagId={ bagId } />
       </RowWithColumn>
-      <RowWithColumn>
-        <ButtonLink to={ to("/adres/:bagId/zaken/nieuw", { bagId })}>
-          <Button variant="primary" as="span">Nieuwe zaak aanmaken</Button>
-        </ButtonLink>
-      </RowWithColumn>
+      <IsAuthorizedWrapper permissionName="can_add_case">
+        <RowWithColumn>
+          <ButtonLink to={ to("/adres/:bagId/zaken/nieuw", { bagId })}>
+            <Button variant="primary" as="span">Nieuwe zaak aanmaken</Button>
+          </ButtonLink>
+        </RowWithColumn>
+      </IsAuthorizedWrapper>
     </DefaultLayout> :
     <NotFoundPage />
 )

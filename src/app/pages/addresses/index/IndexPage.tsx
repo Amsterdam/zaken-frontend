@@ -11,6 +11,7 @@ import PanoramaPreview from "app/components/addresses/Panorama/PanoramaPreview"
 import ButtonLink from "app/components/shared/ButtonLink/ButtonLink"
 import to from "app/routing/utils/to"
 import CasesByBagId from "app/components/addresses/CasesByBagId/CasesByBagId"
+import IsAuthorizedWrapper from "app/components/auth/IsAuthorizedWrapper/IsAuthorizedWrapper"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
 
 type Props = {
@@ -37,11 +38,13 @@ const IndexPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
           emptyText="Op dit adres zijn er geen lopende zaken"
         />
       </RowWithColumn>
-      <RowWithColumn>
-        <ButtonLink to={ to("/adres/:bagId/zaken/nieuw", { bagId })}>
-          <Button variant="primary" as="span">Nieuwe zaak aanmaken</Button>
-        </ButtonLink>
-      </RowWithColumn>
+      <IsAuthorizedWrapper permissionName="can_add_case">
+        <RowWithColumn>
+          <ButtonLink to={ to("/adres/:bagId/zaken/nieuw", { bagId })}>
+            <Button variant="primary" as="span">Nieuwe zaak aanmaken</Button>
+          </ButtonLink>
+        </RowWithColumn>
+      </IsAuthorizedWrapper>
     </DefaultLayout> :
     <NotFoundPage />
 )
