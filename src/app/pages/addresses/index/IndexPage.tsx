@@ -38,7 +38,7 @@ const IndexPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
           emptyText="Op dit adres zijn er geen lopende zaken"
         />
       </RowWithColumn>
-      <IsAuthorizedWrapper permName="can_add_case">
+      <IsAuthorizedWrapper permissionName="can_add_case">
         <RowWithColumn>
           <ButtonLink to={ to("/adres/:bagId/zaken/nieuw", { bagId })}>
             <Button variant="primary" as="span">Nieuwe zaak aanmaken</Button>

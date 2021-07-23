@@ -8,18 +8,18 @@ import { usePermissions } from "app/state/rest"
  */
 
 type Props = {
-  permName: keyof MockComponents.Schemas.Permissions["permissions"]
+  permissionName: keyof MockComponents.Schemas.Permissions["permissions"]
 }
 
-const IsAuthorizedWrapper: React.FC<Props> = ({ permName, children }) => {
+const IsAuthorizedWrapper: React.FC<Props> = ({ permissionName, children }) => {
 
   const [permissions, { isBusy }] = usePermissions()
-  const permission = permissions?.permissions[permName]
+  const hasPermission = permissions?.permissions[permissionName]
   
   return (
     isBusy ?
       <Spinner /> :
-      permission ?
+      hasPermission ?
         <>{ children }</>
       : null
   )
