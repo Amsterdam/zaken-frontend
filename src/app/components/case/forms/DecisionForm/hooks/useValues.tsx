@@ -15,7 +15,8 @@ export default (summon?: Components.Schemas.Summon) => {
         namePrefix={ preposition ?? undefined }
         name={ capitalizeString(last_name) }
       />
-      <PersonRoleDisplay personRole= { person_role } addToEndOfString />
+      ,&nbsp; 
+      <PersonRoleDisplay personRole= { person_role } />
     </>
   )
 
