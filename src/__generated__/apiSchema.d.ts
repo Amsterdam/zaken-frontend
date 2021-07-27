@@ -661,6 +661,25 @@ declare namespace Components {
             previous?: string | null; // uri
             results?: Visit[];
         }
+        export interface PatchedCase {
+            id?: number;
+            address?: Address;
+            case_states?: CaseState[];
+            current_states?: CaseState[];
+            theme?: CaseTheme;
+            reason?: CaseReason;
+            schedules?: Schedule[];
+            project?: CaseProject;
+            identification?: string | null;
+            start_date?: string | null; // date
+            end_date?: string | null; // date
+            is_legacy_bwv?: boolean;
+            legacy_bwv_case_id?: string | null;
+            directing_process?: string | null;
+            camunda_ids?: string[] | null;
+            description?: string | null;
+            author?: string | null; // uuid
+        }
         export interface Permission {
             id: number;
             name: string;
@@ -1040,6 +1059,18 @@ declare namespace Paths {
             export type $200 = Components.Schemas.PaginatedCaseList;
         }
     }
+    namespace CasesPartialUpdate {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        export type RequestBody = Components.Schemas.PatchedCase;
+        namespace Responses {
+            export type $200 = Components.Schemas.Case;
+        }
+    }
     namespace CasesProcessesList {
         namespace Parameters {
             export type Id = number;
@@ -1112,6 +1143,18 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCamundaTaskWithStateList;
+        }
+    }
+    namespace CasesUpdate {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        export type RequestBody = Components.Schemas.CaseCreateUpdate;
+        namespace Responses {
+            export type $200 = Components.Schemas.CaseCreateUpdate;
         }
     }
     namespace DebriefingsCreate {
