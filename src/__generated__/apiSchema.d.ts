@@ -291,6 +291,10 @@ declare namespace Components {
             items: Fine[];
         }
         export type GeslachtsaanduidingEnum = "M" | "V" | "X";
+        export interface Group {
+            permissions?: Permission[];
+            name: string;
+        }
         export type IndicatieBetHernBevelEnum = "J" | "N";
         export type IndicatieCombiDwangbevelEnum = "J" | "N" | "O";
         export type IndicatiePubliekrechtelijkEnum = "J" | "N";
@@ -657,6 +661,12 @@ declare namespace Components {
             previous?: string | null; // uri
             results?: Visit[];
         }
+        export interface Permission {
+            id: number;
+            name: string;
+            codename: string;
+            content_type: number;
+        }
         export interface Permit {
             permit_granted: PermitGrantedEnum;
             permit_type: string;
@@ -777,6 +787,15 @@ declare namespace Components {
             last_name?: string;
             full_name?: string;
         }
+        export interface UserDetail {
+            id?: string; // uuid
+            email?: string; // email
+            username?: string;
+            first_name?: string;
+            last_name?: string;
+            full_name?: string;
+            groups?: Group[];
+        }
         export interface VakantieverhuurReport {
             is_cancellation: boolean;
             report_date: string; // date-time
@@ -862,6 +881,11 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedUserList;
+        }
+    }
+    namespace AuthorsMeRetrieve {
+        namespace Responses {
+            export type $200 = Components.Schemas.UserDetail;
         }
     }
     namespace CamundaTaskCompleteCreate {
@@ -1147,6 +1171,11 @@ declare namespace Paths {
         export type RequestBody = Components.Schemas.OIDCAuthenticate;
         namespace Responses {
             export type $200 = Components.Schemas.OIDCAuthenticate;
+        }
+    }
+    namespace PermissionsList {
+        namespace Responses {
+            export type $200 = Components.Schemas.Permission[];
         }
     }
     namespace PushCreate {
