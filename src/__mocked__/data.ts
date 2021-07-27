@@ -20,7 +20,14 @@ const roles: MockComponents.Schemas.Role[] = [
   "Toezichthouder"
 ]
 
+const permissions: MockComponents.Schemas.Permissions = {
+  permissions: {
+    can_add_case: true
+  }
+}
+
 export default {
   correspondence,
-  roles
+  roles,
+  permissions
 }

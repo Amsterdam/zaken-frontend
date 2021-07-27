@@ -7,6 +7,12 @@ declare namespace MockComponents {
     }
 
     export type Role = string
-    
+
+    export type Permissions = {
+      permissions: {
+        can_add_case: boolean
+      }
+    }
+
   }
 }
