@@ -13,14 +13,3 @@ export const useIsAuthorized = (options?: Options) => {
     isProtected: true
   })
 }
-
-export const usePermissions = (options?: Options) => {
-  const handleError = useErrorHandler()
-  return useApiRequest<string[]>({
-    ...options,
-    url: makeApiUrl("permissions"),
-    groupName: "auth",
-    handleError,
-    isProtected: true
-  })
-}
