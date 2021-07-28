@@ -1,7 +1,7 @@
 export type ApiGroup =
   | "addresses"
   | "auth"
-  | "authors"
+  | "users"
   | "case"
   | "cases"
   | "dataPunt"
@@ -20,7 +20,7 @@ export type Options = {
 
 export * from "./addresses"
 export * from "./auth"
-export * from "./authors"
+export * from "./users"
 export * from "./cases"
 export * from "./tasks"
 export * from "./case"
