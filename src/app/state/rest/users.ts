@@ -13,3 +13,14 @@ export const useUsers = (options?: Options) => {
     isProtected: true
   })
 }
+
+export const useUsersMe = (options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<Components.Schemas.UserDetail>({
+    ...options,
+    url: makeApiUrl("users", "me"),
+    groupName: "auth",
+    handleError,
+    isProtected: true
+  })
+}

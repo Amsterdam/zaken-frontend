@@ -1,6 +1,6 @@
 import { Alert, themeSpacing } from "@amsterdam/asc-ui"
 
-import { useIsAuthorized, useMe, usePermissions } from "app/state/rest/"
+import { useIsAuthorized, useUsersMe, usePermissions } from "app/state/rest/"
 import styled from "styled-components"
 
 const StyledAlert = styled(Alert)`
@@ -11,8 +11,8 @@ const NotAuthorizedAlert = () => {
 
   const [data] = useIsAuthorized()
   const showUnauthorized = data?.is_authorized === false
-  const [meData] = useMe()
-  if (meData !== undefined) console.log(meData)
+  const [me] = useUsersMe()
+  if (me !== undefined) console.log(me)
   const [permissions] = usePermissions()
   if (permissions !== undefined) console.log(permissions)
 
