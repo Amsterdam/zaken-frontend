@@ -292,7 +292,7 @@ declare namespace Components {
         }
         export type GeslachtsaanduidingEnum = "M" | "V" | "X";
         export interface Group {
-            permissions?: Permission[];
+            permissions: string[];
             name: string;
         }
         export type IndicatieBetHernBevelEnum = "J" | "N";
@@ -680,12 +680,6 @@ declare namespace Components {
             description?: string | null;
             author?: string | null; // uuid
         }
-        export interface Permission {
-            id: number;
-            name: string;
-            codename: string;
-            content_type: number;
-        }
         export interface Permit {
             permit_granted: PermitGrantedEnum;
             permit_type: string;
@@ -889,22 +883,6 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.Residents;
-        }
-    }
-    namespace AuthorsList {
-        namespace Parameters {
-            export type Page = number;
-        }
-        export interface QueryParameters {
-            page?: Parameters.Page;
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.PaginatedUserList;
-        }
-    }
-    namespace AuthorsMeRetrieve {
-        namespace Responses {
-            export type $200 = Components.Schemas.UserDetail;
         }
     }
     namespace CamundaTaskCompleteCreate {
@@ -1218,7 +1196,7 @@ declare namespace Paths {
     }
     namespace PermissionsList {
         namespace Responses {
-            export type $200 = Components.Schemas.Permission[];
+            export type $200 = string[];
         }
     }
     namespace PushCreate {
@@ -1433,6 +1411,22 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedViolationTypeList;
+        }
+    }
+    namespace UsersList {
+        namespace Parameters {
+            export type Page = number;
+        }
+        export interface QueryParameters {
+            page?: Parameters.Page;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedUserList;
+        }
+    }
+    namespace UsersMeRetrieve {
+        namespace Responses {
+            export type $200 = Components.Schemas.UserDetail;
         }
     }
     namespace VisitsCreate {

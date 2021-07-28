@@ -1,5 +1,5 @@
 import { Spinner } from "@amsterdam/asc-ui"
-import { useUsersMe } from "app/state/rest"
+import usePermissions from "app/state/rest/custom/usePermissions/usePermissions"
 
 /*
  ** IsAuthorizedWrapper is used to manage permissions.
@@ -13,10 +13,7 @@ type Props = {
 
 const IsAuthorizedWrapper: React.FC<Props> = ({ permissionName, children }) => {
 
-  const [me, { isBusy }] = useUsersMe()
-  const allPermissions = me?.groups?.map(group => group.permissions).flat() as unknown as string[]
-  const permissions = allPermissions?.filter((permission, index, arr) => arr.indexOf(permission) === index)
-  console.log(me, permissions)
+  const [permissions, { isBusy }] = usePermissions()
   const hasPermission = permissions?.includes(permissionName)
 
   return (

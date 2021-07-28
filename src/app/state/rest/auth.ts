@@ -16,7 +16,7 @@ export const useIsAuthorized = (options?: Options) => {
 
 export const usePermissions = (options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<Components.Schemas.Permission[]>({
+  return useApiRequest<string[]>({
     ...options,
     url: makeApiUrl("permissions"),
     groupName: "auth",
