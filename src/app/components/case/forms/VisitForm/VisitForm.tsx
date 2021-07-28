@@ -4,7 +4,7 @@ import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
 
 import ScaffoldFields from "app/components/shared/Form/ScaffoldFields"
 import scaffold from "./scaffold"
-import { useAuthors, useVisitsCreate } from "app/state/rest"
+import { useUsers, useVisitsCreate } from "app/state/rest"
 import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
 import navigateTo from "app/routing/navigateTo"
 
@@ -19,7 +19,7 @@ const mapData = (data: VisitData) => ({ ...data, author_ids: filterUndefined([da
 
 const VisitForm: React.FC<Props> = ({ id, camundaTaskId }) => {
 
-  const [data] = useAuthors()
+  const [data] = useUsers()
   const authors = data?.results ?? []
 
   const [, { execPost }] = useVisitsCreate()
