@@ -2,7 +2,7 @@
 import { Router as ReachRouter } from "@reach/router"
 
 import routes from "app/routing/routes"
-import ProtectedRoute from "./ProtectedRoute"
+import ProtectedPage from "./ProtectedPage"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
 
 const Router: React.FC = () => (
@@ -10,10 +10,10 @@ const Router: React.FC = () => (
     {
       Object
         .entries(routes)
-        .map(([path, { publicly, Page }]) =>
+        .map(([path, { publicly, Page, permissionName }]) =>
           publicly ?
             <Page key={path} path={path} /> :
-            <ProtectedRoute key={path} path={path} page={Page} />)
+            <ProtectedPage key={path} path={path} page={Page} permissionName={permissionName} />)
     }
     <NotFoundPage default />
   </ReachRouter>

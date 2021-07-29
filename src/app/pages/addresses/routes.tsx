@@ -33,7 +33,8 @@ export default {
           "nieuw": {
             Page: CreateCasePage,
             icon: "Edit",
-            title: "Nieuwe zaak aanmaken"
+            title: "Nieuwe zaak aanmaken",
+            permissionName: "add_case"
           }
         }
       }
