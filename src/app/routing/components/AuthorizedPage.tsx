@@ -1,28 +1,27 @@
 import { RouteComponentProps } from "@reach/router"
-import { Spinner } from "@amsterdam/asc-ui"
 
 import NotAuthorizedPage from "app/pages/auth/NotAuthorizedPage"
-import { usePermissions } from "app/state/rest"
+import { useHasPermission } from "app/state/rest"
+import SpinnerWrap from "app/components/shared/ConfirmScaffoldForm/components/SpinnerWrap"
 
 type Props = {
   page: React.ComponentType
-  permissionName?: keyof MockComponents.Schemas.Permissions["permissions"]
+  permissionName?: string
 } & RouteComponentProps
 
 /**
- * The user needs the applicable permission to visit this route.
+ * The user needs the applicable permission to visit this page.
  */
+
 const AuthorizedPage: React.FC<Props> = ({ page: Page, permissionName, ...restProps }) => {
-  console.log("permissionName", permissionName)
-  const [permissions, { isBusy }] = usePermissions()
-  const hasPermission = permissionName ? permissions?.permissions[permissionName] : false
+  const [hasPermission, isBusy] = useHasPermission(permissionName)
 
   return (
     isBusy ?
-      <Spinner /> :
+      <SpinnerWrap /> :
       hasPermission ?
-        <Page {...restProps} />
-      : <NotAuthorizedPage />
+      <Page {...restProps} /> : 
+      <NotAuthorizedPage />
   )
 }
 

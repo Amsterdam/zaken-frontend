@@ -5,7 +5,7 @@ import AuthorizedPage from "./AuthorizedPage"
 
 type Props = {
   page: React.ComponentType
-  permissionName?: keyof MockComponents.Schemas.Permissions["permissions"]
+  permissionName?: string
 } & RouteComponentProps
 
 /**

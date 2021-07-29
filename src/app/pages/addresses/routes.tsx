@@ -34,7 +34,7 @@ export default {
             Page: CreateCasePage,
             icon: "Edit",
             title: "Nieuwe zaak aanmaken",
-            permissionName: "can_add_case"
+            permissionName: "add_case"
           }
         }
       }

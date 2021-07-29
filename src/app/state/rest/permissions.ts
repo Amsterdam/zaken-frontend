@@ -13,3 +13,9 @@ export const usePermissions = (options?: Options) => {
       isProtected: true
     })
   }
+
+  export const useHasPermission = (permissionName?: string) => {
+    const [permissions, { isBusy }] = usePermissions()
+    const hasPermission = permissionName && permissions?.includes(permissionName)
+    return [hasPermission, isBusy] as const
+  }
