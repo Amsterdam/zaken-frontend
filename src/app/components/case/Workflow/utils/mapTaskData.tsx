@@ -1,3 +1,4 @@
+import { List } from "@amsterdam/wonen-ui"
 import styled from "styled-components"
 import to from "app/routing/utils/to"
 import ChangeableDueDate from "app/components/case/tasks/ChangeDueDate/ChangebleDueDate"
@@ -5,7 +6,6 @@ import CompleteTaskButton from "app/components/case/tasks/CompleteTask/CompleteT
 import CamundaFormButton from "app/components/case/tasks/CamundaTask/CamundaFormButton"
 import taskActionMap from "./taskActionMap"
 import LockIcon from "../components/LockIcon"
-import List from "../components/List"
 import TableAction from "app/components/shared/Table/components/TableAction/TableAction"
 
 // This width value (113px) is the width of a date + edit icon including the spacing between them
@@ -29,7 +29,7 @@ export default (
       itemList: [
         <LockIcon />,
         name,
-        roles ? <List items={ roles } /> : "-",
+        <List data={ roles } emptyPlaceholder="-" />,
         due_date ?
           <ChangeableDueDate dueDate={ due_date } caseId={ id } camundaTaskId={ camunda_task_id } /> :
           <Span>-</Span>,

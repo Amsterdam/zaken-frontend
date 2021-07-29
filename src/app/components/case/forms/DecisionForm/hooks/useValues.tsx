@@ -1,6 +1,5 @@
-import List from "app/components/shared/List/List"
 import { capitalizeString } from "app/components/shared/Helpers/helpers"
-import { PersonNameDisplay, PersonRoleDisplay } from "@amsterdam/wonen-ui"
+import { List, PersonNameDisplay, PersonRoleDisplay } from "@amsterdam/wonen-ui"
 
 export default (summon?: Components.Schemas.Summon) => {
 
@@ -22,7 +21,7 @@ export default (summon?: Components.Schemas.Summon) => {
 
   const values = [
     ["Aanschrijving", type_name],
-    ["Aangeschrevene(n)", <List items={ personNames } />]
+    ["Aangeschrevene(n)", <List data={ personNames } />]
   ]
 
   return Object.fromEntries(values)
