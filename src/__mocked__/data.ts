@@ -22,7 +22,7 @@ const roles: MockComponents.Schemas.Role[] = [
 
 const permissions: MockComponents.Schemas.Permissions = {
   permissions: {
-    can_add_case: true
+    can_add_case: false
   }
 }
 
