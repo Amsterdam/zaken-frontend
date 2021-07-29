@@ -40,7 +40,7 @@ const PermitDetail: React.FC<Props> = ({ permit }) => {
           </HeadingSpan>
         }
         headingSize="h4"
-        values={ values }
+        data={ values }
       />
     </Div>
   )

@@ -12,7 +12,7 @@ const FinesSearchResult: React.FC<Props> = ({ fine }) => {
   return (
     <DefinitionList
       numLoadingRows={ 3 }
-      values={ values }
+      data={ values }
     />
   )
 }

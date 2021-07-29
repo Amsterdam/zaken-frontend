@@ -63,7 +63,7 @@ const ConfirmScaffoldFields = <T extends RequestBody>(props: Props<T>) => {
         <Heading>{ title }</Heading>
       }
       <Wrap>
-        <DefinitionList values={ values } />
+        <DefinitionList data={ values } />
         <ButtonWrap>
           <Button variant="primaryInverted" onClick={ onCancel }>{ cancelTitle }</Button>
           <Button variant="secondary" onClick={ onSubmitWrap }>{ submitTitle }</Button>

@@ -1,6 +1,6 @@
 import { useFine } from "app/state/rest"
 import { Heading, Spinner } from "@amsterdam/asc-ui"
-import List from "app/components/shared/List/List"
+import { List } from "@amsterdam/wonen-ui"
 import FinesSearchResult from "./FinesSearchResult"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 
@@ -21,7 +21,7 @@ const FinesSearchResultsList: React.FC<Props> = ({ searchString }) => {
           { items.length > 0 ?
             <>
               <Heading as="h2">Resultaat invorderingscheck</Heading>
-              <List items={ items } />
+              <List data={ items } />
             </> :
             searchString.length > 0 &&
             <>

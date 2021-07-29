@@ -28,7 +28,7 @@ const VacationRental: React.FC<Props> = ({ bagId }) => {
               <Paragraph>Geen vakantieverhuur meldingen</Paragraph>
             </> :
             <>
-              <DefinitionList title={ title } values={ values } headingSize="h4" />
+              <DefinitionList title={ title } data={ values } headingSize="h4" />
               { reports.map(({ check_in_date, check_out_date, is_cancellation }, index: number) =>
                   <VacationRentalReport
                     key={ index }

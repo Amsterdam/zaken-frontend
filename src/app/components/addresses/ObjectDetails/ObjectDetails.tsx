@@ -18,7 +18,7 @@ const ObjectDetails: React.FC<Props> = ({ bagId }) => {
   return <DefinitionList
     isLoading={ isBusy }
     title="Objectdetails"
-    values={ values }
+    data={ values }
   />
 }
 

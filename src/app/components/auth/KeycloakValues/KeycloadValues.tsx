@@ -9,7 +9,7 @@ const KeycloakValues: React.FC = () => {
   const tokenParsed = keycloak.tokenParsed as KeycloakTokenParsedExtended
   const values = useValues(keycloak, tokenParsed)
 
-  return <DefinitionList values={ values } />
+  return <DefinitionList data={ values } />
 }
 
 export default KeycloakValues
