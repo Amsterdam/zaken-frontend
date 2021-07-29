@@ -24,7 +24,7 @@ const DecisionHeader: React.FC<Props> = ({ caseId, camundaTaskId }) => {
       numLoadingRows={ 2 }
       title="Besluit naar aanleiding van"
       headingSize="h4"
-      values={ values }
+      data={ values }
       noValuesPlaceholder="Geen aanschrijving aanwezig"
     />
   )

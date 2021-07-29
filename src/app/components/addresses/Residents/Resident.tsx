@@ -22,7 +22,7 @@ const Resident: React.FC<Props> = ({ resident, num }) => {
     <DefinitionList
       title={ title }
       headingSize="h3"
-      values={ values }
+      data={ values }
     />
   )
 }

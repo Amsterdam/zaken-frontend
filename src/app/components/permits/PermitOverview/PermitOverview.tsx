@@ -34,7 +34,7 @@ const PermitOverview: React.FC<Props> = ({ bagId }) => {
               <Heading forwardedAs="h2">Vergunningen</Heading>
               <Paragraph>Geen vergunningen gevonden</Paragraph>
             </> :
-            <DefinitionList isLoading={ isBusy } numLoadingRows={ 2 } values={ values } title="Vergunningen" />
+            <DefinitionList isLoading={ isBusy } numLoadingRows={ 2 } title="Vergunningen" data={ values } />
           }
           <StyledLink to={ to("/adres/:bagId/vergunningen", { bagId })} >Alle vergunningen details</StyledLink>
         </>

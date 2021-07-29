@@ -14,7 +14,7 @@ const VactionRentalReport: React.FC<Props> = ({ checkInDate, checkOutDate, isCan
   const title = `${ isCancellation ? "Afmelding" : "Melding" } (${ nightsRented } nachten)`
   const values = useVacationRentalReportValues(checkInDate, checkOutDate)
 
-  return <DefinitionList title={ title } values={ values } headingSize="h4" />
+  return <DefinitionList title={ title } data={ values } headingSize="h4" />
 }
 
 export default VactionRentalReport

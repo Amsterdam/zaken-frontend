@@ -8,7 +8,7 @@ export default (summon?: Components.Schemas.Summon) => {
 
   const { persons, type_name } = summon
 
-  const personNames = persons.map(({ first_name, last_name, preposition, person_role }) => 
+  const personNames = persons.map(({ first_name, last_name, preposition, person_role }) =>
     <>
       <PersonNameDisplay
         firstName={ capitalizeString(first_name) }

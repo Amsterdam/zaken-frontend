@@ -15,7 +15,7 @@ const CaseDetails: React.FC<Props> = ({ caseId }) => {
     <DefinitionList
       isLoading={ isBusy }
       numLoadingRows={ 3 }
-      values={ values }
+      data={ values }
     />
   )
 }
