@@ -1,7 +1,7 @@
 import { RouteComponentProps } from "@reach/router"
 
 import NotAuthorizedPage from "app/pages/auth/NotAuthorizedPage"
-import { useHasPermission } from "app/state/rest"
+import useHasPermission from "app/state/rest/custom/usePermissions/useHasPermission"
 import SpinnerWrap from "app/components/shared/ConfirmScaffoldForm/components/SpinnerWrap"
 
 type Props = {
@@ -19,8 +19,8 @@ const AuthorizedPage: React.FC<Props> = ({ page: Page, permissionName, ...restPr
   return (
     isBusy ?
       <SpinnerWrap /> :
-      hasPermission ?
-      <Page {...restProps} /> : 
+    hasPermission ?
+      <Page {...restProps} /> :
       <NotAuthorizedPage />
   )
 }

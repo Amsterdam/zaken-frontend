@@ -14,13 +14,13 @@ type Props = {
 const ProtectedPage: React.FC<Props> = (props) => {
   const { page: Page, permissionName, ...restProps } = props
   const { token } = useKeycloak()
-  
+
+  if (token === undefined) return null
+
   return (
-    token
-    ? permissionName 
-    ? <AuthorizedPage {...props} /> 
-    : <Page {...restProps} />
-    : null
+    permissionName !== undefined ?
+      <AuthorizedPage { ...props } /> :
+      <Page { ...restProps } />
   )
 }
 
