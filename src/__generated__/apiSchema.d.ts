@@ -76,6 +76,7 @@ declare namespace Components {
             form_variables: {
                 [name: string]: any;
             };
+            can_do?: boolean;
         }
         /**
          * Used to complete a task in Camunda.
@@ -238,12 +239,43 @@ declare namespace Components {
             case: number;
             decision_type: number;
         }
+        export interface DecisionSanction {
+            id: number;
+            address: {
+                bag_id: string;
+                id: number;
+                full_address: string;
+                street_name: string;
+                number: number;
+                suffix_letter: string;
+                suffix: string;
+                postal_code: string;
+                lat: number; // float
+                lng: number; // float
+            };
+            theme: {
+                id: number;
+                name: string;
+                case_state_types_top?: number[];
+            };
+            decision_type: {
+                id: number;
+                name: string;
+            };
+            sanction_amount?: string | null; // decimal ^\d{0,98}(\.\d{0,2})?$
+            date_added: string; // date-time
+            sanction_id?: string | null;
+        }
         export interface DecisionType {
             id: number;
             camunda_option: string;
             name: string;
             is_sanction?: boolean;
             theme: number;
+        }
+        export interface DecisionTypeName {
+            id: number;
+            name: string;
         }
         export interface Decos {
             permits: Permit[];
@@ -292,7 +324,7 @@ declare namespace Components {
         }
         export type GeslachtsaanduidingEnum = "M" | "V" | "X";
         export interface Group {
-            permissions: string[];
+            permissions: PermissionsEnum[];
             name: string;
         }
         export type IndicatieBetHernBevelEnum = "J" | "N";
@@ -517,6 +549,24 @@ declare namespace Components {
             previous?: string | null; // uri
             results?: Decision[];
         }
+        export interface PaginatedDecisionSanctionList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=4
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null; // uri
+            results?: DecisionSanction[];
+        }
         export interface PaginatedDecisionTypeList {
             /**
              * example:
@@ -680,6 +730,7 @@ declare namespace Components {
             description?: string | null;
             author?: string | null; // uuid
         }
+        export type PermissionsEnum = "add_address" | "change_address" | "delete_address" | "view_address" | "add_logentry" | "change_logentry" | "delete_logentry" | "view_logentry" | "add_group" | "change_group" | "delete_group" | "view_group" | "add_permission" | "change_permission" | "delete_permission" | "view_permission" | "add_token" | "change_token" | "delete_token" | "view_token" | "add_tokenproxy" | "change_tokenproxy" | "delete_tokenproxy" | "view_tokenproxy" | "add_accessattempt" | "change_accessattempt" | "delete_accessattempt" | "view_accessattempt" | "add_accesslog" | "change_accesslog" | "delete_accesslog" | "view_accesslog" | "add_camundaprocess" | "change_camundaprocess" | "delete_camundaprocess" | "view_camundaprocess" | "add_genericcompletedtask" | "change_genericcompletedtask" | "delete_genericcompletedtask" | "view_genericcompletedtask" | "add_case" | "change_case" | "delete_case" | "view_case" | "add_caseclose" | "change_caseclose" | "delete_caseclose" | "view_caseclose" | "add_caseclosereason" | "change_caseclosereason" | "delete_caseclosereason" | "view_caseclosereason" | "add_casecloseresult" | "change_casecloseresult" | "delete_casecloseresult" | "view_casecloseresult" | "add_caseprocessinstance" | "change_caseprocessinstance" | "delete_caseprocessinstance" | "view_caseprocessinstance" | "add_caseproject" | "change_caseproject" | "delete_caseproject" | "view_caseproject" | "add_casereason" | "change_casereason" | "delete_casereason" | "view_casereason" | "add_casestate" | "change_casestate" | "delete_casestate" | "view_casestate" | "add_casestatetype" | "change_casestatetype" | "delete_casestatetype" | "view_casestatetype" | "add_caseteam" | "add_casetheme" | "change_caseteam" | "change_casetheme" | "delete_caseteam" | "delete_casetheme" | "view_caseteam" | "view_casetheme" | "add_casetimelinereaction" | "change_casetimelinereaction" | "delete_casetimelinereaction" | "view_casetimelinereaction" | "add_casetimelinesubject" | "change_casetimelinesubject" | "delete_casetimelinesubject" | "view_casetimelinesubject" | "add_casetimelinethread" | "change_casetimelinethread" | "delete_casetimelinethread" | "view_casetimelinethread" | "add_casetype" | "add_project" | "change_casetype" | "change_project" | "delete_casetype" | "delete_project" | "view_casetype" | "view_project" | "add_citizenreport" | "change_citizenreport" | "delete_citizenreport" | "view_citizenreport" | "add_openzaakstate" | "add_state" | "change_openzaakstate" | "change_state" | "delete_openzaakstate" | "delete_state" | "view_openzaakstate" | "view_state" | "add_openzaakstatetype" | "add_statetype" | "change_openzaakstatetype" | "change_statetype" | "delete_openzaakstatetype" | "delete_statetype" | "view_openzaakstatetype" | "view_statetype" | "add_contenttype" | "change_contenttype" | "delete_contenttype" | "view_contenttype" | "add_testmodel" | "change_testmodel" | "delete_testmodel" | "view_testmodel" | "add_debriefing" | "change_debriefing" | "delete_debriefing" | "view_debriefing" | "add_decision" | "change_decision" | "delete_decision" | "view_decision" | "add_decisiontype" | "change_decisiontype" | "delete_decisiontype" | "view_decisiontype" | "add_clockedschedule" | "change_clockedschedule" | "delete_clockedschedule" | "view_clockedschedule" | "add_crontabschedule" | "change_crontabschedule" | "delete_crontabschedule" | "view_crontabschedule" | "add_intervalschedule" | "change_intervalschedule" | "delete_intervalschedule" | "view_intervalschedule" | "add_periodictask" | "change_periodictask" | "delete_periodictask" | "view_periodictask" | "add_periodictasks" | "change_periodictasks" | "delete_periodictasks" | "view_periodictasks" | "add_solarschedule" | "change_solarschedule" | "delete_solarschedule" | "view_solarschedule" | "add_chordcounter" | "change_chordcounter" | "delete_chordcounter" | "view_chordcounter" | "add_groupresult" | "change_groupresult" | "delete_groupresult" | "view_groupresult" | "add_taskresult" | "change_taskresult" | "delete_taskresult" | "view_taskresult" | "add_caseevent" | "add_event" | "change_caseevent" | "change_event" | "delete_caseevent" | "delete_event" | "view_caseevent" | "view_event" | "add_fine" | "change_fine" | "delete_fine" | "view_fine" | "add_action" | "change_action" | "delete_action" | "view_action" | "add_daysegment" | "change_daysegment" | "delete_daysegment" | "view_daysegment" | "add_priority" | "change_priority" | "delete_priority" | "view_priority" | "add_schedule" | "change_schedule" | "delete_schedule" | "view_schedule" | "add_weeksegment" | "change_weeksegment" | "delete_weeksegment" | "view_weeksegment" | "add_session" | "change_session" | "delete_session" | "view_session" | "add_summon" | "change_summon" | "delete_summon" | "view_summon" | "add_summonedperson" | "change_summonedperson" | "delete_summonedperson" | "view_summonedperson" | "add_summontype" | "change_summontype" | "delete_summontype" | "view_summontype" | "add_supportcontact" | "change_supportcontact" | "delete_supportcontact" | "view_supportcontact" | "add_user" | "change_user" | "delete_user" | "view_user" | "add_visit" | "change_visit" | "delete_visit" | "view_visit" | "add_nlxconfig" | "change_nlxconfig" | "delete_nlxconfig" | "view_nlxconfig" | "add_service" | "change_service" | "delete_service" | "view_service";
         export interface Permit {
             permit_granted: PermitGrantedEnum;
             permit_type: string;
@@ -1161,14 +1212,47 @@ declare namespace Paths {
     namespace DecisionsList {
         namespace Parameters {
             export type Case = number;
+            export type DateAdded = string; // date-time
+            export type DateAddedGt = string; // date-time
+            export type DateAddedGte = string; // date-time
+            export type DateAddedLt = string; // date-time
+            export type DateAddedLte = string; // date-time
             export type Page = number;
         }
         export interface QueryParameters {
             case?: Parameters.Case;
+            date_added?: Parameters.DateAdded /* date-time */;
+            date_added__gt?: Parameters.DateAddedGt /* date-time */;
+            date_added__gte?: Parameters.DateAddedGte /* date-time */;
+            date_added__lt?: Parameters.DateAddedLt /* date-time */;
+            date_added__lte?: Parameters.DateAddedLte /* date-time */;
             page?: Parameters.Page;
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedDecisionList;
+        }
+    }
+    namespace DecisionsSanctionsList {
+        namespace Parameters {
+            export type Case = number;
+            export type DateAdded = string; // date-time
+            export type DateAddedGt = string; // date-time
+            export type DateAddedGte = string; // date-time
+            export type DateAddedLt = string; // date-time
+            export type DateAddedLte = string; // date-time
+            export type Page = number;
+        }
+        export interface QueryParameters {
+            case?: Parameters.Case;
+            date_added?: Parameters.DateAdded /* date-time */;
+            date_added__gt?: Parameters.DateAddedGt /* date-time */;
+            date_added__gte?: Parameters.DateAddedGte /* date-time */;
+            date_added__lt?: Parameters.DateAddedLt /* date-time */;
+            date_added__lte?: Parameters.DateAddedLte /* date-time */;
+            page?: Parameters.Page;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedDecisionSanctionList;
         }
     }
     namespace FinesRetrieve {

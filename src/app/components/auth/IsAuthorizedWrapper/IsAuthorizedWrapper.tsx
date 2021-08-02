@@ -8,7 +8,7 @@ import useHasPermission from "app/state/rest/custom/usePermissions/useHasPermiss
  */
 
 type Props = {
-  permissionName: string
+  permissionName: Components.Schemas.PermissionsEnum
 }
 
 const IsAuthorizedWrapper: React.FC<Props> = ({ permissionName, children }) => {
