@@ -20,7 +20,7 @@ export default (
   ) =>
   (data: Components.Schemas.CamundaTask) => {
 
-    const { task_name_id, camunda_task_id, name, roles, due_date, form } = data
+    const { task_name_id, camunda_task_id, name, roles, due_date, form, can_do } = data
     const action = taskActionMap[task_name_id]
     const onSubmitTaskComplete = (variables: Components.Schemas.CamundaTask["form"] = {}) =>
       execPost({ case: id, camunda_task_id, variables })
@@ -34,18 +34,14 @@ export default (
           <ChangeableDueDate dueDate={ due_date } caseId={ id } camundaTaskId={ camunda_task_id } /> :
           <Span>-</Span>,
         action !== undefined ?
-          action.disabled ?
-            <TableAction
-              title={ to(`/zaken/:id/${ action.target }/:camundaTaskId`, { id, camundaTaskId: camunda_task_id }) }
-              disabled={ true }
-            >{ action.name }</TableAction> :
-            <TableAction
-              to={ to(`/zaken/:id/${ action.target }/:camundaTaskId`, { id, camundaTaskId: camunda_task_id }) }
-            >{ action.name }</TableAction>
+          <TableAction
+            title={ to(`/zaken/:id/${ action.target }/:camundaTaskId`, { id, camundaTaskId: camunda_task_id }) }
+            disabled={ action.disabled ?? !can_do }
+          >{ action.name }</TableAction>
         :
         form ?
-          <CamundaFormButton onSubmit={ onSubmitTaskComplete } taskName={ name } caseId={ id } form={ form } /> :
-          <CompleteTaskButton onSubmit={ onSubmitTaskComplete } taskName={ name } caseId={ id } />
+          <CamundaFormButton onSubmit={ onSubmitTaskComplete } taskName={ name } caseId={ id } form={ form } disabled={ !can_do } /> :
+          <CompleteTaskButton onSubmit={ onSubmitTaskComplete } taskName={ name } caseId={ id } disabled={ !can_do } />
       ]
     })
   }
