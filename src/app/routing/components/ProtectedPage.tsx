@@ -5,17 +5,18 @@ import AuthorizedPage from "./AuthorizedPage"
 
 type Props = {
   page: React.ComponentType
-  permissionName?: string
+  permissionName?: Components.Schemas.PermissionsEnum
 } & RouteComponentProps
 
 /**
  * The user needs to be logged on to visit this route
  */
 const ProtectedPage: React.FC<Props> = (props) => {
-  const { page: Page, permissionName, ...restProps } = props
   const { token } = useKeycloak()
 
   if (token === undefined) return null
+
+  const { page: Page, permissionName, ...restProps } = props
 
   return (
     permissionName !== undefined ?
