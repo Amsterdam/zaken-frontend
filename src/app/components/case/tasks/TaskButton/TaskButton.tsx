@@ -17,15 +17,15 @@ const TaskButton: React.FC<Props> = ({ onSubmit, taskName, caseId, form, disable
 
   return (
     <>
-      <TableAction onClick={ openModal } disabled={ disabled }>{ form !== undefined ? "Uitkomst" : "Taak afronden" }</TableAction>
-      { form !== undefined ?
+      <TableAction onClick={ openModal } disabled={ disabled }>{ form ? "Uitkomst" : "Taak afronden" }</TableAction>
+      { form ?
         <CamundaFormModal
           taskName={ taskName }
           caseId={ caseId }
           onSubmit={ onSubmit }
           isOpen={ isModalOpen }
           closeModal={ closeModal }
-          form={ form! }
+          form={ form }
         /> :
         <CompleteTaskModal
           taskName={ taskName }
