@@ -14,7 +14,7 @@ export type Props = {
 }
 
 const CamundaFormModal: React.FC<Props> = ({ isOpen, closeModal, onSubmit, taskName, caseId, form }) => {
-  const title = `Is de taak "${ taskName }" afgerond?`
+  const title = `Rond de taak "${ taskName }" af`
   const { addSuccessFlashMessage } = useFlashMessages()
 
   const onSubmitWrap = async ( variables: Components.Schemas.CamundaTaskComplete["variables"]) => {

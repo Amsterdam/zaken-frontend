@@ -3,7 +3,6 @@ import styled from "styled-components"
 import to from "app/routing/utils/to"
 import ChangeableDueDate from "app/components/case/tasks/ChangeDueDate/ChangebleDueDate"
 import CompleteTaskButton from "app/components/case/tasks/CompleteTask/CompleteTaskButton"
-import CamundaFormButton from "app/components/case/tasks/CamundaTask/CamundaFormButton"
 import taskActionMap from "./taskActionMap"
 import LockIcon from "../components/LockIcon"
 import TableAction from "app/components/shared/Table/components/TableAction/TableAction"
@@ -37,11 +36,8 @@ export default (
           <TableAction
             title={ to(`/zaken/:id/${ action.target }/:camundaTaskId`, { id, camundaTaskId: camunda_task_id }) }
             disabled={ action.disabled ?? !can_do }
-          >{ action.name }</TableAction>
-        :
-        form ?
-          <CamundaFormButton onSubmit={ onSubmitTaskComplete } taskName={ name } caseId={ id } form={ form } disabled={ !can_do } /> :
-          <CompleteTaskButton onSubmit={ onSubmitTaskComplete } taskName={ name } caseId={ id } disabled={ !can_do } />
+          >{ action.name }</TableAction> :
+          <CompleteTaskButton onSubmit={ onSubmitTaskComplete } taskName={ name } caseId={ id } form={ form } disabled={ !can_do } />
       ]
     })
   }

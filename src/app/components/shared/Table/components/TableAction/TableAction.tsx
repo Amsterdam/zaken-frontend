@@ -18,13 +18,7 @@ const TableAction: React.FC<Props> = ({ to, children, ...restProps }) => {
     </Button>
   )
 
-  return (
-    to !== undefined ?
-    <ButtonLink to={ to }>
-      { Action }
-    </ButtonLink> :
-    Action
-  )
+  return to ? <ButtonLink to={ to }>{ Action }</ButtonLink> : Action
 }
 
 export default TableAction
