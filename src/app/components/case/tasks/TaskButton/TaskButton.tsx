@@ -1,7 +1,6 @@
 import { useModal } from "app/components/shared/Modal/hooks/useModal"
 import TableAction from "app/components/shared/Table/components/TableAction/TableAction"
-import CompleteTaskModal from "../CompleteTask/CompleteTaskModal"
-import CamundaFormModal from "../CamundaTask/CamundaFormModal"
+import FormModal from "../FormModal/FormModal"
 
 type Props = {
   onSubmit: (variables: Components.Schemas.CamundaTaskComplete["variables"]) => Promise<unknown>
@@ -18,23 +17,14 @@ const TaskButton: React.FC<Props> = ({ onSubmit, taskName, caseId, form, disable
   return (
     <>
       <TableAction onClick={ openModal } disabled={ disabled }>Taak afronden</TableAction>
-      { form ?
-        <CamundaFormModal
-          taskName={ taskName }
-          caseId={ caseId }
-          onSubmit={ onSubmit }
-          isOpen={ isModalOpen }
-          closeModal={ closeModal }
-          form={ form }
-        /> :
-        <CompleteTaskModal
-          taskName={ taskName }
-          caseId={ caseId }
-          onSubmit={ onSubmit }
-          isOpen={ isModalOpen }
-          closeModal={ closeModal }
-        />
-      }
+      <FormModal
+        taskName={ taskName }
+        caseId={ caseId }
+        onSubmit={ onSubmit }
+        isOpen={ isModalOpen }
+        closeModal={ closeModal }
+        form={ form }
+      />
     </>
   )
 }
