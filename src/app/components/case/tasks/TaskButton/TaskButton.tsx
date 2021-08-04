@@ -1,6 +1,6 @@
 import { useModal } from "app/components/shared/Modal/hooks/useModal"
 import TableAction from "app/components/shared/Table/components/TableAction/TableAction"
-import CompleteTaskModal from "./CompleteTaskModal"
+import CompleteTaskModal from "../CompleteTask/CompleteTaskModal"
 import CamundaFormModal from "../CamundaTask/CamundaFormModal"
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
   disabled?: boolean
 }
 
-const CompleteTaskButton: React.FC<Props> = ({ onSubmit, taskName, caseId, form, disabled = false }) => {
+const TaskButton: React.FC<Props> = ({ onSubmit, taskName, caseId, form, disabled = false }) => {
 
   const { isModalOpen, openModal, closeModal } = useModal()
 
@@ -39,4 +39,4 @@ const CompleteTaskButton: React.FC<Props> = ({ onSubmit, taskName, caseId, form,
   )
 }
 
-export default CompleteTaskButton
+export default TaskButton

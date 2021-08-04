@@ -2,7 +2,7 @@ import { List } from "@amsterdam/wonen-ui"
 import styled from "styled-components"
 import to from "app/routing/utils/to"
 import ChangeableDueDate from "app/components/case/tasks/ChangeDueDate/ChangebleDueDate"
-import CompleteTaskButton from "app/components/case/tasks/CompleteTask/CompleteTaskButton"
+import TaskButton from "app/components/case/tasks/TaskButton/TaskButton"
 import taskActionMap from "./taskActionMap"
 import LockIcon from "../components/LockIcon"
 import TableAction from "app/components/shared/Table/components/TableAction/TableAction"
@@ -37,7 +37,7 @@ export default (
             title={ to(`/zaken/:id/${ action.target }/:camundaTaskId`, { id, camundaTaskId: camunda_task_id }) }
             disabled={ action.disabled ?? !can_do }
           >{ action.name }</TableAction> :
-          <CompleteTaskButton onSubmit={ onSubmitTaskComplete } taskName={ name } caseId={ id } form={ form } disabled={ !can_do } />
+          <TaskButton onSubmit={ onSubmitTaskComplete } taskName={ name } caseId={ id } form={ form } disabled={ !can_do } />
       ]
     })
   }
