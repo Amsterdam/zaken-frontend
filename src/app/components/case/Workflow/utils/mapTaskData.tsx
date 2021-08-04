@@ -19,10 +19,14 @@ export default (
   ) =>
   (data: Components.Schemas.CamundaTask) => {
 
-    const { task_name_id, camunda_task_id, name, roles, due_date, form, can_do } = data
+    const { task_name_id, camunda_task_id, name, roles, due_date, form/*, can_do */ } = data
     const action = taskActionMap[task_name_id]
     const onSubmitTaskComplete = (variables: Components.Schemas.CamundaTask["form"] = {}) =>
       execPost({ case: id, camunda_task_id, variables })
+
+    // TODO: enable when backend is ready and probably rename
+    //const disabled = can_do!
+    const disabled = false
 
     return ({
       itemList: [
@@ -35,9 +39,9 @@ export default (
         action !== undefined ?
           <TableAction
             title={ to(`/zaken/:id/${ action.target }/:camundaTaskId`, { id, camundaTaskId: camunda_task_id }) }
-            disabled={ action.disabled ?? !can_do }
+            disabled={ action.disabled ?? disabled }
           >{ action.name }</TableAction> :
-          <TaskButton onSubmit={ onSubmitTaskComplete } taskName={ name } caseId={ id } form={ form } disabled={ !can_do } />
+          <TaskButton onSubmit={ onSubmitTaskComplete } taskName={ name } caseId={ id } form={ form } disabled={ disabled } />
       ]
     })
   }
