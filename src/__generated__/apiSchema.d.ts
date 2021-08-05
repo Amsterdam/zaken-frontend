@@ -76,7 +76,7 @@ declare namespace Components {
             form_variables: {
                 [name: string]: any;
             };
-            can_do?: boolean;
+            has_user_permission?: boolean;
         }
         /**
          * Used to complete a task in Camunda.
