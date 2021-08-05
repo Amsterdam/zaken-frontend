@@ -97,17 +97,6 @@ const Table: React.FC<Props> = ({
       <HorizontalScrollContainer fixedColumnWidth={ fixedColumnWidth }>
         <StyledTable>
           { (showHeadWhenEmpty || !isEmpty) &&
-            <thead>
-              <Row>
-                { columns.map(({ header, minWidth }, index) =>
-                  <TableHeading key={ index } minWidth={ minWidth } isFixed={ hasFixedColumn && index === columns.length - 1 }>
-                    { header ?? <>&nbsp;</> }
-                  </TableHeading>
-                ) }
-              </Row>
-            </thead>
-          }
-          { (showHeadWhenEmpty || !isEmpty) &&
             <TableHeader columns={ columns } hasFixedColumn={ hasFixedColumn } onChangeTableSort={ onChangeTableSort }/>
           }
           
@@ -124,13 +113,13 @@ const Table: React.FC<Props> = ({
               </Row>
             ) }
             { loading && createLoadingData(columns.length, numLoadingRows).map( (row, index) =>
-            <Row key={index}>
-              { row.map( (cell, index) => hasFixedColumn && index === row.length - 1
+              <Row key={index}>
+                { row.map( (cell, index) => hasFixedColumn && index === row.length - 1
                     ? <FixedTableCell key={index} width={ fixedColumnWidth }>{ cell ?? <>&nbsp;</> }</FixedTableCell>
                     : <TableCell key={index}>{ loading ? <SmallSkeleton maxRandomWidth={ (columns[index].minWidth ?? 30) - 30} /> : cell ?? <>&nbsp;</> }</TableCell>
-              ) }
-            </Row>
-          ) }
+                ) }
+              </Row>
+            ) }
             { !loading && isEmpty && (
               <tr>
                 <NoValuesPlaceholder colSpan={columns.length}>

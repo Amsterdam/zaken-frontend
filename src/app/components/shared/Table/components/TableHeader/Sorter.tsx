@@ -14,7 +14,8 @@ type LabelProps = {
 }
 
 type IconProps = {
-  visibility?: string 
+  isSelected: boolean
+  sortOrder: string
 }
 
 const StyledLabel = styled.div<LabelProps>`
@@ -33,24 +34,36 @@ const StyledLabel = styled.div<LabelProps>`
 
 const StyledIcon = styled(Icon)<IconProps>`
   margin: -${ themeSpacing(0.5) } ${ themeSpacing(1) } 0 ${ themeSpacing(2) };
-  visibility: ${ props => props.visibility };
+  visibility: ${ ({ isSelected }) => isSelected ? "visible" : "hidden" };
   color: ${ themeColor("tint", "level6") };
-  // animation: rotate 10.3s ease 0s;
-  // @-webkit-keyframes rotate {
-  //   0% { -webkit-transform: rotate(0deg); }
-  //   100% { -webkit-transform: rotate(360deg); }
-  // }
-  // @keyframes rotate {
-  //   0% { transform: rotate(0deg); }
-  //   100% { transform: rotate(360deg); }
-  }                     
+  &:active {
+    ${ ({ isSelected, sortOrder }) => isSelected && 
+      `animation: ${ sortOrder === "descend" ? "rotate-back" : "rotate" } 0.3s ease 0s;`
+    }
+  }
+  @-webkit-keyframes rotate {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(180deg); }
+  }
+  @keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(180deg); }
+  } 
+  @-webkit-keyframes rotate-back {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(-180deg); }
+  }
+  @keyframes rotate-back {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(-180deg); }
+  }                         
 `
 
 const Sorter: React.FC<Props> = ({ header, dataIndex, sorting, onChangeSorting }) => {
   const isSelected = sorting.columnKey === dataIndex
-    // Only show arrow down icon when order is "descend" and sorting is already selected.
-    const iconType = isSelected && sorting.order === "descend" ? "ArrowDownward" : "ArrowUpward" 
-    const Asset = Assets[iconType] 
+  // Only show arrow down icon when order is "descend" and sorting is already selected.
+  const iconType = isSelected && sorting.order === "descend" ? "ArrowDownward" : "ArrowUpward" 
+  const Asset = Assets[iconType] 
 
   const onSorterClick = () => {
     const newOrder = isSelected && sorting.order === "ascend" ? "descend" : "ascend"
@@ -60,7 +73,7 @@ const Sorter: React.FC<Props> = ({ header, dataIndex, sorting, onChangeSorting }
   return (
     <StyledLabel shouldHover={!isSelected} onClick={ onSorterClick }>
       { header ?? <>&nbsp;</> }
-      <StyledIcon visibility={ isSelected ? "visible" : "hidden"} ><Asset /></StyledIcon>
+      <StyledIcon isSelected={ isSelected } sortOrder={ sorting.order }><Asset /></StyledIcon>
     </StyledLabel>
   )
 }
