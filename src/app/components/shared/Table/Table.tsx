@@ -3,7 +3,6 @@ import styled, { css } from "styled-components"
 import { SmallSkeleton } from "@amsterdam/wonen-ui"
 
 import TableCell from "./components/TableCell/TableCell"
-import TableHeading from "./components/TableHeading/TableHeading"
 import TableHeader from "./components/TableHeader/TableHeader"
 import FixedTableCell, { widthMobile as fixedColumnWidthMobile } from "./components/TableCell/FixedTableCell"
 
@@ -19,7 +18,7 @@ type Props = {
   noValuesPlaceholder?: React.ReactNode
   showHeadWhenEmpty?: boolean
   className?: string
-  onchange?: (sorting?: any) => void
+  onChange?: (sorting?: any) => void
 }
 
 const Wrap = styled.div`
@@ -77,7 +76,7 @@ const Table: React.FC<Props> = ({
   noValuesPlaceholder = "",
   className,
   data,
-  onchange
+  onChange
 }) => {
 
   const isEmpty = (data?.length ?? 0) === 0
@@ -87,8 +86,8 @@ const Table: React.FC<Props> = ({
     : undefined
 
   const onChangeTableSort = (sorter: any) => {
-    if (onchange) {
-      onchange({ sorter })
+    if (onChange && !loading && !isEmpty && sorter) {
+      onChange({ sorter })
     }
   }
 
@@ -99,7 +98,6 @@ const Table: React.FC<Props> = ({
           { (showHeadWhenEmpty || !isEmpty) &&
             <TableHeader columns={ columns } hasFixedColumn={ hasFixedColumn } onChangeTableSort={ onChangeTableSort }/>
           }
-          
           <tbody>
             { !loading && data?.map(({ onClick, itemList }, index) =>
               <Row key={ index } onClick={ onClick ?? (() => {}) } isClickable={ onClick !== undefined } >

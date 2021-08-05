@@ -13,7 +13,7 @@ type DataType = {
 }
 
 const columns = [
-  { header: "Adres", minWidth: 150, dataIndex: "address", sorter: true, defaultSortOrder: "descend" },
+  { header: "Adres", minWidth: 150, dataIndex: "address", sorter: true },
   { header: "Open taak", minWidth: 100, dataIndex: "openCase", sorter: true },
   { header: "Slotdatum", minWidth: 50, dataIndex: "closingDate", sorter: true },
   { minWidth: 140 }
@@ -37,14 +37,14 @@ const TableTasks: React.FC<Props> = ({ data, isBusy }) => {
 
   const values = useValues(data)
 
-  const onchange = (obj: any) => {
-    if (isBusy || !values || !obj.sorter) return
+  const onChange = (obj: any) => {
+    if (!values || !obj.sorter) return // check for isBusy || !values in Table component
     setIsLoading(true)
     const newSortedValues = values.sort(sortTasks(obj.sorter.columnKey ,obj.sorter.order))
     setSortedValues(newSortedValues)
-    setTimeout(() => {
+    setTimeout(() => { 
       setIsLoading(false)
-    }, 350)
+    }, 0) // Trick to force a rerender so skeleton is shown.
   }
 
   return (
@@ -55,7 +55,7 @@ const TableTasks: React.FC<Props> = ({ data, isBusy }) => {
       loading={ isBusy || isLoading }
       numLoadingRows={ 10 }
       noValuesPlaceholder="Er zijn momenteel geen open taken voor de gekozen filters"
-      onchange={onchange}
+      onChange={onChange}
     />
   )
 }

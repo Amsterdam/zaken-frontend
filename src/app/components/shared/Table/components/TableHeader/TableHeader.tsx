@@ -27,15 +27,14 @@ const TableHeader: React.FC<Props> = ({ columns, hasFixedColumn, onChangeTableSo
   return (
     <thead>
       <tr>
-        { columns.map(({ header, minWidth, sorter, dataIndex }, index) =>
+        { columns.map(({ header, minWidth, sorter, ...restprops }, index) =>
           <StyledHeader 
-            className="STYLED-HEADER" 
             key={ index } 
             minWidth={ minWidth } 
             isFixed={ hasFixedColumn && index === columns.length - 1 }
           >
             { sorter ? 
-              <Sorter header={ header } sorting={ sorting } onChangeSorting={ onChangeSorting } dataIndex={ dataIndex } /> : (
+              <Sorter header={ header } sorting={ sorting } onChangeSorting={ onChangeSorting } { ...restprops }/> : (
                 header ?? <>&nbsp;</>
               )
             }
