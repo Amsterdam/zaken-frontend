@@ -13,7 +13,7 @@ const sortDates = (a: any, b: any) => new Date(a?.itemList[2]?.props?.date).getT
 const columns = [
   { header: "Adres", minWidth: 150, sorter: sortAdress },
   { header: "Open taak", minWidth: 100, sorter: sortCases },
-  { header: "Slotdatum", minWidth: 50, dataIndex: "closingDate", sorter: sortDates },
+  { header: "Slotdatum", minWidth: 50, sorter: sortDates },
   { minWidth: 140 }
 ]
 
