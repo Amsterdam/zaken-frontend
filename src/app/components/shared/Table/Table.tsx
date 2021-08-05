@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { breakpoint, themeColor } from "@amsterdam/asc-ui"
 import styled, { css } from "styled-components"
 import { SmallSkeleton } from "@amsterdam/wonen-ui"
@@ -10,7 +11,11 @@ type Props = {
   numLoadingRows?: number
   loading?: boolean
   hasFixedColumn?: boolean
-  columns: { header?: React.ReactNode, minWidth?: number }[]
+  columns: { 
+    header?: React.ReactNode 
+    minWidth?: number 
+    sorter?: any
+  }[]
   data?: {
     onClick?: (event: React.MouseEvent) => void
     itemList: React.ReactNode[]
@@ -78,6 +83,7 @@ const Table: React.FC<Props> = ({
   data,
   onChange
 }) => {
+  const [sorting, setSorting] = useState({ columnKey: undefined, order: "DESCEND" })
 
   const isEmpty = (data?.length ?? 0) === 0
 
@@ -85,21 +91,30 @@ const Table: React.FC<Props> = ({
     ? columns[columns.length - 1].minWidth
     : undefined
 
-  const onChangeTableSort = (sorter: any) => {
-    if (onChange && !loading && !isEmpty && sorter) {
-      onChange({ sorter })
+  const onChangeSorting = (sortObj: any) => {
+    if (!loading && !isEmpty && sortObj) {
+      setSorting(sortObj)
     }
   }
+  
+  const sortedDataDescend = !isEmpty && sorting.columnKey !== undefined ? data?.sort(columns[sorting.columnKey || 0].sorter) : null
+  const sortedData = sorting.order === "ASCEND" ? sortedDataDescend?.reverse() : sortedDataDescend
+  const dataSource = sortedData || data
 
   return (
     <Wrap className={ className }>
       <HorizontalScrollContainer fixedColumnWidth={ fixedColumnWidth }>
         <StyledTable>
           { (showHeadWhenEmpty || !isEmpty) &&
-            <TableHeader columns={ columns } hasFixedColumn={ hasFixedColumn } onChangeTableSort={ onChangeTableSort }/>
+            <TableHeader 
+              columns={ columns } 
+              hasFixedColumn={ hasFixedColumn } 
+              onChangeSorting={ onChangeSorting } 
+              sorting={ sorting }
+            />
           }
           <tbody>
-            { !loading && data?.map(({ onClick, itemList }, index) =>
+            { !loading && dataSource?.map(({ onClick, itemList }, index) =>
               <Row key={ index } onClick={ onClick ?? (() => {}) } isClickable={ onClick !== undefined } >
                 { itemList?.map((cell: React.ReactNode, index: number) =>
                     hasFixedColumn && index === (itemList?.length ?? 0) - 1

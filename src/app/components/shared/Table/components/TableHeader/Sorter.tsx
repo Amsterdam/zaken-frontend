@@ -6,7 +6,7 @@ type Props = {
   header?: React.ReactNode
   sorting?: any
   onChangeSorting: (sorting?: any) => void
-  dataIndex?: string
+  index?: number
 }
 
 type LabelProps = {
@@ -38,7 +38,7 @@ const StyledIcon = styled(Icon)<IconProps>`
   color: ${ themeColor("tint", "level6") };
   &:active {
     ${ ({ isSelected, sortOrder }) => isSelected && 
-      `animation: ${ sortOrder === "descend" ? "rotate-back" : "rotate" } 0.3s ease 0s;`
+      `animation: ${ sortOrder === "DESCEND" ? "rotate-back" : "rotate" } 0.3s ease 0s;`
     }
   }
   @-webkit-keyframes rotate {
@@ -59,15 +59,15 @@ const StyledIcon = styled(Icon)<IconProps>`
   }                         
 `
 
-const Sorter: React.FC<Props> = ({ header, dataIndex, sorting, onChangeSorting }) => {
-  const isSelected = sorting.columnKey === dataIndex
-  // Only show arrow down icon when order is "descend" and sorting is already selected.
-  const iconType = isSelected && sorting.order === "descend" ? "ArrowDownward" : "ArrowUpward" 
+const Sorter: React.FC<Props> = ({ header, index, sorting, onChangeSorting }) => {
+  const isSelected = sorting.columnKey === index
+  // Only show arrow down icon when order is "DESCEND" and sorting is already selected.
+  const iconType = isSelected && sorting.order === "DESCEND" ? "ArrowDownward" : "ArrowUpward" 
   const Asset = Assets[iconType] 
 
   const onSorterClick = () => {
-    const newOrder = isSelected && sorting.order === "ascend" ? "descend" : "ascend"
-    onChangeSorting({ columnKey: dataIndex, order: newOrder })
+    const newOrder = isSelected && sorting.order === "ASCEND" ? "DESCEND" : "ASCEND"
+    onChangeSorting({ columnKey: index, order: newOrder })
   }
   
   return (
