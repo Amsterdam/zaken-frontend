@@ -89,8 +89,6 @@ const Table: React.FC<Props> = ({
     ? columns[columns.length - 1].minWidth
     : undefined
 
-    console.log("fixedColumnWidth", fixedColumnWidth)
-
   const onChangeSorting = (sortObj: any) => {
     if (!loading && !isEmpty && sortObj) {
       setSorting(sortObj)

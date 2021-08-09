@@ -10,18 +10,18 @@ type Props = {
 }
 
 type LabelProps = {
-  shouldHover: boolean 
+  isSelected: boolean
+  sortOrder: string
 }
 
 type IconProps = {
   isSelected: boolean
-  sortOrder: string
 }
 
 const StyledLabel = styled.div<LabelProps>`
   display: flex;
   cursor: pointer;
-  ${ ({ shouldHover }) => shouldHover 
+  ${ ({ isSelected }) => !isSelected 
     ? `&:hover {
       opacity: 0.5;
     }
@@ -30,13 +30,7 @@ const StyledLabel = styled.div<LabelProps>`
     }` 
     : ""
   }
-`
-
-const StyledIcon = styled(Icon)<IconProps>`
-  margin: -${ themeSpacing(0.5) } ${ themeSpacing(1) } 0 ${ themeSpacing(2) };
-  visibility: ${ ({ isSelected }) => isSelected ? "visible" : "hidden" };
-  color: ${ themeColor("tint", "level6") };
-  &:active {
+  &:active span {
     ${ ({ isSelected, sortOrder }) => isSelected && 
       `animation: ${ sortOrder === "DESCEND" ? "rotate-back" : "rotate" } 0.3s ease 0s;`
     }
@@ -56,7 +50,13 @@ const StyledIcon = styled(Icon)<IconProps>`
   @keyframes rotate-back {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(-180deg); }
-  }                         
+  }             
+`
+
+const StyledIcon = styled(Icon)<IconProps>`
+  margin: -${ themeSpacing(0.5) } ${ themeSpacing(1) } 0 ${ themeSpacing(2) };
+  visibility: ${ ({ isSelected }) => isSelected ? "visible" : "hidden" };
+  color: ${ themeColor("tint", "level6") };            
 `
 
 const Sorter: React.FC<Props> = ({ header, index, sorting, onChangeSorting }) => {
@@ -71,9 +71,9 @@ const Sorter: React.FC<Props> = ({ header, index, sorting, onChangeSorting }) =>
   }
   
   return (
-    <StyledLabel shouldHover={!isSelected} onClick={ onSorterClick }>
+    <StyledLabel isSelected={ isSelected } sortOrder={ sorting.order } onClick={ onSorterClick }>
       { header ?? <>&nbsp;</> }
-      <StyledIcon isSelected={ isSelected } sortOrder={ sorting.order }><Asset /></StyledIcon>
+      <StyledIcon isSelected={ isSelected }><Asset /></StyledIcon>
     </StyledLabel>
   )
 }
