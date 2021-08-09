@@ -1,31 +1,29 @@
 import StyledHeader from "./StyledHeader"
 import Sorter from "./Sorter"
 
-type SortOrderEnum = "DESCEND" | "ASCEND"
-
 type Props = {
   hasFixedColumn?: boolean
   columns: { 
     header?: React.ReactNode 
     minWidth?: number 
-    sorter?: any
-    defaultSortOrder?: SortOrderEnum
+    sorter?: (a: any, b: any) => number
   }[]
   onChangeSorting: (sorting?: any) => void
   sorting: any
+  // columnKey: undefined, order: "DESCEND"
 }
 
 const TableHeader: React.FC<Props> = ({ columns, hasFixedColumn, onChangeSorting, sorting }) => (
   <thead>
     <tr>
-      { columns.map(({ header, minWidth, sorter, ...restprops }, index) =>
+      { columns.map(({ header, minWidth, sorter }, index) =>
         <StyledHeader 
           key={ index } 
           minWidth={ minWidth } 
           isFixed={ hasFixedColumn && index === columns.length - 1 }
         >
           { sorter ? 
-            <Sorter header={ header } sorting={ sorting } onChangeSorting={ onChangeSorting } index={ index }  { ...restprops }/> : (
+            <Sorter header={ header } sorting={ sorting } onChangeSorting={ onChangeSorting } index={ index } /> : (
               header ?? <>&nbsp;</>
             )
           }

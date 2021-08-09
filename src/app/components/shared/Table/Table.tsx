@@ -14,7 +14,7 @@ type Props = {
   columns: { 
     header?: React.ReactNode 
     minWidth?: number 
-    sorter?: any
+    sorter?: (a: any, b: any) => number
   }[]
   data?: {
     onClick?: (event: React.MouseEvent) => void
@@ -23,7 +23,6 @@ type Props = {
   noValuesPlaceholder?: React.ReactNode
   showHeadWhenEmpty?: boolean
   className?: string
-  onChange?: (sorting?: any) => void
 }
 
 const Wrap = styled.div`
@@ -80,8 +79,7 @@ const Table: React.FC<Props> = ({
   showHeadWhenEmpty = true,
   noValuesPlaceholder = "",
   className,
-  data,
-  onChange
+  data
 }) => {
   const [sorting, setSorting] = useState({ columnKey: undefined, order: "DESCEND" })
 
@@ -90,6 +88,8 @@ const Table: React.FC<Props> = ({
   const fixedColumnWidth = hasFixedColumn
     ? columns[columns.length - 1].minWidth
     : undefined
+
+    console.log("fixedColumnWidth", fixedColumnWidth)
 
   const onChangeSorting = (sortObj: any) => {
     if (!loading && !isEmpty && sortObj) {
