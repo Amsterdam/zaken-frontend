@@ -29,7 +29,7 @@
     "final-form": "^4.20.2",
     "final-form-arrays": "^3.0.2",
     "immer": "^9.0.5",
-    "keycloak-js": "^15.0.0",
+    "keycloak-js": "^15.0.1",
     "lodash.debounce": "^4.0.8",
     "lodash.merge": "^4.6.2",
     "qs": "^6.10.1",
