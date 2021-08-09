@@ -6,20 +6,24 @@ import { SmallSkeleton } from "@amsterdam/wonen-ui"
 import TableCell from "./components/TableCell/TableCell"
 import TableHeader from "./components/TableHeader/TableHeader"
 import FixedTableCell, { widthMobile as fixedColumnWidthMobile } from "./components/TableCell/FixedTableCell"
+import SortDirection from "./utils/SortDirection"
+import { Sorter, invertedSorter } from "./utils/sorter"
+
+type TableData = {
+  onClick?: (event: React.MouseEvent) => void
+  itemList: React.ReactNode[]
+}[]
 
 type Props = {
   numLoadingRows?: number
   loading?: boolean
   hasFixedColumn?: boolean
-  columns: { 
-    header?: React.ReactNode 
-    minWidth?: number 
-    sorter?: (a: any, b: any) => number
+  columns: {
+    header?: React.ReactNode
+    minWidth?: number
+    sorter?: Sorter
   }[]
-  data?: {
-    onClick?: (event: React.MouseEvent) => void
-    itemList: React.ReactNode[]
-  }[]
+  data?: TableData
   noValuesPlaceholder?: React.ReactNode
   showHeadWhenEmpty?: boolean
   className?: string
@@ -48,6 +52,11 @@ const StyledTable = styled.table`
 
 type ClickableRowProps = {
   isClickable?: boolean
+}
+
+export type SortableColumn = {
+  index: number
+  direction: SortDirection
 }
 
 const Row = styled.tr<ClickableRowProps>`
@@ -81,7 +90,6 @@ const Table: React.FC<Props> = ({
   className,
   data
 }) => {
-  const [sorting, setSorting] = useState({ columnKey: undefined, order: "ASCEND" })
 
   const isEmpty = (data?.length ?? 0) === 0
 
@@ -89,30 +97,34 @@ const Table: React.FC<Props> = ({
     ? columns[columns.length - 1].minWidth
     : undefined
 
-  const onChangeSorting = (sortObj: any) => {
-    if (!loading && !isEmpty && sortObj) {
-      setSorting(sortObj)
-    }
+  const [sortedColumn, setSortedColumn] = useState<SortableColumn>()
+
+  const onChangeSorting = (column?: SortableColumn) => {
+    if (loading) return
+    if (isEmpty) return
+    if (column === undefined) return
+    setSortedColumn(column)
   }
-  
-  const sortedDataDescend = !isEmpty && sorting.columnKey !== undefined ? data?.sort(columns[sorting.columnKey || 0].sorter) : null
-  const sortedData = sorting.order === "DESCEND" ? sortedDataDescend?.reverse() : sortedDataDescend
-  const dataSource = sortedData || data
+
+  const index = sortedColumn?.index ?? 0
+  const sorter = sortedColumn !== undefined ? columns[index].sorter : undefined
+  const directedSorter = sorter !== undefined && sortedColumn?.direction === "DESCEND" ? invertedSorter(sorter) : sorter
+  if (directedSorter !== undefined) data?.sort((a, b) => directedSorter(a.itemList[index], b.itemList[index]))
 
   return (
     <Wrap className={ className }>
       <HorizontalScrollContainer fixedColumnWidth={ fixedColumnWidth }>
         <StyledTable>
           { (showHeadWhenEmpty || !isEmpty) &&
-            <TableHeader 
-              columns={ columns } 
-              hasFixedColumn={ hasFixedColumn } 
-              onChangeSorting={ onChangeSorting } 
-              sorting={ sorting }
+            <TableHeader
+              columns={ columns }
+              hasFixedColumn={ hasFixedColumn }
+              onChangeSorting={ onChangeSorting }
+              sortedColumn={ sortedColumn }
             />
           }
           <tbody>
-            { !loading && dataSource?.map(({ onClick, itemList }, index) =>
+            { !loading && data?.map(({ onClick, itemList }, index) =>
               <Row key={ index } onClick={ onClick ?? (() => {}) } isClickable={ onClick !== undefined } >
                 { itemList?.map((cell: React.ReactNode, index: number) =>
                     hasFixedColumn && index === (itemList?.length ?? 0) - 1
