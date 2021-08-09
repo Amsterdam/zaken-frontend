@@ -6,8 +6,8 @@ import useNodeDimensions from "app/hooks/useNodeDimensions/useNodeDimensions"
 import useNodeByReference from "app/hooks/useNodeByReference/useNodeByReference"
 
 type StyledTDProps = {
-  width?: number
-  height?: number
+  w?: number
+  h?: number
 }
 
 export const widthMobile = 48
@@ -23,10 +23,10 @@ const StyledTd = styled.td<StyledTDProps>`
 
   width: ${ widthMobile }px;
   @media screen and ${ breakpoint("min-width", "laptopM") } {
-    width: ${ ({ width }) => `${ width ?? widthMobile }px;` };
+    width: ${ ({ w }) => `${ w ?? widthMobile }px;` };
   }
 
-  height: ${ ({ height }) => height ? `${ height }px;` : "auto" };
+  height: ${ ({ h }) => h ? `${ h }px;` : "auto" };
 `
 
 type Props = {
@@ -47,7 +47,7 @@ const FixedTableCell: React.FC<Props> = ({ children, width }) => {
   // Grab dimensions of the table-row.
   const dimensions = useNodeDimensions(node)
   // Pass height of the table-row.
-  return <StyledTd ref={ref} height={dimensions?.height} width={width}>
+  return <StyledTd ref={ref} h={dimensions?.height} w={width}>
     { children }
   </StyledTd>
 }

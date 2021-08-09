@@ -81,7 +81,7 @@ const Table: React.FC<Props> = ({
   className,
   data
 }) => {
-  const [sorting, setSorting] = useState({ columnKey: undefined, order: "DESCEND" })
+  const [sorting, setSorting] = useState({ columnKey: undefined, order: "ASCEND" })
 
   const isEmpty = (data?.length ?? 0) === 0
 
@@ -96,7 +96,7 @@ const Table: React.FC<Props> = ({
   }
   
   const sortedDataDescend = !isEmpty && sorting.columnKey !== undefined ? data?.sort(columns[sorting.columnKey || 0].sorter) : null
-  const sortedData = sorting.order === "ASCEND" ? sortedDataDescend?.reverse() : sortedDataDescend
+  const sortedData = sorting.order === "DESCEND" ? sortedDataDescend?.reverse() : sortedDataDescend
   const dataSource = sortedData || data
 
   return (
