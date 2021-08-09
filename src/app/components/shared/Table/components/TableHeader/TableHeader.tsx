@@ -10,7 +10,6 @@ type Props = {
   }[]
   onChangeSorting: (sorting?: any) => void
   sorting: any
-  // columnKey: undefined, order: "DESCEND"
 }
 
 const TableHeader: React.FC<Props> = ({ columns, hasFixedColumn, onChangeSorting, sorting }) => (
