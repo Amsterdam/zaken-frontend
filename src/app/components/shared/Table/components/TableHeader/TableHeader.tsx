@@ -1,3 +1,5 @@
+import { Hidden } from "@amsterdam/asc-ui"
+
 import StyledHeader from "./StyledHeader"
 import Sorter from "./Sorter"
 
@@ -23,7 +25,7 @@ const TableHeader: React.FC<Props> = ({ columns, hasFixedColumn, onChangeSorting
         >
           { sorter ? 
             <Sorter header={ header } sorting={ sorting } onChangeSorting={ onChangeSorting } index={ index } /> : (
-              header ?? <>&nbsp;</>
+              header ?? <Hidden maxBreakpoint="laptopM">&nbsp;</Hidden>
             )
           }
         </StyledHeader>

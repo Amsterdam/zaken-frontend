@@ -90,14 +90,15 @@ const Table: React.FC<Props> = ({
     : undefined
 
   const onChangeSorting = (sortObj: any) => {
-    if (!loading && !isEmpty && sortObj) {
-      setSorting(sortObj)
-    }
+    if (loading) return
+    if (isEmpty) return
+    if (!sortObj) return
+    setSorting(sortObj)
   }
   
-  const sortedDataDescend = !isEmpty && sorting.columnKey !== undefined ? data?.sort(columns[sorting.columnKey || 0].sorter) : null
+  const sortedDataDescend = !isEmpty && sorting.columnKey !== undefined ? data?.sort(columns[sorting.columnKey ?? 0].sorter) : null
   const sortedData = sorting.order === "DESCEND" ? sortedDataDescend?.reverse() : sortedDataDescend
-  const dataSource = sortedData || data
+  const dataSource = sortedData ?? data
 
   return (
     <Wrap className={ className }>
