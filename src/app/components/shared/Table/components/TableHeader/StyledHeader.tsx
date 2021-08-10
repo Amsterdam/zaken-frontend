@@ -7,7 +7,7 @@ type Props = {
   width?: number
 }
 
-const TableHeading = styled.th<Props>`
+const StyledHeader = styled.th<Props>`
   text-align: left;
   border-bottom: 1px solid ${ themeColor("tint", "level4") };
   padding: ${ themeSpacing(2) } ${ themeSpacing(3) };
@@ -27,8 +27,6 @@ const TableHeading = styled.th<Props>`
       })
   ` }
 
-
-
 `
 
-export default TableHeading
+export default StyledHeader

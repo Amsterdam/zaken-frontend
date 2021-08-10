@@ -21,4 +21,5 @@ export { default as Portrait } from "@material-ui/icons/PortraitOutlined"
 export { default as PermIdentity } from "@material-ui/icons/PermIdentity"
 export { default as Refresh } from "@material-ui/icons/Refresh"
 export { default as Search } from "@material-ui/icons/Search"
-
+export { default as ArrowUpward } from "@material-ui/icons/ArrowUpward"
+export { default as ArrowDownward } from "@material-ui/icons/ArrowDownward"

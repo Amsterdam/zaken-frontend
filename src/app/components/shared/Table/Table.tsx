@@ -1,16 +1,21 @@
+import { useState } from "react"
 import { breakpoint, themeColor } from "@amsterdam/asc-ui"
 import styled, { css } from "styled-components"
 import { SmallSkeleton } from "@amsterdam/wonen-ui"
 
 import TableCell from "./components/TableCell/TableCell"
-import TableHeading from "./components/TableHeading/TableHeading"
+import TableHeader from "./components/TableHeader/TableHeader"
 import FixedTableCell, { widthMobile as fixedColumnWidthMobile } from "./components/TableCell/FixedTableCell"
 
 type Props = {
   numLoadingRows?: number
   loading?: boolean
   hasFixedColumn?: boolean
-  columns: { header?: React.ReactNode, minWidth?: number }[]
+  columns: { 
+    header?: React.ReactNode 
+    minWidth?: number 
+    sorter?: (a: any, b: any) => number
+  }[]
   data?: {
     onClick?: (event: React.MouseEvent) => void
     itemList: React.ReactNode[]
@@ -76,6 +81,7 @@ const Table: React.FC<Props> = ({
   className,
   data
 }) => {
+  const [sorting, setSorting] = useState({ columnKey: undefined, order: "ASCEND" })
 
   const isEmpty = (data?.length ?? 0) === 0
 
@@ -83,23 +89,31 @@ const Table: React.FC<Props> = ({
     ? columns[columns.length - 1].minWidth
     : undefined
 
+  const onChangeSorting = (sortObj: any) => {
+    if (loading) return
+    if (isEmpty) return
+    if (!sortObj) return
+    setSorting(sortObj)
+  }
+  
+  const sortedDataDescend = !isEmpty && sorting.columnKey !== undefined ? data?.sort(columns[sorting.columnKey ?? 0].sorter) : null
+  const sortedData = sorting.order === "DESCEND" ? sortedDataDescend?.reverse() : sortedDataDescend
+  const dataSource = sortedData ?? data
+
   return (
     <Wrap className={ className }>
       <HorizontalScrollContainer fixedColumnWidth={ fixedColumnWidth }>
         <StyledTable>
           { (showHeadWhenEmpty || !isEmpty) &&
-            <thead>
-              <Row>
-                { columns.map(({ header, minWidth }, index) =>
-                  <TableHeading key={ index } minWidth={ minWidth } isFixed={ hasFixedColumn && index === columns.length - 1 }>
-                    { header ?? <>&nbsp;</> }
-                  </TableHeading>
-                ) }
-              </Row>
-            </thead>
+            <TableHeader 
+              columns={ columns } 
+              hasFixedColumn={ hasFixedColumn } 
+              onChangeSorting={ onChangeSorting } 
+              sorting={ sorting }
+            />
           }
           <tbody>
-            { !loading && data?.map(({ onClick, itemList }, index) =>
+            { !loading && dataSource?.map(({ onClick, itemList }, index) =>
               <Row key={ index } onClick={ onClick ?? (() => {}) } isClickable={ onClick !== undefined } >
                 { itemList?.map((cell: React.ReactNode, index: number) =>
                     hasFixedColumn && index === (itemList?.length ?? 0) - 1
@@ -111,13 +125,13 @@ const Table: React.FC<Props> = ({
               </Row>
             ) }
             { loading && createLoadingData(columns.length, numLoadingRows).map( (row, index) =>
-            <Row key={index}>
-              { row.map( (cell, index) => hasFixedColumn && index === row.length - 1
+              <Row key={index}>
+                { row.map( (cell, index) => hasFixedColumn && index === row.length - 1
                     ? <FixedTableCell key={index} width={ fixedColumnWidth }>{ cell ?? <>&nbsp;</> }</FixedTableCell>
                     : <TableCell key={index}>{ loading ? <SmallSkeleton maxRandomWidth={ (columns[index].minWidth ?? 30) - 30} /> : cell ?? <>&nbsp;</> }</TableCell>
-              ) }
-            </Row>
-          ) }
+                ) }
+              </Row>
+            ) }
             { !loading && isEmpty && (
               <tr>
                 <NoValuesPlaceholder colSpan={columns.length}>
