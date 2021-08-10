@@ -11,9 +11,9 @@ type Props = {
   numLoadingRows?: number
   loading?: boolean
   hasFixedColumn?: boolean
-  columns: { 
-    header?: React.ReactNode 
-    minWidth?: number 
+  columns: {
+    header?: React.ReactNode
+    minWidth?: number
     sorter?: (a: any, b: any) => number
   }[]
   data?: {
@@ -22,6 +22,7 @@ type Props = {
   }[]
   noValuesPlaceholder?: React.ReactNode
   showHeadWhenEmpty?: boolean
+  onClickRow?: (event: React.MouseEvent, index: number, data?: React.ReactNode[]) => void
   className?: string
 }
 
@@ -59,7 +60,7 @@ const Row = styled.tr<ClickableRowProps>`
   `
   }
 
-  td{
+  td {
     border-bottom: 1px solid ${ themeColor("tint", "level3") };
   }
 `
@@ -68,16 +69,17 @@ const NoValuesPlaceholder = styled(TableCell)`
   font-style: italic;
 `
 
-const createLoadingData = (numColumns: number, numRows: number = 5) =>
+const createLoadingData = (numColumns: number, numRows: number) =>
   [...Array(numRows)].map(_ => [...Array(numColumns)].map(_ => ""))
 
 const Table: React.FC<Props> = ({
   columns,
   loading = false,
-  numLoadingRows,
+  numLoadingRows = 5,
   hasFixedColumn,
   showHeadWhenEmpty = true,
   noValuesPlaceholder = "",
+  onClickRow,
   className,
   data
 }) => {
@@ -95,7 +97,7 @@ const Table: React.FC<Props> = ({
     if (!sortObj) return
     setSorting(sortObj)
   }
-  
+
   const sortedDataDescend = !isEmpty && sorting.columnKey !== undefined ? data?.sort(columns[sorting.columnKey ?? 0].sorter) : null
   const sortedData = sorting.order === "DESCEND" ? sortedDataDescend?.reverse() : sortedDataDescend
   const dataSource = sortedData ?? data
@@ -105,25 +107,32 @@ const Table: React.FC<Props> = ({
       <HorizontalScrollContainer fixedColumnWidth={ fixedColumnWidth }>
         <StyledTable>
           { (showHeadWhenEmpty || !isEmpty) &&
-            <TableHeader 
-              columns={ columns } 
-              hasFixedColumn={ hasFixedColumn } 
-              onChangeSorting={ onChangeSorting } 
+            <TableHeader
+              columns={ columns }
+              hasFixedColumn={ hasFixedColumn }
+              onChangeSorting={ onChangeSorting }
               sorting={ sorting }
             />
           }
           <tbody>
-            { !loading && dataSource?.map(({ onClick, itemList }, index) =>
-              <Row key={ index } onClick={ onClick ?? (() => {}) } isClickable={ onClick !== undefined } >
-                { itemList?.map((cell: React.ReactNode, index: number) =>
-                    hasFixedColumn && index === (itemList?.length ?? 0) - 1
-                      ? <FixedTableCell key={ index } width={ fixedColumnWidth }>{ cell ?? <>&nbsp;</> }</FixedTableCell>
-                      : <TableCell key={ index }>
-                          { loading ? <SmallSkeleton maxRandomWidth={ (columns[index].minWidth ?? 30) - 30 } /> : cell ?? <>&nbsp;</> }
-                        </TableCell>
-                ) }
-              </Row>
-            ) }
+            { !loading && dataSource?.map(({ onClick, itemList }, index) => {
+
+                const onClickRowWrap = (event: React.MouseEvent) => {
+                  onClickRow?.(event, index, data?.map(({ itemList }) => itemList)[index])
+                }
+
+                return (
+                  <Row key={ index } onClick={ onClick ?? onClickRowWrap } isClickable={ onClick !== undefined || onClickRow !== undefined } >
+                    { itemList?.map((cell: React.ReactNode, index: number) =>
+                        hasFixedColumn && index === (itemList?.length ?? 0) - 1
+                          ? <FixedTableCell key={ index } width={ fixedColumnWidth }>{ cell ?? <>&nbsp;</> }</FixedTableCell>
+                          : <TableCell key={ index }>
+                              { loading ? <SmallSkeleton maxRandomWidth={ (columns[index].minWidth ?? 30) - 30 } /> : cell ?? <>&nbsp;</> }
+                            </TableCell>
+                    ) }
+                  </Row>
+                )
+            } ) }
             { loading && createLoadingData(columns.length, numLoadingRows).map( (row, index) =>
               <Row key={index}>
                 { row.map( (cell, index) => hasFixedColumn && index === row.length - 1

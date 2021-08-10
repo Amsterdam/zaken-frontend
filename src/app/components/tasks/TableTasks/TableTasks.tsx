@@ -28,7 +28,7 @@ const columns = [
 
 const TableTasks: React.FC<Props> = ({ data, isBusy }) => {
 
-  const values = useValues(data)
+  const [values, onClickRow] = useValues(data)
 
   return (
     <Table
@@ -37,6 +37,7 @@ const TableTasks: React.FC<Props> = ({ data, isBusy }) => {
       data={ values }
       loading={ isBusy }
       numLoadingRows={ 10 }
+      onClickRow={ onClickRow }
       noValuesPlaceholder="Er zijn momenteel geen open taken voor de gekozen filters"
     />
   )

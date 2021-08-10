@@ -15,7 +15,7 @@ const columns = [
 
 const TableCases: React.FC<Props> = ({ data, isBusy }) => {
 
-  const values = useValues(data?.results)
+  const [values, onClickRow] = useValues(data?.results)
 
   return (
     <Table
@@ -24,6 +24,7 @@ const TableCases: React.FC<Props> = ({ data, isBusy }) => {
       numLoadingRows={ 10 }
       columns={ columns }
       data={ values }
+      onClickRow={ onClickRow }
       noValuesPlaceholder="Er zijn geen zaken voor deze dag"
     />
   )

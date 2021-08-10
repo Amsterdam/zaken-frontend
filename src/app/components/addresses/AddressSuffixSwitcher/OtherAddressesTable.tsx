@@ -1,5 +1,5 @@
-import useOtherAddressesByBagId from "app/state/rest/custom/useOtherAddresses/useOtherAddresses"
 import useValues from "./hooks/useValues"
+import useOtherAddressesByBagId from "app/state/rest/custom/useOtherAddresses/useOtherAddresses"
 import Table from "app/components/shared/Table/Table"
 
 type Props = {
@@ -15,7 +15,8 @@ const columns = [
 const OtherAddressesTable: React.FC<Props> = ({ bagId, onAddressChosen }) => {
 
   const [response, { isBusy }] = useOtherAddressesByBagId(bagId)
-  const values = useValues(response, onAddressChosen)
+
+  const [values, onClickRow] = useValues(response, onAddressChosen)
 
   return (
     <Table
@@ -24,6 +25,7 @@ const OtherAddressesTable: React.FC<Props> = ({ bagId, onAddressChosen }) => {
       loading={ isBusy }
       numLoadingRows={ 3 }
       data={ values }
+      onClickRow={ onClickRow }
       noValuesPlaceholder="Er zijn geen andere adressen gevonden"
     />
   )

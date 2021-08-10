@@ -20,7 +20,7 @@ const columns = [
 const SearchResults: React.FC<Props> = ({ searchString }) => {
 
   const [data, { isBusy }] = useBAGWithZipCode(isValidSearchString(searchString) ? searchString : undefined)
-  const values = useValues(Array.isArray(data?.results) ? data!.results : undefined)
+  const [values, onClickRow] = useValues(Array.isArray(data?.results) ? data!.results : undefined)
 
   return (
     isValidSearchString(searchString) ?
@@ -30,9 +30,11 @@ const SearchResults: React.FC<Props> = ({ searchString }) => {
       data={ values }
       loading={ isBusy }
       numLoadingRows={ 1 }
+      onClickRow={ onClickRow }
       noValuesPlaceholder="Er zijn geen adressen gevonden"
     /> :
     null
   )
 }
+
 export default SearchResults

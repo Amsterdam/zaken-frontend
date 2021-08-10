@@ -30,8 +30,8 @@ const columns = [
 const CasesByBagId: React.FC<Props> = ({ bagId, openCases = false, title = defaultTitle, emptyText = defaultEmptyText }) => {
 
   const [data, { isBusy }] = useCasesByBagId(bagId, openCases)
-  const values = useValues(data?.results)
-  const numCases = data?.results?.length ?? 0
+  const [values, onClickRow] = useValues(data?.results)
+  const numCases = values?.length ?? 0
 
   return (
     <>
@@ -43,6 +43,7 @@ const CasesByBagId: React.FC<Props> = ({ bagId, openCases = false, title = defau
         numLoadingRows={ 1 }
         data={ values }
         showHeadWhenEmpty={ false }
+        onClickRow={ onClickRow }
         noValuesPlaceholder={ emptyText }
       />
     </>

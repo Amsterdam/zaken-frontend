@@ -1,5 +1,5 @@
-import useValues from "./hooks/useValues"
 import { DefinitionList } from "@amsterdam/wonen-ui"
+import useValues from "./hooks/useValues"
 
 type Props = {
   fine: Components.Schemas.Fine
