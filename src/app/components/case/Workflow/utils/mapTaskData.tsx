@@ -25,27 +25,25 @@ export default (
     const onSubmitTaskComplete = (variables: Components.Schemas.CamundaTask["form"] = {}) =>
       execPost({ case: id, camunda_task_id, variables })
 
-    return ({
-      itemList: [
-        <LockIcon />,
-        name,
-        <List data={ roles } emptyPlaceholder="-" />,
-        due_date ?
-          <ChangeableDueDate dueDate={ due_date } caseId={ id } camundaTaskId={ camunda_task_id } /> :
-          <Span>-</Span>,
-        action !== undefined ?
-          action.disabled ?
-            <TableAction
-              title={ to(`/zaken/:id/${ action.target }/:camundaTaskId`, { id, camundaTaskId: camunda_task_id }) }
-              disabled={ true }
-            >{ action.name }</TableAction> :
-            <TableAction
-              to={ to(`/zaken/:id/${ action.target }/:camundaTaskId`, { id, camundaTaskId: camunda_task_id }) }
-            >{ action.name }</TableAction>
-        :
-        form ?
-          <CamundaFormButton onSubmit={ onSubmitTaskComplete } taskName={ name } caseId={ id } form={ form } /> :
-          <CompleteTaskButton onSubmit={ onSubmitTaskComplete } taskName={ name } caseId={ id } />
-      ]
-    })
+    return [
+      <LockIcon />,
+      name,
+      <List data={ roles } emptyPlaceholder="-" />,
+      due_date ?
+        <ChangeableDueDate dueDate={ due_date } caseId={ id } camundaTaskId={ camunda_task_id } /> :
+        <Span>-</Span>,
+      action !== undefined ?
+        action.disabled ?
+          <TableAction
+            title={ to(`/zaken/:id/${ action.target }/:camundaTaskId`, { id, camundaTaskId: camunda_task_id }) }
+            disabled={ true }
+          >{ action.name }</TableAction> :
+          <TableAction
+            to={ to(`/zaken/:id/${ action.target }/:camundaTaskId`, { id, camundaTaskId: camunda_task_id }) }
+          >{ action.name }</TableAction>
+      :
+      form ?
+        <CamundaFormButton onSubmit={ onSubmitTaskComplete } taskName={ name } caseId={ id } form={ form } /> :
+        <CompleteTaskButton onSubmit={ onSubmitTaskComplete } taskName={ name } caseId={ id } />
+    ]
   }

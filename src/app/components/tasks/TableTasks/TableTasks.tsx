@@ -6,17 +6,17 @@ type Props = {
   isBusy: boolean
 }
 
-const sortAdress = (a: any, b: any) => a?.itemList[0].localeCompare(b?.itemList[0])
-const sortCases = (a: any, b: any) => a?.itemList[1].localeCompare(b?.itemList[1])
+const sortAdress = (a: any, b: any) => a?.[0].localeCompare(b?.[0])
+const sortCases = (a: any, b: any) => a?.[1].localeCompare(b?.[1])
 const sortDates = (a: any, b: any) => {
   // If there is no date, return -1 to put it at the end of the list.
-  if (a?.itemList[2]?.props?.date === undefined) {
+  if (a?.[2]?.props?.date === undefined) {
     return 1
   }
-  if (b?.itemList[2]?.props?.date === undefined) {
+  if (b?.[2]?.props?.date === undefined) {
     return -1
   }
-  return new Date(a?.itemList[2]?.props?.date).getTime() - new Date(b?.itemList[2]?.props?.date).getTime()
+  return new Date(a?.[2]?.props?.date).getTime() - new Date(b?.[2]?.props?.date).getTime()
 }
 
 const columns = [

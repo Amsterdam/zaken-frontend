@@ -16,10 +16,7 @@ type Props = {
     minWidth?: number
     sorter?: (a: any, b: any) => number
   }[]
-  data?: {
-    onClick?: (event: React.MouseEvent) => void
-    itemList: React.ReactNode[]
-  }[]
+  data?: React.ReactNode[][]
   noValuesPlaceholder?: React.ReactNode
   showHeadWhenEmpty?: boolean
   onClickRow?: (event: React.MouseEvent, index: number, data?: React.ReactNode[]) => void
@@ -115,24 +112,18 @@ const Table: React.FC<Props> = ({
             />
           }
           <tbody>
-            { !loading && dataSource?.map(({ onClick, itemList }, index) => {
-
-                const onClickRowWrap = (event: React.MouseEvent) => {
-                  onClickRow?.(event, index, data?.map(({ itemList }) => itemList)[index])
-                }
-
-                return (
-                  <Row key={ index } onClick={ onClick ?? onClickRowWrap } isClickable={ onClick !== undefined || onClickRow !== undefined } >
-                    { itemList?.map((cell: React.ReactNode, index: number) =>
-                        hasFixedColumn && index === (itemList?.length ?? 0) - 1
-                          ? <FixedTableCell key={ index } width={ fixedColumnWidth }>{ cell ?? <>&nbsp;</> }</FixedTableCell>
-                          : <TableCell key={ index }>
-                              { loading ? <SmallSkeleton maxRandomWidth={ (columns[index].minWidth ?? 30) - 30 } /> : cell ?? <>&nbsp;</> }
-                            </TableCell>
-                    ) }
-                  </Row>
-                )
-            } ) }
+            { !loading && dataSource?.map((rowData, index) => (
+                <Row key={ index } onClick={ (event: React.MouseEvent) => onClickRow?.(event, index, rowData) } isClickable={ onClickRow !== undefined } >
+                  { rowData.map((cell: React.ReactNode, index: number) =>
+                      hasFixedColumn && index === (rowData.length) - 1
+                        ? <FixedTableCell key={ index } width={ fixedColumnWidth }>{ cell ?? <>&nbsp;</> }</FixedTableCell>
+                        : <TableCell key={ index }>
+                            { loading ? <SmallSkeleton maxRandomWidth={ (columns[index].minWidth ?? 30) - 30 } /> : cell ?? <>&nbsp;</> }
+                          </TableCell>
+                  ) }
+                </Row>
+              ))
+            }
             { loading && createLoadingData(columns.length, numLoadingRows).map( (row, index) =>
               <Row key={index}>
                 { row.map( (cell, index) => hasFixedColumn && index === row.length - 1

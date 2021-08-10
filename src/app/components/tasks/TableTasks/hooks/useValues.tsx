@@ -9,14 +9,12 @@ export default (tasks?: Components.Schemas.CamundaTaskList[]) => [
     const { name, due_date, case: { address: { full_address }, id } } = task
     const href = to("/zaken/:id", { id })
 
-    return {
-      itemList: [
-        full_address ?? "-",
-        name,
-        due_date ? <DueDate date={ due_date } /> : "-",
-        <TableAction to={ href }>Zaakdetails</TableAction>
-      ]
-    }
+    return [
+      full_address ?? "-",
+      name,
+      due_date ? <DueDate date={ due_date } /> : "-",
+      <TableAction to={ href }>Zaakdetails</TableAction>
+    ]
   }),
   (event: React.MouseEvent, index: number) => {
     const id = tasks?.[index].case.id

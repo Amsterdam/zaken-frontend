@@ -5,12 +5,10 @@ import navigateTo from "app/routing/navigateTo"
 
 export default (response: SearchResult[] | undefined, onAddressChosen: () => void) => [
   response?.map(({ adres, adresseerbaar_object_id }) => (
-    {
-      itemList: [
-        adres,
-        <TableAction to={ to("/adres/:bagId", { bagId: adresseerbaar_object_id }) }>Open</TableAction>
-      ]
-    }
+    [
+      adres,
+      <TableAction to={ to("/adres/:bagId", { bagId: adresseerbaar_object_id }) }>Open</TableAction>
+    ]
   )),
   (event: React.MouseEvent, index: number) => {
     onAddressChosen()

@@ -11,14 +11,12 @@ export default (cases?: Components.Schemas.Case[]) => [
     .map(({ id, address, current_states, end_date }) => {
       const startDate = first(current_states.map(({ start_date }) => start_date).sort(sortByDate("DESC")))
 
-      return {
-        itemList: [
-          address.full_address ?? "-",
-          current_states.length > 0 ? current_states.map(({ status_name }) => status_name).join(", ") : isDate(end_date) ? "Afgerond" : "-",
-          <DateDisplay date={ end_date ?? startDate } emptyText="-" />,
-          <TableAction to={ to("/zaken/:id", { id }) }>Zaakdetails</TableAction>
-        ]
-      }
+      return [
+        address.full_address ?? "-",
+        current_states.length > 0 ? current_states.map(({ status_name }) => status_name).join(", ") : isDate(end_date) ? "Afgerond" : "-",
+        <DateDisplay date={ end_date ?? startDate } emptyText="-" />,
+        <TableAction to={ to("/zaken/:id", { id }) }>Zaakdetails</TableAction>
+      ]
     }),
   (event: React.MouseEvent, index: number) => {
     const id = cases?.[index].id
