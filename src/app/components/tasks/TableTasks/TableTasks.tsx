@@ -7,7 +7,7 @@ type Props = {
 }
 
 const sortAdress = (a: any, b: any) => a?.itemList[0].localeCompare(b?.itemList[0])
-const sortCases = (a: any, b: any) => a?.itemList[1].localeCompare(b?.itemList[1])
+const sortTasks = (a: any, b: any) => a?.itemList[1].localeCompare(b?.itemList[1])
 const sortDates = (a: any, b: any) => {
   // If there is no date, return -1 to put it at the end of the list.
   if (a?.itemList[2]?.props?.date === undefined) {
@@ -21,7 +21,7 @@ const sortDates = (a: any, b: any) => {
 
 const columns = [
   { header: "Adres", minWidth: 150, sorter: sortAdress },
-  { header: "Open taak", minWidth: 100, sorter: sortCases },
+  { header: "Open taak", minWidth: 100, sorter: sortTasks },
   { header: "Slotdatum", minWidth: 50, sorter: sortDates },
   { minWidth: 140 }
 ]
