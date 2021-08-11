@@ -1,5 +1,4 @@
 import to from "app/routing/utils/to"
-import DueDate from "app/components/shared/DueDate/DueDate"
 import TableAction from "app/components/shared/Table/components/TableAction/TableAction"
 import navigateTo from "app/routing/navigateTo"
 
@@ -12,7 +11,7 @@ export default (tasks?: Components.Schemas.CamundaTaskList[]) => [
     return [
       full_address ?? "-",
       name,
-      due_date ? <DueDate date={ due_date } /> : "-",
+      due_date ?? undefined,
       <TableAction to={ href }>Zaakdetails</TableAction>
     ]
   }),

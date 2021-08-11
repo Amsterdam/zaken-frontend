@@ -7,6 +7,8 @@ import TableCell from "./components/TableCell/TableCell"
 import TableHeader from "./components/TableHeader/TableHeader"
 import FixedTableCell, { widthMobile as fixedColumnWidthMobile } from "./components/TableCell/FixedTableCell"
 
+type Value = string | number | boolean | undefined | null | React.ReactNode
+
 type Props = {
   numLoadingRows?: number
   loading?: boolean
@@ -15,8 +17,9 @@ type Props = {
     header?: React.ReactNode
     minWidth?: number
     sorter?: (a: any, b: any) => number
+    render?: (value: any) => React.ReactNode
   }[]
-  data?: React.ReactNode[][]
+  data?: Value[][]
   noValuesPlaceholder?: React.ReactNode
   showHeadWhenEmpty?: boolean
   onClickRow?: (event: React.MouseEvent, index: number, data?: React.ReactNode[]) => void
@@ -114,12 +117,17 @@ const Table: React.FC<Props> = ({
           <tbody>
             { !loading && dataSource?.map((rowData, index) => (
                 <Row key={ index } onClick={ (event: React.MouseEvent) => onClickRow?.(event, index, rowData) } isClickable={ onClickRow !== undefined } >
-                  { rowData.map((cell: React.ReactNode, index: number) =>
-                      hasFixedColumn && index === (rowData.length) - 1
-                        ? <FixedTableCell key={ index } width={ fixedColumnWidth }>{ cell ?? <>&nbsp;</> }</FixedTableCell>
+                  { rowData.map((value: Value, index: number) => {
+                      const render = columns[index]?.render
+                      const node = (render ? render(value) : value) ?? <>&nbsp;</>
+
+                      return hasFixedColumn && index === (rowData.length) - 1
+                        ? <FixedTableCell key={ index } width={ fixedColumnWidth }>{ node }</FixedTableCell>
                         : <TableCell key={ index }>
-                            { loading ? <SmallSkeleton maxRandomWidth={ (columns[index].minWidth ?? 30) - 30 } /> : cell ?? <>&nbsp;</> }
+                            { loading ? <SmallSkeleton maxRandomWidth={ (columns[index].minWidth ?? 30) - 30 } /> : node }
                           </TableCell>
+
+                    }
                   ) }
                 </Row>
               ))
