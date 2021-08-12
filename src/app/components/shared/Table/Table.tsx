@@ -6,6 +6,7 @@ import { SmallSkeleton } from "@amsterdam/wonen-ui"
 import TableCell from "./components/TableCell/TableCell"
 import TableHeader from "./components/TableHeader/TableHeader"
 import FixedTableCell, { widthMobile as fixedColumnWidthMobile } from "./components/TableCell/FixedTableCell"
+import { Sorting } from "./components/TableHeader/Sorter"
 
 type Value = string | number | boolean | undefined | null | React.ReactNode
 
@@ -84,7 +85,6 @@ const Table = <R extends Value[]>(props: Props<R>) => {
     className,
     data
   } = props
-  const [sorting, setSorting] = useState({ columnKey: undefined, order: "ASCEND" })
 
   const isEmpty = (data?.length ?? 0) === 0
 
@@ -92,16 +92,11 @@ const Table = <R extends Value[]>(props: Props<R>) => {
     ? columns[columns.length - 1].minWidth
     : undefined
 
-  const onChangeSorting = (sortObj: any) => {
-    if (loading) return
-    if (isEmpty) return
-    if (!sortObj) return
-    setSorting(sortObj)
-  }
+  const [sorting, setSorting] = useState<Sorting>()
 
-  const sortedDataDescend = !isEmpty && sorting.columnKey !== undefined ? data?.sort(columns[sorting.columnKey ?? 0].sorter) : null
-  const sortedData = sorting.order === "DESCEND" ? sortedDataDescend?.reverse() : sortedDataDescend
-  const dataSource = sortedData ?? data
+  const sorter = sorting ? columns[sorting.index].sorter : undefined
+  const sortedDataAscend = sorter !== undefined ? data?.sort(sorter) : data
+  const sortedData = sorting?.order === "DESCEND" ? sortedDataAscend?.reverse() : sortedDataAscend
 
   return (
     <Wrap className={ className }>
@@ -111,12 +106,12 @@ const Table = <R extends Value[]>(props: Props<R>) => {
             <TableHeader
               columns={ columns }
               hasFixedColumn={ hasFixedColumn }
-              onChangeSorting={ onChangeSorting }
+              onChangeSorting={ setSorting }
               sorting={ sorting }
             />
           }
           <tbody>
-            { !loading && dataSource?.map((rowData, index) => (
+            { !loading && sortedData?.map((rowData, index) => (
                 <Row key={ index } onClick={ (event: React.MouseEvent) => onClickRow?.(event, index, rowData) } isClickable={ onClickRow !== undefined } >
                   { rowData.map((value: Value, index: number) => {
                       const render = columns[index]?.render
