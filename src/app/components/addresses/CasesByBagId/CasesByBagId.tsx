@@ -4,6 +4,9 @@ import { Heading, themeSpacing } from "@amsterdam/asc-ui"
 import { useCasesByBagId } from "app/state/rest"
 import useValues from "./hooks/useValues"
 import Table from "app/components/shared/Table/Table"
+import navigateTo from "app/routing/navigateTo"
+import { CaseIdDisplay } from "@amsterdam/wonen-ui"
+import React from "react"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -20,7 +23,7 @@ const StyledHeading = styled(Heading)`
 `
 
 const columns = [
-  { header: "Zaak ID", minWidth: 100 },
+  { header: "Zaak ID", minWidth: 100, render: (id: string | number | boolean | undefined | null | React.ReactNode) => (typeof id === "string" ? <CaseIdDisplay id={ id } /> : null) as React.ReactNode },
   { header: "Thema", minWidth: 100 },
   { header: "Startdatum", minWidth: 100 },
   { header: "Huidige status", minWidth: 100 },
@@ -30,8 +33,10 @@ const columns = [
 const CasesByBagId: React.FC<Props> = ({ bagId, openCases = false, title = defaultTitle, emptyText = defaultEmptyText }) => {
 
   const [data, { isBusy }] = useCasesByBagId(bagId, openCases)
-  const [values, onClickRow] = useValues(data?.results)
+  const values = useValues(data?.results)
   const numCases = values?.length ?? 0
+
+  const onClickRow = (event: React.MouseEvent, index: number, data: Exclude<typeof values, undefined>[0]) => navigateTo("/zaken/:id", { id: data[0] })
 
   return (
     <>

@@ -1,6 +1,9 @@
 import useValues from "./hooks/useValues"
 import Table from "app/components/shared/Table/Table"
 import { DateDisplay } from "@amsterdam/wonen-ui"
+import navigateTo from "app/routing/navigateTo"
+import TableAction from "app/components/shared/Table/components/TableAction/TableAction"
+import to from "app/routing/utils/to"
 
 type Props = {
   data?: Components.Schemas.PaginatedCaseList
@@ -16,18 +19,26 @@ const sortDates = (a: any, b: any) => {
   return new Date(a?.[2]).getTime() - new Date(b?.[2]).getTime()
 }
 
-const renderDate = (value: string | undefined) => <DateDisplay date={ value } emptyText="-" /> as React.ReactNode
+const renderDate = (value: string | number | boolean | undefined | null | React.ReactNode) =>
+  (value === undefined || typeof value === "string" ? <DateDisplay date={ value } emptyText="-" /> : "-") as React.ReactNode
 
 const columns = [
   { header: "Adres", minWidth: 300, sorter: sortAdress },
   { header: "Status", minWidth: 100, sorter: sortStatus },
   { header: "Laatst gewijzigd", minWidth: 100, sorter: sortDates, render: renderDate },
-  { minWidth: 140 }
+  { minWidth: 140, render: (value: string | number | boolean | undefined | null | React.ReactNode) =>
+    typeof value === "string" ? <TableAction to={ to("/zaken/:id", { id: value }) }>Zaakdetails</TableAction> : undefined
+  }
 ]
 
 const TableCases: React.FC<Props> = ({ data, isBusy }) => {
 
-  const [values, onClickRow] = useValues(data?.results)
+  const values = useValues(data?.results)
+
+  const onClickRow = (event: React.MouseEvent, index: number, data: Exclude<typeof values, undefined>[0]) => {
+    const id = data[3]
+    navigateTo("/zaken/:id", { id })
+  }
 
   return (
     <Table

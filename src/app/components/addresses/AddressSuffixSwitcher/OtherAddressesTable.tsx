@@ -1,22 +1,33 @@
 import useValues from "./hooks/useValues"
 import useOtherAddressesByBagId from "app/state/rest/custom/useOtherAddresses/useOtherAddresses"
 import Table from "app/components/shared/Table/Table"
+import navigateTo from "app/routing/navigateTo"
+import TableAction from "app/components/shared/Table/components/TableAction/TableAction"
+import to from "app/routing/utils/to"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
   onAddressChosen: () => void
 }
 
+const renderLink = (value: string | number | boolean | undefined | null | React.ReactNode) =>
+  typeof value === "string" ? <TableAction to={ to("/adres/:bagId", { bagId: value }) }>Open</TableAction> : undefined
+
 const columns = [
   { minWidth: 300, header: "Adres" },
-  { minWidth: 100 }
+  { minWidth: 100, render: renderLink }
 ]
 
 const OtherAddressesTable: React.FC<Props> = ({ bagId, onAddressChosen }) => {
 
   const [response, { isBusy }] = useOtherAddressesByBagId(bagId)
 
-  const [values, onClickRow] = useValues(response, onAddressChosen)
+  const values = useValues(response)
+
+  const onClickRow = (event: React.MouseEvent, index: number, data: Exclude<typeof values, undefined>[0]) => {
+    onAddressChosen()
+    navigateTo("/adres/:bagId", { bagId: data[1] })
+  }
 
   return (
     <Table

@@ -9,7 +9,7 @@ import FixedTableCell, { widthMobile as fixedColumnWidthMobile } from "./compone
 
 type Value = string | number | boolean | undefined | null | React.ReactNode
 
-type Props = {
+type Props<R> = {
   numLoadingRows?: number
   loading?: boolean
   hasFixedColumn?: boolean
@@ -17,12 +17,12 @@ type Props = {
     header?: React.ReactNode
     minWidth?: number
     sorter?: (a: any, b: any) => number
-    render?: (value: any) => React.ReactNode
+    render?: (value: Value) => React.ReactNode
   }[]
-  data?: Value[][]
+  data?: R[]
   noValuesPlaceholder?: React.ReactNode
   showHeadWhenEmpty?: boolean
-  onClickRow?: (event: React.MouseEvent, index: number, data?: React.ReactNode[]) => void
+  onClickRow?: (event: React.MouseEvent, index: number, data: R) => void
   className?: string
 }
 
@@ -72,17 +72,18 @@ const NoValuesPlaceholder = styled(TableCell)`
 const createLoadingData = (numColumns: number, numRows: number) =>
   [...Array(numRows)].map(_ => [...Array(numColumns)].map(_ => ""))
 
-const Table: React.FC<Props> = ({
-  columns,
-  loading = false,
-  numLoadingRows = 5,
-  hasFixedColumn,
-  showHeadWhenEmpty = true,
-  noValuesPlaceholder = "",
-  onClickRow,
-  className,
-  data
-}) => {
+const Table = <R extends Value[]>(props: Props<R>) => {
+  const {
+    columns,
+    loading = false,
+    numLoadingRows = 5,
+    hasFixedColumn,
+    showHeadWhenEmpty = true,
+    noValuesPlaceholder = "",
+    onClickRow,
+    className,
+    data
+  } = props
   const [sorting, setSorting] = useState({ columnKey: undefined, order: "ASCEND" })
 
   const isEmpty = (data?.length ?? 0) === 0
