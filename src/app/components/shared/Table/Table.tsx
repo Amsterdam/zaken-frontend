@@ -16,10 +16,11 @@ type Props<R> = {
   hasFixedColumn?: boolean
   columns: {
     header?: React.ReactNode
-    minWidth?: number
+    dataIndex?: number | keyof R
     render?: (value: Value) => React.ReactNode
     sorter?: (a: Value, b: Value) => number
     defaultSorting?: Sorting["order"]
+    minWidth?: number
   }[]
   data?: R[]
   noValuesPlaceholder?: React.ReactNode
@@ -116,9 +117,9 @@ const Table = <R extends Value[]>(props: Props<R>) => {
           <tbody>
             { !loading && sortedData?.map((rowData, index) => (
                 <Row key={ index } onClick={ (event: React.MouseEvent) => onClickRow?.(event, index, rowData) } isClickable={ onClickRow !== undefined } >
-                  { rowData.map((value: Value, index: number) => {
-                      const render = columns[index]?.render
-                      const node = (render ? render(value) : value) ?? <>&nbsp;</>
+                  { columns.map((column, index) => {
+                      const value = rowData[column.dataIndex ?? index]
+                      const node = (column.render ? column.render(value) : value) ?? <>&nbsp;</>
 
                       return hasFixedColumn && index === (rowData.length) - 1
                         ? <FixedTableCell key={ index } width={ fixedColumnWidth }>{ node }</FixedTableCell>
