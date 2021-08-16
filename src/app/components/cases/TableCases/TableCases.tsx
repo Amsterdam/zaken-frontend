@@ -15,7 +15,7 @@ const renderDate = (value: string | number | boolean | undefined | null | React.
   (value === undefined || typeof value === "string" ? <DateDisplay date={ value } emptyText="-" /> : "-") as React.ReactNode
 
 const columns = [
-  { header: "Adres", sorter: sortStrings, minWidth: 300 },
+  { header: "Adres", sorter: sortStrings, minWidth: 300, defaultSorting: "ASCEND" as const },
   { header: "Status", sorter: sortStrings, minWidth: 100 },
   { header: "Laatst gewijzigd", sorter: sortDates, render: renderDate, minWidth: 100 },
   { render: (value: string | number | boolean | undefined | null | React.ReactNode) =>

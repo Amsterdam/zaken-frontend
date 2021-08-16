@@ -17,8 +17,9 @@ type Props<R> = {
   columns: {
     header?: React.ReactNode
     minWidth?: number
-    sorter?: (a: Value, b: Value) => number
     render?: (value: Value) => React.ReactNode
+    sorter?: (a: Value, b: Value) => number
+    defaultSorting?: Sorting["order"]
   }[]
   data?: R[]
   noValuesPlaceholder?: React.ReactNode
@@ -92,7 +93,9 @@ const Table = <R extends Value[]>(props: Props<R>) => {
     ? columns[columns.length - 1].minWidth
     : undefined
 
-  const [sorting, setSorting] = useState<Sorting>()
+  const defaultSortingIndex = columns.findIndex(({ defaultSorting }) => defaultSorting !== undefined)
+  const defaultSorting = defaultSortingIndex > -1 ? { index: defaultSortingIndex, order: columns[defaultSortingIndex].defaultSorting! } : undefined
+  const [sorting, setSorting] = useState<Sorting | undefined>(defaultSorting)
 
   const sorter = sorting ? columns[sorting.index].sorter : undefined
   const sortedDataAscend = sorter !== undefined ? data?.sort((a: Value[], b: Value[]) => sorter(a[sorting!.index], b[sorting!.index])) : data

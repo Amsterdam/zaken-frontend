@@ -20,7 +20,7 @@ const renderId = (value: string | number | boolean | undefined | null | React.Re
 const columns = [
   { header: "Adres", minWidth: 150, sorter: sortStrings },
   { header: "Open taak", minWidth: 100, sorter: sortStrings },
-  { header: "Slotdatum", minWidth: 50, sorter: sortDates, render: renderDate },
+  { header: "Slotdatum", minWidth: 50, sorter: sortDates, render: renderDate, defaultSorting: "ASCEND" as const },
   { minWidth: 140, render: renderId }
 ]
 
