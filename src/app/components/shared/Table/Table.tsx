@@ -8,7 +8,7 @@ import TableHeader from "./components/TableHeader/TableHeader"
 import FixedTableCell, { widthMobile as fixedColumnWidthMobile } from "./components/TableCell/FixedTableCell"
 import { Sorting } from "./components/TableHeader/Sorter"
 
-type Value = string | number | boolean | undefined | null | React.ReactNode
+export type Value = string | number | boolean | undefined | null | React.ReactNode
 
 type Props<R> = {
   numLoadingRows?: number
@@ -17,7 +17,7 @@ type Props<R> = {
   columns: {
     header?: React.ReactNode
     minWidth?: number
-    sorter?: (a: any, b: any) => number
+    sorter?: (a: Value, b: Value) => number
     render?: (value: Value) => React.ReactNode
   }[]
   data?: R[]
@@ -95,7 +95,7 @@ const Table = <R extends Value[]>(props: Props<R>) => {
   const [sorting, setSorting] = useState<Sorting>()
 
   const sorter = sorting ? columns[sorting.index].sorter : undefined
-  const sortedDataAscend = sorter !== undefined ? data?.sort(sorter) : data
+  const sortedDataAscend = sorter !== undefined ? data?.sort((a: Value[], b: Value[]) => sorter(a[sorting!.index], b[sorting!.index])) : data
   const sortedData = sorting?.order === "DESCEND" ? sortedDataAscend?.reverse() : sortedDataAscend
 
   return (
