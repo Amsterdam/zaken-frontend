@@ -8,7 +8,10 @@ export default (tasks?: Components.Schemas.CamundaTaskList[]) =>
     return [
       full_address ?? "-",
       name,
-      <DateDisplay date={ due_date ?? undefined } emptyText="-" />,
+      {
+        value: due_date,
+        node: <DateDisplay date={ due_date ?? undefined } emptyText="-" />
+      },
       <TableAction to={ to("/zaken/:id", { id }) }>Zaakdetails</TableAction>,
       id
     ]

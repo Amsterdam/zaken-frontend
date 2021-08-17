@@ -10,11 +10,15 @@ export default (cases?: Components.Schemas.Case[]) =>
     ?.sort((a, b) => a.address.full_address.localeCompare(b.address.full_address))
     .map(({ id, address, current_states, end_date }) => {
       const startDate = first(current_states.map(({ start_date }) => start_date).sort(sortByDate("DESC")))
+      const date = end_date ?? startDate
 
       return [
         address.full_address ?? "-",
         current_states.length > 0 ? current_states.map(({ status_name }) => status_name).join(", ") : isDate(end_date) ? "Afgerond" : "-",
-        <DateDisplay date={ end_date ?? startDate } emptyText="-" />,
+        {
+          value: date,
+          node: <DateDisplay date={ date } emptyText="-" />
+        },
         <TableAction to={ to("/zaken/:id", { id }) }>Zaakdetails</TableAction>,
         id
       ]

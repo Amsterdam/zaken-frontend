@@ -8,9 +8,12 @@ import TableHeader from "./components/TableHeader/TableHeader"
 import FixedTableCell, { widthMobile as fixedColumnWidthMobile } from "./components/TableCell/FixedTableCell"
 import { Sorting } from "./components/TableHeader/Sorter"
 import createSorter from "./utils/createSorter"
+import { getNode } from "./utils/getValue"
+import indexValueNode from "./utils/indexValueNode"
 
 export type Value = string | number | boolean | null | undefined
-export type ValueNode = Value | { value: Value, node: React.ReactNode } | React.ReactNode
+export type WrappedValue = { value: Value, node: React.ReactNode }
+export type ValueNode = Value | WrappedValue | React.ReactNode
 export type ValueNodes = ValueNode[] | Record<string, ValueNode>
 export type DataIndex = number | string
 
@@ -20,7 +23,8 @@ type Props<R> = {
   hasFixedColumn?: boolean
   columns: {
     header?: React.ReactNode
-    dataIndex?: number | keyof R
+    //dataIndex?: number | keyof R
+    dataIndex?: DataIndex
     sorter?: (a: Value, b: Value) => number
     defaultSorting?: Sorting["order"]
     minWidth?: number
@@ -28,6 +32,7 @@ type Props<R> = {
   data?: R[]
   noValuesPlaceholder?: React.ReactNode
   showHeadWhenEmpty?: boolean
+  emptyValue?: React.ReactNode
   onClickRow?: (data: R, index: number, event: React.MouseEvent) => void
   className?: string
 }
@@ -121,7 +126,8 @@ const Table = <R extends ValueNode[]>(props: Props<R>) => {
             { !loading && sortedData?.map((rowData, index) => (
                 <Row key={ index } onClick={ (event: React.MouseEvent) => onClickRow?.(rowData, index, event) } isClickable={ onClickRow !== undefined } >
                   { columns.map((column, index) => {
-                      const node = rowData[column.dataIndex ?? index] ?? <>&nbsp;</>
+                      const valueNode = indexValueNode(rowData, column.dataIndex ?? index)
+                      const node = getNode(valueNode) ?? <>&nbsp;</>
 
                       return hasFixedColumn && index === columns.length - 1
                         ? <FixedTableCell key={ index } width={ fixedColumnWidth }>{ node }</FixedTableCell>

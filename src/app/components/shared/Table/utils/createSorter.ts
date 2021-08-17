@@ -1,16 +1,7 @@
-import { Value, ValueNode, ValueNodes, DataIndex } from "../Table"
+import { ValueNodes, DataIndex } from "../Table"
 import { Sorter } from "./sorters"
-
-const getValue = (valueNode: ValueNode): Value => {
-  if (valueNode == null) return valueNode
-  if (["boolean", "number", "string"].includes(typeof valueNode)) return valueNode as Value
-  if (valueNode.hasOwnProperty("value")) return (valueNode as { value: Value }).value
-}
-
-const getValueNode = (valueNodes: ValueNodes, dataIndex: DataIndex) => {
-  if (Array.isArray(valueNodes) && typeof dataIndex === "number") return valueNodes[dataIndex]
-  if (typeof dataIndex === "string") return (valueNodes as Record<string, ValueNode>)[dataIndex]
-}
+import { getValue } from "./getValue"
+import getValueNode from "./indexValueNode"
 
 export default (index: DataIndex, sorter: Sorter) =>
   (as: ValueNodes, bs: ValueNodes) => {
