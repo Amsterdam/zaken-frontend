@@ -1,8 +1,6 @@
 import { DateDisplay } from "@amsterdam/wonen-ui"
-import TableAction from "app/components/shared/Table/components/TableAction/TableAction"
 import Table from "app/components/shared/Table/Table"
 import navigateTo from "app/routing/navigateTo"
-import to from "app/routing/utils/to"
 import useValues from "./hooks/useValues"
 import { sortStrings, sortDates } from "app/components/shared/Table/utils/sorters"
 
@@ -14,14 +12,11 @@ type Props = {
 const renderDate = (value: string | number | boolean | undefined | null | React.ReactNode) =>
   (value === undefined || typeof value === "string" ? <DateDisplay date={ value } emptyText="-" /> : "-") as React.ReactNode
 
-const renderId = (value: string | number | boolean | undefined | null | React.ReactNode) =>
-  typeof value === "string" ? <TableAction to={ to("/zaken/:id", { id: value }) }>Zaakdetails</TableAction> : undefined
-
 const columns = [
   { header: "Adres", minWidth: 150, sorter: sortStrings },
   { header: "Open taak", minWidth: 100, sorter: sortStrings },
   { header: "Slotdatum", minWidth: 50, sorter: sortDates, render: renderDate, defaultSorting: "ASCEND" as const },
-  { minWidth: 140, render: renderId }
+  { minWidth: 140 }
 ]
 
 const TableTasks: React.FC<Props> = ({ data, isBusy }) => {
@@ -29,7 +24,7 @@ const TableTasks: React.FC<Props> = ({ data, isBusy }) => {
   const values = useValues(data)
 
   const onClickRow = (event: React.MouseEvent, index: number, data: Exclude<typeof values, undefined>[0]) => {
-    const id = data[3]
+    const id = data[4]
     navigateTo("/zaken/:id", { id })
   }
 

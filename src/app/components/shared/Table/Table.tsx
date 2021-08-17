@@ -121,7 +121,7 @@ const Table = <R extends Value[]>(props: Props<R>) => {
                       const value = rowData[column.dataIndex ?? index]
                       const node = (column.render ? column.render(value) : value) ?? <>&nbsp;</>
 
-                      return hasFixedColumn && index === (rowData.length) - 1
+                      return hasFixedColumn && index === columns.length - 1
                         ? <FixedTableCell key={ index } width={ fixedColumnWidth }>{ node }</FixedTableCell>
                         : <TableCell key={ index }>
                             { loading ? <SmallSkeleton maxRandomWidth={ (columns[index].minWidth ?? 30) - 30 } /> : node }
