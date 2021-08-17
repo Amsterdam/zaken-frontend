@@ -28,7 +28,7 @@ type Props<R> = {
   data?: R[]
   noValuesPlaceholder?: React.ReactNode
   showHeadWhenEmpty?: boolean
-  onClickRow?: (event: React.MouseEvent, index: number, data: R) => void
+  onClickRow?: (data: R, index: number, event: React.MouseEvent) => void
   className?: string
 }
 
@@ -119,7 +119,7 @@ const Table = <R extends ValueNode[]>(props: Props<R>) => {
           }
           <tbody>
             { !loading && sortedData?.map((rowData, index) => (
-                <Row key={ index } onClick={ (event: React.MouseEvent) => onClickRow?.(event, index, rowData) } isClickable={ onClickRow !== undefined } >
+                <Row key={ index } onClick={ (event: React.MouseEvent) => onClickRow?.(rowData, index, event) } isClickable={ onClickRow !== undefined } >
                   { columns.map((column, index) => {
                       const node = rowData[column.dataIndex ?? index] ?? <>&nbsp;</>
 

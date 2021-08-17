@@ -23,7 +23,7 @@ const SearchResults: React.FC<Props> = ({ searchString }) => {
   const [data, { isBusy }] = useBAGWithZipCode(isValidSearchString(searchString) ? searchString : undefined)
   const values = useValues(Array.isArray(data?.results) ? data!.results : undefined)
 
-  const onClickRow = (event: React.MouseEvent, index: number, data: Exclude<typeof values, undefined>[0]) => {
+  const onClickRow = (data: Exclude<typeof values, undefined>[0]) => {
     const bagId = data[3]
     navigateTo("/adres/:bagId", { bagId })
   }

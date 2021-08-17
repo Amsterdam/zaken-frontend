@@ -19,7 +19,7 @@ const OtherAddressesTable: React.FC<Props> = ({ bagId, onAddressChosen }) => {
 
   const values = useValues(response)
 
-  const onClickRow = (event: React.MouseEvent, index: number, data: Exclude<typeof values, undefined>[0]) => {
+  const onClickRow = (data: Exclude<typeof values, undefined>[0]) => {
     onAddressChosen()
     navigateTo("/adres/:bagId", { bagId: data[2] })
   }

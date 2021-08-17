@@ -19,7 +19,7 @@ const TableCases: React.FC<Props> = ({ data, isBusy }) => {
 
   const values = useValues(data?.results)
 
-  const onClickRow = (event: React.MouseEvent, index: number, data: Exclude<typeof values, undefined>[0]) => {
+  const onClickRow = (data: Exclude<typeof values, undefined>[0]) => {
     const id = data[4]
     navigateTo("/zaken/:id", { id })
   }

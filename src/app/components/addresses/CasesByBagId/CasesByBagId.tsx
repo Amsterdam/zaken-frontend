@@ -35,8 +35,10 @@ const CasesByBagId: React.FC<Props> = ({ bagId, openCases = false, title = defau
   const values = useValues(data?.results)
   const numCases = values?.length ?? 0
 
-  const onClickRow = (event: React.MouseEvent, index: number, data: Exclude<typeof values, undefined>[0]) =>
-    navigateTo("/zaken/:id", { id: data[5] })
+  const onClickRow = (data: Exclude<typeof values, undefined>[0]) => {
+    const id = data[5]
+    navigateTo("/zaken/:id", { id })
+  }
 
   return (
     <>
