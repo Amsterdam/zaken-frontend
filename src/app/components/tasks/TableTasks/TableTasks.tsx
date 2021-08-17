@@ -1,4 +1,3 @@
-import { DateDisplay } from "@amsterdam/wonen-ui"
 import Table from "app/components/shared/Table/Table"
 import navigateTo from "app/routing/navigateTo"
 import useValues from "./hooks/useValues"
@@ -9,13 +8,10 @@ type Props = {
   isBusy: boolean
 }
 
-const renderDate = (value: string | number | boolean | undefined | null | React.ReactNode) =>
-  (value === undefined || typeof value === "string" ? <DateDisplay date={ value } emptyText="-" /> : "-") as React.ReactNode
-
 const columns = [
   { header: "Adres", minWidth: 150, sorter: sortStrings },
   { header: "Open taak", minWidth: 100, sorter: sortStrings },
-  { header: "Slotdatum", minWidth: 50, sorter: sortDates, render: renderDate, defaultSorting: "ASCEND" as const },
+  { header: "Slotdatum", minWidth: 50, sorter: sortDates, defaultSorting: "ASCEND" as const },
   { minWidth: 140 }
 ]
 

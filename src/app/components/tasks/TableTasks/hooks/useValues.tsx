@@ -1,3 +1,4 @@
+import { DateDisplay } from "@amsterdam/wonen-ui"
 import TableAction from "app/components/shared/Table/components/TableAction/TableAction"
 import to from "app/routing/utils/to"
 
@@ -7,7 +8,7 @@ export default (tasks?: Components.Schemas.CamundaTaskList[]) =>
     return [
       full_address ?? "-",
       name,
-      due_date ?? undefined,
+      <DateDisplay date={ due_date } emptyText="-" />,
       <TableAction to={ to("/zaken/:id", { id }) }>Zaakdetails</TableAction>,
       id
     ]

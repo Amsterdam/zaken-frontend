@@ -8,7 +8,30 @@ import TableHeader from "./components/TableHeader/TableHeader"
 import FixedTableCell, { widthMobile as fixedColumnWidthMobile } from "./components/TableCell/FixedTableCell"
 import { Sorting } from "./components/TableHeader/Sorter"
 
-export type Value = string | number | boolean | undefined | null | React.ReactNode
+export type Value = string | number | boolean | null | undefined
+export type ValueNode = Value | React.ReactNode
+type ValueNodes = ValueNode[] | Record<string, ValueNode>
+type Sorter = (a: Value, b: Value) => number
+
+const isValue = (valueNode: ValueNode): valueNode is Value => {
+  if (valueNode == null) return true
+  if (["boolean", "number", "string"].includes(typeof valueNode)) return true
+  return false
+}
+
+const getValueNode = (valueNodes: ValueNodes, dataIndex: number | string) => {
+  if (Array.isArray(valueNodes) && typeof dataIndex === "number") return valueNodes[dataIndex]
+  if (typeof dataIndex === "string") return (valueNodes as Record<string, ValueNode>)[dataIndex]
+}
+
+const createSorter = (index: number | string, sorter: Sorter) =>
+  (as: ValueNodes, bs: ValueNodes) => {
+    const a = getValueNode(as, index)
+    const b = getValueNode(bs, index)
+    if (isValue(b) === false) return 1
+    if (isValue(a) === false) return -1
+    return sorter(a as Value, b as Value)
+  }
 
 type Props<R> = {
   numLoadingRows?: number
@@ -17,7 +40,6 @@ type Props<R> = {
   columns: {
     header?: React.ReactNode
     dataIndex?: number | keyof R
-    render?: (value: Value) => React.ReactNode
     sorter?: (a: Value, b: Value) => number
     defaultSorting?: Sorting["order"]
     minWidth?: number
@@ -75,7 +97,7 @@ const NoValuesPlaceholder = styled(TableCell)`
 const createLoadingData = (numColumns: number, numRows: number) =>
   [...Array(numRows)].map(_ => [...Array(numColumns)].map(_ => ""))
 
-const Table = <R extends Value[]>(props: Props<R>) => {
+const Table = <R extends ValueNode[]>(props: Props<R>) => {
   const {
     columns,
     loading = false,
@@ -99,7 +121,7 @@ const Table = <R extends Value[]>(props: Props<R>) => {
   const [sorting, setSorting] = useState<Sorting | undefined>(defaultSorting)
 
   const sorter = sorting ? columns[sorting.index].sorter : undefined
-  const sortedDataAscend = sorter !== undefined ? data?.sort((a: Value[], b: Value[]) => sorter(a[sorting!.index], b[sorting!.index])) : data
+  const sortedDataAscend = sorter !== undefined ? data?.sort(createSorter(sorting!.index, sorter)) : data
   const sortedData = sorting?.order === "DESCEND" ? sortedDataAscend?.reverse() : sortedDataAscend
 
   return (
@@ -118,8 +140,7 @@ const Table = <R extends Value[]>(props: Props<R>) => {
             { !loading && sortedData?.map((rowData, index) => (
                 <Row key={ index } onClick={ (event: React.MouseEvent) => onClickRow?.(event, index, rowData) } isClickable={ onClickRow !== undefined } >
                   { columns.map((column, index) => {
-                      const value = rowData[column.dataIndex ?? index]
-                      const node = (column.render ? column.render(value) : value) ?? <>&nbsp;</>
+                      const node = rowData[column.dataIndex ?? index] ?? <>&nbsp;</>
 
                       return hasFixedColumn && index === columns.length - 1
                         ? <FixedTableCell key={ index } width={ fixedColumnWidth }>{ node }</FixedTableCell>

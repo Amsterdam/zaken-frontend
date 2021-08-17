@@ -1,6 +1,5 @@
 import useValues from "./hooks/useValues"
 import Table from "app/components/shared/Table/Table"
-import { DateDisplay } from "@amsterdam/wonen-ui"
 import navigateTo from "app/routing/navigateTo"
 import { sortStrings, sortDates } from "app/components/shared/Table/utils/sorters"
 
@@ -9,13 +8,10 @@ type Props = {
   isBusy: boolean
 }
 
-const renderDate = (value: string | number | boolean | undefined | null | React.ReactNode) =>
-  (value === undefined || typeof value === "string" ? <DateDisplay date={ value } emptyText="-" /> : "-") as React.ReactNode
-
 const columns = [
   { header: "Adres", sorter: sortStrings, minWidth: 300, defaultSorting: "ASCEND" as const },
   { header: "Status", sorter: sortStrings, minWidth: 100 },
-  { header: "Laatst gewijzigd", sorter: sortDates, render: renderDate, minWidth: 100 },
+  { header: "Laatst gewijzigd", sorter: sortDates, minWidth: 100 },
   { minWidth: 140 }
 ]
 

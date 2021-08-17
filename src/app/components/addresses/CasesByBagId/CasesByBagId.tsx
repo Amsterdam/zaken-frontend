@@ -5,7 +5,6 @@ import { useCasesByBagId } from "app/state/rest"
 import useValues from "./hooks/useValues"
 import Table from "app/components/shared/Table/Table"
 import navigateTo from "app/routing/navigateTo"
-import { CaseIdDisplay } from "@amsterdam/wonen-ui"
 import React from "react"
 
 type Props = {
@@ -23,7 +22,7 @@ const StyledHeading = styled(Heading)`
 `
 
 const columns = [
-  { header: "Zaak ID", minWidth: 100, render: (id: string | number | boolean | undefined | null | React.ReactNode) => (typeof id === "string" ? <CaseIdDisplay id={ id } /> : null) as React.ReactNode },
+  { header: "Zaak ID", minWidth: 100 },
   { header: "Thema", minWidth: 100 },
   { header: "Startdatum", minWidth: 100 },
   { header: "Huidige status", minWidth: 100 },
@@ -37,7 +36,7 @@ const CasesByBagId: React.FC<Props> = ({ bagId, openCases = false, title = defau
   const numCases = values?.length ?? 0
 
   const onClickRow = (event: React.MouseEvent, index: number, data: Exclude<typeof values, undefined>[0]) =>
-    navigateTo("/zaken/:id", { id: data[0] })
+    navigateTo("/zaken/:id", { id: data[5] })
 
   return (
     <>

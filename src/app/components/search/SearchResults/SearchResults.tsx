@@ -1,8 +1,6 @@
 import { useBAGWithZipCode } from "app/state/rest"
 import useValues from "./hooks/useValues"
 import Table from "app/components/shared/Table/Table"
-import TableAction from "app/components/shared/Table/components/TableAction/TableAction"
-import to from "app/routing/utils/to"
 import navigateTo from "app/routing/navigateTo"
 
 export type SearchResult = Pick<BAGAddressResponse["results"][0], "adres" | "postcode" | "adresseerbaar_object_id">
@@ -17,9 +15,7 @@ const isValidSearchString = (s: string) => s.length >= MIN_SEARCH_LENGTH
 const columns = [
   { header:"Adres", minWidth: 100 },
   { header:"Postcode", minWidth: 100 },
-  { minWidth: 100, render: (value: string | number | boolean | undefined | null | React.ReactNode) =>
-    typeof value === "string" ? <TableAction to={ to("/zaken/:id", { id: value }) }>Zaakdetails</TableAction> : undefined
-  }
+  { minWidth: 100 }
 ]
 
 const SearchResults: React.FC<Props> = ({ searchString }) => {
@@ -28,7 +24,7 @@ const SearchResults: React.FC<Props> = ({ searchString }) => {
   const values = useValues(Array.isArray(data?.results) ? data!.results : undefined)
 
   const onClickRow = (event: React.MouseEvent, index: number, data: Exclude<typeof values, undefined>[0]) => {
-    const bagId = data[2]
+    const bagId = data[3]
     navigateTo("/adres/:bagId", { bagId })
   }
 
