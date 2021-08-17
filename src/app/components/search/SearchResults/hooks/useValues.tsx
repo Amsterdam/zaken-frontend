@@ -8,7 +8,7 @@ export default (results?: SearchResult[]) =>
       [
         adres ?? "-",
         postcode ?? "-",
-        <TableAction to={ to("/zaken/:id", { id: adresseerbaar_object_id }) }>Zaakdetails</TableAction>,
+        <TableAction to={ to("/adres/:bagId", { bagId: adresseerbaar_object_id }) }>Bekijk</TableAction>,
         adresseerbaar_object_id
       ]
     ))

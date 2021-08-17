@@ -13,9 +13,9 @@ const MIN_SEARCH_LENGTH = 3
 const isValidSearchString = (s: string) => s.length >= MIN_SEARCH_LENGTH
 
 const columns = [
-  { header:"Adres", minWidth: 100 },
-  { header:"Postcode", minWidth: 100 },
-  { minWidth: 100 }
+  { header: "Adres", minWidth: 100 },
+  { header: "Postcode", minWidth: 100 },
+  { minWidth: 140 }
 ]
 
 const SearchResults: React.FC<Props> = ({ searchString }) => {
