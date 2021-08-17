@@ -27,6 +27,7 @@ type Props<R> = {
     dataIndex?: DataIndex
     sorter?: (a: Value, b: Value) => number
     defaultSorting?: Sorting["order"]
+    emptyValue?: React.ReactNode
     minWidth?: number
   }[]
   data?: R[]
@@ -91,6 +92,7 @@ const Table = <R extends ValueNode[]>(props: Props<R>) => {
     hasFixedColumn,
     showHeadWhenEmpty = true,
     noValuesPlaceholder = "",
+    emptyValue = <>&nbsp;</>,
     onClickRow,
     className,
     data
@@ -127,7 +129,7 @@ const Table = <R extends ValueNode[]>(props: Props<R>) => {
                 <Row key={ index } onClick={ (event: React.MouseEvent) => onClickRow?.(rowData, index, event) } isClickable={ onClickRow !== undefined } >
                   { columns.map((column, index) => {
                       const valueNode = indexValueNode(rowData, column.dataIndex ?? index)
-                      const node = getNode(valueNode) ?? <>&nbsp;</>
+                      const node = getNode(valueNode) ?? column.emptyValue ?? emptyValue
 
                       return hasFixedColumn && index === columns.length - 1
                         ? <FixedTableCell key={ index } width={ fixedColumnWidth }>{ node }</FixedTableCell>
