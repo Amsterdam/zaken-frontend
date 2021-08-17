@@ -1,5 +1,7 @@
 import { Value } from "../Table"
 
+export type Sorter = (a: Value, b: Value) => number
+
 export const sortNumbers = (a: Value, b: Value) => {
   if (typeof b !== "number") return 1
   if (typeof a !== "number") return -1
