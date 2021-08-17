@@ -9,28 +9,31 @@ import FixedTableCell, { widthMobile as fixedColumnWidthMobile } from "./compone
 import { Sorting } from "./components/TableHeader/Sorter"
 
 export type Value = string | number | boolean | null | undefined
-export type ValueNode = Value | React.ReactNode
+export type ValueNode = Value | { value: Value, node: React.ReactNode } | React.ReactNode
 type ValueNodes = ValueNode[] | Record<string, ValueNode>
+type DataIndex = number | string
 type Sorter = (a: Value, b: Value) => number
 
-const isValue = (valueNode: ValueNode): valueNode is Value => {
-  if (valueNode == null) return true
-  if (["boolean", "number", "string"].includes(typeof valueNode)) return true
-  return false
+const getValue = (valueNode: ValueNode): Value => {
+  if (valueNode == null) return valueNode
+  if (["boolean", "number", "string"].includes(typeof valueNode)) return valueNode as Value
+  if (valueNode.hasOwnProperty("value")) return (valueNode as { value: Value }).value
 }
 
-const getValueNode = (valueNodes: ValueNodes, dataIndex: number | string) => {
+const getValueNode = (valueNodes: ValueNodes, dataIndex: DataIndex) => {
   if (Array.isArray(valueNodes) && typeof dataIndex === "number") return valueNodes[dataIndex]
   if (typeof dataIndex === "string") return (valueNodes as Record<string, ValueNode>)[dataIndex]
 }
 
-const createSorter = (index: number | string, sorter: Sorter) =>
+const createSorter = (index: DataIndex, sorter: Sorter) =>
   (as: ValueNodes, bs: ValueNodes) => {
     const a = getValueNode(as, index)
     const b = getValueNode(bs, index)
-    if (isValue(b) === false) return 1
-    if (isValue(a) === false) return -1
-    return sorter(a as Value, b as Value)
+    const aValue = getValue(a)
+    const bValue = getValue(b)
+    if (bValue == null) return 1
+    if (aValue == null) return -1
+    return sorter(aValue, bValue)
   }
 
 type Props<R> = {
