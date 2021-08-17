@@ -18,3 +18,14 @@ export const useListings = (options?: Options) => {
     */
   })
 }
+
+export const useListing = (tonId?: number, options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<any>({
+    ...options,
+    url: makeTonApiUrl("listings", tonId),
+    groupName: "listings",
+    handleError
+    // isProtected: true
+  })
+}
