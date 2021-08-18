@@ -1,8 +1,6 @@
-import { useMemo } from "react"
 import { Spinner, Heading, ErrorMessage, themeSpacing } from "@amsterdam/asc-ui"
-
 import { useCaseTasks, useTaskComplete } from "app/state/rest"
-import mapTaskData from "./utils/mapTaskData"
+import useMappedData from "./hooks/useMappedData"
 import StyledTable from "./components/StyledTable"
 import styled from "styled-components"
 
@@ -33,13 +31,7 @@ const Workflow: React.FC<Props> = ({ id }) => {
 
   const [data, { isBusy, hasErrors }] = useCaseTasks(id)
   const [, { execPost }] = useTaskComplete({ lazy: true })
-  const mappedData = useMemo(
-    () => data?.map(
-      ({ state: { status_name, information }, tasks }) =>
-        [status_name, information, tasks.map(mapTaskData(id, execPost))] as const
-    ),
-    [data, id, execPost]
-  )
+  const mappedData = useMappedData(id, data, execPost)
 
   return (
     isBusy ?
