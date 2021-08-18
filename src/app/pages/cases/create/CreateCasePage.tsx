@@ -11,6 +11,7 @@ import AddressHeadingByBagId from "app/components/shared/AddressHeadingByBagId/A
 import CreateForm from "app/components/cases/CreateForm/CreateForm"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
 import { Column } from "app/components/layouts/Grid"
+import NoValidTonIdAlert from "./NoValidTonIdAlert"
 
 type Props = {
   bagId: string
@@ -20,11 +21,12 @@ type Props = {
 const CreateCasePage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => {
   const tonIdParam = getUrlParam("tonId")
   const tonId = parseUrlParamId(tonIdParam)
-  // Check for wrong tonId and show alert!
+  const isNoValidTonId = tonIdParam !== undefined && tonId === undefined
 
   return (
   isValidUrlParamBAGId(bagId) ?
     <DefaultLayout>
+      <NoValidTonIdAlert isVisible={ isNoValidTonId } />
       <RowWithColumn>
         <PageHeading />
       </RowWithColumn>

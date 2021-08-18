@@ -7,7 +7,7 @@ import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
-  tonId: number | undefined
+  tonId?: number | undefined
 }
 
 type FormData =
@@ -21,7 +21,7 @@ const mapData = (bagId: Components.Schemas.Address["bag_id"], tonId: number | un
     theme: data.theme.id,
     reason: data.reason.id,
     project: data.project?.id,
-    ton_ids: tonId ? [ tonId ] : undefined
+    ton_ids: tonId !== undefined ? [ tonId ] : undefined
   })
 
 const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
@@ -29,7 +29,7 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
   const [themeId, setThemeId] = useState<Components.Schemas.CaseTheme["id"]>()
 
   useEffect(() => {
-    const caseThemeId = tonId
+    const caseThemeId = tonId !== undefined
       ? caseThemes?.results?.find(({ name }) => name === "Vakantieverhuur")?.id
       : caseThemes?.results?.[0].id
     setThemeId(caseThemeId)
@@ -55,7 +55,7 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
   // If the user has been redirected via ton, fill out the form in advance.
   const initialValues = {
     theme: caseThemes?.results?.find(({ id }) => id === themeId),
-    ...tonId ? {
+    ...tonId !== undefined ? {
       reason: reasons?.results?.find(({ name }) => name === "Digitaal Toezicht"),
       advertisement: "yes",
       advertisement_linklist: [{ advertisement_link: listing?.url }]
