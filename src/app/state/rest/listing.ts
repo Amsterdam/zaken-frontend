@@ -9,13 +9,8 @@ export const useListing = (tonId?: number, options?: Options) => {
     ...options,
     lazy: tonId === undefined,
     url: makeTonApiUrl("listings", tonId),
-    groupName: "listings",
-    handleError
-    // isProtected: true
-    /*
-      At the moment isProtected gives a CORRS error.
-      Don't know why?
-      TODO: Check why this is happening.
-    */
+    groupName: "listing",
+    handleError,
+    isProtected: true
   })
 }
