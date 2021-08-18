@@ -15,7 +15,7 @@ export type Value = string | number | boolean | null | undefined
 export type WrappedValue = { value: Value, node: React.ReactNode }
 export type ValueNode = Value | WrappedValue | React.ReactNode
 export type ValueNodes = ValueNode[] | Record<string, ValueNode>
-export type DataIndex = number | string
+export type DataIndex = number | string | symbol
 
 type Props<R> = {
   numLoadingRows?: number
@@ -23,8 +23,7 @@ type Props<R> = {
   hasFixedColumn?: boolean
   columns: {
     header?: React.ReactNode
-    //dataIndex?: number | keyof R
-    dataIndex?: DataIndex
+    dataIndex?: number | keyof R
     sorter?: (a: Value, b: Value) => number
     defaultSorting?: Sorting["order"]
     emptyValue?: React.ReactNode
