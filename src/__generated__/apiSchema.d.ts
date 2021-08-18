@@ -129,7 +129,7 @@ declare namespace Components {
             directing_process?: string | null;
             camunda_ids?: string[] | null;
             description?: string | null;
-            ton_ids?: string[] | null;
+            ton_ids?: number[] | null;
             author?: string | null; // uuid
         }
         export interface CaseClose {
@@ -159,7 +159,7 @@ declare namespace Components {
             reason: number;
             description?: string | null;
             project?: number;
-            ton_ids?: string[] | null;
+            ton_ids?: number[] | null;
         }
         export interface CaseEvent {
             id: number;
@@ -730,7 +730,7 @@ declare namespace Components {
             directing_process?: string | null;
             camunda_ids?: string[] | null;
             description?: string | null;
-            ton_ids?: string[] | null;
+            ton_ids?: number[] | null;
             author?: string | null; // uuid
         }
         export interface Permit {
