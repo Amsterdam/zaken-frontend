@@ -8,8 +8,8 @@ import FixedTableCell from "./components/TableCell/FixedTableCell"
 describe("Table", () => {
   const columns = [{ header: "column1", minWidth: 100 }, { header: "column2", minWidth: 100 }]
   const data = [
-    { itemList:["foo", "bar"] },
-    { itemList: ["zoo", "baz"] }
+    ["foo", "bar"],
+    ["zoo", "baz"]
   ]
 
   describe("when NOT loading", () => {

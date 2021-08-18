@@ -4,6 +4,7 @@ import { Heading, themeSpacing } from "@amsterdam/asc-ui"
 import { useCasesByBagId } from "app/state/rest"
 import useValues from "./hooks/useValues"
 import Table from "app/components/shared/Table/Table"
+import navigateTo from "app/routing/navigateTo"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -31,7 +32,12 @@ const CasesByBagId: React.FC<Props> = ({ bagId, openCases = false, title = defau
 
   const [data, { isBusy }] = useCasesByBagId(bagId, openCases)
   const values = useValues(data?.results)
-  const numCases = data?.results?.length ?? 0
+  const numCases = values?.length ?? 0
+
+  const onClickRow = (data: Exclude<typeof values, undefined>[0]) => {
+    const id = data[4]
+    navigateTo("/zaken/:id", { id })
+  }
 
   return (
     <>
@@ -43,6 +49,7 @@ const CasesByBagId: React.FC<Props> = ({ bagId, openCases = false, title = defau
         numLoadingRows={ 1 }
         data={ values }
         showHeadWhenEmpty={ false }
+        onClickRow={ onClickRow }
         noValuesPlaceholder={ emptyText }
       />
     </>

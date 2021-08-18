@@ -8,7 +8,9 @@ type Props = React.ComponentProps<typeof Button> & {
 
 const TableAction: React.FC<Props> = ({ to, children, ...restProps }) => {
 
-  const Action = (
+  const onClick = (event: React.MouseEvent) => event.stopPropagation()
+
+  const action = (
     <Button variant="textButton" as={ to ? "span" : "button" } iconLeft={ <ChevronRight /> } iconSize={ 24 } { ...restProps }>
       <Hidden maxBreakpoint="laptopM">
         <span>
@@ -18,7 +20,13 @@ const TableAction: React.FC<Props> = ({ to, children, ...restProps }) => {
     </Button>
   )
 
-  return to ? <ButtonLink to={ to }>{ Action }</ButtonLink> : Action
+  return (
+    to !== undefined ?
+      <ButtonLink to={ to } onClick={ onClick }>
+        { action }
+      </ButtonLink> :
+      action
+  )
 }
 
 export default TableAction

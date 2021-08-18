@@ -6,22 +6,34 @@ import { SmallSkeleton } from "@amsterdam/wonen-ui"
 import TableCell from "./components/TableCell/TableCell"
 import TableHeader from "./components/TableHeader/TableHeader"
 import FixedTableCell, { widthMobile as fixedColumnWidthMobile } from "./components/TableCell/FixedTableCell"
+import { Sorting } from "./components/TableHeader/Sorter"
+import createSorter from "./utils/createSorter"
+import { getNode } from "./utils/getValue"
+import indexValueNode from "./utils/indexValueNode"
 
-type Props = {
+export type Value = string | number | boolean | null | undefined
+export type WrappedValue = { value: Value, node: React.ReactNode }
+export type ValueNode = Value | WrappedValue | React.ReactNode
+export type ValueNodes = ValueNode[] | Record<string, ValueNode>
+export type DataIndex = number | string | symbol
+
+type Props<R> = {
   numLoadingRows?: number
   loading?: boolean
   hasFixedColumn?: boolean
-  columns: { 
-    header?: React.ReactNode 
-    minWidth?: number 
-    sorter?: (a: any, b: any) => number
+  columns: {
+    header?: React.ReactNode
+    dataIndex?: number | keyof R
+    sorter?: (a: Value, b: Value) => number
+    defaultSorting?: Sorting["order"]
+    emptyValue?: React.ReactNode
+    minWidth?: number
   }[]
-  data?: {
-    onClick?: (event: React.MouseEvent) => void
-    itemList: React.ReactNode[]
-  }[]
+  data?: R[]
   noValuesPlaceholder?: React.ReactNode
   showHeadWhenEmpty?: boolean
+  emptyValue?: React.ReactNode
+  onClickRow?: (data: R, index: number, event: React.MouseEvent) => void
   className?: string
 }
 
@@ -59,7 +71,7 @@ const Row = styled.tr<ClickableRowProps>`
   `
   }
 
-  td{
+  td {
     border-bottom: 1px solid ${ themeColor("tint", "level3") };
   }
 `
@@ -68,20 +80,22 @@ const NoValuesPlaceholder = styled(TableCell)`
   font-style: italic;
 `
 
-const createLoadingData = (numColumns: number, numRows: number = 5) =>
+const createLoadingData = (numColumns: number, numRows: number) =>
   [...Array(numRows)].map(_ => [...Array(numColumns)].map(_ => ""))
 
-const Table: React.FC<Props> = ({
-  columns,
-  loading = false,
-  numLoadingRows,
-  hasFixedColumn,
-  showHeadWhenEmpty = true,
-  noValuesPlaceholder = "",
-  className,
-  data
-}) => {
-  const [sorting, setSorting] = useState({ columnKey: undefined, order: "ASCEND" })
+const Table = <R extends ValueNode[]>(props: Props<R>) => {
+  const {
+    columns,
+    loading = false,
+    numLoadingRows = 5,
+    hasFixedColumn,
+    showHeadWhenEmpty = true,
+    noValuesPlaceholder = "",
+    emptyValue = <>&nbsp;</>,
+    onClickRow,
+    className,
+    data
+  } = props
 
   const isEmpty = (data?.length ?? 0) === 0
 
@@ -89,44 +103,47 @@ const Table: React.FC<Props> = ({
     ? columns[columns.length - 1].minWidth
     : undefined
 
-  const onChangeSorting = (sortObj: any) => {
-    if (loading) return
-    if (isEmpty) return
-    if (!sortObj) return
-    setSorting(sortObj)
-  }
-  
-  const sortedDataDescend = !isEmpty && sorting.columnKey !== undefined ? data?.sort(columns[sorting.columnKey ?? 0].sorter) : null
-  const sortedData = sorting.order === "DESCEND" ? sortedDataDescend?.reverse() : sortedDataDescend
-  const dataSource = sortedData ?? data
+  const defaultSortingIndex = columns.findIndex(({ defaultSorting }) => defaultSorting !== undefined)
+  const defaultSorting = defaultSortingIndex > -1 ? { index: defaultSortingIndex, order: columns[defaultSortingIndex].defaultSorting! } : undefined
+  const [sorting, setSorting] = useState<Sorting | undefined>(defaultSorting)
+
+  const sorter = sorting ? columns[sorting.index].sorter : undefined
+  const sortedDataAscend = sorter !== undefined ? data?.sort(createSorter(sorting!.index, sorter)) : data
+  const sortedData = sorting?.order === "DESCEND" ? sortedDataAscend?.reverse() : sortedDataAscend
 
   return (
     <Wrap className={ className }>
       <HorizontalScrollContainer fixedColumnWidth={ fixedColumnWidth }>
         <StyledTable>
           { (showHeadWhenEmpty || !isEmpty) &&
-            <TableHeader 
-              columns={ columns } 
-              hasFixedColumn={ hasFixedColumn } 
-              onChangeSorting={ onChangeSorting } 
+            <TableHeader
+              columns={ columns }
+              hasFixedColumn={ hasFixedColumn }
+              onChangeSorting={ setSorting }
               sorting={ sorting }
             />
           }
           <tbody>
-            { !loading && dataSource?.map(({ onClick, itemList }, index) =>
-              <Row key={ index } onClick={ onClick ?? (() => {}) } isClickable={ onClick !== undefined } >
-                { itemList?.map((cell: React.ReactNode, index: number) =>
-                    hasFixedColumn && index === (itemList?.length ?? 0) - 1
-                      ? <FixedTableCell key={ index } width={ fixedColumnWidth }>{ cell ?? <>&nbsp;</> }</FixedTableCell>
-                      : <TableCell key={ index }>
-                          { loading ? <SmallSkeleton maxRandomWidth={ (columns[index].minWidth ?? 30) - 30 } /> : cell ?? <>&nbsp;</> }
-                        </TableCell>
-                ) }
-              </Row>
-            ) }
-            { loading && createLoadingData(columns.length, numLoadingRows).map( (row, index) =>
-              <Row key={index}>
-                { row.map( (cell, index) => hasFixedColumn && index === row.length - 1
+            { !loading && sortedData?.map((rowData, index) => (
+                <Row key={ index } onClick={ (event: React.MouseEvent) => onClickRow?.(rowData, index, event) } isClickable={ onClickRow !== undefined } >
+                  { columns.map((column, index) => {
+                      const valueNode = indexValueNode(rowData, column.dataIndex ?? index)
+                      const node = getNode(valueNode) ?? column.emptyValue ?? emptyValue
+
+                      return hasFixedColumn && index === columns.length - 1
+                        ? <FixedTableCell key={ index } width={ fixedColumnWidth }>{ node }</FixedTableCell>
+                        : <TableCell key={ index }>
+                            { loading ? <SmallSkeleton maxRandomWidth={ (column.minWidth ?? 30) - 30 } /> : node }
+                          </TableCell>
+
+                    }
+                  ) }
+                </Row>
+              ))
+            }
+            { loading && createLoadingData(columns.length, numLoadingRows).map((row, index) =>
+              <Row key={ index }>
+                { row.map((cell, index) => hasFixedColumn && index === row.length - 1
                     ? <FixedTableCell key={index} width={ fixedColumnWidth }>{ cell ?? <>&nbsp;</> }</FixedTableCell>
                     : <TableCell key={index}>{ loading ? <SmallSkeleton maxRandomWidth={ (columns[index].minWidth ?? 30) - 30} /> : cell ?? <>&nbsp;</> }</TableCell>
                 ) }
@@ -134,7 +151,7 @@ const Table: React.FC<Props> = ({
             ) }
             { !loading && isEmpty && (
               <tr>
-                <NoValuesPlaceholder colSpan={columns.length}>
+                <NoValuesPlaceholder colSpan={ columns.length }>
                   { noValuesPlaceholder }
                 </NoValuesPlaceholder>
               </tr>

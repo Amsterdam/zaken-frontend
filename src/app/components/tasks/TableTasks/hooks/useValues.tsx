@@ -1,27 +1,18 @@
-import to from "app/routing/utils/to"
-import navigateTo from "app/routing/navigateTo"
-import DueDate from "app/components/shared/DueDate/DueDate"
+import { DateDisplay } from "@amsterdam/wonen-ui"
 import TableAction from "app/components/shared/Table/components/TableAction/TableAction"
-
-const onClick = (id: Components.Schemas.Case["id"]) => (event: React.MouseEvent) => {
-  navigateTo("/zaken/:id", { id })
-}
+import to from "app/routing/utils/to"
 
 export default (tasks?: Components.Schemas.CamundaTaskList[]) =>
-
   tasks?.map((task: Components.Schemas.CamundaTaskList) => {
-
     const { name, due_date, case: { address: { full_address }, id } } = task
-    const href = to("/zaken/:id", { id })
-
-    return {
-      href,
-      onClick: onClick(id),
-      itemList: [
-        full_address ?? "-",
-        name,
-        due_date ? <DueDate date={ due_date } /> : "-",
-        <TableAction to={ href }>Zaakdetails</TableAction>
-      ]
-    }
+    return [
+      full_address ?? "-",
+      name,
+      {
+        value: due_date,
+        node: <DateDisplay date={ due_date ?? undefined } emptyText="-" />
+      },
+      <TableAction to={ to("/zaken/:id", { id }) }>Zaakdetails</TableAction>,
+      id
+    ]
   })
