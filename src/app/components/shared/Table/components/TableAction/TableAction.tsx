@@ -22,10 +22,10 @@ const TableAction: React.FC<Props> = ({ to, children, ...restProps }) => {
 
   return (
     to !== undefined ?
-    <ButtonLink to={ to } onClick={ onClick }>
-      { action }
-    </ButtonLink> :
-    action
+      <ButtonLink to={ to } onClick={ onClick }>
+        { action }
+      </ButtonLink> :
+      action
   )
 }
 
