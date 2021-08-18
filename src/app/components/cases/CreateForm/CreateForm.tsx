@@ -38,13 +38,7 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
   const [reasons] = useReasons(themeId)
   const [projects] = useProjects(themeId)
   const [, { execPost }] = useCaseCreate()
-
-  /*
-  ** Only fetch listing if there's a tonId
-  ** Change the hook to useListing(tonId) when TON BE is ready.
-  */
- const [listing] = useListing(tonId)
- console.log("Listing", tonId, listing)
+  const [listing] = useListing(tonId)
 
   const fields = useScaffoldedFields(scaffold, bagId, setThemeId, caseThemes?.results, reasons?.results, projects?.results)
 
@@ -59,7 +53,7 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
     )
 
   // If the user has been redirected via ton, fill out the form in advance.
-  let initialValues = {
+  const initialValues = {
     theme: caseThemes?.results?.find(({ id }) => id === themeId),
     ...tonId ? {
       reason: reasons?.results?.find(({ name }) => name === "Digitaal Toezicht"),

@@ -20,6 +20,7 @@ type Props = {
 const CreateCasePage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => {
   const tonIdParam = getUrlParam("tonId")
   const tonId = parseUrlParamId(tonIdParam)
+  // Check for wrong tonId and show alert!
 
   return (
   isValidUrlParamBAGId(bagId) ?
