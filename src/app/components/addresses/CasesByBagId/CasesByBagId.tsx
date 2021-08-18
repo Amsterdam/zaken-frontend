@@ -5,7 +5,6 @@ import { useCasesByBagId } from "app/state/rest"
 import useValues from "./hooks/useValues"
 import Table from "app/components/shared/Table/Table"
 import navigateTo from "app/routing/navigateTo"
-import React from "react"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -36,7 +35,7 @@ const CasesByBagId: React.FC<Props> = ({ bagId, openCases = false, title = defau
   const numCases = values?.length ?? 0
 
   const onClickRow = (data: Exclude<typeof values, undefined>[0]) => {
-    const id = data[5]
+    const id = data[4]
     navigateTo("/zaken/:id", { id })
   }
 

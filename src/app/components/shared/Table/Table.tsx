@@ -133,7 +133,7 @@ const Table = <R extends ValueNode[]>(props: Props<R>) => {
                       return hasFixedColumn && index === columns.length - 1
                         ? <FixedTableCell key={ index } width={ fixedColumnWidth }>{ node }</FixedTableCell>
                         : <TableCell key={ index }>
-                            { loading ? <SmallSkeleton maxRandomWidth={ (columns[index].minWidth ?? 30) - 30 } /> : node }
+                            { loading ? <SmallSkeleton maxRandomWidth={ (column.minWidth ?? 30) - 30 } /> : node }
                           </TableCell>
 
                     }
@@ -141,9 +141,9 @@ const Table = <R extends ValueNode[]>(props: Props<R>) => {
                 </Row>
               ))
             }
-            { loading && createLoadingData(columns.length, numLoadingRows).map( (row, index) =>
-              <Row key={index}>
-                { row.map( (cell, index) => hasFixedColumn && index === row.length - 1
+            { loading && createLoadingData(columns.length, numLoadingRows).map((row, index) =>
+              <Row key={ index }>
+                { row.map((cell, index) => hasFixedColumn && index === row.length - 1
                     ? <FixedTableCell key={index} width={ fixedColumnWidth }>{ cell ?? <>&nbsp;</> }</FixedTableCell>
                     : <TableCell key={index}>{ loading ? <SmallSkeleton maxRandomWidth={ (columns[index].minWidth ?? 30) - 30} /> : cell ?? <>&nbsp;</> }</TableCell>
                 ) }
@@ -151,7 +151,7 @@ const Table = <R extends ValueNode[]>(props: Props<R>) => {
             ) }
             { !loading && isEmpty && (
               <tr>
-                <NoValuesPlaceholder colSpan={columns.length}>
+                <NoValuesPlaceholder colSpan={ columns.length }>
                   { noValuesPlaceholder }
                 </NoValuesPlaceholder>
               </tr>
