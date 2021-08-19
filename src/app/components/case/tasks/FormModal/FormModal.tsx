@@ -19,7 +19,8 @@ const FormModal: React.FC<Props> = ({ form, isOpen, closeModal, onSubmit, taskNa
   const { addSuccessFlashMessage } = useFlashMessages()
 
   const onSubmitWrap = async (variables: Components.Schemas.CamundaTaskComplete["variables"] = {}) => {
-    const result = await onSubmit(variables)
+    const requestBody = form ? variables : {}
+    const result = await onSubmit(requestBody)
     if (result === undefined) return
     const path = `/zaken/${ caseId }`
     addSuccessFlashMessage(path, "Succes", `De taak "${ taskName }" is succesvol afgerond`, true)
