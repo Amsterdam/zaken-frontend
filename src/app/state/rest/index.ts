@@ -11,7 +11,7 @@ export type ApiGroup =
   | "supportContacts"
   | "roles"
   | "permissions"
-  | "listing"
+  | "listings"
 
 export type Options = {
   keepUsingInvalidCache?: boolean

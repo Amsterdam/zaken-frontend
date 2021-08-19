@@ -9,7 +9,7 @@ export const useListing = (tonId?: number, options?: Options) => {
     ...options,
     lazy: tonId === undefined,
     url: makeTonApiUrl("listings", tonId),
-    groupName: "listing",
+    groupName: "listings",
     handleError,
     isProtected: true
   })
