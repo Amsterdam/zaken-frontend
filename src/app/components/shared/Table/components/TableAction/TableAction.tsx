@@ -10,8 +10,10 @@ const TableAction: React.FC<Props> = ({ to, children, ...restProps }) => {
 
   const onClick = (event: React.MouseEvent) => event.stopPropagation()
 
+  const isAnchor = to !== undefined && restProps.disabled === false
+
   const action = (
-    <Button variant="textButton" as={ to ? "span" : "button" } iconLeft={ <ChevronRight /> } iconSize={ 24 } { ...restProps }>
+    <Button variant="textButton" as={ isAnchor ? "span" : "button" } iconLeft={ <ChevronRight /> } iconSize={ 24 } { ...restProps }>
       <Hidden maxBreakpoint="laptopM">
         <span>
           { children }
@@ -21,8 +23,8 @@ const TableAction: React.FC<Props> = ({ to, children, ...restProps }) => {
   )
 
   return (
-    to !== undefined ?
-      <ButtonLink to={ to } onClick={ onClick }>
+    isAnchor ?
+      <ButtonLink to={ to! } onClick={ onClick }>
         { action }
       </ButtonLink> :
       action

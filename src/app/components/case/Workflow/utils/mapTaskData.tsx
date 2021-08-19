@@ -24,7 +24,7 @@ export default (
     const onSubmitTaskComplete = (variables: Components.Schemas.CamundaTask["form"] = {}) =>
       execPost({ case: id, camunda_task_id, variables })
 
-    const disabled = !user_has_permission
+    const disabled = task_name_id === "task_create_visit" || !user_has_permission
 
     return [
       <LockIcon />,
@@ -36,6 +36,7 @@ export default (
       action !== undefined ?
         <TableAction
           title={ to(`/zaken/:id/${ action.target }/:camundaTaskId`, { id, camundaTaskId: camunda_task_id }) }
+          to={ to(`/zaken/:id/${ action.target }/:camundaTaskId`, { id, camundaTaskId: camunda_task_id }) }
           disabled={ action.disabled ?? disabled }
         >{ action.name }</TableAction> :
         <TaskButton onSubmit={ onSubmitTaskComplete } taskName={ name } caseId={ id } form={ form } disabled={ disabled } />
