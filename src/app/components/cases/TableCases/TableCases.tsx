@@ -1,5 +1,5 @@
 import useValues from "./hooks/useValues"
-import Table from "app/components/shared/Table/Table"
+import { Table } from "@amsterdam/wonen-ui"
 import navigateTo from "app/routing/navigateTo"
 import { sortStrings, sortDates } from "app/components/shared/Table/utils/sorters"
 

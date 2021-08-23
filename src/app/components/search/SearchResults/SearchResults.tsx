@@ -1,6 +1,6 @@
 import { useBAGWithZipCode } from "app/state/rest"
 import useValues from "./hooks/useValues"
-import Table from "app/components/shared/Table/Table"
+import { Table } from "@amsterdam/wonen-ui"
 import navigateTo from "app/routing/navigateTo"
 
 export type SearchResult = Pick<BAGAddressResponse["results"][0], "adres" | "postcode" | "adresseerbaar_object_id">

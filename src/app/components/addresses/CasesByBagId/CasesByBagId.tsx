@@ -3,7 +3,7 @@ import { Heading, themeSpacing } from "@amsterdam/asc-ui"
 
 import { useCasesByBagId } from "app/state/rest"
 import useValues from "./hooks/useValues"
-import Table from "app/components/shared/Table/Table"
+import { Table } from "@amsterdam/wonen-ui"
 import navigateTo from "app/routing/navigateTo"
 
 type Props = {
