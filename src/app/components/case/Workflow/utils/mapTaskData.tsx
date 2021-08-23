@@ -5,7 +5,7 @@ import ChangeableDueDate from "app/components/case/tasks/ChangeDueDate/Changeble
 import TaskButton from "app/components/case/tasks/TaskButton/TaskButton"
 import taskActionMap from "./taskActionMap"
 import LockIcon from "../components/LockIcon"
-import TableAction from "app/components/shared/Table/components/TableAction/TableAction"
+import TableAction from "app/components/shared/TableAction/TableAction"
 
 // This width value (113px) is the width of a date + edit icon including the spacing between them
 const Span = styled.span`

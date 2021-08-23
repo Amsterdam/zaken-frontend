@@ -1,6 +1,6 @@
 import to from "app/routing/utils/to"
 import { CaseIdDisplay, DateDisplay } from "@amsterdam/wonen-ui"
-import TableAction from "app/components/shared/Table/components/TableAction/TableAction"
+import TableAction from "app/components/shared/TableAction/TableAction"
 
 export default (cases?: Components.Schemas.Case[]) =>
   cases?.map(({ id, theme, start_date, current_states }) => (

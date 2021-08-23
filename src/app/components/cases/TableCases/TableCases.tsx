@@ -1,12 +1,13 @@
 import useValues from "./hooks/useValues"
-import { Table } from "@amsterdam/wonen-ui"
+import { Table, tableSorters } from "@amsterdam/wonen-ui"
 import navigateTo from "app/routing/navigateTo"
-import { sortStrings, sortDates } from "app/components/shared/Table/utils/sorters"
 
 type Props = {
   data?: Components.Schemas.PaginatedCaseList
   isBusy: boolean
 }
+
+const { sortStrings, sortDates } = tableSorters
 
 const columns = [
   { header: "Adres", sorter: sortStrings, minWidth: 300, defaultSorting: "ASCEND" as const },
