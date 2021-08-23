@@ -1,7 +1,7 @@
 import { themeColor, themeSpacing } from "@amsterdam/asc-ui"
 import styled from "styled-components"
 
-import Table from "app/components/shared/Table/Table"
+import { Table } from "@amsterdam/wonen-ui"
 
 export default styled(Table)`
   margin-bottom: ${ themeSpacing(5) };

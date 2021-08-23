@@ -1,7 +1,7 @@
 import first from "../utils/first"
 import sortByDate from "../utils/sortByDate"
 import { DateDisplay, isDate } from "@amsterdam/wonen-ui"
-import TableAction from "app/components/shared/Table/components/TableAction/TableAction"
+import TableAction from "app/components/shared/TableAction/TableAction"
 import to from "app/routing/utils/to"
 
 export default (cases?: Components.Schemas.Case[]) =>

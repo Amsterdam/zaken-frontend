@@ -1,5 +1,5 @@
 import { useModal } from "app/components/shared/Modal/hooks/useModal"
-import TableAction from "app/components/shared/Table/components/TableAction/TableAction"
+import TableAction from "app/components/shared/TableAction/TableAction"
 import FormModal from "../FormModal/FormModal"
 
 type Props = {

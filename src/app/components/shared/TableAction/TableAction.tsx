@@ -1,6 +1,6 @@
 import { Button, Hidden } from "@amsterdam/asc-ui"
-import { ChevronRight } from "app/components/shared/Icons"
-import ButtonLink from "app/components/shared/ButtonLink/ButtonLink"
+import { ChevronRight } from "../Icons"
+import ButtonLink from "../ButtonLink/ButtonLink"
 
 type Props = React.ComponentProps<typeof Button> & {
   to?: string
@@ -10,10 +10,8 @@ const TableAction: React.FC<Props> = ({ to, children, ...restProps }) => {
 
   const onClick = (event: React.MouseEvent) => event.stopPropagation()
 
-  const isAnchor = to !== undefined && restProps.disabled === false
-
   const action = (
-    <Button variant="textButton" as={ isAnchor ? "span" : "button" } iconLeft={ <ChevronRight /> } iconSize={ 24 } { ...restProps }>
+    <Button variant="textButton" as={ to ? "span" : "button" } iconLeft={ <ChevronRight /> } iconSize={ 24 } { ...restProps }>
       <Hidden maxBreakpoint="laptopM">
         <span>
           { children }
@@ -23,8 +21,8 @@ const TableAction: React.FC<Props> = ({ to, children, ...restProps }) => {
   )
 
   return (
-    isAnchor ?
-      <ButtonLink to={ to! } onClick={ onClick }>
+    to !== undefined ?
+      <ButtonLink to={ to } onClick={ onClick }>
         { action }
       </ButtonLink> :
       action

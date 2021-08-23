@@ -1,12 +1,13 @@
-import Table from "app/components/shared/Table/Table"
+import { Table, tableSorters } from "@amsterdam/wonen-ui"
 import navigateTo from "app/routing/navigateTo"
 import useValues from "./hooks/useValues"
-import { sortStrings, sortDates } from "app/components/shared/Table/utils/sorters"
 
 type Props = {
   data?: Components.Schemas.CamundaTaskList[]
   isBusy: boolean
 }
+
+const { sortStrings, sortDates } = tableSorters
 
 const columns = [
   { header: "Adres", minWidth: 150, sorter: sortStrings },

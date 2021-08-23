@@ -1,6 +1,6 @@
 import useValues from "./hooks/useValues"
 import useOtherAddressesByBagId from "app/state/rest/custom/useOtherAddresses/useOtherAddresses"
-import Table from "app/components/shared/Table/Table"
+import { Table } from "@amsterdam/wonen-ui"
 import navigateTo from "app/routing/navigateTo"
 
 type Props = {
