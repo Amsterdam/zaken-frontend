@@ -11,7 +11,7 @@ type RouteConfig = {
   title?: string
   icon?: keyof typeof Assets
   subRoutes?: RouteConfigObject
-  permissionName?: string
+  permissionName?: Components.Schemas.PermissionsEnum
 }
 type Path = (Pick<RouteConfig, "title" | "icon"> & { path: string })[]
 type RouteConfigWithPath = RouteConfig & { path: Path }

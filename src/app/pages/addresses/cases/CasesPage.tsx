@@ -31,7 +31,7 @@ const CasesPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
       <RowWithColumn>
         <CasesByBagId bagId={ bagId } />
       </RowWithColumn>
-      <IsAuthorizedWrapper permissionName="add_case">
+      <IsAuthorizedWrapper permissionName="create_case">
         <RowWithColumn>
           <ButtonLink to={ to("/adres/:bagId/zaken/nieuw", { bagId })}>
             <Button variant="primary" as="span">Nieuwe zaak aanmaken</Button>
