@@ -5,7 +5,7 @@ import AuthorizedPage from "./AuthorizedPage"
 
 type Props = {
   page: React.ComponentType
-  permissionName?: string
+  permissionName?: Components.Schemas.PermissionsEnum
 } & RouteComponentProps
 
 /**

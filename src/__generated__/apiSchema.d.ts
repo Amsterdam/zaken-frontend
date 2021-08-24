@@ -326,8 +326,9 @@ declare namespace Components {
         }
         export type GeslachtsaanduidingEnum = "M" | "V" | "X";
         export interface Group {
-            permissions: string[];
+            permissions: PermissionsEnum[];
             name: string;
+            display_name: string;
         }
         export type IndicatieBetHernBevelEnum = "J" | "N";
         export type IndicatieCombiDwangbevelEnum = "J" | "N" | "O";
@@ -733,6 +734,7 @@ declare namespace Components {
             ton_ids?: number[] | null;
             author?: string | null; // uuid
         }
+        export type PermissionsEnum = "create_case" | "close_case" | "perform_task" | "access_personal_data_register" | "access_business_register" | "access_signals" | "access_recovery_check" | "access_sensitive_dossiers" | "access_sigital_surveillance" | "access_document_management_system";
         export interface Permit {
             permit_granted: PermitGrantedEnum;
             permit_type: string;
