@@ -1,6 +1,5 @@
 
 import { RouteComponentProps } from "@reach/router"
-import { Button } from "@amsterdam/asc-ui"
 
 import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId"
 import { RowWithColumn } from "app/components/layouts/Grid/Row"
@@ -8,11 +7,10 @@ import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
 import AddressHeader from "app/components/addresses/AddressHeader/AddressHeader"
 import AddressMenu from "app/components/addresses/AddressMenu/AddressMenu"
 import PanoramaPreview from "app/components/addresses/Panorama/PanoramaPreview"
-import ButtonLink from "app/components/shared/ButtonLink/ButtonLink"
 import to from "app/routing/utils/to"
 import CasesByBagId from "app/components/addresses/CasesByBagId/CasesByBagId"
-import IsAuthorizedWrapper from "app/components/auth/IsAuthorizedWrapper/IsAuthorizedWrapper"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
+import AuthorizedButtonLink from "app/components/shared/ButtonLink/AuthorizedButtonLink"
 
 type Props = {
   bagId: string
@@ -38,13 +36,14 @@ const IndexPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
           emptyText="Op dit adres zijn er geen lopende zaken"
         />
       </RowWithColumn>
-      <IsAuthorizedWrapper permissionName="create_case">
-        <RowWithColumn>
-          <ButtonLink to={ to("/adres/:bagId/zaken/nieuw", { bagId })}>
-            <Button variant="primary" as="span">Nieuwe zaak aanmaken</Button>
-          </ButtonLink>
-        </RowWithColumn>
-      </IsAuthorizedWrapper>
+      <RowWithColumn>
+        <AuthorizedButtonLink
+          permissionName="create_case"
+          to={ to("/adres/:bagId/zaken/nieuw", { bagId }) }
+          text="Nieuwe zaak aanmaken"
+          variant="primary"
+        />
+      </RowWithColumn>
     </DefaultLayout> :
     <NotFoundPage />
 )
