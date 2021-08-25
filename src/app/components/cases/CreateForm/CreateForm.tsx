@@ -5,6 +5,13 @@ import ConfirmScaffoldForm from "app/components/shared/ConfirmScaffoldForm/Confi
 import useNavigateWithFlashMessage from "app/state/flashMessages/useNavigateWithFlashMessage"
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
 
+const TON_THEME_NAME = "Vakantieverhuur"
+const TON_REASON_NAME = "Digitaal Toezicht"
+const advertisementOptions = {
+  yes: "Ja, er is een advertentie",
+  no: "Nee, er is geen advertentie"
+}
+
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
   tonId?: number | undefined
@@ -30,8 +37,8 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
 
   useEffect(() => {
     const caseThemeId = tonId !== undefined
-      ? caseThemes?.results?.find(({ name }) => name === "Vakantieverhuur")?.id
-      : caseThemes?.results?.[0].id
+      ? caseThemes?.results?.find(({ name }) => name === TON_THEME_NAME)?.id
+      : undefined
     setThemeId(caseThemeId)
   }, [tonId, caseThemes, setThemeId])
 
@@ -40,7 +47,12 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
   const [, { execPost }] = useCaseCreate()
   const [listing] = useListing(tonId)
 
-  const fields = useScaffoldedFields(scaffold, bagId, setThemeId, caseThemes?.results, reasons?.results, projects?.results)
+  // Only show Vakantieverhuur, Digitaal Toezicht and Yes as an option for TON.
+  const caseThemesOptions = tonId ? caseThemes?.results?.filter(({ name }) => name === TON_THEME_NAME) : caseThemes?.results
+  const reasonOptions = tonId ? reasons?.results?.filter(({ name }) => name === TON_REASON_NAME) : reasons?.results
+  const adOptions = tonId ? { yes: "Ja, er is een advertentie" } : advertisementOptions
+
+  const fields = useScaffoldedFields(scaffold, bagId, setThemeId, caseThemesOptions, reasonOptions ?? [], projects?.results ?? [], adOptions)
 
   const navigateWithFlashMessage = useNavigateWithFlashMessage()
   const afterSubmit = async (result: Components.Schemas.CaseCreateUpdate) =>
@@ -56,12 +68,10 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
   const initialValues = {
     theme: caseThemes?.results?.find(({ id }) => id === themeId),
     ...tonId !== undefined ? {
-      reason: reasons?.results?.find(({ name }) => name === "Digitaal Toezicht"),
+      reason: reasons?.results?.find(({ name }) => name === TON_REASON_NAME),
       advertisement: "yes",
       advertisement_linklist: [{ advertisement_link: listing?.url }]
-     } : {
-      reason: reasons?.results?.[0]
-     }
+     } : {}
   }
 
   return (
