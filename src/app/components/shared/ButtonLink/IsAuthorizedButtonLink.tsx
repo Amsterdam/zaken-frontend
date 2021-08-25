@@ -10,7 +10,7 @@ type Props = React.ComponentProps<typeof Button> & {
 
 const IsAuthorizedButtonLink: React.FC<Props> = ({ to, text, permissionName, ...restProps }) => {
 
-  const hasPermission = useHasPermission(permissionName)
+  const [hasPermission] = useHasPermission(permissionName)
 
   return hasPermission ?
     <ButtonLink to={ to }><Button as="span" { ...restProps }>{ text }</Button></ButtonLink> :
