@@ -9,7 +9,7 @@ import CasesByBagId from "app/components/addresses/CasesByBagId/CasesByBagId"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
 import Column from "app/components/layouts/Grid/Column"
 import to from "app/routing/utils/to"
-import AuthorizedButtonLink from "app/components/shared/ButtonLink/AuthorizedButtonLink"
+import IsAuthorizedButtonLink from "app/components/shared/ButtonLink/IsAuthorizedButtonLink"
 
 type Props = {
   bagId: string
@@ -30,7 +30,7 @@ const CasesPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
         <CasesByBagId bagId={ bagId } />
       </RowWithColumn>
       <RowWithColumn>
-        <AuthorizedButtonLink
+        <IsAuthorizedButtonLink
           permissionName="create_case"
           to={ to("/adres/:bagId/zaken/nieuw", { bagId }) }
           text="Nieuwe zaak aanmaken"

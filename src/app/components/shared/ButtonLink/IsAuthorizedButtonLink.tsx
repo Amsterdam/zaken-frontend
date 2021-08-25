@@ -8,7 +8,7 @@ type Props = React.ComponentProps<typeof Button> & {
   text: string
 }
 
-const AuthorizedButtonLink: React.FC<Props> = ({ to, text, permissionName, ...restProps }) => {
+const IsAuthorizedButtonLink: React.FC<Props> = ({ to, text, permissionName, ...restProps }) => {
 
   const hasPermission = useHasPermission(permissionName)
 
@@ -17,4 +17,4 @@ const AuthorizedButtonLink: React.FC<Props> = ({ to, text, permissionName, ...re
     <Button disabled={ true } { ...restProps } title="U heeft geen permissie tot deze actie">{ text }</Button>
 }
 
-export default AuthorizedButtonLink
+export default IsAuthorizedButtonLink
