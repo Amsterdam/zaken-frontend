@@ -6,4 +6,5 @@ export default styled(Link)`
   display: inline-block;
   text-decoration: none;
   color: ${ themeColor("tint", "level7") };
+  height: 100%;
 `
