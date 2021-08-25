@@ -29,7 +29,7 @@ const MenuItems: React.FC = () => (
       const menuItem = (
         <MenuItem key={ path }>
           { permissionName !== undefined ?
-              <IsAuthorizedMenuButton permissionName={ permissionName } title={ title } to={ to(path) } /> :
+              <IsAuthorizedMenuButton permissionName={ permissionName } text={ title } to={ to(path) } /> :
               <StyledButtonLink to={ to(path) }>
                 <MenuButton as="span">{ title }</MenuButton>
               </StyledButtonLink>

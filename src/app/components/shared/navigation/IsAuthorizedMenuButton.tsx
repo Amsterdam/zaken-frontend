@@ -6,7 +6,7 @@ import StyledButtonLink from "./StyledButtonLink"
 type Props = React.ComponentProps<typeof MenuButton> & {
   permissionName: Components.Schemas.PermissionsEnum
   to: string
-  title: string | undefined
+  text: string | undefined
 }
 
 const StyledMenuButton = styled(MenuButton)`
@@ -18,14 +18,14 @@ const StyledMenuButton = styled(MenuButton)`
   }
 `
 
-const IsAuthorizedMenuButton: React.FC<Props> = ({ permissionName, to, title, ...restProps }) => {
+const IsAuthorizedMenuButton: React.FC<Props> = ({ permissionName, to, text, ...restProps }) => {
   const [hasPermission, isBusy] = useHasPermission(permissionName)
   const isAuthorized = !isBusy && hasPermission
   return isAuthorized ?
     <StyledButtonLink to={ to }>
-      <MenuButton { ...restProps }>{ title }</MenuButton>
+      <MenuButton { ...restProps }>{ text }</MenuButton>
     </StyledButtonLink> :
-    <StyledMenuButton disabled={ true } { ...restProps }>{ title }</StyledMenuButton>
+    <StyledMenuButton disabled={ true } { ...restProps } title="U heeft geen permissie tot deze actie">{ text }</StyledMenuButton>
 }
 
 export default IsAuthorizedMenuButton
