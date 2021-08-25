@@ -4,14 +4,17 @@ import ButtonLink from "../ButtonLink/ButtonLink"
 
 type Props = React.ComponentProps<typeof Button> & {
   to?: string
+  disabled?: boolean
 }
 
-const TableAction: React.FC<Props> = ({ to, children, ...restProps }) => {
+const TableAction: React.FC<Props> = ({ to, disabled = false, children, ...restProps }) => {
 
   const onClick = (event: React.MouseEvent) => event.stopPropagation()
 
+  const isLink = to !== undefined && disabled === false
+
   const action = (
-    <Button variant="textButton" as={ to ? "span" : "button" } iconLeft={ <ChevronRight /> } iconSize={ 24 } { ...restProps }>
+    <Button variant="textButton" as={ isLink ? "span" : "button" } disabled={ disabled } iconLeft={ <ChevronRight /> } iconSize={ 24 } { ...restProps }>
       <Hidden maxBreakpoint="laptopM">
         <span>
           { children }
@@ -21,8 +24,8 @@ const TableAction: React.FC<Props> = ({ to, children, ...restProps }) => {
   )
 
   return (
-    to !== undefined ?
-      <ButtonLink to={ to } onClick={ onClick }>
+    isLink ?
+      <ButtonLink to={ to! } onClick={ onClick }>
         { action }
       </ButtonLink> :
       action
