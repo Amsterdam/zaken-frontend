@@ -12,7 +12,7 @@ type Props = {
   title?: ReactNode
   values: Record<string, Value>
   startAlternative?: boolean
-  headingSize?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6"
+  headingSize?: React.ComponentProps<typeof Heading>["forwardedAs"]
 }
 
 const StyledTable = styled.table`

@@ -5,7 +5,7 @@ import to from "app/routing/utils/to"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
-  as?: "h1" | "h2" | "span"
+  as?: React.ComponentProps<typeof Typography>["styleAs"]
   title?: string
 }
 

@@ -20,7 +20,7 @@ const IndexPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
   isValidUrlParamBAGId(bagId) ?
     <DefaultLayout>
       <RowWithColumn>
-        <AddressHeader bagId={ bagId } headingSize="h1" isHeader={true} />
+        <AddressHeader bagId={ bagId } headingSize="h1" isHeader={ true } />
       </RowWithColumn>
       <RowWithColumn bottomSpacing={ 3 }>
         <PanoramaPreview bagId={ bagId } aspect={ 2.8 } fov={ 120 } />

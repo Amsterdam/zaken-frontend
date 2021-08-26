@@ -1,11 +1,10 @@
-
+import styled from "styled-components"
 import { Icon, Heading, themeSpacing } from "@amsterdam/asc-ui"
 import * as Assets from "app/components/shared/Icons"
-import styled from "styled-components"
 
 type Props = {
   header: string
-  headingSize?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6"
+  headingSize?: React.ComponentProps<typeof Heading>["forwardedAs"]
   icon?: keyof typeof Assets
   iconSize?: number
 }
