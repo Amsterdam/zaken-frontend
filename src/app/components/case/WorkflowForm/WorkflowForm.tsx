@@ -1,5 +1,3 @@
-
-
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import ConfirmScaffoldForm from "app/components/shared/ConfirmScaffoldForm/ConfirmScaffoldForm"
 import useNavigateWithFlashMessage from "app/state/flashMessages/useNavigateWithFlashMessage"
