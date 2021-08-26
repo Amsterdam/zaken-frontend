@@ -18,7 +18,8 @@ export default {
       "personen": {
         Page: PeoplePage,
         icon: "Portrait",
-        title: "Persoonsgegevens"
+        title: "Persoonsgegevens",
+        permissionName: "access_personal_data_register"
       },
       "vergunningen": {
         Page: PermitsPage,
