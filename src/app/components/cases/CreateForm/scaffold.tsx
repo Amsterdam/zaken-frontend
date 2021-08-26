@@ -6,9 +6,10 @@ import navigateTo from "app/routing/navigateTo"
 export default (
   bagId: Components.Schemas.Address["bag_id"],
   setTheme: (id?: Components.Schemas.CaseTheme["id"]) => void,
-  themes?: Components.Schemas.CaseTheme[],
-  reasons?: Components.Schemas.CaseReason[],
-  projects?: Components.Schemas.CaseProject[]
+  themes: Components.Schemas.CaseTheme[] | undefined,
+  reasons: Components.Schemas.CaseReason[],
+  projects: Components.Schemas.CaseProject[],
+  advertisementOptions: Record<string, string>
   ) => {
 
   const fields = {
@@ -24,13 +25,19 @@ export default (
       }
     },
     reason: {
-      type: "ComplexRadioFields",
+      type: "ShowHide",
       props: {
-        label: "Aanleiding",
-        name: "reason",
-        options: reasons,
-        optionLabelField: "name",
-        isRequired: true
+        shouldShow: () => reasons.length > 0,
+        field: {
+          type: "ComplexRadioFields",
+          props: {
+            label: "Aanleiding",
+            name: "reason",
+            options: reasons,
+            optionLabelField: "name",
+            isRequired: true
+          }
+        }
       }
     },
 
@@ -148,14 +155,17 @@ export default (
       }
     },
     advertisement: {
-      type: "RadioFields",
+      type: "ShowHide",
       props: {
-        isRequired: true,
-        name: "advertisement",
-        label: "Is er een advertentie bekend?",
-        options: {
-          yes: "Ja, er is een advertentie",
-          no: "Nee, er is geen advertentie"
+        shouldShow: (formValues: { values?: { reason?: Components.Schemas.CaseReason } }) => formValues?.values?.reason !== undefined,
+        field: {
+          type: "RadioFields",
+          props: {
+            isRequired: true,
+            name: "advertisement",
+            label: "Is er een advertentie bekend?",
+            options: advertisementOptions
+          }
         }
       }
     },
@@ -188,11 +198,17 @@ export default (
       }
     },
     description: {
-      type: "TextAreaField",
+      type: "ShowHide",
       props: {
-        label: "Korte toelichting",
-        name: "description",
-        extraLabel: "(Niet verplicht)"
+        shouldShow: (formValues: { values?: { reason?: Components.Schemas.CaseReason } }) => formValues?.values?.reason !== undefined,
+        field: {
+          type: "TextAreaField",
+          props: {
+            label: "Korte toelichting",
+            name: "description",
+            extraLabel: "(Niet verplicht)"
+          }
+        }
       }
     },
     cancel: {
