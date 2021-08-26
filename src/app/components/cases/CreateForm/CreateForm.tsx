@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import pick from "lodash.pick"
 import scaffold from "./scaffold"
 import { useCaseThemes, useReasons, useCaseCreate, useProjects, useListing } from "app/state/rest"
 import ConfirmScaffoldForm from "app/components/shared/ConfirmScaffoldForm/ConfirmScaffoldForm"
@@ -50,7 +51,7 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
   // Only show Vakantieverhuur, Digitaal Toezicht and Yes as an option for TON.
   const caseThemesOptions = tonId ? caseThemes?.results?.filter(({ name }) => name === TON_THEME_NAME) : caseThemes?.results
   const reasonOptions = tonId ? reasons?.results?.filter(({ name }) => name === TON_REASON_NAME) : reasons?.results
-  const adOptions = tonId ? { yes: "Ja, er is een advertentie" } : advertisementOptions
+  const adOptions = tonId ? pick(advertisementOptions, ["yes"]) : advertisementOptions
 
   const fields = useScaffoldedFields(scaffold, bagId, setThemeId, caseThemesOptions, reasonOptions ?? [], projects?.results ?? [], adOptions)
 

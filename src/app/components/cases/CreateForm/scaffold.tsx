@@ -9,7 +9,7 @@ export default (
   themes: Components.Schemas.CaseTheme[] | undefined,
   reasons: Components.Schemas.CaseReason[],
   projects: Components.Schemas.CaseProject[],
-  advertisementOptions: any
+  advertisementOptions: Record<string, string>
   ) => {
 
   const fields = {
