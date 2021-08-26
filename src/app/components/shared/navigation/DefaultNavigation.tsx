@@ -29,14 +29,13 @@ const DefaultNavigation: React.FC<Props> = ({ showSearchButton }) => {
       </Hidden>
       <div>
         <Hidden maxBreakpoint="laptopM">
-          <ButtonLink to={to("/hulp")} title="Help">
-            <IconButton size={50} variant="blank" iconSize={28} icon={<Help />} tabIndex={-1}>
-              </IconButton>
+          <ButtonLink to={ to("/hulp") } title="Help">
+            <IconButton size={ 50 } variant="blank" iconSize={ 28 } icon={ <Help /> } tabIndex={ -1 } />
           </ButtonLink>
         </Hidden>
         { showSearchButton &&
-          <ButtonLink to={to("/")} title="Zoeken">
-            <IconButton size={50} variant="blank" iconSize={28} icon={<Search />} tabIndex={-1}/>
+          <ButtonLink to={ to("/") } title="Zoeken">
+            <IconButton size={ 50 } variant="blank" iconSize={ 28 } icon={ <Search /> } tabIndex={ -1 } />
           </ButtonLink>
         }
       </div>

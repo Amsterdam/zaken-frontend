@@ -1,10 +1,9 @@
-
-import styled from "styled-components"
 import { MenuItem, MenuButton, Hidden } from "@amsterdam/asc-ui"
 
 import routes from "app/routing/routes"
-import ButtonLink from "app/components/shared/ButtonLink/ButtonLink"
 import to from "app/routing/utils/to"
+import StyledButtonLink from "./StyledButtonLink"
+import IsAuthorizedMenuButton from "./IsAuthorizedMenuButton"
 
 const items = [
   {
@@ -14,7 +13,8 @@ const items = [
     path: "/taken"
   },
   {
-    path: "/invorderingen"
+    path: "/invorderingen",
+    permissionName: "access_recovery_check" as Components.Schemas.PermissionsEnum
   },
   {
     path: "/hulp",
@@ -22,23 +22,18 @@ const items = [
   }
 ]
 
-const StyledButtonLink = styled(ButtonLink)`
-  span {
-    width: 100%;
-  }
-`
-
 const MenuItems: React.FC = () => (
   <>
-  { items.map(({ path, hiddenLaptopM }) => {
+  { items.map(({ path, hiddenLaptopM, permissionName }) => {
       const { title } = routes[`${ path }/`]
       const menuItem = (
         <MenuItem key={ path }>
-          <StyledButtonLink to={ to(path) }>
-            <MenuButton as="span">
-              { title }
-            </MenuButton>
-          </StyledButtonLink>
+          { permissionName !== undefined ?
+              <IsAuthorizedMenuButton permissionName={ permissionName } text={ title } to={ to(path) } /> :
+              <StyledButtonLink to={ to(path) }>
+                <MenuButton as="span">{ title }</MenuButton>
+              </StyledButtonLink>
+          }
         </MenuItem>
       )
       return hiddenLaptopM ? <Hidden minBreakpoint="laptopM" key={ path }>{ menuItem }</Hidden> : menuItem

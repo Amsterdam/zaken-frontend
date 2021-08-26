@@ -19,11 +19,13 @@ export default (
   ) =>
   (data: Components.Schemas.CamundaTask) => {
 
+
     const { task_name_id, camunda_task_id, name, roles, due_date, form, user_has_permission } = data
     const action = taskActionMap[task_name_id]
     const onSubmitTaskComplete = (variables: Components.Schemas.CamundaTask["form"] = {}) =>
       execPost({ case: id, camunda_task_id, variables })
 
+    // TODO: Extract disabled task names
     const disabled = task_name_id === "task_create_visit" || !user_has_permission
 
     return [
