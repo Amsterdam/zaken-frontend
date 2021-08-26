@@ -12,7 +12,7 @@ type Props = {
 
 const routes = [
   "/adres/:bagId/details/",
-  "/adres/:bagId/personen/",
+  { path: "/adres/:bagId/personen/", permissionName: "access_personal_data_register" as Components.Schemas.PermissionsEnum },
   "/adres/:bagId/vergunningen/",
   "/adres/:bagId/zaken/"
 ]
@@ -36,15 +36,23 @@ const AddressMenu: React.FC<Props> = ({ bagId }) => {
     <BlockMenu>
       <ul>
         { routes.map((route, index) => {
-            const page = routesObject[route]
+            const path = typeof route === "string" ? route : route.path
+            const permissionName = typeof route !== "string" ? route.permissionName : undefined
+            const page = routesObject[path]
             if (page?.icon === undefined || page?.title === undefined) return null
-            const navBlock = <NavBlock to={ to(route, { bagId }) } icon={ page.icon } header={ page.title } count={ counts[index] }/>
+            const navBlock = <NavBlock
+              to={ to(path, { bagId }) }
+              icon={ page.icon }
+              header={ page.title }
+              count={ counts[index] }
+              permissionName={ permissionName }
+            />
             return (
-              <li key={ route }>
+              <li key={ path }>
                 <div>
-                  { mockedRoutes.includes(route) ?
-                    <MockWrapper hasPadding={ false }>{ navBlock }</MockWrapper> :
-                    navBlock
+                  { mockedRoutes.includes(path) ?
+                      <MockWrapper hasPadding={ false }>{ navBlock }</MockWrapper> :
+                      navBlock
                   }
                 </div>
               </li>
