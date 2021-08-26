@@ -47,7 +47,7 @@ const NavBlock: React.FC<Props> = ({ to: toPath, icon, header, count, permission
     <Wrap disabled={ !hasPermission }>
       <StyledCard backgroundColor="level2" shadow>
         <CardContent>
-          { Asset && <Icon size={ 48 }><Asset /></Icon> }
+          <Icon size={ 48 }>{ Asset ? <Asset /> : <span></span> }</Icon>
           <StyledHeading as="h3">{ header }{ count ? ` (${ count })` : "" }</StyledHeading>
         </CardContent>
       </StyledCard>
