@@ -46,7 +46,7 @@ const AddressMenu: React.FC<Props> = ({ bagId }) => {
               header={ page.title }
               count={ counts[index] }
               permissionName={ permissionName }
-              />
+            />
             return (
               <li key={ path }>
                 <div>
