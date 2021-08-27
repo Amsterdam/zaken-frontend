@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { themeColor } from "@amsterdam/asc-ui"
 import { DateDisplay } from "@amsterdam/wonen-ui"
-import isDateInPast from "../Date/helpers"
+import isDateInPast from "../Date/isDateInPast"
 
 type Props = {
   date: Components.Schemas.CamundaTask["due_date"]
