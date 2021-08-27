@@ -11,7 +11,7 @@ import AddressHeadingByBagId from "app/components/shared/AddressHeadingByBagId/A
 import CreateForm from "app/components/cases/CreateForm/CreateForm"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
 import { Column } from "app/components/layouts/Grid"
-import InvalidTonIdAlert from "./InvalidTonIdAlert"
+import InvalidTonIdAlert from "../../../components/shared/InvalidTonIdAlert/InvalidTonIdAlert"
 
 type Props = {
   bagId: string
