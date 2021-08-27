@@ -6,14 +6,14 @@ import PageHeading from "app/components/shared/PageHeading/PageHeading"
 import HelpContent from "app/components/help/HelpContent/HelpContent"
 
 const IndexPage: React.FC<RouteComponentProps> = () => (
-    <DefaultLayout>
-      <RowWithColumn>
-        <PageHeading />
-      </RowWithColumn>
-      <RowWithColumn>
-        <HelpContent />
-      </RowWithColumn>
-    </DefaultLayout>
-  )
+  <DefaultLayout>
+    <RowWithColumn>
+      <PageHeading />
+    </RowWithColumn>
+    <RowWithColumn>
+      <HelpContent />
+    </RowWithColumn>
+  </DefaultLayout>
+)
 
 export default IndexPage
