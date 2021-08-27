@@ -26,9 +26,9 @@ const renderIcon = (index: Index) => {
       return <StyledIcon size={32}><ExpandLess/></StyledIcon>
     default:
       return <StyledIcon
+        size={ 32 }
+        iconUrl={ `${ process.env.PUBLIC_URL }/icons/chevron_up_down.svg` }
         inline
-        size={32}
-        iconUrl={`${ process.env.PUBLIC_URL }/icons/chevron_up_down.svg`}
       />
   }
 }
@@ -37,8 +37,8 @@ const ShowOtherAddressesButton: React.FC<Props> = ({ bagId, index }) => {
   const { isModalOpen, openModal, closeModal } = useModal()
 
   return <>
-    <Button variant="blank" icon={ renderIcon(index) } onClick={openModal} />
-    <OtherAddressesModal bagId={bagId} isOpen={isModalOpen} closeModal={closeModal} />
+    <Button variant="blank" icon={ renderIcon(index) } onClick={ openModal } />
+    <OtherAddressesModal bagId={ bagId } isOpen={ isModalOpen } closeModal={ closeModal } />
   </>
 }
 

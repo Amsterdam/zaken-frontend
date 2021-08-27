@@ -1,6 +1,5 @@
-
 import styled from "styled-components"
-import { breakpoint, themeSpacing } from "@amsterdam/asc-ui"
+import { breakpoint, themeSpacing, Typography } from "@amsterdam/asc-ui"
 
 import { useBAG } from "app/state/rest"
 import ShowOtherAddressesButton from "app/components/addresses/AddressSuffixSwitcher/ShowOtherAddressesButton"
@@ -9,7 +8,7 @@ import AddressLink from "./components/AddressLink"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
-  headingSize?: "h1" | "h2"
+  headingSize?: React.ComponentProps<typeof Typography>["styleAs"]
   isHeader?: boolean
   enableSwitch?: boolean
 }

@@ -4,7 +4,7 @@ import Modal, { ModalBlock } from "app/components/shared/Modal/Modal"
 import OtherAddressesTable from "./OtherAddressesTable"
 
 export type Props = {
-  bagId: string
+  bagId: Components.Schemas.Address["bag_id"]
   isOpen: boolean
   closeModal: () => void
 }

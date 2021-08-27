@@ -1,8 +1,8 @@
-import { ComponentProps, useState, useCallback } from "react"
+import { useState, useCallback } from "react"
 import { useForm } from "react-final-form"
 import { Button } from "@amsterdam/amsterdam-react-final-form"
 
-export type AutoFillButtonProps = ComponentProps<typeof Button> & {
+export type AutoFillButtonProps = React.ComponentProps<typeof Button> & {
   field: string
   target: string
 }
@@ -21,7 +21,7 @@ const AutoFillButton: React.FC<AutoFillButtonProps> = ({ field, target, ...restP
     setIsDisabled(true)
   }, [ getFieldState, change, field, target ])
 
-  return <Button {...restProps} onClick={handleClick} disabled={isDisabled} />
+  return <Button { ...restProps } onClick={ handleClick } disabled={ isDisabled } />
 }
 
 export default AutoFillButton

@@ -1,10 +1,9 @@
-import { ReactNode } from "react"
 import styled from "styled-components"
 import { themeColor, ascDefaultTheme } from "@amsterdam/asc-ui"
 
 type Props = {
   hasPadding?: boolean
-  children: ReactNode
+  children: React.ReactNode
 }
 
 type DivProps = {
