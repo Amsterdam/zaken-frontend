@@ -1,9 +1,9 @@
 import { Spinner, Paragraph, Heading } from "@amsterdam/asc-ui"
+import { DefinitionList } from "@amsterdam/wonen-ui"
 
 import { usePermitDetails } from "app/state/rest"
 import VacationRentalReport from "./components/VacationRentalReport"
 import useVacationRentalValues from "./components/hooks/useVacationRentalValues"
-import { DefinitionList } from "@amsterdam/wonen-ui"
 
 type Props = {
   bagId: string

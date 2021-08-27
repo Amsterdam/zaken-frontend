@@ -33,7 +33,7 @@ const ColumnStyle = styled.div<TypeProps>`
 
 const Column: React.FC<TypeProps> = ({ children, ...props }) => (
   <ColumnStyle { ...props } >
-    {children}
+    { children }
   </ColumnStyle>
 )
 
