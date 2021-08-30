@@ -65,7 +65,7 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
     } catch (error) {
       addErrorToCacheItem(url, error)
       if (handleError) {
-        handleError(error)
+        handleError(error as RequestError)
       } else {
         throw error
       }
