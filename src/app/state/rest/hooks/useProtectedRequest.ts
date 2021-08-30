@@ -4,6 +4,8 @@ import useKeycloak from "app/state/auth/keycloak/useKeycloak"
 import useRequest, { Method } from "./useRequest"
 import navigateTo from "app/routing/navigateTo"
 
+import { RequestError } from "./useRequestWrapper"
+
 export default () => {
 
   const keycloak = useKeycloak()
@@ -25,7 +27,7 @@ export default () => {
         )
         return response
       } catch (error) {
-        switch (error?.response?.status) {
+        switch ((error as RequestError)?.response?.status) {
           case 401: keycloak.logout(); break
           case 403: navigateTo("/auth"); break
         }
