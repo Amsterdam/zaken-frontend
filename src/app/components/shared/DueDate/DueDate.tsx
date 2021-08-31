@@ -4,7 +4,7 @@ import { DateDisplay } from "@amsterdam/wonen-ui"
 import isDateInPast from "../Date/isDateInPast"
 
 type Props = {
-  date: Components.Schemas.CamundaTask["due_date"]
+  date: Components.Schemas.CamundaTask["due_date"] | undefined
   emptyText?: string
 }
 
@@ -12,9 +12,9 @@ const PastDateDisplay = styled(DateDisplay)`
   color: ${ themeColor("secondary") };
 `
 
-const DueDate: React.FC<Props> = ({ date, emptyText }) =>
-  isDateInPast(new Date(date)) ?
-    <PastDateDisplay date={ date } emptyText={ emptyText }/> :
-    <DateDisplay date={ date } emptyText={ emptyText } />
-
+const DueDate: React.FC<Props> = ({ date, emptyText }) => 
+  date !== undefined && isDateInPast(new Date(date))
+    ? <PastDateDisplay date={ date } />
+    : <DateDisplay date={ date } emptyText={ emptyText } />
+  
 export default DueDate
