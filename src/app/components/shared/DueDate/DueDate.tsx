@@ -14,7 +14,7 @@ const PastDateDisplay = styled(DateDisplay)`
 
 const DueDate: React.FC<Props> = ({ date, emptyText }) => 
   date !== undefined && isDateInPast(new Date(date))
-  ? <PastDateDisplay date={ date } />
-  : <DateDisplay date={ date } emptyText={ emptyText } />
+    ? <PastDateDisplay date={ date } />
+    : <DateDisplay date={ date } emptyText={ emptyText } />
   
 export default DueDate
