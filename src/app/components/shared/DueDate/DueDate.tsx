@@ -12,9 +12,10 @@ const PastDateDisplay = styled(DateDisplay)`
   color: ${ themeColor("secondary") };
 `
 
-const DueDate: React.FC<Props> = ({ date, emptyText }) =>
-  isDateInPast(new Date(date)) ?
-    <PastDateDisplay date={ date } emptyText={ emptyText }/> :
-    <DateDisplay date={ date } emptyText={ emptyText } />
-
+const DueDate: React.FC<Props> = ({ date, emptyText }) => 
+  date !== null
+  ? isDateInPast(new Date(date)) 
+    ? <PastDateDisplay date={ date } emptyText={ emptyText }/>
+    : <DateDisplay date={ date } emptyText={ emptyText } />
+  : <span>{ emptyText }</span>
 export default DueDate
