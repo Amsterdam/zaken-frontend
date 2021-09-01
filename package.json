@@ -29,7 +29,7 @@
     "eslint-plugin-unused-imports": "^1.1.4",
     "final-form": "^4.20.2",
     "final-form-arrays": "^3.0.2",
-    "immer": "^9.0.5",
+    "immer": "^9.0.6",
     "keycloak-js": "^15.0.2",
     "lodash.debounce": "^4.0.8",
     "lodash.merge": "^4.6.2",
