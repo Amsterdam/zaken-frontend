@@ -50,11 +50,17 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
 
   // Only show Vakantieverhuur, Digitaal Toezicht and Yes as an option for TON.
   const caseThemesOptions = tonId ? caseThemes?.results?.filter(({ name }) => name === TON_THEME_NAME) : caseThemes?.results
-  const reasonOptions = tonId ? reasons?.results?.filter(({ name }) => name === TON_REASON_NAME) :
-    reasons?.results?.filter(({ name }) => name !== TON_REASON_NAME)
+  const reasonOptions = tonId ? reasons?.results?.filter(({ name }) => name === TON_REASON_NAME)
+    : reasons?.results?.filter(({ name }) => name !== TON_REASON_NAME)
   const adOptions = tonId ? pick(advertisementOptions, ["yes"]) : advertisementOptions
 
-  const fields = useScaffoldedFields(scaffold, bagId, setThemeId, caseThemesOptions, reasonOptions ?? [], projects?.results ?? [], adOptions)
+  /*
+  ** themeId ?? -1 is ugly coding.
+  ** Because it takes time to fetch the reasons after selecting a theme, the submit button is enabled.
+  ** themeId = undefined will load a spinner for the entire page. :(
+  */
+  const fields = useScaffoldedFields(scaffold, bagId, themeId ?? -1,
+    setThemeId, caseThemesOptions, reasonOptions ?? [], projects?.results ?? [], adOptions)
 
   const navigateWithFlashMessage = useNavigateWithFlashMessage()
   const afterSubmit = async (result: Components.Schemas.CaseCreateUpdate) =>

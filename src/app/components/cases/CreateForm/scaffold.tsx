@@ -5,6 +5,7 @@ import navigateTo from "app/routing/navigateTo"
 
 export default (
   bagId: Components.Schemas.Address["bag_id"],
+  themeId: Components.Schemas.CaseTheme["id"],
   setTheme: (id?: Components.Schemas.CaseTheme["id"]) => void,
   themes: Components.Schemas.CaseTheme[] | undefined,
   reasons: Components.Schemas.CaseReason[],
@@ -27,7 +28,7 @@ export default (
     reason: {
       type: "ShowHide",
       props: {
-        shouldShow: () => reasons.length > 0,
+        shouldShow: () => themeId !== -1 || reasons.length > 0,
         field: {
           type: "ComplexRadioFields",
           props: {
