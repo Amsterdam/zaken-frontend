@@ -9,7 +9,7 @@ const Wrap = styled.div`
   margin: 0 auto;
   padding: ${ themeSpacing(3) };
   @media screen and ${ breakpoint("min-width", "laptopM") } {
-    padding: ${ themeSpacing(3) } ${ themeSpacing(14) };
+    padding: ${ themeSpacing(3) } ${ themeSpacing(10) };
   }
 `
 

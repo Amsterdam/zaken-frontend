@@ -11,7 +11,7 @@ const Main = styled.main`
   max-width: ${ sizes.laptopL }px;
 
   @media screen and ${ breakpoint("min-width", "laptopM") } {
-    padding: ${ themeSpacing(2) } ${ themeSpacing(14) } ${ themeSpacing(12) };
+    padding: ${ themeSpacing(2) } ${ themeSpacing(10) } ${ themeSpacing(12) };
   }
 `
 const MainWrapper: React.FC = ({ children }) => (

@@ -15,6 +15,6 @@ const UserInfo: React.FC<Props> = ({ showAsListItem = false }) => {
 
   return showAsListItem ?
     <li>{ userDisplay }</li> :
-    <span>{ userDisplay }</span>
+    <span style={{ marginRight: "-20px" }}>{ userDisplay }</span>
 }
 export default UserInfo
