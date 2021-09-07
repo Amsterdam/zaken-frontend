@@ -27,6 +27,10 @@ const MenuWrap = styled.div`
 
   @media screen and ${ breakpoint("min-width", "laptopM") } {
     justify-content: space-between;
+    
+    ul {
+      margin-left: -10px;
+    }
   }
 `
 
