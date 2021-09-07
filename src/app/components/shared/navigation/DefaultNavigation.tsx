@@ -27,7 +27,7 @@ const DefaultNavigation: React.FC<Props> = ({ showSearchButton }) => {
           <MenuItems />
         </MenuInline>
       </Hidden>
-      <div>
+      <div style={{ marginRight: "-10px" }}>
         <Hidden maxBreakpoint="laptopM">
           <ButtonLink to={ to("/hulp") } title="Help">
             <IconButton size={ 50 } variant="blank" iconSize={ 28 } icon={ <Help /> } tabIndex={ -1 } />
