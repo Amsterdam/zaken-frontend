@@ -21,9 +21,6 @@ jobs:
       - name: Test
         run: npm test
 
-      - name: Echo variable
-        run: echo "Set secret variable is ${{ secrets.CYPRESS_TEST_USER_PASSWORD }}"
-
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
