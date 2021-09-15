@@ -50,7 +50,7 @@ Cypress.Commands.add("login", (authUrl, emailAddress, password) => {
 Cypress.Commands.add("loginUser", () => (
   cy.login(
     Cypress.env("loginUrl"),
-    Cypress.env("defaultUserEmail"),
-    Cypress.env("testUserPassword")
+    Cypress.env("testUserEmail"),
+    Cypress.env("TEST_USER_PASSWORD")
   )
 ))

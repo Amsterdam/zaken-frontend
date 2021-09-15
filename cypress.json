@@ -3,6 +3,6 @@
   "baseUrl": "http://localhost:2999/",
   "env": {
     "loginUrl": "http://localhost:2999/",
-    "defaultUserEmail": "projectmedewerker-noreply@amsterdam.nl "
+    "testUserEmail": "projectmedewerker-noreply@amsterdam.nl"
   }
 }
