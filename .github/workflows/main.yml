@@ -21,7 +21,7 @@ jobs:
       - name: Test
         run: npm test
 
-        echo ${{ secrets.CYPRESS_USER_PASSWORD }}
+        echo ${{ secrets.CYPRESS_TEST_USER_PASSWORD }}
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
