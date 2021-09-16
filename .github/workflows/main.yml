@@ -1,4 +1,4 @@
-name: 'Install, lint, test & build'
+name: 'Install, lint, test, E2E & build'
 
 on:
   push:
@@ -20,6 +20,15 @@ jobs:
 
       - name: Test
         run: npm test
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          build: npm run build
+          start: npm start
+          wait-on: "http://localhost:2999/"
+        env:
+          CYPRESS_TEST_USER_PASSWORD:  ${{ secrets.CYPRESS_TEST_USER_PASSWORD }}
 
       - name: Build
         run: docker build .

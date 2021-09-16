@@ -1,0 +1,9 @@
+{
+  "chromeWebSecurity": false,
+  "baseUrl": "http://localhost:2999/",
+  "screenshotOnRunFailure": false,
+  "video": false,
+  "env": {
+    "emailPm": "projectmedewerker-noreply@amsterdam.nl"
+  }
+}
