@@ -4,7 +4,6 @@
   "screenshotOnRunFailure": false,
   "video": false,
   "env": {
-    "emailPm": "projectmedewerker-noreply@amsterdam.nl",
-    "TEST_USER_PASSWORD": "@Welkom2021"
+    "emailPm": "projectmedewerker-noreply@amsterdam.nl"
   }
 }
