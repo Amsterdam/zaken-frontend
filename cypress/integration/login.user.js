@@ -8,7 +8,7 @@ Cypress.on("uncaught:exception", (err, runnable) => {
 describe("Try to login", () => {
 
   it("Login user", () => {
-    cy.loginUser()
+    cy.loginAsPm()
 
     // Check for AZA page
     cy.get("a")

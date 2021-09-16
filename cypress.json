@@ -1,8 +1,10 @@
 {
   "chromeWebSecurity": false,
   "baseUrl": "http://localhost:2999/",
+  "screenshotOnRunFailure": false,
+  "video": false,
   "env": {
-    "loginUrl": "http://localhost:2999/",
-    "testUserEmail": "projectmedewerker-noreply@amsterdam.nl"
+    "emailPm": "projectmedewerker-noreply@amsterdam.nl",
+    "TEST_USER_PASSWORD": "@Welkom2021"
   }
 }

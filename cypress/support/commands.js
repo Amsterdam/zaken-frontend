@@ -24,13 +24,15 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-Cypress.Commands.add("login", (authUrl, emailAddress, password) => {
+Cypress.Commands.add("login", (emailAddress, password) => {
 
-  expect(authUrl, "authUrl was set").to.be.a("string").and.not.be.empty
   expect(emailAddress, "emailAddress was set").to.be.a("string").and.not.be.empty
-  expect(password, "password was set").to.be.a("string").and.not.be.empty
+  // Throw error when password is missing AND don't show the password in the logs.
+  if (typeof password !== 'string' || !password) {
+    throw new Error('Missing password value, set using TEST_USER_PASSWORD=... in cypress.json')
+  }
 
-  cy.visit(authUrl)
+  cy.visit('/')
 
   cy.get("#username")
     .should("be.visible")
@@ -38,7 +40,7 @@ Cypress.Commands.add("login", (authUrl, emailAddress, password) => {
 
   cy.get("#password")
     .should("be.visible")
-    .type(password)
+    .type(password, { log: false })
 
   cy.get("#kc-login")
     .click()
@@ -47,10 +49,9 @@ Cypress.Commands.add("login", (authUrl, emailAddress, password) => {
 
 })
 
-Cypress.Commands.add("loginUser", () => (
+Cypress.Commands.add("loginAsPm", () => (
   cy.login(
-    Cypress.env("loginUrl"),
-    Cypress.env("testUserEmail"),
+    Cypress.env("emailPm"),
     Cypress.env("TEST_USER_PASSWORD")
   )
 ))

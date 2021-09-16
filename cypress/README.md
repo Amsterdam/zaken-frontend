@@ -10,7 +10,7 @@ To open the Cypress UI, enter the following command after installing dependencie
 
 ## Global variables
 
-Global Cypress variables can be found in `cypress.json` in the root of the project. You can acces them by using: `Cypress.env("testUserEmail")`.
+Global Cypress variables can be found in `cypress.json` in the root of the project. You can acces them by using: `Cypress.env("emailPm")`.
 
 ## Credentials or secrets
 

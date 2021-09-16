@@ -37,4 +37,10 @@ The `master` branch is automatically deployed to [acceptance](https://acc.wonen.
 Tag any branch, but preferably master, with a tag like `v1.0.0` to deploy that specific commit
 to [production](https://wonen.zaken.amsterdam.nl/).
 
-A `npm run deploy:prod` convenience script is also available. This also guarantees the versions between the Git tag and NPM (package.json) are in sync. 
+A `npm run deploy:prod` convenience script is also available. This also guarantees the versions between the Git tag and NPM (package.json) are in sync.
+
+## E2E testing with Cypress
+
+[README.md](https://github.com/Amsterdam/zaken-frontend/blob/master/cypress/README.md)
+
+
