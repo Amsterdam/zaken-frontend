@@ -19,6 +19,9 @@
 .env.production.local
 .eslintcache
 
+# Cypress local secrets
+cypress.env.json
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
