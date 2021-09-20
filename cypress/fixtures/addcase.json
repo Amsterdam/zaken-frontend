@@ -5,5 +5,10 @@
   "city": "Amsterdam",
   "sia_identification": "123456",
   "sia_description": "Test samanvatting melding",
-  "description": "Test toelichting"
+  "description": "Test toelichting",
+  "reporter_name": "Naam reporter",
+  "reporter_phone": "0123456789",
+  "reporter_email": "naam@email.nl",
+  "advertisement_url1":"http://www.test.nl/1",
+  "advertisement_url2":"http://www.test.nl/2"
 }

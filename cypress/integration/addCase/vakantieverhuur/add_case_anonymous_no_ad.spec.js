@@ -1,4 +1,4 @@
-import testData from "../../fixtures/addcase.json"
+import testData from "../../../fixtures/addcase.json"
 
 describe("Try to login", () => {
 
