@@ -12,13 +12,19 @@ describe("Try to login", () => {
   })
 })
 
-describe("Add case to address", () => {
-
+describe("Find address", () => {
+  //TODO implement fixture with dummy data
+  // before( () => {
+  //   cy.fixture('addcase').then( (addcase) => {
+  //       this.addcase = addcase
+  //   })
+  // })
+  
   it("Search query", () => {
     //type searchquery
     cy.get("#2")
       .should("be.visible")
-      .type("1072tt1")
+      .type("1018VN113")
       .wait(1000)
   })
 
@@ -33,7 +39,17 @@ describe("Add case to address", () => {
       .should("be.visible")
       .click()
   })
+})
   
+describe("Add case to address", () => {
+
+  //TODO implement fixture with dummy data
+  // before(function () {
+  //   cy.fixture('addCase').then(function (addCase) {
+  //       this.addCase = addCase
+  //   })
+  // })
+
   it("Select Vakantieverhuur", () => {
     cy.get("#theme_1")
       .should("be.visible")
@@ -63,16 +79,36 @@ describe("Add case to address", () => {
   })
 
   it("Set advertisement no", () => {
-    cy.get("advertisement_no")
+    cy.get("#advertisement_no")
       .should("be.visible")
       .check({force: true})
   })
-  
-})
-
-describe("Try to logout", () => {
-
-  it("Logout user", () => {
-    cy.logout()
+  it("Set general description", () => {
+    cy.get('[data-e2e-id="description"]')
+    .type("general description")
   })
+
+  it("Send form", () => {
+    cy.get(`[data-e2e-id="submit"]`)
+      .click()
+
+    cy.get(`[role="dialog"]`)
+      .find(`button`)
+      .contains("Zaak aanmaken")
+      .should("be.visible")
+      .click()
+  })
+
+
+  //TODO check modal for the right content (with use of fixture)
+
+
+  // Check for CaseDetail page
+  it("Show CaseDetail page", () => {
+    cy.get("h1")
+    .contains("Zaakdetails")
+
+    //TODO check if it's the right address (fixture)
+  })
+
 })
