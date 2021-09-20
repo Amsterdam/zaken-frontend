@@ -10,9 +10,9 @@ describe("Try to login", () => {
   it("Login user", () => {
     cy.loginAsPm()
 
-    // Check for AZA page
-    cy.get("a")
-      .contains("Amsterdamse Zaak Administratie")
+    // Check for Home on landing page.
+    cy.get("h1")
+      .contains("Home")
 
   })
 })
