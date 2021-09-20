@@ -55,3 +55,14 @@ Cypress.Commands.add("loginAsPm", () => (
     Cypress.env("TEST_USER_PASSWORD")
   )
 ))
+
+/**
+ * LOGOUT
+ */
+Cypress.Commands.add("logout", () => {
+  cy.get('button[title*="Uitloggen"]').click()
+
+  cy.wait(1000)
+  cy.get("#username")
+  .should("be.visible")
+})
