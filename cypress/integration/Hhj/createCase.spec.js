@@ -24,6 +24,6 @@ describe("As handhavingsjurist, I cannot create a case", () => {
   it("Nieuwe zaak aanmaken button is disabled", () => {
     cy.get("button[data-e2e-id=btn_add_case]")
       .should("be.visible")
-      .should('be.disabled')
+      .should("be.disabled")
   })
 })

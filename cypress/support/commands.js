@@ -38,18 +38,18 @@ Cypress.Commands.add("login", (email, password) => {
 
   expect(email, "email was set").to.be.a("string").and.not.be.empty
   // Throw error when password is missing AND don't show the password in the logs.
-  if (typeof password !== 'string' || !password) {
-    throw new Error('Missing password value, set using TEST_USER_PASSWORD=... in cypress.json')
+  if (typeof password !== "string" || !password) {
+    throw new Error("Missing password value, set using TEST_USER_PASSWORD=... in cypress.json")
   }
 
-  cy.visit('/')
+  cy.visit("/")
 
   /*
    ** Get the body's text and check if it contains Inloggen.
    ** If not, logout() first
    */
-  cy.get('body').then(($body) => {
-    if (!$body.text().includes('Inloggen')) {
+  cy.get("body").then(($body) => {
+    if (!$body.text().includes("Inloggen")) {
       cy.logout()
     }
   })
