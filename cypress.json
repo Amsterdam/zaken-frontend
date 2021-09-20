@@ -3,7 +3,12 @@
   "baseUrl": "http://localhost:2999/",
   "screenshotOnRunFailure": false,
   "video": false,
+  "viewportWidth": 1280,
+  "viewportHeight": 1024,
   "env": {
-    "emailPm": "projectmedewerker-noreply@amsterdam.nl"
+    "userHh": "handhaver-noreply@amsterdam.nl",
+    "userHhj": "handhavingsjurist-noreply@amsterdam.nl",
+    "userPm": "projectmedewerker-noreply@amsterdam.nl",
+    "userTh": "toezichthouder-noreply@amsterdam.nl"
   }
 }
