@@ -1,4 +1,4 @@
-import testData from "../fixtures/addcase.json"
+import testData from "../../fixtures/addcase.json"
 
 describe("Try to login", () => {
 
@@ -27,46 +27,33 @@ describe("Find address", () => {
 })
   
 describe("Add case to address", () => {
-
-  it("Select Vakantieverhuur", () => {
+  it("Fill in the form", () => {
     cy.get("#theme_1")
       .check({force: true})
-  })
-  
-  it("Select Melding", () => {
+
     cy.get("#reason_0")
       .check({force: true})
-  })
-  
-  it("Select anonieme melder", () => {
+
     cy.get('[data-e2e-id="yes"]')
       .check({force: true})
-  })
 
-  it("Set SIA id", () => {
     cy.get('[data-e2e-id="identification"]')
-    .type(testData.sia_identification)
-  })
-
-  it("Set SIA description", () => {
+      .type(testData.sia_identification)
+    
     cy.get('[data-e2e-id="description_citizenreport"]')
-    .type(testData.sia_description)
-  })
-
-  it("Set advertisement no", () => {
+      .type(testData.sia_description)
+    
     cy.get("#advertisement_no")
       .check({force: true})
-  })
-  it("Set general description", () => {
+
     cy.get('[data-e2e-id="description"]')
-    .type(testData.description)
+      .type(testData.description)
   })
 
   it("Send form", () => {
     cy.get(`[data-e2e-id="submit"]`)
       .click()
 
-    //TODO check modal for the right content (with use of fixture)
     cy.get(`[role="dialog"]`).should('have.length', 1)
 
     cy.get(`[role="dialog"]`)
@@ -82,18 +69,13 @@ describe("Add case to address", () => {
       .click()
   })
 
-
-  
-
-
   // Check for CaseDetail page
   it("Show CaseDetail page", () => {
     cy.get("h1")
-    .contains("Zaakdetails")
+      .contains("Zaakdetails")
 
-    //TODO check if it's the right address (fixture)
+    //Check if it's the right address
     it("ZaakDetail has right address", () => {
-      // Check for Home on landing page.
       cy.get("h1")
         .contains(`${address.street}, ${address.zipCode}`)
     })
