@@ -1,9 +1,4 @@
-Cypress.on("uncaught:exception", (err, runnable) => {
-  // returning false here prevents Cypress from
-  // failing the test
-  console.log("Error ", err)
-  return false
-})
+import testData from "../fixtures/addcase.json"
 
 describe("Try to login", () => {
 
@@ -13,94 +8,82 @@ describe("Try to login", () => {
 })
 
 describe("Find address", () => {
-  //TODO implement fixture with dummy data
-  // before( () => {
-  //   cy.fixture('addcase').then( (addcase) => {
-  //       this.addcase = addcase
-  //   })
-  // })
   
   it("Search query", () => {
-    //type searchquery
     cy.get("#2")
-      .should("be.visible")
-      .type("1018VN113")
+      .type(testData.queryString)
       .wait(1000)
   })
 
   it("Go to first adress searchresults", () => {
     cy.get("tbody>tr").eq(0)
-      .should("be.visible")
       .click()
   })
   
   it("Goto create case page", () => {
     cy.get("span[data-e2e-id=btn_add_case]")
-      .should("be.visible")
       .click()
   })
 })
   
 describe("Add case to address", () => {
 
-  //TODO implement fixture with dummy data
-  // before(function () {
-  //   cy.fixture('addCase').then(function (addCase) {
-  //       this.addCase = addCase
-  //   })
-  // })
-
   it("Select Vakantieverhuur", () => {
     cy.get("#theme_1")
-      .should("be.visible")
       .check({force: true})
   })
   
   it("Select Melding", () => {
     cy.get("#reason_0")
-      .should("be.visible")
       .check({force: true})
   })
   
   it("Select anonieme melder", () => {
     cy.get('[data-e2e-id="yes"]')
-      .should("be.visible")
       .check({force: true})
   })
 
   it("Set SIA id", () => {
     cy.get('[data-e2e-id="identification"]')
-    .type("123456")
+    .type(testData.sia_identification)
   })
 
   it("Set SIA description", () => {
     cy.get('[data-e2e-id="description_citizenreport"]')
-    .type("description citizenreport")
+    .type(testData.sia_description)
   })
 
   it("Set advertisement no", () => {
     cy.get("#advertisement_no")
-      .should("be.visible")
       .check({force: true})
   })
   it("Set general description", () => {
     cy.get('[data-e2e-id="description"]')
-    .type("general description")
+    .type(testData.description)
   })
 
   it("Send form", () => {
     cy.get(`[data-e2e-id="submit"]`)
       .click()
 
+    //TODO check modal for the right content (with use of fixture)
+    cy.get(`[role="dialog"]`).should('have.length', 1)
+
     cy.get(`[role="dialog"]`)
+      .should("contain", "Vakantieverhuur")
+      .and("contain", "Melding")
+      .and("contain", "Ja, de melder is anoniem")
+      .and("contain", "Nee, er is geen advertentie")
+      .and("contain", testData.sia_identification)
+      .and("contain", testData.sia_description)
+      .and("contain", testData.description)
       .find(`button`)
       .contains("Zaak aanmaken")
-      .should("be.visible")
       .click()
   })
 
 
-  //TODO check modal for the right content (with use of fixture)
+  
 
 
   // Check for CaseDetail page
@@ -109,6 +92,11 @@ describe("Add case to address", () => {
     .contains("Zaakdetails")
 
     //TODO check if it's the right address (fixture)
+    it("ZaakDetail has right address", () => {
+      // Check for Home on landing page.
+      cy.get("h1")
+        .contains(`${address.street}, ${address.zipCode}`)
+    })
   })
 
 })
