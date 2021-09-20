@@ -42,6 +42,7 @@ const IndexPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
           to={ to("/adres/:bagId/zaken/nieuw", { bagId }) }
           text="Nieuwe zaak aanmaken"
           variant="primary"
+          data-e2e-id="btn_add_case"
         />
       </RowWithColumn>
     </DefaultLayout> :
