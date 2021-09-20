@@ -5,13 +5,6 @@ Cypress.on("uncaught:exception", (err, runnable) => {
   return false
 })
 
-// describe("Try to logout", () => {
-
-//   it("Logout user", () => {
-//     cy.logout()
-//   })
-// })
-
 describe("Try to login", () => {
 
   it("Login user", () => {
@@ -80,6 +73,6 @@ describe("Add case to address", () => {
 describe("Try to logout", () => {
 
   it("Logout user", () => {
-    //cy.logout()
+    cy.logout()
   })
 })
