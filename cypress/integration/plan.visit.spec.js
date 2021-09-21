@@ -87,7 +87,6 @@ describe('Plan "huisbezoek"', () => {
     })
 
     it("Request is successfully processed", () => {
-      cy.visit("/zaken/4837")
       cy.wait(2000)
       cy.get("h1").contains("Zaakdetails")
       cy.wait(1000)
