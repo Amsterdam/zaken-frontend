@@ -34,7 +34,6 @@ describe('Plan "huisbezoek"', () => {
     it("Bezoek inplannen page is visible", () => {
       cy.get("h1")
         .contains("Bezoek inplannen")
-
       cy.get("dd")
         .contains(address.street)
     })
@@ -44,32 +43,27 @@ describe('Plan "huisbezoek"', () => {
 
     it("Schedule day", () => {
       cy.get('[data-e2e-id="week_segment"]')
-        .should("be.visible")
         .select(visit.weekSegment)
     })
 
     it("Schedule daypart", () => {
       cy.get('[data-e2e-id="day_segment"]')
-        .should("be.visible")
         .select(visit.daySegment)
     })
 
     it("Schedule priority", () => {
       cy.get('[data-e2e-id="priority"]')
-        .should("be.visible")
         .select(visit.priority)
 
     })
 
     it("Fill in description", () => {
       cy.get('[data-e2e-id="description"]')
-        .should("be.visible")
         .type(visit.description)
     })
 
     it("Submit form", () => {
       cy.get(`[data-e2e-id="submit"]`)
-        .should("be.visible")
         .click()
     })
 
@@ -82,7 +76,6 @@ describe('Plan "huisbezoek"', () => {
       cy.get(`[role="dialog"]`)
         .find(`button`)
         .contains("Bezoek inplannen")
-        .should("be.visible")
         .click()
     })
 
