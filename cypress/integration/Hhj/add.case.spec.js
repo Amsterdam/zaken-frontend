@@ -16,7 +16,6 @@ describe("As handhavingsjurist, I cannot create a case", () => {
   })
 
   it("Adresoverzicht has right address", () => {
-    // Check for Home on landing page.
     cy.get("h1")
       .contains(`${address.street}, ${address.zipCode}`)
   })
