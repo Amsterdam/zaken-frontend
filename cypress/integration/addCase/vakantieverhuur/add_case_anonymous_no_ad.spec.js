@@ -67,17 +67,27 @@ describe("Add case to address", () => {
       .find(`button`)
       .contains("Zaak aanmaken")
       .click()
+      .wait(2000)
   })
 
-  // Check for CaseDetail page
   it("Show CaseDetail page", () => {
     cy.get("h1")
       .contains("Zaakdetails")
   })
 
-  //Check if it's the right address
   it("ZaakDetail has right address", () => {
     cy.get("h2")
       .contains(`${testData.street}, ${testData.zipCode}`)
+  })
+
+  it("History contains the right items", () => {
+    cy.get("h2")
+      .contains("Zaakhistorie")
+    cy.get('button[title="Melding "]')
+      .should("have.attr", "aria-expanded", "true")
+      .contains("Melding")
+    cy.get('button[title="Aanleiding "]')
+      .should("have.attr", "aria-expanded", "false")
+      .contains("Aanleiding")
   })
 })
