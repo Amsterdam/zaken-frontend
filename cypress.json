@@ -6,6 +6,7 @@
   "viewportWidth": 1280,
   "viewportHeight": 1024,
   "env": {
+    "baseUrlAcc": "https://acc.api.wonen.zaken.amsterdam.nl/api/v1/",
     "userHh": "handhaver-noreply@amsterdam.nl",
     "userHhj": "handhavingsjurist-noreply@amsterdam.nl",
     "userPm": "projectmedewerker-noreply@amsterdam.nl",
