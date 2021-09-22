@@ -1,17 +1,18 @@
 import testData from "../../../fixtures/addcase.json"
+import address from "../../../fixtures/address.json"
 
-describe("Try to login", () => {
+describe("Test add_case_errors", () => {
 
-  it("Login user", () => {
+  it("Login as projectmedewerker", () => {
     cy.loginAsPm()
   })
 })
 
 describe("Find address", () => {
-  
+
   it("Search query", () => {
     cy.get("#2")
-      .type(testData.queryString)
+      .type(address.queryString)
       .wait(1000)
   })
 
@@ -19,13 +20,13 @@ describe("Find address", () => {
     cy.get("tbody>tr").eq(0)
       .click()
   })
-  
+
   it("Goto create case page", () => {
     cy.get("span[data-e2e-id=btn_add_case]")
       .click()
   })
 })
-  
+
 describe("Add case to address", () => {
   it("Start filling in the form", () => {
     cy.get("#theme_1")
@@ -46,27 +47,27 @@ describe("Add case to address", () => {
   it("Continue filling in the form", () => {
 
     cy.checkInvalidInput(
-      '[data-e2e-id="reporter_phone"]', 
-      "Vul hier enkel 10 cijfers in", 
+      '[data-e2e-id="reporter_phone"]',
+      "Vul hier enkel 10 cijfers in",
       testData.reporterPhone
     )
 
     cy.checkInvalidInput(
-      '[data-e2e-id="reporter_email"]', 
-      "Vul een geldig e-mailadres in", 
+      '[data-e2e-id="reporter_email"]',
+      "Vul een geldig e-mailadres in",
       testData.reporterEmail
     )
 
     cy.checkRequiredField(
-      '[data-e2e-id="identification"]', 
+      '[data-e2e-id="identification"]',
       testData.siaIdentification
     )
 
     cy.checkRequiredField(
-      '[data-e2e-id="description_citizenreport"]', 
+      '[data-e2e-id="description_citizenreport"]',
       testData.siaDescription
     )
-    
+
     cy.get("#advertisement_yes")
       .check({force: true})
 
@@ -74,7 +75,7 @@ describe("Add case to address", () => {
       .should("be.disabled")
 
     cy.checkRequiredField(
-      '[data-e2e-id="advertisement_linklist[0]advertisement_link"]', 
+      '[data-e2e-id="advertisement_linklist[0]advertisement_link"]',
       testData.advertisementUrl1
     )
 

@@ -1,8 +1,8 @@
 {
-  "name": "Koninklijk Paleis Amsterdam",
-  "street": "Nieuwezijds Voorburgwal 147",
-  "zipCode": "1012RJ",
+  "name": "Gemeente Amsterdam OIS",
+  "street": "Weesperstraat 113",
+  "zipCode": "1018VN",
   "city": "Amsterdam",
-  "queryString": "1012RJ147",
-  "bagId": "0363010000758545"
+  "queryString": "1018VN113",
+  "bagId": "0363010000864314"
 }
