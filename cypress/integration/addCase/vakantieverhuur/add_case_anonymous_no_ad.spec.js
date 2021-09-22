@@ -38,10 +38,10 @@ describe("Add case to address", () => {
       .check({force: true})
 
     cy.get('[data-e2e-id="identification"]')
-      .type(testData.sia_identification)
+      .type(testData.siaIdentification)
     
     cy.get('[data-e2e-id="description_citizenreport"]')
-      .type(testData.sia_description)
+      .type(testData.siaDescription)
     
     cy.get("#advertisement_no")
       .check({force: true})
@@ -61,8 +61,8 @@ describe("Add case to address", () => {
       .and("contain", "Melding")
       .and("contain", "Ja, de melder is anoniem")
       .and("contain", "Nee, er is geen advertentie")
-      .and("contain", testData.sia_identification)
-      .and("contain", testData.sia_description)
+      .and("contain", testData.siaIdentification)
+      .and("contain", testData.siaDescription)
       .and("contain", testData.description)
       .find(`button`)
       .contains("Zaak aanmaken")
@@ -73,12 +73,11 @@ describe("Add case to address", () => {
   it("Show CaseDetail page", () => {
     cy.get("h1")
       .contains("Zaakdetails")
-
-    //Check if it's the right address
-    it("ZaakDetail has right address", () => {
-      cy.get("h1")
-        .contains(`${address.street}, ${address.zipCode}`)
-    })
   })
 
+  //Check if it's the right address
+  it("ZaakDetail has right address", () => {
+    cy.get("h2")
+      .contains(`${testData.street}, ${testData.zipCode}`)
+  })
 })

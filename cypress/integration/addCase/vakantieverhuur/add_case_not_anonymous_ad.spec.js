@@ -38,32 +38,32 @@ describe("Add case to address", () => {
       .check({force: true})
 
     cy.get('[data-e2e-id="reporter_name"]')
-      .type(testData.reporter_name)
+      .type(testData.reporterName)
     
     cy.get('[data-e2e-id="reporter_phone"]')
-      .type(testData.reporter_phone)
+      .type(testData.reporterPhone)
     
     cy.get('[data-e2e-id="reporter_email"]')
-      .type(testData.reporter_email)
+      .type(testData.reporterEmail)
     
     cy.get('[data-e2e-id="identification"]')
-      .type(testData.sia_identification)
+      .type(testData.siaIdentification)
     
     cy.get('[data-e2e-id="description_citizenreport"]')
-      .type(testData.sia_description)
+      .type(testData.siaDescription)
     
     cy.get("#advertisement_yes")
       .check({force: true})
 
     cy.get('[data-e2e-id="advertisement_linklist[0]advertisement_link"]')
-      .type(testData.advertisement_url1)
+      .type(testData.advertisementUrl1)
 
     cy.get("#button-add-advertisement_linklist")
       .click()
     
     cy.get('[data-e2e-id="advertisement_linklist[1]advertisement_link"]')
       .should("be.visible")
-      .type(testData.advertisement_url2)
+      .type(testData.advertisementUrl2)
 
 
     cy.get('[data-e2e-id="description"]')
@@ -82,17 +82,17 @@ describe("Add case to address", () => {
       .and("contain", "Melding")
       .and("contain", "Nee, de melder is niet anoniem")
       .and("contain", "Ja, er is een advertentie")
-      .and("contain", testData.advertisement_url1)
-      .and("contain", testData.advertisement_url2)
-      .and("contain", testData.reporter_name)
-      .and("contain", testData.reporter_phone)
-      .and("contain", testData.reporter_email)
-      .and("contain", testData.sia_identification)
-      .and("contain", testData.sia_description)
+      .and("contain", testData.advertisementUrl1)
+      .and("contain", testData.advertisementUrl2)
+      .and("contain", testData.reporterName)
+      .and("contain", testData.reporterPhone)
+      .and("contain", testData.reporterEmail)
+      .and("contain", testData.siaIdentification)
+      .and("contain", testData.siaDescription)
       .and("contain", testData.description)
       .find(`button`)
       .contains("Zaak aanmaken")
-      .click()
+      //.click()
       .wait(2000)
   })
 

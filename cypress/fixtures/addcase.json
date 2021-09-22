@@ -3,12 +3,12 @@
   "street": "Weesperstraat 113",
   "zipCode": "1018VN",
   "city": "Amsterdam",
-  "sia_identification": "123456",
-  "sia_description": "Test samanvatting melding",
+  "siaIdentification": "123456",
+  "siaDescription": "Test samanvatting melding",
   "description": "Test toelichting",
-  "reporter_name": "Naam reporter",
-  "reporter_phone": "0123456789",
-  "reporter_email": "naam@email.nl",
-  "advertisement_url1":"http://www.test.nl/1",
-  "advertisement_url2":"http://www.test.nl/2"
+  "reporterName": "Naam reporter",
+  "reporterPhone": "0123456789",
+  "reporterEmail": "naam@email.nl",
+  "advertisementUrl1":"http://www.test.nl/1",
+  "advertisementUrl2":"http://www.test.nl/2"
 }
