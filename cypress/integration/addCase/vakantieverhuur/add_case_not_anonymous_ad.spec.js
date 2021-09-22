@@ -58,14 +58,20 @@ describe("Add case to address", () => {
     cy.get('[data-e2e-id="advertisement_linklist[0]advertisement_link"]')
       .type(testData.advertisement_url1)
 
-    // TODO in React-final-form give the +button a data-e2e-id to be able to reach it
-    // cy.get(plusbutton)
+    cy.get("#button-add-advertisement_linklist")
+      .click()
+    
+    cy.get('[data-e2e-id="advertisement_linklist[1]advertisement_link"]')
+      .should("be.visible")
+      .type(testData.advertisement_url2)
+
 
     cy.get('[data-e2e-id="description"]')
       .type(testData.description)
   })
 
   it("Send form", () => {
+    cy.intercept('/zaken/*').as('getCaseDetailPage')
     cy.get(`[data-e2e-id="submit"]`)
       .click()
 
@@ -77,6 +83,7 @@ describe("Add case to address", () => {
       .and("contain", "Nee, de melder is niet anoniem")
       .and("contain", "Ja, er is een advertentie")
       .and("contain", testData.advertisement_url1)
+      .and("contain", testData.advertisement_url2)
       .and("contain", testData.reporter_name)
       .and("contain", testData.reporter_phone)
       .and("contain", testData.reporter_email)
@@ -86,18 +93,17 @@ describe("Add case to address", () => {
       .find(`button`)
       .contains("Zaak aanmaken")
       .click()
+      .wait(2000)
   })
 
   // Check for CaseDetail page
   it("Show CaseDetail page", () => {
     cy.get("h1")
       .contains("Zaakdetails")
-
-    //Check if it's the right address
-    it("ZaakDetail has right address", () => {
-      cy.get("h1")
-        .contains(`${address.street}, ${address.zipCode}`)
-    })
   })
-
+  //Check if it's the right address
+  it("ZaakDetail has right address", () => {
+    cy.get("h2")
+      .contains(`${testData.street}, ${testData.zipCode}`)
+  })
 })
