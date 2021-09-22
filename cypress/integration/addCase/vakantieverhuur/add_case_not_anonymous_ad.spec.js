@@ -71,7 +71,6 @@ describe("Add case to address", () => {
   })
 
   it("Send form", () => {
-    cy.intercept('/zaken/*').as('getCaseDetailPage')
     cy.get(`[data-e2e-id="submit"]`)
       .click()
 
@@ -93,7 +92,9 @@ describe("Add case to address", () => {
       .find(`button`)
       .contains("Zaak aanmaken")
       .click()
-      .wait(2000)
+      
+    cy.url({timeout: 60000})
+        .should('include', '/zaken/')
   })
 
   it("Show CaseDetail page", () => {
