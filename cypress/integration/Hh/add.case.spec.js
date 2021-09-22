@@ -4,20 +4,10 @@ describe("As handhaver, I cannot create a case", () => {
 
   it("Login as handhaver", () => {
     cy.loginAsHh()
-
-    // Check for Home on landing page.
-    cy.get("h1")
-      .contains("Home")
   })
 
-  it("Select address", () => {
-    cy.selectFirstCaseByAddressQuery(address.queryString)
-    cy.wait(1000)
-  })
-
-  it("Adresoverzicht has right address", () => {
-    cy.get("h1")
-      .contains(`${address.street}, ${address.zipCode}`)
+  it("Select first case of address", () => {
+    cy.selectFirstCaseByAddressQuery(address.queryString, `${address.street}, ${address.zipCode}`)
   })
 
   it("Nieuwe zaak aanmaken button is disabled", () => {

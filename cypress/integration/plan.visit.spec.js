@@ -11,9 +11,9 @@ describe('Plan "huisbezoek"', () => {
 
     it("Go to Adresoverzicht and check address", () => {
       const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/?open_cases=true`
-      cy.intercept(url).as('getAdres')
+      cy.intercept(url).as('getCases')
       cy.visit(`/adres/${address.bagId}`)
-      cy.wait('@getAdres').then(() => {
+      cy.wait('@getCases').then(() => {
         cy.get("h1")
           .contains(`${address.street}, ${address.zipCode}`)
       })
