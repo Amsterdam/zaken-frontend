@@ -21,8 +21,13 @@ describe("Find address", () => {
   })
   
   it("Goto create case page", () => {
-    cy.get("span[data-e2e-id=btn_add_case]")
-      .click()
+    const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/?open_cases=true`
+    cy.intercept(url).as('getAddress')
+    cy.visit(`/adres/${testData.bagId}`)
+    cy.wait('@getAddress').then(() => {
+      cy.get("span[data-e2e-id=btn_add_case]")
+        .click()
+    })
   })
 })
   
@@ -67,7 +72,9 @@ describe("Add case to address", () => {
       .find(`button`)
       .contains("Zaak aanmaken")
       .click()
-      .wait(2000)
+      
+    cy.url({timeout: 60000})
+        .should('include', '/zaken/')
   })
 
   it("Show CaseDetail page", () => {
