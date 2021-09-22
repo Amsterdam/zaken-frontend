@@ -1,3 +1,14 @@
 {
-  "address": "1018vn113"
+  "queryString": "1018vn113",
+  "street": "Weesperstraat 113",
+  "zipCode": "1018VN",
+  "city": "Amsterdam",
+  "siaIdentification": "123456",
+  "siaDescription": "Test samenvatting melding",
+  "description": "Test toelichting",
+  "reporterName": "Naam reporter",
+  "reporterPhone": "0123456789",
+  "reporterEmail": "naam@email.nl",
+  "advertisementUrl1":"http://www.test.nl/1",
+  "advertisementUrl2":"http://www.test.nl/2"
 }
