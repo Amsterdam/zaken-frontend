@@ -69,7 +69,7 @@ Cypress.Commands.add("login", (email, password) => {
     cy.intercept(url).as('isAuthorized')
 
     // Wait for authorization
-    cy.wait('@isAuthorized').then(() => {
+    cy.wait('@isAuthorized', {timeout: 60000}).then(() => {
       cy.get("h1")
         .contains("Home")
     })
