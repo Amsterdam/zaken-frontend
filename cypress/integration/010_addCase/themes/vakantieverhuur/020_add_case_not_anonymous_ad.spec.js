@@ -94,7 +94,7 @@ describe("Add case to address", () => {
       .contains("Zaak aanmaken")
       .click()
 
-    cy.url({timeout: 60000})
+    cy.url()
         .should('include', '/zaken/')
   })
 
