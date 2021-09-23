@@ -32,8 +32,8 @@ const IndexPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
         <CasesByBagId
           bagId={ bagId }
           openCases={ true }
-          title="Lopende zaken"
-          emptyText="Op dit adres zijn er geen lopende zaken"
+          title="Open zaken"
+          emptyText="Op dit adres zijn er geen open zaken"
         />
       </RowWithColumn>
       <RowWithColumn>
