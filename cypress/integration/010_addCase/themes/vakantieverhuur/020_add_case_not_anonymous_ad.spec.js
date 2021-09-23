@@ -1,17 +1,18 @@
 import testData from "../../../../fixtures/addcase.json"
+import address from "../../../../fixtures/address.json"
 
-describe("Try to login", () => {
+describe("Test add_case_not_anonymous_ad", () => {
 
-  it("Login user", () => {
+  it("Login as projectmedewerker", () => {
     cy.loginAsPm()
   })
 })
 
 describe("Find address", () => {
-  
+
   it("Search query", () => {
     cy.get("#2")
-      .type(testData.queryString)
+      .type(address.queryString)
       .wait(1000)
   })
 
@@ -19,13 +20,13 @@ describe("Find address", () => {
     cy.get("tbody>tr").eq(0)
       .click()
   })
-  
+
   it("Goto create case page", () => {
     cy.get("span[data-e2e-id=btn_add_case]")
       .click()
   })
 })
-  
+
 describe("Add case to address", () => {
   it("Fill in the form", () => {
     cy.get("#theme_1")
@@ -39,19 +40,19 @@ describe("Add case to address", () => {
 
     cy.get('[data-e2e-id="reporter_name"]')
       .type(testData.reporterName)
-    
+
     cy.get('[data-e2e-id="reporter_phone"]')
       .type(testData.reporterPhone)
-    
+
     cy.get('[data-e2e-id="reporter_email"]')
       .type(testData.reporterEmail)
-    
+
     cy.get('[data-e2e-id="identification"]')
       .type(testData.siaIdentification)
-    
+
     cy.get('[data-e2e-id="description_citizenreport"]')
       .type(testData.siaDescription)
-    
+
     cy.get("#advertisement_yes")
       .check({force: true})
 
@@ -60,7 +61,7 @@ describe("Add case to address", () => {
 
     cy.get("#button-add-advertisement_linklist")
       .click()
-    
+
     cy.get('[data-e2e-id="advertisement_linklist[1]advertisement_link"]')
       .should("be.visible")
       .type(testData.advertisementUrl2)
@@ -92,8 +93,8 @@ describe("Add case to address", () => {
       .find(`button`)
       .contains("Zaak aanmaken")
       .click()
-      
-    cy.url()
+
+    cy.url({timeout: 60000})
         .should('include', '/zaken/')
   })
 
@@ -104,7 +105,7 @@ describe("Add case to address", () => {
 
   it("ZaakDetail has right address", () => {
     cy.get("h2")
-      .contains(`${testData.street}, ${testData.zipCode}`)
+      .contains(`${address.street}, ${address.zipCode}`)
   })
 
   it("History contains the right items", () => {
