@@ -48,11 +48,11 @@ Cypress.Commands.add("login", (email, password) => {
    ** Get the body's text and check if it contains Inloggen.
    ** If not, logout() first
    */
-  cy.get("body").then(($body) => {
-    if (!$body.text().includes("Inloggen")) {
-      cy.logout()
-    }
-  })
+  // cy.get("body").then(($body) => {
+  //   if (!$body.text().includes("Inloggen")) {
+  //     cy.logout()
+  //   }
+  // })
 
   cy.get("#username")
     .should("be.visible")
