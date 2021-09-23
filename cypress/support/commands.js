@@ -41,7 +41,7 @@ Cypress.Commands.add("login", (email, password) => {
   if (typeof password !== "string" || !password) {
     throw new Error("Missing password value, set using TEST_USER_PASSWORD=... in cypress.json")
   }
-  cy.wait(500);
+  
   cy.visit("/")
 
   /*
@@ -64,10 +64,10 @@ Cypress.Commands.add("login", (email, password) => {
 
   cy.get("#kc-login")
     .click()
-
+    cy.wait(500);
     const url = `${Cypress.env("baseUrlAcc")}is-authorized/`
     cy.intercept(url).as('isAuthorized')
-
+    cy.wait(500);
     // Wait for authorization
     cy.wait('@isAuthorized').then(() => {
       cy.get("h1")
