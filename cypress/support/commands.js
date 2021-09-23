@@ -54,6 +54,9 @@ Cypress.Commands.add("login", (email, password) => {
     }
   })
 
+  const url = `${Cypress.env("baseUrlAcc")}is-authorized/`
+  cy.intercept(url).as('isAuthorized')
+
   cy.get("#username")
     .should("be.visible")
     .type(email)
@@ -62,14 +65,12 @@ Cypress.Commands.add("login", (email, password) => {
     .should("be.visible")
     .type(password, { log: false })
 
-  const url = `${Cypress.env("baseUrlAcc")}is-authorized/`
-  cy.intercept(url).as('isAuthorized')
 
   cy.get("#kc-login")
     .click()
 
   // Wait for authorization
-  cy.wait('@isAuthorized', {timeout: 60000}).then(() => {
+  cy.wait('@isAuthorized').then(() => {
     cy.get("h1")
       .contains("Home")
   })
