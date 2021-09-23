@@ -42,7 +42,11 @@ Cypress.Commands.add("login", (email, password) => {
     throw new Error("Missing password value, set using TEST_USER_PASSWORD=... in cypress.json")
   }
   
-  cy.visit("/")
+  cy.visit("/", {
+    onBeforeLoad: (win) => {
+      win.fetch = null
+    }
+  })
 
   /*
    ** Get the body's text and check if it contains Inloggen.
@@ -64,10 +68,10 @@ Cypress.Commands.add("login", (email, password) => {
 
   cy.get("#kc-login")
     .click()
-    cy.wait(500);
+    
     const url = `${Cypress.env("baseUrlAcc")}is-authorized/`
     cy.intercept(url).as('isAuthorized')
-    cy.wait(500);
+    
     // Wait for authorization
     cy.wait('@isAuthorized').then(() => {
       cy.get("h1")
