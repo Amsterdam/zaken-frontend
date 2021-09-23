@@ -41,7 +41,7 @@ Cypress.Commands.add("login", (email, password) => {
   if (typeof password !== "string" || !password) {
     throw new Error("Missing password value, set using TEST_USER_PASSWORD=... in cypress.json")
   }
-
+  cy.wait(500);
   cy.visit("/")
 
   /*
