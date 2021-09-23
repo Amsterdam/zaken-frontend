@@ -48,11 +48,11 @@ Cypress.Commands.add("login", (email, password) => {
    ** Get the body's text and check if it contains Inloggen.
    ** If not, logout() first
    */
-  // cy.get("body").then(($body) => {
-  //   if (!$body.text().includes("Inloggen")) {
-  //     cy.logout()
-  //   }
-  // })
+  cy.get("body").then(($body) => {
+    if (!$body.text().includes("Inloggen")) {
+      cy.logout()
+    }
+  })
 
   cy.get("#username")
     .should("be.visible")
@@ -63,16 +63,17 @@ Cypress.Commands.add("login", (email, password) => {
     .type(password, { log: false })
 
   const url = `${Cypress.env("baseUrlAcc")}is-authorized/`
-  cy.intercept(url, { is_authorized: true }).as('isAuthorized')
+  cy.intercept(url).as('isAuthorized')
 
   cy.get("#kc-login")
     .click()
 
+    cy.wait(3000)
   // Wait for authorization
-  cy.wait('@isAuthorized').then(() => {
-    cy.get("h1")
-      .contains("Home")
-  })
+  // cy.wait('@isAuthorized').then(() => {
+  //   cy.get("h1")
+  //     .contains("Home")
+  // })
 })
 
 // Login as handhaver.
