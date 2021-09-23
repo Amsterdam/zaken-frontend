@@ -1,4 +1,4 @@
-import address from "../../fixtures/address.json"
+import address from "../../../../fixtures/address.json"
 
 describe("As handhaver, I cannot create a case", () => {
 

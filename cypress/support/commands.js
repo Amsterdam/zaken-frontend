@@ -41,8 +41,12 @@ Cypress.Commands.add("login", (email, password) => {
   if (typeof password !== "string" || !password) {
     throw new Error("Missing password value, set using TEST_USER_PASSWORD=... in cypress.json")
   }
-
-  cy.visit("/")
+  
+  cy.visit("/", {
+    onBeforeLoad: (win) => {
+      win.fetch = null
+    }
+  })
 
   /*
    ** Get the body's text and check if it contains Inloggen.
