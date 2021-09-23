@@ -62,14 +62,11 @@ Cypress.Commands.add("login", (email, password) => {
     .should("be.visible")
     .type(password, { log: false })
 
-
-  cy.get("#kc-login")
-    .click()
-
   const url = `${Cypress.env("baseUrlAcc")}is-authorized/`
   cy.intercept(url).as('isAuthorized')
 
-  cy.visit("/")
+  cy.get("#kc-login")
+    .click()
 
   // Wait for authorization
   cy.wait('@isAuthorized').then(() => {
