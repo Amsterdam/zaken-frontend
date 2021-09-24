@@ -68,7 +68,9 @@ Cypress.Commands.add("login", (email, password) => {
   cy.get("#kc-login")
     .click()
 
-    cy.wait(3000)
+  cy.wait(3000)
+  cy.get("h1")
+    .contains("Home")
   // Wait for authorization
   // cy.wait('@isAuthorized').then(() => {
   //   cy.get("h1")
