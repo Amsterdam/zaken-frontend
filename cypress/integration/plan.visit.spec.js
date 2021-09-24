@@ -1,5 +1,5 @@
-import address from "../../fixtures/address.json"
-import visit from "../../fixtures/visit.json"
+import address from "../fixtures/address.json"
+import visit from "../fixtures/visit.json"
 
 describe('Plan "huisbezoek"', () => {
 
