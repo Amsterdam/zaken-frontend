@@ -19,6 +19,7 @@ describe("Find address", () => {
   it("Go to first adress searchresults", () => {
     cy.get("tbody>tr").eq(0)
       .click()
+    cy.wait(5000)
   })
 
   it("Goto create case page", () => {
