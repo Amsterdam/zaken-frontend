@@ -13,7 +13,7 @@ describe("Find address", () => {
   it("Search query", () => {
     cy.get("#2")
       .type(address.queryString)
-      .wait(1000)
+      .wait(3000)
   })
 
   it("Go to first adress searchresults", () => {
