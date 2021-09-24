@@ -1,5 +1,5 @@
-import testData from "../../../fixtures/addcase.json"
-import address from "../../../fixtures/address.json"
+import testData from "../../../../fixtures/addcase.json"
+import address from "../../../../fixtures/address.json"
 
 describe("Test add_case_anonymous_no_ad", () => {
 
@@ -78,7 +78,7 @@ describe("Add case to address", () => {
       .contains("Zaak aanmaken")
       .click()
 
-    cy.url({timeout: 60000})
+    cy.url()
         .should('include', '/zaken/')
   })
 

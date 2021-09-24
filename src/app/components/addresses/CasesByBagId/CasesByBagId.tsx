@@ -19,7 +19,9 @@ const defaultEmptyText = "Op dit adres zijn er geen zaken"
 const StyledHeading = styled(Heading)`
   margin-bottom: ${ themeSpacing(4) };
 `
-
+const Div = styled.div`
+  margin-bottom: ${ themeSpacing(8) };
+`
 const columns = [
   { header: "Zaak ID", minWidth: 100 },
   { header: "Thema", minWidth: 100 },
@@ -40,7 +42,7 @@ const CasesByBagId: React.FC<Props> = ({ bagId, openCases = false, title = defau
   }
 
   return (
-    <>
+    <Div>
       <StyledHeading>{ title }{ numCases > 0 && ` (${ numCases })` }</StyledHeading>
       <Table
         hasFixedColumn
@@ -52,7 +54,7 @@ const CasesByBagId: React.FC<Props> = ({ bagId, openCases = false, title = defau
         onClickRow={ onClickRow }
         noValuesPlaceholder={ emptyText }
       />
-    </>
+    </Div>
   )
 }
 export default CasesByBagId

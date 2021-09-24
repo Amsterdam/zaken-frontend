@@ -1,5 +1,5 @@
-import testData from "../../../fixtures/addcase.json"
-import address from "../../../fixtures/address.json"
+import testData from "../../../../fixtures/addcase.json"
+import address from "../../../../fixtures/address.json"
 
 describe("Test add_case_errors", () => {
 
