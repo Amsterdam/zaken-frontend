@@ -6,30 +6,14 @@ describe("Test add_case_errors", () => {
   it("Login as projectmedewerker", () => {
     cy.loginAsPm()
   })
-})
 
-describe("Find address", () => {
-
-  it("Search query", () => {
-    cy.get("#2")
-      .type(address.queryString)
-      .wait(3000)
-  })
-
-  it("Go to first adress searchresults", () => {
-    cy.get("tbody>tr").eq(0)
-      .click()
-    cy.wait(5000)
-  })
-
-  it("Goto create case page", () => {
-    cy.get("span[data-e2e-id=btn_add_case]")
-      .click()
+  it("Select address and create case", () => {
+    cy.createCaseForAddress(address.queryString, `${address.street}, ${address.zipCode}`)
   })
 })
 
-describe("Add case to address", () => {
-  it("Start filling in the form", () => {
+describe("Fill in form and validate", () => {
+  it("Select radio buttons", () => {
     cy.get("#theme_1")
       .check({force: true})
 
@@ -45,7 +29,7 @@ describe("Add case to address", () => {
       .should("be.disabled")
   })
 
-  it("Continue filling in the form", () => {
+  it("Check required fields", () => {
 
     cy.checkInvalidInput(
       '[data-e2e-id="reporter_phone"]',

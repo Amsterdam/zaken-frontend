@@ -6,30 +6,14 @@ describe("Test add_case_not_anonymous_ad", () => {
   it("Login as projectmedewerker", () => {
     cy.loginAsPm()
   })
-})
 
-describe("Find address", () => {
-
-  it("Search query", () => {
-    cy.get("#2")
-      .type(address.queryString)
-      .wait(3000)
-  })
-
-  it("Go to first adress searchresults", () => {
-    cy.get("tbody>tr").eq(0)
-      .click()
-    cy.wait(5000)
-  })
-
-  it("Goto create case page", () => {
-    cy.get("span[data-e2e-id=btn_add_case]")
-      .click()
+  it("Select address and create case", () => {
+    cy.createCaseForAddress(address.queryString, `${address.street}, ${address.zipCode}`)
   })
 })
 
-describe("Add case to address", () => {
-  it("Fill in the form", () => {
+describe("Create case and validate input", () => {
+  it("Fill in form", () => {
     cy.get("#theme_1")
       .check({force: true})
 

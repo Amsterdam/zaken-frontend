@@ -6,8 +6,8 @@ describe("As handhavingsjurist, I cannot create a case", () => {
     cy.loginAsHhj()
   })
 
-  it("Select first case of address", () => {
-    cy.selectFirstCaseByAddressQuery(address.queryString, `${address.street}, ${address.zipCode}`)
+  it("Select address", () => {
+    cy.selectAddress(address.queryString, `${address.street}, ${address.zipCode}`)
   })
 
   it("Nieuwe zaak aanmaken button is disabled", () => {
