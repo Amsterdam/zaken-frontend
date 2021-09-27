@@ -24,6 +24,7 @@ describe("Find address", () => {
   it("Goto create case page", () => {
     // const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/?open_cases=true`
     // cy.intercept(url).as('getAddress')
+    cy.log(`/adres/${address.bagId}`)
     cy.visit(`/adres/${address.bagId}`)
     cy.wait(5000)
     cy.get("span[data-e2e-id=btn_add_case]")
