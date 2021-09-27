@@ -10,16 +10,13 @@ describe('Plan "huisbezoek"', () => {
     })
 
     it("Go to Adresoverzicht and check address", () => {
-      // const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/?open_cases=true`
-      // cy.intercept(url).as('getCases')
+      const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/?open_cases=true`
+      cy.intercept(url).as('getCases')
       cy.visit(`/adres/${address.bagId}`)
-      cy.wait(10000)
-      cy.get("h1")
-        .contains(`${address.street}, ${address.zipCode}`)
-      // cy.wait('@getCases').then(() => {
-      //   cy.get("h1")
-      //     .contains(`${address.street}, ${address.zipCode}`)
-      // })
+      cy.wait('@getCases').then(() => {
+        cy.get("h1")
+          .contains(`${address.street}, ${address.zipCode}`)
+      })
     })
 
     it("Adresoverzicht has right address", () => {
@@ -89,19 +86,13 @@ describe('Plan "huisbezoek"', () => {
     })
 
     it("Request is successfully processed", () => {
-
-      cy.wait(3000)
-      cy.get("h1").contains("Zaakdetails")
-      cy.get("h2").contains("Zaakhistorie")
-      cy.get("span").contains("Bezoek ingepland ")
-
-      // const url = `${Cypress.env("baseUrlAcc")}cases/*/events/`
-      // cy.intercept(url).as('getEvents')
-      // cy.wait('@getEvents').then(() => {
-      //   cy.get("h1").contains("Zaakdetails")
-      //   cy.get("h2").contains("Zaakhistorie")
-      //   cy.get("span").contains("Bezoek ingepland ")
-      // })
+      const url = `${Cypress.env("baseUrlAcc")}cases/*/events/`
+      cy.intercept(url).as('getEvents')
+      cy.wait('@getEvents').then(() => {
+        cy.get("h1").contains("Zaakdetails")
+        cy.get("h2").contains("Zaakhistorie")
+        cy.get("span").contains("Bezoek ingepland ")
+      })
     })
   })
 })

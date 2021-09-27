@@ -62,20 +62,17 @@ Cypress.Commands.add("login", (email, password) => {
     .should("be.visible")
     .type(password, { log: false })
 
-  // const url = `${Cypress.env("baseUrlAcc")}is-authorized/`
-  // cy.intercept(url).as('isAuthorized')
+  const url = `${Cypress.env("baseUrlAcc")}is-authorized/`
+  cy.intercept(url).as('isAuthorized')
 
   cy.get("#kc-login")
     .click()
 
-  cy.wait(3000)
-  cy.get("h1")
-    .contains("Home")
   // Wait for authorization
-  // cy.wait('@isAuthorized').then(() => {
-  //   cy.get("h1")
-  //     .contains("Home")
-  // })
+  cy.wait('@isAuthorized').then(() => {
+    cy.get("h1")
+      .contains("Home")
+  })
 })
 
 // Login as handhaver.

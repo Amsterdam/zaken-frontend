@@ -1,5 +1,5 @@
-import testData from "../../../fixtures/addcase.json"
-import address from "../../../fixtures/address.json"
+import testData from "../../../../fixtures/addcase.json"
+import address from "../../../../fixtures/address.json"
 
 describe("Test add_case_anonymous_no_ad", () => {
 
@@ -22,17 +22,13 @@ describe("Find address", () => {
   })
 
   it("Goto create case page", () => {
-    // const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/?open_cases=true`
-    // cy.intercept(url).as('getAddress')
+    const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/?open_cases=true`
+    cy.intercept(url).as('getAddress')
     cy.visit(`/adres/${address.bagId}`)
-    cy.wait(3000)
-    cy.get("span[data-e2e-id=btn_add_case]")
-      .click()
-
-    // cy.wait('@getAddress').then(() => {
-    //   cy.get("span[data-e2e-id=btn_add_case]")
-    //     .click()
-    // })
+    cy.wait('@getAddress').then(() => {
+      cy.get("span[data-e2e-id=btn_add_case]")
+        .click()
+    })
   })
 })
 
@@ -78,7 +74,7 @@ describe("Add case to address", () => {
       .contains("Zaak aanmaken")
       .click()
 
-    cy.url({timeout: 60000})
+    cy.url()
         .should('include', '/zaken/')
   })
 
