@@ -13,7 +13,7 @@ describe('Plan "huisbezoek"', () => {
       // const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/?open_cases=true`
       // cy.intercept(url).as('getCases')
       cy.visit(`/adres/${address.bagId}`)
-      cy.wait(3000)
+      cy.wait(10000)
       cy.get("h1")
         .contains(`${address.street}, ${address.zipCode}`)
       // cy.wait('@getCases').then(() => {
