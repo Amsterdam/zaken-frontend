@@ -22,7 +22,7 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString, camund
 
   return (
     isValidUrlParamId<Components.Schemas.Case["id"]>(id) &&
-    isValidUrlParamUUID<Components.Schemas.CamundaTask["camunda_task_id"]>(camundaTaskId) ?
+    isValidUrlParamId<Components.Schemas.CamundaTask["camunda_task_id"]>(camundaTaskId) ?
     <DefaultLayout>
       <RowWithColumn>
         <PageHeading />
