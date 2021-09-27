@@ -28,6 +28,7 @@ describe('Plan "huisbezoek"', () => {
     })
 
     it('Get first case with task "Inplannen Huisbezoek"', () => {
+      cy.scrollTo(0, 400)
       cy.get("tbody>tr")
         .contains("td", "Inplannen Huisbezoek")
         .click()
