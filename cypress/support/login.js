@@ -41,12 +41,8 @@ Cypress.Commands.add("login", (email, password) => {
   if (typeof password !== "string" || !password) {
     throw new Error("Missing password value, set using TEST_USER_PASSWORD=... in cypress.json")
   }
-  
-  cy.visit("/", {
-    onBeforeLoad: (win) => {
-      win.fetch = null
-    }
-  })
+
+  cy.visit("/")
 
   /*
    ** Get the body's text and check if it contains Inloggen.
@@ -73,7 +69,7 @@ Cypress.Commands.add("login", (email, password) => {
     .click()
 
   // Wait for authorization
-  cy.wait('@isAuthorized', {timeout: 60000}).then(() => {
+  cy.wait('@isAuthorized').then(() => {
     cy.get("h1")
       .contains("Home")
   })
@@ -97,33 +93,4 @@ Cypress.Commands.add("loginAsPm", () => {
 // Login as toezichthouder.
 Cypress.Commands.add("loginAsTh", () => {
   cy.login(Cypress.env("userTh"), Cypress.env("TEST_USER_PASSWORD"))
-})
-
-// Check for empty textField
-Cypress.Commands.add("checkRequiredField", ( field, validInput="test", errorMessage="Dit veld is verplicht") => {
-  cy.get(field)
-    .focus()
-    .blur()
-    .siblings()
-    .contains(errorMessage)
-
-  cy.get(field)
-    .type(validInput)
-    .siblings()
-    .should("not.exist")
-})
-
-// Check for wrong input
-Cypress.Commands.add("checkInvalidInput", ( field, errorMessage, validInput, invalidInput="test") => {
-  cy.get(field)
-  .type(invalidInput)
-    .blur()
-    .siblings()
-    .contains(errorMessage)
-
-  cy.get(field)
-    .clear()
-    .type(validInput)
-    .siblings()
-    .should("not.exist")
 })

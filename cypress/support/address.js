@@ -3,7 +3,7 @@
  ** Select first case.
  ** Check Adresoverzicht for right address
  */
-Cypress.Commands.add("selectFirstCaseByAddressQuery", (queryString, addressString) => {
+Cypress.Commands.add("selectAddress", (queryString, addressString) => {
 
   expect(queryString, "queryString was set").to.be.a("string").and.not.be.empty
   expect(addressString, "addressString was set").to.be.a("string").and.not.be.empty
@@ -17,6 +17,7 @@ Cypress.Commands.add("selectFirstCaseByAddressQuery", (queryString, addressStrin
   cy.visit(`/?query=${queryString}`)
 
   cy.wait("@getAddress").then(() => {
+    cy.wait(500)
     cy.get("tbody>tr").first()
       .should("be.visible")
       .click()
@@ -26,4 +27,13 @@ Cypress.Commands.add("selectFirstCaseByAddressQuery", (queryString, addressStrin
     cy.get("h1")
       .contains(addressString)
   })
+})
+
+Cypress.Commands.add("createCaseForAddress", (queryString, addressString) => {
+
+  cy.selectAddress(queryString, addressString)
+
+  cy.get("span[data-e2e-id=btn_add_case]")
+    .click()
+
 })
