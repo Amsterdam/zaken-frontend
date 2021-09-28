@@ -2,6 +2,8 @@
   "projectId": "tbpt8b",
   "chromeWebSecurity": false,
   "baseUrl": "http://localhost:2999/",
+  "screenshotOnRunFailure": false,
+  "video": false,
   "viewportWidth": 1280,
   "viewportHeight": 1024,
   "env": {

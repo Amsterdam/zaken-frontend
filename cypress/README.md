@@ -39,4 +39,19 @@ Create a `cypress.env.json` file in the root directory. Add the following code w
 
 NOTE: Add `cypress.env.json` to `.gitignore`
 
+## Cypress Dashboard
 
+The Dashboard is a Cypress service that gives you access to tests you've recorded - typically when running Cypress tests from your CI provider.
+
+https://dashboard.cypress.io/
+
+If tests run fine locally, but not in the Github action, you can enable the Dashboard by uncommenting the following lines in the Github `main.yml` of this repo.
+
+```
+  # CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+  # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+AND set `screenshotOnRunFailure` and `video` to `true` in `cypress.json`!
+
+Watch out! Cypress Dashboard is disabled by default due to limitations of our "free" account.
