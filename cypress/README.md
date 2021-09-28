@@ -48,6 +48,7 @@ https://dashboard.cypress.io/
 If tests run fine locally, but not in the Github action, you can enable the Dashboard by uncommenting the following lines in the Github `main.yml` of this repo.
 
 ```
+  # record: true
   # CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
   # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
