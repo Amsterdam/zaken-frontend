@@ -1,11 +1,12 @@
 import address from "../../fixtures/address.json"
 import debrief from "../../fixtures/debrief.json"
+import roles from "../../fixtures/roles.json"
 
 describe('Process Debrief - No violation"', () => {
 
   describe('Go to Debrief form', () => {
 
-    it("Login as projectmedewerker", () => {
+    it.skip("Login as projectmedewerker", () => {
       cy.loginAsPm()
     })
 
@@ -84,8 +85,12 @@ describe('Process Debrief - No violation"', () => {
           .contains("Debrief")
         cy.get("tbody>tr")
           .contains("td", debrief.noViolationNextTask1)
+          .siblings("td")
+          .contains(roles.PM)
         cy.get("tbody>tr")
           .contains("td", debrief.noViolationNextTask2)
+          .siblings("td")
+          .contains(roles.TH)
       })
     })
 
@@ -95,6 +100,88 @@ describe('Process Debrief - No violation"', () => {
       cy.get('button[title="Debrief "]')
         .should("have.attr", "aria-expanded", "true")
         .contains("Debrief")
+    })
+
+    it('PM can finish task "Terugkoppeling melder(s)"', () => {
+      cy.get("tbody>tr")
+        .contains(roles.PM)
+        .parents('td')
+        .siblings('td')
+        .contains("Taak afronden")
+        .click({force: true})
+
+      cy.get(`[role="dialog"]`)
+        .should('have.length', 1)
+        .and("contain", debrief.noViolationNextTask1)
+        .find('input[name="completed"]')
+        .first()
+        .check()
+      
+      cy.get(`[role="dialog"]`)
+        .find('button')
+        .contains("Taak afronden")
+        .click()
+    })
+
+    it("Check debrief event in history", () => {
+      const url = `${Cypress.env("baseUrlAcc")}cases/*/tasks/`
+      cy.intercept(url).as('getNextTask')
+
+      cy.wait('@getNextTask').then(() => {
+        cy.get("h2")
+        .contains("Zaakhistorie")
+      cy.get(`button[title="${debrief.noViolationNextTask1} "]`)
+        .should("have.attr", "aria-expanded", "true")
+        .contains(debrief.noViolationNextTask1)
+      })
+    })
+
+    it('TH can finish task "Opstellen verkorte rapportage huisbezoek"', () => {
+      cy.get("tbody>tr")
+        .contains(roles.TH)
+        .parents('td')
+        .siblings('td')
+        .contains("Taak afronden")
+        .click({force: true})
+
+      cy.get(`[role="dialog"]`)
+        .should('have.length', 1)
+        .find("h4")
+        .should("contain", "Opstellen verkorte rapportage huisbezoek")
+        .find('input[name="completed"]')
+        .first()
+        .check()
+      
+      cy.get(`[role="dialog"]`)
+        .find('button')
+        .contains("Taak afronden")
+        .click()
+    })
+
+    it("Check debrief event in history", () => {
+      const url = `${Cypress.env("baseUrlAcc")}cases/*/tasks/`
+      cy.intercept(url).as('getNextTask')
+
+      cy.wait('@getNextTask').then(() => {
+        cy.get("h2")
+        .contains("Zaakhistorie")
+      cy.get(`button[title="${debrief.noViolationNextTask2} "]`)
+        .should("have.attr", "aria-expanded", "true")
+        .contains(debrief.noViolationNextTask2)
+      })
+    })
+
+    it("Check id next task is 'Zaak afsluiten'", () => {
+      const url = `${Cypress.env("baseUrlAcc")}cases/*/tasks/`
+      cy.intercept(url).as('getNextTask')
+
+      cy.wait('@getNextTask').then(() => {
+        cy.get("tbody>tr")
+          .contains(roles.PM)
+          .parents('td')
+          .siblings('td')
+          .contains("Zaak afsluiten")
+      })
     })
   })
 })

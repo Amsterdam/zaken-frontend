@@ -7,7 +7,7 @@ describe('Process result "huisbezoek"', () => {
 
   describe('Go to TOP "Resultaat bezoek" form', () => {
 
-    it("Login as projectmedewerker", () => {
+    it.skip("Login as projectmedewerker", () => {
       cy.loginAsPm()
     })
 
