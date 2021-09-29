@@ -1,0 +1,22 @@
+{
+  "nobodyPresent": {
+    "author1": 1,
+    "author2": 2,
+    "situation": "nobody_present",
+    "canNextVisitGoAhead": "yes",
+    "suggestNextVisit": "daytime",
+    "canNextVisitGoAheadDescription": "Toelichting voor een direct uitgezet adres",
+    "suggestNextVisitDescription": "Toelichting voor een suggestie nieuw bezoek",
+    "notes": "Een extra opmerking"
+  },
+  "accessGranted": {
+    "author1": 3,
+    "author2": 4,
+    "situation": "access_granted",
+    "canNextVisitGoAhead": "",
+    "suggestNextVisit": "",
+    "canNextVisitGoAheadDescription": "",
+    "suggestNextVisitDescription": "",
+    "notes": "Gasten aangetroffen in woning. Vakantieverhuur vindt plaats."
+  }
+}
