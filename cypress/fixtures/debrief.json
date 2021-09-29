@@ -3,5 +3,6 @@
   "labelNo": "Geen overtreding",
   "formButtonText": "Terugkoppeling toevoegen",
   "descriptionNoViolation": "Toelichting bij Geen overtreding",
-  "noViolationNextTask": "Opstellen verkorte rapportage huisbezoek"
+  "noViolationNextTask1": "Terugkoppeling melder(s)",
+  "noViolationNextTask2": "Opstellen verkorte rapportage huisbezoek"
 }

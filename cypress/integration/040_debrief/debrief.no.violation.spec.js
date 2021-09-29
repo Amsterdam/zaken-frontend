@@ -1,9 +1,9 @@
 import address from "../../fixtures/address.json"
 import debrief from "../../fixtures/debrief.json"
 
-describe('Process result "huisbezoek"', () => {
+describe('Process Debrief - No violation"', () => {
 
-  describe('Go to TOP "Resultaat bezoek" form', () => {
+  describe('Go to Debrief form', () => {
 
     it("Login as projectmedewerker", () => {
       cy.loginAsPm()
@@ -19,7 +19,7 @@ describe('Process result "huisbezoek"', () => {
       })
     })
 
-    it('Get first case with task "Huisbezoek" and go to "Zaakdetails"', () => {
+    it('Get first case with task "Debrief" and go to "Zaakdetails"', () => {
       cy.scrollTo(0, 400)
       cy.get("tbody>tr")
         .contains("td", "Debrief")
@@ -32,22 +32,18 @@ describe('Process result "huisbezoek"', () => {
       cy.intercept(url).as('getTasks')
 
       cy.wait('@getTasks').then(({ response }) => {
-        const debrief = response?.body?.find((e) => e.state?.status_name === "Verwerken debrief")
-        const caseId = visit?.state?.case
-        const debriefTask = visit?.tasks?.find((e) => e.name === "Debrief verwerken")
+        const debriefResponse = response?.body?.find((e) => e.state?.status_name === "Debrief")
+        const caseId = debriefResponse?.state?.case
+        const debriefTask = debriefResponse?.tasks?.find((e) => e.name === "Verwerken debrief")
         const taskId = debriefTask.camunda_task_id
 
-        const url = `${Cypress.env("baseUrlAcc")}users/`
-        cy.intercept(url).as('getUsers')
+        cy.visit(`/zaken/${caseId}/debriefing/${taskId}`)
 
-        cy.visit(`/zaken/${caseId}/debrief/${taskId}`)
+        cy.url()
+          .should('include', `/zaken/${caseId}/debriefing/${taskId}`)
 
-        // Intercept /users to wait for Toezichthouders next test
-        cy.wait("@getUsers").then(() => {
-          cy.get("h1")
-            .contains(debrief.headerText)
-        })
-
+        cy.get("h1")
+          .contains(debrief.headerText)
       })
     })
   })
@@ -87,9 +83,18 @@ describe('Process result "huisbezoek"', () => {
         cy.get("h4")
           .contains("Debrief")
         cy.get("tbody>tr")
-          .contains("td", debrief.noViolationNextTask)
+          .contains("td", debrief.noViolationNextTask1)
+        cy.get("tbody>tr")
+          .contains("td", debrief.noViolationNextTask2)
       })
     })
 
+    it("Check debrief event in history", () => {
+      cy.get("h2")
+        .contains("Zaakhistorie")
+      cy.get('button[title="Debrief "]')
+        .should("have.attr", "aria-expanded", "true")
+        .contains("Debrief")
+    })
   })
 })
