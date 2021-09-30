@@ -7,7 +7,7 @@ describe('Result "huisbezoek" with access granted', () => {
 
   describe('Go to TOP "Resultaat bezoek" form', () => {
 
-    it("Login as projectmedewerker", () => {
+    it.skip("Login as projectmedewerker", () => {
       cy.loginAsPm()
     })
 
