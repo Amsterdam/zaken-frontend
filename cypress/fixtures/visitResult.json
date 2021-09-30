@@ -5,7 +5,7 @@
     "situation": "nobody_present",
     "canNextVisitGoAhead": "yes",
     "suggestNextVisit": "daytime",
-    "canNextVisitGoAheadDescription": "Toelichting voor een direct uitgezet adres",
+    "canNextVisitGoAheadDescription": "De gordijnen waren dicht. Nieuw bezoek kan zo snel mogelijk ingepland worden.",
     "suggestNextVisitDescription": "Toelichting voor een suggestie nieuw bezoek",
     "notes": "Een extra opmerking"
   },
