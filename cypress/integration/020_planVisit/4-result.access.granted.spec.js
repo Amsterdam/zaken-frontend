@@ -1,9 +1,9 @@
-import address from "../../fixtures/address.json"
-import visitResult from "../../fixtures/visitResult.json"
+import address from "../fixtures/address.json"
+import visitResult from "../fixtures/visitResult.json"
 
 const visit = visitResult.accessGranted
 
-describe('Process result "huisbezoek"', () => {
+describe('Result "huisbezoek" with access granted', () => {
 
   describe('Go to TOP "Resultaat bezoek" form', () => {
 
@@ -77,36 +77,6 @@ describe('Process result "huisbezoek"', () => {
       cy.get(`[data-e2e-id=${visit.situation}]`)
         .check({ force: true })
     })
-
-    // If no one is present, schedule another visit.
-    if (visit.situation === "nobody_present") {
-      it('Select observations', () => {
-        cy.get('input[name="observations"]')
-          .first()
-          .check()
-      })
-
-      it('Select next visit directly', () => {
-        cy.get(`[data-e2e-id=${visit.canNextVisitGoAhead}]`)
-          .check({ force: true })
-      })
-
-      it('Select suggestion next visit', () => {
-        cy.get(`[data-e2e-id=${visit.suggestNextVisit}]`)
-          .check({ force: true })
-      })
-
-      it('Type description next visit directly', () => {
-        cy.get('[data-e2e-id="can_next_visit_go_ahead_description"')
-          .type(visit.canNextVisitGoAheadDescription)
-      })
-
-      it('Type description suggestion new visit', () => {
-        cy.get('[data-e2e-id="suggest_next_visit_description"')
-          .type(visit.suggestNextVisitDescription)
-      })
-    }
-    // End of nobody_present.
 
     it('Type a note', () => {
       cy.get('[data-e2e-id="notes"')
