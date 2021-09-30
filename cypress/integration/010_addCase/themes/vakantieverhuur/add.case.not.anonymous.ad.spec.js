@@ -80,12 +80,11 @@ describe("Create case and validate input", () => {
       .click()
 
     cy.url()
-        .should('include', '/zaken/')
+      .should('include', '/zaken/')
   })
 
   it("Show CaseDetail page", () => {
-    cy.get("h1")
-      .contains("Zaakdetails")
+    cy.shouldBeOnCaseDetailPage()
   })
 
   it("ZaakDetail has right address", () => {

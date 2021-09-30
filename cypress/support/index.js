@@ -14,8 +14,10 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import "./login"
+
 import "./address"
+import "./case"
+import "./login"
 import "./formchecks"
 
 // Alternatively you can use CommonJS syntax:

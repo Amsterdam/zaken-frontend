@@ -59,8 +59,7 @@ describe("Create case and validate input", () => {
   })
 
   it("Show CaseDetail page", () => {
-    cy.get("h1")
-      .contains("Zaakdetails")
+    cy.shouldBeOnCaseDetailPage()
   })
 
   it("ZaakDetail has right address", () => {
