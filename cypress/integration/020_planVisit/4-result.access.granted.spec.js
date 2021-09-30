@@ -1,5 +1,5 @@
-import address from "../fixtures/address.json"
-import visitResult from "../fixtures/visitResult.json"
+import address from "../../fixtures/address.json"
+import visitResult from "../../fixtures/visitResult.json"
 
 const visit = visitResult.accessGranted
 
