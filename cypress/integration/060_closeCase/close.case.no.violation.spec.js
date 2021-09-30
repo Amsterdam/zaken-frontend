@@ -67,9 +67,8 @@ describe('Select Next Step - closing case"', () => {
     cy.intercept(url).as('getEvents')
     cy.wait('@getEvents').then(() => {
       cy.get("h1").contains("Zaakdetails")
-      cy.get("h2").contains("Zaakhistorie")
       cy.get("h2").contains("Status").should("not.exist")
-      cy.get("span").contains("Zaak afgerond ")
+      cy.history("Zaak afgerond")
     })
   })
 })

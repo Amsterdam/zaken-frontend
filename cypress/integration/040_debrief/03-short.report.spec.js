@@ -50,7 +50,7 @@ describe('Process Short Report Visit"', () => {
     cy.get("h2")
       .contains("Zaakhistorie")
     // TODO when double spaces in bpmn are fixed in the backend
-    // use debrief.noViolationNextTask2
+    // use cy.history(debrief.noViolationNextTask2)
     cy.get(`button[title="Opstellen  verkorte rapportage huisbezoek "]`)
       .should("have.attr", "aria-expanded", "true")
       .contains(debrief.noViolationNextTask2)

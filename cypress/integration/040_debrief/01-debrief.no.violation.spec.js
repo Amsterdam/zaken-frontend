@@ -95,11 +95,7 @@ describe('Process Debrief - No violation"', () => {
     })
 
     it("Check debrief event in history", () => {
-      cy.get("h2")
-        .contains("Zaakhistorie")
-      cy.get('button[title="Debrief "]')
-        .should("have.attr", "aria-expanded", "true")
-        .contains("Debrief")
+      cy.history("Debrief")
     })
   })
 })

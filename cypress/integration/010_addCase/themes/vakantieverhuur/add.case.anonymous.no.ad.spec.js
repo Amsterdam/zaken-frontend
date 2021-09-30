@@ -68,13 +68,6 @@ describe("Create case and validate input", () => {
   })
 
   it("History contains the right items", () => {
-    cy.get("h2")
-      .contains("Zaakhistorie")
-    cy.get('button[title="Melding "]')
-      .should("have.attr", "aria-expanded", "true")
-      .contains("Melding")
-    cy.get('button[title="Aanleiding "]')
-      .should("have.attr", "aria-expanded", "false")
-      .contains("Aanleiding")
+    cy.history("Melding")
   })
 })

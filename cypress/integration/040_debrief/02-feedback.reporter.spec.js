@@ -29,13 +29,8 @@ describe('Process Feedback reporter"', () => {
     cy.intercept(url).as('getNextTask')
 
     cy.wait('@getNextTask').then(() => {
-      cy.get("h2")
-      .contains("Zaakhistorie")
-    cy.get(`button[title="${debrief.noViolationNextTask1} "]`)
-      .should("have.attr", "aria-expanded", "true")
-      .contains(debrief.noViolationNextTask1)
+      cy.history(debrief.noViolationNextTask1)
     })
   })
-
 })
     
