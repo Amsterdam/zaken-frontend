@@ -2,7 +2,11 @@
   "headerText": "Debrief terugkoppeling geven",
   "labelNo": "Geen overtreding",
   "formButtonText": "Terugkoppeling toevoegen",
-  "descriptionNoViolation": "Toelichting bij Geen overtreding",
+  "noViolationDescription": "Toelichting bij Geen overtreding",
   "noViolationNextTask1": "Terugkoppeling melder(s)",
-  "noViolationNextTask2": "Opstellen verkorte rapportage huisbezoek"
+  "noViolationNextTask2": "Opstellen verkorte rapportage huisbezoek",
+  "closingTask1": "Uitzetten vervolgstap",
+  "closingTask2": "Afsluiten zaak",
+  "closingReason3": "Geen woonfraude",
+  "closingDescription": "Toelichting bij Zaak afronden"
 }
