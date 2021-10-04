@@ -21,10 +21,10 @@ describe('Result "huisbezoek" with nobody present', () => {
       })
     })
 
-    it('Get first case with task "Huisbezoek" and go to "Zaakdetails"', () => {
+    it("Select case by caseId", () => {
       cy.scrollTo(0, 400)
       cy.get("tbody>tr")
-        .contains("td", "Huisbezoek")
+        .contains("td", Cypress.env('caseId'))
         .click()
     })
 

@@ -40,7 +40,7 @@ describe("Create case and validate input", () => {
     cy.get(`[data-e2e-id="submit"]`)
       .click()
 
-    cy.get(`[role="dialog"]`).should('have.length', 1)
+    cy.get(`[role="dialog"]`).should("have.length", 1)
 
     cy.get(`[role="dialog"]`)
       .should("contain", "Vakantieverhuur")
@@ -50,12 +50,15 @@ describe("Create case and validate input", () => {
       .and("contain", testData.siaIdentification)
       .and("contain", testData.siaDescription)
       .and("contain", testData.description)
-      .find(`button`)
+      .find("button")
       .contains("Zaak aanmaken")
       .click()
 
+    // Set caseId to use in the next tests.
+    cy.setCaseId()
+
     cy.url()
-        .should('include', '/zaken/')
+        .should("include", "/zaken/")
   })
 
   it("Show CaseDetail page", () => {
