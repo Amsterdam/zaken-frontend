@@ -8,7 +8,10 @@ Cypress.Commands.add("setCaseId", () => {
   cy.intercept(url).as('getCase')
 
   cy.wait('@getCase').then(({ response }) => {
+    cy.log('response =>', response)
+    cy.log('body =>', response?.body)
     Cypress.env('caseId', response?.body?.id)
-    cy.log('caseId', response?.body?.id)
+    cy.log('caseId =>', response?.body?.id)
+    cy.wait(5000) // for testing purposes
   })
 })
