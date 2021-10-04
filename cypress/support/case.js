@@ -9,5 +9,6 @@ Cypress.Commands.add("setCaseId", () => {
 
   cy.wait('@getCase').then(({ response }) => {
     Cypress.env('caseId', response?.body?.id)
+    cy.log('caseId', response?.body?.id)
   })
 })

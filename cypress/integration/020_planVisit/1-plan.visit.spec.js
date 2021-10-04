@@ -26,6 +26,7 @@ describe('Plan "huisbezoek"', () => {
 
     it("Select case by caseId", () => {
       cy.scrollTo(0, 400)
+      cy.log('caseId', Cypress.env("caseId"))
       cy.get("tbody>tr")
         .contains("td", Cypress.env("caseId"))
         .click()

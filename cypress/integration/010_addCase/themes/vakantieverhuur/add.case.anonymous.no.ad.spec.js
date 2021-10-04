@@ -58,7 +58,7 @@ describe("Create case and validate input", () => {
     cy.setCaseId()
 
     cy.url()
-        .should("include", "/zaken/")
+      .should("include", "/zaken/")
   })
 
   it("Show CaseDetail page", () => {
