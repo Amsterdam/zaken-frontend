@@ -22,6 +22,9 @@
     "040_debrief/02-feedback.reporter.spec.js",
     "040_debrief/03-short.report.spec.js",
     "050_nextStep/next.step.close.case.spec.js",
-    "060_closeCase/close.case.no.violation.spec.js"
+    "060_closeCase/1.close.case.handhaver.spec.js",
+    "060_closeCase/2.close.case.handhavingsjurist.spec.js",
+    "060_closeCase/3.close.case.toezichthouder.spec.js",
+    "060_closeCase/4.close.case.no.violation.spec.js"
   ]
 }
