@@ -1,7 +1,25 @@
 import debrief from "../../fixtures/debrief.json"
 import roles from "../../fixtures/roles.json"
+import address from "../../fixtures/address.json"
 
 describe('Process Feedback reporter"', () => {
+
+  it("Go to Adresoverzicht and check address", () => {
+    const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/?open_cases=true`
+    cy.intercept(url).as('getCases')
+    cy.visit(`/adres/${address.bagId}`)
+    cy.wait('@getCases').then(() => {
+      cy.get("h1")
+        .contains(`${address.street}, ${address.zipCode}`)
+    })
+  })
+
+  it('Get first case with task "Debrief" and go to "Zaakdetails"', () => {
+    cy.scrollTo(0, 400)
+    cy.get("tbody>tr")
+      .contains("td", "Debrief")
+      .click()
+  })
 
   it('PM can finish task "Terugkoppeling melder(s)"', () => {
     cy.get("tbody>tr")
