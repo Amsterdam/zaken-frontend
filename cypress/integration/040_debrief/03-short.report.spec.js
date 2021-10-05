@@ -45,7 +45,7 @@ describe('Process Short Report Visit"', () => {
     })
   })
 
-  it("Check debrief event in history", () => {
+  it("Check Opstellen verkorte rapportage huisbezoek event in history", () => {
     cy.scrollTo(0, 600)
     cy.get("h2")
       .contains("Zaakhistorie")

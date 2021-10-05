@@ -24,7 +24,7 @@ describe('Process Feedback reporter"', () => {
       .click()
   })
 
-  it("Check debrief event in history", () => {
+  it("Check Terugkoppeling melder(s) event in history", () => {
     const url = `${Cypress.env("baseUrlAcc")}cases/*/tasks/`
     cy.intercept(url).as('getNextTask')
 
