@@ -1,6 +1,7 @@
 /*
  ** Set caseId to use this case in the next tests.
- ** caseId can be requested by: Cypress.env("caseId").
+ ** caseId can be requested by:
+ ** cy.getCaseId().then((e) => { console.log(e.id) })
 */
 
 const PATH = "cypress/fixtures/case.json"
@@ -13,8 +14,6 @@ Cypress.Commands.add("setCaseId", () => {
   cy.wait("@getCase").then(({ response }) => {
     cy.writeFile(PATH, { id: response?.body?.id })
     cy.log("caseId =>", response?.body?.id)
-
-    cy.wait(4000) // for testing purposes
   })
 })
 
