@@ -3,7 +3,7 @@
   "chromeWebSecurity": false,
   "baseUrl": "http://localhost:2999/",
   "screenshotOnRunFailure": false,
-  "video": false,
+  "video": true,
   "viewportWidth": 1280,
   "viewportHeight": 1024,
   "env": {
@@ -16,8 +16,7 @@
   },
   "testFiles": [
     "010_addCase/themes/vakantieverhuur/add.case.anonymous.no.ad.spec.js",
-    "020_planVisit/plan.visit.spec.js",
-    "030_resultVisitTop/result.visit.top.spec.js",
-    "040_debrief/debrief.no.violation.spec.js"
+    "020_planVisit/*.js",
+    "030_debrief/debrief.no.violation.spec.js"
   ]
 }

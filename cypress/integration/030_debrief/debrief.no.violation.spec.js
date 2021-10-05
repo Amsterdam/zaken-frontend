@@ -75,7 +75,7 @@ describe('Process Debrief - No violation"', () => {
       cy.get(`[role="dialog"]`)
         .should("contain", debrief.labelNo)
         .and("contain", debrief.noViolationDescription)
-        .find(`button`)
+        .find("button")
         .contains(debrief.formButtonText)
         .click()
 
@@ -116,7 +116,7 @@ describe('Process Debrief - No violation"', () => {
         .find('input[name="completed"]')
         .first()
         .check()
-      
+
       cy.get(`[role="dialog"]`)
         .find('button')
         .contains("Taak afronden")
@@ -147,12 +147,12 @@ describe('Process Debrief - No violation"', () => {
       cy.get(`[role="dialog"]`)
         .should('have.length', 1)
         .contains(debrief.noViolationNextTask2)
-        
+
       cy.get(`[role="dialog"]`)
         .find('input[name="completed"]')
         .first()
         .check()
-      
+
       cy.get(`[role="dialog"]`)
         .find('button')
         .contains("Taak afronden")
@@ -164,7 +164,7 @@ describe('Process Debrief - No violation"', () => {
       cy.intercept(url).as('getNextTask')
 
       cy.wait('@getNextTask').then(() => {
-          
+
         cy.scrollTo(0, 400)
         cy.get("h4")
           .contains("Vervolgstap")
@@ -251,11 +251,11 @@ describe('Process Debrief - No violation"', () => {
 
     it("Submit the form", () => {
       cy.get(`[role="dialog"]`).should('have.length', 1)
-    
+
       cy.get(`[role="dialog"]`)
         .should("contain", debrief.closingReason3)
         .and("contain", debrief.closingDescription)
-        .find(`button`)
+        .find("button")
         .contains("Verwerken")
         .click()
     })
