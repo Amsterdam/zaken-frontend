@@ -32,8 +32,16 @@ describe('Select Next Step - closing case as handhaver', () => {
       .click()
   })
 
-  it("Keycloak authorisation error should be visible", () => {
-    cy.get("h2")
-      .contains("Keycloak gebruiker")
+  it("Handhaver should not be able to close the case", () => {
+    const url = `${Cypress.env("baseUrlAcc")}cases/*/tasks/`
+
+    cy.request({
+      method: 'GET',
+      url: url,
+      failOnStatusCode: false
+    })
+      .then((response) => {
+        expect(response.status).to.eq(401)
+    })
   })
 })
