@@ -14,7 +14,7 @@ Cypress.Commands.add("setCaseId", () => {
     cy.writeFile(PATH, { id: response?.body?.id })
     cy.log("caseId =>", response?.body?.id)
 
-    cy.wait(5000) // for testing purposes
+    cy.wait(4000) // for testing purposes
   })
 })
 
