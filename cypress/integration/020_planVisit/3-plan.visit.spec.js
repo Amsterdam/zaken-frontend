@@ -5,7 +5,7 @@ describe('Plan "huisbezoek"', () => {
 
   describe('Go to "Bezoek inplannen" form', () => {
 
-    it("Login as projectmedewerker", () => {
+    it.skip("Login as projectmedewerker", () => {
       cy.loginAsPm()
     })
 
@@ -26,9 +26,11 @@ describe('Plan "huisbezoek"', () => {
 
     it("Select case by caseId", () => {
       cy.scrollTo(0, 400)
-      cy.get("tbody>tr")
-        .contains("td", Cypress.env("caseId"))
-        .click()
+      cy.getCaseId().then((e) => {
+        cy.get("tbody>tr")
+          .contains("td", e.id)
+          .click()
+      })
     })
 
     it("Click on task Bezoek inplannen", () => {
