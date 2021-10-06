@@ -1,11 +1,32 @@
 import debrief from "../../fixtures/debrief.json"
-import roles from "../../fixtures/roles.json"
+import address from "../../fixtures/address.json"
 
 describe('Select Next Step - closing case"', () => {
+
+  it("Go to Adresoverzicht and check address", () => {
+    const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/?open_cases=true`
+    cy.intercept(url).as('getCases')
+    cy.visit(`/adres/${address.bagId}`)
+    cy.wait('@getCases').then(() => {
+      cy.get("h1")
+        .contains(`${address.street}, ${address.zipCode}`)
+    })
+  })
+
+  it("Select case by caseId", () => {
+    cy.scrollTo(0, 400)
+    cy.getCaseId().then((e) => {
+      cy.log('caseId =>', e.id)
+      cy.get("tbody>tr")
+        .contains("td", e.id)
+        .click()
+    })
+  })
 
   it("Select to close this case", () => {
     cy.get('button')
       .contains("Taak afronden")
+      .should("have.length", 1)
       .click({force: true})
 
     cy.get(`[role="dialog"]`)
