@@ -104,7 +104,7 @@ describe('Close case as projectmedwerker"', () => {
     cy.wait('@getEvents').then(() => {
       cy.get("h1").contains("Zaakdetails")
       cy.get("h2").contains("Status").should("not.exist")
-      cy.history("Zaak afgerond")
+      cy.history("Zaak afgerond", "Projectmedewerker")
     })
   })
 })

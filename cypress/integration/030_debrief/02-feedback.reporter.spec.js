@@ -50,7 +50,7 @@ describe('Process Feedback reporter"', () => {
     cy.intercept(url).as('getNextTask')
 
     cy.wait('@getNextTask').then(() => {
-      cy.history(debrief.noViolationNextTask1)
+      cy.history(debrief.noViolationNextTask1, "Uitvoerder")
     })
   })
 })

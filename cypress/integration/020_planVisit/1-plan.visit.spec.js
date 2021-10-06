@@ -97,5 +97,9 @@ describe('Plan "huisbezoek"', () => {
         cy.get("span").contains("Bezoek ingepland ")
       })
     })
+    
+    it("History contains the right items", () => {
+      cy.history("Bezoek ingepland", "Datum")
+    })
   })
 })
