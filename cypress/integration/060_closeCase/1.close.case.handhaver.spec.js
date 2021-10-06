@@ -3,7 +3,13 @@ import address from "../../fixtures/address.json"
 describe('Select Next Step - closing case as handhaver', () => {
 
   it("Logout", () => {
-    cy.logout()
+    const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/?open_cases=true`
+    cy.intercept(url).as('getCases')
+    cy.visit(`/adres/${address.bagId}`)
+  
+    cy.wait('@getCases').then(() => {
+      cy.logout()
+    })
   })
 
   it("Login as handhaver", () => {
