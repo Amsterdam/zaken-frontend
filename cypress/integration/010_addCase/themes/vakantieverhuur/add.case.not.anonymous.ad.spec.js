@@ -87,8 +87,7 @@ describe("Create case and validate input", () => {
   })
 
   it("Show CaseDetail page", () => {
-    cy.get("h1")
-      .contains("Zaakdetails")
+    cy.shouldBeOnCaseDetailPage()
   })
 
   it("ZaakDetail has right address", () => {
@@ -97,13 +96,6 @@ describe("Create case and validate input", () => {
   })
 
   it("History contains the right items", () => {
-    cy.get("h2")
-      .contains("Zaakhistorie")
-    cy.get('button[title="Melding "]')
-      .should("have.attr", "aria-expanded", "true")
-      .contains("Melding")
-    cy.get('button[title="Aanleiding "]')
-      .should("have.attr", "aria-expanded", "false")
-      .contains("Aanleiding")
+    cy.history("Melding")
   })
 })
