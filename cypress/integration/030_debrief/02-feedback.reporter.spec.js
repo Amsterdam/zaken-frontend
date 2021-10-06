@@ -14,11 +14,14 @@ describe('Process Feedback reporter"', () => {
     })
   })
 
-  it('Get first case with task "Debrief" and go to "Zaakdetails"', () => {
+  it("Select case by caseId", () => {
     cy.scrollTo(0, 400)
-    cy.get("tbody>tr")
-      .contains("td", "Debrief")
-      .click()
+    cy.getCaseId().then((e) => {
+      cy.log('caseId =>', e.id)
+      cy.get("tbody>tr")
+        .contains("td", e.id)
+        .click()
+    })
   })
 
   it('PM can finish task "Terugkoppeling melder(s)"', () => {
