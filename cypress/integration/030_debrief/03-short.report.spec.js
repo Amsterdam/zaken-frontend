@@ -4,26 +4,31 @@ import roles from "../../fixtures/roles.json"
 describe('Process Short Report Visit"', () => {
 
   it('TH can finish task "Opstellen verkorte rapportage huisbezoek"', () => {
-    cy.get("tbody>tr")
-        .contains(roles.TH)
-        .parents('td')
-        .siblings('td')
-        .contains("Taak afronden")
-        .click({force: true})
+    const url = `${Cypress.env("baseUrlAcc")}cases/*/tasks/`
+    cy.intercept(url).as('getNextTask')
 
-    cy.get(`[role="dialog"]`)
-        .should('have.length', 1)
-        .contains(debrief.noViolationNextTask2)
-        
-    cy.get(`[role="dialog"]`)
-        .find('input[name="completed"]')
-        .first()
-        .check()
-    
-    cy.get(`[role="dialog"]`)
-        .find('button')
-        .contains("Taak afronden")
-        .click()
+    cy.wait('@getNextTask').then(() => {
+      cy.get("tbody>tr")
+          .contains(roles.TH)
+          .parents('td')
+          .siblings('td')
+          .contains("Taak afronden")
+          .click({force: true})
+
+      cy.get(`[role="dialog"]`)
+          .should('have.length', 1)
+          .contains(debrief.noViolationNextTask2)
+          
+      cy.get(`[role="dialog"]`)
+          .find('input[name="completed"]')
+          .first()
+          .check()
+      
+      cy.get(`[role="dialog"]`)
+          .find('button')
+          .contains("Taak afronden")
+          .click()
+    })
   })
 
   it("Check next task is 'Uitzetten vervolgstap'", () => {
