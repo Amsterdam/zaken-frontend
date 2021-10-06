@@ -4,16 +4,21 @@ import roles from "../../fixtures/roles.json"
 describe('Process Short Report Visit"', () => {
 
   it('TH can finish task "Opstellen verkorte rapportage huisbezoek"', () => {
+    
     const url = `${Cypress.env("baseUrlAcc")}cases/*/tasks/`
     cy.intercept(url).as('getNextTask')
 
+    //force intercept
+    cy.reload()
+    
     cy.wait('@getNextTask').then(() => {
       cy.get("tbody>tr")
-          .contains(roles.TH)
-          .parents('td')
-          .siblings('td')
-          .contains("Taak afronden")
-          .click({force: true})
+        .should("be.visible")
+        .contains(roles.TH)
+        .parents('td')
+        .siblings('td')
+        .contains("Taak afronden")
+        .click({force: true})
 
       cy.get(`[role="dialog"]`)
           .should('have.length', 1)
