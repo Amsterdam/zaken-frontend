@@ -11,9 +11,9 @@ describe('Plan "huisbezoek"', () => {
 
     it("Go to Adresoverzicht and check address", () => {
       const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/?open_cases=true`
-      cy.intercept(url).as('getCases')
+      cy.intercept(url).as("getCases")
       cy.visit(`/adres/${address.bagId}`)
-      cy.wait('@getCases').then(() => {
+      cy.wait("@getCases").then(() => {
         cy.get("h1")
           .contains(`${address.street}, ${address.zipCode}`)
       })
@@ -24,11 +24,13 @@ describe('Plan "huisbezoek"', () => {
         .contains(`${address.street}, ${address.zipCode}`)
     })
 
-    it('Get first case with task "Inplannen Huisbezoek"', () => {
+    it("Select case by caseId", () => {
       cy.scrollTo(0, 400)
-      cy.get("tbody>tr")
-        .contains("td", "Inplannen Huisbezoek")
-        .click()
+      cy.getCaseId().then((e) => {
+        cy.get("tbody>tr")
+          .contains("td", e.id)
+          .click()
+      })
     })
 
     it("Click on task Bezoek inplannen", () => {
@@ -80,15 +82,15 @@ describe('Plan "huisbezoek"', () => {
       cy.get("span").contains(visit.description)
 
       cy.get(`[role="dialog"]`)
-        .find(`button`)
+        .find("button")
         .contains("Bezoek inplannen")
         .click()
     })
 
     it("Request is successfully processed", () => {
       const url = `${Cypress.env("baseUrlAcc")}cases/*/events/`
-      cy.intercept(url).as('getEvents')
-      cy.wait('@getEvents').then(() => {
+      cy.intercept(url).as("getEvents")
+      cy.wait("@getEvents").then(() => {
         cy.get("h1").contains("Zaakdetails")
         cy.get("h2").contains("Zaakhistorie")
         cy.get("span").contains("Bezoek ingepland ")

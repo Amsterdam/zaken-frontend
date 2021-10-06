@@ -7,7 +7,7 @@ describe('Result "huisbezoek" with nobody present', () => {
 
   describe('Go to TOP "Resultaat bezoek" form', () => {
 
-    it("Login as projectmedewerker", () => {
+    it.skip("Login as projectmedewerker", () => {
       cy.loginAsPm()
     })
 
@@ -21,11 +21,13 @@ describe('Result "huisbezoek" with nobody present', () => {
       })
     })
 
-    it('Get first case with task "Huisbezoek" and go to "Zaakdetails"', () => {
+    it("Select case by caseId", () => {
       cy.scrollTo(0, 400)
-      cy.get("tbody>tr")
-        .contains("td", "Huisbezoek")
-        .click()
+      cy.getCaseId().then((e) => {
+        cy.get("tbody>tr")
+          .contains("td", e.id)
+          .click()
+      })
     })
 
     it('Intercept TOP URL and load page', () => {

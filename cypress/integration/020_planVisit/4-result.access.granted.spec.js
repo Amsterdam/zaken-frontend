@@ -21,11 +21,13 @@ describe('Result "huisbezoek" with access granted', () => {
       })
     })
 
-    it('Get first case with task "Huisbezoek" and go to "Zaakdetails"', () => {
+    it("Select case by caseId", () => {
       cy.scrollTo(0, 400)
-      cy.get("tbody>tr")
-        .contains("td", "Huisbezoek")
-        .click()
+      cy.getCaseId().then((e) => {
+        cy.get("tbody>tr")
+          .contains("td", e.id)
+          .click()
+      })
     })
 
     it('Intercept TOP URL and load page', () => {
