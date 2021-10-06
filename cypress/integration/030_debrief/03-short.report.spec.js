@@ -13,7 +13,7 @@ describe('Process Short Report Visit"', () => {
     
     cy.wait('@getNextTask').then(() => {
       cy.get("tbody>tr")
-        .should("be.visible")
+        .should("have.length", 1)
         .contains(roles.TH)
         .parents('td')
         .siblings('td')
