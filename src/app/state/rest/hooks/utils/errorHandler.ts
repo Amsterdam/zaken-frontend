@@ -9,7 +9,7 @@ import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
 export const useErrorHandler = () => {
   const { addErrorFlashMessage } = useFlashMessages()
 
-  return useCallback((error: AxiosError) =>
+  return useCallback((error: any) => //TODO any used to be AxiosError
       addErrorFlashMessage(
         "Oeps er ging iets mis!",
         `${ error?.response?.data?.detail ?? error?.message ?? "-" } (URL: ${ error?.config?.url ?? "-" })`

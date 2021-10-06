@@ -8,7 +8,7 @@ describe("useRequestQueue", () => {
     resolve = () => {}
 
     constructor() {
-      this.promise = new Promise((resolve, reject)=> {
+      this.promise = new Promise((resolve: any, reject)=> { //TODO refactor any
         this.reject = reject
         this.resolve = resolve
       })
