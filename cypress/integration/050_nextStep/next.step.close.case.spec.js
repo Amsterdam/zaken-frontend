@@ -24,11 +24,16 @@ describe('Select Next Step - closing case"', () => {
   })
 
   it("Select to close this case", () => {
-    cy.get('button')
-      .contains("Taak afronden")
-      .should("have.length", 1)
-      .click({force: true})
+    const url = `${Cypress.env("baseUrlAcc")}cases/*/tasks/`
+    cy.intercept(url).as('getNextTask')
 
+    cy.wait('@getNextTask').then(() => {
+      cy.get('button')
+        .contains("Taak afronden")
+        .should("have.length", 1)
+        .click({force: true})
+    })
+    
     cy.get(`[role="dialog"]`)
       .should('have.length', 1)
       .and("contain", debrief.closingTask1)
