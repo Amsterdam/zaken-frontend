@@ -10,7 +10,6 @@ import NotFoundPage from "app/pages/errors/NotFoundPage"
 import CaseHeading from "app/components/case/CaseHeading/CaseHeading"
 import { Column } from "app/components/layouts/Grid"
 import DecisionForm from "app/components/case/forms/DecisionForm/DecisionForm"
-import isValidUrlParamUUID from "app/routing/utils/isValidUrlParamUUID"
 
 type Props = {
   id: string

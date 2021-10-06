@@ -2,7 +2,6 @@ import { RouteComponentProps } from "@reach/router"
 
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
-import isValidUrlParamUUID from "app/routing/utils/isValidUrlParamUUID"
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
 import PageHeading from "app/components/shared/PageHeading/PageHeading"
 import Row, { RowWithColumn } from "app/components/layouts/Grid/Row"
