@@ -41,6 +41,10 @@ describe('Result "huisbezoek" with nobody present', () => {
         const topTask = visit?.tasks?.find((e) => e.name === "Doorgeven Huisbezoek TOP")
         const taskId = topTask.camunda_task_id
 
+        // check dueDate
+        cy.get("tbody>tr>td").eq(3)
+          .should("contain", "-")
+
         const url = `${Cypress.env("baseUrlAcc")}users/`
         cy.intercept(url).as('getUsers')
 

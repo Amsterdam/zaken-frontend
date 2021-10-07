@@ -24,6 +24,11 @@ describe('Process Short Report Visit"', () => {
     })
   })
   
+  it('check dueDate', () => {
+    cy.get("tbody>tr>td").eq(3)
+    .should("contain", "-")
+  })
+
   it('TH can finish task "Opstellen verkorte rapportage huisbezoek"', () => {
   
     cy.get("tbody>tr")
