@@ -29,7 +29,7 @@ const FormModal: React.FC<Props> = ({ form, isOpen, closeModal, onSubmit, taskNa
   return (
     <Modal isOpen={ isOpen } onClose={ closeModal } title={ title }>
       <ModalBlock>
-        { form ?
+        { form && form.length > 0 ?
           <CamundaForm onSubmit={ onSubmitWrap } onCancel={ closeModal } camundaForm={ form } /> :
           <CompleteTaskForm onSubmit={ onSubmitWrap } onCancel={ closeModal } />
         }

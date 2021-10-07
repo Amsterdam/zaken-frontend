@@ -87,14 +87,8 @@ describe('Plan "huisbezoek"', () => {
         .click()
     })
 
-    it("Request is successfully processed", () => {
-      const url = `${Cypress.env("baseUrlAcc")}cases/*/events/`
-      cy.intercept(url).as("getEvents")
-      cy.wait("@getEvents").then(() => {
-        cy.get("h1").contains("Zaakdetails")
-        cy.get("h2").contains("Zaakhistorie")
-        cy.get("span").contains("Bezoek ingepland ")
-      })
+    it("History contains the right items", () => {
+      cy.history("Bezoek ingepland", "Datum")
     })
   })
 })
