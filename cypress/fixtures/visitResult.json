@@ -1,4 +1,14 @@
 {
+  "accessGranted": {
+    "author1": 3,
+    "author2": 4,
+    "situation": "access_granted",
+    "canNextVisitGoAhead": "",
+    "suggestNextVisit": "",
+    "canNextVisitGoAheadDescription": "",
+    "suggestNextVisitDescription": "",
+    "notes": "Gasten aangetroffen in woning. Vakantieverhuur vindt plaats."
+  },
   "nobodyPresent": {
     "author1": 1,
     "author2": 2,
@@ -9,14 +19,14 @@
     "suggestNextVisitDescription": "Toelichting voor een suggestie nieuw bezoek",
     "notes": "Een extra opmerking"
   },
-  "accessGranted": {
+  "nobodyPresentHold": {
     "author1": 3,
     "author2": 4,
-    "situation": "access_granted",
-    "canNextVisitGoAhead": "",
+    "situation": "nobody_present",
+    "canNextVisitGoAhead": "no",
     "suggestNextVisit": "",
-    "canNextVisitGoAheadDescription": "",
+    "canNextVisitGoAheadDescription": "Grote gevaarlijke hond aanwezig. Assistentie van politie vereist.",
     "suggestNextVisitDescription": "",
-    "notes": "Gasten aangetroffen in woning. Vakantieverhuur vindt plaats."
+    "notes": ""
   }
 }
