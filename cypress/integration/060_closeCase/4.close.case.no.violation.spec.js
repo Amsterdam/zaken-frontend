@@ -4,16 +4,6 @@ import address from "../../fixtures/address.json"
 
 describe('Close case as projectmedwerker"', () => {
 
-  it("Logout", () => {
-    const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/?open_cases=true`
-    cy.intercept(url).as('getCases')
-    cy.visit(`/adres/${address.bagId}`)
-  
-    cy.wait('@getCases').then(() => {
-      cy.logout()
-    })
-  })
-  
   it("Login as projectmedewerker", () => {
     cy.loginAsPm()
   })
