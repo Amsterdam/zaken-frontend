@@ -96,7 +96,7 @@ describe('Process Debrief - No violation"', () => {
     })
 
     it("Check debrief event in history", () => {
-      cy.history("Debrief")
+      cy.history("Debrief", "Projecthandhaver")
     })
   })
 })
