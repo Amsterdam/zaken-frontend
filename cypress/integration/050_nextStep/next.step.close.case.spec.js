@@ -28,10 +28,15 @@ describe('Select Next Step - closing case"', () => {
     cy.intercept(url).as('getNextTask')
 
     cy.wait('@getNextTask').then(() => {
-      cy.get('button')
-        .contains("Taak afronden")
-        .should("have.length", 1)
-        .click({force: true})
+
+    // check dueDate
+    cy.get("tbody>tr>td").eq(3)
+      .should("contain", "-")
+    
+    cy.get('button')
+      .contains("Taak afronden")
+      .should("have.length", 1)
+      .click({force: true})
     })
     
     cy.get(`[role="dialog"]`)

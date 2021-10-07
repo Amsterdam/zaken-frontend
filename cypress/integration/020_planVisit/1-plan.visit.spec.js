@@ -28,12 +28,19 @@ describe('Plan "huisbezoek"', () => {
       cy.scrollTo(0, 400)
       cy.getCaseId().then((e) => {
         cy.log('caseId =>', e.id)
+        
         cy.get("tbody>tr")
           .contains("td", e.id)
           .click()
+
+        // check dueDate
+        cy.get("tbody>tr>td").eq(3)
+          .should("contain", "-")
+          
       })
     })
 
+    
     it("Click on task Bezoek inplannen", () => {
       cy.get("tbody>tr")
         .contains("td", "Bezoek inplannen")
@@ -46,6 +53,7 @@ describe('Plan "huisbezoek"', () => {
       cy.get("dd")
         .contains(address.street)
     })
+
   })
 
   describe('Fill in "Bezoek inplannen" form', () => {
