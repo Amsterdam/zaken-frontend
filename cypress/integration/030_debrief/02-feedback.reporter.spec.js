@@ -24,6 +24,12 @@ describe('Process Feedback reporter"', () => {
     })
   })
 
+  // check dueDate
+  it('check dueDate', () => {
+    cy.get("tbody>tr>td").eq(3)
+    .should("contain", "-")
+  })
+
   it('PM can finish task "Terugkoppeling melder(s)"', () => {
     cy.get("tbody>tr")
       .contains(roles.PM)

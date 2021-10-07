@@ -38,6 +38,10 @@ describe('Process Debrief - No violation"', () => {
         const debriefTask = debriefResponse?.tasks?.find((e) => e.name === "Verwerken debrief")
         const taskId = debriefTask.camunda_task_id
 
+        // check dueDate
+        cy.get("tbody>tr>td").eq(3)
+          .should("contain", "-")
+
         cy.visit(`/zaken/${caseId}/debriefing/${taskId}`)
 
         cy.url()
