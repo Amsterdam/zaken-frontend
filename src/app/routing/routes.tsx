@@ -5,6 +5,7 @@ import tasksRoutes from "../pages/tasks/routes"
 import helpRoutes from "../pages/help/routes"
 import fineRoutes from "../pages/fines/routes"
 import homeRoutes from "../pages/home/routes"
+import tonRoutes from "../pages/ton/routes"
 
 import routesToRouteConfig, { RouteConfigObject } from "./utils/routesToRouteConfig"
 
@@ -15,7 +16,8 @@ const routes = {
   ...casesRoutes,
   ...tasksRoutes,
   ...helpRoutes,
-  ...fineRoutes
+  ...fineRoutes,
+  ...tonRoutes
 }
 
 const homeRoutesObject = routesToRouteConfig(homeRoutes, [])

@@ -16,12 +16,11 @@ type Props = {
 const AuthorizedPage: React.FC<Props> = ({ page: Page, permissionName, ...restProps }) => {
   const [hasPermission, isBusy] = useHasPermission(permissionName)
 
+  if (isBusy) {
+    return <SpinnerWrap />
+  }
   return (
-    isBusy ?
-      <SpinnerWrap /> :
-    hasPermission ?
-      <Page {...restProps} /> :
-      <NotAuthorizedPage />
+    hasPermission ? <Page {...restProps} /> : <NotAuthorizedPage />
   )
 }
 
