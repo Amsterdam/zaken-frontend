@@ -2,9 +2,9 @@ import address from "../../fixtures/address.json"
 import visitResult from "../../fixtures/visitResult.json"
 import roles from "../../fixtures/roles.json"
 
-const visit = visitResult.nobodyPresent
+const visit = visitResult.nobodyPresentHold
 
-describe('Result "huisbezoek" with nobody present', () => {
+describe('Result "huisbezoek" with nobody present and hold', () => {
 
   describe('Go to TOP "Resultaat bezoek" form', () => {
 
@@ -91,7 +91,7 @@ describe('Result "huisbezoek" with nobody present', () => {
 
     it('Select observations', () => {
       cy.get('input[name="observations"]')
-        .first()
+        .last()
         .check()
     })
 
@@ -100,24 +100,9 @@ describe('Result "huisbezoek" with nobody present', () => {
         .check({ force: true })
     })
 
-    it('Select suggestion next visit', () => {
-      cy.get(`[data-e2e-id=${visit.suggestNextVisit}]`)
-        .check({ force: true })
-    })
-
     it('Type description next visit directly', () => {
       cy.get('[data-e2e-id="can_next_visit_go_ahead_description"')
         .type(visit.canNextVisitGoAheadDescription)
-    })
-
-    it('Type description suggestion new visit', () => {
-      cy.get('[data-e2e-id="suggest_next_visit_description"')
-        .type(visit.suggestNextVisitDescription)
-    })
-
-    it('Type a note', () => {
-      cy.get('[data-e2e-id="notes"')
-        .type(visit.notes)
     })
 
     it('Submit form and check for plan new visit', () => {
@@ -131,14 +116,13 @@ describe('Result "huisbezoek" with nobody present', () => {
       cy.wait("@getEvents").then(() => {
         cy.scrollTo(0, 400)
         cy.get("h4")
-          .contains("Huisbezoek")
+          .contains("Debrief")
         cy.get("tbody>tr")
-          .contains("td", "Bezoek inplannen")
+          .contains("td", "Debrief verwerken")
         cy.get("span")
           .contains("Niemand aanwezig")
         cy.get("span")
           .contains(visit.canNextVisitGoAheadDescription)
-
       })
     })
 

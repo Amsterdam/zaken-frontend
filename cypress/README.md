@@ -45,7 +45,7 @@ The Dashboard is a Cypress service that gives you access to tests you've recorde
 
 https://dashboard.cypress.io/
 
-If tests run fine locally, but not in the Github action, you can enable the Dashboard by uncommenting the following lines in the Github `main.yml` of this repo.
+If tests run fine locally, but not in the Github action, you can enable the Dashboard by setting record to `true` in the Github `main.yml` of this repo. `CYPRESS_RECORD_KEY` and `GITHUB_TOKEN` are required for the appropriate connection.
 
 ```
   # record: true
@@ -53,6 +53,6 @@ If tests run fine locally, but not in the Github action, you can enable the Dash
   # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-AND set `screenshotOnRunFailure` and `video` to `true` in `cypress.json`!
+AND set `screenshotOnRunFailure` and `video` to `true` in `cypress.json` to see screenshots and videos in the Dashboard!
 
 Watch out! Cypress Dashboard is disabled by default due to limitations of our "free" account.

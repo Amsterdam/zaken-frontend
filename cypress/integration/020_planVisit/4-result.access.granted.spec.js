@@ -1,5 +1,6 @@
 import address from "../../fixtures/address.json"
 import visitResult from "../../fixtures/visitResult.json"
+import roles from "../../fixtures/roles.json"
 
 const visit = visitResult.accessGranted
 
@@ -28,7 +29,7 @@ describe('Result "huisbezoek" with access granted', () => {
           .contains("td", e.id)
           .click()
       })
-  
+
     })
 
     it('Intercept TOP URL and load page', () => {
@@ -42,10 +43,14 @@ describe('Result "huisbezoek" with access granted', () => {
         const topTask = visit?.tasks?.find((e) => e.name === "Doorgeven Huisbezoek TOP")
         const taskId = topTask.camunda_task_id
 
+        // Check role
+        cy.get("tbody>tr>td").eq(2)
+          .should("contain", roles.TH)
+
         // check dueDate
         cy.get("tbody>tr>td").eq(3)
           .should("contain", "-")
-        
+
         const url = `${Cypress.env("baseUrlAcc")}users/`
         cy.intercept(url).as('getUsers')
 

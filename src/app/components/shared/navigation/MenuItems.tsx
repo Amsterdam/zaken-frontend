@@ -30,7 +30,6 @@ const items = [
 const MenuItems: React.FC = () => (
   <>
   { items.map(({ path, hiddenLaptopM, permissionName, isHidden }) => {
-    console.log("Routes", routes)
       const { title } = routes[`${ path }/`]
       const menuItem = (
         <MenuItem key={ path }>
