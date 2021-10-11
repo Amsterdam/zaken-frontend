@@ -34,7 +34,7 @@ export default (caseId: Components.Schemas.Case["id"], scheduleTypes?: Component
         label: "Wat is de urgentie voor het bezoek?",
         name: "priority",
         optionLabelField: "name",
-        extraLabel: <InfoButton infoTitle="Urgentie bezoek" infoText="Gebruik hoge urgentie indien er nu toeristen aanwezig zijn of als er bijvoorbeeld een machtiging van kracht is."></InfoButton>,
+        extraLabel: <InfoButton infoTitle="Urgentie bezoek" infoText="Gebruik hoge urgentie indien er nu toeristen aanwezig zijn, kies machtiging als het bezoek prioriteit krijgt in verband met een machtiging."></InfoButton>,
         isRequired: true,
         withEmptyOption: true,
         options: scheduleTypes?.priorities
