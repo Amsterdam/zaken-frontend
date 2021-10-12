@@ -32,15 +32,25 @@ export default (
       <LockIcon />,
       name,
       <List data={ roles } emptyPlaceholder="-" />,
-      due_date ?
-        <ChangeableDueDate dueDate={ due_date } caseId={ id } camundaTaskId={ camunda_task_id } /> :
-        <Span>-</Span>,
-      action !== undefined ?
+      due_date ? (
+        <ChangeableDueDate dueDate={ due_date } caseId={ id } camundaTaskId={ camunda_task_id } />
+        ) : <Span>-</Span>,
+      action !== undefined ? (
         <TableAction
           title={ to(`/zaken/:id/${ action.target }/:camundaTaskId`, { id, camundaTaskId: camunda_task_id }) }
           to={ to(`/zaken/:id/${ action.target }/:camundaTaskId`, { id, camundaTaskId: camunda_task_id }) }
           disabled={ action.disabled ?? disabled }
-        >{ action.name }</TableAction> :
-        <TaskButton onSubmit={ onSubmitTaskComplete } taskName={ name } caseId={ id } form={ form } disabled={ disabled } />
+        >
+          { action.name }
+        </TableAction>
+      ) : (
+        <TaskButton
+          onSubmit={ onSubmitTaskComplete }
+          taskName={ name }
+          caseId={ id }
+          form={ form }
+          disabled={ disabled }
+        />
+      )
     ]
   }
