@@ -100,6 +100,7 @@ declare namespace Components {
          * Camunda task serializer for the list-endpoint
          */
         export interface CamundaTaskList {
+            id: number;
             camunda_task_id: string;
             task_name_id: string;
             name: string;
@@ -107,6 +108,7 @@ declare namespace Components {
             roles: any[];
             case: /* Case-address serializer for camunda tasks */ CamundaCaseAddress;
             process_instance_id: string;
+            owner: string | null;
         }
         export interface CamundaTaskWithState {
             state: CaseState;
