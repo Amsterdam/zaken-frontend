@@ -1,7 +1,7 @@
 
 import { FormTitle } from "@amsterdam/asc-ui"
 
-import { useCamundaProcesses, useCamundaProcess } from "app/state/rest"
+import { useWorkflowProcesses, useWorkflowProcess } from "app/state/rest"
 import scaffold from "./scaffold"
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
@@ -14,9 +14,9 @@ const mapData = (data: { camundaProcess: Components.Schemas.CamundaProcess }) =>
 
 const TaskForm: React.FC<Props> = ({ id }) => {
 
-  const [processes] = useCamundaProcesses(id)
+  const [processes] = useWorkflowProcesses(id)
   const fields = useScaffoldedFields(scaffold, id, processes)
-  const [, { execPost }] = useCamundaProcess(id, { lazy: true })
+  const [, { execPost }] = useWorkflowProcess(id, { lazy: true })
 
   return (
     <>

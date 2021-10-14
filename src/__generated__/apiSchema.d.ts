@@ -16,13 +16,6 @@ declare namespace Components {
             lat: number; // float
             lng: number; // float
         }
-        /**
-         * Case-address serializer for camunda tasks
-         */
-        export interface CamundaCaseAddress {
-            id: number;
-            address: Address;
-        }
         export interface CamundaDateUpdate {
             camunda_task_id: string;
             date: string; // date-time
@@ -61,24 +54,6 @@ declare namespace Components {
             case_process_id: string;
         }
         /**
-         * Serializer for Camunda tasks
-         */
-        export interface CamundaTask {
-            camunda_task_id: string;
-            task_name_id: string;
-            name: string;
-            due_date: string; // date
-            roles: any[];
-            form: {
-                [name: string]: any;
-            };
-            render_form: string;
-            form_variables: {
-                [name: string]: any;
-            };
-            user_has_permission?: boolean;
-        }
-        /**
          * Used to complete a task in Camunda.
          *
          * variables example
@@ -90,27 +65,11 @@ declare namespace Components {
          * }
          */
         export interface CamundaTaskComplete {
-            camunda_task_id: string;
+            case_user_task_id: string;
             case: number;
             variables: {
                 [name: string]: any;
             };
-        }
-        /**
-         * Camunda task serializer for the list-endpoint
-         */
-        export interface CamundaTaskList {
-            camunda_task_id: string;
-            task_name_id: string;
-            name: string;
-            due_date: string; // date
-            roles: any[];
-            case: /* Case-address serializer for camunda tasks */ CamundaCaseAddress;
-            process_instance_id: string;
-        }
-        export interface CamundaTaskWithState {
-            state: CaseState;
-            tasks: /* Serializer for Camunda tasks */ CamundaTask[];
         }
         export interface Case {
             id: number;
@@ -125,6 +84,7 @@ declare namespace Components {
             start_date?: string | null; // date
             end_date?: string | null; // date
             is_legacy_bwv?: boolean;
+            is_legacy_camunda?: boolean;
             legacy_bwv_case_id?: string | null;
             directing_process?: string | null;
             camunda_ids?: string[] | null;
@@ -132,9 +92,16 @@ declare namespace Components {
             ton_ids?: number[] | null;
             author?: string | null; // uuid
         }
+        /**
+         * Case-address serializer for CaseUserTasks
+         */
+        export interface CaseAddress {
+            id: number;
+            address: Address;
+        }
         export interface CaseClose {
             id: number;
-            camunda_task_id?: string;
+            case_user_task_id?: string;
             description: string;
             date_added: string; // date-time
             case: number;
@@ -187,12 +154,26 @@ declare namespace Components {
         export interface CaseState {
             id: number;
             status_name: string;
+            tasks: CaseUserTask[];
             start_date: string; // date
             end_date?: string | null; // date
-            information?: string | null;
             case_process_id?: string | null;
             case: number;
             status: number;
+            workflow?: null | number;
+            users: string /* uuid */[];
+        }
+        export interface CaseStateTask {
+            id: number;
+            status_name: string;
+            tasks: CaseUserTask[];
+            information: string;
+            start_date: string; // date
+            end_date?: string | null; // date
+            case_process_id?: string | null;
+            case: number;
+            status: number;
+            workflow?: null | number;
             users: string /* uuid */[];
         }
         export interface CaseStateType {
@@ -205,10 +186,88 @@ declare namespace Components {
             name: string;
             case_state_types_top?: number[];
         }
+        export interface CaseUserTask {
+            id: number;
+            user_has_permission: boolean;
+            case_user_task_id: string;
+            completed?: boolean;
+            task_id: string; // uuid
+            task_name: string;
+            name: string;
+            form?: {
+                [name: string]: any;
+            } | null;
+            roles?: string[] | null;
+            due_date?: string; // date-time
+            created: string; // date-time
+            updated: string; // date-time
+            owner?: string | null; // uuid
+            case: number;
+            workflow: number;
+        }
+        export interface CaseUserTaskList {
+            id: number;
+            user_has_permission: boolean;
+            case_user_task_id: string;
+            form_variables: {
+                [name: string]: any;
+            };
+            task_name_id: string;
+            case: /* Case-address serializer for CaseUserTasks */ CaseAddress;
+            completed?: boolean;
+            task_id: string; // uuid
+            task_name: string;
+            name: string;
+            form?: {
+                [name: string]: any;
+            } | null;
+            roles?: string[] | null;
+            due_date?: string | null; // date-time
+            created: string; // date-time
+            updated: string; // date-time
+            owner?: string | null; // uuid
+            workflow: number;
+        }
+        export interface CaseWorkflow {
+            state: {
+                id: number;
+                status_name: string;
+                tasks: CaseUserTask[];
+                information: string;
+                start_date: string; // date
+                end_date?: string | null; // date
+                case_process_id?: string | null;
+                case: number;
+                status: number;
+                workflow?: null | number;
+                users: string /* uuid */[];
+            };
+            tasks: {
+                id: number;
+                user_has_permission: boolean;
+                case_user_task_id: string;
+                completed?: boolean;
+                task_id: string; // uuid
+                task_name: string;
+                name: string;
+                form?: {
+                    [name: string]: any;
+                } | null;
+                roles?: string[] | null;
+                due_date?: string | null; // date-time
+                created: string; // date-time
+                updated: string; // date-time
+                owner?: string | null; // uuid
+                case: number;
+                workflow: number;
+            };
+            completed?: boolean;
+            parent_workflow?: null | number;
+        }
         export interface CitizenReport {
             id: number;
             advertisement_linklist?: string;
-            camunda_task_id?: string;
+            case_user_task_id?: string;
             reporter_name?: string | null;
             reporter_phone?: string | null;
             reporter_email?: string | null;
@@ -223,7 +282,7 @@ declare namespace Components {
         }
         export interface DebriefingCreate {
             id: number;
-            camunda_task_id?: string;
+            case_user_task_id?: string;
             violation?: ViolationEnum;
             violation_result?: {
                 [name: string]: any;
@@ -233,7 +292,7 @@ declare namespace Components {
         }
         export interface Decision {
             id: number;
-            camunda_task_id?: string;
+            case_user_task_id?: string;
             sanction_amount?: string | null; // decimal ^\d{0,98}(\.\d{0,2})?$
             description?: string | null;
             date_added: string; // date-time
@@ -353,24 +412,6 @@ declare namespace Components {
              */
             previous?: string | null; // uri
             results?: CamundaProcess[];
-        }
-        export interface PaginatedCamundaTaskWithStateList {
-            /**
-             * example:
-             * 123
-             */
-            count?: number;
-            /**
-             * example:
-             * http://api.example.org/accounts/?page=4
-             */
-            next?: string | null; // uri
-            /**
-             * example:
-             * http://api.example.org/accounts/?page=2
-             */
-            previous?: string | null; // uri
-            results?: CamundaTaskWithState[];
         }
         export interface PaginatedCaseCloseList {
             /**
@@ -515,6 +556,42 @@ declare namespace Components {
              */
             previous?: string | null; // uri
             results?: CaseTheme[];
+        }
+        export interface PaginatedCaseUserTaskListList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=4
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null; // uri
+            results?: CaseUserTaskList[];
+        }
+        export interface PaginatedCaseWorkflowList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=4
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null; // uri
+            results?: CaseWorkflow[];
         }
         export interface PaginatedDebriefingCreateList {
             /**
@@ -727,12 +804,36 @@ declare namespace Components {
             start_date?: string | null; // date
             end_date?: string | null; // date
             is_legacy_bwv?: boolean;
+            is_legacy_camunda?: boolean;
             legacy_bwv_case_id?: string | null;
             directing_process?: string | null;
             camunda_ids?: string[] | null;
             description?: string | null;
             ton_ids?: number[] | null;
             author?: string | null; // uuid
+        }
+        export interface PatchedCaseUserTaskList {
+            id?: number;
+            user_has_permission?: boolean;
+            case_user_task_id?: string;
+            form_variables?: {
+                [name: string]: any;
+            };
+            task_name_id?: string;
+            case?: /* Case-address serializer for CaseUserTasks */ CaseAddress;
+            completed?: boolean;
+            task_id?: string; // uuid
+            task_name?: string;
+            name?: string;
+            form?: {
+                [name: string]: any;
+            } | null;
+            roles?: string[] | null;
+            due_date?: string | null; // date-time
+            created?: string; // date-time
+            updated?: string; // date-time
+            owner?: string | null; // uuid
+            workflow?: number;
         }
         export type PermissionsEnum = "create_case" | "close_case" | "perform_task" | "access_personal_data_register" | "access_business_register" | "access_signals" | "access_recovery_check" | "access_sensitive_dossiers" | "access_sigital_surveillance" | "access_document_management_system";
         export interface Permit {
@@ -791,7 +892,7 @@ declare namespace Components {
             week_segment: WeekSegment;
             day_segment: DaySegment;
             priority: Priority;
-            camunda_task_id?: string;
+            case_user_task_id?: string;
             description?: string | null;
             date_added: string; // date-time
             date_modified: string; // date-time
@@ -804,7 +905,7 @@ declare namespace Components {
             priority: number;
             description?: string | null;
             case: number;
-            camunda_task_id?: string;
+            case_user_task_id?: string;
         }
         export type SoortVorderingEnum = "PBF" | "PBN" | "PRV" | "SOC";
         export interface Summon {
@@ -813,7 +914,7 @@ declare namespace Components {
             type_name: string;
             case: number;
             persons: SummonedPerson[];
-            camunda_task_id?: string;
+            case_user_task_id?: string;
             type_result?: {
                 [name: string]: any;
             } | null;
@@ -893,6 +994,7 @@ declare namespace Components {
             suggest_next_visit_description?: string | null;
             notes?: string | null;
             case: number;
+            task?: null | number;
         }
         export interface WeekSegment {
             id: number;
@@ -1175,7 +1277,7 @@ declare namespace Paths {
             page?: Parameters.Page;
         }
         namespace Responses {
-            export type $200 = Components.Schemas.PaginatedCamundaTaskWithStateList;
+            export type $200 = Components.Schemas.PaginatedCaseWorkflowList;
         }
     }
     namespace CasesUpdate {
@@ -1346,13 +1448,29 @@ declare namespace Paths {
     }
     namespace TasksList {
         namespace Parameters {
+            export type Completed = "all" | "completed" | "not_completed";
+            export type Page = number;
             export type Role = string;
         }
         export interface QueryParameters {
+            completed?: Parameters.Completed;
+            page?: Parameters.Page;
             role?: Parameters.Role;
         }
         namespace Responses {
-            export type $200 = /* Camunda task serializer for the list-endpoint */ Components.Schemas.CamundaTaskList[];
+            export type $200 = Components.Schemas.PaginatedCaseUserTaskListList;
+        }
+    }
+    namespace TasksPartialUpdate {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        export type RequestBody = Components.Schemas.PatchedCaseUserTaskList;
+        namespace Responses {
+            export type $200 = Components.Schemas.CaseUserTaskList;
         }
     }
     namespace ThemesCaseCloseReasonsList {
