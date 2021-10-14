@@ -38,7 +38,7 @@ const TableAction: React.FC<Props> = ({ to, disabled = false, title, children, .
 
   return (
     isLink ? (
-      <ButtonLink to={ to! } onClick={ onClick }>
+      <ButtonLink to={ to! } onClick={ onClick } flex>
         { action }
       </ButtonLink>
     ) : action
