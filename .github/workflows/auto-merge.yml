@@ -1,0 +1,7 @@
+# Auto merge the dependabot pull requests for patch versions
+steps:
+  - uses: actions/checkout@v2
+  - uses: ahmadnassri/action-dependabot-auto-merge@v2
+    with:
+      target: patch
+      github-token: ${{ secrets.mytoken }}
