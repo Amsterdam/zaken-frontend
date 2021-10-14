@@ -12,6 +12,7 @@ export type ApiGroup =
   | "roles"
   | "permissions"
   | "listings"
+  | "task"
 
 export type Options = {
   keepUsingInvalidCache?: boolean

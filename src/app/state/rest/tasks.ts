@@ -15,3 +15,15 @@ export const useTasks = (role: string, options?: Options) => {
     isProtected: true
   })
 }
+
+export const useTask = (id: number, options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<Components.Schemas.CamundaTaskList>({
+    ...options,
+    lazy: true,
+    url: makeApiUrl("tasks", id),
+    groupName: "task",
+    handleError,
+    isProtected: true
+  })
+}
