@@ -7,7 +7,7 @@ import qs from "qs"
 export const useTasks = (role: string, options?: Options) => {
   const handleError = useErrorHandler()
   const queryString = role !== "" ? qs.stringify({ role }, { addQueryPrefix: true }) : ""
-  return useApiRequest<Components.Schemas.CamundaTaskList[]>({
+  return useApiRequest<Components.Schemas.CaseUserTaskList[]>({
     ...options,
     url: `${ makeApiUrl("tasks") }${ queryString }`,
     groupName: "cases",

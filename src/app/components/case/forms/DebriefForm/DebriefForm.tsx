@@ -7,10 +7,10 @@ import { useCase, useDebriefingCreate, useViolationTypes } from "app/state/rest"
 
 type Props = {
   id: Components.Schemas.Case["id"]
-  camundaTaskId: Components.Schemas.CamundaTask["camunda_task_id"]
+  caseUserTaskId: Components.Schemas.CaseUserTask["case_user_task_id"]
 }
 
-const DebriefCreateForm: React.FC<Props> = ({ id, camundaTaskId }) => {
+const DebriefCreateForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
 
   const [caseItem] = useCase(id)
   const themeId = caseItem?.theme.id
@@ -26,7 +26,7 @@ const DebriefCreateForm: React.FC<Props> = ({ id, camundaTaskId }) => {
         id={ id }
         fields={ fields }
         postMethod={ execPost }
-        camundaTaskId={ camundaTaskId }
+        caseUserTaskId={ caseUserTaskId }
       />
     </>
   )

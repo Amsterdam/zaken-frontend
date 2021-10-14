@@ -21,7 +21,7 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString, camund
 
   return (
     isValidUrlParamId<Components.Schemas.Case["id"]>(id) &&
-    isValidUrlParamId<Components.Schemas.CamundaTask["camunda_task_id"]>(camundaTaskId) ?
+    isValidUrlParamId<Components.Schemas.CaseUserTask["task_id"]>(camundaTaskId) ?
     <DefaultLayout>
       <RowWithColumn>
         <PageHeading />
@@ -31,7 +31,7 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString, camund
       </RowWithColumn>
       <Row>
         <Column spanLarge={50}>
-          <CitizenReportForm id={ id } camundaTaskId={ camundaTaskId } />
+          <CitizenReportForm id={ id } caseUserTaskId={ camundaTaskId } />
         </Column>
       </Row>
     </DefaultLayout> :

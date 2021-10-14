@@ -8,7 +8,7 @@ import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks
 
 type Props = {
   id: Components.Schemas.Case["id"]
-  camundaTaskId: Components.Schemas.CamundaTask["camunda_task_id"]
+  caseUserTaskId: Components.Schemas.CaseUserTask["case_user_task_id"]
 }
 
 type CaseCloseTypeFormData = Omit<Components.Schemas.CaseClose, "reason" | "result"> & {
@@ -23,7 +23,7 @@ const mapData = (data: CaseCloseTypeFormData): Components.Schemas.CaseClose => (
   }
 )
 
-const CaseCompleteForm: React.FC<Props> = ({ id, camundaTaskId }) => {
+const CaseCompleteForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
 
   const [caseItem] = useCase(id)
   const themeId = caseItem?.theme.id
@@ -40,7 +40,7 @@ const CaseCompleteForm: React.FC<Props> = ({ id, camundaTaskId }) => {
         fields={ fields }
         mapData={ mapData }
         postMethod={ execPost }
-        camundaTaskId={ camundaTaskId }
+        caseUserTaskId={ caseUserTaskId }
       />
     </>
   )

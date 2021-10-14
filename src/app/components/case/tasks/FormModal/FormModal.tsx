@@ -1,6 +1,6 @@
 import Modal, { ModalBlock } from "app/components/shared/Modal/Modal"
 import CompleteTaskForm from "../CompleteTask/CompleteTaskForm"
-import CamundaForm from "../CamundaTask/CamundaForm"
+import WorkflowForm from "../WorkflowTask/WorkflowForm"
 import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
 
 export type Props = {
@@ -9,7 +9,7 @@ export type Props = {
   isOpen: boolean
   closeModal: () => void
   onSubmit: (variables: Components.Schemas.CamundaTaskComplete["variables"]) => Promise<unknown>
-  form?: Components.Schemas.CamundaTask["form"]
+  form?: Components.Schemas.CaseUserTask["form"]
 }
 
 const FormModal: React.FC<Props> = ({ form, isOpen, closeModal, onSubmit, taskName, caseId }) => {
@@ -30,7 +30,7 @@ const FormModal: React.FC<Props> = ({ form, isOpen, closeModal, onSubmit, taskNa
     <Modal isOpen={ isOpen } onClose={ closeModal } title={ title }>
       <ModalBlock>
         { form && form.length > 0 ?
-          <CamundaForm onSubmit={ onSubmitWrap } onCancel={ closeModal } camundaForm={ form } /> :
+          <WorkflowForm onSubmit={ onSubmitWrap } onCancel={ closeModal } workflowForm={ form } /> :
           <CompleteTaskForm onSubmit={ onSubmitWrap } onCancel={ closeModal } />
         }
       </ModalBlock>

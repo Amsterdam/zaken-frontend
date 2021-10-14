@@ -2,8 +2,8 @@ import DueDate from "app/components/shared/DueDate/DueDate"
 import TableAction from "app/components/shared/TableAction/TableAction"
 import to from "app/routing/utils/to"
 
-export default (tasks?: Components.Schemas.CamundaTaskList[]) =>
-  tasks?.map((task: Components.Schemas.CamundaTaskList) => {
+export default (tasks?: Components.Schemas.CaseUserTaskList[]) =>
+  tasks?.map((task: Components.Schemas.CaseUserTaskList) => {
     const { name, due_date, case: { address: { full_address }, id } } = task
     return [
       full_address ?? "-",

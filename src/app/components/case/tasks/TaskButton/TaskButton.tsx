@@ -6,7 +6,7 @@ type Props = {
   onSubmit: (variables: Components.Schemas.CamundaTaskComplete["variables"]) => Promise<unknown>
   taskName: string
   caseId: Components.Schemas.Case["id"]
-  form?: Components.Schemas.CamundaTask["form"]
+  form?: Components.Schemas.CaseUserTask["form"]
   disabled?: boolean
 }
 

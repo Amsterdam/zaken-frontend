@@ -190,15 +190,18 @@ declare namespace Components {
             id: number;
             user_has_permission: boolean;
             case_user_task_id: string;
+            form: {
+                [name: string]: any;
+            }[];
+            form_variables: {
+                [name: string]: any;
+            };
+            roles: string[];
             completed?: boolean;
             task_id: string; // uuid
             task_name: string;
             name: string;
-            form?: {
-                [name: string]: any;
-            } | null;
-            roles?: string[] | null;
-            due_date?: string; // date-time
+            due_date: string; // date-time
             created: string; // date-time
             updated: string; // date-time
             owner?: string | null; // uuid
@@ -209,20 +212,19 @@ declare namespace Components {
             id: number;
             user_has_permission: boolean;
             case_user_task_id: string;
+            form: {
+                [name: string]: any;
+            }[];
             form_variables: {
                 [name: string]: any;
             };
-            task_name_id: string;
+            roles: string[];
             case: /* Case-address serializer for CaseUserTasks */ CaseAddress;
             completed?: boolean;
             task_id: string; // uuid
             task_name: string;
             name: string;
-            form?: {
-                [name: string]: any;
-            } | null;
-            roles?: string[] | null;
-            due_date?: string | null; // date-time
+            due_date: string; // date-time
             created: string; // date-time
             updated: string; // date-time
             owner?: string | null; // uuid
@@ -242,27 +244,8 @@ declare namespace Components {
                 workflow?: null | number;
                 users: string /* uuid */[];
             };
-            tasks: {
-                id: number;
-                user_has_permission: boolean;
-                case_user_task_id: string;
-                completed?: boolean;
-                task_id: string; // uuid
-                task_name: string;
-                name: string;
-                form?: {
-                    [name: string]: any;
-                } | null;
-                roles?: string[] | null;
-                due_date?: string | null; // date-time
-                created: string; // date-time
-                updated: string; // date-time
-                owner?: string | null; // uuid
-                case: number;
-                workflow: number;
-            };
-            completed?: boolean;
-            parent_workflow?: null | number;
+            tasks: CaseUserTask[];
+            workflow_message_name?: string | null;
         }
         export interface CitizenReport {
             id: number;
@@ -816,20 +799,19 @@ declare namespace Components {
             id?: number;
             user_has_permission?: boolean;
             case_user_task_id?: string;
+            form?: {
+                [name: string]: any;
+            }[];
             form_variables?: {
                 [name: string]: any;
             };
-            task_name_id?: string;
+            roles?: string[];
             case?: /* Case-address serializer for CaseUserTasks */ CaseAddress;
             completed?: boolean;
             task_id?: string; // uuid
             task_name?: string;
             name?: string;
-            form?: {
-                [name: string]: any;
-            } | null;
-            roles?: string[] | null;
-            due_date?: string | null; // date-time
+            due_date?: string; // date-time
             created?: string; // date-time
             updated?: string; // date-time
             owner?: string | null; // uuid

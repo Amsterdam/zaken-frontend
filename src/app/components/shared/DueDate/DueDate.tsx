@@ -4,7 +4,7 @@ import { DateDisplay } from "@amsterdam/wonen-ui"
 import isDateInPast from "../Date/isDateInPast"
 
 type Props = {
-  date: Components.Schemas.CamundaTask["due_date"] | undefined
+  date: Components.Schemas.CaseUserTask["due_date"] | undefined
   emptyText?: string
 }
 

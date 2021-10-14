@@ -3,7 +3,7 @@ import navigateTo from "app/routing/navigateTo"
 import useValues from "./hooks/useValues"
 
 type Props = {
-  data?: Components.Schemas.CamundaTaskList[]
+  data?: Components.Schemas.CaseUserTaskList[]
   isBusy: boolean
 }
 
