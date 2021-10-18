@@ -3,6 +3,7 @@ import styled from "styled-components"
 import { Spinner, Checkbox, themeSpacing } from "@amsterdam/asc-ui"
 import { useUsersMe } from "app/state/rest/index"
 import { useTask } from "app/state/rest"
+import UserIcon from "./UserIcon"
 
 type Props = {
   id: number
@@ -35,11 +36,14 @@ const SelectTask: React.FC<Props> = ({ id, owner }) => {
       })
   }
 
-  return (
-    (isBusy || loading)
-      ? <StyledSpinner />
-      : <Checkbox id={`${ id }`} checked={isChecked} onChange={ onChange }/>
-  )
+  if (isBusy || loading) {
+    return <StyledSpinner />
+  }
+  // If owner is known but not the active user.
+  if (owner && owner !==  data?.id ) {
+    return <UserIcon owner={ owner }/>
+  }
+  return <Checkbox id={`${ id }`} checked={isChecked} onChange={ onChange }/>
 }
 
 export default SelectTask

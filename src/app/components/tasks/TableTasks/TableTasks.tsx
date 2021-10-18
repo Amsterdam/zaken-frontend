@@ -9,7 +9,7 @@ type Props = {
 const { sortStrings, sortDates } = tableSorters
 
 const columns = [
-  { header: "Behandelaar" },
+  { header: "Behandelaar", sorter: sortStrings },
   { header: "Adres", minWidth: 150, sorter: sortStrings },
   { header: "Open taak", minWidth: 100, sorter: sortStrings },
   { header: "Slotdatum", minWidth: 50, sorter: sortDates, defaultSorting: "ASCEND" as const },
