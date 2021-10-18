@@ -9,8 +9,8 @@ import ChangeDueDateModal from "./ChangeDueDateModal"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
-  camundaTaskId: Components.Schemas.CamundaTask["camunda_task_id"]
-  dueDate: Components.Schemas.CamundaTask["due_date"]
+  caseUserTaskId: Components.Schemas.CaseUserTask["task_id"]
+  dueDate: Components.Schemas.CaseUserTask["due_date"]
 }
 
 const Span = styled.span`
@@ -34,7 +34,7 @@ const mapSubmitData = (data: Components.Schemas.CamundaDateUpdate) => ({
   date: appendTimeToDate(data.date)
 })
 
-const ChangeableDueDate: React.FC<Props> = ({ dueDate, camundaTaskId }) => {
+const ChangeableDueDate: React.FC<Props> = ({ dueDate, caseUserTaskId }) => {
 
   const { isModalOpen, openModal, closeModal } = useModal()
 
@@ -55,7 +55,7 @@ const ChangeableDueDate: React.FC<Props> = ({ dueDate, camundaTaskId }) => {
         isOpen={ isModalOpen }
         closeModal={ closeModal }
         dueDate={ dueDate }
-        taskId={ camundaTaskId }
+        taskId={ caseUserTaskId }
         />
     </>
   )

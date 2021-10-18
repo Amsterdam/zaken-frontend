@@ -9,11 +9,11 @@ type Props<T, U> = {
   mapData?: (data: T) => U
   postMethod: (data: U) => Promise<any>
   initialValues?: Record<string, unknown>
-  camundaTaskId?: Components.Schemas.CamundaTask["camunda_task_id"]
+  caseUserTaskId?: Components.Schemas.CaseUserTask["case_user_task_id"]
 }
 
 const WorkflowForm = <T extends Rec, U extends Rec>(props: Props<T, U>) => {
-  const { id, fields, postMethod, mapData, camundaTaskId, initialValues = {} } = props
+  const { id, fields, postMethod, mapData, caseUserTaskId, initialValues = {} } = props
 
   const navigateWithFlashMessage = useNavigateWithFlashMessage()
   const afterSubmit = async () => await navigateWithFlashMessage(
@@ -30,7 +30,7 @@ const WorkflowForm = <T extends Rec, U extends Rec>(props: Props<T, U>) => {
       postMethod={ postMethod }
       mapData={ mapData }
       afterSubmit={ afterSubmit }
-      initialValues={ { case: id, camunda_task_id: camundaTaskId, ...initialValues } }
+      initialValues={ { case: id, case_user_task_id: caseUserTaskId, ...initialValues } }
     />
   )
 }

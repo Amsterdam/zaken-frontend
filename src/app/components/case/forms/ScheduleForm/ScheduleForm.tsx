@@ -7,7 +7,7 @@ import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks
 
 type Props = {
   id: Components.Schemas.Case["id"]
-  camundaTaskId: Components.Schemas.CamundaTask["camunda_task_id"]
+  caseUserTaskId: Components.Schemas.CaseUserTask["case_user_task_id"]
 }
 
 type ScheduleTypeFormData = Omit<Components.Schemas.ScheduleCreate, "week_segment" | "day_segment" | "priority"> & {
@@ -24,7 +24,7 @@ const mapData = (data: ScheduleTypeFormData) => (
   }
 )
 
-const ScheduleForm: React.FC<Props> = ({ id, camundaTaskId }) => {
+const ScheduleForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
 
   const [caseItem] = useCase(id)
   const themeId = caseItem?.theme.id
@@ -45,7 +45,7 @@ const ScheduleForm: React.FC<Props> = ({ id, camundaTaskId }) => {
         mapData={ mapData }
         postMethod={ execPost }
         initialValues={ initialValues }
-        camundaTaskId={ camundaTaskId }
+        caseUserTaskId={ caseUserTaskId }
       />
     </>
   )

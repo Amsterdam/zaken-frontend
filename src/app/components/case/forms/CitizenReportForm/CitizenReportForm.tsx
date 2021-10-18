@@ -6,10 +6,10 @@ import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks
 
 type Props = {
   id: Components.Schemas.Case["id"]
-  camundaTaskId: Components.Schemas.CamundaTask["camunda_task_id"]
+  caseUserTaskId: Components.Schemas.CaseUserTask["case_user_task_id"]
 }
 
-const CitizenReportForm: React.FC<Props> = ({ id, camundaTaskId }) => {
+const CitizenReportForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
 
   const [, { execPost }] = useCitizenReports(id)
   const fields = useScaffoldedFields(scaffold, id)
@@ -19,7 +19,7 @@ const CitizenReportForm: React.FC<Props> = ({ id, camundaTaskId }) => {
       id={ id }
       postMethod={ execPost }
       fields={ fields }
-      camundaTaskId={ camundaTaskId }
+      caseUserTaskId={ caseUserTaskId }
     />
   )
 }

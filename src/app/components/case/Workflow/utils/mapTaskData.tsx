@@ -17,28 +17,28 @@ export default (
     id: Components.Schemas.Case["id"],
     execPost: (data: Partial<Components.Schemas.CamundaTaskComplete>) => Promise<unknown>
   ) =>
-  (data: Components.Schemas.CamundaTask) => {
+  (data: Components.Schemas.CaseUserTask) => {
 
 
-    const { task_name_id, camunda_task_id, name, roles, due_date, form, user_has_permission } = data
-    const action = taskActionMap[task_name_id]
-    const onSubmitTaskComplete = (variables: Components.Schemas.CamundaTask["form"] = {}) =>
-      execPost({ case: id, camunda_task_id, variables })
+    const { task_name, case_user_task_id, name, roles, due_date, form, user_has_permission } = data
+    const action = taskActionMap[task_name]
+    const onSubmitTaskComplete = (variables: Components.Schemas.CaseUserTask["form_variables"] = {}) =>
+      execPost({ case: id, case_user_task_id, variables })
 
     // TODO: Extract disabled task names
-    const disabled = task_name_id === "task_create_visit" || !user_has_permission
+    const disabled = task_name === "task_create_visit" || !user_has_permission
 
     return [
       <LockIcon />,
       name,
       <List data={ roles } emptyPlaceholder="-" />,
       due_date ? (
-        <ChangeableDueDate dueDate={ due_date } caseId={ id } camundaTaskId={ camunda_task_id } />
+        <ChangeableDueDate dueDate={ due_date } caseId={ id } caseUserTaskId={ case_user_task_id } />
         ) : <Span>-</Span>,
       action !== undefined ? (
         <TableAction
-          title={ to(`/zaken/:id/${ action.target }/:camundaTaskId`, { id, camundaTaskId: camunda_task_id }) }
-          to={ to(`/zaken/:id/${ action.target }/:camundaTaskId`, { id, camundaTaskId: camunda_task_id }) }
+          title={ to(`/zaken/:id/${ action.target }/:caseUserTaskId`, { id, caseUserTaskId: case_user_task_id }) }
+          to={ to(`/zaken/:id/${ action.target }/:caseUserTaskId`, { id, caseUserTaskId: case_user_task_id }) }
           disabled={ action.disabled ?? disabled }
         >
           { action.name }

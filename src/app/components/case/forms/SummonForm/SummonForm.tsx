@@ -8,7 +8,7 @@ import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks
 
 type Props = {
   id: Components.Schemas.Case["id"]
-  camundaTaskId: Components.Schemas.CamundaTask["camunda_task_id"]
+  caseUserTaskId: Components.Schemas.CaseUserTask["case_user_task_id"]
 }
 
 //TODO Schema from backend should be improved
@@ -24,7 +24,7 @@ const mapData = (data: SummonData) => {
 
 }
 
-const SummonForm: React.FC<Props> = ({ id, camundaTaskId }) => {
+const SummonForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
 
   const themeId = useCase(id)[0]?.theme.id
   const [data] = useSummonTypes(themeId)
@@ -40,7 +40,7 @@ const SummonForm: React.FC<Props> = ({ id, camundaTaskId }) => {
         fields={ fields }
         mapData={ mapData }
         postMethod={ execPost }
-        camundaTaskId={ camundaTaskId }
+        caseUserTaskId={ caseUserTaskId }
       />
     </>
   )
