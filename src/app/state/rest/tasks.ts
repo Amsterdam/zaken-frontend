@@ -18,7 +18,7 @@ export const useTasks = (role: string, options?: Options) => {
 
 export const useTask = (id: number, options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<Components.Schemas.CamundaTaskList>({
+  return useApiRequest<Components.Schemas.CaseUserTaskList>({
     ...options,
     lazy: true,
     url: makeApiUrl("tasks", id),

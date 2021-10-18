@@ -30,7 +30,7 @@ const WorkflowForm = <T extends Rec, U extends Rec>(props: Props<T, U>) => {
       postMethod={ postMethod }
       mapData={ mapData }
       afterSubmit={ afterSubmit }
-      initialValues={ { case: id, camunda_task_id: caseUserTaskId, ...initialValues } }
+      initialValues={ { case: id, case_user_task_id: caseUserTaskId, ...initialValues } }
     />
   )
 }

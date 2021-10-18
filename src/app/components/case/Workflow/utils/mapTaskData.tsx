@@ -37,8 +37,8 @@ export default (
         ) : <Span>-</Span>,
       action !== undefined ? (
         <TableAction
-          title={ to(`/zaken/:id/${ action.target }/:camundaTaskId`, { id, camundaTaskId: case_user_task_id }) }
-          to={ to(`/zaken/:id/${ action.target }/:camundaTaskId`, { id, camundaTaskId: case_user_task_id }) }
+          title={ to(`/zaken/:id/${ action.target }/:caseUserTaskId`, { id, caseUserTaskId: case_user_task_id }) }
+          to={ to(`/zaken/:id/${ action.target }/:caseUserTaskId`, { id, caseUserTaskId: case_user_task_id }) }
           disabled={ action.disabled ?? disabled }
         >
           { action.name }
