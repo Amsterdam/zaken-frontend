@@ -1,0 +1,42 @@
+{
+    "projectId": "tbpt8b",
+    "chromeWebSecurity": false,
+    "baseUrl": "http://localhost:2999/",
+    "screenshotOnRunFailure": false,
+    "video": false,
+    "viewportWidth": 1280,
+    "viewportHeight": 1024,
+    "env": {
+      "baseUrlAcc": "https://acc.api.wonen.zaken.amsterdam.nl/api/v1/",
+      "baseUrlData": "https://api.data.amsterdam.nl/",
+      "userHh": "handhaver-noreply@amsterdam.nl",
+      "userHhj": "handhavingsjurist-noreply@amsterdam.nl",
+      "userPm": "projectmedewerker-noreply@amsterdam.nl",
+      "userTh": "toezichthouder-noreply@amsterdam.nl"
+    },
+    "testFiles": [
+      "010_addCase/themes/vakantieverhuur/add.case.anonymous.no.ad.spec.js",
+      "020_planVisit/1-plan.visit.spec.js",
+      "020_planVisit/2-result.nobody.present.spec.js",
+      "020_planVisit/3-plan.visit.spec.js",
+      "020_planVisit/4-result.access.granted.spec.js",
+      "030_debrief/01-debrief.no.violation.spec.js",
+      "030_debrief/03-short.report.spec.js",
+      "050_nextStep/*.js",
+      "060_closeCase/*.js",
+      "010_addCase/themes/vakantieverhuur/add.case.not.anonymous.ad.spec.js",
+      "020_planVisit/1-plan.visit.spec.js",
+      "020_planVisit/2-result.nobody.present.spec.js",
+      "020_planVisit/3-plan.visit.spec.js",
+      "020_planVisit/4-result.access.granted.spec.js",
+      "030_debrief/01a-debrief.other.theme.spec.js",
+      "030_debrief/03-short.report.spec.js",
+      "050_nextStep/*.js",
+      "060_closeCase/*.js",
+      "010_addCase/themes/vakantieverhuur/add.case.errors.spec.js",
+      "010_addCase/roles/handhaver/add.case.disabled.spec.js",
+      "010_addCase/roles/handhavingsjurist/add.case.disabled.spec.js",
+      "010_addCase/roles/toezichthouder/add.case.disabled.spec.js"
+    ]
+  }
+  
