@@ -20,7 +20,7 @@
     "020_planVisit/2-result.nobody.present.spec.js",
     "020_planVisit/3-plan.visit.spec.js",
     "020_planVisit/4-result.access.granted.spec.js",
-    "030_debrief/01-debrief.no.violation.spec.js",
+    "030_debrief/01a-debrief.other.theme.spec.js",
     "030_debrief/03-short.report.spec.js",
     "050_nextStep/*.js",
     "060_closeCase/*.js"
