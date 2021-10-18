@@ -8,7 +8,7 @@ type Props = React.ComponentProps<typeof Button> & {
   disabled?: boolean
 }
 
-const TableAction: React.FC<Props> = ({ to, disabled = false, title, children, ...restProps }) => {
+const TableAction: React.FC<Props> = ({ to, disabled = false, children, ...restProps }) => {
 
   const onClick = (event: React.MouseEvent) => event.stopPropagation()
 
