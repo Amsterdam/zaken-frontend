@@ -10,7 +10,7 @@ import stripThousandSeparator from "./utils/stripThousandSeparator"
 
 type Props = {
   id: Components.Schemas.Case["id"]
-  camundaTaskId: Components.Schemas.CamundaTask["camunda_task_id"]
+  caseUserTaskId: Components.Schemas.CaseUserTask["case_user_task_id"]
 }
 
 type DecisionData = Omit<Components.Schemas.Decision, "decision_type"> & { decision_type: { id: number }, description_closing?: string }
@@ -28,7 +28,7 @@ const mapData = (data: DecisionData) => {
   }
 }
 
-const DecisionForm: React.FC<Props> = ({ id, camundaTaskId }) => {
+const DecisionForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
 
   const [caseItem] = useCase(id)
   const themeId = caseItem?.theme.id
@@ -41,14 +41,14 @@ const DecisionForm: React.FC<Props> = ({ id, camundaTaskId }) => {
 
   return (
     <>
-      <DecisionHeader caseId={ id } camundaTaskId={ camundaTaskId } />
+      <DecisionHeader caseId={ id } caseUserTaskId={ caseUserTaskId } />
       <FormTitle>Gebruik dit formulier om aan te geven welk besluit is genomen</FormTitle>
       <WorkflowForm
           id={ id }
           fields={ fields }
           mapData={ mapData }
           postMethod={ execPost }
-          camundaTaskId={ camundaTaskId }
+          caseUserTaskId={ caseUserTaskId }
       />
     </>
   )

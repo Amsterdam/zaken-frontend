@@ -13,16 +13,16 @@ import { Column } from "app/components/layouts/Grid"
 
 type Props = {
   id: string
-  camundaTaskId: string
+  caseUserTaskId: string
 }
 
-const CompleteCasePage: React.FC<RouteComponentProps<Props>> = ({ id: idString, camundaTaskId }) => {
+const CompleteCasePage: React.FC<RouteComponentProps<Props>> = ({ id: idString, caseUserTaskId }) => {
 
   const id = parseUrlParamId(idString)
 
   return (
     isValidUrlParamId<Components.Schemas.Case["id"]>(id) &&
-    isValidUrlParamId<Components.Schemas.CamundaTask["camunda_task_id"]>(camundaTaskId) ?
+    isValidUrlParamId<Components.Schemas.CaseUserTask["task_id"]>(caseUserTaskId) ?
     <DefaultLayout>
       <RowWithColumn>
         <PageHeading />
@@ -32,7 +32,7 @@ const CompleteCasePage: React.FC<RouteComponentProps<Props>> = ({ id: idString, 
       </RowWithColumn>
       <Row>
         <Column spanLarge={50}>
-          <CaseCompleteForm id={ id } camundaTaskId={ camundaTaskId } />
+          <CaseCompleteForm id={ id } caseUserTaskId={ caseUserTaskId } />
         </Column>
       </Row>
     </DefaultLayout> :

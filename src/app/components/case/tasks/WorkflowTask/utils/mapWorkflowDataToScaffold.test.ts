@@ -1,5 +1,5 @@
-import mapCamundaToScaffold from "./mapCamundaToScaffold"
-import mock from "./camunda.mock"
+import mapCamundaToScaffold from "./mapWorkflowDataToScaffold"
+import mock from "./workflowData.mock"
 
 describe("mapCamundaToScaffold", () => {
   it("fields", () => {

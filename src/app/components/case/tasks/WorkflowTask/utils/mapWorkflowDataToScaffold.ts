@@ -2,7 +2,7 @@ import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import { Field } from "app/components/shared/Form/ScaffoldField"
 
-const mapItemToType = (item: Components.Schemas.CamundaTask["form"]["name"]) => {
+const mapItemToType = (item: any) => {
   if (item.is_date) return "DateField"
   if (item.type === "checkbox") return "CheckboxFields"
   if (item.type === "select") return "ComplexSelectField"
@@ -10,13 +10,13 @@ const mapItemToType = (item: Components.Schemas.CamundaTask["form"]["name"]) => 
   return "TextField"
 }
 
-const mapItemToOptions = (item: Components.Schemas.CamundaTask["form"]["name"]) =>
+const mapItemToOptions = (item: any) =>
   item.type === "checkbox" ?
     { [item.name]: item.label } :
     item.options ?? undefined
 
-export default (camundaForm: Components.Schemas.CamundaTask["form"], onCancel = () => {}) => {
-  const fields = camundaForm.reduce((acc: Fields, item: Components.Schemas.CamundaTask["form"]["name"]) => {
+export default (camundaForm: Components.Schemas.CaseUserTask["form"], onCancel = () => {}) => {
+  const fields = camundaForm.reduce((acc: Fields, item: any) => {
     if (item === undefined) return acc
     acc[item.name] = {
       type: mapItemToType(item),

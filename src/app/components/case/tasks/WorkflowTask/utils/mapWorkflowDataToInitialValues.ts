@@ -1,6 +1,6 @@
 type Rec = Record<string, Array<string> | string | { label: string, value: string }>
-export default (camundaForm: Components.Schemas.CamundaTask["form"]) =>
-  camundaForm.reduce((acc: Rec, item: Components.Schemas.CamundaTask["form"]["name"]) => {
+export default (workflowForm: Components.Schemas.CaseUserTask["form"]) =>
+  workflowForm.reduce((acc: Rec, item: any) => {
     const { default_value, label, name, type, options } = item
     // The API response is somewhat inconsistent
     // default_value == "false" means checked

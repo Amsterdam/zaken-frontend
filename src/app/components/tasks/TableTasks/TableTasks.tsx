@@ -2,7 +2,7 @@ import { Table, tableSorters } from "@amsterdam/wonen-ui"
 import useValues from "./hooks/useValues"
 
 type Props = {
-  data?: Components.Schemas.CamundaTaskList[]
+  data?: Components.Schemas.CaseUserTaskList[]
   isBusy: boolean
 }
 
