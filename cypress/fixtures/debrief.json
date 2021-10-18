@@ -1,6 +1,7 @@
 {
   "headerText": "Debrief terugkoppeling geven",
   "labelNo": "Geen overtreding",
+  "labelOtherTheme": "Naar ander thema",
   "formButtonText": "Terugkoppeling toevoegen",
   "noViolationDescription": "Toelichting bij Geen overtreding",
   "noViolationNextTask1": "Terugkoppeling melder(s)",
@@ -8,5 +9,6 @@
   "closingTask1": "Uitzetten vervolgstap",
   "closingTask2": "Afsluiten zaak",
   "closingReason3": "Geen woonfraude",
-  "closingDescription": "Toelichting bij Zaak afronden"
+  "closingDescription": "Toelichting bij Zaak afronden",
+  "otherThemeDescription": "Toelichting bij Naar ander thema"
 }
