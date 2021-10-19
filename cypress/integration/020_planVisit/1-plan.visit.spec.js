@@ -19,16 +19,11 @@ describe('Plan "huisbezoek"', () => {
       })
     })
 
-    it("Adresoverzicht has right address", () => {
-      cy.get("h1")
-        .contains(`${address.street}, ${address.zipCode}`)
-    })
-
     it("Select case by caseId", () => {
       cy.scrollTo(0, 400)
       cy.getCaseId().then((e) => {
         cy.log('caseId =>', e.id)
-        
+
         cy.get("tbody>tr")
           .contains("td", e.id)
           .click()
@@ -36,11 +31,11 @@ describe('Plan "huisbezoek"', () => {
         // check dueDate
         cy.get("tbody>tr>td").eq(3)
           .should("contain", "-")
-          
+
       })
     })
 
-    
+
     it("Click on task Bezoek inplannen", () => {
       cy.get("tbody>tr")
         .contains("td", "Bezoek inplannen")
@@ -105,7 +100,7 @@ describe('Plan "huisbezoek"', () => {
         cy.get("span").contains("Bezoek ingepland ")
       })
     })
-    
+
     it("History contains the right items", () => {
       cy.history("Bezoek ingepland", "Datum")
     })
