@@ -2,7 +2,7 @@ import address from "../../fixtures/address.json"
 import debrief from "../../fixtures/debrief.json"
 import roles from "../../fixtures/roles.json"
 
-describe('Process Debrief - Other Theme"', () => {
+describe('Process Debrief - Violation"', () => {
 
   describe('Go to Debrief form', () => {
 
@@ -20,13 +20,11 @@ describe('Process Debrief - Other Theme"', () => {
       })
     })
 
-    it('Select case by caseId and task "Debrief"', () => {
+    it("Select case by caseId", () => {
+      cy.scrollTo(0, 400)
       cy.getCaseId().then((e) => {
-        cy.scrollTo(0, 400)
         cy.get("tbody>tr")
           .contains("td", e.id)
-          .siblings("td")
-          .contains("td", "Debrief")
           .click()
       })
     })
@@ -59,17 +57,15 @@ describe('Process Debrief - Other Theme"', () => {
 
   describe('Fill in "Debrief" form', () => {
 
-    it('Select "Naar ander thema"', () => {
-      cy.get('[data-e2e-id="SEND_TO_OTHER_THEME"]')
+    it('Select "Wat is de uitkomst van het bezoek?"', () => {
+
+      cy.get('[data-e2e-id="YES"]')
         .check({ force: true })
     })
-    it('Select "Ander thema"', () => {
-      cy.get('select')
-        .select('Kamerverhuur')
-    })
+
     it('Type a note', () => {
       cy.get('[data-e2e-id="feedback"]')
-      .type(debrief.otherThemeDescription)
+      .type(debrief.violationDescription)
     })
 
     it('Submit form and check debrief status', () => {
@@ -83,8 +79,8 @@ describe('Process Debrief - Other Theme"', () => {
       cy.get(`[role="dialog"]`).should('have.length', 1)
 
       cy.get(`[role="dialog"]`)
-        .should("contain", debrief.labelOtherTheme)
-        .and("contain", debrief.otherThemeDescription)
+        .should("contain", debrief.labelYes)
+        .and("contain", debrief.violationDescription)
         .find(`button`)
         .contains(debrief.formButtonText)
         .click()
@@ -93,13 +89,21 @@ describe('Process Debrief - Other Theme"', () => {
         cy.scrollTo(0, 400)
         cy.get("h4")
           .contains("Debrief")
-          // TODO BE should fix this first
+        // TODO BE should fix this first
         // cy.get("tbody>tr")
         //   .contains("td", debrief.noViolationNextTask1)
         //   .siblings("td")
         //   .contains(roles.PM)
         cy.get("tbody>tr")
-          .contains("td", debrief.noViolationNextTask2)
+          .contains("td", debrief.violationNextTask1)
+          .siblings("td")
+          .contains(roles.PHH)
+        cy.get("tbody>tr")
+          .contains("td", debrief.violationNextTask2)
+          .siblings("td")
+          .contains(roles.TH)
+        cy.get("tbody>tr")
+          .contains("td", debrief.violationNextTask3)
           .siblings("td")
           .contains(roles.TH)
       })
