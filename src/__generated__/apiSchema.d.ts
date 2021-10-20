@@ -312,7 +312,7 @@ declare namespace Components {
         }
         export interface DecisionType {
             id: number;
-            camunda_option: string;
+            workflow_option: string;
             name: string;
             is_sanction?: boolean;
             theme: number;
@@ -906,7 +906,7 @@ declare namespace Components {
         export interface SummonType {
             id: number;
             name: string;
-            camunda_option?: string;
+            workflow_option?: string;
         }
         export interface SummonedPerson {
             id: number;
