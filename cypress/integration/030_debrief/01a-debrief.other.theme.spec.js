@@ -2,7 +2,7 @@ import address from "../../fixtures/address.json"
 import debrief from "../../fixtures/debrief.json"
 import roles from "../../fixtures/roles.json"
 
-describe('Process Debrief - No violation"', () => {
+describe('Process Debrief - Other Theme"', () => {
 
   describe('Go to Debrief form', () => {
 
