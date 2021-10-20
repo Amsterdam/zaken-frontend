@@ -6,7 +6,7 @@ import createScaffoldProps from "./scaffold"
 import styled from "styled-components"
 
 type Props = {
-  onSubmit: (data: Components.Schemas.CamundaTaskComplete) => Promise<unknown>
+  onSubmit: (data: Components.Schemas.GenericCompletedTask) => Promise<unknown>
   isLoading?: boolean
   onCancel: () => void
 }

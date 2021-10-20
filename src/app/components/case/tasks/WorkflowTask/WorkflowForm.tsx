@@ -8,7 +8,7 @@ import mapSubmitData from "./utils/mapSubmitData"
 
 type Props = {
   workflowForm: Components.Schemas.CaseUserTask["form"]
-  onSubmit: (data: Components.Schemas.CamundaTaskComplete) => void
+  onSubmit: (data: Components.Schemas.GenericCompletedTask) => void
   isLoading?: boolean
   onCancel: () => void
 }

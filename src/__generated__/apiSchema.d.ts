@@ -1,5 +1,10 @@
 declare namespace Components {
     namespace Schemas {
+
+        export interface CamundaDateUpdate {
+            camunda_task_id: string;
+            date: string; // date-time
+        }
         export interface Action {
             id: number;
             name: string;
@@ -15,61 +20,6 @@ declare namespace Components {
             postal_code: string;
             lat: number; // float
             lng: number; // float
-        }
-        export interface CamundaDateUpdate {
-            camunda_task_id: string;
-            date: string; // date-time
-        }
-        export interface CamundaEndStateWorker {
-            state_identification: number;
-        }
-        export interface CamundaMessageForProcessInstance {
-            message_name: string;
-            camunda_process_id: string;
-        }
-        export interface CamundaMessager {
-            message_name: string;
-            process_variables?: {
-                [name: string]: any;
-            };
-            case_identification: string;
-        }
-        export interface CamundaProcess {
-            id: number;
-            name: string;
-            camunda_message_name: string;
-            to_directing_proccess?: boolean;
-            theme: number;
-        }
-        export interface CamundaStartProcess {
-            camunda_process_id: number;
-        }
-        /**
-         * Serializer for Worker Data
-         */
-        export interface CamundaStateWorker {
-            state: string;
-            case_identification: string;
-            information?: string;
-            case_process_id: string;
-        }
-        /**
-         * Used to complete a task in Camunda.
-         *
-         * variables example
-         * {
-         *     "a_field": {
-         *         "value": true,
-         *         "label": "Label for a field"
-         *     }
-         * }
-         */
-        export interface CamundaTaskComplete {
-            case_user_task_id: string;
-            case: number;
-            variables: {
-                [name: string]: any;
-            };
         }
         export interface Case {
             id: number;
@@ -366,6 +316,24 @@ declare namespace Components {
         export interface FineList {
             items: Fine[];
         }
+        /**
+         * Used to complete a GenericCompletedTask.
+         *
+         * variables example
+         * {
+         *     "a_field": {
+         *         "value": true,
+         *         "label": "Label for a field"
+         *     }
+         * }
+         */
+        export interface GenericCompletedTask {
+            case_user_task_id: string;
+            case: number;
+            variables: {
+                [name: string]: any;
+            };
+        }
         export type GeslachtsaanduidingEnum = "M" | "V" | "X";
         export interface Group {
             permissions: PermissionsEnum[];
@@ -377,24 +345,6 @@ declare namespace Components {
         export type IndicatiePubliekrechtelijkEnum = "J" | "N";
         export interface OIDCAuthenticate {
             code: string;
-        }
-        export interface PaginatedCamundaProcessList {
-            /**
-             * example:
-             * 123
-             */
-            count?: number;
-            /**
-             * example:
-             * http://api.example.org/accounts/?page=4
-             */
-            next?: string | null; // uri
-            /**
-             * example:
-             * http://api.example.org/accounts/?page=2
-             */
-            previous?: string | null; // uri
-            results?: CamundaProcess[];
         }
         export interface PaginatedCaseCloseList {
             /**
@@ -774,6 +724,24 @@ declare namespace Components {
             previous?: string | null; // uri
             results?: Visit[];
         }
+        export interface PaginatedWorkflowOptionList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=4
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null; // uri
+            results?: WorkflowOption[];
+        }
         export interface PatchedCase {
             id?: number;
             address?: Address;
@@ -890,6 +858,9 @@ declare namespace Components {
             case_user_task_id?: string;
         }
         export type SoortVorderingEnum = "PBF" | "PBN" | "PRV" | "SOC";
+        export interface StartWorkflow {
+            workflow_option_id: number;
+        }
         export interface Summon {
             id: number;
             type: number;
@@ -982,6 +953,13 @@ declare namespace Components {
             id: number;
             name: string;
         }
+        export interface WorkflowOption {
+            id: number;
+            name: string;
+            message_name: string;
+            to_directing_proccess?: boolean;
+            theme: number;
+        }
     }
 }
 declare namespace Paths {
@@ -1022,58 +1000,6 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.Residents;
-        }
-    }
-    namespace CamundaTaskCompleteCreate {
-        export type RequestBody = /**
-         * Used to complete a task in Camunda.
-         *
-         * variables example
-         * {
-         *     "a_field": {
-         *         "value": true,
-         *         "label": "Label for a field"
-         *     }
-         * }
-         */
-        Components.Schemas.CamundaTaskComplete;
-        namespace Responses {
-            export interface $200 {
-            }
-        }
-    }
-    namespace CamundaTaskDateCreate {
-        export type RequestBody = Components.Schemas.CamundaDateUpdate;
-        namespace Responses {
-            export type $200 = Components.Schemas.CamundaDateUpdate;
-        }
-    }
-    namespace CamundaWorkerEndStateCreate {
-        export type RequestBody = Components.Schemas.CamundaEndStateWorker;
-        namespace Responses {
-            export interface $200 {
-            }
-        }
-    }
-    namespace CamundaWorkerSendMessageInsideProcessCreate {
-        export type RequestBody = Components.Schemas.CamundaMessageForProcessInstance;
-        namespace Responses {
-            export interface $200 {
-            }
-        }
-    }
-    namespace CamundaWorkerSendMessageStartProcessCreate {
-        export type RequestBody = Components.Schemas.CamundaMessager;
-        namespace Responses {
-            export interface $200 {
-            }
-        }
-    }
-    namespace CamundaWorkerStateCreate {
-        export type RequestBody = /* Serializer for Worker Data */ Components.Schemas.CamundaStateWorker;
-        namespace Responses {
-            export interface $200 {
-            }
         }
     }
     namespace CaseCloseCreate {
@@ -1145,12 +1071,6 @@ declare namespace Paths {
             export type $200 = Components.Schemas.CaseEvent;
         }
     }
-    namespace CasesGenerateMockCreate {
-        export type RequestBody = Components.Schemas.Case;
-        namespace Responses {
-            export type $200 = Components.Schemas.Case;
-        }
-    }
     namespace CasesList {
         namespace Parameters {
             export type Date = string; // date
@@ -1200,7 +1120,7 @@ declare namespace Paths {
             page?: Parameters.Page;
         }
         namespace Responses {
-            export type $200 = Components.Schemas.PaginatedCamundaProcessList;
+            export type $200 = Components.Schemas.PaginatedWorkflowOptionList;
         }
     }
     namespace CasesProcessesStartCreate {
@@ -1210,9 +1130,9 @@ declare namespace Paths {
         export interface PathParameters {
             id: Parameters.Id;
         }
-        export type RequestBody = Components.Schemas.CamundaStartProcess;
+        export type RequestBody = Components.Schemas.StartWorkflow;
         namespace Responses {
-            export type $200 = Components.Schemas.CamundaStartProcess;
+            export type $200 = Components.Schemas.StartWorkflow;
         }
     }
     namespace CasesRetrieve {
@@ -1352,6 +1272,24 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.FineList;
+        }
+    }
+    namespace GenericTasksCompleteCreate {
+        export type RequestBody = /**
+         * Used to complete a GenericCompletedTask.
+         *
+         * variables example
+         * {
+         *     "a_field": {
+         *         "value": true,
+         *         "label": "Label for a field"
+         *     }
+         * }
+         */
+        Components.Schemas.GenericCompletedTask;
+        namespace Responses {
+            export interface $200 {
+            }
         }
     }
     namespace IsAuthorizedRetrieve {
