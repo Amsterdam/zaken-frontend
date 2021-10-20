@@ -20,11 +20,15 @@ describe('Process Debrief - No violation"', () => {
       })
     })
 
-    it('Get first case with task "Debrief" and go to "Zaakdetails"', () => {
-      cy.scrollTo(0, 400)
-      cy.get("tbody>tr")
-        .contains("td", "Debrief")
-        .click()
+    it('Select case by caseId and task "Debrief"', () => {
+      cy.getCaseId().then((e) => {
+        cy.scrollTo(0, 400)
+        cy.get("tbody>tr")
+          .contains("td", e.id)
+          .siblings("td")
+          .contains("td", "Debrief")
+          .click()
+      })
     })
 
     it('Intercept Debrief URL and load page', () => {
@@ -36,7 +40,7 @@ describe('Process Debrief - No violation"', () => {
         const debriefResponse = response?.body?.find((e) => e.state?.status_name === "Debrief")
         const caseId = debriefResponse?.state?.case
         const debriefTask = debriefResponse?.tasks?.find((e) => e.name === "Verwerken debrief")
-        const taskId = debriefTask.camunda_task_id
+        const taskId = debriefTask.case_user_task_id
 
         // check dueDate
         cy.get("tbody>tr>td").eq(3)
@@ -63,7 +67,7 @@ describe('Process Debrief - No violation"', () => {
 
     it('Type a note', () => {
       cy.get('[data-e2e-id="feedback"]')
-      .type(debrief.noViolationDescription)
+      .type(debrief.descriptionNoViolation)
     })
 
     it('Submit form and check debrief status', () => {
@@ -78,7 +82,7 @@ describe('Process Debrief - No violation"', () => {
 
       cy.get(`[role="dialog"]`)
         .should("contain", debrief.labelNo)
-        .and("contain", debrief.noViolationDescription)
+        .and("contain", debrief.descriptionNoViolation)
         .find(`button`)
         .contains(debrief.formButtonText)
         .click()

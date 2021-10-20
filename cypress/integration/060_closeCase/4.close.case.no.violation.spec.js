@@ -36,12 +36,12 @@ describe('Close case as projectmedwerker"', () => {
 
     //force intercept
     cy.reload()
-    
+
     cy.wait('@getTasks').then(({ response }) => {
       const closingResponse = response?.body?.find((e) => e.state?.status_name === debrief.closingTask2)
       const caseId = closingResponse?.state?.case
       const closingTask = closingResponse?.tasks?.find((e) => e.name === debrief.closingTask2)
-      const taskId = closingTask.camunda_task_id
+      const taskId = closingTask.case_user_task_id
 
       const url = `${Cypress.env("baseUrlAcc")}themes/58/case-close-reasons`
       cy.intercept(url).as('getCloseReasons')

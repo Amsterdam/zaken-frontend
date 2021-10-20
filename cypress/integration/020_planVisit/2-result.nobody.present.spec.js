@@ -40,7 +40,7 @@ describe('Result "huisbezoek" with nobody present', () => {
         const visit = response?.body?.find((e) => e.state?.status_name === "Huisbezoek")
         const caseId = visit?.state?.case
         const topTask = visit?.tasks?.find((e) => e.name === "Doorgeven Huisbezoek TOP")
-        const taskId = topTask.camunda_task_id
+        const taskId = topTask.case_user_task_id
 
         // Check role
         cy.get("tbody>tr>td").eq(2)

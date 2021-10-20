@@ -6,7 +6,7 @@ describe('Process Debrief - No violation"', () => {
 
   describe('Go to Debrief form', () => {
 
-    it.skip("Login as projectmedewerker", () => {
+    it("Login as projectmedewerker", () => {
       cy.loginAsPm()
     })
 
@@ -59,17 +59,15 @@ describe('Process Debrief - No violation"', () => {
 
   describe('Fill in "Debrief" form', () => {
 
-    it('Select "Naar ander thema"', () => {
-      cy.get('[data-e2e-id="SEND_TO_OTHER_THEME"]')
+    it('Select "Wat is de uitkomst van het bezoek?"', () => {
+
+      cy.get('[data-e2e-id="ADDITIONAL_RESEARCH_REQUIRED"]')
         .check({ force: true })
     })
-    it('Select "Ander thema"', () => {
-      cy.get('select')
-        .select('Kamerverhuur')
-    })
+
     it('Type a note', () => {
       cy.get('[data-e2e-id="feedback"]')
-      .type(debrief.otherThemeDescription)
+      .type(debrief.descriptionAdditionalResearch)
     })
 
     it('Submit form and check debrief status', () => {
@@ -83,8 +81,8 @@ describe('Process Debrief - No violation"', () => {
       cy.get(`[role="dialog"]`).should('have.length', 1)
 
       cy.get(`[role="dialog"]`)
-        .should("contain", debrief.labelOtherTheme)
-        .and("contain", debrief.otherThemeDescription)
+        .should("contain", debrief.labelAdditionalResearch)
+        .and("contain", debrief.descriptionAdditionalResearch)
         .find(`button`)
         .contains(debrief.formButtonText)
         .click()
@@ -93,15 +91,11 @@ describe('Process Debrief - No violation"', () => {
         cy.scrollTo(0, 400)
         cy.get("h4")
           .contains("Debrief")
-          // TODO BE should fix this first
-        // cy.get("tbody>tr")
-        //   .contains("td", debrief.noViolationNextTask1)
-        //   .siblings("td")
-        //   .contains(roles.PM)
-        cy.get("tbody>tr")
-          .contains("td", debrief.noViolationNextTask2)
+
+          cy.get("tbody>tr")
+          .contains("td", "Debrief verwerken")
           .siblings("td")
-          .contains(roles.TH)
+          .contains(roles.PHH)
       })
     })
 

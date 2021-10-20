@@ -2,9 +2,11 @@
   "headerText": "Debrief terugkoppeling geven",
   "labelNo": "Geen overtreding",
   "labelYes": "Overtreding",
+  "labelAdditionalResearch": "Nader intern onderzoek nodig",
   "labelOtherTheme": "Naar ander thema",
   "formButtonText": "Terugkoppeling toevoegen",
-  "noViolationDescription": "Toelichting bij Geen overtreding",
+  "descriptionNoViolation": "Toelichting bij Geen overtreding",
+  "descriptionAdditionalResearch": "Vermoeden van overtreding. Nader onderzoek noodzakelijk voor het opstellen van de bewijslast.",
   "noViolationNextTask1": "Terugkoppeling melder(s)",
   "noViolationNextTask2": "Opstellen verkorte rapportage huisbezoek",
   "closingTask1": "Uitzetten vervolgstap",
@@ -15,5 +17,8 @@
   "violationDescription": "Toelichting bij Overtreding",
   "violationNextTask1": "Opstellen concept aanschrijvingen",
   "violationNextTask2": "Opstellen beeldverslag",
-  "violationNextTask3": "Opstellen rapport van bevindingen"
+  "violationNextTask3": "Opstellen rapport van bevindingen",
+  "summonNextStep1": "Nakijken aanschrijving(en)",
+  "summonNextStep2": "Verwerk aanschrijving",
+  "summonTask1": "Aanschrijving verwerken"
 }
