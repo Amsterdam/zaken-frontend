@@ -19,11 +19,6 @@ describe('Plan "huisbezoek"', () => {
       })
     })
 
-    it("Adresoverzicht has right address", () => {
-      cy.get("h1")
-        .contains(`${address.street}, ${address.zipCode}`)
-    })
-
     it("Select case by caseId", () => {
       cy.scrollTo(0, 400)
       cy.getCaseId().then((e) => {
