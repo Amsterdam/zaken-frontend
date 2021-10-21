@@ -22,8 +22,6 @@ describe('Plan "huisbezoek"', () => {
     it("Select case by caseId", () => {
       cy.scrollTo(0, 400)
       cy.getCaseId().then((e) => {
-        cy.log('caseId =>', e.id)
-
         cy.get("tbody>tr")
           .contains("td", e.id)
           .click()
@@ -31,10 +29,8 @@ describe('Plan "huisbezoek"', () => {
         // check dueDate
         cy.get("tbody>tr>td").eq(3)
           .should("contain", "-")
-
       })
     })
-
 
     it("Click on task Bezoek inplannen", () => {
       cy.get("tbody>tr")
@@ -48,7 +44,6 @@ describe('Plan "huisbezoek"', () => {
       cy.get("dd")
         .contains(address.street)
     })
-
   })
 
   describe('Fill in "Bezoek inplannen" form', () => {
@@ -95,14 +90,9 @@ describe('Plan "huisbezoek"', () => {
       const url = `${Cypress.env("baseUrlAcc")}cases/*/events/`
       cy.intercept(url).as("getEvents")
       cy.wait("@getEvents").then(() => {
-        cy.get("h1").contains("Zaakdetails")
-        cy.get("h2").contains("Zaakhistorie")
-        cy.get("span").contains("Bezoek ingepland ")
+        cy.history("Bezoek ingepland", "Datum")
       })
     })
 
-    it("History contains the right items", () => {
-      cy.history("Bezoek ingepland", "Datum")
-    })
   })
 })
