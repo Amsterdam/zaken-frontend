@@ -27,3 +27,15 @@ export const useTask = (id: number | string, options?: Options) => {
     isProtected: true
   })
 }
+
+export const useTaskUpdate = (id: number | string, options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<Components.Schemas.CaseUserTaskList>({
+    ...options,
+    lazy: true,
+    url: makeApiUrl("tasks", id),
+    groupName: "cases",
+    handleError,
+    isProtected: true
+  })
+}
