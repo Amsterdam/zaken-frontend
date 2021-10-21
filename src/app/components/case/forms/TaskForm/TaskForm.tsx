@@ -10,7 +10,7 @@ type Props = {
   id: Components.Schemas.Case["id"]
 }
 
-const mapData = (data: { workflowProcess: Components.Schemas.WorkflowOption }) => ({ process_id: data.workflowProcess.id })
+const mapData = (data: { workflowProcess: Components.Schemas.WorkflowOption }) => ({ workflow_option_id: data.workflowProcess.id })
 
 const TaskForm: React.FC<Props> = ({ id }) => {
 
