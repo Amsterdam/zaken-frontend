@@ -71,9 +71,7 @@ describe('Process Debrief - Authorization required"', () => {
     })
 
     it('Submit form and check debrief status', () => {
-      const url = `${Cypress.env("baseUrlAcc")}cases/*/tasks/`
-      cy.intercept(url).as('getNextTask')
-
+      
       cy.get('button[data-e2e-id="submit"]')
         .contains(debrief.formButtonText)
         .click()
@@ -86,25 +84,78 @@ describe('Process Debrief - Authorization required"', () => {
         .find(`button`)
         .contains(debrief.formButtonText)
         .click()
-
-      cy.wait('@getNextTask').then(() => {
-        cy.scrollTo(0, 400)
-        cy.get("h4")
-          .contains("Debrief")
-          // TODO BE should fix this first
-        // cy.get("tbody>tr")
-        //   .contains("td", debrief.noViolationNextTask1)
-        //   .siblings("td")
-        //   .contains(roles.PM)
-        cy.get("tbody>tr")
-          .contains("td", debrief.authorizationNextTask1)
-          .siblings("td")
-          .contains(roles.TH)
-      })
     })
 
     it("Check debrief event in history", () => {
       cy.history("Debrief", "Projecthandhaver")
+    })
+
+    it('PM can finish task "Aanvragen machtiging"', () => {
+    
+      cy.scrollTo(0, 400)
+      cy.get("h4")
+        .contains("Inplannen Huisbezoek")
+        
+      cy.get("tbody>tr")
+        .contains("td", debrief.authorizationNextTask1)
+        .siblings("td")
+        .contains(roles.PM)
+        .parents('td')
+        .siblings('td')
+        .contains("Taak afronden")
+        .click({force: true})
+
+      cy.get(`[role="dialog"]`)
+          .should('have.length', 1)
+          .contains(debrief.authorizationNextTask1)
+          
+      cy.get(`[role="dialog"]`)
+          .find('input[name="completed"]')
+          .first()
+          .check()
+      
+      cy.get(`[role="dialog"]`)
+          .find('button')
+          .contains("Taak afronden")
+          .click()
+    })
+
+    it("Check debrief event in history", () => {
+      cy.history(debrief.authorizationNextTask1, roles.PM)
+    })
+
+    it('PM can finish task "Monitoren binnenkomen machtiging"', () => {
+    
+      cy.scrollTo(0, 400)
+      cy.get("h4")
+        .contains("Inplannen Huisbezoek")
+        
+      cy.get("tbody>tr")
+        .contains("td", debrief.authorizationNextTask2)
+        .siblings("td")
+        .contains(roles.PM)
+        .parents('td')
+        .siblings('td')
+        .contains("Taak afronden")
+        .click({force: true})
+
+      cy.get(`[role="dialog"]`)
+          .should('have.length', 1)
+          .contains(debrief.authorizationNextTask2)
+          
+      cy.get(`[role="dialog"]`)
+          .find('input[name="completed"]')
+          .first()
+          .check()
+      
+      cy.get(`[role="dialog"]`)
+          .find('button')
+          .contains("Taak afronden")
+          .click()
+    })
+
+    it("Check debrief event in history", () => {
+      cy.history(debrief.authorizationNextTask2, roles.PM)
     })
   })
 })

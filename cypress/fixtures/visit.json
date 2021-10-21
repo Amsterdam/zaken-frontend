@@ -2,5 +2,6 @@
   "weekSegment": "Doordeweeks",
   "daySegment": "Overdag",
   "priority": "Normaal",
+  "priorityAuthorization": "Machtiging",
   "description": "Korte toelichting voor het plannen van een bezoek."
 }

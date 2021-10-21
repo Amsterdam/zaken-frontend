@@ -44,6 +44,7 @@
       "020_planVisit/1-plan.visit.spec.js",
       "020_planVisit/4-result.access.granted.spec.js",
       "030_debrief/01c-debrief.authorization.spec.js",
+      "020_planVisit/1a-plan.visit.authorization.spec.js",
       "010_addCase/themes/vakantieverhuur/add.case.errors.spec.js",
       "010_addCase/roles/handhaver/add.case.disabled.spec.js",
       "010_addCase/roles/handhavingsjurist/add.case.disabled.spec.js",
