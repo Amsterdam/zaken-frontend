@@ -1,9 +1,9 @@
-import mapCamundaToScaffold from "./mapWorkflowDataToScaffold"
+import mapWorkflowDataToScaffold from "./mapWorkflowDataToScaffold"
 import mock from "./workflowData.mock"
 
-describe("mapCamundaToScaffold", () => {
+describe("mapWorkflowDataToScaffold", () => {
   it("fields", () => {
-    const scaffold = mapCamundaToScaffold(mock)
+    const scaffold = mapWorkflowDataToScaffold(mock)
     expect(Object.keys(scaffold.fields)).toEqual([
       "situation",
       "can_next_visit_go_ahead",
