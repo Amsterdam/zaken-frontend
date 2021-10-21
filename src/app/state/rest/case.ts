@@ -207,14 +207,3 @@ export const useVisitsCreate = (options?: Options) => {
     isProtected: true
   })
 }
-
-export const useDueDate = (options?: Options) => {
-  const handleError = useErrorHandler()
-  return useApiRequest<Components.Schemas.CamundaDateUpdate>({
-    ...options,
-    url: makeApiUrl("camunda/task/date"),
-    groupName: "cases",
-    handleError,
-    isProtected: true
-  })
-}

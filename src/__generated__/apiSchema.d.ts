@@ -1,10 +1,5 @@
 declare namespace Components {
     namespace Schemas {
-
-        export interface CamundaDateUpdate {
-            camunda_task_id: string;
-            date: string; // date-time
-        }
         export interface Action {
             id: number;
             name: string;
