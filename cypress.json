@@ -18,7 +18,7 @@
     "010_addCase/themes/vakantieverhuur/add.case.anonymous.no.ad.spec.js",
     "020_planVisit/1-plan.visit.spec.js",
     "020_planVisit/4-result.access.granted.spec.js",
-    "030_debrief/01b-debrief.violation.spec.js",
-    "030_debrief/03-report.spec.js"
+    "030_debrief/01c-debrief.authorization.spec.js",
+    "020_planVisit/1a-plan.visit.authorization.spec.js"
   ]
 }
