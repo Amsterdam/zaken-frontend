@@ -12,16 +12,16 @@ import NotFoundPage from "app/pages/errors/NotFoundPage"
 
 type Props = {
   id: string
-  camundaTaskId: string
+  caseUserTaskId: string
 }
 
-const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString, camundaTaskId }) => {
+const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString, caseUserTaskId }) => {
 
   const id = parseUrlParamId(idString)
 
   return (
     isValidUrlParamId<Components.Schemas.Case["id"]>(id) &&
-    isValidUrlParamId<Components.Schemas.CaseUserTask["task_id"]>(camundaTaskId) ?
+    isValidUrlParamId<Components.Schemas.CaseUserTask["task_id"]>(caseUserTaskId) ?
     <DefaultLayout>
       <RowWithColumn>
         <PageHeading />
@@ -31,7 +31,7 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString, camund
       </RowWithColumn>
       <Row>
         <Column spanLarge={50}>
-          <CitizenReportForm id={ id } caseUserTaskId={ camundaTaskId } />
+          <CitizenReportForm id={ id } caseUserTaskId={ caseUserTaskId } />
         </Column>
       </Row>
     </DefaultLayout> :

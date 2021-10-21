@@ -3,7 +3,7 @@ import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
 
 import ScaffoldFields from "app/components/shared/Form/ScaffoldFields"
 import createScaffoldProps from "./utils/mapWorkflowDataToScaffold"
-import mapCamundaToInitialValues from "./utils/mapWorkflowDataToInitialValues"
+import mapWorkflowDataToInitialValues from "./utils/mapWorkflowDataToInitialValues"
 import mapSubmitData from "./utils/mapSubmitData"
 
 type Props = {
@@ -18,7 +18,7 @@ const WorkflowForm: React.FC<Props> = ({ workflowForm, isLoading, onSubmit, onCa
       showSpinner={ isLoading }
       onSubmit={ (data: unknown) => { onSubmit(mapSubmitData(workflowForm, data)) } }
       onCancel={ onCancel }
-      initialValues={ mapCamundaToInitialValues(workflowForm) }
+      initialValues={ mapWorkflowDataToInitialValues(workflowForm) }
     >
       <ScaffoldFields { ...createScaffoldProps(workflowForm, onCancel) } />
     </ScaffoldForm>
