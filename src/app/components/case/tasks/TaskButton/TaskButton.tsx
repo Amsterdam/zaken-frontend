@@ -3,7 +3,7 @@ import TableAction from "app/components/shared/TableAction/TableAction"
 import FormModal from "../FormModal/FormModal"
 
 type Props = {
-  onSubmit: (variables: Components.Schemas.CamundaTaskComplete["variables"]) => Promise<unknown>
+  onSubmit: (variables: Components.Schemas.GenericCompletedTask["variables"]) => Promise<unknown>
   taskName: string
   caseId: Components.Schemas.Case["id"]
   form?: Components.Schemas.CaseUserTask["form"]

@@ -29,7 +29,7 @@ const ChangeDueDateForm: React.FC<Props> = ({ isLoading, onSubmit, onCancel , du
       showSpinner={ isLoading }
       onSubmit={ onSubmit }
       onCancel={ onCancel }
-      initialValues={ { date: formatDate(dueDate), camunda_task_id: taskId } }
+      initialValues={ { date: formatDate(dueDate), workflow_task_id: taskId } }
     >
       <ScaffoldFields { ...createScaffoldProps(onCancel, formatDate(minDate) ) } />
     </ScaffoldForm>

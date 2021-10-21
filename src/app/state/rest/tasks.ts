@@ -16,13 +16,25 @@ export const useTasks = (role: string, options?: Options) => {
   })
 }
 
-export const useTask = (id: number, options?: Options) => {
+export const useTask = (id: number | string, options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.CaseUserTaskList>({
     ...options,
     lazy: true,
     url: makeApiUrl("tasks", id),
     groupName: "task",
+    handleError,
+    isProtected: true
+  })
+}
+
+export const useTaskUpdate = (id: number | string, options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<Components.Schemas.CaseUserTaskList>({
+    ...options,
+    lazy: true,
+    url: makeApiUrl("tasks", id),
+    groupName: "cases",
     handleError,
     isProtected: true
   })

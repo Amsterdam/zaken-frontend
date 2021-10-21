@@ -8,7 +8,7 @@ export type Props = {
   caseId: number
   isOpen: boolean
   closeModal: () => void
-  onSubmit: (variables: Components.Schemas.CamundaTaskComplete["variables"]) => Promise<unknown>
+  onSubmit: (variables: Components.Schemas.GenericCompletedTask["variables"]) => Promise<unknown>
   form?: Components.Schemas.CaseUserTask["form"]
 }
 
@@ -18,7 +18,7 @@ const FormModal: React.FC<Props> = ({ form, isOpen, closeModal, onSubmit, taskNa
 
   const { addSuccessFlashMessage } = useFlashMessages()
 
-  const onSubmitWrap = async (variables: Components.Schemas.CamundaTaskComplete["variables"] = {}) => {
+  const onSubmitWrap = async (variables: Components.Schemas.GenericCompletedTask["variables"] = {}) => {
     const requestBody = form ? variables : {}
     const result = await onSubmit(requestBody)
     if (result === undefined) return
