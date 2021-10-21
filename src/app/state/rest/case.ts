@@ -176,9 +176,9 @@ export const useCaseTasks = (caseId: Components.Schemas.Case["id"], options?: Op
 
 export const useTaskComplete = (options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<Components.Schemas.CamundaTaskComplete>({
+  return useApiRequest<Components.Schemas.GenericCompletedTask>({
     ...options,
-    url: makeApiUrl("camunda", "task", "complete"),
+    url: makeApiUrl("generic-tasks", "complete"),
     groupName: "cases",
     handleError,
     isProtected: true
@@ -202,17 +202,6 @@ export const useVisitsCreate = (options?: Options) => {
     ...options,
     lazy: true,
     url: makeApiUrl("visits"),
-    groupName: "cases",
-    handleError,
-    isProtected: true
-  })
-}
-
-export const useDueDate = (options?: Options) => {
-  const handleError = useErrorHandler()
-  return useApiRequest<Components.Schemas.CamundaDateUpdate>({
-    ...options,
-    url: makeApiUrl("camunda/task/date"),
     groupName: "cases",
     handleError,
     isProtected: true

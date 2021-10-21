@@ -2,7 +2,7 @@ import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import navigateTo from "app/routing/navigateTo"
 
-export default (id: Components.Schemas.Case["id"], processes?: Components.Schemas.CamundaProcess[]) => {
+export default (id: Components.Schemas.Case["id"], processes?: Components.Schemas.WorkflowOption[]) => {
 
   const fields = {
     camundaProcess: {

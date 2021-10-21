@@ -15,7 +15,7 @@ const Span = styled.span`
 
 export default (
     id: Components.Schemas.Case["id"],
-    execPost: (data: Partial<Components.Schemas.CamundaTaskComplete>) => Promise<unknown>
+    execPost: (data: Partial<Components.Schemas.GenericCompletedTask>) => Promise<unknown>
   ) =>
   (data: Components.Schemas.CaseUserTask) => {
 

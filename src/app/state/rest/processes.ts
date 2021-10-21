@@ -5,7 +5,7 @@ import useApiRequest from "./hooks/useApiRequest"
 
 export const useWorkflowProcesses = (id: Components.Schemas.Case["id"], options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<Components.Schemas.CamundaProcess[]>({
+  return useApiRequest<Components.Schemas.WorkflowOption[]>({
     ...options,
     url: makeApiUrl(`cases/${ id }/processes`),
     groupName: "cases",
@@ -16,7 +16,7 @@ export const useWorkflowProcesses = (id: Components.Schemas.Case["id"], options?
 
 export const useWorkflowProcess = (id: Components.Schemas.Case["id"], options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<Components.Schemas.CamundaStartProcess>({
+  return useApiRequest<Components.Schemas.StartWorkflow>({
     ...options,
     lazy: true,
     url: makeApiUrl(`cases/${ id }/processes/start`),

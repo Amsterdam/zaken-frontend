@@ -1,11 +1,11 @@
 import styled from "styled-components"
 import { Icon, themeSpacing } from "@amsterdam/asc-ui"
 import { useModal } from "app/components/shared/Modal/hooks/useModal"
-import { useDueDate } from "app/state/rest/case"
 import { Edit } from "app/components/shared/Icons"
 import { appendTimeToDate } from "app/components/shared/Helpers/helpers"
 import DueDate from "app/components/shared/DueDate/DueDate"
 import ChangeDueDateModal from "./ChangeDueDateModal"
+import { useTaskUpdate } from "app/state/rest"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
@@ -29,17 +29,16 @@ const StyledIcon = styled(Icon)`
   margin-left: ${ themeSpacing(2) };
 `
 
-const mapSubmitData = (data: Components.Schemas.CamundaDateUpdate) => ({
-  ...data,
-  date: appendTimeToDate(data.date)
-})
-
-const ChangeableDueDate: React.FC<Props> = ({ dueDate, caseUserTaskId }) => {
+const ChangeableDueDate: React.FC<Props> = ({ dueDate, caseId, caseUserTaskId }) => {
 
   const { isModalOpen, openModal, closeModal } = useModal()
+  const [, { execPatch }] = useTaskUpdate(caseUserTaskId)
 
-  const [, { execPost }] = useDueDate({ lazy: true })
-  const onSubmit = (data: Components.Schemas.CamundaDateUpdate) => execPost(mapSubmitData(data))
+  const onSubmit = (data: { date: string, id: string }) => {
+    appendTimeToDate(data.date) !== dueDate 
+      ? execPatch( { due_date: appendTimeToDate( data.date ) })
+      : closeModal()
+  }
 
   return (
     <>
