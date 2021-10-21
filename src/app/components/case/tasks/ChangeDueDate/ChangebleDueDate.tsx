@@ -32,12 +32,12 @@ const StyledIcon = styled(Icon)`
 const ChangeableDueDate: React.FC<Props> = ({ dueDate, caseId, caseUserTaskId }) => {
 
   const { isModalOpen, openModal, closeModal } = useModal()
-
   const [, { execPatch }] = useTaskUpdate(caseUserTaskId)
 
-
-  const onSubmit = (data: any) => {
-    execPatch( { due_date: appendTimeToDate(data.date) })
+  const onSubmit = (data: { date: string, id: string }) => {
+    appendTimeToDate(data.date) !== dueDate 
+      ? execPatch( { due_date: appendTimeToDate( data.date ) })
+      : closeModal()
   }
 
   return (
