@@ -1,5 +1,6 @@
 import { Table, tableSorters } from "@amsterdam/wonen-ui"
 import useValues from "./hooks/useValues"
+import { useUsersMe } from "app/state/rest/index"
 
 type Props = {
   data?: Components.Schemas.CaseUserTaskList[]
@@ -8,17 +9,26 @@ type Props = {
 
 const { sortStrings, sortDates } = tableSorters
 
-const columns = [
-  { header: "Behandelaar", sorter: sortStrings },
-  { header: "Adres", minWidth: 150, sorter: sortStrings },
-  { header: "Open taak", minWidth: 100, sorter: sortStrings },
-  { header: "Slotdatum", minWidth: 50, sorter: sortDates, defaultSorting: "ASCEND" as const },
-  { minWidth: 140 }
-]
+// If user is owner, move item to top.
+const sortUserUp = (a: any, b: any, id: string) => {
+  if (a === id) return 1
+  if (b === id) return -1
+  return sortStrings(a, b)
+}
 
 const TableTasks: React.FC<Props> = ({ data, isBusy }) => {
-
   const values = useValues(data)
+  const [me] = useUsersMe()
+
+  const sortOwners = (a: any, b: any) => me?.id ? sortUserUp(a, b, me.id) : sortStrings(a, b)
+
+  const columns = [
+    { header: "Behandelaar", sorter: sortOwners },
+    { header: "Adres", minWidth: 150, sorter: sortStrings },
+    { header: "Open taak", minWidth: 100, sorter: sortStrings },
+    { header: "Slotdatum", minWidth: 50, sorter: sortDates, defaultSorting: "ASCEND" as const },
+    { minWidth: 140 }
+  ]
 
   return (
     <Table
