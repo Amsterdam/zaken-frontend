@@ -1,6 +1,6 @@
 import { useCallback, useContext } from "react"
-import { ApiContext } from "../../../../state/rest/provider/ApiProvider"
-import { makeApiUrl } from "../../../../state/rest/hooks/utils/apiUrl"
+import { ApiContext } from "./ApiProvider"
+import { makeApiUrl } from "../hooks/utils/apiUrl"
 
 type GroupName = "cases" | "case" | "auth" | "users" | "themes" | "roles" | "permissions"
 

@@ -4,7 +4,7 @@ import { Spinner, Checkbox, themeSpacing } from "@amsterdam/asc-ui"
 import { useUsersMe } from "app/state/rest/index"
 import { useTask } from "app/state/rest"
 import UserIcon from "./UserIcon"
-import useContextCache from "./useContextCache"
+import useContextCache from "../../../../state/rest/provider/useContextCache"
 
 type Props = {
   id: number
