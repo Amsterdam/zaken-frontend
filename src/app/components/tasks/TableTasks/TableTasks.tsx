@@ -7,10 +7,12 @@ type Props = {
   isBusy: boolean
 }
 
+type Value = string | number | null | undefined
+
 const { sortStrings, sortDates } = tableSorters
 
 // If user is owner, move item to top.
-const sortUserUp = (a: any, b: any, id: string) => {
+const sortUserUp = (a: Value, b: Value, id: string) => {
   if (a === id) return 1
   if (b === id) return -1
   return sortStrings(a, b)
@@ -20,7 +22,7 @@ const TableTasks: React.FC<Props> = ({ data, isBusy }) => {
   const values = useValues(data)
   const [me] = useUsersMe()
 
-  const sortOwners = (a: any, b: any) => me?.id ? sortUserUp(a, b, me.id) : sortStrings(a, b)
+  const sortOwners = (a: Value, b: Value) => me?.id ? sortUserUp(a, b, me.id) : sortStrings(a, b)
 
   const columns = [
     { header: "Behandelaar", sorter: sortOwners },
