@@ -55,6 +55,8 @@ describe('Close case as projectmedwerker"', () => {
         .siblings('td')
         .contains("Zaak afsluiten")
 
+      cy.testDueDate("tbody>tr>td", 5)
+
       cy.visit(`/zaken/${caseId}/afronding/${taskId}`)
 
       cy.wait("@getCloseReasons").then(() => {

@@ -47,10 +47,8 @@ describe('Result "huisbezoek" with access granted', () => {
         cy.get("tbody>tr>td").eq(2)
           .should("contain", roles.TH)
 
-        // check dueDate
-        cy.get("tbody>tr>td").eq(3)
-          .should("contain", "-")
-
+        cy.testDueDate("tbody>tr>td", 0)
+  
         const url = `${Cypress.env("baseUrlAcc")}users/`
         cy.intercept(url).as('getUsers')
 
