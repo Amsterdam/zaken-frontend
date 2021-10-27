@@ -23,7 +23,7 @@
     "030_debrief/01-debrief.no.violation.spec.js",
     "030_debrief/03-report.short.spec.js",
     "050_nextStep/next.step.close.case.spec.js",
-    "060_closeCase/*.js",
+    "060_closeCase/4.close.case.no.violation.spec.js",
     "010_addCase/themes/vakantieverhuur/add.case.not.anonymous.ad.spec.js",
     "020_visit/visit.plan.spec.js",
     "020_visit/visit.result.access.granted.spec.js",

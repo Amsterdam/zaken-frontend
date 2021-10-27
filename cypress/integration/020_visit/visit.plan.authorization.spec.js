@@ -44,7 +44,7 @@ describe('Plan "huisbezoek"', () => {
 
     it("Fill in description", () => {
       cy.get('[data-e2e-id="description"]')
-        .type(summon.description)
+        .type(visit.description)
     })
 
     it("Submit form", () => {
