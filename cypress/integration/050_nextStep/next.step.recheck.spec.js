@@ -30,8 +30,7 @@ describe('Select Next Step - closing case"', () => {
     cy.wait('@getNextTask').then(() => {
 
     // check dueDate
-    cy.get("tbody>tr>td").eq(3)
-      .should("contain", "-")
+    cy.testDueDate("tbody>tr>td", 3)
     
     cy.get('button')
       .contains("Taak afronden")
