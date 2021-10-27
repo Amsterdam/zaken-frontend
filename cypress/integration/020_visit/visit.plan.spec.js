@@ -25,11 +25,11 @@ describe('Plan "huisbezoek"', () => {
         cy.get("tbody>tr")
           .contains("td", e.id)
           .click()
-
-        // check dueDate
-        cy.get("tbody>tr>td").eq(3)
-          .should("contain", "-")
       })
+    })
+
+    it("Check right dueDate", () => {
+      cy.testDueDate("tbody>tr>td", 0)
     })
 
     it("Click on task Bezoek inplannen", () => {

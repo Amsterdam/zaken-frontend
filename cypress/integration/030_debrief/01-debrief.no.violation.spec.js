@@ -33,6 +33,7 @@ describe('Process Debrief - No violation"', () => {
 
     it('Intercept Debrief URL and load page', () => {
 
+
       const url = `${Cypress.env("baseUrlAcc")}cases/*/tasks/`
       cy.intercept(url).as('getTasks')
 
@@ -43,9 +44,8 @@ describe('Process Debrief - No violation"', () => {
         const taskId = debriefTask.case_user_task_id
 
         // check dueDate
-        cy.get("tbody>tr>td").eq(3)
-          .should("contain", "-")
-
+        cy.testDueDate("tbody>tr>td", 0)
+        
         cy.visit(`/zaken/${caseId}/debriefing/${taskId}`)
 
         cy.url()

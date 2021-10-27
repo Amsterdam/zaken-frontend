@@ -3,6 +3,10 @@ import visit from "../../fixtures/visit.json"
 
 describe('Plan "huisbezoek"', () => {
 
+  it("Check right dueDate", () => {
+    cy.testDueDate("tbody>tr>td", 0)
+  })
+
   describe('Go to "Bezoek inplannen" form', () => {
 
     it("Click on task Bezoek inplannen", () => {
