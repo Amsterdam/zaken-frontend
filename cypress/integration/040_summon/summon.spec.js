@@ -26,8 +26,7 @@ describe('Process Summon"', () => {
   })
   
   it('check dueDate', () => {
-    cy.get("tbody>tr>td").eq(3)
-    .should("contain", "-")
+    cy.testDueDate("tbody>tr>td", 3)
   })
   
   it("History contains the right items", () => {
