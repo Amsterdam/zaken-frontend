@@ -22,7 +22,7 @@ describe('Close case as projectmedwerker"', () => {
     cy.scrollTo(0, 400)
     cy.getCaseId().then((e) => {
       cy.get("tbody>tr")
-        .contains("td", "Afsluiten zaak")
+        .contains("td", e.id)
         .click()
     })
   })
