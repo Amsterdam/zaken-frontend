@@ -3,6 +3,7 @@ import Tooltip from "@material-ui/core/Tooltip"
 import LockOpen from "@material-ui/icons/PersonOutline"
 import { Spinner, Icon, themeSpacing } from "@amsterdam/asc-ui"
 import { useUsers } from "app/state/rest/index"
+import { createNameAbbreviation } from "app/components/shared/Helpers/helpers"
 
 type Props = {
   owner: string
@@ -21,12 +22,6 @@ const StyledIcon = styled(Icon)`
 const StyledDiv = styled.div`
   margin-left: ${ themeSpacing(2) };
 `
-
-const createNameAbbreviation = (user: Components.Schemas.User) => (
-  user.first_name && user.last_name
-    ? `${ user?.first_name.charAt(0).toUpperCase() }${ user?.last_name.charAt(0).toUpperCase() }`
-    : "Onbekend"
-)
 
 const UserIcon: React.FC<Props> = ({ owner }) => {
   const [data, { isBusy }] = useUsers()

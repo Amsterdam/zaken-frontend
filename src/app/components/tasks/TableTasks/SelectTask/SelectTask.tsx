@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react"
 import styled from "styled-components"
-import { Spinner, Checkbox, themeSpacing } from "@amsterdam/asc-ui"
+import { Spinner, Checkbox, themeSpacing, Label } from "@amsterdam/asc-ui"
+import Tooltip from "@material-ui/core/Tooltip"
 import { useUsersMe } from "app/state/rest/index"
 import { useTask } from "app/state/rest"
 import UserIcon from "./UserIcon"
 import useContextCache from "app/state/rest/provider/useContextCache"
+import { createNameAbbreviation } from "app/components/shared/Helpers/helpers"
 
 type Props = {
   id: number
@@ -13,6 +15,10 @@ type Props = {
 
 const StyledSpinner = styled(Spinner)`
   margin: ${ themeSpacing(2) };
+`
+
+const StyledLabel = styled(Label)`
+  font-weight: 400;
 `
 
 const SelectTask: React.FC<Props> = ({ id, owner }) => {
@@ -53,7 +59,15 @@ const SelectTask: React.FC<Props> = ({ id, owner }) => {
   if (owner && owner !==  data?.id ) {
     return <UserIcon owner={ owner }/>
   }
-  return <Checkbox data-e2e-id={`${ id }`} checked={isChecked} onChange={ onChange }/>
+  return (
+    
+    <StyledLabel htmlFor={`cb_${ id }`} label={owner && owner ===  data?.id ? `${ createNameAbbreviation(data) }` : ""}>
+      <Tooltip title={isChecked ? "Mijn taak" : "Beschikbaar"}>
+        <Checkbox data-e2e-id={`${ id }`} id={ `cb_${ id }` } checked={isChecked} onChange={ onChange }/>
+      </Tooltip>
+    </StyledLabel>
+    
+  )
 }
 
 export default SelectTask
