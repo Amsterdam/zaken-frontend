@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import pick from "lodash.pick"
 import scaffold from "./scaffold"
 import { useCaseThemes, useReasons, useCaseCreate, useProjects, useListing } from "app/state/rest"
 import ConfirmScaffoldForm from "app/components/shared/ConfirmScaffoldForm/ConfirmScaffoldForm"
@@ -47,21 +48,19 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
   const [, { execPost }] = useCaseCreate()
   const [listing] = useListing(tonId)
 
+  // Only show Vakantieverhuur, Digitaal Toezicht and Yes as an option for TON.
+  const caseThemesOptions = tonId ? caseThemes?.results?.filter(({ name }) => name === TON_THEME_NAME) : caseThemes?.results
+  const reasonOptions = tonId ? reasons?.results?.filter(({ name }) => name === TON_REASON_NAME)
+    : reasons?.results
+  const adOptions = tonId ? pick(advertisementOptions, ["yes"]) : advertisementOptions
+
   /*
   ** themeId ?? -1 is ugly coding.
   ** Because it takes time to fetch the reasons after selecting a theme, the submit button is enabled.
   ** themeId = undefined will load a spinner for the entire page. :(
   */
-  const fields = useScaffoldedFields(
-    scaffold, 
-    bagId, 
-    themeId ?? -1,
-    setThemeId, 
-    caseThemes?.results, 
-    reasons?.results ?? [], 
-    projects?.results ?? [], 
-    advertisementOptions
-  )
+  const fields = useScaffoldedFields(scaffold, bagId, themeId ?? -1,
+    setThemeId, caseThemesOptions, reasonOptions ?? [], projects?.results ?? [], adOptions)
 
   const navigateWithFlashMessage = useNavigateWithFlashMessage()
   const afterSubmit = async (result: Components.Schemas.CaseCreateUpdate) =>
