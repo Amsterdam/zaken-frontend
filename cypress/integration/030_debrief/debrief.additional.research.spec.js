@@ -43,8 +43,7 @@ describe('Process Debrief - No violation"', () => {
         const taskId = debriefTask.case_user_task_id
 
         // check dueDate
-        cy.get("tbody>tr>td").eq(3)
-          .should("contain", "-")
+        cy.testDueDate("tbody>tr>td", 2)
 
         cy.visit(`/zaken/${caseId}/debriefing/${taskId}`)
 

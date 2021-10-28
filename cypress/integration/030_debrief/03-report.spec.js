@@ -17,7 +17,6 @@ describe('Process Report Visit"', () => {
   it("Select case by caseId", () => {
     cy.scrollTo(0, 400)
     cy.getCaseId().then((e) => {
-      cy.log('caseId =>', e.id)
       cy.get("tbody>tr")
         .contains("td", e.id)
         .click()
@@ -25,8 +24,7 @@ describe('Process Report Visit"', () => {
   })
   
   it('check dueDate', () => {
-    cy.get("tbody>tr>td").eq(3)
-    .should("contain", "-")
+    cy.testDueDate("tbody>tr>td", 2)
   })
 
   it('TH can finish task "Opstellen rapport van bevindingen"', () => {
@@ -56,10 +54,15 @@ describe('Process Report Visit"', () => {
         .click()
   })
 
+  it('check dueDate', () => {
+    cy.testDueDate("tbody>tr>td", 2)
+  })
+
   it("History contains the right items", () => {
     cy.history(debrief.violationNextTask3, "Uitvoerder")
   })
 
+  
   it('TH can finish task "Opstellen beeldverslag"', () => {
   
     cy.get("tbody>tr")
@@ -91,6 +94,9 @@ describe('Process Report Visit"', () => {
     cy.history(debrief.violationNextTask2, "Uitvoerder")
   })
 
+  it('check dueDate', () => {
+    cy.testDueDate("tbody>tr>td", 1)
+  })
   it('TH can finish task "Opstellen concept aanschrijvingen"', () => {
   
     cy.get("tbody>tr")
@@ -122,6 +128,9 @@ describe('Process Report Visit"', () => {
     cy.history(debrief.violationNextTask1, "Uitvoerder")
   })
 
+  it('check dueDate', () => {
+    cy.testDueDate("tbody>tr>td", 2)
+  })
   it("Check next task is 'Nakijken aanschrijving(en)'", () => {
     // const url = `${Cypress.env("baseUrlAcc")}cases/*/tasks/`
     // cy.intercept(url).as('getNextTask')
@@ -160,6 +169,9 @@ describe('Process Report Visit"', () => {
     cy.history(debrief.summonNextStep1, "Uitvoerder")
   })
 
+  it('check dueDate', () => {
+    cy.testDueDate("tbody>tr>td", 1)
+  })
   it("Check next task is 'Verwerk aanschrijving'", () => {
       
     cy.scrollTo(0, 400)

@@ -29,7 +29,7 @@ describe('Select Next Step - closing case"', () => {
     cy.wait('@getNextTask').then(() => {
 
     // check dueDate
-    cy.testDueDate("tbody>tr>td", 0)
+    cy.testDueDate("tbody>tr>td", 3)
     
     cy.get('button')
       .contains("Taak afronden")
@@ -41,7 +41,7 @@ describe('Select Next Step - closing case"', () => {
       .should('have.length', 1)
       .and("contain", debrief.closingTask1)
     cy.get('[data-e2e-id="next_step"]')
-      .select(debrief.closingTask2)
+      .select(debrief.closingTask3)
 
     cy.get(`[data-e2e-id="submit"]`)
       .click()
@@ -51,8 +51,11 @@ describe('Select Next Step - closing case"', () => {
     const url = `${Cypress.env("baseUrlAcc")}cases/*/events/`
     cy.intercept(url).as('getEvents')
     cy.wait('@getEvents').then(() => {
-      cy.get("h1").contains("Zaakdetails")
-      cy.history("Uitzetten vervolgstap", "Uitvoerder")
+    cy.get("h1").contains("Zaakdetails")
+    cy.get("tbody>tr>td").eq(1)
+      .should("contain", "Inplannen Hercontrole")
+    cy.history("Uitzetten vervolgstap", "Uitvoerder")
     })
   })
+
 })

@@ -17,7 +17,6 @@ describe('Process Feedback reporter"', () => {
   it("Select case by caseId", () => {
     cy.scrollTo(0, 400)
     cy.getCaseId().then((e) => {
-      cy.log('caseId =>', e.id)
       cy.get("tbody>tr")
         .contains("td", e.id)
         .click()
@@ -25,10 +24,7 @@ describe('Process Feedback reporter"', () => {
   })
 
   // check dueDate
-  it('check dueDate', () => {
-    cy.get("tbody>tr>td").eq(3)
-    .should("contain", "-")
-  })
+  cy.testDueDate("tbody>tr>td", 30)
 
   it('PM can finish task "Terugkoppeling melder(s)"', () => {
     cy.get("tbody>tr")

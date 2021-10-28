@@ -1,0 +1,13 @@
+{
+  "type": "Waarschuwing VV-vergunning",
+  "firstName1": "John",
+  "lastName1": "Doe",
+  "preposition1": "van der",
+  "role1": "Eigenaar",
+  "firstName2": "Jane",
+  "lastName2": "Doe",
+  "preposition2": "van der",
+  "role2": "Bewoner",
+  "description": "Korte toelichting voor de aanschrijving.",
+  "formButtonText": "Resultaat verwerken"
+}

@@ -47,8 +47,7 @@ describe('Result "huisbezoek" with nobody present and hold', () => {
           .should("contain", roles.TH)
 
         // check dueDate
-        cy.get("tbody>tr>td").eq(3)
-          .should("contain", "-")
+        cy.testDueDate("tbody>tr>td", 0)
 
         const url = `${Cypress.env("baseUrlAcc")}users/`
         cy.intercept(url).as('getUsers')

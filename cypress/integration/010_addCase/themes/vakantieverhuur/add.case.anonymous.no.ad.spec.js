@@ -17,7 +17,7 @@ describe("Create case and validate input", () => {
     cy.get("#theme_1")
       .check({force: true})
 
-    cy.get("#reason_0")
+    cy.get("#reason_1")
       .check({force: true})
 
     cy.get('[data-e2e-id="yes"]')
@@ -37,6 +37,7 @@ describe("Create case and validate input", () => {
   })
 
   it("Send form", () => {
+    
     cy.get(`[data-e2e-id="submit"]`)
       .click()
 
@@ -62,7 +63,9 @@ describe("Create case and validate input", () => {
   })
 
   it("Show CaseDetail page", () => {
+    
     cy.shouldBeOnCaseDetailPage()
+    
   })
 
   it("ZaakDetail has right address", () => {

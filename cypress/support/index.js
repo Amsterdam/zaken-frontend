@@ -15,6 +15,7 @@
 
 // Import commands.js using ES2015 syntax:
 
+import "./helpers"
 import "./address"
 import "./case"
 import "./login"
@@ -23,3 +24,8 @@ import "./case"
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+//Used for dates
+const dayjs = require('dayjs')
+require('dayjs/locale/nl')
+Cypress.dayjs = dayjs

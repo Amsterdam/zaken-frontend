@@ -18,17 +18,15 @@ describe('Close case as projectmedwerker"', () => {
     })
   })
 
-  it("Adresoverzicht has right address", () => {
-    cy.get("h1")
-      .contains(`${address.street}, ${address.zipCode}`)
-  })
-
-  it('Get first case with task "Afsluiten zaak"', () => {
+  it('Select case by caseId', () => {
     cy.scrollTo(0, 400)
-    cy.get("tbody>tr")
-      .contains("td", "Afsluiten zaak")
-      .click()
+    cy.getCaseId().then((e) => {
+      cy.get("tbody>tr")
+        .contains("td", e.id)
+        .click()
+    })
   })
+  
   it('Intercept Afronding URL and load page', () => {
 
     const url = `${Cypress.env("baseUrlAcc")}cases/*/tasks/`
@@ -54,6 +52,8 @@ describe('Close case as projectmedwerker"', () => {
         .parents('td')
         .siblings('td')
         .contains("Zaak afsluiten")
+
+      cy.testDueDate("tbody>tr>td", 5)
 
       cy.visit(`/zaken/${caseId}/afronding/${taskId}`)
 
