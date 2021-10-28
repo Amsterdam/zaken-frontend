@@ -16,7 +16,6 @@ describe('Select Next Step - closing case"', () => {
   it("Select case by caseId", () => {
     cy.scrollTo(0, 400)
     cy.getCaseId().then((e) => {
-      cy.log('caseId =>', e.id)
       cy.get("tbody>tr")
         .contains("td", e.id)
         .click()
