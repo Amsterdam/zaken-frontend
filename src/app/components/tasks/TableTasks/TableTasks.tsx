@@ -25,7 +25,7 @@ const TableTasks: React.FC<Props> = ({ data, isBusy }) => {
   const sortOwners = (a: Value, b: Value) => me?.id ? sortUserUp(a, b, me.id) : sortStrings(a, b)
 
   const columns = [
-    { header: "Behandelaar", sorter: sortOwners },
+    { header: "Opgepakt door", sorter: sortOwners },
     { header: "Adres", minWidth: 150, sorter: sortStrings },
     { header: "Open taak", minWidth: 100, sorter: sortStrings },
     { header: "Slotdatum", minWidth: 50, sorter: sortDates, defaultSorting: "ASCEND" as const },
