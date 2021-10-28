@@ -18,7 +18,7 @@ describe('Close case as projectmedwerker"', () => {
     })
   })
 
-  it('Get first case with task "Afsluiten zaak"', () => {
+  it('Select case by caseId', () => {
     cy.scrollTo(0, 400)
     cy.getCaseId().then((e) => {
       cy.get("tbody>tr")

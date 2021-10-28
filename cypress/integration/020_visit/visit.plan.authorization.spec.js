@@ -3,6 +3,25 @@ import visit from "../../fixtures/visit.json"
 
 describe('Plan "huisbezoek"', () => {
 
+  it("Go to Adresoverzicht and check address", () => {
+    const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/?open_cases=true`
+    cy.intercept(url).as("getCases")
+    cy.visit(`/adres/${address.bagId}`)
+    cy.wait("@getCases").then(() => {
+      cy.get("h1")
+        .contains(`${address.street}, ${address.zipCode}`)
+    })
+  })
+
+  it("Select case by caseId", () => {
+    cy.scrollTo(0, 400)
+    cy.getCaseId().then((e) => {
+      cy.get("tbody>tr")
+        .contains("td", e.id)
+        .click()
+    })
+  })
+  
   it("Check right dueDate", () => {
     cy.testDueDate("tbody>tr>td", 0)
   })
