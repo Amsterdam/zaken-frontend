@@ -1,6 +1,5 @@
 import { useCallback, useContext } from "react"
 import { ApiContext } from "./ApiProvider"
-import { makeApiUrl } from "../hooks/utils/apiUrl"
 
 type GroupName = "cases" | "case" | "auth" | "users" | "themes" | "roles" | "permissions"
 
@@ -19,18 +18,16 @@ type GroupName = "cases" | "case" | "auth" | "users" | "themes" | "roles" | "per
     }
 
     CORRECT:
-    const { getContextItem, updateContextItem } = useContextCache("cases", "tasks")
+    const { getContextItem, updateContextItem } = useContextCache("cases", makeApiUrl("tasks"))
 */
 
-const useContextCache = (groupName: GroupName, url: string) => {
+const useContextCache = (groupName: GroupName, apiUrl: string) => {
   const contextGroup = useContext(ApiContext)[groupName]
-
-  const key = makeApiUrl(url)
-  const item = contextGroup.getCacheItem(key).value
+  const item = contextGroup.getCacheItem(apiUrl)?.value
 
   const getContextItem = useCallback(() => item, [item])
   const updateContextItem = useCallback((updatedItem: any) =>
-    contextGroup.updateCacheItem(key, () => updatedItem), [contextGroup, key]
+    contextGroup.updateCacheItem(apiUrl, () => updatedItem), [contextGroup, apiUrl]
   )
 
   return { getContextItem, updateContextItem }
