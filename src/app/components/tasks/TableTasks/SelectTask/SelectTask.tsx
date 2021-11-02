@@ -7,6 +7,7 @@ import { useTask } from "app/state/rest"
 import UserIcon from "./UserIcon"
 import useContextCache from "app/state/rest/provider/useContextCache"
 import { createNameAbbreviation } from "app/components/shared/Helpers/helpers"
+import { makeApiUrl } from "app/state/rest/hooks/utils/apiUrl"
 
 type Props = {
   id: number
@@ -26,7 +27,10 @@ const SelectTask: React.FC<Props> = ({ id, owner }) => {
   const [loading, setLoading] = useState(false)
   const [data, { isBusy }] = useUsersMe()
   const [, { execPatch }] = useTask(id)
-  const { getContextItem, updateContextItem } = useContextCache("cases", "tasks")
+  // Filtered tasks are stored with the search query as a parameter in the context.
+  const dutchApiUrl = `${ makeApiUrl("tasks") }${ window.location.search }`
+  const apiUrl = dutchApiUrl.replace("rol", "role")
+  const { getContextItem, updateContextItem } = useContextCache("cases", apiUrl)
 
   useEffect(() => {
     // Check if userId is matching with the owner.
@@ -60,13 +64,13 @@ const SelectTask: React.FC<Props> = ({ id, owner }) => {
     return <UserIcon owner={ owner }/>
   }
   return (
-    
+
     <StyledLabel htmlFor={`cb_${ id }`} label={data && data?.id === owner ? `${ createNameAbbreviation(data) }` : ""}>
       <Tooltip title={isChecked ? "Mijn taak" : "Beschikbaar"}>
         <Checkbox data-e2e-id={`${ id }`} id={ `cb_${ id }` } checked={isChecked} onChange={ onChange }/>
       </Tooltip>
     </StyledLabel>
-    
+
   )
 }
 
