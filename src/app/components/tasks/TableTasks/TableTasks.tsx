@@ -13,8 +13,8 @@ const { sortStrings, sortDates } = tableSorters
 
 // If user is owner, move item to top.
 const sortUserUp = (a: Value, b: Value, id: string) => {
-  if (a === id) return 1
-  if (b === id) return -1
+  if (a === id) return -1
+  if (b === id) return 1
   return sortStrings(a, b)
 }
 
