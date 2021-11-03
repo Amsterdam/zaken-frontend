@@ -51,7 +51,7 @@ describe('Process Summon"', () => {
 
     it("Select type of summon", () => {
       cy.get('[data-e2e-id="type"]')
-        .select(summon.type)
+        .select(summon.typeClosing)
     })
 
     it("Type name person 1", () => {
@@ -65,20 +65,11 @@ describe('Process Summon"', () => {
         .select(summon.role1)
     })
 
-    it("Type name person 2", () => {
-      cy.get("#button-add-persons")
-        .click()
-
-      cy.get('[data-e2e-id="persons[1]first_name"]')
-        .type(summon.firstName2)
-      cy.get('[data-e2e-id="persons[1]preposition"]')
-        .type(summon.preposition2)
-      cy.get('[data-e2e-id="persons[1]last_name"]')
-        .type(summon.lastName2)
-      cy.get('[data-e2e-id="persons[1]person_role"]')
-        .select(summon.role2)
-    })
-
+    it("Fill in number of rooms", () => {
+        cy.get('[data-e2e-id="type_result.number_of_accommodations"]')
+          .type(3)
+      })
+  
     it("Fill in description", () => {
       cy.get('[data-e2e-id="description"]')
         .type(summon.description)
@@ -95,7 +86,7 @@ describe('Process Summon"', () => {
       cy.get(`[role="dialog"]`).should('have.length', 1)
 
       cy.get(`[role="dialog"]`)
-        .should("contain", summon.type)
+        .should("contain", summon.typeWarningVv)
         .and("contain", summon.firstName1)
         .and("contain", summon.firstName2)
         .and("contain", summon.preposition1)
