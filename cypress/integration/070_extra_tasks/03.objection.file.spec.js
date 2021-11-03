@@ -63,16 +63,16 @@ describe('Add extra task "Objection File', () => {
       cy.intercept(url).as("getEvents")
       cy.wait("@getEvents").then(() => {
         cy.get("h4")
-          .contains(extraTasks.taskObjectionFile)
+          .contains("Bezwaardossier")
         cy.get("tbody>tr")
-          .contains("td", extraTasks.taskObjectionFile.toLowerCase())
+          .contains("td", extraTasks.taskObjectionFile)
         cy.testDueDate("tbody>tr>td", 0)
       })
     })
   })
 
   describe("PHH processes Callbackrequest", () => {  
-    it("Login as PHH", () => {
+    it.skip("Login as PHH", () => {
       cy.loginAsHh()
     })
 
@@ -99,7 +99,7 @@ describe('Add extra task "Objection File', () => {
   
       cy.get("tbody>tr>td")
         .eq(1)
-        .should("contain",extraTasks.taskObjectionFile.toLowerCase())
+        .should("contain",extraTasks.taskObjectionFile)
         .siblings('td')
         .contains(roles.PHH)
         .parents('td')
@@ -109,10 +109,10 @@ describe('Add extra task "Objection File', () => {
   
       cy.get(`[role="dialog"]`)
           .should('have.length', 1)
-          .contains("h4", extraTasks.taskObjectionFile.toLowerCase())
+          .contains("h4", extraTasks.taskObjectionFile)
           
       cy.get(`[role="dialog"]`)
-        .find('input[name="observations"]')
+        .find('input[name="completed"]')
         .first()
         .check()
       
@@ -149,7 +149,7 @@ describe('Add extra task "Objection File', () => {
     })
 
     it("History contains the right items", () => {
-      cy.history(extraTasks.taskObjectionFile.toLowerCase(), "Uitvoerder")
+      cy.history(extraTasks.taskObjectionFile, "Uitvoerder")
     })
   })
 })

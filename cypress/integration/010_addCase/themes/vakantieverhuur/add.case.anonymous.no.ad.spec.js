@@ -14,7 +14,7 @@ describe("Test add_case_anonymous_no_ad", () => {
 
 describe("Create case and validate input", () => {
   it("Fill in form", () => {
-    cy.get("#theme_1")
+    cy.get("#theme_2")
       .check({force: true})
 
     cy.get("#reason_1")

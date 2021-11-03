@@ -1,7 +1,8 @@
 {
   "label": "Taak opvoeren",
   "taskCallback": "Terugbelverzoek",
-  "taskObjectionFile": "Bezwaardossier",
+  "taskNewSignal": "Nieuwe melding verwerken",
+  "taskObjectionFile": "Aanleveren bezwaardossier",
   "taskCorrespondence": "Correspondentie",
   "description": "Toelichting bij extra taak"
 }

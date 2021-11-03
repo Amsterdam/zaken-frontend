@@ -72,7 +72,7 @@ describe('Add extra task "Callback request', () => {
   })
 
   describe("PHH processes Callbackrequest", () => {  
-    it("Login as PHH", () => {
+    it.skip("Login as PHH", () => {
       cy.loginAsHh()
     })
 
@@ -109,7 +109,7 @@ describe('Add extra task "Callback request', () => {
   
       cy.get(`[role="dialog"]`)
           .should('have.length', 1)
-          .contains("h4", extraTasks.taskCallback)
+          .contains("h4", extraTasks.taskCallback.toLowerCase())
           
       cy.get(`[role="dialog"]`)
         .find('[data-e2e-id="callbackrequest_form"]')
@@ -148,7 +148,7 @@ describe('Add extra task "Callback request', () => {
     })
 
     it("History contains the right items", () => {
-      cy.history(extraTasks.taskCallback.toLowerCase(), "Uitvoerder")
+      cy.history(`Oppakken ${extraTasks.taskCallback.toLowerCase()}`, "Uitvoerder")
     })
   })
 })

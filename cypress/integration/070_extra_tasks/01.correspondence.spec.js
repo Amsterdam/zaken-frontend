@@ -72,7 +72,7 @@ describe('Add extra task "Correspondentie', () => {
   })
 
   describe("PHH processes Correspondence", () => {  
-    it("Login as PHH", () => {
+    it.skip("Login as PHH", () => {
       cy.loginAsHh()
     })
 
@@ -148,7 +148,7 @@ describe('Add extra task "Correspondentie', () => {
     })
 
     it("History contains the right items", () => {
-      cy.history(extraTasks.taskCorrespondence.toLowerCase(), "Uitvoerder")
+      cy.history(`Oppakken ${extraTasks.taskCorrespondence.toLowerCase()}`, "Uitvoerder")
     })
   })
 })
