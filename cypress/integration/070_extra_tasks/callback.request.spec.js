@@ -2,7 +2,7 @@ import address from "../../fixtures/address.json"
 import roles from "../../fixtures/roles.json"
 import extraTasks from "../../fixtures/extraTasks.json"
 
-describe('Add extra task "Correspondentie', () => {
+describe('Add extra task "Callback request', () => {
 
   describe('Go to "Taak opvoeren" form', () => {
 
@@ -39,19 +39,19 @@ describe('Add extra task "Correspondentie', () => {
 
   describe("Submit in form 'Taak opvoeren'", () => {  
     
-    it("Select Task Correspondence", () => {
+    it("Select Task Terugbelverzoek", () => {
       const url = `${Cypress.env("baseUrlAcc")}cases/*/processes/`
       cy.intercept(url).as("getProcesses")
       cy.wait("@getProcesses").then(() => {
       cy.get('[data-e2e-id="workflowProcess"]')
-        .select(extraTasks.taskCorrespondence)
+        .select(extraTasks.taskCallback)
       cy.get(`[data-e2e-id="submit"]`)
         .click()
 
       cy.get(`[role="dialog"]`).should("have.length", 1)
 
       cy.get(`[role="dialog"]`)
-        .should("contain", extraTasks.taskCorrespondence)
+        .should("contain", extraTasks.taskCallback)
         .find("button")
         .contains(extraTasks.label)
         .click()
@@ -63,15 +63,15 @@ describe('Add extra task "Correspondentie', () => {
       cy.intercept(url).as("getEvents")
       cy.wait("@getEvents").then(() => {
         cy.get("h4")
-          .contains(extraTasks.taskCorrespondence)
+          .contains(extraTasks.taskCallback)
         cy.get("tbody>tr")
-          .contains("td", extraTasks.taskCorrespondence.toLowerCase())
+          .contains("td", extraTasks.taskCallback.toLowerCase())
         cy.testDueDate("tbody>tr>td", 0)
       })
     })
   })
 
-  describe("PHH processes Correspondence", () => {  
+  describe("PHH processes Callbackrequest", () => {  
     it("Login as PHH", () => {
       cy.loginAsHh()
     })
@@ -95,11 +95,11 @@ describe('Add extra task "Correspondentie', () => {
       })
     })
 
-    it('PHH can finish task "Correspondence"', () => {
+    it('PHH can finish task "Callbackrequest"', () => {
   
       cy.get("tbody>tr>td")
         .eq(1)
-        .should("contain",extraTasks.taskCorrespondence.toLowerCase())
+        .should("contain",extraTasks.taskCallback.toLowerCase())
         .siblings('td')
         .contains(roles.PHH)
         .parents('td')
@@ -109,10 +109,10 @@ describe('Add extra task "Correspondentie', () => {
   
       cy.get(`[role="dialog"]`)
           .should('have.length', 1)
-          .contains("h4", extraTasks.taskCorrespondence.toLowerCase())
+          .contains("h4", extraTasks.taskCallback)
           
       cy.get(`[role="dialog"]`)
-        .find('[data-e2e-id="correspondence_description"]')
+        .find('[data-e2e-id="callbackrequest_form"]')
         .type(extraTasks.description)
       
       cy.get(`[role="dialog"]`)
@@ -148,7 +148,7 @@ describe('Add extra task "Correspondentie', () => {
     })
 
     it("History contains the right items", () => {
-      cy.history(extraTasks.taskCorrespondence.toLowerCase(), "Uitvoerder")
+      cy.history(extraTasks.taskCallback.toLowerCase(), "Uitvoerder")
     })
   })
 })

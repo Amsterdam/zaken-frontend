@@ -28,7 +28,7 @@
  Cypress.Commands.add("logout", () => {
   cy.get('button[title*="Uitloggen"]').click()
 
-  cy.wait(1000)
+  cy.wait(5000)
   cy.get("#username")
     .should("be.visible")
 })

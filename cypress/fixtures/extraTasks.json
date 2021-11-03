@@ -1,7 +1,8 @@
 {
   "label": "Taak opvoeren",
-  "taskCorrepondence": "Correspondentie",
-  "taskCorrepondenceVerbose": "Oppakken correspondentie",
+  "taskCallback": "Terugbelverzoek",
+  "taskObjectionFile": "Bezwaardossier",
+  "taskCorrespondence": "Correspondentie",
   "description": "Toelichting bij extra taak"
 }
   
