@@ -18,6 +18,7 @@ const TasksFilter: React.FC<Props> = ({ role, roles, setRole }) => {
   const { clearContextCache } = useContextCache("cases", apiUrl)
 
   const onChange = (value: string) => {
+    // Clear the Context/cache to prevent showing outdated data.
     clearContextCache()
     setRole(value)
   }
