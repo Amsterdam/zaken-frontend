@@ -72,6 +72,7 @@ declare namespace Components {
             description?: string | null;
             project?: number;
             ton_ids?: number[] | null;
+            nuisance: boolean | Array<string> | undefined;
         }
         export interface CaseEvent {
             id: number;

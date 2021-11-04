@@ -18,24 +18,25 @@ type Props = {
 const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString, caseUserTaskId }) => {
 
   const id = parseUrlParamId(idString)
+  const isValid = isValidUrlParamId<Components.Schemas.Case["id"]>(id)
+    && isValidUrlParamId<Components.Schemas.CaseUserTask["task_id"]>(caseUserTaskId)
 
   return (
-    isValidUrlParamId<Components.Schemas.Case["id"]>(id) &&
-    isValidUrlParamId<Components.Schemas.CaseUserTask["task_id"]>(caseUserTaskId) ?
-    <DefaultLayout>
-      <RowWithColumn>
-        <PageHeading />
-      </RowWithColumn>
-      <RowWithColumn>
-        <CaseHeading id={ id } />
-      </RowWithColumn>
-      <Row>
-        <Column spanLarge={50}>
-          <CitizenReportForm id={ id } caseUserTaskId={ caseUserTaskId } />
-        </Column>
-      </Row>
-    </DefaultLayout> :
-    <NotFoundPage />
+    isValid ? (
+      <DefaultLayout>
+        <RowWithColumn>
+          <PageHeading />
+        </RowWithColumn>
+        <RowWithColumn>
+          <CaseHeading id={ id } />
+        </RowWithColumn>
+        <Row>
+          <Column spanLarge={50}>
+            <CitizenReportForm id={ id } caseUserTaskId={ caseUserTaskId } />
+          </Column>
+        </Row>
+      </DefaultLayout>
+    ) : <NotFoundPage />
   )
 }
 

@@ -9,6 +9,12 @@ type Props = {
   caseUserTaskId: Components.Schemas.CaseUserTask["case_user_task_id"]
 }
 
+// Nuisance is an array but a boolean is expected.
+const mapData = (data: any) => ({
+  ...data,
+  nuisance: data.nuisance.includes("nuisance")
+})
+
 const CitizenReportForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
 
   const [, { execPost }] = useCitizenReports(id)
@@ -20,6 +26,7 @@ const CitizenReportForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
       postMethod={ execPost }
       fields={ fields }
       caseUserTaskId={ caseUserTaskId }
+      mapData={ mapData }
     />
   )
 }

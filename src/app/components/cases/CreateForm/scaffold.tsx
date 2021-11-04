@@ -137,6 +137,23 @@ export default (
         }
       }
     },
+    nuisance: {
+      type: "ShowHide",
+      props: {
+        shouldShow: (formValues: { values?: { reason?: Components.Schemas.CaseReason } }) => formValues?.values?.reason?.name === "Melding",
+        field: {
+          type: "CheckboxFields",
+          props: {
+            label: "Melding betreft overlast",
+            name: "nuisance",
+            extraLabel: <InfoButton infoTitle="Melding betreft overlast" infoText="Indien in de melding sprake is van overlast door een dreiging, geweld of anderzijds ernstig van aard is, geeft dit hier aan."></InfoButton>,
+            options: {
+              nuisance: "Ja"
+            }
+          }
+        }
+      }
+    },
     project: {
       type: "ShowHide",
       props: {
@@ -239,6 +256,7 @@ export default (
       ["reporter_email"],
       ["identification"],
       ["description_citizenreport", "description_citizenreport"],
+      ["nuisance"],
       ["project"],
       ["advertisement", "advertisement"],
       ["advertisement_linklist", "advertisement_linklist"],

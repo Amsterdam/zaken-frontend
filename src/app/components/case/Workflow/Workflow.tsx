@@ -32,7 +32,6 @@ const Workflow: React.FC<Props> = ({ id }) => {
   const [data, { isBusy, hasErrors }] = useCaseTasks(id)
   const [, { execPost }] = useTaskComplete({ lazy: true })
   const mappedData = useMappedData(id, data, execPost)
-  console.log("data", data)
 
   if (isBusy) return <Spinner />
   if (mappedData !== undefined) {
