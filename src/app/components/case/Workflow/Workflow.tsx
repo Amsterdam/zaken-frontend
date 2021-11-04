@@ -32,33 +32,35 @@ const Workflow: React.FC<Props> = ({ id }) => {
   const [data, { isBusy, hasErrors }] = useCaseTasks(id)
   const [, { execPost }] = useTaskComplete({ lazy: true })
   const mappedData = useMappedData(id, data, execPost)
+  console.log("data", data)
 
-  return (
-    isBusy ?
-      <Spinner /> :
-    mappedData !== undefined ?
+  if (isBusy) return <Spinner />
+  if (mappedData !== undefined) {
+    return (
       <>
-      { mappedData.length > 0 ?
-        mappedData.map(([title, information, tasks], index) =>
-          <Wrap key={ `${ title }_${ index }` }>
-            <Div>
-              <Heading as="h4">{ title }</Heading>
-              { information && <p>{ information }</p> }
-            </Div>
-            <StyledTable
-              columns={ columns }
-              hasFixedColumn
-              data={ tasks }
-            />
-          </Wrap>
-        ) :
-        <>Geen taken beschikbaar. <a href={ window.location.pathname }>Herlaad</a></>
-      }
-      </> :
-    hasErrors ?
-      <ErrorMessage message="Laden van taken mislukt" /> :
-      null
-  )
+        { mappedData.length > 0 ? (
+            mappedData.map(([title, information, tasks], index) => (
+              <Wrap key={ `${ title }_${ index }` }>
+                <Div>
+                  <Heading as="h4">{ title }</Heading>
+                  { information && <p>{ information }</p> }
+                </Div>
+                <StyledTable
+                  columns={ columns }
+                  hasFixedColumn
+                  data={ tasks }
+                />
+              </Wrap>
+            ))
+          ) : (
+            <>Geen taken beschikbaar. <a href={ window.location.pathname }>Herlaad</a></>
+          )
+        }
+      </>
+    )
+  }
+  if (hasErrors) return <ErrorMessage message="Laden van taken mislukt" />
+  return null
 }
 
 export default Workflow

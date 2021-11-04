@@ -14,6 +14,7 @@ import { Column } from "app/components/layouts/Grid"
 import CaseStatus from "app/components/case/CaseStatus/CaseStatus"
 import useExistingCase from "./hooks/useExistingCase"
 import PageSpinner from "app/components/shared/PageSpinner/PageSpinner"
+import CaseNuisanceAlert from "app/components/case/CaseNuisanceAlert/CaseNuisanceAlert"
 
 
 type Props = {
@@ -30,10 +31,8 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
 
   return (
     <>
-    { showSpinner &&
-      <PageSpinner />
-    }
-    { showCase &&
+    { showSpinner && <PageSpinner /> }
+    { showCase && (
       <DefaultLayout>
         <Row>
           <Column spanLarge={ 50 }>
@@ -48,12 +47,14 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
             <CaseDetails caseId={ id } />
           </Column>
         </Row>
-        {
-          isClosed === false &&
+
+        <CaseNuisanceAlert caseId={ id } />
+
+        { isClosed === false && (
           <RowWithColumn>
             <CaseStatus id={ id } />
           </RowWithColumn>
-        }
+        )}
         <RowWithColumn>
           <Heading as="h2">Zaakhistorie</Heading>
           <Divider />
@@ -62,10 +63,8 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
           <TimelineContainer caseId={ id } />
         </RowWithColumn>
       </DefaultLayout>
-    }
-    { showNotFound &&
-      <NotFoundPage />
-    }
+    )}
+    { showNotFound && <NotFoundPage /> }
     </>
   )
 }
