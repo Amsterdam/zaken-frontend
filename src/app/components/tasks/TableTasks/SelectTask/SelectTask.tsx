@@ -7,7 +7,7 @@ import { useTask } from "app/state/rest"
 import UserIcon from "./UserIcon"
 import useContextCache from "app/state/rest/provider/useContextCache"
 import { createNameAbbreviation } from "app/components/shared/Helpers/helpers"
-import { makeApiUrl } from "app/state/rest/hooks/utils/apiUrl"
+import getApiUrlTasks from "../../utils/getApiUrlTasks"
 
 type Props = {
   id: number
@@ -28,8 +28,7 @@ const SelectTask: React.FC<Props> = ({ id, owner }) => {
   const [data, { isBusy }] = useUsersMe()
   const [, { execPatch }] = useTask(id)
   // Filtered tasks are stored with the search query as a parameter in the context.
-  const dutchApiUrl = `${ makeApiUrl("tasks") }${ window.location.search }`
-  const apiUrl = dutchApiUrl.replace("rol", "role")
+  const apiUrl = getApiUrlTasks()
   const { getContextItem, updateContextItem } = useContextCache("cases", apiUrl)
 
   useEffect(() => {
