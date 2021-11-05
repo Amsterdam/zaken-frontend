@@ -24,24 +24,24 @@ const CreateCasePage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => {
   const isInvalidTonId = tonIdParam !== undefined && tonId === undefined
 
   return (
-  isValidUrlParamBAGId(bagId) ?
-    <DefaultLayout>
-      { isInvalidTonId && <InvalidTonIdAlert /> }
-      <RowWithColumn>
-        <PageHeading />
-      </RowWithColumn>
-      <RowWithColumn bottomSpacing={ 0 }>
-        <AddressHeadingByBagId bagId={ bagId } />
-        <FormTitle>Gebruik dit formulier om een nieuwe zaak toe te voegen</FormTitle>
-      </RowWithColumn>
-      <Row>
-        <Column spanLarge={50}>
-          <CreateForm bagId={ bagId } tonId={ tonId } />
-        </Column>
-      </Row>
-    </DefaultLayout> :
-    <NotFoundPage />
-)
+    isValidUrlParamBAGId(bagId) ? (
+      <DefaultLayout>
+        { isInvalidTonId && <InvalidTonIdAlert /> }
+        <RowWithColumn>
+          <PageHeading />
+        </RowWithColumn>
+        <RowWithColumn bottomSpacing={ 0 }>
+          <AddressHeadingByBagId bagId={ bagId } />
+          <FormTitle>Gebruik dit formulier om een nieuwe zaak toe te voegen</FormTitle>
+        </RowWithColumn>
+        <Row>
+          <Column spanLarge={50}>
+            <CreateForm bagId={ bagId } tonId={ tonId } />
+          </Column>
+        </Row>
+      </DefaultLayout>
+    ) : <NotFoundPage />
+  )
 }
 
 export default CreateCasePage

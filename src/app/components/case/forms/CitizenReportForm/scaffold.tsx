@@ -125,6 +125,17 @@ export default (caseId: Components.Schemas.Case["id"]) => {
         isRequired: true
       }
     },
+    nuisance: {
+      type: "CheckboxFields",
+      props: {
+        label: "Melding betreft overlast",
+        name: "nuisance",
+        extraLabel: <InfoButton infoTitle="Melding betreft overlast" infoText="Indien in de melding sprake is van overlast door een dreiging, geweld of anderzijds ernstig van aard is, geeft dit hier aan."></InfoButton>,
+        options: {
+          nuisance: "Ja"
+        }
+      }
+    },
     secondaryButton: {
       type: "Button",
       props: {
@@ -152,6 +163,7 @@ export default (caseId: Components.Schemas.Case["id"]) => {
       ["advertisement", "advertisement"],
       ["advertisement_linklist", "advertisement_linklist"],
       ["description_citizenreport", "description_citizenreport"],
+      ["nuisance"],
       ["secondaryButton", "submit"]
     ])
     .getScaffoldProps()

@@ -20,7 +20,12 @@ type Props = {
 
 type FormData =
   Pick<CaseCreate, "address" | "description"> &
-  { theme: Components.Schemas.CaseTheme, reason: Components.Schemas.CaseReason, project: Components.Schemas.CaseProject }
+  {
+    theme: Components.Schemas.CaseTheme
+    reason: Components.Schemas.CaseReason
+    project: Components.Schemas.CaseProject
+    nuisance: boolean | Array<string> | undefined
+  }
 
 const mapData = (bagId: Components.Schemas.Address["bag_id"], tonId: number | undefined) =>
   (data: FormData): CaseCreate => ({
@@ -29,6 +34,7 @@ const mapData = (bagId: Components.Schemas.Address["bag_id"], tonId: number | un
     theme: data.theme.id,
     reason: data.reason.id,
     project: data.project?.id,
+    nuisance: Array.isArray(data?.nuisance) && data?.nuisance?.includes("nuisance"),
     ton_ids: tonId !== undefined ? [ tonId ] : undefined
   })
 
