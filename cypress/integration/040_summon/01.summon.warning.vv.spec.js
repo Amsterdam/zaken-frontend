@@ -51,7 +51,7 @@ describe('Process Summon"', () => {
 
     it("Select type of summon", () => {
       cy.get('[data-e2e-id="type"]')
-        .select(summon.type)
+        .select(summon.typeWarningVv)
     })
 
     it("Type name person 1", () => {
@@ -95,7 +95,7 @@ describe('Process Summon"', () => {
       cy.get(`[role="dialog"]`).should('have.length', 1)
 
       cy.get(`[role="dialog"]`)
-        .should("contain", summon.type)
+        .should("contain", summon.typeWarningVv)
         .and("contain", summon.firstName1)
         .and("contain", summon.firstName2)
         .and("contain", summon.preposition1)

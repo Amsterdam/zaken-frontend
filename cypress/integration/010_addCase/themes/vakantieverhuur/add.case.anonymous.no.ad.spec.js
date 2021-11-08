@@ -17,7 +17,7 @@ describe("Create case and validate input", () => {
     cy.get("#theme_2")
       .check({force: true})
 
-    cy.get("#reason_1")
+    cy.get("#reason_0")
       .check({force: true})
 
     cy.get('[data-e2e-id="yes"]')

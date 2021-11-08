@@ -1,5 +1,6 @@
 {
-  "type": "Waarschuwing VV-vergunning",
+  "typeWarningVv": "Waarschuwing VV-vergunning",
+  "typeClosing": "Sluitingsproces",
   "firstName1": "John",
   "lastName1": "Doe",
   "preposition1": "van der",
