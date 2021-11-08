@@ -14,10 +14,10 @@ describe("Test add_case_not_anonymous_ad", () => {
 
 describe("Create case and validate input", () => {
   it("Fill in form", () => {
-    cy.get("#theme_1")
+    cy.get("#theme_2")
       .check({force: true})
 
-    cy.get("#reason_1")
+    cy.get("#reason_0")
       .check({force: true})
 
     cy.get('[data-e2e-id="no"]')

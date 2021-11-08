@@ -54,6 +54,11 @@ describe('Process Summon"', () => {
         .select(summon.typeClosing)
     })
 
+    it("Fill in number of rooms", () => {
+      cy.get('[data-e2e-id="type_result.number_of_accommodations"]')
+        .type(3)
+    })
+
     it("Type name person 1", () => {
       cy.get('[data-e2e-id="persons[0]first_name"]')
         .type(summon.firstName1)
@@ -64,11 +69,6 @@ describe('Process Summon"', () => {
       cy.get('[data-e2e-id="persons[0]person_role"]')
         .select(summon.role1)
     })
-
-    it("Fill in number of rooms", () => {
-        cy.get('[data-e2e-id="type_result.number_of_accommodations"]')
-          .type(3)
-      })
   
     it("Fill in description", () => {
       cy.get('[data-e2e-id="description"]')
@@ -86,15 +86,12 @@ describe('Process Summon"', () => {
       cy.get(`[role="dialog"]`).should('have.length', 1)
 
       cy.get(`[role="dialog"]`)
-        .should("contain", summon.typeWarningVv)
+        .should("contain", summon.typeClosing)
+        .and("contain", "3")
         .and("contain", summon.firstName1)
-        .and("contain", summon.firstName2)
         .and("contain", summon.preposition1)
-        .and("contain", summon.preposition2)
         .and("contain", summon.lastName1)
-        .and("contain", summon.lastName2)
         .and("contain", summon.role1)
-        .and("contain", summon.role2)
         .and("contain", summon.description)
         .find(`button`)
         .contains(summon.formButtonText)

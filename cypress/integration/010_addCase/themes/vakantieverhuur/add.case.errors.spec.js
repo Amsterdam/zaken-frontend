@@ -14,10 +14,10 @@ describe("Test add_case_errors", () => {
 
 describe("Fill in form and validate", () => {
   it("Select radio buttons", () => {
-    cy.get("#theme_1")
+    cy.get("#theme_2")
       .check({force: true})
 
-    cy.get("#reason_1")
+    cy.get("#reason_0")
       .check({force: true})
 
     cy.get('[data-e2e-id="no"]')
