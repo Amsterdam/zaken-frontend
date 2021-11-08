@@ -12,7 +12,7 @@ type Props = {
 // Nuisance is an array but a boolean is expected.
 const mapData = (data: any) => ({
   ...data,
-  nuisance: data.nuisance.includes("nuisance")
+  nuisance: data.nuisance ? data.nuisance.includes("nuisance") : false
 })
 
 const CitizenReportForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
