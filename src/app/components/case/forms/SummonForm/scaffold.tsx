@@ -20,7 +20,7 @@ export default (caseId: Components.Schemas.Case["id"], summonTypes?: Components.
         options: summonTypes
       }
     },
-    number_of_accommodations: {
+    "type_result.number_of_accommodations": {
       type: "ShowHide",
       props: {
         shouldShow: (formValues: { values?: { type: Components.Schemas.SummonType } }) => formValues?.values?.type?.workflow_option === "sluiting",
@@ -110,7 +110,7 @@ export default (caseId: Components.Schemas.Case["id"], summonTypes?: Components.
   return new FormPositioner(fields as Fields)
     .setGrid("mobileS", "1fr 1fr", [
       ["type", "type"],
-      ["number_of_accommodations"],
+      ["type_result.number_of_accommodations"],
       ["persons", "persons"],
       ["description", "description"],
       ["secondaryButton", "submit"]
