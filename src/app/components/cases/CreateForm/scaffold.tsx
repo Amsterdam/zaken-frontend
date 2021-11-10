@@ -175,7 +175,8 @@ export default (
     advertisement: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { reason?: Components.Schemas.CaseReason } }) => formValues?.values?.reason !== undefined,
+        shouldShow: (formValues: { values?: { reason?: Components.Schemas.CaseReason, theme?: any } }) => 
+          formValues?.values?.reason !== undefined && formValues?.values?.theme?.name !== "Kamerverhuur",
         field: {
           type: "RadioFields",
           props: {
