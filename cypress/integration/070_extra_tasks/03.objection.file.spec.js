@@ -71,7 +71,7 @@ describe('Add extra task "Objection File', () => {
     })
   })
 
-  describe("PHH processes Callbackrequest", () => {  
+  describe("PHH processes ObjectionFile", () => {  
     it.skip("Login as PHH", () => {
       cy.loginAsHh()
     })
@@ -125,7 +125,7 @@ describe('Add extra task "Objection File', () => {
 
   describe("Check request is processed", () => {  
 
-    it("Login as projectmedewerker", () => {
+    it.skip("Login as projectmedewerker", () => {
       cy.loginAsPm()
     })
 

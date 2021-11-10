@@ -124,7 +124,7 @@ describe('Add extra task "Callback request', () => {
 
   describe("Check request is processed", () => {  
 
-    it("Login as projectmedewerker", () => {
+    it.skip("Login as projectmedewerker", () => {
       cy.loginAsPm()
     })
 

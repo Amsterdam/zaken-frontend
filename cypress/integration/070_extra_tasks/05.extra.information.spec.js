@@ -6,7 +6,7 @@ describe('Add extra task "Extra Information', () => {
 
   describe('Go to "Taak opvoeren" form', () => {
 
-    it.skip("Login as projectmedewerker", () => {
+    it("Login as projectmedewerker", () => {
       cy.loginAsPm()
     })
 
