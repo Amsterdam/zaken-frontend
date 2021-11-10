@@ -9,7 +9,7 @@ const mapField = <T extends RequestBody>(field: Field, key: string, data: T) => 
   if (name === undefined) return
 
   const v = data[name]
-  if (v === undefined && !name.includes("type_result")) return
+  if (v === undefined && data["type_result"] === undefined) return
 
   const value = (type: string, props: any) => {
     if (type === "ArrayField") {      
