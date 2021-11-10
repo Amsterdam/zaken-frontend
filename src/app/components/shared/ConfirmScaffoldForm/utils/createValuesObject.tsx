@@ -12,13 +12,13 @@ const mapField = <T extends RequestBody>(field: Field, key: string, data: T) => 
   if (v === undefined && !name.includes("type_result")) return
 
   const value = (type: string, props: any) => {
-    if(type === "ArrayField") {      
+    if (type === "ArrayField") {      
       return <ArrayFieldList fields={ v as Array<Record<string, string>> } />
-    }else if(type === "ComplexSelectField" || type === "ComplexRadioFields"){
+    } else if (type === "ComplexSelectField" || type === "ComplexRadioFields"){
       return(v as Record<string, string>)[(props as { optionLabelField: string }).optionLabelField]
     } else if (props.hasOwnProperty("options")) {
       return (props as { options: Record<string, unknown> }).options[v as string] 
-    } else if( name.includes("type_result") ) {
+    } else if (name.includes("type_result")) {
       const typeResult: Record<string, string> = data["type_result"] as {}
       return Object.values(typeResult)
     } else {
