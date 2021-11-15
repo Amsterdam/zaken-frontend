@@ -22,9 +22,9 @@ const Tasks: React.FC = () => {
           role={ role }
           roles={ roles }
           setRole={ setRole }
-          theme={theme}
-          themes={caseThemes?.results}
-          setTheme={setTheme}
+          theme={ theme }
+          themes={ caseThemes?.results }
+          setTheme={ setTheme }
         />
       </Column>
     </Row>
