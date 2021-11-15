@@ -146,7 +146,7 @@ export default (
           props: {
             label: "Betreft extreme overlast",
             name: "nuisance",
-            extraLabel: <InfoButton infoTitle="Betreft extreme overlast" infoText="Indien in de melding sprake is van overlast door een dreiging, geweld of anderzijds ernstig van aard is, geeft dit hier aan."></InfoButton>,
+            extraLabel: <InfoButton infoTitle="Betreft extreme overlast" infoText="Aanvinken indien in de melding sprake is van overlast door dreiging, geweld of een anderzijds ernstige aard."></InfoButton>,
             options: {
               nuisance: "Ja"
             }
