@@ -1,12 +1,20 @@
+import qs from "qs"
+import isEmpty from "lodash.isempty"
 import type { Options } from "./"
 import { useErrorHandler } from "./hooks/utils/errorHandler"
 import { makeApiUrl } from "./hooks/utils/apiUrl"
 import useApiRequest from "./hooks/useApiRequest"
-import qs from "qs"
 
-export const useTasks = (role: string, options?: Options) => {
+export const useTasks = (theme: string, role: string, options?: Options) => {
   const handleError = useErrorHandler()
-  const queryString = role !== "" ? qs.stringify({ role }, { addQueryPrefix: true }) : ""
+  const urlParams: any = {}
+  if (theme) {
+    urlParams.theme = theme
+  }
+  if (role) {
+    urlParams.role = role
+  }
+  const queryString = isEmpty(urlParams) ? "" : qs.stringify(urlParams, { addQueryPrefix: true })
   return useApiRequest<Components.Schemas.CaseUserTaskList[]>({
     ...options,
     url: `${ makeApiUrl("tasks") }${ queryString }`,
