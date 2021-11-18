@@ -11,7 +11,6 @@ const DecisionHeader: React.FC<Props> = ({ caseId, caseUserTaskId }) => {
 
   const [summons, { isBusy: isBusySummons }] = useSummonsWithCaseId(caseId)
   const [tasks, { isBusy: isBusyCaseTasks }] = useCaseTasks(caseId)
-  console.log()
   const isBusy = isBusySummons || isBusyCaseTasks
   const task = tasks?.map(({ tasks }) => tasks).flat().find(({ case_user_task_id }) => case_user_task_id === caseUserTaskId)
   // TODO: The use of form_variables + hardcoded key `summon_id` is tight-coupling
@@ -21,12 +20,12 @@ const DecisionHeader: React.FC<Props> = ({ caseId, caseUserTaskId }) => {
 
   return (
     <DefinitionList
-      isLoading={ isBusy }
+      loading={ isBusy }
       numLoadingRows={ 2 }
       title="Besluit naar aanleiding van"
       headingSize="h4"
       data={ values }
-      noValuesPlaceholder="Geen aanschrijving aanwezig"
+      emptyPlaceholder="Geen aanschrijving aanwezig"
     />
   )
 }

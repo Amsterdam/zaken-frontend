@@ -1,27 +1,19 @@
-import useValues from "./hooks/useValues"
 import useOtherAddressesByBagId from "app/state/rest/custom/useOtherAddresses/useOtherAddresses"
 import { Table } from "@amsterdam/wonen-ui"
 import navigateTo from "app/routing/navigateTo"
+import columns from "./columns"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
   onAddressChosen: () => void
 }
 
-const columns = [
-  { minWidth: 300, header: "Adres" },
-  { minWidth: 100 }
-]
-
 const OtherAddressesTable: React.FC<Props> = ({ bagId, onAddressChosen }) => {
+  const [data, { isBusy }] = useOtherAddressesByBagId(bagId)
 
-  const [response, { isBusy }] = useOtherAddressesByBagId(bagId)
-
-  const values = useValues(response)
-
-  const onClickRow = (data: Exclude<typeof values, undefined>[0]) => {
+  const onClickRow = (data: any) => {
     onAddressChosen()
-    navigateTo("/adres/:bagId", { bagId: data[2] })
+    navigateTo("/adres/:bagId", { bagId: data.adresseerbaar_object_id })
   }
 
   return (
@@ -30,9 +22,9 @@ const OtherAddressesTable: React.FC<Props> = ({ bagId, onAddressChosen }) => {
       columns={ columns }
       loading={ isBusy }
       numLoadingRows={ 3 }
-      data={ values }
+      data={ data || [] }
       onClickRow={ onClickRow }
-      noValuesPlaceholder="Er zijn geen andere adressen gevonden"
+      emptyPlaceholder="Er zijn geen andere adressen gevonden"
     />
   )
 }

@@ -13,7 +13,7 @@ const CaseDetails: React.FC<Props> = ({ caseId }) => {
 
   return (
     <DefinitionList
-      isLoading={ isBusy }
+      loading={ isBusy }
       numLoadingRows={ 3 }
       data={ values }
     />

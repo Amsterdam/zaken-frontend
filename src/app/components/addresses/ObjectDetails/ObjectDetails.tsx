@@ -15,11 +15,13 @@ const ObjectDetails: React.FC<Props> = ({ bagId }) => {
   const isBusy = isBusyAddress || isBusyObject
   const values = useValues(BAGAddress, BAGObject)
 
-  return <DefinitionList
-    isLoading={ isBusy }
-    title="Objectdetails"
-    data={ values }
-  />
+  return (
+    <DefinitionList
+      loading={ isBusy }
+      title="Objectdetails"
+      data={ values }
+    />
+  )
 }
 
 export default ObjectDetails

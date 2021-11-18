@@ -1,8 +1,8 @@
 import { Spinner, Heading, ErrorMessage, themeSpacing } from "@amsterdam/asc-ui"
 import { useCaseTasks, useTaskComplete } from "app/state/rest"
-import useMappedData from "./hooks/useMappedData"
 import StyledTable from "./components/StyledTable"
 import styled from "styled-components"
+import getColumns from "./columns"
 
 type Props = {
   id: Components.Schemas.Case["id"]
@@ -19,35 +19,27 @@ const Div = styled.div`
   margin-bottom: ${ themeSpacing(4) };
 `
 
-const columns = [
-  { minWidth: 50 },
-  { header: "Actuele taken", minWidth: 420 },
-  { header: "Uitvoerder", minWidth: 240 },
-  { header: "Slotdatum", minWidth: 120 },
-  { header: "Verwerking taak", minWidth: 280 }
-]
-
 const Workflow: React.FC<Props> = ({ id }) => {
-
   const [data, { isBusy, hasErrors }] = useCaseTasks(id)
   const [, { execPost }] = useTaskComplete({ lazy: true })
-  const mappedData = useMappedData(id, data, execPost)
+
+  const columns = getColumns(execPost)
 
   if (isBusy) return <Spinner />
-  if (mappedData !== undefined) {
+  if (data !== undefined) {
     return (
       <>
-        { mappedData.length > 0 ? (
-            mappedData.map(([title, information, tasks], index) => (
-              <Wrap key={ `${ title }_${ index }` }>
+        { data.length > 0 ? (
+            data.map(({ state, tasks }, index) => (
+              <Wrap key={ `${ state.status_name }_${ index }` }>
                 <Div>
-                  <Heading as="h4">{ title }</Heading>
-                  { information && <p>{ information }</p> }
+                  <Heading as="h4">{ state.status_name }</Heading>
+                  { state.information && <p>{ state.information }</p> }
                 </Div>
                 <StyledTable
                   columns={ columns }
                   hasFixedColumn
-                  data={ tasks }
+                  data={ tasks || [] }
                 />
               </Wrap>
             ))
