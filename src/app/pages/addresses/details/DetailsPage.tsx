@@ -16,7 +16,7 @@ type Props = {
 }
 
 const DetailPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
-  isValidUrlParamBAGId(bagId) ?
+  isValidUrlParamBAGId(bagId) ? (
     <DefaultLayout>
       <Row>
         <Column spanLarge={ 50 }>
@@ -36,8 +36,8 @@ const DetailPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
           <PermitOverview bagId={ bagId }></PermitOverview>
         </Column>
       </Row>
-    </DefaultLayout> :
-    <NotFoundPage />
+    </DefaultLayout>
+  ) : <NotFoundPage />
 )
 
 export default DetailPage
