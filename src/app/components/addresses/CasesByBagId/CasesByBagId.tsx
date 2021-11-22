@@ -2,9 +2,9 @@ import styled from "styled-components"
 import { Heading, themeSpacing } from "@amsterdam/asc-ui"
 
 import { useCasesByBagId } from "app/state/rest"
-import useValues from "./hooks/useValues"
 import { Table } from "@amsterdam/wonen-ui"
 import navigateTo from "app/routing/navigateTo"
+import columns from "./columns"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -22,23 +22,13 @@ const StyledHeading = styled(Heading)`
 const Div = styled.div`
   margin-bottom: ${ themeSpacing(8) };
 `
-const columns = [
-  { header: "Zaak ID", minWidth: 100 },
-  { header: "Thema", minWidth: 100 },
-  { header: "Startdatum", minWidth: 100 },
-  { header: "Huidige status", minWidth: 100 },
-  { minWidth: 140 }
-]
 
 const CasesByBagId: React.FC<Props> = ({ bagId, openCases = false, title = defaultTitle, emptyText = defaultEmptyText }) => {
-
   const [data, { isBusy }] = useCasesByBagId(bagId, openCases)
-  const values = useValues(data?.results)
-  const numCases = values?.length ?? 0
+  const numCases = data?.results?.length ?? 0
 
-  const onClickRow = (data: Exclude<typeof values, undefined>[0]) => {
-    const id = data[5]
-    navigateTo("/zaken/:id", { id })
+  const onClickRow = (data: any) => {
+    navigateTo("/zaken/:id", { id: data.id })
   }
 
   return (
@@ -49,10 +39,10 @@ const CasesByBagId: React.FC<Props> = ({ bagId, openCases = false, title = defau
         columns={ columns }
         loading={ isBusy }
         numLoadingRows={ 1 }
-        data={ values }
+        data={ data?.results || [] }
         showHeadWhenEmpty={ false }
         onClickRow={ onClickRow }
-        noValuesPlaceholder={ emptyText }
+        emptyPlaceholder={ emptyText }
       />
     </Div>
   )
