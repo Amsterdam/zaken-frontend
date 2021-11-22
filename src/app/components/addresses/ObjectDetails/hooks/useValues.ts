@@ -4,7 +4,7 @@ export default (BAGAddressResponse?: BAGAddressResponse, BAGObjectResponse?: BAG
 
   const values = [
     ["Bestemming", BAGAddressResponse.results[0]?.type ?? "-"],
-    ["Oppervlakte", `${ BAGObjectResponse.oppervlakte }m²`],
+    ["Oppervlakte", BAGObjectResponse.oppervlakte ? `${ BAGObjectResponse.oppervlakte }m²` : "-"],
     ["Bouwlagen", BAGObjectResponse.bouwlagen],
     ["Aantal kamers", BAGObjectResponse.aantal_kamers]
   ]
