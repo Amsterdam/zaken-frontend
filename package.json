@@ -84,7 +84,7 @@
     "@types/enzyme": "^3.10.10",
     "@types/enzyme-adapter-react-16": "^1.0.6",
     "@types/jest": "^27.0.2",
-    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.3",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.5",
     "cypress": "^8.7.0",
     "dotenv-flow": "^3.2.0",
     "dtsgenerator": "^3.13.2",
