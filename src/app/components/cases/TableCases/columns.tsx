@@ -4,7 +4,7 @@ import to from "app/routing/utils/to"
 import first from "./utils/first"
 import sortByDate from "./utils/sortByDate"
 
-const getStatus = (record: any) => {
+const getStatus = (record: Record<string, any>) => {
   const { current_states, end_date } = record
   if (current_states.length > 0) {
     return current_states.map((status: any) => status.status_name).join(", ")
@@ -15,7 +15,7 @@ const getStatus = (record: any) => {
   return "-"
 }
 
-const getDate = (record: any) => {
+const getDate = (record: Record<string, any>) => {
   const startDate = first(record?.current_states.map((state: any) => state.start_date).sort(sortByDate("DESC")))
   return record.end_date ?? startDate
 }
