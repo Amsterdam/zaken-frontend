@@ -6,7 +6,7 @@ import navigateTo from "app/routing/navigateTo"
 export default (
   bagId: Components.Schemas.Address["bag_id"],
   themeId: Components.Schemas.CaseTheme["id"],
-  setTheme: (themeId?: Components.Schemas.CaseTheme["id"]) => void,
+  setTheme: (id?: Components.Schemas.CaseTheme["id"]) => void,
   themes: Components.Schemas.CaseTheme[] | undefined,
   reasons: Components.Schemas.CaseReason[],
   projects: Components.Schemas.CaseProject[],
@@ -22,10 +22,7 @@ export default (
         options: themes,
         optionLabelField: "name",
         isRequired: true,
-        onChange: (index: string) => { 
-          console.log("onChange", themes?.[parseInt(index, 10)]?.id)
-          setTheme(themes?.[parseInt(index, 10)]?.id) 
-        }
+        onChange: (index: string) => setTheme(themes?.[parseInt(index, 10)]?.id)
       }
     },
     reason: {
