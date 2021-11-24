@@ -62,16 +62,15 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
   const adOptions = tonId ? pick(advertisementOptions, ["yes"]) : advertisementOptions
 
   const changeThemeId = (newThemeId: number | undefined) => {
-    console.log("new themeId", newThemeId)
+    /**
+     * use undefined first, otherwise the state does not necessarily change when switching themes
+     * delay is needed for updating state twice
+     */
+
     setThemeId(undefined)
-    console.log("1", themeId)
-    setTimeout(function () {
-      if (themeId === undefined) {
-        setThemeId(newThemeId)
-        console.log("2", themeId)
-      }
-      console.log("3", themeId)
-  }, 300)
+    setTimeout(() => {
+      setThemeId(newThemeId)
+  }, 0)
   }
 
   /*
