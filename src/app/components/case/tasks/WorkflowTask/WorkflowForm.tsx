@@ -2,7 +2,7 @@
 import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
 
 import ScaffoldFields from "app/components/shared/Form/ScaffoldFields"
-import createScaffoldProps from "./utils/mapWorkflowDataToScaffold"
+import mapWorkflowDataToScaffold from "./utils/mapWorkflowDataToScaffold"
 import mapWorkflowDataToInitialValues from "./utils/mapWorkflowDataToInitialValues"
 import mapSubmitData from "./utils/mapSubmitData"
 
@@ -20,7 +20,7 @@ const WorkflowForm: React.FC<Props> = ({ workflowForm, isLoading, onSubmit, onCa
       onCancel={ onCancel }
       initialValues={ mapWorkflowDataToInitialValues(workflowForm) }
     >
-      <ScaffoldFields { ...createScaffoldProps(workflowForm, onCancel) } />
+      <ScaffoldFields { ...mapWorkflowDataToScaffold(workflowForm, onCancel) } />
     </ScaffoldForm>
   </div>
 )

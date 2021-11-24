@@ -10,13 +10,12 @@ const mapItemToType = (item: any) => {
   return "TextField"
 }
 
-const mapItemToOptions = (item: any) =>
-  item.type === "checkbox" ?
-    { [item.name]: item.label } :
-    item.options ?? undefined
+const mapItemToOptions = (item: any) => (
+  item.type === "checkbox" ? { [item.name]: item.label } : item.options ?? undefined
+)
 
-export default (camundaForm: Components.Schemas.CaseUserTask["form"], onCancel = () => {}) => {
-  const fields = camundaForm.reduce((acc: Fields, item: any) => {
+export default (workflowForm: Components.Schemas.CaseUserTask["form"], onCancel = () => {}) => {
+  const fields = workflowForm.reduce((acc: Fields, item: any) => {
     if (item === undefined) return acc
     acc[item.name] = {
       type: mapItemToType(item),
@@ -25,7 +24,17 @@ export default (camundaForm: Components.Schemas.CaseUserTask["form"], onCancel =
         label: item.type !== "checkbox" ? item.label : undefined,
         isRequired: item.required ?? false,
         options: mapItemToOptions(item),
-        optionLabelField: "label"
+        optionLabelField: "label",
+        withEmptyOption: true,
+        emptyOptionLabel: "Maak een keuze",
+        validate: (option: any, allValues: any) => {
+          const { type } = item
+          const isRequiredText = "Dit veld is verplicht"
+          if (type === "select" && !option?.value) return isRequiredText
+          if (type === "checkbox" && !(option?.length > 0)) return isRequiredText
+          if (type === "text" && !option) return isRequiredText
+          return ""
+        }
       }
     } as Field
     return acc

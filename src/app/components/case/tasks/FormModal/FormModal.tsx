@@ -29,10 +29,11 @@ const FormModal: React.FC<Props> = ({ form, isOpen, closeModal, onSubmit, taskNa
   return (
     <Modal isOpen={ isOpen } onClose={ closeModal } title={ title }>
       <ModalBlock>
-        { form && form.length > 0 ?
-          <WorkflowForm onSubmit={ onSubmitWrap } onCancel={ closeModal } workflowForm={ form } /> :
+        { form && form.length > 0 ? (
+          <WorkflowForm onSubmit={ onSubmitWrap } onCancel={ closeModal } workflowForm={ form } />
+        ) : (
           <CompleteTaskForm onSubmit={ onSubmitWrap } onCancel={ closeModal } />
-        }
+        )}
       </ModalBlock>
     </Modal>
   )
