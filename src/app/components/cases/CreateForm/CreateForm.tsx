@@ -43,7 +43,6 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
   const [themeId, setThemeId] = useState<Components.Schemas.CaseTheme["id"]>()
 
   useEffect(() => {
-    
     const caseThemeId = tonId !== undefined
       ? caseThemes?.results?.find(({ name }) => name === TON_THEME_NAME)?.id
       : undefined
