@@ -3,7 +3,10 @@ import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import navigateTo from "app/routing/navigateTo"
 
-export default (caseId: Components.Schemas.Case["id"]) => {
+export default (
+  caseId: Components.Schemas.Case["id"],
+  themeName: Components.Schemas.CaseTheme["name"]
+  ) => {
 
 
   const fields = {
@@ -77,14 +80,20 @@ export default (caseId: Components.Schemas.Case["id"]) => {
       }
     },
     advertisement: {
-      type: "RadioFields",
+      type: "ShowHide",
       props: {
-        isRequired: true,
-        name: "advertisement",
-        label: "Is er een advertentie bekend?",
-        options: {
-          yes: "Ja, er is een advertentie",
-          no: "Nee, er is geen advertentie"
+        shouldShow: (() => themeName !== "Kamerverhuur"),
+        field: {
+          type: "RadioFields",
+          props: {
+            isRequired: true,
+            name: "advertisement",
+            label: "Is er een advertentie bekend?",
+            options: {
+              yes: "Ja, er is een advertentie",
+              no: "Nee, er is geen advertentie"
+            }
+          }
         }
       }
     },
