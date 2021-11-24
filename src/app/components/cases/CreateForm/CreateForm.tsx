@@ -43,6 +43,7 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
   const [themeId, setThemeId] = useState<Components.Schemas.CaseTheme["id"]>()
 
   useEffect(() => {
+    
     const caseThemeId = tonId !== undefined
       ? caseThemes?.results?.find(({ name }) => name === TON_THEME_NAME)?.id
       : undefined
@@ -60,13 +61,26 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
     : reasons?.results
   const adOptions = tonId ? pick(advertisementOptions, ["yes"]) : advertisementOptions
 
+  const changeThemeId = (newThemeId: number | undefined) => {
+    console.log("new themeId", newThemeId)
+    setThemeId(undefined)
+    console.log("1", themeId)
+    setTimeout(function () {
+      if (themeId === undefined) {
+        setThemeId(newThemeId)
+        console.log("2", themeId)
+      }
+      console.log("3", themeId)
+  }, 300)
+  }
+
   /*
   ** themeId ?? -1 is ugly coding.
   ** Because it takes time to fetch the reasons after selecting a theme, the submit button is enabled.
   ** themeId = undefined will load a spinner for the entire page. :(
   */
   const fields = useScaffoldedFields(scaffold, bagId, themeId ?? -1,
-    setThemeId, caseThemesOptions, reasonOptions ?? [], projects?.results ?? [], adOptions)
+    changeThemeId, caseThemesOptions, reasonOptions ?? [], projects?.results ?? [], adOptions)
 
   const navigateWithFlashMessage = useNavigateWithFlashMessage()
   const afterSubmit = async (result: Components.Schemas.CaseCreateUpdate) =>

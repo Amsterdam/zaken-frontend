@@ -15,6 +15,7 @@ export const useCaseThemes = (options?: Options) => {
 }
 
 export const useReasons = (themeId?: Components.Schemas.CaseTheme["id"], options?: Options) => {
+  console.log("useReasons")
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.PaginatedCaseReasonList>({
     lazy: themeId === undefined,
