@@ -33,6 +33,12 @@ const CasesPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => {
         </Column>
       </Row>
       <RowWithColumn>
+        <span >
+          Let op: in BWV kunnen er ook open en gesloten zaken bekend zijn.<br/>
+          Bovenstaand overzicht toont alle zaken die bekend zijn in AZA. 
+        </span>
+      </RowWithColumn>
+      <RowWithColumn>
         <CasesByBagId 
           title="Open zaken"
           bagId={ bagId }
@@ -46,10 +52,6 @@ const CasesPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => {
           bagId={ bagId }
           emptyText="Op dit adres zijn geen gesloten zaken"
         />
-        <span >
-          Let op: in BWV kunnen er ook open en gesloten zaken bekend zijn.<br/>
-          Bovenstaand overzicht toont alle zaken die bekend zijn in AZA. 
-        </span>
       </RowWithColumn>
       <RowWithColumn>
         <IsAuthorizedButtonLink
