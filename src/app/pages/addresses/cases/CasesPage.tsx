@@ -33,7 +33,19 @@ const CasesPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => {
         </Column>
       </Row>
       <RowWithColumn>
-        <CasesByBagId bagId={ bagId } />
+        <CasesByBagId 
+          title="Open zaken"
+          bagId={ bagId }
+          openCases={true}
+          emptyText="Op dit adres zijn geen open zaken"
+        />
+      </RowWithColumn>
+      <RowWithColumn>
+        <CasesByBagId 
+          title="Gesloten zaken AZA"
+          bagId={ bagId }
+          emptyText="Op dit adres zijn geen gesloten zaken"
+        />
         <span >
           Let op: in BWV kunnen er ook open en gesloten zaken bekend zijn.<br/>
           Bovenstaand overzicht toont alle zaken die bekend zijn in AZA. 
