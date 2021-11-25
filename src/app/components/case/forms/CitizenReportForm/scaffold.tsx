@@ -76,6 +76,26 @@ export default (caseId: Components.Schemas.Case["id"]) => {
         hideNumberSpinner: true
       }
     },
+    description_citizenreport: {
+      type: "TextAreaField",
+      props: {
+        label: "Korte samenvatting melding",
+        extraLabel: <InfoButton infoTitle="Korte samenvatting melding" infoText="Geef een korte beschrijving van de melding. Deze informatie komt ook door in TOP voor de toezichthouder."></InfoButton>,
+        name: "description_citizenreport",
+        isRequired: true
+      }
+    },
+    nuisance: {
+      type: "CheckboxFields",
+      props: {
+        label: "Betreft extreme overlast",
+        name: "nuisance",
+        extraLabel: <InfoButton infoTitle="Betreft extreme overlast" infoText="Aanvinken indien in de melding sprake is van overlast door dreiging, geweld of een anderzijds ernstige aard."></InfoButton>,
+        options: {
+          nuisance: "Ja"
+        }
+      }
+    },
     advertisement: {
       type: "RadioFields",
       props: {
@@ -116,26 +136,6 @@ export default (caseId: Components.Schemas.Case["id"]) => {
         }
       }
     },
-    description_citizenreport: {
-      type: "TextAreaField",
-      props: {
-        label: "Korte samenvatting melding",
-        extraLabel: <InfoButton infoTitle="Korte samenvatting melding" infoText="Geef een korte beschrijving van de melding. Deze informatie komt ook door in TOP voor de toezichthouder."></InfoButton>,
-        name: "description_citizenreport",
-        isRequired: true
-      }
-    },
-    nuisance: {
-      type: "CheckboxFields",
-      props: {
-        label: "Betreft extreme overlast",
-        name: "nuisance",
-        extraLabel: <InfoButton infoTitle="Betreft extreme overlast" infoText="Aanvinken indien in de melding sprake is van overlast door dreiging, geweld of een anderzijds ernstige aard."></InfoButton>,
-        options: {
-          nuisance: "Ja"
-        }
-      }
-    },
     secondaryButton: {
       type: "Button",
       props: {
@@ -160,10 +160,10 @@ export default (caseId: Components.Schemas.Case["id"]) => {
       ["reporter_phone"],
       ["reporter_email"],
       ["identification"],
-      ["advertisement", "advertisement"],
-      ["advertisement_linklist", "advertisement_linklist"],
       ["description_citizenreport", "description_citizenreport"],
       ["nuisance"],
+      ["advertisement", "advertisement"],
+      ["advertisement_linklist", "advertisement_linklist"],
       ["secondaryButton", "submit"]
     ])
     .getScaffoldProps()
