@@ -60,13 +60,25 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
     : reasons?.results
   const adOptions = tonId ? pick(advertisementOptions, ["yes"]) : advertisementOptions
 
+  const changeThemeId = (newThemeId: number | undefined) => {
+    /**
+     * use undefined first, otherwise the state does not necessarily change when switching themes
+     * delay is needed for updating state twice
+     */
+
+    setThemeId(undefined)
+    setTimeout(() => {
+      setThemeId(newThemeId)
+  }, 0)
+  }
+
   /*
   ** themeId ?? -1 is ugly coding.
   ** Because it takes time to fetch the reasons after selecting a theme, the submit button is enabled.
   ** themeId = undefined will load a spinner for the entire page. :(
   */
   const fields = useScaffoldedFields(scaffold, bagId, themeId ?? -1,
-    setThemeId, caseThemesOptions, reasonOptions ?? [], projects?.results ?? [], adOptions)
+    changeThemeId, caseThemesOptions, reasonOptions ?? [], projects?.results ?? [], adOptions)
 
   const navigateWithFlashMessage = useNavigateWithFlashMessage()
   const afterSubmit = async (result: Components.Schemas.CaseCreateUpdate) =>

@@ -10,24 +10,42 @@ import NotFoundPage from "app/pages/errors/NotFoundPage"
 import Column from "app/components/layouts/Grid/Column"
 import to from "app/routing/utils/to"
 import IsAuthorizedButtonLink from "app/components/shared/ButtonLink/IsAuthorizedButtonLink"
+import { useCasesByBagId } from "app/state/rest"
 
 type Props = {
   bagId: string
 }
 
-const CasesPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
-  isValidUrlParamBAGId(bagId) ?
+const CasesPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => {
+  
+  const [data] = useCasesByBagId(bagId as string)
+  const numCases = data?.results?.length ?? 0
+
+  return (
+    isValidUrlParamBAGId(bagId) ?
     <DefaultLayout>
       <Row>
         <Column spanLarge={ 50 }>
-          <PageHeading />
+          <PageHeading titlePostFix={`(${ numCases })`}/>
         </Column>
         <Column spanLarge={ 50 }>
           <DetailHeader bagId={ bagId } />
         </Column>
       </Row>
       <RowWithColumn>
-        <CasesByBagId bagId={ bagId } />
+        <CasesByBagId 
+          title="Open zaken"
+          bagId={ bagId }
+          openCases={true}
+          emptyText="Op dit adres zijn geen open zaken"
+        />
+      </RowWithColumn>
+      <RowWithColumn>
+        <CasesByBagId 
+          title="Gesloten zaken AZA"
+          bagId={ bagId }
+          emptyText="Op dit adres zijn geen gesloten zaken"
+        />
         <span >
           Let op: in BWV kunnen er ook open en gesloten zaken bekend zijn.<br/>
           Bovenstaand overzicht toont alle zaken die bekend zijn in AZA. 
@@ -43,6 +61,7 @@ const CasesPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
       </RowWithColumn>
     </DefaultLayout> :
     <NotFoundPage />
-)
+  )
+}
 
 export default CasesPage
