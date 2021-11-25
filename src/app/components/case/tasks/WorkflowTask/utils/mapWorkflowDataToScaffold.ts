@@ -27,7 +27,7 @@ export default (workflowForm: Components.Schemas.CaseUserTask["form"], onCancel 
         optionLabelField: "label",
         withEmptyOption: true,
         emptyOptionLabel: "Maak een keuze",
-        validate: (option: any, allValues: any) => {
+        validate: (option: any) => {
           const { type } = item
           const isRequiredText = "Dit veld is verplicht"
           if (type === "select" && !option?.value) return isRequiredText

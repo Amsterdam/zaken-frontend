@@ -10,7 +10,7 @@ export default (workflowForm: Components.Schemas.CaseUserTask["form"]) => (
       return acc
     }
     if (type === "select") {
-      acc[name] = { label, value: default_value ?? undefined }
+      acc[name] = { label, value: "" } // Don't set default action, force user to make a decision.
       return acc
     }
     if (default_value == null) return acc
