@@ -19,7 +19,6 @@ declare namespace Components {
         export interface Case {
             id: number;
             address: Address;
-            case_states: CaseState[];
             current_states: CaseState[];
             theme: CaseTheme;
             reason: CaseReason;
@@ -72,7 +71,6 @@ declare namespace Components {
             description?: string | null;
             project?: number;
             ton_ids?: number[] | null;
-            nuisance: boolean | Array<string> | undefined;
         }
         export interface CaseEvent {
             id: number;
@@ -100,7 +98,7 @@ declare namespace Components {
         export interface CaseState {
             id: number;
             status_name: string;
-            tasks: CaseUserTask[];
+            tasks: CaseUserTaskCaseList[];
             start_date: string; // date
             end_date?: string | null; // date
             case_process_id?: string | null;
@@ -112,7 +110,7 @@ declare namespace Components {
         export interface CaseStateTask {
             id: number;
             status_name: string;
-            tasks: CaseUserTask[];
+            tasks: CaseUserTaskCaseList[];
             information: string;
             start_date: string; // date
             end_date?: string | null; // date
@@ -136,12 +134,28 @@ declare namespace Components {
             id: number;
             user_has_permission: boolean;
             case_user_task_id: string;
+            roles: string[];
             form: {
                 [name: string]: any;
             }[];
             form_variables: {
                 [name: string]: any;
             };
+            completed?: boolean;
+            task_id: string; // uuid
+            task_name: string;
+            name: string;
+            due_date: string; // date-time
+            created: string; // date-time
+            updated: string; // date-time
+            owner?: string | null; // uuid
+            case: number;
+            workflow: number;
+        }
+        export interface CaseUserTaskCaseList {
+            id: number;
+            user_has_permission: boolean;
+            case_user_task_id: string;
             roles: string[];
             completed?: boolean;
             task_id: string; // uuid
@@ -158,13 +172,13 @@ declare namespace Components {
             id: number;
             user_has_permission: boolean;
             case_user_task_id: string;
+            roles: string[];
             form: {
                 [name: string]: any;
             }[];
             form_variables: {
                 [name: string]: any;
             };
-            roles: string[];
             case: /* Case-address serializer for CaseUserTasks */ CaseAddress;
             completed?: boolean;
             task_id: string; // uuid
@@ -180,7 +194,7 @@ declare namespace Components {
             state: {
                 id: number;
                 status_name: string;
-                tasks: CaseUserTask[];
+                tasks: CaseUserTaskCaseList[];
                 information: string;
                 start_date: string; // date
                 end_date?: string | null; // date
@@ -202,6 +216,7 @@ declare namespace Components {
             reporter_email?: string | null;
             identification: number;
             description_citizenreport?: string | null;
+            nuisance?: boolean;
             date_added: string; // date-time
             case: number;
         }
@@ -324,11 +339,14 @@ declare namespace Components {
          * }
          */
         export interface GenericCompletedTask {
+            id: number;
             case_user_task_id: string;
             case: number;
             variables: {
                 [name: string]: any;
             };
+            description?: string;
+            date_added: string; // date-time
         }
         export type GeslachtsaanduidingEnum = "M" | "V" | "X";
         export interface Group {
@@ -741,7 +759,6 @@ declare namespace Components {
         export interface PatchedCase {
             id?: number;
             address?: Address;
-            case_states?: CaseState[];
             current_states?: CaseState[];
             theme?: CaseTheme;
             reason?: CaseReason;
@@ -763,13 +780,13 @@ declare namespace Components {
             id?: number;
             user_has_permission?: boolean;
             case_user_task_id?: string;
+            roles?: string[];
             form?: {
                 [name: string]: any;
             }[];
             form_variables?: {
                 [name: string]: any;
             };
-            roles?: string[];
             case?: /* Case-address serializer for CaseUserTasks */ CaseAddress;
             completed?: boolean;
             task_id?: string; // uuid
@@ -934,6 +951,8 @@ declare namespace Components {
             id: number;
             authors?: User[];
             author_ids?: string /* uuid */[];
+            task: string;
+            case_user_task_id?: string;
             start_time: string; // date-time
             situation?: string | null;
             observations?: string[] | null;
@@ -943,7 +962,6 @@ declare namespace Components {
             suggest_next_visit_description?: string | null;
             notes?: string | null;
             case: number;
-            task?: null | number;
         }
         export interface WeekSegment {
             id: number;
@@ -1367,11 +1385,13 @@ declare namespace Paths {
             export type Completed = "all" | "completed" | "not_completed";
             export type Page = number;
             export type Role = string;
+            export type Theme = string;
         }
         export interface QueryParameters {
             completed?: Parameters.Completed;
             page?: Parameters.Page;
             role?: Parameters.Role;
+            theme?: Parameters.Theme;
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCaseUserTaskListList;
