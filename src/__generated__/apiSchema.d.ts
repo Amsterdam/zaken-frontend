@@ -24,14 +24,8 @@ declare namespace Components {
             reason: CaseReason;
             schedules: Schedule[];
             project: CaseProject;
-            identification?: string | null;
             start_date?: string | null; // date
             end_date?: string | null; // date
-            is_legacy_bwv?: boolean;
-            is_legacy_camunda?: boolean;
-            legacy_bwv_case_id?: string | null;
-            directing_process?: string | null;
-            camunda_ids?: string[] | null;
             description?: string | null;
             ton_ids?: number[] | null;
             author?: string | null; // uuid
@@ -96,16 +90,10 @@ declare namespace Components {
             theme: number;
         }
         export interface CaseState {
-            id: number;
             status_name: string;
             tasks: CaseUserTaskCaseList[];
             start_date: string; // date
             end_date?: string | null; // date
-            case_process_id?: string | null;
-            case: number;
-            status: number;
-            workflow?: null | number;
-            users: string /* uuid */[];
         }
         export interface CaseStateTask {
             id: number;
@@ -764,14 +752,8 @@ declare namespace Components {
             reason?: CaseReason;
             schedules?: Schedule[];
             project?: CaseProject;
-            identification?: string | null;
             start_date?: string | null; // date
             end_date?: string | null; // date
-            is_legacy_bwv?: boolean;
-            is_legacy_camunda?: boolean;
-            legacy_bwv_case_id?: string | null;
-            directing_process?: string | null;
-            camunda_ids?: string[] | null;
             description?: string | null;
             ton_ids?: number[] | null;
             author?: string | null; // uuid
@@ -1168,6 +1150,7 @@ declare namespace Paths {
             export type StreetNumber = string;
             export type Suffix = string;
             export type Theme = number;
+            export type TonIds = string;
         }
         export interface QueryParameters {
             page?: Parameters.Page;
@@ -1176,6 +1159,7 @@ declare namespace Paths {
             streetNumber?: Parameters.StreetNumber;
             suffix?: Parameters.Suffix;
             theme?: Parameters.Theme;
+            tonIds?: Parameters.TonIds;
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCaseList;
