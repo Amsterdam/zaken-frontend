@@ -13,7 +13,7 @@ describe('Result "huisbezoek" with nobody present and hold', () => {
     })
 
     it("Go to Adresoverzicht and check address", () => {
-      const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/?open_cases=true`
+      const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/`
       cy.intercept(url).as('getCases')
       cy.visit(`/adres/${address.bagId}`)
       cy.wait('@getCases').then(() => {
