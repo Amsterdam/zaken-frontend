@@ -26,7 +26,7 @@ describe('Process Feedback reporter"', () => {
   // check dueDate
   cy.testDueDate("tbody>tr>td", 30)
 
-  it('PM can finish task "Terugkoppeling melder(s)"', () => {
+  it('PM can finish task "Terugkoppelen melder"', () => {
     cy.get("tbody>tr")
       .contains(roles.PM)
       .parents('td')
@@ -47,7 +47,7 @@ describe('Process Feedback reporter"', () => {
       .click()
   })
 
-  it("Check Terugkoppeling melder(s) event in history", () => {
+  it("Check Terugkoppeling melder event in history", () => {
     const url = `${Cypress.env("baseUrlAcc")}cases/*/tasks/`
     cy.intercept(url).as('getNextTask')
 
