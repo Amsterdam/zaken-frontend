@@ -26,11 +26,12 @@ const Workflow: React.FC<Props> = ({ id }) => {
   const columns = getColumns(execPost)
 
   if (isBusy) return <Spinner />
-  if (data !== undefined) {
+  const items = data?.results
+  if (items !== undefined) {
     return (
       <>
-        { data.length > 0 ? (
-            data.map(({ state, tasks }, index) => (
+        { items.length > 0 ? (
+            items.map(({ state, tasks }, index) => (
               <Wrap key={ `${ state.status_name }_${ index }` }>
                 <Div>
                   <Heading as="h4">{ state.status_name }</Heading>

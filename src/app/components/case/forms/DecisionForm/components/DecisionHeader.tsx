@@ -10,8 +10,9 @@ type Props = {
 const DecisionHeader: React.FC<Props> = ({ caseId, caseUserTaskId }) => {
 
   const [summons, { isBusy: isBusySummons }] = useSummonsWithCaseId(caseId)
-  const [tasks, { isBusy: isBusyCaseTasks }] = useCaseTasks(caseId)
+  const [data, { isBusy: isBusyCaseTasks }] = useCaseTasks(caseId)
   const isBusy = isBusySummons || isBusyCaseTasks
+  const tasks = data?.results
   const task = tasks?.map(({ tasks }) => tasks).flat().find(({ case_user_task_id }) => case_user_task_id === caseUserTaskId)
   // TODO: The use of form_variables + hardcoded key `summon_id` is tight-coupling
   const summonId = task?.form_variables.summon_id?.value
