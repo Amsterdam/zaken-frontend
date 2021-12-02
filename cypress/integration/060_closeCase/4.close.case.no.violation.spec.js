@@ -36,7 +36,7 @@ describe('Close case as projectmedwerker"', () => {
     cy.reload()
 
     cy.wait('@getTasks').then(({ response }) => {
-      const closingResponse = response?.body?.find((e) => e.state?.status_name === debrief.closingTask2)
+      const closingResponse = response?.body?.results?.find((e) => e.state?.status_name === debrief.closingTask2)
       const caseId = closingResponse?.state?.case
       const closingTask = closingResponse?.tasks?.find((e) => e.name === debrief.closingTask2)
       const taskId = closingTask.case_user_task_id
