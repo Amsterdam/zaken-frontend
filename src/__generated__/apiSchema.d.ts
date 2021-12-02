@@ -94,6 +94,7 @@ declare namespace Components {
             tasks: CaseUserTaskCaseList[];
             start_date: string; // date
             end_date?: string | null; // date
+            status: number;
         }
         export interface CaseStateTask {
             id: number;
@@ -356,12 +357,12 @@ declare namespace Components {
             count?: number;
             /**
              * example:
-             * http://api.example.org/accounts/?page=4
+             * http://api.example.org/accounts/?offset=400&limit=100
              */
             next?: string | null; // uri
             /**
              * example:
-             * http://api.example.org/accounts/?page=2
+             * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
             results?: CaseClose[];
@@ -374,12 +375,12 @@ declare namespace Components {
             count?: number;
             /**
              * example:
-             * http://api.example.org/accounts/?page=4
+             * http://api.example.org/accounts/?offset=400&limit=100
              */
             next?: string | null; // uri
             /**
              * example:
-             * http://api.example.org/accounts/?page=2
+             * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
             results?: CaseCloseReason[];
@@ -392,12 +393,12 @@ declare namespace Components {
             count?: number;
             /**
              * example:
-             * http://api.example.org/accounts/?page=4
+             * http://api.example.org/accounts/?offset=400&limit=100
              */
             next?: string | null; // uri
             /**
              * example:
-             * http://api.example.org/accounts/?page=2
+             * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
             results?: CaseCloseResult[];
@@ -410,12 +411,12 @@ declare namespace Components {
             count?: number;
             /**
              * example:
-             * http://api.example.org/accounts/?page=4
+             * http://api.example.org/accounts/?offset=400&limit=100
              */
             next?: string | null; // uri
             /**
              * example:
-             * http://api.example.org/accounts/?page=2
+             * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
             results?: Case[];
@@ -428,12 +429,12 @@ declare namespace Components {
             count?: number;
             /**
              * example:
-             * http://api.example.org/accounts/?page=4
+             * http://api.example.org/accounts/?offset=400&limit=100
              */
             next?: string | null; // uri
             /**
              * example:
-             * http://api.example.org/accounts/?page=2
+             * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
             results?: CaseProject[];
@@ -446,12 +447,12 @@ declare namespace Components {
             count?: number;
             /**
              * example:
-             * http://api.example.org/accounts/?page=4
+             * http://api.example.org/accounts/?offset=400&limit=100
              */
             next?: string | null; // uri
             /**
              * example:
-             * http://api.example.org/accounts/?page=2
+             * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
             results?: CaseReason[];
@@ -464,12 +465,12 @@ declare namespace Components {
             count?: number;
             /**
              * example:
-             * http://api.example.org/accounts/?page=4
+             * http://api.example.org/accounts/?offset=400&limit=100
              */
             next?: string | null; // uri
             /**
              * example:
-             * http://api.example.org/accounts/?page=2
+             * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
             results?: CaseStateType[];
@@ -482,12 +483,12 @@ declare namespace Components {
             count?: number;
             /**
              * example:
-             * http://api.example.org/accounts/?page=4
+             * http://api.example.org/accounts/?offset=400&limit=100
              */
             next?: string | null; // uri
             /**
              * example:
-             * http://api.example.org/accounts/?page=2
+             * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
             results?: CaseTheme[];
@@ -500,12 +501,12 @@ declare namespace Components {
             count?: number;
             /**
              * example:
-             * http://api.example.org/accounts/?page=4
+             * http://api.example.org/accounts/?offset=400&limit=100
              */
             next?: string | null; // uri
             /**
              * example:
-             * http://api.example.org/accounts/?page=2
+             * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
             results?: CaseUserTaskList[];
@@ -518,12 +519,12 @@ declare namespace Components {
             count?: number;
             /**
              * example:
-             * http://api.example.org/accounts/?page=4
+             * http://api.example.org/accounts/?offset=400&limit=100
              */
             next?: string | null; // uri
             /**
              * example:
-             * http://api.example.org/accounts/?page=2
+             * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
             results?: CaseWorkflow[];
@@ -536,12 +537,12 @@ declare namespace Components {
             count?: number;
             /**
              * example:
-             * http://api.example.org/accounts/?page=4
+             * http://api.example.org/accounts/?offset=400&limit=100
              */
             next?: string | null; // uri
             /**
              * example:
-             * http://api.example.org/accounts/?page=2
+             * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
             results?: DebriefingCreate[];
@@ -554,12 +555,12 @@ declare namespace Components {
             count?: number;
             /**
              * example:
-             * http://api.example.org/accounts/?page=4
+             * http://api.example.org/accounts/?offset=400&limit=100
              */
             next?: string | null; // uri
             /**
              * example:
-             * http://api.example.org/accounts/?page=2
+             * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
             results?: Decision[];
@@ -572,12 +573,12 @@ declare namespace Components {
             count?: number;
             /**
              * example:
-             * http://api.example.org/accounts/?page=4
+             * http://api.example.org/accounts/?offset=400&limit=100
              */
             next?: string | null; // uri
             /**
              * example:
-             * http://api.example.org/accounts/?page=2
+             * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
             results?: DecisionSanction[];
@@ -590,12 +591,12 @@ declare namespace Components {
             count?: number;
             /**
              * example:
-             * http://api.example.org/accounts/?page=4
+             * http://api.example.org/accounts/?offset=400&limit=100
              */
             next?: string | null; // uri
             /**
              * example:
-             * http://api.example.org/accounts/?page=2
+             * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
             results?: DecisionType[];
@@ -608,12 +609,12 @@ declare namespace Components {
             count?: number;
             /**
              * example:
-             * http://api.example.org/accounts/?page=4
+             * http://api.example.org/accounts/?offset=400&limit=100
              */
             next?: string | null; // uri
             /**
              * example:
-             * http://api.example.org/accounts/?page=2
+             * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
             results?: Summon[];
@@ -626,12 +627,12 @@ declare namespace Components {
             count?: number;
             /**
              * example:
-             * http://api.example.org/accounts/?page=4
+             * http://api.example.org/accounts/?offset=400&limit=100
              */
             next?: string | null; // uri
             /**
              * example:
-             * http://api.example.org/accounts/?page=2
+             * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
             results?: SummonType[];
@@ -644,12 +645,12 @@ declare namespace Components {
             count?: number;
             /**
              * example:
-             * http://api.example.org/accounts/?page=4
+             * http://api.example.org/accounts/?offset=400&limit=100
              */
             next?: string | null; // uri
             /**
              * example:
-             * http://api.example.org/accounts/?page=2
+             * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
             results?: SupportContact[];
@@ -662,12 +663,12 @@ declare namespace Components {
             count?: number;
             /**
              * example:
-             * http://api.example.org/accounts/?page=4
+             * http://api.example.org/accounts/?offset=400&limit=100
              */
             next?: string | null; // uri
             /**
              * example:
-             * http://api.example.org/accounts/?page=2
+             * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
             results?: ThemeScheduleTypes[];
@@ -680,12 +681,12 @@ declare namespace Components {
             count?: number;
             /**
              * example:
-             * http://api.example.org/accounts/?page=4
+             * http://api.example.org/accounts/?offset=400&limit=100
              */
             next?: string | null; // uri
             /**
              * example:
-             * http://api.example.org/accounts/?page=2
+             * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
             results?: User[];
@@ -698,12 +699,12 @@ declare namespace Components {
             count?: number;
             /**
              * example:
-             * http://api.example.org/accounts/?page=4
+             * http://api.example.org/accounts/?offset=400&limit=100
              */
             next?: string | null; // uri
             /**
              * example:
-             * http://api.example.org/accounts/?page=2
+             * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
             results?: ViolationType[];
@@ -716,12 +717,12 @@ declare namespace Components {
             count?: number;
             /**
              * example:
-             * http://api.example.org/accounts/?page=4
+             * http://api.example.org/accounts/?offset=400&limit=100
              */
             next?: string | null; // uri
             /**
              * example:
-             * http://api.example.org/accounts/?page=2
+             * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
             results?: Visit[];
@@ -734,12 +735,12 @@ declare namespace Components {
             count?: number;
             /**
              * example:
-             * http://api.example.org/accounts/?page=4
+             * http://api.example.org/accounts/?offset=400&limit=100
              */
             next?: string | null; // uri
             /**
              * example:
-             * http://api.example.org/accounts/?page=2
+             * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
             results?: WorkflowOption[];
@@ -962,15 +963,17 @@ declare namespace Paths {
     namespace AddressesCasesList {
         namespace Parameters {
             export type BagId = string;
+            export type Limit = number;
+            export type Offset = number;
             export type OpenCases = boolean;
-            export type Page = number;
         }
         export interface PathParameters {
             bag_id: Parameters.BagId;
         }
         export interface QueryParameters {
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
             open_cases?: Parameters.OpenCases;
-            page?: Parameters.Page;
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCaseList;
@@ -1006,10 +1009,12 @@ declare namespace Paths {
     }
     namespace CaseCloseList {
         namespace Parameters {
-            export type Page = number;
+            export type Limit = number;
+            export type Offset = number;
         }
         export interface QueryParameters {
-            page?: Parameters.Page;
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCaseCloseList;
@@ -1070,20 +1075,22 @@ declare namespace Paths {
     namespace CasesList {
         namespace Parameters {
             export type Date = string; // date
+            export type Limit = number;
             export type NoPagination = boolean;
+            export type Offset = number;
             export type OpenCases = boolean;
             export type OpenStatus = string;
-            export type Page = number;
             export type Reason = number;
             export type StartDate = string; // date
             export type Theme = number;
         }
         export interface QueryParameters {
             date?: Parameters.Date /* date */;
+            limit?: Parameters.Limit;
             noPagination?: Parameters.NoPagination;
+            offset?: Parameters.Offset;
             openCases?: Parameters.OpenCases;
             openStatus?: Parameters.OpenStatus;
-            page?: Parameters.Page;
             reason?: Parameters.Reason;
             startDate?: Parameters.StartDate /* date */;
             theme?: Parameters.Theme;
@@ -1107,13 +1114,15 @@ declare namespace Paths {
     namespace CasesProcessesList {
         namespace Parameters {
             export type Id = number;
-            export type Page = number;
+            export type Limit = number;
+            export type Offset = number;
         }
         export interface PathParameters {
             id: Parameters.Id;
         }
         export interface QueryParameters {
-            page?: Parameters.Page;
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedWorkflowOptionList;
@@ -1144,7 +1153,8 @@ declare namespace Paths {
     }
     namespace CasesSearchList {
         namespace Parameters {
-            export type Page = number;
+            export type Limit = number;
+            export type Offset = number;
             export type PostalCode = string;
             export type StreetName = string;
             export type StreetNumber = string;
@@ -1153,7 +1163,8 @@ declare namespace Paths {
             export type TonIds = string;
         }
         export interface QueryParameters {
-            page?: Parameters.Page;
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
             postalCode?: Parameters.PostalCode;
             streetName?: Parameters.StreetName;
             streetNumber?: Parameters.StreetNumber;
@@ -1168,13 +1179,15 @@ declare namespace Paths {
     namespace CasesTasksList {
         namespace Parameters {
             export type Id = number;
-            export type Page = number;
+            export type Limit = number;
+            export type Offset = number;
         }
         export interface PathParameters {
             id: Parameters.Id;
         }
         export interface QueryParameters {
-            page?: Parameters.Page;
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCaseWorkflowList;
@@ -1200,10 +1213,12 @@ declare namespace Paths {
     }
     namespace DebriefingsList {
         namespace Parameters {
-            export type Page = number;
+            export type Limit = number;
+            export type Offset = number;
         }
         export interface QueryParameters {
-            page?: Parameters.Page;
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedDebriefingCreateList;
@@ -1223,7 +1238,8 @@ declare namespace Paths {
             export type DateAddedGte = string; // date-time
             export type DateAddedLt = string; // date-time
             export type DateAddedLte = string; // date-time
-            export type Page = number;
+            export type Limit = number;
+            export type Offset = number;
         }
         export interface QueryParameters {
             case?: Parameters.Case;
@@ -1232,7 +1248,8 @@ declare namespace Paths {
             date_added__gte?: Parameters.DateAddedGte /* date-time */;
             date_added__lt?: Parameters.DateAddedLt /* date-time */;
             date_added__lte?: Parameters.DateAddedLte /* date-time */;
-            page?: Parameters.Page;
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedDecisionList;
@@ -1246,7 +1263,8 @@ declare namespace Paths {
             export type DateAddedGte = string; // date-time
             export type DateAddedLt = string; // date-time
             export type DateAddedLte = string; // date-time
-            export type Page = number;
+            export type Limit = number;
+            export type Offset = number;
         }
         export interface QueryParameters {
             case?: Parameters.Case;
@@ -1255,7 +1273,8 @@ declare namespace Paths {
             date_added__gte?: Parameters.DateAddedGte /* date-time */;
             date_added__lt?: Parameters.DateAddedLt /* date-time */;
             date_added__lte?: Parameters.DateAddedLte /* date-time */;
-            page?: Parameters.Page;
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedDecisionSanctionList;
@@ -1343,11 +1362,13 @@ declare namespace Paths {
     namespace SummonsList {
         namespace Parameters {
             export type Case = number;
-            export type Page = number;
+            export type Limit = number;
+            export type Offset = number;
         }
         export interface QueryParameters {
             case?: Parameters.Case;
-            page?: Parameters.Page;
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedSummonList;
@@ -1355,10 +1376,12 @@ declare namespace Paths {
     }
     namespace SupportContactsList {
         namespace Parameters {
-            export type Page = number;
+            export type Limit = number;
+            export type Offset = number;
         }
         export interface QueryParameters {
-            page?: Parameters.Page;
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedSupportContactList;
@@ -1367,13 +1390,15 @@ declare namespace Paths {
     namespace TasksList {
         namespace Parameters {
             export type Completed = "all" | "completed" | "not_completed";
-            export type Page = number;
+            export type Limit = number;
+            export type Offset = number;
             export type Role = string;
             export type Theme = string;
         }
         export interface QueryParameters {
             completed?: Parameters.Completed;
-            page?: Parameters.Page;
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
             role?: Parameters.Role;
             theme?: Parameters.Theme;
         }
@@ -1396,13 +1421,15 @@ declare namespace Paths {
     namespace ThemesCaseCloseReasonsList {
         namespace Parameters {
             export type Id = number;
-            export type Page = number;
+            export type Limit = number;
+            export type Offset = number;
         }
         export interface PathParameters {
             id: Parameters.Id;
         }
         export interface QueryParameters {
-            page?: Parameters.Page;
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCaseCloseReasonList;
@@ -1411,13 +1438,15 @@ declare namespace Paths {
     namespace ThemesCaseCloseResultsList {
         namespace Parameters {
             export type Id = number;
-            export type Page = number;
+            export type Limit = number;
+            export type Offset = number;
         }
         export interface PathParameters {
             id: Parameters.Id;
         }
         export interface QueryParameters {
-            page?: Parameters.Page;
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCaseCloseResultList;
@@ -1426,13 +1455,15 @@ declare namespace Paths {
     namespace ThemesCaseProjectsList {
         namespace Parameters {
             export type Id = number;
-            export type Page = number;
+            export type Limit = number;
+            export type Offset = number;
         }
         export interface PathParameters {
             id: Parameters.Id;
         }
         export interface QueryParameters {
-            page?: Parameters.Page;
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCaseProjectList;
@@ -1441,13 +1472,15 @@ declare namespace Paths {
     namespace ThemesDecisionTypesList {
         namespace Parameters {
             export type Id = number;
-            export type Page = number;
+            export type Limit = number;
+            export type Offset = number;
         }
         export interface PathParameters {
             id: Parameters.Id;
         }
         export interface QueryParameters {
-            page?: Parameters.Page;
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedDecisionTypeList;
@@ -1455,10 +1488,12 @@ declare namespace Paths {
     }
     namespace ThemesList {
         namespace Parameters {
-            export type Page = number;
+            export type Limit = number;
+            export type Offset = number;
         }
         export interface QueryParameters {
-            page?: Parameters.Page;
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCaseThemeList;
@@ -1467,13 +1502,15 @@ declare namespace Paths {
     namespace ThemesReasonsList {
         namespace Parameters {
             export type Id = number;
-            export type Page = number;
+            export type Limit = number;
+            export type Offset = number;
         }
         export interface PathParameters {
             id: Parameters.Id;
         }
         export interface QueryParameters {
-            page?: Parameters.Page;
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCaseReasonList;
@@ -1482,13 +1519,15 @@ declare namespace Paths {
     namespace ThemesScheduleTypesList {
         namespace Parameters {
             export type Id = number;
-            export type Page = number;
+            export type Limit = number;
+            export type Offset = number;
         }
         export interface PathParameters {
             id: Parameters.Id;
         }
         export interface QueryParameters {
-            page?: Parameters.Page;
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedThemeScheduleTypesList;
@@ -1497,13 +1536,15 @@ declare namespace Paths {
     namespace ThemesStateTypesList {
         namespace Parameters {
             export type Id = number;
-            export type Page = number;
+            export type Limit = number;
+            export type Offset = number;
         }
         export interface PathParameters {
             id: Parameters.Id;
         }
         export interface QueryParameters {
-            page?: Parameters.Page;
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCaseStateTypeList;
@@ -1512,13 +1553,15 @@ declare namespace Paths {
     namespace ThemesSummonTypesList {
         namespace Parameters {
             export type Id = number;
-            export type Page = number;
+            export type Limit = number;
+            export type Offset = number;
         }
         export interface PathParameters {
             id: Parameters.Id;
         }
         export interface QueryParameters {
-            page?: Parameters.Page;
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedSummonTypeList;
@@ -1527,13 +1570,15 @@ declare namespace Paths {
     namespace ThemesViolationTypesList {
         namespace Parameters {
             export type Id = number;
-            export type Page = number;
+            export type Limit = number;
+            export type Offset = number;
         }
         export interface PathParameters {
             id: Parameters.Id;
         }
         export interface QueryParameters {
-            page?: Parameters.Page;
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedViolationTypeList;
@@ -1541,10 +1586,12 @@ declare namespace Paths {
     }
     namespace UsersList {
         namespace Parameters {
-            export type Page = number;
+            export type Limit = number;
+            export type Offset = number;
         }
         export interface QueryParameters {
-            page?: Parameters.Page;
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedUserList;
@@ -1563,10 +1610,12 @@ declare namespace Paths {
     }
     namespace VisitsList {
         namespace Parameters {
-            export type Page = number;
+            export type Limit = number;
+            export type Offset = number;
         }
         export interface QueryParameters {
-            page?: Parameters.Page;
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedVisitList;
