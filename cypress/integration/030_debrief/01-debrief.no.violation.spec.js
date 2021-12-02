@@ -11,7 +11,7 @@ describe('Process Debrief - No violation"', () => {
     })
 
     it("Go to Adresoverzicht and check address", () => {
-      const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/?open_cases=true`
+      const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/`
       cy.intercept(url).as('getCases')
       cy.visit(`/adres/${address.bagId}`)
       cy.wait('@getCases').then(() => {
@@ -38,7 +38,7 @@ describe('Process Debrief - No violation"', () => {
       cy.intercept(url).as('getTasks')
 
       cy.wait('@getTasks').then(({ response }) => {
-        const debriefResponse = response?.body?.find((e) => e.state?.status_name === "Debrief")
+        const debriefResponse = response?.body?.results?.find((e) => e.state?.status_name === "Debrief")
         const caseId = debriefResponse?.state?.case
         const debriefTask = debriefResponse?.tasks?.find((e) => e.name === "Verwerken debrief")
         const taskId = debriefTask.case_user_task_id
@@ -91,20 +91,32 @@ describe('Process Debrief - No violation"', () => {
         cy.scrollTo(0, 400)
         cy.get("h4")
           .contains("Debrief")
-          // TODO BE should fix this first
-        // cy.get("tbody>tr")
-        //   .contains("td", debrief.noViolationNextTask1)
-        //   .siblings("td")
-        //   .contains(roles.PM)
         cy.get("tbody>tr")
-          .contains("td", debrief.noViolationNextTask2)
+          .contains("td", debrief.noViolationNextTask1)
           .siblings("td")
           .contains(roles.TH)
+          .parents('td')
+          .siblings('td')
+          .contains("Taak afronden")
+          .click({force: true})
+
+        cy.get(`[role="dialog"]`)
+          .should('have.length', 1)
+          .contains(debrief.noViolationNextTask1)
+            
+        cy.get(`[role="dialog"]`)
+          .find('input[name="completed"]')
+          .first()
+          .check()        
+        cy.get(`[role="dialog"]`)
+          .find('button')
+          .contains("Taak afronden")
+          .click()
       })
     })
 
     it("Check debrief event in history", () => {
-      cy.history("Debrief", "Projecthandhaver")
+      cy.history("Terugkoppelen melder", roles.PM)
     })
   })
 })

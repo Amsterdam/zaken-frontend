@@ -5,7 +5,7 @@ import address from "../../fixtures/address.json"
 describe('Process Feedback reporter"', () => {
 
   it("Go to Adresoverzicht and check address", () => {
-    const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/?open_cases=true`
+    const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/`
     cy.intercept(url).as('getCases')
     cy.visit(`/adres/${address.bagId}`)
     cy.wait('@getCases').then(() => {
@@ -26,7 +26,7 @@ describe('Process Feedback reporter"', () => {
   // check dueDate
   cy.testDueDate("tbody>tr>td", 30)
 
-  it('PM can finish task "Terugkoppeling melder(s)"', () => {
+  it('PM can finish task "Terugkoppelen melder"', () => {
     cy.get("tbody>tr")
       .contains(roles.PM)
       .parents('td')
@@ -47,7 +47,7 @@ describe('Process Feedback reporter"', () => {
       .click()
   })
 
-  it("Check Terugkoppeling melder(s) event in history", () => {
+  it("Check Terugkoppeling melder event in history", () => {
     const url = `${Cypress.env("baseUrlAcc")}cases/*/tasks/`
     cy.intercept(url).as('getNextTask')
 

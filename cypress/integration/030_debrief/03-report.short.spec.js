@@ -5,7 +5,7 @@ import address from "../../fixtures/address.json"
 describe('Process Short Report Visit"', () => {
     
   it("Go to Adresoverzicht and check address", () => {
-    const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/?open_cases=true`
+    const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/`
     cy.intercept(url).as('getCases')
     cy.visit(`/adres/${address.bagId}`)
     cy.wait('@getCases').then(() => {
@@ -72,13 +72,6 @@ describe('Process Short Report Visit"', () => {
   })
 
   it("Check Opstellen verkorte rapportage huisbezoek event in history", () => {
-    cy.scrollTo(0, 600)
-    cy.get("h2")
-      .contains("Zaakhistorie")
-    // TODO when double spaces in bpmn are fixed in the backend
-    // use cy.history(debrief.noViolationNextTask2)
-    cy.get(`button[title="Opstellen  verkorte rapportage huisbezoek "]`)
-      .should("have.attr", "aria-expanded", "true")
-      .contains(debrief.noViolationNextTask2)
+    cy.history(debrief.noViolationNextTask2)
   })
 })

@@ -5,7 +5,7 @@ import address from "../../fixtures/address.json"
 describe('Process Report Visit"', () => {
     
   it("Go to Adresoverzicht and check address", () => {
-    const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/?open_cases=true`
+    const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/`
     cy.intercept(url).as('getCases')
     cy.visit(`/adres/${address.bagId}`)
     cy.wait('@getCases').then(() => {
@@ -97,7 +97,7 @@ describe('Process Report Visit"', () => {
   it('check dueDate', () => {
     cy.testDueDate("tbody>tr>td", 1)
   })
-  it('TH can finish task "Opstellen concept aanschrijvingen"', () => {
+  it('TH can finish task "Opstellen concept aanschrijving"', () => {
   
     cy.get("tbody>tr")
       .should("have.length", 1)

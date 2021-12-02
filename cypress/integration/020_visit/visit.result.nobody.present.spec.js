@@ -13,7 +13,7 @@ describe('Result "huisbezoek" with nobody present', () => {
     })
 
     it("Go to Adresoverzicht and check address", () => {
-      const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/?open_cases=true`
+      const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/`
       cy.intercept(url).as('getCases')
       cy.visit(`/adres/${address.bagId}`)
       cy.wait('@getCases').then(() => {
@@ -37,7 +37,7 @@ describe('Result "huisbezoek" with nobody present', () => {
       cy.intercept(url).as('getTasks')
 
       cy.wait('@getTasks').then(({ response }) => {
-        const visit = response?.body?.find((e) => e.state?.status_name === "Huisbezoek")
+        const visit = response?.body?.results?.find((e) => e.state?.status_name === "Huisbezoek")
         const caseId = visit?.state?.case
         const topTask = visit?.tasks?.find((e) => e.name === "Doorgeven Huisbezoek TOP")
         const taskId = topTask.case_user_task_id
