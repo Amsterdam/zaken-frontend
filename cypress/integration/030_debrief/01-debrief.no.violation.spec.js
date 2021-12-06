@@ -45,7 +45,7 @@ describe('Process Debrief - No violation"', () => {
 
         // check dueDate
         cy.testDueDate("tbody>tr>td", 0)
-        
+
         cy.visit(`/zaken/${caseId}/debriefing/${taskId}`)
 
         cy.url()
@@ -94,7 +94,7 @@ describe('Process Debrief - No violation"', () => {
         cy.get("tbody>tr")
           .contains("td", debrief.noViolationNextTask1)
           .siblings("td")
-          .contains(roles.TH)
+          .contains(roles.PM)
           .parents('td')
           .siblings('td')
           .contains("Taak afronden")
@@ -103,11 +103,11 @@ describe('Process Debrief - No violation"', () => {
         cy.get(`[role="dialog"]`)
           .should('have.length', 1)
           .contains(debrief.noViolationNextTask1)
-            
+
         cy.get(`[role="dialog"]`)
           .find('input[name="completed"]')
           .first()
-          .check()        
+          .check()
         cy.get(`[role="dialog"]`)
           .find('button')
           .contains("Taak afronden")

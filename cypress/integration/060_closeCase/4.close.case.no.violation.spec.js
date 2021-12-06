@@ -26,7 +26,7 @@ describe('Close case as projectmedwerker"', () => {
         .click()
     })
   })
-  
+
   it('Intercept Afronding URL and load page', () => {
 
     const url = `${Cypress.env("baseUrlAcc")}cases/*/tasks/`
@@ -41,7 +41,7 @@ describe('Close case as projectmedwerker"', () => {
       const closingTask = closingResponse?.tasks?.find((e) => e.name === debrief.closingTask2)
       const taskId = closingTask.case_user_task_id
 
-      const url = `${Cypress.env("baseUrlAcc")}themes/58/case-close-reasons`
+      const url = `${Cypress.env("baseUrlAcc")}themes/*/case-close-reasons`
       cy.intercept(url).as('getCloseReasons')
       cy.get("h4")
         .contains(debrief.closingTask2)

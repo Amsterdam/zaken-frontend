@@ -3,7 +3,7 @@ import roles from "../../fixtures/roles.json"
 import address from "../../fixtures/address.json"
 
 describe('Process Short Report Visit"', () => {
-    
+
   it("Go to Adresoverzicht and check address", () => {
     const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/`
     cy.intercept(url).as('getCases')
@@ -22,13 +22,13 @@ describe('Process Short Report Visit"', () => {
         .click()
     })
   })
-  
+
   it('check dueDate', () => {
     cy.testDueDate("tbody>tr>td", 2)
   })
 
   it('TH can finish task "Opstellen verkorte rapportage huisbezoek"', () => {
-  
+
     cy.get("tbody>tr")
       .should("have.length", 1)
       .contains(roles.TH)
@@ -40,16 +40,24 @@ describe('Process Short Report Visit"', () => {
     cy.get(`[role="dialog"]`)
         .should('have.length', 1)
         .contains(debrief.noViolationNextTask2)
-        
+
     cy.get(`[role="dialog"]`)
         .find('input[name="completed"]')
         .first()
         .check()
-    
+
     cy.get(`[role="dialog"]`)
         .find('button')
         .contains("Taak afronden")
         .click()
+  })
+
+  it("Task 'Opstellen verkorte rapportage huisbezoek' needs to be processed", () => {
+    // Wait for the BE timer(10 sec) to process the task.
+    cy.wait(10000)
+    cy.get("a")
+      .contains("Herlaad")
+      .click()
   })
 
   it("Check next task is 'Uitzetten vervolgstap'", () => {
@@ -57,7 +65,7 @@ describe('Process Short Report Visit"', () => {
     cy.intercept(url).as('getNextTask')
 
     cy.wait('@getNextTask').then(() => {
-        
+
       cy.scrollTo(0, 400)
       cy.get("h4")
         .contains("Vervolgstap")
