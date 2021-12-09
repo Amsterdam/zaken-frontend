@@ -10,7 +10,10 @@ export default (caseItem?: Components.Schemas.Case) => {
     ["Zaak ID", <CaseIdDisplay id={ id } />],
     ["Thema", name],
     ["Startdatum", <DateDisplay date={ start_date ?? undefined } emptyText="-" />],
-    ["Aanleiding", project?.name !== undefined ? `Project: ${ project.name }` : reason.name]
+    ["Aanleiding", project?.name !== undefined ? `Project: ${ project.name }` : reason.name],
+
+    // TODO make dynamic
+    ["Onderwerp(en)", "Hennep"]
   ]
 
   return Object.fromEntries(values)
