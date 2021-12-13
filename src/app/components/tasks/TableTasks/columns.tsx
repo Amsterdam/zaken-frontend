@@ -39,7 +39,7 @@ export default (myId?: string) => {
       dataIndex: "due_date",
       minWidth: 50,
       sorter: (a: any, b: any) => new Date(a?.due_date).getTime() - new Date(b?.due_date).getTime(),
-      defaultSorting: "ASCEND" as const,
+      defaultSortOrder: "ASCEND" as const,
       render: (due_date: any) => <DueDate date={ due_date ?? undefined } emptyText="-" />
     }, {
       dataIndex: "case.id",
