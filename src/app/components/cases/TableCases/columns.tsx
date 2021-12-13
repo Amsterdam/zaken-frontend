@@ -26,7 +26,7 @@ const columns = [
     dataIndex: "address.full_address",
     sorter: (a: any, b: any) => a?.address?.full_address.localeCompare(b?.address?.full_address),
     minWidth: 300,
-    defaultSorting: "ASCEND" as const
+    defaultSortOrder: "ASCEND" as const
   }, {
     header: "Status",
     dataIndex: "current_states",
