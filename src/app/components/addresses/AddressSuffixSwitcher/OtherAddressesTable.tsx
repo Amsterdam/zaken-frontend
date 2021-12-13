@@ -25,7 +25,7 @@ const OtherAddressesTable: React.FC<Props> = ({ bagId, onAddressChosen }) => {
       data={ data || [] }
       onClickRow={ onClickRow }
       emptyPlaceholder="Er zijn geen andere adressen gevonden"
-      pagination={false}
+      pagination={ false }
     />
   )
 }

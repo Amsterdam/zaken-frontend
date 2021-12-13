@@ -32,7 +32,7 @@ const SearchResults: React.FC<Props> = ({ searchString }) => {
         numLoadingRows={ 1 }
         onClickRow={ onClickRow }
         emptyPlaceholder="Er zijn geen adressen gevonden"
-        pagination={false}
+        pagination={ false }
       />
     ) : null
   )
