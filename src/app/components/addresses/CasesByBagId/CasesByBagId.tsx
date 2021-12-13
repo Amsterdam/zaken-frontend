@@ -43,6 +43,7 @@ const CasesByBagId: React.FC<Props> = ({ bagId, openCases = false, title = defau
         showHeadWhenEmpty={ false }
         onClickRow={ onClickRow }
         emptyPlaceholder={ emptyText }
+        pagination={ false }
       />
     </Div>
   )

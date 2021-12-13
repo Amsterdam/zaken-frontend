@@ -41,6 +41,7 @@ const Workflow: React.FC<Props> = ({ id }) => {
                   columns={ columns }
                   hasFixedColumn
                   data={ tasks || [] }
+                  pagination={false}
                 />
               </Wrap>
             ))
