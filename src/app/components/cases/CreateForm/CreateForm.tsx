@@ -25,7 +25,7 @@ type FormData =
     reason: Components.Schemas.CaseReason
     project: Components.Schemas.CaseProject
     nuisance: boolean | Array<string> | undefined
-    subjects: Components.Schemas.Subject["id"][]
+    subjects: Components.Schemas.Subject[]
   }
 
 const mapData = (bagId: Components.Schemas.Address["bag_id"], tonId: number | undefined) =>
@@ -36,7 +36,8 @@ const mapData = (bagId: Components.Schemas.Address["bag_id"], tonId: number | un
     reason: data.reason.id,
     project: data.project?.id,
     nuisance: Array.isArray(data?.nuisance) && data?.nuisance?.includes("nuisance"),
-    ton_ids: tonId !== undefined ? [ tonId ] : undefined
+    ton_ids: tonId !== undefined ? [ tonId ] : undefined,
+    subjects: data.subjects.map((subject) => subject.id)
   })
 
 const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
