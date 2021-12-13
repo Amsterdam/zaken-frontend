@@ -38,6 +38,20 @@ export const useProjects = (themeId?: Components.Schemas.CaseTheme["id"], option
   })
 }
 
+
+export const useSubjects = (themeId?: Components.Schemas.CaseTheme["id"], options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<Components.Schemas.PaginatedSubjectList>({
+    lazy: themeId === undefined,
+    ...options,
+    url: makeApiUrl("themes", themeId, "subjects"),
+    groupName: "themes",
+    handleError,
+    isProtected: true
+  })
+}
+
+
 // useSummonTypes for getting the available summonTypes for a specific theme
 export const useSummonTypes = (themeId?: Components.Schemas.CaseTheme["id"], options?: Options) => {
   const handleError = useErrorHandler()

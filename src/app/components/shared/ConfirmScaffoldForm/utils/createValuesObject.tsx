@@ -1,6 +1,7 @@
 import ArrayFieldList from "../components/ArrayFieldList"
 import type { RequestBody, NamedFields } from "../ConfirmScaffoldFields"
 import { Field } from "../../Form/ScaffoldField"
+import OptionList from "../components/OptionList"
 
 const mapField = <T extends RequestBody>(field: Field, key: string, data: T) => {
   const { type, props } = field
@@ -14,6 +15,8 @@ const mapField = <T extends RequestBody>(field: Field, key: string, data: T) => 
   const value = (type: string, props: any) => {
     if (type === "ArrayField") {      
       return <ArrayFieldList fields={ v as Array<Record<string, string>> } />
+    } else if (type === "ComplexCheckboxFields") {      
+      return <OptionList fields={ v as Array<Record<string, string>> } />
     } else if (type === "ComplexSelectField" || type === "ComplexRadioFields"){
       return(v as Record<string, string>)[(props as { optionLabelField: string }).optionLabelField]
     } else if (props.hasOwnProperty("options")) {

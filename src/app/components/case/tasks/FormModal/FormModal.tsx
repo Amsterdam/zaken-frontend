@@ -13,7 +13,7 @@ export type Props = {
 }
 
 const FormModal: React.FC<Props> = ({ form, isOpen, closeModal, onSubmit, taskName, caseId }) => {
-
+  console.log("form", form)
   const title = form ? `Rond de taak "${ taskName }" af` : `Is de taak "${ taskName }" afgerond?`
 
   const { addSuccessFlashMessage } = useFlashMessages()
