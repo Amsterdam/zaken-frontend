@@ -19,13 +19,12 @@ const CaseDetails: React.FC<Props> = ({ caseId }) => {
 
   const [data, { isBusy }] = useCase(caseId)
   const values = useValues(data)
-
-const filteredValues: any = (filterValues: string[]) => Object.keys(values)
-  .filter(key => filterValues.includes(key))
-  .reduce((obj: any, key: string) => {
-    obj[key] = values[key]
-    return obj
-  }, {})
+  const filteredValues: any = (filterValues: string[]) => Object.keys(values)
+    .filter(key => filterValues.includes(key))
+    .reduce((obj: any, key: string) => {
+      obj[key] = values[key]
+      return obj
+    }, {})
 
   return (
     <Div>
