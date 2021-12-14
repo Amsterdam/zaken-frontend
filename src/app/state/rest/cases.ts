@@ -1,17 +1,23 @@
 import qs from "qs"
-
+import isEmpty from "lodash.isempty"
 import type { Options } from "./"
 import { useErrorHandler } from "./hooks/utils/errorHandler"
 import { makeApiUrl } from "./hooks/utils/apiUrl"
 import useApiRequest from "./hooks/useApiRequest"
 
-export const useCases = (start_date?: string, options?: Options) => {
-  const queryString = start_date !== undefined ? qs.stringify({ date: start_date }, { addQueryPrefix: true }) : ""
-  const url = `${ makeApiUrl("cases") }${ queryString }`
+export const useCases = (theme: string, start_date?: string, options?: Options) => {
   const handleError = useErrorHandler()
+  const urlParams: any = {}
+  if (theme) {
+    urlParams.theme = theme
+  }
+  if (start_date !== undefined) {
+    urlParams.date = start_date
+  }
+  const queryString = isEmpty(urlParams) ? "" : qs.stringify(urlParams, { addQueryPrefix: true })
   return useApiRequest<Components.Schemas.PaginatedCaseList>({
     ...options,
-    url,
+    url: `${ makeApiUrl("cases") }${ queryString }`,
     groupName: "cases",
     handleError,
     isProtected: true
