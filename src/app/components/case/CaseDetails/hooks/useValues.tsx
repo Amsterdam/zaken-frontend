@@ -7,7 +7,7 @@ const Wrap = styled.div`
   display: flex;
 `
 
-export default (caseItem?: Components.Schemas.Case) => {
+export default (isClosed: boolean, caseItem?: Components.Schemas.Case) => {
 
   if (caseItem === undefined) return
 
@@ -23,7 +23,9 @@ export default (caseItem?: Components.Schemas.Case) => {
     ["Thema", name],
     ["Startdatum", <DateDisplay date={ start_date ?? undefined } emptyText="-" />],
     ["Aanleiding", project?.name !== undefined ? `Project: ${ project.name }` : reason.name],
-    ["Onderwerp(en)", <ChangeableSubject subjects={ subjects } caseId={ id } />]
+    ["Onderwerp(en)", isClosed 
+      ? subjects.map((subject) => subject.name).join(", ") 
+      : <ChangeableSubject subjects={ subjects } caseId={ id } />]
   ]
 
   return Object.fromEntries(values)

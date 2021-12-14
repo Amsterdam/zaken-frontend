@@ -5,6 +5,7 @@ import useValues from "./hooks/useValues"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
+  isClosed: boolean
 }
 
 const Div = styled.div`
@@ -15,10 +16,10 @@ const Div = styled.div`
   }
 `
 
-const CaseDetails: React.FC<Props> = ({ caseId }) => {
+const CaseDetails: React.FC<Props> = ({ caseId, isClosed }) => {
 
   const [data, { isBusy }] = useCase(caseId)
-  const values = useValues(data)
+  const values = useValues(isClosed, data)
   const filteredValues: any = (filterValues: string[]) => Object.keys(values)
     .filter(key => filterValues.includes(key))
     .reduce((obj: any, key: string) => {

@@ -44,7 +44,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
         </Row>
         <Row>
           <Column spanLarge={ 75 }>
-            <CaseDetails caseId={ id } />
+            <CaseDetails caseId={ id } isClosed={ isClosed } />
           </Column>
         </Row>
 
