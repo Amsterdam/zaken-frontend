@@ -20,46 +20,55 @@ export default {
         Page: DetailsPage,
         title: "Zaakdetails",
         icon: "Folder",
+        permissionName: "access_sensitive_dossiers",
         subRoutes: {
           "afronding/:caseUserTaskId": {
             Page: CompleteCasePage,
             title: "Zaak afronden",
-            icon: "Edit"
+            icon: "Edit",
+            permissionName: "access_sensitive_dossiers"
           },
           "taak": {
             Page: TaskCreatePage,
             title: "Taak opvoeren",
-            icon: "Edit"
+            icon: "Edit",
+            permissionName: "access_sensitive_dossiers"
           },
           "debriefing/:caseUserTaskId": {
             Page: DebriefCreatePage,
             title: "Debrief terugkoppeling geven",
-            icon: "Edit"
+            icon: "Edit",
+            permissionName: "access_sensitive_dossiers"
           },
           "besluit/:caseUserTaskId": {
             Page: DecisionCreatePage,
             title: "Resultaat besluit",
-            icon: "Edit"
+            icon: "Edit",
+            permissionName: "access_sensitive_dossiers"
           },
           "aanschrijving/:caseUserTaskId": {
             Page: SummonCreatePage,
             title: "Resultaat aanschrijving",
-            icon: "Edit"
+            icon: "Edit",
+            permissionName: "access_sensitive_dossiers"
           },
           "inplanning/:caseUserTaskId": {
             Page: ScheduleCreatePage,
             title: "Bezoek inplannen",
-            icon: "Edit"
+            icon: "Edit",
+            permissionName: "access_sensitive_dossiers"
           },
           "huisbezoek/:caseUserTaskId": {
             Page: VisitCreatePage,
             title: "Resultaat bezoek",
-            icon: "Edit"
+            icon: "Edit",
+            permissionName: "access_sensitive_dossiers"
           },
           "melding/:caseUserTaskId": {
             Page: CitizenReportPage,
             title: "Melding verwerken",
-            icon: "Edit"
+            icon: "Edit",
+            permissionName: "access_sensitive_dossiers"
           }
         }
       }

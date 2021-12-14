@@ -24,8 +24,10 @@ declare namespace Components {
             reason: CaseReason;
             schedules: Schedule[];
             project: CaseProject;
+            subjects: Subject[];
             start_date?: string | null; // date
             end_date?: string | null; // date
+            sensitive?: boolean;
             description?: string | null;
             ton_ids?: number[] | null;
             author?: string | null; // uuid
@@ -36,6 +38,7 @@ declare namespace Components {
         export interface CaseAddress {
             id: number;
             address: Address;
+            sensitive?: boolean;
         }
         export interface CaseClose {
             id: number;
@@ -65,6 +68,7 @@ declare namespace Components {
             description?: string | null;
             project?: number;
             ton_ids?: number[] | null;
+            subjects?: number[];
         }
         export interface CaseEvent {
             id: number;
@@ -112,11 +116,12 @@ declare namespace Components {
         export interface CaseStateType {
             id: number;
             name: string;
-            theme?: number;
+            theme: number;
         }
         export interface CaseTheme {
             id: number;
             name: string;
+            sensitive?: boolean;
             case_state_types_top?: number[];
         }
         export interface CaseUserTask {
@@ -250,6 +255,7 @@ declare namespace Components {
             theme: {
                 id: number;
                 name: string;
+                sensitive?: boolean;
                 case_state_types_top?: number[];
             };
             decision_type: {
@@ -601,6 +607,24 @@ declare namespace Components {
             previous?: string | null; // uri
             results?: DecisionType[];
         }
+        export interface PaginatedSubjectList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?offset=400&limit=100
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?offset=200&limit=100
+             */
+            previous?: string | null; // uri
+            results?: Subject[];
+        }
         export interface PaginatedSummonList {
             /**
              * example:
@@ -753,8 +777,10 @@ declare namespace Components {
             reason?: CaseReason;
             schedules?: Schedule[];
             project?: CaseProject;
+            subjects?: Subject[];
             start_date?: string | null; // date
             end_date?: string | null; // date
+            sensitive?: boolean;
             description?: string | null;
             ton_ids?: number[] | null;
             author?: string | null; // uuid
@@ -856,6 +882,11 @@ declare namespace Components {
         export type SoortVorderingEnum = "PBF" | "PBN" | "PRV" | "SOC";
         export interface StartWorkflow {
             workflow_option_id: number;
+        }
+        export interface Subject {
+            id: number;
+            name: string;
+            theme: number;
         }
         export interface Summon {
             id: number;
@@ -1174,6 +1205,23 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCaseList;
+        }
+    }
+    namespace CasesSubjectsList {
+        namespace Parameters {
+            export type Id = number;
+            export type Limit = number;
+            export type Offset = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        export interface QueryParameters {
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedSubjectList;
         }
     }
     namespace CasesTasksList {
@@ -1548,6 +1596,23 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCaseStateTypeList;
+        }
+    }
+    namespace ThemesSubjectsList {
+        namespace Parameters {
+            export type Id = number;
+            export type Limit = number;
+            export type Offset = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        export interface QueryParameters {
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedSubjectList;
         }
     }
     namespace ThemesSummonTypesList {
