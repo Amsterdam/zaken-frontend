@@ -20,7 +20,7 @@ const SearchResults: React.FC<Props> = ({ searchString }) => {
   }
 
   // Only show addresses with a bagId
-  const dataSource = data?.results.filter((obj) => obj.adresseerbaar_object_id) || []
+  const dataSource = data?.results?.filter((obj) => obj.adresseerbaar_object_id) || []
 
   return (
     isValidSearchString(searchString) ? (
