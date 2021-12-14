@@ -10,11 +10,17 @@ describe("Test add_case_anonymous_no_ad", () => {
   it("Select address and create case", () => {
     cy.createCaseForAddress(address.queryString, `${address.street}, ${address.zipCode}`)
   })
+
 })
 
 describe("Create case and validate input", () => {
   it("Fill in form", () => {
-    cy.get("#theme_2")
+
+    cy.wait(1000)
+    cy.get("span")
+      .contains("Vakantieverhuur")
+      .siblings()
+      .find("input")
       .check({force: true})
 
     cy.get("#reason_0")
@@ -37,7 +43,7 @@ describe("Create case and validate input", () => {
   })
 
   it("Send form", () => {
-    
+
     cy.get(`[data-e2e-id="submit"]`)
       .click()
 
@@ -63,9 +69,9 @@ describe("Create case and validate input", () => {
   })
 
   it("Show CaseDetail page", () => {
-    
+
     cy.shouldBeOnCaseDetailPage()
-    
+
   })
 
   it("ZaakDetail has right address", () => {
