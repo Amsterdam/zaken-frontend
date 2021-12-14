@@ -1,17 +1,15 @@
 import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 
-const scaffold = (onCancel: () => void) => {
+const scaffold = (onCancel: () => void, subjects?: Components.Schemas.Subject[]) => {
   const fields = {
     subjects: {
-      type: "CheckboxFields",
+      type: "ComplexCheckboxFields",
           props: {
             label: "Onderwerp",
             name: "subjects",
-            options: {
-              1: "Niet",
-              2: "Kloppen"
-            }
+            options: subjects,
+            optionLabelField: "name"
           }
     },
     cancel: {

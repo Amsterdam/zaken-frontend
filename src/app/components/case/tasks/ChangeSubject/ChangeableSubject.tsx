@@ -3,12 +3,11 @@ import { Icon, themeSpacing } from "@amsterdam/asc-ui"
 import { useModal } from "app/components/shared/Modal/hooks/useModal"
 import { Edit } from "app/components/shared/Icons"
 import ChangeSubjectModal from "./ChangeSubjectModal"
-import { useTaskUpdate } from "app/state/rest"
+import { useCase } from "app/state/rest"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
-  caseUserTaskId?: Components.Schemas.CaseUserTask["task_id"]
-  subjects?: Components.Schemas.Subject[]
+  subjects: Components.Schemas.Subject[]
 }
 
 const Span = styled.span`
@@ -27,19 +26,13 @@ const StyledIcon = styled(Icon)`
   margin-left: ${ themeSpacing(2) };
 `
 
-const ChangeableSubject: React.FC<Props> = ({ subjects, caseId, caseUserTaskId = "123" }) => {
+const ChangeableSubject: React.FC<Props> = ({ subjects, caseId }) => {
 
   const { isModalOpen, openModal, closeModal } = useModal()
-  console.log("subjects", subjects?.map(subject => subject.name))
+  const [, { execPatch }] = useCase(caseId)
 
-  // TODO useSubject here
-  const [, { execPatch }] = useTaskUpdate(caseUserTaskId)
-
-  const onSubmit = (data: { date: string, id: string }) => {
-    console.log("onSubmit, data", data)
-    // appendTimeToDate(data.date) !== dueDate 
-    //   ? execPatch( { due_date: appendTimeToDate( data.date ) })
-    //   : closeModal()
+  const onSubmit = (data: any) => {
+    execPatch( { subjects: data.subjects.map((subject: any) => subject.id) }) 
   }
 
   return (
@@ -56,7 +49,6 @@ const ChangeableSubject: React.FC<Props> = ({ subjects, caseId, caseUserTaskId =
         isOpen={ isModalOpen }
         closeModal={ closeModal }
         subjects={ subjects }
-        taskId={ caseUserTaskId }
         />
     </>
   )

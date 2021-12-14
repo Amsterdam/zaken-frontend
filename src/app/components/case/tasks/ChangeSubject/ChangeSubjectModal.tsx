@@ -7,8 +7,7 @@ export type Props = {
   isOpen: boolean
   closeModal: () => void
   onSubmit: (data: any) => void
-  subjects?: Components.Schemas.Subject[]
-  taskId: string
+  subjects: Components.Schemas.Subject[]
   
 }
 
