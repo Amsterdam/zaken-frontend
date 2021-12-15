@@ -5,12 +5,13 @@ const scaffold = (onCancel: () => void, subjects?: Components.Schemas.Subject[])
   const fields = {
     subjects: {
       type: "ComplexCheckboxFields",
-          props: {
-            label: "Onderwerp",
-            name: "subjects",
-            options: subjects,
-            optionLabelField: "name"
-          }
+        props: {
+          label: "Onderwerp",
+          name: "subjects",
+          options: subjects,
+          optionLabelField: "name",
+          isRequired: true
+        }
     },
     cancel: {
       type: "Button",

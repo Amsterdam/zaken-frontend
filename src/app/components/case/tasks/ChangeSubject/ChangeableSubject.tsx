@@ -27,7 +27,6 @@ const StyledIcon = styled(Icon)`
 `
 
 const ChangeableSubject: React.FC<Props> = ({ subjects, caseId }) => {
-
   const { isModalOpen, openModal, closeModal } = useModal()
   const [, { execPatch }] = useCase(caseId)
 
@@ -49,7 +48,7 @@ const ChangeableSubject: React.FC<Props> = ({ subjects, caseId }) => {
         isOpen={ isModalOpen }
         closeModal={ closeModal }
         subjects={ subjects }
-        />
+      />
     </>
   )
 }

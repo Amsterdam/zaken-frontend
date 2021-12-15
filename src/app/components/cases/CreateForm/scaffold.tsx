@@ -194,7 +194,7 @@ export default (
       type: "ShowHide",
       props: {
         shouldShow: (formValues: { values?: { reason?: Components.Schemas.CaseReason, theme?: Components.Schemas.CaseTheme } }) => 
-          formValues?.values?.reason !== undefined && formValues?.values?.theme?.name !== "Kamerverhuur",
+          formValues?.values?.reason !== undefined && (formValues?.values?.theme?.name !== "Kamerverhuur" && formValues?.values?.theme?.name !== "Ondermijning"),
         field: {
           type: "RadioFields",
           props: {

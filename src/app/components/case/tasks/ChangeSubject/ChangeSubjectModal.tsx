@@ -11,7 +11,7 @@ export type Props = {
   
 }
 
-const ChangeSubjectModal: React.FC<Props> = ({ isOpen, closeModal, onSubmit, subjects }) =>
+const ChangeSubjectModal: React.FC<Props> = ({ isOpen, closeModal, onSubmit, subjects = [] }) => 
   <Modal
     isOpen={isOpen}
     onClose={closeModal}
@@ -19,7 +19,6 @@ const ChangeSubjectModal: React.FC<Props> = ({ isOpen, closeModal, onSubmit, sub
   >
     <ModalBlock>
       <ChangeSubjectForm onSubmit={ onSubmit } onCancel={closeModal} subjects={subjects} initialValues={{ subjects: subjects }} />
-      {/* { subjects.join(", ") } */}
     </ModalBlock>
   </Modal>
 
