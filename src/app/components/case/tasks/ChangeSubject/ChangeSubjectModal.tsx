@@ -8,17 +8,23 @@ export type Props = {
   closeModal: () => void
   onSubmit: (data: any) => void
   subjects: Components.Schemas.Subject[]
-  
+  themeId: Components.Schemas.CaseTheme["id"]
 }
 
-const ChangeSubjectModal: React.FC<Props> = ({ isOpen, closeModal, onSubmit, subjects = [] }) => 
+const ChangeSubjectModal: React.FC<Props> = ({ isOpen, closeModal, onSubmit, subjects = [], themeId }) => 
   <Modal
     isOpen={isOpen}
     onClose={closeModal}
     title="Overtreding onderwerp aanpassen"
   >
     <ModalBlock>
-      <ChangeSubjectForm onSubmit={ onSubmit } onCancel={closeModal} subjects={subjects} initialValues={{ subjects: subjects }} />
+      <ChangeSubjectForm 
+        onSubmit={ onSubmit }
+        onCancel={ closeModal }
+        themeId={ themeId }
+        subjects={subjects}
+        initialValues={{ subjects: subjects }}
+      />
     </ModalBlock>
   </Modal>
 

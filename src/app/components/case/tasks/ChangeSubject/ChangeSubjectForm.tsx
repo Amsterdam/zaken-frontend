@@ -9,11 +9,12 @@ type Props = {
   isLoading?: boolean
   onCancel: () => void
   subjects: Components.Schemas.Subject[]
+  themeId: Components.Schemas.CaseTheme["id"]
   initialValues?: Record<string, unknown> 
 }
 
-const ChangeSubjectForm: React.FC<Props> = ({ isLoading, onSubmit, onCancel, subjects, initialValues }) => {
-  const [subjectsTheme] = useSubjects(subjects[0]?.theme)
+const ChangeSubjectForm: React.FC<Props> = ({ isLoading, onSubmit, onCancel, themeId, subjects, initialValues }) => {
+  const [subjectsTheme] = useSubjects(themeId)
 
   return (
     <>

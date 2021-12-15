@@ -7,6 +7,7 @@ import { useCase } from "app/state/rest"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
+  themeId: Components.Schemas.CaseTheme["id"]
   subjects: Components.Schemas.Subject[]
 }
 
@@ -26,7 +27,7 @@ const StyledIcon = styled(Icon)`
   margin-left: ${ themeSpacing(2) };
 `
 
-const ChangeableSubject: React.FC<Props> = ({ subjects, caseId }) => {
+const ChangeableSubject: React.FC<Props> = ({ subjects, caseId, themeId }) => {
   const { isModalOpen, openModal, closeModal } = useModal()
   const [, { execPatch }] = useCase(caseId)
 
@@ -48,6 +49,7 @@ const ChangeableSubject: React.FC<Props> = ({ subjects, caseId }) => {
         isOpen={ isModalOpen }
         closeModal={ closeModal }
         subjects={ subjects }
+        themeId={ themeId }
       />
     </>
   )
