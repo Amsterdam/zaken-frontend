@@ -12,13 +12,15 @@ type Props = {
 }
 
 const Span = styled.span`
-  display: flex;
-  align-items: center;
-  white-space: nowrap;
-  height: ${ themeSpacing(5) };
   cursor: pointer;
+  position: relative;
   &:hover {
     text-decoration: underline;
+  }
+  svg {
+    position: absolute;
+    bottom: 0;
+    left: 100%;
   }
 `
 

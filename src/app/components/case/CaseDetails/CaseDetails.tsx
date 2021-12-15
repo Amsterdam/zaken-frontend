@@ -13,6 +13,7 @@ const Div = styled.div`
   width: 100%;
   > div {
     flex: 1;
+    min-width: 33%;
   }
 `
 
