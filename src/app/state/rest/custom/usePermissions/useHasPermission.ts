@@ -6,3 +6,5 @@ export default (permissionName?: Components.Schemas.PermissionsEnum) => {
   const hasPermission = permissions?.includes(permissionName) ?? false
   return [hasPermission, isBusy] as const
 }
+
+export const SENSITIVE_CASE_PERMISSION = "access_sensitive_dossiers"

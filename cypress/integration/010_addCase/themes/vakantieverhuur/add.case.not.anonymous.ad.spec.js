@@ -14,7 +14,11 @@ describe("Test add_case_not_anonymous_ad", () => {
 
 describe("Create case and validate input", () => {
   it("Fill in form", () => {
-    cy.get("#theme_2")
+    cy.wait(1000)
+    cy.get("span")
+      .contains("Vakantieverhuur")
+      .siblings()
+      .find("input")
       .check({force: true})
 
     cy.get("#reason_0")

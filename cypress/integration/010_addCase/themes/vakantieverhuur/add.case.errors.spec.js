@@ -14,7 +14,11 @@ describe("Test add_case_errors", () => {
 
 describe("Fill in form and validate", () => {
   it("Select radio buttons", () => {
-    cy.get("#theme_2")
+    cy.wait(1000)
+    cy.get("span")
+      .contains("Vakantieverhuur")
+      .siblings()
+      .find("input")
       .check({force: true})
 
     cy.get("#reason_0")
