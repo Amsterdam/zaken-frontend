@@ -14,31 +14,20 @@ type Props = {
   setTheme: (value: string) => void
 }
 
-const CasesFilter: React.FC<Props> = ({ date, setDate, theme, themes, setTheme }) => {
-  // const apiUrl = getApiUrlTasks()
-  // const { clearContextCache } = useContextCache("cases", apiUrl)
-
-  const onChangeTheme = (value: string) => {
-    // Clear the Context/cache to prevent showing outdated data.
-    // clearContextCache()
-    setTheme(value)
-  }
-
-  return (
-    <FilterMenu>
-      <ScaffoldForm>
-        <ScaffoldFields { ...scaffoldDate(date, setDate) } />
-      </ScaffoldForm>
-      { themes === undefined
-          ? <Spinner />
-          : (
-            <ScaffoldForm>
-              <ScaffoldFields { ...scaffoldTheme(theme, themes, onChangeTheme) } />
-            </ScaffoldForm>
-          )
-      }
-    </FilterMenu>
-  )
-}
+const CasesFilter: React.FC<Props> = ({ date, setDate, theme, themes, setTheme }) => (
+  <FilterMenu>
+    <ScaffoldForm>
+      <ScaffoldFields { ...scaffoldDate(date, setDate) } />
+    </ScaffoldForm>
+    { themes === undefined
+        ? <Spinner />
+        : (
+          <ScaffoldForm>
+            <ScaffoldFields { ...scaffoldTheme(theme, themes, setTheme) } />
+          </ScaffoldForm>
+        )
+    }
+  </FilterMenu>
+)
 
 export default CasesFilter

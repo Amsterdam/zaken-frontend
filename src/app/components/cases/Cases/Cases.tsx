@@ -14,7 +14,7 @@ const parse = (value: string | null) => {
 
 const Cases: React.FC = () => {
 
-  const [date, setDate] = useURLState("date", parse, true)
+  const [date, setDate] = useURLState("from_start_date", parse, true)
   const [caseThemes] = useCaseThemes()
   const [theme, setTheme] = useURLState("theme")
   const [cases, { isBusy, execGet }] = useCases(theme, date)
