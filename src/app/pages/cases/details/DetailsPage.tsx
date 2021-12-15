@@ -15,7 +15,8 @@ import CaseStatus from "app/components/case/CaseStatus/CaseStatus"
 import useExistingCase from "./hooks/useExistingCase"
 import PageSpinner from "app/components/shared/PageSpinner/PageSpinner"
 import CaseNuisanceAlert from "app/components/case/CaseNuisanceAlert/CaseNuisanceAlert"
-
+import useHasPermission, { SENSITIVE_CASE_PERMISSION } from "app/state/rest/custom/usePermissions/useHasPermission"
+import NotAuthorizedPage from "app/pages/auth/NotAuthorizedPage"
 
 type Props = {
   id: string
@@ -24,15 +25,22 @@ type Props = {
 const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
 
   const [exists, isBusy, has404, id, caseItem] = useExistingCase(parseUrlParamId(idString))
-  const showSpinner = isBusy
-  const showCase = exists
+  const [hasPermission, isLoading] = useHasPermission(SENSITIVE_CASE_PERMISSION)
+  const showSpinner = isBusy || isLoading
+  // Don't show if sensitive case and no permission
+  const isAuthorized = caseItem?.sensitive === false || (caseItem?.sensitive === true && hasPermission)
   const showNotFound = has404
   const isClosed = isDate(caseItem?.end_date)
 
+  if (showSpinner) {
+    return <PageSpinner />
+  }
+  if (exists && !isAuthorized) {
+    return <NotAuthorizedPage />
+  }
   return (
     <>
-    { showSpinner && <PageSpinner /> }
-    { showCase && (
+    { exists && isAuthorized && (
       <DefaultLayout>
         <Row>
           <Column spanLarge={ 50 }>

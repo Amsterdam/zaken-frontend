@@ -19,9 +19,9 @@ const ProtectedPage: React.FC<Props> = (props) => {
   const { page: Page, permissionName, ...restProps } = props
 
   return (
-    permissionName !== undefined ?
-      <AuthorizedPage { ...props } /> :
-      <Page { ...restProps } />
+    permissionName !== undefined
+      ? <AuthorizedPage { ...props } />
+      : <Page { ...restProps } />
   )
 }
 
