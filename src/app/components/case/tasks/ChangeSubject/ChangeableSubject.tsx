@@ -14,6 +14,7 @@ type Props = {
 const Span = styled.span`
   cursor: pointer;
   position: relative;
+  display: inline-block;
   &:hover {
     text-decoration: underline;
   }
