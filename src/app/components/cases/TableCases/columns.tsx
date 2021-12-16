@@ -25,8 +25,7 @@ const columns = [
     header: "Adres",
     dataIndex: "address.full_address",
     sorter: (a: any, b: any) => a?.address?.full_address.localeCompare(b?.address?.full_address),
-    minWidth: 300,
-    defaultSortOrder: "ASCEND" as const
+    minWidth: 300
   }, {
     header: "Status",
     dataIndex: "current_states",
@@ -45,6 +44,7 @@ const columns = [
       const bDate = getDate(b)
       return new Date(aDate).getTime() - new Date(bDate).getTime()
     },
+    defaultSortOrder: "DESCEND" as const,
     minWidth: 100,
     render: (text: any, record: any) => {
       const date = getDate(record)
