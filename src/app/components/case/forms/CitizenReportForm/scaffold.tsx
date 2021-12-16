@@ -89,20 +89,26 @@ export default (
       }
     },
     nuisance: {
-      type: "CheckboxFields",
+      type: "ShowHide",
       props: {
-        label: "Betreft extreme overlast",
-        name: "nuisance",
-        extraLabel: <InfoButton infoTitle="Betreft extreme overlast" infoText="Aanvinken indien in de melding sprake is van overlast door dreiging, geweld of een anderzijds ernstige aard."></InfoButton>,
-        options: {
-          nuisance: "Ja"
+        shouldShow: (() => themeName !== "Kamerverhuur" && themeName !== "Ondermijning"),
+        field: {
+          type: "CheckboxFields",
+          props: {
+            label: "Betreft extreme overlast",
+            name: "nuisance",
+            extraLabel: <InfoButton infoTitle="Betreft extreme overlast" infoText="Aanvinken indien in de melding sprake is van overlast door dreiging, geweld of een anderzijds ernstige aard."></InfoButton>,
+            options: {
+              nuisance: "Ja"
+            }
+          }
         }
       }
     },
     advertisement: {
       type: "ShowHide",
       props: {
-        shouldShow: (() => themeName !== "Kamerverhuur"),
+        shouldShow: (() => themeName !== "Kamerverhuur" && themeName !== "Ondermijning"),
         field: {
           type: "RadioFields",
           props: {

@@ -158,7 +158,8 @@ export default (
     nuisance: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { reason?: Components.Schemas.CaseReason } }) => formValues?.values?.reason?.name === "SIA melding",
+        shouldShow: (formValues: { values?: { reason?: Components.Schemas.CaseReason, theme?: Components.Schemas.CaseTheme } }) => 
+        formValues?.values?.theme?.name === "Vakantieverhuur" && formValues?.values?.reason?.name === "SIA melding",
         field: {
           type: "CheckboxFields",
           props: {
@@ -193,8 +194,8 @@ export default (
     advertisement: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { reason?: Components.Schemas.CaseReason, theme?: Components.Schemas.CaseTheme } }) => 
-          formValues?.values?.reason !== undefined && (formValues?.values?.theme?.name !== "Kamerverhuur" && formValues?.values?.theme?.name !== "Ondermijning"),
+        shouldShow: (formValues: { values?: { theme?: Components.Schemas.CaseTheme } }) => 
+        formValues?.values?.theme?.name !== undefined && formValues?.values?.theme?.name !== "Kamerverhuur" && formValues?.values?.theme?.name !== "Ondermijning",
         field: {
           type: "RadioFields",
           props: {
@@ -237,7 +238,7 @@ export default (
     description: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { reason?: Components.Schemas.CaseReason } }) => formValues?.values?.reason !== undefined,
+        shouldShow: (formValues: { values?: { theme?: Components.Schemas.CaseTheme } }) => formValues?.values?.theme !== undefined,
         field: {
           type: "TextAreaField",
           props: {
@@ -269,7 +270,6 @@ export default (
     .setGrid("mobileS", "1fr 1fr", [
       ["theme", "theme"],
       ["reason", "reason"],
-      ["subjects", "subjects"],
       ["reporter_anonymous", "reporter_anonymous"],
       ["reporter_name"],
       ["reporter_phone"],
@@ -280,6 +280,7 @@ export default (
       ["project"],
       ["advertisement", "advertisement"],
       ["advertisement_linklist", "advertisement_linklist"],
+      ["subjects", "subjects"],
       ["description", "description"],
       ["cancel", "submit"]
     ])
