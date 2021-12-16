@@ -17,7 +17,7 @@ const Span = styled.span`
   &:hover {
     text-decoration: underline;
   }
-  svg {
+  >span {
     position: absolute;
     bottom: 0;
     left: 100%;
