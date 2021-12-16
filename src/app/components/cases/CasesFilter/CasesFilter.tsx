@@ -16,17 +16,17 @@ type Props = {
 
 const CasesFilter: React.FC<Props> = ({ date, setDate, theme, themes, setTheme }) => (
   <FilterMenu>
+    {themes === undefined
+      ? <Spinner />
+      : (
+        <ScaffoldForm>
+          <ScaffoldFields { ...scaffoldTheme(theme, themes, setTheme) } />
+        </ScaffoldForm>
+      )
+    }
     <ScaffoldForm>
       <ScaffoldFields { ...scaffoldDate(date, setDate) } />
     </ScaffoldForm>
-    { themes === undefined
-        ? <Spinner />
-        : (
-          <ScaffoldForm>
-            <ScaffoldFields { ...scaffoldTheme(theme, themes, setTheme) } />
-          </ScaffoldForm>
-        )
-    }
   </FilterMenu>
 )
 
