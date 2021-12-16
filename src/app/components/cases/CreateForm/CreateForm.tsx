@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import pick from "lodash.pick"
 import scaffold from "./scaffold"
-import { useCaseThemes, useReasons, useCaseCreate, useProjects, useListing } from "app/state/rest"
+import { useCaseThemes, useReasons, useCaseCreate, useProjects, useListing, useSubjects } from "app/state/rest"
 import ConfirmScaffoldForm from "app/components/shared/ConfirmScaffoldForm/ConfirmScaffoldForm"
 import useNavigateWithFlashMessage from "app/state/flashMessages/useNavigateWithFlashMessage"
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
@@ -25,6 +25,7 @@ type FormData =
     reason: Components.Schemas.CaseReason
     project: Components.Schemas.CaseProject
     nuisance: boolean | Array<string> | undefined
+    subjects: Components.Schemas.Subject[]
   }
 
 const mapData = (bagId: Components.Schemas.Address["bag_id"], tonId: number | undefined) =>
@@ -35,7 +36,8 @@ const mapData = (bagId: Components.Schemas.Address["bag_id"], tonId: number | un
     reason: data.reason.id,
     project: data.project?.id,
     nuisance: Array.isArray(data?.nuisance) && data?.nuisance?.includes("nuisance"),
-    ton_ids: tonId !== undefined ? [ tonId ] : undefined
+    ton_ids: tonId !== undefined ? [ tonId ] : undefined,
+    subjects: data.subjects.map((subject) => subject.id)
   })
 
 const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
@@ -51,6 +53,7 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
 
   const [reasons] = useReasons(themeId)
   const [projects] = useProjects(themeId)
+  const [subjects] = useSubjects(themeId)
   const [, { execPost }] = useCaseCreate()
   const [listing] = useListing(tonId)
 
@@ -77,8 +80,9 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
   ** Because it takes time to fetch the reasons after selecting a theme, the submit button is enabled.
   ** themeId = undefined will load a spinner for the entire page. :(
   */
+ 
   const fields = useScaffoldedFields(scaffold, bagId, themeId ?? -1,
-    changeThemeId, caseThemesOptions, reasonOptions ?? [], projects?.results ?? [], adOptions)
+    changeThemeId, caseThemesOptions, reasonOptions ?? [], projects?.results ?? [], subjects?.results ?? [], adOptions)
 
   const navigateWithFlashMessage = useNavigateWithFlashMessage()
   const afterSubmit = async (result: Components.Schemas.CaseCreateUpdate) =>

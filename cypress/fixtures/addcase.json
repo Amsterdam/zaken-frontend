@@ -6,5 +6,6 @@
   "reporterPhone": "0123456789",
   "reporterEmail": "naam@email.nl",
   "advertisementUrl1":"http://www.test.nl/1",
-  "advertisementUrl2":"http://www.test.nl/2"
+  "advertisementUrl2":"http://www.test.nl/2",
+  "subject": "Geen nachtverblijf"
 }

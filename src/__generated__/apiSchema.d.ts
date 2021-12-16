@@ -25,6 +25,7 @@ declare namespace Components {
             schedules: Schedule[];
             project: CaseProject;
             subjects: Subject[];
+            subject_ids: number[];
             start_date?: string | null; // date
             end_date?: string | null; // date
             sensitive?: boolean;
@@ -778,6 +779,7 @@ declare namespace Components {
             schedules?: Schedule[];
             project?: CaseProject;
             subjects?: Subject[];
+            subject_ids?: number[];
             start_date?: string | null; // date
             end_date?: string | null; // date
             sensitive?: boolean;

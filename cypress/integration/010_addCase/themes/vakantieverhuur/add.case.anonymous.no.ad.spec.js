@@ -18,12 +18,19 @@ describe("Create case and validate input", () => {
 
     cy.wait(1000)
     cy.get("span")
-      .contains("Vakantieverhuur")
+      .contains(/^Vakantieverhuur$/)
       .siblings()
       .find("input")
       .check({force: true})
 
-    cy.get("#reason_0")
+    cy.get("#reason_1")
+      .check({force: true})
+    
+    cy.wait(1000)
+    cy.get("span")
+      .contains(testData.subject)
+      .siblings()
+      .find("input")
       .check({force: true})
 
     cy.get('[data-e2e-id="yes"]')
@@ -51,9 +58,10 @@ describe("Create case and validate input", () => {
 
     cy.get(`[role="dialog"]`)
       .should("contain", "Vakantieverhuur")
-      .and("contain", "Melding")
+      .and("contain", "SIA melding")
       .and("contain", "Ja, de melder is anoniem")
       .and("contain", "Nee, er is geen advertentie")
+      .and("contain", testData.subject)
       .and("contain", testData.siaIdentification)
       .and("contain", testData.siaDescription)
       .and("contain", testData.description)

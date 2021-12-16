@@ -10,6 +10,7 @@ export default (
   themes: Components.Schemas.CaseTheme[] | undefined,
   reasons: Components.Schemas.CaseReason[],
   projects: Components.Schemas.CaseProject[],
+  subjects: Components.Schemas.Subject[],
   advertisementOptions: Record<string, string>
   ) => {
 
@@ -35,6 +36,23 @@ export default (
             label: "Aanleiding",
             name: "reason",
             options: reasons,
+            optionLabelField: "name",
+            isRequired: true
+          }
+        }
+      }
+    },
+
+    subjects: {
+      type: "ShowHide",
+      props: {
+        shouldShow: () => themeId !== -1 || subjects.length > 0,
+        field: {
+          type: "ComplexCheckboxFields",
+          props: {
+            label: "Onderwerp(en)",
+            name: "subjects",
+            options: subjects,
             optionLabelField: "name",
             isRequired: true
           }
@@ -176,7 +194,7 @@ export default (
       type: "ShowHide",
       props: {
         shouldShow: (formValues: { values?: { reason?: Components.Schemas.CaseReason, theme?: Components.Schemas.CaseTheme } }) => 
-          formValues?.values?.reason !== undefined && formValues?.values?.theme?.name !== "Kamerverhuur",
+          formValues?.values?.reason !== undefined && (formValues?.values?.theme?.name !== "Kamerverhuur" && formValues?.values?.theme?.name !== "Ondermijning"),
         field: {
           type: "RadioFields",
           props: {
@@ -251,6 +269,7 @@ export default (
     .setGrid("mobileS", "1fr 1fr", [
       ["theme", "theme"],
       ["reason", "reason"],
+      ["subjects", "subjects"],
       ["reporter_anonymous", "reporter_anonymous"],
       ["reporter_name"],
       ["reporter_phone"],
