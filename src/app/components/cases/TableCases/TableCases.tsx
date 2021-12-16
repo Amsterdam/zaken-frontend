@@ -21,7 +21,7 @@ const TableCases: React.FC<Props> = ({ data, isBusy }) => {
       columns={ columns }
       data={ data?.results || [] }
       onClickRow={ onClickRow }
-      emptyPlaceholder="Er zijn geen zaken voor deze dag"
+      emptyPlaceholder="Er zijn momenteel geen open zaken voor de gekozen filters."
       pagination={ false }
     />
   )
