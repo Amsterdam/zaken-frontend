@@ -23,7 +23,7 @@ describe("Create case and validate input", () => {
       .find("input")
       .check({force: true})
 
-    cy.get("#reason_1")
+    cy.get("#reason_2")
       .check({force: true})
     
     cy.wait(1000)
