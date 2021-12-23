@@ -31,11 +31,11 @@ const Workflow: React.FC<Props> = ({ id }) => {
     return (
       <>
         { items.length > 0 ? (
-            items.map(({ state, tasks }, index) => (
+            items.map(({ state, tasks, information }, index) => (
               <Wrap key={ `${ state.status_name }_${ index }` }>
                 <Div>
                   <Heading as="h4">{ state.status_name }</Heading>
-                  { state.information && <p>{ state.information }</p> }
+                  { information && <p>{ information }</p> }
                 </Div>
                 <StyledTable
                   columns={ columns }

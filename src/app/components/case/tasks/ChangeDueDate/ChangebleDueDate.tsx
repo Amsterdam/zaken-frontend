@@ -9,7 +9,7 @@ import { useTaskUpdate } from "app/state/rest"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
-  caseUserTaskId: Components.Schemas.CaseUserTask["task_id"]
+  caseUserTaskId: string
   dueDate: Components.Schemas.CaseUserTask["due_date"]
 }
 
