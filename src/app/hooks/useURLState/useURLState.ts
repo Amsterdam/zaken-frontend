@@ -25,5 +25,6 @@ export default (key: string, parse = defaultParse, allowEmptyString = false) => 
     const url = `${ window.location.pathname }${ queryString }`
     window.history.replaceState({}, "", url)
   }, [key, stableParse, urlParams, allowEmptyString])
+
   return [value, set] as const
 }
