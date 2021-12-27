@@ -119,6 +119,7 @@ declare namespace Components {
             case: number;
         }
         export interface CaseUserTaskList {
+            id: number;
             user_has_permission: boolean;
             roles: string[];
             case: /* Case-address serializer for CaseUserTasks */ CaseAddress;
@@ -726,6 +727,7 @@ declare namespace Components {
             author?: string | null; // uuid
         }
         export interface PatchedCaseUserTaskList {
+            id?: number;
             user_has_permission?: boolean;
             roles?: string[];
             case?: /* Case-address serializer for CaseUserTasks */ CaseAddress;

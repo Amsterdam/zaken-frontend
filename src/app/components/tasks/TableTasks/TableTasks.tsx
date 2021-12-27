@@ -5,9 +5,10 @@ import getColumns from "./columns"
 type Props = {
   data?: Components.Schemas.CaseUserTaskList[]
   isBusy: boolean
+  emptyPlaceholder: string
 }
 
-const TableTasks: React.FC<Props> = ({ data, isBusy }) => {
+const TableTasks: React.FC<Props> = ({ data, isBusy, emptyPlaceholder }) => {
   const [me] = useUsersMe()
   const columns = getColumns(me?.id)
 
@@ -18,7 +19,7 @@ const TableTasks: React.FC<Props> = ({ data, isBusy }) => {
       data={ data || [] }
       loading={ isBusy }
       numLoadingRows={ 10 }
-      emptyPlaceholder="Er zijn momenteel geen open taken voor de gekozen filters"
+      emptyPlaceholder={ emptyPlaceholder }
       pagination={ false }
     />
   )

@@ -39,8 +39,8 @@ describe('Result "huisbezoek" with access granted', () => {
 
       cy.wait('@getTasks').then(({ response }) => {
         const visit = response?.body?.results?.find((e) => e.state?.status_name === "Huisbezoek")
-        const caseId = visit?.state?.case
         const topTask = visit?.tasks?.find((e) => e.name === "Doorgeven Huisbezoek TOP")
+        const caseId = topTask?.case
         const taskId = topTask.case_user_task_id
 
         // Check role
@@ -48,7 +48,7 @@ describe('Result "huisbezoek" with access granted', () => {
           .should("contain", roles.TH)
 
         cy.testDueDate("tbody>tr>td", 0)
-  
+
         const url = `${Cypress.env("baseUrlAcc")}users/`
         cy.intercept(url).as('getUsers')
 

@@ -39,8 +39,8 @@ describe('Process Debrief - No violation"', () => {
 
       cy.wait('@getTasks').then(({ response }) => {
         const debriefResponse = response?.body?.results?.find((e) => e.state?.status_name === "Debrief")
-        const caseId = debriefResponse?.state?.case
         const debriefTask = debriefResponse?.tasks?.find((e) => e.name === "Verwerken debrief")
+        const caseId = debriefTask?.case
         const taskId = debriefTask.case_user_task_id
 
         // check dueDate
