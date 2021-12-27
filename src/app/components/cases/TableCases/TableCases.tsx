@@ -5,9 +5,10 @@ import columns from "./columns"
 type Props = {
   data?: Components.Schemas.PaginatedCaseList
   isBusy: boolean
+  emptyPlaceholder: string
 }
 
-const TableCases: React.FC<Props> = ({ data, isBusy }) => {
+const TableCases: React.FC<Props> = ({ data, isBusy, emptyPlaceholder }) => {
 
   const onClickRow = (data: any) => {
     navigateTo("/zaken/:id", { id: data.id })
@@ -21,7 +22,7 @@ const TableCases: React.FC<Props> = ({ data, isBusy }) => {
       columns={ columns }
       data={ data?.results || [] }
       onClickRow={ onClickRow }
-      emptyPlaceholder="Er zijn momenteel geen open zaken voor de gekozen filters."
+      emptyPlaceholder={ emptyPlaceholder }
       pagination={ false }
     />
   )
