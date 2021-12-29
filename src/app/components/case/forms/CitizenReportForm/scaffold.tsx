@@ -95,9 +95,9 @@ export default (
         field: {
           type: "CheckboxFields",
           props: {
-            label: "Betreft extreme overlast",
+            label: "Betreft overlast",
             name: "nuisance",
-            extraLabel: <InfoButton infoTitle="Betreft extreme overlast" infoText="Aanvinken indien in de melding sprake is van overlast door dreiging, geweld of een anderzijds ernstige aard."></InfoButton>,
+            extraLabel: <InfoButton infoTitle="Betreft overlast" infoText="Aanvinken indien in de melding sprake is van overlast zoals geluid, lawaai, stank en vuil overlast."></InfoButton>,
             options: {
               nuisance: "Ja"
             }
