@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import { Pagination } from "@amsterdam/asc-ui"
 import { Row, Column } from "app/components/layouts/Grid"
 import TableCases from "app/components/cases/TableCases/TableCases"
 import CasesFilter from "app/components/cases/CasesFilter/CasesFilter"
@@ -21,8 +20,7 @@ const parseDate = (value: string | null) => {
 
 const Cases: React.FC = () => {
   const [data, setData] = useState<dataType>({})
-  // const [page, setPage] = useURLState("page")
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useURLState("page")
   const [theme, setTheme] = useURLState("theme")
   const [date, setDate] = useURLState("from_start_date", parseDate, true)
   const [caseThemes] = useCaseThemes()
@@ -33,13 +31,14 @@ const Cases: React.FC = () => {
     date
   )
   const [hasPermission] = useHasPermission(SENSITIVE_CASE_PERMISSION)
-
+// http://localhost:8080/api/v1/cases?open_status=4&open_status=2&ordering=-id,adress
   useEffect(() => {
-    // dataSource can be undefined and therefore pagination will dissapear.
-    setTimeout(() => {
-      setPage(5)
-    }, 10000)
-    if (dataSource !== undefined) {
+    if (dataSource === undefined) {
+      setData({
+        results: [],
+        count: 0
+      })
+    } else {
       setData(dataSource)
     }
   }, [dataSource])
@@ -57,7 +56,7 @@ const Cases: React.FC = () => {
   }
 
   const resetPage = () => {
-    setPage(1)
+    setPage("1")
   }
 
   const onChangeTheme = (item: string) => {
@@ -66,12 +65,10 @@ const Cases: React.FC = () => {
   }
 
   const onChangeTable = (pagination: any, sorting: any) => {
-    console.log("pagination", pagination)
-    // console.log("sorter", sorting)
+    console.log("sorter", sorting)
     setPage(pagination.page)
   }
 
-  console.log("PAGE", page)
   return (
     <Row>
       <Column spanLarge={ 72 }>
@@ -80,15 +77,10 @@ const Cases: React.FC = () => {
           isBusy={ isBusy }
           onChange={onChangeTable}
           pagination={{
-            page,
+            page: Number(page),
             pageSize: PAGE_SIZE,
             collectionSize: data?.count || 1
           }}
-        />
-        <Pagination
-          page={page}
-          pageSize={PAGE_SIZE}
-          collectionSize={data?.count || 1}
         />
       </Column>
       <Column spanLarge={ 28 }>
