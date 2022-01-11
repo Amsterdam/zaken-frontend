@@ -10,6 +10,7 @@ export const useCases = (
   page_size: number,
   theme: string,
   from_start_date?: string,
+  ordering?: string,
   options?: Options
 ) => {
   const handleError = useErrorHandler()
@@ -26,7 +27,11 @@ export const useCases = (
   if (page_size !== undefined) {
     urlParams.page_size = page_size
   }
+  if (ordering !== undefined) {
+    urlParams.ordering = ordering
+  }
   const queryString = isEmpty(urlParams) ? "" : qs.stringify(urlParams, { addQueryPrefix: true })
+  console.log("URL", `${ makeApiUrl("cases") }${ queryString }`)
   return useApiRequest<Components.Schemas.PaginatedCaseList>({
     ...options,
     url: `${ makeApiUrl("cases") }${ queryString }`,

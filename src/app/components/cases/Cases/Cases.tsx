@@ -8,9 +8,21 @@ import useURLState from "app/hooks/useURLState/useURLState"
 import useHasPermission, { SENSITIVE_CASE_PERMISSION } from "app/state/rest/custom/usePermissions/useHasPermission"
 
 const PAGE_SIZE = 10
+const sortingOrder = {
+  ASCEND: "ASCEND",
+  DESCEND: "DESCEND"
+}
+const dataIndexMapping: any = {
+  "address.full_address": "address",
+  "current_states": "current_states"
+}
 type dataType = {
   results?: Components.Schemas.Case[]
   count?: number
+}
+type Sorting = {
+  dataIndex: string
+  order: "ASCEND" | "DESCEND"
 }
 
 const parseDate = (value: string | null) => {
@@ -22,16 +34,19 @@ const Cases: React.FC = () => {
   const [data, setData] = useState<dataType>({})
   const [page, setPage] = useURLState("page")
   const [theme, setTheme] = useURLState("theme")
+  const [ordering, setOrdering] = useURLState("ordering")
   const [date, setDate] = useURLState("from_start_date", parseDate, true)
   const [caseThemes] = useCaseThemes()
+  console.log("PAGE", page)
   const [dataSource, { isBusy }] = useCases(
     Number(page) || 1,
     PAGE_SIZE,
     theme,
-    date
+    date,
+    ordering
   )
   const [hasPermission] = useHasPermission(SENSITIVE_CASE_PERMISSION)
-// http://localhost:8080/api/v1/cases?open_status=4&open_status=2&ordering=-id,adress
+
   useEffect(() => {
     if (dataSource === undefined) {
       setData({
@@ -64,9 +79,19 @@ const Cases: React.FC = () => {
     setTheme(item)
   }
 
+  // /cases?open_status=4&open_status=2&ordering=-id,adress
+  const setSortingAsOrdering = (sorting: Sorting) => {
+    console.log("sorter2", sorting)
+    let value = dataIndexMapping[sorting.dataIndex]
+    if (sorting.order === sortingOrder.ASCEND) {
+      value = `-${ value }`
+    }
+    setOrdering(value)
+  }
+
   const onChangeTable = (pagination: any, sorting: any) => {
-    console.log("sorter", sorting)
     setPage(pagination.page)
+    setSortingAsOrdering(sorting)
   }
 
   return (
