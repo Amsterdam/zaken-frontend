@@ -25,7 +25,7 @@ const UserInitials: React.FC<Props> = ({ owner }) => {
       : (
           <Tooltip title={ tooltipTitle }>
             <span>
-              {userInitials}
+              { userInitials }
             </span>
           </Tooltip>
         )
