@@ -7,7 +7,7 @@ import useNavigateWithFlashMessage from "app/state/flashMessages/useNavigateWith
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
 
 const TON_THEME_NAME = "Vakantieverhuur"
-const TON_REASON_NAME = "Digitaal Toezicht"
+const TON_REASON_NAME = "Digitaal toezicht"
 const advertisementOptions = {
   yes: "Ja, er is een advertentie",
   no: "Nee, er is geen advertentie"
@@ -68,7 +68,6 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
      * use undefined first, otherwise the state does not necessarily change when switching themes
      * delay is needed for updating state twice
      */
-
     setThemeId(undefined)
     setTimeout(() => {
       setThemeId(newThemeId)
@@ -80,7 +79,7 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
   ** Because it takes time to fetch the reasons after selecting a theme, the submit button is enabled.
   ** themeId = undefined will load a spinner for the entire page. :(
   */
- 
+
   const fields = useScaffoldedFields(scaffold, bagId, themeId ?? -1,
     changeThemeId, caseThemesOptions, reasonOptions ?? [], projects?.results ?? [], subjects?.results ?? [], adOptions)
 
