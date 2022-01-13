@@ -1,7 +1,7 @@
 import { Button, Hidden } from "@amsterdam/asc-ui"
-import Tooltip from "@material-ui/core/Tooltip"
 import { ChevronRight } from "../Icons"
 import ButtonLink from "../ButtonLink/ButtonLink"
+import CustomTooltip from "app/components/help/HelpContent/CustomTooltip"
 
 type Props = React.ComponentProps<typeof Button> & {
   to?: string
@@ -15,7 +15,7 @@ const TableAction: React.FC<Props> = ({ to, disabled = false, children, ...restP
   const isLink = to !== undefined && disabled === false
 
   const action = (
-    <Tooltip title={disabled ? "U heeft geen rechten om deze actie uit te voeren" : ""}>
+    <CustomTooltip title={disabled ? "U heeft geen rechten om deze actie uit te voeren" : ""}>
       <span>
         <Button
           variant="textButton"
@@ -33,7 +33,7 @@ const TableAction: React.FC<Props> = ({ to, disabled = false, children, ...restP
           </Hidden>
         </Button>
       </span>
-    </Tooltip>
+    </CustomTooltip>
   )
 
   return (
