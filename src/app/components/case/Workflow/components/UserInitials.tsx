@@ -1,7 +1,7 @@
-import Tooltip from "@material-ui/core/Tooltip"
 import { Spinner } from "@amsterdam/asc-ui"
 import { useUsers } from "app/state/rest/index"
 import { createNameAbbreviation } from "app/components/shared/Helpers/helpers"
+import CustomTooltip from "app/components/help/HelpContent/CustomTooltip"
 
 type Props = {
   owner?: string
@@ -23,11 +23,11 @@ const UserInitials: React.FC<Props> = ({ owner }) => {
     isBusy
       ? <Spinner />
       : (
-          <Tooltip title={ tooltipTitle }>
+          <CustomTooltip title={ tooltipTitle }>
             <span>
               { userInitials }
             </span>
-          </Tooltip>
+          </CustomTooltip>
         )
   )
 }
