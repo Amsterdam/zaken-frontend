@@ -13,7 +13,7 @@ const sortingOrder = {
   DESCEND: "DESCEND"
 }
 const dataIndexMapping: any = {
-  "address.full_address": "address",
+  "address.full_address": "address__street_name",
   "current_states": "current_states"
 }
 type dataType = {
