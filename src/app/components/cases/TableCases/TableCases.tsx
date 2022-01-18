@@ -12,9 +12,10 @@ type Props = {
     collectionSize: number
   }
   sorting: any
+  emptyPlaceholder: string
 }
 
-const TableCases: React.FC<Props> = ({ data, isBusy, onChange, pagination, sorting }) => {
+const TableCases: React.FC<Props> = ({ data, isBusy, onChange, pagination, sorting, emptyPlaceholder }) => {
 
   const onClickRow = (data: any) => {
     navigateTo("/zaken/:id", { id: data.id })
@@ -29,9 +30,9 @@ const TableCases: React.FC<Props> = ({ data, isBusy, onChange, pagination, sorti
       columns={ columns }
       data={ data?.results || [] }
       onClickRow={ onClickRow }
-      emptyPlaceholder="Er zijn momenteel geen open zaken voor de gekozen filters."
       onChange={onChange}
       pagination={pagination}
+      emptyPlaceholder={ emptyPlaceholder }
     />
   )
 }

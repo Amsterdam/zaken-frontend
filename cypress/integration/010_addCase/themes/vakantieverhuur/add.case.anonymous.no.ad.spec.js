@@ -1,4 +1,4 @@
-import testData from "../../../../fixtures/addcase.json"
+import dummyData from "../../../../fixtures/addcase.json"
 import address from "../../../../fixtures/address.json"
 
 describe("Test add_case_anonymous_no_ad", () => {
@@ -16,37 +16,42 @@ describe("Test add_case_anonymous_no_ad", () => {
 describe("Create case and validate input", () => {
   it("Fill in form", () => {
 
+    cy.intercept("**/reasons/").as("getReasons")
+    cy.intercept("**/subjects/").as("getSubjects")
+
     cy.wait(1000)
+
     cy.get("span")
       .contains(/^Vakantieverhuur$/)
       .siblings()
       .find("input")
       .check({force: true})
 
-    cy.get("#reason_1")
-      .check({force: true})
-    
-    cy.wait(1000)
-    cy.get("span")
-      .contains(testData.subject)
-      .siblings()
-      .find("input")
-      .check({force: true})
+    cy.wait(["@getReasons", "@getSubjects"]).then(() => {
+      cy.get("#reason_2")
+        .check({force: true})
+
+      cy.get("span")
+        .contains(dummyData.subject)
+        .siblings()
+        .find("input")
+        .check({force: true})
+    })
 
     cy.get('[data-e2e-id="yes"]')
       .check({force: true})
 
     cy.get('[data-e2e-id="identification"]')
-      .type(testData.siaIdentification)
+      .type(dummyData.siaIdentification)
 
     cy.get('[data-e2e-id="description_citizenreport"]')
-      .type(testData.siaDescription)
+      .type(dummyData.siaDescription)
 
     cy.get("#advertisement_no")
       .check({force: true})
 
     cy.get('[data-e2e-id="description"]')
-      .type(testData.description)
+      .type(dummyData.description)
   })
 
   it("Send form", () => {
@@ -61,10 +66,10 @@ describe("Create case and validate input", () => {
       .and("contain", "SIA melding")
       .and("contain", "Ja, de melder is anoniem")
       .and("contain", "Nee, er is geen advertentie")
-      .and("contain", testData.subject)
-      .and("contain", testData.siaIdentification)
-      .and("contain", testData.siaDescription)
-      .and("contain", testData.description)
+      .and("contain", dummyData.subject)
+      .and("contain", dummyData.siaIdentification)
+      .and("contain", dummyData.siaDescription)
+      .and("contain", dummyData.description)
       .find("button")
       .contains("Zaak aanmaken")
       .click()

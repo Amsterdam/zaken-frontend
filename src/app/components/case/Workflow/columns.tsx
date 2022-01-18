@@ -6,6 +6,7 @@ import TaskButton from "app/components/case/tasks/TaskButton/TaskButton"
 import taskActionMap from "./utils/taskActionMap"
 import LockIcon from "./components/LockIcon"
 import TableAction from "app/components/shared/TableAction/TableAction"
+import UserInitials from "./components/UserInitials"
 
 // This width value (113px) is the width of a date + edit icon including the spacing between them
 const Span = styled.span`
@@ -21,12 +22,16 @@ export default (execPost: (payload?: any) => Promise<unknown>) => (
     }, {
       header: "Actuele taken",
       dataIndex: "name",
-      minWidth: 420
+      minWidth: 300
     }, {
       header: "Uitvoerder",
       dataIndex: "roles",
-      minWidth: 240,
+      minWidth: 200,
       render: (roles: any) => <List data={ roles } emptyPlaceholder="-" />
+    }, {
+      header: "Opgepakt door",
+      dataIndex: "owner",
+      render: (owner: any) => <UserInitials owner={ owner } />
     }, {
       header: "Slotdatum",
       dataIndex: "due_date",

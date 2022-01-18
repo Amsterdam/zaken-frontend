@@ -22,7 +22,7 @@ const CompleteCasePage: React.FC<RouteComponentProps<Props>> = ({ id: idString, 
 
   return (
     isValidUrlParamId<Components.Schemas.Case["id"]>(id) &&
-    isValidUrlParamId<Components.Schemas.CaseUserTask["task_id"]>(caseUserTaskId) ?
+    isValidUrlParamId<Components.Schemas.CaseUserTask["case_user_task_id"]>(caseUserTaskId) ?
     <DefaultLayout>
       <RowWithColumn>
         <PageHeading />

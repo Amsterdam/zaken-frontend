@@ -1,6 +1,6 @@
 {
   "name": "zaken-frontend",
-  "version": "1.0.16",
+  "version": "1.0.18",
   "private": true,
   "dependencies": {
     "@amsterdam/amsterdam-react-final-form": "^0.1.134",
@@ -10,8 +10,8 @@
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
     "@reach/router": "^1.3.4",
-    "@sentry/react": "^6.15.0",
-    "@testing-library/jest-dom": "^5.15.1",
+    "@sentry/react": "^6.16.1",
+    "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "@types/lodash.debounce": "^4.0.6",
@@ -37,7 +37,7 @@
     "lodash.isempty": "^4.4.0",
     "lodash.merge": "^4.6.2",
     "lodash.pick": "^4.4.0",
-    "qs": "^6.10.1",
+    "qs": "^6.10.3",
     "react": "^17.0.2",
     "react-app-polyfill": "^2.0.0",
     "react-dom": "^17.0.2",
@@ -47,7 +47,7 @@
     "resize-observer-polyfill": "^1.5.1",
     "slash-sandwich": "^1.0.12",
     "styled-components": "^5.3.3",
-    "typescript": "^4.5.2"
+    "typescript": "^4.5.4"
   },
   "scripts": {
     "lint": "eslint --max-warnings 0 --cache --ext .ts,.tsx src",
@@ -81,11 +81,11 @@
   },
   "devDependencies": {
     "@types/dotenv-flow": "^3.2.0",
-    "@types/enzyme": "^3.10.10",
+    "@types/enzyme": "^3.10.11",
     "@types/enzyme-adapter-react-16": "^1.0.6",
-    "@types/jest": "^27.0.3",
-    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.5",
-    "cypress": "^9.1.1",
+    "@types/jest": "^27.4.0",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.6",
+    "cypress": "^9.2.1",
     "dotenv-flow": "^3.2.0",
     "dtsgenerator": "^3.13.2",
     "enzyme": "^3.11.0",

@@ -36,8 +36,8 @@ describe('Process Debrief - Violation"', () => {
 
       cy.wait('@getTasks').then(({ response }) => {
         const debriefResponse = response?.body?.results?.find((e) => e.state?.status_name === "Debrief")
-        const caseId = debriefResponse?.state?.case
         const debriefTask = debriefResponse?.tasks?.find((e) => e.name === "Verwerken debrief")
+        const caseId = debriefTask?.case
         const taskId = debriefTask.case_user_task_id
 
         // check dueDate
@@ -100,11 +100,11 @@ describe('Process Debrief - Violation"', () => {
         cy.get(`[role="dialog"]`)
           .should('have.length', 1)
           .contains(debrief.noViolationNextTask1)
-            
+
         cy.get(`[role="dialog"]`)
           .find('input[name="completed"]')
           .first()
-          .check()        
+          .check()
         cy.get(`[role="dialog"]`)
           .find('button')
           .contains("Taak afronden")

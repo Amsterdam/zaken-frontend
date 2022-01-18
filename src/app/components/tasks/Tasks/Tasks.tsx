@@ -5,21 +5,35 @@ import TasksFilter from "../TasksFilter/TasksFilter"
 import useURLState from "app/hooks/useURLState/useURLState"
 import useHasPermission, { SENSITIVE_CASE_PERMISSION } from "app/state/rest/custom/usePermissions/useHasPermission"
 
+const EMPTY_TEXT_NO_PERMISSION = "Helaas, u bent niet geautoriseerd om deze taken te bekijken."
+const EMPTY_TEXT = "Er zijn momenteel geen open taken voor de gekozen filters."
+const UNDERMINING = "Ondermijning"
+
 const Tasks: React.FC = () => {
+  const [hasPermission] = useHasPermission(SENSITIVE_CASE_PERMISSION)
   const [roles] = useRoles()
   const [caseThemes] = useCaseThemes()
   const [theme, setTheme] = useURLState("thema")
   const [role, setRole] = useURLState("rol")
-  const [tasks, { isBusy }] = useTasks(theme, role)
-  const [hasPermission] = useHasPermission(SENSITIVE_CASE_PERMISSION)
+  const [tasks, { isBusy }] = useTasks(hasPermission, theme, role)
 
-  // Filter tasks with cases for sensitive. TODO: implement filter in BE
+  /*
+   ** Sensitive is sent as a filter in the useTasks hook/request.
+   ** BE has to make some improvements because all tasks are returned, no matter what.
+   ** If BE finished this issue, next line needs to be removed.
+   */
   const sensitiveTasks = hasPermission ? tasks : tasks?.filter(e => e.case.sensitive === false)
+
+  const emptyPlaceholder = hasPermission === false && theme === UNDERMINING ? EMPTY_TEXT_NO_PERMISSION : EMPTY_TEXT
 
   return (
     <Row>
       <Column spanLarge={ 72 }>
-        <TableTasks data={ sensitiveTasks } isBusy={ isBusy } />
+        <TableTasks
+          data={ sensitiveTasks }
+          isBusy={ isBusy }
+          emptyPlaceholder={ emptyPlaceholder }
+        />
       </Column>
       <Column spanLarge={ 28 }>
         <TasksFilter

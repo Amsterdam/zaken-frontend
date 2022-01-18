@@ -25,6 +25,10 @@ type Sorting = {
   order?: "ASCEND" | "DESCEND"
 }
 
+const EMPTY_TEXT_NO_PERMISSION = "Helaas, u bent niet geautoriseerd om deze zaken te bekijken."
+const EMPTY_TEXT = "Er zijn momenteel geen open zaken voor de gekozen filters."
+const UNDERMINING = "Ondermijning"
+
 const parseDate = (value: string | null) => {
   const options = Object.keys(createOptions())
   return value !== null && options.includes(value) ? value : getDate()[0]
@@ -87,6 +91,11 @@ const Cases: React.FC = () => {
     setSortingAsOrdering(sorting)
   }
 
+  const themes = caseThemes?.results || []
+  const underminingId = themes.find((e) => e.name === UNDERMINING)?.id
+  const emptyPlaceholder = hasPermission === false && theme === underminingId?.toString()
+    ? EMPTY_TEXT_NO_PERMISSION : EMPTY_TEXT
+
   return (
     <Row>
       <Column spanLarge={ 72 }>
@@ -100,6 +109,7 @@ const Cases: React.FC = () => {
             collectionSize: data?.count || 1
           }}
           sorting={ sortedInfo }
+          emptyPlaceholder={ emptyPlaceholder }
         />
       </Column>
       <Column spanLarge={ 28 }>
@@ -107,7 +117,7 @@ const Cases: React.FC = () => {
           date={ date }
           setDate={ setDate }
           theme={ theme }
-          themes={ caseThemes?.results }
+          themes={ themes }
           setTheme={ onChangeTheme }
         />
       </Column>

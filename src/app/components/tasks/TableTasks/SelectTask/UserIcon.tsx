@@ -1,9 +1,9 @@
 import styled from "styled-components"
-import Tooltip from "@material-ui/core/Tooltip"
 import LockOpen from "@material-ui/icons/PersonOutline"
 import { Spinner, Icon, themeSpacing } from "@amsterdam/asc-ui"
 import { useUsers } from "app/state/rest/index"
 import { createNameAbbreviation } from "app/components/shared/Helpers/helpers"
+import CustomTooltip from "app/components/help/HelpContent/CustomTooltip"
 
 type Props = {
   owner: string
@@ -32,12 +32,12 @@ const UserIcon: React.FC<Props> = ({ owner }) => {
     isBusy
       ? <StyledSpinner />
       : (
-          <Tooltip title={user?.full_name || "Behandelaar is onbekend"}>
+          <CustomTooltip title={user?.full_name || "Behandelaar is onbekend"}>
             <StyledIcon size={ 28 }>
               <LockOpen />
               <StyledDiv>{user ? createNameAbbreviation(user) : "Onbekend"}</StyledDiv>
             </StyledIcon>
-          </Tooltip>
+          </CustomTooltip>
         )
   )
 }

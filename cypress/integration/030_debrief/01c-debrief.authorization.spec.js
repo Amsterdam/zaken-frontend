@@ -38,8 +38,8 @@ describe('Process Debrief - Authorization required"', () => {
 
       cy.wait('@getTasks').then(({ response }) => {
         const debriefResponse = response?.body?.results?.find((e) => e.state?.status_name === "Debrief")
-        const caseId = debriefResponse?.state?.case
         const debriefTask = debriefResponse?.tasks?.find((e) => e.name === "Verwerken debrief")
+        const caseId = debriefTask?.case
         const taskId = debriefTask.case_user_task_id
 
         // check dueDate
@@ -70,7 +70,7 @@ describe('Process Debrief - Authorization required"', () => {
     })
 
     it('Submit form and check debrief status', () => {
-      
+
       cy.get('button[data-e2e-id="submit"]')
         .contains(debrief.formButtonText)
         .click()
@@ -90,11 +90,11 @@ describe('Process Debrief - Authorization required"', () => {
     })
 
     it('PM can finish task "Aanvragen machtiging"', () => {
-    
+
       cy.scrollTo(0, 400)
       cy.get("h4")
         .contains("Inplannen Huisbezoek")
-        
+
       cy.get("tbody>tr")
         .contains("td", debrief.authorizationNextTask1)
         .siblings("td")
@@ -107,12 +107,12 @@ describe('Process Debrief - Authorization required"', () => {
       cy.get(`[role="dialog"]`)
           .should('have.length', 1)
           .contains(debrief.authorizationNextTask1)
-          
+
       cy.get(`[role="dialog"]`)
           .find('input[name="completed"]')
           .first()
           .check()
-      
+
       cy.get(`[role="dialog"]`)
           .find('button')
           .contains("Taak afronden")
@@ -124,11 +124,11 @@ describe('Process Debrief - Authorization required"', () => {
     })
 
     it('PM can finish task "Monitoren binnenkomen machtiging"', () => {
-    
+
       cy.scrollTo(0, 400)
       cy.get("h4")
         .contains("Inplannen Huisbezoek")
-        
+
       cy.get("tbody>tr")
         .contains("td", debrief.authorizationNextTask2)
         .siblings("td")
@@ -141,12 +141,12 @@ describe('Process Debrief - Authorization required"', () => {
       cy.get(`[role="dialog"]`)
           .should('have.length', 1)
           .contains(debrief.authorizationNextTask2)
-          
+
       cy.get(`[role="dialog"]`)
           .find('input[name="completed"]')
           .first()
           .check()
-      
+
       cy.get(`[role="dialog"]`)
           .find('button')
           .contains("Taak afronden")

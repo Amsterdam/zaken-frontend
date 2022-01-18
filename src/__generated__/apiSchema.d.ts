@@ -19,7 +19,7 @@ declare namespace Components {
         export interface Case {
             id: number;
             address: Address;
-            current_states: CaseState[];
+            current_states: CaseWorkflowCaseDetail[];
             theme: CaseTheme;
             reason: CaseReason;
             schedules: Schedule[];
@@ -94,30 +94,8 @@ declare namespace Components {
             name: string;
             theme: number;
         }
-        export interface CaseState {
-            status_name: string;
-            tasks: CaseUserTaskCaseList[];
-            start_date: string; // date
-            end_date?: string | null; // date
-            status: number;
-        }
-        export interface CaseStateTask {
-            id: number;
-            status_name: string;
-            tasks: CaseUserTaskCaseList[];
-            information: string;
-            start_date: string; // date
-            end_date?: string | null; // date
-            case_process_id?: string | null;
-            case: number;
-            status: number;
-            workflow?: null | number;
-            users: string /* uuid */[];
-        }
         export interface CaseStateType {
-            id: number;
-            name: string;
-            theme: number;
+            status_name: string;
         }
         export interface CaseTheme {
             id: number;
@@ -126,81 +104,42 @@ declare namespace Components {
             case_state_types_top?: number[];
         }
         export interface CaseUserTask {
-            id: number;
             user_has_permission: boolean;
-            case_user_task_id: string;
             roles: string[];
+            case_user_task_id: string;
             form: {
                 [name: string]: any;
             }[];
             form_variables: {
                 [name: string]: any;
             };
-            completed?: boolean;
-            task_id: string; // uuid
             task_name: string;
             name: string;
             due_date: string; // date-time
-            created: string; // date-time
-            updated: string; // date-time
-            owner?: string | null; // uuid
             case: number;
-            workflow: number;
-        }
-        export interface CaseUserTaskCaseList {
-            id: number;
-            user_has_permission: boolean;
-            case_user_task_id: string;
-            roles: string[];
-            completed?: boolean;
-            task_id: string; // uuid
-            task_name: string;
-            name: string;
-            due_date: string; // date-time
-            created: string; // date-time
-            updated: string; // date-time
-            owner?: string | null; // uuid
-            case: number;
-            workflow: number;
         }
         export interface CaseUserTaskList {
             id: number;
             user_has_permission: boolean;
-            case_user_task_id: string;
             roles: string[];
-            form: {
-                [name: string]: any;
-            }[];
-            form_variables: {
-                [name: string]: any;
-            };
             case: /* Case-address serializer for CaseUserTasks */ CaseAddress;
-            completed?: boolean;
-            task_id: string; // uuid
-            task_name: string;
             name: string;
             due_date: string; // date-time
             created: string; // date-time
             updated: string; // date-time
             owner?: string | null; // uuid
-            workflow: number;
         }
         export interface CaseWorkflow {
             state: {
-                id: number;
                 status_name: string;
-                tasks: CaseUserTaskCaseList[];
-                information: string;
-                start_date: string; // date
-                end_date?: string | null; // date
-                case_process_id?: string | null;
-                case: number;
-                status: number;
-                workflow?: null | number;
-                users: string /* uuid */[];
             };
             tasks: CaseUserTask[];
-            workflow_message_name?: string | null;
+            information: string;
+        }
+        export interface CaseWorkflowCaseDetail {
+            status_name: string;
+            status: number;
+            start_date: string; // date-time
         }
         export interface CitizenReport {
             id: number;
@@ -773,7 +712,7 @@ declare namespace Components {
         export interface PatchedCase {
             id?: number;
             address?: Address;
-            current_states?: CaseState[];
+            current_states?: CaseWorkflowCaseDetail[];
             theme?: CaseTheme;
             reason?: CaseReason;
             schedules?: Schedule[];
@@ -790,24 +729,13 @@ declare namespace Components {
         export interface PatchedCaseUserTaskList {
             id?: number;
             user_has_permission?: boolean;
-            case_user_task_id?: string;
             roles?: string[];
-            form?: {
-                [name: string]: any;
-            }[];
-            form_variables?: {
-                [name: string]: any;
-            };
             case?: /* Case-address serializer for CaseUserTasks */ CaseAddress;
-            completed?: boolean;
-            task_id?: string; // uuid
-            task_name?: string;
             name?: string;
             due_date?: string; // date-time
             created?: string; // date-time
             updated?: string; // date-time
             owner?: string | null; // uuid
-            workflow?: number;
         }
         export type PermissionsEnum = "create_case" | "close_case" | "perform_task" | "access_personal_data_register" | "access_business_register" | "access_signals" | "access_recovery_check" | "access_sensitive_dossiers" | "access_sigital_surveillance" | "access_document_management_system";
         export interface Permit {
@@ -821,7 +749,7 @@ declare namespace Components {
             } | null;
         }
         export type PermitGrantedEnum = "GRANTED" | "NOT_GRANTED" | "UNKNOWN";
-        export type PersonRoleEnum = "PERSON_ROLE_OWNER" | "PERSON_ROLE_RESIDENT" | "PERSON_ROLE_MIDDLEMAN";
+        export type PersonRoleEnum = "PERSON_ROLE_OWNER" | "PERSON_ROLE_RESIDENT" | "PERSON_ROLE_MIDDLEMAN" | "PERSON_ROLE_PLATFORM";
         export interface Priority {
             id: number;
             name: string;
@@ -834,9 +762,6 @@ declare namespace Components {
             start_date: string; // date
             end_date?: string; // date
             states?: /* Serializer for State pushed from Top (this is legacy Stadia data) */ PushState[];
-        }
-        export interface PushCaseState {
-            user_emails: string /* email */[];
         }
         /**
          * Serializer for State pushed from Top (this is legacy Stadia data)
@@ -967,8 +892,6 @@ declare namespace Components {
             id: number;
             authors?: User[];
             author_ids?: string /* uuid */[];
-            task: string;
-            case_user_task_id?: string;
             start_time: string; // date-time
             situation?: string | null;
             observations?: string[] | null;
@@ -1064,29 +987,17 @@ declare namespace Paths {
             export type $200 = Components.Schemas.CaseClose;
         }
     }
-    namespace CaseStatesUpdateFromTopCreate {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export interface PathParameters {
-            id: Parameters.Id;
-        }
-        export type RequestBody = Components.Schemas.PushCaseState;
-        namespace Responses {
-            export type $200 = Components.Schemas.PushCaseState;
-        }
-    }
     namespace CasesCitizenReportsCreate {
         namespace Parameters {
             export type FromStartDate = string; // date
             export type Id = number;
             export type OpenCases = boolean;
-            export type OpenStatus = number;
             export type Ordering = string;
             export type PageSize = number;
             export type Reason = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
+            export type StateTypes = number;
             export type Theme = number;
         }
         export interface PathParameters {
@@ -1095,12 +1006,12 @@ declare namespace Paths {
         export interface QueryParameters {
             from_start_date?: Parameters.FromStartDate /* date */;
             open_cases?: Parameters.OpenCases;
-            open_status?: Parameters.OpenStatus;
             ordering?: Parameters.Ordering;
             page_size?: Parameters.PageSize;
             reason?: Parameters.Reason;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
+            state_types?: Parameters.StateTypes;
             theme?: Parameters.Theme;
         }
         export type RequestBody = Components.Schemas.CitizenReport;
@@ -1112,23 +1023,23 @@ declare namespace Paths {
         namespace Parameters {
             export type FromStartDate = string; // date
             export type OpenCases = boolean;
-            export type OpenStatus = number;
             export type Ordering = string;
             export type PageSize = number;
             export type Reason = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
+            export type StateTypes = number;
             export type Theme = number;
         }
         export interface QueryParameters {
             from_start_date?: Parameters.FromStartDate /* date */;
             open_cases?: Parameters.OpenCases;
-            open_status?: Parameters.OpenStatus;
             ordering?: Parameters.Ordering;
             page_size?: Parameters.PageSize;
             reason?: Parameters.Reason;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
+            state_types?: Parameters.StateTypes;
             theme?: Parameters.Theme;
         }
         export type RequestBody = Components.Schemas.CaseCreateUpdate;
@@ -1141,12 +1052,12 @@ declare namespace Paths {
             export type FromStartDate = string; // date
             export type Id = number;
             export type OpenCases = boolean;
-            export type OpenStatus = number;
             export type Ordering = string;
             export type PageSize = number;
             export type Reason = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
+            export type StateTypes = number;
             export type Theme = number;
         }
         export interface PathParameters {
@@ -1155,12 +1066,12 @@ declare namespace Paths {
         export interface QueryParameters {
             from_start_date?: Parameters.FromStartDate /* date */;
             open_cases?: Parameters.OpenCases;
-            open_status?: Parameters.OpenStatus;
             ordering?: Parameters.Ordering;
             page_size?: Parameters.PageSize;
             reason?: Parameters.Reason;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
+            state_types?: Parameters.StateTypes;
             theme?: Parameters.Theme;
         }
         namespace Responses {
@@ -1171,25 +1082,25 @@ declare namespace Paths {
         namespace Parameters {
             export type FromStartDate = string; // date
             export type OpenCases = boolean;
-            export type OpenStatus = number;
             export type Ordering = string;
             export type Page = number;
             export type PageSize = number;
             export type Reason = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
+            export type StateTypes = number;
             export type Theme = number;
         }
         export interface QueryParameters {
             from_start_date?: Parameters.FromStartDate /* date */;
             open_cases?: Parameters.OpenCases;
-            open_status?: Parameters.OpenStatus;
             ordering?: Parameters.Ordering;
             page?: Parameters.Page;
             page_size?: Parameters.PageSize;
             reason?: Parameters.Reason;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
+            state_types?: Parameters.StateTypes;
             theme?: Parameters.Theme;
         }
         namespace Responses {
@@ -1201,12 +1112,12 @@ declare namespace Paths {
             export type FromStartDate = string; // date
             export type Id = number;
             export type OpenCases = boolean;
-            export type OpenStatus = number;
             export type Ordering = string;
             export type PageSize = number;
             export type Reason = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
+            export type StateTypes = number;
             export type Theme = number;
         }
         export interface PathParameters {
@@ -1215,12 +1126,12 @@ declare namespace Paths {
         export interface QueryParameters {
             from_start_date?: Parameters.FromStartDate /* date */;
             open_cases?: Parameters.OpenCases;
-            open_status?: Parameters.OpenStatus;
             ordering?: Parameters.Ordering;
             page_size?: Parameters.PageSize;
             reason?: Parameters.Reason;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
+            state_types?: Parameters.StateTypes;
             theme?: Parameters.Theme;
         }
         export type RequestBody = Components.Schemas.PatchedCase;
@@ -1233,13 +1144,13 @@ declare namespace Paths {
             export type FromStartDate = string; // date
             export type Id = number;
             export type OpenCases = boolean;
-            export type OpenStatus = number;
             export type Ordering = string;
             export type Page = number;
             export type PageSize = number;
             export type Reason = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
+            export type StateTypes = number;
             export type Theme = number;
         }
         export interface PathParameters {
@@ -1248,13 +1159,13 @@ declare namespace Paths {
         export interface QueryParameters {
             from_start_date?: Parameters.FromStartDate /* date */;
             open_cases?: Parameters.OpenCases;
-            open_status?: Parameters.OpenStatus;
             ordering?: Parameters.Ordering;
             page?: Parameters.Page;
             page_size?: Parameters.PageSize;
             reason?: Parameters.Reason;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
+            state_types?: Parameters.StateTypes;
             theme?: Parameters.Theme;
         }
         namespace Responses {
@@ -1266,12 +1177,12 @@ declare namespace Paths {
             export type FromStartDate = string; // date
             export type Id = number;
             export type OpenCases = boolean;
-            export type OpenStatus = number;
             export type Ordering = string;
             export type PageSize = number;
             export type Reason = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
+            export type StateTypes = number;
             export type Theme = number;
         }
         export interface PathParameters {
@@ -1280,12 +1191,12 @@ declare namespace Paths {
         export interface QueryParameters {
             from_start_date?: Parameters.FromStartDate /* date */;
             open_cases?: Parameters.OpenCases;
-            open_status?: Parameters.OpenStatus;
             ordering?: Parameters.Ordering;
             page_size?: Parameters.PageSize;
             reason?: Parameters.Reason;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
+            state_types?: Parameters.StateTypes;
             theme?: Parameters.Theme;
         }
         export type RequestBody = Components.Schemas.StartWorkflow;
@@ -1298,12 +1209,12 @@ declare namespace Paths {
             export type FromStartDate = string; // date
             export type Id = number;
             export type OpenCases = boolean;
-            export type OpenStatus = number;
             export type Ordering = string;
             export type PageSize = number;
             export type Reason = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
+            export type StateTypes = number;
             export type Theme = number;
         }
         export interface PathParameters {
@@ -1312,12 +1223,12 @@ declare namespace Paths {
         export interface QueryParameters {
             from_start_date?: Parameters.FromStartDate /* date */;
             open_cases?: Parameters.OpenCases;
-            open_status?: Parameters.OpenStatus;
             ordering?: Parameters.Ordering;
             page_size?: Parameters.PageSize;
             reason?: Parameters.Reason;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
+            state_types?: Parameters.StateTypes;
             theme?: Parameters.Theme;
         }
         namespace Responses {
@@ -1328,7 +1239,6 @@ declare namespace Paths {
         namespace Parameters {
             export type FromStartDate = string; // date
             export type OpenCases = boolean;
-            export type OpenStatus = number;
             export type Ordering = string;
             export type Page = number;
             export type PageSize = number;
@@ -1336,6 +1246,7 @@ declare namespace Paths {
             export type Reason = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
+            export type StateTypes = number;
             export type StreetName = string;
             export type StreetNumber = string;
             export type Suffix = string;
@@ -1345,7 +1256,6 @@ declare namespace Paths {
         export interface QueryParameters {
             from_start_date?: Parameters.FromStartDate /* date */;
             open_cases?: Parameters.OpenCases;
-            open_status?: Parameters.OpenStatus;
             ordering?: Parameters.Ordering;
             page?: Parameters.Page;
             page_size?: Parameters.PageSize;
@@ -1353,6 +1263,7 @@ declare namespace Paths {
             reason?: Parameters.Reason;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
+            state_types?: Parameters.StateTypes;
             streetName?: Parameters.StreetName;
             streetNumber?: Parameters.StreetNumber;
             suffix?: Parameters.Suffix;
@@ -1368,13 +1279,13 @@ declare namespace Paths {
             export type FromStartDate = string; // date
             export type Id = number;
             export type OpenCases = boolean;
-            export type OpenStatus = number;
             export type Ordering = string;
             export type Page = number;
             export type PageSize = number;
             export type Reason = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
+            export type StateTypes = number;
             export type Theme = number;
         }
         export interface PathParameters {
@@ -1383,13 +1294,13 @@ declare namespace Paths {
         export interface QueryParameters {
             from_start_date?: Parameters.FromStartDate /* date */;
             open_cases?: Parameters.OpenCases;
-            open_status?: Parameters.OpenStatus;
             ordering?: Parameters.Ordering;
             page?: Parameters.Page;
             page_size?: Parameters.PageSize;
             reason?: Parameters.Reason;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
+            state_types?: Parameters.StateTypes;
             theme?: Parameters.Theme;
         }
         namespace Responses {
@@ -1401,13 +1312,13 @@ declare namespace Paths {
             export type FromStartDate = string; // date
             export type Id = number;
             export type OpenCases = boolean;
-            export type OpenStatus = number;
             export type Ordering = string;
             export type Page = number;
             export type PageSize = number;
             export type Reason = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
+            export type StateTypes = number;
             export type Theme = number;
         }
         export interface PathParameters {
@@ -1416,13 +1327,13 @@ declare namespace Paths {
         export interface QueryParameters {
             from_start_date?: Parameters.FromStartDate /* date */;
             open_cases?: Parameters.OpenCases;
-            open_status?: Parameters.OpenStatus;
             ordering?: Parameters.Ordering;
             page?: Parameters.Page;
             page_size?: Parameters.PageSize;
             reason?: Parameters.Reason;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
+            state_types?: Parameters.StateTypes;
             theme?: Parameters.Theme;
         }
         namespace Responses {
@@ -1434,12 +1345,12 @@ declare namespace Paths {
             export type FromStartDate = string; // date
             export type Id = number;
             export type OpenCases = boolean;
-            export type OpenStatus = number;
             export type Ordering = string;
             export type PageSize = number;
             export type Reason = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
+            export type StateTypes = number;
             export type Theme = number;
         }
         export interface PathParameters {
@@ -1448,12 +1359,12 @@ declare namespace Paths {
         export interface QueryParameters {
             from_start_date?: Parameters.FromStartDate /* date */;
             open_cases?: Parameters.OpenCases;
-            open_status?: Parameters.OpenStatus;
             ordering?: Parameters.Ordering;
             page_size?: Parameters.PageSize;
             reason?: Parameters.Reason;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
+            state_types?: Parameters.StateTypes;
             theme?: Parameters.Theme;
         }
         export type RequestBody = Components.Schemas.CaseCreateUpdate;

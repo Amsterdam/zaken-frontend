@@ -22,6 +22,9 @@ export const useCases = (
   if (page_size !== undefined) {
     urlParams.page_size = page_size
   }
+  if (sensitive === false) {
+    urlParams.sensitive = false
+  }
   if (theme) {
     urlParams.theme = theme
   }

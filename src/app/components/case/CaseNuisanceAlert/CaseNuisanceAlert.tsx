@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { Alert, themeSpacing } from "@amsterdam/asc-ui"
 import { useCase, useCaseEvents } from "app/state/rest"
 
-const MAX_NUMBER_NUISANCE = 3
+const MAX_NUMBER_NUISANCE = 6
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
@@ -27,7 +27,7 @@ const CaseNuisanceAlert: React.FC<Props> = ({ caseId }) => {
   return (
     isVisible ? (
       <StyledAlert level="warning" dismissible>
-        LET OP: er zijn 3 meldingen met overlast genoteerd. Voer de taak 'Melding overlast' op!
+        {`LET OP: er zijn ${ MAX_NUMBER_NUISANCE } meldingen met overlast genoteerd. Voer de taak 'Melding overlast' op!`}
       </StyledAlert>
     ) : null
   )

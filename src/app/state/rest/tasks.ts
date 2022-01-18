@@ -5,9 +5,12 @@ import { useErrorHandler } from "./hooks/utils/errorHandler"
 import { makeApiUrl } from "./hooks/utils/apiUrl"
 import useApiRequest from "./hooks/useApiRequest"
 
-export const useTasks = (theme: string, role: string, options?: Options) => {
+export const useTasks = (sensitive = false, theme: string, role: string, options?: Options) => {
   const handleError = useErrorHandler()
   const urlParams: any = {}
+  if (sensitive === false) {
+    urlParams.sensitive = false
+  }
   if (theme) {
     urlParams.theme = theme
   }

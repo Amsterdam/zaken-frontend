@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react"
 import styled from "styled-components"
 import { Spinner, Checkbox, themeSpacing, Label } from "@amsterdam/asc-ui"
-import Tooltip from "@material-ui/core/Tooltip"
 import { useUsersMe } from "app/state/rest/index"
 import { useTask } from "app/state/rest"
 import UserIcon from "./UserIcon"
 import useContextCache from "app/state/rest/provider/useContextCache"
 import { createNameAbbreviation } from "app/components/shared/Helpers/helpers"
 import getApiUrlTasks from "../../utils/getApiUrlTasks"
+import CustomTooltip from "app/components/help/HelpContent/CustomTooltip"
 
 type Props = {
   id: number
@@ -65,9 +65,9 @@ const SelectTask: React.FC<Props> = ({ id, owner }) => {
   return (
 
     <StyledLabel htmlFor={`cb_${ id }`} label={data && data?.id === owner ? `${ createNameAbbreviation(data) }` : ""}>
-      <Tooltip title={isChecked ? "Mijn taak" : "Beschikbaar"}>
+      <CustomTooltip title={isChecked ? "Mijn taak" : "Beschikbaar"}>
         <Checkbox data-e2e-id={`${ id }`} id={ `cb_${ id }` } checked={isChecked} onChange={ onChange }/>
-      </Tooltip>
+      </CustomTooltip>
     </StyledLabel>
 
   )
