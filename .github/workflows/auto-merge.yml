@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.actor == 'dependabot[bot]' && github.event.workflow_run.conclusion == 'success' }}
     steps:
-      - name: Dependabot metadata
+      - name: Dependabot metadata => ${{ github.actor }}
         id: metadata
         uses: dependabot/fetch-metadata@v1.1.1
         with:
