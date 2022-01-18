@@ -86,7 +86,6 @@ const Cases: React.FC = () => {
   }
 
   const onChangeTable = (pagination: any, sorting: any) => {
-    console.log("pagination", pagination)
     setPage(pagination.page.toString())
     setSortingAsOrdering(sorting)
   }
