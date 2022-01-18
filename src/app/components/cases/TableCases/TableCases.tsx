@@ -1,6 +1,6 @@
 import { Table } from "@amsterdam/wonen-ui"
 import navigateTo from "app/routing/navigateTo"
-import columns from "./columns"
+import getColumns from "./columns"
 
 type Props = {
   data?: Components.Schemas.PaginatedCaseList
@@ -11,14 +11,16 @@ type Props = {
     pageSize: number
     collectionSize: number
   }
+  sorting: any
 }
 
-const TableCases: React.FC<Props> = ({ data, isBusy, onChange, pagination }) => {
+const TableCases: React.FC<Props> = ({ data, isBusy, onChange, pagination, sorting }) => {
 
   const onClickRow = (data: any) => {
     navigateTo("/zaken/:id", { id: data.id })
   }
 
+  const columns = getColumns(sorting)
   return (
     <Table
       hasFixedColumn

@@ -14,15 +14,15 @@ const sortingOrder = {
 }
 const dataIndexMapping: any = {
   "address.full_address": "address__street_name",
-  "current_states": "current_states"
+  "last_updated": "last_updated"
 }
 type dataType = {
   results?: Components.Schemas.Case[]
   count?: number
 }
 type Sorting = {
-  dataIndex: string
-  order: "ASCEND" | "DESCEND"
+  dataIndex?: string
+  order?: "ASCEND" | "DESCEND"
 }
 
 const parseDate = (value: string | null) => {
@@ -32,20 +32,21 @@ const parseDate = (value: string | null) => {
 
 const Cases: React.FC = () => {
   const [data, setData] = useState<dataType>({})
-  const [page, setPage] = useURLState("page")
+  const [page, setPage] = useURLState("page", "1")
   const [theme, setTheme] = useURLState("theme")
-  const [ordering, setOrdering] = useURLState("ordering")
-  const [date, setDate] = useURLState("from_start_date", parseDate, true)
+  const [ordering, setOrdering] = useURLState("ordering", "last_updated")
+  const [sortedInfo, setSortedInfo] = useState<Sorting>({})
+  const [date, setDate] = useURLState("from_start_date", "", parseDate, true)
   const [caseThemes] = useCaseThemes()
-  console.log("PAGE", page)
+  const [hasPermission] = useHasPermission(SENSITIVE_CASE_PERMISSION)
   const [dataSource, { isBusy }] = useCases(
     Number(page) || 1,
     PAGE_SIZE,
     theme,
+    hasPermission,
     date,
     ordering
   )
-  const [hasPermission] = useHasPermission(SENSITIVE_CASE_PERMISSION)
 
   useEffect(() => {
     if (dataSource === undefined) {
@@ -58,18 +59,6 @@ const Cases: React.FC = () => {
     }
   }, [dataSource])
 
-  // Filter cases for sensitive. TODO: implement filter in BE
-  let sensitiveData = undefined
-  if (hasPermission) {
-    sensitiveData = data
-  } else {
-    const results = data?.results?.filter(e => e.sensitive === false)
-    sensitiveData = {
-      results,
-      count: results?.length
-    }
-  }
-
   const resetPage = () => {
     setPage("1")
   }
@@ -81,16 +70,20 @@ const Cases: React.FC = () => {
 
   // /cases?open_status=4&open_status=2&ordering=-id,adress
   const setSortingAsOrdering = (sorting: Sorting) => {
-    console.log("sorter2", sorting)
-    let value = dataIndexMapping[sorting.dataIndex]
-    if (sorting.order === sortingOrder.ASCEND) {
+    let value = ""
+    if (sorting?.dataIndex) {
+      value = dataIndexMapping[sorting.dataIndex]
+    }
+    if (sorting.order === sortingOrder.DESCEND) {
       value = `-${ value }`
     }
+    setSortedInfo(sorting)
     setOrdering(value)
   }
 
   const onChangeTable = (pagination: any, sorting: any) => {
-    setPage(pagination.page)
+    console.log("pagination", pagination)
+    setPage(pagination.page.toString())
     setSortingAsOrdering(sorting)
   }
 
@@ -98,7 +91,7 @@ const Cases: React.FC = () => {
     <Row>
       <Column spanLarge={ 72 }>
         <TableCases
-          data={ sensitiveData }
+          data={ data }
           isBusy={ isBusy }
           onChange={onChangeTable}
           pagination={{
@@ -106,6 +99,7 @@ const Cases: React.FC = () => {
             pageSize: PAGE_SIZE,
             collectionSize: data?.count || 1
           }}
+          sorting={ sortedInfo }
         />
       </Column>
       <Column spanLarge={ 28 }>

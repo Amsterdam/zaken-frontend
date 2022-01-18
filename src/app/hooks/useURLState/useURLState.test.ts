@@ -2,6 +2,12 @@ import { renderHook, act } from "@testing-library/react-hooks"
 import useURLState from "./useURLState"
 
 describe("useURLState", () => {
+  it("should have initial value", () => {
+    const { result } = renderHook(() => useURLState("q", "initialValue"))
+    const [value] = result.current
+    expect(value).toBe("initialValue")
+  })
+
   it("should set search param", () => {
     const { result, waitForNextUpdate } = renderHook(() => useURLState("q"))
     const [, set] = result.current
@@ -19,7 +25,7 @@ describe("useURLState", () => {
   })
 
   it("parse", () => {
-    const { result } = renderHook(() => useURLState("q", () => ""))
+    const { result } = renderHook(() => useURLState("q", "", () => ""))
     const [value] = result.current
     expect(value).toBe("")
   })

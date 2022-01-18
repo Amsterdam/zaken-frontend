@@ -9,29 +9,33 @@ export const useCases = (
   page: number,
   page_size: number,
   theme: string,
+  sensitive = false,
   from_start_date?: string,
   ordering?: string,
   options?: Options
 ) => {
   const handleError = useErrorHandler()
   const urlParams: any = {}
-  if (theme) {
-    urlParams.theme = theme
-  }
-  if (from_start_date !== undefined) {
-    urlParams.from_start_date = from_start_date
-  }
   if (page !== undefined) {
     urlParams.page = page
   }
   if (page_size !== undefined) {
     urlParams.page_size = page_size
   }
-  if (ordering !== undefined) {
+  if (theme) {
+    urlParams.theme = theme
+  }
+  if (from_start_date !== undefined) {
+    urlParams.from_start_date = from_start_date
+  }
+  if (ordering) {
     urlParams.ordering = ordering
   }
+  if (sensitive === false) {
+    urlParams.sensitive = false
+  }
+
   const queryString = isEmpty(urlParams) ? "" : qs.stringify(urlParams, { addQueryPrefix: true })
-  console.log("URL", `${ makeApiUrl("cases") }${ queryString }`)
   return useApiRequest<Components.Schemas.PaginatedCaseList>({
     ...options,
     url: `${ makeApiUrl("cases") }${ queryString }`,

@@ -1,8 +1,6 @@
 import { DateDisplay, isDate } from "@amsterdam/wonen-ui"
 import TableAction from "app/components/shared/TableAction/TableAction"
 import to from "app/routing/utils/to"
-import first from "./utils/first"
-import sortByDate from "./utils/sortByDate"
 
 const getStatus = (record: Record<string, any>) => {
   const { current_states, end_date } = record
@@ -15,41 +13,35 @@ const getStatus = (record: Record<string, any>) => {
   return "-"
 }
 
-const getDate = (record: Record<string, any>) => {
-  const startDate = first(record?.current_states.map((state: any) => state.start_date).sort(sortByDate("DESC")))
-  return record.end_date ?? startDate
-}
-
-const columns = [
+const columns = (sorting: any) => [
   {
     header: "Adres",
     dataIndex: "address.full_address",
     sorter: (a: any, b: any) => a?.address?.full_address.localeCompare(b?.address?.full_address),
+    sortOrder: sorting.dataIndex === "address.full_address" && sorting.order,
     minWidth: 300
   }, {
     header: "Status",
     dataIndex: "current_states",
-    sorter: (a: any, b: any) => {
-      const aValue = getStatus(a)
-      const bValue = getStatus(b)
-      return aValue.localeCompare(bValue)
-    },
+    /*
+     ** At the moment current_states can not be sorted in the BE.
+     ** For now the sorter is disabled.
+     */
+    // sorter: (a: any, b: any) => {
+    //   const aValue = getStatus(a)
+    //   const bValue = getStatus(b)
+    //   return aValue.localeCompare(bValue)
+    // },
     minWidth: 100,
     render: (current_states: any, record: any) => getStatus(record)
   }, {
     header: "Laatst gewijzigd",
-    dataIndex: "current_states",
-    sorter: (a: any, b: any) => {
-      const aDate = getDate(a)
-      const bDate = getDate(b)
-      return new Date(aDate).getTime() - new Date(bDate).getTime()
-    },
+    dataIndex: "last_updated",
+    sorter: (a: any, b: any) => new Date(a.last_updated).getTime() - new Date(b.last_updated).getTime(),
     defaultSortOrder: "DESCEND" as const,
+    sortOrder: sorting.dataIndex === "last_updated" && sorting.order,
     minWidth: 100,
-    render: (text: any, record: any) => {
-      const date = getDate(record)
-      return <DateDisplay date={ date } emptyText="-" />
-    }
+    render: (text: any) => <DateDisplay date={ text } emptyText="-" />
   }, {
     dataIndex: "id",
     minWidth: 140,
