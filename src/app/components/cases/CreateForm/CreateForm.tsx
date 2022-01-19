@@ -18,27 +18,37 @@ type Props = {
   tonId?: number | undefined
 }
 
-type FormData =
-  Pick<CaseCreate, "address" | "description"> &
-  {
-    theme: Components.Schemas.CaseTheme
-    reason: Components.Schemas.CaseReason
-    project: Components.Schemas.CaseProject
-    nuisance: boolean | Array<string> | undefined
-    subjects: Components.Schemas.Subject[]
-  }
+// type FormData =
+//   Pick<CaseCreate, "description"> &
+//   {
+//     theme: Components.Schemas.CaseTheme
+//     reason: Components.Schemas.CaseReason
+//     project: Components.Schemas.CaseProject
+//     nuisance: boolean | Array<string> | undefined
+//     subjects: Components.Schemas.Subject[]
+//     identification: Components.Schemas.CitizenReport["identification"]
+//     citizen_reports: Omit<Components.Schemas.CitizenReportCase, "id" | "date_added">[]
+//   }
 
 const mapData = (bagId: Components.Schemas.Address["bag_id"], tonId: number | undefined) =>
-  (data: FormData): CaseCreate => ({
+  (data: any): any => {
+    const mappedData = {
     ...data,
-    address: { bag_id: bagId },
-    theme: data.theme.id,
-    reason: data.reason.id,
-    project: data.project?.id,
-    nuisance: Array.isArray(data?.nuisance) && data?.nuisance?.includes("nuisance"),
+    bag_id: bagId,
+    theme_id: data.theme.id,
+    reason_id: data.reason.id,
+    project_id: data.project?.id,
     ton_ids: tonId !== undefined ? [ tonId ] : undefined,
-    subjects: data.subjects.map((subject) => subject.id)
-  })
+    subject_ids: data.subjects.map((subject: any) => subject.id)
+  }
+  if (data.identification) {
+    mappedData.citizen_reports = [{
+      ...data,
+      nuisance: Array.isArray(data?.nuisance) && data?.nuisance?.includes("nuisance")
+    }]
+  }
+  return mappedData
+}
 
 const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
   const [caseThemes] = useCaseThemes()
@@ -84,7 +94,7 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
     changeThemeId, caseThemesOptions, reasonOptions ?? [], projects?.results ?? [], subjects?.results ?? [], adOptions)
 
   const navigateWithFlashMessage = useNavigateWithFlashMessage()
-  const afterSubmit = async (result: Components.Schemas.CaseCreateUpdate) =>
+  const afterSubmit = async (result: Components.Schemas.Case) =>
     await navigateWithFlashMessage(
       "/zaken/:id",
       { id: result.id },

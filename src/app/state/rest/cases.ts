@@ -5,9 +5,23 @@ import { useErrorHandler } from "./hooks/utils/errorHandler"
 import { makeApiUrl } from "./hooks/utils/apiUrl"
 import useApiRequest from "./hooks/useApiRequest"
 
-export const useCases = (sensitive = false, theme: string, from_start_date?: string, options?: Options) => {
+export const useCases = (
+  page: number,
+  page_size: number,
+  theme: string,
+  sensitive = false,
+  from_start_date?: string,
+  ordering?: string,
+  options?: Options
+) => {
   const handleError = useErrorHandler()
   const urlParams: any = {}
+  if (page !== undefined) {
+    urlParams.page = page
+  }
+  if (page_size !== undefined) {
+    urlParams.page_size = page_size
+  }
   if (sensitive === false) {
     urlParams.sensitive = false
   }
@@ -17,6 +31,13 @@ export const useCases = (sensitive = false, theme: string, from_start_date?: str
   if (from_start_date !== undefined) {
     urlParams.from_start_date = from_start_date
   }
+  if (ordering) {
+    urlParams.ordering = ordering
+  }
+  if (sensitive === false) {
+    urlParams.sensitive = false
+  }
+
   const queryString = isEmpty(urlParams) ? "" : qs.stringify(urlParams, { addQueryPrefix: true })
   return useApiRequest<Components.Schemas.PaginatedCaseList>({
     ...options,

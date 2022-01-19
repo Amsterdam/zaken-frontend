@@ -18,7 +18,7 @@ export const useCase = (id?: Components.Schemas.Case["id"], options?: Options) =
 
 export const useCaseCreate = (options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<Components.Schemas.CaseCreateUpdate, CaseCreate>({
+  return useApiRequest<any, any>({
     lazy: true,
     ...options,
     url: makeApiUrl("cases"),
