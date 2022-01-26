@@ -14,15 +14,31 @@ describe("Test add_case_not_anonymous_ad", () => {
 
 describe("Create case and validate input", () => {
   it("Fill in form", () => {
+
+    cy.intercept("**/reasons/").as("getReasons")
+    cy.intercept("**/subjects/").as("getSubjects")
+
     cy.wait(1000)
+
     cy.get("span")
-      .contains("Vakantieverhuur")
+      .contains(/^Vakantieverhuur$/)
       .siblings()
       .find("input")
       .check({force: true})
 
-    cy.get("#reason_2")
-      .check({force: true})
+    cy.wait(["@getReasons", "@getSubjects"]).then(() => {
+      cy.get("span")
+        .contains(/^SIA melding$/)
+        .siblings()
+        .find("input")
+        .check({force: true})
+
+      cy.get("span")
+        .contains(dummyData.subject)
+        .siblings()
+        .find("input")
+        .check({force: true})
+    })
 
     cy.get('[data-e2e-id="no"]')
       .check({force: true})

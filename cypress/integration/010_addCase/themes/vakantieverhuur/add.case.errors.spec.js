@@ -1,4 +1,4 @@
-import testData from "../../../../fixtures/addcase.json"
+import dummyData from "../../../../fixtures/addcase.json"
 import address from "../../../../fixtures/address.json"
 
 describe("Test add_case_errors", () => {
@@ -14,15 +14,28 @@ describe("Test add_case_errors", () => {
 
 describe("Fill in form and validate", () => {
   it("Select radio buttons", () => {
+
+    cy.intercept("**/reasons/").as("getReasons")
+    cy.intercept("**/subjects/").as("getSubjects")
+
     cy.wait(1000)
+
     cy.get("span")
-      .contains("Vakantieverhuur")
+      .contains(/^Vakantieverhuur$/)
       .siblings()
       .find("input")
       .check({force: true})
 
-    cy.get("#reason_0")
-      .check({force: true})
+    cy.wait(["@getReasons", "@getSubjects"]).then(() => {
+      cy.get("#reason_0")
+        .check({force: true})
+
+      cy.get("span")
+        .contains(dummyData.subject)
+        .siblings()
+        .find("input")
+        .check({force: true})
+    })
 
     cy.get('[data-e2e-id="no"]')
       .check({force: true})
@@ -38,23 +51,23 @@ describe("Fill in form and validate", () => {
     cy.checkInvalidInput(
       '[data-e2e-id="reporter_phone"]',
       "Vul hier enkel 10 cijfers in",
-      testData.reporterPhone
+      dummyData.reporterPhone
     )
 
     cy.checkInvalidInput(
       '[data-e2e-id="reporter_email"]',
       "Vul een geldig e-mailadres in",
-      testData.reporterEmail
+      dummyData.reporterEmail
     )
 
     cy.checkRequiredField(
       '[data-e2e-id="identification"]',
-      testData.siaIdentification
+      dummyData.siaIdentification
     )
 
     cy.checkRequiredField(
       '[data-e2e-id="description_citizenreport"]',
-      testData.siaDescription
+      dummyData.siaDescription
     )
 
     cy.get("#advertisement_yes")
@@ -65,7 +78,7 @@ describe("Fill in form and validate", () => {
 
     cy.checkRequiredField(
       '[data-e2e-id="advertisement_linklist[0]advertisement_link"]',
-      testData.advertisementUrl1
+      dummyData.advertisementUrl1
     )
 
     cy.get("button[data-e2e-id=submit]")

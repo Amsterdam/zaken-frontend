@@ -28,7 +28,10 @@ describe("Create case and validate input", () => {
       .check({force: true})
 
     cy.wait(["@getReasons", "@getSubjects"]).then(() => {
-      cy.get("#reason_2")
+      cy.get("span")
+        .contains(/^SIA melding$/)
+        .siblings()
+        .find("input")
         .check({force: true})
 
       cy.get("span")
