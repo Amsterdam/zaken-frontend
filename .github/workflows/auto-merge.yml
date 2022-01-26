@@ -1,6 +1,8 @@
 name: Dependabot auto-merge
 
 on:
+  pull_request:
+    branches: [ master ]
   workflow_run:
     types:
       - completed
@@ -17,16 +19,16 @@ jobs:
     if: ${{ github.actor == 'dependabot[bot]' && github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Dependabot metadata => ${{ github.actor }}
-        id: metadata
+        id: dependabot-metadata
         uses: dependabot/fetch-metadata@v1.1.1
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
-      - name: Enable auto-merge for Dependabot PRs => ${{ steps.metadata.outputs.update-type }}
-        if: ${{ steps.metadata.outputs.update-type == 'version-update:semver-minor' ||  steps.metadata.outputs.update-type == 'version-update:semver-patch'}}
+      - name: Enable auto-merge for Dependabot PRs => ${{ steps.dependabot-metadata.outputs.update-type }}
+        if: ${{ steps.dependabot-metadata.outputs.update-type != 'version-update:semver-major' }}
         run: gh pr merge --auto --merge "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # pass the Dashboard record key as an environment variable for Cypress Dashboard
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           CYPRESS_TEST_USER_PASSWORD:  ${{ secrets.CYPRESS_TEST_USER_PASSWORD }}
