@@ -34,7 +34,8 @@ export default (workflowForm: Components.Schemas.CaseUserTask["form"], onCancel 
           if (type === "checkbox" && !(option?.length > 0)) return isRequiredText
           if (type === "text" && !option) return isRequiredText
           return ""
-        }
+        },
+        tooltip: item.tooltip
       }
     } as Field
     return acc
