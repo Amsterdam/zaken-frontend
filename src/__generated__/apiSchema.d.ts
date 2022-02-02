@@ -946,7 +946,7 @@ declare namespace Components {
             first_name?: string;
             last_name?: string;
             full_name?: string;
-            groups?: Group[];
+            permissions?: string[];
         }
         export interface VakantieverhuurReport {
             is_cancellation: boolean;
