@@ -10,16 +10,17 @@ const Router: React.FC = () => (
     {
       Object
         .entries(routes)
-        .map(([path, { publicly, Page, permissionName }]) =>
+        .map(([path, { publicly, Page, permissionNames }]) => (
           publicly ? <Page key={path} path={path} />
             : (
               <ProtectedPage
                 key={path}
                 path={path}
                 page={Page}
-                permissionName={permissionName}
+                permissionNames={permissionNames}
               />
             )
+          )
         )
     }
     <NotFoundPage default />

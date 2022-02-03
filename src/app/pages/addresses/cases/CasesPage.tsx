@@ -17,7 +17,7 @@ type Props = {
 }
 
 const CasesPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => {
-  
+
   const [data] = useCasesByBagId(bagId as string)
   const numCases = data?.results?.length ?? 0
 
@@ -35,11 +35,11 @@ const CasesPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => {
       <RowWithColumn>
         <span >
           Let op: in BWV kunnen er ook open en gesloten zaken bekend zijn.<br/>
-          Bovenstaand overzicht toont alle zaken die bekend zijn in AZA. 
+          Bovenstaand overzicht toont alle zaken die bekend zijn in AZA.
         </span>
       </RowWithColumn>
       <RowWithColumn>
-        <CasesByBagId 
+        <CasesByBagId
           title="Open zaken"
           bagId={ bagId }
           openCases={true}
@@ -47,7 +47,7 @@ const CasesPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => {
         />
       </RowWithColumn>
       <RowWithColumn>
-        <CasesByBagId 
+        <CasesByBagId
           title="Gesloten zaken AZA"
           bagId={ bagId }
           emptyText="Op dit adres zijn geen gesloten zaken"
@@ -55,7 +55,7 @@ const CasesPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => {
       </RowWithColumn>
       <RowWithColumn>
         <IsAuthorizedButtonLink
-          permissionName="create_case"
+          permissionNames={["create_case"]}
           to={ to("/adres/:bagId/zaken/nieuw", { bagId }) }
           text="Nieuwe zaak aanmaken"
           variant="primary"

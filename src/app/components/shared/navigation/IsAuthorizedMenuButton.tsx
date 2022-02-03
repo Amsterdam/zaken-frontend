@@ -4,7 +4,7 @@ import useHasPermission from "app/state/rest/custom/usePermissions/useHasPermiss
 import StyledButtonLink from "./StyledButtonLink"
 
 type Props = React.ComponentProps<typeof MenuButton> & {
-  permissionName: Components.Schemas.PermissionsEnum
+  permissionNames: Components.Schemas.PermissionsEnum[]
   isHidden?: boolean
   to: string
   text: string | undefined
@@ -42,8 +42,8 @@ const StyledLink = styled(Link)`
   transition: color 0.1s ease-in-out,background-color 0.1s ease-in-out;
 `
 
-const IsAuthorizedMenuButton: React.FC<Props> = ({ permissionName, isHidden, to, text, ...restProps }) => {
-  const [hasPermission, isBusy] = useHasPermission(permissionName)
+const IsAuthorizedMenuButton: React.FC<Props> = ({ permissionNames, isHidden, to, text, ...restProps }) => {
+  const [hasPermission, isBusy] = useHasPermission(permissionNames)
   const isAuthorized = !isBusy && hasPermission
   /*
    ** Exception for "Digitaal toezicht".

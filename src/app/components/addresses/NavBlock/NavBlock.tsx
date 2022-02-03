@@ -9,7 +9,7 @@ type Props = {
   icon: keyof typeof Assets
   header: string
   count?: string | number
-  permissionName?: Components.Schemas.PermissionsEnum
+  permissionNames?: Components.Schemas.PermissionsEnum[]
 }
 
 const Wrap = styled.div<{ disabled: boolean }>`
@@ -38,9 +38,9 @@ const StyledHeading = styled(Heading)`
   margin-top: ${ themeSpacing(4) };
 `
 
-const NavBlock: React.FC<Props> = ({ to: toPath, icon, header, count, permissionName }) => {
+const NavBlock: React.FC<Props> = ({ to: toPath, icon, header, count, permissionNames }) => {
 
-  const [hasPermission] = useHasPermission(permissionName)
+  const [hasPermission] = useHasPermission(permissionNames)
 
   const Asset = Assets[icon]
   const card = (

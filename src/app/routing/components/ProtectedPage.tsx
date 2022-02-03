@@ -5,7 +5,7 @@ import AuthorizedPage from "./AuthorizedPage"
 
 type Props = {
   page: React.ComponentType
-  permissionName?: Components.Schemas.PermissionsEnum
+  permissionNames?: Components.Schemas.PermissionsEnum[]
 } & RouteComponentProps
 
 /**
@@ -16,10 +16,10 @@ const ProtectedPage: React.FC<Props> = (props) => {
 
   if (token === undefined) return null
 
-  const { page: Page, permissionName, ...restProps } = props
+  const { page: Page, permissionNames, ...restProps } = props
 
   return (
-    permissionName !== undefined
+    permissionNames !== undefined
       ? <AuthorizedPage { ...props } />
       : <Page { ...restProps } />
   )
