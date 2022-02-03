@@ -19,7 +19,7 @@ export default {
         Page: PeoplePage,
         icon: "Portrait",
         title: "Persoonsgegevens",
-        permissionName: "access_personal_data_register"
+        permissionNames: ["access_personal_data_register"]
       },
       "vergunningen": {
         Page: PermitsPage,
@@ -35,7 +35,7 @@ export default {
             Page: CreateCasePage,
             icon: "Edit",
             title: "Nieuwe zaak aanmaken",
-            permissionName: "create_case"
+            permissionNames: ["create_case", "create_digital_surveilance_case"]
           }
         }
       }

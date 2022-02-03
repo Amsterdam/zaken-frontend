@@ -5,6 +5,6 @@ export default {
     Page: FinePage,
     title: "Invorderingscheck",
     icon: "Euro",
-    permissionName: "access_recovery_check"
+    permissionNames: ["access_recovery_check"]
   }
 }

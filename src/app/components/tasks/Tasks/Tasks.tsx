@@ -10,7 +10,7 @@ const EMPTY_TEXT = "Er zijn momenteel geen open taken voor de gekozen filters."
 const UNDERMINING = "Ondermijning"
 
 const Tasks: React.FC = () => {
-  const [hasPermission] = useHasPermission(SENSITIVE_CASE_PERMISSION)
+  const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const [roles] = useRoles()
   const [caseThemes] = useCaseThemes()
   const [theme, setTheme] = useURLState("thema")

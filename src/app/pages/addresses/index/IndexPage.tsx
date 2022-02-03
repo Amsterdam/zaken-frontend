@@ -38,7 +38,7 @@ const IndexPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
       </RowWithColumn>
       <RowWithColumn>
         <IsAuthorizedButtonLink
-          permissionName="create_case"
+          permissionNames={ ["create_case"] }
           to={ to("/adres/:bagId/zaken/nieuw", { bagId }) }
           text="Nieuwe zaak aanmaken"
           variant="primary"

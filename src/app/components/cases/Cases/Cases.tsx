@@ -42,7 +42,7 @@ const Cases: React.FC = () => {
   const [sortedInfo, setSortedInfo] = useState<Sorting>({})
   const [date, setDate] = useURLState("from_start_date", "", parseDate, true)
   const [caseThemes] = useCaseThemes()
-  const [hasPermission] = useHasPermission(SENSITIVE_CASE_PERMISSION)
+  const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const [dataSource, { isBusy }] = useCases(
     Number(page) || 1,
     PAGE_SIZE,

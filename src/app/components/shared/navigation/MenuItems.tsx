@@ -14,11 +14,11 @@ const items = [
   },
   {
     path: "/invorderingen",
-    permissionName: "access_recovery_check" as Components.Schemas.PermissionsEnum
+    permissionNames: ["access_recovery_check"] as Components.Schemas.PermissionsEnum[]
   },
   {
     path: "/digitaaltoezicht",
-    permissionName: "access_sigital_surveillance" as Components.Schemas.PermissionsEnum,
+    permissionNames: ["access_sigital_surveillance"] as Components.Schemas.PermissionsEnum[],
     isHidden: true
   },
   {
@@ -29,12 +29,12 @@ const items = [
 
 const MenuItems: React.FC = () => (
   <>
-  { items.map(({ path, hiddenLaptopM, permissionName, isHidden }) => {
+  { items.map(({ path, hiddenLaptopM, permissionNames, isHidden }) => {
       const { title } = routes[`${ path }/`]
       const menuItem = (
         <MenuItem key={ path }>
-          { permissionName !== undefined
-              ? <IsAuthorizedMenuButton permissionName={ permissionName } isHidden={ isHidden } text={ title } to={ to(path) } />
+          { permissionNames !== undefined
+              ? <IsAuthorizedMenuButton permissionNames={ permissionNames } isHidden={ isHidden } text={ title } to={ to(path) } />
               : (
               <StyledButtonLink to={ to(path) }>
                 <MenuButton as="span">{ title }</MenuButton>

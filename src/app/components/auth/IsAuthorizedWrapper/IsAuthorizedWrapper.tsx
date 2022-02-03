@@ -8,11 +8,11 @@ import useHasPermission from "app/state/rest/custom/usePermissions/useHasPermiss
  */
 
 type Props = {
-  permissionName: Components.Schemas.PermissionsEnum
+  permissionNames: Components.Schemas.PermissionsEnum[]
 }
 
-const IsAuthorizedWrapper: React.FC<Props> = ({ permissionName, children }) => {
-  const [hasPermission, isBusy] = useHasPermission(permissionName)
+const IsAuthorizedWrapper: React.FC<Props> = ({ permissionNames, children }) => {
+  const [hasPermission, isBusy] = useHasPermission(permissionNames)
 
   return (
     isBusy ?

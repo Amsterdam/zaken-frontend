@@ -6,15 +6,15 @@ import SpinnerWrap from "app/components/shared/ConfirmScaffoldForm/components/Sp
 
 type Props = {
   page: React.ComponentType
-  permissionName?: Components.Schemas.PermissionsEnum
+  permissionNames?: Components.Schemas.PermissionsEnum[]
 } & RouteComponentProps
 
 /**
  * The user needs the applicable permission to visit this page.
  */
 
-const AuthorizedPage: React.FC<Props> = ({ page: Page, permissionName, ...restProps }) => {
-  const [hasPermission, isBusy] = useHasPermission(permissionName)
+const AuthorizedPage: React.FC<Props> = ({ page: Page, permissionNames, ...restProps }) => {
+  const [hasPermission, isBusy] = useHasPermission(permissionNames)
 
   if (isBusy) {
     return <SpinnerWrap />
