@@ -3,14 +3,14 @@ import ButtonLink from "app/components/shared/ButtonLink/ButtonLink"
 import useHasPermission from "app/state/rest/custom/usePermissions/useHasPermission"
 
 type Props = React.ComponentProps<typeof Button> & {
-  permissionName: Components.Schemas.PermissionsEnum
+  permissionNames: Components.Schemas.PermissionsEnum[]
   to: string
   text: string
 }
 
-const IsAuthorizedButtonLink: React.FC<Props> = ({ to, text, permissionName, ...restProps }) => {
+const IsAuthorizedButtonLink: React.FC<Props> = ({ to, text, permissionNames, ...restProps }) => {
 
-  const [hasPermission] = useHasPermission(permissionName)
+  const [hasPermission] = useHasPermission(permissionNames)
 
   return hasPermission ?
     <ButtonLink to={ to }><Button as="span" { ...restProps }>{ text }</Button></ButtonLink> :

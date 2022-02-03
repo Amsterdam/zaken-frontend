@@ -25,7 +25,7 @@ type Props = {
 const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
 
   const [exists, isBusy, has404, id, caseItem] = useExistingCase(parseUrlParamId(idString))
-  const [hasPermission, isLoading] = useHasPermission(SENSITIVE_CASE_PERMISSION)
+  const [hasPermission, isLoading] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const showSpinner = isBusy || isLoading
   // Don't show if sensitive case and no permission
   const isAuthorized = caseItem?.sensitive === false || (caseItem?.sensitive === true && hasPermission)
