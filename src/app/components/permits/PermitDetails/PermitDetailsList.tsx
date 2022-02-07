@@ -10,26 +10,29 @@ type Props = {
 }
 
 const PermitDetailsList: React.FC<Props> = ({ bagId }) => {
-
   const [data, { isBusy }] = usePermitDetails(bagId)
   const permits = useKnownPermits(data)
 
+  if (isBusy) {
+	  return <Spinner />
+  }
   return (
-    <>
-      { isBusy ?
-          <Spinner /> :
-        permits === undefined ?
-          <>
-            <Heading forwardedAs="h4">Vergunningen</Heading>
-            <Paragraph>Geen vergunningen gevonden</Paragraph>
-          </> :
-          <div>
-            { permits.map(permit =>
-                <PermitDetails key={ permit.permit_type } permit={ permit } />
-            ) }
-          </div>
-      }
-    </>
+		<>
+			{ permits === undefined ? (
+					<>
+						<Heading forwardedAs="h4">Vergunningen</Heading>
+						<Paragraph>Geen vergunningen gevonden</Paragraph>
+					</>
+				) : (
+					<div>
+						{ permits.map(permit => (
+								<PermitDetails key={ permit.permit_type } permit={ permit } />
+							)
+						)}
+					</div>
+				)
+			}
+		</>
   )
 }
 

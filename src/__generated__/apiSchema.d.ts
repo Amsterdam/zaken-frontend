@@ -82,7 +82,7 @@ declare namespace Components {
             date_added: string; // date-time
             case: number;
             reason: number;
-            result?: null | number;
+            result?: number | null;
         }
         export interface CaseCloseReason {
             id: number;
@@ -104,10 +104,11 @@ declare namespace Components {
                 [name: string]: any;
             };
             date_created: string; // date-time
-            type: TypeEnum;
+            type: CaseEventTypeEnum;
             emitter_id: number;
             case: number;
         }
+        export type CaseEventTypeEnum = "DEBRIEFING" | "VISIT" | "CASE" | "CASE_CLOSE" | "SUMMON" | "GENERIC_TASK" | "SCHEDULE" | "CITIZEN_REPORT";
         export interface CaseProject {
             id: number;
             name: string;
@@ -134,9 +135,7 @@ declare namespace Components {
             user_has_permission: boolean;
             roles: string[];
             case_user_task_id: string;
-            form: {
-                [name: string]: any;
-            }[];
+            form: GenericFormField[];
             form_variables: {
                 [name: string]: any;
             };
@@ -261,12 +260,7 @@ declare namespace Components {
         }
         export interface Decos {
             permits: Permit[];
-            vakantieverhuur_reports: {
-                rented_days_count: null | number;
-                planned_days_count: null | number;
-                is_rented_today: boolean;
-                reports: VakantieverhuurReport[];
-            } | null;
+            vakantieverhuur_reports: VakantieverhuurReportInformation[] | null;
         }
         export interface Fine {
             identificatienummer: string;
@@ -325,12 +319,20 @@ declare namespace Components {
             description?: string;
             date_added: string; // date-time
         }
-        export type GeslachtsaanduidingEnum = "M" | "V" | "X";
-        export interface Group {
-            permissions: PermissionsEnum[];
+        export interface GenericFormField {
             name: string;
-            display_name: string;
+            label: string;
+            options?: GenericFormFieldOption[];
+            type: GenericFormFieldTypeEnum;
+            tooltip?: string;
+            required: boolean;
         }
+        export interface GenericFormFieldOption {
+            label: string;
+            value: string;
+        }
+        export type GenericFormFieldTypeEnum = "text" | "select" | "checkbox";
+        export type GeslachtsaanduidingEnum = "M" | "V" | "X";
         export type IndicatieBetHernBevelEnum = "J" | "N";
         export type IndicatieCombiDwangbevelEnum = "J" | "N" | "O";
         export type IndicatiePubliekrechtelijkEnum = "J" | "N";
@@ -813,14 +815,14 @@ declare namespace Components {
             updated?: string; // date-time
             owner?: string | null; // uuid
         }
-        export type PermissionsEnum = "create_case" | "close_case" | "perform_task" | "access_personal_data_register" | "access_business_register" | "access_signals" | "access_recovery_check" | "access_sensitive_dossiers" | "access_sigital_surveillance" | "access_document_management_system";
+        export type PermissionsEnum = "create_case" | "create_digital_surveilance_case" | "close_case" | "perform_task" | "access_personal_data_register" | "access_business_register" | "access_signals" | "access_recovery_check" | "access_sensitive_dossiers" | "access_sigital_surveillance" | "access_document_management_system";
         export interface Permit {
             permit_granted: PermitGrantedEnum;
             permit_type: string;
-            raw_data: {
+            raw_data?: {
                 [name: string]: any;
             } | null;
-            details: {
+            details?: {
                 [name: string]: any;
             } | null;
         }
@@ -930,7 +932,6 @@ declare namespace Components {
             day_segments: DaySegment[];
             priorities: Priority[];
         }
-        export type TypeEnum = "DEBRIEFING" | "VISIT" | "CASE" | "CASE_CLOSE" | "SUMMON" | "GENERIC_TASK" | "SCHEDULE" | "CITIZEN_REPORT";
         export interface User {
             id?: string; // uuid
             email?: string; // email
@@ -946,7 +947,7 @@ declare namespace Components {
             first_name?: string;
             last_name?: string;
             full_name?: string;
-            permissions?: string[];
+            permissions: PermissionsEnum[];
         }
         export interface VakantieverhuurReport {
             is_cancellation: boolean;
@@ -955,12 +956,13 @@ declare namespace Components {
             check_out_date: string; // date-time
         }
         export interface VakantieverhuurReportInformation {
-            rented_days_count: null | number;
-            planned_days_count: null | number;
+            year: number;
+            rented_days_count: number | null;
+            planned_days_count: number | null;
             is_rented_today: boolean;
             reports: VakantieverhuurReport[];
         }
-        export type ViolationEnum = "NO" | "YES" | "ADDITIONAL_RESEARCH_REQUIRED" | "ADDITIONAL_VISIT_REQUIRED" | "ADDITIONAL_VISIT_WITH_AUTHORIZATION" | "SEND_TO_OTHER_THEME";
+        export type ViolationEnum = "NO" | "YES" | "ADDITIONAL_RESEARCH_REQUIRED" | "ADDITIONAL_VISIT_REQUIRED" | "ADDITIONAL_VISIT_WITH_AUTHORIZATION" | "SEND_TO_OTHER_THEME" | "LIKELY_INHABITED";
         export interface ViolationType {
             key: string;
         }
@@ -1163,27 +1165,35 @@ declare namespace Paths {
     namespace CasesList {
         namespace Parameters {
             export type FromStartDate = string; // date
+            export type Number = string;
             export type OpenCases = boolean;
             export type Ordering = string;
             export type Page = number;
             export type PageSize = number;
+            export type PostalCode = string;
             export type Reason = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
+            export type StreetName = string;
+            export type Suffix = string;
             export type Theme = number;
             export type TonIds = number;
         }
         export interface QueryParameters {
             from_start_date?: Parameters.FromStartDate /* date */;
+            number?: Parameters.Number;
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
             page?: Parameters.Page;
             page_size?: Parameters.PageSize;
+            postal_code?: Parameters.PostalCode;
             reason?: Parameters.Reason;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
+            street_name?: Parameters.StreetName;
+            suffix?: Parameters.Suffix;
             theme?: Parameters.Theme;
             ton_ids?: Parameters.TonIds;
         }
@@ -1229,14 +1239,18 @@ declare namespace Paths {
         namespace Parameters {
             export type FromStartDate = string; // date
             export type Id = number;
+            export type Number = string;
             export type OpenCases = boolean;
             export type Ordering = string;
             export type Page = number;
             export type PageSize = number;
+            export type PostalCode = string;
             export type Reason = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
+            export type StreetName = string;
+            export type Suffix = string;
             export type Theme = number;
             export type TonIds = number;
         }
@@ -1245,14 +1259,18 @@ declare namespace Paths {
         }
         export interface QueryParameters {
             from_start_date?: Parameters.FromStartDate /* date */;
+            number?: Parameters.Number;
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
             page?: Parameters.Page;
             page_size?: Parameters.PageSize;
+            postal_code?: Parameters.PostalCode;
             reason?: Parameters.Reason;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
+            street_name?: Parameters.StreetName;
+            suffix?: Parameters.Suffix;
             theme?: Parameters.Theme;
             ton_ids?: Parameters.TonIds;
         }
@@ -1331,14 +1349,18 @@ declare namespace Paths {
         namespace Parameters {
             export type FromStartDate = string; // date
             export type Id = number;
+            export type Number = string;
             export type OpenCases = boolean;
             export type Ordering = string;
             export type Page = number;
             export type PageSize = number;
+            export type PostalCode = string;
             export type Reason = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
+            export type StreetName = string;
+            export type Suffix = string;
             export type Theme = number;
             export type TonIds = number;
         }
@@ -1347,14 +1369,18 @@ declare namespace Paths {
         }
         export interface QueryParameters {
             from_start_date?: Parameters.FromStartDate /* date */;
+            number?: Parameters.Number;
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
             page?: Parameters.Page;
             page_size?: Parameters.PageSize;
+            postal_code?: Parameters.PostalCode;
             reason?: Parameters.Reason;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
+            street_name?: Parameters.StreetName;
+            suffix?: Parameters.Suffix;
             theme?: Parameters.Theme;
             ton_ids?: Parameters.TonIds;
         }
@@ -1366,14 +1392,18 @@ declare namespace Paths {
         namespace Parameters {
             export type FromStartDate = string; // date
             export type Id = number;
+            export type Number = string;
             export type OpenCases = boolean;
             export type Ordering = string;
             export type Page = number;
             export type PageSize = number;
+            export type PostalCode = string;
             export type Reason = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
+            export type StreetName = string;
+            export type Suffix = string;
             export type Theme = number;
             export type TonIds = number;
         }
@@ -1382,14 +1412,18 @@ declare namespace Paths {
         }
         export interface QueryParameters {
             from_start_date?: Parameters.FromStartDate /* date */;
+            number?: Parameters.Number;
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
             page?: Parameters.Page;
             page_size?: Parameters.PageSize;
+            postal_code?: Parameters.PostalCode;
             reason?: Parameters.Reason;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
+            street_name?: Parameters.StreetName;
+            suffix?: Parameters.Suffix;
             theme?: Parameters.Theme;
             ton_ids?: Parameters.TonIds;
         }

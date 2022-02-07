@@ -36,7 +36,7 @@ const PermitDetail: React.FC<Props> = ({ permit }) => {
       <DefinitionList
         title={
           <HeadingSpan>
-            { permit_type } <StyledIcon>{ isGranted ? <Check /> : <Close /> }</StyledIcon>
+            { permit_type } <StyledIcon color={isGranted ? "#00a03c" : "#ec0000"} >{ isGranted ? <Check /> : <Close /> }</StyledIcon>
           </HeadingSpan>
         }
         headingSize="h4"
@@ -45,4 +45,5 @@ const PermitDetail: React.FC<Props> = ({ permit }) => {
     </Div>
   )
 }
+
 export default PermitDetail
