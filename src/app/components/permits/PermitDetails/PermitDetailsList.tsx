@@ -6,17 +6,17 @@ import useKnownPermits from "./hooks/useKnownPermits"
 import PermitDetails from "./PermitDetails"
 
 type Props = {
-  bagId: string
+	bagId: string
 }
 
 const PermitDetailsList: React.FC<Props> = ({ bagId }) => {
-  const [data, { isBusy }] = usePermitDetails(bagId)
-  const permits = useKnownPermits(data)
+	const [data, { isBusy }] = usePermitDetails(bagId)
+	const permits = useKnownPermits(data)
 
-  if (isBusy) {
-	  return <Spinner />
-  }
-  return (
+	if (isBusy) {
+		return <Spinner />
+	}
+	return (
 		<>
 			{ permits === undefined ? (
 					<>
@@ -33,7 +33,7 @@ const PermitDetailsList: React.FC<Props> = ({ bagId }) => {
 				)
 			}
 		</>
-  )
+	)
 }
 
 export default PermitDetailsList
