@@ -72,6 +72,11 @@ const Cases: React.FC = () => {
     setTheme(item)
   }
 
+  const onChangeDate = (item: string) => {
+    resetPage()
+    setDate(item)
+  }
+
   // /cases?open_status=4&open_status=2&ordering=-id,adress
   const setSortingAsOrdering = (sorting: Sorting) => {
     let value = ""
@@ -114,7 +119,7 @@ const Cases: React.FC = () => {
       <Column spanLarge={ 28 }>
         <CasesFilter
           date={ date }
-          setDate={ setDate }
+          setDate={ onChangeDate }
           theme={ theme }
           themes={ themes }
           setTheme={ onChangeTheme }
