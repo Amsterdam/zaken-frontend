@@ -17,7 +17,7 @@ type Props = {
 }
 
 const PermitsPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
-  isValidUrlParamBAGId(bagId) ?
+  isValidUrlParamBAGId(bagId) ? (
     <DefaultLayout>
       <Row>
         <Column spanLarge={ 50 }>
@@ -38,8 +38,8 @@ const PermitsPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
       <RowWithColumn>
         <DecosLink bagId={ bagId } />
       </RowWithColumn>
-    </DefaultLayout> :
-    <NotFoundPage />
+    </DefaultLayout>
+  ) : <NotFoundPage />
 )
 
 export default  PermitsPage
