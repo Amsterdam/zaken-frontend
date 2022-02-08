@@ -7,24 +7,23 @@ type Props = {
 }
 
 const TimelineContainer: React.FC<Props> = ({ caseId }) => {
-
   const [timelineEvents, { hasErrors }] = useCaseEvents(caseId)
   const showEmpty = timelineEvents?.length === 0
 
   return (
     <>
-    { hasErrors ?
-      <ErrorMessage message="Laden van tijdlijn evenementen mislukt" /> :
-      <>
-        { timelineEvents === undefined ?
-          <Spinner /> :
-          <EventsTimeline events={ timelineEvents } spacingHorizontal={ 3 } />
-        }
-        </>
+      { hasErrors ? (
+          <ErrorMessage message="Laden van tijdlijn evenementen mislukt" />
+        ) : (
+          <>
+            { timelineEvents === undefined ? <Spinner /> : (
+                <EventsTimeline events={ timelineEvents } spacingHorizontal={ 3 } />
+              )
+            }
+          </>
+        )
       }
-      { showEmpty &&
-        <p>Geen tijdlijn evenementen beschikbaar</p>
-      }
+      { showEmpty && <p>Geen tijdlijn evenementen beschikbaar</p> }
     </>
   )
 }
