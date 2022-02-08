@@ -5,7 +5,7 @@ const translationsViolationTypes: Record<string, string> = {
     "ADDITIONAL_VISIT_REQUIRED": "Aanvullend bezoek nodig",
     "ADDITIONAL_VISIT_WITH_AUTHORIZATION": "Machtiging benodigd",
     "SEND_TO_OTHER_THEME": "Naar ander thema",
-    "LIKELY_INHABITED": "Vermoeden bewoning"
+    "LIKELY_INHABITED": "Vermoeden bewoning/leegstand"
   }
 
   export default translationsViolationTypes
