@@ -15,7 +15,7 @@ type Props = {
   bagId: string
 }
 
-const DetailPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
+const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
   isValidUrlParamBAGId(bagId) ? (
     <DefaultLayout>
       <Row>
@@ -40,4 +40,4 @@ const DetailPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
   ) : <NotFoundPage />
 )
 
-export default DetailPage
+export default DetailsPage

@@ -1,45 +1,39 @@
 import { Spinner, Paragraph, Heading } from "@amsterdam/asc-ui"
-import { DefinitionList } from "@amsterdam/wonen-ui"
 
 import { usePermitDetails } from "app/state/rest"
 import VacationRentalReport from "./components/VacationRentalReport"
-import useVacationRentalValues from "./components/hooks/useVacationRentalValues"
 
 type Props = {
   bagId: string
 }
 
+const TITLE = "Vakantieverhuur meldingen"
+
 const VacationRental: React.FC<Props> = ({ bagId }) => {
-
-  const title = "Vakantieverhuur meldingen"
-
   const [data, { isBusy }] = usePermitDetails(bagId)
-  const values = useVacationRentalValues(data?.vakantieverhuur_reports)
-  const reports = data?.vakantieverhuur_reports?.reports ?? []
+  const vakantieverhuurReports = data?.vakantieverhuur_reports ?? []
+  vakantieverhuurReports.sort((a, b) => b.year - a.year ) // Oldest year at the end.
 
+  if (isBusy) {
+    return <Spinner />
+  }
+  if (!(vakantieverhuurReports.length > 0)) {
+    return (
+      <>
+        <Heading forwardedAs="h4">{ TITLE }</Heading>
+        <Paragraph>Geen vakantieverhuur meldingen</Paragraph>
+      </>
+    )
+  }
   return (
     <>
-      { isBusy ?
-        <Spinner /> :
-        <>
-          { reports.length === 0 ?
-            <>
-              <Heading forwardedAs="h4">{ title }</Heading>
-              <Paragraph>Geen vakantieverhuur meldingen</Paragraph>
-            </> :
-            <>
-              <DefinitionList title={ title } data={ values } headingSize="h4" />
-              { reports.map(({ check_in_date, check_out_date, is_cancellation }, index: number) =>
-                  <VacationRentalReport
-                    key={ index }
-                    checkInDate={ check_in_date }
-                    checkOutDate={ check_out_date }
-                    isCancellation={ is_cancellation }
-                  />
-              ) }
-            </>
-          }
-        </>
+      { vakantieverhuurReports.map((vakantieverhuurReport) => (
+          <VacationRentalReport
+            vakantieverhuurReport={ vakantieverhuurReport }
+            title={TITLE}
+            key={vakantieverhuurReport.year}
+          />
+        ))
       }
     </>
   )

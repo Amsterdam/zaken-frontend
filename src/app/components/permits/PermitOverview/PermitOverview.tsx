@@ -20,26 +20,26 @@ const StyledLink = styled(Link)`
 `
 
 const PermitOverview: React.FC<Props> = ({ bagId }) => {
-
   const [data, { isBusy }] = usePermitDetails(bagId)
   const values = usePermitValues(data)
 
+  if (isBusy) {
+    return <Spinner />
+  }
   return (
     <>
-      { isBusy ?
-        <Spinner /> :
-        <>
-          { values === undefined ?
-            <>
-              <Heading forwardedAs="h2">Vergunningen</Heading>
-              <Paragraph>Geen vergunningen gevonden</Paragraph>
-            </> :
-            <DefinitionList loading={ isBusy } numLoadingRows={ 2 } title="Vergunningen" data={ values } />
-          }
-          <StyledLink to={ to("/adres/:bagId/vergunningen", { bagId })} >Alle vergunningen details</StyledLink>
-        </>
+      { values === undefined ? (
+          <>
+            <Heading forwardedAs="h2">Vergunningen</Heading>
+            <Paragraph>Geen vergunningen gevonden</Paragraph>
+          </>
+        ) : (
+          <DefinitionList loading={ isBusy } numLoadingRows={ 2 } title="Vergunningen" data={ values } />
+        )
       }
+      <StyledLink to={ to("/adres/:bagId/vergunningen", { bagId })} >Alle vergunningen details</StyledLink>
     </>
   )
 }
+
 export default PermitOverview
