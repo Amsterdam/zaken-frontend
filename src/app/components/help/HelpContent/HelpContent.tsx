@@ -41,7 +41,7 @@ const HelpContent: React.FC = () => {
           De belangrijkste functionaliteiten van { titleShort } staan omschreven in een factsheet.
         </Paragraph>
         <Paragraph>
-          Je vindt de factsheet op de G-schijf:<br /><i>G:\WZS\Organisatie\VNH\Werkinstructie AZA</i>
+          Je vindt de factsheet op de G-schijf:<br /><i>G:\WZS\Organisatie\VNH\AZA Werkinstructie</i>
         </Paragraph>
       </RowWithColumn>
       <RowWithColumn>
@@ -58,7 +58,7 @@ const HelpContent: React.FC = () => {
         <AccordionWrapper>
           <Accordion title="Algemeen gebruik zaaksysteem">
             <Paragraph>
-              In de factsheet, waar bovenaan deze pagina naar verwezen wordt, lees je wat je in { titleShort } kan vinden. Heb je specifiekere vragen hoe { titleShort } werkt of kom je ergens niet uit, neem dan contact op met een van de key-users. Dit zijn directe collega’s die veel kennis hebben van { titleShort } en hier speciaal voor getraind zijn. Zij helpen je graag verder. Vraag aan je teamleider bij wie jij het beste terecht kan.  
+              In de factsheet, waar bovenaan deze pagina naar verwezen wordt, lees je wat je in { titleShort } kan vinden. Heb je specifiekere vragen hoe { titleShort } werkt of kom je ergens niet uit, neem dan contact op met een van de key-users. Dit zijn directe collega’s die veel kennis hebben van { titleShort } en hier speciaal voor getraind zijn. Zij helpen je graag verder. Vraag aan je teamleider bij wie jij het beste terecht kan.
             </Paragraph>
           </Accordion>
         </AccordionWrapper>
