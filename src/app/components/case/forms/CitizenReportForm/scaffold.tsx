@@ -91,7 +91,7 @@ export default (
     nuisance: {
       type: "ShowHide",
       props: {
-        shouldShow: (() => themeName !== "Kamerverhuur" && themeName !== "Ondermijning"),
+        shouldShow: (() => themeName === "Vakantieverhuur" ),
         field: {
           type: "CheckboxFields",
           props: {
