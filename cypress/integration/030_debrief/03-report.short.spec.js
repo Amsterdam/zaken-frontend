@@ -52,14 +52,6 @@ describe('Process Short Report Visit"', () => {
         .click()
   })
 
-  it("Task 'Opstellen verkorte rapportage huisbezoek' needs to be processed", () => {
-    // Wait for the BE timer(10 sec) to process the task.
-    cy.wait(10000)
-    cy.get("a")
-      .contains("Herlaad")
-      .click()
-  })
-
   it("Check next task is 'Uitzetten vervolgstap'", () => {
     const url = `${Cypress.env("baseUrlAcc")}cases/*/tasks/`
     cy.intercept(url).as('getNextTask')
