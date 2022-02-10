@@ -1,49 +1,20 @@
-import styled from "styled-components"
-import { themeSpacing, Icon } from "@amsterdam/asc-ui"
-import { DefinitionList } from "@amsterdam/wonen-ui"
-import { Check, Close } from "app/components/shared/Icons"
-import useValues from "./hooks/useValues"
+
+import { PermitsOverview } from "@amsterdam/wonen-ui"
+import { usePermitDetails } from "app/state/rest"
 
 type Props = {
-  permit: Components.Schemas.Permit
+  bagId: string
 }
 
-const Div = styled.div<{ isOpaque?: boolean }>`
-  margin-bottom: ${ themeSpacing(8) };
-  dl {
-    opacity: ${ ({ isOpaque = true }) => isOpaque ? 1 : 0.3 };
-  }
-`
-
-const HeadingSpan = styled.span`
-  display: flex;
-  justify-content: start;
-  align-items: center;
-`
-
-const StyledIcon = styled(Icon)`
-  margin-left: ${ themeSpacing(2) };
-`
-
-const PermitDetail: React.FC<Props> = ({ permit }) => {
-
-  const values = useValues(permit)
-  const { permit_type, permit_granted } = permit
-  const isGranted = permit_granted === "GRANTED"
+const PermitDetails: React.FC<Props> = ({ bagId }) => {
+  const [data, { isBusy }] = usePermitDetails(bagId)
 
   return (
-    <Div isOpaque={ isGranted }>
-      <DefinitionList
-        title={
-          <HeadingSpan>
-            { permit_type } <StyledIcon color={isGranted ? "#00a03c" : "#ec0000"} >{ isGranted ? <Check /> : <Close /> }</StyledIcon>
-          </HeadingSpan>
-        }
-        headingSize="h4"
-        data={ values }
-      />
-    </Div>
+    <PermitsOverview
+      permits={ data?.permits || [] }
+      loading={ isBusy }
+    />
   )
 }
 
-export default PermitDetail
+export default PermitDetails
