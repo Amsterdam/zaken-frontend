@@ -7,7 +7,7 @@ import { useCase, useDebriefingCreate, useViolationTypes } from "app/state/rest"
 
 type Props = {
   id: Components.Schemas.Case["id"]
-  caseUserTaskId: Components.Schemas.CaseUserTask["case_user_task_id"]
+  caseUserTaskId: Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"]
 }
 
 const DebriefCreateForm: React.FC<Props> = ({ id, caseUserTaskId }) => {

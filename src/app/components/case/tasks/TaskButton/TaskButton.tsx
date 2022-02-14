@@ -6,7 +6,7 @@ type Props = {
   onSubmit: (variables: Components.Schemas.GenericCompletedTask["variables"]) => Promise<unknown>
   taskName: string
   caseId: Components.Schemas.Case["id"]
-  form?: Components.Schemas.CaseUserTask["form"]
+  form?: Components.Schemas.CaseUserTaskWorkdflow["form"]
   disabled?: boolean
 }
 

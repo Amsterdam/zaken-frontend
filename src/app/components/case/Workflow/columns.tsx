@@ -46,7 +46,7 @@ export default (execPost: (payload?: any) => Promise<unknown>) => (
       render: (id: any, record: any) => {
         const { task_name, case_user_task_id, user_has_permission, name, form } = record
         const action = taskActionMap[task_name]
-        const onSubmitTaskComplete = (variables: Components.Schemas.CaseUserTask["form_variables"] = {}) => (
+        const onSubmitTaskComplete = (variables: Components.Schemas.CaseUserTaskWorkdflow["form_variables"] = {}) => (
           execPost({ case: id, case_user_task_id, variables })
         )
         const disabled = task_name === "task_create_visit" || !user_has_permission

@@ -44,12 +44,14 @@ const SelectTask: React.FC<Props> = ({ id, owner }) => {
       .then((resp: any) => {
         if (resp.status === 200) {
           // Owner changed so update context.
-          const tasks = getContextItem()
+          const tasksRespponse = getContextItem()
+          const tasks = tasksRespponse?.results
           let newTasks = [...tasks]
           const index = tasks.findIndex((task: { id: number }) => task.id === id)
           const obj = newTasks[index]
           newTasks[index] = { ...obj, owner: newOwner }
-          updateContextItem(newTasks)
+          const newContextItem = { ...tasksRespponse, results: newTasks }
+          updateContextItem(newContextItem)
         }
         setLoading((prevLoading) => !prevLoading)
       })

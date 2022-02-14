@@ -8,14 +8,14 @@ import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks
 
 type Props = {
   id: Components.Schemas.Case["id"]
-  caseUserTaskId: Components.Schemas.CaseUserTask["case_user_task_id"]
+  caseUserTaskId: Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"]
 }
 
 //TODO Schema from backend should be improved
 type SummonData = Omit<Components.Schemas.Summon, "type"> & { type: { id: number } }
 const mapData = (data: SummonData) => {
-  
-  const persons = data.persons.map(person => { 
+
+  const persons = data.persons.map(person => {
     const p = person
     p.person_role = (person.person_role as any).key
     return p

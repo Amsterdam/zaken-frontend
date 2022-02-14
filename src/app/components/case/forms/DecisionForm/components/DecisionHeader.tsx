@@ -4,7 +4,7 @@ import { DefinitionList } from "@amsterdam/wonen-ui"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
-  caseUserTaskId: Components.Schemas.CaseUserTask["case_user_task_id"]
+  caseUserTaskId: Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"]
 }
 
 const DecisionHeader: React.FC<Props> = ({ caseId, caseUserTaskId }) => {

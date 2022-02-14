@@ -10,7 +10,7 @@ const castValue = (item: any, value: any) => {
   return value
 }
 
-export default (form: Components.Schemas.CaseUserTask["form"], data: any) =>
+export default (form: Components.Schemas.CaseUserTaskWorkdflow["form"], data: any) =>
   form.reduce((acc: any, item: any) => {
     const key = item.name
     const value = castValue(item, data[key])

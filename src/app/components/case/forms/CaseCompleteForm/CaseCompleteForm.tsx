@@ -8,7 +8,7 @@ import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks
 
 type Props = {
   id: Components.Schemas.Case["id"]
-  caseUserTaskId: Components.Schemas.CaseUserTask["case_user_task_id"]
+  caseUserTaskId: Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"]
 }
 
 type CaseCloseTypeFormData = Omit<Components.Schemas.CaseClose, "reason" | "result"> & {

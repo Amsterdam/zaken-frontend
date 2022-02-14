@@ -7,7 +7,7 @@ import mapWorkflowDataToInitialValues from "./utils/mapWorkflowDataToInitialValu
 import mapSubmitData from "./utils/mapSubmitData"
 
 type Props = {
-  workflowForm: Components.Schemas.CaseUserTask["form"]
+  workflowForm: Components.Schemas.CaseUserTaskWorkdflow["form"]
   onSubmit: (data: Components.Schemas.GenericCompletedTask) => void
   isLoading?: boolean
   onCancel: () => void

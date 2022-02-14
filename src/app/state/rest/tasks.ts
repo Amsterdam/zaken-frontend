@@ -18,7 +18,7 @@ export const useTasks = (sensitive = false, theme: string, role: string, options
     urlParams.role = role
   }
   const queryString = isEmpty(urlParams) ? "" : qs.stringify(urlParams, { addQueryPrefix: true })
-  return useApiRequest<Components.Schemas.CaseUserTaskList[]>({
+  return useApiRequest<Components.Schemas.PaginatedCaseUserTaskList>({
     ...options,
     url: `${ makeApiUrl("tasks") }${ queryString }`,
     groupName: "cases",
@@ -29,7 +29,7 @@ export const useTasks = (sensitive = false, theme: string, role: string, options
 
 export const useTask = (id: number | string, options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<Components.Schemas.CaseUserTaskList>({
+  return useApiRequest<Components.Schemas.CaseUserTask>({
     ...options,
     lazy: true,
     url: makeApiUrl("tasks", id),
@@ -41,7 +41,7 @@ export const useTask = (id: number | string, options?: Options) => {
 
 export const useTaskUpdate = (id: number | string, options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<Components.Schemas.CaseUserTaskList>({
+  return useApiRequest<Components.Schemas.CaseUserTask>({
     ...options,
     lazy: true,
     url: makeApiUrl("tasks", id),

@@ -9,7 +9,7 @@ export type Props = {
   isOpen: boolean
   closeModal: () => void
   onSubmit: (variables: Components.Schemas.GenericCompletedTask["variables"]) => Promise<unknown>
-  form?: Components.Schemas.CaseUserTask["form"]
+  form?: Components.Schemas.CaseUserTaskWorkdflow["form"]
 }
 
 const FormModal: React.FC<Props> = ({ form, isOpen, closeModal, onSubmit, taskName, caseId }) => {

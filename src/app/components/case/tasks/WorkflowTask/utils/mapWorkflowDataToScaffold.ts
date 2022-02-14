@@ -14,7 +14,7 @@ const mapItemToOptions = (item: any) => (
   item.type === "checkbox" ? { [item.name]: item.label } : item.options ?? undefined
 )
 
-export default (workflowForm: Components.Schemas.CaseUserTask["form"], onCancel = () => {}) => {
+export default (workflowForm: Components.Schemas.CaseUserTaskWorkdflow["form"], onCancel = () => {}) => {
   const fields = workflowForm.reduce((acc: Fields, item: any) => {
     if (item === undefined) return acc
     acc[item.name] = {
