@@ -3,5 +3,6 @@
   "daySegment": "Overdag",
   "priority": "Normaal",
   "priorityAuthorization": "Machtiging",
-  "description": "Korte toelichting voor het plannen van een bezoek."
+  "description": "Korte toelichting voor het plannen van een bezoek.",
+  "visitFrom": "Vanaf een specifieke datum"
 }
