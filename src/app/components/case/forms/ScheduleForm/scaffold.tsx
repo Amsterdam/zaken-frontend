@@ -1,4 +1,5 @@
 import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
+import moment from "moment"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import navigateTo from "app/routing/navigateTo"
@@ -26,6 +27,41 @@ export default (caseId: Components.Schemas.Case["id"], scheduleTypes?: Component
         isRequired: true,
         withEmptyOption: true,
         options: scheduleTypes?.day_segments
+      }
+    },
+    visit_from: {
+      type: "ComplexSelectField",
+      props: {
+        label: "Wanneer kan het bezoek het beste gelopen worden?",
+        name: "visit_from",
+        optionLabelField: "name",
+        isRequired: true,
+        withEmptyOption: true,
+        options: [{
+          id: 1, name: "Vanaf vandaag"
+        }, {
+          id: 2, name: "Vanaf een specifieke datum"
+        }]
+      }
+    },
+    visit_from_datetime: {
+      type: "ShowHide",
+      props: {
+        shouldShow: (formValues: { values?: { visit_from: { id: number } } }) => formValues?.values?.visit_from?.id === 2,
+        field: {
+          type: "DateField",
+          props: {
+            label: "Vanaf welke datum kan het bezoek ingepland worden?",
+            name: "visit_from_datetime",
+            isRequired: true,
+            validate: (value: string | undefined) => {
+              const now = moment()
+              const valueDate = moment(value)
+              const isValidDate = valueDate.isBefore(now, "day") // Date cannot be in the past.
+              return isValidDate ? "Selecteer vandaag of een dag in de toekomst!" : false
+            }
+          }
+        }
       }
     },
     priority: {
@@ -69,6 +105,8 @@ export default (caseId: Components.Schemas.Case["id"], scheduleTypes?: Component
     .setGrid("mobileS", "1fr 1fr", [
       ["week_segment", "week_segment"],
       ["day_segment", "day_segment"],
+      ["visit_from", "visit_from"],
+      ["visit_from_datetime", "visit_from_datetime"],
       ["priority", "priority"],
       ["description", "description"],
       ["secondaryButton", "submit"]

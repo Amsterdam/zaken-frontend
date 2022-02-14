@@ -1,4 +1,5 @@
 import { FormTitle } from "@amsterdam/asc-ui"
+import moment from "moment"
 
 import { useCase, useScheduleTypes, useScheduleCreate } from "app/state/rest/"
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
@@ -15,14 +16,13 @@ type ScheduleTypeFormData = Omit<Components.Schemas.ScheduleCreate, "week_segmen
   day_segment: Components.Schemas.ThemeScheduleTypes["day_segments"][0]
   priority: Components.Schemas.ThemeScheduleTypes["priorities"][0]
 }
-const mapData = (data: ScheduleTypeFormData) => (
-  {
-    ...data,
-    week_segment: data.week_segment.id,
-    day_segment: data.day_segment.id,
-    priority: data.priority.id
-  }
-)
+const mapData = (data: ScheduleTypeFormData) => ({
+  ...data,
+  week_segment: data.week_segment.id,
+  day_segment: data.day_segment.id,
+  priority: data.priority.id,
+  visit_from_datetime: data.visit_from_datetime ? moment(data.visit_from_datetime).format() : null
+})
 
 const ScheduleForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
 
