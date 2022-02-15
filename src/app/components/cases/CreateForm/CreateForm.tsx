@@ -109,7 +109,7 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
     ...tonId !== undefined ? {
       reason: reasons?.results?.find(({ name }) => name === TON_REASON_NAME),
       advertisement: "yes",
-      advertisement_linklist: [{ advertisement_link: listing?.url }]
+      advertisements: [{ link: listing?.url }]
      } : {}
   }
 

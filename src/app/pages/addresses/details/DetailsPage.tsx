@@ -10,6 +10,7 @@ import PageHeading from "app/components/shared/PageHeading/PageHeading"
 import ObjectDetails from "app/components/addresses/ObjectDetails/ObjectDetails"
 import PermitOverview from "app/components/permits/PermitOverview/PermitOverview"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
+import Advertisements from "app/components/addresses/Advertisements/Advertisements"
 
 type Props = {
   bagId: string
@@ -33,7 +34,12 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
       </Row>
       <Row>
         <Column spanLarge={50}>
-          <PermitOverview bagId={ bagId }></PermitOverview>
+          <PermitOverview bagId={ bagId } />
+        </Column>
+      </Row>
+      <Row>
+        <Column spanLarge={50}>
+          <Advertisements bagId={ bagId }/>
         </Column>
       </Row>
     </DefaultLayout>
