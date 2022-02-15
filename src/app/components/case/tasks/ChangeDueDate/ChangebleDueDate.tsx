@@ -9,8 +9,8 @@ import { useTaskUpdate } from "app/state/rest"
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
-  caseUserTaskId: Components.Schemas.CaseUserTask["case_user_task_id"]
-  dueDate: Components.Schemas.CaseUserTask["due_date"]
+  caseUserTaskId: Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"]
+  dueDate: Components.Schemas.CaseUserTaskWorkdflow["due_date"]
 }
 
 const Span = styled.span`
@@ -35,7 +35,7 @@ const ChangeableDueDate: React.FC<Props> = ({ dueDate, caseId, caseUserTaskId })
   const [, { execPatch }] = useTaskUpdate(caseUserTaskId)
 
   const onSubmit = (data: { date: string, id: string }) => {
-    appendTimeToDate(data.date) !== dueDate 
+    appendTimeToDate(data.date) !== dueDate
       ? execPatch( { due_date: appendTimeToDate( data.date ) })
       : closeModal()
   }

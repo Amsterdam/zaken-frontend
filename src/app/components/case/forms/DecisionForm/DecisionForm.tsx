@@ -10,7 +10,7 @@ import stripThousandSeparator from "./utils/stripThousandSeparator"
 
 type Props = {
   id: Components.Schemas.Case["id"]
-  caseUserTaskId: Components.Schemas.CaseUserTask["case_user_task_id"]
+  caseUserTaskId: Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"]
 }
 
 type DecisionData = Omit<Components.Schemas.Decision, "decision_type"> & { decision_type: { id: number }, description_closing?: string }

@@ -10,7 +10,7 @@ import navigateTo from "app/routing/navigateTo"
 
 type Props = {
   id: Components.Schemas.Case["id"]
-  caseUserTaskId: Components.Schemas.CaseUserTask["case_user_task_id"]
+  caseUserTaskId: Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"]
 
 }
 

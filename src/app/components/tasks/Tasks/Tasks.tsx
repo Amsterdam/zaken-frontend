@@ -15,7 +15,8 @@ const Tasks: React.FC = () => {
   const [caseThemes] = useCaseThemes()
   const [theme, setTheme] = useURLState("thema")
   const [role, setRole] = useURLState("rol")
-  const [tasks, { isBusy }] = useTasks(hasPermission, theme, role)
+  const [data, { isBusy }] = useTasks(hasPermission, theme, role)
+  const tasks = data?.results || []
 
   /*
    ** Sensitive is sent as a filter in the useTasks hook/request.

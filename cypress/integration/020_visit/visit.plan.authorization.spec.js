@@ -21,7 +21,7 @@ describe('Plan "huisbezoek"', () => {
         .click()
     })
   })
-  
+
   it("Check right dueDate", () => {
     cy.testDueDate("tbody>tr>td", 0)
   })
@@ -53,6 +53,16 @@ describe('Plan "huisbezoek"', () => {
     it("Schedule daypart", () => {
       cy.get('[data-e2e-id="day_segment"]')
         .select(visit.daySegment)
+    })
+
+    it("Schedule visit from", () => {
+      cy.get('[data-e2e-id="visit_from"]')
+        .select(visit.visitFrom)
+    })
+
+    it("Schedule visit from date", () => {
+      cy.get('[data-e2e-id="visit_from_datetime"]')
+        .type(moment().format("YYYY-MM-DD"))
     })
 
     it("Schedule priority", () => {

@@ -1,3 +1,4 @@
+import moment from "moment"
 import ArrayFieldList from "../components/ArrayFieldList"
 import type { RequestBody, NamedFields } from "../ConfirmScaffoldFields"
 import { Field } from "../../Form/ScaffoldField"
@@ -6,24 +7,26 @@ import OptionList from "../components/OptionList"
 const mapField = <T extends RequestBody>(field: Field, key: string, data: T) => {
   const { type, props } = field
   const { label = key, name } = props
- 
+
   if (name === undefined) return
 
   const v = data[name]
   if (v === undefined && data["type_result"] === undefined) return
 
   const value = (type: string, props: any) => {
-    if (type === "ArrayField") {      
+    if (type === "ArrayField") {
       return <ArrayFieldList fields={ v as Array<Record<string, string>> } />
-    } else if (type === "ComplexCheckboxFields") {      
+    } else if (type === "ComplexCheckboxFields") {
       return <OptionList fields={ v as Array<Record<string, string>> } />
-    } else if (type === "ComplexSelectField" || type === "ComplexRadioFields"){
+    } else if (type === "ComplexSelectField" || type === "ComplexRadioFields") {
       return(v as Record<string, string>)[(props as { optionLabelField: string }).optionLabelField]
     } else if (props.hasOwnProperty("options")) {
-      return (props as { options: Record<string, unknown> }).options[v as string] 
+      return (props as { options: Record<string, unknown> }).options[v as string]
     } else if (name.includes("type_result")) {
       const typeResult: Record<string, string> = data["type_result"] as {}
       return Object.values(typeResult)
+    } else if (type === "DateField") {
+      return typeof v === "string" ? moment(v).format("DD-MM-YYYY") : v
     } else {
       return v
     }

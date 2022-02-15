@@ -3,7 +3,7 @@ import { useUsersMe } from "app/state/rest/index"
 import getColumns from "./columns"
 
 type Props = {
-  data?: Components.Schemas.CaseUserTaskList[]
+  data?: Components.Schemas.CaseUserTask[]
   isBusy: boolean
   emptyPlaceholder: string
 }

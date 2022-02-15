@@ -1,3 +1,4 @@
+import moment from "moment"
 import address from "../../fixtures/address.json"
 import visit from "../../fixtures/visit.json"
 
@@ -58,10 +59,19 @@ describe('Plan "huisbezoek"', () => {
         .select(visit.daySegment)
     })
 
+    it("Schedule visit from", () => {
+      cy.get('[data-e2e-id="visit_from"]')
+        .select(visit.visitFrom)
+    })
+
+    it("Schedule visit from date", () => {
+      cy.get('[data-e2e-id="visit_from_datetime"]')
+        .type(moment().format("YYYY-MM-DD"))
+    })
+
     it("Schedule priority", () => {
       cy.get('[data-e2e-id="priority"]')
         .select(visit.priority)
-
     })
 
     it("Fill in description", () => {

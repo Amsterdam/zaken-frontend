@@ -63,7 +63,7 @@ declare namespace Components {
             end_date?: string | null; // date
             sensitive?: boolean;
             description?: string | null;
-            ton_ids?: number[] | null;
+            ton_ids?: number /* int64 */[] | null;
             last_updated: string; // date-time
             created: string; // date-time
         }
@@ -132,6 +132,17 @@ declare namespace Components {
             case_state_types_top?: number[];
         }
         export interface CaseUserTask {
+            id: number;
+            user_has_permission: boolean;
+            roles: string[];
+            case: /* Case-address serializer for CaseUserTasks */ CaseAddress;
+            name: string;
+            due_date: string; // date-time
+            created: string; // date-time
+            updated: string; // date-time
+            owner?: string | null; // uuid
+        }
+        export interface CaseUserTaskWorkdflow {
             user_has_permission: boolean;
             roles: string[];
             case_user_task_id: string;
@@ -145,24 +156,13 @@ declare namespace Components {
             owner?: string | null; // uuid
             case: number;
         }
-        export interface CaseUserTaskList {
-            id: number;
-            user_has_permission: boolean;
-            roles: string[];
-            case: /* Case-address serializer for CaseUserTasks */ CaseAddress;
-            name: string;
-            due_date: string; // date-time
-            created: string; // date-time
-            updated: string; // date-time
-            owner?: string | null; // uuid
-        }
         export interface CaseWorkflow {
             state: {
                 id: number;
                 status_name: string;
                 name: string;
             };
-            tasks: CaseUserTask[];
+            tasks: CaseUserTaskWorkdflow[];
             information: string;
         }
         export interface CaseWorkflowCaseDetail {
@@ -483,7 +483,7 @@ declare namespace Components {
             previous?: string | null; // uri
             results?: CaseTheme[];
         }
-        export interface PaginatedCaseUserTaskListList {
+        export interface PaginatedCaseUserTaskList {
             /**
              * example:
              * 123
@@ -491,15 +491,15 @@ declare namespace Components {
             count?: number;
             /**
              * example:
-             * http://api.example.org/accounts/?offset=400&limit=100
+             * http://api.example.org/accounts/?page=4
              */
             next?: string | null; // uri
             /**
              * example:
-             * http://api.example.org/accounts/?offset=200&limit=100
+             * http://api.example.org/accounts/?page=2
              */
             previous?: string | null; // uri
-            results?: CaseUserTaskList[];
+            results?: CaseUserTask[];
         }
         export interface PaginatedCaseWorkflowList {
             /**
@@ -800,11 +800,11 @@ declare namespace Components {
             end_date?: string | null; // date
             sensitive?: boolean;
             description?: string | null;
-            ton_ids?: number[] | null;
+            ton_ids?: number /* int64 */[] | null;
             last_updated?: string; // date-time
             created?: string; // date-time
         }
-        export interface PatchedCaseUserTaskList {
+        export interface PatchedCaseUserTask {
             id?: number;
             user_has_permission?: boolean;
             roles?: string[];
@@ -819,15 +819,15 @@ declare namespace Components {
         export interface Permit {
             permit_granted: PermitGrantedEnum;
             permit_type: string;
-            raw_data?: {
+            raw_data: {
                 [name: string]: any;
             } | null;
-            details?: {
+            details: {
                 [name: string]: any;
             } | null;
         }
         export type PermitGrantedEnum = "GRANTED" | "NOT_GRANTED" | "UNKNOWN";
-        export type PersonRoleEnum = "PERSON_ROLE_OWNER" | "PERSON_ROLE_RESIDENT" | "PERSON_ROLE_MIDDLEMAN" | "PERSON_ROLE_PLATFORM";
+        export type PersonRoleEnum = "PERSON_ROLE_OWNER" | "PERSON_ROLE_RESIDENT" | "PERSON_ROLE_MIDDLEMAN" | "PERSON_ROLE_PLATFORM" | "PERSON_ROLE_HEIR";
         export interface Priority {
             id: number;
             name: string;
@@ -873,7 +873,9 @@ declare namespace Components {
             description?: string | null;
             date_added: string; // date-time
             date_modified: string; // date-time
+            visit_from_datetime?: string | null; // date-time
             case: number;
+            author?: string | null; // uuid
         }
         export interface ScheduleCreate {
             action: number;
@@ -883,6 +885,7 @@ declare namespace Components {
             description?: string | null;
             case: number;
             case_user_task_id?: string;
+            visit_from_datetime?: string | null; // date-time
         }
         export type SoortVorderingEnum = "PBF" | "PBN" | "PRV" | "SOC";
         export interface StartWorkflow {
@@ -1649,33 +1652,91 @@ declare namespace Paths {
     }
     namespace TasksList {
         namespace Parameters {
-            export type Completed = "all" | "completed" | "not_completed";
-            export type Limit = number;
-            export type Offset = number;
+            export type Completed = boolean;
+            export type DueDate = string; // date
+            export type FromStartDate = string; // date
+            export type Number = string;
+            export type OpenCases = boolean;
+            export type Ordering = string;
+            export type Owner = string;
+            export type Page = number;
+            export type PageSize = number;
+            export type PostalCode = string;
+            export type Reason = number;
             export type Role = string;
+            export type Sensitive = boolean;
+            export type StartDate = string; // date
+            export type StateTypes = number;
+            export type StreetName = string;
+            export type Suffix = string;
             export type Theme = string;
+            export type TonIds = number;
         }
         export interface QueryParameters {
             completed?: Parameters.Completed;
-            limit?: Parameters.Limit;
-            offset?: Parameters.Offset;
+            due_date?: Parameters.DueDate /* date */;
+            from_start_date?: Parameters.FromStartDate /* date */;
+            number?: Parameters.Number;
+            open_cases?: Parameters.OpenCases;
+            ordering?: Parameters.Ordering;
+            owner?: Parameters.Owner;
+            page?: Parameters.Page;
+            page_size?: Parameters.PageSize;
+            postal_code?: Parameters.PostalCode;
+            reason?: Parameters.Reason;
             role?: Parameters.Role;
+            sensitive?: Parameters.Sensitive;
+            start_date?: Parameters.StartDate /* date */;
+            state_types?: Parameters.StateTypes;
+            street_name?: Parameters.StreetName;
+            suffix?: Parameters.Suffix;
             theme?: Parameters.Theme;
+            ton_ids?: Parameters.TonIds;
         }
         namespace Responses {
-            export type $200 = Components.Schemas.PaginatedCaseUserTaskListList;
+            export type $200 = Components.Schemas.PaginatedCaseUserTaskList;
         }
     }
     namespace TasksPartialUpdate {
         namespace Parameters {
+            export type Completed = boolean;
+            export type DueDate = string; // date
+            export type FromStartDate = string; // date
             export type Id = number;
+            export type OpenCases = boolean;
+            export type Ordering = string;
+            export type Owner = string;
+            export type PageSize = number;
+            export type Reason = number;
+            export type Role = string;
+            export type Sensitive = boolean;
+            export type StartDate = string; // date
+            export type StateTypes = number;
+            export type Theme = string;
+            export type TonIds = number;
         }
         export interface PathParameters {
             id: Parameters.Id;
         }
-        export type RequestBody = Components.Schemas.PatchedCaseUserTaskList;
+        export interface QueryParameters {
+            completed?: Parameters.Completed;
+            due_date?: Parameters.DueDate /* date */;
+            from_start_date?: Parameters.FromStartDate /* date */;
+            open_cases?: Parameters.OpenCases;
+            ordering?: Parameters.Ordering;
+            owner?: Parameters.Owner;
+            page_size?: Parameters.PageSize;
+            reason?: Parameters.Reason;
+            role?: Parameters.Role;
+            sensitive?: Parameters.Sensitive;
+            start_date?: Parameters.StartDate /* date */;
+            state_types?: Parameters.StateTypes;
+            theme?: Parameters.Theme;
+            ton_ids?: Parameters.TonIds;
+        }
+        export type RequestBody = Components.Schemas.PatchedCaseUserTask;
         namespace Responses {
-            export type $200 = Components.Schemas.CaseUserTaskList;
+            export type $200 = Components.Schemas.CaseUserTask;
         }
     }
     namespace ThemesCaseCloseReasonsList {
