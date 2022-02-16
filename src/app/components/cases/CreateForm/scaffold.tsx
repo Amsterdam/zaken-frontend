@@ -207,7 +207,7 @@ export default (
         }
       }
     },
-    advertisement_linklist: {
+    advertisements: {
       type: "ShowHide",
       props: {
         shouldShow: (formValues: { values?: { advertisement: string } }) => formValues?.values?.advertisement === "yes",
@@ -215,17 +215,17 @@ export default (
           type: "ArrayField",
           props: {
             label: "Link(s) naar de advertentie",
-            name: "advertisement_linklist",
+            name: "advertisements",
             isRequired: true,
             allowAdd: true,
             allowRemove: true,
             minItems: 1,
             scaffoldFields: {
-              advertisement_link: {
+              link: {
                 type: "TextField",
                 props: {
                   placeholder: "Link naar de advertentie",
-                  name: "advertisement_link",
+                  name: "link",
                   hint: "Vul hier de volledige url in, inclusief http(s)://",
                   isRequired: true
                 }
@@ -279,7 +279,7 @@ export default (
       ["nuisance"],
       ["project"],
       ["advertisement", "advertisement"],
-      ["advertisement_linklist", "advertisement_linklist"],
+      ["advertisements", "advertisements"],
       ["subjects", "subjects"],
       ["description", "description"],
       ["cancel", "submit"]
