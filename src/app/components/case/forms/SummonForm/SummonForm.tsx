@@ -12,16 +12,39 @@ type Props = {
 }
 
 //TODO Schema from backend should be improved
-type SummonData = Omit<Components.Schemas.Summon, "type"> & { type: { id: number } }
-const mapData = (data: SummonData) => {
+type SummonData = Omit<Components.Schemas.Summon, "type"> & {
+  type: { id: number }
+  entity_type: "natural" | "legal"
+  legal_entity_type: "board" | "person"
+  legal_entity_name: string
+  board_role: Components.Schemas.PersonRoleEnum
+}
 
-  const persons = data.persons.map(person => {
+type SummonedPersonData = {
+  first_name?: string
+  last_name?: string
+  person_role?: Components.Schemas.PersonRoleEnum
+  entity_name?: string
+  function?: string
+  company?: string
+}
+
+const mapData = (data: SummonData) => {
+  let persons: SummonedPersonData[] = []
+  if (data.entity_type === "legal" && data.legal_entity_type === "board") {
+    persons.push({
+      person_role: data.board_role,
+      function: "Bestuur",
+      entity_name: data.legal_entity_name
+    })
+  }
+  data.persons.forEach((person: SummonedPersonData) => {
     const p = person
     p.person_role = (person.person_role as any).key
-    return p
+    p.entity_name = data.legal_entity_name
+    persons.push(p)
   })
   return ({ ...data, type: data.type.id, persons })
-
 }
 
 const SummonForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
