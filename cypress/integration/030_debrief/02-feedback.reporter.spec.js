@@ -36,11 +36,11 @@ describe('Process Feedback reporter"', () => {
 
     cy.get(`[role="dialog"]`)
       .should('have.length', 1)
-      .and("contain", debrief.noViolationNextTask1)
+      .and("contain", debrief.noViolationNextTask)
       .find('input[name="completed"]')
       .first()
       .check()
-    
+
     cy.get(`[role="dialog"]`)
       .find('button')
       .contains("Taak afronden")
@@ -52,8 +52,7 @@ describe('Process Feedback reporter"', () => {
     cy.intercept(url).as('getNextTask')
 
     cy.wait('@getNextTask').then(() => {
-      cy.history(debrief.noViolationNextTask1, "Uitvoerder")
+      cy.history(debrief.noViolationNextTask, "Uitvoerder")
     })
   })
 })
-    

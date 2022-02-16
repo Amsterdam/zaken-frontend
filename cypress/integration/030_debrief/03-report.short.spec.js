@@ -27,32 +27,30 @@ describe('Process Short Report Visit"', () => {
     cy.testDueDate("tbody>tr>td", 2)
   })
 
-  it('TH can finish task "Opstellen verkorte rapportage huisbezoek"', () => {
+  it('PHH can finish task "Uitzetten vervolgstap"', () => {
 
     cy.get("tbody>tr")
       .should("have.length", 1)
-      .contains(roles.TH)
+      .contains(roles.PHH)
       .parents('td')
       .siblings('td')
       .contains("Taak afronden")
       .click({force: true})
 
     cy.get(`[role="dialog"]`)
-        .should('have.length', 1)
-        .contains(debrief.noViolationNextTask2)
+      .should('have.length', 1)
+      .contains(debrief.closingTask1)
+
+    cy.get('[data-e2e-id="next_step"]')
+      .select(debrief.closingTask2)
 
     cy.get(`[role="dialog"]`)
-        .find('input[name="completed"]')
-        .first()
-        .check()
-
-    cy.get(`[role="dialog"]`)
-        .find('button')
-        .contains("Taak afronden")
-        .click()
+      .find('button')
+      .contains("Taak afronden")
+      .click()
   })
 
-  it("Check next task is 'Uitzetten vervolgstap'", () => {
+  it("Check next task is 'Afsluiten zaak'", () => {
     const url = `${Cypress.env("baseUrlAcc")}cases/*/tasks/`
     cy.intercept(url).as('getNextTask')
 
@@ -60,18 +58,18 @@ describe('Process Short Report Visit"', () => {
 
       cy.scrollTo(0, 400)
       cy.get("h4")
-        .contains("Vervolgstap")
+        .contains(debrief.closingTask2)
       cy.get("tbody>tr")
-        .contains("td", debrief.closingTask1)
+        .contains("td", debrief.closingTask2)
         .siblings("td")
-        .contains(roles.PHH)
+        .contains(roles.PM)
         .parents('td')
         .siblings('td')
-        .contains("Taak afronden")
+        .contains("Zaak afsluiten")
     })
   })
 
-  it("Check Opstellen verkorte rapportage huisbezoek event in history", () => {
-    cy.history(debrief.noViolationNextTask2)
+  it("Check Uitzetten vervolgstap event in history", () => {
+    cy.history(debrief.closingTask1)
   })
 })

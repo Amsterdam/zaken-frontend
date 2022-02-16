@@ -89,7 +89,7 @@ describe('Process Debrief - Violation"', () => {
         cy.get("h4")
           .contains("Debrief")
         cy.get("tbody>tr")
-          .contains("td", debrief.noViolationNextTask1)
+          .contains("td", debrief.noViolationNextTask)
           .siblings("td")
           .contains(roles.TH)
           .parents('td')
@@ -99,7 +99,7 @@ describe('Process Debrief - Violation"', () => {
 
         cy.get(`[role="dialog"]`)
           .should('have.length', 1)
-          .contains(debrief.noViolationNextTask1)
+          .contains(debrief.noViolationNextTask)
 
         cy.get(`[role="dialog"]`)
           .find('input[name="completed"]')
