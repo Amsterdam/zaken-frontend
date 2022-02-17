@@ -33,12 +33,12 @@ const mapData = (data: SummonData) => {
   let persons: SummonedPersonData[] = []
   if (data.entity_type === "legal" && data.legal_entity_type === "board") {
     persons.push({
-      person_role: data.board_role,
+      person_role: (data.board_role as any).key,
       function: "Bestuur",
       entity_name: data.legal_entity_name
     })
   }
-  data.persons.forEach((person: SummonedPersonData) => {
+  data.persons?.forEach((person: SummonedPersonData) => {
     const p = person
     p.person_role = (person.person_role as any).key
     p.entity_name = data.legal_entity_name
