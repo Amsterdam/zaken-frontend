@@ -31,7 +31,7 @@ const Advertisements: React.FC<Props> = ({ bagId }) => {
   }
   return (
     <>
-      <Heading forwardedAs="h2">Advertentie(s)</Heading>
+      <Heading forwardedAs="h2">Advertenties</Heading>
       { uniqueAds.length > 0 ? (
           <>
             { uniqueAds.map(ad => (
