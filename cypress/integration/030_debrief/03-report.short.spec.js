@@ -30,7 +30,7 @@ describe('Process Short Report Visit"', () => {
   it('PHH can finish task "Uitzetten vervolgstap"', () => {
 
     cy.get("tbody>tr")
-      .should("have.length", 1)
+      .should("have.length", 2)
       .contains(roles.PHH)
       .parents('td')
       .siblings('td')
