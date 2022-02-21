@@ -35,7 +35,7 @@ export default (caseId: Components.Schemas.Case["id"], summonTypes?: Components.
         }
       }
     },
-    entityType: {
+    entity_type: {
       type: "RadioFields",
       props: {
         isRequired: true,
@@ -48,7 +48,7 @@ export default (caseId: Components.Schemas.Case["id"], summonTypes?: Components.
         }
       }
     },
-    boardRole: {
+    board_role: {
       type: "ShowHide",
       props: {
         shouldShow: (formValues: { values?: {legal_entity_type: string}}) => formValues?.values?.legal_entity_type === "board",
@@ -57,6 +57,7 @@ export default (caseId: Components.Schemas.Case["id"], summonTypes?: Components.
           props: {
             options: personRoles,
             name: "board_role",
+            label: "Bestuursfunctie",
             optionLabelField: "label",
             isRequired: true,
             withEmptyOption: true,
@@ -65,7 +66,7 @@ export default (caseId: Components.Schemas.Case["id"], summonTypes?: Components.
         }
       }
     },
-    legalEntityName: {
+    legal_entity_name: {
       type: "ShowHide",
       props: {
         shouldShow: (formValues: { values?: {entity_type: string}}) => formValues?.values?.entity_type === "legal",
@@ -80,7 +81,7 @@ export default (caseId: Components.Schemas.Case["id"], summonTypes?: Components.
         }
       }
     },
-    legalEntityType: {
+    legal_entity_type: {
       type: "ShowHide",
       props: {
         shouldShow: (formValues: { values?: {entity_type: string}}) => formValues?.values?.entity_type === "legal",
@@ -88,6 +89,7 @@ export default (caseId: Components.Schemas.Case["id"], summonTypes?: Components.
           type: "SelectField",
           props: {
             name: "legal_entity_type",
+            label: "Gericht aan",
             withEmptyOption: true,
             emptyOptionLabel: "Kies type",
             isRequired: true,
@@ -187,9 +189,9 @@ export default (caseId: Components.Schemas.Case["id"], summonTypes?: Components.
     .setGrid("mobileS", "1fr 1fr", [
       ["type", "type"],
       ["type_result.number_of_accommodations"],
-      ["entityType", "entityType"],
-      ["legalEntityName", "legalEntityName"],
-      ["legalEntityType", "boardRole"],
+      ["entity_type", "entity_type"],
+      ["legal_entity_name", "legal_entity_name"],
+      ["legal_entity_type", "board_role"],
       ["persons", "persons"],
       ["description", "description"],
       ["secondaryButton", "submit"]
