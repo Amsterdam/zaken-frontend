@@ -1,6 +1,6 @@
 {
   "name": "zaken-frontend",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "private": true,
   "dependencies": {
     "@amsterdam/amsterdam-react-final-form": "^0.1.136",
