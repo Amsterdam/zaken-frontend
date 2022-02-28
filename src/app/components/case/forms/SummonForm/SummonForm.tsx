@@ -17,7 +17,7 @@ type SummonData = Omit<Components.Schemas.Summon, "type"> & {
   entity_type: "natural" | "legal"
   legal_entity_type: "board" | "person"
   legal_entity_name: string
-  board_role: Components.Schemas.PersonRoleEnum
+  legal_entity_role: Components.Schemas.PersonRoleEnum
 }
 
 type SummonedPersonData = {
@@ -33,7 +33,7 @@ const mapData = (data: SummonData) => {
   let persons: SummonedPersonData[] = []
   if (data.entity_type === "legal" && data.legal_entity_type === "board") {
     persons.push({
-      person_role: (data.board_role as any).key,
+      person_role: (data.legal_entity_role as any).key,
       function: "Bestuur",
       entity_name: data.legal_entity_name
     })

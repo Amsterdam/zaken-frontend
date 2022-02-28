@@ -48,20 +48,20 @@ export default (caseId: Components.Schemas.Case["id"], summonTypes?: Components.
         }
       }
     },
-    board_role: {
+    legal_entity_role: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: {legal_entity_type: string}}) => formValues?.values?.legal_entity_type === "board",
+        shouldShow: (formValues: { values?: {entity_type: string}}) => formValues?.values?.entity_type === "legal",
         field: {
           type: "ComplexSelectField",
           props: {
+            label: "Rol",
             options: personRoles,
-            name: "board_role",
-            label: "Bestuursfunctie",
+            name: "legal_entity_role",
             optionLabelField: "label",
             isRequired: true,
             withEmptyOption: true,
-            emptyOptionLabel: "Kies rol van bestuur"
+            emptyOptionLabel: "Kies rol"
           }
         }
       }
@@ -190,8 +190,8 @@ export default (caseId: Components.Schemas.Case["id"], summonTypes?: Components.
       ["type", "type"],
       ["type_result.number_of_accommodations"],
       ["entity_type", "entity_type"],
-      ["legal_entity_name", "legal_entity_name"],
-      ["legal_entity_type", "board_role"],
+      ["legal_entity_name", "legal_entity_role"],
+      ["legal_entity_type", "legal_entity_type"],
       ["persons", "persons"],
       ["description", "description"],
       ["secondaryButton", "submit"]
