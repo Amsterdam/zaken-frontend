@@ -3,15 +3,11 @@ import navigateTo from "app/routing/navigateTo"
 import getColumns from "./columns"
 
 type Props = {
-  data?: Components.Schemas.PaginatedCaseList
+  data: Components.Schemas.Case[]
   isBusy: boolean
   onChange: (pagination: any, sorting: any) => void
-  pagination: {
-    page: number
-    pageSize: number
-    collectionSize: number
-  }
-  sorting: any
+  pagination: TABLE.Schemas.Pagination
+  sorting: TABLE.Schemas.Sorting
   emptyPlaceholder: string
 }
 
@@ -28,7 +24,7 @@ const TableCases: React.FC<Props> = ({ data, isBusy, onChange, pagination, sorti
       loading={ isBusy }
       numLoadingRows={ 10 }
       columns={ columns }
-      data={ data?.results || [] }
+      data={ data }
       onClickRow={ onClickRow }
       onChange={onChange}
       pagination={pagination}
