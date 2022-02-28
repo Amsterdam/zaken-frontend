@@ -18,18 +18,6 @@ type Props = {
   tonId?: number | undefined
 }
 
-// type FormData =
-//   Pick<CaseCreate, "description"> &
-//   {
-//     theme: Components.Schemas.CaseTheme
-//     reason: Components.Schemas.CaseReason
-//     project: Components.Schemas.CaseProject
-//     nuisance: boolean | Array<string> | undefined
-//     subjects: Components.Schemas.Subject[]
-//     identification: Components.Schemas.CitizenReport["identification"]
-//     citizen_reports: Omit<Components.Schemas.CitizenReportCase, "id" | "date_added">[]
-//   }
-
 const mapData = (bagId: Components.Schemas.Address["bag_id"], tonId: number | undefined) =>
   (data: any): any => {
     const mappedData = {
@@ -44,8 +32,12 @@ const mapData = (bagId: Components.Schemas.Address["bag_id"], tonId: number | un
   if (data.identification) {
     mappedData.citizen_reports = [{
       ...data,
-      nuisance: Array.isArray(data?.nuisance) && data?.nuisance?.includes("nuisance")
+      nuisance: Array.isArray(data?.nuisance) && data?.nuisance?.includes("nuisance"),
+      advertisements: data.advertisements
     }]
+    // Only send advertisements in citizen_reports when it's a melding.
+    const { advertisements, ...restWithoutAdvertisements } = mappedData
+    return restWithoutAdvertisements
   }
   return mappedData
 }
@@ -109,7 +101,7 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
     ...tonId !== undefined ? {
       reason: reasons?.results?.find(({ name }) => name === TON_REASON_NAME),
       advertisement: "yes",
-      advertisement_linklist: [{ advertisement_link: listing?.url }]
+      advertisements: [{ link: listing?.url }]
      } : {}
   }
 

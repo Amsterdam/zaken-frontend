@@ -16,6 +16,13 @@ declare namespace Components {
             lat: number; // float
             lng: number; // float
         }
+        export interface Advertisement {
+            id: number;
+            link: string;
+            date_added: string; // date-time
+            related_object_id?: number | null;
+            related_object_type?: number | null;
+        }
         /**
          * Adds nested create feature
          */
@@ -59,6 +66,7 @@ declare namespace Components {
             subjects: Subject[];
             subject_ids?: number[];
             citizen_reports?: CitizenReportCase[];
+            advertisements?: Advertisement[];
             start_date?: string | null; // date
             end_date?: string | null; // date
             sensitive?: boolean;
@@ -338,6 +346,24 @@ declare namespace Components {
         export type IndicatiePubliekrechtelijkEnum = "J" | "N";
         export interface OIDCAuthenticate {
             code: string;
+        }
+        export interface PaginatedAdvertisementList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?offset=400&limit=100
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?offset=200&limit=100
+             */
+            previous?: string | null; // uri
+            results?: Advertisement[];
         }
         export interface PaginatedCaseCloseList {
             /**
@@ -796,6 +822,7 @@ declare namespace Components {
             subjects?: Subject[];
             subject_ids?: number[];
             citizen_reports?: CitizenReportCase[];
+            advertisements?: Advertisement[];
             start_date?: string | null; // date
             end_date?: string | null; // date
             sensitive?: boolean;
@@ -997,6 +1024,23 @@ declare namespace Components {
     }
 }
 declare namespace Paths {
+    namespace AddressesAdvertisementsList {
+        namespace Parameters {
+            export type BagId = string;
+            export type Limit = number;
+            export type Offset = number;
+        }
+        export interface PathParameters {
+            bag_id: Parameters.BagId;
+        }
+        export interface QueryParameters {
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedAdvertisementList;
+        }
+    }
     namespace AddressesCasesList {
         namespace Parameters {
             export type BagId = string;
@@ -1066,6 +1110,49 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.CaseClose;
+        }
+    }
+    namespace CasesAdvertisementsList {
+        namespace Parameters {
+            export type FromStartDate = string; // date
+            export type Id = number;
+            export type Number = string;
+            export type OpenCases = boolean;
+            export type Ordering = string;
+            export type Page = number;
+            export type PageSize = number;
+            export type PostalCode = string;
+            export type Reason = number;
+            export type Sensitive = boolean;
+            export type StartDate = string; // date
+            export type StateTypes = number;
+            export type StreetName = string;
+            export type Suffix = string;
+            export type Theme = number;
+            export type TonIds = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        export interface QueryParameters {
+            from_start_date?: Parameters.FromStartDate /* date */;
+            number?: Parameters.Number;
+            open_cases?: Parameters.OpenCases;
+            ordering?: Parameters.Ordering;
+            page?: Parameters.Page;
+            page_size?: Parameters.PageSize;
+            postal_code?: Parameters.PostalCode;
+            reason?: Parameters.Reason;
+            sensitive?: Parameters.Sensitive;
+            start_date?: Parameters.StartDate /* date */;
+            state_types?: Parameters.StateTypes;
+            street_name?: Parameters.StreetName;
+            suffix?: Parameters.Suffix;
+            theme?: Parameters.Theme;
+            ton_ids?: Parameters.TonIds;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedAdvertisementList;
         }
     }
     namespace CasesCitizenReportsCreate {
