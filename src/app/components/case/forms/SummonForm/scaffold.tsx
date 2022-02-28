@@ -35,48 +35,126 @@ export default (caseId: Components.Schemas.Case["id"], summonTypes?: Components.
         }
       }
     },
-    persons: {
-      type: "ArrayField",
+    entity_type: {
+      type: "RadioFields",
       props: {
+        isRequired: true,
+        horizontal: true,
+        name: "entity_type",
         label: "Aan wie is de aanschrijving gericht?",
-        name: "persons",
-        allowAdd: true,
-        allowRemove: true,
-        minItems: 1,
-        maxItems: 2,
-        scaffoldFields: {
-          first_name: {
-            type: "TextField",
-            props: {
-              placeholder:"Voornaam",
-              name: "first_name",
-              isRequired: true
+        options: {
+          natural: "Natuurlijk persoon",
+          legal: "Rechtspersoon"
+        }
+      }
+    },
+    board_role: {
+      type: "ShowHide",
+      props: {
+        shouldShow: (formValues: { values?: {legal_entity_type: string}}) => formValues?.values?.legal_entity_type === "board",
+        field: {
+          type: "ComplexSelectField",
+          props: {
+            options: personRoles,
+            name: "board_role",
+            label: "Bestuursfunctie",
+            optionLabelField: "label",
+            isRequired: true,
+            withEmptyOption: true,
+            emptyOptionLabel: "Kies rol van bestuur"
+          }
+        }
+      }
+    },
+    legal_entity_name: {
+      type: "ShowHide",
+      props: {
+        shouldShow: (formValues: { values?: {entity_type: string}}) => formValues?.values?.entity_type === "legal",
+        field: {
+          type: "InputField",
+          props: {
+            name: "legal_entity_name",
+            isRequired: true,
+            label: "Aangeschreven rechtspersoon",
+            placeholder: "Bedrijfsnaam"
+          }
+        }
+      }
+    },
+    legal_entity_type: {
+      type: "ShowHide",
+      props: {
+        shouldShow: (formValues: { values?: {entity_type: string}}) => formValues?.values?.entity_type === "legal",
+        field: {
+          type: "SelectField",
+          props: {
+            name: "legal_entity_type",
+            label: "Gericht aan",
+            withEmptyOption: true,
+            emptyOptionLabel: "Kies type",
+            isRequired: true,
+            options: {
+              board: "Aan bestuur",
+              person: "Aan persoon"
             }
-          },
-          preposition: {
-            type: "TextField",
-            props: {
-              placeholder:"Tussenvoegsel",
-              name: "preposition"
-            }
-          },
-          last_name: {
-            type: "TextField",
-            props: {
-              placeholder: "Achternaam",
-              name: "last_name",
-              isRequired: true
-            }
-          },
-          person_role: {
-            type: "ComplexSelectField",
-            props: {
-              options: personRoles,
-              name: "person_role",
-              optionLabelField: "label",
-              isRequired: true,
-              withEmptyOption: true,
-              emptyOptionLabel: "Kies rol"
+          }
+        }
+      }
+    },
+    persons: {
+      type: "ShowHide",
+      props: {
+        shouldShow: (formValues: { values?: {
+            entity_type: string
+            legal_entity_type: string
+          }}) => (
+          formValues?.values?.entity_type === "natural" ||
+          formValues?.values?.legal_entity_type === "person"
+        ),
+        field: {
+          type: "ArrayField",
+          props: {
+            label: "Aangeschreven persoon",
+            name: "persons",
+            allowAdd: true,
+            allowRemove: true,
+            minItems: 1,
+            maxItems: 2,
+            scaffoldFields: {
+              first_name: {
+                type: "TextField",
+                props: {
+                  placeholder:"Voornaam",
+                  name: "first_name",
+                  isRequired: true
+                }
+              },
+              preposition: {
+                type: "TextField",
+                props: {
+                  placeholder:"Tussenvoegsel",
+                  name: "preposition"
+                }
+              },
+              last_name: {
+                type: "TextField",
+                props: {
+                  placeholder: "Achternaam",
+                  name: "last_name",
+                  isRequired: true
+                }
+              },
+              person_role: {
+                type: "ComplexSelectField",
+                props: {
+                  options: personRoles,
+                  name: "person_role",
+                  optionLabelField: "label",
+                  isRequired: true,
+                  withEmptyOption: true,
+                  emptyOptionLabel: "Kies rol"
+                }
+              }
             }
           }
         }
@@ -111,6 +189,9 @@ export default (caseId: Components.Schemas.Case["id"], summonTypes?: Components.
     .setGrid("mobileS", "1fr 1fr", [
       ["type", "type"],
       ["type_result.number_of_accommodations"],
+      ["entity_type", "entity_type"],
+      ["legal_entity_name", "legal_entity_name"],
+      ["legal_entity_type", "board_role"],
       ["persons", "persons"],
       ["description", "description"],
       ["secondaryButton", "submit"]
