@@ -32,28 +32,25 @@ export const useCases = (
   pagination: TABLE.Schemas.Pagination,
   sorting?: TABLE.Schemas.Sorting,
   theme?: string,
-  fromStartDate?: string,
+  from_start_date?: string,
   options?: Options
 ) => {
   const handleError = useErrorHandler()
   const urlParams: any = {
     page: pagination.page,
-    page_size: pagination.pageSize
+    page_size: pagination.pageSize,
+    theme,
+    from_start_date
   }
   if (sensitive === false) {
     urlParams.sensitive = false
-  }
-  if (theme !== undefined) {
-    urlParams.theme = theme
-  }
-  if (fromStartDate !== undefined) {
-    urlParams.from_start_date = fromStartDate
   }
   if (sorting) {
     urlParams.ordering = getOrderingValue(sorting)
   }
 
   const queryString = isEmpty(urlParams) ? "" : qs.stringify(urlParams, { addQueryPrefix: true })
+
   return useApiRequest<Components.Schemas.PaginatedCaseList>({
     ...options,
     url: `${ makeApiUrl("cases") }${ queryString }`,
