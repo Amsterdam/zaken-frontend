@@ -18,6 +18,7 @@ type SummonData = Omit<Components.Schemas.Summon, "type"> & {
   legal_entity_type: "board" | "person"
   legal_entity_name: string
   legal_entity_role: Components.Schemas.PersonRoleEnum
+  persons_legal_entity: SummonedPersonData[]
 }
 
 type SummonedPersonData = {
@@ -31,19 +32,32 @@ type SummonedPersonData = {
 
 const mapData = (data: SummonData) => {
   let persons: SummonedPersonData[] = []
-  if (data.entity_type === "legal" && data.legal_entity_type === "board") {
-    persons.push({
-      person_role: (data.legal_entity_role as any).key,
-      function: "Bestuur",
-      entity_name: data.legal_entity_name
+  if (data.entity_type === "legal") {
+    if (data.legal_entity_type === "board") {
+      persons.push({
+        person_role: (data.legal_entity_role as any).key,
+        function: "Bestuur",
+        entity_name: data.legal_entity_name
+      })
+    } else {
+      const legalEntityPerson = data.persons_legal_entity[0]
+      if (legalEntityPerson) {
+        persons.push({
+          ...legalEntityPerson,
+          person_role: (data.legal_entity_role as any).key,
+          function: data.legal_entity_type,
+          entity_name: data.legal_entity_name
+        })
+      }
+    }
+  } else {
+    data.persons?.forEach((person: SummonedPersonData) => {
+      const p = person
+      p.person_role = (person.person_role as any).key
+      p.entity_name = data.legal_entity_name
+      persons.push(p)
     })
   }
-  data.persons?.forEach((person: SummonedPersonData) => {
-    const p = person
-    p.person_role = (person.person_role as any).key
-    p.entity_name = data.legal_entity_name
-    persons.push(p)
-  })
   return ({ ...data, type: data.type.id, persons })
 }
 
