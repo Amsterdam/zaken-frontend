@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
 
-const useMediaQuery = (minWidth: number) => {
+const useMediaQuery = (selectedMinWidth?: number) => {
   const [state, setState] = useState({
     windowWidth: window.innerWidth,
     isDesiredWidth: false
   })
+
+  const minWidth = selectedMinWidth || 0
 
   useEffect(() => {
     const resizeHandler = () => {
@@ -19,7 +21,7 @@ const useMediaQuery = (minWidth: number) => {
     }
   }, [minWidth])
 
-  return state.isDesiredWidth
+  return { isDesiredWidth: state.isDesiredWidth, windowWidth: state.windowWidth }
 }
 
 export default useMediaQuery

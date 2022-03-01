@@ -19,7 +19,7 @@ export const initialState: StateType = {
     pageSize: 10
   },
   sorting: {
-    dataIndex: "last_updated",
+    dataIndex: "start_date",
     order: "DESCEND"
   },
   theme: "",
