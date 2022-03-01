@@ -47,6 +47,7 @@ const Cases: React.FC = () => {
   }
 
   const onChangeTable = (pagination: TABLE.Schemas.Pagination, sorting: TABLE.Schemas.Sorting) => {
+    console.log("pagination", pagination)
     updateContextState({ pagination, sorting })
   }
 
