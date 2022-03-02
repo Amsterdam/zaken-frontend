@@ -49,7 +49,10 @@ const TableCases: React.FC<Props> = ({ data, isBusy, onChange, pagination, sorti
       data={ data }
       onClickRow={ onClickRow }
       onChange={onChange}
-      pagination={pagination}
+      pagination={{
+        ...pagination,
+        paginationLength: 9
+      }}
       emptyPlaceholder={ emptyPlaceholder }
     />
   )
