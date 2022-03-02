@@ -1,37 +1,31 @@
-import { displayDate } from "@amsterdam/wonen-ui"
-
+import moment from "moment"
 import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 
-export const getDate = (backwards = 0) => {
-  const d = new Date(new Date().setDate(new Date().getDate() - backwards))
-  return [`${ d.getFullYear() }-${ d.getMonth() + 1 }-${ d.getDate() }`, displayDate(d)]
-}
+const DATE_FORMAT = "YYYY-MM-DD"
 
-export const createOptions = () => {
-  const options = [...Array(7)].reduce((acc, _, index) => {
-    const [date, displayDate] = getDate(index)
-    switch (index) {
-      case 0: acc[date] = "Vandaag"; break
-      case 1: acc[date] = "Gisteren"; break
-      default: acc[date] = displayDate
-    }
-    return acc
-  }, {} as Record<string, string>)
-  options[""] = "Alle zaken"
-  console.log("options", options)
-  return options
+const getOptions = () => {
+  const today = moment().format(DATE_FORMAT)
+  const yesterday = moment().subtract(1, "days").format(DATE_FORMAT)
+  const sevenDaysAgo = moment().subtract(7, "days").format(DATE_FORMAT)
+  const thirtyDaysAgo = moment().subtract(30, "days").format(DATE_FORMAT)
+  return {
+    "": "Alle zaken",
+   [today]: "Vandaag",
+   [yesterday]: "Gisteren",
+   [sevenDaysAgo]: "Laatste 7 dagen",
+   [thirtyDaysAgo]: "Laatste 30 dagen"
+  }
 }
 
 export default (value: string, onChange: (value: string) => void) => {
-
   const fields = {
     period: {
       type: "RadioFields",
       props: {
         label: "Startdatum",
         name: "startdate",
-        options: createOptions(),
+        options: getOptions(),
         onChange,
         value
       }
