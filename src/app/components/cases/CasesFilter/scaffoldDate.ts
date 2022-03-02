@@ -19,6 +19,7 @@ export const createOptions = () => {
     return acc
   }, {} as Record<string, string>)
   options[""] = "Alle zaken"
+  console.log("options", options)
   return options
 }
 
@@ -28,8 +29,8 @@ export default (value: string, onChange: (value: string) => void) => {
     period: {
       type: "RadioFields",
       props: {
-        label: "Periode",
-        name: "period",
+        label: "Startdatum",
+        name: "startdate",
         options: createOptions(),
         onChange,
         value
