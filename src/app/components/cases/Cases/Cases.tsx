@@ -1,10 +1,23 @@
 import { useEffect, useContext } from "react"
-import { Row, Column } from "app/components/layouts/Grid"
+import styled from "styled-components"
 import TableCases from "app/components/cases/TableCases/TableCases"
 import CasesFilter from "app/components/cases/CasesFilter/CasesFilter"
 import { useCases, useCaseThemes } from "app/state/rest"
 import useHasPermission, { SENSITIVE_CASE_PERMISSION } from "app/state/rest/custom/usePermissions/useHasPermission"
 import { ContextValues } from "app/state/context/ValueProvider"
+
+const Container = styled.div`
+  margin: 0 auto;
+  display: grid;
+  grid-gap: 1rem;
+  @media (min-width: 1600px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+`
+
+const FilterContainer = styled.div`
+  max-width: 400px
+`
 
 const EMPTY_TEXT_NO_PERMISSION = "Helaas, u bent niet geautoriseerd om deze zaken te bekijken."
 const EMPTY_TEXT = "Er zijn momenteel geen open zaken voor de gekozen filters."
@@ -56,8 +69,8 @@ const Cases: React.FC = () => {
     ? EMPTY_TEXT_NO_PERMISSION : EMPTY_TEXT
 
   return (
-    <Row>
-      <Column spanLarge={ 72 }>
+    <Container>
+
         <TableCases
           data={ results || [] }
           isBusy={ isBusy }
@@ -70,8 +83,7 @@ const Cases: React.FC = () => {
           sorting={ sorting }
           emptyPlaceholder={ emptyPlaceholder }
         />
-      </Column>
-      <Column spanLarge={ 28 }>
+      <FilterContainer>
         <CasesFilter
           date={ fromStartDate }
           setDate={ (value: string) => onChangeFilter("fromStartDate", value) }
@@ -79,8 +91,8 @@ const Cases: React.FC = () => {
           themes={ themes }
           setTheme={ (value: string) => onChangeFilter("theme", value) }
         />
-      </Column>
-    </Row>
+      </FilterContainer>
+    </Container>
   )
 }
 

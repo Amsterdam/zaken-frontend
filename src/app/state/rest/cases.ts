@@ -12,7 +12,9 @@ const sortingOrder = {
 }
 
 const dataIndexMapping: any = {
-  "address.full_address": "address__street_name",
+  "address.street_name": "address__street_name",
+  "address.postal_code": "address__postal_code",
+  "start_date": "start_date",
   "last_updated": "last_updated"
 }
 

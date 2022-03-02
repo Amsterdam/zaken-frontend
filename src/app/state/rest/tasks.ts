@@ -7,7 +7,9 @@ import useApiRequest from "./hooks/useApiRequest"
 
 export const useTasks = (sensitive = false, theme: string, role: string, options?: Options) => {
   const handleError = useErrorHandler()
-  const urlParams: any = {}
+  const urlParams: any = {
+    page_size: 1000
+  }
   if (sensitive === false) {
     urlParams.sensitive = false
   }
