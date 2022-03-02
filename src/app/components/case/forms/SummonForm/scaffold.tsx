@@ -5,8 +5,9 @@ import navigateTo from "app/routing/navigateTo"
 import { personRoleMap } from "@amsterdam/wonen-ui/helpers/dictionaries"
 
 export default (caseId: Components.Schemas.Case["id"], summonTypes?: Components.Schemas.SummonType[]) => {
-
-  const personRoles = Object.entries(personRoleMap).map(([key, label]) => ({ key, label }))
+  const roleEntries = Object.entries(personRoleMap)
+  const personRoles = roleEntries.filter(([key]) => key !== "PERSON_ROLE_PLATFORM").map(([key, label]) => ({ key, label }))
+  const legalEntityRoles = roleEntries.filter(([key]) => !["PERSON_ROLE_HEIR", "PERSON_ROLE_RESIDENT"].includes(key)).map(([key, label]) => ({ key, label }))
   const fields = {
     type: {
       type: "ComplexSelectField",
@@ -48,20 +49,20 @@ export default (caseId: Components.Schemas.Case["id"], summonTypes?: Components.
         }
       }
     },
-    board_role: {
+    legal_entity_role: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: {legal_entity_type: string}}) => formValues?.values?.legal_entity_type === "board",
+        shouldShow: (formValues: { values?: {entity_type: string}}) => formValues?.values?.entity_type === "legal",
         field: {
           type: "ComplexSelectField",
           props: {
-            options: personRoles,
-            name: "board_role",
-            label: "Bestuursfunctie",
+            label: "Rol",
+            options: legalEntityRoles,
+            name: "legal_entity_role",
             optionLabelField: "label",
             isRequired: true,
             withEmptyOption: true,
-            emptyOptionLabel: "Kies rol van bestuur"
+            emptyOptionLabel: "Kies rol"
           }
         }
       }
@@ -108,8 +109,7 @@ export default (caseId: Components.Schemas.Case["id"], summonTypes?: Components.
             entity_type: string
             legal_entity_type: string
           }}) => (
-          formValues?.values?.entity_type === "natural" ||
-          formValues?.values?.legal_entity_type === "person"
+          formValues?.values?.entity_type === "natural"
         ),
         field: {
           type: "ArrayField",
@@ -160,6 +160,54 @@ export default (caseId: Components.Schemas.Case["id"], summonTypes?: Components.
         }
       }
     },
+    persons_legal_entity: {
+      type: "ShowHide",
+      props: {
+        shouldShow: (formValues: { values?: {
+            entity_type: string
+            legal_entity_type: string
+          }}) => (
+          formValues?.values?.entity_type === "legal" &&
+          formValues?.values?.legal_entity_type === "person"
+        ),
+        field: {
+          type: "ArrayField",
+          props: {
+            label: "Aangeschreven persoon",
+            name: "persons_legal_entity",
+            allowAdd: true,
+            allowRemove: true,
+            minItems: 1,
+            maxItems: 1,
+            scaffoldFields: {
+              first_name: {
+                type: "TextField",
+                props: {
+                  placeholder:"Voornaam",
+                  name: "first_name",
+                  isRequired: true
+                }
+              },
+              preposition: {
+                type: "TextField",
+                props: {
+                  placeholder:"Tussenvoegsel",
+                  name: "preposition"
+                }
+              },
+              last_name: {
+                type: "TextField",
+                props: {
+                  placeholder: "Achternaam",
+                  name: "last_name",
+                  isRequired: true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     description: {
       type: "TextAreaField",
       props: {
@@ -190,8 +238,9 @@ export default (caseId: Components.Schemas.Case["id"], summonTypes?: Components.
       ["type", "type"],
       ["type_result.number_of_accommodations"],
       ["entity_type", "entity_type"],
-      ["legal_entity_name", "legal_entity_name"],
-      ["legal_entity_type", "board_role"],
+      ["legal_entity_name", "legal_entity_role"],
+      ["legal_entity_type", "legal_entity_type"],
+      ["persons_legal_entity", "persons_legal_entity"],
       ["persons", "persons"],
       ["description", "description"],
       ["secondaryButton", "submit"]
