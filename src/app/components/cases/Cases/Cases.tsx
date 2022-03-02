@@ -1,6 +1,5 @@
 import { useEffect, useContext } from "react"
 import styled from "styled-components"
-// import { Row, Column } from "app/components/layouts/Grid"
 import TableCases from "app/components/cases/TableCases/TableCases"
 import CasesFilter from "app/components/cases/CasesFilter/CasesFilter"
 import { useCases, useCaseThemes } from "app/state/rest"
