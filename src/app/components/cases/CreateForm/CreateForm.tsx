@@ -33,11 +33,8 @@ const mapData = (bagId: Components.Schemas.Address["bag_id"], tonId: number | un
     mappedData.citizen_reports = [{
       ...data,
       nuisance: Array.isArray(data?.nuisance) && data?.nuisance?.includes("nuisance"),
-      advertisements: data.advertisements
+      advertisements: undefined
     }]
-    // Only send advertisements in citizen_reports when it's a melding.
-    const { advertisements, ...restWithoutAdvertisements } = mappedData
-    return restWithoutAdvertisements
   }
   return mappedData
 }
