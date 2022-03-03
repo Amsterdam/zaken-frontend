@@ -34,12 +34,12 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
       </Row>
       <Row>
         <Column spanLarge={50}>
-          <PermitOverview bagId={ bagId } />
+          <Advertisements bagId={ bagId }/>
         </Column>
       </Row>
       <Row>
         <Column spanLarge={50}>
-          <Advertisements bagId={ bagId }/>
+          <PermitOverview bagId={ bagId } />
         </Column>
       </Row>
     </DefaultLayout>
