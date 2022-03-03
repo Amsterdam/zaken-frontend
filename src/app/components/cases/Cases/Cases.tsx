@@ -27,7 +27,6 @@ const Cases: React.FC = () => {
   const {
     results, count, pagination, sorting, fromStartDate, theme, updateContextState
   } = useContext(ContextValues)
-
   const [caseThemes] = useCaseThemes()
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const [dataSource, { isBusy }] = useCases(
@@ -59,6 +58,15 @@ const Cases: React.FC = () => {
     })
   }
 
+  const onChangePageSize = (pageSize: string) => {
+    updateContextState({
+      pagination: {
+        ...pagination,
+        pageSize: parseInt(pageSize)
+      }
+    })
+  }
+
   const onChangeTable = (pagination: TABLE.Schemas.Pagination, sorting: TABLE.Schemas.Sorting) => {
     updateContextState({ pagination, sorting })
   }
@@ -70,7 +78,6 @@ const Cases: React.FC = () => {
 
   return (
     <Container>
-
         <TableCases
           data={ results || [] }
           isBusy={ isBusy }
@@ -90,6 +97,8 @@ const Cases: React.FC = () => {
           theme={ theme }
           themes={ themes }
           setTheme={ (value: string) => onChangeFilter("theme", value) }
+          setPageSize={ onChangePageSize }
+          pageSize={ pagination.pageSize?.toString() || "10" }
         />
       </FilterContainer>
     </Container>
