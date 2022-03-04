@@ -5,40 +5,54 @@ import { useErrorHandler } from "./hooks/utils/errorHandler"
 import { makeApiUrl } from "./hooks/utils/apiUrl"
 import useApiRequest from "./hooks/useApiRequest"
 
+
+const sortingOrder = {
+  ASCEND: "ASCEND",
+  DESCEND: "DESCEND"
+}
+
+const dataIndexMapping: any = {
+  "address.street_name": "address__street_name",
+  "address.postal_code": "address__postal_code",
+  "start_date": "start_date",
+  "last_updated": "last_updated"
+}
+
+const getOrderingValue = (sorting: TABLE.Schemas.Sorting) => {
+  let value = ""
+  if (sorting?.dataIndex) {
+    value = dataIndexMapping[sorting.dataIndex]
+  }
+  if (sorting.order === sortingOrder.DESCEND) {
+    value = `-${ value }`
+  }
+  return value
+}
+
 export const useCases = (
-  page: number,
-  page_size: number,
-  theme: string,
   sensitive = false,
+  pagination: TABLE.Schemas.Pagination,
+  sorting?: TABLE.Schemas.Sorting,
+  theme?: string,
   from_start_date?: string,
-  ordering?: string,
   options?: Options
 ) => {
   const handleError = useErrorHandler()
-  const urlParams: any = {}
-  if (page !== undefined) {
-    urlParams.page = page
-  }
-  if (page_size !== undefined) {
-    urlParams.page_size = page_size
-  }
-  if (sensitive === false) {
-    urlParams.sensitive = false
-  }
-  if (theme) {
-    urlParams.theme = theme
-  }
-  if (from_start_date !== undefined) {
-    urlParams.from_start_date = from_start_date
-  }
-  if (ordering) {
-    urlParams.ordering = ordering
+  const urlParams: any = {
+    page: pagination.page,
+    page_size: pagination.pageSize,
+    theme,
+    from_start_date
   }
   if (sensitive === false) {
     urlParams.sensitive = false
+  }
+  if (sorting) {
+    urlParams.ordering = getOrderingValue(sorting)
   }
 
   const queryString = isEmpty(urlParams) ? "" : qs.stringify(urlParams, { addQueryPrefix: true })
+
   return useApiRequest<Components.Schemas.PaginatedCaseList>({
     ...options,
     url: `${ makeApiUrl("cases") }${ queryString }`,

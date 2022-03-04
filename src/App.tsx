@@ -7,6 +7,7 @@ import initializedCallback from "app/state/auth/keycloak/initializedCallback"
 import Router from "app/routing/components/Router"
 import FlashMessageProvider from "app/state/flashMessages/FlashMessageProvider"
 import ApiProvider from "app/state/rest/provider/ApiProvider"
+import ValueProvider from "app/state/context/ValueProvider"
 import isLocalDevelopment from "app/state/auth/keycloak/isLocalDevelopment"
 import { ErrorBoundary } from "@sentry/react"
 import PageTitle from "app/routing/components/PageTitle"
@@ -22,7 +23,9 @@ const App = () => (
         <LocationProvider>
           <FlashMessageProvider>
             <ApiProvider>
-              <Router />
+              <ValueProvider>
+                <Router />
+              </ValueProvider>
             </ApiProvider>
           </FlashMessageProvider>
         </LocationProvider>
