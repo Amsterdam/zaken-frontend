@@ -1,5 +1,4 @@
-import { capitalizeString } from "app/components/shared/Helpers/helpers"
-import { List, PersonNameDisplay, PersonRoleDisplay } from "@amsterdam/wonen-ui"
+import { List, PersonNameDisplay, PersonRoleDisplay, PersonEntityDisplay } from "@amsterdam/wonen-ui"
 
 export default (summon?: Components.Schemas.Summon) => {
 
@@ -7,15 +6,16 @@ export default (summon?: Components.Schemas.Summon) => {
 
   const { persons, type_name } = summon
 
-  const personNames = persons.map(({ first_name, last_name, preposition, person_role }) =>
+  const personNames = persons.map(({ first_name, last_name, preposition, person_role, function: person_function, entity_name }) =>
     <>
-      <PersonNameDisplay
-        firstName={ capitalizeString(first_name) }
-        namePrefix={ preposition ?? undefined }
-        name={ capitalizeString(last_name) }
-      />
-      { person_role && ", " }
-      <PersonRoleDisplay personRole= { person_role } />
+      { last_name && <PersonNameDisplay firstName={first_name} namePrefix={preposition ?? undefined} name={last_name} /> }
+      { last_name && (person_function || entity_name) && <span>, </span> }
+      <PersonEntityDisplay personFunction={person_function} entityName={entity_name} />
+      { person_role && <>
+        <span> (</span>
+          <PersonRoleDisplay personRole={person_role} />
+        <span>)</span>
+      </> }
     </>
   )
 
