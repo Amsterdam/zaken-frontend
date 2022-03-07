@@ -37,7 +37,7 @@ const scaffold = (onCancel: () => void, subjects?: Components.Schemas.Subject[])
       ["cancel", "submit"]
     ])
     .setGrid("laptopM", "1fr 1fr", [
-      ["subjects"],
+      ["subjects", "subjects"],
       ["cancel", "submit"]
     ])
     .getScaffoldProps()
