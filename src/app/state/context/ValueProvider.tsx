@@ -10,10 +10,18 @@ const ValueProvider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
   const value: StateType = {
-    ...state,
-    updateContextState: useCallback((payload: any) => {
-      dispatch({ type: actions.UPDATE_STATE, payload })
-    }, [dispatch])
+    cases: {
+      ...state.cases,
+      updateContextCases: useCallback((payload: any) => {
+        dispatch({ type: actions.UPDATE_CASES, payload })
+      }, [dispatch])
+    },
+    tasks: {
+      ...state.tasks,
+      updateContextTasks: useCallback((payload: any) => {
+        dispatch({ type: actions.UPDATE_TASKS, payload })
+      }, [dispatch])
+    }
   }
 
   return (

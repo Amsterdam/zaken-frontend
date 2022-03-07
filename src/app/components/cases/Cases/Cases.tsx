@@ -25,8 +25,8 @@ const UNDERMINING = "Ondermijning"
 
 const Cases: React.FC = () => {
   const {
-    results, count, pagination, sorting, fromStartDate, theme, updateContextState
-  } = useContext(ContextValues)
+    results, count, pagination, sorting, fromStartDate, theme, updateContextCases
+  } = useContext(ContextValues)["cases"]
   const [caseThemes] = useCaseThemes()
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const [dataSource, { isBusy }] = useCases(
@@ -39,17 +39,17 @@ const Cases: React.FC = () => {
 
   useEffect(() => {
     if (dataSource === undefined) {
-      updateContextState({
+      updateContextCases({
         results: [],
         count: 0
       })
     } else {
-      updateContextState(dataSource)
+      updateContextCases(dataSource)
     }
-  }, [dataSource, updateContextState])
+  }, [dataSource, updateContextCases])
 
   const onChangeFilter = (key: string, item: string) => {
-    updateContextState({
+    updateContextCases({
       [key]: item,
       pagination: {
         ...pagination,
@@ -59,7 +59,7 @@ const Cases: React.FC = () => {
   }
 
   const onChangePageSize = (pageSize: string) => {
-    updateContextState({
+    updateContextCases({
       pagination: {
         ...pagination,
         pageSize: parseInt(pageSize)
@@ -68,7 +68,7 @@ const Cases: React.FC = () => {
   }
 
   const onChangeTable = (pagination: TABLE.Schemas.Pagination, sorting: TABLE.Schemas.Sorting) => {
-    updateContextState({ pagination, sorting })
+    updateContextCases({ pagination, sorting })
   }
 
   const themes = caseThemes?.results || []

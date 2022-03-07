@@ -1,6 +1,7 @@
 // Reducer actions
 const actions = {
-  UPDATE_STATE: "UPDATE_STATE"
+  UPDATE_CASES: "UPDATE_CASES",
+  UPDATE_TASKS: "UPDATE_TASKS"
 }
 
 export default actions

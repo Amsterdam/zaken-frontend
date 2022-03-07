@@ -5,21 +5,53 @@ import { useErrorHandler } from "./hooks/utils/errorHandler"
 import { makeApiUrl } from "./hooks/utils/apiUrl"
 import useApiRequest from "./hooks/useApiRequest"
 
-export const useTasks = (sensitive = false, theme: string, role: string, options?: Options) => {
+const sortingOrder = {
+  ASCEND: "ASCEND",
+  DESCEND: "DESCEND"
+}
+
+const dataIndexMapping: any = {
+  "owner": "owner",
+  "case.address.full_address": "case__address__street_name",
+  "due_date": "due_date",
+  "name": "name"
+}
+
+const getOrderingValue = (sorting: TABLE.Schemas.Sorting) => {
+  let value = ""
+  if (sorting?.dataIndex) {
+    value = dataIndexMapping[sorting.dataIndex]
+  }
+  if (sorting.order === sortingOrder.DESCEND) {
+    value = `-${ value }`
+  }
+  return value
+}
+
+export const useTasks = (
+  sensitive = false,
+  pagination: TABLE.Schemas.Pagination,
+  sorting?: TABLE.Schemas.Sorting,
+  theme?: string,
+  role?: string,
+  options?: Options
+) => {
   const handleError = useErrorHandler()
   const urlParams: any = {
-    page_size: 1000
+    page: pagination.page,
+    page_size: pagination.pageSize,
+    theme,
+    role
   }
   if (sensitive === false) {
     urlParams.sensitive = false
   }
-  if (theme) {
-    urlParams.theme = theme
+  if (sorting) {
+    urlParams.ordering = getOrderingValue(sorting)
   }
-  if (role) {
-    urlParams.role = role
-  }
+
   const queryString = isEmpty(urlParams) ? "" : qs.stringify(urlParams, { addQueryPrefix: true })
+
   return useApiRequest<Components.Schemas.PaginatedCaseUserTaskList>({
     ...options,
     url: `${ makeApiUrl("tasks") }${ queryString }`,
