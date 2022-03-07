@@ -948,6 +948,8 @@ declare namespace Components {
             last_name: string;
             person_role?: PersonRoleEnum;
             summon: number;
+            function?: string;
+            entity_name?: string;
         }
         export interface SupportContact {
             id: number;

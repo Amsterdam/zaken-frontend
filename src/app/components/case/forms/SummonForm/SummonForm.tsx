@@ -45,7 +45,6 @@ const mapData = (data: SummonData) => {
         persons.push({
           ...legalEntityPerson,
           person_role: (data.legal_entity_role as any).key,
-          function: data.legal_entity_type,
           entity_name: data.legal_entity_name
         })
       }
