@@ -3,27 +3,10 @@ import TableAction from "app/components/shared/TableAction/TableAction"
 import to from "app/routing/utils/to"
 import SelectTask from "./SelectTask/SelectTask"
 
-// If user is owner, move item to top.
-// const sortUserUp = (a: any, b: any, myId: string) => {
-//   if (a.owner === myId && b.owner === myId) {
-//     // If a and b both have the user id, sort by ascending due date.
-//     return new Date(a?.due_date).getTime() - new Date(b?.due_date).getTime()
-//   }
-//   if (a.owner === myId) {
-//     return -1
-//   }
-//   if (b.owner === myId) return 1
-//   return a?.owner?.localeCompare(b?.owner)
-// }
-
-// const sortOwners = (a: any, b: any) => myId ? sortUserUp(a, b, myId) : a?.localeCompare(b)
-
 export default (sorting: any, myId?: string) => ([
   {
     header: "Opgepakt door",
     dataIndex: "owner",
-    // sorter: sortOwners,
-    // sortOrder: sorting.dataIndex === "owner" && sorting.order,
     render: (owner: any, record: any) => <SelectTask taskId={ record.id } taskOwner={ owner }/>
   }, {
     header: "Adres",
