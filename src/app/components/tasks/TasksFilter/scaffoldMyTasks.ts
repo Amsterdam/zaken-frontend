@@ -8,7 +8,7 @@ export default (value: string, onChange: (value: string) => void) => {
     period: {
       type: "RadioFields",
       props: {
-        // label: "Label?",
+        label: "Taken",
         name: "pageSize",
         options: {
           "": "Alle taken",
