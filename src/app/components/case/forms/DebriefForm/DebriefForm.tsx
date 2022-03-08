@@ -15,7 +15,6 @@ const DebriefCreateForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
   const [caseItem] = useCase(id)
   const themeId = caseItem?.theme.id
   const themeName = caseItem?.theme.name
-  console.log("themeName", themeName)
   const [data] = useViolationTypes(themeId)
   const violationTypes = data?.results
   const [, { execPost }] = useDebriefingCreate()
