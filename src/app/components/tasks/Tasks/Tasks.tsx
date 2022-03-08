@@ -5,6 +5,8 @@ import TableTasks from "app/components/tasks/TableTasks/TableTasks"
 import TasksFilter from "../TasksFilter/TasksFilter"
 import useHasPermission, { SENSITIVE_CASE_PERMISSION } from "app/state/rest/custom/usePermissions/useHasPermission"
 import { ContextValues } from "app/state/context/ValueProvider"
+import { getQueryUrl } from "app/state/rest/tasks"
+import useContextCache from "app/state/rest/provider/useContextCache"
 
 const EMPTY_TEXT_NO_PERMISSION = "Helaas, u bent niet geautoriseerd om deze taken te bekijken."
 const EMPTY_TEXT = "Er zijn momenteel geen open taken voor de gekozen filters."
@@ -24,6 +26,8 @@ const Tasks: React.FC = () => {
     theme,
     role
   )
+  const queryUrl = getQueryUrl(hasPermission, pagination, sorting, theme, role)
+  const { clearContextCache } = useContextCache("cases", queryUrl)
 
   useEffect(() => {
     if (dataSource === undefined) {
@@ -37,6 +41,7 @@ const Tasks: React.FC = () => {
   }, [dataSource, updateContextTasks])
 
   const onChangeFilter = (key: string, item: string) => {
+    clearContextCache()
     updateContextTasks({
       [key]: item,
       pagination: {
@@ -46,14 +51,14 @@ const Tasks: React.FC = () => {
     })
   }
 
-  // const onChangePageSize = (pageSize: string) => {
-  //   updateContextTasks({
-  //     pagination: {
-  //       ...pagination,
-  //       pageSize: parseInt(pageSize)
-  //     }
-  //   })
-  // }
+  const onChangePageSize = (pageSize: string) => {
+    updateContextTasks({
+      pagination: {
+        ...pagination,
+        pageSize: parseInt(pageSize)
+      }
+    })
+  }
 
   const onChangeTable = (pagination: TABLE.Schemas.Pagination, sorting: TABLE.Schemas.Sorting) => {
     updateContextTasks({ pagination, sorting })
@@ -85,6 +90,8 @@ const Tasks: React.FC = () => {
           theme={ theme }
           themes={ caseThemes?.results }
           setTheme={ (value: string) => onChangeFilter("theme", value) }
+          setPageSize={ onChangePageSize }
+          pageSize={ pagination.pageSize?.toString() || "10" }
         />
       </Column>
     </Row>
