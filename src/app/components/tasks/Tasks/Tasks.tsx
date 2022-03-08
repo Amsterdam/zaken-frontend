@@ -14,7 +14,6 @@ const Tasks: React.FC = () => {
   const {
     results, count, pagination, sorting, role, theme, updateContextTasks
   } = useContext(ContextValues)["tasks"]
-
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const [roles] = useRoles()
   const [caseThemes] = useCaseThemes()

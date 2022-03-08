@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import styled from "styled-components"
 import { Spinner, Checkbox, themeSpacing, Label } from "@amsterdam/asc-ui"
 import { useUsersMe } from "app/state/rest/index"
@@ -6,8 +6,10 @@ import { useTask } from "app/state/rest"
 import UserIcon from "./UserIcon"
 import useContextCache from "app/state/rest/provider/useContextCache"
 import { createNameAbbreviation } from "app/components/shared/Helpers/helpers"
-import getApiUrlTasks from "../../utils/getApiUrlTasks"
 import CustomTooltip from "app/components/help/HelpContent/CustomTooltip"
+import useHasPermission, { SENSITIVE_CASE_PERMISSION } from "app/state/rest/custom/usePermissions/useHasPermission"
+import { ContextValues } from "app/state/context/ValueProvider"
+import { getQueryUrl } from "app/state/rest/tasks"
 
 type Props = {
   id: number
@@ -23,13 +25,17 @@ const StyledLabel = styled(Label)`
 `
 
 const SelectTask: React.FC<Props> = ({ id, owner }) => {
+  // Get tasks params to create the query params url for the Context.
+  // Two different providers are being used. :(
+  const { pagination, sorting, role, theme } = useContext(ContextValues)["tasks"]
+  const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const [isChecked, setIsChecked] = useState(false)
   const [loading, setLoading] = useState(false)
   const [data, { isBusy }] = useUsersMe()
   const [, { execPatch }] = useTask(id)
   // Filtered tasks are stored with the search query as a parameter in the context.
-  const apiUrl = getApiUrlTasks()
-  const { getContextItem, updateContextItem } = useContextCache("cases", apiUrl)
+  const queryUrl = getQueryUrl(hasPermission, pagination, sorting, theme, role)
+  const { getContextItem, updateContextItem } = useContextCache("cases", queryUrl)
 
   useEffect(() => {
     // Check if userId is matching with the owner.

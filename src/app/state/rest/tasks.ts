@@ -28,15 +28,13 @@ const getOrderingValue = (sorting: TABLE.Schemas.Sorting) => {
   return value
 }
 
-export const useTasks = (
+export const getQueryUrl = (
   sensitive = false,
   pagination: TABLE.Schemas.Pagination,
   sorting?: TABLE.Schemas.Sorting,
   theme?: string,
-  role?: string,
-  options?: Options
+  role?: string
 ) => {
-  const handleError = useErrorHandler()
   const urlParams: any = {
     page: pagination.page,
     page_size: pagination.pageSize,
@@ -52,9 +50,23 @@ export const useTasks = (
 
   const queryString = isEmpty(urlParams) ? "" : qs.stringify(urlParams, { addQueryPrefix: true })
 
+  return `${ makeApiUrl("tasks") }${ queryString }`
+}
+
+export const useTasks = (
+  sensitive = false,
+  pagination: TABLE.Schemas.Pagination,
+  sorting?: TABLE.Schemas.Sorting,
+  theme?: string,
+  role?: string,
+  options?: Options
+) => {
+  const handleError = useErrorHandler()
+  const queryUrl = getQueryUrl(sensitive, pagination, sorting, theme, role)
+
   return useApiRequest<Components.Schemas.PaginatedCaseUserTaskList>({
     ...options,
-    url: `${ makeApiUrl("tasks") }${ queryString }`,
+    url: queryUrl,
     groupName: "cases",
     handleError,
     isProtected: true
