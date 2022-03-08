@@ -48,7 +48,7 @@ const TableCases: React.FC<Props> = ({ data, isBusy, onChange, pagination, sorti
       columns={ prioritizedColumns }
       data={ data }
       onClickRow={ onClickRow }
-      onChange={onChange}
+      onChange={ onChange }
       pagination={{
         ...pagination,
         paginationLength: 9

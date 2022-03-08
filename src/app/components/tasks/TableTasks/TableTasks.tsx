@@ -5,22 +5,29 @@ import getColumns from "./columns"
 type Props = {
   data?: Components.Schemas.CaseUserTask[]
   isBusy: boolean
+  onChange: (pagination: any, sorting: any) => void
+  pagination: TABLE.Schemas.Pagination
+  sorting: TABLE.Schemas.Sorting
   emptyPlaceholder: string
 }
 
-const TableTasks: React.FC<Props> = ({ data, isBusy, emptyPlaceholder }) => {
+const TableTasks: React.FC<Props> = ({ data, isBusy, onChange, pagination, sorting, emptyPlaceholder }) => {
   const [me] = useUsersMe()
-  const columns = getColumns(me?.id)
+  const columns = getColumns(sorting, me?.id)
 
   return (
     <Table
       hasFixedColumn
       columns={ columns }
-      data={ data || [] }
+      data={ data }
       loading={ isBusy }
       numLoadingRows={ 10 }
+      onChange={ onChange }
+      pagination={{
+        ...pagination,
+        paginationLength: 9
+      }}
       emptyPlaceholder={ emptyPlaceholder }
-      pagination={ false }
     />
   )
 }

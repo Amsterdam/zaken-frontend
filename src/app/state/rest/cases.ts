@@ -5,7 +5,6 @@ import { useErrorHandler } from "./hooks/utils/errorHandler"
 import { makeApiUrl } from "./hooks/utils/apiUrl"
 import useApiRequest from "./hooks/useApiRequest"
 
-
 const sortingOrder = {
   ASCEND: "ASCEND",
   DESCEND: "DESCEND"
