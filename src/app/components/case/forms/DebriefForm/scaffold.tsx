@@ -6,7 +6,26 @@ import navigateTo from "app/routing/navigateTo"
 import translationsViolationTypes from "app/translations/translationsViolationTypes"
 import translationsMap from "app/translations/translationsMap"
 
-export default (caseId: Components.Schemas.Case["id"], violationTypes: Components.Schemas.PaginatedViolationTypeList["results"]) => {
+const options = {
+  "-": "-",
+  "Kamerverhuur": "Kamerverhuur",
+  "Leegstand": "Leegstand",
+  "Onderhuur": "Onderhuur",
+  "Ondermijning": "Ondermijning",
+  "Vakantieverhuur": "Vakantieverhuur",
+  "Woningverbetering": "Woningverbetering"
+}
+
+// Remove current theme from options
+const getThemeOptions = (themeName?: string) => {
+  if (themeName !== undefined) {
+    const { [themeName]: remove, ...rest }: any = options
+    return rest
+  }
+  return options
+}
+
+export default (caseId: Components.Schemas.Case["id"], violationTypes: Components.Schemas.PaginatedViolationTypeList["results"], themeName?: string) => {
 
   const violationOptions = violationTypes?.map(({ key }) => key).reduce((acc, item) => { acc[item] = translationsMap(translationsViolationTypes, item); return acc }, {} as Record<string, string>)
 
@@ -31,14 +50,7 @@ export default (caseId: Components.Schemas.Case["id"], violationTypes: Component
             isRequired: true,
             name: "violation_result.theme",
             label: "Naar welk thema overdragen?",
-            options: {
-              "-": "-",
-              "Kamerverhuur": "Kamerverhuur",
-              "Leegstand": "Leegstand",
-              "Onderhuur": "Onderhuur",
-              "Ondermijning": "Ondermijning",
-              "Woningverbetering": "Woningverbetering"
-            }
+            options: getThemeOptions(themeName)
           }
         }
       }
