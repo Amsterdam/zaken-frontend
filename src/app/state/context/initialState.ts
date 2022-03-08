@@ -17,6 +17,7 @@ export type StateType = {
     sorting: TABLE.Schemas.Sorting
     theme: string
     role: string
+    owner: string
     updateContextTasks: (payload: any) => void
   }
 }
@@ -51,6 +52,7 @@ export const initialState: StateType = {
     },
     theme: "",
     role: "",
+    owner: "",
     updateContextTasks: noop
   }
 }

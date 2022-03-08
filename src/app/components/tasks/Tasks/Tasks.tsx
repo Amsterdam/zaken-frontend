@@ -14,7 +14,7 @@ const UNDERMINING = "Ondermijning"
 
 const Tasks: React.FC = () => {
   const {
-    results, count, pagination, sorting, role, theme, updateContextTasks
+    results, count, pagination, sorting, role, theme, updateContextTasks, owner
   } = useContext(ContextValues)["tasks"]
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const [roles] = useRoles()
@@ -24,9 +24,10 @@ const Tasks: React.FC = () => {
     pagination,
     sorting,
     theme,
-    role
+    role,
+    owner
   )
-  const queryUrl = getQueryUrl(hasPermission, pagination, sorting, theme, role)
+  const queryUrl = getQueryUrl(hasPermission, pagination, sorting, theme, role, owner)
   const { clearContextCache } = useContextCache("cases", queryUrl)
 
   useEffect(() => {
@@ -41,6 +42,7 @@ const Tasks: React.FC = () => {
   }, [dataSource, updateContextTasks])
 
   const onChangeFilter = (key: string, item: string) => {
+    // Empty cache to force a new data fetch.
     clearContextCache()
     updateContextTasks({
       [key]: item,
@@ -92,6 +94,8 @@ const Tasks: React.FC = () => {
           setTheme={ (value: string) => onChangeFilter("theme", value) }
           setPageSize={ onChangePageSize }
           pageSize={ pagination.pageSize?.toString() || "10" }
+          owner={ owner }
+          setOwner={ (value: string) => onChangeFilter("owner", value) }
         />
       </Column>
     </Row>

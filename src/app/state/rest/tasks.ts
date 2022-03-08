@@ -33,13 +33,15 @@ export const getQueryUrl = (
   pagination: TABLE.Schemas.Pagination,
   sorting?: TABLE.Schemas.Sorting,
   theme?: string,
-  role?: string
+  role?: string,
+  owner?: string
 ) => {
   const urlParams: any = {
     page: pagination.page,
     page_size: pagination.pageSize,
     theme,
-    role
+    role,
+    owner
   }
   if (sensitive === false) {
     urlParams.sensitive = false
@@ -59,10 +61,11 @@ export const useTasks = (
   sorting?: TABLE.Schemas.Sorting,
   theme?: string,
   role?: string,
+  owner?: string,
   options?: Options
 ) => {
   const handleError = useErrorHandler()
-  const queryUrl = getQueryUrl(sensitive, pagination, sorting, theme, role)
+  const queryUrl = getQueryUrl(sensitive, pagination, sorting, theme, role, owner)
 
   return useApiRequest<Components.Schemas.PaginatedCaseUserTaskList>({
     ...options,

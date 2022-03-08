@@ -6,6 +6,7 @@ import ScaffoldFields from "app/components/shared/Form/ScaffoldFields"
 import scaffoldTheme from "./scaffoldTheme"
 import scaffoldRole from "./scaffoldRole"
 import scaffoldPageSize from "./scaffoldPageSize"
+import scaffoldMyTasks from "./scaffoldMyTasks"
 
 type Props = {
   theme: string
@@ -16,13 +17,18 @@ type Props = {
   setRole: (value: string) => void
   pageSize: string
   setPageSize: (value: string) => void
+  owner: string
+  setOwner: (value: string) => void
 }
 
 const TasksFilter: React.FC<Props> = ({
-  role, roles, setRole, theme, themes, setTheme, pageSize, setPageSize
+  role, roles, setRole, theme, themes, setTheme, pageSize, setPageSize, owner, setOwner
 }) => (
   <>
     <FilterMenu>
+      <ScaffoldForm>
+        <ScaffoldFields { ...scaffoldMyTasks(owner, setOwner) } />
+      </ScaffoldForm>
       { themes === undefined
           ? <Spinner />
           : (
