@@ -31,7 +31,6 @@ export default (workflowForm: Components.Schemas.CaseUserTaskWorkdflow["form"], 
           const { type } = item
           const isRequiredText = "Dit veld is verplicht"
           if (type === "select" && !option?.value) return isRequiredText
-          if (type === "checkbox" && !(option?.length > 0)) return isRequiredText
           if (type === "text" && !option) return isRequiredText
           return ""
         },
