@@ -20,8 +20,6 @@ declare namespace Components {
             id: number;
             link: string;
             date_added: string; // date-time
-            related_object_id?: number | null;
-            related_object_type?: number | null;
         }
         /**
          * Adds nested create feature
@@ -70,10 +68,12 @@ declare namespace Components {
             start_date?: string | null; // date
             end_date?: string | null; // date
             sensitive?: boolean;
+            mma_number?: number | null;
             description?: string | null;
             ton_ids?: number /* int64 */[] | null;
             last_updated: string; // date-time
             created: string; // date-time
+            previous_case?: number | null;
         }
         /**
          * Case-address serializer for CaseUserTasks
@@ -180,12 +180,13 @@ declare namespace Components {
         }
         export interface CitizenReport {
             id: number;
-            advertisement_linklist?: string;
+            advertisements?: Advertisement[];
             case_user_task_id?: string;
             reporter_name?: string | null;
             reporter_phone?: string | null;
             reporter_email?: string | null;
             identification: number;
+            advertisement_linklist?: string[] | null;
             description_citizenreport?: string | null;
             nuisance?: boolean;
             date_added: string; // date-time
@@ -193,12 +194,13 @@ declare namespace Components {
         }
         export interface CitizenReportCase {
             id: number;
-            advertisement_linklist?: string;
+            advertisements?: Advertisement[];
             case_user_task_id?: string;
             reporter_name?: string | null;
             reporter_phone?: string | null;
             reporter_email?: string | null;
             identification: number;
+            advertisement_linklist?: string[] | null;
             description_citizenreport?: string | null;
             nuisance?: boolean;
             date_added: string; // date-time
@@ -826,10 +828,12 @@ declare namespace Components {
             start_date?: string | null; // date
             end_date?: string | null; // date
             sensitive?: boolean;
+            mma_number?: number | null;
             description?: string | null;
             ton_ids?: number /* int64 */[] | null;
             last_updated?: string; // date-time
             created?: string; // date-time
+            previous_case?: number | null;
         }
         export interface PatchedCaseUserTask {
             id?: number;
@@ -943,13 +947,13 @@ declare namespace Components {
         }
         export interface SummonedPerson {
             id: number;
-            first_name: string;
+            first_name?: string;
             preposition?: string | null;
-            last_name: string;
+            last_name?: string;
             person_role?: PersonRoleEnum;
             summon: number;
-            function?: string;
             entity_name?: string;
+            function?: string;
         }
         export interface SupportContact {
             id: number;
@@ -1124,10 +1128,12 @@ declare namespace Paths {
             export type Page = number;
             export type PageSize = number;
             export type PostalCode = string;
+            export type Project = number;
             export type Reason = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
+            export type StateTypesName = string;
             export type StreetName = string;
             export type Suffix = string;
             export type Theme = number;
@@ -1144,10 +1150,12 @@ declare namespace Paths {
             page?: Parameters.Page;
             page_size?: Parameters.PageSize;
             postal_code?: Parameters.PostalCode;
+            project?: Parameters.Project;
             reason?: Parameters.Reason;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
+            state_types__name?: Parameters.StateTypesName;
             street_name?: Parameters.StreetName;
             suffix?: Parameters.Suffix;
             theme?: Parameters.Theme;
@@ -1164,10 +1172,12 @@ declare namespace Paths {
             export type OpenCases = boolean;
             export type Ordering = string;
             export type PageSize = number;
+            export type Project = number;
             export type Reason = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
+            export type StateTypesName = string;
             export type Theme = number;
             export type TonIds = number;
         }
@@ -1179,10 +1189,12 @@ declare namespace Paths {
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
             page_size?: Parameters.PageSize;
+            project?: Parameters.Project;
             reason?: Parameters.Reason;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
+            state_types__name?: Parameters.StateTypesName;
             theme?: Parameters.Theme;
             ton_ids?: Parameters.TonIds;
         }
@@ -1197,10 +1209,12 @@ declare namespace Paths {
             export type OpenCases = boolean;
             export type Ordering = string;
             export type PageSize = number;
+            export type Project = number;
             export type Reason = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
+            export type StateTypesName = string;
             export type Theme = number;
             export type TonIds = number;
         }
@@ -1209,10 +1223,12 @@ declare namespace Paths {
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
             page_size?: Parameters.PageSize;
+            project?: Parameters.Project;
             reason?: Parameters.Reason;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
+            state_types__name?: Parameters.StateTypesName;
             theme?: Parameters.Theme;
             ton_ids?: Parameters.TonIds;
         }
@@ -1228,10 +1244,12 @@ declare namespace Paths {
             export type OpenCases = boolean;
             export type Ordering = string;
             export type PageSize = number;
+            export type Project = number;
             export type Reason = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
+            export type StateTypesName = string;
             export type Theme = number;
             export type TonIds = number;
         }
@@ -1243,10 +1261,12 @@ declare namespace Paths {
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
             page_size?: Parameters.PageSize;
+            project?: Parameters.Project;
             reason?: Parameters.Reason;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
+            state_types__name?: Parameters.StateTypesName;
             theme?: Parameters.Theme;
             ton_ids?: Parameters.TonIds;
         }
@@ -1263,10 +1283,12 @@ declare namespace Paths {
             export type Page = number;
             export type PageSize = number;
             export type PostalCode = string;
+            export type Project = number;
             export type Reason = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
+            export type StateTypesName = string;
             export type StreetName = string;
             export type Suffix = string;
             export type Theme = number;
@@ -1280,10 +1302,12 @@ declare namespace Paths {
             page?: Parameters.Page;
             page_size?: Parameters.PageSize;
             postal_code?: Parameters.PostalCode;
+            project?: Parameters.Project;
             reason?: Parameters.Reason;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
+            state_types__name?: Parameters.StateTypesName;
             street_name?: Parameters.StreetName;
             suffix?: Parameters.Suffix;
             theme?: Parameters.Theme;
@@ -1300,10 +1324,12 @@ declare namespace Paths {
             export type OpenCases = boolean;
             export type Ordering = string;
             export type PageSize = number;
+            export type Project = number;
             export type Reason = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
+            export type StateTypesName = string;
             export type Theme = number;
             export type TonIds = number;
         }
@@ -1315,10 +1341,12 @@ declare namespace Paths {
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
             page_size?: Parameters.PageSize;
+            project?: Parameters.Project;
             reason?: Parameters.Reason;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
+            state_types__name?: Parameters.StateTypesName;
             theme?: Parameters.Theme;
             ton_ids?: Parameters.TonIds;
         }
@@ -1337,10 +1365,12 @@ declare namespace Paths {
             export type Page = number;
             export type PageSize = number;
             export type PostalCode = string;
+            export type Project = number;
             export type Reason = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
+            export type StateTypesName = string;
             export type StreetName = string;
             export type Suffix = string;
             export type Theme = number;
@@ -1357,10 +1387,12 @@ declare namespace Paths {
             page?: Parameters.Page;
             page_size?: Parameters.PageSize;
             postal_code?: Parameters.PostalCode;
+            project?: Parameters.Project;
             reason?: Parameters.Reason;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
+            state_types__name?: Parameters.StateTypesName;
             street_name?: Parameters.StreetName;
             suffix?: Parameters.Suffix;
             theme?: Parameters.Theme;
@@ -1377,10 +1409,12 @@ declare namespace Paths {
             export type OpenCases = boolean;
             export type Ordering = string;
             export type PageSize = number;
+            export type Project = number;
             export type Reason = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
+            export type StateTypesName = string;
             export type Theme = number;
             export type TonIds = number;
         }
@@ -1392,10 +1426,12 @@ declare namespace Paths {
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
             page_size?: Parameters.PageSize;
+            project?: Parameters.Project;
             reason?: Parameters.Reason;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
+            state_types__name?: Parameters.StateTypesName;
             theme?: Parameters.Theme;
             ton_ids?: Parameters.TonIds;
         }
@@ -1411,10 +1447,12 @@ declare namespace Paths {
             export type OpenCases = boolean;
             export type Ordering = string;
             export type PageSize = number;
+            export type Project = number;
             export type Reason = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
+            export type StateTypesName = string;
             export type Theme = number;
             export type TonIds = number;
         }
@@ -1426,10 +1464,12 @@ declare namespace Paths {
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
             page_size?: Parameters.PageSize;
+            project?: Parameters.Project;
             reason?: Parameters.Reason;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
+            state_types__name?: Parameters.StateTypesName;
             theme?: Parameters.Theme;
             ton_ids?: Parameters.TonIds;
         }
@@ -1447,10 +1487,12 @@ declare namespace Paths {
             export type Page = number;
             export type PageSize = number;
             export type PostalCode = string;
+            export type Project = number;
             export type Reason = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
+            export type StateTypesName = string;
             export type StreetName = string;
             export type Suffix = string;
             export type Theme = number;
@@ -1467,10 +1509,12 @@ declare namespace Paths {
             page?: Parameters.Page;
             page_size?: Parameters.PageSize;
             postal_code?: Parameters.PostalCode;
+            project?: Parameters.Project;
             reason?: Parameters.Reason;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
+            state_types__name?: Parameters.StateTypesName;
             street_name?: Parameters.StreetName;
             suffix?: Parameters.Suffix;
             theme?: Parameters.Theme;
@@ -1490,10 +1534,12 @@ declare namespace Paths {
             export type Page = number;
             export type PageSize = number;
             export type PostalCode = string;
+            export type Project = number;
             export type Reason = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
+            export type StateTypesName = string;
             export type StreetName = string;
             export type Suffix = string;
             export type Theme = number;
@@ -1510,10 +1556,12 @@ declare namespace Paths {
             page?: Parameters.Page;
             page_size?: Parameters.PageSize;
             postal_code?: Parameters.PostalCode;
+            project?: Parameters.Project;
             reason?: Parameters.Reason;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
+            state_types__name?: Parameters.StateTypesName;
             street_name?: Parameters.StreetName;
             suffix?: Parameters.Suffix;
             theme?: Parameters.Theme;
@@ -1530,10 +1578,12 @@ declare namespace Paths {
             export type OpenCases = boolean;
             export type Ordering = string;
             export type PageSize = number;
+            export type Project = number;
             export type Reason = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
+            export type StateTypesName = string;
             export type Theme = number;
             export type TonIds = number;
         }
@@ -1545,10 +1595,12 @@ declare namespace Paths {
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
             page_size?: Parameters.PageSize;
+            project?: Parameters.Project;
             reason?: Parameters.Reason;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
+            state_types__name?: Parameters.StateTypesName;
             theme?: Parameters.Theme;
             ton_ids?: Parameters.TonIds;
         }

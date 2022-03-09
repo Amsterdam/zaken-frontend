@@ -43,7 +43,26 @@ export default (
         }
       }
     },
-
+    mma_number: {
+      type: "ShowHide",
+      props: {
+        shouldShow: (formValues: { values?: { reason?: Components.Schemas.CaseReason } }) => (
+          formValues?.values?.reason?.name === "MMA"
+        ),
+        field: {
+          type: "NumberField",
+          props: {
+            label: "MMA-nummer",
+            name: "mma_number",
+            placeholder: "123456",
+            min: 1,
+            step: 1,
+            isRequired: true,
+            hideNumberSpinner: true
+          }
+        }
+      }
+    },
     subjects: {
       type: "ShowHide",
       props: {
@@ -315,6 +334,7 @@ export default (
       ["description_citizenreport", "description_citizenreport"],
       ["nuisance"],
       ["project"],
+      ["mma_number"],
       ["advertisement", "advertisement"],
       ["advertisements", "advertisements"],
       ["subjects", "subjects"],
