@@ -11,7 +11,8 @@ export default (
   reasons: Components.Schemas.CaseReason[],
   projects: Components.Schemas.CaseProject[],
   subjects: Components.Schemas.Subject[],
-  advertisementOptions: Record<string, string>
+  advertisementOptions: Record<string, string>,
+  cases: Components.Schemas.Case[]
   ) => {
 
   const fields = {
@@ -42,7 +43,26 @@ export default (
         }
       }
     },
-
+    mma_number: {
+      type: "ShowHide",
+      props: {
+        shouldShow: (formValues: { values?: { reason?: Components.Schemas.CaseReason } }) => (
+          formValues?.values?.reason?.name === "MMA"
+        ),
+        field: {
+          type: "NumberField",
+          props: {
+            label: "MMA-nummer",
+            name: "mma_number",
+            placeholder: "123456",
+            min: 1,
+            step: 1,
+            isRequired: true,
+            hideNumberSpinner: true
+          }
+        }
+      }
+    },
     subjects: {
       type: "ShowHide",
       props: {
@@ -235,6 +255,42 @@ export default (
         }
       }
     },
+    otherTheme: {
+      type: "ShowHide",
+      props: {
+        shouldShow: (formValues: { values?: { theme?: Components.Schemas.CaseTheme } }) => formValues?.values?.theme !== undefined,
+        field: {
+          type: "CheckboxFields",
+          props: {
+            label: "Overgedragen vanuit ander thema",
+            name: "otherTheme",
+            options: {
+              otherTheme: "Ja"
+            }
+          }
+        }
+      }
+    },
+    previous_case: {
+      type: "ShowHide",
+      props: {
+        shouldShow: (formValues: { values?: { otherTheme?: any } }) => (
+          formValues?.values?.otherTheme?.includes("otherTheme")
+        ),
+        field: {
+          type: "ComplexSelectField",
+          props: {
+            label: "Overgedragen zaak ID",
+            name: "previous_case",
+            options: cases,
+            optionLabelField: "id",
+            withEmptyOption: true,
+            emptyOptionLabel: "Maak een keuze",
+            isRequired: true
+          }
+        }
+      }
+    },
     description: {
       type: "ShowHide",
       props: {
@@ -278,9 +334,12 @@ export default (
       ["description_citizenreport", "description_citizenreport"],
       ["nuisance"],
       ["project"],
+      ["mma_number"],
       ["advertisement", "advertisement"],
       ["advertisements", "advertisements"],
       ["subjects", "subjects"],
+      ["otherTheme", "otherTheme"],
+      ["previous_case"],
       ["description", "description"],
       ["cancel", "submit"]
     ])

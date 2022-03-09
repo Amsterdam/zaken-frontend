@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react"
 import pick from "lodash.pick"
 import scaffold from "./scaffold"
-import { useCaseThemes, useReasons, useCaseCreate, useProjects, useListing, useSubjects } from "app/state/rest"
+import {
+  useCaseThemes, useReasons, useCaseCreate, useProjects,
+  useListing, useSubjects, useCasesByBagId
+} from "app/state/rest"
 import ConfirmScaffoldForm from "app/components/shared/ConfirmScaffoldForm/ConfirmScaffoldForm"
 import useNavigateWithFlashMessage from "app/state/flashMessages/useNavigateWithFlashMessage"
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
@@ -27,7 +30,8 @@ const mapData = (bagId: Components.Schemas.Address["bag_id"], tonId: number | un
     reason_id: data.reason.id,
     project_id: data.project?.id,
     ton_ids: tonId !== undefined ? [ tonId ] : undefined,
-    subject_ids: data.subjects.map((subject: any) => subject.id)
+    subject_ids: data.subjects.map((subject: any) => subject.id),
+    previous_case: data.previous_case?.id || undefined
   }
   if (data.identification) {
     mappedData.citizen_reports = [{
@@ -55,6 +59,7 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
   const [subjects] = useSubjects(themeId)
   const [, { execPost }] = useCaseCreate()
   const [listing] = useListing(tonId)
+  const [cases] = useCasesByBagId(bagId)
 
   // Only show Vakantieverhuur, Digitaal Toezicht and Yes as an option for TON.
   const caseThemesOptions = tonId ? caseThemes?.results?.filter(({ name }) => name === TON_THEME_NAME) : caseThemes?.results
@@ -62,7 +67,11 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
     : reasons?.results?.filter(({ name }) => name !== TON_REASON_NAME)
   const adOptions = tonId ? pick(advertisementOptions, ["yes"]) : advertisementOptions
 
-  const changeThemeId = (newThemeId: number | undefined) => {
+  // Get cases and sort them by id for the option to link a previous case.
+  const casesArray = cases?.results ? [...cases.results] : []
+  const sortedCases = casesArray.sort((a, b) => (a.id > b.id) ? 1 : -1)
+
+  const onChangeThemeId = (newThemeId: number | undefined) => {
     /**
      * use undefined first, otherwise the state does not necessarily change when switching themes
      * delay is needed for updating state twice
@@ -79,8 +88,11 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
   ** themeId = undefined will load a spinner for the entire page. :(
   */
 
-  const fields = useScaffoldedFields(scaffold, bagId, themeId ?? -1,
-    changeThemeId, caseThemesOptions, reasonOptions ?? [], projects?.results ?? [], subjects?.results ?? [], adOptions)
+  const fields = useScaffoldedFields(
+    scaffold, bagId, themeId ?? -1, onChangeThemeId, caseThemesOptions,
+    reasonOptions ?? [], projects?.results ?? [], subjects?.results ?? [],
+    adOptions, sortedCases
+  )
 
   const navigateWithFlashMessage = useNavigateWithFlashMessage()
   const afterSubmit = async (result: Components.Schemas.Case) =>
