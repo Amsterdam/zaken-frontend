@@ -14,7 +14,7 @@ describe("mapWorkflowDataToScaffold", () => {
       "submit"
     ])
     const values = Object.values(scaffold.fields) as any
-    expect(values[1].type).toBe("CheckboxFields")
+    expect(values[1].type).toBe("Boolean")
     expect(values[2].type).toBe("ComplexSelectField")
     expect(values[3].type).toBe("DateField")
   })
