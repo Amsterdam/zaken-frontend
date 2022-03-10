@@ -4,36 +4,35 @@ import { Field } from "app/components/shared/Form/ScaffoldField"
 
 const mapItemToType = (item: any) => {
   if (item.is_date) return "DateField"
-  if (item.type === "checkbox") return "CheckboxFields"
+  if (item.type === "checkbox") return "Boolean"
+  if (item.type === "multiselect") return "CheckboxFields"
   if (item.type === "select") return "ComplexSelectField"
   if (item.camunda_type === "Long") return "NumberField"
   return "TextField"
 }
 
+const arrayToObject = (array: Array<{ label: string, value: string }>) => array.reduce(
+  (acc, val) => ({ ...acc, [val.value]: val.label }), {} as Record<string, string>
+)
+
 const mapItemToOptions = (item: any) => (
-  item.type === "checkbox" ? { [item.name]: item.label } : item.options ?? undefined
+  item.type === "checkbox" ? { [item.name]: item.label } : item.type === "multiselect" ? arrayToObject(item.options) : item.options ?? undefined
 )
 
 export default (workflowForm: Components.Schemas.CaseUserTaskWorkdflow["form"], onCancel = () => {}) => {
+
   const fields = workflowForm.reduce((acc: Fields, item: any) => {
     if (item === undefined) return acc
     acc[item.name] = {
       type: mapItemToType(item),
       props: {
         name: item.name,
-        label: item.type !== "checkbox" ? item.label : undefined,
+        label: item.label,
         isRequired: item.required ?? false,
         options: mapItemToOptions(item),
         optionLabelField: "label",
         withEmptyOption: true,
         emptyOptionLabel: "Maak een keuze",
-        validate: (option: any) => {
-          const { type } = item
-          const isRequiredText = "Dit veld is verplicht"
-          if (type === "select" && !option?.value) return isRequiredText
-          if (type === "text" && !option) return isRequiredText
-          return ""
-        },
         tooltip: item.tooltip
       }
     } as Field
