@@ -1,5 +1,3 @@
-
-
 import Modal, { ModalBlock } from "app/components/shared/Modal/Modal"
 import ChangeSubjectForm from "./ChangeSubjectForm"
 
@@ -11,14 +9,14 @@ export type Props = {
   themeId: Components.Schemas.CaseTheme["id"]
 }
 
-const ChangeSubjectModal: React.FC<Props> = ({ isOpen, closeModal, onSubmit, subjects = [], themeId }) => 
+const ChangeSubjectModal: React.FC<Props> = ({ isOpen, closeModal, onSubmit, subjects = [], themeId }) =>
   <Modal
     isOpen={isOpen}
     onClose={closeModal}
     title="Overtreding onderwerp aanpassen"
   >
     <ModalBlock>
-      <ChangeSubjectForm 
+      <ChangeSubjectForm
         onSubmit={ onSubmit }
         onCancel={ closeModal }
         themeId={ themeId }

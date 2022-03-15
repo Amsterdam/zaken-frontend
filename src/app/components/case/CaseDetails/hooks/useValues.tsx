@@ -23,8 +23,8 @@ export default (isClosed: boolean, caseItem?: Components.Schemas.Case) => {
     ["Thema", theme.name],
     ["Startdatum", <DateDisplay date={ start_date ?? undefined } emptyText="-" />],
     ["Aanleiding", project?.name !== undefined ? `Project: ${ project.name }` : reason.name],
-    ["Onderwerp(en)", isClosed 
-      ? subjects.map((subject) => subject.name).join(", ") 
+    ["Onderwerp(en)", isClosed
+      ? subjects.map((subject) => subject.name).join(", ")
       : <ChangeableSubject subjects={ subjects } caseId={ id } themeId={ theme.id } />]
   ]
 
