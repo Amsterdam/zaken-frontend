@@ -78,17 +78,17 @@ const Cases: React.FC = () => {
 
   return (
     <Container>
-        <TableCases
-          data={ results || [] }
-          isBusy={ isBusy }
-          onChange={onChangeTable}
-          pagination={{
+      <TableCases
+        data={ results || [] }
+        isBusy={ isBusy }
+        onChange={onChangeTable}
+        pagination={{
             page: pagination.page,
             pageSize: pagination.pageSize,
             collectionSize: count || 1
           }}
-          sorting={ sorting }
-          emptyPlaceholder={ emptyPlaceholder }
+        sorting={ sorting }
+        emptyPlaceholder={ emptyPlaceholder }
         />
       <FilterContainer>
         <CasesFilter

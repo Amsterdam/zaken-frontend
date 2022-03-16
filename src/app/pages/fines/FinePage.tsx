@@ -6,12 +6,12 @@ import PageHeading from "app/components/shared/PageHeading/PageHeading"
 import FinesSearchWrapper from "app/components/fines/FinesSearchWrapper"
 
 const FinePage: React.FC<RouteComponentProps> = () => (
-    <DefaultLayout>
-      <RowWithColumn>
-        <PageHeading />
-      </RowWithColumn>
-      <FinesSearchWrapper />
-    </DefaultLayout>
+  <DefaultLayout>
+    <RowWithColumn>
+      <PageHeading />
+    </RowWithColumn>
+    <FinesSearchWrapper />
+  </DefaultLayout>
   )
 
 export default FinePage

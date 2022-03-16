@@ -21,11 +21,11 @@ const BreadCrumbs: React.FC = () => {
 
   return (
     items.length > 1 ?
-    <nav>
-      <Breadcrumbs>
-        { items.map(({ title, to }, index) => <Link key={ index } to={ to }>{ title }</Link>) }
-      </Breadcrumbs>
-    </nav> :
+      <nav>
+        <Breadcrumbs>
+          { items.map(({ title, to }, index) => <Link key={ index } to={ to }>{ title }</Link>) }
+        </Breadcrumbs>
+      </nav> :
     null
   )
 }

@@ -71,19 +71,19 @@ const Details: React.FC<Props> = ({ isLoading, numLoadingRows, numInitialVisible
     { title && <Heading forwardedAs={ headingSize }>{ isLoading ? <SmallSkeleton height={10} /> : title}</Heading> }
     <StyledTable>
       <tbody>
-      { isLoading
+        { isLoading
         ? <LoadingRows numRows={numLoadingRows ?? 5} />
         : <>
-            { rows
+          { rows
               .map(([key, value]) => (
                 <StyledTR key={key} startAlternative={ startAlternative }>
                   <StyledTD>{ key }</StyledTD>
                   <StyledTD>{ castValue(value) }</StyledTD>
                 </StyledTR>
               )) }
-            { isCollapsible && isCollapsed && <tr><td><StyledButton variant="textButton" onClick={toggleCollapsed}> + Toon alle </StyledButton></td></tr> }
-            { isCollapsible && !isCollapsed && <tr><td><StyledButton variant="textButton" onClick={toggleCollapsed}> - Toon minder </StyledButton></td></tr> }
-          </>
+          { isCollapsible && isCollapsed && <tr><td><StyledButton variant="textButton" onClick={toggleCollapsed}> + Toon alle </StyledButton></td></tr> }
+          { isCollapsible && !isCollapsed && <tr><td><StyledButton variant="textButton" onClick={toggleCollapsed}> - Toon minder </StyledButton></td></tr> }
+        </>
         }
       </tbody>
     </StyledTable>

@@ -16,6 +16,8 @@ module.exports = {
     "semi": ["error", "never"],
     "template-curly-spacing": ["error", "always"],
     "unused-imports/no-unused-imports": "warn",
+    "react/jsx-indent-props": ["error", 2],
+    "react/jsx-indent" : ["error", 2],
 
     "@typescript-eslint/consistent-type-definitions": ["error", "type"],
     "@typescript-eslint/member-delimiter-style": ["error", {

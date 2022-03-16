@@ -42,10 +42,10 @@ const StyledMenuButton = styled(MenuButton)`
 const UserDisplay: React.FC<Props> = ({ name, onClick }) =>
   <>
     { name &&
-      <Div>
-        <Icon size={ 32 }><PermIdentity /></Icon>
-        <span>{ name }</span>
-      </Div>
+    <Div>
+      <Icon size={ 32 }><PermIdentity /></Icon>
+      <span>{ name }</span>
+    </Div>
     }
     <StyledMenuButton
       tabIndex={ 0 }

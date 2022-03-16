@@ -12,11 +12,11 @@ type Pet = {
 }
 
 const Wrapper: React.FC = ({ children }) => (
-    <KeycloakProvider>
-      <ApiProvider>
-        { children }
-      </ApiProvider>
-    </KeycloakProvider>
+  <KeycloakProvider>
+    <ApiProvider>
+      { children }
+    </ApiProvider>
+  </KeycloakProvider>
   )
 
 describe("useApiRequest", () => {

@@ -60,7 +60,7 @@ const ConfirmScaffoldFields = <T extends RequestBody>(props: Props<T>) => {
   const content = (
     <>
       { showInModal === false &&
-        <Heading>{ title }</Heading>
+      <Heading>{ title }</Heading>
       }
       <Wrap>
         <DefinitionList data={ values } />

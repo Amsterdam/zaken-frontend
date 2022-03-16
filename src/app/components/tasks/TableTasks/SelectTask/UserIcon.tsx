@@ -32,12 +32,12 @@ const UserIcon: React.FC<Props> = ({ owner }) => {
     isBusy
       ? <StyledSpinner />
       : (
-          <CustomTooltip title={user?.full_name || "Behandelaar is onbekend"}>
-            <StyledIcon size={ 28 }>
-              <LockOpen />
-              <StyledDiv>{user ? createNameAbbreviation(user) : "Onbekend"}</StyledDiv>
-            </StyledIcon>
-          </CustomTooltip>
+        <CustomTooltip title={user?.full_name || "Behandelaar is onbekend"}>
+          <StyledIcon size={ 28 }>
+            <LockOpen />
+            <StyledDiv>{user ? createNameAbbreviation(user) : "Onbekend"}</StyledDiv>
+          </StyledIcon>
+        </CustomTooltip>
         )
   )
 }

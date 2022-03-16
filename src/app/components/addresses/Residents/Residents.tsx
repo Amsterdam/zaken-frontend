@@ -29,7 +29,7 @@ const Residents: React.FC<Props> = ({ bagId }) => {
         <>
           <Heading as="h2">Actueel ingeschreven personen ({ residents.results.length })</Heading>
           <Ul>
-          { residents.results
+            { residents.results
               .map((resident, index) =>
                 <li key={ index }><Resident resident={ resident } num={ index + 1 }/></li>)
           }

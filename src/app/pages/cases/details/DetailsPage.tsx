@@ -40,7 +40,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
   }
   return (
     <>
-    { exists && isAuthorized && (
+      { exists && isAuthorized && (
       <DefaultLayout>
         <Row>
           <Column spanLarge={ 50 }>
@@ -59,9 +59,9 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
         <CaseNuisanceAlert caseId={ id } />
 
         { isClosed === false && (
-          <RowWithColumn>
-            <CaseStatus id={ id } />
-          </RowWithColumn>
+        <RowWithColumn>
+          <CaseStatus id={ id } />
+        </RowWithColumn>
         )}
         <RowWithColumn>
           <Heading as="h2">Zaakhistorie</Heading>
@@ -72,7 +72,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
         </RowWithColumn>
       </DefaultLayout>
     )}
-    { showNotFound && <NotFoundPage /> }
+      { showNotFound && <NotFoundPage /> }
     </>
   )
 }
