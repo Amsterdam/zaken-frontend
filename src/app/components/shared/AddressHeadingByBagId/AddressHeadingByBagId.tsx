@@ -21,10 +21,10 @@ const AddressHeadingByBagId: React.FC<Props> = ({ bagId }) => {
     <>
       <Heading as="h3">Adres</Heading>
       { address &&
-        <Div>
-          <p><AddressDisplay streetName={ address.straatnaam } streetNumber={ address.huisnummer } suffix={ address.bag_huisletter } etage={ address.bag_toevoeging } /></p>
-          <p>{ address.postcode } { address.woonplaats }</p>
-        </Div>
+      <Div>
+        <p><AddressDisplay streetName={ address.straatnaam } streetNumber={ address.huisnummer } suffix={ address.bag_huisletter } etage={ address.bag_toevoeging } /></p>
+        <p>{ address.postcode } { address.woonplaats }</p>
+      </Div>
       }
     </>
   )

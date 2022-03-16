@@ -37,10 +37,10 @@ const ConfirmScaffoldForm = <T extends Rec, U extends Rec, V extends Rec>(props:
 
   return (
     fields === undefined ?
-    <Spinner /> :
-    <ScaffoldForm onSubmit={ onSubmit } initialValues={ initialValues }>
-      <ScaffoldFields { ...fields }/>
-      { isSubmitted &&
+      <Spinner /> :
+      <ScaffoldForm onSubmit={ onSubmit } initialValues={ initialValues }>
+        <ScaffoldFields { ...fields }/>
+        { isSubmitted &&
         <ConfirmScaffoldFields<typeof fields.fields>
           fields={ fields.fields }
           data={ data }
@@ -52,7 +52,7 @@ const ConfirmScaffoldForm = <T extends Rec, U extends Rec, V extends Rec>(props:
           submittingTitle={ submittingTitle }
         />
       }
-    </ScaffoldForm>
+      </ScaffoldForm>
   )
 }
 

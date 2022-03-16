@@ -21,20 +21,20 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
 
   return (
     isValidUrlParamId<Components.Schemas.Case["id"]>(id) ?
-    <DefaultLayout>
-      <RowWithColumn>
-        <PageHeading />
-      </RowWithColumn>
-      <RowWithColumn>
-        <CaseHeading id={ id } />
-      </RowWithColumn>
-      <Row>
-        <Column spanLarge={50}>
-          <TaskForm id={ id } />
-        </Column>
-      </Row>
-    </DefaultLayout> :
-    <NotFoundPage />
+      <DefaultLayout>
+        <RowWithColumn>
+          <PageHeading />
+        </RowWithColumn>
+        <RowWithColumn>
+          <CaseHeading id={ id } />
+        </RowWithColumn>
+        <Row>
+          <Column spanLarge={50}>
+            <TaskForm id={ id } />
+          </Column>
+        </Row>
+      </DefaultLayout> :
+      <NotFoundPage />
   )
 }
 

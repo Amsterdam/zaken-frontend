@@ -13,7 +13,7 @@ export default (summon?: Components.Schemas.Summon) => {
       <PersonEntityDisplay personFunction={person_function} entityName={entity_name} />
       { person_role && <>
         <span> (</span>
-          <PersonRoleDisplay personRole={person_role} />
+        <PersonRoleDisplay personRole={person_role} />
         <span>)</span>
       </> }
     </>

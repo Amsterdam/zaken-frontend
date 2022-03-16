@@ -44,11 +44,11 @@ const DecisionForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
       <DecisionHeader caseId={ id } caseUserTaskId={ caseUserTaskId } />
       <FormTitle>Gebruik dit formulier om aan te geven welk besluit is genomen</FormTitle>
       <WorkflowForm
-          id={ id }
-          fields={ fields }
-          mapData={ mapData }
-          postMethod={ execPost }
-          caseUserTaskId={ caseUserTaskId }
+        id={ id }
+        fields={ fields }
+        mapData={ mapData }
+        postMethod={ execPost }
+        caseUserTaskId={ caseUserTaskId }
       />
     </>
   )

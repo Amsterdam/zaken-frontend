@@ -29,10 +29,10 @@ const PermitOverview: React.FC<Props> = ({ bagId }) => {
   return (
     <>
       { values === undefined ? (
-          <>
-            <Heading forwardedAs="h2">Vergunningen</Heading>
-            <Paragraph>Geen vergunningen gevonden</Paragraph>
-          </>
+        <>
+          <Heading forwardedAs="h2">Vergunningen</Heading>
+          <Paragraph>Geen vergunningen gevonden</Paragraph>
+        </>
         ) : (
           <DefinitionList loading={ isBusy } numLoadingRows={ 2 } title="Vergunningen" data={ values } />
         )

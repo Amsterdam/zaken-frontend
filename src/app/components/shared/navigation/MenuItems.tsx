@@ -29,16 +29,16 @@ const items = [
 
 const MenuItems: React.FC = () => (
   <>
-  { items.map(({ path, hiddenLaptopM, permissionNames, isHidden }) => {
+    { items.map(({ path, hiddenLaptopM, permissionNames, isHidden }) => {
       const { title } = routes[`${ path }/`]
       const menuItem = (
         <MenuItem key={ path }>
           { permissionNames !== undefined
               ? <IsAuthorizedMenuButton permissionNames={ permissionNames } isHidden={ isHidden } text={ title } to={ to(path) } />
               : (
-              <StyledButtonLink to={ to(path) }>
-                <MenuButton as="span">{ title }</MenuButton>
-              </StyledButtonLink>
+                <StyledButtonLink to={ to(path) }>
+                  <MenuButton as="span">{ title }</MenuButton>
+                </StyledButtonLink>
             )
           }
         </MenuItem>

@@ -22,16 +22,16 @@ const FinesSearchWrapper: React.FC = () => {
       </RowWithColumn>
       <Row>
         <Column spanLarge={50}>
-        <form onSubmit={e => {
+          <form onSubmit={e => {
           e.preventDefault()
           onSubmit()
         }}>
-          <SearchBar
-            placeholder="Vul kenmerk in, bijv. 12345_6_78"
-            value={ searchQuery }
-            onChange={ onChange }
-            onClear={ onClear }
-            autoFocus={ true }
+            <SearchBar
+              placeholder="Vul kenmerk in, bijv. 12345_6_78"
+              value={ searchQuery }
+              onChange={ onChange }
+              onClear={ onClear }
+              autoFocus={ true }
           />
           </form>
         </Column>

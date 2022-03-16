@@ -23,46 +23,46 @@ const CasesPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => {
 
   return (
     isValidUrlParamBAGId(bagId) ?
-    <DefaultLayout>
-      <Row>
-        <Column spanLarge={ 50 }>
-          <PageHeading titlePostFix={`(${ numCases })`}/>
-        </Column>
-        <Column spanLarge={ 50 }>
-          <DetailHeader bagId={ bagId } />
-        </Column>
-      </Row>
-      <RowWithColumn>
-        <span >
-          Let op: in BWV kunnen er ook open en gesloten zaken bekend zijn.<br/>
-          Onderstaand overzicht toont alle zaken die bekend zijn in AZA.
-        </span>
-      </RowWithColumn>
-      <RowWithColumn>
-        <CasesByBagId
-          title="Open zaken"
-          bagId={ bagId }
-          openCases={true}
-          emptyText="Op dit adres zijn geen open zaken"
+      <DefaultLayout>
+        <Row>
+          <Column spanLarge={ 50 }>
+            <PageHeading titlePostFix={`(${ numCases })`}/>
+          </Column>
+          <Column spanLarge={ 50 }>
+            <DetailHeader bagId={ bagId } />
+          </Column>
+        </Row>
+        <RowWithColumn>
+          <span >
+            Let op: in BWV kunnen er ook open en gesloten zaken bekend zijn.<br/>
+            Onderstaand overzicht toont alle zaken die bekend zijn in AZA.
+          </span>
+        </RowWithColumn>
+        <RowWithColumn>
+          <CasesByBagId
+            title="Open zaken"
+            bagId={ bagId }
+            openCases={true}
+            emptyText="Op dit adres zijn geen open zaken"
         />
-      </RowWithColumn>
-      <RowWithColumn>
-        <CasesByBagId
-          title="Gesloten zaken AZA"
-          bagId={ bagId }
-          emptyText="Op dit adres zijn geen gesloten zaken"
+        </RowWithColumn>
+        <RowWithColumn>
+          <CasesByBagId
+            title="Gesloten zaken AZA"
+            bagId={ bagId }
+            emptyText="Op dit adres zijn geen gesloten zaken"
         />
-      </RowWithColumn>
-      <RowWithColumn>
-        <IsAuthorizedButtonLink
-          permissionNames={["create_case"]}
-          to={ to("/adres/:bagId/zaken/nieuw", { bagId }) }
-          text="Nieuwe zaak aanmaken"
-          variant="primary"
+        </RowWithColumn>
+        <RowWithColumn>
+          <IsAuthorizedButtonLink
+            permissionNames={["create_case"]}
+            to={ to("/adres/:bagId/zaken/nieuw", { bagId }) }
+            text="Nieuwe zaak aanmaken"
+            variant="primary"
         />
-      </RowWithColumn>
-    </DefaultLayout> :
-    <NotFoundPage />
+        </RowWithColumn>
+      </DefaultLayout> :
+      <NotFoundPage />
   )
 }
 

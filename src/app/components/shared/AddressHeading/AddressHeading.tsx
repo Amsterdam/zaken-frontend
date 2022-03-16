@@ -19,10 +19,10 @@ const AddressHeading: React.FC<Props> = ({ caseId }) => {
     <>
       <Heading as="h3">Adres</Heading>
       { data &&
-        <Div>
-          <p><AddressDisplay streetName={ data.address.street_name } streetNumber={ data.address.number } suffix={ data.address.suffix_letter } etage={ data.address.suffix } /></p>
-          <p>{ data.address.postal_code } Amsterdam</p>
-        </Div>
+      <Div>
+        <p><AddressDisplay streetName={ data.address.street_name } streetNumber={ data.address.number } suffix={ data.address.suffix_letter } etage={ data.address.suffix } /></p>
+        <p>{ data.address.postal_code } Amsterdam</p>
+      </Div>
       }
     </>
   )

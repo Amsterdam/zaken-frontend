@@ -23,11 +23,11 @@ const UserInitials: React.FC<Props> = ({ owner }) => {
     isBusy
       ? <Spinner />
       : (
-          <CustomTooltip title={ tooltipTitle }>
-            <span>
-              { userInitials }
-            </span>
-          </CustomTooltip>
+        <CustomTooltip title={ tooltipTitle }>
+          <span>
+            { userInitials }
+          </span>
+        </CustomTooltip>
         )
   )
 }

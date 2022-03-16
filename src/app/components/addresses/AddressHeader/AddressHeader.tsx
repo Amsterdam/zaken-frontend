@@ -45,12 +45,12 @@ const AddressHeader: React.FC<Props> = ({ bagId, headingSize = "h2", isHeader = 
   return (
     <Div isHeader={ isHeader }>
       { showTitle &&
-        <AddressLink title={ title } bagId={ bagId } as={ headingSize ?? "span" } />
+      <AddressLink title={ title } bagId={ bagId } as={ headingSize ?? "span" } />
       }
       { showButton &&
-        <ButtonWrap>
-          <ShowOtherAddressesButton bagId={ bagId } index={ index } />
-        </ButtonWrap>
+      <ButtonWrap>
+        <ShowOtherAddressesButton bagId={ bagId } index={ index } />
+      </ButtonWrap>
       }
     </Div>
   )
