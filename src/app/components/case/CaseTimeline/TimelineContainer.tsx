@@ -17,7 +17,11 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
         ) : (
           <>
             { timelineEvents === undefined ? <Spinner /> : (
-              <EventsTimeline events={ timelineEvents } spacingHorizontal={ 3 } />
+              <EventsTimeline
+                events={ timelineEvents }
+                spacingHorizontal={ 3 }
+                prefixUrl={ `${ process.env.REACT_APP_AZA_FE }zaken/` }
+              />
               )
             }
           </>
