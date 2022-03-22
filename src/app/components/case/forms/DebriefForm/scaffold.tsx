@@ -55,6 +55,23 @@ export default (caseId: Components.Schemas.Case["id"], violationTypes: Component
         }
       }
     },
+    nuisance_detected: {
+      type: "ShowHide",
+      props: {
+        shouldShow: (() => themeName === "Vakantieverhuur" ),
+        field: {
+          type: "CheckboxFields",
+          props: {
+            label: "Overlast geconstateerd",
+            name: "nuisance_detected",
+            extraLabel: <InfoButton infoTitle="Overlast geconstateerd" infoText="Aanvinken indien overlast geconstateerd is zoals geluid, lawaai, stank en vuil overlast."></InfoButton>,
+            options: {
+              nuisance_detected: "Ja"
+            }
+          }
+        }
+      }
+    },
     feedback: {
       type: "TextAreaField",
       props: {
@@ -84,6 +101,7 @@ export default (caseId: Components.Schemas.Case["id"], violationTypes: Component
     .setGrid("mobileS", "1fr 1fr", [
       ["violation", "violation"],
       ["theme", "theme"],
+      ["nuisance_detected", "nuisance_detected"],
       ["feedback", "feedback"],
       ["secondaryButton", "submit"]
     ])

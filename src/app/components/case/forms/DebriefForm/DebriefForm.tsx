@@ -20,6 +20,12 @@ const DebriefCreateForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
   const [, { execPost }] = useDebriefingCreate()
   const fields = useScaffoldedFields(scaffold, id, violationTypes, themeName)
 
+  // Nuisance is an array but a boolean is expected.
+  const mapData = (data: any) => ({
+    ...data,
+    nuisance_detected: data.nuisance_detected ? data.nuisance_detected.includes("nuisance_detected") : false
+  })
+
   return (
     <>
       <FormTitle>Geef terugkoppeling van de gehouden debrief</FormTitle>
@@ -28,6 +34,7 @@ const DebriefCreateForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
         fields={ fields }
         postMethod={ execPost }
         caseUserTaskId={ caseUserTaskId }
+        mapData={ mapData }
       />
     </>
   )
