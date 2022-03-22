@@ -51,7 +51,7 @@ describe('Close case as projectmedwerker"', () => {
         .contains(roles.PM)
         .parents('td')
         .siblings('td')
-        .contains("Zaak afsluiten")
+        .contains("Afsluiten zaak")
 
       cy.testDueDate("tbody>tr>td", 5)
 

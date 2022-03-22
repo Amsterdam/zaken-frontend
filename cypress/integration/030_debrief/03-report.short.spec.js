@@ -65,7 +65,7 @@ describe('Process Short Report Visit"', () => {
         .contains(roles.PM)
         .parents('td')
         .siblings('td')
-        .contains("Zaak afsluiten")
+        .contains("Afsluiten zaak")
     })
   })
 
