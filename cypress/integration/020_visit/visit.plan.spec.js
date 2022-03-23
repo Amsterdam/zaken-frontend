@@ -33,6 +33,22 @@ describe('Plan "huisbezoek"', () => {
       cy.testDueDate("tbody>tr>td", 0)
     })
 
+    it("Click on task `Bepalen processtap`", () => {
+      cy.get("tbody>tr")
+        .contains("td", "Bepalen processtap")
+        .siblings('td')
+        .contains("Taak afronden")
+        .click({force: true})
+    })
+
+    it("Select next step", () => {
+      cy.get('[data-e2e-id="visit_next_step"]')
+        .select(visit.nextStep)
+
+      cy.get(`[data-e2e-id="submit"]`)
+        .click()
+    })
+
     it("Click on task Bezoek inplannen", () => {
       cy.get("tbody>tr")
         .contains("td", "Bezoek inplannen")
