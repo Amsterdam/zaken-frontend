@@ -60,12 +60,9 @@ describe('Process Short Report Visit"', () => {
       cy.get("h4")
         .contains(debrief.closingTask2)
       cy.get("tbody>tr")
-        .contains("td", debrief.closingTask2)
+        .contains("td", debrief.closingTask4)
         .siblings("td")
         .contains(roles.PM)
-        .parents('td')
-        .siblings('td')
-        .contains("Afsluiten zaak")
     })
   })
 

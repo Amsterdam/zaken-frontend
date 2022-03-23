@@ -37,7 +37,7 @@ describe('Close case as projectmedwerker"', () => {
 
     cy.wait('@getTasks').then(({ response }) => {
       const closingResponse = response?.body?.results?.find((e) => e.state?.status_name === debrief.closingTask2)
-      const closingTask = closingResponse?.tasks?.find((e) => e.name === debrief.closingTask2)
+      const closingTask = closingResponse?.tasks?.find((e) => e.name === debrief.closingTask4)
       const caseId = closingTask?.case
       const taskId = closingTask.case_user_task_id
 
@@ -46,12 +46,9 @@ describe('Close case as projectmedwerker"', () => {
       cy.get("h4")
         .contains(debrief.closingTask2)
       cy.get("tbody>tr")
-        .contains("td", debrief.closingTask2)
+        .contains("td", debrief.closingTask4)
         .siblings("td")
         .contains(roles.PM)
-        .parents('td')
-        .siblings('td')
-        .contains("Afsluiten zaak")
 
       cy.testDueDate("tbody>tr>td", 5)
 
