@@ -10,7 +10,7 @@ const sortingOrder = {
   DESCEND: "DESCEND"
 }
 
-const dataIndexMapping: any = {
+const sortingIndexMapping: any = {
   "address.street_name": "address__street_name",
   "address.postal_code": "address__postal_code",
   "start_date": "start_date",
@@ -20,7 +20,7 @@ const dataIndexMapping: any = {
 const getOrderingValue = (sorting: TABLE.Schemas.Sorting) => {
   let value = ""
   if (sorting?.dataIndex) {
-    value = dataIndexMapping[sorting.dataIndex]
+    value = sortingIndexMapping[sorting.dataIndex]
   }
   if (sorting.order === sortingOrder.DESCEND) {
     value = `-${ value }`
