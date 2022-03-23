@@ -39,7 +39,7 @@ const getColumns = (sorting: any) => {
       dataIndex: "address.street_name",
       sorter: (a: any, b: any) => a?.address?.full_address.localeCompare(b?.address?.full_address),
       sortOrder: sorting.dataIndex === "address.street_name" && sorting.order,
-      minWidth: 250,
+      minWidth: 200,
       render: (text: any, record: any) => {
         const { number, suffix, suffix_letter } = record.address
         return `${ text } ${ number }${ suffix ? "-" : "" }${ suffix || "" }${ suffix_letter ? "-" : "" }${ suffix_letter || "" }`

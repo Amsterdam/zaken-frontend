@@ -9,11 +9,20 @@ export default (sorting: any, myId?: string) => ([
     dataIndex: "owner",
     render: (owner: any, record: any) => <SelectTask taskId={ record.id } taskOwner={ owner }/>
   }, {
-    header: "Adres",
-    dataIndex: "case.address.full_address",
-    minWidth: 150,
-    sorter: (a: any, b: any) => a?.case?.address?.full_address.localeCompare(b?.case.address?.full_address),
-    sortOrder: sorting.dataIndex === "case.address.full_address" && sorting.order
+    header: "Straat",
+    dataIndex: "case.address.street_name",
+    sorter: (a: any, b: any) => a?.case?.address?.full_address.localeCompare(b?.case?.address?.full_address),
+    sortOrder: sorting.dataIndex === "case.address.street_name" && sorting.order,
+    minWidth: 200,
+    render: (text: any, record: any) => {
+      const { number, suffix, suffix_letter } = record.case.address
+      return `${ text } ${ number }${ suffix ? "-" : "" }${ suffix || "" }${ suffix_letter ? "-" : "" }${ suffix_letter || "" }`
+    }
+  }, {
+    header: "Postcode",
+    dataIndex: "case.address.postal_code",
+    sorter: (a: any, b: any) => a?.case?.address?.postal_code.localeCompare(b?.case?.address?.postal_code),
+    sortOrder: sorting.dataIndex === "case.address.postal_code" && sorting.order
   }, {
     header: "Open taak",
     dataIndex: "name",

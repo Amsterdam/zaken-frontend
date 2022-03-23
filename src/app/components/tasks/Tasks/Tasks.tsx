@@ -57,7 +57,9 @@ const Tasks: React.FC = () => {
     updateContextTasks({
       pagination: {
         ...pagination,
-        pageSize: parseInt(pageSize)
+        pageSize: parseInt(pageSize),
+        page: 1
+
       }
     })
   }
