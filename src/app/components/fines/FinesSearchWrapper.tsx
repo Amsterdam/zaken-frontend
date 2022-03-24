@@ -32,7 +32,7 @@ const FinesSearchWrapper: React.FC = () => {
               onChange={ onChange }
               onClear={ onClear }
               autoFocus={ true }
-          />
+            />
           </form>
         </Column>
       </Row>

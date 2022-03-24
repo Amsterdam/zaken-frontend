@@ -90,7 +90,7 @@ const Cases: React.FC = () => {
           }}
         sorting={ sorting }
         emptyPlaceholder={ emptyPlaceholder }
-        />
+      />
       <FilterContainer>
         <CasesFilter
           date={ fromStartDate }

@@ -29,7 +29,7 @@ const Modal: React.FC<Props> = ({ children, title, isOpen, showCloseButton = tru
           onClick={onClose}
           variant="blank"
           style={{ alignSelf: "flex-start" }}
-          >
+        >
           <Icon size={28}><Close /></Icon>
         </Button>
         }

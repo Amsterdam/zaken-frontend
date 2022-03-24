@@ -38,7 +38,8 @@ const DefaultLayout: React.FC<Props> = ({ showSearchButton = true, children }) =
   <>
     <SkipLinks linkList={ [
       { title: "Direct naar: inhoud", target: "a11y_content" }
-    ] }/>
+    ] }
+    />
     <HeaderWrap>
       <Header
         tall

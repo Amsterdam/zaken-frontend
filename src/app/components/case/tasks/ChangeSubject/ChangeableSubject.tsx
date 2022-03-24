@@ -43,7 +43,7 @@ const ChangeableSubject: React.FC<Props> = ({ subjects, caseId, themeId }) => {
       <Span
         role="link"
         onClick={ openModal }
-        >
+      >
         { subjects?.map(subject => subject.name).join(", ")}
         <StyledIcon size={ 20 }><Edit titleAccess="Pas het onderwerp aan" /></StyledIcon>
       </Span>

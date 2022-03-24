@@ -45,7 +45,7 @@ const ChangeableDueDate: React.FC<Props> = ({ dueDate, caseId, caseUserTaskId })
       <Span
         role="link"
         onClick={ openModal }
-        >
+      >
         <DueDate date={ dueDate } />
         <StyledIcon size={ 20 }><Edit titleAccess="Pas de slotdatum aan" /></StyledIcon>
       </Span>
@@ -55,7 +55,7 @@ const ChangeableDueDate: React.FC<Props> = ({ dueDate, caseId, caseUserTaskId })
         closeModal={ closeModal }
         dueDate={ dueDate }
         taskId={ caseUserTaskId }
-        />
+      />
     </>
   )
 }

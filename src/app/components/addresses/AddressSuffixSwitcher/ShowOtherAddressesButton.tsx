@@ -29,7 +29,7 @@ const renderIcon = (index: Index) => {
         size={ 32 }
         iconUrl={ `${ process.env.PUBLIC_URL }/icons/chevron_up_down.svg` }
         inline
-      />
+             />
   }
 }
 

@@ -47,12 +47,13 @@ const ChangeSubjectForm: React.FC<Props> = ({ isLoading, onSubmit, onCancel, the
           onClick={() => handleCheck(subject)}
           key={subject.id}
           htmlFor={subject.id.toString()}
-          label={subject.name}>
+          label={subject.name}
+        >
           <Checkbox
             id={subject.id.toString()}
             onChange={() => handleCheck(subject)}
             checked={isSelected(subject.id)}
-            />
+          />
         </StyledLabel>
       ))}
     </>

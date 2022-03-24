@@ -44,14 +44,14 @@ const CasesPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => {
             bagId={ bagId }
             openCases={true}
             emptyText="Op dit adres zijn geen open zaken"
-        />
+          />
         </RowWithColumn>
         <RowWithColumn>
           <CasesByBagId
             title="Gesloten zaken AZA"
             bagId={ bagId }
             emptyText="Op dit adres zijn geen gesloten zaken"
-        />
+          />
         </RowWithColumn>
         <RowWithColumn>
           <IsAuthorizedButtonLink
@@ -59,7 +59,7 @@ const CasesPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => {
             to={ to("/adres/:bagId/zaken/nieuw", { bagId }) }
             text="Nieuwe zaak aanmaken"
             variant="primary"
-        />
+          />
         </RowWithColumn>
       </DefaultLayout> :
       <NotFoundPage />
