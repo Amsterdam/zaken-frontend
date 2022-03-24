@@ -1,6 +1,6 @@
 
 import styled from "styled-components"
-import { Modal as AscModal, TopBar, Heading, Button, Icon, Divider, themeSpacing } from "@amsterdam/asc-ui"
+import { Modal as AscModal, TopBar, Heading, Button, Icon, themeSpacing, themeColor } from "@amsterdam/asc-ui"
 import { Close } from "app/components/shared/Icons"
 
 type Props = {
@@ -17,9 +17,18 @@ export const ModalBlock = styled.div`
   line-height: 1.5;
 `
 
+export const StyledTopBar = styled(TopBar)`
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background: white;
+  z-index: 2;
+  border-bottom: 1px solid ${ themeColor("tint", "level4") };
+`
+
 const Modal: React.FC<Props> = ({ children, title, isOpen, showCloseButton = true, onClose }) => (
   <AscModal open={isOpen} onClose={onClose}>
-    <TopBar>
+    <StyledTopBar>
       <Heading forwardedAs="h4" style={{ flexGrow: 1, padding: "12px 0" } }>
         { title }
         { showCloseButton &&
@@ -34,8 +43,7 @@ const Modal: React.FC<Props> = ({ children, title, isOpen, showCloseButton = tru
         </Button>
         }
       </Heading>
-    </TopBar>
-    <Divider />
+    </StyledTopBar>
     { children }
   </AscModal>)
 
