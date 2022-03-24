@@ -1,44 +1,43 @@
-import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
-import { Fields } from "app/components/shared/Form/ScaffoldFields"
-import navigateTo from "app/routing/navigateTo"
+import { FormPositioner } from '@amsterdam/amsterdam-react-final-form';
+import { Fields } from 'app/components/shared/Form/ScaffoldFields';
+import navigateTo from 'app/routing/navigateTo';
 
-export default (id: Components.Schemas.Case["id"], processes?: Components.Schemas.WorkflowOption[]) => {
-
+export default (id: Components.Schemas.Case['id'], processes?: Components.Schemas.WorkflowOption[]) => {
   const fields = {
     workflowProcess: {
-      type: "ComplexSelectField",
+      type: 'ComplexSelectField',
       props: {
-        name: "workflowProcess",
-        label: "Taak opvoeren",
-        optionLabelField: "name",
+        name: 'workflowProcess',
+        label: 'Taak opvoeren',
+        optionLabelField: 'name',
         withEmptyOption: true,
-        emptyOptionLabel: "Selecteer een taak",
+        emptyOptionLabel: 'Selecteer een taak',
         isRequired: true,
-        options: processes
-      }
+        options: processes,
+      },
     },
     cancel: {
-      type: "Button",
+      type: 'Button',
       props: {
-        label: "Annuleren",
-        variant: "primaryInverted",
-        onClick: () => navigateTo("/zaken/:id", { id })
-      }
+        label: 'Annuleren',
+        variant: 'primaryInverted',
+        onClick: () => navigateTo('/zaken/:id', { id }),
+      },
     },
     submit: {
-      type: "SubmitButton",
+      type: 'SubmitButton',
       props: {
-        variant: "secondary",
-        label: "Taak opvoeren",
-        align: "right"
-      }
-    }
-  }
+        variant: 'secondary',
+        label: 'Taak opvoeren',
+        align: 'right',
+      },
+    },
+  };
 
   return new FormPositioner(fields as Fields)
-    .setGrid("mobileS", "1fr 1fr", [
-      ["workflowProcess", "workflowProcess"],
-      ["cancel", "submit"]
+    .setGrid('mobileS', '1fr 1fr', [
+      ['workflowProcess', 'workflowProcess'],
+      ['cancel', 'submit'],
     ])
-    .getScaffoldProps()
-}
+    .getScaffoldProps();
+};

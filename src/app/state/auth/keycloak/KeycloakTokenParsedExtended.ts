@@ -1,4 +1,5 @@
-import { KeycloakTokenParsed } from "keycloak-js"
+import { KeycloakTokenParsed } from 'keycloak-js';
+
 type KeycloakTokenParsedExtended =
   KeycloakTokenParsed &
   {
@@ -6,4 +7,4 @@ type KeycloakTokenParsedExtended =
     email: string
     preferred_username: string
   }
-export default KeycloakTokenParsedExtended
+export default KeycloakTokenParsedExtended;

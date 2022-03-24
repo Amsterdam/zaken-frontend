@@ -1,9 +1,9 @@
-import { themeSpacing } from "@amsterdam/asc-ui"
-import styled from "styled-components"
+import { themeSpacing } from '@amsterdam/asc-ui';
+import styled from 'styled-components';
 
 const Ul = styled.ul`
-  margin-bottom: ${ themeSpacing(6) }
-`
+  margin-bottom: ${themeSpacing(6)}
+`;
 
 export default (
   <ol>
@@ -23,4 +23,4 @@ export default (
       </Ul>
     </li>
   </ol>
-)
+);

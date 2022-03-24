@@ -1,30 +1,29 @@
-import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
-import { Fields } from "app/components/shared/Form/ScaffoldFields"
+import { FormPositioner } from '@amsterdam/amsterdam-react-final-form';
+import { Fields } from 'app/components/shared/Form/ScaffoldFields';
 
-export const ROLE = "Projectmedewerker"
+export const ROLE = 'Projectmedewerker';
 
-const createOptions = (roles: MockComponents.Schemas.Role[]) =>
-  roles.reduce((acc, cur) => {
-    acc[cur] = cur
-    return acc
-  }, { "": "Alle rollen" } as Record<string, MockComponents.Schemas.Role>)
+const createOptions = (roles: MockComponents.Schemas.Role[]) => roles.reduce((acc, cur) => {
+  acc[cur] = cur;
+  return acc;
+}, { '': 'Alle rollen' } as Record<string, MockComponents.Schemas.Role>);
 
 export default (role: MockComponents.Schemas.Role, roles: MockComponents.Schemas.Role[], onChange: (value: string) => void) => {
   const fields = {
     period: {
-      type: "RadioFields",
+      type: 'RadioFields',
       props: {
-        label: "Rol",
-        name: "role",
-        optionLabelField: "title",
+        label: 'Rol',
+        name: 'role',
+        optionLabelField: 'title',
         options: createOptions(roles),
         onChange,
-        value: role
-      }
-    }
-  }
+        value: role,
+      },
+    },
+  };
 
   return new FormPositioner(fields as Fields)
-    .setVertical("mobileS")
-    .getScaffoldProps()
-}
+    .setVertical('mobileS')
+    .getScaffoldProps();
+};

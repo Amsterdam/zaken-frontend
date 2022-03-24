@@ -1,12 +1,12 @@
-import { breakpoint, Header } from "@amsterdam/asc-ui"
-import styled from "styled-components"
-import DefaultNavigation from "app/components/shared/navigation/DefaultNavigation"
-import MainWrapper from "app/components/layouts/MainWrapper/MainWrapper"
-import to from "app/routing/utils/to"
-import FlashMessages from "app/components/layouts/FlashMessages/FlashMessages"
-import UserInfo from "app/components/shared/UserInfo/UserInfo"
-import SkipLinks from "app/components/shared/SkipLinks/SkipLinks"
-import BreadCrumbsWrap from "app/components/shared/BreadCrumbs/BreadCrumbsWrap"
+import { breakpoint, Header } from '@amsterdam/asc-ui';
+import styled from 'styled-components';
+import DefaultNavigation from 'app/components/shared/navigation/DefaultNavigation';
+import MainWrapper from 'app/components/layouts/MainWrapper/MainWrapper';
+import to from 'app/routing/utils/to';
+import FlashMessages from 'app/components/layouts/FlashMessages/FlashMessages';
+import UserInfo from 'app/components/shared/UserInfo/UserInfo';
+import SkipLinks from 'app/components/shared/SkipLinks/SkipLinks';
+import BreadCrumbsWrap from 'app/components/shared/BreadCrumbs/BreadCrumbsWrap';
 
 type Props = {
   showSearchButton?: boolean
@@ -18,40 +18,40 @@ const HeaderWrap = styled.div`
   > div {
     z-index: 1;
   }
-`
+`;
 
 const MenuWrap = styled.div`
   display: flex;
   justify-content: flex-end;
   width: 100%;
 
-  @media screen and ${ breakpoint("min-width", "laptopM") } {
+  @media screen and ${breakpoint('min-width', 'laptopM')} {
     justify-content: space-between;
     
     ul {
       margin-left: -10px;
     }
   }
-`
+`;
 
 const DefaultLayout: React.FC<Props> = ({ showSearchButton = true, children }) => (
   <>
-    <SkipLinks linkList={ [
-      { title: "Direct naar: inhoud", target: "a11y_content" }
-    ] }
+    <SkipLinks linkList={[
+      { title: 'Direct naar: inhoud', target: 'a11y_content' },
+    ]}
     />
     <HeaderWrap>
       <Header
         tall
-        fullWidth={ false }
+        fullWidth={false}
         title="Amsterdamse Zaak Administratie"
-        homeLink={ to("/") }
-        navigation={
+        homeLink={to('/')}
+        navigation={(
           <MenuWrap>
-            <DefaultNavigation showSearchButton={ showSearchButton } />
+            <DefaultNavigation showSearchButton={showSearchButton} />
           </MenuWrap>
-        }
-        links={ <UserInfo /> }
+        )}
+        links={<UserInfo />}
       />
       <BreadCrumbsWrap />
     </HeaderWrap>
@@ -60,6 +60,6 @@ const DefaultLayout: React.FC<Props> = ({ showSearchButton = true, children }) =
       { children }
     </MainWrapper>
   </>
-)
+);
 
-export default DefaultLayout
+export default DefaultLayout;

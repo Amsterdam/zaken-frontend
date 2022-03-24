@@ -1,9 +1,8 @@
+import { Router as ReachRouter } from '@reach/router';
 
-import { Router as ReachRouter } from "@reach/router"
-
-import routes from "app/routing/routes"
-import ProtectedPage from "./ProtectedPage"
-import NotFoundPage from "app/pages/errors/NotFoundPage"
+import routes from 'app/routing/routes';
+import NotFoundPage from 'app/pages/errors/NotFoundPage';
+import ProtectedPage from './ProtectedPage';
 
 const Router: React.FC = () => (
   <ReachRouter>
@@ -20,11 +19,10 @@ const Router: React.FC = () => (
                 permissionNames={permissionNames}
               />
             )
-          )
-        )
+        ))
     }
     <NotFoundPage default />
   </ReachRouter>
-)
+);
 
-export default Router
+export default Router;

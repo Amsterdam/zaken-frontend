@@ -1,5 +1,7 @@
-import { Link, List, ListItem, themeColor } from "@amsterdam/asc-ui"
-import styled from "styled-components"
+import {
+  Link, List, ListItem, themeColor,
+} from '@amsterdam/asc-ui';
+import styled from 'styled-components';
 
 type Props = {
   linkList: {
@@ -13,12 +15,12 @@ const StyledList = styled(List)`
   li {
     margin: 0;
   }
-`
+`;
 
 const StyledLink = styled(Link)`
 
-    background-color: ${ themeColor("primary") };
-    color: ${ themeColor("tint", "level1") };
+    background-color: ${themeColor('primary')};
+    color: ${themeColor('tint', 'level1')};
     left: 50%;
     padding: 12px 16px;
     position: absolute;
@@ -27,25 +29,25 @@ const StyledLink = styled(Link)`
     z-index: -999;
 
     &:hover {
-      color: ${ themeColor("tint", "level1") };
+      color: ${themeColor('tint', 'level1')};
       text-decoration: none;
     }
     &:focus {
       transform: translate(-50%, 0%);
       z-index: 999;
     }
-`
+`;
 
-const SkipLinks: React.FC<Props> = ( { linkList }) => (
+const SkipLinks: React.FC<Props> = ({ linkList }) => (
   <nav>
-    <StyledList >
-      {linkList.map((link, index) => 
-        <ListItem key={ `${ link.target }_${ index }` }>
-          <StyledLink href={ `#${ link.target }` }>{ link.title }</StyledLink>
+    <StyledList>
+      {linkList.map((link, index) => (
+        <ListItem key={`${link.target}_${index}`}>
+          <StyledLink href={`#${link.target}`}>{ link.title }</StyledLink>
         </ListItem>
-      )}
+      ))}
     </StyledList>
   </nav>
-)
+);
 
-export default SkipLinks
+export default SkipLinks;

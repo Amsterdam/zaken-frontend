@@ -1,15 +1,15 @@
-import { createContext, useState, useEffect } from "react"
-import { KeycloakInstance } from "keycloak-js"
+import { createContext, useState, useEffect } from 'react';
+import { KeycloakInstance } from 'keycloak-js';
 
-import { keycloak } from "./keycloak"
-import options from "./options"
+import { keycloak } from './keycloak';
+import options from './options';
 
 export type Context = {
   isInitialized: boolean
   isAuthenticated: boolean
   keycloak: KeycloakInstance
 }
-export const KeycloakContext = createContext<Context|undefined>(undefined)
+export const KeycloakContext = createContext<Context|undefined>(undefined);
 
 type Props = {
   shouldInitialize?: boolean
@@ -17,34 +17,34 @@ type Props = {
 }
 
 const KeycloakProvider: React.FC<Props> = ({ shouldInitialize = true, initializedCallback, children }) => {
-  const [isInitialized, setIsInitialized] = useState(false)
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [isInitialized, setIsInitialized] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    if (shouldInitialize === false) return
+    if (shouldInitialize === false) return;
     (async () => {
       try {
-        const isAuthenticated = await keycloak.init(options)
-        setIsInitialized(true)
-        setIsAuthenticated(isAuthenticated)
-        if (initializedCallback !== undefined) await initializedCallback(keycloak, isAuthenticated)
+        const isAuthenticated = await keycloak.init(options);
+        setIsInitialized(true);
+        setIsAuthenticated(isAuthenticated);
+        if (initializedCallback !== undefined) await initializedCallback(keycloak, isAuthenticated);
       } catch (err) {
-        console.error("Keycloak failed to initialize")
-        console.error(err)
+        console.error('Keycloak failed to initialize');
+        console.error(err);
       }
-    })()
-  }, [initializedCallback, shouldInitialize])
+    })();
+  }, [initializedCallback, shouldInitialize]);
 
   const value = {
     isInitialized,
     isAuthenticated,
-    keycloak
-  }
+    keycloak,
+  };
 
   return (
-    <KeycloakContext.Provider value={ value }>
+    <KeycloakContext.Provider value={value}>
       { children }
     </KeycloakContext.Provider>
-  )
-}
-export default KeycloakProvider
+  );
+};
+export default KeycloakProvider;

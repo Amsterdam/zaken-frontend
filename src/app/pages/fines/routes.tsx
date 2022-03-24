@@ -1,10 +1,10 @@
-import FinePage from "app/pages/fines/FinePage"
+import FinePage from 'app/pages/fines/FinePage';
 
 export default {
-  "invorderingen": {
+  invorderingen: {
     Page: FinePage,
-    title: "Invorderingscheck",
-    icon: "Euro",
-    permissionNames: ["access_recovery_check"]
-  }
-}
+    title: 'Invorderingscheck',
+    icon: 'Euro',
+    permissionNames: ['access_recovery_check'],
+  },
+};

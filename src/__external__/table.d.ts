@@ -1,5 +1,5 @@
-const ASCEND = "ASCEND"
-const DESCEND = "DESCEND"
+const ASCEND = 'ASCEND';
+const DESCEND = 'DESCEND';
 
 type SortOrder = typeof ASCEND | typeof DESCEND
 

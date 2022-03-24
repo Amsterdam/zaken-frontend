@@ -1,6 +1,7 @@
-import { useContext } from "react"
-import { FlashMessageContext } from "./FlashMessageProvider"
-export type { FlashMessageLevel } from "./hooks/useFlashMessagesReducer"
+import { useContext } from 'react';
+import { FlashMessageContext } from './FlashMessageProvider';
+
+export type { FlashMessageLevel } from './hooks/useFlashMessagesReducer';
 
 /**
  * A flash message is a message that is only shown once.
@@ -15,9 +16,9 @@ export type { FlashMessageLevel } from "./hooks/useFlashMessagesReducer"
  *
  */
 export const useFlashMessages = () => {
-  const context = useContext(FlashMessageContext)
+  const context = useContext(FlashMessageContext);
   if (context === undefined) {
-    throw new Error("Context was not set")
+    throw new Error('Context was not set');
   }
-  return context
-}
+  return context;
+};

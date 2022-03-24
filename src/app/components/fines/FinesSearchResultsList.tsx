@@ -1,33 +1,39 @@
-import { useFine } from "app/state/rest"
-import { Heading, Spinner } from "@amsterdam/asc-ui"
-import { List } from "@amsterdam/wonen-ui"
-import FinesSearchResult from "./FinesSearchResult"
-import InfoButton from "app/components/shared/InfoHeading/InfoButton"
+import { useFine } from 'app/state/rest';
+import { Heading, Spinner } from '@amsterdam/asc-ui';
+import { List } from '@amsterdam/wonen-ui';
+import InfoButton from 'app/components/shared/InfoHeading/InfoButton';
+import FinesSearchResult from './FinesSearchResult';
 
 type Props = {
   searchString: string
 }
 
 const FinesSearchResultsList: React.FC<Props> = ({ searchString }) => {
-
-  const [data, { isBusy }] = useFine(searchString.length > 0 ? searchString : undefined)
-  const items = data?.items.map((fine) => <FinesSearchResult fine={ fine } />) ?? []
+  const [data, { isBusy }] = useFine(searchString.length > 0 ? searchString : undefined);
+  const items = data?.items.map((fine) => <FinesSearchResult fine={fine} />) ?? [];
 
   return (
     <>
-      { isBusy ?
-        <Spinner /> :
-        <>
-          { items.length > 0 ?
-            <>
-              <Heading as="h2">Resultaat invorderingscheck</Heading>
-              <List data={ items } />
-            </> :
-            searchString.length > 0 &&
+      { isBusy
+        ? <Spinner />
+        : (
+          <>
+            { items.length > 0
+              ? (
+                <>
+                  <Heading as="h2">Resultaat invorderingscheck</Heading>
+                  <List data={items} />
+                </>
+              )
+              : searchString.length > 0
+            && (
             <>
               <Heading as="h2">Resultaat invorderingscheck</Heading>
               <p>De gezochte beschikking is nog niet bekend bij belastingen.</p>
-              <p>Belastingen pakt overgedragen beschikkingen in principe op binnen <strong>5 werkdagen</strong>.
+              <p>
+                Belastingen pakt overgedragen beschikkingen in principe op binnen
+                <strong>5 werkdagen</strong>
+                .
                 <span>
                   <InfoButton
                     infoTitle="Facturatie"
@@ -37,11 +43,11 @@ const FinesSearchResultsList: React.FC<Props> = ({ searchString }) => {
               </p>
               <p>Indien deze tijd verstreken is, controleer dan of de beschikking juist verstuurd is.</p>
             </>
-          }
-        </>
-      }
+            )}
+          </>
+        )}
     </>
-  )
-}
+  );
+};
 
-export default FinesSearchResultsList
+export default FinesSearchResultsList;

@@ -1,26 +1,26 @@
 const correspondence: MockComponents.Schemas.Correspondence[] = [
   {
     id: 1,
-    title: "Correspondentie"
+    title: 'Correspondentie',
   },
   {
     id: 2,
-    title: "Terugbel verzoek"
+    title: 'Terugbel verzoek',
   },
   {
     id: 3,
-    title: "Melding"
-  }
-]
+    title: 'Melding',
+  },
+];
 
 const roles: MockComponents.Schemas.Role[] = [
-  "Handhavingsjurist",
-  "Projecthandhaver",
-  "Projectmedewerker",
-  "Toezichthouder"
-]
+  'Handhavingsjurist',
+  'Projecthandhaver',
+  'Projectmedewerker',
+  'Toezichthouder',
+];
 
 export default {
   correspondence,
-  roles
-}
+  roles,
+};

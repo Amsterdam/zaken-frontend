@@ -1,4 +1,4 @@
-import AddressHeader from "app/components/addresses/AddressHeader/AddressHeader"
+import AddressHeader from 'app/components/addresses/AddressHeader/AddressHeader';
 
 type Props = {
   bagId: string
@@ -6,7 +6,7 @@ type Props = {
 }
 
 const DetailHeader: React.FC<Props> = ({ bagId, enableSwitch }) => (
-  <AddressHeader bagId={ bagId! } enableSwitch={ enableSwitch } headingSize="h2" />
-)
+  <AddressHeader bagId={bagId!} enableSwitch={enableSwitch} headingSize="h2" />
+);
 
-export default DetailHeader
+export default DetailHeader;

@@ -1,7 +1,7 @@
-import { RouteComponentProps } from "@reach/router"
+import { RouteComponentProps } from '@reach/router';
 
-import useKeycloak from "app/state/auth/keycloak/useKeycloak"
-import AuthorizedPage from "./AuthorizedPage"
+import useKeycloak from 'app/state/auth/keycloak/useKeycloak';
+import AuthorizedPage from './AuthorizedPage';
 
 type Props = {
   page: React.ComponentType
@@ -12,17 +12,17 @@ type Props = {
  * The user needs to be logged on to visit this route
  */
 const ProtectedPage: React.FC<Props> = (props) => {
-  const { token } = useKeycloak()
+  const { token } = useKeycloak();
 
-  if (token === undefined) return null
+  if (token === undefined) return null;
 
-  const { page: Page, permissionNames, ...restProps } = props
+  const { page: Page, permissionNames, ...restProps } = props;
 
   return (
     permissionNames !== undefined
-      ? <AuthorizedPage { ...props } />
-      : <Page { ...restProps } />
-  )
-}
+      ? <AuthorizedPage {...props} />
+      : <Page {...restProps} />
+  );
+};
 
-export default ProtectedPage
+export default ProtectedPage;

@@ -1,5 +1,5 @@
-import AuthPage from "./AuthPage"
+import AuthPage from './AuthPage';
 
 export default {
-  "/auth": AuthPage
-}
+  '/auth': AuthPage,
+};

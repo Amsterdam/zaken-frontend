@@ -1,39 +1,38 @@
-import { useCallback } from "react"
+import { useCallback } from 'react';
 
-import useKeycloak from "app/state/auth/keycloak/useKeycloak"
-import useRequest, { Method } from "./useRequest"
-import navigateTo from "app/routing/navigateTo"
+import useKeycloak from 'app/state/auth/keycloak/useKeycloak';
+import navigateTo from 'app/routing/navigateTo';
+import useRequest, { Method } from './useRequest';
 
-import { RequestError } from "./useRequestWrapper"
+import { RequestError } from './useRequestWrapper';
 
 export default () => {
-
-  const keycloak = useKeycloak()
-  const request = useRequest()
+  const keycloak = useKeycloak();
+  const request = useRequest();
 
   return useCallback(
     async <Schema>(method: Method, url: string, data?: unknown, additionalHeaders = {}) => {
       try {
-        await keycloak.updateToken(30)
+        await keycloak.updateToken(30);
         const headers = {
-          Authorization: `Bearer ${ keycloak.token }`,
-          ...additionalHeaders
-        }
+          Authorization: `Bearer ${keycloak.token}`,
+          ...additionalHeaders,
+        };
         const response = await request<Schema>(
           method,
           url,
           data,
-          headers
-        )
-        return response
+          headers,
+        );
+        return response;
       } catch (error) {
         switch ((error as RequestError)?.response?.status) {
-          case 401: keycloak.logout(); break
-          case 403: navigateTo("/auth"); break
+          case 401: keycloak.logout(); break;
+          case 403: navigateTo('/auth'); break;
         }
-        if (error !== undefined) throw error
+        if (error !== undefined) throw error;
       }
     },
-    [keycloak, request]
-  )
-}
+    [keycloak, request],
+  );
+};

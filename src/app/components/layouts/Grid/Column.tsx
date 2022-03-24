@@ -1,6 +1,6 @@
-import styled from "styled-components"
-import { breakpoint } from "@amsterdam/asc-ui"
-import layouts from "@amsterdam/asc-ui/lib/theme/default/layouts"
+import styled from 'styled-components';
+import { breakpoint } from '@amsterdam/asc-ui';
+import layouts from '@amsterdam/asc-ui/lib/theme/default/layouts';
 
 /** Columns for page layout
  * optional props:
@@ -16,25 +16,25 @@ export type TypeProps = {
   spanLarge?: number
 }
 
-const GUTTER = layouts.large.gutter
+const GUTTER = layouts.large.gutter;
 
 const ColumnStyle = styled.div<TypeProps>`
   flex:1;
-  padding: 0 ${ GUTTER / 2 }px;
+  padding: 0 ${GUTTER / 2}px;
   max-width: 100%;
-  flex-basis: ${ props => props.spanSmall ? `${ props.spanSmall }%` : "100%" };
-  flex-grow: ${ props => props.spanSmall ? 0 : 1 };
-  @media screen and ${ breakpoint("min-width", "laptopM") } {
-    padding: 0 ${ GUTTER / 2 }px;
-    flex-basis: ${ props => props.spanLarge ? `${ props.spanLarge }%` : "100%" };
-    flex-grow: ${ props => props.spanLarge ? 0 : 1 };
+  flex-basis: ${(props) => (props.spanSmall ? `${props.spanSmall}%` : '100%')};
+  flex-grow: ${(props) => (props.spanSmall ? 0 : 1)};
+  @media screen and ${breakpoint('min-width', 'laptopM')} {
+    padding: 0 ${GUTTER / 2}px;
+    flex-basis: ${(props) => (props.spanLarge ? `${props.spanLarge}%` : '100%')};
+    flex-grow: ${(props) => (props.spanLarge ? 0 : 1)};
   }
-`
+`;
 
 const Column: React.FC<TypeProps> = ({ children, ...props }) => (
-  <ColumnStyle { ...props } >
+  <ColumnStyle {...props}>
     { children }
   </ColumnStyle>
-)
+);
 
-export default Column
+export default Column;

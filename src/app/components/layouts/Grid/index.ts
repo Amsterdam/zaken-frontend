@@ -1,4 +1,4 @@
-import Row, { RowWithColumn } from "./Row"
-import Column from "./Column"
+import Row, { RowWithColumn } from './Row';
+import Column from './Column';
 
-export { Row, RowWithColumn, Column }
+export { Row, RowWithColumn, Column };

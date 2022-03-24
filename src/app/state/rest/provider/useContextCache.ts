@@ -1,7 +1,7 @@
-import { useCallback, useContext } from "react"
-import { ApiContext } from "./ApiProvider"
+import { useCallback, useContext } from 'react';
+import { ApiContext } from './ApiProvider';
 
-type GroupName = "cases" | "case" | "auth" | "users" | "themes" | "roles" | "permissions"
+type GroupName = 'cases' | 'case' | 'auth' | 'users' | 'themes' | 'roles' | 'permissions'
 
 /*
  ** Hook for getting and updating items in the Context.
@@ -22,16 +22,14 @@ type GroupName = "cases" | "case" | "auth" | "users" | "themes" | "roles" | "per
 */
 
 const useContextCache = (groupName: GroupName, apiUrl: string) => {
-  const contextGroup = useContext(ApiContext)[groupName]
-  const item = contextGroup.getCacheItem(apiUrl)?.value
+  const contextGroup = useContext(ApiContext)[groupName];
+  const item = contextGroup.getCacheItem(apiUrl)?.value;
 
-  const getContextItem = useCallback(() => item, [item])
-  const updateContextItem = useCallback((updatedItem: any) =>
-    contextGroup.updateCacheItem(apiUrl, () => updatedItem), [contextGroup, apiUrl]
-  )
-  const clearContextCache = useCallback(() => contextGroup.clearCache(), [ contextGroup ])
+  const getContextItem = useCallback(() => item, [item]);
+  const updateContextItem = useCallback((updatedItem: any) => contextGroup.updateCacheItem(apiUrl, () => updatedItem), [contextGroup, apiUrl]);
+  const clearContextCache = useCallback(() => contextGroup.clearCache(), [contextGroup]);
 
-  return { getContextItem, updateContextItem, clearContextCache }
-}
+  return { getContextItem, updateContextItem, clearContextCache };
+};
 
-export default useContextCache
+export default useContextCache;

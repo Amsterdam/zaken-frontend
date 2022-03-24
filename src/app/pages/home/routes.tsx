@@ -1,8 +1,8 @@
-import HomePage from "app/pages/home/HomePage"
+import HomePage from 'app/pages/home/HomePage';
 
 export default {
-  "/": {
+  '/': {
     Page: HomePage,
-    title: "Home"
-  }
-}
+    title: 'Home',
+  },
+};

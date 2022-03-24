@@ -1,4 +1,4 @@
 export default {
-  onLoad: "login-required",
-  checkLoginIframe: false
-}
+  onLoad: 'login-required',
+  checkLoginIframe: false,
+};

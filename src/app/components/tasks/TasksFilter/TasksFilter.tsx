@@ -1,12 +1,12 @@
-import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
-import { Spinner } from "@amsterdam/asc-ui"
+import { ScaffoldForm } from '@amsterdam/amsterdam-react-final-form';
+import { Spinner } from '@amsterdam/asc-ui';
 
-import FilterMenu from "app/components/shared/FilterMenu/FilterMenu"
-import ScaffoldFields from "app/components/shared/Form/ScaffoldFields"
-import scaffoldTheme from "./scaffoldTheme"
-import scaffoldRole from "./scaffoldRole"
-import scaffoldPageSize from "./scaffoldPageSize"
-import scaffoldMyTasks from "./scaffoldMyTasks"
+import FilterMenu from 'app/components/shared/FilterMenu/FilterMenu';
+import ScaffoldFields from 'app/components/shared/Form/ScaffoldFields';
+import scaffoldTheme from './scaffoldTheme';
+import scaffoldRole from './scaffoldRole';
+import scaffoldPageSize from './scaffoldPageSize';
+import scaffoldMyTasks from './scaffoldMyTasks';
 
 type Props = {
   theme: string
@@ -22,42 +22,39 @@ type Props = {
 }
 
 const TasksFilter: React.FC<Props> = ({
-  role, roles, setRole, theme, themes, setTheme, pageSize, setPageSize, owner, setOwner
+  role, roles, setRole, theme, themes, setTheme, pageSize, setPageSize, owner, setOwner,
 }) => (
   <>
     <FilterMenu>
       <ScaffoldForm>
-        <ScaffoldFields { ...scaffoldMyTasks(owner, setOwner) } />
+        <ScaffoldFields {...scaffoldMyTasks(owner, setOwner)} />
       </ScaffoldForm>
       { themes === undefined
-          ? <Spinner />
-          : (
-            <ScaffoldForm>
-              <ScaffoldFields { ...scaffoldTheme(theme, themes, setTheme) } />
-            </ScaffoldForm>
-          )
-      }
+        ? <Spinner />
+        : (
+          <ScaffoldForm>
+            <ScaffoldFields {...scaffoldTheme(theme, themes, setTheme)} />
+          </ScaffoldForm>
+        )}
       { roles === undefined
-          ? <Spinner />
-          : (
-            <ScaffoldForm>
-              <ScaffoldFields { ...scaffoldRole(role, roles, setRole) } />
-            </ScaffoldForm>
-          )
-      }
+        ? <Spinner />
+        : (
+          <ScaffoldForm>
+            <ScaffoldFields {...scaffoldRole(role, roles, setRole)} />
+          </ScaffoldForm>
+        )}
       <ScaffoldForm>
-        <ScaffoldFields { ...scaffoldPageSize(pageSize, setPageSize) } />
+        <ScaffoldFields {...scaffoldPageSize(pageSize, setPageSize)} />
       </ScaffoldForm>
     </FilterMenu>
     <FilterMenu>
       <i>
-        <a href={ `${ window.location.pathname }${ window.location.search }` }>
+        <a href={`${window.location.pathname}${window.location.search}`}>
           Herlaad taken
         </a>
       </i>
     </FilterMenu>
   </>
-)
+);
 
-
-export default TasksFilter
+export default TasksFilter;

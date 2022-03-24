@@ -1,4 +1,4 @@
-import actions from "./actions"
+import actions from './actions';
 
 // Reducer to Handle Actions
 const reducer = (state: any, action: any) => {
@@ -8,20 +8,20 @@ const reducer = (state: any, action: any) => {
         ...state,
         cases: {
           ...state.cases,
-          ...action.payload
-        }
-      }
+          ...action.payload,
+        },
+      };
     case actions.UPDATE_TASKS:
       return {
         ...state,
         tasks: {
           ...state.tasks,
-          ...action.payload
-        }
-      }
+          ...action.payload,
+        },
+      };
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default reducer
+export default reducer;

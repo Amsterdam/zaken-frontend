@@ -2,5 +2,5 @@ export default {
   init: async () => {},
   updateToken: async () => {},
   logout: () => {},
-  token: process.env.REACT_APP_API_TOKEN ?? ""
-}
+  token: process.env.REACT_APP_API_TOKEN ?? '',
+};

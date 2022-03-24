@@ -1,8 +1,8 @@
-import styled from "styled-components"
-import { breakpoint, themeSpacing } from "@amsterdam/asc-ui"
-import layouts from "@amsterdam/asc-ui/lib/theme/default/layouts"
+import styled from 'styled-components';
+import { breakpoint, themeSpacing } from '@amsterdam/asc-ui';
+import layouts from '@amsterdam/asc-ui/lib/theme/default/layouts';
 
-import Column from "app/components/layouts/Grid/Column"
+import Column from 'app/components/layouts/Grid/Column';
 
 /** Rows for page layout
  * optional props:
@@ -19,7 +19,7 @@ export type TypeProps = {
   topSpacing?: number
 }
 
-const GUTTER = layouts.large.gutter
+const GUTTER = layouts.large.gutter;
 
 const RowStyle = styled.div<TypeProps>`
   box-sizing: border-box;
@@ -27,39 +27,39 @@ const RowStyle = styled.div<TypeProps>`
   justify-content: flex-start;
   align-items: flex-start;
   flex-wrap: wrap;
-  width: calc(100% + ${ GUTTER } px);
-  margin-left: -${ GUTTER / 2 }px;
-  margin-right: -${ GUTTER / 2 }px;
+  width: calc(100% + ${GUTTER} px);
+  margin-left: -${GUTTER / 2}px;
+  margin-right: -${GUTTER / 2}px;
 
   /* Column */
   > div {
-    margin-bottom: ${ props => themeSpacing(props.bottomSpacing ?? 6) };
-    margin-top: ${ props => themeSpacing(props.topSpacing ?? 0) };
+    margin-bottom: ${(props) => themeSpacing(props.bottomSpacing ?? 6)};
+    margin-top: ${(props) => themeSpacing(props.topSpacing ?? 0)};
   }
 
-  @media screen and ${ breakpoint("min-width", "laptopM") } {
-    width: calc(100% + ${ GUTTER }px);
-    margin-left: -${ GUTTER / 2 }px;
-    margin-right: -${ GUTTER  / 2 }px;
+  @media screen and ${breakpoint('min-width', 'laptopM')} {
+    width: calc(100% + ${GUTTER}px);
+    margin-left: -${GUTTER / 2}px;
+    margin-right: -${GUTTER / 2}px;
 
     /* Column */
     > div {
-      margin-bottom: ${ props => themeSpacing(props.bottomSpacing ?? 12) };
+      margin-bottom: ${(props) => themeSpacing(props.bottomSpacing ?? 12)};
     }
   }
-`
+`;
 
 export const RowWithColumn: React.FC<TypeProps> = ({ children, ...props }) => (
-  <RowStyle { ...props }>
+  <RowStyle {...props}>
     <Column>
       { children }
     </Column>
   </RowStyle>
-)
+);
 const Row: React.FC<TypeProps> = ({ children, ...props }) => (
-  <RowStyle { ...props }>
+  <RowStyle {...props}>
     { children }
   </RowStyle>
-)
+);
 
-export default Row
+export default Row;

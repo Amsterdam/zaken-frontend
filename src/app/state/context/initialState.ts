@@ -1,4 +1,4 @@
-const noop = () => {}
+const noop = () => {};
 
 export type StateType = {
   cases: {
@@ -29,32 +29,32 @@ export const initialState: StateType = {
     count: 0,
     pagination: {
       page: 1,
-      pageSize: 10
+      pageSize: 10,
     },
     sorting: {
-      dataIndex: "start_date",
-      order: "DESCEND"
+      dataIndex: 'start_date',
+      order: 'DESCEND',
     },
-    theme: "",
-    fromStartDate: "",
-    updateContextCases: noop
+    theme: '',
+    fromStartDate: '',
+    updateContextCases: noop,
   },
   tasks: {
     results: [],
     count: 0,
     pagination: {
       page: 1,
-      pageSize: 10
+      pageSize: 10,
     },
     sorting: {
-      dataIndex: "due_date",
-      order: "ASCEND"
+      dataIndex: 'due_date',
+      order: 'ASCEND',
     },
-    theme: "",
-    role: "",
-    owner: "",
-    updateContextTasks: noop
-  }
-}
+    theme: '',
+    role: '',
+    owner: '',
+    updateContextTasks: noop,
+  },
+};
 
-export default initialState
+export default initialState;

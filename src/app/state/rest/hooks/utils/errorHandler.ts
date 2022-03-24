@@ -1,27 +1,25 @@
-import { useCallback } from "react"
-import { AxiosError } from "axios"
+import { useCallback } from 'react';
+import { AxiosError } from 'axios';
 
-import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
+import { useFlashMessages } from 'app/state/flashMessages/useFlashMessages';
 
 /**
  * Default error handler:
  */
 export const useErrorHandler = () => {
-  const { addErrorFlashMessage } = useFlashMessages()
+  const { addErrorFlashMessage } = useFlashMessages();
 
-  return useCallback((error: any) => //TODO any used to be AxiosError
+  return useCallback(
+    (error: any) => // TODO any used to be AxiosError
       addErrorFlashMessage(
-        "Oeps er ging iets mis!",
-        `${ error?.response?.data?.detail ?? error?.message ?? "-" } (URL: ${ error?.config?.url ?? "-" })`
+        'Oeps er ging iets mis!',
+        `${error?.response?.data?.detail ?? error?.message ?? '-'} (URL: ${error?.config?.url ?? '-'})`,
       ),
-    [addErrorFlashMessage]
-  )
-}
+    [addErrorFlashMessage],
+  );
+};
 
 /**
  * Suppress error handler:
  */
-export const useSuppressErrorHandler = () =>
-  useCallback((error: AxiosError) => console.error(error), [])
-
-
+export const useSuppressErrorHandler = () => useCallback((error: AxiosError) => console.error(error), []);

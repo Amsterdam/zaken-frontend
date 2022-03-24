@@ -1,7 +1,5 @@
-
-
-import Modal, { ModalBlock } from "app/components/shared/Modal/Modal"
-import ChangeDueDateForm from "./ChangeDueDateForm"
+import Modal, { ModalBlock } from 'app/components/shared/Modal/Modal';
+import ChangeDueDateForm from './ChangeDueDateForm';
 
 export type Props = {
   isOpen: boolean
@@ -11,15 +9,18 @@ export type Props = {
   taskId: string
 }
 
-const ChangeDueDateModal: React.FC<Props> = ({ isOpen, closeModal, onSubmit, dueDate, taskId }) =>
+const ChangeDueDateModal: React.FC<Props> = ({
+  isOpen, closeModal, onSubmit, dueDate, taskId,
+}) => (
   <Modal
     isOpen={isOpen}
     onClose={closeModal}
     title="Wat is de nieuwe datum?"
   >
     <ModalBlock>
-      <ChangeDueDateForm onSubmit={ onSubmit } onCancel={closeModal} dueDate={dueDate} taskId={taskId} />
+      <ChangeDueDateForm onSubmit={onSubmit} onCancel={closeModal} dueDate={dueDate} taskId={taskId} />
     </ModalBlock>
   </Modal>
+);
 
-export default ChangeDueDateModal
+export default ChangeDueDateModal;

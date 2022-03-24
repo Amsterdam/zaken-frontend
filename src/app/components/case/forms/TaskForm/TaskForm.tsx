@@ -1,34 +1,32 @@
+import { FormTitle } from '@amsterdam/asc-ui';
 
-import { FormTitle } from "@amsterdam/asc-ui"
-
-import { useWorkflowProcesses, useWorkflowProcess } from "app/state/rest"
-import scaffold from "./scaffold"
-import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
-import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
+import { useWorkflowProcesses, useWorkflowProcess } from 'app/state/rest';
+import useScaffoldedFields from 'app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields';
+import WorkflowForm from 'app/components/case/WorkflowForm/WorkflowForm';
+import scaffold from './scaffold';
 
 type Props = {
-  id: Components.Schemas.Case["id"]
+  id: Components.Schemas.Case['id']
 }
 
-const mapData = (data: { workflowProcess: Components.Schemas.WorkflowOption }) => ({ workflow_option_id: data.workflowProcess.id })
+const mapData = (data: { workflowProcess: Components.Schemas.WorkflowOption }) => ({ workflow_option_id: data.workflowProcess.id });
 
 const TaskForm: React.FC<Props> = ({ id }) => {
-
-  const [processes] = useWorkflowProcesses(id)
-  const fields = useScaffoldedFields(scaffold, id, processes)
-  const [, { execPost }] = useWorkflowProcess(id, { lazy: true })
+  const [processes] = useWorkflowProcesses(id);
+  const fields = useScaffoldedFields(scaffold, id, processes);
+  const [, { execPost }] = useWorkflowProcess(id, { lazy: true });
 
   return (
     <>
       <FormTitle>Gebruik dit formulier om een taak op te voeren</FormTitle>
       <WorkflowForm
-        id={ id }
-        fields={ fields }
-        postMethod={ execPost }
-        mapData={ mapData }
+        id={id}
+        fields={fields}
+        postMethod={execPost}
+        mapData={mapData}
       />
     </>
-  )
-}
+  );
+};
 
-export default TaskForm
+export default TaskForm;

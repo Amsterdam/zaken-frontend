@@ -1,8 +1,8 @@
-import TonPage from "app/pages/ton/TonPage"
+import TonPage from 'app/pages/ton/TonPage';
 
 export default {
-  "digitaaltoezicht": {
+  digitaaltoezicht: {
     Page: TonPage,
-    title: "Digitaal toezicht"
-  }
-}
+    title: 'Digitaal toezicht',
+  },
+};

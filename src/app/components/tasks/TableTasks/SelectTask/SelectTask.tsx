@@ -1,15 +1,17 @@
-import { useState, useEffect, useContext } from "react"
-import styled from "styled-components"
-import { Spinner, Checkbox, themeSpacing, Label } from "@amsterdam/asc-ui"
-import { useUsersMe } from "app/state/rest/index"
-import { useTask } from "app/state/rest"
-import UserIcon from "./UserIcon"
-import useContextCache from "app/state/rest/provider/useContextCache"
-import { createNameAbbreviation } from "app/components/shared/Helpers/helpers"
-import CustomTooltip from "app/components/help/HelpContent/CustomTooltip"
-import useHasPermission, { SENSITIVE_CASE_PERMISSION } from "app/state/rest/custom/usePermissions/useHasPermission"
-import { ContextValues } from "app/state/context/ValueProvider"
-import { getQueryUrl } from "app/state/rest/tasks"
+import { useState, useEffect, useContext } from 'react';
+import styled from 'styled-components';
+import {
+  Spinner, Checkbox, themeSpacing, Label,
+} from '@amsterdam/asc-ui';
+import { useUsersMe } from 'app/state/rest/index';
+import { useTask } from 'app/state/rest';
+import useContextCache from 'app/state/rest/provider/useContextCache';
+import { createNameAbbreviation } from 'app/components/shared/Helpers/helpers';
+import CustomTooltip from 'app/components/help/HelpContent/CustomTooltip';
+import useHasPermission, { SENSITIVE_CASE_PERMISSION } from 'app/state/rest/custom/usePermissions/useHasPermission';
+import { ContextValues } from 'app/state/context/ValueProvider';
+import { getQueryUrl } from 'app/state/rest/tasks';
+import UserIcon from './UserIcon';
 
 type Props = {
   taskId: any
@@ -17,66 +19,68 @@ type Props = {
 }
 
 const StyledSpinner = styled(Spinner)`
-  margin: ${ themeSpacing(2) };
-`
+  margin: ${themeSpacing(2)};
+`;
 
 const StyledLabel = styled(Label)`
   font-weight: 400;
-`
+`;
 
 const SelectTask: React.FC<Props> = ({ taskId, taskOwner }) => {
   // Get tasks params to create the query params url for the Context.
   // Two different providers are being used. :(
-  const { pagination, sorting, role, theme, owner } = useContext(ContextValues)["tasks"]
-  const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
-  const [isChecked, setIsChecked] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [data, { isBusy }] = useUsersMe()
-  const [, { execPatch }] = useTask(taskId)
+  const {
+    pagination, sorting, role, theme, owner,
+  } = useContext(ContextValues).tasks;
+  const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION]);
+  const [isChecked, setIsChecked] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [data, { isBusy }] = useUsersMe();
+  const [, { execPatch }] = useTask(taskId);
   // Filtered tasks are stored with the search query as a parameter in the context.
-  const queryUrl = getQueryUrl(hasPermission, pagination, sorting, theme, role, owner)
-  const { getContextItem, updateContextItem } = useContextCache("cases", queryUrl)
+  const queryUrl = getQueryUrl(hasPermission, pagination, sorting, theme, role, owner);
+  const { getContextItem, updateContextItem } = useContextCache('cases', queryUrl);
 
   useEffect(() => {
     // Check if userId is matching with the taskOwner.
-    const isSelected = data?.id === taskOwner
-    setIsChecked(isSelected)
-  }, [data?.id, taskOwner])
+    const isSelected = data?.id === taskOwner;
+    setIsChecked(isSelected);
+  }, [data?.id, taskOwner]);
 
   const onChange = () => {
-    setLoading((prevLoading) => !prevLoading)
-    const newOwner = isChecked ? null : data?.id
+    setLoading((prevLoading) => !prevLoading);
+    const newOwner = isChecked ? null : data?.id;
     execPatch({ owner: newOwner })
       .then((resp: any) => {
         if (resp.status === 200) {
           // Owner changed so update context.
-          const tasksRespponse = getContextItem()
-          const tasks = tasksRespponse?.results
-          let newTasks = [...tasks]
-          const index = tasks.findIndex((task: { id: number }) => task.id === taskId)
-          const obj = newTasks[index]
-          newTasks[index] = { ...obj, owner: newOwner }
-          const newContextItem = { ...tasksRespponse, results: newTasks }
-          updateContextItem(newContextItem)
+          const tasksRespponse = getContextItem();
+          const tasks = tasksRespponse?.results;
+          const newTasks = [...tasks];
+          const index = tasks.findIndex((task: { id: number }) => task.id === taskId);
+          const obj = newTasks[index];
+          newTasks[index] = { ...obj, owner: newOwner };
+          const newContextItem = { ...tasksRespponse, results: newTasks };
+          updateContextItem(newContextItem);
         }
-        setLoading((prevLoading) => !prevLoading)
-      })
-  }
+        setLoading((prevLoading) => !prevLoading);
+      });
+  };
 
   if (isBusy || loading) {
-    return <StyledSpinner />
+    return <StyledSpinner />;
   }
   // If taskOwner is known but the the taskOwner is not the active user, show a user icon.
-  if (taskOwner && taskOwner !==  data?.id ) {
-    return <UserIcon owner={ taskOwner }/>
+  if (taskOwner && taskOwner !== data?.id) {
+    return <UserIcon owner={taskOwner} />;
   }
   return (
-    <StyledLabel htmlFor={`cb_${ taskId }`} label={data && data?.id === taskOwner ? `${ createNameAbbreviation(data) }` : ""}>
-      <CustomTooltip title={isChecked ? "Mijn taak" : "Beschikbaar"}>
-        <Checkbox data-e2e-id={`${ taskId }`} id={ `cb_${ taskId }` } checked={isChecked} onChange={ onChange }/>
+    <StyledLabel htmlFor={`cb_${taskId}`} label={data && data?.id === taskOwner ? `${createNameAbbreviation(data)}` : ''}>
+      <CustomTooltip title={isChecked ? 'Mijn taak' : 'Beschikbaar'}>
+        <Checkbox data-e2e-id={`${taskId}`} id={`cb_${taskId}`} checked={isChecked} onChange={onChange} />
       </CustomTooltip>
     </StyledLabel>
-  )
-}
+  );
+};
 
-export default SelectTask
+export default SelectTask;

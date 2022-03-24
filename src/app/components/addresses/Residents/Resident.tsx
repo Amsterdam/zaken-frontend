@@ -1,5 +1,5 @@
-import useValues from "./hooks/useValues"
-import { PersonNameDisplay, DefinitionList } from "@amsterdam/wonen-ui"
+import { PersonNameDisplay, DefinitionList } from '@amsterdam/wonen-ui';
+import useValues from './hooks/useValues';
 
 type Props = {
   resident: Components.Schemas.Resident
@@ -7,23 +7,25 @@ type Props = {
 }
 
 const Resident: React.FC<Props> = ({ resident, num }) => {
-  const title = <>
-    { `${ num }. ` }
-    <PersonNameDisplay
-      sex={ resident.geslachtsaanduiding }
-      firstName={ `${ resident.voorletters }.` }
-      namePrefix={ resident.voorvoegsel_geslachtsnaam }
-      name={ resident.geslachtsnaam }
-    />
-  </>
-  const values = useValues(resident)
+  const title = (
+    <>
+      { `${num}. ` }
+      <PersonNameDisplay
+        sex={resident.geslachtsaanduiding}
+        firstName={`${resident.voorletters}.`}
+        namePrefix={resident.voorvoegsel_geslachtsnaam}
+        name={resident.geslachtsnaam}
+      />
+    </>
+  );
+  const values = useValues(resident);
 
   return (
     <DefinitionList
-      title={ title }
+      title={title}
       headingSize="h3"
-      data={ values }
+      data={values}
     />
-  )
-}
-export default Resident
+  );
+};
+export default Resident;

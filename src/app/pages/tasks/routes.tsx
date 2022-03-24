@@ -1,9 +1,9 @@
-import IndexPage from "./IndexPage"
+import IndexPage from './IndexPage';
 
 export default {
-  "/taken": {
-    title: "Takenoverzicht",
+  '/taken': {
+    title: 'Takenoverzicht',
     Page: IndexPage,
-    icon: "Edit"
-  }
-}
+    icon: 'Edit',
+  },
+};

@@ -1,9 +1,9 @@
-import HelpPage from "app/pages/help/HelpPage"
+import HelpPage from 'app/pages/help/HelpPage';
 
 export default {
-  "hulp": {
+  hulp: {
     Page: HelpPage,
-    title: "Hulp",
-    icon: "Help"
-  }
-}
+    title: 'Hulp',
+    icon: 'Help',
+  },
+};

@@ -1,18 +1,18 @@
-import { displayDate } from "@amsterdam/wonen-ui"
-import { debriefViolationMap } from "../helpers/dictionaries"
+import { displayDate } from '@amsterdam/wonen-ui';
+import { debriefViolationMap } from '../helpers/dictionaries';
 
 export default [
   {
-    key: "date_added",
-    mapValue: (v: string) => displayDate(v)
+    key: 'date_added',
+    mapValue: (v: string) => displayDate(v),
   },
-  "author",
+  'author',
   {
-    key: "violation",
-    mapValue: (v: keyof typeof debriefViolationMap) => debriefViolationMap[v]
+    key: 'violation',
+    mapValue: (v: keyof typeof debriefViolationMap) => debriefViolationMap[v],
   },
   {
-    key: "feedback",
-    italic: true
-  }
-]
+    key: 'feedback',
+    italic: true,
+  },
+];

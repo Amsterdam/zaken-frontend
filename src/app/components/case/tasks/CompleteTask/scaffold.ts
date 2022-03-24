@@ -1,42 +1,42 @@
-import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
-import { Fields } from "app/components/shared/Form/ScaffoldFields"
+import { FormPositioner } from '@amsterdam/amsterdam-react-final-form';
+import { Fields } from 'app/components/shared/Form/ScaffoldFields';
 
 const scaffold = (onCancel: () => void) => {
   const fields = {
     completed: {
-      type: "CheckboxFields",
+      type: 'CheckboxFields',
       props: {
-        name: "completed",
-        label: "",
+        name: 'completed',
+        label: '',
         isRequired: true,
         options: {
-          completed: "Ja, deze taak is afgerond"
-        }
-      }
+          completed: 'Ja, deze taak is afgerond',
+        },
+      },
     },
     submit: {
-      type: "SubmitButton",
-      variant: "primary",
+      type: 'SubmitButton',
+      variant: 'primary',
       props: {
-        label: "Taak afronden"
-      }
+        label: 'Taak afronden',
+      },
     },
     cancel: {
-      type: "Button",
+      type: 'Button',
       props: {
-        label: "Annuleer",
-        variant: "primaryInverted",
-        onClick: onCancel
-      }
-    }
-  }
+        label: 'Annuleer',
+        variant: 'primaryInverted',
+        onClick: onCancel,
+      },
+    },
+  };
 
   return new FormPositioner(fields as Fields)
-    .setGrid("mobileS", "1fr 1fr", [
-      ["completed", "completed"],
-      ["cancel", "submit"]
+    .setGrid('mobileS', '1fr 1fr', [
+      ['completed', 'completed'],
+      ['cancel', 'submit'],
     ])
-    .getScaffoldProps()
-}
+    .getScaffoldProps();
+};
 
-export default scaffold
+export default scaffold;

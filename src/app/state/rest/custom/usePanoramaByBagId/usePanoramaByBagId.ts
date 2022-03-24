@@ -1,7 +1,7 @@
-import { useBAG, usePanorama } from "app/state/rest/index"
+import { useBAG, usePanorama } from 'app/state/rest/index';
 
 const usePanoramaByBagId = (bagId: string, width: number | undefined, aspect: number | undefined, radius: number, fov: number | undefined) => {
-  const [data] = useBAG(bagId)
+  const [data] = useBAG(bagId);
 
   return usePanorama(
     data?.results?.[0]?.centroid[1],
@@ -10,8 +10,8 @@ const usePanoramaByBagId = (bagId: string, width: number | undefined, aspect: nu
     aspect,
     radius,
     fov,
-    { lazy: data?.results?.[0] === undefined || width === undefined }
-  )
-}
+    { lazy: data?.results?.[0] === undefined || width === undefined },
+  );
+};
 
-export default usePanoramaByBagId
+export default usePanoramaByBagId;

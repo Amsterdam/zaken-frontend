@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from 'styled-components';
 
 // Be careful
 // ==========
@@ -14,9 +14,16 @@ type Props = {
 
 const NoWrap = styled.span`
   white-space: nowrap;
-`
+`;
 
-const AddressDisplay: React.FC<Props> = ({ streetName, streetNumber, suffix, etage }) =>
-  <>{ streetName } <NoWrap>{ `${ streetNumber }${ suffix ? suffix : "" }${ etage ? `-${ etage }` : "" }`.trim() }</NoWrap></>
+const AddressDisplay: React.FC<Props> = ({
+  streetName, streetNumber, suffix, etage,
+}) => (
+  <>
+    { streetName }
+    {' '}
+    <NoWrap>{ `${streetNumber}${suffix || ''}${etage ? `-${etage}` : ''}`.trim() }</NoWrap>
+  </>
+);
 
-export default AddressDisplay
+export default AddressDisplay;
