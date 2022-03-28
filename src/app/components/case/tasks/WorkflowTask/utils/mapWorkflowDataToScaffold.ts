@@ -23,11 +23,15 @@ export default (workflowForm: Components.Schemas.CaseUserTaskWorkdflow["form"], 
 
   const fields = workflowForm.reduce((acc: Fields, item: any) => {
     if (item === undefined) return acc
+    const mappedItemType = mapItemToType(item)
+    // Check for Boolean type to add the checkboxLabel for an aligned single checkbox label.
+    const isBoolean = mappedItemType === "Boolean"
     acc[item.name] = {
-      type: mapItemToType(item),
+      type: mappedItemType,
       props: {
         name: item.name,
-        label: item.label,
+        label: isBoolean ? "" : item.label,
+        checkboxLabel: isBoolean ? item.label : "",
         isRequired: item.required ?? false,
         options: mapItemToOptions(item),
         optionLabelField: "label",
