@@ -50,7 +50,9 @@ const ConfirmScaffoldFields = <T extends RequestBody>(props: Props<T>) => {
     submittingTitle
   } = props
   const [isSubmitting, setSubmitting] = useState(false)
+  console.log("fields", fields)
   const values = useMemo(() => createValuesObject<T>(fields, data, showFields), [data, fields, showFields])
+  console.log("values", values)
 
   const onSubmitWrap = async () => {
     setSubmitting(true)
@@ -59,23 +61,19 @@ const ConfirmScaffoldFields = <T extends RequestBody>(props: Props<T>) => {
 
   const content = (
     <>
-      { showInModal === false &&
-      <Heading>{ title }</Heading>
-      }
+      { showInModal === false && <Heading>{ title }</Heading> }
       <Wrap>
         <DefinitionList data={ values } />
         <ButtonWrap>
           <Button variant="primaryInverted" onClick={ onCancel }>{ cancelTitle }</Button>
           <Button variant="secondary" onClick={ onSubmitWrap }>{ submitTitle }</Button>
         </ButtonWrap>
-        { isSubmitting &&
-          <SpinnerWrap />
-        }
+        { isSubmitting && <SpinnerWrap /> }
       </Wrap>
     </>
   )
 
-  return showInModal ?
+  return showInModal ? (
     <Modal
       title={ isSubmitting && submittingTitle ? submittingTitle : title }
       isOpen={ true }
@@ -85,8 +83,8 @@ const ConfirmScaffoldFields = <T extends RequestBody>(props: Props<T>) => {
       <ModalBlock>
         { content }
       </ModalBlock>
-    </Modal> :
-    content
+    </Modal>
+  ) : content
 }
 
 export default ConfirmScaffoldFields

@@ -13,11 +13,12 @@ type Props<T, U, V> = {
   afterSubmit?: (result: V) => Promise<unknown>
   initialValues?: Record<string, unknown>
   submittingTitle?: string
+  title?: string
 }
 
 const ConfirmScaffoldForm = <T extends Rec, U extends Rec, V extends Rec>(props: Props<T, U, V>) => {
 
-  const { fields, postMethod, mapData, afterSubmit, initialValues, submittingTitle } = props
+  const { fields, postMethod, mapData, afterSubmit, initialValues, submittingTitle, title } = props
   const {
     isSubmitted,
     data,
@@ -36,23 +37,24 @@ const ConfirmScaffoldForm = <T extends Rec, U extends Rec, V extends Rec>(props:
   }
 
   return (
-    fields === undefined ?
-      <Spinner /> :
+    fields === undefined ? <Spinner /> : (
       <ScaffoldForm onSubmit={ onSubmit } initialValues={ initialValues }>
         <ScaffoldFields { ...fields }/>
-        { isSubmitted &&
-        <ConfirmScaffoldFields<typeof fields.fields>
-          fields={ fields.fields }
-          data={ data }
-          showFields={ Object.keys(fields.fields) }
-          onCancel={ onCancelConfirm }
-          onSubmit={ onSubmitConfirmWrap }
-          submitTitle={ submitTitle }
-          showInModal={ true }
-          submittingTitle={ submittingTitle }
-        />
-      }
+        { isSubmitted && (
+          <ConfirmScaffoldFields<typeof fields.fields>
+            fields={ fields.fields }
+            data={ data }
+            showFields={ Object.keys(fields.fields) }
+            onCancel={ onCancelConfirm }
+            onSubmit={ onSubmitConfirmWrap }
+            submitTitle={ submitTitle }
+            showInModal={ true }
+            submittingTitle={ submittingTitle }
+            title={ title }
+          />
+        )}
       </ScaffoldForm>
+    )
   )
 }
 
