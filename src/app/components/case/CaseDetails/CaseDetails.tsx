@@ -44,9 +44,8 @@ const getDataFirstCol = (caseItem?: Components.Schemas.Case) => {
 
 const getDataSecondCol = (isClosed: boolean, caseItem?: Components.Schemas.Case) => {
   if (caseItem === undefined) return
-  const { id, theme, start_date, reason, project, subjects, address: { housing_corporation } } = caseItem
+  const { id, theme, reason, project, subjects, address: { housing_corporation } } = caseItem
   const data: any = {
-    "Startdatum": <DateDisplay date={ start_date ?? undefined } emptyText="-" />,
     "Aanleiding": project?.name !== undefined ? `Project: ${ project.name }` : reason.name,
     "Onderwerp(en)": isClosed
       ? subjects.map((subject) => subject.name).join(", ")
