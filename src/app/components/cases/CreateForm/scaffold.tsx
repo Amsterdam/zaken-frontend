@@ -43,7 +43,7 @@ export default (
             optionLabelField: "name",
             withEmptyOption: true,
             emptyOptionLabel: "Maak een keuze",
-            isRequired: true
+            isRequired: false
           }
         }
       }
