@@ -37,7 +37,7 @@ const getDataFirstCol = (caseItem?: Components.Schemas.Case) => {
     "Startdatum": <DateDisplay date={ start_date ?? undefined } emptyText="-" />
   }
   if (previous_case) {
-    data["Gerelateerde zaak"] = previous_case
+    data["Overgedragen zaak"] = previous_case
   }
   return data
 }

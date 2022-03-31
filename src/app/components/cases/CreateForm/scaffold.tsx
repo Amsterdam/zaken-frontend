@@ -346,7 +346,7 @@ export default (
   return new FormPositioner(fields as Fields)
     .setGrid("mobileS", "1fr 1fr", [
       ["theme", "theme"],
-      ["housing_corporation"],
+      ["housing_corporation", "housing_corporation"],
       ["reason", "reason"],
       ["reporter_anonymous", "reporter_anonymous"],
       ["reporter_name"],
