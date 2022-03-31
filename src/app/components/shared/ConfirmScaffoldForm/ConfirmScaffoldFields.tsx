@@ -50,9 +50,7 @@ const ConfirmScaffoldFields = <T extends RequestBody>(props: Props<T>) => {
     submittingTitle
   } = props
   const [isSubmitting, setSubmitting] = useState(false)
-  console.log("fields", fields)
   const values = useMemo(() => createValuesObject<T>(fields, data, showFields), [data, fields, showFields])
-  console.log("values", values)
 
   const onSubmitWrap = async () => {
     setSubmitting(true)
