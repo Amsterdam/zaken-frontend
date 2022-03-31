@@ -3,11 +3,12 @@ import pick from "lodash.pick"
 import scaffold from "./scaffold"
 import {
   useCaseThemes, useReasons, useCaseCreate, useProjects,
-  useListing, useSubjects, useCasesByBagId, useCorporations
+  useListing, useSubjects, useCasesByBagId, useCorporations, useBAG
 } from "app/state/rest"
 import ConfirmScaffoldForm from "app/components/shared/ConfirmScaffoldForm/ConfirmScaffoldForm"
 import useNavigateWithFlashMessage from "app/state/flashMessages/useNavigateWithFlashMessage"
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
+import getAddressAsString from "app/components/addresses/utils/getAddressAsString"
 
 const TON_THEME_NAME = "Vakantieverhuur"
 const TON_REASON_NAME = "Digitaal toezicht"
@@ -62,6 +63,7 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
   const [listing] = useListing(tonId)
   const [cases] = useCasesByBagId(bagId)
   const [corporations] = useCorporations()
+  const [bagAddress] = useBAG(bagId)
 
   // Only show Vakantieverhuur, Digitaal Toezicht and Yes as an option for TON.
   const caseThemesOptions = tonId ? caseThemes?.results?.filter(({ name }) => name === TON_THEME_NAME) : caseThemes?.results
@@ -127,6 +129,9 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
      } : {}
   }
 
+  const addressString = getAddressAsString(bagAddress)
+  const title = `${ addressString } - Controleer de gegevens`
+
   return (
     <ConfirmScaffoldForm
       fields={ fields }
@@ -135,6 +140,7 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
       afterSubmit={ afterSubmit }
       initialValues={ initialValues }
       submittingTitle="De zaak wordt aangemaakt. Wacht met sluiten van dit venster."
+      title={ title }
     />
   )
 }
