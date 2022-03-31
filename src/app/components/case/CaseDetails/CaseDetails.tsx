@@ -1,48 +1,84 @@
 import styled from "styled-components"
-import { DefinitionList } from "@amsterdam/wonen-ui"
+import { DefinitionList, CaseIdDisplay, DateDisplay } from "@amsterdam/wonen-ui"
 import { useCase } from "app/state/rest"
-import useValues from "./hooks/useValues"
+import ChangeableSubject from "../tasks/ChangeSubject/ChangeableSubject"
+import SensitiveCaseIcon from "../SensitiveCaseIcon/SensitiveCaseIcon"
+import DisplayCorporation from "./DisplayCorporation"
+
+const Wrap = styled.div`
+  display: flex;
+`
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
   isClosed: boolean
 }
 
-const Div = styled.div`
+const StyledDiv = styled.div`
   display: flex;
   width: 100%;
   > div {
     flex: 1;
-    min-width: 33%;
+    min-width: 60%;
   }
 `
 
-const CaseDetails: React.FC<Props> = ({ caseId, isClosed }) => {
+const getDataFirstCol = (caseItem?: Components.Schemas.Case) => {
+  if (caseItem === undefined) return
+  const { id, theme, start_date, sensitive, previous_case } = caseItem
+  const data: any = {
+    "Zaak ID": (
+      <Wrap>
+        <CaseIdDisplay id={ id } />
+        <SensitiveCaseIcon sensitive={ sensitive }/>
+      </Wrap>
+    ),
+    "Thema": theme.name,
+    "Startdatum": <DateDisplay date={ start_date ?? undefined } emptyText="-" />
+  }
+  if (previous_case) {
+    data["Gerelateerde zaak"] = previous_case
+  }
+  return data
+}
 
+const getDataSecondCol = (isClosed: boolean, caseItem?: Components.Schemas.Case) => {
+  if (caseItem === undefined) return
+  const { id, theme, start_date, reason, project, subjects, address: { housing_corporation } } = caseItem
+  const data: any = {
+    "Startdatum": <DateDisplay date={ start_date ?? undefined } emptyText="-" />,
+    "Aanleiding": project?.name !== undefined ? `Project: ${ project.name }` : reason.name,
+    "Onderwerp(en)": isClosed
+      ? subjects.map((subject) => subject.name).join(", ")
+      : <ChangeableSubject subjects={ subjects } caseId={ id } themeId={ theme.id } />
+  }
+  if (theme.id === 6) {
+    data["Corporatie"] = <DisplayCorporation id={ housing_corporation } />
+  }
+  return data
+}
+
+const CaseDetails: React.FC<Props> = ({ caseId, isClosed }) => {
   const [data, { isBusy }] = useCase(caseId)
-  const values = useValues(isClosed, data)
-  const filteredValues: any = (filterValues: string[]) => Object.keys(values)
-    .filter(key => filterValues.includes(key))
-    .reduce((obj: any, key: string) => {
-      obj[key] = values[key]
-      return obj
-    }, {})
+
+  const dataFirstCol = getDataFirstCol(data)
+  const dataSecondCol = getDataSecondCol(isClosed, data)
 
   return (
-    <Div>
+    <StyledDiv>
       <DefinitionList
         loading={ isBusy }
         numLoadingRows={ 2 }
         hasRowsSeperated={ false }
-        data={ filteredValues([Object.keys(values)[0], Object.keys(values)[1], Object.keys(values)[2]]) }
+        data={ dataFirstCol }
       />
       <DefinitionList
         loading={ isBusy }
         numLoadingRows={ 2 }
         hasRowsSeperated={ false }
-        data={ filteredValues([Object.keys(values)[3], Object.keys(values)[4]]) }
+        data={ dataSecondCol }
       />
-    </Div>
+    </StyledDiv>
   )
 }
 

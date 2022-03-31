@@ -42,6 +42,7 @@ export default <T extends RequestBody>(fields: NamedFields<T>, data: T | undefin
     const nestedField = (field.props as { field: Field })?.field
     return nestedField !== undefined ? nestedField : field
   })
+
   return showFields.reduce((acc, key) => {
     const field = mappedFields.find(field => field.props.name === key)
     if (field === undefined) return acc

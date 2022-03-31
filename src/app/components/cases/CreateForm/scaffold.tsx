@@ -3,6 +3,8 @@ import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import navigateTo from "app/routing/navigateTo"
 
+const THEME_ID_SUBLET = 6
+
 export default (
   bagId: Components.Schemas.Address["bag_id"],
   themeId: Components.Schemas.CaseTheme["id"],
@@ -12,7 +14,8 @@ export default (
   projects: Components.Schemas.CaseProject[],
   subjects: Components.Schemas.Subject[],
   advertisementOptions: Record<string, string>,
-  cases: Components.Schemas.Case[]
+  cases: Components.Schemas.Case[],
+  corporations: Components.Schemas.HousingCorporation[]
   ) => {
 
   const fields = {
@@ -25,6 +28,24 @@ export default (
         optionLabelField: "name",
         isRequired: true,
         onChange: (index: string) => setTheme(themes?.[parseInt(index, 10)]?.id)
+      }
+    },
+    housing_corporation: {
+      type: "ShowHide",
+      props: {
+        shouldShow: () => themeId === THEME_ID_SUBLET && corporations.length > 0, // Sublet use only.
+        field: {
+          type: "ComplexSelectField",
+          props: {
+            label: "Welke corporatie is eigenaar van dit adres?",
+            name: "housing_corporation",
+            options: corporations,
+            optionLabelField: "name",
+            withEmptyOption: true,
+            emptyOptionLabel: "Maak een keuze",
+            isRequired: true
+          }
+        }
       }
     },
     reason: {
@@ -325,6 +346,7 @@ export default (
   return new FormPositioner(fields as Fields)
     .setGrid("mobileS", "1fr 1fr", [
       ["theme", "theme"],
+      ["housing_corporation"],
       ["reason", "reason"],
       ["reporter_anonymous", "reporter_anonymous"],
       ["reporter_name"],

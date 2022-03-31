@@ -14,7 +14,7 @@ const showOptionalProperty = (prop: string | undefined) => prop ?? "(onbekend)"
 const mapData = (data: Components.Schemas.PaginatedSupportContactList | undefined) => ([
   data?.results?.find(({ title }) => title === "Coördinator Ontwikkelkamer"),
   data?.results?.find(({ title }) => title === "Datapunt"),
-  data?.results?.find(({ title }) => title === "UX Specialist")
+  data?.results?.find(({ title }) => title === "Coördinator AZA")
 ])
 
 const RefreshIcon = styled (Refresh)`
@@ -32,8 +32,7 @@ const HelpContent: React.FC = () => {
   const titleShort = "AZA"
   const contacts = useMemo(() => mapData(data), [data])
 
-  return showSpinner ?
-    <Spinner /> :
+  return showSpinner ? <Spinner /> : (
     <>
       <RowWithColumn>
         <Heading as="h2">Wat kan je met de { title } ({ titleShort })?</Heading>
@@ -92,5 +91,7 @@ const HelpContent: React.FC = () => {
         </AccordionWrapper>
       </RowWithColumn>
     </>
+  )
 }
+
 export default HelpContent

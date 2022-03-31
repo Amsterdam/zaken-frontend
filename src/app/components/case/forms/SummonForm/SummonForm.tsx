@@ -18,20 +18,11 @@ type SummonData = Omit<Components.Schemas.Summon, "type"> & {
   legal_entity_type: "board" | "person"
   legal_entity_name: string
   legal_entity_role: Components.Schemas.PersonRoleEnum
-  persons_legal_entity: SummonedPersonData[]
-}
-
-type SummonedPersonData = {
-  first_name?: string
-  last_name?: string
-  person_role?: Components.Schemas.PersonRoleEnum
-  entity_name?: string
-  function?: string
-  company?: string
+  persons_legal_entity: Components.Schemas.SummonedPerson[]
 }
 
 const mapData = (data: SummonData) => {
-  let persons: SummonedPersonData[] = []
+  let persons: any[] = []
   if (data.entity_type === "legal") {
     if (data.legal_entity_type === "board") {
       persons.push({
@@ -50,7 +41,7 @@ const mapData = (data: SummonData) => {
       }
     }
   } else {
-    data.persons?.forEach((person: SummonedPersonData) => {
+    data.persons?.forEach((person: Components.Schemas.SummonedPerson) => {
       const p = person
       p.person_role = (person.person_role as any).key
       p.entity_name = data.legal_entity_name

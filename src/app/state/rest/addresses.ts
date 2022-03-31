@@ -24,3 +24,14 @@ export const useResidents = (bagId: Components.Schemas.Address["bag_id"], option
     isProtected: true
   })
 }
+
+export const useCorporations = (options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<Components.Schemas.PaginatedHousingCorporationList>({
+    ...options,
+    url: makeApiUrl("addresses", "housing-corporations"),
+    groupName: "addresses",
+    handleError,
+    isProtected: true
+  })
+}
