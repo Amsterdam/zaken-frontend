@@ -37,7 +37,7 @@
     "lodash.isempty": "^4.4.0",
     "lodash.merge": "^4.6.2",
     "lodash.pick": "^4.4.0",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "qs": "^6.10.3",
     "react": "^17.0.2",
     "react-app-polyfill": "^3.0.0",
