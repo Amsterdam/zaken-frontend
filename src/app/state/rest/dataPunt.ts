@@ -17,6 +17,17 @@ export const useBAG = (bagId?: Components.Schemas.Address["bag_id"], options?: O
   })
 }
 
+export const useBAGWithStreet = (searchString?: string, options?: Options) => {
+  const handleError = useErrorHandler()
+  const queryString = qs.stringify({ q: searchString }, { addQueryPrefix: true })
+  return useApiRequest<BAGAddressResponse>({
+    url: `https://api.data.amsterdam.nl/atlas/search/adres/${ queryString }`,
+    ...options,
+    groupName: "dataPunt",
+    handleError
+  })
+}
+
 export const useBAGWithZipCode = (bagId?: Components.Schemas.Address["bag_id"], options?: Options) => {
   const handleError = useErrorHandler()
   const queryString = qs.stringify({ q: bagId }, { addQueryPrefix: true })
