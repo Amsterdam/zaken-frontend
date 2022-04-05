@@ -45,8 +45,9 @@ const getDataFirstCol = (caseItem?: Components.Schemas.Case) => {
 const getDataSecondCol = (isClosed: boolean, caseItem?: Components.Schemas.Case) => {
   if (caseItem === undefined) return
   const { id, theme, reason, project, subjects, address: { housing_corporation } } = caseItem
+  const hasProject = project?.name !== undefined
   const data: any = {
-    "Aanleiding": project?.name !== undefined ? `Project: ${ project.name }` : reason.name,
+    "Aanleiding": `${ reason.name }${ hasProject ? ": " : "" }${ hasProject ? project.name : "" }`,
     "Onderwerp(en)": isClosed
       ? subjects.map((subject) => subject.name).join(", ")
       : <ChangeableSubject subjects={ subjects } caseId={ id } themeId={ theme.id } />
