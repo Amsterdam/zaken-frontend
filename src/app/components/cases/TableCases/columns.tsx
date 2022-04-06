@@ -2,7 +2,7 @@ import { DateDisplay, isDate, CaseIdDisplay } from "@amsterdam/wonen-ui"
 import styled from "styled-components"
 import TableAction from "app/components/shared/TableAction/TableAction"
 import to from "app/routing/utils/to"
-import SensitiveCaseIcon from "app/components/case/SensitiveCaseIcon/SensitiveCaseIcon"
+import SensitiveCaseIcon from "app/components/case/icons/SensitiveCaseIcon/SensitiveCaseIcon"
 
 const Wrap = styled.div`
   display: flex;

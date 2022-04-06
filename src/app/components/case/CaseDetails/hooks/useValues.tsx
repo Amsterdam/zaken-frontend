@@ -1,7 +1,8 @@
 import styled from "styled-components"
 import { CaseIdDisplay, DateDisplay } from "@amsterdam/wonen-ui"
 import ChangeableSubject from "../../tasks/ChangeSubject/ChangeableSubject"
-import SensitiveCaseIcon from "../../SensitiveCaseIcon/SensitiveCaseIcon"
+import SensitiveCaseIcon from "../../icons/SensitiveCaseIcon/SensitiveCaseIcon"
+import EnforcementIcon from "../../icons/EnforcementIcon/EnforcementIcon"
 
 const Wrap = styled.div`
   display: flex;
@@ -18,6 +19,8 @@ export default (isClosed: boolean, caseItem?: Components.Schemas.Case) => {
       <Wrap>
         <CaseIdDisplay id={ id } />
         <SensitiveCaseIcon sensitive={ sensitive }/>
+        <EnforcementIcon caseReason={ reason } />
+
       </Wrap>
     ],
     ["Thema", theme.name],
