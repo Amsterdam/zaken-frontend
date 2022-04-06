@@ -1,5 +1,5 @@
 import { Icon } from "@amsterdam/asc-ui"
-import { Policy } from "app/components/shared/Icons"
+import { PanTool } from "app/components/shared/Icons"
 import { StyledTooltip } from "../layout"
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
 const EnforcementIcon: React.FC<Props> = ({ caseReason }) => (
   caseReason.name === "Handhavingsverzoek" ? (
     <StyledTooltip title="Deze zaak heeft een handhavingsverzoek als aanleiding">
-      <Icon><Policy /></Icon>
+      <Icon><PanTool /></Icon>
     </StyledTooltip>
   ) : null
 )
