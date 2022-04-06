@@ -3,9 +3,12 @@ import styled from "styled-components"
 import TableAction from "app/components/shared/TableAction/TableAction"
 import to from "app/routing/utils/to"
 import SensitiveCaseIcon from "app/components/case/icons/SensitiveCaseIcon/SensitiveCaseIcon"
+import EnforcementIcon from "app/components/case/icons/EnforcementIcon/EnforcementIcon"
+
 
 const Wrap = styled.div`
   display: flex;
+  align-items: center;
 `
 
 const getStatus = (record: Record<string, any>) => {
@@ -32,6 +35,7 @@ const getColumns = (sorting: any) => {
         <Wrap>
           <CaseIdDisplay id={ record.id } />
           <SensitiveCaseIcon sensitive={ record.sensitive }/>
+          <EnforcementIcon caseReason={ record.reason } />
         </Wrap>
       )
     }, {

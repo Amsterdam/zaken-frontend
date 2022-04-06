@@ -8,6 +8,7 @@ import EnforcementIcon from "../icons/EnforcementIcon/EnforcementIcon"
 
 const Wrap = styled.div`
   display: flex;
+  align-items: center;
 `
 
 type Props = {
