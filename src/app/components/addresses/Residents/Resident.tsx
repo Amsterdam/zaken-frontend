@@ -1,29 +1,31 @@
+import { Accordion } from "@amsterdam/asc-ui"
+import { DefinitionList } from "@amsterdam/wonen-ui"
+import moment from "moment"
 import useValues from "./hooks/useValues"
-import { PersonNameDisplay, DefinitionList } from "@amsterdam/wonen-ui"
 
 type Props = {
-  resident: Components.Schemas.Resident
+  resident: any
   num: number
 }
 
+const getGenderSymbol = (gender: string) => {
+  if (gender === "vrouw") return "V"
+  if (gender === "man") return "M"
+  return gender
+}
+
 const Resident: React.FC<Props> = ({ resident, num }) => {
-  const title = <>
-    { `${ num }. ` }
-    <PersonNameDisplay
-      sex={ resident.geslachtsaanduiding }
-      firstName={ `${ resident.voorletters }.` }
-      namePrefix={ resident.voorvoegsel_geslachtsnaam }
-      name={ resident.geslachtsnaam }
-    />
-  </>
   const values = useValues(resident)
 
+  const dayOfBirth = moment(resident?.geboorte?.datum?.datum).format("DD-MM-YYYY")
+  const title = `${ num }. ${ resident?.naam?.aanschrijfwijze } ${ dayOfBirth } (${ resident?.leeftijd })
+    ${ getGenderSymbol(resident?.geslachtsaanduiding) } ${ resident?.overlijden ? "†" : "" }`
+
   return (
-    <DefinitionList
-      title={ title }
-      headingSize="h3"
-      data={ values }
-    />
+    <Accordion title={ title }>
+      <DefinitionList data={ values } />
+    </Accordion>
   )
 }
+
 export default Resident
