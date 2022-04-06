@@ -11,6 +11,7 @@ const DELAY = 750
 const SearchWrapper: React.FC = () => {
   const [searchString, setSearchString] = useURLState("query")
   const debouncedSetSearchString = debounce(setSearchString, DELAY)
+
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => debouncedSetSearchString(event.target.value.trim())
   const onClear = () => debouncedSetSearchString("")
 
@@ -21,7 +22,7 @@ const SearchWrapper: React.FC = () => {
           <Heading>Adres zoeken</Heading>
           <FormTitle>Ook om een nieuwe zaak aan te maken op een specifiek adres</FormTitle>
           <SearchBar
-            placeholder="Zoek op postcode en huisnummer"
+            placeholder="Zoek op postcode en huisnummer of straat"
             value={ searchString }
             onChange={ onChange }
             onClear={ onClear }

@@ -20,4 +20,5 @@ declare type BAGAddressResponse = {
     vbo_status: string
     woonplaats: string
   }>
+  count: number
 }

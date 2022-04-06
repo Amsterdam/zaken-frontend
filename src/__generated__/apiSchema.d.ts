@@ -15,6 +15,7 @@ declare namespace Components {
             postal_code: string;
             lat: number; // float
             lng: number; // float
+            housing_corporation: number;
         }
         export interface Advertisement {
             id: number;
@@ -37,6 +38,7 @@ declare namespace Components {
                 postal_code: string;
                 lat: number; // float
                 lng: number; // float
+                housing_corporation: number;
             };
             bag_id: string;
             current_states: CaseWorkflowCaseDetail[];
@@ -44,7 +46,6 @@ declare namespace Components {
                 id: number;
                 name: string;
                 sensitive?: boolean;
-                case_state_types_top?: number[];
             };
             theme_id: number;
             reason: {
@@ -65,6 +66,7 @@ declare namespace Components {
             subject_ids?: number[];
             citizen_reports?: CitizenReportCase[];
             advertisements?: Advertisement[];
+            housing_corporation?: number;
             start_date?: string | null; // date
             end_date?: string | null; // date
             sensitive?: boolean;
@@ -137,7 +139,6 @@ declare namespace Components {
             id: number;
             name: string;
             sensitive?: boolean;
-            case_state_types_top?: number[];
         }
         export interface CaseUserTask {
             id: number;
@@ -211,6 +212,7 @@ declare namespace Components {
         }
         export interface DebriefingCreate {
             id: number;
+            nuisance_detected?: boolean;
             case_user_task_id?: string;
             violation?: ViolationEnum;
             violation_result?: {
@@ -226,6 +228,7 @@ declare namespace Components {
             description?: string | null;
             date_added: string; // date-time
             sanction_id: string;
+            active?: boolean;
             case: number;
             decision_type: number;
         }
@@ -242,12 +245,12 @@ declare namespace Components {
                 postal_code: string;
                 lat: number; // float
                 lng: number; // float
+                housing_corporation: number;
             };
             theme: {
                 id: number;
                 name: string;
                 sensitive?: boolean;
-                case_state_types_top?: number[];
             };
             decision_type: {
                 id: number;
@@ -256,6 +259,7 @@ declare namespace Components {
             sanction_amount?: string | null; // decimal ^\d{0,98}(\.\d{0,2})?$
             date_added: string; // date-time
             sanction_id?: string | null;
+            active?: boolean;
         }
         export interface DecisionType {
             id: number;
@@ -308,25 +312,25 @@ declare namespace Components {
         export interface FineList {
             items: Fine[];
         }
-        /**
-         * Used to complete a GenericCompletedTask.
-         *
-         * variables example
-         * {
-         *     "a_field": {
-         *         "value": true,
-         *         "label": "Label for a field"
-         *     }
-         * }
-         */
         export interface GenericCompletedTask {
+            id: number;
+            case_user_task_id?: string;
+            date_added: string; // date-time
+            task_name: string;
+            description: string;
+            variables?: {
+                [name: string]: any;
+            };
+            case: number;
+            author: string; // uuid
+        }
+        export interface GenericCompletedTaskCreate {
             id: number;
             case_user_task_id: string;
             case: number;
             variables: {
                 [name: string]: any;
             };
-            description?: string;
             date_added: string; // date-time
         }
         export interface GenericFormField {
@@ -342,7 +346,10 @@ declare namespace Components {
             value: string;
         }
         export type GenericFormFieldTypeEnum = "text" | "select" | "checkbox";
-        export type GeslachtsaanduidingEnum = "M" | "V" | "X";
+        export interface HousingCorporation {
+            id: number;
+            name: string;
+        }
         export type IndicatieBetHernBevelEnum = "J" | "N";
         export type IndicatieCombiDwangbevelEnum = "J" | "N" | "O";
         export type IndicatiePubliekrechtelijkEnum = "J" | "N";
@@ -475,24 +482,6 @@ declare namespace Components {
             previous?: string | null; // uri
             results?: CaseReason[];
         }
-        export interface PaginatedCaseStateTypeList {
-            /**
-             * example:
-             * 123
-             */
-            count?: number;
-            /**
-             * example:
-             * http://api.example.org/accounts/?offset=400&limit=100
-             */
-            next?: string | null; // uri
-            /**
-             * example:
-             * http://api.example.org/accounts/?offset=200&limit=100
-             */
-            previous?: string | null; // uri
-            results?: CaseStateType[];
-        }
         export interface PaginatedCaseThemeList {
             /**
              * example:
@@ -618,6 +607,42 @@ declare namespace Components {
              */
             previous?: string | null; // uri
             results?: DecisionType[];
+        }
+        export interface PaginatedGenericCompletedTaskList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=4
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null; // uri
+            results?: GenericCompletedTask[];
+        }
+        export interface PaginatedHousingCorporationList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?offset=400&limit=100
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?offset=200&limit=100
+             */
+            previous?: string | null; // uri
+            results?: HousingCorporation[];
         }
         export interface PaginatedSubjectList {
             /**
@@ -797,6 +822,7 @@ declare namespace Components {
                 postal_code: string;
                 lat: number; // float
                 lng: number; // float
+                housing_corporation: number;
             };
             bag_id?: string;
             current_states?: CaseWorkflowCaseDetail[];
@@ -804,7 +830,6 @@ declare namespace Components {
                 id: number;
                 name: string;
                 sensitive?: boolean;
-                case_state_types_top?: number[];
             };
             theme_id?: number;
             reason?: {
@@ -825,6 +850,7 @@ declare namespace Components {
             subject_ids?: number[];
             citizen_reports?: CitizenReportCase[];
             advertisements?: Advertisement[];
+            housing_corporation?: number;
             start_date?: string | null; // date
             end_date?: string | null; // date
             sensitive?: boolean;
@@ -882,17 +908,19 @@ declare namespace Components {
             gauge_date?: string | null; // date
             invoice_identification: string;
         }
-        export interface Resident {
-            geboortedatum: string; // date-time
-            geslachtsaanduiding: GeslachtsaanduidingEnum;
-            geslachtsnaam: string;
-            voorletters: string;
-            voornamen: string;
-            voorvoegsel_geslachtsnaam?: string;
-            datum_begin_relatie_verblijfadres: string; // date-time
-        }
         export interface Residents {
-            results: Resident[];
+            /**
+             *  links
+             */
+            _links: {
+                [name: string]: any;
+            };
+            /**
+             *  embedded
+             */
+            _embedded: {
+                [name: string]: any;
+            };
         }
         export interface Schedule {
             id: number;
@@ -905,6 +933,7 @@ declare namespace Components {
             date_added: string; // date-time
             date_modified: string; // date-time
             visit_from_datetime?: string | null; // date-time
+            housing_corporation_combiteam?: boolean;
             case: number;
             author?: string | null; // uuid
         }
@@ -948,7 +977,7 @@ declare namespace Components {
         export interface SummonedPerson {
             id: number;
             first_name?: string;
-            preposition?: string | null;
+            preposition?: string;
             last_name?: string;
             person_role?: PersonRoleEnum;
             summon: number;
@@ -1066,6 +1095,19 @@ declare namespace Paths {
             export type $200 = Components.Schemas.PaginatedCaseList;
         }
     }
+    namespace AddressesHousingCorporationsList {
+        namespace Parameters {
+            export type Limit = number;
+            export type Offset = number;
+        }
+        export interface QueryParameters {
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedHousingCorporationList;
+        }
+    }
     namespace AddressesPermitsRetrieve {
         namespace Parameters {
             export type BagId = string;
@@ -1121,6 +1163,7 @@ declare namespace Paths {
     namespace CasesAdvertisementsList {
         namespace Parameters {
             export type FromStartDate = string; // date
+            export type HousingCorporation = string[];
             export type Id = number;
             export type Number = string;
             export type OpenCases = boolean;
@@ -1128,8 +1171,14 @@ declare namespace Paths {
             export type Page = number;
             export type PageSize = number;
             export type PostalCode = string;
+            export type PostalCodeRange = string;
+            export type Priority = number;
             export type Project = number;
             export type Reason = number;
+            export type ScheduleDaySegment = number;
+            export type ScheduleHousingCorporationCombiteam = boolean;
+            export type ScheduleVisitFrom = string; // date
+            export type ScheduleWeekSegment = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
@@ -1144,14 +1193,21 @@ declare namespace Paths {
         }
         export interface QueryParameters {
             from_start_date?: Parameters.FromStartDate /* date */;
+            housing_corporation?: Parameters.HousingCorporation;
             number?: Parameters.Number;
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
             page?: Parameters.Page;
             page_size?: Parameters.PageSize;
             postal_code?: Parameters.PostalCode;
+            postal_code_range?: Parameters.PostalCodeRange;
+            priority?: Parameters.Priority;
             project?: Parameters.Project;
             reason?: Parameters.Reason;
+            schedule_day_segment?: Parameters.ScheduleDaySegment;
+            schedule_housing_corporation_combiteam?: Parameters.ScheduleHousingCorporationCombiteam;
+            schedule_visit_from?: Parameters.ScheduleVisitFrom /* date */;
+            schedule_week_segment?: Parameters.ScheduleWeekSegment;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
@@ -1172,8 +1228,14 @@ declare namespace Paths {
             export type OpenCases = boolean;
             export type Ordering = string;
             export type PageSize = number;
+            export type PostalCodeRange = string;
+            export type Priority = number;
             export type Project = number;
             export type Reason = number;
+            export type ScheduleDaySegment = number;
+            export type ScheduleHousingCorporationCombiteam = boolean;
+            export type ScheduleVisitFrom = string; // date
+            export type ScheduleWeekSegment = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
@@ -1189,8 +1251,14 @@ declare namespace Paths {
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
             page_size?: Parameters.PageSize;
+            postal_code_range?: Parameters.PostalCodeRange;
+            priority?: Parameters.Priority;
             project?: Parameters.Project;
             reason?: Parameters.Reason;
+            schedule_day_segment?: Parameters.ScheduleDaySegment;
+            schedule_housing_corporation_combiteam?: Parameters.ScheduleHousingCorporationCombiteam;
+            schedule_visit_from?: Parameters.ScheduleVisitFrom /* date */;
+            schedule_week_segment?: Parameters.ScheduleWeekSegment;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
@@ -1203,14 +1271,20 @@ declare namespace Paths {
             export type $200 = Components.Schemas.CitizenReport;
         }
     }
-    namespace CasesCreate {
+    namespace CasesCountRetrieve {
         namespace Parameters {
             export type FromStartDate = string; // date
             export type OpenCases = boolean;
             export type Ordering = string;
             export type PageSize = number;
+            export type PostalCodeRange = string;
+            export type Priority = number;
             export type Project = number;
             export type Reason = number;
+            export type ScheduleDaySegment = number;
+            export type ScheduleHousingCorporationCombiteam = boolean;
+            export type ScheduleVisitFrom = string; // date
+            export type ScheduleWeekSegment = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
@@ -1223,8 +1297,59 @@ declare namespace Paths {
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
             page_size?: Parameters.PageSize;
+            postal_code_range?: Parameters.PostalCodeRange;
+            priority?: Parameters.Priority;
             project?: Parameters.Project;
             reason?: Parameters.Reason;
+            schedule_day_segment?: Parameters.ScheduleDaySegment;
+            schedule_housing_corporation_combiteam?: Parameters.ScheduleHousingCorporationCombiteam;
+            schedule_visit_from?: Parameters.ScheduleVisitFrom /* date */;
+            schedule_week_segment?: Parameters.ScheduleWeekSegment;
+            sensitive?: Parameters.Sensitive;
+            start_date?: Parameters.StartDate /* date */;
+            state_types?: Parameters.StateTypes;
+            state_types__name?: Parameters.StateTypesName;
+            theme?: Parameters.Theme;
+            ton_ids?: Parameters.TonIds;
+        }
+        namespace Responses {
+            export type $200 = /* Adds nested create feature */ Components.Schemas.Case;
+        }
+    }
+    namespace CasesCreate {
+        namespace Parameters {
+            export type FromStartDate = string; // date
+            export type OpenCases = boolean;
+            export type Ordering = string;
+            export type PageSize = number;
+            export type PostalCodeRange = string;
+            export type Priority = number;
+            export type Project = number;
+            export type Reason = number;
+            export type ScheduleDaySegment = number;
+            export type ScheduleHousingCorporationCombiteam = boolean;
+            export type ScheduleVisitFrom = string; // date
+            export type ScheduleWeekSegment = number;
+            export type Sensitive = boolean;
+            export type StartDate = string; // date
+            export type StateTypes = number;
+            export type StateTypesName = string;
+            export type Theme = number;
+            export type TonIds = number;
+        }
+        export interface QueryParameters {
+            from_start_date?: Parameters.FromStartDate /* date */;
+            open_cases?: Parameters.OpenCases;
+            ordering?: Parameters.Ordering;
+            page_size?: Parameters.PageSize;
+            postal_code_range?: Parameters.PostalCodeRange;
+            priority?: Parameters.Priority;
+            project?: Parameters.Project;
+            reason?: Parameters.Reason;
+            schedule_day_segment?: Parameters.ScheduleDaySegment;
+            schedule_housing_corporation_combiteam?: Parameters.ScheduleHousingCorporationCombiteam;
+            schedule_visit_from?: Parameters.ScheduleVisitFrom /* date */;
+            schedule_week_segment?: Parameters.ScheduleWeekSegment;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
@@ -1244,8 +1369,14 @@ declare namespace Paths {
             export type OpenCases = boolean;
             export type Ordering = string;
             export type PageSize = number;
+            export type PostalCodeRange = string;
+            export type Priority = number;
             export type Project = number;
             export type Reason = number;
+            export type ScheduleDaySegment = number;
+            export type ScheduleHousingCorporationCombiteam = boolean;
+            export type ScheduleVisitFrom = string; // date
+            export type ScheduleWeekSegment = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
@@ -1261,8 +1392,14 @@ declare namespace Paths {
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
             page_size?: Parameters.PageSize;
+            postal_code_range?: Parameters.PostalCodeRange;
+            priority?: Parameters.Priority;
             project?: Parameters.Project;
             reason?: Parameters.Reason;
+            schedule_day_segment?: Parameters.ScheduleDaySegment;
+            schedule_housing_corporation_combiteam?: Parameters.ScheduleHousingCorporationCombiteam;
+            schedule_visit_from?: Parameters.ScheduleVisitFrom /* date */;
+            schedule_week_segment?: Parameters.ScheduleWeekSegment;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
@@ -1277,14 +1414,21 @@ declare namespace Paths {
     namespace CasesList {
         namespace Parameters {
             export type FromStartDate = string; // date
+            export type HousingCorporation = string[];
             export type Number = string;
             export type OpenCases = boolean;
             export type Ordering = string;
             export type Page = number;
             export type PageSize = number;
             export type PostalCode = string;
+            export type PostalCodeRange = string;
+            export type Priority = number;
             export type Project = number;
             export type Reason = number;
+            export type ScheduleDaySegment = number;
+            export type ScheduleHousingCorporationCombiteam = boolean;
+            export type ScheduleVisitFrom = string; // date
+            export type ScheduleWeekSegment = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
@@ -1296,14 +1440,21 @@ declare namespace Paths {
         }
         export interface QueryParameters {
             from_start_date?: Parameters.FromStartDate /* date */;
+            housing_corporation?: Parameters.HousingCorporation;
             number?: Parameters.Number;
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
             page?: Parameters.Page;
             page_size?: Parameters.PageSize;
             postal_code?: Parameters.PostalCode;
+            postal_code_range?: Parameters.PostalCodeRange;
+            priority?: Parameters.Priority;
             project?: Parameters.Project;
             reason?: Parameters.Reason;
+            schedule_day_segment?: Parameters.ScheduleDaySegment;
+            schedule_housing_corporation_combiteam?: Parameters.ScheduleHousingCorporationCombiteam;
+            schedule_visit_from?: Parameters.ScheduleVisitFrom /* date */;
+            schedule_week_segment?: Parameters.ScheduleWeekSegment;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
@@ -1324,8 +1475,14 @@ declare namespace Paths {
             export type OpenCases = boolean;
             export type Ordering = string;
             export type PageSize = number;
+            export type PostalCodeRange = string;
+            export type Priority = number;
             export type Project = number;
             export type Reason = number;
+            export type ScheduleDaySegment = number;
+            export type ScheduleHousingCorporationCombiteam = boolean;
+            export type ScheduleVisitFrom = string; // date
+            export type ScheduleWeekSegment = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
@@ -1341,8 +1498,14 @@ declare namespace Paths {
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
             page_size?: Parameters.PageSize;
+            postal_code_range?: Parameters.PostalCodeRange;
+            priority?: Parameters.Priority;
             project?: Parameters.Project;
             reason?: Parameters.Reason;
+            schedule_day_segment?: Parameters.ScheduleDaySegment;
+            schedule_housing_corporation_combiteam?: Parameters.ScheduleHousingCorporationCombiteam;
+            schedule_visit_from?: Parameters.ScheduleVisitFrom /* date */;
+            schedule_week_segment?: Parameters.ScheduleWeekSegment;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
@@ -1358,6 +1521,7 @@ declare namespace Paths {
     namespace CasesProcessesList {
         namespace Parameters {
             export type FromStartDate = string; // date
+            export type HousingCorporation = string[];
             export type Id = number;
             export type Number = string;
             export type OpenCases = boolean;
@@ -1365,8 +1529,14 @@ declare namespace Paths {
             export type Page = number;
             export type PageSize = number;
             export type PostalCode = string;
+            export type PostalCodeRange = string;
+            export type Priority = number;
             export type Project = number;
             export type Reason = number;
+            export type ScheduleDaySegment = number;
+            export type ScheduleHousingCorporationCombiteam = boolean;
+            export type ScheduleVisitFrom = string; // date
+            export type ScheduleWeekSegment = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
@@ -1381,14 +1551,21 @@ declare namespace Paths {
         }
         export interface QueryParameters {
             from_start_date?: Parameters.FromStartDate /* date */;
+            housing_corporation?: Parameters.HousingCorporation;
             number?: Parameters.Number;
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
             page?: Parameters.Page;
             page_size?: Parameters.PageSize;
             postal_code?: Parameters.PostalCode;
+            postal_code_range?: Parameters.PostalCodeRange;
+            priority?: Parameters.Priority;
             project?: Parameters.Project;
             reason?: Parameters.Reason;
+            schedule_day_segment?: Parameters.ScheduleDaySegment;
+            schedule_housing_corporation_combiteam?: Parameters.ScheduleHousingCorporationCombiteam;
+            schedule_visit_from?: Parameters.ScheduleVisitFrom /* date */;
+            schedule_week_segment?: Parameters.ScheduleWeekSegment;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
@@ -1409,8 +1586,14 @@ declare namespace Paths {
             export type OpenCases = boolean;
             export type Ordering = string;
             export type PageSize = number;
+            export type PostalCodeRange = string;
+            export type Priority = number;
             export type Project = number;
             export type Reason = number;
+            export type ScheduleDaySegment = number;
+            export type ScheduleHousingCorporationCombiteam = boolean;
+            export type ScheduleVisitFrom = string; // date
+            export type ScheduleWeekSegment = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
@@ -1426,8 +1609,14 @@ declare namespace Paths {
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
             page_size?: Parameters.PageSize;
+            postal_code_range?: Parameters.PostalCodeRange;
+            priority?: Parameters.Priority;
             project?: Parameters.Project;
             reason?: Parameters.Reason;
+            schedule_day_segment?: Parameters.ScheduleDaySegment;
+            schedule_housing_corporation_combiteam?: Parameters.ScheduleHousingCorporationCombiteam;
+            schedule_visit_from?: Parameters.ScheduleVisitFrom /* date */;
+            schedule_week_segment?: Parameters.ScheduleWeekSegment;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
@@ -1447,8 +1636,14 @@ declare namespace Paths {
             export type OpenCases = boolean;
             export type Ordering = string;
             export type PageSize = number;
+            export type PostalCodeRange = string;
+            export type Priority = number;
             export type Project = number;
             export type Reason = number;
+            export type ScheduleDaySegment = number;
+            export type ScheduleHousingCorporationCombiteam = boolean;
+            export type ScheduleVisitFrom = string; // date
+            export type ScheduleWeekSegment = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
@@ -1464,8 +1659,14 @@ declare namespace Paths {
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
             page_size?: Parameters.PageSize;
+            postal_code_range?: Parameters.PostalCodeRange;
+            priority?: Parameters.Priority;
             project?: Parameters.Project;
             reason?: Parameters.Reason;
+            schedule_day_segment?: Parameters.ScheduleDaySegment;
+            schedule_housing_corporation_combiteam?: Parameters.ScheduleHousingCorporationCombiteam;
+            schedule_visit_from?: Parameters.ScheduleVisitFrom /* date */;
+            schedule_week_segment?: Parameters.ScheduleWeekSegment;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
@@ -1480,6 +1681,7 @@ declare namespace Paths {
     namespace CasesSubjectsList {
         namespace Parameters {
             export type FromStartDate = string; // date
+            export type HousingCorporation = string[];
             export type Id = number;
             export type Number = string;
             export type OpenCases = boolean;
@@ -1487,8 +1689,14 @@ declare namespace Paths {
             export type Page = number;
             export type PageSize = number;
             export type PostalCode = string;
+            export type PostalCodeRange = string;
+            export type Priority = number;
             export type Project = number;
             export type Reason = number;
+            export type ScheduleDaySegment = number;
+            export type ScheduleHousingCorporationCombiteam = boolean;
+            export type ScheduleVisitFrom = string; // date
+            export type ScheduleWeekSegment = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
@@ -1503,14 +1711,21 @@ declare namespace Paths {
         }
         export interface QueryParameters {
             from_start_date?: Parameters.FromStartDate /* date */;
+            housing_corporation?: Parameters.HousingCorporation;
             number?: Parameters.Number;
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
             page?: Parameters.Page;
             page_size?: Parameters.PageSize;
             postal_code?: Parameters.PostalCode;
+            postal_code_range?: Parameters.PostalCodeRange;
+            priority?: Parameters.Priority;
             project?: Parameters.Project;
             reason?: Parameters.Reason;
+            schedule_day_segment?: Parameters.ScheduleDaySegment;
+            schedule_housing_corporation_combiteam?: Parameters.ScheduleHousingCorporationCombiteam;
+            schedule_visit_from?: Parameters.ScheduleVisitFrom /* date */;
+            schedule_week_segment?: Parameters.ScheduleWeekSegment;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
@@ -1527,6 +1742,7 @@ declare namespace Paths {
     namespace CasesTasksList {
         namespace Parameters {
             export type FromStartDate = string; // date
+            export type HousingCorporation = string[];
             export type Id = number;
             export type Number = string;
             export type OpenCases = boolean;
@@ -1534,8 +1750,14 @@ declare namespace Paths {
             export type Page = number;
             export type PageSize = number;
             export type PostalCode = string;
+            export type PostalCodeRange = string;
+            export type Priority = number;
             export type Project = number;
             export type Reason = number;
+            export type ScheduleDaySegment = number;
+            export type ScheduleHousingCorporationCombiteam = boolean;
+            export type ScheduleVisitFrom = string; // date
+            export type ScheduleWeekSegment = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
@@ -1550,14 +1772,21 @@ declare namespace Paths {
         }
         export interface QueryParameters {
             from_start_date?: Parameters.FromStartDate /* date */;
+            housing_corporation?: Parameters.HousingCorporation;
             number?: Parameters.Number;
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
             page?: Parameters.Page;
             page_size?: Parameters.PageSize;
             postal_code?: Parameters.PostalCode;
+            postal_code_range?: Parameters.PostalCodeRange;
+            priority?: Parameters.Priority;
             project?: Parameters.Project;
             reason?: Parameters.Reason;
+            schedule_day_segment?: Parameters.ScheduleDaySegment;
+            schedule_housing_corporation_combiteam?: Parameters.ScheduleHousingCorporationCombiteam;
+            schedule_visit_from?: Parameters.ScheduleVisitFrom /* date */;
+            schedule_week_segment?: Parameters.ScheduleWeekSegment;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
@@ -1578,8 +1807,14 @@ declare namespace Paths {
             export type OpenCases = boolean;
             export type Ordering = string;
             export type PageSize = number;
+            export type PostalCodeRange = string;
+            export type Priority = number;
             export type Project = number;
             export type Reason = number;
+            export type ScheduleDaySegment = number;
+            export type ScheduleHousingCorporationCombiteam = boolean;
+            export type ScheduleVisitFrom = string; // date
+            export type ScheduleWeekSegment = number;
             export type Sensitive = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
@@ -1595,8 +1830,14 @@ declare namespace Paths {
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
             page_size?: Parameters.PageSize;
+            postal_code_range?: Parameters.PostalCodeRange;
+            priority?: Parameters.Priority;
             project?: Parameters.Project;
             reason?: Parameters.Reason;
+            schedule_day_segment?: Parameters.ScheduleDaySegment;
+            schedule_housing_corporation_combiteam?: Parameters.ScheduleHousingCorporationCombiteam;
+            schedule_visit_from?: Parameters.ScheduleVisitFrom /* date */;
+            schedule_week_segment?: Parameters.ScheduleWeekSegment;
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
@@ -1696,21 +1937,59 @@ declare namespace Paths {
         }
     }
     namespace GenericTasksCompleteCreate {
-        export type RequestBody = /**
-         * Used to complete a GenericCompletedTask.
-         *
-         * variables example
-         * {
-         *     "a_field": {
-         *         "value": true,
-         *         "label": "Label for a field"
-         *     }
-         * }
-         */
-        Components.Schemas.GenericCompletedTask;
+        namespace Parameters {
+            export type Case = number;
+            export type CaseReason = number;
+            export type CaseTheme = number;
+            export type Description = string;
+            export type FromDateAdded = string; // date
+            export type TaskName = string;
+            export type ToDateAdded = string; // date
+        }
+        export interface QueryParameters {
+            case?: Parameters.Case;
+            case__reason?: Parameters.CaseReason;
+            case__theme?: Parameters.CaseTheme;
+            description?: Parameters.Description;
+            from_date_added?: Parameters.FromDateAdded /* date */;
+            task_name?: Parameters.TaskName;
+            to_date_added?: Parameters.ToDateAdded /* date */;
+        }
+        export type RequestBody = Components.Schemas.GenericCompletedTaskCreate;
         namespace Responses {
             export interface $200 {
             }
+        }
+    }
+    namespace GenericTasksList {
+        namespace Parameters {
+            export type Case = number;
+            export type CaseProject = string[];
+            export type CaseReason = number;
+            export type CaseTheme = number;
+            export type Description = string;
+            export type FromDateAdded = string; // date
+            export type OpenCases = boolean;
+            export type Page = number;
+            export type PageSize = number;
+            export type TaskName = string;
+            export type ToDateAdded = string; // date
+        }
+        export interface QueryParameters {
+            case?: Parameters.Case;
+            case__project?: Parameters.CaseProject;
+            case__reason?: Parameters.CaseReason;
+            case__theme?: Parameters.CaseTheme;
+            description?: Parameters.Description;
+            from_date_added?: Parameters.FromDateAdded /* date */;
+            open_cases?: Parameters.OpenCases;
+            page?: Parameters.Page;
+            page_size?: Parameters.PageSize;
+            task_name?: Parameters.TaskName;
+            to_date_added?: Parameters.ToDateAdded /* date */;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedGenericCompletedTaskList;
         }
     }
     namespace IsAuthorizedRetrieve {
@@ -1993,23 +2272,6 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedThemeScheduleTypesList;
-        }
-    }
-    namespace ThemesStateTypesList {
-        namespace Parameters {
-            export type Id = number;
-            export type Limit = number;
-            export type Offset = number;
-        }
-        export interface PathParameters {
-            id: Parameters.Id;
-        }
-        export interface QueryParameters {
-            limit?: Parameters.Limit;
-            offset?: Parameters.Offset;
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.PaginatedCaseStateTypeList;
         }
     }
     namespace ThemesSubjectsList {

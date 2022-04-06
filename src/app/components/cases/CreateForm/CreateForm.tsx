@@ -3,11 +3,12 @@ import pick from "lodash.pick"
 import scaffold from "./scaffold"
 import {
   useCaseThemes, useReasons, useCaseCreate, useProjects,
-  useListing, useSubjects, useCasesByBagId
+  useListing, useSubjects, useCasesByBagId, useCorporations, useBAG
 } from "app/state/rest"
 import ConfirmScaffoldForm from "app/components/shared/ConfirmScaffoldForm/ConfirmScaffoldForm"
 import useNavigateWithFlashMessage from "app/state/flashMessages/useNavigateWithFlashMessage"
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
+import getAddressAsString from "app/components/addresses/utils/getAddressAsString"
 
 const TON_THEME_NAME = "Vakantieverhuur"
 const TON_REASON_NAME = "Digitaal toezicht"
@@ -31,7 +32,8 @@ const mapData = (bagId: Components.Schemas.Address["bag_id"], tonId: number | un
     project_id: data.project?.id,
     ton_ids: tonId !== undefined ? [ tonId ] : undefined,
     subject_ids: data.subjects.map((subject: any) => subject.id),
-    previous_case: data.previous_case?.id || undefined
+    previous_case: data.previous_case?.id || undefined,
+    housing_corporation: data.housing_corporation?.id || undefined
   }
   if (data.identification) {
     mappedData.citizen_reports = [{
@@ -60,6 +62,8 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
   const [, { execPost }] = useCaseCreate()
   const [listing] = useListing(tonId)
   const [cases] = useCasesByBagId(bagId)
+  const [corporations] = useCorporations()
+  const [bagAddress] = useBAG(bagId)
 
   // Only show Vakantieverhuur, Digitaal Toezicht and Yes as an option for TON.
   const caseThemesOptions = tonId ? caseThemes?.results?.filter(({ name }) => name === TON_THEME_NAME) : caseThemes?.results
@@ -70,6 +74,9 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
   // Get cases and sort them by id for the option to link a previous case.
   const casesArray = cases?.results ? [...cases.results] : []
   const sortedCases = casesArray.sort((a, b) => (a.id > b.id) ? 1 : -1)
+
+  const corporationsArray = corporations?.results ? [...corporations.results] : []
+  const sortedCorporations = corporationsArray.sort((a, b) => a.name.localeCompare(b.name))
 
   const onChangeThemeId = (newThemeId: number | undefined) => {
     /**
@@ -89,9 +96,17 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
   */
 
   const fields = useScaffoldedFields(
-    scaffold, bagId, themeId ?? -1, onChangeThemeId, caseThemesOptions,
-    reasonOptions ?? [], projects?.results ?? [], subjects?.results ?? [],
-    adOptions, sortedCases
+    scaffold,
+    bagId,
+    themeId ?? -1,
+    onChangeThemeId,
+    caseThemesOptions,
+    reasonOptions ?? [],
+    projects?.results ?? [],
+    subjects?.results ?? [],
+    adOptions,
+    sortedCases,
+    sortedCorporations
   )
 
   const navigateWithFlashMessage = useNavigateWithFlashMessage()
@@ -114,6 +129,9 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
      } : {}
   }
 
+  const addressString = getAddressAsString(bagAddress)
+  const title = `${ addressString } - Controleer de gegevens`
+
   return (
     <ConfirmScaffoldForm
       fields={ fields }
@@ -122,6 +140,7 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
       afterSubmit={ afterSubmit }
       initialValues={ initialValues }
       submittingTitle="De zaak wordt aangemaakt. Wacht met sluiten van dit venster."
+      title={ title }
     />
   )
 }

@@ -30,7 +30,7 @@ const AddressMenu: React.FC<Props> = ({ bagId }) => {
   const permitsFound = permitDetails?.permits.filter(p => ["GRANTED", "NOT_GRANTED"].includes(p.permit_granted)).length
   const counts = [
     undefined,
-    residents?.results.length,
+    residents?._embedded?.ingeschrevenpersonen?.length,
     permitsFound === permitsGranted ? permitsGranted : permitsGranted + "/" + permitsFound,
     numCases
   ]

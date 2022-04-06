@@ -8,7 +8,6 @@ import Column from "app/components/layouts/Grid/Column"
 import DetailHeader from "app/components/shared/DetailHeader/DetailHeader"
 import People from "app/components/addresses/People/People"
 import PageHeading from "app/components/shared/PageHeading/PageHeading"
-import MockWrapper from "app/components/shared/MockWrapper/MockWrapper"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
 
 type Props = {
@@ -16,7 +15,7 @@ type Props = {
 }
 
 const PeoplePage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
-  isValidUrlParamBAGId(bagId) ?
+  isValidUrlParamBAGId(bagId) ? (
     <DefaultLayout>
       <Row>
         <Column spanLarge={ 50 }>
@@ -25,16 +24,14 @@ const PeoplePage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
         <Column spanLarge={ 50 }>
           <DetailHeader bagId={ bagId } />
         </Column>
-      </Row> 
+      </Row>
       <Row>
         <Column spanLarge={ 50 }>
-          <MockWrapper>
-            <People bagId={ bagId } />
-          </MockWrapper>
+          <People bagId={ bagId } />
         </Column>
       </Row>
-    </DefaultLayout> :
-    <NotFoundPage />
+    </DefaultLayout>
+  ) : <NotFoundPage />
 )
 
 export default PeoplePage
