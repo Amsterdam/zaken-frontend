@@ -46,7 +46,6 @@ declare namespace Components {
                 id: number;
                 name: string;
                 sensitive?: boolean;
-                case_state_types_top?: number[];
             };
             theme_id: number;
             reason: {
@@ -140,7 +139,6 @@ declare namespace Components {
             id: number;
             name: string;
             sensitive?: boolean;
-            case_state_types_top?: number[];
         }
         export interface CaseUserTask {
             id: number;
@@ -253,7 +251,6 @@ declare namespace Components {
                 id: number;
                 name: string;
                 sensitive?: boolean;
-                case_state_types_top?: number[];
             };
             decision_type: {
                 id: number;
@@ -315,25 +312,25 @@ declare namespace Components {
         export interface FineList {
             items: Fine[];
         }
-        /**
-         * Used to complete a GenericCompletedTask.
-         *
-         * variables example
-         * {
-         *     "a_field": {
-         *         "value": true,
-         *         "label": "Label for a field"
-         *     }
-         * }
-         */
         export interface GenericCompletedTask {
+            id: number;
+            case_user_task_id?: string;
+            date_added: string; // date-time
+            task_name: string;
+            description: string;
+            variables?: {
+                [name: string]: any;
+            };
+            case: number;
+            author: string; // uuid
+        }
+        export interface GenericCompletedTaskCreate {
             id: number;
             case_user_task_id: string;
             case: number;
             variables: {
                 [name: string]: any;
             };
-            description?: string;
             date_added: string; // date-time
         }
         export interface GenericFormField {
@@ -349,7 +346,6 @@ declare namespace Components {
             value: string;
         }
         export type GenericFormFieldTypeEnum = "text" | "select" | "checkbox";
-        export type GeslachtsaanduidingEnum = "M" | "V" | "X";
         export interface HousingCorporation {
             id: number;
             name: string;
@@ -486,24 +482,6 @@ declare namespace Components {
             previous?: string | null; // uri
             results?: CaseReason[];
         }
-        export interface PaginatedCaseStateTypeList {
-            /**
-             * example:
-             * 123
-             */
-            count?: number;
-            /**
-             * example:
-             * http://api.example.org/accounts/?offset=400&limit=100
-             */
-            next?: string | null; // uri
-            /**
-             * example:
-             * http://api.example.org/accounts/?offset=200&limit=100
-             */
-            previous?: string | null; // uri
-            results?: CaseStateType[];
-        }
         export interface PaginatedCaseThemeList {
             /**
              * example:
@@ -629,6 +607,24 @@ declare namespace Components {
              */
             previous?: string | null; // uri
             results?: DecisionType[];
+        }
+        export interface PaginatedGenericCompletedTaskList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=4
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null; // uri
+            results?: GenericCompletedTask[];
         }
         export interface PaginatedHousingCorporationList {
             /**
@@ -834,7 +830,6 @@ declare namespace Components {
                 id: number;
                 name: string;
                 sensitive?: boolean;
-                case_state_types_top?: number[];
             };
             theme_id?: number;
             reason?: {
@@ -913,17 +908,19 @@ declare namespace Components {
             gauge_date?: string | null; // date
             invoice_identification: string;
         }
-        export interface Resident {
-            geboortedatum: string; // date-time
-            geslachtsaanduiding: GeslachtsaanduidingEnum;
-            geslachtsnaam: string;
-            voorletters: string;
-            voornamen: string;
-            voorvoegsel_geslachtsnaam?: string;
-            datum_begin_relatie_verblijfadres: string; // date-time
-        }
         export interface Residents {
-            results: Resident[];
+            /**
+             *  links
+             */
+            _links: {
+                [name: string]: any;
+            };
+            /**
+             *  embedded
+             */
+            _embedded: {
+                [name: string]: any;
+            };
         }
         export interface Schedule {
             id: number;
@@ -979,13 +976,13 @@ declare namespace Components {
         }
         export interface SummonedPerson {
             id: number;
-            first_name?: string | undefined;
-            preposition?: string | undefined;
-            last_name?: string | undefined;
+            first_name?: string;
+            preposition?: string;
+            last_name?: string;
             person_role?: PersonRoleEnum;
             summon: number;
-            entity_name?: string | undefined;
-            function?: string | undefined;
+            entity_name?: string;
+            function?: string;
         }
         export interface SupportContact {
             id: number;
@@ -1940,21 +1937,59 @@ declare namespace Paths {
         }
     }
     namespace GenericTasksCompleteCreate {
-        export type RequestBody = /**
-         * Used to complete a GenericCompletedTask.
-         *
-         * variables example
-         * {
-         *     "a_field": {
-         *         "value": true,
-         *         "label": "Label for a field"
-         *     }
-         * }
-         */
-        Components.Schemas.GenericCompletedTask;
+        namespace Parameters {
+            export type Case = number;
+            export type CaseReason = number;
+            export type CaseTheme = number;
+            export type Description = string;
+            export type FromDateAdded = string; // date
+            export type TaskName = string;
+            export type ToDateAdded = string; // date
+        }
+        export interface QueryParameters {
+            case?: Parameters.Case;
+            case__reason?: Parameters.CaseReason;
+            case__theme?: Parameters.CaseTheme;
+            description?: Parameters.Description;
+            from_date_added?: Parameters.FromDateAdded /* date */;
+            task_name?: Parameters.TaskName;
+            to_date_added?: Parameters.ToDateAdded /* date */;
+        }
+        export type RequestBody = Components.Schemas.GenericCompletedTaskCreate;
         namespace Responses {
             export interface $200 {
             }
+        }
+    }
+    namespace GenericTasksList {
+        namespace Parameters {
+            export type Case = number;
+            export type CaseProject = string[];
+            export type CaseReason = number;
+            export type CaseTheme = number;
+            export type Description = string;
+            export type FromDateAdded = string; // date
+            export type OpenCases = boolean;
+            export type Page = number;
+            export type PageSize = number;
+            export type TaskName = string;
+            export type ToDateAdded = string; // date
+        }
+        export interface QueryParameters {
+            case?: Parameters.Case;
+            case__project?: Parameters.CaseProject;
+            case__reason?: Parameters.CaseReason;
+            case__theme?: Parameters.CaseTheme;
+            description?: Parameters.Description;
+            from_date_added?: Parameters.FromDateAdded /* date */;
+            open_cases?: Parameters.OpenCases;
+            page?: Parameters.Page;
+            page_size?: Parameters.PageSize;
+            task_name?: Parameters.TaskName;
+            to_date_added?: Parameters.ToDateAdded /* date */;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedGenericCompletedTaskList;
         }
     }
     namespace IsAuthorizedRetrieve {
@@ -2237,23 +2272,6 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedThemeScheduleTypesList;
-        }
-    }
-    namespace ThemesStateTypesList {
-        namespace Parameters {
-            export type Id = number;
-            export type Limit = number;
-            export type Offset = number;
-        }
-        export interface PathParameters {
-            id: Parameters.Id;
-        }
-        export interface QueryParameters {
-            limit?: Parameters.Limit;
-            offset?: Parameters.Offset;
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.PaginatedCaseStateTypeList;
         }
     }
     namespace ThemesSubjectsList {

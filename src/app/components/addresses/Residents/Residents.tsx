@@ -21,22 +21,25 @@ const Ul = styled.ul`
 `
 
 const Residents: React.FC<Props> = ({ bagId }) => {
-  const [residents] = useResidents(bagId)
+  const [data, { isBusy }] = useResidents(bagId)
+  const residents: any = data?._embedded?.ingeschrevenpersonen ?? []
 
+  if (isBusy) {
+    return <LoadingDetails numRows={4} />
+  }
   return (
     <>
-      { residents ?
+      { residents.length > 0 ? (
         <>
-          <Heading as="h2">Actueel ingeschreven personen ({ residents.results.length })</Heading>
+          <Heading as="h2">Actueel ingeschreven personen ({ residents.length })</Heading>
           <Ul>
-            { residents.results
-              .map((resident, index) =>
-                <li key={ index }><Resident resident={ resident } num={ index + 1 }/></li>)
-          }
+            {residents.map((resident: any, index: number) => (
+              <Resident resident={ resident } key={ index } num={ index + 1 } />
+              )
+            )}
           </Ul>
         </>
-        :
-        <LoadingDetails numRows={4} />
+        ) : <Heading as="h2">Er zijn geen ingeschreven personen op dit adres</Heading>
       }
     </>
   )
