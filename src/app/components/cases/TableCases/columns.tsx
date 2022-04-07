@@ -35,7 +35,7 @@ const getColumns = (sorting: any) => {
         <Wrap>
           <CaseIdDisplay id={ record.id } />
           <SensitiveCaseIcon sensitive={ record.sensitive }/>
-          <EnforcementIcon caseReason={ record.reason } />
+          { record.is_enforcement_request && <EnforcementIcon /> }
         </Wrap>
       )
     }, {

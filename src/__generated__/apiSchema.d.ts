@@ -76,6 +76,7 @@ declare namespace Components {
             last_updated: string; // date-time
             created: string; // date-time
             previous_case?: number | null;
+            is_enforcement_request?: boolean
         }
         /**
          * Case-address serializer for CaseUserTasks
