@@ -2,11 +2,13 @@ import styled from "styled-components"
 import { DefinitionList, CaseIdDisplay, DateDisplay } from "@amsterdam/wonen-ui"
 import { useCase } from "app/state/rest"
 import ChangeableSubject from "../tasks/ChangeSubject/ChangeableSubject"
-import SensitiveCaseIcon from "../SensitiveCaseIcon/SensitiveCaseIcon"
 import DisplayCorporation from "./DisplayCorporation"
+import SensitiveCaseIcon from "../icons/SensitiveCaseIcon/SensitiveCaseIcon"
+import EnforcementIcon from "../icons/EnforcementIcon/EnforcementIcon"
 
 const Wrap = styled.div`
   display: flex;
+  align-items: center;
 `
 
 type Props = {
@@ -25,12 +27,13 @@ const StyledDiv = styled.div`
 
 const getDataFirstCol = (caseItem?: Components.Schemas.Case) => {
   if (caseItem === undefined) return
-  const { id, theme, start_date, sensitive, previous_case } = caseItem
+  const { id, theme, reason, start_date, sensitive, previous_case } = caseItem
   const data: any = {
     "Zaak ID": (
       <Wrap>
         <CaseIdDisplay id={ id } />
         <SensitiveCaseIcon sensitive={ sensitive }/>
+        <EnforcementIcon caseReason={ reason } />
       </Wrap>
     ),
     "Thema": theme.name,
