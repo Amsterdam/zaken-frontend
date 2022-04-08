@@ -4,7 +4,7 @@ import { StyledTooltip } from "../layout"
 
 const EnforcementIcon: React.FC = () => (
   <StyledTooltip title="Deze zaak heeft een handhavingsverzoek als aanleiding">
-    <Icon><PanTool /></Icon>
+    <Icon><PanTool color='error' /></Icon>
   </StyledTooltip>
 )
 
