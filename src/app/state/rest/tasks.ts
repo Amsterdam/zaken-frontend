@@ -35,7 +35,8 @@ export const getQueryUrl = (
   sorting?: TABLE.Schemas.Sorting,
   theme?: string,
   role?: string,
-  owner?: string
+  owner?: string,
+  isEnforcementRequest?: boolean
 ) => {
   const urlParams: any = {
     page: pagination.page,
@@ -50,6 +51,9 @@ export const getQueryUrl = (
   if (sorting) {
     urlParams.ordering = getOrderingValue(sorting)
   }
+  if (isEnforcementRequest) {
+    urlParams.is_enforcement_request = true
+  }
 
   const queryString = isEmpty(urlParams) ? "" : qs.stringify(urlParams, { addQueryPrefix: true })
 
@@ -63,10 +67,11 @@ export const useTasks = (
   theme?: string,
   role?: string,
   owner?: string,
+  isEnforcementRequest?: boolean,
   options?: Options
 ) => {
   const handleError = useErrorHandler()
-  const queryUrl = getQueryUrl(sensitive, pagination, sorting, theme, role, owner)
+  const queryUrl = getQueryUrl(sensitive, pagination, sorting, theme, role, owner, isEnforcementRequest)
 
   return useApiRequest<Components.Schemas.PaginatedCaseUserTaskList>({
     ...options,

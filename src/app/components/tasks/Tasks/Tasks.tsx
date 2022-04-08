@@ -7,10 +7,16 @@ import useHasPermission, { SENSITIVE_CASE_PERMISSION } from "app/state/rest/cust
 import { ContextValues } from "app/state/context/ValueProvider"
 import { getQueryUrl } from "app/state/rest/tasks"
 import useContextCache from "app/state/rest/provider/useContextCache"
+import { Heading, themeSpacing } from "@amsterdam/asc-ui"
+import styled from "styled-components"
 
 const EMPTY_TEXT_NO_PERMISSION = "Helaas, u bent niet geautoriseerd om deze taken te bekijken."
 const EMPTY_TEXT = "Er zijn momenteel geen open taken voor de gekozen filters."
 const UNDERMINING = "Ondermijning"
+
+const StyledHeading = styled(Heading)`
+  margin-top: ${ themeSpacing(5) };
+`
 
 const Tasks: React.FC = () => {
   const {
@@ -25,8 +31,19 @@ const Tasks: React.FC = () => {
     sorting,
     theme,
     role,
-    owner
+    owner,
+    false
   )
+  const [enforcementDataSource] = useTasks(
+    hasPermission,
+    pagination,
+    sorting,
+    theme,
+    role,
+    owner,
+    true
+  )
+
   const queryUrl = getQueryUrl(hasPermission, pagination, sorting, theme, role, owner)
   const { clearContextCache } = useContextCache("cases", queryUrl)
 
@@ -59,7 +76,6 @@ const Tasks: React.FC = () => {
         ...pagination,
         pageSize: parseInt(pageSize),
         page: 1
-
       }
     })
   }
@@ -69,38 +85,55 @@ const Tasks: React.FC = () => {
   }
 
   const emptyPlaceholder = hasPermission === false && theme === UNDERMINING ? EMPTY_TEXT_NO_PERMISSION : EMPTY_TEXT
-
   return (
-    <Row>
-      <Column spanLarge={ 72 }>
-        <TableTasks
-          data={ results || [] }
-          isBusy={ isBusy }
-          onChange={onChangeTable}
-          pagination={{
-            page: pagination.page,
-            pageSize: pagination.pageSize,
-            collectionSize: count || 1
-          }}
-          sorting={ sorting }
-          emptyPlaceholder={ emptyPlaceholder }
-        />
-      </Column>
-      <Column spanLarge={ 28 }>
-        <TasksFilter
-          role={ role }
-          roles={ roles }
-          setRole={ (value: string) => onChangeFilter("role", value) }
-          theme={ theme }
-          themes={ caseThemes?.results }
-          setTheme={ (value: string) => onChangeFilter("theme", value) }
-          setPageSize={ onChangePageSize }
-          pageSize={ pagination.pageSize?.toString() || "10" }
-          owner={ owner }
-          setOwner={ (value: string) => onChangeFilter("owner", value) }
-        />
-      </Column>
-    </Row>
+    <>
+      <Row>
+        <Column spanLarge={ 72 }>
+          { enforcementDataSource?.results?.length ? (
+            <>
+              <Heading as="h2">Handhavingstaken</Heading>
+              <TableTasks
+                data={ enforcementDataSource?.results || [] }
+                isBusy={ isBusy }
+                onChange={onChangeTable}
+                pagination={false}
+                sorting={ sorting }
+                emptyPlaceholder={ emptyPlaceholder }
+                />
+            </>
+            ) : null
+            }
+          <StyledHeading as="h2">Alle taken</StyledHeading>
+          <TableTasks
+            data={ results || [] }
+            isBusy={ isBusy }
+            onChange={onChangeTable}
+            pagination={{
+              page: pagination.page,
+              pageSize: pagination.pageSize,
+              collectionSize: count || 1,
+              paginationLength: 9
+            }}
+            sorting={ sorting }
+            emptyPlaceholder={ emptyPlaceholder }
+          />
+        </Column>
+        <Column spanLarge={ 28 }>
+          <TasksFilter
+            role={ role }
+            roles={ roles }
+            setRole={ (value: string) => onChangeFilter("role", value) }
+            theme={ theme }
+            themes={ caseThemes?.results }
+            setTheme={ (value: string) => onChangeFilter("theme", value) }
+            setPageSize={ onChangePageSize }
+            pageSize={ pagination.pageSize?.toString() || "10" }
+            owner={ owner }
+            setOwner={ (value: string) => onChangeFilter("owner", value) }
+            />
+        </Column>
+      </Row>
+    </>
   )
 }
 
