@@ -9,13 +9,20 @@ import { getQueryUrl } from "app/state/rest/tasks"
 import useContextCache from "app/state/rest/provider/useContextCache"
 import { Heading, themeSpacing } from "@amsterdam/asc-ui"
 import styled from "styled-components"
+import EnforcementIcon from "app/components/case/icons/EnforcementIcon/EnforcementIcon"
 
 const EMPTY_TEXT_NO_PERMISSION = "Helaas, u bent niet geautoriseerd om deze taken te bekijken."
 const EMPTY_TEXT = "Er zijn momenteel geen open taken voor de gekozen filters."
 const UNDERMINING = "Ondermijning"
 
 const StyledHeading = styled(Heading)`
-  margin-top: ${ themeSpacing(5) };
+  display: flex;
+  align-items: center;
+  justify-content: start;
+`
+
+const Wrap = styled.div`
+  margin-bottom: ${ themeSpacing(12) };
 `
 
 const Tasks: React.FC = () => {
@@ -85,13 +92,15 @@ const Tasks: React.FC = () => {
   }
 
   const emptyPlaceholder = hasPermission === false && theme === UNDERMINING ? EMPTY_TEXT_NO_PERMISSION : EMPTY_TEXT
+  const enforcementTasksAvailable = !!enforcementDataSource?.results?.length
+
   return (
     <>
       <Row>
         <Column spanLarge={ 72 }>
-          { enforcementDataSource?.results?.length ? (
-            <>
-              <Heading as="h2">Handhavingstaken</Heading>
+          { enforcementTasksAvailable ?  (
+            <Wrap>
+              <StyledHeading as="h2"><span>Handhavingsverzoeken </span><EnforcementIcon /></StyledHeading>
               <TableTasks
                 data={ enforcementDataSource?.results || [] }
                 isBusy={ isBusy }
@@ -100,10 +109,10 @@ const Tasks: React.FC = () => {
                 sorting={ sorting }
                 emptyPlaceholder={ emptyPlaceholder }
                 />
-            </>
+            </Wrap>
             ) : null
-            }
-          <StyledHeading as="h2">Alle taken</StyledHeading>
+          }
+          <StyledHeading as="h2">Alle { enforcementTasksAvailable ? "overige" : "" } taken</StyledHeading>
           <TableTasks
             data={ results || [] }
             isBusy={ isBusy }
