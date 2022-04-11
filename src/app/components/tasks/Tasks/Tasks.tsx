@@ -100,7 +100,7 @@ const Tasks: React.FC = () => {
         <Column spanLarge={ 72 }>
           { enforcementTasksAvailable ?  (
             <Wrap>
-              <StyledHeading as="h2"><span>Handhavingsverzoeken </span><EnforcementIcon /></StyledHeading>
+              <StyledHeading as="h2"><span>Handhavingsverzoeken </span><EnforcementIcon show /></StyledHeading>
               <TableTasks
                 data={ enforcementDataSource?.results || [] }
                 isBusy={ isBusy }
@@ -139,7 +139,7 @@ const Tasks: React.FC = () => {
             pageSize={ pagination.pageSize?.toString() || "10" }
             owner={ owner }
             setOwner={ (value: string) => onChangeFilter("owner", value) }
-            />
+          />
         </Column>
       </Row>
     </>

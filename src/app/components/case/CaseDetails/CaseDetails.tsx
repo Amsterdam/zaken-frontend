@@ -33,7 +33,7 @@ const getDataFirstCol = (caseItem?: Components.Schemas.Case) => {
       <Wrap>
         <CaseIdDisplay id={ id } />
         <SensitiveCaseIcon sensitive={ sensitive }/>
-        {is_enforcement_request && <EnforcementIcon />}
+        <EnforcementIcon show={ is_enforcement_request } />
       </Wrap>
     ),
     "Thema": theme.name,
