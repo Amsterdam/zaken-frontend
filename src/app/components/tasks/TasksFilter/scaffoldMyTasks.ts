@@ -13,7 +13,7 @@ export default (value: string, onChange: (value: string) => void) => {
         options: {
           "": "Alle taken",
           [me?.id || "owner" ]: "Mijn taken"
-      },
+        },
         onChange,
         value
       }

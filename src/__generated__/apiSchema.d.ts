@@ -152,6 +152,10 @@ declare namespace Components {
             updated: string; // date-time
             owner?: string | null; // uuid
         }
+        export interface CaseUserTaskName {
+            task_name: string
+            name: string
+        }
         export interface CaseUserTaskWorkdflow {
             user_has_permission: boolean;
             roles: string[];

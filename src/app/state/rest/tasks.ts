@@ -36,11 +36,14 @@ export const getQueryUrl = (
   theme?: string,
   role?: string,
   owner?: string,
-  isEnforcementRequest?: boolean
+  isEnforcementRequest?: boolean,
+  taskName?: string
 ) => {
-  const urlParams: any = {
+  let urlParams: any = {
     page: pagination.page,
     page_size: pagination.pageSize,
+    name: taskName,
+    is_enforcement_request: isEnforcementRequest,
     theme,
     role,
     owner
@@ -51,8 +54,11 @@ export const getQueryUrl = (
   if (sorting) {
     urlParams.ordering = getOrderingValue(sorting)
   }
-  if (isEnforcementRequest) {
-    urlParams.is_enforcement_request = true
+
+  urlParams = {
+    completed: false,
+    open_cases: true,
+    ...urlParams
   }
 
   const queryString = isEmpty(urlParams) ? "" : qs.stringify(urlParams, { addQueryPrefix: true })
@@ -68,10 +74,11 @@ export const useTasks = (
   role?: string,
   owner?: string,
   isEnforcementRequest?: boolean,
+  taskName?: string,
   options?: Options
 ) => {
   const handleError = useErrorHandler()
-  const queryUrl = getQueryUrl(sensitive, pagination, sorting, theme, role, owner, isEnforcementRequest)
+  const queryUrl = getQueryUrl(sensitive, pagination, sorting, theme, role, owner, isEnforcementRequest, taskName)
 
   return useApiRequest<Components.Schemas.PaginatedCaseUserTaskList>({
     ...options,
@@ -101,6 +108,18 @@ export const useTaskUpdate = (id: number | string, options?: Options) => {
     lazy: true,
     url: makeApiUrl("tasks", id),
     groupName: "cases",
+    handleError,
+    isProtected: true
+  })
+}
+
+export const useTaskNames = () => {
+  const handleError = useErrorHandler()
+  const queryString = qs.stringify({ completed: false, open_cases: true }, { addQueryPrefix: true })
+  const apiUrl = makeApiUrl("tasks", "task-names") + queryString
+  return useApiRequest<Components.Schemas.CaseUserTaskName[]>({
+    url: apiUrl,
+    groupName: "task",
     handleError,
     isProtected: true
   })

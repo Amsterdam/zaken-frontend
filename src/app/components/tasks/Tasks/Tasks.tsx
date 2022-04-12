@@ -1,5 +1,5 @@
 import { useEffect, useContext } from "react"
-import { useRoles, useTasks, useCaseThemes } from "app/state/rest"
+import { useRoles, useTasks, useCaseThemes, useTaskNames } from "app/state/rest"
 import { Row, Column } from "app/components/layouts/Grid"
 import TableTasks from "app/components/tasks/TableTasks/TableTasks"
 import TasksFilter from "../TasksFilter/TasksFilter"
@@ -27,7 +27,7 @@ const Wrap = styled.div`
 
 const Tasks: React.FC = () => {
   const {
-    results, count, pagination, sorting, role, theme, updateContextTasks, owner
+    results, count, pagination, sorting, role, theme, updateContextTasks, owner, taskName
   } = useContext(ContextValues)["tasks"]
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const [roles] = useRoles()
@@ -39,7 +39,8 @@ const Tasks: React.FC = () => {
     theme,
     role,
     owner,
-    false
+    false,
+    taskName
   )
   const [enforcementDataSource] = useTasks(
     hasPermission,
@@ -48,9 +49,11 @@ const Tasks: React.FC = () => {
     theme,
     role,
     owner,
-    true
+    true,
+    taskName
   )
 
+  const [ taskNames ] = useTaskNames()
   const queryUrl = getQueryUrl(hasPermission, pagination, sorting, theme, role, owner)
   const { clearContextCache } = useContextCache("cases", queryUrl)
 
@@ -139,6 +142,9 @@ const Tasks: React.FC = () => {
             pageSize={ pagination.pageSize?.toString() || "10" }
             owner={ owner }
             setOwner={ (value: string) => onChangeFilter("owner", value) }
+            taskName={ taskName }
+            setTaskName={ (value: string) => onChangeFilter("taskName", value) }
+            taskNames={ taskNames }
           />
         </Column>
       </Row>
