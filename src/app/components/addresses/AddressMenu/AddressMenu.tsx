@@ -3,7 +3,6 @@ import NavBlock from "app/components/addresses/NavBlock/NavBlock"
 import to from "app/routing/utils/to"
 import routesObject from "app/routing/routes"
 import { useCasesByBagId, usePermitDetails } from "app/state/rest"
-import { useResidents } from "app/state/rest/"
 import MockWrapper from "app/components/shared/MockWrapper/MockWrapper"
 
 type Props = {
@@ -17,20 +16,17 @@ const routes = [
   "/adres/:bagId/zaken/"
 ]
 
-const mockedRoutes = [
-  "/adres/:bagId/personen/"
-]
+const mockedRoutes: string[] = []
 
 const AddressMenu: React.FC<Props> = ({ bagId }) => {
   const [permitDetails] = usePermitDetails(bagId)
-  const [residents] = useResidents(bagId)
   const [data] = useCasesByBagId(bagId)
   const numCases = data?.results?.length ?? 0
   const permitsGranted = permitDetails?.permits.filter(p => p.permit_granted === "GRANTED").length
   const permitsFound = permitDetails?.permits.filter(p => ["GRANTED", "NOT_GRANTED"].includes(p.permit_granted)).length
   const counts = [
     undefined,
-    residents?._embedded?.ingeschrevenpersonen?.length,
+    undefined,
     permitsFound === permitsGranted ? permitsGranted : permitsGranted + "/" + permitsFound,
     numCases
   ]
