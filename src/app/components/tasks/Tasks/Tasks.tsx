@@ -42,9 +42,12 @@ const Tasks: React.FC = () => {
     false,
     taskName
   )
-  const [enforcementDataSource] = useTasks(
+  const [enforcementDataSource, { isBusy: isBusyEnforcement }] = useTasks(
     hasPermission,
-    pagination,
+    {
+      page: 1, // There is no pagination for enforcement tasks
+      pageSize: 1000 // 1000 is the maximum
+    },
     sorting,
     theme,
     role,
@@ -52,8 +55,7 @@ const Tasks: React.FC = () => {
     true,
     taskName
   )
-
-  const [ taskNames ] = useTaskNames()
+  const [ taskNamesData ] = useTaskNames()
   const queryUrl = getQueryUrl(hasPermission, pagination, sorting, theme, role, owner)
   const { clearContextCache } = useContextCache("cases", queryUrl)
 
@@ -96,6 +98,7 @@ const Tasks: React.FC = () => {
 
   const emptyPlaceholder = hasPermission === false && theme === UNDERMINING ? EMPTY_TEXT_NO_PERMISSION : EMPTY_TEXT
   const enforcementTasksAvailable = !!enforcementDataSource?.results?.length
+  const taskNames = taskNamesData?.sort((a, b) => a.name.localeCompare(b.name))
 
   return (
     <>
@@ -103,10 +106,13 @@ const Tasks: React.FC = () => {
         <Column spanLarge={ 72 }>
           { enforcementTasksAvailable ?  (
             <Wrap>
-              <StyledHeading as="h2"><span>Handhavingsverzoeken </span><EnforcementIcon show /></StyledHeading>
+              <StyledHeading as="h2">
+                <span>Handhavingsverzoeken </span>
+                <EnforcementIcon show />
+              </StyledHeading>
               <TableTasks
                 data={ enforcementDataSource?.results || [] }
-                isBusy={ isBusy }
+                isBusy={ isBusyEnforcement }
                 onChange={onChangeTable}
                 pagination={false}
                 sorting={ sorting }
@@ -115,7 +121,9 @@ const Tasks: React.FC = () => {
             </Wrap>
             ) : null
           }
-          <StyledHeading as="h2">Alle { enforcementTasksAvailable ? "overige" : "" } taken</StyledHeading>
+          <StyledHeading as="h2">
+            Alle { enforcementTasksAvailable ? "overige" : "" } taken
+          </StyledHeading>
           <TableTasks
             data={ results || [] }
             isBusy={ isBusy }
