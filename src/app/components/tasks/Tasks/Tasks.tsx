@@ -55,8 +55,7 @@ const Tasks: React.FC = () => {
     true,
     taskName
   )
-
-  const [ taskNames ] = useTaskNames()
+  const [ taskNamesData ] = useTaskNames()
   const queryUrl = getQueryUrl(hasPermission, pagination, sorting, theme, role, owner)
   const { clearContextCache } = useContextCache("cases", queryUrl)
 
@@ -99,6 +98,7 @@ const Tasks: React.FC = () => {
 
   const emptyPlaceholder = hasPermission === false && theme === UNDERMINING ? EMPTY_TEXT_NO_PERMISSION : EMPTY_TEXT
   const enforcementTasksAvailable = !!enforcementDataSource?.results?.length
+  const taskNames = taskNamesData?.sort((a, b) => a.name.localeCompare(b.name))
 
   return (
     <>
