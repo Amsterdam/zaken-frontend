@@ -42,7 +42,7 @@ const Tasks: React.FC = () => {
     false,
     taskName
   )
-  const [enforcementDataSource] = useTasks(
+  const [enforcementDataSource, { isBusy: isBusyEnforcement }] = useTasks(
     hasPermission,
     {
       page: 1, // There is no pagination for enforcement tasks
@@ -106,10 +106,13 @@ const Tasks: React.FC = () => {
         <Column spanLarge={ 72 }>
           { enforcementTasksAvailable ?  (
             <Wrap>
-              <StyledHeading as="h2"><span>Handhavingsverzoeken </span><EnforcementIcon show /></StyledHeading>
+              <StyledHeading as="h2">
+                <span>Handhavingsverzoeken </span>
+                <EnforcementIcon show />
+              </StyledHeading>
               <TableTasks
                 data={ enforcementDataSource?.results || [] }
-                isBusy={ isBusy }
+                isBusy={ isBusyEnforcement }
                 onChange={onChangeTable}
                 pagination={false}
                 sorting={ sorting }
@@ -118,7 +121,9 @@ const Tasks: React.FC = () => {
             </Wrap>
             ) : null
           }
-          <StyledHeading as="h2">Alle { enforcementTasksAvailable ? "overige" : "" } taken</StyledHeading>
+          <StyledHeading as="h2">
+            Alle { enforcementTasksAvailable ? "overige" : "" } taken
+          </StyledHeading>
           <TableTasks
             data={ results || [] }
             isBusy={ isBusy }
