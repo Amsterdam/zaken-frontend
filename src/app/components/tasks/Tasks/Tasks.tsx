@@ -44,7 +44,10 @@ const Tasks: React.FC = () => {
   )
   const [enforcementDataSource] = useTasks(
     hasPermission,
-    pagination,
+    {
+      page: 1, // There is no pagination for enforcement tasks
+      pageSize: 1000 // 1000 is the maximum
+    },
     sorting,
     theme,
     role,
