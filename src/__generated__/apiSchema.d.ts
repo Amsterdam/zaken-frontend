@@ -76,6 +76,7 @@ declare namespace Components {
             last_updated: string; // date-time
             created: string; // date-time
             previous_case?: number | null;
+            is_enforcement_request?: boolean
         }
         /**
          * Case-address serializer for CaseUserTasks
@@ -150,6 +151,10 @@ declare namespace Components {
             created: string; // date-time
             updated: string; // date-time
             owner?: string | null; // uuid
+        }
+        export interface CaseUserTaskName {
+            task_name: string
+            name: string
         }
         export interface CaseUserTaskWorkdflow {
             user_has_permission: boolean;

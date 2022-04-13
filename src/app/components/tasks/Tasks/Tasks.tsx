@@ -1,5 +1,5 @@
 import { useEffect, useContext } from "react"
-import { useRoles, useTasks, useCaseThemes } from "app/state/rest"
+import { useRoles, useTasks, useCaseThemes, useTaskNames } from "app/state/rest"
 import { Row, Column } from "app/components/layouts/Grid"
 import TableTasks from "app/components/tasks/TableTasks/TableTasks"
 import TasksFilter from "../TasksFilter/TasksFilter"
@@ -7,14 +7,27 @@ import useHasPermission, { SENSITIVE_CASE_PERMISSION } from "app/state/rest/cust
 import { ContextValues } from "app/state/context/ValueProvider"
 import { getQueryUrl } from "app/state/rest/tasks"
 import useContextCache from "app/state/rest/provider/useContextCache"
+import { Heading, themeSpacing } from "@amsterdam/asc-ui"
+import styled from "styled-components"
+import EnforcementIcon from "app/components/case/icons/EnforcementIcon/EnforcementIcon"
 
 const EMPTY_TEXT_NO_PERMISSION = "Helaas, u bent niet geautoriseerd om deze taken te bekijken."
 const EMPTY_TEXT = "Er zijn momenteel geen open taken voor de gekozen filters."
 const UNDERMINING = "Ondermijning"
 
+const StyledHeading = styled(Heading)`
+  display: flex;
+  align-items: center;
+  justify-content: start;
+`
+
+const Wrap = styled.div`
+  margin-bottom: ${ themeSpacing(12) };
+`
+
 const Tasks: React.FC = () => {
   const {
-    results, count, pagination, sorting, role, theme, updateContextTasks, owner
+    results, count, pagination, sorting, role, theme, updateContextTasks, owner, taskName
   } = useContext(ContextValues)["tasks"]
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const [roles] = useRoles()
@@ -25,8 +38,22 @@ const Tasks: React.FC = () => {
     sorting,
     theme,
     role,
-    owner
+    owner,
+    false,
+    taskName
   )
+  const [enforcementDataSource] = useTasks(
+    hasPermission,
+    pagination,
+    sorting,
+    theme,
+    role,
+    owner,
+    true,
+    taskName
+  )
+
+  const [ taskNames ] = useTaskNames()
   const queryUrl = getQueryUrl(hasPermission, pagination, sorting, theme, role, owner)
   const { clearContextCache } = useContextCache("cases", queryUrl)
 
@@ -59,7 +86,6 @@ const Tasks: React.FC = () => {
         ...pagination,
         pageSize: parseInt(pageSize),
         page: 1
-
       }
     })
   }
@@ -69,38 +95,60 @@ const Tasks: React.FC = () => {
   }
 
   const emptyPlaceholder = hasPermission === false && theme === UNDERMINING ? EMPTY_TEXT_NO_PERMISSION : EMPTY_TEXT
+  const enforcementTasksAvailable = !!enforcementDataSource?.results?.length
 
   return (
-    <Row>
-      <Column spanLarge={ 72 }>
-        <TableTasks
-          data={ results || [] }
-          isBusy={ isBusy }
-          onChange={onChangeTable}
-          pagination={{
-            page: pagination.page,
-            pageSize: pagination.pageSize,
-            collectionSize: count || 1
-          }}
-          sorting={ sorting }
-          emptyPlaceholder={ emptyPlaceholder }
-        />
-      </Column>
-      <Column spanLarge={ 28 }>
-        <TasksFilter
-          role={ role }
-          roles={ roles }
-          setRole={ (value: string) => onChangeFilter("role", value) }
-          theme={ theme }
-          themes={ caseThemes?.results }
-          setTheme={ (value: string) => onChangeFilter("theme", value) }
-          setPageSize={ onChangePageSize }
-          pageSize={ pagination.pageSize?.toString() || "10" }
-          owner={ owner }
-          setOwner={ (value: string) => onChangeFilter("owner", value) }
-        />
-      </Column>
-    </Row>
+    <>
+      <Row>
+        <Column spanLarge={ 72 }>
+          { enforcementTasksAvailable ?  (
+            <Wrap>
+              <StyledHeading as="h2"><span>Handhavingsverzoeken </span><EnforcementIcon show /></StyledHeading>
+              <TableTasks
+                data={ enforcementDataSource?.results || [] }
+                isBusy={ isBusy }
+                onChange={onChangeTable}
+                pagination={false}
+                sorting={ sorting }
+                emptyPlaceholder={ emptyPlaceholder }
+                />
+            </Wrap>
+            ) : null
+          }
+          <StyledHeading as="h2">Alle { enforcementTasksAvailable ? "overige" : "" } taken</StyledHeading>
+          <TableTasks
+            data={ results || [] }
+            isBusy={ isBusy }
+            onChange={onChangeTable}
+            pagination={{
+              page: pagination.page,
+              pageSize: pagination.pageSize,
+              collectionSize: count || 1,
+              paginationLength: 9
+            }}
+            sorting={ sorting }
+            emptyPlaceholder={ emptyPlaceholder }
+          />
+        </Column>
+        <Column spanLarge={ 28 }>
+          <TasksFilter
+            role={ role }
+            roles={ roles }
+            setRole={ (value: string) => onChangeFilter("role", value) }
+            theme={ theme }
+            themes={ caseThemes?.results }
+            setTheme={ (value: string) => onChangeFilter("theme", value) }
+            setPageSize={ onChangePageSize }
+            pageSize={ pagination.pageSize?.toString() || "10" }
+            owner={ owner }
+            setOwner={ (value: string) => onChangeFilter("owner", value) }
+            taskName={ taskName }
+            setTaskName={ (value: string) => onChangeFilter("taskName", value) }
+            taskNames={ taskNames }
+          />
+        </Column>
+      </Row>
+    </>
   )
 }
 

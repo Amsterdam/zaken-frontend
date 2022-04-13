@@ -27,13 +27,13 @@ const StyledDiv = styled.div`
 
 const getDataFirstCol = (caseItem?: Components.Schemas.Case) => {
   if (caseItem === undefined) return
-  const { id, theme, reason, start_date, sensitive, previous_case } = caseItem
+  const { id, theme, start_date, sensitive, previous_case, is_enforcement_request } = caseItem
   const data: any = {
     "Zaak ID": (
       <Wrap>
         <CaseIdDisplay id={ id } />
         <SensitiveCaseIcon sensitive={ sensitive }/>
-        <EnforcementIcon caseReason={ reason } />
+        <EnforcementIcon show={ is_enforcement_request } />
       </Wrap>
     ),
     "Thema": theme.name,

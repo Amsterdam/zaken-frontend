@@ -6,7 +6,7 @@ type Props = {
   data?: Components.Schemas.CaseUserTask[]
   isBusy: boolean
   onChange: (pagination: any, sorting: any) => void
-  pagination: TABLE.Schemas.Pagination
+  pagination: TABLE.Schemas.Pagination | false
   sorting: TABLE.Schemas.Sorting
   emptyPlaceholder: string
 }
@@ -23,10 +23,7 @@ const TableTasks: React.FC<Props> = ({ data, isBusy, onChange, pagination, sorti
       loading={ isBusy }
       numLoadingRows={ 10 }
       onChange={ onChange }
-      pagination={{
-        ...pagination,
-        paginationLength: 9
-      }}
+      pagination={pagination}
       emptyPlaceholder={ emptyPlaceholder }
     />
   )

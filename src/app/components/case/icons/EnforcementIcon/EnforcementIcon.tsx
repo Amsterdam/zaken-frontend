@@ -3,13 +3,13 @@ import { PanTool } from "app/components/shared/Icons"
 import { StyledTooltip } from "../layout"
 
 type Props = {
-  caseReason: Components.Schemas.Case["reason"]
+  show?: boolean
 }
 
-const EnforcementIcon: React.FC<Props> = ({ caseReason }) => (
-  caseReason.name === "Handhavingsverzoek" ? (
+const EnforcementIcon: React.FC<Props> = ({ show }) => (
+  show ? (
     <StyledTooltip title="Deze zaak heeft een handhavingsverzoek als aanleiding">
-      <Icon><PanTool /></Icon>
+      <Icon><PanTool color='error' /></Icon>
     </StyledTooltip>
   ) : null
 )
