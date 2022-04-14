@@ -113,9 +113,10 @@ export const useTaskUpdate = (id: number | string, options?: Options) => {
   })
 }
 
-export const useTaskNames = () => {
+export const useTaskNames = (role: string) => {
   const handleError = useErrorHandler()
-  const queryString = qs.stringify({ completed: false, open_cases: true }, { addQueryPrefix: true })
+  const queryParams = { completed: false, open_cases: true, role }
+  const queryString = qs.stringify(queryParams, { addQueryPrefix: true })
   const apiUrl = makeApiUrl("tasks", "task-names") + queryString
   return useApiRequest<Components.Schemas.CaseUserTaskName[]>({
     url: apiUrl,

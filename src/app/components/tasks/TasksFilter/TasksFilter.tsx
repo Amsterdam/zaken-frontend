@@ -33,9 +33,6 @@ const TasksFilter: React.FC<Props> = ({
       <ScaffoldForm>
         <ScaffoldFields { ...scaffoldMyTasks(owner, setOwner) } />
       </ScaffoldForm>
-      <ScaffoldForm>
-        <ScaffoldFields { ...scaffoldTaskName(taskName, setTaskName, taskNames) } />
-      </ScaffoldForm>
       { themes === undefined
           ? <Spinner />
           : (
@@ -51,6 +48,14 @@ const TasksFilter: React.FC<Props> = ({
               <ScaffoldFields { ...scaffoldRole(role, roles, setRole) } />
             </ScaffoldForm>
           )
+      }
+      { taskNames === undefined ?
+        <Spinner />
+        : (
+          <ScaffoldForm>
+            <ScaffoldFields { ...scaffoldTaskName(taskName, setTaskName, taskNames) } />
+          </ScaffoldForm>
+        )
       }
       <ScaffoldForm>
         <ScaffoldFields { ...scaffoldPageSize(pageSize, setPageSize) } />
