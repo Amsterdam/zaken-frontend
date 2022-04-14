@@ -55,7 +55,7 @@ const Tasks: React.FC = () => {
     true,
     taskName
   )
-  const [ taskNamesData ] = useTaskNames()
+  const [ taskNamesData ] = useTaskNames(role)
   const queryUrl = getQueryUrl(hasPermission, pagination, sorting, theme, role, owner)
   const { clearContextCache } = useContextCache("cases", queryUrl)
 
@@ -80,6 +80,10 @@ const Tasks: React.FC = () => {
         page: 1
       }
     })
+    // When role is set we need to reset the taskName dropdown to avoid a stale selection:
+    if (key === "role") {
+      onChangeFilter("taskName", "")
+    }
   }
 
   const onChangePageSize = (pageSize: string) => {
@@ -147,7 +151,7 @@ const Tasks: React.FC = () => {
             themes={ caseThemes?.results }
             setTheme={ (value: string) => onChangeFilter("theme", value) }
             setPageSize={ onChangePageSize }
-            pageSize={ pagination.pageSize?.toString() || "10" }
+            pageSize={ pagination.pageSize?.toString() || "25" }
             owner={ owner }
             setOwner={ (value: string) => onChangeFilter("owner", value) }
             taskName={ taskName }

@@ -30,7 +30,7 @@ export const initialState: StateType = {
     count: 0,
     pagination: {
       page: 1,
-      pageSize: 10
+      pageSize: 25
     },
     sorting: {
       dataIndex: "start_date",
@@ -45,7 +45,7 @@ export const initialState: StateType = {
     count: 0,
     pagination: {
       page: 1,
-      pageSize: 10
+      pageSize: 25
     },
     sorting: {
       dataIndex: "due_date",
