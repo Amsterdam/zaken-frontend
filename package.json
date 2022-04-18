@@ -13,7 +13,7 @@
     "@sentry/react": "^6.19.3",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^12.1.4",
-    "@testing-library/user-event": "^14.0.4",
+    "@testing-library/user-event": "^14.1.1",
     "@types/lodash.debounce": "^4.0.6",
     "@types/lodash.isempty": "^4.4.6",
     "@types/lodash.merge": "^4.6.6",
