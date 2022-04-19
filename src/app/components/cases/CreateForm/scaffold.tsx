@@ -304,7 +304,7 @@ export default (
             label: "Overgedragen zaak ID",
             name: "previous_case",
             options: cases,
-            optionLabelField: "id",
+            optionLabelField: "label",
             withEmptyOption: true,
             emptyOptionLabel: "Maak een keuze",
             isRequired: true
