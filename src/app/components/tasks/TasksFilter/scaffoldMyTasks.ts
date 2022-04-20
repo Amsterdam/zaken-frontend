@@ -12,7 +12,7 @@ export default (value: string, onChange: (value: string) => void) => {
         name: "pageSize",
         options: {
           "": "Alle taken",
-          [me?.id || "owner" ]: "Mijn taken"
+          [me?.id || "owner" ]: "Mijn opgepakte taken"
         },
         onChange,
         value

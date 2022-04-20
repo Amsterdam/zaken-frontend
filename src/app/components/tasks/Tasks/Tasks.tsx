@@ -111,7 +111,7 @@ const Tasks: React.FC = () => {
           { enforcementTasksAvailable ?  (
             <Wrap>
               <StyledHeading as="h2">
-                <span>Handhavingsverzoeken </span>
+                <span>Handhavingsverzoeken ({ enforcementDataSource?.results?.length }) </span>
                 <EnforcementIcon show />
               </StyledHeading>
               <TableTasks
@@ -126,7 +126,7 @@ const Tasks: React.FC = () => {
             ) : null
           }
           <StyledHeading as="h2">
-            Alle { enforcementTasksAvailable ? "overige" : "" } taken
+            Alle { enforcementTasksAvailable ? "overige" : "" } taken ({ results?.length })
           </StyledHeading>
           <TableTasks
             data={ results || [] }
