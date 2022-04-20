@@ -73,7 +73,12 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
 
   // Get cases and sort them by id for the option to link a previous case.
   const casesArray = cases?.results ? [...cases.results] : []
-  const sortedCases = casesArray.sort((a, b) => (a.id > b.id) ? 1 : -1)
+  // Add a more explicit label to the options
+  const casesWithLabel = casesArray.map((item) => ({
+    ...item,
+    label: `${ item.id }: ${ item?.theme?.name }`
+  }))
+  const sortedCases = casesWithLabel.sort((a, b) => (a.id > b.id) ? 1 : -1)
 
   const corporationsArray = corporations?.results ? [...corporations.results] : []
   const sortedCorporations = corporationsArray.sort((a, b) => a.name.localeCompare(b.name))
