@@ -1,10 +1,12 @@
 import { useEffect, useContext } from "react"
 import styled from "styled-components"
+import { Heading } from "@amsterdam/asc-ui"
 import TableCases from "app/components/cases/TableCases/TableCases"
 import CasesFilter from "app/components/cases/CasesFilter/CasesFilter"
 import { useCases, useCaseThemes } from "app/state/rest"
 import useHasPermission, { SENSITIVE_CASE_PERMISSION } from "app/state/rest/custom/usePermissions/useHasPermission"
 import { ContextValues } from "app/state/context/ValueProvider"
+import { RowWithColumn } from "app/components/layouts/Grid"
 
 const Container = styled.div`
   margin: 0 auto;
@@ -78,31 +80,36 @@ const Cases: React.FC = () => {
     ? EMPTY_TEXT_NO_PERMISSION : EMPTY_TEXT
 
   return (
-    <Container>
-      <TableCases
-        data={ results || [] }
-        isBusy={ isBusy }
-        onChange={onChangeTable}
-        pagination={{
-            page: pagination.page,
-            pageSize: pagination.pageSize,
-            collectionSize: count || 1
-          }}
-        sorting={ sorting }
-        emptyPlaceholder={ emptyPlaceholder }
-        />
-      <FilterContainer>
-        <CasesFilter
-          date={ fromStartDate }
-          setDate={ (value: string) => onChangeFilter("fromStartDate", value) }
-          theme={ theme }
-          themes={ themes }
-          setTheme={ (value: string) => onChangeFilter("theme", value) }
-          setPageSize={ onChangePageSize }
-          pageSize={ pagination.pageSize?.toString() || "10" }
-        />
-      </FilterContainer>
-    </Container>
+    <>
+      <RowWithColumn>
+        <Heading>Zakenoverzicht ({ count })</Heading>
+      </RowWithColumn>
+      <Container>
+        <TableCases
+          data={ results || [] }
+          isBusy={ isBusy }
+          onChange={onChangeTable}
+          pagination={{
+              page: pagination.page,
+              pageSize: pagination.pageSize,
+              collectionSize: count || 1
+            }}
+          sorting={ sorting }
+          emptyPlaceholder={ emptyPlaceholder }
+          />
+        <FilterContainer>
+          <CasesFilter
+            date={ fromStartDate }
+            setDate={ (value: string) => onChangeFilter("fromStartDate", value) }
+            theme={ theme }
+            themes={ themes }
+            setTheme={ (value: string) => onChangeFilter("theme", value) }
+            setPageSize={ onChangePageSize }
+            pageSize={ pagination.pageSize?.toString() || "10" }
+          />
+        </FilterContainer>
+      </Container>
+    </>
   )
 }
 
