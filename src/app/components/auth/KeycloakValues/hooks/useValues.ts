@@ -8,7 +8,8 @@ export default (keycloak?: KeycloakInstance, token?: KeycloakTokenParsedExtended
     ["Naam", token.name],
     ["E-mail", token.email],
     ["Gebruikersnaam", token.preferred_username],
-    ["Keycloak groepen", keycloak.realmAccess?.roles.join(", ") ?? "-"]
+    ["Keycloak groepen", keycloak.realmAccess?.roles.join(", ") ?? "-"],
+    ["aud", token.aud]
   ]
 
   return Object.fromEntries(values)
