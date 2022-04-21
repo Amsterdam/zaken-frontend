@@ -3,11 +3,13 @@ import TableAction from "app/components/shared/TableAction/TableAction"
 import to from "app/routing/utils/to"
 import SelectTask from "./SelectTask/SelectTask"
 
-export default (sorting: any, myId?: string) => ([
+export default (sorting: any, myId?: string, isEnforcement?: boolean) => ([
   {
     header: "Opgepakt door",
     dataIndex: "owner",
-    render: (owner: any, record: any) => <SelectTask taskId={ record.id } taskOwner={ owner }/>
+    render: (owner: any, record: any) => (
+      <SelectTask taskId={ record.id } taskOwner={ owner } isEnforcement={ !!isEnforcement }/>
+    )
   }, {
     header: "Straat",
     dataIndex: "case.address.street_name",

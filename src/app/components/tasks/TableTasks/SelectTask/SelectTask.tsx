@@ -14,6 +14,7 @@ import { getQueryUrl } from "app/state/rest/tasks"
 type Props = {
   taskId: any
   taskOwner?: string | null
+  isEnforcement: boolean
 }
 
 const StyledSpinner = styled(Spinner)`
@@ -24,17 +25,31 @@ const StyledLabel = styled(Label)`
   font-weight: 400;
 `
 
-const SelectTask: React.FC<Props> = ({ taskId, taskOwner }) => {
+const enforcementPagination = {
+  page: 1, // There is no pagination for enforcement tasks
+  pageSize: 1000 // 1000 is the maximum
+}
+
+const SelectTask: React.FC<Props> = ({ taskId, taskOwner, isEnforcement }) => {
   // Get tasks params to create the query params url for the Context.
   // Two different providers are being used. :(
-  const { pagination, sorting, role, theme, owner } = useContext(ContextValues)["tasks"]
+  const { pagination, sorting, role, theme, owner, taskName } = useContext(ContextValues)["tasks"]
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const [isChecked, setIsChecked] = useState(false)
   const [loading, setLoading] = useState(false)
   const [data, { isBusy }] = useUsersMe()
   const [, { execPatch }] = useTask(taskId)
   // Filtered tasks are stored with the search query as a parameter in the context.
-  const queryUrl = getQueryUrl(hasPermission, pagination, sorting, theme, role, owner)
+  const queryUrl = getQueryUrl(
+    hasPermission,
+    isEnforcement ? enforcementPagination : pagination,
+    sorting,
+    theme,
+    role,
+    owner,
+    isEnforcement,
+    taskName
+  )
   const { getContextItem, updateContextItem } = useContextCache("cases", queryUrl)
 
   useEffect(() => {

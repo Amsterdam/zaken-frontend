@@ -9,11 +9,14 @@ type Props = {
   pagination: TABLE.Schemas.Pagination | false
   sorting: TABLE.Schemas.Sorting
   emptyPlaceholder: string
+  isEnforcement?: boolean
 }
 
-const TableTasks: React.FC<Props> = ({ data, isBusy, onChange, pagination, sorting, emptyPlaceholder }) => {
+const TableTasks: React.FC<Props> = ({
+  data, isBusy, onChange, pagination, sorting, emptyPlaceholder, isEnforcement
+}) => {
   const [me] = useUsersMe()
-  const columns = getColumns(sorting, me?.id)
+  const columns = getColumns(sorting, me?.id, isEnforcement)
 
   return (
     <Table
