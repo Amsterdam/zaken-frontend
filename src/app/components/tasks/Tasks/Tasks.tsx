@@ -121,7 +121,8 @@ const Tasks: React.FC = () => {
                 pagination={false}
                 sorting={ sorting }
                 emptyPlaceholder={ emptyPlaceholder }
-                />
+                isEnforcement
+              />
             </Wrap>
             ) : null
           }

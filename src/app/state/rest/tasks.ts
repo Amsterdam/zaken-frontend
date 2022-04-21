@@ -78,7 +78,16 @@ export const useTasks = (
   options?: Options
 ) => {
   const handleError = useErrorHandler()
-  const queryUrl = getQueryUrl(sensitive, pagination, sorting, theme, role, owner, isEnforcementRequest, taskName)
+  const queryUrl = getQueryUrl(
+    sensitive,
+    pagination,
+    sorting,
+    theme,
+    role,
+    owner,
+    isEnforcementRequest,
+    taskName
+  )
 
   return useApiRequest<Components.Schemas.PaginatedCaseUserTaskList>({
     ...options,
@@ -117,10 +126,10 @@ export const useTaskNames = (role: string) => {
   const handleError = useErrorHandler()
   const queryParams = { completed: false, open_cases: true, role }
   const queryString = qs.stringify(queryParams, { addQueryPrefix: true })
-  const apiUrl = makeApiUrl("tasks", "task-names") + queryString
+  const apiUrl = `${ makeApiUrl("tasks", "task-names") }${ queryString }`
   return useApiRequest<Components.Schemas.CaseUserTaskName[]>({
     url: apiUrl,
-    groupName: "task",
+    groupName: "themes",
     handleError,
     isProtected: true
   })
