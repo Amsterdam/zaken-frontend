@@ -16,7 +16,7 @@ export type StateType = {
     pagination: TABLE.Schemas.Pagination
     sorting: TABLE.Schemas.Sorting
     theme: string
-    role: string
+    role?: string
     owner: string
     taskName: string
     updateContextTasks: (payload: any) => void
@@ -52,7 +52,7 @@ export const initialState: StateType = {
       order: "ASCEND"
     },
     theme: "",
-    role: "",
+    role: undefined,
     owner: "",
     taskName: "",
     updateContextTasks: noop

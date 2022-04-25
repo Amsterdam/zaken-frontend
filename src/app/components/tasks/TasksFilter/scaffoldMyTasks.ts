@@ -1,6 +1,6 @@
 import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
-import { useUsersMe } from "app/state/rest/index"
+import { useUsersMe } from "app/state/rest"
 
 export default (value: string, onChange: (value: string) => void) => {
   const [me] = useUsersMe()

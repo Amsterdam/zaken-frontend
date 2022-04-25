@@ -49,12 +49,10 @@ const TasksFilter: React.FC<Props> = ({
             </ScaffoldForm>
           )
       }
-      { taskNames === undefined ?
-        <Spinner />
-        : (
-          <ScaffoldForm>
-            <ScaffoldFields { ...scaffoldTaskName(taskName, setTaskName, taskNames) } />
-          </ScaffoldForm>
+      { taskNames === undefined ? <Spinner /> : (
+        <ScaffoldForm>
+          <ScaffoldFields { ...scaffoldTaskName(taskName, setTaskName, taskNames) } />
+        </ScaffoldForm>
         )
       }
       <ScaffoldForm>

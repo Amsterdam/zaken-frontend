@@ -1018,6 +1018,7 @@ declare namespace Components {
             last_name?: string;
             full_name?: string;
             permissions: PermissionsEnum[];
+            role?: string;
         }
         export interface VakantieverhuurReport {
             is_cancellation: boolean;

@@ -1,5 +1,5 @@
 import { useEffect, useContext } from "react"
-import { useRoles, useTasks, useCaseThemes, useTaskNames } from "app/state/rest"
+import { useRoles, useTasks, useCaseThemes, useTaskNames, useUsersMe } from "app/state/rest"
 import { Row, Column } from "app/components/layouts/Grid"
 import TableTasks from "app/components/tasks/TableTasks/TableTasks"
 import TasksFilter from "../TasksFilter/TasksFilter"
@@ -31,6 +31,7 @@ const Tasks: React.FC = () => {
   } = useContext(ContextValues)["tasks"]
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const [roles] = useRoles()
+  const [me] = useUsersMe()
   const [caseThemes] = useCaseThemes()
   const [dataSource, { isBusy }] = useTasks(
     hasPermission,
@@ -55,9 +56,19 @@ const Tasks: React.FC = () => {
     true,
     taskName
   )
-  const [ taskNamesData ] = useTaskNames(role)
+  const [ taskNamesData ] = useTaskNames(role ?? "")
   const queryUrl = getQueryUrl(hasPermission, pagination, sorting, theme, role, owner)
   const { clearContextCache } = useContextCache("cases", queryUrl)
+
+
+  useEffect(() => {
+    // Set initial role when loaded for the first time
+    if (me?.role && role === undefined) {
+      updateContextTasks({
+        role: me.role
+      })
+    }
+  }, [me, role, updateContextTasks])
 
   useEffect(() => {
     if (dataSource === undefined) {
@@ -145,7 +156,7 @@ const Tasks: React.FC = () => {
         </Column>
         <Column spanLarge={ 28 }>
           <TasksFilter
-            role={ role }
+            role={ role ?? "" }
             roles={ roles }
             setRole={ (value: string) => onChangeFilter("role", value) }
             theme={ theme }

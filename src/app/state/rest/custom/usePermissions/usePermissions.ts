@@ -1,4 +1,4 @@
-import { useUsersMe } from "app/state/rest/index"
+import { useUsersMe } from "app/state/rest"
 
 export default () => {
   const response = useUsersMe()

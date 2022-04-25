@@ -1,5 +1,5 @@
 import { Table } from "@amsterdam/wonen-ui"
-import { useUsersMe } from "app/state/rest/index"
+import { useUsersMe } from "app/state/rest"
 import getColumns from "./columns"
 
 type Props = {
