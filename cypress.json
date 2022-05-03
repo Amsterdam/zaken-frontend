@@ -18,6 +18,7 @@
     "010_addCase/themes/vakantieverhuur/add.case.anonymous.no.ad.spec.js",
     "020_visit/visit.plan.spec.js",
     "020_visit/visit.result.access.granted.spec.js",
+    "025_taskOverview/*.js",
     "030_debrief/01-debrief.no.violation.spec.js",
     "030_debrief/03-report.short.spec.js",
     "060_closeCase/*.js"
