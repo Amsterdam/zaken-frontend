@@ -7,6 +7,7 @@ const mapItemToType = (item: any) => {
   if (item.type === "checkbox") return "Boolean"
   if (item.type === "multiselect") return "CheckboxFields"
   if (item.type === "select") return "ComplexSelectField"
+  if (item.type === "number") return "NumberField"
   if (item.camunda_type === "Long") return "NumberField"
   return "TextField"
 }
