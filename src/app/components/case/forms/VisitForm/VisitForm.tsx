@@ -14,7 +14,7 @@ type Props = {
 
 }
 
-export type VisitData = Omit<Components.Schemas.Visit, "author_ids"> & { author1: Components.Schemas.User, author2: Components.Schemas.User, task: number | null }
+export type VisitData = Omit<Components.Schemas.Visit, "author_ids"> & { author1: Components.Schemas.User, author2: Components.Schemas.User, task: number | null, top_visit_id: number,  completed: boolean }
 const filterUndefined = <T extends unknown>(arr: Array<T | undefined>) => arr.filter((item): item is T => item !== undefined)
 const mapData = (data: VisitData) => ({ ...data, author_ids: filterUndefined([data.author1?.id, data.author2?.id]) })
 
@@ -36,7 +36,7 @@ const VisitForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
     navigateTo("/zaken/:id", { id })
   }
 
-  const initialValues = { case: id, start_time: "2021-01-01T12:34", observations: [], "task": caseUserTaskId }
+  const initialValues = { case: id, start_time: "2021-01-01T12:34", observations: [], "task": caseUserTaskId, "top_visit_id": 42, "completed": true }
   const fields = scaffold(id, authors)
 
   return (
