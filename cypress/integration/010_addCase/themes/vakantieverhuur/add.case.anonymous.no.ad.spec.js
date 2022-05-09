@@ -96,6 +96,6 @@ describe("Create case and validate input", () => {
   })
 
   it("History contains the right items", () => {
-    cy.history("Melding", "Projectmedewerker")
+    cy.history("SIA melding verwerken", "Projectmedewerker")
   })
 })
