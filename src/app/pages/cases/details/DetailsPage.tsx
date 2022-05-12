@@ -1,6 +1,7 @@
 
 import { RouteComponentProps } from "@reach/router"
-import { Divider, Heading } from "@amsterdam/asc-ui"
+import styled from "styled-components"
+import { Divider, Heading, themeSpacing } from "@amsterdam/asc-ui"
 import { isDate } from "@amsterdam/wonen-ui"
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
 import Row, { RowWithColumn } from "app/components/layouts/Grid/Row"
@@ -17,10 +18,16 @@ import PageSpinner from "app/components/shared/PageSpinner/PageSpinner"
 import CaseNuisanceAlert from "app/components/case/CaseNuisanceAlert/CaseNuisanceAlert"
 import useHasPermission, { SENSITIVE_CASE_PERMISSION } from "app/state/rest/custom/usePermissions/useHasPermission"
 import NotAuthorizedPage from "app/pages/auth/NotAuthorizedPage"
+import { Tabs, Tab } from "app/components/Tabs"
+import Documents from "app/components/case/Documents/Documents"
 
 type Props = {
   id: string
 }
+
+const PaddedContent = styled.div`
+  padding-top: ${ themeSpacing(8) };
+`
 
 const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
 
@@ -50,7 +57,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
             <DetailHeaderByCaseId caseId={ id } enableSwitch={ false } />
           </Column>
         </Row>
-        <Row>
+        <Row bottomSpacing={ 4 }>
           <Column spanLarge={ 75 }>
             <CaseDetails caseId={ id } isClosed={ isClosed } />
           </Column>
@@ -58,18 +65,29 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
 
         <CaseNuisanceAlert caseId={ id } />
 
-        { isClosed === false && (
-        <RowWithColumn>
-          <CaseStatus id={ id } />
-        </RowWithColumn>
-        )}
-        <RowWithColumn>
-          <Heading as="h2">Zaakhistorie</Heading>
-          <Divider />
-        </RowWithColumn>
-        <RowWithColumn>
-          <TimelineContainer caseId={ id } />
-        </RowWithColumn>
+        <Tabs label="An example of tabs">
+          <Tab id="1" label="Actuele taken & historie">
+            <PaddedContent>
+              { isClosed === false && (
+                <RowWithColumn>
+                  <CaseStatus id={ id } />
+                </RowWithColumn>
+              )}
+              <RowWithColumn>
+                <Heading as="h2">Zaakhistorie</Heading>
+                <Divider />
+              </RowWithColumn>
+              <RowWithColumn>
+                <TimelineContainer caseId={ id } />
+              </RowWithColumn>
+            </PaddedContent>
+          </Tab>
+          <Tab id="2" label="Documenten">
+            <PaddedContent>
+              <Documents />
+            </PaddedContent>
+          </Tab>
+        </Tabs>
       </DefaultLayout>
     )}
       { showNotFound && <NotFoundPage /> }
