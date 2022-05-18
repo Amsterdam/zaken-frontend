@@ -20,7 +20,7 @@ type Props = {
   setPageSize: (value: string) => void
   owner: string
   setOwner: (value: string) => void
-  taskNames?: Components.Schemas.CaseUserTaskName[]
+  taskNames?: Components.Schemas.CaseUserTaskTaskName[]
   taskName: string
   setTaskName: (value: string) => void
 }
