@@ -84,7 +84,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
           </Tab>
           <Tab id="2" label="Documenten">
             <PaddedContent>
-              <Documents />
+              <Documents caseId={ id } />
             </PaddedContent>
           </Tab>
         </Tabs>
