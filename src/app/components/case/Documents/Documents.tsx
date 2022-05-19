@@ -1,5 +1,5 @@
-import styled, { css } from "styled-components"
-import { themeSpacing, themeColor } from "@amsterdam/asc-ui"
+import { useCaseDocuments } from "app/state/rest"
+import DocumentsTable from "./DocumentsTable/DocumentsTable"
 import FileUploader from "./FileUploader"
 
 
@@ -8,11 +8,12 @@ type Props = {
 }
 
 const Documents: React.FC<Props> = ({ caseId }) => {
-  console.log("DOCUMENTS")
+  const [data, { isBusy, execGet }] = useCaseDocuments(caseId)
 
   return (
     <>
-      <FileUploader caseId={ caseId }/>
+      <DocumentsTable  data={ data?.results } loading={ isBusy }/>
+      <FileUploader caseId={ caseId } getDocuments={ execGet } />
     </>
   )
 }

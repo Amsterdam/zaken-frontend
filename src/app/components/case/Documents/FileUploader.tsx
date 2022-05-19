@@ -7,11 +7,13 @@ import { makeApiUrl } from "app/state/rest/hooks/utils/apiUrl"
 
 type Props = {
   caseId: Components.Schemas.CaseEvent["id"]
+  getDocuments: () => Promise<unknown>
 }
 
 const StyledDiv =  styled.div`
   display: flex;
   flex-direction: column;
+  margin-top: ${ themeSpacing(10) };
 `
 
 const StyledSpan =  styled.span`
@@ -45,7 +47,7 @@ const StyledSelectedFile =  styled.span`
   margin-top: ${ themeSpacing(3) };
 `
 
-const FileUploader: React.FC<Props> = ({ caseId }) => {
+const FileUploader: React.FC<Props> = ({ caseId, getDocuments }) => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
   const [selectedFile, setSelectedFile] = useState<any>(null)
@@ -54,6 +56,7 @@ const FileUploader: React.FC<Props> = ({ caseId }) => {
 
   const uploadFile = async (event: any) => {
     const fileUploaded = event.target.files[0]
+    console.log("")
     const formData = new FormData()
 		formData.append("file", fileUploaded)
     formData.append("documenttype_url", "https://acc.api.wonen.zaken.amsterdam.nl/open-zaak/catalogi/api/v1/informatieobjecttypen/655ed6b3-2ee8-475d-8e40-7de76a2454f7")
@@ -65,6 +68,7 @@ const FileUploader: React.FC<Props> = ({ caseId }) => {
       if (response.status === 200) {
         setSelectedFile(fileUploaded)
         setLoading(false)
+        getDocuments()
       }
     } catch (error) {
       setSelectedFile(null)

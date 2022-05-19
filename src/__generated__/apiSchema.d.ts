@@ -127,7 +127,6 @@ declare namespace Components {
         }
         export interface CaseDocumentUpload {
             file: string; // uri
-            title?: string;
             documenttype_url?: string; // uri
         }
         export interface CaseEvent {
@@ -361,7 +360,7 @@ declare namespace Components {
             description: string;
             variables?: {
                 [name: string]: any;
-            };
+            } | null;
             case: number;
             author: string; // uuid
         }
@@ -1067,13 +1066,13 @@ declare namespace Components {
         }
         export interface SummonedPerson {
             id: number;
-            first_name?: string;
-            preposition?: string;
-            last_name?: string;
+            first_name?: string | null;
+            preposition?: string | null;
+            last_name?: string | null;
             person_role?: PersonRoleEnum;
             summon: number;
-            entity_name?: string;
-            function?: string;
+            entity_name?: string | null;
+            function?: string | null;
         }
         export interface SupportContact {
             id: number;
@@ -2278,6 +2277,29 @@ declare namespace Paths {
         namespace Responses {
             export interface $200 {
             }
+        }
+    }
+    namespace DocumentsDestroy {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        namespace Responses {
+            export interface $204 {
+            }
+        }
+    }
+    namespace DocumentsDownloadRetrieve {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.CaseDocument;
         }
     }
     namespace DocumentsRetrieve {

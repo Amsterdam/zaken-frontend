@@ -207,3 +207,14 @@ export const useVisitsCreate = (options?: Options) => {
     isProtected: true
   })
 }
+
+export const useCaseDocuments = (caseId: Components.Schemas.Case["id"], options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<Components.Schemas.PaginatedDocumentTypeList>({
+    ...options,
+    url: makeApiUrl("cases", caseId, "documents"),
+    groupName: "cases",
+    handleError,
+    isProtected: true
+  })
+}
