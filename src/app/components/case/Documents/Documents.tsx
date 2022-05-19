@@ -1,0 +1,21 @@
+import { useCaseDocuments } from "app/state/rest"
+import DocumentsTable from "./DocumentsTable/DocumentsTable"
+import FileUploader from "./FileUploader"
+
+
+type Props = {
+  caseId: Components.Schemas.CaseEvent["id"]
+}
+
+const Documents: React.FC<Props> = ({ caseId }) => {
+  const [data, { isBusy, execGet }] = useCaseDocuments(caseId)
+
+  return (
+    <>
+      <DocumentsTable  data={ data?.results } loading={ isBusy }/>
+      <FileUploader caseId={ caseId } getDocuments={ execGet } />
+    </>
+  )
+}
+
+export default Documents

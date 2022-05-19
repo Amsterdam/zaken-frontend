@@ -39,7 +39,7 @@ const StyledLink = styled(Link)`
 const SkipLinks: React.FC<Props> = ( { linkList }) => (
   <nav>
     <StyledList >
-      {linkList.map((link, index) => 
+      {linkList.map((link, index) =>
         <ListItem key={ `${ link.target }_${ index }` }>
           <StyledLink href={ `#${ link.target }` }>{ link.title }</StyledLink>
         </ListItem>

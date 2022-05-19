@@ -127,7 +127,7 @@ export const useTaskNames = (role: string) => {
   const queryParams = { completed: false, open_cases: true, role }
   const queryString = qs.stringify(queryParams, { addQueryPrefix: true })
   const apiUrl = `${ makeApiUrl("tasks", "task-names") }${ queryString }`
-  return useApiRequest<Components.Schemas.CaseUserTaskName[]>({
+  return useApiRequest<Components.Schemas.CaseUserTaskTaskName[]>({
     url: apiUrl,
     groupName: "themes",
     handleError,
