@@ -1,7 +1,7 @@
 import moment from "moment"
 import styled from "styled-components"
 import formatBytes from "../utils/formatBytes"
-import TableActions from "./TableActions/TableActions"
+// import TableActions from "./TableActions/TableActions"
 
 const StyledName = styled.span`
   width: 300px;
