@@ -12,7 +12,11 @@ const Documents: React.FC<Props> = ({ caseId }) => {
 
   return (
     <>
-      <DocumentsTable  data={ data?.results } loading={ isBusy }/>
+      <DocumentsTable
+        data={ data?.results }
+        loading={ isBusy }
+        getDocuments={ execGet }
+      />
       <FileUploader caseId={ caseId } getDocuments={ execGet } />
     </>
   )

@@ -56,7 +56,6 @@ const FileUploader: React.FC<Props> = ({ caseId, getDocuments }) => {
 
   const uploadFile = async (event: any) => {
     const fileUploaded = event.target.files[0]
-    console.log("")
     const formData = new FormData()
 		formData.append("file", fileUploaded)
     formData.append("documenttype_url", "https://acc.api.wonen.zaken.amsterdam.nl/open-zaak/catalogi/api/v1/informatieobjecttypen/655ed6b3-2ee8-475d-8e40-7de76a2454f7")

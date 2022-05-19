@@ -1,9 +1,11 @@
 import styled from "styled-components"
 import { themeSpacing } from "@amsterdam/asc-ui"
 import DownloadDocument from "./DownloadDocument"
+import DeleteDocument from "./DeleteDocument"
 
 type Props = {
   record: any
+  getDocuments: () => Promise<unknown>
 }
 
 const StyledSpan = styled.span`
@@ -16,12 +18,12 @@ const StyledMarginRight = styled.span`
 
 const DEFAULT_SIZE = 20
 
-const TableActions: React.FC<Props> = ({ record }) => (
+const TableActions: React.FC<Props> = ({ record, getDocuments }) => (
   <StyledSpan>
     <StyledMarginRight>
-      <DownloadDocument size={ DEFAULT_SIZE } />
+      <DownloadDocument size={ DEFAULT_SIZE } documentId={ record.id } />
     </StyledMarginRight>
-    <DownloadDocument size={ DEFAULT_SIZE } />
+    <DeleteDocument size={ DEFAULT_SIZE } documentId={ record.id } getDocuments={ getDocuments } />
   </StyledSpan>
 )
 

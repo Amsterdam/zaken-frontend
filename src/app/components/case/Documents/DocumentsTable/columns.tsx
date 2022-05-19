@@ -1,7 +1,7 @@
 import moment from "moment"
 import styled from "styled-components"
 import formatBytes from "../utils/formatBytes"
-// import TableActions from "./TableActions/TableActions"
+import TableActions from "./TableActions/TableActions"
 
 const StyledName = styled.span`
   width: 300px;
@@ -12,7 +12,7 @@ const StyledName = styled.span`
   display: inline-block;
 `
 
-const columns = [
+const getColumns = (getDocuments: () => Promise<unknown>) => [
   {
     header: "Naam",
     dataIndex: "bestandsnaam",
@@ -32,7 +32,12 @@ const columns = [
     dataIndex: "bestandsomvang",
     minWidth: 100,
     render: (size: any) => formatBytes(size)
+  }, {
+    header: "Acties",
+    dataIndex: "",
+    minWidth: 100,
+    render: (text: any, record: any) => <TableActions record={ record } getDocuments={ getDocuments } />
   }
 ]
 
-export default columns
+export default getColumns
