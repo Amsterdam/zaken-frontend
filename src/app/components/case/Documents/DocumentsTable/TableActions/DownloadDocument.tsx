@@ -10,6 +10,7 @@ type Props = {
 }
 
 const DownloadDocument: React.FC<Props> = ({ documentId, size = 20 }) => {
+  const [file, setFile] = useState(undefined)
   const [loading, setLoading] = useState(false)
   const url = makeApiUrl("documents", documentId, "download")
   const protectedRequest = useProtectedRequest()
@@ -62,7 +63,7 @@ const DownloadDocument: React.FC<Props> = ({ documentId, size = 20 }) => {
         icon={ loading ? <Spinner /> : <Download /> }
         onClick={ downloadFile }
       />
-      <a href="path_to_file" download="proposed_file_name">Download</a>
+      <a href={ file } download="proposed_file_name">Download</a>
     </>
   )
 }
