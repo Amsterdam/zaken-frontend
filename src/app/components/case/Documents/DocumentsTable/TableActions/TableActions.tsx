@@ -1,5 +1,4 @@
 import styled from "styled-components"
-import { themeSpacing } from "@amsterdam/asc-ui"
 import DownloadDocument from "./DownloadDocument"
 import DeleteDocument from "./DeleteDocument"
 import ViewDocument from "./ViewDocument"
