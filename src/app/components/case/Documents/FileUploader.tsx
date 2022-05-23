@@ -13,7 +13,7 @@ type Props = {
 const StyledDiv =  styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: ${ themeSpacing(10) };
+  margin-bottom: ${ themeSpacing(6) };
 `
 
 const StyledSpan =  styled.span`
@@ -76,6 +76,11 @@ const FileUploader: React.FC<Props> = ({ caseId, getDocuments }) => {
     }
   }
 
+  const onInputClick = (event: any) => {
+    // Empty the value so user can uploud same file again.
+    event.target.value = ""
+  }
+
   return (
     <StyledDiv>
       <StyledSpan>
@@ -89,7 +94,13 @@ const FileUploader: React.FC<Props> = ({ caseId, getDocuments }) => {
           )}
         </StyledIconSpan>
       </StyledLabel>
-      <Input id="file-upload" type="file" onChange={ uploadFile }/>
+      <Input
+        data-e2e-id="file-upload"
+        type="file"
+        onChange={ uploadFile }
+        accept="*/*"
+        onClick={ onInputClick }
+      />
       <StyledSelectedFile>
         {selectedFile && `${ selectedFile?.name } is succesvol geüpload.`}
         {error && "Oeps, er ging iets mis."}

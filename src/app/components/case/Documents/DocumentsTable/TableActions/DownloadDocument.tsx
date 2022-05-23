@@ -1,70 +1,61 @@
 import { Button, Spinner } from "@amsterdam/asc-ui"
 import { Download } from "@amsterdam/asc-assets"
-import useProtectedRequest from "app/state/rest/hooks/useProtectedRequest"
 import { makeApiUrl } from "app/state/rest/hooks/utils/apiUrl"
 import { useState } from "react"
+import useKeycloak from "app/state/auth/keycloak/useKeycloak"
 
 type Props = {
-  documentId: number
+  record: any
   size?: number
 }
 
-const DownloadDocument: React.FC<Props> = ({ documentId, size = 20 }) => {
-  const [file, setFile] = useState(undefined)
+const DownloadDocument: React.FC<Props> = ({ record, size = 20 }) => {
   const [loading, setLoading] = useState(false)
-  const url = makeApiUrl("documents", documentId, "download")
-  const protectedRequest = useProtectedRequest()
+  const url = makeApiUrl("documents", record.id, "download")
+  const keycloak = useKeycloak()
 
   const downloadFile = async () => {
     setLoading(true)
-    try {
-      const response: any = await protectedRequest<any>("get", url)
-      if (response.status === 200) {
-        console.log("response", response)
-        try {
-          // const blob = await response.blob()
-          // var binaryData = []
-          // binaryData.push(response.data)
-          // console.log("binaryData", binaryData)
-          // const file = window.URL.createObjectURL(myBlob)
-          // console.log("file", file)
-          // window.location.assign(response)
-          const url = window.URL.createObjectURL(response)
-          const link = document.createElement("a")
-          link.href = url
-          link.setAttribute("download", "test")
-          // 3. Append to html page
-          document.body.appendChild(link)
-          // 4. Force download
-          link.click()
-          // 5. Clean up and remove the link
-          link?.parentNode?.removeChild(link)
-
-        } catch (err) {
-          console.log("Blob error", err)
-        }
-
-        setLoading(false)
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${ keycloak.token }`
       }
-    } catch (error) {
+    })
+    .then((response) => response.blob())
+    .then((blob) => {
+      console.log("response", blob)
+      const newBlob = new Blob([blob])
+      // Create blob link to download
+      const url = window.URL.createObjectURL(newBlob)
+      // window.open(url, "_blank_")
+      const link = document.createElement("a")
+      link.href = url
+      link.setAttribute("download", record.bestandsnaam)
+      // Append to html link element page
+      document.body.appendChild(link)
+      // Start download
+      link.click()
+      // Clean up and remove the link
+      link?.parentNode?.removeChild(link)
+    })
+    .finally(() => {
       setLoading(false)
-    }
+    })
   }
 
-  if (!documentId) {
+  if (!record.id) {
     return null
   }
   return (
-    <>
-      <Button
-        size={ size }
-        variant="blank"
-        iconSize={ size }
-        icon={ loading ? <Spinner /> : <Download /> }
-        onClick={ downloadFile }
-      />
-      <a href={ file } download="proposed_file_name">Download</a>
-    </>
+    <Button
+      size={ size }
+      variant="blank"
+      iconSize={ size }
+      icon={ loading ? <Spinner /> : <Download /> }
+      onClick={ downloadFile }
+      data-e2e-id="download-document"
+    />
   )
 }
 

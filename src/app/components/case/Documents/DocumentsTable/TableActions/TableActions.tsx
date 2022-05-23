@@ -21,9 +21,13 @@ const DEFAULT_SIZE = 20
 const TableActions: React.FC<Props> = ({ record, getDocuments }) => (
   <StyledSpan>
     <StyledMarginRight>
-      <DownloadDocument size={ DEFAULT_SIZE } documentId={ record.id } />
+      <DownloadDocument size={ DEFAULT_SIZE } record={ record } />
     </StyledMarginRight>
-    <DeleteDocument size={ DEFAULT_SIZE } documentId={ record.id } getDocuments={ getDocuments } />
+    <DeleteDocument
+      size={ DEFAULT_SIZE }
+      record={ record }
+      getDocuments={ getDocuments }
+    />
   </StyledSpan>
 )
 

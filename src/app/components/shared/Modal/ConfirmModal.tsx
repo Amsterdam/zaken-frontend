@@ -10,7 +10,6 @@ export type Props = {
   isOpen: boolean
   onClose: () => void
   onConfirm: () => Promise<any>
-
   okValue?: string
   cancelValue?: string
 }
@@ -37,7 +36,9 @@ const ConfirmModal: React.FC<Props> = ({ isOpen, onClose, title, children, okVal
           data-e2e-id="confirm"
           onClick={onConfirm}
           variant="secondary"
-        >{ okValue }</SpinnerButton>
+        >
+          { okValue }
+        </SpinnerButton>
       </div>
     </ModalBlockFlex>
   </Modal>
