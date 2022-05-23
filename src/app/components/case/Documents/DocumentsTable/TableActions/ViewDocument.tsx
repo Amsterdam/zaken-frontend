@@ -1,15 +1,15 @@
-import { Button, Spinner } from "@amsterdam/asc-ui"
-import { Download } from "@amsterdam/asc-assets"
-import { makeApiUrl } from "app/state/rest/hooks/utils/apiUrl"
 import { useState } from "react"
+import { Button, Spinner } from "@amsterdam/asc-ui"
+import { makeApiUrl } from "app/state/rest/hooks/utils/apiUrl"
 import useKeycloak from "app/state/auth/keycloak/useKeycloak"
+import { Pageview } from "app/components/shared/Icons"
 
 type Props = {
   record: any
   size?: number
 }
 
-const DownloadDocument: React.FC<Props> = ({ record, size = 20 }) => {
+const ViewDocument: React.FC<Props> = ({ record, size = 20 }) => {
   const [loading, setLoading] = useState(false)
   const apiUrl = makeApiUrl("documents", record.id, "download")
   const keycloak = useKeycloak()
@@ -24,19 +24,10 @@ const DownloadDocument: React.FC<Props> = ({ record, size = 20 }) => {
     })
     .then((response) => response.blob())
     .then((blob) => {
-      const newBlob = new Blob([blob])
+      const newBlob = new Blob([blob], { type: blob.type })
       // Create blob link to download
       const url = window.URL.createObjectURL(newBlob)
-      // window.open(url, "_blank_")
-      const link = document.createElement("a")
-      link.href = url
-      link.setAttribute("download", record.bestandsnaam)
-      // Append to html link element page
-      document.body.appendChild(link)
-      // Start download
-      link.click()
-      // Clean up and remove the link
-      link?.parentNode?.removeChild(link)
+      window.open(url, "_blank_")
     })
     .finally(() => {
       setLoading(false)
@@ -50,12 +41,12 @@ const DownloadDocument: React.FC<Props> = ({ record, size = 20 }) => {
     <Button
       size={ size }
       variant="blank"
-      iconSize={ size - 2}
-      icon={ loading ? <Spinner /> : <Download /> }
+      iconSize={ size + 4 }
+      icon={ loading ? <Spinner /> : <Pageview /> }
       onClick={ downloadFile }
       data-e2e-id="download-document"
     />
   )
 }
 
-export default DownloadDocument
+export default ViewDocument
