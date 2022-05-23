@@ -1,5 +1,5 @@
+import { useEffect, useMemo, useState } from "react"
 import { Table } from "@amsterdam/wonen-ui"
-import { useEffect, useState } from "react"
 import getColumns from "./columns"
 
 type Props = {
@@ -20,10 +20,13 @@ const TableTasks: React.FC<Props> = ({ data, loading, getDocuments }) => {
 
   const columns = getColumns(getDocuments)
 
+  // By sorting data for id, records are sorted for creation date.
+  const sortedData = useMemo(() => data?.sort((a: any, b: any) => b?.id - a?.id), [data])
+
   return (
     <Table
       columns={ columns }
-      data={ data }
+      data={ sortedData }
       loading={ loading }
       numLoadingRows={ numLoadingRows }
       emptyPlaceholder="Er zijn geen documenten gevonden"
