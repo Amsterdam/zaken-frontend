@@ -8,7 +8,7 @@ type Props = {
   getDocuments: () => Promise<unknown>
 }
 
-const TableTasks: React.FC<Props> = ({ data, loading, getDocuments }) => {
+const DocumentsTable: React.FC<Props> = ({ data, loading, getDocuments }) => {
   const [numLoadingRows, setNumLoadingRows] = useState(3)
 
   useEffect(() => {
@@ -35,4 +35,4 @@ const TableTasks: React.FC<Props> = ({ data, loading, getDocuments }) => {
   )
 }
 
-export default TableTasks
+export default DocumentsTable

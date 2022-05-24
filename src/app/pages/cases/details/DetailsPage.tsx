@@ -45,51 +45,60 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
   if (exists && !isAuthorized) {
     return <NotAuthorizedPage />
   }
+
+  const tabs = [
+    <Tab id="1" key="1" label="Actuele taken & historie">
+      <PaddedContent>
+        { isClosed === false && (
+          <RowWithColumn>
+            <CaseStatus id={ id } />
+          </RowWithColumn>
+        )}
+        <RowWithColumn>
+          <Heading as="h2">Zaakhistorie</Heading>
+          <Divider />
+        </RowWithColumn>
+        <RowWithColumn>
+          <TimelineContainer caseId={ id } />
+        </RowWithColumn>
+      </PaddedContent>
+    </Tab>
+  ]
+  if (process.env.REACT_APP_ENVIRONMENT !== "production") {
+    tabs.push(
+      <Tab id="2" key="2" label="Documenten">
+        <PaddedContent>
+          <Documents caseId={ id } />
+        </PaddedContent>
+      </Tab>
+    )
+  }
+
   return (
     <>
       { exists && isAuthorized && (
-      <DefaultLayout>
-        <Row>
-          <Column spanLarge={ 50 }>
-            <PageHeading />
-          </Column>
-          <Column spanLarge={ 50 }>
-            <DetailHeaderByCaseId caseId={ id } enableSwitch={ false } />
-          </Column>
-        </Row>
-        <Row bottomSpacing={ 4 }>
-          <Column spanLarge={ 75 }>
-            <CaseDetails caseId={ id } isClosed={ isClosed } />
-          </Column>
-        </Row>
+        <DefaultLayout>
+          <Row>
+            <Column spanLarge={ 50 }>
+              <PageHeading />
+            </Column>
+            <Column spanLarge={ 50 }>
+              <DetailHeaderByCaseId caseId={ id } enableSwitch={ false } />
+            </Column>
+          </Row>
+          <Row bottomSpacing={ 4 }>
+            <Column spanLarge={ 75 }>
+              <CaseDetails caseId={ id } isClosed={ isClosed } />
+            </Column>
+          </Row>
 
-        <CaseNuisanceAlert caseId={ id } />
+          <CaseNuisanceAlert caseId={ id } />
 
-        <Tabs label="An example of tabs">
-          <Tab id="1" label="Actuele taken & historie">
-            <PaddedContent>
-              { isClosed === false && (
-                <RowWithColumn>
-                  <CaseStatus id={ id } />
-                </RowWithColumn>
-              )}
-              <RowWithColumn>
-                <Heading as="h2">Zaakhistorie</Heading>
-                <Divider />
-              </RowWithColumn>
-              <RowWithColumn>
-                <TimelineContainer caseId={ id } />
-              </RowWithColumn>
-            </PaddedContent>
-          </Tab>
-          <Tab id="2" label="Documenten">
-            <PaddedContent>
-              <Documents caseId={ id } />
-            </PaddedContent>
-          </Tab>
-        </Tabs>
-      </DefaultLayout>
-    )}
+          <Tabs label="Tabs voor zaak informatie">
+            { tabs.map((item) => item) }
+          </Tabs>
+        </DefaultLayout>
+      )}
       { showNotFound && <NotFoundPage /> }
     </>
   )
