@@ -47,7 +47,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
   }
 
   const tabs = [
-    <Tab id="1" key="1" label="Actuele taken & historie">
+    <Tab id="1" key="1" label="Open taken & historie">
       <PaddedContent>
         { isClosed === false && (
           <RowWithColumn>

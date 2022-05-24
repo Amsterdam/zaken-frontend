@@ -54,7 +54,7 @@ const getColumns = (sorting: any) => {
       sorter: (a: any, b: any) => a?.address?.postal_code.localeCompare(b?.address?.postal_code),
       sortOrder: sorting.dataIndex === "address.postal_code" && sorting.order
     }, {
-      header: "Status",
+      header: "Taak",
       dataIndex: "current_states",
       /*
       ** At the moment current_states can not be sorted in the BE.

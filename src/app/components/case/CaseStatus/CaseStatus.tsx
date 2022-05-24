@@ -25,7 +25,7 @@ const CaseStatus: React.FC<Props> = ({ id }) => (
   <>
     <Row bottomSpacing={ 0 }>
       <Column spanSmall={ 50 } spanLarge={ 50 }>
-        <Heading as="h2">Status</Heading>
+        <Heading as="h2">Open taken</Heading>
       </Column>
       <Column spanSmall={ 50 } spanLarge={ 50 }>
         <ButtonWrap>

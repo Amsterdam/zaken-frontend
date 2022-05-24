@@ -20,7 +20,7 @@ export default (execPost: (payload?: any) => Promise<unknown>) => (
       minWidth: 50,
       render: () => <LockIcon />
     }, {
-      header: "Actuele taken",
+      header: "Open taken",
       dataIndex: "name",
       minWidth: 300
     }, {
