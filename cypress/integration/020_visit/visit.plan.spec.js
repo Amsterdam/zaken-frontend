@@ -50,9 +50,13 @@ describe('Plan "huisbezoek"', () => {
     })
 
     it("Click on task Bezoek inplannen", () => {
-      cy.get("tbody>tr")
-        .contains("td", "Bezoek inplannen")
-        .click()
+      const url = `${Cypress.env("baseUrlAcc")}cases/*/tasks/`
+      cy.intercept(url).as("getTasks")
+      cy.wait("@getTasks").then(() => {
+        cy.get("tbody>tr")
+          .contains("td", "Bezoek inplannen")
+          .click()
+      })
     })
 
     it("Bezoek inplannen page is visible", () => {

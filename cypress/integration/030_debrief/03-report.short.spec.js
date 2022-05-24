@@ -24,13 +24,13 @@ describe('Process Short Report Visit"', () => {
   })
 
   it('check dueDate', () => {
-    cy.testDueDate("tbody>tr>td", 2)
+    cy.testDueDate("tbody>tr>td", 3)
   })
 
   it('PHH can finish task "Uitzetten vervolgstap"', () => {
 
     cy.get("tbody>tr")
-      .should("have.length", 2)
+      .should("have.length", 3)
       .contains(roles.PHH)
       .parents('td')
       .siblings('td')
