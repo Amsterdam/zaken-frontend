@@ -18,8 +18,6 @@ describe("Create case and validate input", () => {
     cy.intercept("**/reasons/").as("getReasons")
     cy.intercept("**/subjects/").as("getSubjects")
 
-    cy.wait(1000)
-
     cy.get("span")
       .contains(/^Vakantieverhuur$/)
       .siblings()

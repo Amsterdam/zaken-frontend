@@ -30,10 +30,16 @@ Cypress.Commands.add("selectAddress", (queryString, addressString) => {
 })
 
 Cypress.Commands.add("createCaseForAddress", (queryString, addressString) => {
+  cy.intercept("**/themes/").as("getThemes")
 
   cy.selectAddress(queryString, addressString)
 
   cy.get("span[data-e2e-id=btn_add_case]")
     .click()
+
+  cy.wait("@getThemes").then(() => {
+    cy.get("span")
+    .contains(/^Vakantieverhuur$/)
+  })
 
 })
