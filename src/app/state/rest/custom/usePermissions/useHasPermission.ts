@@ -2,7 +2,15 @@ import usePermissions from "app/state/rest/custom/usePermissions/usePermissions"
 
 export default (permissionsToCheck?: Components.Schemas.PermissionsEnum[]) => {
   const [permissions, { isBusy }] = usePermissions()
-  if (permissionsToCheck === undefined) return [true, false] as const
+
+  // When no permission is needed
+  if (permissionsToCheck === undefined) {
+    return [true, false] as const
+  }
+  // usePermissions is undefined or busy
+  if (permissions === undefined || isBusy) {
+    return [false, true] as const
+  }
   // permissionsToCheck and permissions must be arrays.
   if (!Array.isArray(permissionsToCheck) || !Array.isArray(permissions)) {
     return [false, false] as const
