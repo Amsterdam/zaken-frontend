@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import { DefinitionList, CaseIdDisplay, DateDisplay } from "@amsterdam/wonen-ui"
+import type { DefinitionListData } from "@amsterdam/wonen-ui"
 import { useCase } from "app/state/rest"
 import ChangeableSubject from "../tasks/ChangeSubject/ChangeableSubject"
 import DisplayCorporation from "./DisplayCorporation"
@@ -28,7 +29,7 @@ const StyledDiv = styled.div`
 const getDataFirstCol = (isClosed: boolean, caseItem?: Components.Schemas.Case) => {
   if (caseItem === undefined) return
   const { id, start_date, sensitive, previous_case, is_enforcement_request } = caseItem
-  const data: any = {
+  const data: DefinitionListData = {
     "Zaak ID": (
       <Wrap>
         <CaseIdDisplay id={ id } />
@@ -49,7 +50,7 @@ const getDataSecondCol = (isClosed: boolean, caseItem?: Components.Schemas.Case)
   if (caseItem === undefined) return
   const { id, theme, reason, project, subjects, address: { housing_corporation } } = caseItem
   const hasProject = project?.name !== undefined
-  const data: any = {
+  const data: DefinitionListData = {
     "Thema": theme.name,
     "Aanleiding": `${ reason.name }${ hasProject ? ": " : "" }${ hasProject ? project.name : "" }`,
     "Onderwerp(en)": isClosed
