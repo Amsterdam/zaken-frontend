@@ -22,12 +22,15 @@ const ViewDocument: React.FC<Props> = ({ record, size = 20 }) => {
         "Authorization": `Bearer ${ keycloak.token }`
       }
     })
-    .then((response) => response.blob())
-    .then((blob) => {
-      const newBlob = new Blob([blob], { type: blob.type })
-      // Create blob link to download
-      const url = window.URL.createObjectURL(newBlob)
-      window.open(url, "_blank_")
+    .then((response) => {
+      if (response.status === 200) {
+        response.blob()
+          .then((blob) => {
+            const newBlob = new Blob([blob], { type: blob.type })
+            const url = window.URL.createObjectURL(newBlob)
+            window.open(url, "_blank_")
+          })
+      }
     })
     .finally(() => {
       setLoading(false)
