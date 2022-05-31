@@ -34,7 +34,7 @@ const CasesPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => {
         </Row>
         <RowWithColumn>
           <span >
-            Let op: in BWV kunnen er ook open en gesloten zaken bekend zijn.<br/>
+            Let op: in BWV kunnen er ook gesloten zaken bekend zijn.<br/>
             Onderstaand overzicht toont alle zaken die bekend zijn in AZA.
           </span>
         </RowWithColumn>

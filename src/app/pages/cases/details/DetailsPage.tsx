@@ -49,11 +49,9 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
   const tabs = [
     <Tab id="1" key="1" label="Open taken & historie">
       <PaddedContent>
-        { isClosed === false && (
-          <RowWithColumn>
-            <CaseStatus id={ id } />
-          </RowWithColumn>
-        )}
+        <RowWithColumn>
+          <CaseStatus id={ id } />
+        </RowWithColumn>
         <RowWithColumn>
           <Heading as="h2">Zaakhistorie</Heading>
           <Divider />
