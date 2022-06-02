@@ -1,21 +1,20 @@
 import styled from "styled-components"
-import { DefinitionList, CaseIdDisplay, DateDisplay, isDate } from "@amsterdam/wonen-ui"
+import { DefinitionList, CaseIdDisplay, DateDisplay } from "@amsterdam/wonen-ui"
 import type { DefinitionListData } from "@amsterdam/wonen-ui"
 import { useCase } from "app/state/rest"
 import ChangeableSubject from "../tasks/ChangeSubject/ChangeableSubject"
 import DisplayCorporation from "./DisplayCorporation"
 import SensitiveCaseIcon from "../icons/SensitiveCaseIcon/SensitiveCaseIcon"
 import EnforcementIcon from "../icons/EnforcementIcon/EnforcementIcon"
-import { useEffect } from "react"
+
+type Props = {
+  caseId: Components.Schemas.Case["id"]
+}
 
 const Wrap = styled.div`
   display: flex;
   align-items: center;
 `
-
-type Props = {
-  caseId: Components.Schemas.Case["id"]
-}
 
 const StyledDiv = styled.div`
   display: flex;
@@ -25,6 +24,8 @@ const StyledDiv = styled.div`
     min-width: 60%;
   }
 `
+
+const CLOSED: Components.Schemas.CaseDetail["state"] = "AFGESLOTEN"
 
 const getDataFirstCol = (isClosed: boolean, caseItem?: Components.Schemas.CaseDetail) => {
   if (caseItem === undefined) return
@@ -66,7 +67,7 @@ const getDataSecondCol = (isClosed: boolean, caseItem?: Components.Schemas.CaseD
 const CaseDetails: React.FC<Props> = ({ caseId }) => {
   const [data, { isBusy }] = useCase(caseId)
 
-  const isClosed = isDate(data?.end_date)
+  const isClosed = data?.state === CLOSED
   const dataFirstCol = getDataFirstCol(isClosed, data)
   const dataSecondCol = getDataSecondCol(isClosed, data)
 
