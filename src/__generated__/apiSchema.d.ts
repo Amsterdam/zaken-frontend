@@ -118,10 +118,80 @@ declare namespace Components {
             name: string;
             case_theme: number;
         }
+        /**
+         * Adds nested create feature
+         */
+        export interface CaseDetail {
+            id: number;
+            address: {
+                bag_id: string;
+                id: number;
+                full_address: string;
+                street_name: string;
+                number: number;
+                suffix_letter: string;
+                suffix: string;
+                postal_code: string;
+                lat: number; // float
+                lng: number; // float
+                housing_corporation: number;
+            };
+            bag_id: string;
+            current_states: CaseWorkflowCaseDetail[];
+            theme: {
+                id: number;
+                name: string;
+                /**
+                 * This is the case type that can be found in openzaak. This way all the case types can be linked within the systems.
+                 */
+                case_type_url?: string | null; // uri
+                sensitive?: boolean;
+            };
+            theme_id: number;
+            reason: {
+                id: number;
+                name: string;
+                theme: number;
+            };
+            reason_id: number;
+            schedules: Schedule[];
+            project: {
+                id: number;
+                name: string;
+                active?: boolean;
+                theme: number;
+            };
+            project_id?: number;
+            subjects: Subject[];
+            subject_ids?: number[];
+            citizen_reports?: CitizenReportCase[];
+            advertisements?: Advertisement[];
+            housing_corporation?: number;
+            state: string;
+            start_date?: string | null; // date
+            end_date?: string | null; // date
+            sensitive?: boolean;
+            mma_number?: number | null;
+            description?: string | null;
+            ton_ids?: number /* int64 */[] | null;
+            last_updated: string; // date-time
+            created: string; // date-time
+            is_enforcement_request?: boolean;
+            /**
+             * This is the case that can be found in openzaak.
+             */
+            case_url?: string | null; // uri
+            /**
+             * This field determines if the case is deleted in openzaak.
+             */
+            case_deleted?: boolean;
+            previous_case?: number | null;
+        }
         export interface CaseDocument {
             id: number;
             document_url: string; // uri
             document_content: string; // uri
+            case_document_connection_url?: string; // uri
             connected?: boolean;
             case: number;
         }
@@ -153,6 +223,12 @@ declare namespace Components {
             id: number;
             name: string;
             theme: number;
+        }
+        export interface CaseState {
+            id: number;
+            status?: StatusEnum;
+            created: string; // date-time
+            case: number;
         }
         export interface CaseStateType {
             id: number;
@@ -221,6 +297,15 @@ declare namespace Components {
             identification: number;
             advertisement_linklist?: string[] | null;
             description_citizenreport?: string | null;
+            nuisance?: boolean;
+            date_added: string; // date-time
+            case: number;
+        }
+        export interface CitizenReportAnonomized {
+            id: number;
+            case_user_task_id?: string;
+            identification: number;
+            advertisement_linklist?: string[] | null;
             nuisance?: boolean;
             date_added: string; // date-time
             case: number;
@@ -397,6 +482,24 @@ declare namespace Components {
         export interface OIDCAuthenticate {
             code: string;
         }
+        export interface PaginatedActionList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?offset=400&limit=100
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?offset=200&limit=100
+             */
+            previous?: string | null; // uri
+            results?: Action[];
+        }
         export interface PaginatedAdvertisementList {
             /**
              * example:
@@ -523,6 +626,24 @@ declare namespace Components {
             previous?: string | null; // uri
             results?: CaseReason[];
         }
+        export interface PaginatedCaseStateList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?offset=400&limit=100
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?offset=200&limit=100
+             */
+            previous?: string | null; // uri
+            results?: CaseState[];
+        }
         export interface PaginatedCaseThemeList {
             /**
              * example:
@@ -594,6 +715,42 @@ declare namespace Components {
              */
             previous?: string | null; // uri
             results?: CaseWorkflow[];
+        }
+        export interface PaginatedCitizenReportAnonomizedList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?offset=400&limit=100
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?offset=200&limit=100
+             */
+            previous?: string | null; // uri
+            results?: CitizenReportAnonomized[];
+        }
+        export interface PaginatedDaySegmentList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?offset=400&limit=100
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?offset=200&limit=100
+             */
+            previous?: string | null; // uri
+            results?: DaySegment[];
         }
         export interface PaginatedDebriefingCreateList {
             /**
@@ -721,6 +878,42 @@ declare namespace Components {
             previous?: string | null; // uri
             results?: HousingCorporation[];
         }
+        export interface PaginatedPriorityList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?offset=400&limit=100
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?offset=200&limit=100
+             */
+            previous?: string | null; // uri
+            results?: Priority[];
+        }
+        export interface PaginatedScheduleCreateList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?offset=400&limit=100
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?offset=200&limit=100
+             */
+            previous?: string | null; // uri
+            results?: ScheduleCreate[];
+        }
         export interface PaginatedSubjectList {
             /**
              * example:
@@ -774,6 +967,24 @@ declare namespace Components {
              */
             previous?: string | null; // uri
             results?: SummonType[];
+        }
+        export interface PaginatedSummonedPersonAnonomizedList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?offset=400&limit=100
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?offset=200&limit=100
+             */
+            previous?: string | null; // uri
+            results?: SummonedPersonAnonomized[];
         }
         export interface PaginatedSupportContactList {
             /**
@@ -864,6 +1075,24 @@ declare namespace Components {
              */
             previous?: string | null; // uri
             results?: Visit[];
+        }
+        export interface PaginatedWeekSegmentList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?offset=400&limit=100
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?offset=200&limit=100
+             */
+            previous?: string | null; // uri
+            results?: WeekSegment[];
         }
         export interface PaginatedWorkflowOptionList {
             /**
@@ -1041,6 +1270,7 @@ declare namespace Components {
         export interface StartWorkflow {
             workflow_option_id: number;
         }
+        export type StatusEnum = "TOEZICHT" | "HANDHAVING" | "AFGESLOTEN";
         export interface Subject {
             id: number;
             name: string;
@@ -1073,6 +1303,11 @@ declare namespace Components {
             summon: number;
             entity_name?: string | null;
             function?: string | null;
+        }
+        export interface SummonedPersonAnonomized {
+            id: number;
+            person_role?: PersonRoleEnum;
+            summon: number;
         }
         export interface SupportContact {
             id: number;
@@ -1147,6 +1382,7 @@ declare namespace Components {
             name: string;
             message_name: string;
             to_directing_proccess?: boolean;
+            enabled_on_case_closed?: boolean;
             theme: number;
         }
     }
@@ -1242,6 +1478,32 @@ declare namespace Paths {
             export type $200 = Components.Schemas.PaginatedCaseCloseList;
         }
     }
+    namespace CaseCloseReasonsList {
+        namespace Parameters {
+            export type Limit = number;
+            export type Offset = number;
+        }
+        export interface QueryParameters {
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedCaseCloseReasonList;
+        }
+    }
+    namespace CaseCloseResultsList {
+        namespace Parameters {
+            export type Limit = number;
+            export type Offset = number;
+        }
+        export interface QueryParameters {
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedCaseCloseResultList;
+        }
+    }
     namespace CaseCloseRetrieve {
         namespace Parameters {
             export type Id = number;
@@ -1251,6 +1513,19 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.CaseClose;
+        }
+    }
+    namespace CaseStatesList {
+        namespace Parameters {
+            export type Limit = number;
+            export type Offset = number;
+        }
+        export interface QueryParameters {
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedCaseStateList;
         }
     }
     namespace CasesAdvertisementsList {
@@ -2011,7 +2286,7 @@ declare namespace Paths {
             ton_ids?: Parameters.TonIds;
         }
         namespace Responses {
-            export type $200 = /* Adds nested create feature */ Components.Schemas.Case;
+            export type $200 = /* Adds nested create feature */ Components.Schemas.CaseDetail;
         }
     }
     namespace CasesSubjectsList {
@@ -2198,6 +2473,19 @@ declare namespace Paths {
             export type $200 = /* Adds nested create feature */ Components.Schemas.Case;
         }
     }
+    namespace CitizenReportsList {
+        namespace Parameters {
+            export type Limit = number;
+            export type Offset = number;
+        }
+        export interface QueryParameters {
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedCitizenReportAnonomizedList;
+        }
+    }
     namespace DebriefingsCreate {
         export type RequestBody = Components.Schemas.DebriefingCreate;
         namespace Responses {
@@ -2215,6 +2503,19 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedDebriefingCreateList;
+        }
+    }
+    namespace DecisionTypesList {
+        namespace Parameters {
+            export type Limit = number;
+            export type Offset = number;
+        }
+        export interface QueryParameters {
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedDecisionTypeList;
         }
     }
     namespace DecisionsCreate {
@@ -2409,10 +2710,75 @@ declare namespace Paths {
             export type $201 = Components.Schemas.Push;
         }
     }
+    namespace ScheduleActionsList {
+        namespace Parameters {
+            export type Limit = number;
+            export type Offset = number;
+        }
+        export interface QueryParameters {
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedActionList;
+        }
+    }
+    namespace ScheduleDaysegmentsList {
+        namespace Parameters {
+            export type Limit = number;
+            export type Offset = number;
+        }
+        export interface QueryParameters {
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedDaySegmentList;
+        }
+    }
+    namespace SchedulePrioritiesList {
+        namespace Parameters {
+            export type Limit = number;
+            export type Offset = number;
+        }
+        export interface QueryParameters {
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedPriorityList;
+        }
+    }
+    namespace ScheduleWeeksegmentsList {
+        namespace Parameters {
+            export type Limit = number;
+            export type Offset = number;
+        }
+        export interface QueryParameters {
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedWeekSegmentList;
+        }
+    }
     namespace SchedulesCreate {
         export type RequestBody = Components.Schemas.ScheduleCreate;
         namespace Responses {
             export type $201 = Components.Schemas.ScheduleCreate;
+        }
+    }
+    namespace SchedulesList {
+        namespace Parameters {
+            export type Limit = number;
+            export type Offset = number;
+        }
+        export interface QueryParameters {
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedScheduleCreateList;
         }
     }
     namespace SchemaRetrieve {
@@ -2428,6 +2794,32 @@ declare namespace Paths {
             export interface $200 {
                 [name: string]: any;
             }
+        }
+    }
+    namespace SummonTypesList {
+        namespace Parameters {
+            export type Limit = number;
+            export type Offset = number;
+        }
+        export interface QueryParameters {
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedSummonTypeList;
+        }
+    }
+    namespace SummonedPersonsList {
+        namespace Parameters {
+            export type Limit = number;
+            export type Offset = number;
+        }
+        export interface QueryParameters {
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedSummonedPersonAnonomizedList;
         }
     }
     namespace SummonsCreate {

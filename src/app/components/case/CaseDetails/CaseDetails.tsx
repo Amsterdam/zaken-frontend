@@ -7,15 +7,14 @@ import DisplayCorporation from "./DisplayCorporation"
 import SensitiveCaseIcon from "../icons/SensitiveCaseIcon/SensitiveCaseIcon"
 import EnforcementIcon from "../icons/EnforcementIcon/EnforcementIcon"
 
+type Props = {
+  caseId: Components.Schemas.Case["id"]
+}
+
 const Wrap = styled.div`
   display: flex;
   align-items: center;
 `
-
-type Props = {
-  caseId: Components.Schemas.Case["id"]
-  isClosed: boolean
-}
 
 const StyledDiv = styled.div`
   display: flex;
@@ -26,7 +25,9 @@ const StyledDiv = styled.div`
   }
 `
 
-const getDataFirstCol = (isClosed: boolean, caseItem?: Components.Schemas.Case) => {
+const CLOSED: Components.Schemas.CaseDetail["state"] = "AFGESLOTEN"
+
+const getDataFirstCol = (isClosed: boolean, caseItem?: Components.Schemas.CaseDetail) => {
   if (caseItem === undefined) return
   const { id, start_date, sensitive, previous_case, is_enforcement_request } = caseItem
   const data: DefinitionListData = {
@@ -46,7 +47,7 @@ const getDataFirstCol = (isClosed: boolean, caseItem?: Components.Schemas.Case) 
   return data
 }
 
-const getDataSecondCol = (isClosed: boolean, caseItem?: Components.Schemas.Case) => {
+const getDataSecondCol = (isClosed: boolean, caseItem?: Components.Schemas.CaseDetail) => {
   if (caseItem === undefined) return
   const { id, theme, reason, project, subjects, address: { housing_corporation } } = caseItem
   const hasProject = project?.name !== undefined
@@ -63,9 +64,10 @@ const getDataSecondCol = (isClosed: boolean, caseItem?: Components.Schemas.Case)
   return data
 }
 
-const CaseDetails: React.FC<Props> = ({ caseId, isClosed }) => {
+const CaseDetails: React.FC<Props> = ({ caseId }) => {
   const [data, { isBusy }] = useCase(caseId)
 
+  const isClosed = data?.state === CLOSED
   const dataFirstCol = getDataFirstCol(isClosed, data)
   const dataSecondCol = getDataSecondCol(isClosed, data)
 

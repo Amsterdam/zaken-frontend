@@ -2,7 +2,6 @@
 import { RouteComponentProps } from "@reach/router"
 import styled from "styled-components"
 import { Divider, Heading, themeSpacing } from "@amsterdam/asc-ui"
-import { isDate } from "@amsterdam/wonen-ui"
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
 import Row, { RowWithColumn } from "app/components/layouts/Grid/Row"
 import PageHeading from "app/components/shared/PageHeading/PageHeading"
@@ -37,7 +36,6 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
   // Don't show if sensitive case and no permission
   const isAuthorized = caseItem?.sensitive === false || (caseItem?.sensitive === true && hasPermission)
   const showNotFound = has404
-  const isClosed = isDate(caseItem?.end_date)
 
   if (showSpinner) {
     return <PageSpinner />
@@ -86,7 +84,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
           </Row>
           <Row bottomSpacing={ 4 }>
             <Column spanLarge={ 75 }>
-              <CaseDetails caseId={ id } isClosed={ isClosed } />
+              <CaseDetails caseId={ id } />
             </Column>
           </Row>
 
