@@ -6,7 +6,7 @@ import qs from "qs"
 
 export const useCase = (id?: Components.Schemas.Case["id"], options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<Components.Schemas.Case>({
+  return useApiRequest<Components.Schemas.CaseDetail>({
     lazy: id === undefined,
     ...options,
     url: makeApiUrl("cases", id),
@@ -119,7 +119,6 @@ export const useCaseClose = (options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.CaseClose>({
     ...options,
-    lazy: true,
     url: makeApiUrl("case-close"),
     groupName: "cases",
     handleError,

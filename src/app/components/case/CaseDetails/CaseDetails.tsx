@@ -1,11 +1,12 @@
 import styled from "styled-components"
-import { DefinitionList, CaseIdDisplay, DateDisplay } from "@amsterdam/wonen-ui"
+import { DefinitionList, CaseIdDisplay, DateDisplay, isDate } from "@amsterdam/wonen-ui"
 import type { DefinitionListData } from "@amsterdam/wonen-ui"
 import { useCase } from "app/state/rest"
 import ChangeableSubject from "../tasks/ChangeSubject/ChangeableSubject"
 import DisplayCorporation from "./DisplayCorporation"
 import SensitiveCaseIcon from "../icons/SensitiveCaseIcon/SensitiveCaseIcon"
 import EnforcementIcon from "../icons/EnforcementIcon/EnforcementIcon"
+import { useEffect } from "react"
 
 const Wrap = styled.div`
   display: flex;
@@ -14,7 +15,6 @@ const Wrap = styled.div`
 
 type Props = {
   caseId: Components.Schemas.Case["id"]
-  isClosed: boolean
 }
 
 const StyledDiv = styled.div`
@@ -26,7 +26,7 @@ const StyledDiv = styled.div`
   }
 `
 
-const getDataFirstCol = (isClosed: boolean, caseItem?: Components.Schemas.Case) => {
+const getDataFirstCol = (isClosed: boolean, caseItem?: Components.Schemas.CaseDetail) => {
   if (caseItem === undefined) return
   const { id, start_date, sensitive, previous_case, is_enforcement_request } = caseItem
   const data: DefinitionListData = {
@@ -46,7 +46,7 @@ const getDataFirstCol = (isClosed: boolean, caseItem?: Components.Schemas.Case) 
   return data
 }
 
-const getDataSecondCol = (isClosed: boolean, caseItem?: Components.Schemas.Case) => {
+const getDataSecondCol = (isClosed: boolean, caseItem?: Components.Schemas.CaseDetail) => {
   if (caseItem === undefined) return
   const { id, theme, reason, project, subjects, address: { housing_corporation } } = caseItem
   const hasProject = project?.name !== undefined
@@ -63,9 +63,10 @@ const getDataSecondCol = (isClosed: boolean, caseItem?: Components.Schemas.Case)
   return data
 }
 
-const CaseDetails: React.FC<Props> = ({ caseId, isClosed }) => {
+const CaseDetails: React.FC<Props> = ({ caseId }) => {
   const [data, { isBusy }] = useCase(caseId)
 
+  const isClosed = isDate(data?.end_date)
   const dataFirstCol = getDataFirstCol(isClosed, data)
   const dataSecondCol = getDataSecondCol(isClosed, data)
 

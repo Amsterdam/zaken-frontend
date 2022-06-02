@@ -20,23 +20,25 @@ const CompleteCasePage: React.FC<RouteComponentProps<Props>> = ({ id: idString, 
 
   const id = parseUrlParamId(idString)
 
-  return (
-    isValidUrlParamId<Components.Schemas.Case["id"]>(id) &&
-    isValidUrlParamId<Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"]>(caseUserTaskId) ?
-      <DefaultLayout>
-        <RowWithColumn>
-          <PageHeading />
-        </RowWithColumn>
-        <RowWithColumn>
-          <CaseHeading id={ id } />
-        </RowWithColumn>
-        <Row>
-          <Column spanLarge={50}>
-            <CaseCompleteForm id={ id } caseUserTaskId={ caseUserTaskId } />
-          </Column>
-        </Row>
-      </DefaultLayout> :
-      <NotFoundPage />
+  const isValid = isValidUrlParamId<Components.Schemas.Case["id"]>(id)
+    && isValidUrlParamId<Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"]>(caseUserTaskId)
+
+    return (
+      isValid ? (
+        <DefaultLayout>
+          <RowWithColumn>
+            <PageHeading />
+          </RowWithColumn>
+          <RowWithColumn>
+            <CaseHeading id={ id } />
+          </RowWithColumn>
+          <Row>
+            <Column spanLarge={50}>
+              <CaseCompleteForm id={ id } caseUserTaskId={ caseUserTaskId } />
+            </Column>
+          </Row>
+        </DefaultLayout>
+      ) : <NotFoundPage />
   )
 }
 
