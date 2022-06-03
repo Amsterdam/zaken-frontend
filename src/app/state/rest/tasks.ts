@@ -57,7 +57,7 @@ export const getQueryUrl = (
 
   urlParams = {
     completed: false,
-    open_cases: true,
+    // open_cases: true,
     ...urlParams
   }
 

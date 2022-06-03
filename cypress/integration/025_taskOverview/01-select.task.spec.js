@@ -2,7 +2,7 @@ import address from "../../fixtures/address.json"
 import debrief from "../../fixtures/debrief.json"
 import roles from "../../fixtures/roles.json"
 
-describe('Task overview"', () => {
+describe("Task overview", () => {
 
     it.skip("Login as projectmedewerker", () => {
       cy.loginAsPm()
