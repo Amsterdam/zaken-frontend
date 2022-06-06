@@ -94,7 +94,7 @@
     "nock": "^13.2.4",
     "react-hooks-testing-library": "^0.6.0",
     "react-test-renderer": "^17.0.2",
-    "ts-node": "^10.8.0"
+    "ts-node": "^10.8.1"
   },
   "jest": {
     "collectCoverageFrom": [
