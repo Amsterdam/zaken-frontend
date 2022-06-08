@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react"
 import { Table } from "@amsterdam/wonen-ui"
+import { useDocumentTypes } from "app/state/rest"
 import getColumns from "./columns"
 
 type Props = {
@@ -10,6 +11,7 @@ type Props = {
 
 const DocumentsTable: React.FC<Props> = ({ data, loading, getDocuments }) => {
   const [numLoadingRows, setNumLoadingRows] = useState(3)
+  const [documentTypes] = useDocumentTypes()
 
   useEffect(() => {
     if (data && data?.length > 0) {
@@ -18,7 +20,7 @@ const DocumentsTable: React.FC<Props> = ({ data, loading, getDocuments }) => {
     }
   }, [data])
 
-  const columns = getColumns(getDocuments)
+  const columns = getColumns(getDocuments, documentTypes)
 
   // By sorting data for id, records are sorted for creation date.
   const sortedData = useMemo(() => data?.sort((a: any, b: any) => b?.id - a?.id), [data])

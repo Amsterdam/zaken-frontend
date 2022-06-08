@@ -217,3 +217,14 @@ export const useCaseDocuments = (caseId: Components.Schemas.Case["id"], options?
     isProtected: true
   })
 }
+
+export const useDocumentTypes = (options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<Components.Schemas.DocumentType[]>({
+    ...options,
+    url: makeApiUrl("document-types"),
+    groupName: "cases",
+    handleError,
+    isProtected: true
+  })
+}

@@ -3,8 +3,12 @@ import styled from "styled-components"
 import formatBytes from "../utils/formatBytes"
 import TableActions from "./TableActions/TableActions"
 
-const StyledName = styled.span`
-  width: 300px;
+type Props = {
+  columnWidth?: string
+}
+
+const StyledName = styled.span<Props>`
+  width: ${ props => props.columnWidth || "300px" };
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -12,12 +16,28 @@ const StyledName = styled.span`
   display: inline-block;
 `
 
-const getColumns = (getDocuments: () => Promise<unknown>) => [
+const getDocumentTypeName = (type: string, documentTypes?: Components.Schemas.DocumentType[]) => {
+  if (!documentTypes) {
+    return null
+  }
+  const found = documentTypes.find((doc) => doc.url === type)
+  if (found) {
+    return found.omschrijving
+  }
+  return null
+}
+
+const getColumns = (getDocuments: () => Promise<unknown>, documentTypes?: Components.Schemas.DocumentType[]) => [
   {
     header: "Naam",
     dataIndex: "bestandsnaam",
     minWidth: 100,
     render: (text: any, record: any) => record.error ? "Document niet gevonden" : <StyledName>{ text ?? "-" }</StyledName>
+  }, {
+    header: "Type",
+    dataIndex: "informatieobjecttype",
+    minWidth: 100,
+    render: (type: any) => <StyledName columnWidth="200px">{ getDocumentTypeName(type, documentTypes) ?? "-" }</StyledName>
   }, {
     header: "Aangemaakt",
     dataIndex: "creatiedatum",

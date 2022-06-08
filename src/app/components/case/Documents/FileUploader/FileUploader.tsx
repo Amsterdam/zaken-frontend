@@ -4,6 +4,8 @@ import { themeColor, themeSpacing, Icon, Spinner } from "@amsterdam/asc-ui"
 import { CloudUpload } from "app/components/shared/Icons"
 import useProtectedRequest from "app/state/rest/hooks/useProtectedRequest"
 import { makeApiUrl } from "app/state/rest/hooks/utils/apiUrl"
+import DocumentTypeModal from "./DocumentTypeModal"
+import { useModal } from "app/components/shared/Modal/hooks/useModal"
 
 type Props = {
   caseId: Components.Schemas.CaseEvent["id"]
@@ -51,29 +53,35 @@ const FileUploader: React.FC<Props> = ({ caseId, getDocuments }) => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
   const [selectedFile, setSelectedFile] = useState<any>(null)
+  const { isModalOpen, openModal, closeModal } = useModal()
   const url = makeApiUrl("cases", caseId, "documents", "create")
   const protectedRequest = useProtectedRequest()
 
-  const uploadFile = async (event: any) => {
-    const fileUploaded = event.target.files[0]
-    const formData = new FormData()
-		formData.append("file", fileUploaded)
-    formData.append("documenttype_url", "https://acc.api.wonen.zaken.amsterdam.nl/open-zaak/catalogi/api/v1/informatieobjecttypen/655ed6b3-2ee8-475d-8e40-7de76a2454f7")
-
+  const saveDocument = async (documentUrl: string) => {
     setLoading(true)
     setError(false)
     try {
+      const formData = new FormData()
+      formData.append("file", selectedFile)
+      formData.append("documenttype_url", documentUrl)
       const response: any = await protectedRequest<any>("post", url, formData)
       if (response.status === 200) {
-        setSelectedFile(fileUploaded)
         setLoading(false)
         getDocuments()
+        closeModal()
       }
     } catch (error) {
       setSelectedFile(null)
       setLoading(false)
       setError(true)
+      closeModal()
     }
+  }
+
+  const uploadFile = (event: any) => {
+    const fileUploaded = event.target.files[0]
+    setSelectedFile(fileUploaded)
+    openModal()
   }
 
   const onInputClick = (event: any) => {
@@ -101,6 +109,12 @@ const FileUploader: React.FC<Props> = ({ caseId, getDocuments }) => {
         onChange={ uploadFile }
         accept="*/*"
         onClick={ onInputClick }
+      />
+      <DocumentTypeModal
+        isOpen={ isModalOpen }
+        onClose={ closeModal }
+        onSubmit={ saveDocument }
+        loading={ loading }
       />
       <StyledSelectedFile>
         {selectedFile && `${ selectedFile?.name } is succesvol geüpload.`}
