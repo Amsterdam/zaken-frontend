@@ -24,7 +24,7 @@ jobs:
 
       - name: Cypress run
         if: ${{ github.actor != 'dependabot[bot]' }}
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         with:
           record: false
           start: npm start
