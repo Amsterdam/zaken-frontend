@@ -111,6 +111,7 @@ const FileUploader: React.FC<Props> = ({ caseId, getDocuments }) => {
         onClick={ onInputClick }
       />
       <DocumentTypeModal
+        caseId={ caseId }
         isOpen={ isModalOpen }
         onClose={ closeModal }
         onSubmit={ saveDocument }

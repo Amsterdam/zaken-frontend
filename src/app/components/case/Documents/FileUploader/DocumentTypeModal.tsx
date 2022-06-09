@@ -2,9 +2,10 @@ import { useState } from "react"
 import { Select, themeSpacing, Spinner, Button } from "@amsterdam/asc-ui"
 import styled from "styled-components"
 import Modal, { ModalBlock } from "app/components/shared/Modal/Modal"
-import { useDocumentTypes } from "app/state/rest"
+import { useDocumentTypesByCase } from "app/state/rest"
 
 type Props = {
+  caseId: Components.Schemas.Case["id"]
   isOpen: boolean
   onClose: () => void
   onSubmit: (documentUrl: string) => void
@@ -20,9 +21,9 @@ const ButtonContainer = styled.div`
 
 const DEFAULT_VALUE: string = "1"
 
-const DocumentTypeModal: React.FC<Props> = ({ isOpen, onClose, onSubmit, loading }) => {
+const DocumentTypeModal: React.FC<Props> = ({ caseId, isOpen, onClose, onSubmit, loading }) => {
   const [documentType, setDocumentType] = useState(DEFAULT_VALUE)
-  const [documentTypes, { isBusy }] = useDocumentTypes()
+  const [documentTypes, { isBusy }] = useDocumentTypesByCase(caseId)
 
   const showSpinner = isBusy || documentTypes === undefined
 
