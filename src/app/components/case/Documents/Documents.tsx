@@ -1,6 +1,6 @@
 import { useCaseDocuments } from "app/state/rest"
 import DocumentsTable from "./DocumentsTable/DocumentsTable"
-import FileUploader from "./FileUploader"
+import FileUploader from "./FileUploader/FileUploader"
 
 
 type Props = {

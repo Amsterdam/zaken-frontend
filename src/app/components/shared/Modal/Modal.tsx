@@ -31,17 +31,17 @@ const Modal: React.FC<Props> = ({ children, title, isOpen, showCloseButton = tru
     <StyledTopBar>
       <Heading forwardedAs="h4" style={{ flexGrow: 1, padding: "12px 0" } }>
         { title }
-        { showCloseButton &&
-        <Button
-          type="button"
-          size={30}
-          onClick={onClose}
-          variant="blank"
-          style={{ alignSelf: "flex-start" }}
-          >
-          <Icon size={28}><Close /></Icon>
-        </Button>
-        }
+        { showCloseButton && (
+          <Button
+            type="button"
+            size={30}
+            onClick={onClose}
+            variant="blank"
+            style={{ alignSelf: "flex-start" }}
+            >
+            <Icon size={28}><Close /></Icon>
+          </Button>
+        )}
       </Heading>
     </StyledTopBar>
     { children }
