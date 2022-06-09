@@ -17,7 +17,7 @@ type Props = {
 }
 
 const IndexPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
-  isValidUrlParamBAGId(bagId) ?
+  isValidUrlParamBAGId(bagId) ? (
     <DefaultLayout>
       <RowWithColumn>
         <AddressHeader bagId={ bagId } headingSize="h1" isHeader={ true } />
@@ -37,6 +37,13 @@ const IndexPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
         />
       </RowWithColumn>
       <RowWithColumn>
+        <CasesByBagId
+          title="Gesloten zaken AZA"
+          bagId={ bagId }
+          emptyText="Op dit adres zijn geen gesloten zaken"
+        />
+      </RowWithColumn>
+      <RowWithColumn>
         <IsAuthorizedButtonLink
           permissionNames={ ["create_case"] }
           to={ to("/adres/:bagId/zaken/nieuw", { bagId }) }
@@ -45,8 +52,8 @@ const IndexPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
           data-e2e-id="btn_add_case"
         />
       </RowWithColumn>
-    </DefaultLayout> :
-    <NotFoundPage />
+    </DefaultLayout>
+  ) : <NotFoundPage />
 )
 
 export default IndexPage

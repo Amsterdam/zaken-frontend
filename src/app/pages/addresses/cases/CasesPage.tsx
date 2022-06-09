@@ -22,7 +22,7 @@ const CasesPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => {
   const numCases = data?.results?.length ?? 0
 
   return (
-    isValidUrlParamBAGId(bagId) ?
+    isValidUrlParamBAGId(bagId) ? (
       <DefaultLayout>
         <Row>
           <Column spanLarge={ 50 }>
@@ -59,10 +59,10 @@ const CasesPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => {
             to={ to("/adres/:bagId/zaken/nieuw", { bagId }) }
             text="Nieuwe zaak aanmaken"
             variant="primary"
-        />
+          />
         </RowWithColumn>
-      </DefaultLayout> :
-      <NotFoundPage />
+      </DefaultLayout>
+    ) : <NotFoundPage />
   )
 }
 
