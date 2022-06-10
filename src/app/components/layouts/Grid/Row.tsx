@@ -56,6 +56,7 @@ export const RowWithColumn: React.FC<TypeProps> = ({ children, ...props }) => (
     </Column>
   </RowStyle>
 )
+
 const Row: React.FC<TypeProps> = ({ children, ...props }) => (
   <RowStyle { ...props }>
     { children }

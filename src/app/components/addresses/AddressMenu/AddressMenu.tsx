@@ -12,8 +12,7 @@ type Props = {
 const routes = [
   "/adres/:bagId/details/",
   { path: "/adres/:bagId/personen/", permissionNames: ["access_personal_data_register"] as Components.Schemas.PermissionsEnum[] },
-  "/adres/:bagId/vergunningen/",
-  "/adres/:bagId/zaken/"
+  "/adres/:bagId/vergunningen/"
 ]
 
 const mockedRoutes: string[] = []
