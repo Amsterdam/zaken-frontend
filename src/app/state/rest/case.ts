@@ -162,17 +162,6 @@ export const useCitizenReports = (caseId: Components.Schemas.Case["id"], options
   })
 }
 
-export const useCaseTasks = (caseId: Components.Schemas.Case["id"], options?: Options) => {
-  const handleError = useErrorHandler()
-  return useApiRequest<Components.Schemas.PaginatedCaseWorkflowList>({
-    ...options,
-    url: makeApiUrl("cases", caseId, "tasks"),
-    groupName: "cases",
-    handleError,
-    isProtected: true
-  })
-}
-
 export const useTaskComplete = (options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.GenericCompletedTask>({

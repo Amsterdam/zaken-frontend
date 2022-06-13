@@ -1,11 +1,11 @@
-import { Spinner, Heading, ErrorMessage, themeSpacing } from "@amsterdam/asc-ui"
-import { useCaseTasks, useTaskComplete } from "app/state/rest"
+import { Heading, themeSpacing } from "@amsterdam/asc-ui"
+import { useTaskComplete } from "app/state/rest"
 import StyledTable from "./components/StyledTable"
 import styled from "styled-components"
 import getColumns from "./columns"
 
 type Props = {
-  id: Components.Schemas.Case["id"]
+  workflows: Components.Schemas.Case["workflows"]
 }
 
 const Wrap = styled.div`
@@ -19,22 +19,19 @@ const Div = styled.div`
   margin-bottom: ${ themeSpacing(4) };
 `
 
-const Workflow: React.FC<Props> = ({ id }) => {
-  const [data, { isBusy, hasErrors }] = useCaseTasks(id)
+const Workflow: React.FC<Props> = ({ workflows }) => {
   const [, { execPost }] = useTaskComplete({ lazy: true })
 
   const columns = getColumns(execPost)
 
-  if (isBusy) return <Spinner />
-  const items = data?.results
-  if (items !== undefined) {
+  if (workflows !== undefined) {
     return (
       <>
-        { items.length > 0 ? (
-            items.map(({ state, tasks, information }, index) => (
-              <Wrap key={ `${ state.status_name }_${ index }` }>
+        { workflows.length > 0 ? (
+            workflows.map(({ state, tasks, information }, index) => (
+              <Wrap key={ `${ state.name }_${ index }` }>
                 <Div>
-                  <Heading as="h4">{ state.status_name }</Heading>
+                  <Heading as="h4">{ state.name }</Heading>
                   { information && <p>{ information }</p> }
                 </Div>
                 <StyledTable
@@ -52,7 +49,6 @@ const Workflow: React.FC<Props> = ({ id }) => {
       </>
     )
   }
-  if (hasErrors) return <ErrorMessage message="Laden van taken mislukt" />
   return null
 }
 

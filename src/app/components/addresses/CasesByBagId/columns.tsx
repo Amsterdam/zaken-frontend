@@ -19,9 +19,9 @@ export const columnsOpenCases = [
     render: (start_date: any) => <DateDisplay date={ start_date ?? undefined } emptyText="-" />
   }, {
     header: "Huidige status",
-    dataIndex: "current_states" ,
+    dataIndex: "workflows" ,
     minWidth: 100,
-    render: (current_states: any) => current_states?.length > 0 ? current_states.map((status: any) => status.status_name).join(", ") : "-"
+    render: (workflows: any) => workflows?.length > 0 ? workflows.map((status: any) => status.name).join(", ") : "-"
   }, {
     dataIndex: "id",
     minWidth: 140,

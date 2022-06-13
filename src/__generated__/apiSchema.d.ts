@@ -41,7 +41,7 @@ declare namespace Components {
                 housing_corporation: number;
             };
             bag_id: string;
-            current_states: CaseWorkflowCaseDetail[];
+            workflows: CaseWorkflow[];
             theme: {
                 id: number;
                 name: string;
@@ -137,7 +137,7 @@ declare namespace Components {
                 housing_corporation: number;
             };
             bag_id: string;
-            current_states: CaseWorkflowCaseDetail[];
+            workflows: CaseWorkflow[];
             theme: {
                 id: number;
                 name: string;
@@ -284,6 +284,7 @@ declare namespace Components {
         }
         export interface CaseWorkflowCaseDetail {
             status_name: string;
+            name: string;
             status: number;
             start_date: string; // date-time
         }
@@ -1131,7 +1132,7 @@ declare namespace Components {
                 housing_corporation: number;
             };
             bag_id?: string;
-            current_states?: CaseWorkflowCaseDetail[];
+            workflows?: CaseWorkflow[];
             theme?: {
                 id: number;
                 name: string;

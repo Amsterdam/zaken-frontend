@@ -19,7 +19,7 @@ const CaseNuisanceAlert: React.FC<Props> = ({ caseId }) => {
 
   const totalNuisance = caseEvents?.reduce((acc, cur) => cur?.event_values?.nuisance_detected ? ++acc : acc, 0)
   const isMaxExceeded = totalNuisance !== undefined && totalNuisance >= MAX_NUMBER_NUISANCE
-  const isNuisanceReportedInStates = caseData?.current_states.find((state) => state.status_name === "Melding overlast")
+  const isNuisanceReportedInStates = caseData?.workflows.find((workflow) => workflow.state.name === "Melding overlast")
   const isNuisanceReportedInEvents = caseEvents?.find((event) => event?.event_values?.description === "Doorzetten melding overlast")
 
   const isVisible = isMaxExceeded && !isNuisanceReportedInStates && !isNuisanceReportedInEvents
