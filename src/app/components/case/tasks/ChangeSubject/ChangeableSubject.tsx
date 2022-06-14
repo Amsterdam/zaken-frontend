@@ -6,7 +6,7 @@ import ChangeSubjectModal from "./ChangeSubjectModal"
 import { useCase } from "app/state/rest"
 
 type Props = {
-  caseId: Components.Schemas.Case["id"]
+  caseId: Components.Schemas.CaseCreate["id"]
   themeId: Components.Schemas.CaseTheme["id"]
   subjects: Components.Schemas.Subject[]
 }
@@ -34,8 +34,8 @@ const ChangeableSubject: React.FC<Props> = ({ subjects, caseId, themeId }) => {
   const { isModalOpen, openModal, closeModal } = useModal()
   const [, { execPatch }] = useCase(caseId)
 
-  const onSubmit = (data: any) => {
-    execPatch( { subject_ids: data.subjects.map((subject: any) => subject.id) }) 
+  const onSubmit = (data: { subjects: Components.Schemas.Subject[] }) => {
+    execPatch( { subject_ids: data.subjects.map((subject: Components.Schemas.Subject) => subject.id) }) 
   }
 
   return (

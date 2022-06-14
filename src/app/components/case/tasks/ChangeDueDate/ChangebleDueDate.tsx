@@ -8,7 +8,7 @@ import ChangeDueDateModal from "./ChangeDueDateModal"
 import { useTaskUpdate } from "app/state/rest"
 
 type Props = {
-  caseId: Components.Schemas.Case["id"]
+  caseId: Components.Schemas.CaseDetail["id"]
   caseUserTaskId: Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"]
   dueDate: Components.Schemas.CaseUserTaskWorkdflow["due_date"]
 }

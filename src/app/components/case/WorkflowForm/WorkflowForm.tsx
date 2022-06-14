@@ -4,7 +4,7 @@ import useNavigateWithFlashMessage from "app/state/flashMessages/useNavigateWith
 
 type Rec = Record<string, any>
 type Props<T, U> = {
-  id: Components.Schemas.Case["id"]
+  id: Components.Schemas.CaseDetail["id"]
   fields?: { fields: Fields }
   mapData?: (data: T) => U
   postMethod: (data: U) => Promise<any>

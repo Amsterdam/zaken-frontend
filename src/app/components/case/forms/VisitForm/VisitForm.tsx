@@ -9,7 +9,7 @@ import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
 import navigateTo from "app/routing/navigateTo"
 
 type Props = {
-  id: Components.Schemas.Case["id"]
+  id: Components.Schemas.CaseDetail["id"]
   caseUserTaskId: Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"]
 
 }

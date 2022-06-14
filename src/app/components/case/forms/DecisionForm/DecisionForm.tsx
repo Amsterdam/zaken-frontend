@@ -9,7 +9,7 @@ import { useDecisionTypes } from "app/state/rest/themes"
 import stripThousandSeparator from "./utils/stripThousandSeparator"
 
 type Props = {
-  id: Components.Schemas.Case["id"]
+  id: Components.Schemas.CaseDetail["id"]
   caseUserTaskId: Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"]
 }
 

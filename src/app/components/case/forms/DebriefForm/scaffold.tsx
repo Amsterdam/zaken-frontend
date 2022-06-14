@@ -25,7 +25,7 @@ const getThemeOptions = (themeName?: string) => {
   return options
 }
 
-export default (caseId: Components.Schemas.Case["id"], violationTypes: Components.Schemas.PaginatedViolationTypeList["results"], themeName?: string) => {
+export default (caseId: Components.Schemas.CaseDetail["id"], violationTypes: Components.Schemas.PaginatedViolationTypeList["results"], themeName?: string) => {
 
   const violationOptions = violationTypes?.map(({ key }) => key).reduce((acc, item) => { acc[item] = translationsMap(translationsViolationTypes, item); return acc }, {} as Record<string, string>)
 

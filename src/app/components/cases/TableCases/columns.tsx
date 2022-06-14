@@ -15,7 +15,7 @@ const getStatus = (record: Record<string, any>) => {
   const { workflows, end_date } = record
   if (workflows.length > 0) {
     // Ontdubbelen
-    const arr = workflows.map((status: any) => status.name)
+    const arr = workflows.map((status: any) => status.state.name)
     const uniqueArray = Array.from(new Set(arr))
     return uniqueArray.join(", ")
   }
@@ -57,7 +57,7 @@ const getColumns = (sorting: any) => {
       header: "Taak",
       dataIndex: "workflows",
       /*
-      ** At the moment workflows can not be sorted in the BE.
+      ** At the moment current_states can not be sorted in the BE.
       ** For now the sorter is disabled.
       */
       // sorter: (a: any, b: any) => {

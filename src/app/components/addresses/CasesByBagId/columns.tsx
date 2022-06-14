@@ -21,7 +21,7 @@ export const columnsOpenCases = [
     header: "Huidige status",
     dataIndex: "workflows" ,
     minWidth: 100,
-    render: (workflows: any) => workflows?.length > 0 ? workflows.map((status: any) => status.name).join(", ") : "-"
+    render: (workflows: any) => workflows?.length > 0 ? workflows.map((status: any) => status.state.name).join(", ") : "-"
   }, {
     dataIndex: "id",
     minWidth: 140,

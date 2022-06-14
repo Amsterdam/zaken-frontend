@@ -8,8 +8,8 @@ import ButtonLink from "app/components/shared/ButtonLink/ButtonLink"
 import to from "app/routing/utils/to"
 
 type Props = {
-  id: Components.Schemas.Case["id"]
-  workflows: Components.Schemas.Case["workflows"]
+  id: Components.Schemas.CaseDetail["id"]
+  workflows: Components.Schemas.CaseDetail["workflows"]
 }
 
 const ButtonWrap = styled.div`

@@ -6,7 +6,7 @@ import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
 import { useCase, useDebriefingCreate, useViolationTypes } from "app/state/rest"
 
 type Props = {
-  id: Components.Schemas.Case["id"]
+  id: Components.Schemas.CaseDetail["id"]
   caseUserTaskId: Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"]
 }
 

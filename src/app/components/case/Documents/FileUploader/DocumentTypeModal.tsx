@@ -5,7 +5,7 @@ import Modal, { ModalBlock } from "app/components/shared/Modal/Modal"
 import { useDocumentTypesByCase } from "app/state/rest"
 
 type Props = {
-  caseId: Components.Schemas.Case["id"]
+  caseId: Components.Schemas.CaseDetail["id"]
   isOpen: boolean
   onClose: () => void
   onSubmit: (documentUrl: string) => void

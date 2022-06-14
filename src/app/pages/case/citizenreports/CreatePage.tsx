@@ -18,7 +18,7 @@ type Props = {
 const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString, caseUserTaskId }) => {
 
   const id = parseUrlParamId(idString)
-  const isValid = isValidUrlParamId<Components.Schemas.Case["id"]>(id)
+  const isValid = isValidUrlParamId<Components.Schemas.CaseDetail["id"]>(id)
     && isValidUrlParamId<Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"]>(caseUserTaskId)
 
   return (

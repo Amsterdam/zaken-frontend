@@ -5,7 +5,7 @@ import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import navigateTo from "app/routing/navigateTo"
 
 export default (
-    caseId: Components.Schemas.Case["id"],
+    caseId: Components.Schemas.CaseDetail["id"],
     scheduleTypes?: Components.Schemas.ThemeScheduleTypes,
     visitFromOptions?: { id: number, name: string }[]
   ) => {

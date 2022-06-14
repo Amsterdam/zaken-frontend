@@ -3,7 +3,7 @@ import { VerifiedUser } from "app/components/shared/Icons"
 import { StyledTooltip } from "../layout"
 
 type Props = {
-  sensitive: Components.Schemas.Case["sensitive"]
+  sensitive: Components.Schemas.CaseDetail["sensitive"]
 }
 
 const SensitiveCaseIcon: React.FC<Props> = ({ sensitive }) => (

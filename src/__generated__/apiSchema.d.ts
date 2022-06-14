@@ -17,20 +17,23 @@ declare namespace Components {
             lng: number; // float
             housing_corporation: number;
         }
+        export interface AddressTiny {
+            street_name: string;
+            number: number;
+            suffix_letter: string;
+            suffix: string;
+            postal_code: string;
+            lat: number; // float
+            lng: number; // float
+        }
         export interface Advertisement {
             id: number;
             link: string;
             date_added: string; // date-time
         }
-        /**
-         * Adds nested create feature
-         */
         export interface Case {
             id: number;
             address: {
-                bag_id: string;
-                id: number;
-                full_address: string;
                 street_name: string;
                 number: number;
                 suffix_letter: string;
@@ -38,57 +41,21 @@ declare namespace Components {
                 postal_code: string;
                 lat: number; // float
                 lng: number; // float
-                housing_corporation: number;
             };
-            bag_id: string;
-            workflows: CaseWorkflow[];
-            theme: {
-                id: number;
-                name: string;
-                /**
-                 * This is the case type that can be found in openzaak. This way all the case types can be linked within the systems.
-                 */
-                case_type_url?: string | null; // uri
-                sensitive?: boolean;
-            };
-            theme_id: number;
             reason: {
                 id: number;
                 name: string;
-                theme: number;
             };
-            reason_id: number;
             schedules: Schedule[];
-            project: {
+            workflows: CaseWorkflowBase[];
+            theme: {
                 id: number;
                 name: string;
-                active?: boolean;
-                theme: number;
             };
-            project_id?: number;
-            subjects: Subject[];
-            subject_ids?: number[];
-            citizen_reports?: CitizenReportCase[];
             advertisements?: Advertisement[];
-            housing_corporation?: number;
             start_date?: string | null; // date
             end_date?: string | null; // date
-            sensitive?: boolean;
-            mma_number?: number | null;
-            description?: string | null;
-            ton_ids?: number /* int64 */[] | null;
             last_updated: string; // date-time
-            created: string; // date-time
-            is_enforcement_request?: boolean;
-            /**
-             * This is the case that can be found in openzaak.
-             */
-            case_url?: string | null; // uri
-            /**
-             * This field determines if the case is deleted in openzaak.
-             */
-            case_deleted?: boolean;
-            previous_case?: number | null;
         }
         /**
          * Case-address serializer for CaseUserTasks
@@ -121,7 +88,7 @@ declare namespace Components {
         /**
          * Adds nested create feature
          */
-        export interface CaseDetail {
+        export interface CaseCreate {
             id: number;
             address: {
                 bag_id: string;
@@ -137,29 +104,19 @@ declare namespace Components {
                 housing_corporation: number;
             };
             bag_id: string;
-            workflows: CaseWorkflow[];
             theme: {
                 id: number;
                 name: string;
-                /**
-                 * This is the case type that can be found in openzaak. This way all the case types can be linked within the systems.
-                 */
-                case_type_url?: string | null; // uri
-                sensitive?: boolean;
             };
             theme_id: number;
             reason: {
                 id: number;
                 name: string;
-                theme: number;
             };
             reason_id: number;
-            schedules: Schedule[];
             project: {
                 id: number;
                 name: string;
-                active?: boolean;
-                theme: number;
             };
             project_id?: number;
             subjects: Subject[];
@@ -168,6 +125,7 @@ declare namespace Components {
             advertisements?: Advertisement[];
             housing_corporation?: number;
             state: string;
+            workflows: CaseWorkflow[];
             start_date?: string | null; // date
             end_date?: string | null; // date
             sensitive?: boolean;
@@ -185,6 +143,47 @@ declare namespace Components {
              * This field determines if the case is deleted in openzaak.
              */
             case_deleted?: boolean;
+            previous_case?: number | null;
+        }
+        export interface CaseDetail {
+            id: number;
+            address: {
+                bag_id: string;
+                id: number;
+                full_address: string;
+                street_name: string;
+                number: number;
+                suffix_letter: string;
+                suffix: string;
+                postal_code: string;
+                lat: number; // float
+                lng: number; // float
+                housing_corporation: number;
+            };
+            state: string;
+            workflows: CaseWorkflow[];
+            subjects: Subject[];
+            project: {
+                id: number;
+                name: string;
+            };
+            theme: {
+                id: number;
+                name: string;
+            };
+            reason: {
+                id: number;
+                name: string;
+            };
+            advertisements?: Advertisement[];
+            start_date?: string | null; // date
+            end_date?: string | null; // date
+            sensitive?: boolean;
+            mma_number?: number | null;
+            description?: string | null;
+            ton_ids?: number /* int64 */[] | null;
+            last_updated: string; // date-time
+            is_enforcement_request?: boolean;
             previous_case?: number | null;
         }
         export interface CaseDocument {
@@ -216,13 +215,10 @@ declare namespace Components {
         export interface CaseProject {
             id: number;
             name: string;
-            active?: boolean;
-            theme: number;
         }
         export interface CaseReason {
             id: number;
             name: string;
-            theme: number;
         }
         export interface CaseState {
             id: number;
@@ -231,18 +227,11 @@ declare namespace Components {
             case: number;
         }
         export interface CaseStateType {
-            id: number;
-            status_name: string;
             name: string;
         }
         export interface CaseTheme {
             id: number;
             name: string;
-            /**
-             * This is the case type that can be found in openzaak. This way all the case types can be linked within the systems.
-             */
-            case_type_url?: string | null; // uri
-            sensitive?: boolean;
         }
         export interface CaseUserTask {
             id: number;
@@ -275,18 +264,15 @@ declare namespace Components {
         }
         export interface CaseWorkflow {
             state: {
-                id: number;
-                status_name: string;
                 name: string;
             };
             tasks: CaseUserTaskWorkdflow[];
             information: string;
         }
-        export interface CaseWorkflowCaseDetail {
-            status_name: string;
-            name: string;
-            status: number;
-            start_date: string; // date-time
+        export interface CaseWorkflowBase {
+            state: {
+                name: string;
+            };
         }
         export interface CitizenReport {
             id: number;
@@ -368,11 +354,6 @@ declare namespace Components {
             theme: {
                 id: number;
                 name: string;
-                /**
-                 * This is the case type that can be found in openzaak. This way all the case types can be linked within the systems.
-                 */
-                case_type_url?: string | null; // uri
-                sensitive?: boolean;
             };
             decision_type: {
                 id: number;
@@ -589,7 +570,7 @@ declare namespace Components {
              * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
-            results?: /* Adds nested create feature */ Case[];
+            results?: Case[];
         }
         export interface PaginatedCaseProjectList {
             /**
@@ -1113,15 +1094,9 @@ declare namespace Components {
             previous?: string | null; // uri
             results?: WorkflowOption[];
         }
-        /**
-         * Adds nested create feature
-         */
         export interface PatchedCase {
             id?: number;
             address?: {
-                bag_id: string;
-                id: number;
-                full_address: string;
                 street_name: string;
                 number: number;
                 suffix_letter: string;
@@ -1129,57 +1104,21 @@ declare namespace Components {
                 postal_code: string;
                 lat: number; // float
                 lng: number; // float
-                housing_corporation: number;
             };
-            bag_id?: string;
-            workflows?: CaseWorkflow[];
-            theme?: {
-                id: number;
-                name: string;
-                /**
-                 * This is the case type that can be found in openzaak. This way all the case types can be linked within the systems.
-                 */
-                case_type_url?: string | null; // uri
-                sensitive?: boolean;
-            };
-            theme_id?: number;
             reason?: {
                 id: number;
                 name: string;
-                theme: number;
             };
-            reason_id?: number;
             schedules?: Schedule[];
-            project?: {
+            workflows?: CaseWorkflowBase[];
+            theme?: {
                 id: number;
                 name: string;
-                active?: boolean;
-                theme: number;
             };
-            project_id?: number;
-            subjects?: Subject[];
-            subject_ids?: number[];
-            citizen_reports?: CitizenReportCase[];
             advertisements?: Advertisement[];
-            housing_corporation?: number;
             start_date?: string | null; // date
             end_date?: string | null; // date
-            sensitive?: boolean;
-            mma_number?: number | null;
-            description?: string | null;
-            ton_ids?: number /* int64 */[] | null;
             last_updated?: string; // date-time
-            created?: string; // date-time
-            is_enforcement_request?: boolean;
-            /**
-             * This is the case that can be found in openzaak.
-             */
-            case_url?: string | null; // uri
-            /**
-             * This field determines if the case is deleted in openzaak.
-             */
-            case_deleted?: boolean;
-            previous_case?: number | null;
         }
         export interface PatchedCaseUserTask {
             id?: number;
@@ -1208,6 +1147,9 @@ declare namespace Components {
         export interface Priority {
             id: number;
             name: string;
+            weight: number; // float
+        }
+        export interface PriorityTiny {
             weight: number; // float
         }
         export interface Push {
@@ -1243,19 +1185,7 @@ declare namespace Components {
             };
         }
         export interface Schedule {
-            id: number;
-            action: Action;
-            week_segment: WeekSegment;
-            day_segment: DaySegment;
-            priority: Priority;
-            case_user_task_id?: string;
-            description?: string | null;
-            date_added: string; // date-time
-            date_modified: string; // date-time
-            visit_from_datetime?: string | null; // date-time
-            housing_corporation_combiteam?: boolean;
-            case: number;
-            author?: string | null; // uuid
+            priority: PriorityTiny;
         }
         export interface ScheduleCreate {
             action: number;
@@ -1275,7 +1205,6 @@ declare namespace Components {
         export interface Subject {
             id: number;
             name: string;
-            theme: number;
         }
         export interface Summon {
             id: number;
@@ -1556,6 +1485,7 @@ declare namespace Paths {
             export type StateTypesName = string;
             export type StreetName = string;
             export type Suffix = string;
+            export type Task = string;
             export type Theme = number;
             export type TonIds = number;
         }
@@ -1587,6 +1517,7 @@ declare namespace Paths {
             state_types__name?: Parameters.StateTypesName;
             street_name?: Parameters.StreetName;
             suffix?: Parameters.Suffix;
+            task?: Parameters.Task;
             theme?: Parameters.Theme;
             ton_ids?: Parameters.TonIds;
         }
@@ -1615,6 +1546,7 @@ declare namespace Paths {
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StateTypesName = string;
+            export type Task = string;
             export type Theme = number;
             export type TonIds = number;
         }
@@ -1640,6 +1572,7 @@ declare namespace Paths {
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
+            task?: Parameters.Task;
             theme?: Parameters.Theme;
             ton_ids?: Parameters.TonIds;
         }
@@ -1668,6 +1601,7 @@ declare namespace Paths {
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StateTypesName = string;
+            export type Task = string;
             export type Theme = number;
             export type TonIds = number;
         }
@@ -1690,11 +1624,12 @@ declare namespace Paths {
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
+            task?: Parameters.Task;
             theme?: Parameters.Theme;
             ton_ids?: Parameters.TonIds;
         }
         namespace Responses {
-            export type $200 = /* Adds nested create feature */ Components.Schemas.Case;
+            export type $200 = Components.Schemas.Case;
         }
     }
     namespace CasesCreate {
@@ -1717,6 +1652,7 @@ declare namespace Paths {
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StateTypesName = string;
+            export type Task = string;
             export type Theme = number;
             export type TonIds = number;
         }
@@ -1739,12 +1675,13 @@ declare namespace Paths {
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
+            task?: Parameters.Task;
             theme?: Parameters.Theme;
             ton_ids?: Parameters.TonIds;
         }
-        export type RequestBody = /* Adds nested create feature */ Components.Schemas.Case;
+        export type RequestBody = /* Adds nested create feature */ Components.Schemas.CaseCreate;
         namespace Responses {
-            export type $201 = /* Adds nested create feature */ Components.Schemas.Case;
+            export type $201 = /* Adds nested create feature */ Components.Schemas.CaseCreate;
         }
     }
     namespace CasesDocumentTypesList {
@@ -1774,6 +1711,7 @@ declare namespace Paths {
             export type StateTypesName = string;
             export type StreetName = string;
             export type Suffix = string;
+            export type Task = string;
             export type Theme = number;
             export type TonIds = number;
         }
@@ -1805,6 +1743,7 @@ declare namespace Paths {
             state_types__name?: Parameters.StateTypesName;
             street_name?: Parameters.StreetName;
             suffix?: Parameters.Suffix;
+            task?: Parameters.Task;
             theme?: Parameters.Theme;
             ton_ids?: Parameters.TonIds;
         }
@@ -1833,6 +1772,7 @@ declare namespace Paths {
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StateTypesName = string;
+            export type Task = string;
             export type Theme = number;
             export type TonIds = number;
         }
@@ -1858,6 +1798,7 @@ declare namespace Paths {
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
+            task?: Parameters.Task;
             theme?: Parameters.Theme;
             ton_ids?: Parameters.TonIds;
         }
@@ -1893,6 +1834,7 @@ declare namespace Paths {
             export type StateTypesName = string;
             export type StreetName = string;
             export type Suffix = string;
+            export type Task = string;
             export type Theme = number;
             export type TonIds = number;
         }
@@ -1924,6 +1866,7 @@ declare namespace Paths {
             state_types__name?: Parameters.StateTypesName;
             street_name?: Parameters.StreetName;
             suffix?: Parameters.Suffix;
+            task?: Parameters.Task;
             theme?: Parameters.Theme;
             ton_ids?: Parameters.TonIds;
         }
@@ -1971,6 +1914,7 @@ declare namespace Paths {
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StateTypesName = string;
+            export type Task = string;
             export type Theme = number;
             export type TonIds = number;
         }
@@ -1996,6 +1940,7 @@ declare namespace Paths {
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
+            task?: Parameters.Task;
             theme?: Parameters.Theme;
             ton_ids?: Parameters.TonIds;
         }
@@ -2029,6 +1974,7 @@ declare namespace Paths {
             export type StateTypesName = string;
             export type StreetName = string;
             export type Suffix = string;
+            export type Task = string;
             export type Theme = number;
             export type TonIds = number;
         }
@@ -2057,6 +2003,7 @@ declare namespace Paths {
             state_types__name?: Parameters.StateTypesName;
             street_name?: Parameters.StreetName;
             suffix?: Parameters.Suffix;
+            task?: Parameters.Task;
             theme?: Parameters.Theme;
             ton_ids?: Parameters.TonIds;
         }
@@ -2085,6 +2032,7 @@ declare namespace Paths {
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StateTypesName = string;
+            export type Task = string;
             export type Theme = number;
             export type TonIds = number;
         }
@@ -2110,12 +2058,13 @@ declare namespace Paths {
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
+            task?: Parameters.Task;
             theme?: Parameters.Theme;
             ton_ids?: Parameters.TonIds;
         }
-        export type RequestBody = /* Adds nested create feature */ Components.Schemas.PatchedCase;
+        export type RequestBody = Components.Schemas.PatchedCase;
         namespace Responses {
-            export type $200 = /* Adds nested create feature */ Components.Schemas.Case;
+            export type $200 = Components.Schemas.Case;
         }
     }
     namespace CasesProcessesList {
@@ -2145,6 +2094,7 @@ declare namespace Paths {
             export type StateTypesName = string;
             export type StreetName = string;
             export type Suffix = string;
+            export type Task = string;
             export type Theme = number;
             export type TonIds = number;
         }
@@ -2176,6 +2126,7 @@ declare namespace Paths {
             state_types__name?: Parameters.StateTypesName;
             street_name?: Parameters.StreetName;
             suffix?: Parameters.Suffix;
+            task?: Parameters.Task;
             theme?: Parameters.Theme;
             ton_ids?: Parameters.TonIds;
         }
@@ -2204,6 +2155,7 @@ declare namespace Paths {
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StateTypesName = string;
+            export type Task = string;
             export type Theme = number;
             export type TonIds = number;
         }
@@ -2229,6 +2181,7 @@ declare namespace Paths {
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
+            task?: Parameters.Task;
             theme?: Parameters.Theme;
             ton_ids?: Parameters.TonIds;
         }
@@ -2258,6 +2211,7 @@ declare namespace Paths {
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StateTypesName = string;
+            export type Task = string;
             export type Theme = number;
             export type TonIds = number;
         }
@@ -2283,11 +2237,12 @@ declare namespace Paths {
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
+            task?: Parameters.Task;
             theme?: Parameters.Theme;
             ton_ids?: Parameters.TonIds;
         }
         namespace Responses {
-            export type $200 = /* Adds nested create feature */ Components.Schemas.CaseDetail;
+            export type $200 = Components.Schemas.CaseDetail;
         }
     }
     namespace CasesSubjectsList {
@@ -2317,6 +2272,7 @@ declare namespace Paths {
             export type StateTypesName = string;
             export type StreetName = string;
             export type Suffix = string;
+            export type Task = string;
             export type Theme = number;
             export type TonIds = number;
         }
@@ -2348,6 +2304,7 @@ declare namespace Paths {
             state_types__name?: Parameters.StateTypesName;
             street_name?: Parameters.StreetName;
             suffix?: Parameters.Suffix;
+            task?: Parameters.Task;
             theme?: Parameters.Theme;
             ton_ids?: Parameters.TonIds;
         }
@@ -2382,6 +2339,7 @@ declare namespace Paths {
             export type StateTypesName = string;
             export type StreetName = string;
             export type Suffix = string;
+            export type Task = string;
             export type Theme = number;
             export type TonIds = number;
         }
@@ -2413,6 +2371,7 @@ declare namespace Paths {
             state_types__name?: Parameters.StateTypesName;
             street_name?: Parameters.StreetName;
             suffix?: Parameters.Suffix;
+            task?: Parameters.Task;
             theme?: Parameters.Theme;
             ton_ids?: Parameters.TonIds;
         }
@@ -2441,6 +2400,7 @@ declare namespace Paths {
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StateTypesName = string;
+            export type Task = string;
             export type Theme = number;
             export type TonIds = number;
         }
@@ -2466,12 +2426,13 @@ declare namespace Paths {
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
+            task?: Parameters.Task;
             theme?: Parameters.Theme;
             ton_ids?: Parameters.TonIds;
         }
-        export type RequestBody = /* Adds nested create feature */ Components.Schemas.Case;
+        export type RequestBody = Components.Schemas.Case;
         namespace Responses {
-            export type $200 = /* Adds nested create feature */ Components.Schemas.Case;
+            export type $200 = Components.Schemas.Case;
         }
     }
     namespace CitizenReportsList {

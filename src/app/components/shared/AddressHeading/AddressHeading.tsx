@@ -5,7 +5,7 @@ import AddressDisplay from "app/components/addresses/AddressDisplay/AddressDispl
 import styled from "styled-components"
 
 type Props = {
-  caseId: Components.Schemas.Case["id"]
+  caseId: Components.Schemas.CaseDetail["id"]
 }
 
 const Div = styled.div`

@@ -6,7 +6,7 @@ import { useCase, useCaseEvents } from "app/state/rest"
 const MAX_NUMBER_NUISANCE = 3
 
 type Props = {
-  caseId: Components.Schemas.Case["id"]
+  caseId: Components.Schemas.CaseDetail["id"]
 }
 
 const StyledAlert = styled(Alert)`

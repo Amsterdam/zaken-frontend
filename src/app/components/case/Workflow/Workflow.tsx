@@ -5,7 +5,7 @@ import styled from "styled-components"
 import getColumns from "./columns"
 
 type Props = {
-  workflows: Components.Schemas.Case["workflows"]
+  workflows: Components.Schemas.CaseDetail["workflows"]
 }
 
 const Wrap = styled.div`
