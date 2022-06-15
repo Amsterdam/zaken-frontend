@@ -4,7 +4,7 @@ import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import navigateTo from "app/routing/navigateTo"
 import { personRoleMap } from "@amsterdam/wonen-ui/helpers/dictionaries"
 
-export default (caseId: Components.Schemas.Case["id"], summonTypes?: Components.Schemas.SummonType[]) => {
+export default (caseId: Components.Schemas.CaseDetail["id"], summonTypes?: Components.Schemas.SummonType[]) => {
   const roleEntries = Object.entries(personRoleMap)
   const personRoles = roleEntries.filter(([key]) => key !== "PERSON_ROLE_PLATFORM").map(([key, label]) => ({ key, label }))
   const legalEntityRoles = roleEntries.filter(([key]) => !["PERSON_ROLE_HEIR", "PERSON_ROLE_RESIDENT"].includes(key)).map(([key, label]) => ({ key, label }))

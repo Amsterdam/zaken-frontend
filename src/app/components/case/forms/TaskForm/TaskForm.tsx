@@ -7,7 +7,7 @@ import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
 
 type Props = {
-  id: Components.Schemas.Case["id"]
+  id: Components.Schemas.CaseDetail["id"]
 }
 
 const mapData = (data: { workflowProcess: Components.Schemas.WorkflowOption }) => ({ workflow_option_id: data.workflowProcess.id })

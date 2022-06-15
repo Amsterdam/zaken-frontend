@@ -17,7 +17,7 @@ const columnPriority = [
   "address.street_name",
   "address.postal_code",
   "start_date",
-  "current_states",
+  "workflows",
   "reason.name",
   "last_updated",
   "id"

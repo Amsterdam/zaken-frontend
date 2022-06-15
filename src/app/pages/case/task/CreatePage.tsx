@@ -20,7 +20,7 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
   const id = parseUrlParamId(idString)
 
   return (
-    isValidUrlParamId<Components.Schemas.Case["id"]>(id) ?
+    isValidUrlParamId<Components.Schemas.CaseDetail["id"]>(id) ?
       <DefaultLayout>
         <RowWithColumn>
           <PageHeading />

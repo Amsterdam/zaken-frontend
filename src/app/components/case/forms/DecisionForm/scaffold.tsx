@@ -5,7 +5,7 @@ import navigateTo from "app/routing/navigateTo"
 
 const descriptionRequired = (idDecision: number | undefined, shouldMatch = true) => shouldMatch ? idDecision === 9 : idDecision !== 9
 
-export default (caseId: Components.Schemas.Case["id"], decisions?: Components.Schemas.DecisionType[]) => {
+export default (caseId: Components.Schemas.CaseDetail["id"], decisions?: Components.Schemas.DecisionType[]) => {
 
   const fields = {
     decision_type: {

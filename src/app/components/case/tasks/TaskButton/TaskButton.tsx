@@ -5,7 +5,7 @@ import FormModal from "../FormModal/FormModal"
 type Props = {
   onSubmit: (variables: Components.Schemas.GenericCompletedTask["variables"]) => Promise<unknown>
   taskName: string
-  caseId: Components.Schemas.Case["id"]
+  caseId: Components.Schemas.CaseDetail["id"]
   form?: Components.Schemas.CaseUserTaskWorkdflow["form"]
   disabled?: boolean
 }

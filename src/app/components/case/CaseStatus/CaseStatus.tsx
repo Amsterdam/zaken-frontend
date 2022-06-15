@@ -8,7 +8,8 @@ import ButtonLink from "app/components/shared/ButtonLink/ButtonLink"
 import to from "app/routing/utils/to"
 
 type Props = {
-  id: Components.Schemas.Case["id"]
+  id: Components.Schemas.CaseDetail["id"]
+  workflows: Components.Schemas.CaseDetail["workflows"]
 }
 
 const ButtonWrap = styled.div`
@@ -21,7 +22,7 @@ const StyledDivider = styled(Divider)`
   margin-bottom: ${ themeSpacing(8) };
 `
 
-const CaseStatus: React.FC<Props> = ({ id }) => (
+const CaseStatus: React.FC<Props> = ({ id, workflows }) => (
   <>
     <Row bottomSpacing={ 0 }>
       <Column spanSmall={ 50 } spanLarge={ 50 }>
@@ -37,7 +38,7 @@ const CaseStatus: React.FC<Props> = ({ id }) => (
     </Row>
     <RowWithColumn>
       <StyledDivider />
-      <Workflow id={ id } />
+      <Workflow workflows={ workflows } />
     </RowWithColumn>
   </>
 )

@@ -20,7 +20,7 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString, caseUs
   const id = parseUrlParamId(idString)
 
   return (
-    isValidUrlParamId<Components.Schemas.Case["id"]>(id) &&
+    isValidUrlParamId<Components.Schemas.CaseDetail["id"]>(id) &&
     isValidUrlParamId<Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"]>(caseUserTaskId) ?
       <DefaultLayout>
         <RowWithColumn>

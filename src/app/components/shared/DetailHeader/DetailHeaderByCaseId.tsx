@@ -4,7 +4,7 @@ import DetailHeader from "./DetailHeader"
 import { useCase } from "app/state/rest"
 
 type Props = {
-  caseId: Components.Schemas.Case["id"]
+  caseId: Components.Schemas.CaseDetail["id"]
   enableSwitch?: boolean
 }
 

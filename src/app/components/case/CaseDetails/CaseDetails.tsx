@@ -8,7 +8,7 @@ import SensitiveCaseIcon from "../icons/SensitiveCaseIcon/SensitiveCaseIcon"
 import EnforcementIcon from "../icons/EnforcementIcon/EnforcementIcon"
 
 type Props = {
-  caseId: Components.Schemas.Case["id"]
+  caseId: Components.Schemas.CaseDetail["id"]
 }
 
 const Wrap = styled.div`

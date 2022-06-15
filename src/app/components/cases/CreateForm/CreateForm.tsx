@@ -115,7 +115,7 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
   )
 
   const navigateWithFlashMessage = useNavigateWithFlashMessage()
-  const afterSubmit = async (result: Components.Schemas.Case) =>
+  const afterSubmit = async (result: Components.Schemas.CaseDetail) =>
     await navigateWithFlashMessage(
       "/zaken/:id",
       { id: result.id },

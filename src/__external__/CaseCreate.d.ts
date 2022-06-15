@@ -4,7 +4,7 @@ type CitizenReport = {
 }
 
 // We override the address key here. Because the generated type expects a complete Address instead of just a bag_id
-declare type CaseCreate = Omit<Components.Schemas.Case, "id" | "address" | "current_states" | "schedules" | "last_updated" | "created"> &
+declare type CaseCreate = Omit<Components.Schemas.CaseDetail, "id" | "address" | "workflows" | "schedules" | "last_updated" | "created"> &
   {
     address: {
       bag_id: Components.Schemas.Address["bag_id"]

@@ -9,7 +9,7 @@ import { useDecisionTypes } from "app/state/rest/themes"
 import stripThousandSeparator from "./utils/stripThousandSeparator"
 
 type Props = {
-  id: Components.Schemas.Case["id"]
+  id: Components.Schemas.CaseDetail["id"]
   caseUserTaskId: Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"]
 }
 
@@ -41,7 +41,7 @@ const DecisionForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
 
   return (
     <>
-      <DecisionHeader caseId={ id } caseUserTaskId={ caseUserTaskId } />
+      <DecisionHeader caseId={ id } caseUserTaskId={ caseUserTaskId } workflows={ caseItem?.workflows! } />
       <FormTitle>Gebruik dit formulier om aan te geven welk besluit is genomen</FormTitle>
       <WorkflowForm
         id={ id }

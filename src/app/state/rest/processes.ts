@@ -14,7 +14,7 @@ export const useWorkflowProcesses = (id: Components.Schemas.Case["id"], options?
   })
 }
 
-export const useWorkflowProcess = (id: Components.Schemas.Case["id"], options?: Options) => {
+export const useWorkflowProcess = (id: Components.Schemas.CaseDetail["id"], options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.StartWorkflow>({
     ...options,

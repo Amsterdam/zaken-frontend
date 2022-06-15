@@ -12,10 +12,10 @@ const Wrap = styled.div`
 `
 
 const getStatus = (record: Record<string, any>) => {
-  const { current_states, end_date } = record
-  if (current_states.length > 0) {
+  const { workflows, end_date } = record
+  if (workflows.length > 0) {
     // Ontdubbelen
-    const arr = current_states.map((status: any) => status.status_name)
+    const arr = workflows.map((status: any) => status.state.name)
     const uniqueArray = Array.from(new Set(arr))
     return uniqueArray.join(", ")
   }
@@ -55,7 +55,7 @@ const getColumns = (sorting: any) => {
       sortOrder: sorting.dataIndex === "address.postal_code" && sorting.order
     }, {
       header: "Taak",
-      dataIndex: "current_states",
+      dataIndex: "workflows",
       /*
       ** At the moment current_states can not be sorted in the BE.
       ** For now the sorter is disabled.
@@ -66,7 +66,7 @@ const getColumns = (sorting: any) => {
       //   return aValue.localeCompare(bValue)
       // },
       minWidth: 200,
-      render: (current_states: any, record: any) => getStatus(record)
+      render: (workflows: any, record: any) => getStatus(record)
     }, {
       header: "Aanleiding",
       dataIndex: "reason.name",
