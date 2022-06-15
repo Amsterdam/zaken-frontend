@@ -10,8 +10,7 @@ type Props = {
 
 const DecisionHeader: React.FC<Props> = ({ caseId, caseUserTaskId, workflows }) => {
 
-  const [summons, { isBusy: isBusySummons }] = useSummonsWithCaseId(caseId)
-  const isBusy = isBusySummons
+  const [summons, { isBusy }] = useSummonsWithCaseId(caseId)
 
   const task = workflows?.map(({ tasks }) => tasks).flat().find(({ case_user_task_id }) => case_user_task_id === caseUserTaskId)
   // TODO: The use of form_variables + hardcoded key `summon_id` is tight-coupling
