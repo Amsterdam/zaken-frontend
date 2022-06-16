@@ -1,17 +1,18 @@
 import { useEffect, useMemo, useState } from "react"
 import { Table } from "@amsterdam/wonen-ui"
-import { useDocumentTypes } from "app/state/rest"
+import { useDocumentTypesByCase } from "app/state/rest"
 import getColumns from "./columns"
 
 type Props = {
+  caseId: Components.Schemas.CaseEvent["id"]
   data?: Components.Schemas.DocumentType[]
   loading: boolean
   getDocuments: () => Promise<unknown>
 }
 
-const DocumentsTable: React.FC<Props> = ({ data, loading, getDocuments }) => {
+const DocumentsTable: React.FC<Props> = ({ caseId, data, loading, getDocuments }) => {
   const [numLoadingRows, setNumLoadingRows] = useState(3)
-  const [documentTypes] = useDocumentTypes()
+  const [documentTypes] = useDocumentTypesByCase(caseId)
 
   useEffect(() => {
     if (data && data?.length > 0) {

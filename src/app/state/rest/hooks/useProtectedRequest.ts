@@ -14,6 +14,7 @@ export default () => {
   return useCallback(
     async <Schema>(method: Method, url: string, data?: unknown, additionalHeaders = {}) => {
       try {
+        // Update the access token when it expires in less than 30 seconds
         await keycloak.updateToken(30)
         const headers = {
           Authorization: `Bearer ${ keycloak.token }`,

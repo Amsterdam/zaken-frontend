@@ -15,6 +15,7 @@ const Documents: React.FC<Props> = ({ caseId }) => {
       <FileUploader caseId={ caseId } getDocuments={ execGet } />
       <DocumentsTable
         data={ data?.results }
+        caseId={ caseId }
         loading={ isBusy }
         getDocuments={ execGet }
       />
