@@ -19,6 +19,7 @@ export type StateType = {
     role?: string
     owner: string
     taskName: string
+    reason: string
     updateContextTasks: (payload: any) => void
   }
 }
@@ -55,6 +56,7 @@ export const initialState: StateType = {
     role: undefined,
     owner: "",
     taskName: "",
+    reason: "",
     updateContextTasks: noop
   }
 }

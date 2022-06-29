@@ -8,7 +8,7 @@ import SensitiveCaseIcon from "../icons/SensitiveCaseIcon/SensitiveCaseIcon"
 import EnforcementIcon from "../icons/EnforcementIcon/EnforcementIcon"
 
 type Props = {
-  caseId: Components.Schemas.CaseDetail["id"]
+  caseId: Components.Schemas.CaseCreate["id"]
 }
 
 const Wrap = styled.div`
@@ -25,9 +25,9 @@ const StyledDiv = styled.div`
   }
 `
 
-const CLOSED: Components.Schemas.CaseDetail["state"] = "AFGESLOTEN"
+const CLOSED: Components.Schemas.CaseCreate["state"] = "AFGESLOTEN"
 
-const getDataFirstCol = (isClosed: boolean, caseItem?: Components.Schemas.CaseDetail) => {
+const getDataFirstCol = (isClosed: boolean, caseItem?: Components.Schemas.CaseCreate) => {
   if (caseItem === undefined) return
   const { id, start_date, sensitive, previous_case, is_enforcement_request } = caseItem
   const data: DefinitionListData = {
@@ -47,7 +47,7 @@ const getDataFirstCol = (isClosed: boolean, caseItem?: Components.Schemas.CaseDe
   return data
 }
 
-const getDataSecondCol = (isClosed: boolean, caseItem?: Components.Schemas.CaseDetail) => {
+const getDataSecondCol = (isClosed: boolean, caseItem?: Components.Schemas.CaseCreate) => {
   if (caseItem === undefined) return
   const { id, theme, reason, project, subjects, address: { housing_corporation } } = caseItem
   const hasProject = project?.name !== undefined

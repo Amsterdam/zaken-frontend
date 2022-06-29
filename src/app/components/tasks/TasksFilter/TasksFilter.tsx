@@ -8,6 +8,7 @@ import scaffoldRole from "./scaffoldRole"
 import scaffoldPageSize from "./scaffoldPageSize"
 import scaffoldMyTasks from "./scaffoldMyTasks"
 import scaffoldTaskName from "./scaffoldTaskName"
+import scaffoldReasons from "./scaffoldReasons"
 
 type Props = {
   theme: string
@@ -23,10 +24,15 @@ type Props = {
   taskNames?: Components.Schemas.CaseUserTaskTaskName[]
   taskName: string
   setTaskName: (value: string) => void
+  reasons?: Components.Schemas.CaseReason[]
+  reason: string
+  setReason: (value: string) => void
+
 }
 
 const TasksFilter: React.FC<Props> = ({
-  role, roles, setRole, theme, themes, setTheme, pageSize, setPageSize, owner, setOwner, taskNames, taskName, setTaskName
+  role, roles, setRole, theme, themes, setTheme, pageSize, setPageSize, owner,
+  setOwner, taskNames, taskName, setTaskName, reasons, reason, setReason
 }) => (
   <>
     <FilterMenu>
@@ -40,6 +46,12 @@ const TasksFilter: React.FC<Props> = ({
               <ScaffoldFields { ...scaffoldTheme(theme, themes, setTheme) } />
             </ScaffoldForm>
           )
+      }
+      { reasons === undefined ? <Spinner /> : (
+        <ScaffoldForm>
+          <ScaffoldFields { ...scaffoldReasons(reason, setReason, reasons) } />
+        </ScaffoldForm>
+        )
       }
       { roles === undefined
           ? <Spinner />
