@@ -3,7 +3,7 @@ import roles from "../../fixtures/roles.json"
 import address from "../../fixtures/address.json"
 
 describe('Process Report Visit"', () => {
-    
+
   it("Go to Adresoverzicht and check address", () => {
     const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/`
     cy.intercept(url).as('getCases')
@@ -22,13 +22,13 @@ describe('Process Report Visit"', () => {
         .click()
     })
   })
-  
+
   it('check dueDate', () => {
     cy.testDueDate("tbody>tr>td", 2)
   })
 
   it('TH can finish task "Opstellen rapport van bevindingen"', () => {
-  
+
     cy.get("tbody>tr")
       .should("have.length", 3)
       .contains(debrief.violationNextTask3)
@@ -42,12 +42,12 @@ describe('Process Report Visit"', () => {
     cy.get(`[role="dialog"]`)
         .should('have.length', 1)
         .contains(debrief.violationNextTask3)
-        
+
     cy.get(`[role="dialog"]`)
         .find('input[name="completed"]')
         .first()
         .check()
-    
+
     cy.get(`[role="dialog"]`)
         .find('button')
         .contains("Taak afronden")
@@ -62,9 +62,9 @@ describe('Process Report Visit"', () => {
     cy.history(debrief.violationNextTask3, "Uitvoerder")
   })
 
-  
+
   it('TH can finish task "Opstellen beeldverslag"', () => {
-  
+
     cy.get("tbody>tr")
       .should("have.length", 2)
       .contains(debrief.violationNextTask2)
@@ -78,12 +78,12 @@ describe('Process Report Visit"', () => {
     cy.get(`[role="dialog"]`)
         .should('have.length', 1)
         .contains(debrief.violationNextTask2)
-        
+
     cy.get(`[role="dialog"]`)
         .find('input[name="completed"]')
         .first()
         .check()
-    
+
     cy.get(`[role="dialog"]`)
         .find('button')
         .contains("Taak afronden")
@@ -98,7 +98,7 @@ describe('Process Report Visit"', () => {
     cy.testDueDate("tbody>tr>td", 1)
   })
   it('TH can finish task "Opstellen concept aanschrijving"', () => {
-  
+
     cy.get("tbody>tr")
       .should("have.length", 1)
       .contains(debrief.violationNextTask1)
@@ -112,12 +112,12 @@ describe('Process Report Visit"', () => {
     cy.get(`[role="dialog"]`)
         .should('have.length', 1)
         .contains(debrief.violationNextTask1)
-        
+
     cy.get(`[role="dialog"]`)
         .find('input[name="completed"]')
         .first()
         .check()
-    
+
     cy.get(`[role="dialog"]`)
         .find('button')
         .contains("Taak afronden")
@@ -132,11 +132,11 @@ describe('Process Report Visit"', () => {
     cy.testDueDate("tbody>tr>td", 2)
   })
   it("Check next task is 'Nakijken aanschrijving(en)'", () => {
-    // const url = `${Cypress.env("baseUrlAcc")}cases/*/tasks/`
+    // const url = `${Cypress.env("baseUrlAcc")}cases/*/`
     // cy.intercept(url).as('getNextTask')
 
     // cy.wait('@getNextTask').then(() => {
-        
+
       cy.scrollTo(0, 400)
       cy.get("h4")
         .contains("Debrief")
@@ -152,12 +152,12 @@ describe('Process Report Visit"', () => {
       cy.get(`[role="dialog"]`)
         .should('have.length', 1)
         .contains(debrief.summonNextStep1)
-        
+
       cy.get(`[role="dialog"]`)
           .find('input[name="completed"]')
           .first()
           .check()
-      
+
       cy.get(`[role="dialog"]`)
           .find('button')
           .contains("Taak afronden")
@@ -173,7 +173,7 @@ describe('Process Report Visit"', () => {
     cy.testDueDate("tbody>tr>td", 1)
   })
   it("Check next task is 'Verwerk aanschrijving'", () => {
-      
+
     cy.scrollTo(0, 400)
     cy.get("h4")
       .contains("Aanschrijving")

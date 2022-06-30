@@ -33,11 +33,11 @@ describe('Process Debrief - No violation"', () => {
 
     it('Intercept Debrief URL and load page', () => {
 
-      const url = `${Cypress.env("baseUrlAcc")}cases/*/tasks/`
+      const url = `${Cypress.env("baseUrlAcc")}cases/*/`
       cy.intercept(url).as('getTasks')
 
       cy.wait('@getTasks').then(({ response }) => {
-        const debriefResponse = response?.body?.results?.find((e) => e.state?.status_name === "Debrief")
+        const debriefResponse = response?.body?.workflows?.find((e) => e.state?.name === "Debrief")
         const debriefTask = debriefResponse?.tasks?.find((e) => e.name === "Verwerken debrief")
         const caseId = debriefTask?.case
         const taskId = debriefTask.case_user_task_id
@@ -70,7 +70,7 @@ describe('Process Debrief - No violation"', () => {
     })
 
     it('Submit form and check debrief status', () => {
-      const url = `${Cypress.env("baseUrlAcc")}cases/*/tasks/`
+      const url = `${Cypress.env("baseUrlAcc")}cases/*/`
       cy.intercept(url).as('getNextTask')
 
       cy.get('button[data-e2e-id="submit"]')

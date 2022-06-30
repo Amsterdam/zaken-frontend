@@ -50,9 +50,9 @@ describe('Plan "huisbezoek"', () => {
     })
 
     it("Click on task Bezoek inplannen", () => {
-      const url = `${Cypress.env("baseUrlAcc")}cases/*/tasks/`
-      cy.intercept(url).as("getTasks")
-      cy.wait("@getTasks").then(() => {
+      const url = `${Cypress.env("baseUrlAcc")}cases/*/`
+      cy.intercept(url).as("getCase")
+      cy.wait("@getCase").then(() => {
         cy.get("tbody>tr")
           .contains("td", "Bezoek inplannen")
           .click()
@@ -62,7 +62,7 @@ describe('Plan "huisbezoek"', () => {
     it("Bezoek inplannen page is visible", () => {
       cy.get("h1")
         .contains("Bezoek inplannen")
-      cy.get("dd")
+      cy.get("dd", { timeout: 10000 })
         .contains(address.street)
     })
   })

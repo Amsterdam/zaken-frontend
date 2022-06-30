@@ -29,7 +29,7 @@ describe('Select Next Step - closing case as toezichthouder', () => {
   })
 
   it("Toezichthouder should not be able to close the case", () => {
-    const url = `${Cypress.env("baseUrlAcc")}cases/*/tasks/`
+    const url = `${Cypress.env("baseUrlAcc")}cases/*/`
 
     cy.request({
       method: 'GET',

@@ -11,10 +11,11 @@ Cypress.Commands.add("setCaseId", () => {
   const url = `${Cypress.env("baseUrlAcc")}cases/*/`
   cy.intercept(url).as("getCase")
 
-  cy.wait("@getCase").then(({ response }) => {
-    cy.writeFile(PATH, { id: response?.body?.id })
-    cy.log("caseId =>", response?.body?.id)
-  })
+  cy.wait("@getCase", { timeout: 10000 })
+    .then(({ response }) => {
+      cy.writeFile(PATH, { id: response?.body?.id })
+      cy.log("caseId =>", response?.body?.id)
+    })
 })
 
 Cypress.Commands.add("getCaseId", () => cy.readFile(PATH))

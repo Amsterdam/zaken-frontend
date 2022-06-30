@@ -1,5 +1,5 @@
 import { useEffect, useContext } from "react"
-import { useRoles, useTasks, useCaseThemes, useTaskNames, useUsersMe } from "app/state/rest"
+import { useRoles, useTasks, useCaseThemes, useTaskNames, useUsersMe, useTasksReasons } from "app/state/rest"
 import { Row, Column } from "app/components/layouts/Grid"
 import TableTasks from "app/components/tasks/TableTasks/TableTasks"
 import TasksFilter from "../TasksFilter/TasksFilter"
@@ -27,12 +27,13 @@ const Wrap = styled.div`
 
 const Tasks: React.FC = () => {
   const {
-    results, count, pagination, sorting, role, theme, updateContextTasks, owner, taskName
+    results, count, pagination, sorting, role, theme, updateContextTasks, owner, taskName, reason
   } = useContext(ContextValues)["tasks"]
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const [roles] = useRoles()
   const [me] = useUsersMe()
   const [caseThemes] = useCaseThemes()
+  const [reasons] = useTasksReasons(theme)
   const [dataSource, { isBusy }] = useTasks(
     hasPermission,
     pagination,
@@ -41,7 +42,8 @@ const Tasks: React.FC = () => {
     role,
     owner,
     false,
-    taskName
+    taskName,
+    reason
   )
   const [enforcementDataSource, { isBusy: isBusyEnforcement }] = useTasks(
     hasPermission,
@@ -54,7 +56,8 @@ const Tasks: React.FC = () => {
     role,
     owner,
     true,
-    taskName
+    taskName,
+    reason
   )
   const [ taskNamesData ] = useTaskNames(role ?? "")
   const queryUrl = getQueryUrl(hasPermission, pagination, sorting, theme, role, owner)
@@ -84,17 +87,22 @@ const Tasks: React.FC = () => {
   const onChangeFilter = (key: string, item: string) => {
     // Empty cache to force a new data fetch.
     clearContextCache()
-    updateContextTasks({
+    const taskContextItem = {
       [key]: item,
       pagination: {
         ...pagination,
         page: 1
       }
-    })
+    }
     // When role is set we need to reset the taskName dropdown to avoid a stale selection:
     if (key === "role") {
-      onChangeFilter("taskName", "")
+      taskContextItem.taskName = ""
     }
+    // When theme is set we need to reset the reason dropdown to avoid a stale selection:
+    if (key === "theme") {
+      taskContextItem.reason = ""
+    }
+    updateContextTasks(taskContextItem)
   }
 
   const onChangePageSize = (pageSize: string) => {
@@ -169,6 +177,9 @@ const Tasks: React.FC = () => {
             taskName={ taskName }
             setTaskName={ (value: string) => onChangeFilter("taskName", value) }
             taskNames={ taskNames }
+            reason={ reason }
+            setReason={ (value: string) => onChangeFilter("reason", value)}
+            reasons={ reasons }
           />
         </Column>
       </Row>

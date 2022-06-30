@@ -29,14 +29,14 @@ describe('Close case as projectmedwerker"', () => {
 
   it('Intercept Afronding URL and load page', () => {
 
-    const url = `${Cypress.env("baseUrlAcc")}cases/*/tasks/`
+    const url = `${Cypress.env("baseUrlAcc")}cases/*/`
     cy.intercept(url).as('getTasks')
 
     //force intercept
     cy.reload()
 
     cy.wait('@getTasks').then(({ response }) => {
-      const closingResponse = response?.body?.results?.find((e) => e.state?.status_name === debrief.closingTask2)
+      const closingResponse = response?.body?.workflows?.find((e) => e.state?.name === debrief.closingTask2)
       const closingTask = closingResponse?.tasks?.find((e) => e.name === debrief.closingTask4)
       const caseId = closingTask?.case
       const taskId = closingTask.case_user_task_id

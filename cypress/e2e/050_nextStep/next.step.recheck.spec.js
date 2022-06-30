@@ -23,20 +23,20 @@ describe('Select Next Step - closing case"', () => {
   })
 
   it("Select to close this case", () => {
-    const url = `${Cypress.env("baseUrlAcc")}cases/*/tasks/`
+    const url = `${Cypress.env("baseUrlAcc")}cases/*/`
     cy.intercept(url).as('getNextTask')
 
     cy.wait('@getNextTask').then(() => {
 
     // check dueDate
     cy.testDueDate("tbody>tr>td", 3)
-    
+
     cy.get('button')
       .contains("Taak afronden")
       .should("have.length", 1)
       .click({force: true})
     })
-    
+
     cy.get(`[role="dialog"]`)
       .should('have.length', 1)
       .and("contain", debrief.closingTask1)

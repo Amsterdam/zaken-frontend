@@ -29,7 +29,7 @@ describe('Plan "huisbezoek"', () => {
   describe('Go to "Bezoek inplannen" form', () => {
 
     it("Click on task Bezoek inplannen", () => {
-      const url = `${Cypress.env("baseUrlAcc")}cases/*/tasks/`
+      const url = `${Cypress.env("baseUrlAcc")}cases/*/`
       cy.intercept(url).as("getTasks")
       cy.wait("@getTasks").then(() => {
         cy.get("tbody>tr")

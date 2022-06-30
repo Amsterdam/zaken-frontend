@@ -51,7 +51,7 @@ describe('Process Short Report Visit"', () => {
   })
 
   it("Check next task is 'Afsluiten zaak'", () => {
-    const url = `${Cypress.env("baseUrlAcc")}cases/*/tasks/`
+    const url = `${Cypress.env("baseUrlAcc")}cases/*/`
     cy.intercept(url).as('getNextTask')
 
     cy.wait('@getNextTask').then(() => {
