@@ -7,6 +7,7 @@ export type StateType = {
     pagination: TABLE.Schemas.Pagination
     sorting: TABLE.Schemas.Sorting
     theme: string
+    reason: string
     fromStartDate: string
     updateContextCases: (payload: any) => void
   }
@@ -38,6 +39,7 @@ export const initialState: StateType = {
       order: "DESCEND"
     },
     theme: "",
+    reason: "",
     fromStartDate: "",
     updateContextCases: noop
   },

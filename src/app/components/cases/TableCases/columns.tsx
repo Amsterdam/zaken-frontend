@@ -70,6 +70,8 @@ const getColumns = (sorting: any) => {
     }, {
       header: "Aanleiding",
       dataIndex: "reason.name",
+      sorter: (a: any, b: any) => a?.reason?.name.localeCompare(b?.reason?.name),
+      sortOrder: sorting.dataIndex === "reason.name" && sorting.order,
       minWidth: 140
     }, {
       header: "Startdatum",

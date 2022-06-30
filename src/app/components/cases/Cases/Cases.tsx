@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { Heading } from "@amsterdam/asc-ui"
 import TableCases from "app/components/cases/TableCases/TableCases"
 import CasesFilter from "app/components/cases/CasesFilter/CasesFilter"
-import { useCases, useCaseThemes } from "app/state/rest"
+import { useCases, useCaseThemes, useTasksReasons } from "app/state/rest"
 import useHasPermission, { SENSITIVE_CASE_PERMISSION } from "app/state/rest/custom/usePermissions/useHasPermission"
 import { ContextValues } from "app/state/context/ValueProvider"
 import { RowWithColumn } from "app/components/layouts/Grid"
@@ -27,10 +27,11 @@ const UNDERMINING = "Ondermijning"
 
 const Cases: React.FC = () => {
   const {
-    results, count, pagination, sorting, fromStartDate, theme, updateContextCases
+    results, count, pagination, sorting, fromStartDate, theme, updateContextCases, reason
   } = useContext(ContextValues)["cases"]
-  const [caseThemes] = useCaseThemes()
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
+  const [caseThemes] = useCaseThemes()
+  const [reasons] = useTasksReasons(theme)
   /*
    ** Create a mapping because /cases can only be filtered by themeId
    ** This needs to be adjusted in the BE and needs to be a string, just like the other theme filters
@@ -41,7 +42,8 @@ const Cases: React.FC = () => {
     pagination,
     sorting,
     mappedThemeId,
-    fromStartDate
+    fromStartDate,
+    reason
   )
 
   useEffect(() => {
@@ -56,13 +58,18 @@ const Cases: React.FC = () => {
   }, [dataSource, updateContextCases])
 
   const onChangeFilter = (key: string, item: string) => {
-    updateContextCases({
+    const casesContextItem = {
       [key]: item,
       pagination: {
         ...pagination,
         page: 1
       }
-    })
+    }
+    // When theme is set we need to reset the reason dropdown to avoid a stale selection:
+    if (key === "theme") {
+      casesContextItem.reason = ""
+    }
+    updateContextCases(casesContextItem)
   }
 
   const onChangePageSize = (pageSize: string) => {
@@ -95,10 +102,10 @@ const Cases: React.FC = () => {
           isBusy={ isBusy }
           onChange={onChangeTable}
           pagination={{
-              page: pagination.page,
-              pageSize: pagination.pageSize,
-              collectionSize: count || 1
-            }}
+            page: pagination.page,
+            pageSize: pagination.pageSize,
+            collectionSize: count || 1
+          }}
           sorting={ sorting }
           emptyPlaceholder={ emptyPlaceholder }
           />
@@ -111,6 +118,9 @@ const Cases: React.FC = () => {
             setTheme={ (value: string) => onChangeFilter("theme", value) }
             setPageSize={ onChangePageSize }
             pageSize={ pagination.pageSize?.toString() || "10" }
+            reason={ reason }
+            setReason={ (value: string) => onChangeFilter("reason", value)}
+            reasons={ reasons }
           />
         </FilterContainer>
       </Container>

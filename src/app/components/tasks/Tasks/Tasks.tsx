@@ -87,7 +87,7 @@ const Tasks: React.FC = () => {
   const onChangeFilter = (key: string, item: string) => {
     // Empty cache to force a new data fetch.
     clearContextCache()
-    const taskContextItem = {
+    const tasksContextItem = {
       [key]: item,
       pagination: {
         ...pagination,
@@ -96,13 +96,13 @@ const Tasks: React.FC = () => {
     }
     // When role is set we need to reset the taskName dropdown to avoid a stale selection:
     if (key === "role") {
-      taskContextItem.taskName = ""
+      tasksContextItem.taskName = ""
     }
     // When theme is set we need to reset the reason dropdown to avoid a stale selection:
     if (key === "theme") {
-      taskContextItem.reason = ""
+      tasksContextItem.reason = ""
     }
-    updateContextTasks(taskContextItem)
+    updateContextTasks(tasksContextItem)
   }
 
   const onChangePageSize = (pageSize: string) => {

@@ -13,6 +13,7 @@ const sortingOrder = {
 const sortingIndexMapping: any = {
   "address.street_name": "address__street_name",
   "address.postal_code": "address__postal_code",
+  "reason.name": "reason__name",
   "start_date": "start_date",
   "last_updated": "last_updated"
 }
@@ -34,6 +35,7 @@ export const useCases = (
   sorting?: TABLE.Schemas.Sorting,
   theme?: string,
   from_start_date?: string,
+  reason?: string,
   options?: Options
 ) => {
   const handleError = useErrorHandler()
@@ -42,7 +44,8 @@ export const useCases = (
     page_size: pagination.pageSize,
     theme,
     from_start_date,
-    open_cases: true
+    open_cases: true,
+    reason_name: reason
   }
   if (sensitive === false) {
     urlParams.sensitive = false
