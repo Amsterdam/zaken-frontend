@@ -3,7 +3,7 @@ import { Fields } from "app/components/shared/Form/ScaffoldFields"
 
 const createOptions = (themes: Components.Schemas.CaseTheme[]) => (
   themes.reduce((acc, cur) => {
-    acc[cur.id] = cur.name
+    acc[cur.name] = cur.name
     return acc
   }, { "": "Alle thema's" } as Record<string, MockComponents.Schemas.Role>)
 )

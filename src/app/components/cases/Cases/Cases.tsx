@@ -31,11 +31,16 @@ const Cases: React.FC = () => {
   } = useContext(ContextValues)["cases"]
   const [caseThemes] = useCaseThemes()
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
+  /*
+   ** Create a mapping because /cases can only be filtered by themeId
+   ** This needs to be adjusted in the BE and needs to be a string, just like the other theme filters
+  */
+  const mappedThemeId = caseThemes?.results?.find((caseTheme) => caseTheme.name === theme)?.id?.toString() ?? ""
   const [dataSource, { isBusy }] = useCases(
     hasPermission,
     pagination,
     sorting,
-    theme,
+    mappedThemeId,
     fromStartDate
   )
 
