@@ -20,7 +20,11 @@ describe('Process Debrief - No violation"', () => {
       })
     })
 
-    it('Select case by caseId and task "Debrief"', () => {
+    it('Select case by caseId and intercept debrief url', () => {
+
+      const url = `${Cypress.env("baseUrlAcc")}cases/*/`
+      cy.intercept(url).as('getCase')
+
       cy.getCaseId().then((e) => {
         cy.scrollTo(0, 400)
         cy.get("tbody>tr")
@@ -29,31 +33,14 @@ describe('Process Debrief - No violation"', () => {
           .contains("td", "Debrief")
           .click()
       })
-    })
 
-    it('Intercept Debrief URL and load page', () => {
+      cy.get("tbody>tr")
+        .contains("td", debrief.taskName)
+        .click()
 
+      cy.get("h1")
+        .contains(debrief.headerText)
 
-      const url = `${Cypress.env("baseUrlAcc")}cases/*/tasks/`
-      cy.intercept(url).as('getTasks')
-
-      cy.wait('@getTasks').then(({ response }) => {
-        const debriefResponse = response?.body?.results?.find((e) => e.state?.status_name === "Debrief")
-        const debriefTask = debriefResponse?.tasks?.find((e) => e.name === "Verwerken debrief")
-        const caseId = debriefTask?.case
-        const taskId = debriefTask.case_user_task_id
-
-        // check dueDate
-        cy.testDueDate("tbody>tr>td", 0)
-
-        cy.visit(`/zaken/${caseId}/debriefing/${taskId}`)
-
-        cy.url()
-          .should('include', `/zaken/${caseId}/debriefing/${taskId}`)
-
-        cy.get("h1")
-          .contains(debrief.headerText)
-      })
     })
   })
 
@@ -71,7 +58,7 @@ describe('Process Debrief - No violation"', () => {
     })
 
     it('Submit form and check debrief status', () => {
-      const url = `${Cypress.env("baseUrlAcc")}cases/*/tasks/`
+      const url = `${Cypress.env("baseUrlAcc")}cases/*/`
       cy.intercept(url).as('getNextTask')
 
       cy.get('button[data-e2e-id="submit"]')

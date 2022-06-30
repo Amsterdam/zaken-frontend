@@ -48,7 +48,7 @@ describe('Process Feedback reporter"', () => {
   })
 
   it("Check Terugkoppeling melder event in history", () => {
-    const url = `${Cypress.env("baseUrlAcc")}cases/*/tasks/`
+    const url = `${Cypress.env("baseUrlAcc")}cases/*/`
     cy.intercept(url).as('getNextTask')
 
     cy.wait('@getNextTask').then(() => {

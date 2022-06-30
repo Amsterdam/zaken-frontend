@@ -4,7 +4,7 @@ import address from "../../fixtures/address.json"
 import summon from "../../fixtures/summon.json"
 
 describe('Process Summon"', () => {
-    
+
   it("Go to Adresoverzicht and check address", () => {
     const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/`
     cy.intercept(url).as('getCases')
@@ -23,17 +23,17 @@ describe('Process Summon"', () => {
         .click()
     })
   })
-  
+
   it('check dueDate', () => {
     cy.testDueDate("tbody>tr>td", 3)
   })
-  
+
   it("History contains the right items", () => {
     cy.history(debrief.summonNextStep1, "Uitvoerder")
   })
 
   it("PHH can finish task 'Verwerk aanschrijving'", () => {
-      
+
     cy.scrollTo(0, 400)
     cy.get("h4")
       .contains("Aanschrijving")
@@ -85,7 +85,7 @@ describe('Process Summon"', () => {
     })
 
     it('Submit form and check debrief status', () => {
-      const url = `${Cypress.env("baseUrlAcc")}cases/*/tasks/`
+      const url = `${Cypress.env("baseUrlAcc")}cases/*/`
       cy.intercept(url).as('getNextTask')
 
       cy.get('button[data-e2e-id="submit"]')
@@ -109,13 +109,13 @@ describe('Process Summon"', () => {
         .contains(summon.formButtonText)
         .click()
     })
-    
+
     it("Check next task is 'Uitzetten vervolgstap'", () => {
-      const url = `${Cypress.env("baseUrlAcc")}cases/*/tasks/`
+      const url = `${Cypress.env("baseUrlAcc")}cases/*/`
       cy.intercept(url).as('getNextTask')
-  
+
       cy.wait('@getNextTask').then(() => {
-          
+
         cy.scrollTo(0, 400)
         cy.get("h4")
           .contains("Vervolgstap")

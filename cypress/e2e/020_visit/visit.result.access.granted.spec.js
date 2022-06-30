@@ -22,7 +22,10 @@ describe('Result "huisbezoek" with access granted', () => {
       })
     })
 
-    it("Select case by caseId", () => {
+    it("Select case by caseId and intercept TOP url", () => {
+      const url = `${ Cypress.env("baseUrlAcc") }cases/*/`
+      cy.intercept(url).as('getCase')
+
       cy.scrollTo(0, 400)
       cy.getCaseId().then((e) => {
         cy.get("tbody>tr")
@@ -30,15 +33,8 @@ describe('Result "huisbezoek" with access granted', () => {
           .click()
       })
 
-    })
-
-    it('Intercept TOP URL and load page', () => {
-
-      const url = `${Cypress.env("baseUrlAcc")}cases/*/tasks/`
-      cy.intercept(url).as('getTasks')
-
-      cy.wait('@getTasks').then(({ response }) => {
-        const visit = response?.body?.results?.find((e) => e.state?.status_name === "Huisbezoek")
+      cy.wait('@getCase').then(({ response }) => {
+        const visit = response?.body?.workflows?.find((e) => e.state?.name === "Huisbezoek")
         const topTask = visit?.tasks?.find((e) => e.name === "Doorgeven Huisbezoek TOP")
         const caseId = topTask?.case
         const taskId = topTask.case_user_task_id
@@ -94,7 +90,7 @@ describe('Result "huisbezoek" with access granted', () => {
     })
 
     it('Submit form and check debrief status', () => {
-      const url = `${Cypress.env("baseUrlAcc")}cases/*/tasks/`
+      const url = `${Cypress.env("baseUrlAcc")}cases/*/`
       cy.intercept(url).as('getDebriefTask')
 
       cy.get('button[data-e2e-id="submit"]')

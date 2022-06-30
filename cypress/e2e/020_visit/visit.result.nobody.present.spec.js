@@ -33,11 +33,11 @@ describe('Result "huisbezoek" with nobody present', () => {
 
     it('Intercept TOP URL and load page', () => {
 
-      const url = `${Cypress.env("baseUrlAcc")}cases/*/tasks/`
+      const url = `${Cypress.env("baseUrlAcc")}cases/*/`
       cy.intercept(url).as('getTasks')
 
       cy.wait('@getTasks').then(({ response }) => {
-        const visit = response?.body?.results?.find((e) => e.state?.status_name === "Huisbezoek")
+        const visit = response?.body?.workflows?.find((e) => e.state?.name === "Huisbezoek")
         const topTask = visit?.tasks?.find((e) => e.name === "Doorgeven Huisbezoek TOP")
         const caseId = topTask?.case
         const taskId = topTask.case_user_task_id
