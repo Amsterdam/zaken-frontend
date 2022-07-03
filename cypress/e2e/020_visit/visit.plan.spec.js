@@ -62,7 +62,7 @@ describe('Plan "huisbezoek"', () => {
     it("Bezoek inplannen page is visible", () => {
       cy.get("h1")
         .contains("Bezoek inplannen")
-      cy.get("dd", { timeout: 10000 })
+      cy.get("dd")
         .contains(address.street)
     })
   })

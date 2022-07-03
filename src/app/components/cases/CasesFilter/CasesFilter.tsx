@@ -6,6 +6,7 @@ import ScaffoldFields from "app/components/shared/Form/ScaffoldFields"
 import scaffoldDate from "./scaffoldDate"
 import scaffoldTheme from "./scaffoldTheme"
 import scaffoldPageSize from "./scaffoldPageSize"
+import scaffoldReasons from "./scaffoldReasons"
 
 type Props = {
   date: string
@@ -15,9 +16,15 @@ type Props = {
   setTheme: (value: string) => void
   pageSize: string
   setPageSize: (value: string) => void
+  reasons?: Components.Schemas.CaseReason[]
+  reason: string
+  setReason: (value: string) => void
 }
 
-const CasesFilter: React.FC<Props> = ({ date, setDate, theme, themes, setTheme, pageSize, setPageSize }) => (
+const CasesFilter: React.FC<Props> = ({
+  date, setDate, theme, themes, setTheme, pageSize, setPageSize,
+  reasons, reason, setReason
+}) => (
   <FilterMenu>
     {themes === undefined
       ? <Spinner />
@@ -25,6 +32,12 @@ const CasesFilter: React.FC<Props> = ({ date, setDate, theme, themes, setTheme, 
         <ScaffoldForm>
           <ScaffoldFields { ...scaffoldTheme(theme, themes, setTheme) } />
         </ScaffoldForm>
+      )
+    }
+    { reasons === undefined ? <Spinner /> : (
+      <ScaffoldForm>
+        <ScaffoldFields { ...scaffoldReasons(reason, setReason, reasons) } />
+      </ScaffoldForm>
       )
     }
     <ScaffoldForm>

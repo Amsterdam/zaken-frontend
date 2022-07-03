@@ -3,10 +3,12 @@ import { defineConfig } from "cypress"
 export default defineConfig({
   projectId: "tbpt8b",
   chromeWebSecurity: false,
-  screenshotOnRunFailure: false,
-  video: false,
+  screenshotOnRunFailure: true,
+  video: true,
   viewportWidth: 1280,
   viewportHeight: 1024,
+  defaultCommandTimeout: 10000,
+  requestTimeout: 10000,
 
   env: {
     baseUrlAcc: "https://acc.api.wonen.zaken.amsterdam.nl/api/v1/",
