@@ -4,7 +4,7 @@ export default defineConfig({
   projectId: "tbpt8b",
   chromeWebSecurity: false,
   screenshotOnRunFailure: false,
-  video: true,
+  video: false,
   viewportWidth: 1280,
   viewportHeight: 1024,
   defaultCommandTimeout: 10000,
