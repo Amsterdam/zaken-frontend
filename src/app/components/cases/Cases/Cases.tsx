@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { Heading } from "@amsterdam/asc-ui"
 import TableCases from "app/components/cases/TableCases/TableCases"
 import CasesFilter from "app/components/cases/CasesFilter/CasesFilter"
-import { useCases, useCaseThemes, useTasksReasons } from "app/state/rest"
+import { useCases, useCaseThemes, useTasksReasons, useDistricts } from "app/state/rest"
 import useHasPermission, { SENSITIVE_CASE_PERMISSION } from "app/state/rest/custom/usePermissions/useHasPermission"
 import { ContextValues } from "app/state/context/ValueProvider"
 import { RowWithColumn } from "app/components/layouts/Grid"
@@ -27,23 +27,21 @@ const UNDERMINING = "Ondermijning"
 
 const Cases: React.FC = () => {
   const {
-    results, count, pagination, sorting, fromStartDate, theme, updateContextCases, reason
+    results, count, pagination, sorting, fromStartDate, theme,
+    updateContextCases, reason, district
   } = useContext(ContextValues)["cases"]
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const [caseThemes] = useCaseThemes()
   const [reasons] = useTasksReasons(theme)
-  /*
-   ** Create a mapping because /cases can only be filtered by themeId
-   ** This needs to be adjusted in the BE and needs to be a string, just like the other theme filters
-  */
-  const mappedThemeId = caseThemes?.results?.find((caseTheme) => caseTheme.name === theme)?.id?.toString() ?? ""
+  const [caseDistricts] = useDistricts()
   const [dataSource, { isBusy }] = useCases(
     hasPermission,
     pagination,
     sorting,
-    mappedThemeId,
+    theme,
     fromStartDate,
-    reason
+    reason,
+    district
   )
 
   useEffect(() => {
@@ -88,6 +86,7 @@ const Cases: React.FC = () => {
 
   const themes = caseThemes?.results || []
   const underminingId = themes.find((e) => e.name === UNDERMINING)?.id
+  const districts = caseDistricts?.results || []
   const emptyPlaceholder = hasPermission === false && theme === underminingId?.toString()
     ? EMPTY_TEXT_NO_PERMISSION : EMPTY_TEXT
 
@@ -121,6 +120,9 @@ const Cases: React.FC = () => {
             reason={ reason }
             setReason={ (value: string) => onChangeFilter("reason", value)}
             reasons={ reasons }
+            districts={ districts }
+            district={ district }
+            setDistrict={ (value: string) => onChangeFilter("district", value)}
           />
         </FilterContainer>
       </Container>

@@ -36,19 +36,27 @@ export const useCases = (
   theme?: string,
   from_start_date?: string,
   reason?: string,
+  district?: string,
   options?: Options
 ) => {
   const handleError = useErrorHandler()
   const urlParams: any = {
     page: pagination.page,
     page_size: pagination.pageSize,
-    theme,
     from_start_date,
-    open_cases: true,
-    reason_name: reason
+    open_cases: true
   }
   if (sensitive === false) {
     urlParams.sensitive = false
+  }
+  if (theme) {
+    urlParams.theme_name = theme
+  }
+  if (reason) {
+    urlParams.reason_name = reason
+  }
+  if (district) {
+    urlParams.district_name = district
   }
   if (sorting) {
     urlParams.ordering = getOrderingValue(sorting)

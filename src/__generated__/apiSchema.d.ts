@@ -15,6 +15,7 @@ declare namespace Components {
             postal_code: string;
             lat: number; // float
             lng: number; // float
+            district: District;
             housing_corporation: number;
         }
         export interface AddressTiny {
@@ -25,6 +26,7 @@ declare namespace Components {
             postal_code: string;
             lat: number; // float
             lng: number; // float
+            district: District;
         }
         export interface Advertisement {
             id: number;
@@ -41,6 +43,7 @@ declare namespace Components {
                 postal_code: string;
                 lat: number; // float
                 lng: number; // float
+                district: District;
             };
             reason: {
                 id: number;
@@ -101,6 +104,7 @@ declare namespace Components {
                 postal_code: string;
                 lat: number; // float
                 lng: number; // float
+                district: District;
                 housing_corporation: number;
             };
             bag_id: string;
@@ -158,6 +162,7 @@ declare namespace Components {
                 postal_code: string;
                 lat: number; // float
                 lng: number; // float
+                district: District;
                 housing_corporation: number;
             };
             state: string;
@@ -363,6 +368,7 @@ declare namespace Components {
                 postal_code: string;
                 lat: number; // float
                 lng: number; // float
+                district: District;
                 housing_corporation: number;
             };
             theme: {
@@ -395,6 +401,10 @@ declare namespace Components {
             decos_folders: {
                 [name: string]: any;
             } | null;
+        }
+        export interface District {
+            id: number;
+            name: string;
         }
         export interface DocumentType {
             omschrijving: string;
@@ -1127,6 +1137,7 @@ declare namespace Components {
                 postal_code: string;
                 lat: number; // float
                 lng: number; // float
+                district: District;
                 housing_corporation: number;
             };
             bag_id?: string;
@@ -1408,6 +1419,19 @@ declare namespace Paths {
             export type $200 = Components.Schemas.PaginatedCaseList;
         }
     }
+    namespace AddressesDistrictsList {
+        namespace Parameters {
+            export type Limit = number;
+            export type Offset = number;
+        }
+        export interface QueryParameters {
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedHousingCorporationList;
+        }
+    }
     namespace AddressesHousingCorporationsList {
         namespace Parameters {
             export type Limit = number;
@@ -1514,6 +1538,8 @@ declare namespace Paths {
     }
     namespace CasesAdvertisementsList {
         namespace Parameters {
+            export type District = number;
+            export type DistrictName = string;
             export type FromStartDate = string; // date
             export type HousingCorporation = string[];
             export type Id = number;
@@ -1548,6 +1574,8 @@ declare namespace Paths {
             id: Parameters.Id;
         }
         export interface QueryParameters {
+            district?: Parameters.District;
+            district_name?: Parameters.DistrictName;
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
@@ -1583,6 +1611,8 @@ declare namespace Paths {
     }
     namespace CasesCitizenReportsCreate {
         namespace Parameters {
+            export type District = number;
+            export type DistrictName = string;
             export type FromStartDate = string; // date
             export type Id = number;
             export type IsEnforcementRequest = boolean;
@@ -1611,6 +1641,8 @@ declare namespace Paths {
             id: Parameters.Id;
         }
         export interface QueryParameters {
+            district?: Parameters.District;
+            district_name?: Parameters.DistrictName;
             from_start_date?: Parameters.FromStartDate /* date */;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             open_cases?: Parameters.OpenCases;
@@ -1641,6 +1673,8 @@ declare namespace Paths {
     }
     namespace CasesCountRetrieve {
         namespace Parameters {
+            export type District = number;
+            export type DistrictName = string;
             export type FromStartDate = string; // date
             export type IsEnforcementRequest = boolean;
             export type OpenCases = boolean;
@@ -1665,6 +1699,8 @@ declare namespace Paths {
             export type TonIds = number;
         }
         export interface QueryParameters {
+            district?: Parameters.District;
+            district_name?: Parameters.DistrictName;
             from_start_date?: Parameters.FromStartDate /* date */;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             open_cases?: Parameters.OpenCases;
@@ -1694,6 +1730,8 @@ declare namespace Paths {
     }
     namespace CasesCreate {
         namespace Parameters {
+            export type District = number;
+            export type DistrictName = string;
             export type FromStartDate = string; // date
             export type IsEnforcementRequest = boolean;
             export type OpenCases = boolean;
@@ -1718,6 +1756,8 @@ declare namespace Paths {
             export type TonIds = number;
         }
         export interface QueryParameters {
+            district?: Parameters.District;
+            district_name?: Parameters.DistrictName;
             from_start_date?: Parameters.FromStartDate /* date */;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             open_cases?: Parameters.OpenCases;
@@ -1746,8 +1786,96 @@ declare namespace Paths {
             export type $201 = /* Adds nested create feature */ Components.Schemas.CaseCreate;
         }
     }
+    namespace CasesDistrictNamesList {
+        namespace Parameters {
+            export type District = number;
+            export type DistrictName = string;
+            export type FromStartDate = string; // date
+            export type HousingCorporation = string[];
+            export type IsEnforcementRequest = boolean;
+            export type Number = string;
+            export type OpenCases = boolean;
+            export type Ordering = string;
+            export type Page = number;
+            export type PageSize = number;
+            export type PostalCode = string;
+            export type PostalCodeRange = string;
+            export type Priority = number;
+            export type Project = number;
+            export type Reason = number;
+            export type ReasonName = string;
+            export type ScheduleDaySegment = number;
+            export type ScheduleFromDateAdded = string; // date
+            export type ScheduleHousingCorporationCombiteam = boolean;
+            export type ScheduleVisitFrom = string; // date
+            export type ScheduleWeekSegment = number;
+            export type Sensitive = boolean;
+            export type StartDate = string; // date
+            export type StateTypes = number;
+            export type StateTypesName = string;
+            export type StreetName = string;
+            export type Suffix = string;
+            export type Task = string;
+            export type Theme = number;
+            export type TonIds = number;
+        }
+        export interface QueryParameters {
+            district?: Parameters.District;
+            district_name?: Parameters.DistrictName;
+            from_start_date?: Parameters.FromStartDate /* date */;
+            housing_corporation?: Parameters.HousingCorporation;
+            is_enforcement_request?: Parameters.IsEnforcementRequest;
+            number?: Parameters.Number;
+            open_cases?: Parameters.OpenCases;
+            ordering?: Parameters.Ordering;
+            page?: Parameters.Page;
+            page_size?: Parameters.PageSize;
+            postal_code?: Parameters.PostalCode;
+            postal_code_range?: Parameters.PostalCodeRange;
+            priority?: Parameters.Priority;
+            project?: Parameters.Project;
+            reason?: Parameters.Reason;
+            reason_name?: Parameters.ReasonName;
+            schedule_day_segment?: Parameters.ScheduleDaySegment;
+            schedule_from_date_added?: Parameters.ScheduleFromDateAdded /* date */;
+            schedule_housing_corporation_combiteam?: Parameters.ScheduleHousingCorporationCombiteam;
+            schedule_visit_from?: Parameters.ScheduleVisitFrom /* date */;
+            schedule_week_segment?: Parameters.ScheduleWeekSegment;
+            sensitive?: Parameters.Sensitive;
+            start_date?: Parameters.StartDate /* date */;
+            state_types?: Parameters.StateTypes;
+            state_types__name?: Parameters.StateTypesName;
+            street_name?: Parameters.StreetName;
+            suffix?: Parameters.Suffix;
+            task?: Parameters.Task;
+            theme?: Parameters.Theme;
+            ton_ids?: Parameters.TonIds;
+        }
+        namespace Responses {
+            export interface $200 {
+                /**
+                 * example:
+                 * 123
+                 */
+                count?: number;
+                /**
+                 * example:
+                 * http://api.example.org/accounts/?page=4
+                 */
+                next?: string | null; // uri
+                /**
+                 * example:
+                 * http://api.example.org/accounts/?page=2
+                 */
+                previous?: string | null; // uri
+                results?: string[];
+            }
+        }
+    }
     namespace CasesDocumentTypesList {
         namespace Parameters {
+            export type District = number;
+            export type DistrictName = string;
             export type FromStartDate = string; // date
             export type HousingCorporation = string[];
             export type Id = number;
@@ -1782,6 +1910,8 @@ declare namespace Paths {
             id: Parameters.Id;
         }
         export interface QueryParameters {
+            district?: Parameters.District;
+            district_name?: Parameters.DistrictName;
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
@@ -1817,6 +1947,8 @@ declare namespace Paths {
     }
     namespace CasesDocumentsCreateCreate {
         namespace Parameters {
+            export type District = number;
+            export type DistrictName = string;
             export type FromStartDate = string; // date
             export type Id = number;
             export type IsEnforcementRequest = boolean;
@@ -1845,6 +1977,8 @@ declare namespace Paths {
             id: Parameters.Id;
         }
         export interface QueryParameters {
+            district?: Parameters.District;
+            district_name?: Parameters.DistrictName;
             from_start_date?: Parameters.FromStartDate /* date */;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             open_cases?: Parameters.OpenCases;
@@ -1875,6 +2009,8 @@ declare namespace Paths {
     }
     namespace CasesDocumentsList {
         namespace Parameters {
+            export type District = number;
+            export type DistrictName = string;
             export type FromStartDate = string; // date
             export type HousingCorporation = string[];
             export type Id = number;
@@ -1909,6 +2045,8 @@ declare namespace Paths {
             id: Parameters.Id;
         }
         export interface QueryParameters {
+            district?: Parameters.District;
+            district_name?: Parameters.DistrictName;
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
@@ -1963,6 +2101,8 @@ declare namespace Paths {
     }
     namespace CasesEventsRetrieve {
         namespace Parameters {
+            export type District = number;
+            export type DistrictName = string;
             export type FromStartDate = string; // date
             export type Id = number;
             export type IsEnforcementRequest = boolean;
@@ -1991,6 +2131,8 @@ declare namespace Paths {
             id: Parameters.Id;
         }
         export interface QueryParameters {
+            district?: Parameters.District;
+            district_name?: Parameters.DistrictName;
             from_start_date?: Parameters.FromStartDate /* date */;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             open_cases?: Parameters.OpenCases;
@@ -2020,6 +2162,8 @@ declare namespace Paths {
     }
     namespace CasesList {
         namespace Parameters {
+            export type District = number;
+            export type DistrictName = string;
             export type FromStartDate = string; // date
             export type HousingCorporation = string[];
             export type IsEnforcementRequest = boolean;
@@ -2050,6 +2194,8 @@ declare namespace Paths {
             export type TonIds = number;
         }
         export interface QueryParameters {
+            district?: Parameters.District;
+            district_name?: Parameters.DistrictName;
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
@@ -2085,6 +2231,8 @@ declare namespace Paths {
     }
     namespace CasesPartialUpdate {
         namespace Parameters {
+            export type District = number;
+            export type DistrictName = string;
             export type FromStartDate = string; // date
             export type Id = number;
             export type IsEnforcementRequest = boolean;
@@ -2113,6 +2261,8 @@ declare namespace Paths {
             id: Parameters.Id;
         }
         export interface QueryParameters {
+            district?: Parameters.District;
+            district_name?: Parameters.DistrictName;
             from_start_date?: Parameters.FromStartDate /* date */;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             open_cases?: Parameters.OpenCases;
@@ -2143,6 +2293,8 @@ declare namespace Paths {
     }
     namespace CasesProcessesList {
         namespace Parameters {
+            export type District = number;
+            export type DistrictName = string;
             export type FromStartDate = string; // date
             export type HousingCorporation = string[];
             export type Id = number;
@@ -2177,6 +2329,8 @@ declare namespace Paths {
             id: Parameters.Id;
         }
         export interface QueryParameters {
+            district?: Parameters.District;
+            district_name?: Parameters.DistrictName;
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
@@ -2212,6 +2366,8 @@ declare namespace Paths {
     }
     namespace CasesProcessesStartCreate {
         namespace Parameters {
+            export type District = number;
+            export type DistrictName = string;
             export type FromStartDate = string; // date
             export type Id = number;
             export type IsEnforcementRequest = boolean;
@@ -2240,6 +2396,8 @@ declare namespace Paths {
             id: Parameters.Id;
         }
         export interface QueryParameters {
+            district?: Parameters.District;
+            district_name?: Parameters.DistrictName;
             from_start_date?: Parameters.FromStartDate /* date */;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             open_cases?: Parameters.OpenCases;
@@ -2270,6 +2428,8 @@ declare namespace Paths {
     }
     namespace CasesReasonNamesList {
         namespace Parameters {
+            export type District = number;
+            export type DistrictName = string;
             export type FromStartDate = string; // date
             export type HousingCorporation = string[];
             export type IsEnforcementRequest = boolean;
@@ -2300,6 +2460,8 @@ declare namespace Paths {
             export type TonIds = number;
         }
         export interface QueryParameters {
+            district?: Parameters.District;
+            district_name?: Parameters.DistrictName;
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
@@ -2352,6 +2514,8 @@ declare namespace Paths {
     }
     namespace CasesRetrieve {
         namespace Parameters {
+            export type District = number;
+            export type DistrictName = string;
             export type FromStartDate = string; // date
             export type Id = number;
             export type IsEnforcementRequest = boolean;
@@ -2380,6 +2544,8 @@ declare namespace Paths {
             id: Parameters.Id;
         }
         export interface QueryParameters {
+            district?: Parameters.District;
+            district_name?: Parameters.DistrictName;
             from_start_date?: Parameters.FromStartDate /* date */;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             open_cases?: Parameters.OpenCases;
@@ -2409,6 +2575,8 @@ declare namespace Paths {
     }
     namespace CasesSubjectsList {
         namespace Parameters {
+            export type District = number;
+            export type DistrictName = string;
             export type FromStartDate = string; // date
             export type HousingCorporation = string[];
             export type Id = number;
@@ -2443,6 +2611,8 @@ declare namespace Paths {
             id: Parameters.Id;
         }
         export interface QueryParameters {
+            district?: Parameters.District;
+            district_name?: Parameters.DistrictName;
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
@@ -2478,6 +2648,8 @@ declare namespace Paths {
     }
     namespace CasesUpdate {
         namespace Parameters {
+            export type District = number;
+            export type DistrictName = string;
             export type FromStartDate = string; // date
             export type Id = number;
             export type IsEnforcementRequest = boolean;
@@ -2506,6 +2678,8 @@ declare namespace Paths {
             id: Parameters.Id;
         }
         export interface QueryParameters {
+            district?: Parameters.District;
+            district_name?: Parameters.DistrictName;
             from_start_date?: Parameters.FromStartDate /* date */;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             open_cases?: Parameters.OpenCases;
@@ -2536,6 +2710,8 @@ declare namespace Paths {
     }
     namespace CasesWorkflowsList {
         namespace Parameters {
+            export type District = number;
+            export type DistrictName = string;
             export type FromStartDate = string; // date
             export type HousingCorporation = string[];
             export type Id = number;
@@ -2570,6 +2746,8 @@ declare namespace Paths {
             id: Parameters.Id;
         }
         export interface QueryParameters {
+            district?: Parameters.District;
+            district_name?: Parameters.DistrictName;
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
@@ -2986,9 +3164,11 @@ declare namespace Paths {
             export type $200 = Components.Schemas.PaginatedSupportContactList;
         }
     }
-    namespace TasksList {
+    namespace TasksDistrictNamesList {
         namespace Parameters {
             export type Completed = boolean;
+            export type District = number;
+            export type DistrictName = string;
             export type DueDate = string; // date
             export type FromStartDate = string; // date
             export type IsEnforcementRequest = boolean;
@@ -3013,6 +3193,82 @@ declare namespace Paths {
         }
         export interface QueryParameters {
             completed?: Parameters.Completed;
+            district?: Parameters.District;
+            district_name?: Parameters.DistrictName;
+            due_date?: Parameters.DueDate /* date */;
+            from_start_date?: Parameters.FromStartDate /* date */;
+            is_enforcement_request?: Parameters.IsEnforcementRequest;
+            name?: Parameters.Name;
+            number?: Parameters.Number;
+            open_cases?: Parameters.OpenCases;
+            ordering?: Parameters.Ordering;
+            owner?: Parameters.Owner;
+            page?: Parameters.Page;
+            page_size?: Parameters.PageSize;
+            postal_code?: Parameters.PostalCode;
+            reason?: Parameters.Reason;
+            reason_name?: Parameters.ReasonName;
+            role?: Parameters.Role;
+            sensitive?: Parameters.Sensitive;
+            start_date?: Parameters.StartDate /* date */;
+            state_types?: Parameters.StateTypes;
+            street_name?: Parameters.StreetName;
+            suffix?: Parameters.Suffix;
+            theme?: Parameters.Theme;
+            ton_ids?: Parameters.TonIds;
+        }
+        namespace Responses {
+            export interface $200 {
+                /**
+                 * example:
+                 * 123
+                 */
+                count?: number;
+                /**
+                 * example:
+                 * http://api.example.org/accounts/?page=4
+                 */
+                next?: string | null; // uri
+                /**
+                 * example:
+                 * http://api.example.org/accounts/?page=2
+                 */
+                previous?: string | null; // uri
+                results?: string[];
+            }
+        }
+    }
+    namespace TasksList {
+        namespace Parameters {
+            export type Completed = boolean;
+            export type District = number;
+            export type DistrictName = string;
+            export type DueDate = string; // date
+            export type FromStartDate = string; // date
+            export type IsEnforcementRequest = boolean;
+            export type Name = string;
+            export type Number = string;
+            export type OpenCases = boolean;
+            export type Ordering = string;
+            export type Owner = string;
+            export type Page = number;
+            export type PageSize = number;
+            export type PostalCode = string;
+            export type Reason = number;
+            export type ReasonName = string;
+            export type Role = string;
+            export type Sensitive = boolean;
+            export type StartDate = string; // date
+            export type StateTypes = number;
+            export type StreetName = string;
+            export type Suffix = string;
+            export type Theme = string;
+            export type TonIds = number;
+        }
+        export interface QueryParameters {
+            completed?: Parameters.Completed;
+            district?: Parameters.District;
+            district_name?: Parameters.DistrictName;
             due_date?: Parameters.DueDate /* date */;
             from_start_date?: Parameters.FromStartDate /* date */;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
@@ -3042,6 +3298,8 @@ declare namespace Paths {
     namespace TasksPartialUpdate {
         namespace Parameters {
             export type Completed = boolean;
+            export type District = number;
+            export type DistrictName = string;
             export type DueDate = string; // date
             export type FromStartDate = string; // date
             export type Id = number;
@@ -3065,6 +3323,8 @@ declare namespace Paths {
         }
         export interface QueryParameters {
             completed?: Parameters.Completed;
+            district?: Parameters.District;
+            district_name?: Parameters.DistrictName;
             due_date?: Parameters.DueDate /* date */;
             from_start_date?: Parameters.FromStartDate /* date */;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
@@ -3090,6 +3350,8 @@ declare namespace Paths {
     namespace TasksReasonNamesList {
         namespace Parameters {
             export type Completed = boolean;
+            export type District = number;
+            export type DistrictName = string;
             export type DueDate = string; // date
             export type FromStartDate = string; // date
             export type IsEnforcementRequest = boolean;
@@ -3114,6 +3376,8 @@ declare namespace Paths {
         }
         export interface QueryParameters {
             completed?: Parameters.Completed;
+            district?: Parameters.District;
+            district_name?: Parameters.DistrictName;
             due_date?: Parameters.DueDate /* date */;
             from_start_date?: Parameters.FromStartDate /* date */;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
@@ -3160,6 +3424,8 @@ declare namespace Paths {
     namespace TasksTaskNamesList {
         namespace Parameters {
             export type Completed = boolean;
+            export type District = number;
+            export type DistrictName = string;
             export type DueDate = string; // date
             export type FromStartDate = string; // date
             export type IsEnforcementRequest = boolean;
@@ -3184,6 +3450,8 @@ declare namespace Paths {
         }
         export interface QueryParameters {
             completed?: Parameters.Completed;
+            district?: Parameters.District;
+            district_name?: Parameters.DistrictName;
             due_date?: Parameters.DueDate /* date */;
             from_start_date?: Parameters.FromStartDate /* date */;
             is_enforcement_request?: Parameters.IsEnforcementRequest;

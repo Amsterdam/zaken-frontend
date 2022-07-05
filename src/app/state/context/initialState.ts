@@ -8,6 +8,7 @@ export type StateType = {
     sorting: TABLE.Schemas.Sorting
     theme: string
     reason: string
+    district: string
     fromStartDate: string
     updateContextCases: (payload: any) => void
   }
@@ -21,6 +22,7 @@ export type StateType = {
     owner: string
     taskName: string
     reason: string
+    district: string
     updateContextTasks: (payload: any) => void
   }
 }
@@ -40,6 +42,7 @@ export const initialState: StateType = {
     },
     theme: "",
     reason: "",
+    district: "",
     fromStartDate: "",
     updateContextCases: noop
   },
@@ -59,6 +62,7 @@ export const initialState: StateType = {
     owner: "",
     taskName: "",
     reason: "",
+    district: "",
     updateContextTasks: noop
   }
 }
