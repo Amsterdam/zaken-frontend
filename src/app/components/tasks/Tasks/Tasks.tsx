@@ -1,5 +1,5 @@
 import { useEffect, useContext } from "react"
-import { useRoles, useTasks, useCaseThemes, useTaskNames, useUsersMe, useTasksReasons } from "app/state/rest"
+import { useRoles, useTasks, useCaseThemes, useTaskNames, useUsersMe, useTasksReasons, useDistricts } from "app/state/rest"
 import { Row, Column } from "app/components/layouts/Grid"
 import TableTasks from "app/components/tasks/TableTasks/TableTasks"
 import TasksFilter from "../TasksFilter/TasksFilter"
@@ -27,13 +27,15 @@ const Wrap = styled.div`
 
 const Tasks: React.FC = () => {
   const {
-    results, count, pagination, sorting, role, theme, updateContextTasks, owner, taskName, reason
+    results, count, pagination, sorting, role, theme,
+    updateContextTasks, owner, taskName, reason, district
   } = useContext(ContextValues)["tasks"]
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const [roles] = useRoles()
   const [me] = useUsersMe()
   const [caseThemes] = useCaseThemes()
   const [reasons] = useTasksReasons(theme)
+  const [tasksDistricts] = useDistricts()
   const [dataSource, { isBusy }] = useTasks(
     hasPermission,
     pagination,
@@ -43,7 +45,8 @@ const Tasks: React.FC = () => {
     owner,
     false,
     taskName,
-    reason
+    reason,
+    district
   )
   const [enforcementDataSource, { isBusy: isBusyEnforcement }] = useTasks(
     hasPermission,
@@ -57,7 +60,8 @@ const Tasks: React.FC = () => {
     owner,
     true,
     taskName,
-    reason
+    reason,
+    district
   )
   const [ taskNamesData ] = useTaskNames(role ?? "")
   const queryUrl = getQueryUrl(hasPermission, pagination, sorting, theme, role, owner)
@@ -119,6 +123,7 @@ const Tasks: React.FC = () => {
     updateContextTasks({ pagination, sorting })
   }
 
+  const districts = tasksDistricts?.results || []
   const emptyPlaceholder = hasPermission === false && theme === UNDERMINING ? EMPTY_TEXT_NO_PERMISSION : EMPTY_TEXT
   const enforcementTasksAvailable = !!enforcementDataSource?.results?.length
   const taskNames = taskNamesData?.sort((a, b) => a.name.localeCompare(b.name))
@@ -180,6 +185,9 @@ const Tasks: React.FC = () => {
             reason={ reason }
             setReason={ (value: string) => onChangeFilter("reason", value)}
             reasons={ reasons }
+            districts={ districts }
+            district={ district }
+            setDistrict={ (value: string) => onChangeFilter("district", value)}
           />
         </Column>
       </Row>

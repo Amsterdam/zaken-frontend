@@ -38,7 +38,7 @@ export const useCorporations = (options?: Options) => {
 
 export const useDistricts = (options?: Options) => {
   const handleError = useErrorHandler()
-  return useApiRequest<Components.Schemas.PaginatedHousingCorporationList>({
+  return useApiRequest<Components.Schemas.PaginatedDistrictList>({
     ...options,
     url: makeApiUrl("addresses", "districts"),
     groupName: "addresses",

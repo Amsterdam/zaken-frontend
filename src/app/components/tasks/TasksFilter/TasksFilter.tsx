@@ -9,6 +9,7 @@ import scaffoldPageSize from "./scaffoldPageSize"
 import scaffoldMyTasks from "./scaffoldMyTasks"
 import scaffoldTaskName from "./scaffoldTaskName"
 import scaffoldReasons from "./scaffoldReasons"
+import scaffoldDistrict from "./scaffoldDistrict"
 
 type Props = {
   theme: string
@@ -27,12 +28,15 @@ type Props = {
   reasons?: Components.Schemas.CaseReason[]
   reason: string
   setReason: (value: string) => void
-
+  districts: Components.Schemas.District[]
+  district: string
+  setDistrict: (value: string) => void
 }
 
 const TasksFilter: React.FC<Props> = ({
   role, roles, setRole, theme, themes, setTheme, pageSize, setPageSize, owner,
-  setOwner, taskNames, taskName, setTaskName, reasons, reason, setReason
+  setOwner, taskNames, taskName, setTaskName, reasons, reason, setReason,
+  districts, district, setDistrict
 }) => (
   <>
     <FilterMenu>
@@ -67,6 +71,9 @@ const TasksFilter: React.FC<Props> = ({
         </ScaffoldForm>
         )
       }
+      <ScaffoldForm>
+        <ScaffoldFields { ...scaffoldDistrict(district, districts, setDistrict) } />
+      </ScaffoldForm>
       <ScaffoldForm>
         <ScaffoldFields { ...scaffoldPageSize(pageSize, setPageSize) } />
       </ScaffoldForm>

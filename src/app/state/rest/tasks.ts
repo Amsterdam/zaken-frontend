@@ -38,28 +38,38 @@ export const getQueryUrl = (
   owner?: string,
   isEnforcementRequest?: boolean,
   taskName?: string,
-  reason?: string
+  reason?: string,
+  district?: string
 ) => {
   let urlParams: any = {
+    completed: false,
     page: pagination.page,
     page_size: pagination.pageSize,
-    name: taskName,
-    is_enforcement_request: isEnforcementRequest,
-    theme,
-    role,
-    owner,
-    reason_name: reason
+    is_enforcement_request: isEnforcementRequest
   }
   if (sensitive === false) {
     urlParams.sensitive = false
   }
+  if (theme) {
+    urlParams.theme_name = theme
+  }
+  if (reason) {
+    urlParams.reason_name = reason
+  }
+  if (taskName) {
+    urlParams.name = taskName
+  }
+  if (role) {
+    urlParams.role = role
+  }
+  if (owner) {
+    urlParams.owner = owner
+  }
+  if (district) {
+    urlParams.district_name = district
+  }
   if (sorting) {
     urlParams.ordering = getOrderingValue(sorting)
-  }
-
-  urlParams = {
-    completed: false,
-    ...urlParams
   }
 
   const queryString = isEmpty(urlParams) ? "" : qs.stringify(urlParams, { addQueryPrefix: true })
@@ -77,6 +87,7 @@ export const useTasks = (
   isEnforcementRequest?: boolean,
   taskName?: string,
   reason?: string,
+  district?: string,
   options?: Options
 ) => {
   const handleError = useErrorHandler()
@@ -89,7 +100,8 @@ export const useTasks = (
     owner,
     isEnforcementRequest,
     taskName,
-    reason
+    reason,
+    district
   )
 
   return useApiRequest<Components.Schemas.PaginatedCaseUserTaskList>({
