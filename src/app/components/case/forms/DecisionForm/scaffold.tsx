@@ -31,7 +31,9 @@ export default (caseId: Components.Schemas.CaseDetail["id"], decisions?: Compone
             label: "Wat is het opgelegde bedrag?",
             extraLabel: <InfoButton infoTitle="Hoe vul ik het bedrag in?" infoText="Vul hier alleen cijfers in, geen punten, komma's of tekens."></InfoButton>,
             name: "sanction_amount",
-            pattern: "[0-9]"
+            pattern: "[0-9]",
+            min: 0,
+            validate: (value: number | undefined) => Number.isInteger(value) ? false : "Voer alleen cijfers in, geen punten of komma's!"
           }
         }
       }
