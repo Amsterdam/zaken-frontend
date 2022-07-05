@@ -57,8 +57,8 @@ export default (
             validate: (value: string | undefined) => {
               const now = moment()
               const valueDate = moment(value)
-              const isValidDate = valueDate.isBefore(now, "day") // Date cannot be in the past.
-              return isValidDate ? "Selecteer vandaag of een dag in de toekomst!" : false
+              const isInvalidDate = valueDate.isBefore(now, "day") // Date cannot be in the past.
+              return isInvalidDate ? "Selecteer vandaag of een dag in de toekomst!" : false
             }
           }
         }

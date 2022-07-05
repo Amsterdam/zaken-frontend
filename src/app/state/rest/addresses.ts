@@ -35,3 +35,14 @@ export const useCorporations = (options?: Options) => {
     isProtected: true
   })
 }
+
+export const useDistricts = (options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<Components.Schemas.PaginatedDistrictList>({
+    ...options,
+    url: makeApiUrl("addresses", "districts"),
+    groupName: "addresses",
+    handleError,
+    isProtected: true
+  })
+}

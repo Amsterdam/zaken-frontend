@@ -6,7 +6,7 @@ import useApiRequest from "./hooks/useApiRequest"
 
 export const useTasksReasons = (theme: string, options?: Options) => {
   const handleError = useErrorHandler()
-  const queryString = qs.stringify({ theme }, { addQueryPrefix: true })
+  const queryString = qs.stringify({ thema_name: theme }, { addQueryPrefix: true })
   const apiUrl = `${ makeApiUrl("tasks", "reason-names") }${ queryString }`
   return useApiRequest<Components.Schemas.CaseReason[]>({
     ...options,
