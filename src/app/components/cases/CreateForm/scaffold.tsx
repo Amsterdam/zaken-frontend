@@ -2,6 +2,7 @@ import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import navigateTo from "app/routing/navigateTo"
+import isValidUrl from "app/routing/utils/isValidUrl"
 
 const THEME_ID_SUBLET = 6
 
@@ -268,7 +269,8 @@ export default (
                   placeholder: "Link naar de advertentie",
                   name: "link",
                   hint: "Vul hier de volledige url in, inclusief http(s)://",
-                  isRequired: true
+                  isRequired: true,
+                  validate: (value: string | undefined) => isValidUrl(value) ? false : "Dit is geen geldige url!"
                 }
               }
             }
