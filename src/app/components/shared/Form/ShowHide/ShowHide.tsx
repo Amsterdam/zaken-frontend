@@ -1,10 +1,10 @@
 
+import { useEffect } from "react"
 import produce from "immer"
-
-import ScaffoldField, { Field } from "../ScaffoldField"
 import { useFormState, useForm } from "react-final-form"
 import { FormState } from "final-form"
 import { Dimensions, Responsive } from "@amsterdam/amsterdam-react-final-form"
+import ScaffoldField, { Field } from "../ScaffoldField"
 
 export type ShowHideProps = {
   position?: Responsive<Dimensions>
@@ -19,19 +19,23 @@ const ShowHide: React.FC<ShowHideProps> = ({ shouldShow, field, position }) => {
   const formState = useFormState()
   const form = useForm()
 
-  const positionedField = produce(field, draft => {
-    draft.props.position = position
-  })
-
   const isShown = shouldShow(formState)
 
-  if (isShown === false && field.props.name !== undefined) {
-    form.change(field.props.name, undefined)
-  }
+  // UseEffect to prevent state change when rendering
+  useEffect(() => {
+    if (isShown === false && field.props.name !== undefined) {
+      form.change(field.props.name, undefined)
+    }
+  }, [isShown, form, field.props.name])
 
-  return isShown
-    ? <ScaffoldField field={ positionedField } />
-    : null
+  if (isShown) {
+    const positionedField = produce(field, draft => {
+      draft.props.position = position
+    })
+    return <ScaffoldField field={ positionedField } />
+  } else {
+    return null
+  }
 }
 
 export default ShowHide
