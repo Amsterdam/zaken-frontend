@@ -32,7 +32,7 @@
     "final-form": "^4.20.7",
     "final-form-arrays": "^3.0.2",
     "immer": "^9.0.14",
-    "keycloak-js": "^18.0.0",
+    "keycloak-js": "^19.0.1",
     "lodash.debounce": "^4.0.8",
     "lodash.isempty": "^4.4.0",
     "lodash.merge": "^4.6.2",
