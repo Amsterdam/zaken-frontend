@@ -20,7 +20,7 @@ const TableTasks: React.FC<Props> = ({
 
   return (
     <Table
-      hasFixedColumn
+      lastColumnFixed
       columns={ columns }
       data={ data }
       loading={ isBusy }

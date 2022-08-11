@@ -41,7 +41,7 @@ const SearchResults: React.FC<Props> = ({ searchString }) => {
       )}
       { isValid ? (
         <Table
-          hasFixedColumn
+          lastColumnFixed
           columns={ columns }
           data={ dataSource }
           loading={ loading }

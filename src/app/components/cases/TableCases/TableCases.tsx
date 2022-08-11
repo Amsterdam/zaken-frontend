@@ -42,7 +42,7 @@ const TableCases: React.FC<Props> = ({ data, isBusy, onChange, pagination, sorti
 
   return (
     <Table
-      hasFixedColumn
+      lastColumnFixed
       loading={ isBusy }
       numLoadingRows={ 10 }
       columns={ prioritizedColumns }

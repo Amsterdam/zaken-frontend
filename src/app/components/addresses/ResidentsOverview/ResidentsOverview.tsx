@@ -1,7 +1,5 @@
 
-import { Heading } from "@amsterdam/asc-ui"
 import { Residents } from "@amsterdam/wonen-ui"
-
 import { useResidents } from "app/state/rest"
 import LoadingDetails from "app/components/shared/Details/LoadingDetails"
 
@@ -16,10 +14,8 @@ const ResidentsOverview: React.FC<Props> = ({ bagId }) => {
     return <LoadingDetails numRows={4} />
   }
   return (
-    <>
-      <Heading as="h2">Actueel ingeschreven personen ({ data?._embedded?.ingeschrevenpersonen.length })</Heading>
-      <Residents data={ data } loading={ isBusy } />
-    </>
+    <Residents data={ data } loading={ isBusy } header />
   )
 }
+
 export default ResidentsOverview

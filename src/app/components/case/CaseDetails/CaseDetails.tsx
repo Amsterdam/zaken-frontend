@@ -76,13 +76,13 @@ const CaseDetails: React.FC<Props> = ({ caseId }) => {
       <DefinitionList
         loading={ isBusy }
         numLoadingRows={ 2 }
-        hasRowsSeperated={ false }
+        horizontalBordered={ false }
         data={ dataFirstCol }
       />
       <DefinitionList
         loading={ isBusy }
         numLoadingRows={ 2 }
-        hasRowsSeperated={ false }
+        horizontalBordered={ false }
         data={ dataSecondCol }
       />
     </StyledDiv>

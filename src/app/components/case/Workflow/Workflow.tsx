@@ -36,7 +36,7 @@ const Workflow: React.FC<Props> = ({ workflows }) => {
                 </Div>
                 <StyledTable
                   columns={ columns }
-                  hasFixedColumn
+                  lastColumnFixed
                   data={ tasks || [] }
                   pagination={ false }
                 />

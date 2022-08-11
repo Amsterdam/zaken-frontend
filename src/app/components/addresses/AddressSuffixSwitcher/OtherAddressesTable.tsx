@@ -18,7 +18,7 @@ const OtherAddressesTable: React.FC<Props> = ({ bagId, onAddressChosen }) => {
 
   return (
     <Table
-      hasFixedColumn
+      lastColumnFixed
       columns={ columns }
       loading={ isBusy }
       numLoadingRows={ 3 }

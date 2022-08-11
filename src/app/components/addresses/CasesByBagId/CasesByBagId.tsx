@@ -35,7 +35,7 @@ const CasesByBagId: React.FC<Props> = ({ bagId, openCases = false, title = defau
     <Div>
       <StyledHeading as={"h2"}>{ title }{ numCases > 0 && ` (${ numCases })` }</StyledHeading>
       <Table
-        hasFixedColumn
+        lastColumnFixed
         columns={ openCases ? columnsOpenCases : columnsClosedCases }
         loading={ isBusy }
         numLoadingRows={ 1 }
