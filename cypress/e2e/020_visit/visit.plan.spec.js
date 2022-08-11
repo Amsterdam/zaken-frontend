@@ -60,11 +60,16 @@ describe('Plan "huisbezoek"', () => {
     })
 
     it("Bezoek inplannen page is visible", () => {
-      cy.get("h1")
+      const url = `${Cypress.env("baseUrlAcc")}themes/*/schedule-types/`
+      cy.intercept(url).as("getScheduleTypes")
+      cy.wait("@getScheduleTypes").then(() => {
+        cy.get("h1")
         .contains("Bezoek inplannen")
-      cy.get("dd")
-        .contains(address.street)
+        cy.get("dd")
+          .contains(address.street)
+      })
     })
+
   })
 
   describe('Fill in "Bezoek inplannen" form', () => {
