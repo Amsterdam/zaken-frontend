@@ -26,7 +26,7 @@ jobs:
         if: ${{ github.actor != 'dependabot[bot]' }}
         uses: cypress-io/github-action@v4
         with:
-          record: true
+          record: false
           start: npm start
           wait-on: "http://localhost:2999/"
         env:
