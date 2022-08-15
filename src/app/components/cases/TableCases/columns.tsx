@@ -41,7 +41,7 @@ const getColumns = (sorting: any) => {
     }, {
       header: "Straat",
       dataIndex: "address.street_name",
-      sorter: (a: any, b: any) => a?.address?.full_address.localeCompare(b?.address?.full_address),
+      sorter: (a: any, b: any) => a?.address?.street_name.localeCompare(b?.address?.street_name),
       sortOrder: sorting.dataIndex === "address.street_name" && sorting.order,
       minWidth: 200,
       render: (text: any, record: any) => {
