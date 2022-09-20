@@ -62,7 +62,11 @@ export const useCases = (
     urlParams.ordering = getOrderingValue(sorting)
   }
 
-  const queryString = isEmpty(urlParams) ? "" : qs.stringify(urlParams, { addQueryPrefix: true })
+  /*
+   ** indices: false is used to prevent parsing arrays by qs to code like this: %5B0%5D,
+   ** which cannot be parsed by the Django Python back-end.
+   */
+  const queryString = isEmpty(urlParams) ? "" : qs.stringify(urlParams, { addQueryPrefix: true, indices: true })
 
   return useApiRequest<Components.Schemas.PaginatedCaseList>({
     ...options,

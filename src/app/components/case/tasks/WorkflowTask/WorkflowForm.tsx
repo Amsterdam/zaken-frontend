@@ -12,6 +12,7 @@ type Props = {
   isLoading?: boolean
   onCancel: () => void
 }
+
 const WorkflowForm: React.FC<Props> = ({ workflowForm, isLoading, onSubmit, onCancel }) => (
   <div>
     <ScaffoldForm
