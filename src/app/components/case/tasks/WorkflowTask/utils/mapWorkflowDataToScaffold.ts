@@ -9,6 +9,7 @@ const mapItemToType = (item: any) => {
   if (item.type === "select") return "ComplexSelectField"
   if (item.type === "number") return "NumberField"
   if (item.camunda_type === "Long") return "NumberField"
+  if (item.type === "text") return "TextAreaField"
   return "TextField"
 }
 
