@@ -36,7 +36,7 @@ export const useCases = (
   theme?: string,
   from_start_date?: string,
   reason?: string,
-  district?: string,
+  districtNames?: Components.Schemas.District["name"][],
   options?: Options
 ) => {
   const handleError = useErrorHandler()
@@ -55,8 +55,8 @@ export const useCases = (
   if (reason) {
     urlParams.reason_name = reason
   }
-  if (district) {
-    urlParams.district_name = district
+  if (districtNames && districtNames?.length > 0) {
+    urlParams.district_name = districtNames
   }
   if (sorting) {
     urlParams.ordering = getOrderingValue(sorting)
@@ -64,9 +64,10 @@ export const useCases = (
 
   /*
    ** indices: false is used to prevent parsing arrays by qs to code like this: %5B0%5D,
-   ** which cannot be parsed by the Django Python back-end.
+   ** which cannot be parsed by the Django Python back-end or
+   ** maybe config must be changed somewhere.
    */
-  const queryString = isEmpty(urlParams) ? "" : qs.stringify(urlParams, { addQueryPrefix: true, indices: true })
+  const queryString = isEmpty(urlParams) ? "" : qs.stringify(urlParams, { addQueryPrefix: true, indices: false })
 
   return useApiRequest<Components.Schemas.PaginatedCaseList>({
     ...options,
