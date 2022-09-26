@@ -54,6 +54,7 @@ const DistrictsFilter: React.FC<Props> = ({ districts, districtNames, setDistric
         >
           <Checkbox
             id={ sortedDistrict.name }
+            data-testid={ sortedDistrict.name }
             onChange={ onChangeDistrict }
             checked={ districtNames.includes(sortedDistrict.name) }
           />
