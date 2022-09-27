@@ -32,7 +32,7 @@ const enforcementPagination = {
 const SelectTask: React.FC<Props> = ({ taskId, taskOwner, isEnforcement }) => {
   // Get tasks params to create the query params url for the Context.
   // Two different providers are being used. :(
-  const { pagination, sorting, role, theme, owner, taskName, reason, district } = useContext(ContextValues)["tasks"]
+  const { pagination, sorting, role, theme, owner, taskName, reason, districtNames } = useContext(ContextValues)["tasks"]
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const [isChecked, setIsChecked] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -49,7 +49,7 @@ const SelectTask: React.FC<Props> = ({ taskId, taskOwner, isEnforcement }) => {
     isEnforcement,
     taskName,
     reason,
-    district
+    districtNames
   )
   const { getContextItem, updateContextItem } = useContextCache("cases", queryUrl)
 

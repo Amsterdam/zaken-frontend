@@ -7,7 +7,7 @@ import scaffoldDate from "./scaffoldDate"
 import scaffoldTheme from "./scaffoldTheme"
 import scaffoldPageSize from "./scaffoldPageSize"
 import scaffoldReason from "./scaffoldReason"
-import DistrictsFilter from "./DistrictsFilter/DistrictsFilter"
+import DistrictsFilter from "app/components/filters/DistrictsFilter/DistrictsFilter"
 
 type Props = {
   date: string
