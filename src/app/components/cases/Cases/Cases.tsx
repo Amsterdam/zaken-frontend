@@ -8,6 +8,8 @@ import useHasPermission, { SENSITIVE_CASE_PERMISSION } from "app/state/rest/cust
 import { ContextValues } from "app/state/context/ValueProvider"
 import { RowWithColumn } from "app/components/layouts/Grid"
 
+type Item = string | Components.Schemas.District["name"][]
+
 const Container = styled.div`
   margin: 0 auto;
   display: grid;
@@ -28,7 +30,7 @@ const UNDERMINING = "Ondermijning"
 const Cases: React.FC = () => {
   const {
     results, count, pagination, sorting, fromStartDate, theme,
-    updateContextCases, reason, district
+    updateContextCases, reason, districtNames
   } = useContext(ContextValues)["cases"]
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const [caseThemes] = useCaseThemes()
@@ -41,7 +43,7 @@ const Cases: React.FC = () => {
     theme,
     fromStartDate,
     reason,
-    district
+    districtNames
   )
 
   useEffect(() => {
@@ -55,7 +57,7 @@ const Cases: React.FC = () => {
     }
   }, [dataSource, updateContextCases])
 
-  const onChangeFilter = (key: string, item: string) => {
+  const onChangeFilter = (key: string, item: Item) => {
     const casesContextItem = {
       [key]: item,
       pagination: {
@@ -121,8 +123,8 @@ const Cases: React.FC = () => {
             setReason={ (value: string) => onChangeFilter("reason", value)}
             reasons={ reasons }
             districts={ districts }
-            district={ district }
-            setDistrict={ (value: string) => onChangeFilter("district", value)}
+            districtNames={ districtNames }
+            setDistrictNames={ (value: Components.Schemas.District["name"][]) => onChangeFilter("districtNames", value)}
           />
         </FilterContainer>
       </Container>

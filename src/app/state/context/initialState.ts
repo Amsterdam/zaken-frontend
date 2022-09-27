@@ -8,7 +8,7 @@ export type StateType = {
     sorting: TABLE.Schemas.Sorting
     theme: string
     reason: string
-    district: string
+    districtNames: Components.Schemas.District["name"][]
     fromStartDate: string
     updateContextCases: (payload: any) => void
   }
@@ -42,7 +42,7 @@ export const initialState: StateType = {
     },
     theme: "",
     reason: "",
-    district: "",
+    districtNames: [],
     fromStartDate: "",
     updateContextCases: noop
   },

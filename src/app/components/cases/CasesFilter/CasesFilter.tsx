@@ -7,7 +7,7 @@ import scaffoldDate from "./scaffoldDate"
 import scaffoldTheme from "./scaffoldTheme"
 import scaffoldPageSize from "./scaffoldPageSize"
 import scaffoldReason from "./scaffoldReason"
-import scaffoldDistrict from "./scaffoldDistrict"
+import DistrictsFilter from "./DistrictsFilter/DistrictsFilter"
 
 type Props = {
   date: string
@@ -21,13 +21,13 @@ type Props = {
   reason: string
   setReason: (value: string) => void
   districts: Components.Schemas.District[]
-  district: string
-  setDistrict: (value: string) => void
+  districtNames: Components.Schemas.District["name"][]
+  setDistrictNames: (value: Components.Schemas.District["name"][]) => void
 }
 
 const CasesFilter: React.FC<Props> = ({
   date, setDate, theme, themes, setTheme, pageSize, setPageSize,
-  reasons, reason, setReason, districts, district, setDistrict
+  reasons, reason, setReason, districts, districtNames, setDistrictNames
 }) => (
   <FilterMenu>
     <ScaffoldForm>
@@ -42,9 +42,11 @@ const CasesFilter: React.FC<Props> = ({
     <ScaffoldForm>
       <ScaffoldFields { ...scaffoldDate(date, setDate) } />
     </ScaffoldForm>
-    <ScaffoldForm>
-      <ScaffoldFields { ...scaffoldDistrict(district, districts, setDistrict) } />
-    </ScaffoldForm>
+    <DistrictsFilter
+      districtNames={ districtNames }
+      districts={ districts }
+      setDistrictNames={ setDistrictNames }
+    />
     <ScaffoldForm>
       <ScaffoldFields { ...scaffoldPageSize(pageSize, setPageSize) } />
     </ScaffoldForm>
