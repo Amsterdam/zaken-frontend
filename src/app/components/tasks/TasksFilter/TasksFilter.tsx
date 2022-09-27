@@ -9,7 +9,7 @@ import scaffoldPageSize from "./scaffoldPageSize"
 import scaffoldMyTasks from "./scaffoldMyTasks"
 import scaffoldTaskName from "./scaffoldTaskName"
 import scaffoldReasons from "./scaffoldReasons"
-import scaffoldDistrict from "./scaffoldDistrict"
+import DistrictsFilter from "app/components/filters/DistrictsFilter/DistrictsFilter"
 
 type Props = {
   theme: string
@@ -29,14 +29,14 @@ type Props = {
   reason: string
   setReason: (value: string) => void
   districts: Components.Schemas.District[]
-  district: string
-  setDistrict: (value: string) => void
+  districtNames: Components.Schemas.District["name"][]
+  setDistrictNames: (value: Components.Schemas.District["name"][]) => void
 }
 
 const TasksFilter: React.FC<Props> = ({
   role, roles, setRole, theme, themes, setTheme, pageSize, setPageSize, owner,
   setOwner, taskNames, taskName, setTaskName, reasons, reason, setReason,
-  districts, district, setDistrict
+  districts, districtNames, setDistrictNames
 }) => (
   <>
     <FilterMenu>
@@ -71,9 +71,11 @@ const TasksFilter: React.FC<Props> = ({
         </ScaffoldForm>
         )
       }
-      <ScaffoldForm>
-        <ScaffoldFields { ...scaffoldDistrict(district, districts, setDistrict) } />
-      </ScaffoldForm>
+      <DistrictsFilter
+        districtNames={ districtNames }
+        districts={ districts }
+        setDistrictNames={ setDistrictNames }
+      />
       <ScaffoldForm>
         <ScaffoldFields { ...scaffoldPageSize(pageSize, setPageSize) } />
       </ScaffoldForm>

@@ -22,7 +22,7 @@ export type StateType = {
     owner: string
     taskName: string
     reason: string
-    district: string
+    districtNames: Components.Schemas.District["name"][]
     updateContextTasks: (payload: any) => void
   }
 }
@@ -62,7 +62,7 @@ export const initialState: StateType = {
     owner: "",
     taskName: "",
     reason: "",
-    district: "",
+    districtNames: [],
     updateContextTasks: noop
   }
 }

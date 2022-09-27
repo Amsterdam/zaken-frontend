@@ -11,6 +11,8 @@ import { Heading, themeSpacing } from "@amsterdam/asc-ui"
 import styled from "styled-components"
 import EnforcementIcon from "app/components/case/icons/EnforcementIcon/EnforcementIcon"
 
+type Item = string | Components.Schemas.District["name"][]
+
 const EMPTY_TEXT_NO_PERMISSION = "Helaas, u bent niet geautoriseerd om deze taken te bekijken."
 const EMPTY_TEXT = "Er zijn momenteel geen open taken voor de gekozen filters."
 const UNDERMINING = "Ondermijning"
@@ -28,7 +30,7 @@ const Wrap = styled.div`
 const Tasks: React.FC = () => {
   const {
     results, count, pagination, sorting, role, theme,
-    updateContextTasks, owner, taskName, reason, district
+    updateContextTasks, owner, taskName, reason, districtNames
   } = useContext(ContextValues)["tasks"]
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const [roles] = useRoles()
@@ -46,7 +48,7 @@ const Tasks: React.FC = () => {
     false,
     taskName,
     reason,
-    district
+    districtNames
   )
   const [enforcementDataSource, { isBusy: isBusyEnforcement }] = useTasks(
     hasPermission,
@@ -61,7 +63,7 @@ const Tasks: React.FC = () => {
     true,
     taskName,
     reason,
-    district
+    districtNames
   )
   const [ taskNamesData ] = useTaskNames(role ?? "")
   const queryUrl = getQueryUrl(hasPermission, pagination, sorting, theme, role, owner)
@@ -88,7 +90,7 @@ const Tasks: React.FC = () => {
     }
   }, [dataSource, updateContextTasks])
 
-  const onChangeFilter = (key: string, item: string) => {
+  const onChangeFilter = (key: string, item: Item) => {
     // Empty cache to force a new data fetch.
     clearContextCache()
     const tasksContextItem = {
@@ -186,8 +188,8 @@ const Tasks: React.FC = () => {
             setReason={ (value: string) => onChangeFilter("reason", value)}
             reasons={ reasons }
             districts={ districts }
-            district={ district }
-            setDistrict={ (value: string) => onChangeFilter("district", value)}
+            districtNames={ districtNames }
+            setDistrictNames={ (value: Components.Schemas.District["name"][]) => onChangeFilter("districtNames", value)}
           />
         </Column>
       </Row>
