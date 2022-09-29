@@ -47,7 +47,6 @@ const Cases: React.FC = () => {
     districtNames,
     housingCorporations
   )
-  console.log("corporations", corporationData)
 
   useEffect(() => {
     if (dataSource === undefined) {
@@ -68,9 +67,14 @@ const Cases: React.FC = () => {
         page: 1
       }
     }
-    // When theme is set we need to reset the reason dropdown to avoid a stale selection:
+
+    /*
+     ** When theme is set we need to reset the selection for reason and
+     ** housingCorporations to avoid a stale selection:
+     */
     if (key === "theme") {
       casesContextItem.reason = ""
+      casesContextItem.housingCorporations = []
     }
     updateContextCases(casesContextItem)
   }

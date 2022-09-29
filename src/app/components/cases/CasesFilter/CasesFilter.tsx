@@ -37,6 +37,15 @@ const CasesFilter: React.FC<Props> = ({
     <ScaffoldForm>
       <ScaffoldFields { ...scaffoldTheme(theme, themes, setTheme) } />
     </ScaffoldForm>
+    { theme === "Onderhuur" && (
+      <MultipleOptionsFilter
+        label="Corporaties"
+        options={ corporations }
+        selectedOptions={ selectedCorporations }
+        setSelectedOptions={ setSelectedCorporations }
+        byId
+      />
+    )}
     { reasons === undefined ? <Spinner /> : (
       <ScaffoldForm>
         <ScaffoldFields { ...scaffoldReason(reason, setReason, reasons) } />
@@ -51,13 +60,6 @@ const CasesFilter: React.FC<Props> = ({
       options={ districts }
       selectedOptions={ districtNames }
       setSelectedOptions={ setDistrictNames }
-    />
-    <MultipleOptionsFilter
-      label="Corporaties"
-      options={ corporations }
-      selectedOptions={ selectedCorporations }
-      setSelectedOptions={ setSelectedCorporations }
-      byId
     />
     <ScaffoldForm>
       <ScaffoldFields { ...scaffoldPageSize(pageSize, setPageSize) } />
