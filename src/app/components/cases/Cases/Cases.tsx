@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { Heading } from "@amsterdam/asc-ui"
 import TableCases from "app/components/cases/TableCases/TableCases"
 import CasesFilter from "app/components/cases/CasesFilter/CasesFilter"
-import { useCases, useCaseThemes, useTasksReasons, useDistricts } from "app/state/rest"
+import { useCases, useCaseThemes, useTasksReasons, useDistricts, useCorporations } from "app/state/rest"
 import useHasPermission, { SENSITIVE_CASE_PERMISSION } from "app/state/rest/custom/usePermissions/useHasPermission"
 import { ContextValues } from "app/state/context/ValueProvider"
 import { RowWithColumn } from "app/components/layouts/Grid"
@@ -30,12 +30,13 @@ const UNDERMINING = "Ondermijning"
 const Cases: React.FC = () => {
   const {
     results, count, pagination, sorting, fromStartDate, theme,
-    updateContextCases, reason, districtNames
+    updateContextCases, reason, districtNames, housingCorporations
   } = useContext(ContextValues)["cases"]
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const [caseThemes] = useCaseThemes()
   const [reasons] = useTasksReasons(theme)
   const [caseDistricts] = useDistricts()
+  const [corporationData] = useCorporations()
   const [dataSource, { isBusy }] = useCases(
     hasPermission,
     pagination,
@@ -43,7 +44,8 @@ const Cases: React.FC = () => {
     theme,
     fromStartDate,
     reason,
-    districtNames
+    districtNames,
+    housingCorporations
   )
 
   useEffect(() => {
@@ -65,9 +67,14 @@ const Cases: React.FC = () => {
         page: 1
       }
     }
-    // When theme is set we need to reset the reason dropdown to avoid a stale selection:
+
+    /*
+     ** When theme is set we need to reset the selection for reason and
+     ** housingCorporations to avoid a stale selection:
+     */
     if (key === "theme") {
       casesContextItem.reason = ""
+      casesContextItem.housingCorporations = []
     }
     updateContextCases(casesContextItem)
   }
@@ -120,11 +127,14 @@ const Cases: React.FC = () => {
             setPageSize={ onChangePageSize }
             pageSize={ pagination.pageSize?.toString() || "10" }
             reason={ reason }
-            setReason={ (value: string) => onChangeFilter("reason", value)}
+            setReason={ (value: string) => onChangeFilter("reason", value) }
             reasons={ reasons }
             districts={ districts }
             districtNames={ districtNames }
-            setDistrictNames={ (value: Components.Schemas.District["name"][]) => onChangeFilter("districtNames", value)}
+            setDistrictNames={ (value: Components.Schemas.District["name"][]) => onChangeFilter("districtNames", value) }
+            corporations={ corporationData?.results }
+            selectedCorporations={ housingCorporations }
+            setSelectedCorporations={ (value: string[]) => onChangeFilter("housingCorporations", value) }
           />
         </FilterContainer>
       </Container>

@@ -9,6 +9,7 @@ export type StateType = {
     theme: string
     reason: string
     districtNames: Components.Schemas.District["name"][]
+    housingCorporations: string[]
     fromStartDate: string
     updateContextCases: (payload: any) => void
   }
@@ -43,6 +44,7 @@ export const initialState: StateType = {
     theme: "",
     reason: "",
     districtNames: [],
+    housingCorporations: [],
     fromStartDate: "",
     updateContextCases: noop
   },
