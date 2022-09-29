@@ -56,9 +56,13 @@ export const getQueryUrl = (
   if (reason) {
     urlParams.reason_name = reason
   }
-  if (taskName) {
-    urlParams.name = taskName
-  }
+  console.log("taskName", taskName)
+  // Contacteren corporatie
+  // Inplannen Huisbezoek
+  // if (taskName) {
+  //   urlParams.name = taskName
+  // }
+  urlParams.name = ["Contacteren corporatie", "Inplannen Huisbezoek"]
   if (role) {
     urlParams.role = role
   }

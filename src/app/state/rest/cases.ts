@@ -37,6 +37,7 @@ export const useCases = (
   from_start_date?: string,
   reason?: string,
   districtNames?: Components.Schemas.District["name"][],
+  housingCorporations?: string[],
   options?: Options
 ) => {
   const handleError = useErrorHandler()
@@ -58,9 +59,13 @@ export const useCases = (
   if (districtNames && districtNames?.length > 0) {
     urlParams.district_name = districtNames
   }
+  if (housingCorporations && housingCorporations?.length > 0) {
+    urlParams.housing_corporation = housingCorporations
+  }
   if (sorting) {
     urlParams.ordering = getOrderingValue(sorting)
   }
+  // urlParams.housing_corporation = ["5", "6"]
 
   /*
    ** indices: false is used to prevent parsing arrays by qs to code like this: %5B0%5D,

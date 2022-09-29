@@ -9,7 +9,7 @@ import scaffoldPageSize from "./scaffoldPageSize"
 import scaffoldMyTasks from "./scaffoldMyTasks"
 import scaffoldTaskName from "./scaffoldTaskName"
 import scaffoldReasons from "./scaffoldReasons"
-import DistrictsFilter from "app/components/filters/DistrictsFilter/DistrictsFilter"
+import MultipleOptionsFilter from "app/components/filters/MultipleOptionsFilter/MultipleOptionsFilter"
 
 type Props = {
   theme: string
@@ -71,10 +71,11 @@ const TasksFilter: React.FC<Props> = ({
         </ScaffoldForm>
         )
       }
-      <DistrictsFilter
-        districtNames={ districtNames }
-        districts={ districts }
-        setDistrictNames={ setDistrictNames }
+      <MultipleOptionsFilter
+        label="Stadsdelen"
+        options={ districts }
+        selectedOptions={ districtNames }
+        setSelectedOptions={ setDistrictNames }
       />
       <ScaffoldForm>
         <ScaffoldFields { ...scaffoldPageSize(pageSize, setPageSize) } />

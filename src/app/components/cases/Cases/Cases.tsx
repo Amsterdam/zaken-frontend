@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { Heading } from "@amsterdam/asc-ui"
 import TableCases from "app/components/cases/TableCases/TableCases"
 import CasesFilter from "app/components/cases/CasesFilter/CasesFilter"
-import { useCases, useCaseThemes, useTasksReasons, useDistricts } from "app/state/rest"
+import { useCases, useCaseThemes, useTasksReasons, useDistricts, useCorporations } from "app/state/rest"
 import useHasPermission, { SENSITIVE_CASE_PERMISSION } from "app/state/rest/custom/usePermissions/useHasPermission"
 import { ContextValues } from "app/state/context/ValueProvider"
 import { RowWithColumn } from "app/components/layouts/Grid"
@@ -30,12 +30,13 @@ const UNDERMINING = "Ondermijning"
 const Cases: React.FC = () => {
   const {
     results, count, pagination, sorting, fromStartDate, theme,
-    updateContextCases, reason, districtNames
+    updateContextCases, reason, districtNames, housingCorporations
   } = useContext(ContextValues)["cases"]
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const [caseThemes] = useCaseThemes()
   const [reasons] = useTasksReasons(theme)
   const [caseDistricts] = useDistricts()
+  const [corporationData] = useCorporations()
   const [dataSource, { isBusy }] = useCases(
     hasPermission,
     pagination,
@@ -43,8 +44,10 @@ const Cases: React.FC = () => {
     theme,
     fromStartDate,
     reason,
-    districtNames
+    districtNames,
+    housingCorporations
   )
+  console.log("corporations", corporationData)
 
   useEffect(() => {
     if (dataSource === undefined) {
@@ -125,6 +128,9 @@ const Cases: React.FC = () => {
             districts={ districts }
             districtNames={ districtNames }
             setDistrictNames={ (value: Components.Schemas.District["name"][]) => onChangeFilter("districtNames", value)}
+            corporations={ corporationData?.results }
+            selectedCorporations={ housingCorporations }
+            setSelectedCorporations={ (value: string[]) => onChangeFilter("housingCorporations", value)}
           />
         </FilterContainer>
       </Container>
