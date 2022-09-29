@@ -127,14 +127,14 @@ const Cases: React.FC = () => {
             setPageSize={ onChangePageSize }
             pageSize={ pagination.pageSize?.toString() || "10" }
             reason={ reason }
-            setReason={ (value: string) => onChangeFilter("reason", value)}
+            setReason={ (value: string) => onChangeFilter("reason", value) }
             reasons={ reasons }
             districts={ districts }
             districtNames={ districtNames }
-            setDistrictNames={ (value: Components.Schemas.District["name"][]) => onChangeFilter("districtNames", value)}
+            setDistrictNames={ (value: Components.Schemas.District["name"][]) => onChangeFilter("districtNames", value) }
             corporations={ corporationData?.results }
             selectedCorporations={ housingCorporations }
-            setSelectedCorporations={ (value: string[]) => onChangeFilter("housingCorporations", value)}
+            setSelectedCorporations={ (value: string[]) => onChangeFilter("housingCorporations", value) }
           />
         </FilterContainer>
       </Container>

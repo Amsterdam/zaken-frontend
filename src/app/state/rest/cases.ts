@@ -65,7 +65,6 @@ export const useCases = (
   if (sorting) {
     urlParams.ordering = getOrderingValue(sorting)
   }
-  // urlParams.housing_corporation = ["5", "6"]
 
   /*
    ** indices: false is used to prevent parsing arrays by qs to code like this: %5B0%5D,
