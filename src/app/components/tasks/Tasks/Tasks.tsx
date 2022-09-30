@@ -1,5 +1,7 @@
 import { useEffect, useContext } from "react"
-import { useRoles, useTasks, useCaseThemes, useTaskNames, useUsersMe, useTasksReasons, useDistricts } from "app/state/rest"
+import { useRoles, useTasks, useCaseThemes, useTaskNames,
+  useUsersMe, useTasksReasons, useDistricts, useCorporations
+} from "app/state/rest"
 import { Row, Column } from "app/components/layouts/Grid"
 import TableTasks from "app/components/tasks/TableTasks/TableTasks"
 import TasksFilter from "../TasksFilter/TasksFilter"
@@ -30,7 +32,8 @@ const Wrap = styled.div`
 const Tasks: React.FC = () => {
   const {
     results, count, pagination, sorting, role, theme,
-    updateContextTasks, owner, taskName, reason, districtNames
+    updateContextTasks, owner, taskName, reason, districtNames,
+    housingCorporations
   } = useContext(ContextValues)["tasks"]
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const [roles] = useRoles()
@@ -38,6 +41,7 @@ const Tasks: React.FC = () => {
   const [caseThemes] = useCaseThemes()
   const [reasons] = useTasksReasons(theme)
   const [tasksDistricts] = useDistricts()
+  const [corporationData] = useCorporations()
   const [dataSource, { isBusy }] = useTasks(
     hasPermission,
     pagination,
@@ -48,7 +52,8 @@ const Tasks: React.FC = () => {
     false,
     taskName,
     reason,
-    districtNames
+    districtNames,
+    housingCorporations
   )
   const [enforcementDataSource, { isBusy: isBusyEnforcement }] = useTasks(
     hasPermission,
@@ -63,7 +68,8 @@ const Tasks: React.FC = () => {
     true,
     taskName,
     reason,
-    districtNames
+    districtNames,
+    housingCorporations
   )
   const [ taskNamesData ] = useTaskNames(role ?? "")
   const queryUrl = getQueryUrl(hasPermission, pagination, sorting, theme, role, owner)
@@ -104,9 +110,13 @@ const Tasks: React.FC = () => {
     if (key === "role") {
       tasksContextItem.taskName = ""
     }
-    // When theme is set we need to reset the reason dropdown to avoid a stale selection:
+    /*
+     ** When theme is set we need to reset the selection for reason and
+     ** housingCorporations to avoid a stale selection:
+     */
     if (key === "theme") {
       tasksContextItem.reason = ""
+      tasksContextItem.housingCorporations = []
     }
     updateContextTasks(tasksContextItem)
   }
@@ -190,6 +200,9 @@ const Tasks: React.FC = () => {
             districts={ districts }
             districtNames={ districtNames }
             setDistrictNames={ (value: Components.Schemas.District["name"][]) => onChangeFilter("districtNames", value)}
+            corporations={ corporationData?.results }
+            selectedCorporations={ housingCorporations }
+            setSelectedCorporations={ (value: string[]) => onChangeFilter("housingCorporations", value) }
           />
         </Column>
       </Row>

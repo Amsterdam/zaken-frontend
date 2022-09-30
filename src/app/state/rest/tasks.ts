@@ -39,7 +39,8 @@ export const getQueryUrl = (
   isEnforcementRequest?: boolean,
   taskName?: string,
   reason?: string,
-  districtNames?: Components.Schemas.District["name"][]
+  districtNames?: Components.Schemas.District["name"][],
+  housingCorporations?: string[]
 ) => {
   let urlParams: any = {
     completed: false,
@@ -68,6 +69,9 @@ export const getQueryUrl = (
   if (districtNames && districtNames?.length > 0) {
     urlParams.district_name = districtNames
   }
+  if (housingCorporations && housingCorporations?.length > 0) {
+    urlParams.housing_corporation = housingCorporations
+  }
   if (sorting) {
     urlParams.ordering = getOrderingValue(sorting)
   }
@@ -88,6 +92,7 @@ export const useTasks = (
   taskName?: string,
   reason?: string,
   districtNames?: Components.Schemas.District["name"][],
+  housingCorporations?: string[],
   options?: Options
 ) => {
   const handleError = useErrorHandler()
@@ -101,7 +106,8 @@ export const useTasks = (
     isEnforcementRequest,
     taskName,
     reason,
-    districtNames
+    districtNames,
+    housingCorporations
   )
 
   return useApiRequest<Components.Schemas.PaginatedCaseUserTaskList>({

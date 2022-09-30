@@ -31,12 +31,16 @@ type Props = {
   districts: Components.Schemas.District[]
   districtNames: Components.Schemas.District["name"][]
   setDistrictNames: (value: Components.Schemas.District["name"][]) => void
+  corporations?: Components.Schemas.HousingCorporation[]
+  selectedCorporations: string[]
+  setSelectedCorporations: (value: Components.Schemas.HousingCorporation["name"][]) => void
 }
 
 const TasksFilter: React.FC<Props> = ({
   role, roles, setRole, theme, themes, setTheme, pageSize, setPageSize, owner,
   setOwner, taskNames, taskName, setTaskName, reasons, reason, setReason,
-  districts, districtNames, setDistrictNames
+  districts, districtNames, setDistrictNames, corporations, selectedCorporations,
+  setSelectedCorporations
 }) => (
   <>
     <FilterMenu>
@@ -51,6 +55,15 @@ const TasksFilter: React.FC<Props> = ({
             </ScaffoldForm>
           )
       }
+      { theme === "Onderhuur" && (
+        <MultipleOptionsFilter
+          label="Corporaties"
+          options={ corporations }
+          selectedOptions={ selectedCorporations }
+          setSelectedOptions={ setSelectedCorporations }
+          byId
+        />
+      )}
       { reasons === undefined ? <Spinner /> : (
         <ScaffoldForm>
           <ScaffoldFields { ...scaffoldReasons(reason, setReason, reasons) } />
