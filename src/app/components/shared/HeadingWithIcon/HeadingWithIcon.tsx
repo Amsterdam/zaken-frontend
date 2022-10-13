@@ -20,9 +20,9 @@ const HeadingWithIcon: React.FC<Props> = ({ icon, header, headingSize = "h1", ic
   const Asset = icon ? Assets[icon] : null
   return (
     <Div>
-      { Asset != null &&
-      <StyledIcon size={ iconSize }><Asset /></StyledIcon>
-      }
+      { Asset != null && (
+        <StyledIcon size={ iconSize }><Asset /></StyledIcon>
+      )}
       <Heading forwardedAs={ headingSize }>{ header }</Heading>
     </Div>
   )

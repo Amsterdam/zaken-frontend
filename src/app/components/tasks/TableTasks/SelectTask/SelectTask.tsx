@@ -34,7 +34,7 @@ const SelectTask: React.FC<Props> = ({ taskId, taskOwner, isEnforcement }) => {
   // Two different providers are being used. :(
   const {
     pagination, sorting, role, theme, owner,
-    taskName, reason, districtNames, housingCorporations
+    taskNames, reason, districtNames, housingCorporations
   } = useContext(ContextValues)["tasks"]
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const [isChecked, setIsChecked] = useState(false)
@@ -50,7 +50,7 @@ const SelectTask: React.FC<Props> = ({ taskId, taskOwner, isEnforcement }) => {
     role,
     owner,
     isEnforcement,
-    taskName,
+    taskNames,
     reason,
     districtNames,
     housingCorporations
