@@ -14,7 +14,7 @@ type Props = {
   byId?: boolean
 }
 
-const StyledDiv = styled.div`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: ${ themeSpacing(5) };
@@ -55,7 +55,7 @@ const MultipleOptionsFilterBox: React.FC<Props> = ({ label, options, selectedOpt
   const visibleOptions = searchedOptions ?? options
   return (
     <>
-      <StyledDiv>
+      <Wrapper>
         <FilterSearch
           onChange={ onChangeFilterSearch }
           onFocus={ () => setIsFocussed(true) }
@@ -85,7 +85,7 @@ const MultipleOptionsFilterBox: React.FC<Props> = ({ label, options, selectedOpt
             ) })
           }
         </FilterCard>
-      </StyledDiv>
+      </Wrapper>
     </>
   )
 }

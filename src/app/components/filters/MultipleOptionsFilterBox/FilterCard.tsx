@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components"
+import styled from "styled-components"
 import { Card, themeColor, themeSpacing  } from "@amsterdam/asc-ui"
 
 type Props = {
@@ -6,20 +6,16 @@ type Props = {
   hasItems: boolean
 }
 
-const style = css<{ isVisible: boolean }>`
+const StyledCard = styled(Card)<{ isVisible: boolean }>`
   display: flex;
   align-items: flex-start;
-  max-height: 0px;
+  max-height: 0;
   overflow: auto;
   transition: max-height 300ms ease-out, padding 300ms ease-out, border-width 300ms ease-out;
-  border: 0px solid ${ themeColor("tint", "level4") };
-  max-height: ${ ({ isVisible }) => isVisible ? "200px" : "0px" };
+  border: 0 solid ${ themeColor("tint", "level4") };
+  max-height: ${ ({ isVisible }) => isVisible ? "200px" : 0 };
   padding: ${ ({ isVisible }) => isVisible ? themeSpacing(2) : themeSpacing(0, 2) };
-  border-width: ${ ({ isVisible }) => isVisible ? "1px" : "0px" };
-`
-
-const StyledCard = styled(Card)<{ isVisible: boolean }>`
-  ${ style }
+  border-width: ${ ({ isVisible }) => isVisible ? "1px" : 0 };
 `
 
 const StyledSpan = styled.span`
