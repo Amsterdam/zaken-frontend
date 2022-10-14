@@ -40,7 +40,7 @@ const Input = styled.input.attrs({
 
 const FilterSearch: React.FC<Props> = ({ onChange, onFocus, onBlur }) => (
   <Input
-    placeholder="Selecteer taak namen..."
+    placeholder="Zoek op taak naam..."
     onChange={ onChange }
     onFocus={ onFocus }
     onBlur={ onBlur }

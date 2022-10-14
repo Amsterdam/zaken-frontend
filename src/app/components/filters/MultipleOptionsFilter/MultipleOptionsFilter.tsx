@@ -1,6 +1,6 @@
 import { useMemo } from "react"
-import styled, { css } from "styled-components"
-import { Checkbox, Label, themeSpacing } from "@amsterdam/asc-ui"
+import { Checkbox, Label } from "@amsterdam/asc-ui"
+import { FilterWrapper, StyledLabel  } from "../FilterStyle"
 
 type Option = { id: number, name: string }
 
@@ -11,29 +11,6 @@ type Props = {
   setSelectedOptions: (value: string[]) => void
   byId?: boolean
 }
-
-const StyledDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: ${ themeSpacing(5) };
-`
-
-const style = css`
-  line-height: 18px;
-  font-size: 18px;
-  font-weight: 600;
-  width: 100%;
-
-  span {
-    margin: ${ themeSpacing(2) } 0;
-    align-items: center;
-    display: flex;
-  }
-`
-
-const StyledLabel = styled(Label)`
-  ${ style }
-`
 
 const MultipleOptionsFilter: React.FC<Props> = ({ label, options, selectedOptions, setSelectedOptions, byId = false }) => {
 
@@ -53,7 +30,7 @@ const MultipleOptionsFilter: React.FC<Props> = ({ label, options, selectedOption
   }
 
   return (
-    <StyledDiv>
+    <FilterWrapper>
       <StyledLabel label={ label } />
       { sortedOptions?.map((option) => {
         const value = byId ? option.id.toString() : option.name
@@ -73,7 +50,7 @@ const MultipleOptionsFilter: React.FC<Props> = ({ label, options, selectedOption
           </Label>
         ) })
       }
-    </StyledDiv>
+    </FilterWrapper>
   )
 }
 

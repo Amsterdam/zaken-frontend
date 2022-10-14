@@ -47,14 +47,6 @@ const TasksFilter: React.FC<Props> = ({
       <ScaffoldForm>
         <ScaffoldFields { ...scaffoldMyTasks(owner, setOwner) } />
       </ScaffoldForm>
-      { taskNames === undefined ? <Spinner /> : (
-        <MultipleOptionsFilterBox
-          label="Taak namen"
-          options={ taskNames }
-          selectedOptions={ selectedTaskNames }
-          setSelectedOptions={ setSelectedTaskNames }
-        />
-      )}
       { themes === undefined
           ? <Spinner />
           : (
@@ -86,12 +78,14 @@ const TasksFilter: React.FC<Props> = ({
             </ScaffoldForm>
           )
       }
-      {/* { taskNames === undefined ? <Spinner /> : (
-        <ScaffoldForm>
-          <ScaffoldFields { ...scaffoldTaskName(taskName, setTaskName, taskNames) } />
-        </ScaffoldForm>
-        )
-      } */}
+      { taskNames === undefined ? <Spinner /> : (
+        <MultipleOptionsFilterBox
+          label="Taak namen"
+          options={ taskNames }
+          selectedOptions={ selectedTaskNames }
+          setSelectedOptions={ setSelectedTaskNames }
+        />
+      )}
       <MultipleOptionsFilter
         label="Stadsdelen"
         options={ districts }

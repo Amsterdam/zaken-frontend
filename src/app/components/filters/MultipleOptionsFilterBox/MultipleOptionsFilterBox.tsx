@@ -1,8 +1,8 @@
 import { useState } from "react"
-import styled from "styled-components"
-import { Checkbox, Label, themeSpacing } from "@amsterdam/asc-ui"
+import { Checkbox, Label } from "@amsterdam/asc-ui"
 import FilterCard from "./FilterCard"
 import FilterSearch from "./FilterSearch"
+import { FilterWrapper, StyledLabel } from "../FilterStyle"
 
 type Option = { id?: number, name: string }
 
@@ -13,12 +13,6 @@ type Props = {
   setSelectedOptions: (value: string[]) => void
   byId?: boolean
 }
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: ${ themeSpacing(5) };
-`
 
 const MultipleOptionsFilterBox: React.FC<Props> = ({ label, options, selectedOptions, setSelectedOptions, byId = false }) => {
   const [isFocussed, setIsFocussed] = useState(false)
@@ -55,7 +49,8 @@ const MultipleOptionsFilterBox: React.FC<Props> = ({ label, options, selectedOpt
   const visibleOptions = searchedOptions ?? options
   return (
     <>
-      <Wrapper>
+      <FilterWrapper>
+        <StyledLabel label={ label } />
         <FilterSearch
           onChange={ onChangeFilterSearch }
           onFocus={ () => setIsFocussed(true) }
@@ -85,7 +80,7 @@ const MultipleOptionsFilterBox: React.FC<Props> = ({ label, options, selectedOpt
             ) })
           }
         </FilterCard>
-      </Wrapper>
+      </FilterWrapper>
     </>
   )
 }
