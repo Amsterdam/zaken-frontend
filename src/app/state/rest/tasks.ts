@@ -37,7 +37,7 @@ export const getQueryUrl = (
   role?: string,
   owner?: string,
   isEnforcementRequest?: boolean,
-  taskName?: string,
+  taskNames?: Components.Schemas.CaseUserTaskTaskName["name"][],
   reason?: string,
   districtNames?: Components.Schemas.District["name"][],
   housingCorporations?: string[]
@@ -57,8 +57,8 @@ export const getQueryUrl = (
   if (reason) {
     urlParams.reason_name = reason
   }
-  if (taskName) {
-    urlParams.name = taskName
+  if (taskNames && taskNames?.length > 0) {
+    urlParams.name = taskNames
   }
   if (role) {
     urlParams.role = role
@@ -89,7 +89,7 @@ export const useTasks = (
   role?: string,
   owner?: string,
   isEnforcementRequest?: boolean,
-  taskName?: string,
+  taskNames?: Components.Schemas.CaseUserTaskTaskName["name"][],
   reason?: string,
   districtNames?: Components.Schemas.District["name"][],
   housingCorporations?: string[],
@@ -104,7 +104,7 @@ export const useTasks = (
     role,
     owner,
     isEnforcementRequest,
-    taskName,
+    taskNames,
     reason,
     districtNames,
     housingCorporations

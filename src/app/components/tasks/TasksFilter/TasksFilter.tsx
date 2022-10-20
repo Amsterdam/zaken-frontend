@@ -7,9 +7,9 @@ import scaffoldTheme from "./scaffoldTheme"
 import scaffoldRole from "./scaffoldRole"
 import scaffoldPageSize from "./scaffoldPageSize"
 import scaffoldMyTasks from "./scaffoldMyTasks"
-import scaffoldTaskName from "./scaffoldTaskName"
 import scaffoldReasons from "./scaffoldReasons"
 import MultipleOptionsFilter from "app/components/filters/MultipleOptionsFilter/MultipleOptionsFilter"
+import MultipleOptionsFilterBox from "app/components/filters/MultipleOptionsFilterBox/MultipleOptionsFilterBox"
 
 type Props = {
   theme: string
@@ -23,8 +23,8 @@ type Props = {
   owner: string
   setOwner: (value: string) => void
   taskNames?: Components.Schemas.CaseUserTaskTaskName[]
-  taskName: string
-  setTaskName: (value: string) => void
+  selectedTaskNames: string[]
+  setSelectedTaskNames: (value: Components.Schemas.CaseUserTaskTaskName["name"][]) => void
   reasons?: Components.Schemas.CaseReason[]
   reason: string
   setReason: (value: string) => void
@@ -38,7 +38,7 @@ type Props = {
 
 const TasksFilter: React.FC<Props> = ({
   role, roles, setRole, theme, themes, setTheme, pageSize, setPageSize, owner,
-  setOwner, taskNames, taskName, setTaskName, reasons, reason, setReason,
+  setOwner, taskNames, selectedTaskNames, setSelectedTaskNames, reasons, reason, setReason,
   districts, districtNames, setDistrictNames, corporations, selectedCorporations,
   setSelectedCorporations
 }) => (
@@ -79,11 +79,13 @@ const TasksFilter: React.FC<Props> = ({
           )
       }
       { taskNames === undefined ? <Spinner /> : (
-        <ScaffoldForm>
-          <ScaffoldFields { ...scaffoldTaskName(taskName, setTaskName, taskNames) } />
-        </ScaffoldForm>
-        )
-      }
+        <MultipleOptionsFilterBox
+          label="Taak namen"
+          options={ taskNames }
+          selectedOptions={ selectedTaskNames }
+          setSelectedOptions={ setSelectedTaskNames }
+        />
+      )}
       <MultipleOptionsFilter
         label="Stadsdelen"
         options={ districts }

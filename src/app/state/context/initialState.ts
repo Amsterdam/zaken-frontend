@@ -21,7 +21,7 @@ export type StateType = {
     theme: string
     role?: string
     owner: string
-    taskName: string
+    taskNames: Components.Schemas.CaseUserTaskTaskName["name"][]
     reason: string
     districtNames: Components.Schemas.District["name"][]
     housingCorporations: string[]
@@ -63,7 +63,7 @@ export const initialState: StateType = {
     theme: "",
     role: undefined,
     owner: "",
-    taskName: "",
+    taskNames: [],
     reason: "",
     districtNames: [],
     housingCorporations: [],

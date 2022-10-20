@@ -32,7 +32,7 @@ const Wrap = styled.div`
 const Tasks: React.FC = () => {
   const {
     results, count, pagination, sorting, role, theme,
-    updateContextTasks, owner, taskName, reason, districtNames,
+    updateContextTasks, owner, taskNames, reason, districtNames,
     housingCorporations
   } = useContext(ContextValues)["tasks"]
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
@@ -50,7 +50,7 @@ const Tasks: React.FC = () => {
     role,
     owner,
     false,
-    taskName,
+    taskNames,
     reason,
     districtNames,
     housingCorporations
@@ -66,7 +66,7 @@ const Tasks: React.FC = () => {
     role,
     owner,
     true,
-    taskName,
+    taskNames,
     reason,
     districtNames,
     housingCorporations
@@ -106,9 +106,9 @@ const Tasks: React.FC = () => {
         page: 1
       }
     }
-    // When role is set we need to reset the taskName dropdown to avoid a stale selection:
+    // When role is set we need to reset the taskNames dropdown to avoid a stale selection:
     if (key === "role") {
-      tasksContextItem.taskName = ""
+      tasksContextItem.taskNames = ""
     }
     /*
      ** When theme is set we need to reset the selection for reason and
@@ -138,7 +138,6 @@ const Tasks: React.FC = () => {
   const districts = tasksDistricts?.results || []
   const emptyPlaceholder = hasPermission === false && theme === UNDERMINING ? EMPTY_TEXT_NO_PERMISSION : EMPTY_TEXT
   const enforcementTasksAvailable = !!enforcementDataSource?.results?.length
-  const taskNames = taskNamesData?.sort((a, b) => a.name.localeCompare(b.name))
 
   return (
     <>
@@ -191,9 +190,9 @@ const Tasks: React.FC = () => {
             pageSize={ pagination.pageSize?.toString() || "25" }
             owner={ owner }
             setOwner={ (value: string) => onChangeFilter("owner", value) }
-            taskName={ taskName }
-            setTaskName={ (value: string) => onChangeFilter("taskName", value) }
-            taskNames={ taskNames }
+            selectedTaskNames={ taskNames }
+            setSelectedTaskNames={ (value: Components.Schemas.CaseUserTaskTaskName["name"][]) => onChangeFilter("taskNames", value) }
+            taskNames={ taskNamesData }
             reason={ reason }
             setReason={ (value: string) => onChangeFilter("reason", value)}
             reasons={ reasons }
