@@ -2,7 +2,6 @@ import { useEffect, useContext } from "react"
 import { useRoles, useTasks, useCaseThemes, useTaskNames,
   useUsersMe, useTasksReasons, useDistricts, useCorporations
 } from "app/state/rest"
-import { Row, Column } from "app/components/layouts/Grid"
 import TableTasks from "app/components/tasks/TableTasks/TableTasks"
 import TasksFilter from "../TasksFilter/TasksFilter"
 import useHasPermission, { SENSITIVE_CASE_PERMISSION } from "app/state/rest/custom/usePermissions/useHasPermission"
@@ -27,6 +26,20 @@ const StyledHeading = styled(Heading)`
 
 const Wrap = styled.div`
   margin-bottom: ${ themeSpacing(12) };
+`
+
+const Container = styled.div`
+  margin: 0 auto;
+  display: grid;
+  grid-gap: 1rem;
+  @media (min-width: 1400px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+`
+
+const FilterContainer = styled.div`
+  min-width: 300px;
+  max-width: 400px;
 `
 
 const Tasks: React.FC = () => {
@@ -140,72 +153,70 @@ const Tasks: React.FC = () => {
   const enforcementTasksAvailable = !!enforcementDataSource?.results?.length
 
   return (
-    <>
-      <Row>
-        <Column spanLarge={ 72 }>
-          { enforcementTasksAvailable ?  (
-            <Wrap>
-              <StyledHeading as="h2">
-                <span>Handhavingsverzoeken ({ enforcementDataSource?.count }) </span>
-                <EnforcementIcon show />
-              </StyledHeading>
-              <TableTasks
-                data={ enforcementDataSource?.results || [] }
-                isBusy={ isBusyEnforcement }
-                onChange={onChangeTable}
-                pagination={false}
-                sorting={ sorting }
-                emptyPlaceholder={ emptyPlaceholder }
-                isEnforcement
-              />
-            </Wrap>
-            ) : null
-          }
-          <StyledHeading as="h2">
-            Alle { enforcementTasksAvailable ? "overige" : "" } taken ({ count })
-          </StyledHeading>
-          <TableTasks
-            data={ results || [] }
-            isBusy={ isBusy }
-            onChange={onChangeTable}
-            pagination={{
-              page: pagination.page,
-              pageSize: pagination.pageSize,
-              collectionSize: count || 1,
-              paginationLength: 9
-            }}
-            sorting={ sorting }
-            emptyPlaceholder={ emptyPlaceholder }
-          />
-        </Column>
-        <Column spanLarge={ 28 }>
-          <TasksFilter
-            role={ role ?? "" }
-            roles={ roles }
-            setRole={ (value: string) => onChangeFilter("role", value) }
-            theme={ theme }
-            themes={ caseThemes?.results }
-            setTheme={ (value: string) => onChangeFilter("theme", value) }
-            setPageSize={ onChangePageSize }
-            pageSize={ pagination.pageSize?.toString() || "25" }
-            owner={ owner }
-            setOwner={ (value: string) => onChangeFilter("owner", value) }
-            selectedTaskNames={ taskNames }
-            setSelectedTaskNames={ (value: Components.Schemas.CaseUserTaskTaskName["name"][]) => onChangeFilter("taskNames", value) }
-            taskNames={ taskNamesData }
-            reason={ reason }
-            setReason={ (value: string) => onChangeFilter("reason", value)}
-            reasons={ reasons }
-            districts={ districts }
-            districtNames={ districtNames }
-            setDistrictNames={ (value: Components.Schemas.District["name"][]) => onChangeFilter("districtNames", value)}
-            corporations={ corporationData?.results }
-            selectedCorporations={ housingCorporations }
-            setSelectedCorporations={ (value: string[]) => onChangeFilter("housingCorporations", value) }
-          />
-        </Column>
-      </Row>
-    </>
+    <Container>
+      <div>
+        { enforcementTasksAvailable ?  (
+          <Wrap>
+            <StyledHeading as="h2">
+              <span>Handhavingsverzoeken ({ enforcementDataSource?.count }) </span>
+              <EnforcementIcon show />
+            </StyledHeading>
+            <TableTasks
+              data={ enforcementDataSource?.results || [] }
+              isBusy={ isBusyEnforcement }
+              onChange={onChangeTable}
+              pagination={false}
+              sorting={ sorting }
+              emptyPlaceholder={ emptyPlaceholder }
+              isEnforcement
+            />
+          </Wrap>
+          ) : null
+        }
+        <StyledHeading as="h2">
+          Alle { enforcementTasksAvailable ? "overige" : "" } taken ({ count })
+        </StyledHeading>
+        <TableTasks
+          data={ results || [] }
+          isBusy={ isBusy }
+          onChange={onChangeTable}
+          pagination={{
+            page: pagination.page,
+            pageSize: pagination.pageSize,
+            collectionSize: count || 1,
+            paginationLength: 9
+          }}
+          sorting={ sorting }
+          emptyPlaceholder={ emptyPlaceholder }
+        />
+      </div>
+      <FilterContainer>
+        <TasksFilter
+          role={ role ?? "" }
+          roles={ roles }
+          setRole={ (value: string) => onChangeFilter("role", value) }
+          theme={ theme }
+          themes={ caseThemes?.results }
+          setTheme={ (value: string) => onChangeFilter("theme", value) }
+          setPageSize={ onChangePageSize }
+          pageSize={ pagination.pageSize?.toString() || "25" }
+          owner={ owner }
+          setOwner={ (value: string) => onChangeFilter("owner", value) }
+          selectedTaskNames={ taskNames }
+          setSelectedTaskNames={ (value: Components.Schemas.CaseUserTaskTaskName["name"][]) => onChangeFilter("taskNames", value) }
+          taskNames={ taskNamesData }
+          reason={ reason }
+          setReason={ (value: string) => onChangeFilter("reason", value)}
+          reasons={ reasons }
+          districts={ districts }
+          districtNames={ districtNames }
+          setDistrictNames={ (value: Components.Schemas.District["name"][]) => onChangeFilter("districtNames", value)}
+          corporations={ corporationData?.results }
+          selectedCorporations={ housingCorporations }
+          setSelectedCorporations={ (value: string[]) => onChangeFilter("housingCorporations", value) }
+        />
+      </FilterContainer>
+    </Container>
   )
 }
 

@@ -1,3 +1,4 @@
+import { DateDisplay } from "@amsterdam/wonen-ui"
 import DueDate from "app/components/shared/DueDate/DueDate"
 import TableAction from "app/components/shared/TableAction/TableAction"
 import to from "app/routing/utils/to"
@@ -28,9 +29,16 @@ export default (sorting: any, myId?: string, isEnforcement?: boolean) => ([
   }, {
     header: "Open taak",
     dataIndex: "name",
-    minWidth: 100,
+    minWidth: 200,
     sorter: (a: any, b: any) => a?.name?.localeCompare(b?.name),
     sortOrder: sorting.dataIndex === "name" && sorting.order
+  }, {
+    header: "Startdatum",
+    dataIndex: "case.start_date",
+    sorter: (a: any, b: any) => new Date(a.case.start_date).getTime() - new Date(b.case.start_date).getTime(),
+    sortOrder: sorting.dataIndex === "start_date" && sorting.order,
+    minWidth: 100,
+    render: (text: any) => <DateDisplay date={ text } emptyText="-" />
   }, {
     header: "Slotdatum",
     dataIndex: "due_date",
