@@ -20,7 +20,7 @@ const Container = styled.div`
 `
 
 const FilterContainer = styled.div`
-  max-width: 400px
+  max-width: 400px;
 `
 
 const EMPTY_TEXT_NO_PERMISSION = "Helaas, u bent niet geautoriseerd om deze zaken te bekijken."

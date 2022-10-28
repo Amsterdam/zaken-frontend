@@ -1,6 +1,8 @@
 import { Table } from "@amsterdam/wonen-ui"
 import { useUsersMe } from "app/state/rest"
 import getColumns from "./columns"
+import useMediaQuery from "app/hooks/useMediaQuery/useMediaQuery"
+import createResponsiveColumns from "./createPrioritizedColumns"
 
 type Props = {
   data?: Components.Schemas.CaseUserTask[]
@@ -17,11 +19,14 @@ const TableTasks: React.FC<Props> = ({
 }) => {
   const [me] = useUsersMe()
   const columns = getColumns(sorting, me?.id, isEnforcement)
+  const { windowWidth } = useMediaQuery()
+
+  const prioritizedColumns = createResponsiveColumns(columns, windowWidth)
 
   return (
     <Table
       lastColumnFixed
-      columns={ columns }
+      columns={ prioritizedColumns }
       data={ data }
       loading={ isBusy }
       numLoadingRows={ 10 }
