@@ -2,6 +2,7 @@ import { Table } from "@amsterdam/wonen-ui"
 import { useUsersMe } from "app/state/rest"
 import getColumns from "./columns"
 import useMediaQuery from "app/hooks/useMediaQuery/useMediaQuery"
+import createResponsiveColumns from "./createPrioritizedColumns"
 
 type Props = {
   data?: Components.Schemas.CaseUserTask[]
@@ -13,16 +14,6 @@ type Props = {
   isEnforcement?: boolean
 }
 
-const columnPriority = [
-  "case.id",
-  "case.address.street_name",
-  "name",
-  "owner",
-  "case.address.postal_code",
-  "due_date",
-  "case.start_date"
-]
-
 const TableTasks: React.FC<Props> = ({
   data, isBusy, onChange, pagination, sorting, emptyPlaceholder, isEnforcement
 }) => {
@@ -30,14 +21,7 @@ const TableTasks: React.FC<Props> = ({
   const columns = getColumns(sorting, me?.id, isEnforcement)
   const { windowWidth } = useMediaQuery()
 
-  let prioritizedColumns = columns
-  if (windowWidth < 900) {
-    const prioArray = columnPriority.slice(0, 4)
-    prioritizedColumns = columns.filter(col => prioArray.includes(col.dataIndex))
-  } else if (windowWidth < 1600) {
-    const prioArray = columnPriority.slice(0, 6)
-    prioritizedColumns = columns.filter(col => prioArray.includes(col.dataIndex))
-  }
+  const prioritizedColumns = createResponsiveColumns(columns, windowWidth)
 
   return (
     <Table
