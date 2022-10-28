@@ -3,8 +3,7 @@ import { themeColor, themeSpacing } from "@amsterdam/asc-ui"
 
 type Props = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-  onFocus?: () => void
-  onBlur: () => void
+  onFocus: () => void
 }
 
 const Input = styled.input.attrs({
@@ -38,12 +37,11 @@ const Input = styled.input.attrs({
   }
 `
 
-const FilterSearch: React.FC<Props> = ({ onChange, onFocus, onBlur }) => (
+const FilterSearch: React.FC<Props> = ({ onChange, onFocus }) => (
   <Input
     placeholder="Zoek op taak naam..."
     onChange={ onChange }
     onFocus={ onFocus }
-    onBlur={ onBlur }
   />
 )
 
