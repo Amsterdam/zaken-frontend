@@ -6,8 +6,6 @@ Cypress.Commands.add("logout", () => {
   cy.get("#username").should("be.visible")
 })
 
-cy.logout()
-
 // Login
 Cypress.Commands.add("login", (email, password) => {
   expect(email, "email was set").to.be.a("string").and.not.be.empty
