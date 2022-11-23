@@ -7,7 +7,6 @@
 const PATH = "cypress/fixtures/case.json"
 
 Cypress.Commands.add("setCaseId", () => {
-
   const url = `${Cypress.env("baseUrlAcc")}cases/*/`
   cy.intercept(url).as("getCase")
 
@@ -20,7 +19,7 @@ Cypress.Commands.add("setCaseId", () => {
 
 Cypress.Commands.add("getCaseId", () => cy.readFile(PATH))
 
-//Check for CaseDetailPage with Case ID to be visible
+// Check for CaseDetailPage with Case ID to be visible
 Cypress.Commands.add("shouldBeOnCaseDetailPage", () => {
   cy.get("h1")
     .contains("Zaakdetails")

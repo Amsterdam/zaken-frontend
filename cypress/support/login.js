@@ -1,52 +1,27 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+// Logout
 
- // Logout
- Cypress.Commands.add("logout", () => {
+Cypress.Commands.add("logout", () => {
   cy.get('button[title*="Uitloggen"]').click()
-
   cy.wait(1000)
-  cy.get("#username")
-    .should("be.visible")
+  cy.get("#username").should("be.visible")
 })
+
+cy.logout()
 
 // Login
 Cypress.Commands.add("login", (email, password) => {
-
   expect(email, "email was set").to.be.a("string").and.not.be.empty
   // Throw error when password is missing AND don't show the password in the logs.
-  if (typeof password !== "string" || !password) {
-    throw new Error("Missing password value, set using TEST_USER_PASSWORD=... in cypress.json")
+  if (!password ||  typeof password !== "string" ) {
+    throw new Error("Missing password value, set using TEST_USER_PASSWORD=... in cypress.env.json")
   }
 
   cy.visit("/")
 
   /*
-   ** Get the body's text and check if it contains Inloggen.
-   ** If not, logout() first
+   ** In Github action the session token will not be stored so every file
+   ** a login is needed. When testing locally the session token is stored.
+   ** This method will logout at the beginning of a test so a uniform flow is created.
    */
   cy.get("body").then(($body) => {
     if (!$body.text().includes("Inloggen")) {
