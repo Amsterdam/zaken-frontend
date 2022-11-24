@@ -29,13 +29,6 @@ const MultipleOptionsFilterBox: React.FC<Props> = ({ label, options, selectedOpt
     setSelectedOptions(newSelectedOptions)
   }
 
-  const onBlurFilterSearch = () => {
-    // onBlur is set before props are updated so use a timeout
-    setTimeout(() => {
-      setIsFocussed(false)
-     }, 150)
-  }
-
   const onChangeFilterSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchString = e.target.value
     if (searchString) {
@@ -54,7 +47,6 @@ const MultipleOptionsFilterBox: React.FC<Props> = ({ label, options, selectedOpt
         <FilterSearch
           onChange={ onChangeFilterSearch }
           onFocus={ () => setIsFocussed(true) }
-          onBlur={ onBlurFilterSearch }
         />
         <FilterCard
           isVisible={ isFocussed || selectedOptions.length > 0 }
