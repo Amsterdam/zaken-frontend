@@ -26,7 +26,7 @@ This is a public repo. Passwords or other secrets can be stored as a Github secr
 ```
 - Variable is accessible by `Cypress.env("TEST_USER_PASSWORD")`
 
-## Local testing
+## Use variable for Local testing
 
 Create a `cypress.env.json` file in the root directory. Add the following code with your secret password:
 

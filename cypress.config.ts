@@ -3,13 +3,12 @@ import { defineConfig } from "cypress"
 export default defineConfig({
   projectId: "tbpt8b",
   chromeWebSecurity: false,
-  screenshotOnRunFailure: false,
-  video: false,
+  screenshotOnRunFailure: true,
+  video: true,
   viewportWidth: 1280,
   viewportHeight: 1024,
   defaultCommandTimeout: 10000,
   requestTimeout: 10000,
-
   env: {
     baseUrlAcc: "https://acc.api.wonen.zaken.amsterdam.nl/api/v1/",
     baseUrlData: "https://api.data.amsterdam.nl/",
@@ -18,7 +17,6 @@ export default defineConfig({
     userPm: "projectmedewerker-noreply@amsterdam.nl",
     userTh: "toezichthouder-noreply@amsterdam.nl"
   },
-
   e2e: {
     // We've imported your old cypress plugins here.
     // You may want to clean this up later by importing these.
@@ -36,7 +34,6 @@ export default defineConfig({
       "cypress/e2e/060_closeCase/*.js"
     ]
   },
-
   component: {
     devServer: {
       framework: "create-react-app",
