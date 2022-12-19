@@ -32,6 +32,8 @@ const DocumentTypeModal: React.FC<Props> = ({ caseId, isOpen, onClose, onSubmit,
     onClose()
   }
 
+  const sortedDocumentTypes = documentTypes ? documentTypes.sort((a, b) => a.omschrijving.localeCompare(b.omschrijving)) : []
+
   return (
     <Modal isOpen={ isOpen } onClose={ onCancel } title="Kies een documenttype">
       <ModalBlock>
@@ -42,7 +44,7 @@ const DocumentTypeModal: React.FC<Props> = ({ caseId, isOpen, onClose, onSubmit,
               onChange={ (event: React.ChangeEvent<HTMLSelectElement>) => setDocumentType(event.target.value) }
             >
               <option value={ DEFAULT_VALUE }>Maak een keuze</option>
-              { documentTypes.map((type) => (
+              { sortedDocumentTypes.map((type) => (
                 <option value={ type.url } key={ type.url } >{ type.omschrijving }</option>
               ))}
             </Select>
