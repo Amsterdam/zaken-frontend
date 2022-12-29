@@ -1,4 +1,6 @@
 
+import qs from "qs"
+import moment from "moment"
 import type { Options } from "./"
 import { useErrorHandler, useSuppressErrorHandler } from "./hooks/utils/errorHandler"
 import { makeApiUrl } from "./hooks/utils/apiUrl"
@@ -8,6 +10,21 @@ export const usePermitDetails = (bagId: string) => {
   const handleError = useSuppressErrorHandler()
   return useApiRequest<Components.Schemas.Decos>({
     url: makeApiUrl("addresses", bagId, "permits"),
+    groupName: "addresses",
+    handleError,
+    isProtected: true
+  })
+}
+
+export const useMeldingen = (bagId: string) => {
+  const queryString = qs.stringify({
+    start_date: moment().subtract(1, "years").startOf("year").format()
+  }, {
+    addQueryPrefix: true
+  })
+  const handleError = useSuppressErrorHandler()
+  return useApiRequest<Components.Schemas.Meldingen>({
+    url: `${ makeApiUrl("addresses", bagId, "meldingen") }${ queryString }`,
     groupName: "addresses",
     handleError,
     isProtected: true
