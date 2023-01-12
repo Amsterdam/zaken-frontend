@@ -51,7 +51,11 @@ const DocumentTypeModal: React.FC<Props> = ({ caseId, isOpen, onClose, onSubmit,
           </>
         )}
         <ButtonContainer>
-          <Button onClick={ onCancel } variant="primaryInverted">
+          <Button
+            onClick={ onCancel }
+            variant="primaryInverted"
+            disabled={ loading }
+          >
             Annuleer
           </Button>
           <Button
