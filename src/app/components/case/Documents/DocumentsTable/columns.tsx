@@ -44,7 +44,7 @@ const getColumns = (getDocuments: () => Promise<unknown>, documentTypes?: Compon
     minWidth: 100,
     render: (text: any) => text ? moment(text).format("DD-MM-YYYY") : "-"
   }, {
-    header: "Extensie",
+    header: "Media type",
     dataIndex: "formaat",
     render: (text: any) => text ?? "-"
   }, {
