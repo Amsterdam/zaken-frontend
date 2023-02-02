@@ -2,7 +2,7 @@ import styled from "styled-components"
 import { DefinitionList, CaseIdDisplay, DateDisplay } from "@amsterdam/wonen-ui"
 import type { DefinitionListData } from "@amsterdam/wonen-ui"
 import { useCase } from "app/state/rest"
-import ChangeableSubject from "../tasks/ChangeSubject/ChangeableSubject"
+import ChangeableSubject from "./ChangeSubject/ChangeableSubject"
 import DisplayCorporation from "./DisplayCorporation"
 import SensitiveCaseIcon from "../icons/SensitiveCaseIcon/SensitiveCaseIcon"
 import EnforcementIcon from "../icons/EnforcementIcon/EnforcementIcon"
@@ -48,7 +48,10 @@ const getDataFirstCol = (isClosed: boolean, caseItem?: Components.Schemas.CaseCr
 }
 
 const getDataSecondCol = (isClosed: boolean, caseItem?: Components.Schemas.CaseCreate) => {
-  if (caseItem === undefined) return
+  if (caseItem === undefined) {
+    return undefined
+  }
+  console.log("caseItem", caseItem)
   const { id, theme, reason, project, subjects, address: { housing_corporation } } = caseItem
   const hasProject = project?.name !== undefined
   const data: DefinitionListData = {
@@ -58,7 +61,7 @@ const getDataSecondCol = (isClosed: boolean, caseItem?: Components.Schemas.CaseC
       ? subjects.map((subject) => subject.name).join(", ")
       : <ChangeableSubject subjects={ subjects } caseId={ id } themeId={ theme.id } />
   }
-  if (theme.id === 6) {
+  if (housing_corporation) {
     data["Corporatie"] = <DisplayCorporation id={ housing_corporation } />
   }
   return data
