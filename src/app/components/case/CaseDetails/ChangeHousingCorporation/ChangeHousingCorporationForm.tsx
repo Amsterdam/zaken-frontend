@@ -27,10 +27,13 @@ const ChangeHousingCorporationForm: React.FC<Props> = ({
       <RadioGroup name="group">
         {
           housingCorporations.map(housingCorporation => (
-            <Label htmlFor={ `housingCorporation-${ housingCorporation.id }` } label={ housingCorporation.name }>
+            <Label
+              htmlFor={ `housingCorporation-${ housingCorporation.id }` }
+              label={ housingCorporation.name }
+              key={ `housingCorporation-${ housingCorporation.id }` }
+            >
               <Radio
                 id={ `housingCorporation-${ housingCorporation.id }` }
-                key={ `housingCorporation-${ housingCorporation.id }` }
                 checked={ housingCorporation.id === housingCorporationId }
                 onChange={() => setSelectedCorpo(housingCorporation.id)}
               />

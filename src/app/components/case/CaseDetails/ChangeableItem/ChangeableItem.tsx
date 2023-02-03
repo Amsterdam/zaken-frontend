@@ -27,7 +27,7 @@ const StyledIcon = styled(Icon)`
   margin-left: ${ themeSpacing(1) };
 `
 
-const ChangeableItem = ({ name = "", titleAccess = "", onClick }: Props) => (
+const ChangeableItem = ({ name = "-", titleAccess = "", onClick }: Props) => (
   <Span
     role="link"
     onClick={ onClick }
