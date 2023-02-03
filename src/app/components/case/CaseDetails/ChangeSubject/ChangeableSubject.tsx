@@ -1,9 +1,7 @@
-import styled from "styled-components"
-import { Icon, themeSpacing } from "@amsterdam/asc-ui"
 import { useModal } from "app/components/shared/Modal/hooks/useModal"
-import { Edit } from "app/components/shared/Icons"
-import ChangeSubjectModal from "./ChangeSubjectModal"
 import { useCase } from "app/state/rest"
+import ChangeSubjectModal from "./ChangeSubjectModal"
+import ChangeableItem from "../ChangeableItem/ChangeableItem"
 
 type Props = {
   caseId: Components.Schemas.CaseCreate["id"]
@@ -11,42 +9,21 @@ type Props = {
   subjects: Components.Schemas.Subject[]
 }
 
-const Span = styled.span`
-  cursor: pointer;
-  position: relative;
-  display: inline-block;
-  &:hover {
-    text-decoration: underline;
-  }
-  >span {
-    position: absolute;
-    bottom: 0;
-    left: 100%;
-  }
-`
-
-const StyledIcon = styled(Icon)`
-  display: inline-block;
-  margin-left: ${ themeSpacing(2) };
-`
-
 const ChangeableSubject: React.FC<Props> = ({ subjects, caseId, themeId }) => {
   const { isModalOpen, openModal, closeModal } = useModal()
   const [, { execPatch }] = useCase(caseId)
 
   const onSubmit = (data: { subjects: Components.Schemas.Subject[] }) => {
-    execPatch( { subject_ids: data.subjects.map((subject: Components.Schemas.Subject) => subject.id) }) 
+    execPatch( { subject_ids: data.subjects.map((subject: Components.Schemas.Subject) => subject.id) })
   }
 
   return (
     <>
-      <Span
-        role="link"
+      <ChangeableItem
+        name={ subjects?.map(subject => subject.name).join(", ") }
+        titleAccess="Wijzig het onderwerp"
         onClick={ openModal }
-        >
-        { subjects?.map(subject => subject.name).join(", ")}
-        <StyledIcon size={ 20 }><Edit titleAccess="Pas het onderwerp aan" /></StyledIcon>
-      </Span>
+      />
       <ChangeSubjectModal
         onSubmit={ onSubmit }
         isOpen={ isModalOpen }
