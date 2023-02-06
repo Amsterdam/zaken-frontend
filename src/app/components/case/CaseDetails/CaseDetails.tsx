@@ -59,15 +59,17 @@ const getDataSecondCol = (isClosed: boolean, caseItem?: Components.Schemas.CaseC
     "Aanleiding": `${ reason.name }${ hasProject ? ": " : "" }${ hasProject ? project.name : "" }`,
     "Onderwerp(en)": isClosed
       ? subjects.map((subject) => subject.name).join(", ")
-      : <ChangeableSubject subjects={ subjects } caseId={ id } themeId={ theme.id } />,
-    "Corporatie": (
-      <ChangeHousingCorporation
-        housingCorporationId={ housing_corporation }
-        bagId={ bag_id }
-        caseId={ id }
-      />
-    )
-  }
+      : <ChangeableSubject subjects={ subjects } caseId={ id } themeId={ theme.id } />
+    }
+    if (theme.id === 6 || theme.id === 5) {
+      data["Corporatie"] = (
+        <ChangeHousingCorporation
+          housingCorporationId={ housing_corporation }
+          bagId={ bag_id }
+          caseId={ id }
+        />
+      )
+    }
   return data
 }
 
