@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useModal } from "app/components/shared/Modal/hooks/useModal"
 import { useCorporations, useAddresses, useCase } from "app/state/rest"
 import ChangeableItem from "../ChangeableItem/ChangeableItem"
@@ -15,23 +15,35 @@ type Props = {
 const ChangeHousingCorporation: React.FC<Props> = ({ housingCorporationId, bagId, caseId }) => {
   const { isModalOpen, openModal, closeModal } = useModal()
   const [loading, setLoading] = useState(false)
+  const [housingCorporations, setHousingCorporations] = useState<Components.Schemas.HousingCorporation[]>([])
   const [caseItem, { updateCache }] = useCase(caseId)
   const [data] = useCorporations()
   const [, { execPatch }] = useAddresses(bagId, { lazy: true })
 
-  const onSubmit = (housing_corporation: Components.Schemas.HousingCorporation["id"]) => {
+  useEffect(() => {
+    if (data?.results) {
+      // Add a null option for no housing corporation.
+      let corporations: any = [...data?.results]
+      corporations.push({ id: null, name: "Geen corporatie" })
+      setHousingCorporations(corporations)
+    }
+  }, [data?.results])
+
+  const onSubmit = (housing_corporation?: Components.Schemas.HousingCorporation["id"] | null) => {
     setLoading(true)
     execPatch({ housing_corporation })
       .then((response: any) => {
         // Update the case context for housing corporation
-        const updatedCase = {
-          ...caseItem,
-          address: {
-            ...caseItem?.address,
-            housing_corporation: response.data.housing_corporation
+        if (response?.data) {
+          const updatedCase = {
+            ...caseItem,
+            address: {
+              ...caseItem?.address,
+              housing_corporation: response.data.housing_corporation
+            }
           }
+          updateCache(() => updatedCase)
         }
-        updateCache(() => updatedCase)
       })
       .finally(() => {
         setLoading(false)
@@ -39,15 +51,10 @@ const ChangeHousingCorporation: React.FC<Props> = ({ housingCorporationId, bagId
       })
   }
 
-  let corporation: any = undefined
-  if (housingCorporationId && data?.results) {
-    corporation = data.results.find((corporation) => corporation.id === housingCorporationId)
-  }
-
   return (
     <>
       <ChangeableItem
-        name={ corporation?.name }
+        name={ housingCorporations.find((corporation) => corporation.id === housingCorporationId)?.name }
         titleAccess="Wijzig de woningcorporatie"
         onClick={ openModal }
       />
@@ -61,8 +68,8 @@ const ChangeHousingCorporation: React.FC<Props> = ({ housingCorporationId, bagId
             <ChangeHousingCorporationForm
               onSubmit={ onSubmit }
               onCancel={ closeModal }
-              housingCorporations={ data?.results || [] }
-              housingCorporationId={ corporation?.id }
+              housingCorporations={ housingCorporations }
+              housingCorporationId={ housingCorporationId }
             />
           </ModalBlock>
         </SpinnerWrapper>
