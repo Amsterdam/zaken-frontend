@@ -1,8 +1,8 @@
 import { useState } from "react"
-import { Select, themeSpacing, Spinner, Button } from "@amsterdam/asc-ui"
-import styled from "styled-components"
+import { Select, Spinner, Button } from "@amsterdam/asc-ui"
 import Modal, { ModalBlock } from "app/components/shared/Modal/Modal"
 import { useDocumentTypesByCase } from "app/state/rest"
+import { ButtonContainer, StyledButton } from "../../CaseDetails/layout"
 
 type Props = {
   caseId: Components.Schemas.CaseDetail["id"]
@@ -11,13 +11,6 @@ type Props = {
   onSubmit: (documentUrl: string) => void
   loading: boolean
 }
-
-const ButtonContainer = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  margin-top: ${ themeSpacing(6) };
-`
 
 const DEFAULT_VALUE: string = "1"
 
@@ -51,13 +44,13 @@ const DocumentTypeModal: React.FC<Props> = ({ caseId, isOpen, onClose, onSubmit,
           </>
         )}
         <ButtonContainer>
-          <Button
+          <StyledButton
             onClick={ onCancel }
             variant="primaryInverted"
             disabled={ loading }
           >
             Annuleer
-          </Button>
+          </StyledButton>
           <Button
             onClick={() => onSubmit(documentType) }
             variant="primary"

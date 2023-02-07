@@ -1,6 +1,6 @@
 import type { Options } from "./"
 import { useErrorHandler } from "./hooks/utils/errorHandler"
-import { makeApiUrl } from "./hooks/utils/apiUrl"
+import { makeApiUrl } from "app/state/rest/hooks/utils/apiUrl"
 import useApiRequest from "./hooks/useApiRequest"
 import qs from "qs"
 

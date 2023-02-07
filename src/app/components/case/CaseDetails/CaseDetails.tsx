@@ -2,8 +2,8 @@ import styled from "styled-components"
 import { DefinitionList, CaseIdDisplay, DateDisplay } from "@amsterdam/wonen-ui"
 import type { DefinitionListData } from "@amsterdam/wonen-ui"
 import { useCase } from "app/state/rest"
-import ChangeableSubject from "../tasks/ChangeSubject/ChangeableSubject"
-import DisplayCorporation from "./DisplayCorporation"
+import ChangeableSubject from "./ChangeSubject/ChangeableSubject"
+import ChangeHousingCorporation from "./ChangeHousingCorporation/ChangeHousingCorporation"
 import SensitiveCaseIcon from "../icons/SensitiveCaseIcon/SensitiveCaseIcon"
 import EnforcementIcon from "../icons/EnforcementIcon/EnforcementIcon"
 
@@ -48,8 +48,11 @@ const getDataFirstCol = (isClosed: boolean, caseItem?: Components.Schemas.CaseCr
 }
 
 const getDataSecondCol = (isClosed: boolean, caseItem?: Components.Schemas.CaseCreate) => {
-  if (caseItem === undefined) return
-  const { id, theme, reason, project, subjects, address: { housing_corporation } } = caseItem
+  if (caseItem === undefined) {
+    return undefined
+  }
+
+  const { id, theme, reason, project, subjects, address: { housing_corporation, bag_id } } = caseItem
   const hasProject = project?.name !== undefined
   const data: DefinitionListData = {
     "Thema": theme.name,
@@ -57,10 +60,16 @@ const getDataSecondCol = (isClosed: boolean, caseItem?: Components.Schemas.CaseC
     "Onderwerp(en)": isClosed
       ? subjects.map((subject) => subject.name).join(", ")
       : <ChangeableSubject subjects={ subjects } caseId={ id } themeId={ theme.id } />
-  }
-  if (theme.id === 6) {
-    data["Corporatie"] = <DisplayCorporation id={ housing_corporation } />
-  }
+    }
+    if (theme.id === 6 || theme.id === 5) {
+      data["Corporatie"] = (
+        <ChangeHousingCorporation
+          housingCorporationId={ housing_corporation }
+          bagId={ bag_id }
+          caseId={ id }
+        />
+      )
+    }
   return data
 }
 
