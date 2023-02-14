@@ -10,6 +10,7 @@ import { useModal } from "app/components/shared/Modal/hooks/useModal"
 type Props = {
   caseId: Components.Schemas.CaseEvent["id"]
   getDocuments: () => Promise<unknown>
+  documentTypes?: Components.Schemas.DocumentType[]
 }
 
 const StyledDiv =  styled.div`
@@ -49,7 +50,7 @@ const StyledSelectedFile =  styled.span`
   margin-top: ${ themeSpacing(3) };
 `
 
-const FileUploader: React.FC<Props> = ({ caseId, getDocuments }) => {
+const FileUploader: React.FC<Props> = ({ caseId, getDocuments, documentTypes }) => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
   const [selectedFile, setSelectedFile] = useState<any>(null)
@@ -116,6 +117,7 @@ const FileUploader: React.FC<Props> = ({ caseId, getDocuments }) => {
         onClose={ closeModal }
         onSubmit={ saveDocument }
         loading={ loading }
+        documentTypes={ documentTypes }
       />
       <StyledSelectedFile>
         {selectedFile && `${ selectedFile?.name } is succesvol geüpload.`}

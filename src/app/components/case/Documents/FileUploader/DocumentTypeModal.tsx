@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { Select, Spinner, Button } from "@amsterdam/asc-ui"
 import Modal, { ModalBlock } from "app/components/shared/Modal/Modal"
-import { useDocumentTypesByCase } from "app/state/rest"
 import { ButtonContainer, StyledButton } from "../../CaseDetails/layout"
 
 type Props = {
@@ -10,15 +9,14 @@ type Props = {
   onClose: () => void
   onSubmit: (documentUrl: string) => void
   loading: boolean
+  documentTypes?: Components.Schemas.DocumentType[]
 }
 
 const DEFAULT_VALUE: string = "1"
 
-const DocumentTypeModal: React.FC<Props> = ({ caseId, isOpen, onClose, onSubmit, loading }) => {
+const DocumentTypeModal: React.FC<Props> = ({ caseId, isOpen, onClose, onSubmit, loading, documentTypes }) => {
   const [documentType, setDocumentType] = useState(DEFAULT_VALUE)
-  const [documentTypes, { isBusy }] = useDocumentTypesByCase(caseId)
-
-  const showSpinner = isBusy || documentTypes === undefined
+  const showSpinner = documentTypes === undefined
 
   const onCancel = () => {
     setDocumentType(DEFAULT_VALUE)
