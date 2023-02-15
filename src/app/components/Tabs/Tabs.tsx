@@ -29,11 +29,6 @@ export type TabsProps = {
    */
   children: ReactElement<PropsWithChildren<TabProps>, typeof Tab>[]
   /**
-   * The ID of the initial active tab
-   * @deprecated Please use `activeTab` instead
-   */
-  initialTab?: string
-  /**
    * The ID of the active tab
    */
   activeTab?: string
@@ -50,7 +45,6 @@ function formatPanelId(id: string) {
 export function Tabs({
   label,
   children,
-  initialTab,
   activeTab,
   className
 }: TabsProps & HTMLAttributes<HTMLDivElement>) {
@@ -59,8 +53,8 @@ export function Tabs({
     [children]
   )
   const foundInitialTab = useMemo(
-    () => allTabs.find((id) => id === (activeTab ?? initialTab)),
-    [allTabs, initialTab, activeTab]
+    () => allTabs.find((id) => id === activeTab),
+    [allTabs, activeTab]
   )
 
   // default to first tab
@@ -70,22 +64,13 @@ export function Tabs({
   )
 
   useEffect(() => {
-    if ((activeTab ?? initialTab) && !foundInitialTab) {
+    if (activeTab  && !foundInitialTab) {
       // eslint-disable-next-line no-console
       console.warn(
-        `You passed a wrong ${
-          activeTab ? "activeTab" : "initialTab"
-        } value to Tabs component. Given ID: ${ activeTab ?? initialTab }`
+        `You passed a wrong activeTab value to Tabs component. Given ID: ${ activeTab }`
       )
     }
-
-    if (initialTab) {
-      // eslint-disable-next-line no-console
-      console.warn(
-        "You are using a deprecated prop \"initialTab\" on Tabs component. Please use \"activeTab\" instead"
-      )
-    }
-  }, [initialActiveTab, activeTab, initialTab, foundInitialTab])
+  }, [initialActiveTab, activeTab, foundInitialTab])
 
   const [selectedTab, setSelectedTab] = useState(initialActiveTab)
   const tabListRef = useRef<HTMLDivElement>(null)
