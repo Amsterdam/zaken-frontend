@@ -6,6 +6,7 @@ import ChangeableSubject from "./ChangeSubject/ChangeableSubject"
 import ChangeHousingCorporation from "./ChangeHousingCorporation/ChangeHousingCorporation"
 import SensitiveCaseIcon from "../icons/SensitiveCaseIcon/SensitiveCaseIcon"
 import EnforcementIcon from "../icons/EnforcementIcon/EnforcementIcon"
+import { isThemeWithCorporations } from "app/components/case/themes/helpers"
 
 type Props = {
   caseId: Components.Schemas.CaseCreate["id"]
@@ -54,6 +55,7 @@ const getDataSecondCol = (isClosed: boolean, caseItem?: Components.Schemas.CaseC
 
   const { id, theme, reason, project, subjects, address: { housing_corporation, bag_id } } = caseItem
   const hasProject = project?.name !== undefined
+  const showHousingCorporation = isThemeWithCorporations(theme.id)
   const data: DefinitionListData = {
     "Thema": theme.name,
     "Aanleiding": `${ reason.name }${ hasProject ? ": " : "" }${ hasProject ? project.name : "" }`,
@@ -61,7 +63,7 @@ const getDataSecondCol = (isClosed: boolean, caseItem?: Components.Schemas.CaseC
       ? subjects.map((subject) => subject.name).join(", ")
       : <ChangeableSubject subjects={ subjects } caseId={ id } themeId={ theme.id } />
     }
-    if (theme.id === 6 || theme.id === 5) {
+    if (showHousingCorporation) {
       data["Corporatie"] = (
         <ChangeHousingCorporation
           housingCorporationId={ housing_corporation }
