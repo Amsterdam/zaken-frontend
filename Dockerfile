@@ -1,4 +1,4 @@
-FROM node:12 AS builder
+FROM node:16-alpine AS builder
 
 ARG COMMIT_HASH
 
