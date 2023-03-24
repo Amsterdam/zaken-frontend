@@ -3,8 +3,6 @@ import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import InfoContent from "./components/InfoContent"
 import navigateTo from "app/routing/navigateTo"
-import translationsViolationTypes from "app/translations/translationsViolationTypes"
-import translationsMap from "app/translations/translationsMap"
 
 const options = {
   "-": "-",
@@ -27,7 +25,7 @@ const getThemeOptions = (themeName?: string) => {
 
 export default (caseId: Components.Schemas.CaseDetail["id"], violationTypes: Components.Schemas.PaginatedViolationTypeList["results"], themeName?: string) => {
 
-  const violationOptions = violationTypes?.map(({ key }) => key).reduce((acc, item) => { acc[item] = translationsMap(translationsViolationTypes, item); return acc }, {} as Record<string, string>)
+  const violationOptions = violationTypes?.reduce((acc, item) => ({ ...acc, [item.key]: [item.value] }), {})
 
   const fields = {
     violation: {

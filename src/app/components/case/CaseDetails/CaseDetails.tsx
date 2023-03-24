@@ -7,6 +7,7 @@ import ChangeHousingCorporation from "./ChangeHousingCorporation/ChangeHousingCo
 import SensitiveCaseIcon from "../icons/SensitiveCaseIcon/SensitiveCaseIcon"
 import EnforcementIcon from "../icons/EnforcementIcon/EnforcementIcon"
 import { isThemeWithCorporations } from "app/components/case/themes/helpers"
+import translationsCaseStates from "app/translations/translationsCaseStates"
 
 type Props = {
   caseId: Components.Schemas.CaseCreate["id"]
@@ -28,9 +29,11 @@ const StyledDiv = styled.div`
 
 const CLOSED: Components.Schemas.CaseCreate["state"] = "AFGESLOTEN"
 
-const getDataFirstCol = (isClosed: boolean, caseItem?: Components.Schemas.CaseCreate) => {
-  if (caseItem === undefined) return
-  const { id, start_date, sensitive, previous_case, is_enforcement_request } = caseItem
+const getDataFirstCol = (caseItem?: Components.Schemas.CaseCreate) => {
+  if (caseItem === undefined) {
+    return undefined
+  }
+  const { id, start_date, sensitive, previous_case, is_enforcement_request, state } = caseItem
   const data: DefinitionListData = {
     "Zaak ID": (
       <Wrap>
@@ -39,7 +42,7 @@ const getDataFirstCol = (isClosed: boolean, caseItem?: Components.Schemas.CaseCr
         <EnforcementIcon show={ is_enforcement_request } />
       </Wrap>
     ),
-    "Status": isClosed ? <strong>Gesloten</strong> : "Open",
+    "Status": translationsCaseStates[state],
     "Startdatum": <DateDisplay date={ start_date ?? undefined } emptyText="-" />
   }
   if (previous_case) {
@@ -48,18 +51,18 @@ const getDataFirstCol = (isClosed: boolean, caseItem?: Components.Schemas.CaseCr
   return data
 }
 
-const getDataSecondCol = (isClosed: boolean, caseItem?: Components.Schemas.CaseCreate) => {
+const getDataSecondCol = (caseItem?: Components.Schemas.CaseCreate) => {
   if (caseItem === undefined) {
     return undefined
   }
 
-  const { id, theme, reason, project, subjects, address: { housing_corporation, bag_id } } = caseItem
+  const { id, theme, reason, project, subjects, state, address: { housing_corporation, bag_id } } = caseItem
   const hasProject = project?.name !== undefined
   const showHousingCorporation = isThemeWithCorporations(theme.id)
   const data: DefinitionListData = {
     "Thema": theme.name,
     "Aanleiding": `${ reason.name }${ hasProject ? ": " : "" }${ hasProject ? project.name : "" }`,
-    "Onderwerp(en)": isClosed
+    "Onderwerp(en)": state === CLOSED
       ? subjects.map((subject) => subject.name).join(", ")
       : <ChangeableSubject subjects={ subjects } caseId={ id } themeId={ theme.id } />
     }
@@ -78,9 +81,8 @@ const getDataSecondCol = (isClosed: boolean, caseItem?: Components.Schemas.CaseC
 const CaseDetails: React.FC<Props> = ({ caseId }) => {
   const [data, { isBusy }] = useCase(caseId)
 
-  const isClosed = data?.state === CLOSED
-  const dataFirstCol = getDataFirstCol(isClosed, data)
-  const dataSecondCol = getDataSecondCol(isClosed, data)
+  const dataFirstCol = getDataFirstCol(data)
+  const dataSecondCol = getDataSecondCol(data)
 
   return (
     <StyledDiv>

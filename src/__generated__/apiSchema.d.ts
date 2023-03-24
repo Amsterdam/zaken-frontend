@@ -1497,6 +1497,7 @@ declare namespace Components {
         export type ViolationEnum = "NO" | "YES" | "ADDITIONAL_RESEARCH_REQUIRED" | "ADDITIONAL_VISIT_REQUIRED" | "ADDITIONAL_VISIT_WITH_AUTHORIZATION" | "SEND_TO_OTHER_THEME" | "LIKELY_INHABITED";
         export interface ViolationType {
             key: string;
+            value: string;
         }
         export interface Visit {
             id: number;
