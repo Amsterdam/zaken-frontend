@@ -4,7 +4,7 @@ import { StrictMode } from "react"
 import ReactDOM from "react-dom"
 import App from "./App"
 import * as serviceWorker from "./serviceWorker"
-import { name, version } from "../package.json"
+import packageInfo from "../package.json"
 
 // Sentry
 import initSentry from "./app/sentry/init"
@@ -22,5 +22,5 @@ ReactDOM.render(
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister()
 
-console.log("Name:", name, version)
+console.log("Name:", packageInfo.name, packageInfo.version)
 console.log("Commit hash:", process.env.REACT_APP_GIT_COMMIT_HASH ?? "n/a")
