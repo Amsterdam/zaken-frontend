@@ -1,19 +1,18 @@
 import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
-import { Fields } from "app/components/shared/Form/ScaffoldFields"
+import { type Fields } from "app/components/shared/Form/ScaffoldFields"
 import navigateTo from "app/routing/navigateTo"
 
 export default (caseId: Components.Schemas.CaseDetail["id"], completeCaseReasons?: Components.Schemas.CaseCloseReason[], completeCaseResults?: Components.Schemas.CaseCloseResult[]) => {
-
   const fields = {
     reason: {
       type: "ComplexRadioFields",
-          props: {
-            isRequired: true,
-            label: "Wat is de reden?",
-            name: "reason",
-            optionLabelField: "name",
-            options: completeCaseReasons
-          }
+      props: {
+        isRequired: true,
+        label: "Wat is de reden?",
+        name: "reason",
+        optionLabelField: "name",
+        options: completeCaseReasons
+      }
     },
     result: {
       type: "ShowHide",
@@ -45,7 +44,7 @@ export default (caseId: Components.Schemas.CaseDetail["id"], completeCaseReasons
       props: {
         label: "Annuleren",
         variant: "primaryInverted",
-        onClick: () => navigateTo("/zaken/:id", { id: caseId })
+        onClick: async () => { await navigateTo("/zaken/:id", { id: caseId }) }
       }
     },
     submit: {
@@ -66,4 +65,3 @@ export default (caseId: Components.Schemas.CaseDetail["id"], completeCaseReasons
     ])
     .getScaffoldProps()
 }
-

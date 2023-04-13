@@ -1,7 +1,7 @@
 import { Button } from "@amsterdam/asc-ui"
 
 import { useModal } from "../Modal/hooks/useModal"
-import ConfirmModal, { Props as ConfirmModalProps } from "../Modal/ConfirmModal"
+import ConfirmModal, { type Props as ConfirmModalProps } from "../Modal/ConfirmModal"
 
 type Props =
   Omit<React.ComponentProps<typeof Button>, "onClick"> &

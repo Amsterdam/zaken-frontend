@@ -24,16 +24,16 @@ type Props = {
   setOwner: (value: string) => void
   taskNames?: Components.Schemas.CaseUserTaskTaskName[]
   selectedTaskNames: string[]
-  setSelectedTaskNames: (value: Components.Schemas.CaseUserTaskTaskName["name"][]) => void
+  setSelectedTaskNames: (value: Array<Components.Schemas.CaseUserTaskTaskName["name"]>) => void
   reasons?: Components.Schemas.CaseReason[]
   reason: string
   setReason: (value: string) => void
   districts: Components.Schemas.District[]
-  districtNames: Components.Schemas.District["name"][]
-  setDistrictNames: (value: Components.Schemas.District["name"][]) => void
+  districtNames: Array<Components.Schemas.District["name"]>
+  setDistrictNames: (value: Array<Components.Schemas.District["name"]>) => void
   corporations?: Components.Schemas.HousingCorporation[]
   selectedCorporations: string[]
-  setSelectedCorporations: (value: Components.Schemas.HousingCorporation["name"][]) => void
+  setSelectedCorporations: (value: Array<Components.Schemas.HousingCorporation["name"]>) => void
 }
 
 const TasksFilter: React.FC<Props> = ({
@@ -48,11 +48,11 @@ const TasksFilter: React.FC<Props> = ({
         <ScaffoldFields { ...scaffoldMyTasks(owner, setOwner) } />
       </ScaffoldForm>
       { themes === undefined
-          ? <Spinner />
-          : (
-            <ScaffoldForm>
-              <ScaffoldFields { ...scaffoldTheme(theme, themes, setTheme) } />
-            </ScaffoldForm>
+        ? <Spinner />
+        : (
+          <ScaffoldForm>
+            <ScaffoldFields { ...scaffoldTheme(theme, themes, setTheme) } />
+          </ScaffoldForm>
           )
       }
       { theme === "Onderhuur" && (
@@ -64,28 +64,32 @@ const TasksFilter: React.FC<Props> = ({
           byId
         />
       )}
-      { reasons === undefined ? <Spinner /> : (
-        <ScaffoldForm>
-          <ScaffoldFields { ...scaffoldReasons(reason, setReason, reasons) } />
-        </ScaffoldForm>
-        )
-      }
-      { roles === undefined
-          ? <Spinner />
-          : (
-            <ScaffoldForm>
-              <ScaffoldFields { ...scaffoldRole(role, roles, setRole) } />
-            </ScaffoldForm>
+      { reasons === undefined
+        ? <Spinner />
+        : (
+          <ScaffoldForm>
+            <ScaffoldFields { ...scaffoldReasons(reason, setReason, reasons) } />
+          </ScaffoldForm>
           )
       }
-      { taskNames === undefined ? <Spinner /> : (
-        <MultipleOptionsFilterBox
-          label="Taak namen"
-          options={ taskNames }
-          selectedOptions={ selectedTaskNames }
-          setSelectedOptions={ setSelectedTaskNames }
+      { roles === undefined
+        ? <Spinner />
+        : (
+          <ScaffoldForm>
+            <ScaffoldFields { ...scaffoldRole(role, roles, setRole) } />
+          </ScaffoldForm>
+          )
+      }
+      { taskNames === undefined
+        ? <Spinner />
+        : (
+          <MultipleOptionsFilterBox
+            label="Taak namen"
+            options={ taskNames }
+            selectedOptions={ selectedTaskNames }
+            setSelectedOptions={ setSelectedTaskNames }
         />
-      )}
+          )}
       <MultipleOptionsFilter
         label="Stadsdelen"
         options={ districts }
@@ -105,6 +109,5 @@ const TasksFilter: React.FC<Props> = ({
     </FilterMenu>
   </>
 )
-
 
 export default TasksFilter

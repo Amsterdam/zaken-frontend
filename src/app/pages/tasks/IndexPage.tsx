@@ -1,4 +1,4 @@
-import { RouteComponentProps } from "@reach/router"
+import { type RouteComponentProps } from "@reach/router"
 import { Heading } from "@amsterdam/asc-ui"
 
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"

@@ -11,7 +11,6 @@ type Props = {
 }
 
 const TaskButton: React.FC<Props> = ({ onSubmit, taskName, caseId, form, disabled = false }) => {
-
   const { isModalOpen, openModal, closeModal } = useModal()
 
   return (

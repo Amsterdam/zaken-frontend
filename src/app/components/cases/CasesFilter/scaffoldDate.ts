@@ -1,6 +1,6 @@
 import moment from "moment"
 import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
-import { Fields } from "app/components/shared/Form/ScaffoldFields"
+import { type Fields } from "app/components/shared/Form/ScaffoldFields"
 
 const DATE_FORMAT = "YYYY-MM-DD"
 
@@ -11,10 +11,10 @@ const getOptions = () => {
   const thirtyDaysAgo = moment().subtract(30, "days").format(DATE_FORMAT)
   return {
     "": "Alle zaken",
-   [today]: "Vandaag",
-   [yesterday]: "Gisteren",
-   [sevenDaysAgo]: "Laatste 7 dagen",
-   [thirtyDaysAgo]: "Laatste 30 dagen"
+    [today]: "Vandaag",
+    [yesterday]: "Gisteren",
+    [sevenDaysAgo]: "Laatste 7 dagen",
+    [thirtyDaysAgo]: "Laatste 30 dagen"
   }
 }
 

@@ -15,11 +15,11 @@ const IsAuthorizedWrapper: React.FC<Props> = ({ permissionNames, children }) => 
   const [hasPermission, isBusy] = useHasPermission(permissionNames)
 
   return (
-    isBusy ?
-      <Spinner /> :
-      hasPermission ?
-        <>{ children }</>
-      : null
+    isBusy
+      ? <Spinner />
+      : hasPermission
+        ? <>{ children }</>
+        : null
   )
 }
 

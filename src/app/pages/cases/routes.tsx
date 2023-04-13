@@ -26,7 +26,7 @@ export default {
             title: "Zaak afronden",
             icon: "Edit"
           },
-          "taak": {
+          taak: {
             Page: TaskCreatePage,
             title: "Taak opvoeren",
             icon: "Edit"

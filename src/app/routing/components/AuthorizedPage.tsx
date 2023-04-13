@@ -1,4 +1,4 @@
-import { RouteComponentProps } from "@reach/router"
+import { type RouteComponentProps } from "@reach/router"
 
 import NotAuthorizedPage from "app/pages/auth/NotAuthorizedPage"
 import useHasPermission from "app/state/rest/custom/usePermissions/useHasPermission"

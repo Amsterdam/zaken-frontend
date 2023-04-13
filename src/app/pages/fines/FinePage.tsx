@@ -1,4 +1,4 @@
-import { RouteComponentProps } from "@reach/router"
+import { type RouteComponentProps } from "@reach/router"
 
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
 import { RowWithColumn } from "app/components/layouts/Grid"
@@ -12,6 +12,6 @@ const FinePage: React.FC<RouteComponentProps> = () => (
     </RowWithColumn>
     <FinesSearchWrapper />
   </DefaultLayout>
-  )
+)
 
 export default FinePage

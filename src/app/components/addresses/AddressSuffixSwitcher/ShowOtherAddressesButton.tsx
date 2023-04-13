@@ -19,7 +19,7 @@ const StyledIcon = styled(Icon)`
 `
 
 const renderIcon = (index: Index) => {
-  switch(index) {
+  switch (index) {
     case "first":
       return <StyledIcon size={32}><ExpandMore/></StyledIcon>
     case "last":

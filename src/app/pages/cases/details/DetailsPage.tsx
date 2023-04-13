@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { RouteComponentProps } from "@reach/router"
+import { type RouteComponentProps } from "@reach/router"
 import styled from "styled-components"
 import { Divider, Heading, themeSpacing } from "@amsterdam/asc-ui"
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
@@ -29,7 +29,6 @@ const PaddedContent = styled.div`
 `
 
 const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
-
   const [exists, isBusy, has404, id, caseItem] = useExistingCase(parseUrlParamId(idString))
   const [hasPermission, isLoading] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const showSpinner = isBusy || isLoading
@@ -37,7 +36,6 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
   const isAuthorized = caseItem?.sensitive === false || (caseItem?.sensitive === true && hasPermission)
   const showNotFound = has404
   const [isDocumentsTabActive, setIsDocumentsTabActive] = useState(false)
-
 
   if (showSpinner) {
     return <PageSpinner />
@@ -64,7 +62,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
   ]
   if (process.env.REACT_APP_ENVIRONMENT !== "production") {
     tabs.push(
-      <Tab id="2" key="2" label="Documenten" onClick={ () => setIsDocumentsTabActive(true) } >
+      <Tab id="2" key="2" label="Documenten" onClick={ () => { setIsDocumentsTabActive(true) } } >
         <PaddedContent>
           <Documents caseId={ id } isActiveTab={ isDocumentsTabActive }/>
         </PaddedContent>

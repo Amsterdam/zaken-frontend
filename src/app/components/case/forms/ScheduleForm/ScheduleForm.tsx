@@ -24,10 +24,10 @@ const mapData = (data: ScheduleTypeFormData) => ({
   visit_from_datetime: data.visit_from_datetime ? moment(data.visit_from_datetime).format() : null
 })
 
-const visitFromOptions: { id: number, name: string }[] = [{
-    id: 1, name: "Vanaf vandaag"
-  }, {
-    id: 2, name: "Vanaf een specifieke datum"
+const visitFromOptions: Array<{ id: number, name: string }> = [{
+  id: 1, name: "Vanaf vandaag"
+}, {
+  id: 2, name: "Vanaf een specifieke datum"
 }]
 
 const ScheduleForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
@@ -39,12 +39,14 @@ const ScheduleForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
 
   const initialValues = {
     action: scheduleTypes?.actions[0].id,
-    ...caseItem?.theme?.name === "Ondermijning" ? {
-      week_segment: scheduleTypes?.week_segments.find((e) => e.name === "Doordeweeks"),
-      day_segment: scheduleTypes?.day_segments.find((e) => e.name === "Overdag"),
-      visit_from: visitFromOptions[0],
-      priority: scheduleTypes?.priorities.find((e) => e.name === "Machtiging")
-    } : {}
+    ...caseItem?.theme?.name === "Ondermijning"
+      ? {
+          week_segment: scheduleTypes?.week_segments.find((e) => e.name === "Doordeweeks"),
+          day_segment: scheduleTypes?.day_segments.find((e) => e.name === "Overdag"),
+          visit_from: visitFromOptions[0],
+          priority: scheduleTypes?.priorities.find((e) => e.name === "Machtiging")
+        }
+      : {}
   }
 
   return (

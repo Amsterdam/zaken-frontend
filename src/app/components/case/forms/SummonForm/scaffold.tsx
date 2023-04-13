@@ -1,5 +1,5 @@
 import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
-import { Fields } from "app/components/shared/Form/ScaffoldFields"
+import { type Fields } from "app/components/shared/Form/ScaffoldFields"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import navigateTo from "app/routing/navigateTo"
 import { personRoleMap } from "@amsterdam/wonen-ui/helpers/dictionaries"
@@ -52,7 +52,7 @@ export default (caseId: Components.Schemas.CaseDetail["id"], summonTypes?: Compo
     legal_entity_role: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: {entity_type: string}}) => formValues?.values?.entity_type === "legal",
+        shouldShow: (formValues: { values?: { entity_type: string } }) => formValues?.values?.entity_type === "legal",
         field: {
           type: "ComplexSelectField",
           props: {
@@ -70,7 +70,7 @@ export default (caseId: Components.Schemas.CaseDetail["id"], summonTypes?: Compo
     legal_entity_name: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: {entity_type: string}}) => formValues?.values?.entity_type === "legal",
+        shouldShow: (formValues: { values?: { entity_type: string } }) => formValues?.values?.entity_type === "legal",
         field: {
           type: "InputField",
           props: {
@@ -85,7 +85,7 @@ export default (caseId: Components.Schemas.CaseDetail["id"], summonTypes?: Compo
     legal_entity_type: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: {entity_type: string}}) => formValues?.values?.entity_type === "legal",
+        shouldShow: (formValues: { values?: { entity_type: string } }) => formValues?.values?.entity_type === "legal",
         field: {
           type: "SelectField",
           props: {
@@ -106,9 +106,9 @@ export default (caseId: Components.Schemas.CaseDetail["id"], summonTypes?: Compo
       type: "ShowHide",
       props: {
         shouldShow: (formValues: { values?: {
-            entity_type: string
-            legal_entity_type: string
-          }}) => (
+          entity_type: string
+          legal_entity_type: string
+        } }) => (
           formValues?.values?.entity_type === "natural"
         ),
         field: {
@@ -124,7 +124,7 @@ export default (caseId: Components.Schemas.CaseDetail["id"], summonTypes?: Compo
               first_name: {
                 type: "TextField",
                 props: {
-                  placeholder:"Voornaam",
+                  placeholder: "Voornaam",
                   name: "first_name",
                   isRequired: true
                 }
@@ -132,7 +132,7 @@ export default (caseId: Components.Schemas.CaseDetail["id"], summonTypes?: Compo
               preposition: {
                 type: "TextField",
                 props: {
-                  placeholder:"Tussenvoegsel",
+                  placeholder: "Tussenvoegsel",
                   name: "preposition"
                 }
               },
@@ -164,9 +164,9 @@ export default (caseId: Components.Schemas.CaseDetail["id"], summonTypes?: Compo
       type: "ShowHide",
       props: {
         shouldShow: (formValues: { values?: {
-            entity_type: string
-            legal_entity_type: string
-          }}) => (
+          entity_type: string
+          legal_entity_type: string
+        } }) => (
           formValues?.values?.entity_type === "legal" &&
           formValues?.values?.legal_entity_type === "person"
         ),
@@ -183,7 +183,7 @@ export default (caseId: Components.Schemas.CaseDetail["id"], summonTypes?: Compo
               first_name: {
                 type: "TextField",
                 props: {
-                  placeholder:"Voornaam",
+                  placeholder: "Voornaam",
                   name: "first_name",
                   isRequired: true
                 }
@@ -191,7 +191,7 @@ export default (caseId: Components.Schemas.CaseDetail["id"], summonTypes?: Compo
               preposition: {
                 type: "TextField",
                 props: {
-                  placeholder:"Tussenvoegsel",
+                  placeholder: "Tussenvoegsel",
                   name: "preposition"
                 }
               },
@@ -221,7 +221,7 @@ export default (caseId: Components.Schemas.CaseDetail["id"], summonTypes?: Compo
       props: {
         label: "Annuleren",
         variant: "primaryInverted",
-        onClick: () => navigateTo("/zaken/:id", { id: caseId })
+        onClick: async () => { await navigateTo("/zaken/:id", { id: caseId }) }
       }
     },
     submit: {
@@ -247,4 +247,3 @@ export default (caseId: Components.Schemas.CaseDetail["id"], summonTypes?: Compo
     ])
     .getScaffoldProps()
 }
-

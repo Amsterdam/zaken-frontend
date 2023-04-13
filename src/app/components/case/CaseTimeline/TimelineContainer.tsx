@@ -12,20 +12,24 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
 
   return (
     <>
-      { hasErrors ? (
-        <ErrorMessage message="Laden van tijdlijn evenementen mislukt" />
-        ) : (
+      { hasErrors
+        ? (
+          <ErrorMessage message="Laden van tijdlijn evenementen mislukt" />
+          )
+        : (
           <>
-            { timelineEvents === undefined ? <Spinner /> : (
-              <EventsTimeline
-                events={ timelineEvents }
-                spacingHorizontal={ 3 }
-                prefixUrl={ `${ process.env.REACT_APP_AZA_FE }zaken/` }
+            { timelineEvents === undefined
+              ? <Spinner />
+              : (
+                <EventsTimeline
+                  events={ timelineEvents }
+                  spacingHorizontal={ 3 }
+                  prefixUrl={ `${ process.env.REACT_APP_AZA_FE }zaken/` }
               />
-              )
+                )
             }
           </>
-        )
+          )
       }
       { showEmpty && <p>Geen tijdlijn evenementen beschikbaar</p> }
     </>

@@ -1,6 +1,6 @@
 declare type BAGAddressResponse = {
   results: Array<{
-    _links: Array<any>
+    _links: any[]
     adres: string
     adresseerbaar_object_id: string
     bag_huisletter: string

@@ -1,4 +1,4 @@
-import { useFlashMessages, FlashMessageLevel } from "./useFlashMessages"
+import { useFlashMessages, type FlashMessageLevel } from "./useFlashMessages"
 import to from "app/routing/utils/to"
 import navigateTo from "app/routing/navigateTo"
 

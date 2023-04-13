@@ -5,21 +5,21 @@ import TableAction from "app/components/shared/TableAction/TableAction"
 export const columnsOpenCases = [
   {
     header: "Zaak ID",
-    dataIndex: "id" ,
+    dataIndex: "id",
     minWidth: 100,
     render: (id: any) => <CaseIdDisplay id={ id } />
   }, {
     header: "Thema",
-    dataIndex: "theme.name" ,
+    dataIndex: "theme.name",
     minWidth: 100
   }, {
     header: "Startdatum",
-    dataIndex: "start_date" ,
+    dataIndex: "start_date",
     minWidth: 100,
     render: (start_date: any) => <DateDisplay date={ start_date ?? undefined } emptyText="-" />
   }, {
     header: "Huidige status",
-    dataIndex: "workflows" ,
+    dataIndex: "workflows",
     minWidth: 100,
     render: (workflows: any) => workflows?.length > 0 ? workflows.map((status: any) => status.state.name).join(", ") : "-"
   }, {
@@ -32,21 +32,21 @@ export const columnsOpenCases = [
 export const columnsClosedCases = [
   {
     header: "Zaak ID",
-    dataIndex: "id" ,
+    dataIndex: "id",
     minWidth: 100,
     render: (id: any) => <CaseIdDisplay id={ id } />
   }, {
     header: "Thema",
-    dataIndex: "theme.name" ,
+    dataIndex: "theme.name",
     minWidth: 100
   }, {
     header: "Afsluitdatum",
-    dataIndex: "end_date" ,
+    dataIndex: "end_date",
     minWidth: 100,
     render: (end_date: any) => <DateDisplay date={ end_date ?? undefined } emptyText="-" />
   }, {
     header: "Aanleiding",
-    dataIndex: "reason" ,
+    dataIndex: "reason",
     minWidth: 100,
     render: (reason: any) => reason.name != null ? reason.name : "-"
   }, {
@@ -55,4 +55,3 @@ export const columnsClosedCases = [
     render: (id: any) => <TableAction to={ to("/zaken/:id", { id }) }>Zaakdetails</TableAction>
   }
 ]
-

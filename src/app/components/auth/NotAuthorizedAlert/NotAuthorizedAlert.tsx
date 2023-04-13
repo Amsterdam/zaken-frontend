@@ -7,12 +7,11 @@ const StyledAlert = styled(Alert)`
 `
 
 const NotAuthorizedAlert: React.FC = () => {
-
   const [data] = useIsAuthorized()
   const showUnauthorized = data?.is_authorized === false
 
-  return showUnauthorized ?
-    <StyledAlert level="error">Je bent niet geauthorizeerd. Waarschijnlijk staan de Keycloak groepen gekoppeld aan je ADW account niet goed ingesteld.</StyledAlert> :
-    null
+  return showUnauthorized
+    ? <StyledAlert level="error">Je bent niet geauthorizeerd. Waarschijnlijk staan de Keycloak groepen gekoppeld aan je ADW account niet goed ingesteld.</StyledAlert>
+    : null
 }
 export default NotAuthorizedAlert

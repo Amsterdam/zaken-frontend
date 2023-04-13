@@ -15,8 +15,8 @@ const sortingIndexMapping: any = {
   "address.street_name": "address__street_name, start_date",
   "address.postal_code": "address__postal_code, start_date",
   "reason.name": "reason__name, start_date",
-  "start_date": "start_date, id",
-  "last_updated": "last_updated, start_date"
+  start_date: "start_date, id",
+  last_updated: "last_updated, start_date"
 }
 
 const getOrderingValue = (sorting: TABLE.Schemas.Sorting) => {
@@ -37,7 +37,7 @@ export const useCases = (
   theme?: string,
   from_start_date?: string,
   reason?: string,
-  districtNames?: Components.Schemas.District["name"][],
+  districtNames?: Array<Components.Schemas.District["name"]>,
   housingCorporations?: string[],
   options?: Options
 ) => {
@@ -48,7 +48,7 @@ export const useCases = (
     from_start_date,
     open_cases: true
   }
-  if (sensitive === false) {
+  if (!sensitive) {
     urlParams.sensitive = false
   }
   if (theme) {
@@ -57,13 +57,13 @@ export const useCases = (
   if (reason) {
     urlParams.reason_name = reason
   }
-  if (districtNames && districtNames?.length > 0) {
+  if ((districtNames != null) && districtNames?.length > 0) {
     urlParams.district_name = districtNames
   }
-  if (housingCorporations && housingCorporations?.length > 0) {
+  if ((housingCorporations != null) && housingCorporations?.length > 0) {
     urlParams.housing_corporation = housingCorporations
   }
-  if (sorting) {
+  if (sorting != null) {
     urlParams.ordering = getOrderingValue(sorting)
   }
 

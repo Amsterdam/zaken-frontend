@@ -1,6 +1,6 @@
 import * as Constants from "./constants"
 
-const THEMES_WITH_CORPORATIONS: Components.Schemas.CaseTheme["id"][] = [
+const THEMES_WITH_CORPORATIONS: Array<Components.Schemas.CaseTheme["id"]> = [
   Constants.LEEGSTAND_THEME_ID,
   Constants.ONDERHUUR_THEME_ID
 ]

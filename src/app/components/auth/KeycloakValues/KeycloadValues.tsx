@@ -4,7 +4,6 @@ import { DefinitionList } from "@amsterdam/wonen-ui"
 import useValues from "./hooks/useValues"
 
 const KeycloakValues: React.FC = () => {
-
   const keycloak = useKeycloak()
   const tokenParsed = keycloak.tokenParsed as KeycloakTokenParsedExtended
   const values = useValues(keycloak, tokenParsed)

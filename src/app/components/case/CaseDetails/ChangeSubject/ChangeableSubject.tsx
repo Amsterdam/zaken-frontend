@@ -14,7 +14,7 @@ const ChangeableSubject: React.FC<Props> = ({ subjects, caseId, themeId }) => {
   const [, { execPatch }] = useCase(caseId)
 
   const onSubmit = (data: { subjects: Components.Schemas.Subject[] }) => {
-    execPatch( { subject_ids: data.subjects.map((subject: Components.Schemas.Subject) => subject.id) })
+    execPatch({ subject_ids: data.subjects.map((subject: Components.Schemas.Subject) => subject.id) })
   }
 
   return (

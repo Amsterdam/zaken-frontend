@@ -1,5 +1,5 @@
 import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
-import { Fields } from "app/components/shared/Form/ScaffoldFields"
+import { type Fields } from "app/components/shared/Form/ScaffoldFields"
 
 const scaffold = (onCancel: () => void) => {
   const fields = {

@@ -9,7 +9,7 @@ const PageHeading: React.FC<Props> = ({ titlePostFix }) => {
   const route = find(routes, window.location.pathname)
   const pageConfig = route ? routes[route] : undefined
 
-  return <HeadingWithIcon icon={ pageConfig?.icon } header={ `${ pageConfig?.title ?? ""  } ${ titlePostFix ?? "" }`} />
+  return <HeadingWithIcon icon={ pageConfig?.icon } header={ `${ pageConfig?.title ?? "" } ${ titlePostFix ?? "" }`} />
 }
 
 export default PageHeading

@@ -9,7 +9,7 @@ type RectResult = {
   right: number
   top: number
   width: number
-};
+}
 
 const getRect = <T extends HTMLElement>(element?: T): RectResult => {
   let rect: RectResult = {
@@ -20,7 +20,7 @@ const getRect = <T extends HTMLElement>(element?: T): RectResult => {
     top: 0,
     width: 0
   }
-  if (element) rect = element.getBoundingClientRect()
+  if (element != null) rect = element.getBoundingClientRect()
   return rect
 }
 
@@ -29,7 +29,7 @@ export default <T extends HTMLElement>(
   delay = 0
 ): RectResult => {
   const [rect, setRect] = useState<RectResult>(
-    ref?.current ? getRect(ref.current) : getRect()
+    ((ref?.current) != null) ? getRect(ref.current) : getRect()
   )
 
   const handleResize = useCallback(() => {
@@ -46,14 +46,14 @@ export default <T extends HTMLElement>(
     const debounced = debounce(handleResize, delay)
 
     if (typeof ResizeObserver === "function") {
-      let resizeObserver = new ResizeObserver(debounced)
+      const resizeObserver = new ResizeObserver(debounced)
       resizeObserver.observe(element)
       return () => {
         resizeObserver.disconnect()
       }
     } else {
       window.addEventListener("resize", debounced) // Browser support, remove freely
-      return () => window.removeEventListener("resize", debounced)
+      return () => { window.removeEventListener("resize", debounced) }
     }
   }, [ref, delay, handleResize])
 

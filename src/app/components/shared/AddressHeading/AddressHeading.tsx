@@ -18,7 +18,7 @@ const AddressHeading: React.FC<Props> = ({ caseId }) => {
   return (
     <>
       <Heading as="h3">Adres</Heading>
-      { data &&
+      { (data != null) &&
       <Div>
         <p><AddressDisplay streetName={ data.address.street_name } streetNumber={ data.address.number } suffix={ data.address.suffix_letter } etage={ data.address.suffix } /></p>
         <p>{ data.address.postal_code } Amsterdam</p>

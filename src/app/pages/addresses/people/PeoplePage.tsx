@@ -1,5 +1,5 @@
 
-import { RouteComponentProps } from "@reach/router"
+import { type RouteComponentProps } from "@reach/router"
 
 import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId"
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
@@ -15,23 +15,25 @@ type Props = {
 }
 
 const PeoplePage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
-  isValidUrlParamBAGId(bagId) ? (
-    <DefaultLayout>
-      <Row>
-        <Column spanLarge={ 50 }>
-          <PageHeading />
-        </Column>
-        <Column spanLarge={ 50 }>
-          <DetailHeader bagId={ bagId } />
-        </Column>
-      </Row>
-      <Row>
-        <Column spanLarge={ 50 }>
-          <ResidentsOverview bagId={ bagId } />
-        </Column>
-      </Row>
-    </DefaultLayout>
-  ) : <NotFoundPage />
+  isValidUrlParamBAGId(bagId)
+    ? (
+      <DefaultLayout>
+        <Row>
+          <Column spanLarge={ 50 }>
+            <PageHeading />
+          </Column>
+          <Column spanLarge={ 50 }>
+            <DetailHeader bagId={ bagId } />
+          </Column>
+        </Row>
+        <Row>
+          <Column spanLarge={ 50 }>
+            <ResidentsOverview bagId={ bagId } />
+          </Column>
+        </Row>
+      </DefaultLayout>
+      )
+    : <NotFoundPage />
 )
 
 export default PeoplePage

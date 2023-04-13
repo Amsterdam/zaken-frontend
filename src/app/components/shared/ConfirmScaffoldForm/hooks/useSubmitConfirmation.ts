@@ -3,7 +3,6 @@ import { useState } from "react"
 const defaultMapData = <T, U>(data: T) => data as unknown as U
 
 export default <T, U, V>(postMethod: (data: U) => Promise<V>, mapData: (data: T) => U = defaultMapData) => {
-
   const [isSubmitted, setSubmitted] = useState(false)
   const [data, setData] = useState<T>()
 

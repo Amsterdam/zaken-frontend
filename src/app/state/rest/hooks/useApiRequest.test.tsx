@@ -17,7 +17,7 @@ const Wrapper: React.FC = ({ children }) => (
       { children }
     </ApiProvider>
   </KeycloakProvider>
-  )
+)
 
 describe("useApiRequest", () => {
   it("should perform a GET request on mount", async () => {
@@ -35,8 +35,8 @@ describe("useApiRequest", () => {
     expect(result.current[0]).toEqual(undefined)
 
     // Make API respond:
-    await act(() => waitForNextUpdate())
-    await act(() => waitForNextUpdate())
+    await act(async () => { await waitForNextUpdate() })
+    await act(async () => { await waitForNextUpdate() })
 
     // not busy anymore... results are in!
     expect(result.current[1].isBusy).toEqual(false)
@@ -67,8 +67,8 @@ describe("useApiRequest", () => {
     expect(result.current.first[0]).toEqual(undefined)
     expect(result.current.second[0]).toEqual(undefined)
 
-    await act(() => waitForNextUpdate())
-    await act(() => waitForNextUpdate())
+    await act(async () => { await waitForNextUpdate() })
+    await act(async () => { await waitForNextUpdate() })
 
     // not busy anymore
     expect(result.current.first[1].isBusy).toEqual(false)
@@ -81,19 +81,19 @@ describe("useApiRequest", () => {
   })
 
   test.each([
-    [ "POST",
+    ["POST",
       (scope: nock.Scope) => scope.post("/pet").reply(200),
       (hook: any) => hook[1].execPost({ name: "popo" })
     ],
-    [ "PUT",
+    ["PUT",
       (scope: nock.Scope) => scope.put("/pet").reply(200),
       (hook: any) => hook[1].execPut({ name: "popo" })
     ],
-    [ "PATCH",
+    ["PATCH",
       (scope: nock.Scope) => scope.patch("/pet").reply(200),
       (hook: any) => hook[1].execPatch({ name: "popo" })
     ],
-    [ "DELETE",
+    ["DELETE",
       (scope: nock.Scope) => scope.delete("/pet").reply(200),
       (hook: any) => hook[1].execDelete()
     ]
@@ -110,22 +110,22 @@ describe("useApiRequest", () => {
 
     const onSuccess = jest.fn()
     const { result, waitForNextUpdate } = renderHook(usePet, { wrapper: Wrapper })
-    await act(() => waitForNextUpdate())
-    await act(() => waitForNextUpdate())
+    await act(async () => { await waitForNextUpdate() })
+    await act(async () => { await waitForNextUpdate() })
 
     // On mount, "Fifi" should be fetched
     expect(result.current[0]).toEqual({ name: "Fifi", type: "dog" })
 
     await act(async () => {
       await exec(result.current).then(onSuccess)
-      return waitForNextUpdate()
+      await waitForNextUpdate()
     })
 
     // Cache was cleared. Data should be undefined now:
     expect(result.current[0]).toEqual(undefined)
 
     // New fetch should happen
-    await act(() => waitForNextUpdate())
+    await act(async () => { await waitForNextUpdate() })
     expect(result.current[0]).toEqual({ name: "Popo", type: "dog" })
 
     expect(onSuccess).toHaveBeenCalled()
@@ -141,8 +141,8 @@ describe("useApiRequest", () => {
       .reply(500, { detail: "S.O.S." })
 
     const { waitForNextUpdate } = renderHook(usePet, { wrapper: Wrapper })
-    await act(() => waitForNextUpdate())
-    await act(() => waitForNextUpdate())
+    await act(async () => { await waitForNextUpdate() })
+    await act(async () => { await waitForNextUpdate() })
 
     expect(handleError).toHaveBeenCalledWith(expect.objectContaining({
       message: "Request failed with status code 500",

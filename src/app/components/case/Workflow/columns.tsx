@@ -36,9 +36,11 @@ export default (execPost: (payload?: any) => Promise<unknown>) => (
       header: "Slotdatum",
       dataIndex: "due_date",
       minWidth: 120,
-      render: (due_date: any, record: any) =>  due_date ? (
-        <ChangeableDueDate dueDate={ due_date } caseId={ record.case } caseUserTaskId={ record.case_user_task_id } />
-      ) : <Span>-</Span>
+      render: (due_date: any, record: any) => due_date
+        ? (
+          <ChangeableDueDate dueDate={ due_date } caseId={ record.case } caseUserTaskId={ record.case_user_task_id } />
+          )
+        : <Span>-</Span>
     }, {
       header: "Verwerking taak",
       dataIndex: "case",
@@ -46,28 +48,30 @@ export default (execPost: (payload?: any) => Promise<unknown>) => (
       render: (id: any, record: any) => {
         const { task_name, case_user_task_id, user_has_permission, name, form } = record
         const action = taskActionMap[task_name]
-        const onSubmitTaskComplete = (variables: Components.Schemas.CaseUserTaskWorkdflow["form_variables"] | null = {}) => (
-          execPost({ case: id, case_user_task_id, variables })
+        const onSubmitTaskComplete = async (variables: Components.Schemas.CaseUserTaskWorkdflow["form_variables"] | null = {}) => (
+          await execPost({ case: id, case_user_task_id, variables })
         )
         const disabled = task_name === "task_create_visit" || !user_has_permission
         return (
-          action !== undefined ? (
-            <TableAction
-              title={ to(`/zaken/:id/${ action.target }/:caseUserTaskId`, { id, caseUserTaskId: case_user_task_id }) }
-              to={ to(`/zaken/:id/${ action.target }/:caseUserTaskId`, { id, caseUserTaskId: case_user_task_id }) }
-              disabled={ action.disabled ?? disabled }
+          action !== undefined
+            ? (
+              <TableAction
+                title={ to(`/zaken/:id/${ action.target }/:caseUserTaskId`, { id, caseUserTaskId: case_user_task_id }) }
+                to={ to(`/zaken/:id/${ action.target }/:caseUserTaskId`, { id, caseUserTaskId: case_user_task_id }) }
+                disabled={ action.disabled ?? disabled }
             >
-              { action.name }
-            </TableAction>
-          ) : (
-            <TaskButton
-              onSubmit={ onSubmitTaskComplete }
-              taskName={ name }
-              caseId={ id }
-              form={ form }
-              disabled={ disabled }
+                { action.name }
+              </TableAction>
+              )
+            : (
+              <TaskButton
+                onSubmit={ onSubmitTaskComplete }
+                taskName={ name }
+                caseId={ id }
+                form={ form }
+                disabled={ disabled }
             />
-          )
+              )
         )
       }
     }

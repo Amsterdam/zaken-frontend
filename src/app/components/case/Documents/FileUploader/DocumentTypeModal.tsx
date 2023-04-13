@@ -23,24 +23,26 @@ const DocumentTypeModal: React.FC<Props> = ({ caseId, isOpen, onClose, onSubmit,
     onClose()
   }
 
-  const sortedDocumentTypes = documentTypes ? documentTypes.sort((a, b) => a.omschrijving.localeCompare(b.omschrijving)) : []
+  const sortedDocumentTypes = (documentTypes != null) ? documentTypes.sort((a, b) => a.omschrijving.localeCompare(b.omschrijving)) : []
 
   return (
     <Modal isOpen={ isOpen } onClose={ onCancel } title="Kies een documenttype">
       <ModalBlock>
-        { showSpinner ? <Spinner /> : (
-          <>
-            <Select
-              id="select-document-type"
-              onChange={ (event: React.ChangeEvent<HTMLSelectElement>) => setDocumentType(event.target.value) }
+        { showSpinner
+          ? <Spinner />
+          : (
+            <>
+              <Select
+                id="select-document-type"
+                onChange={ (event: React.ChangeEvent<HTMLSelectElement>) => { setDocumentType(event.target.value) } }
             >
-              <option value={ DEFAULT_VALUE }>Maak een keuze</option>
-              { sortedDocumentTypes.map((type) => (
-                <option value={ type.url } key={ type.url } >{ type.omschrijving }</option>
-              ))}
-            </Select>
-          </>
-        )}
+                <option value={ DEFAULT_VALUE }>Maak een keuze</option>
+                { sortedDocumentTypes.map((type) => (
+                  <option value={ type.url } key={ type.url } >{ type.omschrijving }</option>
+                ))}
+              </Select>
+            </>
+            )}
         <ButtonContainer>
           <StyledButton
             onClick={ onCancel }
@@ -50,7 +52,7 @@ const DocumentTypeModal: React.FC<Props> = ({ caseId, isOpen, onClose, onSubmit,
             Annuleer
           </StyledButton>
           <Button
-            onClick={() => onSubmit(documentType) }
+            onClick={() => { onSubmit(documentType) } }
             variant="primary"
             disabled={ documentType === DEFAULT_VALUE || loading }
             iconLeft={ loading ? <Spinner /> : null }

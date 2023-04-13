@@ -12,9 +12,12 @@ export default (isProtected?: boolean, isMocked?: boolean, isMockExtended?: bool
   const mockedRequest = useMockedRequest()
   const mockExtendedRequest = useMockExtendedRequest(isProtected)
   return (
-    isMockExtended ? mockExtendedRequest :
-    isMocked ? mockedRequest :
-    isProtected ? protectedRequest
-    : request
+    isMockExtended
+      ? mockExtendedRequest
+      : isMocked
+        ? mockedRequest
+        : isProtected
+          ? protectedRequest
+          : request
   )
 }

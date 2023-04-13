@@ -34,12 +34,12 @@ const MenuItems: React.FC = () => (
       const menuItem = (
         <MenuItem key={ path }>
           { permissionNames !== undefined
-              ? <IsAuthorizedMenuButton permissionNames={ permissionNames } isHidden={ isHidden } text={ title } to={ to(path) } />
-              : (
-                <StyledButtonLink to={ to(path) }>
-                  <MenuButton as="span">{ title }</MenuButton>
-                </StyledButtonLink>
-            )
+            ? <IsAuthorizedMenuButton permissionNames={ permissionNames } isHidden={ isHidden } text={ title } to={ to(path) } />
+            : (
+              <StyledButtonLink to={ to(path) }>
+                <MenuButton as="span">{ title }</MenuButton>
+              </StyledButtonLink>
+              )
           }
         </MenuItem>
       )

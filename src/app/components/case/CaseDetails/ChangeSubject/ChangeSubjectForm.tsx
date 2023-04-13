@@ -9,14 +9,14 @@ type Props = {
   onCancel: () => void
   subjects: Components.Schemas.Subject[]
   themeId: Components.Schemas.CaseTheme["id"]
-  initialValues?: { subjects: Components.Schemas.Subject[]}
+  initialValues?: { subjects: Components.Schemas.Subject[] }
 }
 
 const ChangeSubjectForm: React.FC<Props> = ({ isLoading, onSubmit, onCancel, themeId, initialValues }) => {
   const [subjectsTheme] = useSubjects(themeId)
   const [caseTheme] = useCaseThemes()
-  const [ otherTheme, setOtherTheme ] = useState<number | undefined>(undefined)
-  const [ otherSubjects ] = useSubjects(otherTheme)
+  const [otherTheme, setOtherTheme] = useState<number | undefined>(undefined)
+  const [otherSubjects] = useSubjects(otherTheme)
   const [selectedSubjects, setSelectedSubjects] = useState<Components.Schemas.Subject[] | undefined>(initialValues?.subjects)
 
   const isSelected = (subjectId: number) => (
@@ -27,7 +27,7 @@ const ChangeSubjectForm: React.FC<Props> = ({ isLoading, onSubmit, onCancel, the
     if (isSelected(subject.id)) {
       setSelectedSubjects(selectedSubjects?.filter(sub => sub.id !== subject.id))
     } else {
-      setSelectedSubjects([...selectedSubjects || [], subject])
+      setSelectedSubjects([...(selectedSubjects != null) || [], subject])
     }
   }
 
@@ -44,13 +44,13 @@ const ChangeSubjectForm: React.FC<Props> = ({ isLoading, onSubmit, onCancel, the
     <>
       {subjects.map(subject => (
         <StyledLabel
-          onClick={() => handleCheck(subject)}
+          onClick={() => { handleCheck(subject) }}
           key={subject.id}
           htmlFor={subject.id.toString()}
           label={subject.name}>
           <Checkbox
             id={subject.id.toString()}
-            onChange={() => handleCheck(subject)}
+            onChange={() => { handleCheck(subject) }}
             checked={isSelected(subject.id)}
             />
         </StyledLabel>
@@ -60,28 +60,28 @@ const ChangeSubjectForm: React.FC<Props> = ({ isLoading, onSubmit, onCancel, the
 
   return (
     <>
-      { subjectsTheme && !isLoading
-      ? (
-        <>
-          <CheckBoxes subjects={subjectsTheme?.results || []}/>
-          <StyledSelect onChange={(e) => setOtherTheme(parseInt((e.target as HTMLSelectElement).value)) }>
-            { !otherTheme && <option>Voeg onderwerpen van ander thema toe</option>}
-            {caseTheme?.results?.filter(theme => theme.id !== themeId).map(theme => (
-              <option key={theme.id} value={theme.id}>{theme.name}</option>
+      { (subjectsTheme != null) && !isLoading
+        ? (
+          <>
+            <CheckBoxes subjects={((subjectsTheme?.results) != null) || []}/>
+            <StyledSelect onChange={(e) => { setOtherTheme(parseInt((e.target as HTMLSelectElement).value)) } }>
+              { !otherTheme && <option>Voeg onderwerpen van ander thema toe</option>}
+              {caseTheme?.results?.filter(theme => theme.id !== themeId).map(theme => (
+                <option key={theme.id} value={theme.id}>{theme.name}</option>
               ))}
-          </StyledSelect>
-          <CheckBoxes subjects={otherSubjects?.results || []}/>
-          <ButtonContainer>
-            <StyledButton onClick={onCancel} variant="primaryInverted">
-              Annuleer
-            </StyledButton>
-            <Button onClick={submit} variant="primary">
-              Verwerken
-            </Button>
-          </ButtonContainer>
-        </>
-      )
-      : <Spinner />
+            </StyledSelect>
+            <CheckBoxes subjects={((otherSubjects?.results) != null) || []}/>
+            <ButtonContainer>
+              <StyledButton onClick={onCancel} variant="primaryInverted">
+                Annuleer
+              </StyledButton>
+              <Button onClick={submit} variant="primary">
+                Verwerken
+              </Button>
+            </ButtonContainer>
+          </>
+          )
+        : <Spinner />
     }
     </>
   )

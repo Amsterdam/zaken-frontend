@@ -21,11 +21,11 @@ export type RequestQueue = {
 }
 
 const reducer = produce((draft: State, action: Action) => {
-  switch(action.type) {
+  switch (action.type) {
     case "PUSH":
       if (!isPending(draft, action.item.url, action.item.method)) {
         draft.push(action.item)
-      } 
+      }
       break
     case "SHIFT":
       draft.shift()
@@ -39,16 +39,16 @@ const isPending = (state: Readonly<State>, url: string, method: string): boolean
 export const useRequestQueue = () => {
   const [isBusy, setIsBusy] = useState(false)
   const [state, dispatch] = useReducer(reducer, [])
-  const isRequestPendingInQueue = useCallback((url, method) => isPending(state, url, method), [ state ])
+  const isRequestPendingInQueue = useCallback((url, method) => isPending(state, url, method), [state])
 
   const pushRequestInQueue = useCallback(
-    (url: string, method: string, promise: QueuedPromise) => { dispatch({ type: "PUSH", item: { url, method, promise  } }) },
-    [ dispatch ]
+    (url: string, method: string, promise: QueuedPromise) => { dispatch({ type: "PUSH", item: { url, method, promise } }) },
+    [dispatch]
   )
 
   const shiftRequest = useCallback(
-    () => dispatch({ type: "SHIFT" }),
-    [ dispatch ]
+    () => { dispatch({ type: "SHIFT" }) },
+    [dispatch]
   )
 
   // Call items in queue one by one.
@@ -62,7 +62,7 @@ export const useRequestQueue = () => {
           setIsBusy(false)
         })
     }
-  }, [ state, shiftRequest, setIsBusy, isBusy ])
+  }, [state, shiftRequest, setIsBusy, isBusy])
 
   return { isRequestPendingInQueue, pushRequestInQueue }
 }

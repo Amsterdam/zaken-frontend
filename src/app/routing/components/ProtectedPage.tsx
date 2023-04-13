@@ -1,4 +1,4 @@
-import { RouteComponentProps } from "@reach/router"
+import { type RouteComponentProps } from "@reach/router"
 
 import useKeycloak from "app/state/auth/keycloak/useKeycloak"
 import AuthorizedPage from "./AuthorizedPage"

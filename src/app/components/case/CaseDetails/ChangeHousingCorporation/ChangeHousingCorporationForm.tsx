@@ -35,7 +35,7 @@ const ChangeHousingCorporationForm: React.FC<Props> = ({
               <Radio
                 id={ `housingCorporation-${ housingCorporation.id }` }
                 checked={ housingCorporation.id === housingCorporationId }
-                onChange={() => setSelectedCorpo(housingCorporation.id)}
+                onChange={() => { setSelectedCorpo(housingCorporation.id) }}
               />
             </Label>
           ))

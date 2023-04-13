@@ -3,7 +3,6 @@ import { useEffect } from "react"
 import DocumentsTable from "./DocumentsTable/DocumentsTable"
 import FileUploader from "./FileUploader/FileUploader"
 
-
 type Props = {
   caseId: Components.Schemas.CaseEvent["id"]
   isActiveTab?: boolean
@@ -15,9 +14,9 @@ const Documents: React.FC<Props> = ({ caseId, isActiveTab }) => {
 
   // Fetch the documents when user clicks on the documents tab.
   useEffect(() => {
-    if (isActiveTab) {
-      getDocuments()
-      getDocumentTypes()
+    if (isActiveTab != null) {
+      void getDocuments()
+      void getDocumentTypes()
     }
   }, [isActiveTab, getDocuments, getDocumentTypes])
 

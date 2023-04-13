@@ -9,7 +9,6 @@ type Props = {
 }
 
 const DecisionHeader: React.FC<Props> = ({ caseId, caseUserTaskId, workflows }) => {
-
   const [summons, { isBusy }] = useSummonsWithCaseId(caseId)
 
   const task = workflows?.map(({ tasks }) => tasks).flat().find(({ case_user_task_id }) => case_user_task_id === caseUserTaskId)

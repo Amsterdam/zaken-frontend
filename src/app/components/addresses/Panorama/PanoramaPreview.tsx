@@ -29,9 +29,9 @@ const PanoramaPreview: React.FC<Props> = ({ bagId, width: w, aspect = 1.5, radiu
 
   return (
     <Div ref={ ref } style={ { height } }>
-      { data ?
-        <Img src={ data.url } alt={ `Panorama preview voor BAG: ${ bagId }` } /> :
-        null
+      { (data != null)
+        ? <Img src={ data.url } alt={ `Panorama preview voor BAG: ${ bagId }` } />
+        : null
       }
     </Div>
   )

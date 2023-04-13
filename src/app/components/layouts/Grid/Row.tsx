@@ -40,7 +40,7 @@ const RowStyle = styled.div<TypeProps>`
   @media screen and ${ breakpoint("min-width", "laptopM") } {
     width: calc(100% + ${ GUTTER }px);
     margin-left: -${ GUTTER / 2 }px;
-    margin-right: -${ GUTTER  / 2 }px;
+    margin-right: -${ GUTTER / 2 }px;
 
     /* Column */
     > div {

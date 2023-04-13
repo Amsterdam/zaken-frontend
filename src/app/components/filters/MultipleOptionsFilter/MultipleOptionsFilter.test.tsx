@@ -52,7 +52,6 @@ test("checkboxes are checked", () => {
     const checkbox = screen.getByTestId(ARR_2[i].name)
     expect(checkbox).not.toBeChecked()
   }
-
 })
 
 test("label is set and changed", () => {
@@ -78,7 +77,6 @@ test("label is set and changed", () => {
     />
   )
   expect(queryByText(LABEL_2)).toBeInTheDocument()
-
 })
 
 test("onChange is called and checkbox is checked", () => {
@@ -110,5 +108,4 @@ test("onChange is called and checkbox is checked", () => {
   )
   // testOptionName is set as prop so checkbox must be checked.
   expect(screen.getByTestId(testOptionName)).toBeChecked()
-
 })

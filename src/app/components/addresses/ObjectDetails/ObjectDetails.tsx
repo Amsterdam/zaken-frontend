@@ -7,7 +7,6 @@ type Props = {
 }
 
 const ObjectDetails: React.FC<Props> = ({ bagId }) => {
-
   const [BAGAddress, { isBusy: isBusyAddress }] = useBAG(bagId)
   const { type, subtype_id } = BAGAddress?.results[0] ?? {}
   const [BAGObject, { isBusy: isBusyObject }] = useBAGLodging(type, subtype_id)

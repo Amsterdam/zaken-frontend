@@ -99,7 +99,7 @@ describe("Tabs", () => {
     expect(tabPanelOne).not.toHaveAttribute("hidden")
     expect(tabPanelTwo).toHaveAttribute("hidden")
 
-    if (tabTwo) {
+    if (tabTwo != null) {
       fireEvent.click(tabTwo)
     }
 
@@ -147,7 +147,7 @@ describe("Tabs", () => {
 
     const tabOne = container.querySelector("#tab-one")
 
-    if (tabOne) {
+    if (tabOne != null) {
       fireEvent.click(tabOne)
     }
 
@@ -213,7 +213,7 @@ describe("Tabs", () => {
   })
 
   it("should change the active tab when the activeTab prop changes", () => {
-    function Wrapper() {
+    function Wrapper () {
       const [activeTab, setActiveTab] = useState("two")
       return (
         <>
@@ -231,7 +231,7 @@ describe("Tabs", () => {
           <button
             type="button"
             data-testid="button"
-            onClick={() => setActiveTab("three")}
+            onClick={() => { setActiveTab("three") }}
           >
             Programmically change the active tab to the third tab
           </button>

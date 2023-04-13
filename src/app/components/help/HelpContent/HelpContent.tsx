@@ -5,7 +5,7 @@ import PhoneLink from "./PhoneLink"
 import { Refresh } from "app/components/shared/Icons"
 import styled from "styled-components"
 
-const RefreshIcon = styled (Refresh)`
+const RefreshIcon = styled(Refresh)`
   vertical-align: text-top;
 `
 

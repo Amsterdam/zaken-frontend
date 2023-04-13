@@ -8,7 +8,7 @@ import useHasPermission, { SENSITIVE_CASE_PERMISSION } from "app/state/rest/cust
 import { ContextValues } from "app/state/context/ValueProvider"
 import { RowWithColumn } from "app/components/layouts/Grid"
 
-type Item = string | Components.Schemas.District["name"][]
+type Item = string | Array<Components.Schemas.District["name"]>
 
 const Container = styled.div`
   margin: 0 auto;
@@ -31,7 +31,7 @@ const Cases: React.FC = () => {
   const {
     results, count, pagination, sorting, fromStartDate, theme,
     updateContextCases, reason, districtNames, housingCorporations
-  } = useContext(ContextValues)["cases"]
+  } = useContext(ContextValues).cases
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const [caseThemes] = useCaseThemes()
   const [reasons] = useTasksReasons(theme)
@@ -93,11 +93,12 @@ const Cases: React.FC = () => {
     updateContextCases({ pagination, sorting })
   }
 
-  const themes = caseThemes?.results || []
+  const themes = ((caseThemes?.results) != null) || []
   const underminingId = themes.find((e) => e.name === UNDERMINING)?.id
-  const districts = caseDistricts?.results || []
-  const emptyPlaceholder = hasPermission === false && theme === underminingId?.toString()
-    ? EMPTY_TEXT_NO_PERMISSION : EMPTY_TEXT
+  const districts = ((caseDistricts?.results) != null) || []
+  const emptyPlaceholder = !hasPermission && theme === underminingId?.toString()
+    ? EMPTY_TEXT_NO_PERMISSION
+    : EMPTY_TEXT
 
   return (
     <>
@@ -120,21 +121,21 @@ const Cases: React.FC = () => {
         <FilterContainer>
           <CasesFilter
             date={ fromStartDate }
-            setDate={ (value: string) => onChangeFilter("fromStartDate", value) }
+            setDate={ (value: string) => { onChangeFilter("fromStartDate", value) } }
             theme={ theme }
             themes={ themes }
-            setTheme={ (value: string) => onChangeFilter("theme", value) }
+            setTheme={ (value: string) => { onChangeFilter("theme", value) } }
             setPageSize={ onChangePageSize }
             pageSize={ pagination.pageSize?.toString() || "10" }
             reason={ reason }
-            setReason={ (value: string) => onChangeFilter("reason", value) }
+            setReason={ (value: string) => { onChangeFilter("reason", value) } }
             reasons={ reasons }
             districts={ districts }
             districtNames={ districtNames }
-            setDistrictNames={ (value: Components.Schemas.District["name"][]) => onChangeFilter("districtNames", value) }
+            setDistrictNames={ (value: Array<Components.Schemas.District["name"]>) => { onChangeFilter("districtNames", value) } }
             corporations={ corporationData?.results }
             selectedCorporations={ housingCorporations }
-            setSelectedCorporations={ (value: string[]) => onChangeFilter("housingCorporations", value) }
+            setSelectedCorporations={ (value: string[]) => { onChangeFilter("housingCorporations", value) } }
           />
         </FilterContainer>
       </Container>

@@ -13,13 +13,13 @@ type Props = {
   documentTypes?: Components.Schemas.DocumentType[]
 }
 
-const StyledDiv =  styled.div`
+const StyledDiv = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: ${ themeSpacing(6) };
 `
 
-const StyledSpan =  styled.span`
+const StyledSpan = styled.span`
   margin-bottom: ${ themeSpacing(4) };
 `
 
@@ -46,7 +46,7 @@ const Input = styled.input.attrs({ type: "file" })`
   display: none;
 `
 
-const StyledSelectedFile =  styled.span`
+const StyledSelectedFile = styled.span`
   margin-top: ${ themeSpacing(3) };
 `
 
@@ -98,9 +98,11 @@ const FileUploader: React.FC<Props> = ({ caseId, getDocuments, documentTypes }) 
       <StyledLabel htmlFor="file-upload">
         Klik hier en selecteer een bestand om te uploaden
         <StyledIconSpan>
-          { loading ? <Spinner size={28} color={ themeColor("primary") }/> : (
-            <Icon size={28}><CloudUpload /></Icon>
-          )}
+          { loading
+            ? <Spinner size={28} color={ themeColor("primary") }/>
+            : (
+              <Icon size={28}><CloudUpload /></Icon>
+              )}
         </StyledIconSpan>
       </StyledLabel>
       <Input

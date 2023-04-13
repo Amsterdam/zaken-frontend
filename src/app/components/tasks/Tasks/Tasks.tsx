@@ -1,5 +1,6 @@
 import { useEffect, useContext } from "react"
-import { useRoles, useTasks, useCaseThemes, useTaskNames,
+import {
+  useRoles, useTasks, useCaseThemes, useTaskNames,
   useUsersMe, useTasksReasons, useDistricts, useCorporations
 } from "app/state/rest"
 import TableTasks from "app/components/tasks/TableTasks/TableTasks"
@@ -12,7 +13,7 @@ import { Heading, themeSpacing } from "@amsterdam/asc-ui"
 import styled from "styled-components"
 import EnforcementIcon from "app/components/case/icons/EnforcementIcon/EnforcementIcon"
 
-type Item = string | Components.Schemas.District["name"][]
+type Item = string | Array<Components.Schemas.District["name"]>
 
 const EMPTY_TEXT_NO_PERMISSION = "Helaas, u bent niet geautoriseerd om deze taken te bekijken."
 const EMPTY_TEXT = "Er zijn momenteel geen open taken voor de gekozen filters."
@@ -47,7 +48,7 @@ const Tasks: React.FC = () => {
     results, count, pagination, sorting, role, theme,
     updateContextTasks, owner, taskNames, reason, districtNames,
     housingCorporations
-  } = useContext(ContextValues)["tasks"]
+  } = useContext(ContextValues).tasks
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const [roles] = useRoles()
   const [me] = useUsersMe()
@@ -84,10 +85,9 @@ const Tasks: React.FC = () => {
     districtNames,
     housingCorporations
   )
-  const [ taskNamesData ] = useTaskNames(role ?? "")
+  const [taskNamesData] = useTaskNames(role ?? "")
   const queryUrl = getQueryUrl(hasPermission, pagination, sorting, theme, role, owner)
   const { clearContextCache } = useContextCache("cases", queryUrl)
-
 
   useEffect(() => {
     // Set initial role when loaded for the first time
@@ -148,21 +148,21 @@ const Tasks: React.FC = () => {
     updateContextTasks({ pagination, sorting })
   }
 
-  const districts = tasksDistricts?.results || []
-  const emptyPlaceholder = hasPermission === false && theme === UNDERMINING ? EMPTY_TEXT_NO_PERMISSION : EMPTY_TEXT
+  const districts = ((tasksDistricts?.results) != null) || []
+  const emptyPlaceholder = !hasPermission && theme === UNDERMINING ? EMPTY_TEXT_NO_PERMISSION : EMPTY_TEXT
   const enforcementTasksAvailable = !!enforcementDataSource?.results?.length
 
   return (
     <Container>
       <div>
-        { enforcementTasksAvailable &&  (
+        { enforcementTasksAvailable && (
           <Wrap>
             <StyledHeading as="h2">
               Handhavingsverzoeken ({ enforcementDataSource?.count })
               <EnforcementIcon show />
             </StyledHeading>
             <TableTasks
-              data={ enforcementDataSource?.results || [] }
+              data={ ((enforcementDataSource?.results) != null) || [] }
               isBusy={ isBusyEnforcement }
               onChange={onChangeTable}
               pagination={false}
@@ -193,26 +193,26 @@ const Tasks: React.FC = () => {
         <TasksFilter
           role={ role ?? "" }
           roles={ roles }
-          setRole={ (value: string) => onChangeFilter("role", value) }
+          setRole={ (value: string) => { onChangeFilter("role", value) } }
           theme={ theme }
           themes={ caseThemes?.results }
-          setTheme={ (value: string) => onChangeFilter("theme", value) }
+          setTheme={ (value: string) => { onChangeFilter("theme", value) } }
           setPageSize={ onChangePageSize }
           pageSize={ pagination.pageSize?.toString() || "25" }
           owner={ owner }
-          setOwner={ (value: string) => onChangeFilter("owner", value) }
+          setOwner={ (value: string) => { onChangeFilter("owner", value) } }
           selectedTaskNames={ taskNames }
-          setSelectedTaskNames={ (value: Components.Schemas.CaseUserTaskTaskName["name"][]) => onChangeFilter("taskNames", value) }
+          setSelectedTaskNames={ (value: Array<Components.Schemas.CaseUserTaskTaskName["name"]>) => { onChangeFilter("taskNames", value) } }
           taskNames={ taskNamesData }
           reason={ reason }
-          setReason={ (value: string) => onChangeFilter("reason", value)}
+          setReason={ (value: string) => { onChangeFilter("reason", value) }}
           reasons={ reasons }
           districts={ districts }
           districtNames={ districtNames }
-          setDistrictNames={ (value: Components.Schemas.District["name"][]) => onChangeFilter("districtNames", value)}
+          setDistrictNames={ (value: Array<Components.Schemas.District["name"]>) => { onChangeFilter("districtNames", value) }}
           corporations={ corporationData?.results }
           selectedCorporations={ housingCorporations }
-          setSelectedCorporations={ (value: string[]) => onChangeFilter("housingCorporations", value) }
+          setSelectedCorporations={ (value: string[]) => { onChangeFilter("housingCorporations", value) } }
         />
       </FilterContainer>
     </Container>

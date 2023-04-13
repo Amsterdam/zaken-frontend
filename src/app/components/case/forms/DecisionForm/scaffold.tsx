@@ -1,12 +1,11 @@
 import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
-import { Fields } from "app/components/shared/Form/ScaffoldFields"
+import { type Fields } from "app/components/shared/Form/ScaffoldFields"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import navigateTo from "app/routing/navigateTo"
 
 const descriptionRequired = (idDecision: number | undefined, shouldMatch = true) => shouldMatch ? idDecision === 9 : idDecision !== 9
 
 export default (caseId: Components.Schemas.CaseDetail["id"], decisions?: Components.Schemas.DecisionType[]) => {
-
   const fields = {
     decision_type: {
       type: "ComplexSelectField",
@@ -71,7 +70,7 @@ export default (caseId: Components.Schemas.CaseDetail["id"], decisions?: Compone
       props: {
         label: "Annuleren",
         variant: "primaryInverted",
-        onClick: () => navigateTo("/zaken/:id", { id: caseId })
+        onClick: async () => { await navigateTo("/zaken/:id", { id: caseId }) }
       }
     },
     submit: {
@@ -94,4 +93,3 @@ export default (caseId: Components.Schemas.CaseDetail["id"], decisions?: Compone
     ])
     .getScaffoldProps()
 }
-

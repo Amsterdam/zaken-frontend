@@ -1,6 +1,6 @@
 import { Spinner } from "@amsterdam/asc-ui"
 import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
-import ScaffoldFields, { Fields } from "app/components/shared/Form/ScaffoldFields"
+import ScaffoldFields, { type Fields } from "app/components/shared/Form/ScaffoldFields"
 import ConfirmScaffoldFields from "./ConfirmScaffoldFields"
 import useSubmitConfirmation from "./hooks/useSubmitConfirmation"
 
@@ -17,7 +17,6 @@ type Props<T, U, V> = {
 }
 
 const ConfirmScaffoldForm = <T extends Rec, U extends Rec, V extends Rec>(props: Props<T, U, V>) => {
-
   const { fields, postMethod, mapData, afterSubmit, initialValues, submittingTitle, title } = props
   const {
     isSubmitted,
@@ -37,10 +36,12 @@ const ConfirmScaffoldForm = <T extends Rec, U extends Rec, V extends Rec>(props:
   }
 
   return (
-    fields === undefined ? <Spinner /> : (
-      <ScaffoldForm onSubmit={ onSubmit } initialValues={ initialValues }>
-        <ScaffoldFields { ...fields }/>
-        { isSubmitted && (
+    fields === undefined
+      ? <Spinner />
+      : (
+        <ScaffoldForm onSubmit={ onSubmit } initialValues={ initialValues }>
+          <ScaffoldFields { ...fields }/>
+          { isSubmitted && (
           <ConfirmScaffoldFields<typeof fields.fields>
             fields={ fields.fields }
             data={ data }
@@ -52,9 +53,9 @@ const ConfirmScaffoldForm = <T extends Rec, U extends Rec, V extends Rec>(props:
             submittingTitle={ submittingTitle }
             title={ title }
           />
-        )}
-      </ScaffoldForm>
-    )
+          )}
+        </ScaffoldForm>
+        )
   )
 }
 

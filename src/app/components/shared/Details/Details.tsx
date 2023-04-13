@@ -1,8 +1,7 @@
-import { ReactNode, useCallback, useState } from "react"
+import { type ReactNode, useCallback, useState } from "react"
 import { Button, Heading, themeColor, themeSpacing } from "@amsterdam/asc-ui"
 import { SmallSkeleton } from "@amsterdam/wonen-ui"
 import styled from "styled-components"
-
 
 type Value = ReactNode
 type Props = {
@@ -57,7 +56,7 @@ const castValue = (value: Value): ReactNode => {
 const Details: React.FC<Props> = ({ isLoading, numLoadingRows, numInitialVisibleRows = Number.MAX_VALUE, title, values, startAlternative = true, headingSize = "h2" }) => {
   const [isCollapsed, setIsCollapsed] = useState(true)
 
-  const toggleCollapsed = useCallback(() => setIsCollapsed(!isCollapsed), [setIsCollapsed, isCollapsed])
+  const toggleCollapsed = useCallback(() => { setIsCollapsed(!isCollapsed) }, [setIsCollapsed, isCollapsed])
 
   const valueEntries = Object.entries(values)
 
@@ -72,23 +71,22 @@ const Details: React.FC<Props> = ({ isLoading, numLoadingRows, numInitialVisible
     <StyledTable>
       <tbody>
         { isLoading
-        ? <LoadingRows numRows={numLoadingRows ?? 5} />
-        : <>
-          { rows
+          ? <LoadingRows numRows={numLoadingRows ?? 5} />
+          : <>
+            { rows
               .map(([key, value]) => (
                 <StyledTR key={key} startAlternative={ startAlternative }>
                   <StyledTD>{ key }</StyledTD>
                   <StyledTD>{ castValue(value) }</StyledTD>
                 </StyledTR>
               )) }
-          { isCollapsible && isCollapsed && <tr><td><StyledButton variant="textButton" onClick={toggleCollapsed}> + Toon alle </StyledButton></td></tr> }
-          { isCollapsible && !isCollapsed && <tr><td><StyledButton variant="textButton" onClick={toggleCollapsed}> - Toon minder </StyledButton></td></tr> }
-        </>
+            { isCollapsible && isCollapsed && <tr><td><StyledButton variant="textButton" onClick={toggleCollapsed}> + Toon alle </StyledButton></td></tr> }
+            { isCollapsible && !isCollapsed && <tr><td><StyledButton variant="textButton" onClick={toggleCollapsed}> - Toon minder </StyledButton></td></tr> }
+          </>
         }
       </tbody>
     </StyledTable>
   </>)
 }
-
 
 export default Details

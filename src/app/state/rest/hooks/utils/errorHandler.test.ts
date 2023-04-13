@@ -1,7 +1,7 @@
 // Module mocking should always be on top:
 // -----------------------------------------
 import { renderHook } from "@testing-library/react-hooks"
-import { AxiosError } from "axios"
+import { type AxiosError } from "axios"
 
 import { useErrorHandler } from "./errorHandler"
 
@@ -17,7 +17,7 @@ describe("rest hook utils", () => {
       mockAddErrorFlashMessage.mockReset()
     })
 
-    it ("should return a callback pushes a flash message", () => {
+    it("should return a callback pushes a flash message", () => {
       const mockedError: AxiosError = {
         isAxiosError: true,
         name: "error",

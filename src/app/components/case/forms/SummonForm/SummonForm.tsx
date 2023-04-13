@@ -11,7 +11,7 @@ type Props = {
   caseUserTaskId: Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"]
 }
 
-//TODO Schema from backend should be improved
+// TODO Schema from backend should be improved
 type SummonData = Omit<Components.Schemas.Summon, "type"> & {
   type: { id: number }
   entity_type: "natural" | "legal"
@@ -22,7 +22,7 @@ type SummonData = Omit<Components.Schemas.Summon, "type"> & {
 }
 
 const mapData = (data: SummonData) => {
-  let persons: any[] = []
+  const persons: any[] = []
   if (data.entity_type === "legal") {
     if (data.legal_entity_type === "board") {
       persons.push({
@@ -52,7 +52,6 @@ const mapData = (data: SummonData) => {
 }
 
 const SummonForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
-
   const themeId = useCase(id)[0]?.theme.id
   const [data] = useSummonTypes(themeId)
   const summonTypes = data?.results

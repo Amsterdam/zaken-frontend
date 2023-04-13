@@ -21,9 +21,9 @@ const ChangeHousingCorporation: React.FC<Props> = ({ housingCorporationId, bagId
   const [, { execPatch }] = useAddresses(bagId, { lazy: true })
 
   useEffect(() => {
-    if (data?.results) {
+    if ((data?.results) != null) {
       // Add a null option for no housing corporation.
-      let corporations: any = [...data?.results]
+      const corporations: any = [...data?.results]
       corporations.push({ id: null, name: "Geen corporatie" })
       setHousingCorporations(corporations)
     }

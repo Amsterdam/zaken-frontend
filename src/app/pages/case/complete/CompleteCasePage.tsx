@@ -1,5 +1,5 @@
 
-import { RouteComponentProps } from "@reach/router"
+import { type RouteComponentProps } from "@reach/router"
 
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
@@ -17,14 +17,14 @@ type Props = {
 }
 
 const CompleteCasePage: React.FC<RouteComponentProps<Props>> = ({ id: idString, caseUserTaskId }) => {
-
   const id = parseUrlParamId(idString)
 
-  const isValid = isValidUrlParamId<Components.Schemas.CaseDetail["id"]>(id)
-    && isValidUrlParamId<Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"]>(caseUserTaskId)
+  const isValid = isValidUrlParamId<Components.Schemas.CaseDetail["id"]>(id) &&
+    isValidUrlParamId<Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"]>(caseUserTaskId)
 
-    return (
-      isValid ? (
+  return (
+    isValid
+      ? (
         <DefaultLayout>
           <RowWithColumn>
             <PageHeading />
@@ -38,7 +38,8 @@ const CompleteCasePage: React.FC<RouteComponentProps<Props>> = ({ id: idString, 
             </Column>
           </Row>
         </DefaultLayout>
-      ) : <NotFoundPage />
+        )
+      : <NotFoundPage />
   )
 }
 

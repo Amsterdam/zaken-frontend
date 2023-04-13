@@ -1,6 +1,6 @@
 import { createContext, useReducer, useCallback } from "react"
 import actions from "./actions"
-import initialState, { StateType } from "./initialState"
+import initialState, { type StateType } from "./initialState"
 import reducer from "./reducer"
 
 // Context and Provider

@@ -14,7 +14,7 @@ const DocumentsTable: React.FC<Props> = ({ caseId, documents, loading, getDocume
   const [numLoadingRows, setNumLoadingRows] = useState(3)
 
   useEffect(() => {
-    if (documents && documents?.length > 0) {
+    if ((documents != null) && documents?.length > 0) {
       // Set number of loading rows to keep the table height when loading
       setNumLoadingRows(documents.length)
     }

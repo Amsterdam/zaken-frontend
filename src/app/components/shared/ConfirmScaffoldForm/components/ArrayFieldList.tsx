@@ -11,12 +11,12 @@ const isComplexField = (field: string | ComplexField): field is ComplexField => 
 const ArrayFieldList: React.FC<Props> = ({ fields }) => (
   <List>
     { fields.map(field => {
-        const s = Object.keys(field).map(key => {
-          const f = field[key]
-          return isComplexField(f) ? `- ${ f?.label }` : f
-        }).join(" ")
-        return <ListItem key={ s }>{ s }</ListItem>
-      })
+      const s = Object.keys(field).map(key => {
+        const f = field[key]
+        return isComplexField(f) ? `- ${ f?.label }` : f
+      }).join(" ")
+      return <ListItem key={ s }>{ s }</ListItem>
+    })
     }
   </List>
 )

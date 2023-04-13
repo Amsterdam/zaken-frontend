@@ -1,7 +1,6 @@
 import first from "./first"
 
 describe("first", () => {
-
   it("undefined", () => {
     expect(first(undefined)).toBeUndefined()
   })

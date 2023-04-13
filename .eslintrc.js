@@ -1,8 +1,28 @@
 module.exports = {
-  plugins: ["unused-imports"],
+  env: {
+    browser: true,
+    es2021: true
+  },
   extends: [
-    "react-app"
+    'plugin:react/recommended',
+    'standard-with-typescript'
   ],
+  overrides: [
+  ],
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    project: ["./tsconfig.json"]
+  },
+  plugins: [
+    'react',
+    "unused-imports"
+  ],
+  settings: {
+    react: {
+     version: "detect",
+    },
+  },
   rules: {
     "arrow-body-style": ["error", "as-needed"],
     "block-spacing": ["error", "always"],
@@ -18,8 +38,11 @@ module.exports = {
     "unused-imports/no-unused-imports": "warn",
     "react/jsx-indent-props": ["error", 2],
     "react/jsx-indent" : ["error", 2],
-
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": 0,
     "@typescript-eslint/consistent-type-definitions": ["error", "type"],
+    "@typescript-eslint/explicit-function-return-type": "warn",
+    "@typescript-eslint/restrict-template-expressions": "warn",
     "@typescript-eslint/member-delimiter-style": ["error", {
       multiline: {
         delimiter: "none",
@@ -34,6 +57,7 @@ module.exports = {
       before: false,
       after: true,
       overrides: { arrow: { before: true, after: true } }
-    }]
+    }],
+    "@typescript-eslint/quotes": ["error", "double"]
   }
 }

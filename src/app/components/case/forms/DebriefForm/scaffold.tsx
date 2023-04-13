@@ -1,17 +1,17 @@
 import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
-import { Fields } from "app/components/shared/Form/ScaffoldFields"
+import { type Fields } from "app/components/shared/Form/ScaffoldFields"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import InfoContent from "./components/InfoContent"
 import navigateTo from "app/routing/navigateTo"
 
 const options = {
   "-": "-",
-  "Kamerverhuur": "Kamerverhuur",
-  "Leegstand": "Leegstand",
-  "Onderhuur": "Onderhuur",
-  "Ondermijning": "Ondermijning",
-  "Vakantieverhuur": "Vakantieverhuur",
-  "Woningverbetering": "Woningverbetering"
+  Kamerverhuur: "Kamerverhuur",
+  Leegstand: "Leegstand",
+  Onderhuur: "Onderhuur",
+  Ondermijning: "Ondermijning",
+  Vakantieverhuur: "Vakantieverhuur",
+  Woningverbetering: "Woningverbetering"
 }
 
 // Remove current theme from options
@@ -24,7 +24,6 @@ const getThemeOptions = (themeName?: string) => {
 }
 
 export default (caseId: Components.Schemas.CaseDetail["id"], violationTypes: Components.Schemas.PaginatedViolationTypeList["results"], themeName?: string) => {
-
   const violationOptions = violationTypes?.reduce((acc, item) => ({ ...acc, [item.key]: [item.value] }), {})
 
   const fields = {
@@ -56,7 +55,7 @@ export default (caseId: Components.Schemas.CaseDetail["id"], violationTypes: Com
     nuisance_detected: {
       type: "ShowHide",
       props: {
-        shouldShow: (() => themeName === "Vakantieverhuur" ),
+        shouldShow: () => themeName === "Vakantieverhuur",
         field: {
           type: "CheckboxFields",
           props: {
@@ -83,7 +82,7 @@ export default (caseId: Components.Schemas.CaseDetail["id"], violationTypes: Com
       props: {
         label: "Annuleer",
         variant: "primaryInverted",
-        onClick: () => navigateTo("/zaken/:id", { id: caseId })
+        onClick: async () => { await navigateTo("/zaken/:id", { id: caseId }) }
       }
     },
     submit: {

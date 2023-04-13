@@ -1,7 +1,7 @@
 import { useCallback } from "react"
 import merge from "lodash.merge"
 
-import useRequest, { Method } from "./useRequest"
+import useRequest, { type Method } from "./useRequest"
 import useProtectedRequest from "./useProtectedRequest"
 import useMockedRequest from "./useMockedRequest"
 import { stripApiHostFromUrl } from "./utils/apiUrl"

@@ -1,15 +1,14 @@
 import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
 import moment from "moment"
-import { Fields } from "app/components/shared/Form/ScaffoldFields"
+import { type Fields } from "app/components/shared/Form/ScaffoldFields"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import navigateTo from "app/routing/navigateTo"
 
 export default (
-    caseId: Components.Schemas.CaseDetail["id"],
-    scheduleTypes?: Components.Schemas.ThemeScheduleTypes,
-    visitFromOptions?: { id: number, name: string }[]
-  ) => {
-
+  caseId: Components.Schemas.CaseDetail["id"],
+  scheduleTypes?: Components.Schemas.ThemeScheduleTypes,
+  visitFromOptions?: Array<{ id: number, name: string }>
+) => {
   const fields = {
     week_segment: {
       type: "ComplexSelectField",
@@ -89,7 +88,7 @@ export default (
       props: {
         label: "Annuleren",
         variant: "primaryInverted",
-        onClick: () => navigateTo("/zaken/:id", { id: caseId })
+        onClick: async () => { await navigateTo("/zaken/:id", { id: caseId }) }
       }
     },
     submit: {
@@ -113,4 +112,3 @@ export default (
     ])
     .getScaffoldProps()
 }
-

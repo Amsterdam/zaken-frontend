@@ -28,14 +28,16 @@ const PermitOverview: React.FC<Props> = ({ bagId }) => {
   }
   return (
     <>
-      { values === undefined ? (
-        <>
-          <Heading forwardedAs="h2">Vergunningen</Heading>
-          <Paragraph>Geen vergunningen gevonden</Paragraph>
-        </>
-        ) : (
+      { values === undefined
+        ? (
+          <>
+            <Heading forwardedAs="h2">Vergunningen</Heading>
+            <Paragraph>Geen vergunningen gevonden</Paragraph>
+          </>
+          )
+        : (
           <DefinitionList loading={ isBusy } numLoadingRows={ 2 } title="Vergunningen" data={ values } />
-        )
+          )
       }
       <StyledLink to={ to("/adres/:bagId/vergunningen", { bagId })} >Alle vergunningen details</StyledLink>
     </>

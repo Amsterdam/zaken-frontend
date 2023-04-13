@@ -20,8 +20,8 @@ const TabButton = styled.button.attrs({
   }
 
   ${ ({ isSelected }) =>
-    isSelected
-    && css`
+    isSelected &&
+    css`
       color: ${ themeColor("tint", "level7") };
       box-shadow: inset 0 -2.5px ${ themeColor("tint", "level7") };
 

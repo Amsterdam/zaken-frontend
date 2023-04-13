@@ -1,4 +1,4 @@
-import { RouteComponentProps } from "@reach/router"
+import { type RouteComponentProps } from "@reach/router"
 
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
@@ -16,27 +16,28 @@ type Props = {
 }
 
 const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString, caseUserTaskId }) => {
-
   const id = parseUrlParamId(idString)
-  const isValid = isValidUrlParamId<Components.Schemas.CaseDetail["id"]>(id)
-    && isValidUrlParamId<Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"]>(caseUserTaskId)
+  const isValid = isValidUrlParamId<Components.Schemas.CaseDetail["id"]>(id) &&
+    isValidUrlParamId<Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"]>(caseUserTaskId)
 
   return (
-    isValid ? (
-      <DefaultLayout>
-        <RowWithColumn>
-          <PageHeading />
-        </RowWithColumn>
-        <RowWithColumn>
-          <CaseHeading id={ id } />
-        </RowWithColumn>
-        <Row>
-          <Column spanLarge={50}>
-            <CitizenReportForm id={ id } caseUserTaskId={ caseUserTaskId } />
-          </Column>
-        </Row>
-      </DefaultLayout>
-    ) : <NotFoundPage />
+    isValid
+      ? (
+        <DefaultLayout>
+          <RowWithColumn>
+            <PageHeading />
+          </RowWithColumn>
+          <RowWithColumn>
+            <CaseHeading id={ id } />
+          </RowWithColumn>
+          <Row>
+            <Column spanLarge={50}>
+              <CitizenReportForm id={ id } caseUserTaskId={ caseUserTaskId } />
+            </Column>
+          </Row>
+        </DefaultLayout>
+        )
+      : <NotFoundPage />
   )
 }
 

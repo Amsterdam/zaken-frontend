@@ -9,18 +9,18 @@ export default {
     Page: IndexPage,
     title: "Adresoverzicht",
     subRoutes: {
-      "details": {
+      details: {
         Page: DetailsPage,
         icon: "Home",
         title: "Adresdetails"
       },
-      "personen": {
+      personen: {
         Page: PeoplePage,
         icon: "Portrait",
         title: "Persoonsgegevens",
         permissionNames: ["access_personal_data_register"]
       },
-      "vergunningen": {
+      vergunningen: {
         Page: PermitsPage,
         icon: "AssignmentTurnedIn",
         title: "Vergunningen"

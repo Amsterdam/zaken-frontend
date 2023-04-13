@@ -3,7 +3,7 @@ import slashSandwich from "slash-sandwich"
 /**
  * Utility function to create an API URL
  */
-export const makeApiUrl = (...paths: Array<number|string|undefined>) =>
+export const makeApiUrl = (...paths: Array<number | string | undefined>) =>
   slashSandwich([process.env.REACT_APP_API_HOST, process.env.REACT_APP_API_PATH, ...paths])
 
 /**
@@ -15,5 +15,5 @@ export const stripApiHostFromUrl = (url: string) =>
 /**
  * Utility function to create an API URL for TON
  */
- export const makeTonApiUrl = (...paths: Array<number|string|undefined>) =>
+export const makeTonApiUrl = (...paths: Array<number | string | undefined>) =>
   slashSandwich([process.env.REACT_APP_API_HOST_TON, process.env.REACT_APP_API_PATH_TON, ...paths], { trailingSlash: false })

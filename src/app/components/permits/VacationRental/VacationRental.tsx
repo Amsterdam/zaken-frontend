@@ -10,7 +10,7 @@ const VacationRental: React.FC<Props> = ({ bagId }) => {
 
   return (
     <HolidayRentalReports
-      data={ data?.data || [] }
+      data={ ((data?.data) != null) || [] }
       loading={ isBusy }
     />
   )

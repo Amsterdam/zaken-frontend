@@ -34,30 +34,32 @@ const AddressMenu: React.FC<Props> = ({ bagId }) => {
     <BlockMenu>
       <ul>
         { routes.map((route, index) => {
-            const path = typeof route === "string" ? route : route.path
-            const permissionNames = typeof route !== "string" ? route.permissionNames : undefined
-            const page = routesObject[path]
-            if (page?.icon === undefined || page?.title === undefined) return null
-            const navBlock = (
-              <NavBlock
-                to={ to(path, { bagId }) }
-                icon={ page.icon }
-                header={ page.title }
-                count={ counts[index] }
-                permissionNames={ permissionNames }
+          const path = typeof route === "string" ? route : route.path
+          const permissionNames = typeof route !== "string" ? route.permissionNames : undefined
+          const page = routesObject[path]
+          if (page?.icon === undefined || page?.title === undefined) return null
+          const navBlock = (
+            <NavBlock
+              to={ to(path, { bagId }) }
+              icon={ page.icon }
+              header={ page.title }
+              count={ counts[index] }
+              permissionNames={ permissionNames }
               />
-            )
-            return (
-              <li key={ path }>
-                <div>
-                  { mockedRoutes.includes(path) ? (
+          )
+          return (
+            <li key={ path }>
+              <div>
+                { mockedRoutes.includes(path)
+                  ? (
                     <MockWrapper hasPadding={ false }>{ navBlock }</MockWrapper>
-                    ) : navBlock
+                    )
+                  : navBlock
                   }
-                </div>
-              </li>
-            )
-          })
+              </div>
+            </li>
+          )
+        })
         }
       </ul>
     </BlockMenu>

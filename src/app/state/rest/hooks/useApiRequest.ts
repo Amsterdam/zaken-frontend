@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useContext } from "react"
 
 import { ApiContext } from "../provider/ApiProvider"
-import { ApiGroup } from "../index"
-import useRequestWrapper, { RequestError } from "./useRequestWrapper"
+import { type ApiGroup } from "../index"
+import useRequestWrapper, { type RequestError } from "./useRequestWrapper"
 
 type GetOptions = {
   method: "get"
@@ -55,7 +55,7 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
         clearCache()
       }
 
-      const response: any = await request<Schema>(options.method, url, payload) //TODO any used to be unknown
+      const response: any = await request<Schema>(options.method, url, payload) // TODO any used to be unknown
 
       if (isGetOptions(options) || (isMutateOptions(options) && options.useResponseAsCache)) {
         setCacheItem(url, response?.data)
@@ -64,7 +64,7 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
       return response
     } catch (error) {
       addErrorToCacheItem(url, error)
-      if (handleError) {
+      if (handleError != null) {
         handleError(error as RequestError)
       } else {
         throw error
@@ -75,35 +75,38 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
   /**
    * Queues an API request
    */
-  const queueRequest = useCallback(async (options: Options, payload?: Payload) => new Promise(
-    (resolve, reject) =>
-      pushRequestInQueue(url, options.method, () => execRequest(options, payload)
-        .then(resolve)
-        .catch(reject)
+  const queueRequest = useCallback(async (options: Options, payload?: Payload) => await new Promise(
+    (resolve, reject) => {
+      pushRequestInQueue(url, options.method, async () => {
+        await execRequest(options, payload)
+          .then(resolve)
+          .catch(reject)
+      }
       )
-  ), [ execRequest, url, pushRequestInQueue ])
+    }
+  ), [execRequest, url, pushRequestInQueue])
 
   /**
    * Define HTTP methods
    */
-  const execGet = useCallback((options?: Omit<GetOptions, "method">) =>
-    queueRequest({ method: "get", ...options }), [ queueRequest ])
+  const execGet = useCallback(async (options?: Omit<GetOptions, "method">) =>
+    await queueRequest({ method: "get", ...options }), [queueRequest])
 
-  const execPost = useCallback((payload?: Payload, options?: Omit<MutateOptions, "method">) =>
-    queueRequest({ method: "post", ...options }, payload), [ queueRequest ])
+  const execPost = useCallback(async (payload?: Payload, options?: Omit<MutateOptions, "method">) =>
+    await queueRequest({ method: "post", ...options }, payload), [queueRequest])
 
-  const execPut = useCallback((payload?: Payload, options?: Omit<MutateOptions, "method">) =>
-    queueRequest({ method: "put", ...options }, payload), [ queueRequest ])
+  const execPut = useCallback(async (payload?: Payload, options?: Omit<MutateOptions, "method">) =>
+    await queueRequest({ method: "put", ...options }, payload), [queueRequest])
 
-  const execPatch = useCallback((payload?: Payload, options?: Omit<MutateOptions, "method">) =>
-    queueRequest({ method: "patch", ...options }, payload), [ queueRequest ])
+  const execPatch = useCallback(async (payload?: Payload, options?: Omit<MutateOptions, "method">) =>
+    await queueRequest({ method: "patch", ...options }, payload), [queueRequest])
 
-  const execDelete = useCallback((options?: Omit<MutateOptions, "method">) =>
-    queueRequest({ method: "delete", ...options }), [ queueRequest ])
+  const execDelete = useCallback(async (options?: Omit<MutateOptions, "method">) =>
+    await queueRequest({ method: "delete", ...options }), [queueRequest])
 
   const updateCache = useCallback(
-    (updater: (item: Schema) => void) => updateCacheItem(url, updater),
-    [ updateCacheItem, url ]
+    (updater: (item: Schema) => void) => { updateCacheItem(url, updater) },
+    [updateCacheItem, url]
   )
 
   // reFetch whenever our cache is invalidated
@@ -119,7 +122,7 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
     if ((!cacheItem || !cacheItem.valid) && !lazy) {
       execGet()
     }
-  }, [ execGet, cacheItem, lazy ])
+  }, [execGet, cacheItem, lazy])
 
   return [
     data,

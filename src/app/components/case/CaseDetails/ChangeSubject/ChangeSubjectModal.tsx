@@ -21,7 +21,7 @@ const ChangeSubjectModal: React.FC<Props> = ({ isOpen, closeModal, onSubmit, sub
         onCancel={ closeModal }
         themeId={ themeId }
         subjects={subjects}
-        initialValues={{ subjects: subjects }}
+        initialValues={{ subjects }}
       />
     </ModalBlock>
   </Modal>

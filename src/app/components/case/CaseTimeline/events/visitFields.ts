@@ -1,12 +1,12 @@
 import { displayDate, displayTime } from "@amsterdam/wonen-ui"
-import { visitLabelsMap, visitEventValuesMap, visit_go_ahead } from "../helpers/dictionaries"
+import { visitLabelsMap, visitEventValuesMap, visitGoAhead } from "../helpers/dictionaries"
 
 const mapValue = (v: keyof typeof visitEventValuesMap) => visitEventValuesMap[v]
 
 export default [
   {
     key: "start_time",
-    label: visitLabelsMap["date"],
+    label: visitLabelsMap.date,
     mapValue: (v: string) => displayDate(v),
     shouldShow: (value: any, isNested: boolean) => !isNested
   },
@@ -37,7 +37,7 @@ export default [
   },
   {
     key: "can_next_visit_go_ahead",
-    mapValue: (v: keyof typeof visit_go_ahead) => visit_go_ahead[v]
+    mapValue: (v: keyof typeof visitGoAhead) => visitGoAhead[v]
   },
   {
     key: "can_next_visit_go_ahead_description",

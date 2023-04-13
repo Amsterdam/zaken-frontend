@@ -1,5 +1,5 @@
 import { useMemo } from "react"
-import { Fields } from "app/components/shared/Form/ScaffoldFields"
+import { type Fields } from "app/components/shared/Form/ScaffoldFields"
 
 type Scaffold = (...data: any[]) => { fields: Fields }
 export default <T extends Scaffold>(scaffold: T, ...params: Parameters<T>) =>

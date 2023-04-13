@@ -1,9 +1,8 @@
 import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
-import { Fields } from "app/components/shared/Form/ScaffoldFields"
+import { type Fields } from "app/components/shared/Form/ScaffoldFields"
 import navigateTo from "app/routing/navigateTo"
 
 export default (id: Components.Schemas.CaseDetail["id"], processes?: Components.Schemas.WorkflowOption[]) => {
-
   const fields = {
     workflowProcess: {
       type: "ComplexSelectField",
@@ -22,7 +21,7 @@ export default (id: Components.Schemas.CaseDetail["id"], processes?: Components.
       props: {
         label: "Annuleren",
         variant: "primaryInverted",
-        onClick: () => navigateTo("/zaken/:id", { id })
+        onClick: async () => { await navigateTo("/zaken/:id", { id }) }
       }
     },
     submit: {

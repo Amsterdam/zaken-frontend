@@ -11,7 +11,6 @@ type BreadCrumbsItem = {
 }
 
 const BreadCrumbs: React.FC = () => {
-
   const routeParams = useParams() ?? {}
   const route = find(routes, window.location.pathname)
 
@@ -20,13 +19,13 @@ const BreadCrumbs: React.FC = () => {
   const items = pathItems.filter((item): item is BreadCrumbsItem => item.title !== undefined && item.to !== undefined)
 
   return (
-    items.length > 1 ?
-      <nav>
+    items.length > 1
+      ? <nav>
         <Breadcrumbs>
           { items.map(({ title, to }, index) => <Link key={ index } to={ to }>{ title }</Link>) }
         </Breadcrumbs>
-      </nav> :
-    null
+      </nav>
+      : null
   )
 }
 

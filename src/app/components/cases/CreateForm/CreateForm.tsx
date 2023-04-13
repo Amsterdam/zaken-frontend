@@ -25,25 +25,25 @@ type Props = {
 const mapData = (bagId: Components.Schemas.Address["bag_id"], tonId: number | undefined) =>
   (data: any): any => {
     const mappedData = {
-    ...data,
-    bag_id: bagId,
-    theme_id: data.theme.id,
-    reason_id: data.reason.id,
-    project_id: data.project?.id,
-    ton_ids: tonId !== undefined ? [ tonId ] : undefined,
-    subject_ids: data.subjects.map((subject: any) => subject.id),
-    previous_case: data.previous_case?.id || undefined,
-    housing_corporation: data.housing_corporation?.id || undefined
-  }
-  if (data.identification) {
-    mappedData.citizen_reports = [{
       ...data,
-      nuisance: Array.isArray(data?.nuisance) && data?.nuisance?.includes("nuisance"),
-      advertisements: undefined
-    }]
+      bag_id: bagId,
+      theme_id: data.theme.id,
+      reason_id: data.reason.id,
+      project_id: data.project?.id,
+      ton_ids: tonId !== undefined ? [tonId] : undefined,
+      subject_ids: data.subjects.map((subject: any) => subject.id),
+      previous_case: data.previous_case?.id || undefined,
+      housing_corporation: data.housing_corporation?.id || undefined
+    }
+    if (data.identification) {
+      mappedData.citizen_reports = [{
+        ...data,
+        nuisance: Array.isArray(data?.nuisance) && data?.nuisance?.includes("nuisance"),
+        advertisements: undefined
+      }]
+    }
+    return mappedData
   }
-  return mappedData
-}
 
 const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
   const [caseThemes] = useCaseThemes()
@@ -67,12 +67,13 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
 
   // Only show Vakantieverhuur, Digitaal Toezicht and Yes as an option for TON.
   const caseThemesOptions = tonId ? caseThemes?.results?.filter(({ name }) => name === TON_THEME_NAME) : caseThemes?.results
-  const reasonOptions = tonId ? reasons?.results?.filter(({ name }) => name === TON_REASON_NAME)
+  const reasonOptions = tonId
+    ? reasons?.results?.filter(({ name }) => name === TON_REASON_NAME)
     : reasons?.results?.filter(({ name }) => name !== TON_REASON_NAME)
   const adOptions = tonId ? pick(advertisementOptions, ["yes"]) : advertisementOptions
 
   // Get cases and sort them by id for the option to link a previous case.
-  const casesArray = cases?.results ? [...cases.results] : []
+  const casesArray = ((cases?.results) != null) ? [...cases.results] : []
   // Add a more explicit label to the options
   const casesWithLabel = casesArray.map((item) => ({
     ...item,
@@ -80,7 +81,7 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
   }))
   const sortedCases = casesWithLabel.sort((a, b) => (a.id > b.id) ? 1 : -1)
 
-  const corporationsArray = corporations?.results ? [...corporations.results] : []
+  const corporationsArray = ((corporations?.results) != null) ? [...corporations.results] : []
   const sortedCorporations = corporationsArray.sort((a, b) => a.name.localeCompare(b.name))
 
   const onChangeThemeId = (newThemeId: number | undefined) => {
@@ -91,7 +92,7 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
     setThemeId(undefined)
     setTimeout(() => {
       setThemeId(newThemeId)
-  }, 0)
+    }, 0)
   }
 
   /*
@@ -115,7 +116,7 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
   )
 
   const navigateWithFlashMessage = useNavigateWithFlashMessage()
-  const afterSubmit = async (result: Components.Schemas.CaseDetail) =>
+  const afterSubmit = async (result: Components.Schemas.CaseDetail) => {
     await navigateWithFlashMessage(
       "/zaken/:id",
       { id: result.id },
@@ -123,15 +124,18 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
       "Succes",
       "De zaak is succesvol toegevoegd"
     )
+  }
 
   // If the user has been redirected via ton, fill out the form in advance.
   const initialValues = {
     theme: caseThemes?.results?.find(({ id }) => id === themeId),
-    ...tonId !== undefined ? {
-      reason: reasons?.results?.find(({ name }) => name === TON_REASON_NAME),
-      advertisement: "yes",
-      advertisements: [{ link: listing?.url }]
-     } : {}
+    ...tonId !== undefined
+      ? {
+          reason: reasons?.results?.find(({ name }) => name === TON_REASON_NAME),
+          advertisement: "yes",
+          advertisements: [{ link: listing?.url }]
+        }
+      : {}
   }
 
   const addressString = getAddressAsString(bagAddress)

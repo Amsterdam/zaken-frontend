@@ -1,4 +1,4 @@
-import { RouteComponentProps } from "@reach/router"
+import { type RouteComponentProps } from "@reach/router"
 
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
@@ -20,8 +20,8 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString, caseUs
 
   return (
     isValidUrlParamId<Components.Schemas.CaseDetail["id"]>(id) &&
-    isValidUrlParamId<Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"]>(caseUserTaskId) ?
-      <DefaultLayout>
+    isValidUrlParamId<Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"]>(caseUserTaskId)
+      ? <DefaultLayout>
         <RowWithColumn>
           <PageHeading />
         </RowWithColumn>
@@ -33,8 +33,8 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString, caseUs
             <DebriefCreateForm id={ id } caseUserTaskId={ caseUserTaskId } />
           </Column>
         </Row>
-      </DefaultLayout> :
-      <NotFoundPage />
+      </DefaultLayout>
+      : <NotFoundPage />
   )
 }
 

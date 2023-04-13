@@ -21,11 +21,11 @@ type Props = {
   reason: string
   setReason: (value: string) => void
   districts: Components.Schemas.District[]
-  districtNames: Components.Schemas.District["name"][]
-  setDistrictNames: (value: Components.Schemas.District["name"][]) => void
+  districtNames: Array<Components.Schemas.District["name"]>
+  setDistrictNames: (value: Array<Components.Schemas.District["name"]>) => void
   corporations?: Components.Schemas.HousingCorporation[]
   selectedCorporations: string[]
-  setSelectedCorporations: (value: Components.Schemas.HousingCorporation["name"][]) => void
+  setSelectedCorporations: (value: Array<Components.Schemas.HousingCorporation["name"]>) => void
 }
 
 const CasesFilter: React.FC<Props> = ({
@@ -46,11 +46,13 @@ const CasesFilter: React.FC<Props> = ({
         byId
       />
     )}
-    { reasons === undefined ? <Spinner /> : (
-      <ScaffoldForm>
-        <ScaffoldFields { ...scaffoldReason(reason, setReason, reasons) } />
-      </ScaffoldForm>
-      )
+    { reasons === undefined
+      ? <Spinner />
+      : (
+        <ScaffoldForm>
+          <ScaffoldFields { ...scaffoldReason(reason, setReason, reasons) } />
+        </ScaffoldForm>
+        )
     }
     <ScaffoldForm>
       <ScaffoldFields { ...scaffoldDate(date, setDate) } />

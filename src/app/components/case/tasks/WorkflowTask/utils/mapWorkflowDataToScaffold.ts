@@ -1,6 +1,6 @@
 import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
-import { Fields } from "app/components/shared/Form/ScaffoldFields"
-import { Field } from "app/components/shared/Form/ScaffoldField"
+import { type Fields } from "app/components/shared/Form/ScaffoldFields"
+import { type Field } from "app/components/shared/Form/ScaffoldField"
 
 const mapItemToType = (item: any) => {
   if (item.is_date) return "DateField"
@@ -13,8 +13,8 @@ const mapItemToType = (item: any) => {
   return "TextField"
 }
 
-const arrayToObject = (array: Array<{ label: string, value: string }>) => array.reduce(
-  (acc, val) => ({ ...acc, [val.value]: val.label }), {} as Record<string, string>
+const arrayToObject = (array: Array<{ label: string, value: string }>) => array.reduce<Record<string, string>>(
+  (acc, val) => ({ ...acc, [val.value]: val.label }), {}
 )
 
 const mapItemToOptions = (item: any) => {
@@ -32,8 +32,7 @@ const mapItemToOptions = (item: any) => {
 }
 
 export default (workflowForm: Components.Schemas.CaseUserTaskWorkdflow["form"], onCancel = () => {}) => {
-
-  const fields = workflowForm.reduce((acc: Fields, item: any) => {
+  const fields = workflowForm.reduce<Fields>((acc: Fields, item: any) => {
     if (item === undefined) return acc
     const mappedItemType = mapItemToType(item)
     // Check for Boolean type to add the checkboxLabel for an aligned single checkbox label.
@@ -53,7 +52,7 @@ export default (workflowForm: Components.Schemas.CaseUserTaskWorkdflow["form"], 
       }
     } as Field
     return acc
-  }, {} as Fields)
+  }, {})
 
   const buttons = {
     cancel: {

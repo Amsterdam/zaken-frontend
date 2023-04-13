@@ -1,5 +1,4 @@
 export default (BAGAddressResponse?: BAGAddressResponse, BAGObjectResponse?: BAGObjectResponse) => {
-
   if (BAGAddressResponse === undefined || BAGObjectResponse === undefined) return
 
   const values = [

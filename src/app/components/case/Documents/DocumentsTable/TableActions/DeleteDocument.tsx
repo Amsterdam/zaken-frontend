@@ -7,7 +7,7 @@ import ConfirmModal from "app/components/shared/Modal/ConfirmModal"
 
 type Props = {
   record: any
-  getDocuments: () => Promise<unknown>
+  getDocuments: () => void
   size?: number
 }
 
@@ -17,7 +17,7 @@ const DeleteDocument: React.FC<Props> = ({ record, getDocuments, size = 20 }) =>
   const url = makeApiUrl("documents", record.id)
   const protectedRequest = useProtectedRequest()
 
-  const deleteFile = async () => {
+  const deleteFile = async (): Promise<void> => {
     setLoading(true)
     try {
       const response: any = await protectedRequest<any>("delete", url)
@@ -30,7 +30,7 @@ const DeleteDocument: React.FC<Props> = ({ record, getDocuments, size = 20 }) =>
     }
   }
 
-  if (!record.id) {
+  if (record.id == null) {
     return null
   }
   return (
@@ -40,14 +40,14 @@ const DeleteDocument: React.FC<Props> = ({ record, getDocuments, size = 20 }) =>
         variant="blank"
         iconSize={ size + 4 }
         icon={ loading ? <Spinner /> : <Delete /> }
-        onClick={ () => setIsOpen(true) }
+        onClick={ () => { setIsOpen(true) } }
         data-e2e-id="delete-document"
       />
       <ConfirmModal
         title="Document verwijderen"
         isOpen={ isOpen }
         onConfirm={ deleteFile }
-        onClose={ () => setIsOpen(false) }
+        onClose={ () => { setIsOpen(false) } }
         okValue="Verwijderen"
       >
         <Paragraph>

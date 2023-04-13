@@ -1,7 +1,6 @@
 import { List, PersonNameDisplay, PersonRoleDisplay, PersonEntityDisplay } from "@amsterdam/wonen-ui"
 
 export default (summon?: Components.Schemas.Summon) => {
-
   if (summon === undefined) return
 
   const { persons, type_name } = summon

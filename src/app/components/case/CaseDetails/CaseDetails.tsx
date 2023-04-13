@@ -42,8 +42,8 @@ const getDataFirstCol = (caseItem?: Components.Schemas.CaseCreate) => {
         <EnforcementIcon show={ is_enforcement_request } />
       </Wrap>
     ),
-    "Status": translationsCaseStates[state],
-    "Startdatum": <DateDisplay date={ start_date ?? undefined } emptyText="-" />
+    Status: translationsCaseStates[state],
+    Startdatum: <DateDisplay date={ start_date ?? undefined } emptyText="-" />
   }
   if (previous_case) {
     data["Overgedragen zaak"] = previous_case
@@ -60,21 +60,21 @@ const getDataSecondCol = (caseItem?: Components.Schemas.CaseCreate) => {
   const hasProject = project?.name !== undefined
   const showHousingCorporation = isThemeWithCorporations(theme.id)
   const data: DefinitionListData = {
-    "Thema": theme.name,
-    "Aanleiding": `${ reason.name }${ hasProject ? ": " : "" }${ hasProject ? project.name : "" }`,
+    Thema: theme.name,
+    Aanleiding: `${ reason.name }${ hasProject ? ": " : "" }${ hasProject ? project.name : "" }`,
     "Onderwerp(en)": state === CLOSED
       ? subjects.map((subject) => subject.name).join(", ")
       : <ChangeableSubject subjects={ subjects } caseId={ id } themeId={ theme.id } />
-    }
-    if (showHousingCorporation) {
-      data["Corporatie"] = (
-        <ChangeHousingCorporation
-          housingCorporationId={ housing_corporation }
-          bagId={ bag_id }
-          caseId={ id }
+  }
+  if (showHousingCorporation) {
+    data.Corporatie = (
+      <ChangeHousingCorporation
+        housingCorporationId={ housing_corporation }
+        bagId={ bag_id }
+        caseId={ id }
         />
-      )
-    }
+    )
+  }
   return data
 }
 

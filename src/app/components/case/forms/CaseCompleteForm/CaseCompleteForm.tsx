@@ -24,7 +24,6 @@ const mapData = (data: CaseCloseTypeFormData): Components.Schemas.CaseClose => (
 )
 
 const CaseCompleteForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
-
   const [caseItem] = useCase(id)
   const themeId = caseItem?.theme.id
   const [caseCloseReasons] = useCaseCloseReasons(themeId)

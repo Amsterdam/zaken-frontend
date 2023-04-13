@@ -19,7 +19,6 @@ const SpinnerContainer = styled.div`
   backdrop-filter: blur(1px);
 `
 
-
 const SpinnerWrapper: React.FC<Props> = ({ spinning = true, children }) => (
   <div>
     { spinning && (

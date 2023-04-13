@@ -17,7 +17,6 @@ const mapData = (data: any) => ({
 })
 
 const CitizenReportForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
-
   const [, { execPost }] = useCitizenReports(id)
   const [data] = useCase(id)
   const themeName = data?.theme.name

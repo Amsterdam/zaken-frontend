@@ -25,7 +25,7 @@ const Div = styled.div`
 
 const CasesByBagId: React.FC<Props> = ({ bagId, openCases = false, title = defaultTitle, emptyText = defaultEmptyText }) => {
   const [data, { isBusy }] = useCasesByBagId(bagId)
-  const caseList = data?.results?.filter(result => openCases ? result.end_date === null : result.end_date !== null) || []
+  const caseList = ((data?.results?.filter(result => openCases ? result.end_date === null : result.end_date !== null)) != null) || []
   const numCases = caseList.length
   const onClickRow = (data: any) => {
     navigateTo("/zaken/:id", { id: data.id })

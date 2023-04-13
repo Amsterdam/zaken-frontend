@@ -1,10 +1,10 @@
 import { createContext } from "react"
 
-import { ApiCache, useApiCache } from "../hooks/useApiCache"
-import { RequestQueue, useRequestQueue } from "../hooks/useRequestQueue"
+import { type ApiCache, useApiCache } from "../hooks/useApiCache"
+import { type RequestQueue, useRequestQueue } from "../hooks/useRequestQueue"
 import { noopContext } from "./noopContext"
 
-import { ApiGroup } from "../index"
+import { type ApiGroup } from "../index"
 
 type GroupedContext = Record<ApiGroup, ApiCache & RequestQueue>
 export const ApiContext = createContext<GroupedContext>({

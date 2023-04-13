@@ -1,6 +1,6 @@
 import { mount } from "enzyme"
 import { Form } from "react-final-form"
-import { FormState } from "final-form"
+import { type FormState } from "final-form"
 
 import ShowHide from "./ShowHide"
 

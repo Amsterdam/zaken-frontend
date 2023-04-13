@@ -43,5 +43,4 @@ const CaseStatus: React.FC<Props> = ({ id, workflows }) => (
   </>
 )
 
-
 export default CaseStatus

@@ -14,7 +14,7 @@ const PermitDetails: React.FC<Props> = ({ bagId }) => {
     <>
       <Heading forwardedAs="h4">Vergunningen</Heading>
       <PermitsOverview
-        permits={ data?.permits || [] }
+        permits={ ((data?.permits) != null) || [] }
         loading={ isBusy }
       />
     </>

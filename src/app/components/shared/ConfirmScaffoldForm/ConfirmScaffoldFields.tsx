@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { Heading, Button } from "@amsterdam/asc-ui"
 
 import Modal, { ModalBlock } from "app/components/shared/Modal/Modal"
-import { Field } from "../Form/ScaffoldField"
+import { type Field } from "../Form/ScaffoldField"
 import createValuesObject from "./utils/createValuesObject"
 import { DefinitionList } from "@amsterdam/wonen-ui"
 import SpinnerWrap from "./components/SpinnerWrap"
@@ -59,7 +59,7 @@ const ConfirmScaffoldFields = <T extends RequestBody>(props: Props<T>) => {
 
   const content = (
     <>
-      { showInModal === false && <Heading>{ title }</Heading> }
+      { !showInModal && <Heading>{ title }</Heading> }
       <Wrap>
         <DefinitionList data={ values } />
         <ButtonWrap>
@@ -71,18 +71,20 @@ const ConfirmScaffoldFields = <T extends RequestBody>(props: Props<T>) => {
     </>
   )
 
-  return showInModal ? (
-    <Modal
-      title={ isSubmitting && submittingTitle ? submittingTitle : title }
-      isOpen={ true }
-      showCloseButton={ !isSubmitting }
-      onClose={ onCancel }
+  return showInModal
+    ? (
+      <Modal
+        title={ isSubmitting && submittingTitle ? submittingTitle : title }
+        isOpen={ true }
+        showCloseButton={ !isSubmitting }
+        onClose={ onCancel }
     >
-      <ModalBlock>
-        { content }
-      </ModalBlock>
-    </Modal>
-  ) : content
+        <ModalBlock>
+          { content }
+        </ModalBlock>
+      </Modal>
+      )
+    : content
 }
 
 export default ConfirmScaffoldFields

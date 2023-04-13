@@ -19,7 +19,7 @@ const App = () => (
     <PageTitle />
     <ThemeProvider>
       <GlobalStyle />
-      <KeycloakProvider shouldInitialize={ isLocalDevelopment === false } initializedCallback={ initializedCallback }>
+      <KeycloakProvider shouldInitialize={ !isLocalDevelopment } initializedCallback={ initializedCallback }>
         <LocationProvider>
           <FlashMessageProvider>
             <ApiProvider>

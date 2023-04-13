@@ -1,9 +1,8 @@
 import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
-import { Fields } from "app/components/shared/Form/ScaffoldFields"
+import { type Fields } from "app/components/shared/Form/ScaffoldFields"
 import navigateTo from "app/routing/navigateTo"
 
 const scaffold = (caseId: Components.Schemas.CaseDetail["id"], authors: Components.Schemas.User[]) => {
-
   const fields = {
     author1: {
       type: "ComplexSelectField",
@@ -112,7 +111,7 @@ const scaffold = (caseId: Components.Schemas.CaseDetail["id"], authors: Componen
       props: {
         label: "Annuleer",
         variant: "primaryInverted",
-        onClick: () => navigateTo("/zaken/:id", { id: caseId })
+        onClick: async () => { await navigateTo("/zaken/:id", { id: caseId }) }
       }
     },
     submit: {

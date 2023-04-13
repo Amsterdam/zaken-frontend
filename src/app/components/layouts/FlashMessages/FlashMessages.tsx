@@ -17,7 +17,7 @@ const FlashMessages: React.FC = () => {
     <Row bottomSpacing={ 0 }>
       <Column>
         { state[pathname] && state[pathname].map((props, index) => <StyledAlert key={ index } { ...props } />) }
-        { state["current"] && state["current"].map((props, index) => <StyledAlert key={ index } { ...props } />) }
+        { state.current && state.current.map((props, index) => <StyledAlert key={ index } { ...props } />) }
       </Column>
     </Row>
   )

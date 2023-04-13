@@ -12,11 +12,11 @@ const sortingOrder = {
 
 // A second sorter parameter is added because of the huge number of duplicate values.
 const sortingIndexMapping: any = {
-  "owner": "owner, due_date",
+  owner: "owner, due_date",
   "case.address.street_name": "case__address__street_name, due_date",
   "case.address.postal_code": "case__address__postal_code, due_date",
-  "due_date": "due_date, id",
-  "name": "name, due_date",
+  due_date: "due_date, id",
+  name: "name, due_date",
   "case.start_date": "case__start_date, due_date"
 }
 
@@ -39,18 +39,18 @@ export const getQueryUrl = (
   role?: string,
   owner?: string,
   isEnforcementRequest?: boolean,
-  taskNames?: Components.Schemas.CaseUserTaskTaskName["name"][],
+  taskNames?: Array<Components.Schemas.CaseUserTaskTaskName["name"]>,
   reason?: string,
-  districtNames?: Components.Schemas.District["name"][],
+  districtNames?: Array<Components.Schemas.District["name"]>,
   housingCorporations?: string[]
 ) => {
-  let urlParams: any = {
+  const urlParams: any = {
     completed: false,
     page: pagination.page,
     page_size: pagination.pageSize,
     is_enforcement_request: isEnforcementRequest
   }
-  if (sensitive === false) {
+  if (!sensitive) {
     urlParams.sensitive = false
   }
   if (theme) {
@@ -59,7 +59,7 @@ export const getQueryUrl = (
   if (reason) {
     urlParams.reason_name = reason
   }
-  if (taskNames && taskNames?.length > 0) {
+  if ((taskNames != null) && taskNames?.length > 0) {
     urlParams.name = taskNames
   }
   if (role) {
@@ -68,17 +68,17 @@ export const getQueryUrl = (
   if (owner) {
     urlParams.owner = owner
   }
-  if (districtNames && districtNames?.length > 0) {
+  if ((districtNames != null) && districtNames?.length > 0) {
     urlParams.district_name = districtNames
   }
-  if (housingCorporations && housingCorporations?.length > 0) {
+  if ((housingCorporations != null) && housingCorporations?.length > 0) {
     urlParams.housing_corporation = housingCorporations
   }
-  if (sorting) {
+  if (sorting != null) {
     urlParams.ordering = getOrderingValue(sorting)
   }
 
-  const queryString = isEmpty(urlParams) ? "" : qs.stringify(urlParams, { addQueryPrefix: true, indices: false  })
+  const queryString = isEmpty(urlParams) ? "" : qs.stringify(urlParams, { addQueryPrefix: true, indices: false })
 
   return `${ makeApiUrl("tasks") }${ queryString }`
 }
@@ -91,9 +91,9 @@ export const useTasks = (
   role?: string,
   owner?: string,
   isEnforcementRequest?: boolean,
-  taskNames?: Components.Schemas.CaseUserTaskTaskName["name"][],
+  taskNames?: Array<Components.Schemas.CaseUserTaskTaskName["name"]>,
   reason?: string,
-  districtNames?: Components.Schemas.District["name"][],
+  districtNames?: Array<Components.Schemas.District["name"]>,
   housingCorporations?: string[],
   options?: Options
 ) => {

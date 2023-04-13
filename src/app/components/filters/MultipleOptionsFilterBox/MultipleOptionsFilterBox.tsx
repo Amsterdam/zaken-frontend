@@ -46,11 +46,11 @@ const MultipleOptionsFilterBox: React.FC<Props> = ({ label, options, selectedOpt
         <StyledLabel label={ label } />
         <FilterSearch
           onChange={ onChangeFilterSearch }
-          onFocus={ () => setIsFocussed(true) }
+          onFocus={ () => { setIsFocussed(true) } }
         />
         <FilterCard
           isVisible={ isFocussed || selectedOptions.length > 0 }
-          hasItems={ !!(visibleOptions && visibleOptions?.length > 0) }
+          hasItems={ !!((visibleOptions != null) && visibleOptions?.length > 0) }
         >
           { visibleOptions?.map((option) => {
             const value = byId && option?.id ? option?.id?.toString() : option.name
@@ -69,7 +69,8 @@ const MultipleOptionsFilterBox: React.FC<Props> = ({ label, options, selectedOpt
                   checked={ selectedOptions.includes(value) }
                 />
               </Label>
-            ) })
+            )
+          })
           }
         </FilterCard>
       </FilterWrapper>

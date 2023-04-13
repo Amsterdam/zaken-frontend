@@ -20,15 +20,14 @@ const Dt = styled.dt`
 `
 
 const CaseHeading: React.FC<Props> = ({ id }) => {
-
   const [data] = useCase(id)
 
   return (
     <>
       <Heading as="h3">Zaak</Heading>
-      { data === undefined ?
-        <Spinner /> :
-        <dl>
+      { data === undefined
+        ? <Spinner />
+        : <dl>
           <Div>
             <Dt>Adres</Dt>
             <dd>

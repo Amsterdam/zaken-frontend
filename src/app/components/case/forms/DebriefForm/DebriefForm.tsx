@@ -11,7 +11,6 @@ type Props = {
 }
 
 const DebriefCreateForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
-
   const [caseItem] = useCase(id)
   const themeId = caseItem?.theme.id
   const themeName = caseItem?.theme.name

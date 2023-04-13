@@ -13,7 +13,6 @@ type Props = {
 const mapData = (data: { workflowProcess: Components.Schemas.WorkflowOption }) => ({ workflow_option_id: data.workflowProcess.id })
 
 const TaskForm: React.FC<Props> = ({ id }) => {
-
   const [processes] = useWorkflowProcesses(id)
   const fields = useScaffoldedFields(scaffold, id, processes)
   const [, { execPost }] = useWorkflowProcess(id, { lazy: true })

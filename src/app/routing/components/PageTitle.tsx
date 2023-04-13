@@ -13,7 +13,6 @@ const setPageTitle = () => {
 }
 
 const PageTitle: React.FC = () => {
-
   useEffect(() => {
     setPageTitle()
     return globalHistory.listen(({ action }) => {

@@ -7,9 +7,9 @@ type Props = {
 const OptionList: React.FC<Props> = ({ fields }) => (
   <List>
     { fields.map(field => {
-      const f = field["name"]
+      const f = field.name
       return <ListItem key={ f }>{ f }</ListItem>
-      })
+    })
     }
   </List>
 )

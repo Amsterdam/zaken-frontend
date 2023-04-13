@@ -27,22 +27,22 @@ export type TabsProps = {
   /**
    * The children for the tabs, only `Tab` components are allowed.
    */
-  children: ReactElement<PropsWithChildren<TabProps>, typeof Tab>[]
+  children: Array<ReactElement<PropsWithChildren<TabProps>, typeof Tab>>
   /**
    * The ID of the active tab
    */
   activeTab?: string
 }
 
-function formatTabId(id: string) {
+function formatTabId (id: string) {
   return `tab-${ id }`
 }
 
-function formatPanelId(id: string) {
+function formatPanelId (id: string) {
   return `panel-${ id }`
 }
 
-export function Tabs({
+export function Tabs ({
   label,
   children,
   activeTab,
@@ -64,7 +64,7 @@ export function Tabs({
   )
 
   useEffect(() => {
-    if (activeTab  && !foundInitialTab) {
+    if (activeTab && !foundInitialTab) {
       // eslint-disable-next-line no-console
       console.warn(
         `You passed a wrong activeTab value to Tabs component. Given ID: ${ activeTab }`

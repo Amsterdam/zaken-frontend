@@ -7,11 +7,13 @@ type Props = {
 }
 
 const SensitiveCaseIcon: React.FC<Props> = ({ sensitive }) => (
-  sensitive ? (
-    <StyledTooltip title="Dit betreft een gevoelige zaak">
-      <Icon><VerifiedUser /></Icon>
-    </StyledTooltip>
-  ) : null
+  sensitive
+    ? (
+      <StyledTooltip title="Dit betreft een gevoelige zaak">
+        <Icon><VerifiedUser /></Icon>
+      </StyledTooltip>
+      )
+    : null
 )
 
 export default SensitiveCaseIcon

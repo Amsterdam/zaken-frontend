@@ -1,5 +1,5 @@
 import type KeycloakTokenParsedExtended from "app/state/auth/keycloak/KeycloakTokenParsedExtended"
-import { KeycloakInstance } from "keycloak-js"
+import { type KeycloakInstance } from "keycloak-js"
 
 export default (keycloak?: KeycloakInstance, token?: KeycloakTokenParsedExtended) => {
   if (keycloak === undefined || token === undefined) return

@@ -38,7 +38,6 @@ export const useProjects = (themeId?: Components.Schemas.CaseTheme["id"], option
   })
 }
 
-
 export const useSubjects = (themeId?: Components.Schemas.CaseTheme["id"], options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.PaginatedSubjectList>({
@@ -50,7 +49,6 @@ export const useSubjects = (themeId?: Components.Schemas.CaseTheme["id"], option
     isProtected: true
   })
 }
-
 
 // useSummonTypes for getting the available summonTypes for a specific theme
 export const useSummonTypes = (themeId?: Components.Schemas.CaseTheme["id"], options?: Options) => {
@@ -100,4 +98,3 @@ export const useViolationTypes = (themeId?: Components.Schemas.CaseTheme["id"], 
     isProtected: true
   })
 }
-

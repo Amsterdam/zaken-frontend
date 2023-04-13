@@ -23,7 +23,7 @@ type Action =
   | { type: "CLEAR" }
 
 const reducer = (state: State, action: Action) => {
-  switch(action.type) {
+  switch (action.type) {
     case "UPDATE_ITEM": {
       const item = state[action.key]
       const value = produce(item.value, action.updater)
@@ -58,13 +58,13 @@ const reducer = (state: State, action: Action) => {
 }
 
 export const useApiCache = () => {
-  const [ cache, dispatch ] = useReducer(reducer, {})
+  const [cache, dispatch] = useReducer(reducer, {})
 
-  const getCacheItem = useCallback((key: string) => cache[key], [ cache ])
-  const setCacheItem = useCallback((key: string, value: any) => dispatch({ type: "SET_ITEM", key, value }), [ dispatch ])
-  const updateCacheItem = useCallback((key: string, updater: (cache: any) => void) => dispatch({ type: "UPDATE_ITEM", key, updater }), [ dispatch ])
-  const addErrorToCacheItem = useCallback((key: string, error: any) => dispatch({ type: "ADD_ERROR", key, error }), [ dispatch ])
-  const clearCache = useCallback(() => dispatch({ type: "CLEAR" }), [ dispatch ])
+  const getCacheItem = useCallback((key: string) => cache[key], [cache])
+  const setCacheItem = useCallback((key: string, value: any) => { dispatch({ type: "SET_ITEM", key, value }) }, [dispatch])
+  const updateCacheItem = useCallback((key: string, updater: (cache: any) => void) => { dispatch({ type: "UPDATE_ITEM", key, updater }) }, [dispatch])
+  const addErrorToCacheItem = useCallback((key: string, error: any) => { dispatch({ type: "ADD_ERROR", key, error }) }, [dispatch])
+  const clearCache = useCallback(() => { dispatch({ type: "CLEAR" }) }, [dispatch])
 
   return { getCacheItem, setCacheItem, updateCacheItem, addErrorToCacheItem, clearCache }
 }

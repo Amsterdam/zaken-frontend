@@ -1,5 +1,5 @@
 import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
-import { Fields } from "app/components/shared/Form/ScaffoldFields"
+import { type Fields } from "app/components/shared/Form/ScaffoldFields"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import navigateTo from "app/routing/navigateTo"
 import isValidUrl from "app/routing/utils/isValidUrl"
@@ -7,9 +7,7 @@ import isValidUrl from "app/routing/utils/isValidUrl"
 export default (
   caseId: Components.Schemas.CaseDetail["id"],
   themeName: Components.Schemas.CaseTheme["name"]
-  ) => {
-
-
+) => {
   const fields = {
     reporter_anonymous: {
       type: "RadioFields",
@@ -26,7 +24,7 @@ export default (
     reporter_name: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?:  { reporter_anonymous: string } }) => formValues?.values?.reporter_anonymous === "no",
+        shouldShow: (formValues: { values?: { reporter_anonymous: string } }) => formValues?.values?.reporter_anonymous === "no",
         field: {
           type: "TextField",
           props: {
@@ -40,7 +38,7 @@ export default (
     reporter_phone: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?:  { reporter_anonymous: string } }) => formValues?.values?.reporter_anonymous === "no",
+        shouldShow: (formValues: { values?: { reporter_anonymous: string } }) => formValues?.values?.reporter_anonymous === "no",
         field: {
           type: "TelField",
           props: {
@@ -56,7 +54,7 @@ export default (
     reporter_email: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?:  { reporter_anonymous: string } }) => formValues?.values?.reporter_anonymous === "no",
+        shouldShow: (formValues: { values?: { reporter_anonymous: string } }) => formValues?.values?.reporter_anonymous === "no",
         field: {
           type: "EmailField",
           props: {
@@ -92,7 +90,7 @@ export default (
     nuisance: {
       type: "ShowHide",
       props: {
-        shouldShow: (() => themeName === "Vakantieverhuur" ),
+        shouldShow: () => themeName === "Vakantieverhuur",
         field: {
           type: "CheckboxFields",
           props: {
@@ -109,7 +107,7 @@ export default (
     advertisement: {
       type: "ShowHide",
       props: {
-        shouldShow: (() => themeName !== "Kamerverhuur" && themeName !== "Ondermijning"),
+        shouldShow: () => themeName !== "Kamerverhuur" && themeName !== "Ondermijning",
         field: {
           type: "RadioFields",
           props: {
@@ -158,7 +156,7 @@ export default (
       props: {
         label: "Annuleren",
         variant: "primaryInverted",
-        onClick: () => navigateTo("/zaken/:id", { id: caseId })
+        onClick: async () => { await navigateTo("/zaken/:id", { id: caseId }) }
       }
     },
     submit: {
@@ -185,4 +183,3 @@ export default (
     ])
     .getScaffoldProps()
 }
-

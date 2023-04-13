@@ -39,7 +39,6 @@ const StyledHeading = styled(Heading)`
 `
 
 const NavBlock: React.FC<Props> = ({ to: toPath, icon, header, count, permissionNames }) => {
-
   const [hasPermission] = useHasPermission(permissionNames)
 
   const Asset = Assets[icon]

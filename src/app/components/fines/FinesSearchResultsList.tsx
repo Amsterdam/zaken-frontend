@@ -9,21 +9,20 @@ type Props = {
 }
 
 const FinesSearchResultsList: React.FC<Props> = ({ searchString }) => {
-
   const [data, { isBusy }] = useFine(searchString.length > 0 ? searchString : undefined)
   const items = data?.items.map((fine) => <FinesSearchResult fine={ fine } />) ?? []
 
   return (
     <>
-      { isBusy ?
-        <Spinner /> :
-        <>
-          { items.length > 0 ?
-            <>
+      { isBusy
+        ? <Spinner />
+        : <>
+          { items.length > 0
+            ? <>
               <Heading as="h2">Resultaat invorderingscheck</Heading>
               <List data={ items } />
-            </> :
-            searchString.length > 0 &&
+            </>
+            : searchString.length > 0 &&
             <>
               <Heading as="h2">Resultaat invorderingscheck</Heading>
               <p>De gezochte beschikking is nog niet bekend bij belastingen.</p>

@@ -1,5 +1,4 @@
 
-
 import Modal, { ModalBlock } from "app/components/shared/Modal/Modal"
 import OtherAddressesTable from "./OtherAddressesTable"
 

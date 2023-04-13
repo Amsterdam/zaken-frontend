@@ -14,7 +14,7 @@ const HomeMenu: React.FC = () => (
       { items.map((route) => {
         const page = routesObject[route]
         if (page?.icon === undefined || page?.title === undefined) return null
-        const navBlock = <NavBlock to={ to( route ) } icon={ page.icon } header={ page.title } />
+        const navBlock = <NavBlock to={ to(route) } icon={ page.icon } header={ page.title } />
         return (
           <li key={ route }>
             <div>
@@ -22,7 +22,7 @@ const HomeMenu: React.FC = () => (
             </div>
           </li>
         )
-        })
+      })
       }
     </ul>
   </BlockMenu>

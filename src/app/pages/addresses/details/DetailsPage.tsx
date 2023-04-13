@@ -1,5 +1,5 @@
 
-import { RouteComponentProps } from "@reach/router"
+import { type RouteComponentProps } from "@reach/router"
 
 import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId"
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
@@ -17,33 +17,35 @@ type Props = {
 }
 
 const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
-  isValidUrlParamBAGId(bagId) ? (
-    <DefaultLayout>
-      <Row>
-        <Column spanLarge={ 50 }>
-          <PageHeading />
-        </Column>
-        <Column spanLarge={ 50 }>
-          <DetailHeader bagId={ bagId } />
-        </Column>
-      </Row>
-      <Row>
-        <Column spanLarge={50}>
-          <ObjectDetails bagId={ bagId } />
-        </Column>
-      </Row>
-      <Row>
-        <Column spanLarge={50}>
-          <Advertisements bagId={ bagId }/>
-        </Column>
-      </Row>
-      <Row>
-        <Column spanLarge={50}>
-          <PermitOverview bagId={ bagId } />
-        </Column>
-      </Row>
-    </DefaultLayout>
-  ) : <NotFoundPage />
+  isValidUrlParamBAGId(bagId)
+    ? (
+      <DefaultLayout>
+        <Row>
+          <Column spanLarge={ 50 }>
+            <PageHeading />
+          </Column>
+          <Column spanLarge={ 50 }>
+            <DetailHeader bagId={ bagId } />
+          </Column>
+        </Row>
+        <Row>
+          <Column spanLarge={50}>
+            <ObjectDetails bagId={ bagId } />
+          </Column>
+        </Row>
+        <Row>
+          <Column spanLarge={50}>
+            <Advertisements bagId={ bagId }/>
+          </Column>
+        </Row>
+        <Row>
+          <Column spanLarge={50}>
+            <PermitOverview bagId={ bagId } />
+          </Column>
+        </Row>
+      </DefaultLayout>
+      )
+    : <NotFoundPage />
 )
 
 export default DetailsPage

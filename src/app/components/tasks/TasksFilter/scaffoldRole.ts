@@ -1,13 +1,13 @@
 import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
-import { Fields } from "app/components/shared/Form/ScaffoldFields"
+import { type Fields } from "app/components/shared/Form/ScaffoldFields"
 
 export const ROLE = "Projectmedewerker"
 
 const createOptions = (roles: MockComponents.Schemas.Role[]) =>
-  roles.reduce((acc, cur) => {
+  roles.reduce<Record<string, MockComponents.Schemas.Role>>((acc, cur) => {
     acc[cur] = cur
     return acc
-  }, { "": "Alle rollen" } as Record<string, MockComponents.Schemas.Role>)
+  }, { "": "Alle rollen" })
 
 export default (role: MockComponents.Schemas.Role, roles: MockComponents.Schemas.Role[], onChange: (value: string) => void) => {
   const fields = {

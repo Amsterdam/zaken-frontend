@@ -17,11 +17,11 @@ const StyledName = styled.span<Props>`
 `
 
 const getDocumentTypeName = (type: string, documentTypes?: Components.Schemas.DocumentType[]) => {
-  if (!documentTypes) {
+  if (documentTypes == null) {
     return null
   }
   const found = documentTypes.find((doc) => doc.url === type)
-  if (found) {
+  if (found != null) {
     return found.omschrijving
   }
   return null

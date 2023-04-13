@@ -7,7 +7,7 @@ import fineRoutes from "../pages/fines/routes"
 import homeRoutes from "../pages/home/routes"
 import tonRoutes from "../pages/ton/routes"
 
-import routesToRouteConfig, { RouteConfigObject } from "./utils/routesToRouteConfig"
+import routesToRouteConfig, { type RouteConfigObject } from "./utils/routesToRouteConfig"
 
 // NOTE: Add feature routes here
 const routes = {

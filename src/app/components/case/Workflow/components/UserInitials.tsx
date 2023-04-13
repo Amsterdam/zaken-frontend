@@ -10,12 +10,12 @@ type Props = {
 const UserInitials: React.FC<Props> = ({ owner }) => {
   const [data, { isBusy }] = useUsers()
   const users = data?.results
-  const user = users && users.find((user) => user.id === owner)
+  const user = (users != null) && users.find((user) => user.id === owner)
 
   let userInitials = "-"
   let tooltipTitle = "Taak is nog niet opgepakt"
   if (owner) {
-    userInitials = user ? createNameAbbreviation(user) : "Onbekend"
+    userInitials = (user != null) ? createNameAbbreviation(user) : "Onbekend"
     tooltipTitle = user?.full_name || "Behandelaar is onbekend"
   }
 

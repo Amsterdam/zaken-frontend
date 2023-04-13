@@ -26,10 +26,9 @@ const useContextCache = (groupName: GroupName, apiUrl: string) => {
   const item = contextGroup.getCacheItem(apiUrl)?.value
 
   const getContextItem = useCallback(() => item, [item])
-  const updateContextItem = useCallback((updatedItem: any) =>
-    contextGroup.updateCacheItem(apiUrl, () => updatedItem), [contextGroup, apiUrl]
+  const updateContextItem = useCallback((updatedItem: any) => { contextGroup.updateCacheItem(apiUrl, () => updatedItem) }, [contextGroup, apiUrl]
   )
-  const clearContextCache = useCallback(() => contextGroup.clearCache(), [ contextGroup ])
+  const clearContextCache = useCallback(() => { contextGroup.clearCache() }, [contextGroup])
 
   return { getContextItem, updateContextItem, clearContextCache }
 }

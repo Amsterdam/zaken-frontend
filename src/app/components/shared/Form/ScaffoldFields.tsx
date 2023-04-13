@@ -1,7 +1,7 @@
-import { ComponentProps } from "react"
+import { type ComponentProps } from "react"
 import { Scaffold as AmsterdamScaffold } from "@amsterdam/amsterdam-react-final-form"
-import ScaffoldField, { Field } from "./ScaffoldField"
-import { FieldRenderer } from "@amsterdam/amsterdam-react-final-form/components/final-form/Scaffold/Scaffold"
+import ScaffoldField, { type Field } from "./ScaffoldField"
+import { type FieldRenderer } from "@amsterdam/amsterdam-react-final-form/components/final-form/Scaffold/Scaffold"
 
 export type Fields = Record<string, Field>
 
@@ -14,7 +14,7 @@ const fieldRenderer: FieldRenderer = field => <ScaffoldField field={ field } />
 /**
  * Scaffolds the default amsterdam-react-final-form fields, as well as custom defined fields for zaken-frontend
  */
-// @ts-ignore
+// @ts-expect-error
 const ScaffoldFields: React.FC<Props> = props => <AmsterdamScaffold fieldRenderer={ fieldRenderer } { ...props } />
 
 export default ScaffoldFields

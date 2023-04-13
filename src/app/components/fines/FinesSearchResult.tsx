@@ -6,7 +6,6 @@ type Props = {
 }
 
 const FinesSearchResult: React.FC<Props> = ({ fine }) => {
-
   const values = useValues(fine)
 
   return (

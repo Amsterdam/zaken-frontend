@@ -13,13 +13,12 @@ export type Props = {
 }
 
 const FormModal: React.FC<Props> = ({ form, isOpen, closeModal, onSubmit, taskName, caseId }) => {
-
-  const title = form ? `Rond de taak "${ taskName }" af` : `Is de taak "${ taskName }" afgerond?`
+  const title = (form != null) ? `Rond de taak "${ taskName }" af` : `Is de taak "${ taskName }" afgerond?`
 
   const { addSuccessFlashMessage } = useFlashMessages()
 
   const onSubmitWrap = async (variables: Components.Schemas.GenericCompletedTask["variables"] = {}) => {
-    const requestBody = form ? variables : {}
+    const requestBody = (form != null) ? variables : {}
     const result = await onSubmit(requestBody)
     if (result === undefined) return
     const path = `/zaken/${ caseId }`
@@ -29,11 +28,13 @@ const FormModal: React.FC<Props> = ({ form, isOpen, closeModal, onSubmit, taskNa
   return (
     <Modal isOpen={ isOpen } onClose={ closeModal } title={ title }>
       <ModalBlock>
-        { form && form.length > 0 ? (
-          <WorkflowForm onSubmit={ onSubmitWrap } onCancel={ closeModal } workflowForm={ form } />
-        ) : (
-          <CompleteTaskForm onSubmit={ onSubmitWrap } onCancel={ closeModal } />
-        )}
+        { (form != null) && form.length > 0
+          ? (
+            <WorkflowForm onSubmit={ onSubmitWrap } onCancel={ closeModal } workflowForm={ form } />
+            )
+          : (
+            <CompleteTaskForm onSubmit={ onSubmitWrap } onCancel={ closeModal } />
+            )}
       </ModalBlock>
     </Modal>
   )

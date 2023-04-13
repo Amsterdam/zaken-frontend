@@ -22,7 +22,7 @@ const OtherAddressesTable: React.FC<Props> = ({ bagId, onAddressChosen }) => {
       columns={ columns }
       loading={ isBusy }
       numLoadingRows={ 3 }
-      data={ data || [] }
+      data={ (data != null) || [] }
       onClickRow={ onClickRow }
       emptyPlaceholder="Er zijn geen andere adressen gevonden"
       pagination={ false }

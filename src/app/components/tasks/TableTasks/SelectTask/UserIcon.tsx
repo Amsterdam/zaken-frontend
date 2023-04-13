@@ -26,7 +26,7 @@ const StyledDiv = styled.div`
 const UserIcon: React.FC<Props> = ({ owner }) => {
   const [data, { isBusy }] = useUsers()
   const users = data?.results
-  const user = users && users.find((user) => user.id === owner)
+  const user = (users != null) && users.find((user) => user.id === owner)
 
   return (
     isBusy
@@ -35,7 +35,7 @@ const UserIcon: React.FC<Props> = ({ owner }) => {
         <CustomTooltip title={user?.full_name || "Behandelaar is onbekend"}>
           <StyledIcon size={ 28 }>
             <LockOpen />
-            <StyledDiv>{user ? createNameAbbreviation(user) : "Onbekend"}</StyledDiv>
+            <StyledDiv>{(user != null) ? createNameAbbreviation(user) : "Onbekend"}</StyledDiv>
           </StyledIcon>
         </CustomTooltip>
         )

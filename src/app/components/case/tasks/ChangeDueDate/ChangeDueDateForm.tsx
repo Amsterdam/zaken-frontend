@@ -23,7 +23,7 @@ const formatDate = (dateStr: string | Date) => {
   return `${ year }-${ month }-${ day }`
 }
 
-const ChangeDueDateForm: React.FC<Props> = ({ isLoading, onSubmit, onCancel , dueDate, minDate = new Date(), taskId }) =>
+const ChangeDueDateForm: React.FC<Props> = ({ isLoading, onSubmit, onCancel, dueDate, minDate = new Date(), taskId }) =>
   <div>
     <ScaffoldForm
       showSpinner={ isLoading }
@@ -31,7 +31,7 @@ const ChangeDueDateForm: React.FC<Props> = ({ isLoading, onSubmit, onCancel , du
       onCancel={ onCancel }
       initialValues={ { date: formatDate(dueDate), workflow_task_id: taskId } }
     >
-      <ScaffoldFields { ...createScaffoldProps(onCancel, formatDate(minDate) ) } />
+      <ScaffoldFields { ...createScaffoldProps(onCancel, formatDate(minDate)) } />
     </ScaffoldForm>
   </div>
 

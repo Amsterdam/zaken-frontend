@@ -1,11 +1,11 @@
-import { KeycloakInstance } from "keycloak-js"
+import { type KeycloakInstance } from "keycloak-js"
 
 import { makeApiUrl } from "app/state/rest/hooks/utils/apiUrl"
 import createAuthHeaders from "app/state/rest/hooks/utils/createAuthHeaders"
 import navigateTo from "app/routing/navigateTo"
 
 export default async (keycloak: KeycloakInstance, isAuthenticated: boolean) => {
-  if (isAuthenticated === false) return
+  if (!isAuthenticated) return
   const response = await fetch(makeApiUrl("is-authorized"), {
     headers: {
       ...createAuthHeaders(keycloak.token ?? ""),

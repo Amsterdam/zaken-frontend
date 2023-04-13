@@ -45,7 +45,7 @@ export const useBAGLodging = (type?: string, subTypeId?: string, options?: Optio
   const url = slashSandwich(["https://api.data.amsterdam.nl/bag/v1.1", type, subTypeId], { trailingSlash: true })
 
   return useApiRequest<BAGObjectResponse>({
-    url: url,
+    url,
     lazy: type === undefined || subTypeId === undefined,
     ...options,
     groupName: "dataPunt",

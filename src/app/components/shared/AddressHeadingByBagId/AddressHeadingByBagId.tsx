@@ -4,7 +4,6 @@ import { Heading, themeSpacing } from "@amsterdam/asc-ui"
 import { useBAG } from "app/state/rest/"
 import AddressDisplay from "app/components/addresses/AddressDisplay/AddressDisplay"
 
-
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
 }
@@ -20,7 +19,7 @@ const AddressHeadingByBagId: React.FC<Props> = ({ bagId }) => {
   return (
     <>
       <Heading as="h3">Adres</Heading>
-      { address && (
+      { (address != null) && (
         <Div>
           <p><AddressDisplay streetName={ address.straatnaam } streetNumber={ address.huisnummer } suffix={ address.bag_huisletter } etage={ address.bag_toevoeging } /></p>
           <p>{ address.postcode } { address.woonplaats }</p>

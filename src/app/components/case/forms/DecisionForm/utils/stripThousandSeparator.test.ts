@@ -1,7 +1,6 @@
 import stripThousandSeparator from "./stripThousandSeparator"
 
 describe("stripThousandSeparator", () => {
-
   it("number", () => {
     expect(stripThousandSeparator(99)).toBe("99")
   })

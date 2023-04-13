@@ -15,7 +15,7 @@ const IS_OPEN_CASES = true
 
 const Advertisements: React.FC<Props> = ({ bagId }) => {
   const [data, { isBusy }] = useCasesByBagId(bagId, IS_OPEN_CASES)
-  const cases = data?.results || []
+  const cases = ((data?.results) != null) || []
   let mergedAds: Components.Schemas.Advertisement[] = []
   // Merge all advertisement arrays to one.
   cases.forEach(c => {
@@ -24,7 +24,7 @@ const Advertisements: React.FC<Props> = ({ bagId }) => {
     }
   })
   // Filter for unique advertisements.
-  const uniqueAds = mergedAds.filter((value, index, self) => self.findIndex(v => v.link === value.link) === index )
+  const uniqueAds = mergedAds.filter((value, index, self) => self.findIndex(v => v.link === value.link) === index)
 
   if (isBusy) {
     return <Spinner />
@@ -32,20 +32,22 @@ const Advertisements: React.FC<Props> = ({ bagId }) => {
   return (
     <>
       <Heading forwardedAs="h2">Advertenties</Heading>
-      { uniqueAds.length > 0 ? (
-        <>
-          { uniqueAds.map(ad => (
-            <div>
-              <StyledLink href={ad.link} variant="inline" icon="external" target="_blank" rel="noopener noreferrer">
-                {ad.link}
-              </StyledLink>
-            </div>
-              ))
+      { uniqueAds.length > 0
+        ? (
+          <>
+            { uniqueAds.map(ad => (
+              <div>
+                <StyledLink href={ad.link} variant="inline" icon="external" target="_blank" rel="noopener noreferrer">
+                  {ad.link}
+                </StyledLink>
+              </div>
+            ))
             }
-        </>
-        ) : (
+          </>
+          )
+        : (
           <Paragraph>Geen advertenties gevonden</Paragraph>
-        )
+          )
       }
     </>
   )

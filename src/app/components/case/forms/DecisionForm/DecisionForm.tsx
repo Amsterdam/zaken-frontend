@@ -15,7 +15,6 @@ type Props = {
 
 type DecisionData = Omit<Components.Schemas.Decision, "decision_type"> & { decision_type: { id: number }, description_closing?: string }
 const mapData = (data: DecisionData) => {
-
   const decision_type = data.decision_type.id
   const sanctionAmount = data.sanction_amount ? Math.round(parseFloat(stripThousandSeparator(data.sanction_amount))) : Number.NaN
   const sanction_amount = !Number.isNaN(sanctionAmount) ? sanctionAmount : undefined
@@ -29,7 +28,6 @@ const mapData = (data: DecisionData) => {
 }
 
 const DecisionForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
-
   const [caseItem] = useCase(id)
   const themeId = caseItem?.theme.id
   const [data] = useDecisionTypes(themeId)

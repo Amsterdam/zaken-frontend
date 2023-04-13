@@ -1,7 +1,7 @@
 import moment from "moment"
 import ArrayFieldList from "../components/ArrayFieldList"
 import type { RequestBody, NamedFields } from "../ConfirmScaffoldFields"
-import { Field } from "../../Form/ScaffoldField"
+import { type Field } from "../../Form/ScaffoldField"
 import OptionList from "../components/OptionList"
 
 const mapField = <T extends RequestBody>(field: Field, key: string, data: T) => {
@@ -10,7 +10,7 @@ const mapField = <T extends RequestBody>(field: Field, key: string, data: T) => 
 
   if (name === undefined) return
   const v = data[name]
-  const mappingTypeResult = data["type_result"] && name.includes("type_result")
+  const mappingTypeResult = data.type_result && name.includes("type_result")
   if (v === undefined && !mappingTypeResult) return
 
   const value = (type: string, props: any) => {
@@ -19,11 +19,11 @@ const mapField = <T extends RequestBody>(field: Field, key: string, data: T) => 
     } else if (type === "ComplexCheckboxFields") {
       return <OptionList fields={ v as Array<Record<string, string>> } />
     } else if (type === "ComplexSelectField" || type === "ComplexRadioFields") {
-      return(v as Record<string, string>)[(props as { optionLabelField: string }).optionLabelField]
+      return (v as Record<string, string>)[(props as { optionLabelField: string }).optionLabelField]
     } else if (props.hasOwnProperty("options")) {
       return (props as { options: Record<string, unknown> }).options[v as string]
     } else if (name.includes("type_result")) {
-      const typeResult: Record<string, string> = data["type_result"] as {}
+      const typeResult: Record<string, string> = data.type_result as {}
       return Object.values(typeResult)
     } else if (type === "DateField") {
       return typeof v === "string" ? moment(v).format("DD-MM-YYYY") : v
@@ -43,7 +43,7 @@ export default <T extends RequestBody>(fields: NamedFields<T>, data: T | undefin
     return nestedField !== undefined ? nestedField : field
   })
 
-  return showFields.reduce((acc, key) => {
+  return showFields.reduce<Record<string, React.ReactNode>>((acc, key) => {
     const field = mappedFields.find(field => field.props.name === key)
     if (field === undefined) return acc
     const keyValuePair = mapField<T>(field, key, data)
@@ -51,5 +51,5 @@ export default <T extends RequestBody>(fields: NamedFields<T>, data: T | undefin
     const [label, value] = keyValuePair
     acc[label] = value
     return acc
-  }, {} as Record<string, React.ReactNode>)
+  }, {})
 }

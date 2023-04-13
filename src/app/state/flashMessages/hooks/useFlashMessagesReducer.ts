@@ -1,7 +1,7 @@
-import { ComponentProps, ReactNode, useCallback, useEffect, useReducer } from "react"
+import { type ComponentProps, type ReactNode, useCallback, useEffect, useReducer } from "react"
 import { globalHistory, useLocation } from "@reach/router"
 import produce from "immer"
-import { Alert } from "@amsterdam/asc-ui"
+import { type Alert } from "@amsterdam/asc-ui"
 
 export type FlashMessage = ComponentProps<typeof Alert>
 export type State = Record<string, FlashMessage[]>
@@ -21,7 +21,7 @@ export const reducer = produce((draft, action: Action) => {
       break
     case "clear":
       delete draft[action.path]
-      delete draft["current"]
+      delete draft.current
       break
   }
 })
@@ -31,7 +31,7 @@ export const useFlashMessagesReducer = () => {
   const { pathname } = useLocation()
 
   const clearFlashMessages = useCallback(
-    (path: string) => dispatch({ type: "clear", path }),
+    (path: string) => { dispatch({ type: "clear", path }) },
     [dispatch]
   )
 
@@ -40,7 +40,7 @@ export const useFlashMessagesReducer = () => {
       if (shouldClear) {
         clearFlashMessages(path)
       }
-      return dispatch({
+      dispatch({
         path,
         type: "add",
         props: { title, children: body, level: "info", dismissible: true }
@@ -50,18 +50,20 @@ export const useFlashMessagesReducer = () => {
   )
 
   const addErrorFlashMessage = useCallback(
-    (title: string, body?: ReactNode) => dispatch({
-      path: "current",
-      type: "add",
-      props: { title, children: body, level: "error", dismissible: true }
-    }),
+    (title: string, body?: ReactNode) => {
+      dispatch({
+        path: "current",
+        type: "add",
+        props: { title, children: body, level: "error", dismissible: true }
+      })
+    },
     [dispatch]
   )
 
   useEffect(() => {
-    const unListen = globalHistory.listen(() => clearFlashMessages(pathname))
+    const unListen = globalHistory.listen(() => { clearFlashMessages(pathname) })
     return () => { unListen() }
-  }, [ pathname, clearFlashMessages ])
+  }, [pathname, clearFlashMessages])
 
   return {
     state: state as State,

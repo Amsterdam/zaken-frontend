@@ -2,10 +2,10 @@ import { Link, List, ListItem, themeColor } from "@amsterdam/asc-ui"
 import styled from "styled-components"
 
 type Props = {
-  linkList: {
+  linkList: Array<{
     title: string
     target: string
-  }[]
+  }>
 }
 
 const StyledList = styled(List)`
@@ -36,7 +36,7 @@ const StyledLink = styled(Link)`
     }
 `
 
-const SkipLinks: React.FC<Props> = ( { linkList }) => (
+const SkipLinks: React.FC<Props> = ({ linkList }) => (
   <nav>
     <StyledList >
       {linkList.map((link, index) =>

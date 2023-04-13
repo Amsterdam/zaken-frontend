@@ -1,6 +1,6 @@
-type Rec = Record<string, Array<string> | string | { label: string, value: string }>
+type Rec = Record<string, string[] | string | { label: string, value: string }>
 export default (workflowForm: Components.Schemas.CaseUserTaskWorkdflow["form"]) => (
-  workflowForm.reduce((acc: Rec, item: any) => {
+  workflowForm.reduce<Rec>((acc: Rec, item: any) => {
     const { default_value, name, type } = item
     // The API response is somewhat inconsistent
     // default_value == "false" means checked
@@ -16,5 +16,5 @@ export default (workflowForm: Components.Schemas.CaseUserTaskWorkdflow["form"]) 
     // if (default_value == null) return acc
     // acc[name] = default_value
     return acc
-  }, {} as Rec)
+  }, {})
 )

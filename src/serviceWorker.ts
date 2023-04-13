@@ -23,9 +23,9 @@ const isLocalhost = Boolean(
 type Config = {
   onSuccess?: (registration: ServiceWorkerRegistration) => void
   onUpdate?: (registration: ServiceWorkerRegistration) => void
-};
+}
 
-export function register(config?: Config) {
+export function register (config?: Config) {
   if (process.env.NODE_ENV === "production" && "serviceWorker" in navigator) {
     // The URL constructor is available in all browsers that support SW.
     const publicUrl = new URL(
@@ -62,7 +62,7 @@ export function register(config?: Config) {
   }
 }
 
-function registerValidSW(swUrl: string, config?: Config) {
+function registerValidSW (swUrl: string, config?: Config) {
   navigator.serviceWorker
     .register(swUrl)
     .then(registration => {
@@ -73,7 +73,7 @@ function registerValidSW(swUrl: string, config?: Config) {
         }
         installingWorker.onstatechange = () => {
           if (installingWorker.state === "installed") {
-            if (navigator.serviceWorker.controller) {
+            if (navigator.serviceWorker.controller != null) {
               // At this point, the updated precached content has been fetched,
               // but the previous service worker will still serve the older
               // content until all client tabs are closed.
@@ -83,7 +83,7 @@ function registerValidSW(swUrl: string, config?: Config) {
               )
 
               // Execute callback
-              if (config && config.onUpdate) {
+              if ((config != null) && (config.onUpdate != null)) {
                 config.onUpdate(registration)
               }
             } else {
@@ -93,7 +93,7 @@ function registerValidSW(swUrl: string, config?: Config) {
               console.log("Content is cached for offline use.")
 
               // Execute callback
-              if (config && config.onSuccess) {
+              if ((config != null) && (config.onSuccess != null)) {
                 config.onSuccess(registration)
               }
             }
@@ -106,7 +106,7 @@ function registerValidSW(swUrl: string, config?: Config) {
     })
 }
 
-function checkValidServiceWorker(swUrl: string, config?: Config) {
+function checkValidServiceWorker (swUrl: string, config?: Config) {
   // Check if the service worker can be found. If it can't reload the page.
   fetch(swUrl, {
     headers: { "Service-Worker": "script" }
@@ -116,7 +116,7 @@ function checkValidServiceWorker(swUrl: string, config?: Config) {
       const contentType = response.headers.get("content-type")
       if (
         response.status === 404 ||
-        (contentType != null && contentType.indexOf("javascript") === -1)
+        (contentType != null && !contentType.includes("javascript"))
       ) {
         // No service worker found. Probably a different app. Reload the page.
         navigator.serviceWorker.ready.then(registration => {
@@ -136,7 +136,7 @@ function checkValidServiceWorker(swUrl: string, config?: Config) {
     })
 }
 
-export function unregister() {
+export function unregister () {
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.ready
       .then(registration => {

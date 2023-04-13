@@ -9,10 +9,9 @@ type Props = React.ComponentProps<typeof Button> & {
 }
 
 const TableAction: React.FC<Props> = ({ to, disabled = false, children, ...restProps }) => {
+  const onClick = (event: React.MouseEvent) => { event.stopPropagation() }
 
-  const onClick = (event: React.MouseEvent) => event.stopPropagation()
-
-  const isLink = to !== undefined && disabled === false
+  const isLink = to !== undefined && !disabled
 
   const action = (
     <CustomTooltip title={disabled ? "U heeft geen rechten om deze actie uit te voeren" : ""}>
@@ -37,11 +36,13 @@ const TableAction: React.FC<Props> = ({ to, disabled = false, children, ...restP
   )
 
   return (
-    isLink ? (
-      <ButtonLink to={ to! } onClick={ onClick } flex>
-        { action }
-      </ButtonLink>
-    ) : action
+    isLink
+      ? (
+        <ButtonLink to={ to } onClick={ onClick } flex>
+          { action }
+        </ButtonLink>
+        )
+      : action
   )
 }
 

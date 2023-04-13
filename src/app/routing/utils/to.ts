@@ -1,5 +1,5 @@
-import routesObject, { Routes } from "app/routing/routes"
-import { RouteComponentProps } from "@reach/router"
+import routesObject, { type Routes } from "app/routing/routes"
+import { type RouteComponentProps } from "@reach/router"
 import slashSandwich from "slash-sandwich"
 
 // RouteParams for given K in Routes
@@ -39,10 +39,10 @@ const applyRouteParams = <T extends Routes, K extends keyof T>
  * Usage: `to("/foo/:id/", { id: 100 })`
  */
 export default <T extends Routes, K extends keyof T>
-  (path: K, params?: RouteParams<T, K>) => {
-    const str = path.toString()
-    if (process.env.NODE_ENV === "development" && !(slashSandwich([str], { trailingSlash: true }) in routesObject)) console.warn(`${ str } is not an existing route`)
-    return params !== undefined
-      ? applyRouteParams(str, params)
-      : str
-  }
+(path: K, params?: RouteParams<T, K>) => {
+  const str = path.toString()
+  if (process.env.NODE_ENV === "development" && !(slashSandwich([str], { trailingSlash: true }) in routesObject)) console.warn(`${ str } is not an existing route`)
+  return params !== undefined
+    ? applyRouteParams(str, params)
+    : str
+}

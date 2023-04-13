@@ -8,7 +8,7 @@ export type AutoFillButtonProps = React.ComponentProps<typeof Button> & {
 }
 
 const AutoFillButton: React.FC<AutoFillButtonProps> = ({ field, target, ...restProps }) => {
-  const [ isDisabled, setIsDisabled ] = useState(false)
+  const [isDisabled, setIsDisabled] = useState(false)
   const { getFieldState, change } = useForm()
 
   const handleClick = useCallback(() => {
@@ -19,7 +19,7 @@ const AutoFillButton: React.FC<AutoFillButtonProps> = ({ field, target, ...restP
 
     change("note", value)
     setIsDisabled(true)
-  }, [ getFieldState, change, field, target ])
+  }, [getFieldState, change, field, target])
 
   return <Button { ...restProps } onClick={ handleClick } disabled={ isDisabled } />
 }

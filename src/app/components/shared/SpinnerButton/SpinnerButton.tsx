@@ -1,4 +1,4 @@
-import { ComponentProps, useCallback, useState } from "react"
+import { type ComponentProps, useCallback, useState } from "react"
 import { Button } from "@amsterdam/asc-ui"
 import Spinner from "@amsterdam/asc-ui/lib/components/Spinner"
 import useIsMounted from "app/hooks/useIsMounted/useIsMounted"
@@ -17,7 +17,7 @@ const SpinnerButton: React.FC<Props> = ({ onClick, ...restProps }) => {
     if (isMounted.current) {
       setIsSpinning(false)
     }
-  }, [ onClick, isMounted ])
+  }, [onClick, isMounted])
 
   return (
     <Button onClick={handleClick} icon={ isSpinning ? <Spinner /> : undefined } {...restProps} />

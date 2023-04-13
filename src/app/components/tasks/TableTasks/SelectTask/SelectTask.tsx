@@ -35,7 +35,7 @@ const SelectTask: React.FC<Props> = ({ taskId, taskOwner, isEnforcement }) => {
   const {
     pagination, sorting, role, theme, owner,
     taskNames, reason, districtNames, housingCorporations
-  } = useContext(ContextValues)["tasks"]
+  } = useContext(ContextValues).tasks
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const [isChecked, setIsChecked] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -72,7 +72,7 @@ const SelectTask: React.FC<Props> = ({ taskId, taskOwner, isEnforcement }) => {
           // Owner changed so update context.
           const tasksRespponse = getContextItem()
           const tasks = tasksRespponse?.results
-          let newTasks = [...tasks]
+          const newTasks = [...tasks]
           const index = tasks.findIndex((task: { id: number }) => task.id === taskId)
           const obj = newTasks[index]
           newTasks[index] = { ...obj, owner: newOwner }
@@ -87,11 +87,11 @@ const SelectTask: React.FC<Props> = ({ taskId, taskOwner, isEnforcement }) => {
     return <StyledSpinner />
   }
   // If taskOwner is known but the the taskOwner is not the active user, show a user icon.
-  if (taskOwner && taskOwner !==  data?.id ) {
+  if (taskOwner && taskOwner !== data?.id) {
     return <UserIcon owner={ taskOwner }/>
   }
   return (
-    <StyledLabel htmlFor={`cb_${ taskId }`} label={data && data?.id === taskOwner ? `${ createNameAbbreviation(data) }` : ""}>
+    <StyledLabel htmlFor={`cb_${ taskId }`} label={(data != null) && data?.id === taskOwner ? `${ createNameAbbreviation(data) }` : ""}>
       <CustomTooltip title={isChecked ? "Mijn taak" : "Beschikbaar"}>
         <Checkbox data-e2e-id={`${ taskId }`} id={ `cb_${ taskId }` } checked={isChecked} onChange={ onChange }/>
       </CustomTooltip>

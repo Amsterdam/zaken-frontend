@@ -17,6 +17,6 @@ const NoWrap = styled.span`
 `
 
 const AddressDisplay: React.FC<Props> = ({ streetName, streetNumber, suffix, etage }) =>
-  <>{ streetName } <NoWrap>{ `${ streetNumber }${ suffix ? suffix : "" }${ etage ? `-${ etage }` : "" }`.trim() }</NoWrap></>
+  <>{ streetName } <NoWrap>{ `${ streetNumber }${ suffix || "" }${ etage ? `-${ etage }` : "" }`.trim() }</NoWrap></>
 
 export default AddressDisplay

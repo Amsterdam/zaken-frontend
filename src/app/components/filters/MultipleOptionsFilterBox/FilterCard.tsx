@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { Card, themeColor, themeSpacing  } from "@amsterdam/asc-ui"
+import { Card, themeColor, themeSpacing } from "@amsterdam/asc-ui"
 
 type Props = {
   isVisible: boolean

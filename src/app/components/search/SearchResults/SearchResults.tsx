@@ -30,27 +30,29 @@ const SearchResults: React.FC<Props> = ({ searchString }) => {
   const loading = isBusyZipCode || isBusyStreet
   const data = isZipCode ? dataZipCode : dataStreet
   // Only show addresses with a bagId
-  const dataSource = data?.results?.filter((obj) => obj.adresseerbaar_object_id) || []
+  const dataSource = ((data?.results?.filter((obj) => obj.adresseerbaar_object_id)) != null) || []
 
   return (
     <>
-      { data && data?.count > 100 && (
+      { (data != null) && data?.count > 100 && (
         <Paragraph strong>
           Er zijn meer dan 100 resultaten voor deze zoekopdracht. Specificeer je zoekterm.
         </Paragraph>
       )}
-      { isValid ? (
-        <Table
-          lastColumnFixed
-          columns={ columns }
-          data={ dataSource }
-          loading={ loading }
-          numLoadingRows={ 1 }
-          onClickRow={ onClickRow }
-          emptyPlaceholder="Er zijn geen adressen gevonden"
-          pagination={ false }
+      { isValid
+        ? (
+          <Table
+            lastColumnFixed
+            columns={ columns }
+            data={ dataSource }
+            loading={ loading }
+            numLoadingRows={ 1 }
+            onClickRow={ onClickRow }
+            emptyPlaceholder="Er zijn geen adressen gevonden"
+            pagination={ false }
         />
-        ) : null
+          )
+        : null
       }
     </>
   )

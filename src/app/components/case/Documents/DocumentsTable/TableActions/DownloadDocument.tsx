@@ -19,32 +19,32 @@ const DownloadDocument: React.FC<Props> = ({ record, size = 20 }) => {
     fetch(apiUrl, {
       method: "GET",
       headers: {
-        "Authorization": `Bearer ${ keycloak.token }`
+        Authorization: `Bearer ${ keycloak.token }`
       }
     })
-    .then((response) => {
-      if (response.status === 200) {
-        response.blob()
-          .then((blob) => {
-            const newBlob = new Blob([blob])
-            // Create blob link to download
-            const url = window.URL.createObjectURL(newBlob)
-            // window.open(url, "_blank_")
-            const link = document.createElement("a")
-            link.href = url
-            link.setAttribute("download", record.bestandsnaam)
-            // Append to html link element page
-            document.body.appendChild(link)
-            // Start download
-            link.click()
-            // Clean up and remove the link
-            link?.parentNode?.removeChild(link)
-          })
-      }
-    })
-    .finally(() => {
-      setLoading(false)
-    })
+      .then((response) => {
+        if (response.status === 200) {
+          response.blob()
+            .then((blob) => {
+              const newBlob = new Blob([blob])
+              // Create blob link to download
+              const url = window.URL.createObjectURL(newBlob)
+              // window.open(url, "_blank_")
+              const link = document.createElement("a")
+              link.href = url
+              link.setAttribute("download", record.bestandsnaam)
+              // Append to html link element page
+              document.body.appendChild(link)
+              // Start download
+              link.click()
+              // Clean up and remove the link
+              link?.parentNode?.removeChild(link)
+            })
+        }
+      })
+      .finally(() => {
+        setLoading(false)
+      })
   }
 
   if (!record.id) {

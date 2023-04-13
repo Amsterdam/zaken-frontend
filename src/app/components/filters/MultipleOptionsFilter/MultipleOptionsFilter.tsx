@@ -13,7 +13,6 @@ type Props = {
 }
 
 const MultipleOptionsFilter: React.FC<Props> = ({ label, options, selectedOptions, setSelectedOptions, byId = false }) => {
-
   const sortedOptions = useMemo(() => (
     options?.sort((a, b) => a.name.localeCompare(b.name))
   ), [options])
@@ -48,7 +47,8 @@ const MultipleOptionsFilter: React.FC<Props> = ({ label, options, selectedOption
               checked={ selectedOptions.includes(value) }
             />
           </Label>
-        ) })
+        )
+      })
       }
     </FilterWrapper>
   )

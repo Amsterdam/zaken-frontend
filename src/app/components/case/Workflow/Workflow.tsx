@@ -27,24 +27,26 @@ const Workflow: React.FC<Props> = ({ workflows }) => {
   if (workflows !== undefined) {
     return (
       <>
-        { workflows.length > 0 ? (
-            workflows.map(({ state, tasks, information }, index) => (
-              <Wrap key={ `${ state.name }_${ index }` }>
-                <Div>
-                  <Heading as="h4">{ state.name }</Heading>
-                  { information && <p>{ information }</p> }
-                </Div>
-                <StyledTable
-                  columns={ columns }
-                  lastColumnFixed
-                  data={ tasks || [] }
-                  pagination={ false }
+        { workflows.length > 0
+          ? (
+              workflows.map(({ state, tasks, information }, index) => (
+                <Wrap key={ `${ state.name }_${ index }` }>
+                  <Div>
+                    <Heading as="h4">{ state.name }</Heading>
+                    { information && <p>{ information }</p> }
+                  </Div>
+                  <StyledTable
+                    columns={ columns }
+                    lastColumnFixed
+                    data={ tasks || [] }
+                    pagination={ false }
                 />
-              </Wrap>
-            ))
-          ) : (
+                </Wrap>
+              ))
+            )
+          : (
             <>Geen taken beschikbaar. <a href={ window.location.pathname }>Herlaad</a></>
-          )
+            )
         }
       </>
     )

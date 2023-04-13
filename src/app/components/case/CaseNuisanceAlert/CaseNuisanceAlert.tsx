@@ -22,14 +22,16 @@ const CaseNuisanceAlert: React.FC<Props> = ({ caseId }) => {
   const isNuisanceReportedInStates = caseData?.workflows.find((workflow) => workflow.state.name === "Melding overlast")
   const isNuisanceReportedInEvents = caseEvents?.find((event) => event?.event_values?.description === "Doorzetten melding overlast")
 
-  const isVisible = isMaxExceeded && !isNuisanceReportedInStates && !isNuisanceReportedInEvents
+  const isVisible = isMaxExceeded && (isNuisanceReportedInStates == null) && (isNuisanceReportedInEvents == null)
 
   return (
-    isVisible ? (
-      <StyledAlert level="warning" dismissible>
-        {`LET OP: er is ${ MAX_NUMBER_NUISANCE } keer overlast geconstateerd. Voer de taak 'Melding overlast' op!`}
-      </StyledAlert>
-    ) : null
+    isVisible
+      ? (
+        <StyledAlert level="warning" dismissible>
+          {`LET OP: er is ${ MAX_NUMBER_NUISANCE } keer overlast geconstateerd. Voer de taak 'Melding overlast' op!`}
+        </StyledAlert>
+        )
+      : null
   )
 }
 

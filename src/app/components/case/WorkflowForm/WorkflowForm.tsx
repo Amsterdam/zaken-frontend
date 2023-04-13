@@ -1,4 +1,4 @@
-import { Fields } from "app/components/shared/Form/ScaffoldFields"
+import { type Fields } from "app/components/shared/Form/ScaffoldFields"
 import ConfirmScaffoldForm from "app/components/shared/ConfirmScaffoldForm/ConfirmScaffoldForm"
 import useNavigateWithFlashMessage from "app/state/flashMessages/useNavigateWithFlashMessage"
 
@@ -16,13 +16,15 @@ const WorkflowForm = <T extends Rec, U extends Rec>(props: Props<T, U>) => {
   const { id, fields, postMethod, mapData, caseUserTaskId, initialValues = {} } = props
 
   const navigateWithFlashMessage = useNavigateWithFlashMessage()
-  const afterSubmit = async () => await navigateWithFlashMessage(
-    "/zaken/:id",
-    { id },
-    "info",
-    "Succes",
-    "Het resultaat is verwerkt"
-  )
+  const afterSubmit = async () => {
+    await navigateWithFlashMessage(
+      "/zaken/:id",
+      { id },
+      "info",
+      "Succes",
+      "Het resultaat is verwerkt"
+    )
+  }
 
   return (
     <ConfirmScaffoldForm
