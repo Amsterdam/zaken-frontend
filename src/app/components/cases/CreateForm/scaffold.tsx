@@ -3,8 +3,7 @@ import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import navigateTo from "app/routing/navigateTo"
 import isValidUrl from "app/routing/utils/isValidUrl"
-
-const THEME_ID_SUBLET = 6
+import { isThemeWithCorporations } from "app/components/case/themes/helpers"
 
 export default (
   bagId: Components.Schemas.Address["bag_id"],
@@ -34,7 +33,7 @@ export default (
     housing_corporation: {
       type: "ShowHide",
       props: {
-        shouldShow: () => themeId === THEME_ID_SUBLET && corporations.length > 0, // Sublet use only.
+        shouldShow: () => isThemeWithCorporations(themeId) && corporations.length > 0,
         field: {
           type: "ComplexSelectField",
           props: {

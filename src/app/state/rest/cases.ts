@@ -10,12 +10,13 @@ const sortingOrder = {
   DESCEND: "DESCEND"
 }
 
+// A second sorter parameter is added because of the huge number of duplicate values.
 const sortingIndexMapping: any = {
-  "address.street_name": "address__street_name",
-  "address.postal_code": "address__postal_code",
-  "reason.name": "reason__name",
-  "start_date": "start_date",
-  "last_updated": "last_updated"
+  "address.street_name": "address__street_name, start_date",
+  "address.postal_code": "address__postal_code, start_date",
+  "reason.name": "reason__name, start_date",
+  "start_date": "start_date, id",
+  "last_updated": "last_updated, start_date"
 }
 
 const getOrderingValue = (sorting: TABLE.Schemas.Sorting) => {

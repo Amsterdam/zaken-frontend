@@ -1,16 +1,16 @@
-import { HolidayRental } from "@amsterdam/wonen-ui"
-import { usePermitDetails } from "app/state/rest"
+import { HolidayRentalReports } from "@amsterdam/wonen-ui"
+import { useMeldingen } from "app/state/rest"
 
 type Props = {
   bagId: string
 }
 
 const VacationRental: React.FC<Props> = ({ bagId }) => {
-  const [data, { isBusy }] = usePermitDetails(bagId)
+  const [data, { isBusy }] = useMeldingen(bagId)
 
   return (
-    <HolidayRental
-      data={ data?.vakantieverhuur_reports || [] }
+    <HolidayRentalReports
+      data={ data?.data || [] }
       loading={ isBusy }
     />
   )
