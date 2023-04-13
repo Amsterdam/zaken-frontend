@@ -22,7 +22,7 @@ type SummonData = Omit<Components.Schemas.Summon, "type"> & {
 }
 
 const mapData = (data: SummonData) => {
-  let persons: any[] = []
+  const persons: any[] = []
   if (data.entity_type === "legal") {
     if (data.legal_entity_type === "board") {
       persons.push({

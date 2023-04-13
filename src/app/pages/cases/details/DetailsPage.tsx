@@ -50,7 +50,7 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
     <Tab id="1" key="1" label="Open taken & historie">
       <PaddedContent>
         <RowWithColumn>
-          <CaseStatus id={ id } workflows={ caseItem?.workflows! } />
+          <CaseStatus id={ id } workflows={ caseItem?.workflows } />
         </RowWithColumn>
         <RowWithColumn>
           <Heading as="h2">Zaakhistorie</Heading>

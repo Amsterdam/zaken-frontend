@@ -31,7 +31,7 @@ const mapItemToOptions = (item: any) => {
   return undefined
 }
 
-export default (workflowForm: Components.Schemas.CaseUserTaskWorkdflow["form"], onCancel = () => {}) => {
+export default (workflowForm: Components.Schemas.CaseUserTaskWorkdflow["form"], onCancel = () => { /* do nothing */ }) => {
 
   const fields = workflowForm.reduce((acc: Fields, item: any) => {
     if (item === undefined) return acc

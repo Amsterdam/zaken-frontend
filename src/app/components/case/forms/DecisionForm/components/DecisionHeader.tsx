@@ -5,10 +5,10 @@ import { DefinitionList } from "@amsterdam/wonen-ui"
 type Props = {
   caseId: Components.Schemas.CaseDetail["id"]
   caseUserTaskId: Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"]
-  workflows: Components.Schemas.CaseDetail["workflows"]
+  workflows?: Components.Schemas.CaseDetail["workflows"]
 }
 
-const DecisionHeader: React.FC<Props> = ({ caseId, caseUserTaskId, workflows }) => {
+const DecisionHeader: React.FC<Props> = ({ caseId, caseUserTaskId, workflows = [] }) => {
 
   const [summons, { isBusy }] = useSummonsWithCaseId(caseId)
 

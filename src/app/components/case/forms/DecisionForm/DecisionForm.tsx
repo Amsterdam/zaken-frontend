@@ -41,7 +41,7 @@ const DecisionForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
 
   return (
     <>
-      <DecisionHeader caseId={ id } caseUserTaskId={ caseUserTaskId } workflows={ caseItem?.workflows! } />
+      <DecisionHeader caseId={ id } caseUserTaskId={ caseUserTaskId } workflows={ caseItem?.workflows } />
       <FormTitle>Gebruik dit formulier om aan te geven welk besluit is genomen</FormTitle>
       <WorkflowForm
         id={ id }

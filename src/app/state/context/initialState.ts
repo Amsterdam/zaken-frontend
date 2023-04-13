@@ -1,4 +1,4 @@
-const noop = () => {}
+const noop = () => { /* empty */ }
 
 export type StateType = {
   cases: {

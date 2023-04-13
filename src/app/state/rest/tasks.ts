@@ -44,7 +44,7 @@ export const getQueryUrl = (
   districtNames?: Components.Schemas.District["name"][],
   housingCorporations?: string[]
 ) => {
-  let urlParams: any = {
+  const urlParams: any = {
     completed: false,
     page: pagination.page,
     page_size: pagination.pageSize,

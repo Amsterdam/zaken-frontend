@@ -12,7 +12,7 @@ type Props = {
   documentTypes?: Components.Schemas.DocumentType[]
 }
 
-const DEFAULT_VALUE: string = "1"
+const DEFAULT_VALUE = "1"
 
 const DocumentTypeModal: React.FC<Props> = ({ caseId, isOpen, onClose, onSubmit, loading, documentTypes }) => {
   const [documentType, setDocumentType] = useState(DEFAULT_VALUE)

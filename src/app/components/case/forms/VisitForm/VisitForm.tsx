@@ -15,7 +15,7 @@ type Props = {
 }
 
 export type VisitData = Omit<Components.Schemas.Visit, "author_ids"> & { author1: Components.Schemas.User, author2: Components.Schemas.User, task: number | null, top_visit_id: number,  completed: boolean }
-const filterUndefined = <T extends unknown>(arr: Array<T | undefined>) => arr.filter((item): item is T => item !== undefined)
+const filterUndefined = (arr: any[]) => arr.filter((item) => item !== undefined)
 const mapData = (data: VisitData) => ({ ...data, author_ids: filterUndefined([data.author1?.id, data.author2?.id]) })
 
 const VisitForm: React.FC<Props> = ({ id, caseUserTaskId }) => {

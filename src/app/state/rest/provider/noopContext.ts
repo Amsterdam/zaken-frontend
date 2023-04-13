@@ -1,4 +1,4 @@
-const noop = () => {}
+const noop = () => { /* empty */ }
 
 export const noopContext = {
   isRequestPendingInQueue: () => false,

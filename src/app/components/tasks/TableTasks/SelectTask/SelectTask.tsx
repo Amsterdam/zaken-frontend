@@ -72,7 +72,7 @@ const SelectTask: React.FC<Props> = ({ taskId, taskOwner, isEnforcement }) => {
           // Owner changed so update context.
           const tasksRespponse = getContextItem()
           const tasks = tasksRespponse?.results
-          let newTasks = [...tasks]
+          const newTasks = [...tasks]
           const index = tasks.findIndex((task: { id: number }) => task.id === taskId)
           const obj = newTasks[index]
           newTasks[index] = { ...obj, owner: newOwner }

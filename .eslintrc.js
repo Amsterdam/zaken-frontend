@@ -17,8 +17,7 @@ module.exports = {
     },
     "plugins": [
         "react",
-        "@typescript-eslint",
-        "unused-imports"
+        "@typescript-eslint"
     ],
     rules: {
       "react/react-in-jsx-scope": "off",
@@ -34,10 +33,10 @@ module.exports = {
       "space-infix-ops": ["error"],
       "semi": ["error", "never"],
       "template-curly-spacing": ["error", "always"],
-      "unused-imports/no-unused-imports": "warn",
       "react/jsx-indent-props": ["error", 2],
       "react/jsx-indent" : ["error", 2],
-
+      "react/jsx-key": "off",
+      "@typescript-eslint/ban-ts-comment": "off",
       "@typescript-eslint/consistent-type-definitions": ["error", "type"],
       "@typescript-eslint/member-delimiter-style": ["error", {
         multiline: {

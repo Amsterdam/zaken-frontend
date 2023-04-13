@@ -20,10 +20,10 @@ const mapField = <T extends RequestBody>(field: Field, key: string, data: T) => 
       return <OptionList fields={ v as Array<Record<string, string>> } />
     } else if (type === "ComplexSelectField" || type === "ComplexRadioFields") {
       return(v as Record<string, string>)[(props as { optionLabelField: string }).optionLabelField]
-    } else if (props.hasOwnProperty("options")) {
+    } else if (Object.prototype.hasOwnProperty.call(props, "options")) {
       return (props as { options: Record<string, unknown> }).options[v as string]
     } else if (name.includes("type_result")) {
-      const typeResult: Record<string, string> = data["type_result"] as {}
+      const typeResult: Record<string, never> = data["type_result"] as Record<string, never>
       return Object.values(typeResult)
     } else if (type === "DateField") {
       return typeof v === "string" ? moment(v).format("DD-MM-YYYY") : v

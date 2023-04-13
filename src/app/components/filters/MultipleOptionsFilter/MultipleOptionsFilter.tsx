@@ -1,6 +1,6 @@
 import { useMemo } from "react"
 import { Checkbox, Label } from "@amsterdam/asc-ui"
-import { FilterWrapper, StyledLabel  } from "../FilterStyle"
+import { FilterWrapper, StyledLabel } from "../FilterStyle"
 
 type Option = { id: number, name: string }
 

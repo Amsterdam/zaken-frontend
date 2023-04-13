@@ -26,7 +26,7 @@ type Props<RequestBody> = {
 const DEFAULT_TITLE = "Controleer of onderstaande gegevens kloppen"
 const DEFAULT_CANCEL_TITLE = "Wijzig"
 const DEFAULT_SUBMIT_TITLE = "Opslaan"
-const noop = () => {}
+const noop = () => { /* nothing */ }
 
 const ButtonWrap = styled.div`
   display: flex;
