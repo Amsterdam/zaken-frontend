@@ -4,8 +4,8 @@ import { useRequestQueue } from "./useRequestQueue"
 describe("useRequestQueue", () => {
   class Deferred {
     promise: Promise<any>
-    reject = () => {}
-    resolve = () => {}
+    reject = () => { /* empty */ }
+    resolve = () => { /* empty */ }
 
     constructor() {
       this.promise = new Promise((resolve: any, reject)=> { //TODO refactor any
