@@ -13,7 +13,7 @@ const Wrap = styled.div`
   }
 `
 
-const MainWrapper: React.FC = ({ children }) => (
+const MainWrapper: React.FC = () => (
   <Wrap>
     <BreadCrumbs />
   </Wrap>

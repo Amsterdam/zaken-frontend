@@ -3,14 +3,13 @@ import { Table } from "@amsterdam/wonen-ui"
 import getColumns from "./columns"
 
 type Props = {
-  caseId: Components.Schemas.CaseEvent["id"]
   documents?: Components.Schemas.PaginatedDocumentTypeList["results"]
   loading: boolean
   getDocuments: () => Promise<unknown>
   documentTypes?: Components.Schemas.DocumentType[]
 }
 
-const DocumentsTable: React.FC<Props> = ({ caseId, documents, loading, getDocuments, documentTypes }) => {
+const DocumentsTable: React.FC<Props> = ({ documents, loading, getDocuments, documentTypes }) => {
   const [numLoadingRows, setNumLoadingRows] = useState(3)
 
   useEffect(() => {

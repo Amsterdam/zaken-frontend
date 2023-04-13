@@ -13,7 +13,7 @@ const getUrlId = (url: string) => {
 }
 
 export default () => useCallback(
-  async <Schema>(method: Method, url: string, requestData?: unknown, headers = {}) => {
+  async <Schema>(method: Method, url: string) => {
     await timeout(60)
     const urlId = getUrlId(url)
     const data = method === "get" ?

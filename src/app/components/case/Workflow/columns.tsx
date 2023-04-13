@@ -37,7 +37,7 @@ export default (execPost: (payload?: any) => Promise<unknown>) => (
       dataIndex: "due_date",
       minWidth: 120,
       render: (due_date: any, record: any) =>  due_date ? (
-        <ChangeableDueDate dueDate={ due_date } caseId={ record.case } caseUserTaskId={ record.case_user_task_id } />
+        <ChangeableDueDate dueDate={ due_date } caseUserTaskId={ record.case_user_task_id } />
       ) : <Span>-</Span>
     }, {
       header: "Verwerking taak",

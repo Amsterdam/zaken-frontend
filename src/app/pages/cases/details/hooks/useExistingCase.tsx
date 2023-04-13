@@ -16,6 +16,6 @@ export default (oId: number | undefined) => {
     if (caseItem !== undefined) return
     execGet()
   }, [oId, caseItem, valid, execGet])
-
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   return [exists, isBusy, has404, oId!, caseItem] as const
 }

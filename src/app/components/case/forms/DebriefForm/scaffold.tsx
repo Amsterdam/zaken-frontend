@@ -17,7 +17,8 @@ const options = {
 // Remove current theme from options
 const getThemeOptions = (themeName?: string) => {
   if (themeName !== undefined) {
-    const { [themeName]: remove, ...rest }: any = options
+    const rest: any = { ...options }
+    delete rest[themeName]
     return rest
   }
   return options

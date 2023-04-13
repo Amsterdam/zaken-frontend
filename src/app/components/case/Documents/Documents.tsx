@@ -30,7 +30,6 @@ const Documents: React.FC<Props> = ({ caseId, isActiveTab }) => {
       />
       <DocumentsTable
         documents={ data?.results }
-        caseId={ caseId }
         loading={ isBusy }
         getDocuments={ getDocuments }
         documentTypes={ documentTypes }

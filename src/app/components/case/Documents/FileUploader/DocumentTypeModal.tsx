@@ -4,7 +4,6 @@ import Modal, { ModalBlock } from "app/components/shared/Modal/Modal"
 import { ButtonContainer, StyledButton } from "../../CaseDetails/layout"
 
 type Props = {
-  caseId: Components.Schemas.CaseDetail["id"]
   isOpen: boolean
   onClose: () => void
   onSubmit: (documentUrl: string) => void
@@ -14,7 +13,7 @@ type Props = {
 
 const DEFAULT_VALUE = "1"
 
-const DocumentTypeModal: React.FC<Props> = ({ caseId, isOpen, onClose, onSubmit, loading, documentTypes }) => {
+const DocumentTypeModal: React.FC<Props> = ({ isOpen, onClose, onSubmit, loading, documentTypes }) => {
   const [documentType, setDocumentType] = useState(DEFAULT_VALUE)
   const showSpinner = documentTypes === undefined
 

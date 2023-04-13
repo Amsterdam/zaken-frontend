@@ -3,6 +3,7 @@ import { Link } from "@reach/router"
 import { themeColor } from "@amsterdam/asc-ui"
 
 // Filter all non-standard props like flex.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default styled(({ flex, ...props }) => <Link {...props} />)`
   display: ${ ({ flex }) => flex ? "flex" : "inline-block" };
   align-items: center;

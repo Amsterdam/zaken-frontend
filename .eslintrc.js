@@ -36,6 +36,7 @@ module.exports = {
       "react/jsx-indent-props": ["error", 2],
       "react/jsx-indent" : ["error", 2],
       "react/jsx-key": "off",
+      "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/ban-ts-comment": "off",
       "@typescript-eslint/consistent-type-definitions": ["error", "type"],
       "@typescript-eslint/member-delimiter-style": ["error", {
