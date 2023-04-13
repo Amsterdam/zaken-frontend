@@ -23,7 +23,7 @@ const ChangeHousingCorporation: React.FC<Props> = ({ housingCorporationId, bagId
   useEffect(() => {
     if (data?.results) {
       // Add a null option for no housing corporation.
-      let corporations: any = [...data?.results]
+      const corporations: any = [...data.results]
       corporations.push({ id: null, name: "Geen corporatie" })
       setHousingCorporations(corporations)
     }

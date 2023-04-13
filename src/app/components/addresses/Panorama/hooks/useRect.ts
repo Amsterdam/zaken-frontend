@@ -46,7 +46,7 @@ export default <T extends HTMLElement>(
     const debounced = debounce(handleResize, delay)
 
     if (typeof ResizeObserver === "function") {
-      let resizeObserver = new ResizeObserver(debounced)
+      const resizeObserver = new ResizeObserver(debounced)
       resizeObserver.observe(element)
       return () => {
         resizeObserver.disconnect()
