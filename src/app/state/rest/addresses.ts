@@ -6,6 +6,17 @@ import { useErrorHandler, useSuppressErrorHandler } from "./hooks/utils/errorHan
 import { makeApiUrl } from "./hooks/utils/apiUrl"
 import useApiRequest from "./hooks/useApiRequest"
 
+export const useAddresses = (bagId: Components.Schemas.Address["bag_id"], options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<Components.Schemas.Address>({
+    ...options,
+    url: makeApiUrl("addresses", bagId),
+    groupName: "addresses",
+    handleError,
+    isProtected: true
+  })
+}
+
 export const usePermitDetails = (bagId: string) => {
   const handleError = useSuppressErrorHandler()
   return useApiRequest<Components.Schemas.Decos>({
@@ -47,7 +58,7 @@ export const useCorporations = (options?: Options) => {
   return useApiRequest<Components.Schemas.PaginatedHousingCorporationList>({
     ...options,
     url: makeApiUrl("addresses", "housing-corporations"),
-    groupName: "addresses",
+    groupName: "housingCorporations",
     handleError,
     isProtected: true
   })

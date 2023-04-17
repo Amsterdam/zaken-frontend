@@ -16,7 +16,7 @@ declare namespace Components {
             lat: number; // float
             lng: number; // float
             district: District;
-            housing_corporation: number;
+            housing_corporation?: number | null;
         }
         export interface AddressTiny {
             bag_id: string;
@@ -112,7 +112,7 @@ declare namespace Components {
                 lat: number; // float
                 lng: number; // float
                 district: District;
-                housing_corporation: number;
+                housing_corporation?: number | null;
             };
             bag_id: string;
             theme: {
@@ -170,7 +170,7 @@ declare namespace Components {
                 lat: number; // float
                 lng: number; // float
                 district: District;
-                housing_corporation: number;
+                housing_corporation?: number | null;
             };
             state: string;
             workflows: CaseWorkflow[];
@@ -227,7 +227,7 @@ declare namespace Components {
                 lat: number; // float
                 lng: number; // float
                 district: District;
-                housing_corporation: number;
+                housing_corporation?: number | null;
             };
             state: string;
             workflows: CaseWorkflow[];
@@ -294,6 +294,7 @@ declare namespace Components {
             id: number;
             status?: StatusEnum;
             created: string; // date-time
+            last_updated: string; // date-time
             case: number;
         }
         export interface CaseStateType {
@@ -434,7 +435,7 @@ declare namespace Components {
                 lat: number; // float
                 lng: number; // float
                 district: District;
-                housing_corporation: number;
+                housing_corporation?: number | null;
             };
             theme: {
                 id: number;
@@ -1254,6 +1255,20 @@ declare namespace Components {
             previous?: string | null; // uri
             results?: WorkflowOption[];
         }
+        export interface PatchedAddress {
+            bag_id?: string;
+            id?: number;
+            full_address?: string;
+            street_name?: string;
+            number?: number;
+            suffix_letter?: string;
+            suffix?: string;
+            postal_code?: string;
+            lat?: number; // float
+            lng?: number; // float
+            district?: District;
+            housing_corporation?: number | null;
+        }
         /**
          * Adds nested create feature
          */
@@ -1271,7 +1286,7 @@ declare namespace Components {
                 lat: number; // float
                 lng: number; // float
                 district: District;
-                housing_corporation: number;
+                housing_corporation?: number | null;
             };
             bag_id?: string;
             theme?: {
@@ -1482,6 +1497,7 @@ declare namespace Components {
         export type ViolationEnum = "NO" | "YES" | "ADDITIONAL_RESEARCH_REQUIRED" | "ADDITIONAL_VISIT_REQUIRED" | "ADDITIONAL_VISIT_WITH_AUTHORIZATION" | "SEND_TO_OTHER_THEME" | "LIKELY_INHABITED";
         export interface ViolationType {
             key: string;
+            value: string;
         }
         export interface Visit {
             id: number;
@@ -1595,6 +1611,18 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedMeldingenList;
+        }
+    }
+    namespace AddressesPartialUpdate {
+        namespace Parameters {
+            export type BagId = string;
+        }
+        export interface PathParameters {
+            bag_id: Parameters.BagId;
+        }
+        export type RequestBody = Components.Schemas.PatchedAddress;
+        namespace Responses {
+            export type $200 = Components.Schemas.Address;
         }
     }
     namespace AddressesPermitsRetrieve {

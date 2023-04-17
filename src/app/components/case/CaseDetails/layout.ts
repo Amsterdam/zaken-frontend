@@ -1,4 +1,4 @@
-import { Label, Select, themeSpacing } from "@amsterdam/asc-ui"
+import { Label, Select, themeSpacing, Button } from "@amsterdam/asc-ui"
 import styled from "styled-components"
 
 export const StyledSelect = styled(Select)`
@@ -12,6 +12,10 @@ export const StyledLabel = styled(Label)`
 export const ButtonContainer = styled.div`
   display: flex;
   width: 100%;
-  justify-content: space-between;
-  margin-top: ${ themeSpacing(3) };
+  justify-content: flex-end;
+  margin-top: ${ themeSpacing(5) };
+`
+
+export const StyledButton = styled(Button)`
+  margin-right: ${ themeSpacing(4) };
 `

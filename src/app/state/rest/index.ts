@@ -13,6 +13,7 @@ export type ApiGroup =
   | "permissions"
   | "listings"
   | "task"
+  | "housingCorporations"
 
 export type Options = {
   keepUsingInvalidCache?: boolean
