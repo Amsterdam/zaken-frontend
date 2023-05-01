@@ -59,7 +59,7 @@
     "test:coverage": "react-scripts test --coverage --watchAll=false",
     "cy": "npx cypress open",
     "cy:run": "cypress run",
-    "start": "PORT=2999 react-scripts start",
+    "start": "PORT=2999 env-cmd -f .env.development react-scripts start",
     "local": "PORT=2999 env-cmd -f .env.development.local react-scripts start",
     "swagger:generate-schema": "TS_NODE_PROJECT='./scripts/tsconfig.json' NODE_ENV='development' ts-node scripts/src/generateSwaggerSchema.ts",
     "build": "react-scripts build",
