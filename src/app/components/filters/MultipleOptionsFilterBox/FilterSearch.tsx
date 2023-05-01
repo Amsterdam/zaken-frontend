@@ -12,7 +12,7 @@ const Input = styled.input.attrs({
 })`
   width: 100%;
   height: 100%;
-  padding: ${ themeSpacing(2, 4) };
+  padding: ${ themeSpacing(3, 4) };
   outline: none;
   border: 1px solid ${ themeColor("tint", "level5") };
   background-color: #ffffff;

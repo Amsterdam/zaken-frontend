@@ -23,6 +23,7 @@ const Container = styled.div`
 `
 
 const FilterContainer = styled.div`
+ min-width: 300px;
   max-width: 400px;
 `
 
