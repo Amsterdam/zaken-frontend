@@ -2,29 +2,31 @@ const noop = () => {}
 
 export type StateType = {
   cases: {
-    results: Components.Schemas.Case[]
     count: number
-    pagination: TABLE.Schemas.Pagination
-    sorting: TABLE.Schemas.Sorting
-    theme: string
-    reason: string
     districtNames: Components.Schemas.District["name"][]
-    housingCorporations: string[]
     fromStartDate: string
+    housingCorporations: string[]
+    pagination: TABLE.Schemas.Pagination
+    reason: string
+    results: Components.Schemas.Case[]
+    sorting: TABLE.Schemas.Sorting
+    subjects: string[]
+    theme: string
     updateContextCases: (payload: any) => void
   }
   tasks: {
-    results: Components.Schemas.CaseUserTask[]
     count: number
-    pagination: TABLE.Schemas.Pagination
-    sorting: TABLE.Schemas.Sorting
-    theme: string
-    role?: string
-    owner: string
-    taskNames: Components.Schemas.CaseUserTaskTaskName["name"][]
-    reason: string
     districtNames: Components.Schemas.District["name"][]
     housingCorporations: string[]
+    owner: string
+    pagination: TABLE.Schemas.Pagination
+    reason: string
+    results: Components.Schemas.CaseUserTask[]
+    role?: string
+    sorting: TABLE.Schemas.Sorting
+    theme: string
+    subjects: string[]
+    taskNames: Components.Schemas.CaseUserTaskTaskName["name"][]
     updateContextTasks: (payload: any) => void
   }
 }
@@ -32,41 +34,43 @@ export type StateType = {
 // Initial State
 export const initialState: StateType = {
   cases: {
-    results: [],
     count: 0,
+    districtNames: [],
+    fromStartDate: "",
+    housingCorporations: [],
     pagination: {
       page: 1,
       pageSize: 25
     },
+    reason: "",
+    results: [],
     sorting: {
       dataIndex: "start_date",
       order: "DESCEND"
     },
+    subjects: [],
     theme: "",
-    reason: "",
-    districtNames: [],
-    housingCorporations: [],
-    fromStartDate: "",
     updateContextCases: noop
   },
   tasks: {
-    results: [],
     count: 0,
+    districtNames: [],
+    housingCorporations: [],
     pagination: {
       page: 1,
       pageSize: 25
     },
+    owner: "",
+    reason: "",
+    results: [],
+    role: undefined,
     sorting: {
       dataIndex: "due_date",
       order: "ASCEND"
     },
-    theme: "",
-    role: undefined,
-    owner: "",
+    subjects: [],
     taskNames: [],
-    reason: "",
-    districtNames: [],
-    housingCorporations: [],
+    theme: "",
     updateContextTasks: noop
   }
 }

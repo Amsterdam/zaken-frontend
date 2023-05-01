@@ -47,6 +47,7 @@ const MultipleOptionsFilterBox: React.FC<Props> = ({ label, options, selectedOpt
         <FilterSearch
           onChange={ onChangeFilterSearch }
           onFocus={ () => setIsFocussed(true) }
+          label={ label }
         />
         <FilterCard
           isVisible={ isFocussed || selectedOptions.length > 0 }
@@ -59,7 +60,7 @@ const MultipleOptionsFilterBox: React.FC<Props> = ({ label, options, selectedOpt
                 htmlFor={ option.name }
                 label={ option.name }
                 key={ option.name }
-                style={{ width: "100%" }}
+                style={ { width: "100%" } }
               >
                 <Checkbox
                   id={ option.name }
