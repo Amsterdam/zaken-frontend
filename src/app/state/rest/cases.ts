@@ -37,6 +37,7 @@ export const useCases = (
   theme?: string,
   from_start_date?: string,
   reason?: string,
+  subjects?: string[],
   districtNames?: Components.Schemas.District["name"][],
   housingCorporations?: string[],
   options?: Options
@@ -56,6 +57,9 @@ export const useCases = (
   }
   if (reason) {
     urlParams.reason_name = reason
+  }
+  if (subjects && subjects?.length > 0) {
+    urlParams.subject = subjects
   }
   if (districtNames && districtNames?.length > 0) {
     urlParams.district_name = districtNames

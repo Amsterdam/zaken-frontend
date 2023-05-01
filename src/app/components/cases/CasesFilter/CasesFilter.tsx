@@ -8,30 +8,35 @@ import scaffoldTheme from "./scaffoldTheme"
 import scaffoldPageSize from "./scaffoldPageSize"
 import scaffoldReason from "./scaffoldReason"
 import MultipleOptionsFilter from "app/components/filters/MultipleOptionsFilter/MultipleOptionsFilter"
+import MultipleOptionsFilterBox from "app/components/filters/MultipleOptionsFilterBox/MultipleOptionsFilterBox"
 
 type Props = {
   date: string
-  setDate: (value: string) => void
-  theme: string
-  themes: Components.Schemas.CaseTheme[]
-  setTheme: (value: string) => void
-  pageSize: string
-  setPageSize: (value: string) => void
-  reasons?: Components.Schemas.CaseReason[]
-  reason: string
-  setReason: (value: string) => void
+  corporations?: Components.Schemas.HousingCorporation[]
   districts: Components.Schemas.District[]
   districtNames: Components.Schemas.District["name"][]
-  setDistrictNames: (value: Components.Schemas.District["name"][]) => void
-  corporations?: Components.Schemas.HousingCorporation[]
+  pageSize: string
+  reason: string
+  reasons?: Components.Schemas.CaseReason[]
   selectedCorporations: string[]
+  selectedSubjects: string[]
+  setDate: (value: string) => void
+  setDistrictNames: (value: Components.Schemas.District["name"][]) => void
+  setPageSize: (value: string) => void
+  setReason: (value: string) => void
   setSelectedCorporations: (value: Components.Schemas.HousingCorporation["name"][]) => void
+  setSelectedSubjects: (value: string[]) => void
+  setTheme: (value: string) => void
+  subjects?: Components.Schemas.Subject[]
+  theme: string
+  themes: Components.Schemas.CaseTheme[]
 }
 
 const CasesFilter: React.FC<Props> = ({
   date, setDate, theme, themes, setTheme, pageSize, setPageSize,
   reasons, reason, setReason, districts, districtNames, setDistrictNames,
-  corporations, selectedCorporations, setSelectedCorporations
+  corporations, selectedCorporations, setSelectedCorporations, subjects,
+  setSelectedSubjects, selectedSubjects
 }) => (
   <FilterMenu>
     <ScaffoldForm>
@@ -50,8 +55,16 @@ const CasesFilter: React.FC<Props> = ({
       <ScaffoldForm>
         <ScaffoldFields { ...scaffoldReason(reason, setReason, reasons) } />
       </ScaffoldForm>
-      )
-    }
+    )}
+    { subjects !== undefined && (
+      <MultipleOptionsFilterBox
+        label="Onderwerpen"
+        options={ subjects }
+        selectedOptions={ selectedSubjects }
+        setSelectedOptions={ setSelectedSubjects }
+        byId
+      />
+    )}
     <ScaffoldForm>
       <ScaffoldFields { ...scaffoldDate(date, setDate) } />
     </ScaffoldForm>
