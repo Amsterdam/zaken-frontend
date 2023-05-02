@@ -33,7 +33,7 @@ const SelectTask: React.FC<Props> = ({ taskId, taskOwner, isEnforcement }) => {
   // Get tasks params to create the query params url for the Context.
   // Two different providers are being used. :(
   const {
-    pagination, sorting, role, theme, owner,
+    pagination, sorting, role, theme, owner, subjects,
     taskNames, reason, districtNames, housingCorporations
   } = useContext(ContextValues)["tasks"]
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
@@ -52,6 +52,7 @@ const SelectTask: React.FC<Props> = ({ taskId, taskOwner, isEnforcement }) => {
     isEnforcement,
     taskNames,
     reason,
+    subjects,
     districtNames,
     housingCorporations
   )
@@ -91,9 +92,9 @@ const SelectTask: React.FC<Props> = ({ taskId, taskOwner, isEnforcement }) => {
     return <UserIcon owner={ taskOwner }/>
   }
   return (
-    <StyledLabel htmlFor={`cb_${ taskId }`} label={data && data?.id === taskOwner ? `${ createNameAbbreviation(data) }` : ""}>
-      <CustomTooltip title={isChecked ? "Mijn taak" : "Beschikbaar"}>
-        <Checkbox data-e2e-id={`${ taskId }`} id={ `cb_${ taskId }` } checked={isChecked} onChange={ onChange }/>
+    <StyledLabel htmlFor={ `cb_${ taskId }` } label={ data && data?.id === taskOwner ? `${ createNameAbbreviation(data) }` : "" }>
+      <CustomTooltip title={ isChecked ? "Mijn taak" : "Beschikbaar" }>
+        <Checkbox data-e2e-id={ `${ taskId }` } id={ `cb_${ taskId }` } checked={ isChecked } onChange={ onChange }/>
       </CustomTooltip>
     </StyledLabel>
   )
