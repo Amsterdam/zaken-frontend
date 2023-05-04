@@ -24,7 +24,8 @@ const mapItemToOptions = (item: any) => {
     return arrayToObject(item.options)
   } else if (item.options && item.name === "reactie_ontvangen_voor_huisbezoek") {
     // TODO: BPMN-model should be updated to remove this option
-    return item.options.filter((option: any) => option.value !== "corporatie_gaat_lopen")
+    return item.options
+    // return item.options.filter((option: any) => option.value !== "corporatie_gaat_lopen")
   } else if (item.options) {
     return item.options
   }
