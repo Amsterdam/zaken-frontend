@@ -22,10 +22,6 @@ const mapItemToOptions = (item: any) => {
     return { [item.name]: item.label }
   } else if (item.type === "multiselect") {
     return arrayToObject(item.options)
-  } else if (item.options && item.name === "reactie_ontvangen_voor_huisbezoek") {
-    // TODO: BPMN-model should be updated to remove this option
-    return item.options
-    // return item.options.filter((option: any) => option.value !== "corporatie_gaat_lopen")
   } else if (item.options) {
     return item.options
   }
