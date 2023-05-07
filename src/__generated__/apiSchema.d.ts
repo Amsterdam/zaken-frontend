@@ -61,10 +61,15 @@ declare namespace Components {
             };
             advertisements?: Advertisement[];
             subjects: Subject[];
+            project: {
+                id: number;
+                name: string;
+            };
             start_date?: string | null; // date
             end_date?: string | null; // date
             ton_ids?: string[] | null;
             last_updated: string; // date-time
+            tags?: number[];
         }
         /**
          * Case-address serializer for CaseUserTasks
@@ -132,6 +137,8 @@ declare namespace Components {
             project_id?: number;
             subjects: Subject[];
             subject_ids?: number[];
+            tags: Tag[];
+            tag_ids?: (number | null)[];
             citizen_reports?: CitizenReportCase[];
             advertisements?: Advertisement[];
             housing_corporation?: number;
@@ -212,6 +219,7 @@ declare namespace Components {
             case_deleted?: boolean;
             previous_case?: number | null;
             author?: string | null; // uuid
+            tags?: number[];
         }
         export interface CaseDetail {
             id: number;
@@ -232,6 +240,7 @@ declare namespace Components {
             state: string;
             workflows: CaseWorkflow[];
             subjects: Subject[];
+            tags: Tag[];
             project: {
                 id: number;
                 name: string;
@@ -463,7 +472,6 @@ declare namespace Components {
         }
         export interface Decos {
             permits: Permit[];
-            vakantieverhuur_reports: VakantieverhuurReportInformation[] | null;
             decos_folders: {
                 [name: string]: any;
             } | null;
@@ -1147,6 +1155,24 @@ declare namespace Components {
             previous?: string | null; // uri
             results?: SupportContact[];
         }
+        export interface PaginatedTagList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?offset=400&limit=100
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?offset=200&limit=100
+             */
+            previous?: string | null; // uri
+            results?: Tag[];
+        }
         export interface PaginatedThemeScheduleTypesList {
             /**
              * example:
@@ -1306,6 +1332,8 @@ declare namespace Components {
             project_id?: number;
             subjects?: Subject[];
             subject_ids?: number[];
+            tags?: Tag[];
+            tag_ids?: (number | null)[];
             citizen_reports?: CitizenReportCase[];
             advertisements?: Advertisement[];
             housing_corporation?: number;
@@ -1389,6 +1417,7 @@ declare namespace Components {
             priority: number;
             visit_from_datetime?: string | null; // date-time
             week_segment: number;
+            housing_corporation_combiteam?: boolean;
         }
         export interface ScheduleData {
             id: number;
@@ -1454,6 +1483,10 @@ declare namespace Components {
             email: string;
             title: string;
         }
+        export interface Tag {
+            id: number;
+            name: string;
+        }
         export interface ThemeScheduleTypes {
             actions: Action[];
             week_segments: WeekSegment[];
@@ -1477,22 +1510,6 @@ declare namespace Components {
             full_name?: string;
             permissions: PermissionsEnum[];
             role: string;
-        }
-        export interface VakantieverhuurReport {
-            is_cancellation: boolean;
-            report_date: string; // date-time
-            check_in_date: string; // date-time
-            check_out_date: string; // date-time
-            days_count_per_year: {
-                [name: string]: any;
-            };
-        }
-        export interface VakantieverhuurReportInformation {
-            year: number;
-            rented_days_count: number | null;
-            planned_days_count: number | null;
-            is_rented_today: boolean;
-            reports: VakantieverhuurReport[];
         }
         export type ViolationEnum = "NO" | "YES" | "ADDITIONAL_RESEARCH_REQUIRED" | "ADDITIONAL_VISIT_REQUIRED" | "ADDITIONAL_VISIT_WITH_AUTHORIZATION" | "SEND_TO_OTHER_THEME" | "LIKELY_INHABITED";
         export interface ViolationType {
@@ -1746,6 +1763,8 @@ declare namespace Paths {
             export type StateTypes = number;
             export type StateTypesName = string;
             export type StreetName = string;
+            export type Subject = number;
+            export type SubjectName = string;
             export type Suffix = string;
             export type Task = string;
             export type Theme = number;
@@ -1783,6 +1802,8 @@ declare namespace Paths {
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
             street_name?: Parameters.StreetName;
+            subject?: Parameters.Subject;
+            subject_name?: Parameters.SubjectName;
             suffix?: Parameters.Suffix;
             task?: Parameters.Task;
             theme?: Parameters.Theme;
@@ -1819,6 +1840,8 @@ declare namespace Paths {
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StateTypesName = string;
+            export type Subject = number;
+            export type SubjectName = string;
             export type Task = string;
             export type Theme = number;
             export type ThemeName = string;
@@ -1851,6 +1874,8 @@ declare namespace Paths {
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
+            subject?: Parameters.Subject;
+            subject_name?: Parameters.SubjectName;
             task?: Parameters.Task;
             theme?: Parameters.Theme;
             theme_name?: Parameters.ThemeName;
@@ -1886,6 +1911,8 @@ declare namespace Paths {
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StateTypesName = string;
+            export type Subject = number;
+            export type SubjectName = string;
             export type Task = string;
             export type Theme = number;
             export type ThemeName = string;
@@ -1915,6 +1942,8 @@ declare namespace Paths {
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
+            subject?: Parameters.Subject;
+            subject_name?: Parameters.SubjectName;
             task?: Parameters.Task;
             theme?: Parameters.Theme;
             theme_name?: Parameters.ThemeName;
@@ -1949,6 +1978,8 @@ declare namespace Paths {
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StateTypesName = string;
+            export type Subject = number;
+            export type SubjectName = string;
             export type Task = string;
             export type Theme = number;
             export type ThemeName = string;
@@ -1978,6 +2009,8 @@ declare namespace Paths {
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
+            subject?: Parameters.Subject;
+            subject_name?: Parameters.SubjectName;
             task?: Parameters.Task;
             theme?: Parameters.Theme;
             theme_name?: Parameters.ThemeName;
@@ -2017,6 +2050,8 @@ declare namespace Paths {
             export type StateTypes = number;
             export type StateTypesName = string;
             export type StreetName = string;
+            export type Subject = number;
+            export type SubjectName = string;
             export type Suffix = string;
             export type Task = string;
             export type Theme = number;
@@ -2051,6 +2086,8 @@ declare namespace Paths {
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
             street_name?: Parameters.StreetName;
+            subject?: Parameters.Subject;
+            subject_name?: Parameters.SubjectName;
             suffix?: Parameters.Suffix;
             task?: Parameters.Task;
             theme?: Parameters.Theme;
@@ -2090,6 +2127,8 @@ declare namespace Paths {
             export type StateTypes = number;
             export type StateTypesName = string;
             export type StreetName = string;
+            export type Subject = number;
+            export type SubjectName = string;
             export type Suffix = string;
             export type Task = string;
             export type Theme = number;
@@ -2124,6 +2163,8 @@ declare namespace Paths {
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
             street_name?: Parameters.StreetName;
+            subject?: Parameters.Subject;
+            subject_name?: Parameters.SubjectName;
             suffix?: Parameters.Suffix;
             task?: Parameters.Task;
             theme?: Parameters.Theme;
@@ -2181,6 +2222,8 @@ declare namespace Paths {
             export type StateTypes = number;
             export type StateTypesName = string;
             export type StreetName = string;
+            export type Subject = number;
+            export type SubjectName = string;
             export type Suffix = string;
             export type Task = string;
             export type Theme = number;
@@ -2218,6 +2261,8 @@ declare namespace Paths {
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
             street_name?: Parameters.StreetName;
+            subject?: Parameters.Subject;
+            subject_name?: Parameters.SubjectName;
             suffix?: Parameters.Suffix;
             task?: Parameters.Task;
             theme?: Parameters.Theme;
@@ -2254,6 +2299,8 @@ declare namespace Paths {
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StateTypesName = string;
+            export type Subject = number;
+            export type SubjectName = string;
             export type Task = string;
             export type Theme = number;
             export type ThemeName = string;
@@ -2286,6 +2333,8 @@ declare namespace Paths {
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
+            subject?: Parameters.Subject;
+            subject_name?: Parameters.SubjectName;
             task?: Parameters.Task;
             theme?: Parameters.Theme;
             theme_name?: Parameters.ThemeName;
@@ -2326,6 +2375,8 @@ declare namespace Paths {
             export type StateTypes = number;
             export type StateTypesName = string;
             export type StreetName = string;
+            export type Subject = number;
+            export type SubjectName = string;
             export type Suffix = string;
             export type Task = string;
             export type Theme = number;
@@ -2363,6 +2414,8 @@ declare namespace Paths {
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
             street_name?: Parameters.StreetName;
+            subject?: Parameters.Subject;
+            subject_name?: Parameters.SubjectName;
             suffix?: Parameters.Suffix;
             task?: Parameters.Task;
             theme?: Parameters.Theme;
@@ -2418,6 +2471,8 @@ declare namespace Paths {
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StateTypesName = string;
+            export type Subject = number;
+            export type SubjectName = string;
             export type Task = string;
             export type Theme = number;
             export type ThemeName = string;
@@ -2450,6 +2505,8 @@ declare namespace Paths {
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
+            subject?: Parameters.Subject;
+            subject_name?: Parameters.SubjectName;
             task?: Parameters.Task;
             theme?: Parameters.Theme;
             theme_name?: Parameters.ThemeName;
@@ -2488,6 +2545,8 @@ declare namespace Paths {
             export type StateTypes = number;
             export type StateTypesName = string;
             export type StreetName = string;
+            export type Subject = number;
+            export type SubjectName = string;
             export type Suffix = string;
             export type Task = string;
             export type Theme = number;
@@ -2522,6 +2581,8 @@ declare namespace Paths {
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
             street_name?: Parameters.StreetName;
+            subject?: Parameters.Subject;
+            subject_name?: Parameters.SubjectName;
             suffix?: Parameters.Suffix;
             task?: Parameters.Task;
             theme?: Parameters.Theme;
@@ -2558,6 +2619,8 @@ declare namespace Paths {
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StateTypesName = string;
+            export type Subject = number;
+            export type SubjectName = string;
             export type Task = string;
             export type Theme = number;
             export type ThemeName = string;
@@ -2590,6 +2653,8 @@ declare namespace Paths {
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
+            subject?: Parameters.Subject;
+            subject_name?: Parameters.SubjectName;
             task?: Parameters.Task;
             theme?: Parameters.Theme;
             theme_name?: Parameters.ThemeName;
@@ -2630,6 +2695,8 @@ declare namespace Paths {
             export type StateTypes = number;
             export type StateTypesName = string;
             export type StreetName = string;
+            export type Subject = number;
+            export type SubjectName = string;
             export type Suffix = string;
             export type Task = string;
             export type Theme = number;
@@ -2667,6 +2734,8 @@ declare namespace Paths {
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
             street_name?: Parameters.StreetName;
+            subject?: Parameters.Subject;
+            subject_name?: Parameters.SubjectName;
             suffix?: Parameters.Suffix;
             task?: Parameters.Task;
             theme?: Parameters.Theme;
@@ -2703,6 +2772,8 @@ declare namespace Paths {
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StateTypesName = string;
+            export type Subject = number;
+            export type SubjectName = string;
             export type Task = string;
             export type Theme = number;
             export type ThemeName = string;
@@ -2735,6 +2806,8 @@ declare namespace Paths {
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
+            subject?: Parameters.Subject;
+            subject_name?: Parameters.SubjectName;
             task?: Parameters.Task;
             theme?: Parameters.Theme;
             theme_name?: Parameters.ThemeName;
@@ -2774,6 +2847,8 @@ declare namespace Paths {
             export type StateTypes = number;
             export type StateTypesName = string;
             export type StreetName = string;
+            export type Subject = number;
+            export type SubjectName = string;
             export type Suffix = string;
             export type Task = string;
             export type Theme = number;
@@ -2808,6 +2883,8 @@ declare namespace Paths {
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
             street_name?: Parameters.StreetName;
+            subject?: Parameters.Subject;
+            subject_name?: Parameters.SubjectName;
             suffix?: Parameters.Suffix;
             task?: Parameters.Task;
             theme?: Parameters.Theme;
@@ -2861,6 +2938,8 @@ declare namespace Paths {
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StateTypesName = string;
+            export type Subject = number;
+            export type SubjectName = string;
             export type Task = string;
             export type Theme = number;
             export type ThemeName = string;
@@ -2893,6 +2972,8 @@ declare namespace Paths {
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
+            subject?: Parameters.Subject;
+            subject_name?: Parameters.SubjectName;
             task?: Parameters.Task;
             theme?: Parameters.Theme;
             theme_name?: Parameters.ThemeName;
@@ -2932,6 +3013,8 @@ declare namespace Paths {
             export type StateTypes = number;
             export type StateTypesName = string;
             export type StreetName = string;
+            export type Subject = number;
+            export type SubjectName = string;
             export type Suffix = string;
             export type Task = string;
             export type Theme = number;
@@ -2969,6 +3052,8 @@ declare namespace Paths {
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
             street_name?: Parameters.StreetName;
+            subject?: Parameters.Subject;
+            subject_name?: Parameters.SubjectName;
             suffix?: Parameters.Suffix;
             task?: Parameters.Task;
             theme?: Parameters.Theme;
@@ -3005,6 +3090,8 @@ declare namespace Paths {
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StateTypesName = string;
+            export type Subject = number;
+            export type SubjectName = string;
             export type Task = string;
             export type Theme = number;
             export type ThemeName = string;
@@ -3037,6 +3124,8 @@ declare namespace Paths {
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
+            subject?: Parameters.Subject;
+            subject_name?: Parameters.SubjectName;
             task?: Parameters.Task;
             theme?: Parameters.Theme;
             theme_name?: Parameters.ThemeName;
@@ -3077,6 +3166,8 @@ declare namespace Paths {
             export type StateTypes = number;
             export type StateTypesName = string;
             export type StreetName = string;
+            export type Subject = number;
+            export type SubjectName = string;
             export type Suffix = string;
             export type Task = string;
             export type Theme = number;
@@ -3114,6 +3205,8 @@ declare namespace Paths {
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
             street_name?: Parameters.StreetName;
+            subject?: Parameters.Subject;
+            subject_name?: Parameters.SubjectName;
             suffix?: Parameters.Suffix;
             task?: Parameters.Task;
             theme?: Parameters.Theme;
@@ -3527,6 +3620,8 @@ declare namespace Paths {
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StreetName = string;
+            export type Subject = number;
+            export type SubjectName = string;
             export type Suffix = string;
             export type Theme = number;
             export type ThemeName = string;
@@ -3557,6 +3652,8 @@ declare namespace Paths {
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             street_name?: Parameters.StreetName;
+            subject?: Parameters.Subject;
+            subject_name?: Parameters.SubjectName;
             suffix?: Parameters.Suffix;
             theme?: Parameters.Theme;
             theme_name?: Parameters.ThemeName;
@@ -3609,6 +3706,8 @@ declare namespace Paths {
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StreetName = string;
+            export type Subject = number;
+            export type SubjectName = string;
             export type Suffix = string;
             export type Theme = number;
             export type ThemeName = string;
@@ -3639,6 +3738,8 @@ declare namespace Paths {
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             street_name?: Parameters.StreetName;
+            subject?: Parameters.Subject;
+            subject_name?: Parameters.SubjectName;
             suffix?: Parameters.Suffix;
             theme?: Parameters.Theme;
             theme_name?: Parameters.ThemeName;
@@ -3671,6 +3772,8 @@ declare namespace Paths {
             export type Sensitive = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
+            export type Subject = number;
+            export type SubjectName = string;
             export type Theme = number;
             export type ThemeName = string;
             export type TonIds = number;
@@ -3699,6 +3802,8 @@ declare namespace Paths {
             sensitive?: Parameters.Sensitive;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
+            subject?: Parameters.Subject;
+            subject_name?: Parameters.SubjectName;
             theme?: Parameters.Theme;
             theme_name?: Parameters.ThemeName;
             ton_ids?: Parameters.TonIds;
@@ -3734,6 +3839,8 @@ declare namespace Paths {
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StreetName = string;
+            export type Subject = number;
+            export type SubjectName = string;
             export type Suffix = string;
             export type Theme = number;
             export type ThemeName = string;
@@ -3764,6 +3871,8 @@ declare namespace Paths {
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             street_name?: Parameters.StreetName;
+            subject?: Parameters.Subject;
+            subject_name?: Parameters.SubjectName;
             suffix?: Parameters.Suffix;
             theme?: Parameters.Theme;
             theme_name?: Parameters.ThemeName;
@@ -3816,6 +3925,8 @@ declare namespace Paths {
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StreetName = string;
+            export type Subject = number;
+            export type SubjectName = string;
             export type Suffix = string;
             export type Theme = number;
             export type ThemeName = string;
@@ -3846,6 +3957,8 @@ declare namespace Paths {
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             street_name?: Parameters.StreetName;
+            subject?: Parameters.Subject;
+            subject_name?: Parameters.SubjectName;
             suffix?: Parameters.Suffix;
             theme?: Parameters.Theme;
             theme_name?: Parameters.ThemeName;
@@ -4002,6 +4115,23 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedSummonTypeList;
+        }
+    }
+    namespace ThemesTagsList {
+        namespace Parameters {
+            export type Id = number;
+            export type Limit = number;
+            export type Offset = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        export interface QueryParameters {
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedTagList;
         }
     }
     namespace ThemesViolationTypesList {

@@ -65,6 +65,18 @@ export const useSummonTypes = (themeId?: Components.Schemas.CaseTheme["id"], opt
   })
 }
 
+export const useTags = (themeId?: Components.Schemas.CaseTheme["id"], options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<Components.Schemas.PaginatedTagList>({
+    lazy: themeId === undefined,
+    ...options,
+    url: makeApiUrl("themes", themeId, "tags"),
+    groupName: "themes",
+    handleError,
+    isProtected: true
+  })
+}
+
 export const useDecisionTypes = (themeId?: Components.Schemas.CaseTheme["id"], options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.PaginatedDecisionTypeList>({

@@ -8,6 +8,7 @@ import SensitiveCaseIcon from "../icons/SensitiveCaseIcon/SensitiveCaseIcon"
 import EnforcementIcon from "../icons/EnforcementIcon/EnforcementIcon"
 import { isThemeWithCorporations } from "app/components/case/themes/helpers"
 import translationsCaseStates from "app/translations/translationsCaseStates"
+import EditableTag from "./EditableTag/EditableTag"
 
 type Props = {
   caseId: Components.Schemas.CaseCreate["id"]
@@ -48,6 +49,7 @@ const getDataFirstCol = (caseItem?: Components.Schemas.CaseCreate) => {
   if (previous_case) {
     data["Overgedragen zaak"] = previous_case
   }
+  data["Tag"] = <EditableTag case={ caseItem } />
   return data
 }
 
@@ -65,16 +67,16 @@ const getDataSecondCol = (caseItem?: Components.Schemas.CaseCreate) => {
     "Onderwerp(en)": state === CLOSED
       ? subjects.map((subject) => subject.name).join(", ")
       : <ChangeableSubject subjects={ subjects } caseId={ id } themeId={ theme.id } />
-    }
-    if (showHousingCorporation) {
-      data["Corporatie"] = (
-        <ChangeHousingCorporation
-          housingCorporationId={ housing_corporation }
-          bagId={ bag_id }
-          caseId={ id }
-        />
-      )
-    }
+  }
+  if (showHousingCorporation) {
+    data["Corporatie"] = (
+      <ChangeHousingCorporation
+        housingCorporationId={ housing_corporation }
+        bagId={ bag_id }
+        caseId={ id }
+      />
+    )
+  }
   return data
 }
 
