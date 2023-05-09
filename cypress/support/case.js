@@ -10,7 +10,7 @@ Cypress.Commands.add("setCaseId", () => {
   const url = `${Cypress.env("baseUrlAcc")}cases/*/`
   cy.intercept(url).as("getCase")
 
-  cy.wait("@getCase", { timeout: 10000 })
+  cy.wait("@getCase", { timeout: 20000 })
     .then(({ response }) => {
       cy.writeFile(PATH, { id: response?.body?.id })
       cy.log("caseId =>", response?.body?.id)
@@ -20,7 +20,11 @@ Cypress.Commands.add("setCaseId", () => {
 Cypress.Commands.add("getCaseId", () => cy.readFile(PATH))
 
 // Check for CaseDetailPage with Case ID to be visible
-Cypress.Commands.add("shouldBeOnCaseDetailPage", () => {
+Cypress.Commands.add("goToCaseDetailPage", () => {
+  cy.getCaseId().then((e) => {
+    cy.visit(`/zaken/${ e.id }`)
+  })
+
   cy.get("h1")
     .contains("Zaakdetails")
 

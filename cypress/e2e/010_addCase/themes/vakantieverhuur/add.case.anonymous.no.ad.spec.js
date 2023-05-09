@@ -1,20 +1,21 @@
 import dummyData from "../../../../fixtures/addcase.json"
 import address from "../../../../fixtures/address.json"
 
-describe("Test add_case_anonymous_no_ad", () => {
+beforeEach(() =>  {
+  cy.kcloginAsPm();
+  cy.visit('/');
+  cy.get('a')
+    .should('contain', 'Amsterdamse Zaak Administratie');
+});
+// afterEach(() =>  {
+//   cy.kcLogout();
+// });
 
-  it("Login as projectmedewerker", () => {
-    cy.loginAsPm()
-  })
+
+describe("Test add.case.anonymous.no.ad.spec", () => {
 
   it("Select address and create case", () => {
     cy.createCaseForAddress(address.queryString, `${address.street}, ${address.zipCode}`)
-  })
-
-})
-
-describe("Create case and validate input", () => {
-  it("Fill in form", () => {
 
     cy.intercept("**/reasons/").as("getReasons")
     cy.intercept("**/subjects/").as("getSubjects")
@@ -53,9 +54,6 @@ describe("Create case and validate input", () => {
 
     cy.get('[data-e2e-id="description"]')
       .type(dummyData.description)
-  })
-
-  it("Send form", () => {
 
     cy.get(`[data-e2e-id="submit"]`)
       .click()
@@ -82,18 +80,12 @@ describe("Create case and validate input", () => {
       .should("include", "/zaken/")
   })
 
-  it("Show CaseDetail page", () => {
+  it("ZaakDetail has address and history", () => {
+    cy.goToCaseDetailPage()
 
-    cy.shouldBeOnCaseDetailPage()
-
-  })
-
-  it("ZaakDetail has right address", () => {
     cy.get("h2")
       .contains(`${address.street}, ${address.zipCode}`)
-  })
 
-  it("History contains the right items", () => {
     cy.history("SIA melding verwerken", "Projectmedewerker")
   })
 })
