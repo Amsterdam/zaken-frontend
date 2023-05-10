@@ -38,6 +38,7 @@ Cypress.Commands.add("goToCaseDetailPage", () => {
 //Check for right item to exist and opened in history
 Cypress.Commands.add("history", (openedItemName, labelToCheck) => {
   cy.get("h2").contains("Zaakhistorie")
+  cy.scrollTo(0, 400);
   cy.get(`button:contains(${openedItemName})`)
     .should("have.attr", "aria-expanded", "true")
     .parent()
