@@ -38,7 +38,7 @@ describe("Test visit.result.access.granted.spec", () => {
       const taskId = topTask.case_user_task_id;
 
       // Check role
-      cy.get("tbody>tr>td").eq(2).should("contain", roles.PM);
+      cy.get("tbody>tr>td").eq(2).should("contain", roles.TH);
 
       cy.testDueDate("tbody>tr>td", 0);
 
