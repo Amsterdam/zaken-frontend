@@ -1,5 +1,6 @@
 import dummyData from "../../../../fixtures/addcase.json"
 import address from "../../../../fixtures/address.json"
+import roles from "../../../../visitResult.json";
 
 beforeEach(() =>  {
   cy.kcloginAsPm();
@@ -86,6 +87,6 @@ describe("Test add.case.anonymous.no.ad.spec", () => {
     cy.get("h2")
       .contains(`${address.street}, ${address.zipCode}`)
 
-    cy.history("SIA melding verwerken", "Projectmedewerker")
+    cy.history("SIA melding verwerken", roles.PM)
   })
 })

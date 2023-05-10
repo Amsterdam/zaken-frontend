@@ -57,11 +57,12 @@ describe("Test debrief.no.violation.spec", () => {
         .find("button")
         .contains("Taak afronden")
         .click();
-    });
-  });
 
-  it("Check debrief event in history", () => {
-    cy.goToCaseDetailPage();
-    cy.history(debrief.noViolationNextTask, roles.PM);
+      const urlEvents = `${Cypress.env("baseUrlAcc")}cases/*/events/`;
+      cy.intercept(urlEvents).as("getEvents");
+      cy.wait("@getEvents").then(() => {
+        cy.history(debrief.noViolationNextTask, roles.PM);
+      });
+    });
   });
 });
