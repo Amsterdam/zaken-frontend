@@ -33,7 +33,7 @@ const SelectTask: React.FC<Props> = ({ taskId, taskOwner, isEnforcement }) => {
   // Get tasks params to create the query params url for the Context.
   // Two different providers are being used. :(
   const {
-    pagination, sorting, role, theme, owner, subjects,
+    pagination, sorting, role, theme, owner, projects, subjects,
     taskNames, reason, districtNames, housingCorporations
   } = useContext(ContextValues)["tasks"]
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
@@ -51,6 +51,7 @@ const SelectTask: React.FC<Props> = ({ taskId, taskOwner, isEnforcement }) => {
     owner,
     isEnforcement,
     taskNames,
+    projects,
     reason,
     subjects,
     districtNames,
