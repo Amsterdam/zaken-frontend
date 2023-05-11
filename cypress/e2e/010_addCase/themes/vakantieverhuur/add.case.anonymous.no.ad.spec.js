@@ -1,6 +1,6 @@
 import dummyData from "../../../../fixtures/addcase.json"
 import address from "../../../../fixtures/address.json"
-import roles from "../../../../visitResult.json";
+import roles from "../../../../fixtures/visitResult.json";
 
 beforeEach(() =>  {
   cy.kcloginAsPm();
