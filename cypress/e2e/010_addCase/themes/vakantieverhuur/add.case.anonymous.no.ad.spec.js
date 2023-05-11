@@ -1,66 +1,58 @@
-import dummyData from "../../../../fixtures/addcase.json"
-import address from "../../../../fixtures/address.json"
+import dummyData from "../../../../fixtures/addcase.json";
+import address from "../../../../fixtures/address.json";
+import roles from "../../../../fixtures/visitResult.json";
 
-describe("Test add_case_anonymous_no_ad", () => {
+beforeEach(() => {
+  cy.kcloginAsPm();
+  cy.visit("/");
+  cy.get("a").should("contain", "Amsterdamse Zaak Administratie");
+});
 
-  it("Login as projectmedewerker", () => {
-    cy.loginAsPm()
-  })
-
+describe("Test add.case.anonymous.no.ad.spec", () => {
   it("Select address and create case", () => {
-    cy.createCaseForAddress(address.queryString, `${address.street}, ${address.zipCode}`)
-  })
+    cy.createCaseForAddress(
+      address.queryString,
+      `${address.street}, ${address.zipCode}`
+    );
 
-})
-
-describe("Create case and validate input", () => {
-  it("Fill in form", () => {
-
-    cy.intercept("**/reasons/").as("getReasons")
-    cy.intercept("**/subjects/").as("getSubjects")
+    cy.intercept("**/reasons/").as("getReasons");
+    cy.intercept("**/subjects/").as("getSubjects");
 
     cy.get("span")
       .contains(/^Vakantieverhuur$/)
       .siblings()
       .find("input")
-      .check({force: true})
+      .check({ force: true });
 
     cy.wait(["@getReasons", "@getSubjects"]).then(() => {
       cy.get("span")
         .contains(/^SIA melding$/)
         .siblings()
         .find("input")
-        .check({force: true})
+        .check({ force: true });
 
       cy.get("span")
         .contains(dummyData.subject)
         .siblings()
         .find("input")
-        .check({force: true})
-    })
+        .check({ force: true });
+    });
 
-    cy.get('[data-e2e-id="yes"]')
-      .check({force: true})
+    cy.get('[data-e2e-id="yes"]').check({ force: true });
 
-    cy.get('[data-e2e-id="identification"]')
-      .type(dummyData.siaIdentification)
+    cy.get('[data-e2e-id="identification"]').type(dummyData.siaIdentification);
 
-    cy.get('[data-e2e-id="description_citizenreport"]')
-      .type(dummyData.siaDescription)
+    cy.get('[data-e2e-id="description_citizenreport"]').type(
+      dummyData.siaDescription
+    );
 
-    cy.get("#advertisement_no")
-      .check({force: true})
+    cy.get("#advertisement_no").check({ force: true });
 
-    cy.get('[data-e2e-id="description"]')
-      .type(dummyData.description)
-  })
+    cy.get('[data-e2e-id="description"]').type(dummyData.description);
 
-  it("Send form", () => {
+    cy.get(`[data-e2e-id="submit"]`).click();
 
-    cy.get(`[data-e2e-id="submit"]`)
-      .click()
-
-    cy.get(`[role="dialog"]`).should("have.length", 1)
+    cy.get(`[role="dialog"]`).should("have.length", 1);
 
     cy.get(`[role="dialog"]`)
       .should("contain", "Vakantieverhuur")
@@ -73,27 +65,19 @@ describe("Create case and validate input", () => {
       .and("contain", dummyData.description)
       .find("button")
       .contains("Zaak aanmaken")
-      .click()
+      .click();
 
     // Set caseId to use in the next tests.
-    cy.setCaseId()
+    cy.setCaseId();
 
-    cy.url()
-      .should("include", "/zaken/")
-  })
+    cy.url().should("include", "/zaken/");
+  });
 
-  it("Show CaseDetail page", () => {
+  it("ZaakDetail has address and history", () => {
+    cy.goToCaseDetailPage();
 
-    cy.shouldBeOnCaseDetailPage()
+    cy.get("h2").contains(`${address.street}, ${address.zipCode}`);
 
-  })
-
-  it("ZaakDetail has right address", () => {
-    cy.get("h2")
-      .contains(`${address.street}, ${address.zipCode}`)
-  })
-
-  it("History contains the right items", () => {
-    cy.history("SIA melding verwerken", "Projectmedewerker")
-  })
-})
+    cy.history("SIA melding verwerken", roles.PM);
+  });
+});
