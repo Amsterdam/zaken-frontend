@@ -1,5 +1,5 @@
 import { useEffect, useContext } from "react"
-import { useRoles, useTasks, useCaseThemes, useTaskNames,
+import { useRoles, useTasks, useCaseThemes, useTaskNames, useProjects,
   useUsersMe, useTasksReasons, useDistricts, useCorporations, useSubjects
 } from "app/state/rest"
 import TableTasks from "app/components/tasks/TableTasks/TableTasks"
@@ -45,8 +45,8 @@ const FilterContainer = styled.div`
 
 const Tasks: React.FC = () => {
   const {
-    count, districtNames, housingCorporations, owner, pagination, reason, results,
-    role, sorting, subjects, taskNames, theme, updateContextTasks
+    count, districtNames, housingCorporations, owner, pagination, projects,
+    reason, results, role, sorting, subjects, taskNames, theme, updateContextTasks
   } = useContext(ContextValues)["tasks"]
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const [roles] = useRoles()
@@ -54,6 +54,7 @@ const Tasks: React.FC = () => {
   const [caseThemes] = useCaseThemes()
   const [reasons] = useTasksReasons(theme)
   const themeId = getThemeId(caseThemes?.results, theme)
+  const [projectsTheme] = useProjects(themeId)
   const [subjectsTheme] = useSubjects(themeId)
   const [tasksDistricts] = useDistricts()
   const [corporationData] = useCorporations()
@@ -66,6 +67,7 @@ const Tasks: React.FC = () => {
     owner,
     false,
     taskNames,
+    projects,
     reason,
     subjects,
     districtNames,
@@ -83,6 +85,7 @@ const Tasks: React.FC = () => {
     owner,
     true,
     taskNames,
+    projects,
     reason,
     subjects,
     districtNames,
@@ -132,8 +135,9 @@ const Tasks: React.FC = () => {
      ** housingCorporations to avoid a stale selection:
      */
     if (key === "theme") {
-      tasksContextItem.reason = ""
       tasksContextItem.housingCorporations = []
+      tasksContextItem.projects = []
+      tasksContextItem.reason = ""
       tasksContextItem.subjects = []
     }
     updateContextTasks(tasksContextItem)
@@ -201,11 +205,13 @@ const Tasks: React.FC = () => {
           corporations={ corporationData?.results }
           owner={ owner }
           pageSize={ pagination.pageSize?.toString() || "25" }
+          projects={ projectsTheme?.results }
           role={ role ?? "" }
           roles={ roles }
           reason={ reason }
           reasons={ reasons }
           selectedCorporations={ housingCorporations }
+          selectedProjects={ projects }
           selectedSubjects={ subjects }
           selectedTaskNames={ taskNames }
           setDistrictNames={ (value: Components.Schemas.District["name"][]) => onChangeFilter("districtNames", value) }
@@ -214,6 +220,7 @@ const Tasks: React.FC = () => {
           setReason={ (value: string) => onChangeFilter("reason", value) }
           setRole={ (value: string) => onChangeFilter("role", value) }
           setSelectedCorporations={ (value: string[]) => onChangeFilter("housingCorporations", value) }
+          setSelectedProjects={ (value: string[]) => onChangeFilter("projects", value) }
           setSelectedSubjects={ (value: string[]) => onChangeFilter("subjects", value) }
           setSelectedTaskNames={ (value: Components.Schemas.CaseUserTaskTaskName["name"][]) => onChangeFilter("taskNames", value) }
           setTheme={ (value: string) => onChangeFilter("theme", value) }

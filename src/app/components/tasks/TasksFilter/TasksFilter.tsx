@@ -16,12 +16,14 @@ type Props = {
   districtNames: Components.Schemas.District["name"][]
   corporations?: Components.Schemas.HousingCorporation[]
   pageSize: string
+  projects?: Components.Schemas.CaseProject[]
   owner: string
   reasons?: Components.Schemas.CaseReason[]
   reason: string
   role: MockComponents.Schemas.Role
   roles?: MockComponents.Schemas.Role[]
   selectedCorporations: string[]
+  selectedProjects: string[]
   selectedSubjects: string[]
   selectedTaskNames: string[]
   setDistrictNames: (value: Components.Schemas.District["name"][]) => void
@@ -29,6 +31,7 @@ type Props = {
   setReason: (value: string) => void
   setRole: (value: string) => void
   setSelectedCorporations: (value: Components.Schemas.HousingCorporation["name"][]) => void
+  setSelectedProjects: (value: string[]) => void
   setSelectedSubjects: (value: string[]) => void
   setSelectedTaskNames: (value: Components.Schemas.CaseUserTaskTaskName["name"][]) => void
   setTheme: (value: string) => void
@@ -43,7 +46,8 @@ const TasksFilter: React.FC<Props> = ({
   role, roles, setRole, theme, themes, setTheme, pageSize, setPageSize, owner,
   setOwner, taskNames, selectedTaskNames, setSelectedTaskNames, reasons, reason, setReason,
   districts, districtNames, setDistrictNames, corporations, selectedCorporations,
-  setSelectedCorporations, subjects, setSelectedSubjects, selectedSubjects
+  setSelectedCorporations, subjects, setSelectedSubjects, selectedSubjects, projects,
+  selectedProjects, setSelectedProjects
 }) => (
   <>
     <FilterMenu>
@@ -81,6 +85,15 @@ const TasksFilter: React.FC<Props> = ({
           </ScaffoldForm>
         )
       }
+      { projects !== undefined && (
+        <MultipleOptionsFilterBox
+          label="Projecten"
+          options={ projects }
+          selectedOptions={ selectedProjects }
+          setSelectedOptions={ setSelectedProjects }
+          byId
+        />
+      )}
       { taskNames === undefined ? <Spinner /> : (
         <MultipleOptionsFilterBox
           label="Taak namen"

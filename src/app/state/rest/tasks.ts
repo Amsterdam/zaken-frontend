@@ -40,6 +40,7 @@ export const getQueryUrl = (
   owner?: string,
   isEnforcementRequest?: boolean,
   taskNames?: Components.Schemas.CaseUserTaskTaskName["name"][],
+  projects?: string[],
   reason?: string,
   subjects?: string[],
   districtNames?: Components.Schemas.District["name"][],
@@ -56,6 +57,9 @@ export const getQueryUrl = (
   }
   if (theme) {
     urlParams.theme_name = theme
+  }
+  if (projects && projects.length > 0) {
+    urlParams.project = projects
   }
   if (reason) {
     urlParams.reason_name = reason
@@ -96,6 +100,7 @@ export const useTasks = (
   owner?: string,
   isEnforcementRequest?: boolean,
   taskNames?: Components.Schemas.CaseUserTaskTaskName["name"][],
+  projects?: string[],
   reason?: string,
   subjects?: string[],
   districtNames?: Components.Schemas.District["name"][],
@@ -112,6 +117,7 @@ export const useTasks = (
     owner,
     isEnforcementRequest,
     taskNames,
+    projects,
     reason,
     subjects,
     districtNames,

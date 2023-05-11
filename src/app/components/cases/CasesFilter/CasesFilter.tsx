@@ -27,8 +27,8 @@ type Props = {
   setPageSize: (value: string) => void
   setReason: (value: string) => void
   setSelectedCorporations: (value: Components.Schemas.HousingCorporation["name"][]) => void
-  setSelectedSubjects: (value: string[]) => void
   setSelectedProjects: (value: string[]) => void
+  setSelectedSubjects: (value: string[]) => void
   setTheme: (value: string) => void
   subjects?: Components.Schemas.Subject[]
   theme: string
