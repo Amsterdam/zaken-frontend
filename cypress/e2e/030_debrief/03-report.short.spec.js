@@ -1,6 +1,6 @@
-import debrief from "../../fixtures/debrief.json"
-import roles from "../../fixtures/roles.json"
-import address from "../../fixtures/address.json"
+import debrief from "../../fixtures/debrief.json";
+import roles from "../../fixtures/roles.json";
+import address from "../../fixtures/address.json";
 
 beforeEach(() => {
   cy.kcloginAsPm();
@@ -9,11 +9,10 @@ beforeEach(() => {
 });
 
 describe("Test report.short.spec", () => {
-
-  it('Go to case details and check dueDate', () => {
+  it("Go to case details and check dueDate", () => {
     cy.goToCaseDetailPage();
-    cy.testDueDate("tbody>tr>td", 3)
-  })
+    cy.testDueDate("tbody>tr>td", 3);
+  });
 
   it('PHH can finish task "Uitzetten vervolgstap"', () => {
     cy.goToCaseDetailPage();
@@ -21,40 +20,34 @@ describe("Test report.short.spec", () => {
     cy.get("tbody>tr")
       .should("have.length", 3)
       .contains(roles.PHH)
-      .parents('td')
-      .siblings('td')
+      .parents("td")
+      .siblings("td")
       .contains("Taak afronden")
-      .click({force: true})
+      .click({ force: true });
 
     cy.get(`[role="dialog"]`)
-      .should('have.length', 1)
-      .contains(debrief.closingTask1)
+      .should("have.length", 1)
+      .contains(debrief.closingTask1);
 
-    cy.get('[data-e2e-id="next_step"]')
-      .select(debrief.closingTask2)
+    cy.get('[data-e2e-id="next_step"]').select(debrief.closingTask2);
 
-    cy.get(`[role="dialog"]`)
-      .find('button')
-      .contains("Taak afronden")
-      .click()
+    cy.get(`[role="dialog"]`).find("button").contains("Taak afronden").click();
 
-    const url = `${Cypress.env("baseUrlAcc")}cases/*/`
-    cy.intercept(url).as('getNextTask')
+    const url = `${Cypress.env("baseUrlAcc")}cases/*/`;
+    cy.intercept(url).as("getNextTask");
 
-    cy.wait('@getNextTask').then(() => {
-
-      cy.scrollTo(0, 400)
-      cy.get("h4")
-        .contains(debrief.closingTask2)
+    cy.wait("@getNextTask").then(() => {
+      cy.scrollTo(0, 400);
+      cy.get("h4").contains(debrief.closingTask2);
       cy.get("tbody>tr")
         .contains("td", debrief.closingTask4)
         .siblings("td")
-        .contains(roles.PM)
-    })
-  })
+        .contains(roles.PM);
+    });
+  });
 
   it("Check Uitzetten vervolgstap event in history", () => {
     cy.goToCaseDetailPage();
-    cy.history(debrief.closingTask1)
-  })
-})
+    cy.history(debrief.closingTask1);
+  });
+});

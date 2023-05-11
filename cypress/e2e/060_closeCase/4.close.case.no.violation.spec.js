@@ -78,11 +78,11 @@ describe('Close case as projectmedwerker"', () => {
       .find(`button`)
       .contains("Verwerken")
       .click();
-  });
 
-  it("Request is successfully processed", () => {
-    cy.goToCaseDetailPage();
-
-    cy.history("Zaak afgerond", "Projectmedewerker");
+    const urlEvents = `${Cypress.env("baseUrlAcc")}cases/*/events/`;
+    cy.intercept(urlEvents).as("getEvents");
+    cy.wait("@getEvents").then(() => {
+      cy.history("Zaak afgerond", "Projectmedewerker");
+    });
   });
 });
