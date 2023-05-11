@@ -7,6 +7,7 @@ export type StateType = {
     fromStartDate: string
     housingCorporations: string[]
     pagination: TABLE.Schemas.Pagination
+    projects: string[]
     reason: string
     results: Components.Schemas.Case[]
     sorting: TABLE.Schemas.Sorting
@@ -20,6 +21,7 @@ export type StateType = {
     housingCorporations: string[]
     owner: string
     pagination: TABLE.Schemas.Pagination
+    projects: string[]
     reason: string
     results: Components.Schemas.CaseUserTask[]
     role?: string
@@ -42,6 +44,7 @@ export const initialState: StateType = {
       page: 1,
       pageSize: 25
     },
+    projects: [],
     reason: "",
     results: [],
     sorting: {
@@ -56,11 +59,12 @@ export const initialState: StateType = {
     count: 0,
     districtNames: [],
     housingCorporations: [],
+    owner: "",
     pagination: {
       page: 1,
       pageSize: 25
     },
-    owner: "",
+    projects: [],
     reason: "",
     results: [],
     role: undefined,

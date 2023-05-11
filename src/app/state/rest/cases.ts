@@ -36,6 +36,7 @@ export const useCases = (
   sorting?: TABLE.Schemas.Sorting,
   theme?: string,
   from_start_date?: string,
+  projects?: string[],
   reason?: string,
   subjects?: string[],
   districtNames?: Components.Schemas.District["name"][],
@@ -54,6 +55,9 @@ export const useCases = (
   }
   if (theme) {
     urlParams.theme_name = theme
+  }
+  if (projects && projects.length > 0) {
+    urlParams.project = projects
   }
   if (reason) {
     urlParams.reason_name = reason

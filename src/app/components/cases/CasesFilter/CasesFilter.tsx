@@ -16,9 +16,11 @@ type Props = {
   districts: Components.Schemas.District[]
   districtNames: Components.Schemas.District["name"][]
   pageSize: string
+  projects?: Components.Schemas.CaseProject[]
   reason: string
   reasons?: Components.Schemas.CaseReason[]
   selectedCorporations: string[]
+  selectedProjects: string[]
   selectedSubjects: string[]
   setDate: (value: string) => void
   setDistrictNames: (value: Components.Schemas.District["name"][]) => void
@@ -26,6 +28,7 @@ type Props = {
   setReason: (value: string) => void
   setSelectedCorporations: (value: Components.Schemas.HousingCorporation["name"][]) => void
   setSelectedSubjects: (value: string[]) => void
+  setSelectedProjects: (value: string[]) => void
   setTheme: (value: string) => void
   subjects?: Components.Schemas.Subject[]
   theme: string
@@ -36,7 +39,7 @@ const CasesFilter: React.FC<Props> = ({
   date, setDate, theme, themes, setTheme, pageSize, setPageSize,
   reasons, reason, setReason, districts, districtNames, setDistrictNames,
   corporations, selectedCorporations, setSelectedCorporations, subjects,
-  setSelectedSubjects, selectedSubjects
+  setSelectedSubjects, selectedSubjects, projects, selectedProjects, setSelectedProjects
 }) => (
   <FilterMenu>
     <ScaffoldForm>
@@ -55,6 +58,15 @@ const CasesFilter: React.FC<Props> = ({
       <ScaffoldForm>
         <ScaffoldFields { ...scaffoldReason(reason, setReason, reasons) } />
       </ScaffoldForm>
+    )}
+    { projects !== undefined && (
+      <MultipleOptionsFilterBox
+        label="Projecten"
+        options={ projects }
+        selectedOptions={ selectedProjects }
+        setSelectedOptions={ setSelectedProjects }
+        byId
+      />
     )}
     { subjects !== undefined && (
       <MultipleOptionsFilterBox
