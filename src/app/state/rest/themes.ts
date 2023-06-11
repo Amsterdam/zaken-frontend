@@ -89,6 +89,18 @@ export const useDecisionTypes = (themeId?: Components.Schemas.CaseTheme["id"], o
   })
 }
 
+export const useQuickDecisionTypes = (themeId?: Components.Schemas.CaseTheme["id"], options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<Components.Schemas.PaginatedQuickDecisionTypeList>({
+    ...options,
+    lazy: themeId === undefined,
+    url: makeApiUrl("themes", themeId, "quick-decision-types"),
+    groupName: "cases",
+    handleError,
+    isProtected: true
+  })
+}
+
 export const useScheduleTypes = (themeId?: Components.Schemas.CaseTheme["id"], options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.ThemeScheduleTypes>({
