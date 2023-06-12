@@ -8,12 +8,12 @@ export default (summon?: Components.Schemas.Summon) => {
 
   const personNames = persons.map(({ first_name, last_name, preposition, person_role, function: person_function, entity_name }) =>
     <>
-      { last_name && <PersonNameDisplay firstName={first_name} namePrefix={preposition ?? undefined} name={last_name} /> }
+      { last_name && <PersonNameDisplay firstName={ first_name } namePrefix={ preposition ?? undefined } name={ last_name } /> }
       { last_name && (person_function || entity_name) && <span>, </span> }
-      <PersonEntityDisplay personFunction={person_function} entityName={entity_name} />
+      <PersonEntityDisplay personFunction={ person_function } entityName={ entity_name } />
       { person_role && <>
         <span> (</span>
-        <PersonRoleDisplay personRole={person_role} />
+        <PersonRoleDisplay personRole={ person_role } />
         <span>)</span>
       </> }
     </>

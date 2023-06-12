@@ -1047,6 +1047,42 @@ declare namespace Components {
             previous?: string | null; // uri
             results?: Priority[];
         }
+        export interface PaginatedQuickDecisionList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?offset=400&limit=100
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?offset=200&limit=100
+             */
+            previous?: string | null; // uri
+            results?: QuickDecision[];
+        }
+        export interface PaginatedQuickDecisionTypeList {
+            /**
+             * example:
+             * 123
+             */
+            count?: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?offset=400&limit=100
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?offset=200&limit=100
+             */
+            previous?: string | null; // uri
+            results?: QuickDecisionType[];
+        }
         export interface PaginatedScheduleCreateList {
             /**
              * example:
@@ -1389,6 +1425,20 @@ declare namespace Components {
         }
         export interface PriorityTiny {
             weight: number; // float
+        }
+        export interface QuickDecision {
+            id: number;
+            case_user_task_id?: string;
+            description?: string | null;
+            date_added: string; // date-time
+            case: number;
+            quick_decision_type: number;
+        }
+        export interface QuickDecisionType {
+            id: number;
+            name: string;
+            workflow_option: string;
+            theme: number;
         }
         export interface Residents {
             /**
@@ -3448,6 +3498,40 @@ declare namespace Paths {
             export type $200 = string[];
         }
     }
+    namespace QuickDecisionTypesList {
+        namespace Parameters {
+            export type Limit = number;
+            export type Offset = number;
+        }
+        export interface QueryParameters {
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedQuickDecisionTypeList;
+        }
+    }
+    namespace QuickDecisionsCreate {
+        export type RequestBody = Components.Schemas.QuickDecision;
+        namespace Responses {
+            export type $201 = Components.Schemas.QuickDecision;
+        }
+    }
+    namespace QuickDecisionsList {
+        namespace Parameters {
+            export type Case = number;
+            export type Limit = number;
+            export type Offset = number;
+        }
+        export interface QueryParameters {
+            case?: Parameters.Case;
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedQuickDecisionList;
+        }
+    }
     namespace ScheduleActionsList {
         namespace Parameters {
             export type Limit = number;
@@ -4047,6 +4131,23 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.PaginatedCaseThemeList;
+        }
+    }
+    namespace ThemesQuickDecisionTypesList {
+        namespace Parameters {
+            export type Id = number;
+            export type Limit = number;
+            export type Offset = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        export interface QueryParameters {
+            limit?: Parameters.Limit;
+            offset?: Parameters.Offset;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedQuickDecisionTypeList;
         }
     }
     namespace ThemesReasonsList {

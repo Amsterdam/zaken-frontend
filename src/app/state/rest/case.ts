@@ -88,6 +88,17 @@ export const useDecisions = (options?: Options) => {
   })
 }
 
+export const useQuickDecisions = (options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<Components.Schemas.QuickDecision>({
+    ...options,
+    url: makeApiUrl("quick-decisions"),
+    groupName: "cases",
+    handleError,
+    isProtected: true
+  })
+}
+
 // TODO-MOCKED replace with real endpoint
 export const useCorrespondences = (options?: Options) => {
   const handleError = useErrorHandler()
