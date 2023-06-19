@@ -16,7 +16,7 @@ export default (
   advertisementOptions: Record<string, string>,
   cases: Components.Schemas.Case[],
   corporations: Components.Schemas.HousingCorporation[]
-  ) => {
+) => {
 
   const fields = {
     theme: {
@@ -199,8 +199,9 @@ export default (
     nuisance: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { reason?: Components.Schemas.CaseReason, theme?: Components.Schemas.CaseTheme } }) =>
-        formValues?.values?.theme?.name === "Vakantieverhuur" && formValues?.values?.reason?.name === "SIA melding",
+        shouldShow: (formValues: { values?: { reason?: Components.Schemas.CaseReason, theme?: Components.Schemas.CaseTheme } }) => (
+          formValues?.values?.theme?.name === "Vakantieverhuur" && formValues?.values?.reason?.name === "SIA melding"
+        ),
         field: {
           type: "CheckboxFields",
           props: {
@@ -235,8 +236,12 @@ export default (
     advertisement: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { theme?: Components.Schemas.CaseTheme } }) =>
-        formValues?.values?.theme?.name !== undefined && formValues?.values?.theme?.name !== "Kamerverhuur" && formValues?.values?.theme?.name !== "Ondermijning",
+        shouldShow: (formValues: { values?: { theme?: Components.Schemas.CaseTheme } }) => {
+          const themeName = formValues?.values?.theme?.name
+          const isVisible = themeName !== undefined && themeName !== "Kamerverhuur"
+            && themeName !== "Ondermijning" && themeName !== "Goed verhuurderschap"
+          return isVisible
+        },
         field: {
           type: "RadioFields",
           props: {

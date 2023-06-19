@@ -7,7 +7,7 @@ import isValidUrl from "app/routing/utils/isValidUrl"
 export default (
   caseId: Components.Schemas.CaseDetail["id"],
   themeName: Components.Schemas.CaseTheme["name"]
-  ) => {
+) => {
 
 
   const fields = {
@@ -109,7 +109,7 @@ export default (
     advertisement: {
       type: "ShowHide",
       props: {
-        shouldShow: (() => themeName !== "Kamerverhuur" && themeName !== "Ondermijning"),
+        shouldShow: (() => themeName !== "Kamerverhuur" && themeName !== "Ondermijning" && themeName !== "Goed verhuurderschap"),
         field: {
           type: "RadioFields",
           props: {
