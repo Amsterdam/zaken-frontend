@@ -169,3 +169,15 @@ export const useTaskNames = (role: string) => {
     isProtected: true
   })
 }
+
+// useSummonTypes for getting the available summonTypes for a specific task
+export const useSummonTypesByTaskId = (id: number | string, options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<Components.Schemas.PaginatedSummonTypeList>({
+    ...options,
+    url: makeApiUrl("tasks", id, "summon-types"),
+    groupName: "task",
+    handleError,
+    isProtected: true
+  })
+}
