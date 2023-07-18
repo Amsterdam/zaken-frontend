@@ -28,5 +28,7 @@ RUN mv $DIR/build/* $DIR/builds/acceptance/
 FROM nginx:stable-alpine
 ADD nginx.conf /etc/nginx/nginx.conf
 
+RUN apk update && apk upgrade libx11
+
 COPY --from=builder /var/www/builds /var/www
 CMD nginx -g 'daemon off;'
