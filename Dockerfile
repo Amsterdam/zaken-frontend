@@ -12,9 +12,6 @@ RUN mkdir -p $DIR/builds/production
 
 WORKDIR $DIR
 
-# Install ca-certificates to handle SSL certificate verification
-RUN apk add --no-cache ca-certificates
-
 # install dependencies
 RUN npm ci --production --unsafe-perm --ignore-scripts .
 
@@ -32,8 +29,10 @@ RUN mv $DIR/build/* $DIR/builds/acceptance/
 # Use the official Nginx image as the final stage
 FROM nginx:stable-alpine
 
+# Install ca-certificates to handle SSL certificate verification
 # Install libx11 for Nginx (if needed)
-RUN apk update && apk add --no-cache libx11
+RUN apk update && apk add --no-cache ca-certificates && update-ca-certificates && apk add --no-cache libx11
+
 
 # Copy the nginx configuration
 ADD nginx.conf /etc/nginx/nginx.conf
