@@ -170,7 +170,7 @@ export const useTaskNames = (role: string) => {
   })
 }
 
-// useSummonTypes for getting the available summonTypes for a specific task
+// useSummonTypesByTaskId for getting the available summonTypes for a specific task and thus Theme.
 export const useSummonTypesByTaskId = (id: Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"], options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.PaginatedSummonTypeList>({
