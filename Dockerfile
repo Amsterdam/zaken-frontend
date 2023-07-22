@@ -29,11 +29,6 @@ RUN mv $DIR/build/* $DIR/builds/acceptance/
 # Use the official Nginx image as the final stage
 FROM nginx:stable-alpine
 
-# Install ca-certificates to handle SSL certificate verification
-# Install libx11 for Nginx (if needed)
-RUN apk update && apk add --no-cache ca-certificates && update-ca-certificates && apk add --no-cache libx11
-
-
 # Copy the nginx configuration
 ADD nginx.conf /etc/nginx/nginx.conf
 
