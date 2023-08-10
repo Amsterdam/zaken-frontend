@@ -1,7 +1,7 @@
 import { Button, Checkbox, Spinner } from "@amsterdam/asc-ui"
 import { useCaseThemes, useSubjects } from "app/state/rest"
 import { useState } from "react"
-import { ButtonContainer, StyledLabel, StyledSelect } from "./layout"
+import { ButtonContainer, StyledLabel, StyledSelect, StyledButton } from "../layout"
 
 type Props = {
   onSubmit: (data: any) => void
@@ -72,9 +72,9 @@ const ChangeSubjectForm: React.FC<Props> = ({ isLoading, onSubmit, onCancel, the
           </StyledSelect>
           <CheckBoxes subjects={otherSubjects?.results || []}/>
           <ButtonContainer>
-            <Button onClick={onCancel} variant="primaryInverted">
+            <StyledButton onClick={onCancel} variant="primaryInverted">
               Annuleer
-            </Button>
+            </StyledButton>
             <Button onClick={submit} variant="primary">
               Verwerken
             </Button>

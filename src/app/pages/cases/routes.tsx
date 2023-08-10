@@ -3,6 +3,7 @@ import DetailsPage from "app/pages/cases/details/DetailsPage"
 import DebriefCreatePage from "app/pages/case/debriefings/CreatePage"
 import SummonCreatePage from "app/pages/case/summons/CreatePage"
 import DecisionCreatePage from "app/pages/case/decisions/CreatePage"
+import QuickDecisionCreatePage from "app/pages/case/quick-decisions/CreatePage"
 import CompleteCasePage from "app/pages/case/complete/CompleteCasePage"
 import CitizenReportPage from "app/pages/case/citizenreports/CreatePage"
 import VisitCreatePage from "app/pages/case/visits/CreatePage"
@@ -38,6 +39,11 @@ export default {
           },
           "besluit/:caseUserTaskId": {
             Page: DecisionCreatePage,
+            title: "Resultaat besluit",
+            icon: "Edit"
+          },
+          "snel-besluit/:caseUserTaskId": {
+            Page: QuickDecisionCreatePage,
             title: "Resultaat besluit",
             icon: "Edit"
           },

@@ -25,7 +25,7 @@ const ValueProvider: React.FC = ({ children }) => {
   }
 
   return (
-    <ContextValues.Provider value={value}>
+    <ContextValues.Provider value={ value }>
       {children}
     </ContextValues.Provider>
   )

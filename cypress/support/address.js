@@ -17,7 +17,7 @@ Cypress.Commands.add("selectAddress", (queryString, addressString) => {
   cy.visit(`/?query=${queryString}`)
 
   cy.wait("@getAddress").then(() => {
-    cy.wait(500)
+    cy.wait(1000)
     cy.get("tbody>tr").first()
       .should("be.visible")
       .click()

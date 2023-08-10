@@ -21,9 +21,9 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString, caseUs
   const id = parseUrlParamId(idString)
 
   return (
-    isValidUrlParamId<Components.Schemas.CaseDetail["id"]>(id) &&
-    isValidUrlParamId<Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"]>(caseUserTaskId) ?
-      <DefaultLayout>
+    isValidUrlParamId<Components.Schemas.CaseDetail["id"]>(id)
+    && isValidUrlParamId<Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"]>(caseUserTaskId)
+      ? <DefaultLayout>
         <RowWithColumn>
           <PageHeading />
         </RowWithColumn>
@@ -31,12 +31,12 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString, caseUs
           <CaseHeading id={ id } />
         </RowWithColumn>
         <Row>
-          <Column spanLarge={50}>
+          <Column spanLarge={ 50 }>
             <SummonForm id={ id } caseUserTaskId={ caseUserTaskId } />
           </Column>
         </Row>
-      </DefaultLayout> :
-      <NotFoundPage />
+      </DefaultLayout>
+      : <NotFoundPage />
   )
 }
 

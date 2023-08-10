@@ -10,13 +10,14 @@ const sortingOrder = {
   DESCEND: "DESCEND"
 }
 
+// A second sorter parameter is added because of the huge number of duplicate values.
 const sortingIndexMapping: any = {
-  "owner": "owner",
-  "case.address.street_name": "case__address__street_name",
-  "case.address.postal_code": "case__address__postal_code",
-  "due_date": "due_date",
-  "name": "name",
-  "case.start_date": "case__start_date"
+  "owner": "owner, due_date",
+  "case.address.street_name": "case__address__street_name, due_date",
+  "case.address.postal_code": "case__address__postal_code, due_date",
+  "due_date": "due_date, id",
+  "name": "name, due_date",
+  "case.start_date": "case__start_date, due_date"
 }
 
 const getOrderingValue = (sorting: TABLE.Schemas.Sorting) => {
@@ -39,7 +40,9 @@ export const getQueryUrl = (
   owner?: string,
   isEnforcementRequest?: boolean,
   taskNames?: Components.Schemas.CaseUserTaskTaskName["name"][],
+  projects?: string[],
   reason?: string,
+  subjects?: string[],
   districtNames?: Components.Schemas.District["name"][],
   housingCorporations?: string[]
 ) => {
@@ -55,8 +58,14 @@ export const getQueryUrl = (
   if (theme) {
     urlParams.theme_name = theme
   }
+  if (projects && projects.length > 0) {
+    urlParams.project = projects
+  }
   if (reason) {
     urlParams.reason_name = reason
+  }
+  if (subjects && subjects?.length > 0) {
+    urlParams.subject = subjects
   }
   if (taskNames && taskNames?.length > 0) {
     urlParams.name = taskNames
@@ -91,7 +100,9 @@ export const useTasks = (
   owner?: string,
   isEnforcementRequest?: boolean,
   taskNames?: Components.Schemas.CaseUserTaskTaskName["name"][],
+  projects?: string[],
   reason?: string,
+  subjects?: string[],
   districtNames?: Components.Schemas.District["name"][],
   housingCorporations?: string[],
   options?: Options
@@ -106,7 +117,9 @@ export const useTasks = (
     owner,
     isEnforcementRequest,
     taskNames,
+    projects,
     reason,
+    subjects,
     districtNames,
     housingCorporations
   )

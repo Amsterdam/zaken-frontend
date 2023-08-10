@@ -56,7 +56,8 @@ const SummonForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
   const themeId = useCase(id)[0]?.theme.id
   const [data] = useSummonTypes(themeId)
   const summonTypes = data?.results
-  const fields = useScaffoldedFields(scaffold, id, summonTypes)
+  const summonTypesWithoutBoete = summonTypes?.filter((summonType) => summonType.workflow_option !== "besluit")
+  const fields = useScaffoldedFields(scaffold, id, summonTypesWithoutBoete)
   const [, { execPost }] = useSummons({ lazy: true })
 
   return (
