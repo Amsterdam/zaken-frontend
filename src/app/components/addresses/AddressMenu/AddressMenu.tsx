@@ -21,8 +21,8 @@ const AddressMenu: React.FC<Props> = ({ bagId }) => {
   const [permitDetails] = usePermitDetails(bagId)
   const [data] = useCasesByBagId(bagId)
   const numCases = data?.results?.length ?? 0
-  const permitsGranted = permitDetails?.permits.filter(p => p.permit_granted === "GRANTED").length
-  const permitsFound = permitDetails?.permits.filter(p => ["GRANTED", "NOT_GRANTED"].includes(p.permit_granted)).length
+  const permitsGranted = permitDetails?.permits?.filter(p => p.permit_granted === "GRANTED").length
+  const permitsFound = permitDetails?.permits?.filter(p => ["GRANTED", "NOT_GRANTED"].includes(p.permit_granted)).length
   const counts = [
     undefined,
     undefined,
@@ -34,30 +34,30 @@ const AddressMenu: React.FC<Props> = ({ bagId }) => {
     <BlockMenu>
       <ul>
         { routes.map((route, index) => {
-            const path = typeof route === "string" ? route : route.path
-            const permissionNames = typeof route !== "string" ? route.permissionNames : undefined
-            const page = routesObject[path]
-            if (page?.icon === undefined || page?.title === undefined) return null
-            const navBlock = (
-              <NavBlock
-                to={ to(path, { bagId }) }
-                icon={ page.icon }
-                header={ page.title }
-                count={ counts[index] }
-                permissionNames={ permissionNames }
-              />
-            )
-            return (
-              <li key={ path }>
-                <div>
-                  { mockedRoutes.includes(path) ? (
-                    <MockWrapper hasPadding={ false }>{ navBlock }</MockWrapper>
-                    ) : navBlock
-                  }
-                </div>
-              </li>
-            )
-          })
+          const path = typeof route === "string" ? route : route.path
+          const permissionNames = typeof route !== "string" ? route.permissionNames : undefined
+          const page = routesObject[path]
+          if (page?.icon === undefined || page?.title === undefined) return null
+          const navBlock = (
+            <NavBlock
+              to={ to(path, { bagId }) }
+              icon={ page.icon }
+              header={ page.title }
+              count={ counts[index] }
+              permissionNames={ permissionNames }
+            />
+          )
+          return (
+            <li key={ path }>
+              <div>
+                { mockedRoutes.includes(path) ? (
+                  <MockWrapper hasPadding={ false }>{ navBlock }</MockWrapper>
+                ) : navBlock
+                }
+              </div>
+            </li>
+          )
+        })
         }
       </ul>
     </BlockMenu>
