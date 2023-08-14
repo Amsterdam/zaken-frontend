@@ -1,5 +1,6 @@
 import { useBAG, useBAGLodging } from "app/state/rest"
 import { DefinitionList } from "@amsterdam/wonen-ui"
+import getAddressFromBagResults from "app/components/addresses/utils/getAddressFromBagResults"
 import useValues from "./hooks/useValues"
 
 type Props = {
@@ -8,8 +9,11 @@ type Props = {
 
 const ObjectDetails: React.FC<Props> = ({ bagId }) => {
 
-  const [BAGAddress, { isBusy: isBusyAddress }] = useBAG(bagId)
-  const { type, subtype_id } = BAGAddress?.results[0] ?? {}
+  const [BAGAddressResponse, { isBusy: isBusyAddress }] = useBAG(bagId)
+  const BAGAddress = getAddressFromBagResults(BAGAddressResponse)
+
+
+  const { type, subtype_id } = BAGAddress ?? {}
   const [BAGObject, { isBusy: isBusyObject }] = useBAGLodging(type, subtype_id)
 
   const isBusy = isBusyAddress || isBusyObject
