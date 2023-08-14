@@ -2,7 +2,7 @@ import styled from "styled-components"
 import { breakpoint, themeSpacing, Typography } from "@amsterdam/asc-ui"
 
 import { useBAG } from "app/state/rest"
-import ShowOtherAddressesButton from "app/components/addresses/AddressSuffixSwitcher/ShowOtherAddressesButton"
+import ShowOtherAddressesButton, { Index } from "app/components/addresses/AddressSuffixSwitcher/ShowOtherAddressesButton"
 import useOtherAddressesByBagId from "app/state/rest/custom/useOtherAddresses/useOtherAddresses"
 import AddressLink from "./components/AddressLink"
 import getAddressFromBagResults from "app/components/addresses/utils/getAddressFromBagResults"
@@ -37,10 +37,12 @@ const AddressHeader: React.FC<Props> = ({ bagId, headingSize = "h2", isHeader = 
   const showButton = enableSwitch && (filteredAddresses?.length ?? 0) > 1
   const isCurrentAddress = (address: { adres: string }) => address.adres.trim() === foundAddress?.adres.trim()
   const addressIndex = filteredAddresses?.findIndex(isCurrentAddress) ?? -1
-  const index
-    = addressIndex === 0 ? "first"
-      : addressIndex > 0 && addressIndex === (filteredAddresses?.length ?? 0) - 1 ? "last"
-        : undefined
+  let index: Index = undefined
+  if (addressIndex === 0) {
+    index = "first"
+  } else if (addressIndex > 0 && addressIndex === (filteredAddresses?.length ?? 0) - 1) {
+    index = "last"
+  }
 
   // TODO: Show loading status visually
   return (
