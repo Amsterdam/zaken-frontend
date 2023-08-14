@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { Heading, themeSpacing } from "@amsterdam/asc-ui"
 import { useBAG } from "app/state/rest/"
 import AddressDisplay from "app/components/addresses/AddressDisplay/AddressDisplay"
-
+import getAddressFromBagResults from "app/components/addresses/utils/getAddressFromBagResults"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -15,7 +15,7 @@ const Div = styled.div`
 
 const AddressHeadingByBagId: React.FC<Props> = ({ bagId }) => {
   const [data] = useBAG(bagId)
-  const address = data?.results[0]
+  const address = getAddressFromBagResults(data)
 
   return (
     <>

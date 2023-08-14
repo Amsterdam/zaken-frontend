@@ -9,6 +9,7 @@ import ConfirmScaffoldForm from "app/components/shared/ConfirmScaffoldForm/Confi
 import useNavigateWithFlashMessage from "app/state/flashMessages/useNavigateWithFlashMessage"
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
 import getAddressAsString from "app/components/addresses/utils/getAddressAsString"
+import getAddressFromBagResults from "app/components/addresses/utils/getAddressFromBagResults"
 
 const TON_THEME_NAME = "Vakantieverhuur"
 const TON_REASON_NAME = "Digitaal toezicht"
@@ -25,25 +26,25 @@ type Props = {
 const mapData = (bagId: Components.Schemas.Address["bag_id"], tonId: number | undefined) =>
   (data: any): any => {
     const mappedData = {
-    ...data,
-    bag_id: bagId,
-    theme_id: data.theme.id,
-    reason_id: data.reason.id,
-    project_id: data.project?.id,
-    ton_ids: tonId !== undefined ? [ tonId ] : undefined,
-    subject_ids: data.subjects.map((subject: any) => subject.id),
-    previous_case: data.previous_case?.id || undefined,
-    housing_corporation: data.housing_corporation?.id || undefined
-  }
-  if (data.identification) {
-    mappedData.citizen_reports = [{
       ...data,
-      nuisance: Array.isArray(data?.nuisance) && data?.nuisance?.includes("nuisance"),
-      advertisements: undefined
-    }]
+      bag_id: bagId,
+      theme_id: data.theme.id,
+      reason_id: data.reason.id,
+      project_id: data.project?.id,
+      ton_ids: tonId !== undefined ? [ tonId ] : undefined,
+      subject_ids: data.subjects.map((subject: any) => subject.id),
+      previous_case: data.previous_case?.id || undefined,
+      housing_corporation: data.housing_corporation?.id || undefined
+    }
+    if (data.identification) {
+      mappedData.citizen_reports = [{
+        ...data,
+        nuisance: Array.isArray(data?.nuisance) && data?.nuisance?.includes("nuisance"),
+        advertisements: undefined
+      }]
+    }
+    return mappedData
   }
-  return mappedData
-}
 
 const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
   const [caseThemes] = useCaseThemes()
@@ -63,7 +64,9 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
   const [listing] = useListing(tonId)
   const [cases] = useCasesByBagId(bagId)
   const [corporations] = useCorporations()
-  const [bagAddress] = useBAG(bagId)
+  const [bagAddressResponse] = useBAG(bagId)
+  const bagAddress = getAddressFromBagResults(bagAddressResponse)
+
 
   // Only show Vakantieverhuur, Digitaal Toezicht and Yes as an option for TON.
   const caseThemesOptions = tonId ? caseThemes?.results?.filter(({ name }) => name === TON_THEME_NAME) : caseThemes?.results
@@ -91,7 +94,7 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
     setThemeId(undefined)
     setTimeout(() => {
       setThemeId(newThemeId)
-  }, 0)
+    }, 0)
   }
 
   /*
@@ -131,7 +134,7 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
       reason: reasons?.results?.find(({ name }) => name === TON_REASON_NAME),
       advertisement: "yes",
       advertisements: [{ link: listing?.url }]
-     } : {}
+    } : {}
   }
 
   const addressString = getAddressAsString(bagAddress)
