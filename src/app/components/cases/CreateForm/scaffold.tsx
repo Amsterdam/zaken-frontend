@@ -3,7 +3,6 @@ import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import navigateTo from "app/routing/navigateTo"
 import isValidUrl from "app/routing/utils/isValidUrl"
-import { isThemeWithCorporations } from "app/components/case/themes/helpers"
 
 export default (
   bagId: Components.Schemas.Address["bag_id"],
@@ -28,24 +27,6 @@ export default (
         optionLabelField: "name",
         isRequired: true,
         onChange: (index: string) => setTheme(themes?.[parseInt(index, 10)]?.id)
-      }
-    },
-    housing_corporation: {
-      type: "ShowHide",
-      props: {
-        shouldShow: () => isThemeWithCorporations(themeId) && corporations.length > 0,
-        field: {
-          type: "ComplexSelectField",
-          props: {
-            label: "Welke corporatie is eigenaar van dit adres?",
-            name: "housing_corporation",
-            options: corporations,
-            optionLabelField: "name",
-            withEmptyOption: true,
-            emptyOptionLabel: "Maak een keuze",
-            isRequired: false
-          }
-        }
       }
     },
     reason: {
@@ -80,6 +61,24 @@ export default (
             step: 1,
             isRequired: true,
             hideNumberSpinner: true
+          }
+        }
+      }
+    },
+    housing_corporation: {
+      type: "ShowHide",
+      props: {
+        shouldShow: (formValues: { values?: { theme?: Components.Schemas.CaseTheme } }) => formValues?.values?.theme !== undefined && corporations.length > 0,
+        field: {
+          type: "ComplexSelectField",
+          props: {
+            label: "Welke corporatie is eigenaar van dit adres?",
+            name: "housing_corporation",
+            options: corporations,
+            optionLabelField: "name",
+            withEmptyOption: true,
+            emptyOptionLabel: "Geen corporatie",
+            isRequired: false
           }
         }
       }
@@ -352,8 +351,8 @@ export default (
   return new FormPositioner(fields as Fields)
     .setGrid("mobileS", "1fr 1fr", [
       ["theme", "theme"],
-      ["housing_corporation", "housing_corporation"],
       ["reason", "reason"],
+      ["housing_corporation", "housing_corporation"],
       ["reporter_anonymous", "reporter_anonymous"],
       ["reporter_name"],
       ["reporter_phone"],

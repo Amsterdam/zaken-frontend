@@ -6,7 +6,6 @@ import ChangeableSubject from "./ChangeSubject/ChangeableSubject"
 import ChangeHousingCorporation from "./ChangeHousingCorporation/ChangeHousingCorporation"
 import SensitiveCaseIcon from "../icons/SensitiveCaseIcon/SensitiveCaseIcon"
 import EnforcementIcon from "../icons/EnforcementIcon/EnforcementIcon"
-import { isThemeWithCorporations } from "app/components/case/themes/helpers"
 import translationsCaseStates from "app/translations/translationsCaseStates"
 import EditableTag from "./EditableTag/EditableTag"
 
@@ -60,16 +59,13 @@ const getDataSecondCol = (caseItem?: Components.Schemas.CaseCreate) => {
 
   const { id, theme, reason, project, subjects, state, address: { housing_corporation, bag_id } } = caseItem
   const hasProject = project?.name !== undefined
-  const showHousingCorporation = isThemeWithCorporations(theme.id)
   const data: DefinitionListData = {
     "Thema": theme.name,
     "Aanleiding": `${ reason.name }${ hasProject ? ": " : "" }${ hasProject ? project.name : "" }`,
     "Onderwerp(en)": state === CLOSED
       ? subjects.map((subject) => subject.name).join(", ")
-      : <ChangeableSubject subjects={ subjects } caseId={ id } themeId={ theme.id } />
-  }
-  if (showHousingCorporation) {
-    data["Corporatie"] = (
+      : <ChangeableSubject subjects={ subjects } caseId={ id } themeId={ theme.id } />,
+    "Corporatie": (
       <ChangeHousingCorporation
         housingCorporationId={ housing_corporation }
         bagId={ bag_id }
