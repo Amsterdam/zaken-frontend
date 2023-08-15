@@ -12,35 +12,42 @@ import MultipleOptionsFilter from "app/components/filters/MultipleOptionsFilter/
 import MultipleOptionsFilterBox from "app/components/filters/MultipleOptionsFilterBox/MultipleOptionsFilterBox"
 
 type Props = {
-  theme: string
-  themes?: Components.Schemas.CaseTheme[]
-  setTheme: (value: string) => void
-  role: MockComponents.Schemas.Role
-  roles?: MockComponents.Schemas.Role[]
-  setRole: (value: string) => void
-  pageSize: string
-  setPageSize: (value: string) => void
-  owner: string
-  setOwner: (value: string) => void
-  taskNames?: Components.Schemas.CaseUserTaskTaskName[]
-  selectedTaskNames: string[]
-  setSelectedTaskNames: (value: Components.Schemas.CaseUserTaskTaskName["name"][]) => void
-  reasons?: Components.Schemas.CaseReason[]
-  reason: string
-  setReason: (value: string) => void
   districts: Components.Schemas.District[]
   districtNames: Components.Schemas.District["name"][]
-  setDistrictNames: (value: Components.Schemas.District["name"][]) => void
   corporations?: Components.Schemas.HousingCorporation[]
+  pageSize: string
+  projects?: Components.Schemas.CaseProject[]
+  owner: string
+  reasons?: Components.Schemas.CaseReason[]
+  reason: string
+  role: MockComponents.Schemas.Role
+  roles?: MockComponents.Schemas.Role[]
   selectedCorporations: string[]
+  selectedProjects: string[]
+  selectedSubjects: string[]
+  selectedTaskNames: string[]
+  setDistrictNames: (value: Components.Schemas.District["name"][]) => void
+  setPageSize: (value: string) => void
+  setReason: (value: string) => void
+  setRole: (value: string) => void
   setSelectedCorporations: (value: Components.Schemas.HousingCorporation["name"][]) => void
+  setSelectedProjects: (value: string[]) => void
+  setSelectedSubjects: (value: string[]) => void
+  setSelectedTaskNames: (value: Components.Schemas.CaseUserTaskTaskName["name"][]) => void
+  setTheme: (value: string) => void
+  setOwner: (value: string) => void
+  subjects?: Components.Schemas.Subject[]
+  taskNames?: Components.Schemas.CaseUserTaskTaskName[]
+  theme: string
+  themes?: Components.Schemas.CaseTheme[]
 }
 
 const TasksFilter: React.FC<Props> = ({
   role, roles, setRole, theme, themes, setTheme, pageSize, setPageSize, owner,
   setOwner, taskNames, selectedTaskNames, setSelectedTaskNames, reasons, reason, setReason,
   districts, districtNames, setDistrictNames, corporations, selectedCorporations,
-  setSelectedCorporations
+  setSelectedCorporations, subjects, setSelectedSubjects, selectedSubjects, projects,
+  selectedProjects, setSelectedProjects
 }) => (
   <>
     <FilterMenu>
@@ -48,12 +55,12 @@ const TasksFilter: React.FC<Props> = ({
         <ScaffoldFields { ...scaffoldMyTasks(owner, setOwner) } />
       </ScaffoldForm>
       { themes === undefined
-          ? <Spinner />
-          : (
-            <ScaffoldForm>
-              <ScaffoldFields { ...scaffoldTheme(theme, themes, setTheme) } />
-            </ScaffoldForm>
-          )
+        ? <Spinner />
+        : (
+          <ScaffoldForm>
+            <ScaffoldFields { ...scaffoldTheme(theme, themes, setTheme) } />
+          </ScaffoldForm>
+        )
       }
       { theme === "Onderhuur" && (
         <MultipleOptionsFilter
@@ -68,22 +75,40 @@ const TasksFilter: React.FC<Props> = ({
         <ScaffoldForm>
           <ScaffoldFields { ...scaffoldReasons(reason, setReason, reasons) } />
         </ScaffoldForm>
-        )
+      )
       }
       { roles === undefined
-          ? <Spinner />
-          : (
-            <ScaffoldForm>
-              <ScaffoldFields { ...scaffoldRole(role, roles, setRole) } />
-            </ScaffoldForm>
-          )
+        ? <Spinner />
+        : (
+          <ScaffoldForm>
+            <ScaffoldFields { ...scaffoldRole(role, roles, setRole) } />
+          </ScaffoldForm>
+        )
       }
+      { projects !== undefined && (
+        <MultipleOptionsFilterBox
+          label="Projecten"
+          options={ projects }
+          selectedOptions={ selectedProjects }
+          setSelectedOptions={ setSelectedProjects }
+          byId
+        />
+      )}
       { taskNames === undefined ? <Spinner /> : (
         <MultipleOptionsFilterBox
           label="Taak namen"
           options={ taskNames }
           selectedOptions={ selectedTaskNames }
           setSelectedOptions={ setSelectedTaskNames }
+        />
+      )}
+      { subjects !== undefined && (
+        <MultipleOptionsFilterBox
+          label="Onderwerpen"
+          options={ subjects }
+          selectedOptions={ selectedSubjects }
+          setSelectedOptions={ setSelectedSubjects }
+          byId
         />
       )}
       <MultipleOptionsFilter

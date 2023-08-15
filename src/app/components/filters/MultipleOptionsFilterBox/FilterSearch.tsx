@@ -4,6 +4,7 @@ import { themeColor, themeSpacing } from "@amsterdam/asc-ui"
 type Props = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   onFocus: () => void
+  label?: string
 }
 
 const Input = styled.input.attrs({
@@ -11,7 +12,7 @@ const Input = styled.input.attrs({
 })`
   width: 100%;
   height: 100%;
-  padding: ${ themeSpacing(2, 4) };
+  padding: ${ themeSpacing(3, 4) };
   outline: none;
   border: 1px solid ${ themeColor("tint", "level5") };
   background-color: #ffffff;
@@ -37,9 +38,9 @@ const Input = styled.input.attrs({
   }
 `
 
-const FilterSearch: React.FC<Props> = ({ onChange, onFocus }) => (
+const FilterSearch: React.FC<Props> = ({ onChange, onFocus, label = "" }) => (
   <Input
-    placeholder="Zoek op taak naam..."
+    placeholder={ `Zoek op ${ label.toLowerCase() }...` }
     onChange={ onChange }
     onFocus={ onFocus }
   />

@@ -1,4 +1,4 @@
-
+import { useState } from "react"
 import { RouteComponentProps } from "@reach/router"
 import styled from "styled-components"
 import { Divider, Heading, themeSpacing } from "@amsterdam/asc-ui"
@@ -36,6 +36,8 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
   // Don't show if sensitive case and no permission
   const isAuthorized = caseItem?.sensitive === false || (caseItem?.sensitive === true && hasPermission)
   const showNotFound = has404
+  const [isDocumentsTabActive, setIsDocumentsTabActive] = useState(false)
+
 
   if (showSpinner) {
     return <PageSpinner />
@@ -62,9 +64,9 @@ const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => 
   ]
   if (process.env.REACT_APP_ENVIRONMENT !== "production") {
     tabs.push(
-      <Tab id="2" key="2" label="Documenten">
+      <Tab id="2" key="2" label="Documenten" onClick={ () => setIsDocumentsTabActive(true) } >
         <PaddedContent>
-          <Documents caseId={ id } />
+          <Documents caseId={ id } isActiveTab={ isDocumentsTabActive }/>
         </PaddedContent>
       </Tab>
     )

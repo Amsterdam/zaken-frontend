@@ -3,8 +3,8 @@ import { defineConfig } from "cypress"
 export default defineConfig({
   projectId: "tbpt8b",
   chromeWebSecurity: false,
-  screenshotOnRunFailure: true,
-  video: true,
+  screenshotOnRunFailure: false,
+  video: false,
   viewportWidth: 1280,
   viewportHeight: 1024,
   defaultCommandTimeout: 10000,

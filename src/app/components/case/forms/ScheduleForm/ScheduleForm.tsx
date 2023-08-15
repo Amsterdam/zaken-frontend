@@ -25,9 +25,9 @@ const mapData = (data: ScheduleTypeFormData) => ({
 })
 
 const visitFromOptions: { id: number, name: string }[] = [{
-    id: 1, name: "Vanaf vandaag"
-  }, {
-    id: 2, name: "Vanaf een specifieke datum"
+  id: 1, name: "Vanaf vandaag"
+}, {
+  id: 2, name: "Vanaf een specifieke datum"
 }]
 
 const ScheduleForm: React.FC<Props> = ({ id, caseUserTaskId }) => {

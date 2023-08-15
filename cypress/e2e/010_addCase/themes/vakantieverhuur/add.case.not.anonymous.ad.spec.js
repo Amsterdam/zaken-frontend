@@ -105,7 +105,7 @@ describe("Create case and validate input", () => {
   })
 
   it("Show CaseDetail page", () => {
-    cy.shouldBeOnCaseDetailPage()
+    cy.goToCaseDetailPage()
   })
 
   it("ZaakDetail has right address", () => {

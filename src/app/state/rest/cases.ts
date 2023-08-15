@@ -10,12 +10,13 @@ const sortingOrder = {
   DESCEND: "DESCEND"
 }
 
+// A second sorter parameter is added because of the huge number of duplicate values.
 const sortingIndexMapping: any = {
-  "address.street_name": "address__street_name",
-  "address.postal_code": "address__postal_code",
-  "reason.name": "reason__name",
-  "start_date": "start_date",
-  "last_updated": "last_updated"
+  "address.street_name": "address__street_name, start_date",
+  "address.postal_code": "address__postal_code, start_date",
+  "reason.name": "reason__name, start_date",
+  "start_date": "start_date, id",
+  "last_updated": "last_updated, start_date"
 }
 
 const getOrderingValue = (sorting: TABLE.Schemas.Sorting) => {
@@ -35,7 +36,9 @@ export const useCases = (
   sorting?: TABLE.Schemas.Sorting,
   theme?: string,
   from_start_date?: string,
+  projects?: string[],
   reason?: string,
+  subjects?: string[],
   districtNames?: Components.Schemas.District["name"][],
   housingCorporations?: string[],
   options?: Options
@@ -53,8 +56,14 @@ export const useCases = (
   if (theme) {
     urlParams.theme_name = theme
   }
+  if (projects && projects.length > 0) {
+    urlParams.project = projects
+  }
   if (reason) {
     urlParams.reason_name = reason
+  }
+  if (subjects && subjects?.length > 0) {
+    urlParams.subject = subjects
   }
   if (districtNames && districtNames?.length > 0) {
     urlParams.district_name = districtNames

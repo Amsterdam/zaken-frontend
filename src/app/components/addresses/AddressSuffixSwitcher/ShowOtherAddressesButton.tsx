@@ -6,7 +6,7 @@ import { Button, Icon } from "@amsterdam/asc-ui"
 import { useModal } from "app/components/shared/Modal/hooks/useModal"
 import OtherAddressesModal from "./OtherAddressesModal"
 
-type Index = "first" | "last" | undefined
+export type Index = "first" | "last" | undefined
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
   index: Index
@@ -21,9 +21,9 @@ const StyledIcon = styled(Icon)`
 const renderIcon = (index: Index) => {
   switch(index) {
     case "first":
-      return <StyledIcon size={32}><ExpandMore/></StyledIcon>
+      return <StyledIcon size={ 32 }><ExpandMore/></StyledIcon>
     case "last":
-      return <StyledIcon size={32}><ExpandLess/></StyledIcon>
+      return <StyledIcon size={ 32 }><ExpandLess/></StyledIcon>
     default:
       return <StyledIcon
         size={ 32 }

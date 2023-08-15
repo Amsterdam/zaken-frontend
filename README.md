@@ -42,5 +42,3 @@ A `npm run deploy:prod` convenience script is also available. This also guarante
 ## E2E testing with Cypress
 
 [README.md](https://github.com/Amsterdam/zaken-frontend/blob/master/cypress/README.md)
-
-
