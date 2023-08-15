@@ -27,8 +27,6 @@ const StyledDiv = styled.div`
   }
 `
 
-const CLOSED: Components.Schemas.CaseCreate["state"] = "AFGESLOTEN"
-
 const getDataFirstCol = (caseItem?: Components.Schemas.CaseCreate) => {
   if (caseItem === undefined) {
     return undefined
@@ -57,14 +55,12 @@ const getDataSecondCol = (caseItem?: Components.Schemas.CaseCreate) => {
     return undefined
   }
 
-  const { id, theme, reason, project, subjects, state, address: { housing_corporation, bag_id } } = caseItem
+  const { id, theme, reason, project, subjects, address: { housing_corporation, bag_id } } = caseItem
   const hasProject = project?.name !== undefined
   const data: DefinitionListData = {
     "Thema": theme.name,
     "Aanleiding": `${ reason.name }${ hasProject ? ": " : "" }${ hasProject ? project.name : "" }`,
-    "Onderwerp(en)": state === CLOSED
-      ? subjects.map((subject) => subject.name).join(", ")
-      : <ChangeableSubject subjects={ subjects } caseId={ id } themeId={ theme.id } />,
+    "Onderwerp(en)": <ChangeableSubject subjects={ subjects } caseId={ id } themeId={ theme.id } />,
     "Corporatie": (
       <ChangeHousingCorporation
         housingCorporationId={ housing_corporation }
