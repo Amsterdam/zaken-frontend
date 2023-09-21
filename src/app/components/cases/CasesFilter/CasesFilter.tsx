@@ -7,7 +7,6 @@ import scaffoldDate from "./scaffoldDate"
 import scaffoldTheme from "./scaffoldTheme"
 import scaffoldPageSize from "./scaffoldPageSize"
 import scaffoldReason from "./scaffoldReason"
-import MultipleOptionsFilter from "app/components/filters/MultipleOptionsFilter/MultipleOptionsFilter"
 import MultipleOptionsFilterBox from "app/components/filters/MultipleOptionsFilterBox/MultipleOptionsFilterBox"
 
 type Props = {
@@ -45,20 +44,21 @@ const CasesFilter: React.FC<Props> = ({
     <ScaffoldForm>
       <ScaffoldFields { ...scaffoldTheme(theme, themes, setTheme) } />
     </ScaffoldForm>
-    { theme === "Onderhuur" && (
-      <MultipleOptionsFilter
-        label="Corporaties"
-        options={ corporations }
-        selectedOptions={ selectedCorporations }
-        setSelectedOptions={ setSelectedCorporations }
-        byId
-      />
-    )}
+    <ScaffoldForm>
+      <ScaffoldFields { ...scaffoldDate(date, setDate) } />
+    </ScaffoldForm>
     { reasons === undefined ? <Spinner /> : (
       <ScaffoldForm>
         <ScaffoldFields { ...scaffoldReason(reason, setReason, reasons) } />
       </ScaffoldForm>
     )}
+    <MultipleOptionsFilterBox
+      label="Corporaties"
+      options={ corporations }
+      selectedOptions={ selectedCorporations }
+      setSelectedOptions={ setSelectedCorporations }
+      byId
+    />
     { projects !== undefined && (
       <MultipleOptionsFilterBox
         label="Projecten"
@@ -77,10 +77,7 @@ const CasesFilter: React.FC<Props> = ({
         byId
       />
     )}
-    <ScaffoldForm>
-      <ScaffoldFields { ...scaffoldDate(date, setDate) } />
-    </ScaffoldForm>
-    <MultipleOptionsFilter
+    <MultipleOptionsFilterBox
       label="Stadsdelen"
       options={ districts }
       selectedOptions={ districtNames }

@@ -8,7 +8,6 @@ import scaffoldRole from "./scaffoldRole"
 import scaffoldPageSize from "./scaffoldPageSize"
 import scaffoldMyTasks from "./scaffoldMyTasks"
 import scaffoldReasons from "./scaffoldReasons"
-import MultipleOptionsFilter from "app/components/filters/MultipleOptionsFilter/MultipleOptionsFilter"
 import MultipleOptionsFilterBox from "app/components/filters/MultipleOptionsFilterBox/MultipleOptionsFilterBox"
 
 type Props = {
@@ -62,21 +61,6 @@ const TasksFilter: React.FC<Props> = ({
           </ScaffoldForm>
         )
       }
-      { theme === "Onderhuur" && (
-        <MultipleOptionsFilter
-          label="Corporaties"
-          options={ corporations }
-          selectedOptions={ selectedCorporations }
-          setSelectedOptions={ setSelectedCorporations }
-          byId
-        />
-      )}
-      { reasons === undefined ? <Spinner /> : (
-        <ScaffoldForm>
-          <ScaffoldFields { ...scaffoldReasons(reason, setReason, reasons) } />
-        </ScaffoldForm>
-      )
-      }
       { roles === undefined
         ? <Spinner />
         : (
@@ -85,14 +69,10 @@ const TasksFilter: React.FC<Props> = ({
           </ScaffoldForm>
         )
       }
-      { projects !== undefined && (
-        <MultipleOptionsFilterBox
-          label="Projecten"
-          options={ projects }
-          selectedOptions={ selectedProjects }
-          setSelectedOptions={ setSelectedProjects }
-          byId
-        />
+      { reasons === undefined ? <Spinner /> : (
+        <ScaffoldForm>
+          <ScaffoldFields { ...scaffoldReasons(reason, setReason, reasons) } />
+        </ScaffoldForm>
       )}
       { taskNames === undefined ? <Spinner /> : (
         <MultipleOptionsFilterBox
@@ -102,6 +82,24 @@ const TasksFilter: React.FC<Props> = ({
           setSelectedOptions={ setSelectedTaskNames }
         />
       )}
+      <MultipleOptionsFilterBox
+        label="Corporaties"
+        options={ corporations }
+        selectedOptions={ selectedCorporations }
+        setSelectedOptions={ setSelectedCorporations }
+        byId
+      />
+
+      { projects !== undefined && (
+        <MultipleOptionsFilterBox
+          label="Projecten"
+          options={ projects }
+          selectedOptions={ selectedProjects }
+          setSelectedOptions={ setSelectedProjects }
+          byId
+        />
+      )}
+
       { subjects !== undefined && (
         <MultipleOptionsFilterBox
           label="Onderwerpen"
@@ -111,7 +109,7 @@ const TasksFilter: React.FC<Props> = ({
           byId
         />
       )}
-      <MultipleOptionsFilter
+      <MultipleOptionsFilterBox
         label="Stadsdelen"
         options={ districts }
         selectedOptions={ districtNames }

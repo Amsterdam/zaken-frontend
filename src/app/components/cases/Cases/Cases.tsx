@@ -82,7 +82,6 @@ const Cases: React.FC = () => {
      ** housingCorporations to avoid a stale selection:
      */
     if (key === "theme") {
-      casesContextItem.housingCorporations = []
       casesContextItem.reason = ""
       casesContextItem.projects = []
       casesContextItem.subjects = []

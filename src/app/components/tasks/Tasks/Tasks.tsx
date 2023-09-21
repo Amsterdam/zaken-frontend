@@ -135,7 +135,6 @@ const Tasks: React.FC = () => {
      ** housingCorporations to avoid a stale selection:
      */
     if (key === "theme") {
-      tasksContextItem.housingCorporations = []
       tasksContextItem.projects = []
       tasksContextItem.reason = ""
       tasksContextItem.subjects = []
