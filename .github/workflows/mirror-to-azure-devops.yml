@@ -18,6 +18,7 @@ jobs:
           AZURE_DEVOPS_PAT: ${{ secrets.AZURE_DEVOPS_PAT }}
           AZURE_DEVOPS_REPO_URL: ${{ secrets.AZURE_DEVOPS_REPO_URL }}
         run: |
-          git remote add azure-devops $AZURE_DEVOPS_REPO_URL
+          git remote add azure-devops $AZURE_DEVOPS_REPO_URL.extraHeader "AUTHORIZATION: Basic $AZURE_DEVOPS_PAT"
           git push azure-devops --all
           git push azure-devops --tags
+          /.extraHeader
