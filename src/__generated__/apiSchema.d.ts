@@ -1418,6 +1418,18 @@ declare namespace Components {
         }
         export type PermitGrantedEnum = "GRANTED" | "NOT_GRANTED" | "UNKNOWN";
         export type PersonRoleEnum = "PERSON_ROLE_OWNER" | "PERSON_ROLE_RESIDENT" | "PERSON_ROLE_MIDDLEMAN" | "PERSON_ROLE_PLATFORM" | "PERSON_ROLE_HEIR";
+        export interface Powerbrowser {
+            baG_ID: string;
+            product: string;
+            kenmerk: string | null;
+            muT_DAT: string; // date-time
+            status: string;
+            resultaat: string | null;
+            startdatum: string; // date-time
+            einddatum: string | null; // date-time
+            vergunninghouder: string | null;
+            initator: string | null;
+        }
         export interface Priority {
             id: number;
             name: string;
@@ -1561,7 +1573,7 @@ declare namespace Components {
             permissions: PermissionsEnum[];
             role: string;
         }
-        export type ViolationEnum = "NO" | "YES" | "ADDITIONAL_RESEARCH_REQUIRED" | "ADDITIONAL_VISIT_REQUIRED" | "ADDITIONAL_VISIT_WITH_AUTHORIZATION" | "SEND_TO_OTHER_THEME" | "LIKELY_INHABITED";
+        export type ViolationEnum = "NO" | "YES" | "ADDITIONAL_RESEARCH_REQUIRED" | "ADDITIONAL_VISIT_REQUIRED" | "ADDITIONAL_VISIT_WITH_AUTHORIZATION" | "SEND_TO_OTHER_THEME" | "LIKELY_INHABITED" | "SERVICE_COSTS" | "SCHEDULE_CONVERSATION" | "ADVICE_OTHER_DISCIPLINE" | "REQUEST_DOCUMENTS";
         export interface ViolationType {
             key: string;
             value: string;
@@ -1690,6 +1702,17 @@ declare namespace Paths {
         export type RequestBody = Components.Schemas.PatchedAddress;
         namespace Responses {
             export type $200 = Components.Schemas.Address;
+        }
+    }
+    namespace AddressesPermitsPowerbrowserRetrieve {
+        namespace Parameters {
+            export type BagId = string;
+        }
+        export interface PathParameters {
+            bag_id: Parameters.BagId;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.Powerbrowser;
         }
     }
     namespace AddressesPermitsRetrieve {
