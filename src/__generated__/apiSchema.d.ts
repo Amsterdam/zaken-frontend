@@ -1429,6 +1429,7 @@ declare namespace Components {
             einddatum: string | null; // date-time
             vergunninghouder: string | null;
             initator: string | null;
+            datuM_TOT: string | null // date-time
         }
         export interface Priority {
             id: number;
