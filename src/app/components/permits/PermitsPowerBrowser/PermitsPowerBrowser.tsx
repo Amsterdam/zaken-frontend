@@ -9,6 +9,7 @@ import { usePermitsPowerBrowser } from "app/state/rest"
 const StyledSpan = styled.span`
   color: ${ themeColor("tint","level5") };
   font-weight: 500;
+  font-size: 16px;
   display: flex;
   align-items: center;
 `
