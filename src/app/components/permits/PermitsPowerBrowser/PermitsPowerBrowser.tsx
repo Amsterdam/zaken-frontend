@@ -9,6 +9,7 @@ import { usePermitsPowerBrowser } from "app/state/rest"
 const StyledSpan = styled.span`
   color: ${ themeColor("tint","level5") };
   font-weight: 500;
+  font-size: 16px;
   display: flex;
   align-items: center;
 `
@@ -30,7 +31,7 @@ const PermitsPowerBrowser: React.FC<Props> = ({ bagId }) => {
     <>
       <Heading forwardedAs="h4">
         Vergunningen PowerBrowser
-        { permits.length > 0 && (
+        { permits.length === 0 && (
           <StyledSpan>
             Alles tonen
             <StyledSwitch
