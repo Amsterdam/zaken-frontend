@@ -1,10 +1,11 @@
 
 import { RouteComponentProps } from "@reach/router"
 
-import Row, { RowWithColumn } from "app/components/layouts/Grid/Row"
+import Row from "app/components/layouts/Grid/Row"
 import PageHeading from "app/components/shared/PageHeading/PageHeading"
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
 import PermitDetailsList from "app/components/permits/PermitDetails/PermitDetails"
+import PermitsPowerBrowser from "app/components/permits/PermitsPowerBrowser/PermitsPowerBrowser"
 import VacationRental from "app/components/permits/VacationRental/VacationRental"
 import DetailHeader from "app/components/shared/DetailHeader/DetailHeader"
 import Column from "app/components/layouts/Grid/Column"
@@ -30,14 +31,13 @@ const PermitsPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
       <Row>
         <Column spanLarge={ 50 }>
           <PermitDetailsList bagId={ bagId }></PermitDetailsList>
+          <VacationRental bagId={ bagId }></VacationRental>
+          <DecosLink bagId={ bagId } />
         </Column>
         <Column spanLarge={ 50 }>
-          <VacationRental bagId={ bagId }></VacationRental>
+          <PermitsPowerBrowser bagId={ bagId }></PermitsPowerBrowser>
         </Column>
       </Row>
-      <RowWithColumn>
-        <DecosLink bagId={ bagId } />
-      </RowWithColumn>
     </DefaultLayout>
   ) : <NotFoundPage />
 )

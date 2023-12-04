@@ -1,6 +1,6 @@
 import { useEffect, useContext } from "react"
-import { useRoles, useTasks, useCaseThemes, useTaskNames,
-  useUsersMe, useTasksReasons, useDistricts, useCorporations
+import { useRoles, useTasks, useCaseThemes, useTaskNames, useProjects,
+  useUsersMe, useTasksReasons, useDistricts, useCorporations, useSubjects
 } from "app/state/rest"
 import TableTasks from "app/components/tasks/TableTasks/TableTasks"
 import TasksFilter from "../TasksFilter/TasksFilter"
@@ -11,6 +11,7 @@ import useContextCache from "app/state/rest/provider/useContextCache"
 import { Heading, themeSpacing } from "@amsterdam/asc-ui"
 import styled from "styled-components"
 import EnforcementIcon from "app/components/case/icons/EnforcementIcon/EnforcementIcon"
+import getThemeId from "app/components/tasks/utils/getThemeId"
 
 type Item = string | Components.Schemas.District["name"][]
 
@@ -44,15 +45,17 @@ const FilterContainer = styled.div`
 
 const Tasks: React.FC = () => {
   const {
-    results, count, pagination, sorting, role, theme,
-    updateContextTasks, owner, taskNames, reason, districtNames,
-    housingCorporations
+    count, districtNames, housingCorporations, owner, pagination, projects,
+    reason, results, role, sorting, subjects, taskNames, theme, updateContextTasks
   } = useContext(ContextValues)["tasks"]
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const [roles] = useRoles()
   const [me] = useUsersMe()
   const [caseThemes] = useCaseThemes()
   const [reasons] = useTasksReasons(theme)
+  const themeId = getThemeId(caseThemes?.results, theme)
+  const [projectsTheme] = useProjects(themeId)
+  const [subjectsTheme] = useSubjects(themeId)
   const [tasksDistricts] = useDistricts()
   const [corporationData] = useCorporations()
   const [dataSource, { isBusy }] = useTasks(
@@ -64,7 +67,9 @@ const Tasks: React.FC = () => {
     owner,
     false,
     taskNames,
+    projects,
     reason,
+    subjects,
     districtNames,
     housingCorporations
   )
@@ -80,7 +85,9 @@ const Tasks: React.FC = () => {
     owner,
     true,
     taskNames,
+    projects,
     reason,
+    subjects,
     districtNames,
     housingCorporations
   )
@@ -128,8 +135,9 @@ const Tasks: React.FC = () => {
      ** housingCorporations to avoid a stale selection:
      */
     if (key === "theme") {
+      tasksContextItem.projects = []
       tasksContextItem.reason = ""
-      tasksContextItem.housingCorporations = []
+      tasksContextItem.subjects = []
     }
     updateContextTasks(tasksContextItem)
   }
@@ -164,8 +172,8 @@ const Tasks: React.FC = () => {
             <TableTasks
               data={ enforcementDataSource?.results || [] }
               isBusy={ isBusyEnforcement }
-              onChange={onChangeTable}
-              pagination={false}
+              onChange={ onChangeTable }
+              pagination={ false }
               sorting={ sorting }
               emptyPlaceholder={ emptyPlaceholder }
               isEnforcement
@@ -178,41 +186,47 @@ const Tasks: React.FC = () => {
         <TableTasks
           data={ results || [] }
           isBusy={ isBusy }
-          onChange={onChangeTable}
-          pagination={{
+          onChange={ onChangeTable }
+          pagination={ {
             page: pagination.page,
             pageSize: pagination.pageSize,
             collectionSize: count || 1,
             paginationLength: 9
-          }}
+          } }
           sorting={ sorting }
           emptyPlaceholder={ emptyPlaceholder }
         />
       </div>
       <FilterContainer>
         <TasksFilter
+          districtNames={ districtNames }
+          districts={ districts }
+          corporations={ corporationData?.results }
+          owner={ owner }
+          pageSize={ pagination.pageSize?.toString() || "25" }
+          projects={ projectsTheme?.results }
           role={ role ?? "" }
           roles={ roles }
+          reason={ reason }
+          reasons={ reasons }
+          selectedCorporations={ housingCorporations }
+          selectedProjects={ projects }
+          selectedSubjects={ subjects }
+          selectedTaskNames={ taskNames }
+          setDistrictNames={ (value: Components.Schemas.District["name"][]) => onChangeFilter("districtNames", value) }
+          setOwner={ (value: string) => onChangeFilter("owner", value) }
+          setPageSize={ onChangePageSize }
+          setReason={ (value: string) => onChangeFilter("reason", value) }
           setRole={ (value: string) => onChangeFilter("role", value) }
+          setSelectedCorporations={ (value: string[]) => onChangeFilter("housingCorporations", value) }
+          setSelectedProjects={ (value: string[]) => onChangeFilter("projects", value) }
+          setSelectedSubjects={ (value: string[]) => onChangeFilter("subjects", value) }
+          setSelectedTaskNames={ (value: Components.Schemas.CaseUserTaskTaskName["name"][]) => onChangeFilter("taskNames", value) }
+          setTheme={ (value: string) => onChangeFilter("theme", value) }
+          subjects={ subjectsTheme?.results }
+          taskNames={ taskNamesData }
           theme={ theme }
           themes={ caseThemes?.results }
-          setTheme={ (value: string) => onChangeFilter("theme", value) }
-          setPageSize={ onChangePageSize }
-          pageSize={ pagination.pageSize?.toString() || "25" }
-          owner={ owner }
-          setOwner={ (value: string) => onChangeFilter("owner", value) }
-          selectedTaskNames={ taskNames }
-          setSelectedTaskNames={ (value: Components.Schemas.CaseUserTaskTaskName["name"][]) => onChangeFilter("taskNames", value) }
-          taskNames={ taskNamesData }
-          reason={ reason }
-          setReason={ (value: string) => onChangeFilter("reason", value)}
-          reasons={ reasons }
-          districts={ districts }
-          districtNames={ districtNames }
-          setDistrictNames={ (value: Components.Schemas.District["name"][]) => onChangeFilter("districtNames", value)}
-          corporations={ corporationData?.results }
-          selectedCorporations={ housingCorporations }
-          setSelectedCorporations={ (value: string[]) => onChangeFilter("housingCorporations", value) }
         />
       </FilterContainer>
     </Container>

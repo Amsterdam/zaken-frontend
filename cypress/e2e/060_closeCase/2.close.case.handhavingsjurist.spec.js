@@ -1,43 +1,46 @@
-import address from "../../fixtures/address.json"
+import address from "../../fixtures/address.json";
+import roles from "../../fixtures/roles.json";
 
-describe('Select Next Step - closing case as handhavingsjurist', () => {
+// Handhavingsjurist
+beforeEach(() => {
+  cy.kcloginAsHhj();
+  cy.visit("/");
+  cy.get("a").should("contain", "Amsterdamse Zaak Administratie");
+});
 
-  it("Login as handhavingsjurist", () => {
-    cy.loginAsHhj()
-  })
+describe("Select Next Step - closing case as handhavingsjurist", () => {
+  it('Go to Adresoverzicht and case has task "Afsluiten zaak"', () => {
+    const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/`;
+    cy.intercept(url).as("getCases");
+    cy.visit(`/adres/${address.bagId}`);
+    cy.wait("@getCases").then(() => {
+      cy.get("h1").contains(`${address.street}, ${address.zipCode}`);
+    });
 
-  it("Go to Adresoverzicht and check address", () => {
-    const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/`
-    cy.intercept(url).as('getCases')
-    cy.visit(`/adres/${address.bagId}`)
-    cy.wait('@getCases').then(() => {
-      cy.get("h1")
-        .contains(`${address.street}, ${address.zipCode}`)
-    })
-  })
+    cy.scrollTo(0, 400);
+    cy.get("tbody>tr").contains("td", "Afsluiten zaak").click();
 
-  it("Adresoverzicht has right address", () => {
-    cy.get("h1")
-      .contains(`${address.street}, ${address.zipCode}`)
-  })
+    cy.get("h1").contains("Zaakdetails");
+  });
 
-  it('Get first case with task "Afsluiten zaak"', () => {
-    cy.scrollTo(0, 400)
-    cy.get("tbody>tr")
-      .contains("td", "Afsluiten zaak")
-      .click()
-  })
+  it("Handhaver should not be able to close the case", () => {
+    cy.goToCaseDetailPage();
 
-  it("Handhavingsjurist should not be able to close the case", () => {
-    const url = `${Cypress.env("baseUrlAcc")}cases/*/`
+    cy.get("tbody>tr>td").eq(2).should("contain", roles.PM);
 
-    cy.request({
-      method: 'GET',
-      url: url,
-      failOnStatusCode: false
-    })
-      .then((response) => {
-        expect(response.status).to.eq(401)
-    })
-  })
-})
+    const url = `${Cypress.env("baseUrlAcc")}themes/*/case-close-reasons/`;
+    cy.intercept(url).as("getCloseReasons");
+
+    cy.get("tbody>tr").contains("td", "Zaak afsluiten").click();
+
+    cy.wait("@getCloseReasons").then(() => {
+      cy.get("h1").contains("Zaak afronden");
+    });
+
+    cy.get("[data-e2e-id=1]").check({ force: true });
+
+    cy.get('button[data-e2e-id="submit"]')
+      .contains("Verwerken")
+      .should("be.disabled");
+  });
+});

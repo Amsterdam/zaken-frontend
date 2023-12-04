@@ -65,12 +65,36 @@ export const useSummonTypes = (themeId?: Components.Schemas.CaseTheme["id"], opt
   })
 }
 
+export const useTags = (themeId?: Components.Schemas.CaseTheme["id"], options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<Components.Schemas.PaginatedTagList>({
+    lazy: themeId === undefined,
+    ...options,
+    url: makeApiUrl("themes", themeId, "tags"),
+    groupName: "themes",
+    handleError,
+    isProtected: true
+  })
+}
+
 export const useDecisionTypes = (themeId?: Components.Schemas.CaseTheme["id"], options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.PaginatedDecisionTypeList>({
     ...options,
     lazy: themeId === undefined,
     url: makeApiUrl("themes", themeId, "decision-types"),
+    groupName: "cases",
+    handleError,
+    isProtected: true
+  })
+}
+
+export const useQuickDecisionTypes = (themeId?: Components.Schemas.CaseTheme["id"], options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<Components.Schemas.PaginatedQuickDecisionTypeList>({
+    ...options,
+    lazy: themeId === undefined,
+    url: makeApiUrl("themes", themeId, "quick-decision-types"),
     groupName: "cases",
     handleError,
     isProtected: true

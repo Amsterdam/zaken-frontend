@@ -4,8 +4,6 @@ import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import navigateTo from "app/routing/navigateTo"
 import isValidUrl from "app/routing/utils/isValidUrl"
 
-const THEME_ID_SUBLET = 6
-
 export default (
   bagId: Components.Schemas.Address["bag_id"],
   themeId: Components.Schemas.CaseTheme["id"],
@@ -17,7 +15,7 @@ export default (
   advertisementOptions: Record<string, string>,
   cases: Components.Schemas.Case[],
   corporations: Components.Schemas.HousingCorporation[]
-  ) => {
+) => {
 
   const fields = {
     theme: {
@@ -29,24 +27,6 @@ export default (
         optionLabelField: "name",
         isRequired: true,
         onChange: (index: string) => setTheme(themes?.[parseInt(index, 10)]?.id)
-      }
-    },
-    housing_corporation: {
-      type: "ShowHide",
-      props: {
-        shouldShow: () => themeId === THEME_ID_SUBLET && corporations.length > 0, // Sublet use only.
-        field: {
-          type: "ComplexSelectField",
-          props: {
-            label: "Welke corporatie is eigenaar van dit adres?",
-            name: "housing_corporation",
-            options: corporations,
-            optionLabelField: "name",
-            withEmptyOption: true,
-            emptyOptionLabel: "Maak een keuze",
-            isRequired: false
-          }
-        }
       }
     },
     reason: {
@@ -81,6 +61,24 @@ export default (
             step: 1,
             isRequired: true,
             hideNumberSpinner: true
+          }
+        }
+      }
+    },
+    housing_corporation: {
+      type: "ShowHide",
+      props: {
+        shouldShow: (formValues: { values?: { theme?: Components.Schemas.CaseTheme } }) => formValues?.values?.theme !== undefined && corporations.length > 0,
+        field: {
+          type: "ComplexSelectField",
+          props: {
+            label: "Welke corporatie is eigenaar van dit adres?",
+            name: "housing_corporation",
+            options: corporations,
+            optionLabelField: "name",
+            withEmptyOption: true,
+            emptyOptionLabel: "Geen corporatie",
+            isRequired: false
           }
         }
       }
@@ -200,8 +198,9 @@ export default (
     nuisance: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { reason?: Components.Schemas.CaseReason, theme?: Components.Schemas.CaseTheme } }) =>
-        formValues?.values?.theme?.name === "Vakantieverhuur" && formValues?.values?.reason?.name === "SIA melding",
+        shouldShow: (formValues: { values?: { reason?: Components.Schemas.CaseReason, theme?: Components.Schemas.CaseTheme } }) => (
+          formValues?.values?.theme?.name === "Vakantieverhuur" && formValues?.values?.reason?.name === "SIA melding"
+        ),
         field: {
           type: "CheckboxFields",
           props: {
@@ -236,8 +235,12 @@ export default (
     advertisement: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { theme?: Components.Schemas.CaseTheme } }) =>
-        formValues?.values?.theme?.name !== undefined && formValues?.values?.theme?.name !== "Kamerverhuur" && formValues?.values?.theme?.name !== "Ondermijning",
+        shouldShow: (formValues: { values?: { theme?: Components.Schemas.CaseTheme } }) => {
+          const themeName = formValues?.values?.theme?.name
+          const isVisible = themeName !== undefined && themeName !== "Kamerverhuur"
+            && themeName !== "Ondermijning" && themeName !== "Goed verhuurderschap"
+          return isVisible
+        },
         field: {
           type: "RadioFields",
           props: {
@@ -348,8 +351,8 @@ export default (
   return new FormPositioner(fields as Fields)
     .setGrid("mobileS", "1fr 1fr", [
       ["theme", "theme"],
-      ["housing_corporation", "housing_corporation"],
       ["reason", "reason"],
+      ["housing_corporation", "housing_corporation"],
       ["reporter_anonymous", "reporter_anonymous"],
       ["reporter_name"],
       ["reporter_phone"],

@@ -3,10 +3,13 @@ import styled from "styled-components"
 import { Heading } from "@amsterdam/asc-ui"
 import TableCases from "app/components/cases/TableCases/TableCases"
 import CasesFilter from "app/components/cases/CasesFilter/CasesFilter"
-import { useCases, useCaseThemes, useTasksReasons, useDistricts, useCorporations } from "app/state/rest"
+import { useCases, useCaseThemes, useTasksReasons, useDistricts,
+  useCorporations, useSubjects, useProjects
+} from "app/state/rest"
 import useHasPermission, { SENSITIVE_CASE_PERMISSION } from "app/state/rest/custom/usePermissions/useHasPermission"
 import { ContextValues } from "app/state/context/ValueProvider"
 import { RowWithColumn } from "app/components/layouts/Grid"
+import getThemeId from "app/components/tasks/utils/getThemeId"
 
 type Item = string | Components.Schemas.District["name"][]
 
@@ -20,6 +23,7 @@ const Container = styled.div`
 `
 
 const FilterContainer = styled.div`
+ min-width: 300px;
   max-width: 400px;
 `
 
@@ -29,12 +33,15 @@ const UNDERMINING = "Ondermijning"
 
 const Cases: React.FC = () => {
   const {
-    results, count, pagination, sorting, fromStartDate, theme,
-    updateContextCases, reason, districtNames, housingCorporations
+    count, districtNames, fromStartDate, housingCorporations, pagination, projects,
+    reason, results, sorting, subjects, theme, updateContextCases
   } = useContext(ContextValues)["cases"]
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const [caseThemes] = useCaseThemes()
   const [reasons] = useTasksReasons(theme)
+  const themeId = getThemeId(caseThemes?.results, theme)
+  const [projectsTheme] = useProjects(themeId)
+  const [subjectsTheme] = useSubjects(themeId)
   const [caseDistricts] = useDistricts()
   const [corporationData] = useCorporations()
   const [dataSource, { isBusy }] = useCases(
@@ -43,7 +50,9 @@ const Cases: React.FC = () => {
     sorting,
     theme,
     fromStartDate,
+    projects,
     reason,
+    subjects,
     districtNames,
     housingCorporations
   )
@@ -74,7 +83,8 @@ const Cases: React.FC = () => {
      */
     if (key === "theme") {
       casesContextItem.reason = ""
-      casesContextItem.housingCorporations = []
+      casesContextItem.projects = []
+      casesContextItem.subjects = []
     }
     updateContextCases(casesContextItem)
   }
@@ -108,33 +118,39 @@ const Cases: React.FC = () => {
         <TableCases
           data={ results || [] }
           isBusy={ isBusy }
-          onChange={onChangeTable}
-          pagination={{
+          onChange={ onChangeTable }
+          pagination={ {
             page: pagination.page,
             pageSize: pagination.pageSize,
             collectionSize: count || 1
-          }}
+          } }
           sorting={ sorting }
           emptyPlaceholder={ emptyPlaceholder }
-          />
+        />
         <FilterContainer>
           <CasesFilter
             date={ fromStartDate }
-            setDate={ (value: string) => onChangeFilter("fromStartDate", value) }
-            theme={ theme }
-            themes={ themes }
-            setTheme={ (value: string) => onChangeFilter("theme", value) }
-            setPageSize={ onChangePageSize }
-            pageSize={ pagination.pageSize?.toString() || "10" }
-            reason={ reason }
-            setReason={ (value: string) => onChangeFilter("reason", value) }
-            reasons={ reasons }
+            corporations={ corporationData?.results }
             districts={ districts }
             districtNames={ districtNames }
-            setDistrictNames={ (value: Components.Schemas.District["name"][]) => onChangeFilter("districtNames", value) }
-            corporations={ corporationData?.results }
+            pageSize={ pagination.pageSize?.toString() || "10" }
+            projects={ projectsTheme?.results }
+            reason={ reason }
+            reasons={ reasons }
             selectedCorporations={ housingCorporations }
+            selectedProjects={ projects }
+            selectedSubjects={ subjects }
+            setDate={ (value: string) => onChangeFilter("fromStartDate", value) }
+            setDistrictNames={ (value: Components.Schemas.District["name"][]) => onChangeFilter("districtNames", value) }
+            setPageSize={ onChangePageSize }
+            setReason={ (value: string) => onChangeFilter("reason", value) }
             setSelectedCorporations={ (value: string[]) => onChangeFilter("housingCorporations", value) }
+            setSelectedProjects={ (value: string[]) => onChangeFilter("projects", value) }
+            setSelectedSubjects={ (value: string[]) => onChangeFilter("subjects", value) }
+            setTheme={ (value: string) => onChangeFilter("theme", value) }
+            subjects={ subjectsTheme?.results }
+            theme={ theme }
+            themes={ themes }
           />
         </FilterContainer>
       </Container>
