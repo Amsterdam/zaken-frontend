@@ -32,7 +32,7 @@ export default (caseId: Components.Schemas.CaseDetail["id"], violationTypes: Com
       type: "RadioFields",
       props: {
         isRequired: true,
-        label: "Wat is de uitkomst van het bezoek?",
+        label: themeName === "Goed verhuurderschap" ? "Wat is de uitkomst van het debriefen?" : "Wat is de uitkomst van het bezoek?",
         extraLabel: <InfoButton infoTitle="Niet duidelijk of er een overtreding is? Twee opties:" infoText={ InfoContent }></InfoButton>,
         name: "violation",
         options: violationOptions
