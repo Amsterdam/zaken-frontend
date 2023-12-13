@@ -2,7 +2,7 @@ image:
   registry: 127.0.0.1:5001
   imagePullPolicy: Always
 
-host: zaken-frontend.localhost
+host: zaken-f.local
 
 secrets:
   certificate:
