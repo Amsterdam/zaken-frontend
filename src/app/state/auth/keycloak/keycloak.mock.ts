@@ -1,6 +1,8 @@
+import { env } from "app/config/env"
+
 export default {
   init: async () => {},
   updateToken: async () => {},
   logout: () => {},
-  token: process.env.REACT_APP_API_TOKEN ?? ""
+  token: env.REACT_APP_API_TOKEN ?? ""
 }

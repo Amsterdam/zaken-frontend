@@ -5,6 +5,7 @@ import ReactDOM from "react-dom"
 import App from "./App"
 import * as serviceWorker from "./serviceWorker"
 import packageInfo from "../package.json"
+import { env } from "app/config/env"
 
 // Sentry
 import initSentry from "./app/sentry/init"
@@ -23,4 +24,4 @@ ReactDOM.render(
 serviceWorker.unregister()
 
 console.log("Name:", packageInfo.name, packageInfo.version)
-console.log("Commit hash:", process.env.REACT_APP_GIT_COMMIT_HASH ?? "n/a")
+console.log("Commit hash:", env.REACT_APP_GIT_COMMIT_HASH ?? "n/a")
