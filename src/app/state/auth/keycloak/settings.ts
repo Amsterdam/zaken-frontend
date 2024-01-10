@@ -4,8 +4,8 @@ export default {
   "url": "https://iam.amsterdam.nl/auth/",
   "realm": env.REACT_APP_KEYCLOAK_REALM ?? "",
   "ssl-required": "external",
-  "resource": "salmagundi-azure-test",
+  "resource": "wonen-woon-o-azure",
   "public-client": true,
   "confidential-port": 0,
-  "clientId": "salmagundi-azure-test"
+  "clientId": "wonen-woon-o-azure"
 }
