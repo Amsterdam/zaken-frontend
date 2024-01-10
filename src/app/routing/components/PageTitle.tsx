@@ -1,8 +1,9 @@
 import { useEffect } from "react"
 import find from "../utils/find"
 import routes from "app/routing/routes"
+import { env } from "app/config/env"
 
-const PAGE_TITLE = process.env.REACT_APP_PAGE_TITLE ?? ""
+const PAGE_TITLE = env.REACT_APP_PAGE_TITLE ?? ""
 
 const setPageTitle = () => {
   const route = find(routes, window.location.pathname)

@@ -2,6 +2,7 @@ import { MenuButton, Link } from "@amsterdam/asc-ui"
 import styled from "styled-components"
 import useHasPermission from "app/state/rest/custom/usePermissions/useHasPermission"
 import StyledButtonLink from "./StyledButtonLink"
+import { env } from "app/config/env"
 
 type Props = React.ComponentProps<typeof MenuButton> & {
   permissionNames: Components.Schemas.PermissionsEnum[]
@@ -52,7 +53,7 @@ const IsAuthorizedMenuButton: React.FC<Props> = ({ permissionNames, isHidden, to
    */
   if (isAuthorized && text === "Digitaal toezicht") {
     return (
-      <StyledLink href={process.env.REACT_APP_HOST_TON} target="_blank" rel="noopener noreferrer">{ text }</StyledLink>
+      <StyledLink href={env.REACT_APP_HOST_TON} target="_blank" rel="noopener noreferrer">{ text }</StyledLink>
     )
   } else if (isAuthorized) {
     return (
