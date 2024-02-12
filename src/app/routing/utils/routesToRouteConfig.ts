@@ -1,7 +1,7 @@
 
 import type { RouteComponentProps } from "@reach/router"
 import * as Assets from "app/components/shared/Icons"
-import slashSandwich from "slash-sandwich"
+import slashSandwich from "./slashSandwich"
 
 export type RouteConfigObject = Record<string, RouteConfig | Page>
 type Page = React.FC<RouteComponentProps>
@@ -29,13 +29,13 @@ const addPathToRouteConfig = (config: RouteConfig, key: string, p: Path): RouteC
 const routesToRouteConfig = (
   routes: RouteConfigObject, path: Path, routeConfig: Record<string, RouteConfigWithPath> = {}, basePath = "/"
 ): Record<string, RouteConfigWithPath> => (
-    Object.keys(routes).reduce((acc, key) => {
-      const route = routes[key]
-      const k = slashSandwich([basePath, key], { trailingSlash: true })
-      const routeConfigWithPath = addPathToRouteConfig(toRouteConfig(route), k, path)
-      acc[k] = routeConfigWithPath
-      return routesToRouteConfig(routeConfigWithPath.subRoutes ?? {}, routeConfigWithPath.path, acc, k)
-    }, routeConfig)
+  Object.keys(routes).reduce((acc, key) => {
+    const route = routes[key]
+    const k = slashSandwich([basePath, key], { trailingSlash: true })
+    const routeConfigWithPath = addPathToRouteConfig(toRouteConfig(route), k, path)
+    acc[k] = routeConfigWithPath
+    return routesToRouteConfig(routeConfigWithPath.subRoutes ?? {}, routeConfigWithPath.path, acc, k)
+  }, routeConfig)
 )
 
 export default routesToRouteConfig
