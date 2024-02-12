@@ -1,4 +1,4 @@
-import slashSandwich from "slash-sandwich"
+import slashSandwich from "../../../../routing/utils/slashSandwich"
 
 /**
  * Utility function to create an API URL
@@ -15,5 +15,5 @@ export const stripApiHostFromUrl = (url: string) =>
 /**
  * Utility function to create an API URL for TON
  */
- export const makeTonApiUrl = (...paths: Array<number|string|undefined>) =>
+export const makeTonApiUrl = (...paths: Array<number|string|undefined>) =>
   slashSandwich([process.env.REACT_APP_API_HOST_TON, process.env.REACT_APP_API_PATH_TON, ...paths], { trailingSlash: false })

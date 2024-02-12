@@ -1,5 +1,5 @@
 import qs from "qs"
-import slashSandwich from "slash-sandwich"
+import slashSandwich from "../../routing/utils/slashSandwich"
 
 import type { Options } from "./"
 import { useErrorHandler, useSuppressErrorHandler } from "./hooks/utils/errorHandler"
