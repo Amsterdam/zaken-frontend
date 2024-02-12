@@ -45,7 +45,7 @@
     "react-dom": "^17.0.2",
     "react-final-form": "^6.5.9",
     "react-final-form-arrays": "^3.1.4",
-    "react-scripts": "4.0.3",
+    "react-router-dom": "^6.22.0",
     "resize-observer-polyfill": "^1.5.1",
     "styled-components": "^5.3.11",
     "typescript": "^4.9.3"
@@ -58,12 +58,13 @@
     "test:coverage": "react-scripts test --coverage --watchAll=false",
     "cy": "npx cypress open",
     "cy:run": "cypress run",
-    "start": "PORT=2999 react-scripts start",
+    "start": "PORT=2999 vite",
     "acc": "PORT=2999 env-cmd -f .env.acceptance react-scripts start",
     "swagger:generate-schema": "TS_NODE_PROJECT='./scripts/tsconfig.json' NODE_ENV='development' ts-node scripts/src/generateSwaggerSchema.ts",
-    "build": "react-scripts build",
+    "build": "vite build",
     "build:acc": "env-cmd -f .env.acceptance react-scripts build",
-    "deploy:prod": "npm version patch && git push origin HEAD --follow-tags"
+    "deploy:prod": "npm version patch && git push origin HEAD --follow-tags",
+    "dev": "vite"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -86,6 +87,8 @@
     "@types/enzyme": "^3.10.13",
     "@types/enzyme-adapter-react-16": "^1.0.6",
     "@types/jest": "^29.5.3",
+    "@types/node": "^20.11.5",
+    "@vitejs/plugin-react": "^4.2.1",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.8.0",
     "cypress": "^12.17.3",
     "dotenv-flow": "^3.2.0",
@@ -94,7 +97,9 @@
     "nock": "^13.3.2",
     "react-hooks-testing-library": "^0.6.0",
     "react-test-renderer": "^17.0.2",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.1",
+    "vite": "^5.1.1",
+    "vite-tsconfig-paths": "^4.3.1"
   },
   "jest": {
     "collectCoverageFrom": [
