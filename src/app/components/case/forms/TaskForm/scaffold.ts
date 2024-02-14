@@ -1,9 +1,12 @@
 import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
-import navigateTo from "app/routing/navigateTo"
+import type { NavigateToFunction } from "app/routing/useNavigation"
 
-export default (id: Components.Schemas.CaseDetail["id"], processes?: Components.Schemas.WorkflowOption[]) => {
-
+export default (
+  id: Components.Schemas.CaseDetail["id"],
+  navigateTo: NavigateToFunction,
+  processes?: Components.Schemas.WorkflowOption[]
+) => {
   const fields = {
     workflowProcess: {
       type: "ComplexSelectField",

@@ -1,7 +1,7 @@
 
 import styled from "styled-components"
 import { Heading, themeSpacing } from "@amsterdam/asc-ui"
-import { useBAG } from "app/state/rest/"
+import { useBAG } from "app/state/rest"
 import AddressDisplay from "app/components/addresses/AddressDisplay/AddressDisplay"
 import getAddressFromBagResults from "app/components/addresses/utils/getAddressFromBagResults"
 

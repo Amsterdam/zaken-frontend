@@ -1,7 +1,7 @@
 import { Paragraph } from "@amsterdam/asc-ui"
 import { Table } from "@amsterdam/wonen-ui"
 import { useBAGWithZipCode, useBAGWithStreet } from "app/state/rest"
-import navigateTo from "app/routing/navigateTo"
+import useNavigation from "app/routing/useNavigation"
 import columns from "./columns"
 
 export type SearchResult = Pick<BAGAddressResponse["results"][0], "adres" | "postcode" | "adresseerbaar_object_id">
@@ -22,6 +22,7 @@ const SearchResults: React.FC<Props> = ({ searchString }) => {
   const searchStringStreet = isValid && !REGEX_ZIP_CODE.test(searchString) ? searchString : undefined
   const [dataZipCode, { isBusy: isBusyZipCode }] = useBAGWithZipCode(searchStringZipcode)
   const [dataStreet, { isBusy: isBusyStreet }] = useBAGWithStreet(searchStringStreet)
+  const { navigateTo } = useNavigation()
 
   const onClickRow = (data: any) => {
     navigateTo("/adres/:bagId", { bagId: data.adresseerbaar_object_id })

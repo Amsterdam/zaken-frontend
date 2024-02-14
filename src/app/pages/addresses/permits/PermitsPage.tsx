@@ -1,6 +1,5 @@
 
-import { RouteComponentProps } from "@reach/router"
-
+import { useParams } from 'react-router-dom'
 import Row from "app/components/layouts/Grid/Row"
 import PageHeading from "app/components/shared/PageHeading/PageHeading"
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
@@ -17,29 +16,32 @@ type Props = {
   bagId: string
 }
 
-const PermitsPage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
-  isValidUrlParamBAGId(bagId) ? (
-    <DefaultLayout>
-      <Row>
-        <Column spanLarge={ 50 }>
-          <PageHeading />
-        </Column>
-        <Column spanLarge={ 50 }>
-          <DetailHeader bagId={ bagId } />
-        </Column>
-      </Row>
-      <Row>
-        <Column spanLarge={ 50 }>
-          <PermitDetailsList bagId={ bagId }></PermitDetailsList>
-          <VacationRental bagId={ bagId }></VacationRental>
-          <DecosLink bagId={ bagId } />
-        </Column>
-        <Column spanLarge={ 50 }>
-          <PermitsPowerBrowser bagId={ bagId }></PermitsPowerBrowser>
-        </Column>
-      </Row>
-    </DefaultLayout>
-  ) : <NotFoundPage />
-)
+const PermitsPage: React.FC = () => {
+  const { bagId } = useParams<Props>();
+  return (
+    isValidUrlParamBAGId(bagId) ? (
+      <DefaultLayout>
+        <Row>
+          <Column spanLarge={ 50 }>
+            <PageHeading />
+          </Column>
+          <Column spanLarge={ 50 }>
+            <DetailHeader bagId={ bagId } />
+          </Column>
+        </Row>
+        <Row>
+          <Column spanLarge={ 50 }>
+            <PermitDetailsList bagId={ bagId }></PermitDetailsList>
+            <VacationRental bagId={ bagId }></VacationRental>
+            <DecosLink bagId={ bagId } />
+          </Column>
+          <Column spanLarge={ 50 }>
+            <PermitsPowerBrowser bagId={ bagId }></PermitsPowerBrowser>
+          </Column>
+        </Row>
+      </DefaultLayout>
+    ) : <NotFoundPage />
+  )
+}
 
 export default  PermitsPage

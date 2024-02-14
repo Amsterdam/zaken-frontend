@@ -1,6 +1,5 @@
-import { RouteComponentProps } from "@reach/router"
+import { useParams } from 'react-router-dom'
 import { FormTitle } from "@amsterdam/asc-ui"
-
 import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId"
 import getUrlParam from "app/routing/utils/getUrlParam"
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
@@ -13,12 +12,12 @@ import NotFoundPage from "app/pages/errors/NotFoundPage"
 import { Column } from "app/components/layouts/Grid"
 import InvalidTonIdAlert from "app/components/shared/InvalidTonIdAlert/InvalidTonIdAlert"
 
-type Props = {
+type RouteParams = {
   bagId: string
-  tonId?: string
 }
 
-const CreateCasePage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => {
+const CreateCasePage: React.FC = () => {
+  const { bagId  } = useParams<RouteParams>()
   const tonIdParam = getUrlParam("tonId")
   const tonId = parseUrlParamId(tonIdParam)
   const isInvalidTonId = tonIdParam !== undefined && tonId === undefined

@@ -2,10 +2,11 @@ import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
 import moment from "moment"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
-import navigateTo from "app/routing/navigateTo"
+import type { NavigateToFunction } from "app/routing/useNavigation"
 
 export default (
     caseId: Components.Schemas.CaseDetail["id"],
+    navigateTo: NavigateToFunction,
     scheduleTypes?: Components.Schemas.ThemeScheduleTypes,
     visitFromOptions?: { id: number, name: string }[]
   ) => {

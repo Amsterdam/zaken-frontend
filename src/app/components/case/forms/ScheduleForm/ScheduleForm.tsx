@@ -1,9 +1,10 @@
 import { FormTitle } from "@amsterdam/asc-ui"
 import moment from "moment"
-import { useCase, useScheduleTypes, useScheduleCreate } from "app/state/rest/"
+import { useCase, useScheduleTypes, useScheduleCreate } from "app/state/rest"
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
 import scaffold from "./scaffold"
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
+import useNavigation from "app/routing/useNavigation"
 
 type Props = {
   id: Components.Schemas.CaseDetail["id"]
@@ -34,7 +35,8 @@ const ScheduleForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
   const [caseItem] = useCase(id)
   const themeId = caseItem?.theme.id
   const [scheduleTypes] = useScheduleTypes(themeId)
-  const fields = useScaffoldedFields(scaffold, id, scheduleTypes, visitFromOptions)
+  const { navigateTo } = useNavigation()
+  const fields = useScaffoldedFields(scaffold, id, navigateTo, scheduleTypes, visitFromOptions)
   const [, { execPost }] = useScheduleCreate()
 
   const initialValues = {

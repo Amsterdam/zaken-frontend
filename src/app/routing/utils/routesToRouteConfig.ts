@@ -1,10 +1,9 @@
 
-import type { RouteComponentProps } from "@reach/router"
 import * as Assets from "app/components/shared/Icons"
 import slashSandwich from "./slashSandwich"
 
 export type RouteConfigObject = Record<string, RouteConfig | Page>
-type Page = React.FC<RouteComponentProps>
+export type Page = React.FC<{}>;
 type RouteConfig = {
   Page: Page
   publicly?: boolean

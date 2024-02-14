@@ -1,9 +1,9 @@
-
-import { useCitizenReports } from "app/state/rest/"
+import { useCitizenReports } from "app/state/rest"
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
 import scaffold from "app/components/case/forms/CitizenReportForm/scaffold"
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
 import { useCase } from "app/state/rest"
+import useNavigation from "app/routing/useNavigation"
 
 type Props = {
   id: Components.Schemas.CaseDetail["id"]
@@ -17,11 +17,11 @@ const mapData = (data: any) => ({
 })
 
 const CitizenReportForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
-
   const [, { execPost }] = useCitizenReports(id)
   const [data] = useCase(id)
   const themeName = data?.theme.name
-  const fields = useScaffoldedFields(scaffold, id, themeName as string)
+  const { navigateTo } = useNavigation()
+  const fields = useScaffoldedFields(scaffold, id, navigateTo, themeName as string)
 
   return (
     <WorkflowForm

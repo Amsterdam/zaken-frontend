@@ -6,7 +6,7 @@ import ScaffoldFields from "app/components/shared/Form/ScaffoldFields"
 import scaffold from "./scaffold"
 import { useUsers, useVisitsCreate } from "app/state/rest"
 import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
-import navigateTo from "app/routing/navigateTo"
+import useNavigation from "app/routing/useNavigation"
 
 type Props = {
   id: Components.Schemas.CaseDetail["id"]
@@ -18,8 +18,9 @@ export type VisitData = Omit<Components.Schemas.Visit, "author_ids"> & { author1
 const filterUndefined = <T extends unknown>(arr: Array<T | undefined>) => arr.filter((item): item is T => item !== undefined)
 const mapData = (data: VisitData) => ({ ...data, author_ids: filterUndefined([data.author1?.id, data.author2?.id]) })
 
-const VisitForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
 
+const VisitForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
+  const { navigateTo } = useNavigation()
   const [data] = useUsers()
   const authors = data?.results ?? []
 
@@ -37,7 +38,7 @@ const VisitForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
   }
 
   const initialValues = { case: id, start_time: "2021-01-01T12:34", observations: [], "task": caseUserTaskId, "top_visit_id": 42, "completed": true }
-  const fields = scaffold(id, authors)
+  const fields = scaffold(id, navigateTo, authors)
 
   return (
     <>

@@ -1,7 +1,7 @@
 
 import { FormTitle } from "@amsterdam/asc-ui"
 
-import { useSummons, useSummonTypesByTaskId } from "app/state/rest/"
+import { useSummons, useSummonTypesByTaskId } from "app/state/rest"
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
 import scaffold from "app/components/case/forms/SummonForm/scaffold"
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"

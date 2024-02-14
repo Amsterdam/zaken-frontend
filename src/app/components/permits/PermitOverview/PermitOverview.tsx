@@ -1,5 +1,5 @@
 import { Spinner, Heading, Paragraph, themeColor } from "@amsterdam/asc-ui"
-import { Link } from "@reach/router"
+import { Link } from "react-router-dom"
 import { DefinitionList } from "@amsterdam/wonen-ui"
 import styled from "styled-components"
 

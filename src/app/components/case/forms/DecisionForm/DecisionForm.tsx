@@ -1,12 +1,13 @@
 import { FormTitle } from "@amsterdam/asc-ui"
 
-import { useCase, useDecisions } from "app/state/rest/"
+import { useCase, useDecisions } from "app/state/rest"
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
 import scaffold from "app/components/case/forms/DecisionForm/scaffold"
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
 import DecisionHeader from "./components/DecisionHeader"
 import { useDecisionTypes } from "app/state/rest/themes"
 import stripThousandSeparator from "./utils/stripThousandSeparator"
+import useNavigation from "app/routing/useNavigation"
 
 type Props = {
   id: Components.Schemas.CaseDetail["id"]
@@ -29,14 +30,12 @@ const mapData = (data: DecisionData) => {
 }
 
 const DecisionForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
-
   const [caseItem] = useCase(id)
   const themeId = caseItem?.theme.id
   const [data] = useDecisionTypes(themeId)
   const decisionTypes = data?.results
-
-  const fields = useScaffoldedFields(scaffold, id, decisionTypes)
-
+  const { navigateTo } = useNavigation()
+  const fields = useScaffoldedFields(scaffold, id, navigateTo, decisionTypes)
   const [, { execPost }] = useDecisions({ lazy: true })
 
   return (

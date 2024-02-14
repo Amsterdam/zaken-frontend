@@ -1,10 +1,11 @@
 import { FormTitle } from "@amsterdam/asc-ui"
-import { useCase, useQuickDecisions } from "app/state/rest/"
+import { useCase, useQuickDecisions } from "app/state/rest"
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
 import scaffold from "app/components/case/forms/QuickDecisionForm/scaffold"
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
 import DecisionHeader from "../DecisionForm/components/DecisionHeader"
 import { useQuickDecisionTypes } from "app/state/rest/themes"
+import useNavigation from "app/routing/useNavigation"
 
 type Props = {
   id: Components.Schemas.CaseDetail["id"]
@@ -23,8 +24,8 @@ const QuickDecisionForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
   const themeId = caseItem?.theme.id
   const [data] = useQuickDecisionTypes(themeId)
   const quickDecisionTypes = data?.results
-
-  const fields = useScaffoldedFields(scaffold, id, quickDecisionTypes)
+  const { navigateTo } = useNavigation()
+  const fields = useScaffoldedFields(scaffold, id, navigateTo, quickDecisionTypes)
 
   const [, { execPost }] = useQuickDecisions({ lazy: true })
 

@@ -1,6 +1,5 @@
 
-import { RouteComponentProps } from "@reach/router"
-
+import { useParams } from 'react-router-dom'
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
@@ -11,13 +10,13 @@ import { Column } from "app/components/layouts/Grid"
 import SummonForm from "app/components/case/forms/SummonForm/SummonForm"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
 
-type Props = {
+type RouteParams = {
   id: string
   caseUserTaskId: string
 }
 
-const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString, caseUserTaskId }) => {
-
+const CreatePage: React.FC = () => {
+  const { id: idString, caseUserTaskId  } = useParams<RouteParams>()
   const id = parseUrlParamId(idString)
 
   return (

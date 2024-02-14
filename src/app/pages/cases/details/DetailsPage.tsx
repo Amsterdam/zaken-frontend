@@ -1,7 +1,7 @@
 import { useState } from "react"
-import { RouteComponentProps } from "@reach/router"
 import styled from "styled-components"
 import { Divider, Heading, themeSpacing } from "@amsterdam/asc-ui"
+import { useParams } from 'react-router-dom';
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
 import Row, { RowWithColumn } from "app/components/layouts/Grid/Row"
 import PageHeading from "app/components/shared/PageHeading/PageHeading"
@@ -20,6 +20,7 @@ import NotAuthorizedPage from "app/pages/auth/NotAuthorizedPage"
 import { Tabs, Tab } from "app/components/Tabs"
 import Documents from "app/components/case/Documents/Documents"
 
+
 type Props = {
   id: string
 }
@@ -28,8 +29,8 @@ const PaddedContent = styled.div`
   padding-top: ${ themeSpacing(8) };
 `
 
-const DetailsPage: React.FC<RouteComponentProps<Props>> = ({ id: idString }) => {
-
+const DetailsPage: React.FC = () => {
+  const { id: idString } = useParams<Props>();
   const [exists, isBusy, has404, id, caseItem] = useExistingCase(parseUrlParamId(idString))
   const [hasPermission, isLoading] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const showSpinner = isBusy || isLoading

@@ -1,5 +1,5 @@
 import { ComponentProps, ReactNode, useCallback, useEffect, useReducer } from "react"
-import { globalHistory, useLocation } from "@reach/router"
+import { useLocation } from 'react-router-dom';
 import produce from "immer"
 import { Alert } from "@amsterdam/asc-ui"
 
@@ -28,7 +28,7 @@ export const reducer = produce((draft, action: Action) => {
 
 export const useFlashMessagesReducer = () => {
   const [state, dispatch] = useReducer(reducer, {} as State)
-  const { pathname } = useLocation()
+  const { pathname } = useLocation();
 
   const clearFlashMessages = useCallback(
     (path: string) => dispatch({ type: "clear", path }),
@@ -59,8 +59,7 @@ export const useFlashMessagesReducer = () => {
   )
 
   useEffect(() => {
-    const unListen = globalHistory.listen(() => clearFlashMessages(pathname))
-    return () => { unListen() }
+    clearFlashMessages(pathname)
   }, [ pathname, clearFlashMessages ])
 
   return {

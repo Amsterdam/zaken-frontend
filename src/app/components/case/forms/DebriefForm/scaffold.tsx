@@ -2,7 +2,7 @@ import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import InfoContent from "./components/InfoContent"
-import navigateTo from "app/routing/navigateTo"
+import type { NavigateToFunction } from "app/routing/useNavigation"
 
 const options = {
   "-": "-",
@@ -23,7 +23,12 @@ const getThemeOptions = (themeName?: string) => {
   return options
 }
 
-export default (caseId: Components.Schemas.CaseDetail["id"], violationTypes: Components.Schemas.PaginatedViolationTypeList["results"], themeName?: string) => {
+export default (
+  caseId: Components.Schemas.CaseDetail["id"],
+  navigateTo: NavigateToFunction,
+  violationTypes: Components.Schemas.PaginatedViolationTypeList["results"],
+  themeName?: string
+) => {
 
   const violationOptions = violationTypes?.reduce((acc, item) => ({ ...acc, [item.key]: [item.value] }), {})
 

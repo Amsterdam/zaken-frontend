@@ -10,6 +10,8 @@ import useNavigateWithFlashMessage from "app/state/flashMessages/useNavigateWith
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
 import getAddressAsString from "app/components/addresses/utils/getAddressAsString"
 import getAddressFromBagResults from "app/components/addresses/utils/getAddressFromBagResults"
+import useNavigation from "app/routing/useNavigation"
+
 
 const TON_THEME_NAME = "Vakantieverhuur"
 const TON_REASON_NAME = "Digitaal toezicht"
@@ -66,6 +68,7 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
   const [corporations] = useCorporations()
   const [bagAddressResponse] = useBAG(bagId)
   const bagAddress = getAddressFromBagResults(bagAddressResponse)
+  const { navigateTo } = useNavigation()
 
 
   // Only show Vakantieverhuur, Digitaal Toezicht and Yes as an option for TON.
@@ -106,6 +109,7 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
   const fields = useScaffoldedFields(
     scaffold,
     bagId,
+    navigateTo,
     themeId ?? -1,
     onChangeThemeId,
     caseThemesOptions,

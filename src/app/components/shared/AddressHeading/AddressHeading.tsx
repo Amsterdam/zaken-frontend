@@ -1,6 +1,6 @@
 
 import { Heading, themeSpacing } from "@amsterdam/asc-ui"
-import { useCase } from "app/state/rest/"
+import { useCase } from "app/state/rest"
 import AddressDisplay from "app/components/addresses/AddressDisplay/AddressDisplay"
 import styled from "styled-components"
 

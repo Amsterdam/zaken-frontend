@@ -2,14 +2,14 @@ import { useCallback } from "react"
 
 import useKeycloak from "app/state/auth/keycloak/useKeycloak"
 import useRequest, { Method } from "./useRequest"
-import navigateTo from "app/routing/navigateTo"
+import useNavigation from "app/routing/useNavigation"
 
 import { RequestError } from "./useRequestWrapper"
 
 export default () => {
-
   const keycloak = useKeycloak()
   const request = useRequest()
+  const { navigateTo } = useNavigation()
 
   return useCallback(
     async <Schema>(method: Method, url: string, data?: unknown, additionalHeaders = {}) => {
