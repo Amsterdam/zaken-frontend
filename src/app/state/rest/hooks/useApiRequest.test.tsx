@@ -1,6 +1,6 @@
 
 import nock from "nock"
-
+import { BrowserRouter } from "react-router-dom";
 import { renderHook, act } from "@testing-library/react-hooks"
 import useApiRequest from "./useApiRequest"
 import ApiProvider from "../provider/ApiProvider"
@@ -13,11 +13,13 @@ type Pet = {
 
 const Wrapper: React.FC = ({ children }) => (
   <KeycloakProvider>
-    <ApiProvider>
-      { children }
-    </ApiProvider>
+    <BrowserRouter>
+      <ApiProvider>
+        { children }
+      </ApiProvider>
+    </BrowserRouter>
   </KeycloakProvider>
-  )
+)
 
 describe("useApiRequest", () => {
   it("should perform a GET request on mount", async () => {
@@ -34,9 +36,16 @@ describe("useApiRequest", () => {
     expect(result.current[1].isBusy).toEqual(true)
     expect(result.current[0]).toEqual(undefined)
 
-    // Make API respond:
-    await act(() => waitForNextUpdate())
-    await act(() => waitForNextUpdate())
+    // // Make API respond:
+    // await act(() => waitForNextUpdate())
+    // await act(() => waitForNextUpdate())
+      // Make API respond:
+      await act(async () => {
+        await waitForNextUpdate()
+      })
+      await act(async () => {
+        await waitForNextUpdate()
+      })
 
     // not busy anymore... results are in!
     expect(result.current[1].isBusy).toEqual(false)

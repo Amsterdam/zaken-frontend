@@ -3,8 +3,9 @@ import slashSandwich from "../../../../routing/utils/slashSandwich"
 /**
  * Utility function to create an API URL
  */
-export const makeApiUrl = (...paths: Array<number|string|undefined>) =>
-  slashSandwich([process.env.REACT_APP_API_HOST, process.env.REACT_APP_API_PATH, ...paths])
+export const makeApiUrl = (...paths: Array<number|string|undefined>) => {
+  return slashSandwich([process.env.REACT_APP_API_HOST, process.env.REACT_APP_API_PATH, ...paths])
+}
 
 /**
  * Utility function to strip API host from URL

@@ -2,11 +2,12 @@
 // -----------------------------------------
 import { renderHook } from "@testing-library/react-hooks"
 import { AxiosError } from "axios"
+// import { useFlashMessages } from "../../../flashMessages/useFlashMessages"
 
 import { useErrorHandler } from "./errorHandler"
 
 const mockAddErrorFlashMessage = jest.fn()
-jest.mock("app/state/flashMessages/useFlashMessages", () => ({
+jest.mock("../../../flashMessages/useFlashMessages", () => ({
   __esModule: true,
   useFlashMessages: () => ({ addErrorFlashMessage: mockAddErrorFlashMessage })
 }))
