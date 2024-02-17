@@ -6,9 +6,6 @@
     "node": ">=20",
     "npm": ">=8"
   },
-  "resolutions": {
-    "@typescript-eslint/eslint-plugin": "7.0.1"
-  },
   "dependencies": {
     "@amsterdam/amsterdam-react-final-form": "^0.1.140",
     "@amsterdam/asc-assets": "^0.38.0",
