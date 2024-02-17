@@ -1,5 +1,8 @@
-# Use the official Node.js image as the builder stage
-FROM node:16-alpine AS builder
+ARG NODE_VERSION=20
+# Use the official Node.js image as the builder stage.
+# "alpine" refers to a lightweight Linux distribution based on musl libc and BusyBox,
+# known for its small size and efficiency.
+FROM node:$NODE_VERSION-alpine AS builder
 
 ARG COMMIT_HASH
 
