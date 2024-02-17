@@ -1,5 +1,5 @@
 import { Table } from "@amsterdam/wonen-ui"
-import navigateTo from "app/routing/navigateTo"
+import useNavigation from "app/routing/useNavigation"
 import getColumns from "./columns"
 import useMediaQuery from "app/hooks/useMediaQuery/useMediaQuery"
 import createResponsiveColumns from "./createPrioritizedColumns"
@@ -15,6 +15,7 @@ type Props = {
 
 const TableCases: React.FC<Props> = ({ data, isBusy, onChange, pagination, sorting, emptyPlaceholder }) => {
   const { windowWidth } = useMediaQuery()
+  const { navigateTo } = useNavigation()
 
   const columns = getColumns(sorting)
   const prioritizedColumns = createResponsiveColumns(columns, windowWidth)

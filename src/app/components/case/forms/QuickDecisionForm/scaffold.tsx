@@ -1,8 +1,12 @@
 import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
-import navigateTo from "app/routing/navigateTo"
+import type { NavigateToFunction } from "app/routing/useNavigation"
 
-export default (caseId: Components.Schemas.CaseDetail["id"], quickDecisionTypes?: Components.Schemas.QuickDecisionType[]) => {
+export default (
+  caseId: Components.Schemas.CaseDetail["id"],
+  navigateTo: NavigateToFunction,
+  quickDecisionTypes?: Components.Schemas.QuickDecisionType[]
+) => {
 
   const fields = {
     quick_decision_type: {

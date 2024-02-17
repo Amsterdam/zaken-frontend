@@ -1,11 +1,15 @@
 import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
-import navigateTo from "app/routing/navigateTo"
+import type { NavigateToFunction } from "app/routing/useNavigation"
 
 const descriptionRequired = (idDecision: number | undefined, shouldMatch = true) => shouldMatch ? idDecision === 9 : idDecision !== 9
 
-export default (caseId: Components.Schemas.CaseDetail["id"], decisions?: Components.Schemas.DecisionType[]) => {
+export default (
+  caseId: Components.Schemas.CaseDetail["id"],
+  navigateTo: NavigateToFunction,
+  decisions?: Components.Schemas.DecisionType[]
+) => {
 
   const fields = {
     decision_type: {

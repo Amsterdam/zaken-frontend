@@ -1,4 +1,4 @@
-import { Link } from "@reach/router"
+import { Link } from "react-router-dom"
 import { Typography, themeColor } from "@amsterdam/asc-ui"
 import styled from "styled-components"
 import to from "app/routing/utils/to"

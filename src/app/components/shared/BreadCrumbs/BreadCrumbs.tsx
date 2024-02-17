@@ -1,4 +1,4 @@
-import { Link, useParams } from "@reach/router"
+import { Link, useParams } from "react-router-dom"
 import { Breadcrumbs } from "@amsterdam/asc-ui"
 import to from "app/routing/utils/to"
 import find from "app/routing/utils/find"

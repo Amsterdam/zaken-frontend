@@ -1,10 +1,9 @@
-import { shallow } from "enzyme"
-
-import ApiProvider, { ApiContext } from "./ApiProvider"
+import { render, screen } from "@testing-library/react"
+import ApiProvider from "./ApiProvider"
 
 describe("ApiProvider", () => {
-  it("should render an ApiContext.Provider", () => {
-      const component = shallow(<ApiProvider />)
-      expect(component.find(ApiContext.Provider).exists()).toEqual(true)
+  it("should render an ApiContext.Provider with children", () => {
+    render(<ApiProvider><span>TEST</span></ApiProvider>)
+    expect(screen.getByText("TEST")).toBeInTheDocument()
   })
 })

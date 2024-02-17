@@ -35,7 +35,7 @@ const Advertisements: React.FC<Props> = ({ bagId }) => {
       { uniqueAds.length > 0 ? (
         <>
           { uniqueAds.map(ad => (
-            <div>
+            <div key={ad.id} >
               <StyledLink href={ad.link} variant="inline" icon="external" target="_blank" rel="noopener noreferrer">
                 {ad.link}
               </StyledLink>

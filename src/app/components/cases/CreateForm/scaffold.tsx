@@ -1,11 +1,12 @@
 import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
-import navigateTo from "app/routing/navigateTo"
+import type { NavigateToFunction } from "app/routing/useNavigation"
 import isValidUrl from "app/routing/utils/isValidUrl"
 
 export default (
   bagId: Components.Schemas.Address["bag_id"],
+  navigateTo: NavigateToFunction,
   themeId: Components.Schemas.CaseTheme["id"],
   setTheme: (id?: Components.Schemas.CaseTheme["id"]) => void,
   themes: Components.Schemas.CaseTheme[] | undefined,

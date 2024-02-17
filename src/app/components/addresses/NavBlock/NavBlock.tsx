@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { Link } from "@reach/router"
+import { Link } from "react-router-dom"
 import useHasPermission from "app/state/rest/custom/usePermissions/useHasPermission"
 import { Card, CardContent, Icon, Heading, themeColor, themeSpacing } from "@amsterdam/asc-ui"
 import * as Assets from "app/components/shared/Icons"
