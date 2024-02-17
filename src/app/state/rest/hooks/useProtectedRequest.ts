@@ -35,6 +35,6 @@ export default () => {
         if (error !== undefined) throw error
       }
     },
-    [keycloak, request]
+    [keycloak, request, navigateTo]
   )
 }

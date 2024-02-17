@@ -1,6 +1,6 @@
 import { Fragment } from "react"
 import { ThemeProvider, GlobalStyle } from "@amsterdam/asc-ui"
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom"
 
 import KeycloakProvider from "app/state/auth/keycloak/KeycloakProvider"
 import initializedCallback from "app/state/auth/keycloak/initializedCallback"

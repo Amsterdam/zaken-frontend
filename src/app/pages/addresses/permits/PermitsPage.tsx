@@ -1,5 +1,5 @@
 
-import { useParams } from 'react-router-dom'
+import { useParams } from "react-router-dom"
 import Row from "app/components/layouts/Grid/Row"
 import PageHeading from "app/components/shared/PageHeading/PageHeading"
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
@@ -17,7 +17,7 @@ type Props = {
 }
 
 const PermitsPage: React.FC = () => {
-  const { bagId } = useParams<Props>();
+  const { bagId } = useParams<Props>()
   return (
     isValidUrlParamBAGId(bagId) ? (
       <DefaultLayout>

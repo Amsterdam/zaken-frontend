@@ -1,5 +1,5 @@
 
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom"
 import routes from "app/routing/routes"
 import ProtectedPage from "./ProtectedPage"
 import NotFoundPage from "app/pages/errors/NotFoundPage"

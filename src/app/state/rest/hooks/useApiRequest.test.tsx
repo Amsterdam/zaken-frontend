@@ -1,6 +1,6 @@
 
 import nock from "nock"
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom"
 import { renderHook, act } from "@testing-library/react-hooks"
 import useApiRequest from "./useApiRequest"
 import ApiProvider from "../provider/ApiProvider"

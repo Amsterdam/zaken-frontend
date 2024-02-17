@@ -1,5 +1,5 @@
 
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom"
 import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId"
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
 import Row from "app/components/layouts/Grid/Row"
@@ -16,7 +16,7 @@ type Props = {
 }
 
 const DetailsPage: React.FC = () => {
-  const { bagId } = useParams<Props>();
+  const { bagId } = useParams<Props>()
   return (
     isValidUrlParamBAGId(bagId) ? (
       <DefaultLayout>

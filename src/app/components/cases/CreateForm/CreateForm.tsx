@@ -74,7 +74,7 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
   const caseThemesOptions = tonId ? caseThemes?.results?.filter(({ name }) => name === TON_THEME_NAME) : caseThemes?.results
   const reasonOptions = tonId ? reasons?.results?.filter(({ name }) => name === TON_REASON_NAME)
     : reasons?.results?.filter(({ name }) => name !== TON_REASON_NAME)
-  const adOptions = tonId ? { yes: advertisementOptions.yes } : advertisementOptions;
+  const adOptions = tonId ? { yes: advertisementOptions.yes } : advertisementOptions
 
   // Get cases and sort them by id for the option to link a previous case.
   const casesArray = cases?.results ? [...cases.results] : []

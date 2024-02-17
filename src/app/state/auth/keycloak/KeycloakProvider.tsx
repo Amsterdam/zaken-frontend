@@ -39,6 +39,7 @@ const KeycloakProvider: React.FC<Props> = ({
         console.error(err)
       }
     })()
+    // eslint-disable-next-line
   }, [initializedCallback, shouldInitialize])
 
   const value = {

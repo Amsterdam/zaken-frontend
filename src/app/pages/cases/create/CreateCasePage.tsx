@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useParams } from "react-router-dom"
 import { FormTitle } from "@amsterdam/asc-ui"
 import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId"
 import getUrlParam from "app/routing/utils/getUrlParam"

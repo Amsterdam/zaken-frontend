@@ -1,7 +1,7 @@
 import { useState } from "react"
 import styled from "styled-components"
 import { Divider, Heading, themeSpacing } from "@amsterdam/asc-ui"
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom"
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
 import Row, { RowWithColumn } from "app/components/layouts/Grid/Row"
 import PageHeading from "app/components/shared/PageHeading/PageHeading"
@@ -30,7 +30,7 @@ const PaddedContent = styled.div`
 `
 
 const DetailsPage: React.FC = () => {
-  const { id: idString } = useParams<Props>();
+  const { id: idString } = useParams<Props>()
   const [exists, isBusy, has404, id, caseItem] = useExistingCase(parseUrlParamId(idString))
   const [hasPermission, isLoading] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const showSpinner = isBusy || isLoading

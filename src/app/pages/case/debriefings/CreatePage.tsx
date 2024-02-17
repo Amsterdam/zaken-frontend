@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useParams } from "react-router-dom"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
 import PageHeading from "app/components/shared/PageHeading/PageHeading"
@@ -15,7 +15,7 @@ type RouteParams = {
 }
 
 const CreatePage: React.FC = () => {
-  const { id: idString, caseUserTaskId  } = useParams<RouteParams>();
+  const { id: idString, caseUserTaskId  } = useParams<RouteParams>()
   const id = parseUrlParamId(idString)
 
   return (

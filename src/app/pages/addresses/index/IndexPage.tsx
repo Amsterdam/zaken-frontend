@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useParams } from "react-router-dom"
 import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId"
 import { RowWithColumn } from "app/components/layouts/Grid/Row"
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
@@ -15,7 +15,7 @@ type Props = {
 }
 
 const IndexPage: React.FC = () => {
-  const { bagId } = useParams<Props>();
+  const { bagId } = useParams<Props>()
   return (
     isValidUrlParamBAGId(bagId) ? (
       <DefaultLayout>

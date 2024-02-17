@@ -1,5 +1,5 @@
 
-import { useParams } from 'react-router-dom'
+import { useParams } from "react-router-dom"
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"

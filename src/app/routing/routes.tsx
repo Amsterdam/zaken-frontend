@@ -21,7 +21,7 @@ const routes = {
 }
 
 const homeRoutesObject = routesToRouteConfig(homeRoutes, [])
-const routesObject = routesToRouteConfig(routes as any, homeRoutesObject["/"].path, homeRoutesObject)
+const routesObject = routesToRouteConfig(routes as RouteConfigObject, homeRoutesObject["/"].path, homeRoutesObject)
 if (process.env.NODE_ENV === "development") console.log("Routes:", routesObject)
 export type Routes = typeof routesObject
 export default routesObject
