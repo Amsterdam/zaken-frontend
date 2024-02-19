@@ -38,44 +38,44 @@ describe("Create case and validate input", () => {
         .check({force: true})
     })
 
-    cy.get('[data-e2e-id="no"]')
+    cy.get('[data-testid="no"]')
       .check({force: true})
 
-    cy.get('[data-e2e-id="reporter_name"]')
+    cy.get('[data-testid="reporter_name"]')
       .type(testData.reporterName)
 
-    cy.get('[data-e2e-id="reporter_phone"]')
+    cy.get('[data-testid="reporter_phone"]')
       .type(testData.reporterPhone)
 
-    cy.get('[data-e2e-id="reporter_email"]')
+    cy.get('[data-testid="reporter_email"]')
       .type(testData.reporterEmail)
 
-    cy.get('[data-e2e-id="identification"]')
+    cy.get('[data-testid="identification"]')
       .type(testData.siaIdentification)
 
-    cy.get('[data-e2e-id="description_citizenreport"]')
+    cy.get('[data-testid="description_citizenreport"]')
       .type(testData.siaDescription)
 
     cy.get("#advertisement_yes")
       .check({force: true})
 
-    cy.get('[data-e2e-id="advertisement_linklist[0]advertisement_link"]')
+    cy.get('[data-testid="advertisement_linklist[0]advertisement_link"]')
       .type(testData.advertisementUrl1)
 
     cy.get("#button-add-advertisement_linklist")
       .click()
 
-    cy.get('[data-e2e-id="advertisement_linklist[1]advertisement_link"]')
+    cy.get('[data-testid="advertisement_linklist[1]advertisement_link"]')
       .should("be.visible")
       .type(testData.advertisementUrl2)
 
 
-    cy.get('[data-e2e-id="description"]')
+    cy.get('[data-testid="description"]')
       .type(testData.description)
   })
 
   it("Send form", () => {
-    cy.get(`[data-e2e-id="submit"]`)
+    cy.get(`[data-testid="submit"]`)
       .click()
 
     cy.get(`[role="dialog"]`).should("have.length", 1)

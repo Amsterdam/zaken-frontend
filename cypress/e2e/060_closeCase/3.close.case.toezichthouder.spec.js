@@ -37,9 +37,9 @@ describe("Select Next Step - closing case as toezichthouder", () => {
       cy.get("h1").contains("Zaak afronden");
     });
 
-    cy.get("[data-e2e-id=1]").check({ force: true });
+    cy.get("[data-testid=1]").check({ force: true });
 
-    cy.get('button[data-e2e-id="submit"]')
+    cy.get('button[data-testid="submit"]')
       .contains("Verwerken")
       .should("be.disabled");
   });

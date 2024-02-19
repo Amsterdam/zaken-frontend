@@ -41,7 +41,7 @@ const DeleteDocument: React.FC<Props> = ({ record, getDocuments, size = 20 }) =>
         iconSize={ size + 4 }
         icon={ loading ? <Spinner /> : <Delete /> }
         onClick={ () => setIsOpen(true) }
-        data-e2e-id="delete-document"
+        data-testid="delete-document"
       />
       <ConfirmModal
         title="Document verwijderen"

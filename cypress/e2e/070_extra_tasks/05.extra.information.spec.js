@@ -37,15 +37,15 @@ describe('Add extra task "Extra Information', () => {
 
   })
 
-  describe("Submit in form 'Taak opvoeren'", () => {  
-    
+  describe("Submit in form 'Taak opvoeren'", () => {
+
     it("Select Task Extra informatie", () => {
       const url = `${Cypress.env("baseUrlAcc")}cases/*/processes/`
       cy.intercept(url).as("getProcesses")
       cy.wait("@getProcesses").then(() => {
-      cy.get('[data-e2e-id="workflowProcess"]')
+      cy.get('[data-testid="workflowProcess"]')
         .select(extraTasks.taskExtraInformation)
-      cy.get(`[data-e2e-id="submit"]`)
+      cy.get(`[data-testid="submit"]`)
         .click()
 
       cy.get(`[role="dialog"]`).should("have.length", 1)
@@ -71,9 +71,9 @@ describe('Add extra task "Extra Information', () => {
     })
   })
 
-  describe("PM processes Extra information", () => {  
+  describe("PM processes Extra information", () => {
     it('PM can finish task "Extra Information"', () => {
-  
+
       cy.get("tbody>tr>td")
         .eq(1)
         .should("contain",extraTasks.taskExtraInformation.toLowerCase())
@@ -83,11 +83,11 @@ describe('Add extra task "Extra Information', () => {
         cy.get(`[role="dialog"]`)
           .should('have.length', 1)
           .contains("h4", extraTasks.taskExtraInformation.toLowerCase())
-          
+
       cy.get(`[role="dialog"]`)
-        .find('[data-e2e-id="extra_informatie"]')
+        .find('[data-testid="extra_informatie"]')
         .type(extraTasks.description)
-      
+
       cy.get(`[role="dialog"]`)
           .find('button')
           .contains("Taak afronden")
@@ -95,7 +95,7 @@ describe('Add extra task "Extra Information', () => {
     })
   })
 
-  describe("Check request is processed", () => {  
+  describe("Check request is processed", () => {
 
     it("History contains the right items", () => {
       cy.history(`Verwerken ${extraTasks.taskExtraInformation.toLowerCase()}`, "Uitvoerder")

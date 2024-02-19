@@ -37,15 +37,15 @@ describe('Add extra task "New signal', () => {
 
   })
 
-  describe("Submit in form 'Taak opvoeren'", () => {  
-    
+  describe("Submit in form 'Taak opvoeren'", () => {
+
     it("Select Task Verwerken nieuwe melding", () => {
       const url = `${Cypress.env("baseUrlAcc")}cases/*/processes/`
       cy.intercept(url).as("getProcesses")
       cy.wait("@getProcesses").then(() => {
-      cy.get('[data-e2e-id="workflowProcess"]')
+      cy.get('[data-testid="workflowProcess"]')
         .select("Nieuwe melding")
-      cy.get(`[data-e2e-id="submit"]`)
+      cy.get(`[data-testid="submit"]`)
         .click()
 
       cy.get(`[role="dialog"]`).should("have.length", 1)
@@ -71,9 +71,9 @@ describe('Add extra task "New signal', () => {
     })
   })
 
-  describe("PM processes New signal", () => {  
+  describe("PM processes New signal", () => {
     it('PM can finish task "New signal"', () => {
-  
+
       cy.get("tbody>tr>td")
         .eq(1)
         .should("contain",extraTasks.taskNewSignal)

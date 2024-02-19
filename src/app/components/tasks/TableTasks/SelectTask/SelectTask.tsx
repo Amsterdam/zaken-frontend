@@ -95,7 +95,7 @@ const SelectTask: React.FC<Props> = ({ taskId, taskOwner, isEnforcement }) => {
   return (
     <StyledLabel htmlFor={ `cb_${ taskId }` } label={ data && data?.id === taskOwner ? `${ createNameAbbreviation(data) }` : "" }>
       <CustomTooltip title={ isChecked ? "Mijn taak" : "Beschikbaar" }>
-        <Checkbox data-e2e-id={ `${ taskId }` } id={ `cb_${ taskId }` } checked={ isChecked } onChange={ onChange }/>
+        <Checkbox data-testid={ `${ taskId }` } id={ `cb_${ taskId }` } checked={ isChecked } onChange={ onChange }/>
       </CustomTooltip>
     </StyledLabel>
   )

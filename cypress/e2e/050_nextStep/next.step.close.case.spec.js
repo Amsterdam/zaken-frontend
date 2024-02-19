@@ -40,10 +40,10 @@ describe('Select Next Step - closing case"', () => {
     cy.get(`[role="dialog"]`)
       .should('have.length', 1)
       .and("contain", debrief.closingTask1)
-    cy.get('[data-e2e-id="next_step"]')
+    cy.get('[data-testid="next_step"]')
       .select(debrief.closingTask2)
 
-    cy.get(`[data-e2e-id="submit"]`)
+    cy.get(`[data-testid="submit"]`)
       .click()
   })
 

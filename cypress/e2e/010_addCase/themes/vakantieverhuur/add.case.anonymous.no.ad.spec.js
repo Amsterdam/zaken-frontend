@@ -38,19 +38,19 @@ describe("Test add.case.anonymous.no.ad.spec", () => {
         .check({ force: true });
     });
 
-    cy.get('[data-e2e-id="yes"]').check({ force: true });
+    cy.get('[data-testid="yes"]').check({ force: true });
 
-    cy.get('[data-e2e-id="identification"]').type(dummyData.siaIdentification);
+    cy.get('[data-testid="identification"]').type(dummyData.siaIdentification);
 
-    cy.get('[data-e2e-id="description_citizenreport"]').type(
+    cy.get('[data-testid="description_citizenreport"]').type(
       dummyData.siaDescription
     );
 
     cy.get("#advertisement_no").check({ force: true });
 
-    cy.get('[data-e2e-id="description"]').type(dummyData.description);
+    cy.get('[data-testid="description"]').type(dummyData.description);
 
-    cy.get(`[data-e2e-id="submit"]`).click();
+    cy.get(`[data-testid="submit"]`).click();
 
     cy.get(`[role="dialog"]`).should("have.length", 1);
 

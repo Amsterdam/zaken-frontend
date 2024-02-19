@@ -37,15 +37,15 @@ describe('Add extra task "Callback request', () => {
 
   })
 
-  describe("Submit in form 'Taak opvoeren'", () => {  
-    
+  describe("Submit in form 'Taak opvoeren'", () => {
+
     it("Select Task Terugbelverzoek", () => {
       const url = `${Cypress.env("baseUrlAcc")}cases/*/processes/`
       cy.intercept(url).as("getProcesses")
       cy.wait("@getProcesses").then(() => {
-      cy.get('[data-e2e-id="workflowProcess"]')
+      cy.get('[data-testid="workflowProcess"]')
         .select(extraTasks.taskCallback)
-      cy.get(`[data-e2e-id="submit"]`)
+      cy.get(`[data-testid="submit"]`)
         .click()
 
       cy.get(`[role="dialog"]`).should("have.length", 1)
@@ -71,7 +71,7 @@ describe('Add extra task "Callback request', () => {
     })
   })
 
-  describe("PHH processes Callbackrequest", () => {  
+  describe("PHH processes Callbackrequest", () => {
     it.skip("Login as PHH", () => {
       cy.loginAsHh()
     })
@@ -85,7 +85,7 @@ describe('Add extra task "Callback request', () => {
           .contains(`${address.street}, ${address.zipCode}`)
       })
     })
-  
+
     it("Select case by caseId", () => {
       cy.scrollTo(0, 400)
       cy.getCaseId().then((e) => {
@@ -96,7 +96,7 @@ describe('Add extra task "Callback request', () => {
     })
 
     it('PHH can finish task "Callbackrequest"', () => {
-  
+
       cy.get("tbody>tr>td")
         .eq(1)
         .should("contain",extraTasks.taskCallback.toLowerCase())
@@ -106,15 +106,15 @@ describe('Add extra task "Callback request', () => {
         .siblings('td')
         .contains("Taak afronden")
         .click({force: true})
-  
+
       cy.get(`[role="dialog"]`)
           .should('have.length', 1)
           .contains("h4", extraTasks.taskCallback.toLowerCase())
-          
+
       cy.get(`[role="dialog"]`)
-        .find('[data-e2e-id="callbackrequest_form"]')
+        .find('[data-testid="callbackrequest_form"]')
         .type(extraTasks.description)
-      
+
       cy.get(`[role="dialog"]`)
           .find('button')
           .contains("Taak afronden")
@@ -122,7 +122,7 @@ describe('Add extra task "Callback request', () => {
     })
   })
 
-  describe("Check request is processed", () => {  
+  describe("Check request is processed", () => {
 
     it.skip("Login as projectmedewerker", () => {
       cy.loginAsPm()

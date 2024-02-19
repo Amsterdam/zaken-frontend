@@ -60,12 +60,12 @@ describe('Close case as projectmedwerker"', () => {
     });
 
     cy.get("label[for='reason_3']")
-      .find('[data-e2e-id="3"]')
+      .find('[data-testid="3"]')
       .check({ force: true });
 
-    cy.get('[data-e2e-id="description"]').type(debrief.closingDescription);
+    cy.get('[data-testid="description"]').type(debrief.closingDescription);
 
-    cy.get('button[data-e2e-id="submit"]')
+    cy.get('button[data-testid="submit"]')
       .contains("Verwerken")
       .should("not.be.disabled")
       .click();

@@ -60,12 +60,12 @@ describe('Process Debrief - No violation"', () => {
 
     it('Select "Wat is de uitkomst van het bezoek?"', () => {
 
-      cy.get('[data-e2e-id="ADDITIONAL_RESEARCH_REQUIRED"]')
+      cy.get('[data-testid="ADDITIONAL_RESEARCH_REQUIRED"]')
         .check({ force: true })
     })
 
     it('Type a note', () => {
-      cy.get('[data-e2e-id="feedback"]')
+      cy.get('[data-testid="feedback"]')
       .type(debrief.descriptionAdditionalResearch)
     })
 
@@ -73,7 +73,7 @@ describe('Process Debrief - No violation"', () => {
       const url = `${Cypress.env("baseUrlAcc")}cases/*/`
       cy.intercept(url).as('getNextTask')
 
-      cy.get('button[data-e2e-id="submit"]')
+      cy.get('button[data-testid="submit"]')
         .contains(debrief.formButtonText)
         .click()
 

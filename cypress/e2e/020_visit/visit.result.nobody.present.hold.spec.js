@@ -68,23 +68,23 @@ describe('Result "huisbezoek" with nobody present and hold', () => {
 
     it('Select "Toezichthouders"', () => {
 
-      cy.get('[data-e2e-id="author1"] > option')
+      cy.get('[data-testid="author1"] > option')
         .eq(visit.author1)
-        .then(element => cy.get('[data-e2e-id="author1"]').select(element.val()))
+        .then(element => cy.get('[data-testid="author1"]').select(element.val()))
 
-      cy.get('[data-e2e-id="author2"] > option')
+      cy.get('[data-testid="author2"] > option')
         .eq(visit.author2)
-        .then(element => cy.get('[data-e2e-id="author2"]').select(element.val()))
+        .then(element => cy.get('[data-testid="author2"]').select(element.val()))
     })
 
     it('Set "Starttijd onderzoek"', () => {
-      cy.get('[data-e2e-id="start_time"]')
+      cy.get('[data-testid="start_time"]')
         .clear()
         .type(new Date().toJSON().substring(0,16))
     })
 
     it('Select situation', () => {
-      cy.get(`[data-e2e-id=${visit.situation}]`)
+      cy.get(`[data-testid=${visit.situation}]`)
         .check({ force: true })
     })
 
@@ -95,12 +95,12 @@ describe('Result "huisbezoek" with nobody present and hold', () => {
     })
 
     it('Select next visit directly', () => {
-      cy.get(`[data-e2e-id=${visit.canNextVisitGoAhead}]`)
+      cy.get(`[data-testid=${visit.canNextVisitGoAhead}]`)
         .check({ force: true })
     })
 
     it('Type description next visit directly', () => {
-      cy.get('[data-e2e-id="can_next_visit_go_ahead_description"')
+      cy.get('[data-testid="can_next_visit_go_ahead_description"')
         .type(visit.canNextVisitGoAheadDescription)
     })
 
@@ -108,7 +108,7 @@ describe('Result "huisbezoek" with nobody present and hold', () => {
       const url = `${Cypress.env("baseUrlAcc")}cases/*/events/`
       cy.intercept(url).as('getEvents')
 
-      cy.get('button[data-e2e-id="submit"]')
+      cy.get('button[data-testid="submit"]')
         .contains("Toevoegen")
         .click()
 

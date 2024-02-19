@@ -57,7 +57,7 @@ const DownloadDocument: React.FC<Props> = ({ record, size = 20 }) => {
       iconSize={ size - 2}
       icon={ loading ? <Spinner /> : <Download /> }
       onClick={ downloadFile }
-      data-e2e-id="download-document"
+      data-testid="download-document"
     />
   )
 }

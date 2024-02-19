@@ -59,7 +59,7 @@ describe('Process Debrief - Other Theme"', () => {
   describe('Fill in "Debrief" form', () => {
 
     it('Select "Naar ander thema"', () => {
-      cy.get('[data-e2e-id="SEND_TO_OTHER_THEME"]')
+      cy.get('[data-testid="SEND_TO_OTHER_THEME"]')
         .check({ force: true })
     })
     it('Select "Ander thema"', () => {
@@ -67,7 +67,7 @@ describe('Process Debrief - Other Theme"', () => {
         .select('Kamerverhuur')
     })
     it('Type a note', () => {
-      cy.get('[data-e2e-id="feedback"]')
+      cy.get('[data-testid="feedback"]')
       .type(debrief.otherThemeDescription)
     })
 
@@ -75,7 +75,7 @@ describe('Process Debrief - Other Theme"', () => {
       const url = `${Cypress.env("baseUrlAcc")}cases/*/`
       cy.intercept(url).as('getNextTask')
 
-      cy.get('button[data-e2e-id="submit"]')
+      cy.get('button[data-testid="submit"]')
         .contains(debrief.formButtonText)
         .click()
 

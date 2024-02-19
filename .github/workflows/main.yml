@@ -29,7 +29,8 @@ jobs:
         uses: cypress-io/github-action@v4
         with:
           record: false
-          start: npm start
+          # Run test against acc, otherwise a local backend is needed.
+          start: npm run acc
           wait-on: "http://localhost:2999/"
         env:
           # pass GitHub token to allow accurately detecting a build vs a re-run build for Cypress Dashboard

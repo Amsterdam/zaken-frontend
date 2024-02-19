@@ -33,7 +33,7 @@ const ConfirmModal: React.FC<Props> = ({ isOpen, onClose, title, children, okVal
       </Flex>
       <div>
         <SpinnerButton
-          data-e2e-id="confirm"
+          data-testid="confirm"
           onClick={onConfirm}
           variant="secondary"
         >

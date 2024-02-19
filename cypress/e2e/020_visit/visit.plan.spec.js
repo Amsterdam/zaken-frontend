@@ -36,9 +36,9 @@ describe('Test visit.plan.spec', () => {
       .contains("Taak afronden")
       .click({ force: true });
 
-    cy.get('[data-e2e-id="visit_next_step"]').select(visit.nextStep);
+    cy.get('[data-testid="visit_next_step"]').select(visit.nextStep);
 
-    cy.get(`[data-e2e-id="submit"]`).click();
+    cy.get(`[data-testid="submit"]`).click();
 
     const urlCases = `${Cypress.env("baseUrlAcc")}cases/*/`;
     cy.intercept(urlCases).as("getCase");
@@ -62,21 +62,21 @@ describe('Test visit.plan.spec', () => {
       cy.get("dd").contains(address.street);
     });
 
-    cy.get('[data-e2e-id="week_segment"]').select(visit.weekSegment);
+    cy.get('[data-testid="week_segment"]').select(visit.weekSegment);
 
-    cy.get('[data-e2e-id="day_segment"]').select(visit.daySegment);
+    cy.get('[data-testid="day_segment"]').select(visit.daySegment);
 
-    cy.get('[data-e2e-id="visit_from"]').select(visit.visitFrom);
+    cy.get('[data-testid="visit_from"]').select(visit.visitFrom);
 
-    cy.get('[data-e2e-id="visit_from_datetime"]').type(
+    cy.get('[data-testid="visit_from_datetime"]').type(
       moment().format("YYYY-MM-DD")
     );
 
-    cy.get('[data-e2e-id="priority"]').select(visit.priority);
+    cy.get('[data-testid="priority"]').select(visit.priority);
 
-    cy.get('[data-e2e-id="description"]').type(visit.description);
+    cy.get('[data-testid="description"]').type(visit.description);
 
-    cy.get(`[data-e2e-id="submit"]`).click();
+    cy.get(`[data-testid="submit"]`).click();
 
     cy.get("span").contains(visit.weekSegment);
     cy.get("span").contains(visit.daySegment);

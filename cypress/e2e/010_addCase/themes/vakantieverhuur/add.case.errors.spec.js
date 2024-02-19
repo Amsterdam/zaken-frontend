@@ -35,51 +35,51 @@ describe("Fill in form and validate", () => {
         .check({force: true})
     })
 
-    cy.get('[data-e2e-id="no"]')
+    cy.get('[data-testid="no"]')
       .check({force: true})
   })
 
   it("Zaak aanmaken button is disabled", () => {
-    cy.get("button[data-e2e-id=submit]")
+    cy.get("button[data-testid=submit]")
       .should("be.disabled")
   })
 
   it("Check required fields", () => {
 
     cy.checkInvalidInput(
-      '[data-e2e-id="reporter_phone"]',
+      '[data-testid="reporter_phone"]',
       "Vul hier enkel 10 cijfers in",
       dummyData.reporterPhone
     )
 
     cy.checkInvalidInput(
-      '[data-e2e-id="reporter_email"]',
+      '[data-testid="reporter_email"]',
       "Vul een geldig e-mailadres in",
       dummyData.reporterEmail
     )
 
     cy.checkRequiredField(
-      '[data-e2e-id="identification"]',
+      '[data-testid="identification"]',
       dummyData.siaIdentification
     )
 
     cy.checkRequiredField(
-      '[data-e2e-id="description_citizenreport"]',
+      '[data-testid="description_citizenreport"]',
       dummyData.siaDescription
     )
 
     cy.get("#advertisement_yes")
       .check({force: true})
 
-    cy.get("button[data-e2e-id=submit]")
+    cy.get("button[data-testid=submit]")
       .should("be.disabled")
 
     cy.checkRequiredField(
-      '[data-e2e-id="advertisement_linklist[0]advertisement_link"]',
+      '[data-testid="advertisement_linklist[0]advertisement_link"]',
       dummyData.advertisementUrl1
     )
 
-    cy.get("button[data-e2e-id=submit]")
+    cy.get("button[data-testid=submit]")
       .should("be.enabled")
 
   })

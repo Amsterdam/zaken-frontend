@@ -36,7 +36,7 @@ const PermitsPowerBrowser: React.FC<Props> = ({ bagId }) => {
             Alles tonen
             <StyledSwitch
               aria-label="This is a checkbox!"
-              data-e2e-id="checkBox_display_all_permts"
+              data-testid="checkBox_display_all_permts"
               onChange={ (e: React.ChangeEvent<HTMLInputElement>) => {
                 setIsChecked(e.target.checked)
               } }
