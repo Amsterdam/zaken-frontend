@@ -37,15 +37,15 @@ describe('Add extra task "Correspondentie', () => {
 
   })
 
-  describe("Submit in form 'Taak opvoeren'", () => {  
-    
+  describe("Submit in form 'Taak opvoeren'", () => {
+
     it("Select Task Correspondence", () => {
       const url = `${Cypress.env("baseUrlAcc")}cases/*/processes/`
       cy.intercept(url).as("getProcesses")
       cy.wait("@getProcesses").then(() => {
-      cy.get('[data-e2e-id="workflowProcess"]')
+      cy.get('[data-testid="workflowProcess"]')
         .select(extraTasks.taskCorrespondence)
-      cy.get(`[data-e2e-id="submit"]`)
+      cy.get(`[data-testid="submit"]`)
         .click()
 
       cy.get(`[role="dialog"]`).should("have.length", 1)
@@ -71,7 +71,7 @@ describe('Add extra task "Correspondentie', () => {
     })
   })
 
-  describe("PHH processes Correspondence", () => {  
+  describe("PHH processes Correspondence", () => {
     it.skip("Login as PHH", () => {
       cy.loginAsHh()
     })
@@ -85,7 +85,7 @@ describe('Add extra task "Correspondentie', () => {
           .contains(`${address.street}, ${address.zipCode}`)
       })
     })
-  
+
     it("Select case by caseId", () => {
       cy.scrollTo(0, 400)
       cy.getCaseId().then((e) => {
@@ -96,7 +96,7 @@ describe('Add extra task "Correspondentie', () => {
     })
 
     it('PHH can finish task "Correspondence"', () => {
-  
+
       cy.get("tbody>tr>td")
         .eq(1)
         .should("contain",extraTasks.taskCorrespondence.toLowerCase())
@@ -106,15 +106,15 @@ describe('Add extra task "Correspondentie', () => {
         .siblings('td')
         .contains("Taak afronden")
         .click({force: true})
-  
+
       cy.get(`[role="dialog"]`)
           .should('have.length', 1)
           .contains("h4", extraTasks.taskCorrespondence.toLowerCase())
-          
+
       cy.get(`[role="dialog"]`)
-        .find('[data-e2e-id="correspondence_description"]')
+        .find('[data-testid="correspondence_description"]')
         .type(extraTasks.description)
-      
+
       cy.get(`[role="dialog"]`)
           .find('button')
           .contains("Taak afronden")
@@ -122,7 +122,7 @@ describe('Add extra task "Correspondentie', () => {
     })
   })
 
-  describe("Check request is processed", () => {  
+  describe("Check request is processed", () => {
 
     it.skip("Login as projectmedewerker", () => {
       cy.loginAsPm()

@@ -22,7 +22,7 @@ describe("Test select.task.spec", () => {
     const checkBox = cy.get('[type="checkbox"][title="Beschikbaar"]').first();
     checkBox.check();
     cy.wait("@updateTask").then((e) => {
-      cy.get(`[type="checkbox"][data-e2e-id="${e.response.body.id}"]`);
+      cy.get(`[type="checkbox"][data-testid="${e.response.body.id}"]`);
       checkBox.should("be.checked");
       checkBox.uncheck();
     });

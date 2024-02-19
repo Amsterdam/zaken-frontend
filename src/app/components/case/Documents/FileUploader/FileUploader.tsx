@@ -105,7 +105,7 @@ const FileUploader: React.FC<Props> = ({ caseId, getDocuments, documentTypes }) 
       </StyledLabel>
       <Input
         id="file-upload"
-        data-e2e-id="file-upload"
+        data-testid="file-upload"
         type="file"
         onChange={ uploadFile }
         accept="*/*"

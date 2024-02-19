@@ -16,14 +16,14 @@ describe("Test debrief.no.violation.spec", () => {
 
     cy.get("h1").contains(debrief.headerText);
 
-    cy.get('[data-e2e-id="NO"]').check({ force: true });
+    cy.get('[data-testid="NO"]').check({ force: true });
 
-    cy.get('[data-e2e-id="feedback"]').type(debrief.descriptionNoViolation);
+    cy.get('[data-testid="feedback"]').type(debrief.descriptionNoViolation);
 
     const url = `${Cypress.env("baseUrlAcc")}cases/*/`;
     cy.intercept(url).as("getNextTask");
 
-    cy.get('button[data-e2e-id="submit"]')
+    cy.get('button[data-testid="submit"]')
       .contains(debrief.formButtonText)
       .click();
 

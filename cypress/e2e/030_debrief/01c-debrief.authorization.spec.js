@@ -60,18 +60,18 @@ describe('Process Debrief - Authorization required"', () => {
 
     it('Select "Wat is de uitkomst van het bezoek?"', () => {
 
-      cy.get('[data-e2e-id="ADDITIONAL_VISIT_WITH_AUTHORIZATION"]')
+      cy.get('[data-testid="ADDITIONAL_VISIT_WITH_AUTHORIZATION"]')
         .check({ force: true })
     })
 
     it('Type a note', () => {
-      cy.get('[data-e2e-id="feedback"]')
+      cy.get('[data-testid="feedback"]')
       .type(debrief.descriptionAuthorization)
     })
 
     it('Submit form and check debrief status', () => {
 
-      cy.get('button[data-e2e-id="submit"]')
+      cy.get('button[data-testid="submit"]')
         .contains(debrief.formButtonText)
         .click()
 

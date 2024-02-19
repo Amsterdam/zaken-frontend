@@ -37,15 +37,15 @@ describe('Add extra task "Objection File', () => {
 
   })
 
-  describe("Submit in form 'Taak opvoeren'", () => {  
-    
+  describe("Submit in form 'Taak opvoeren'", () => {
+
     it("Select Task Aanleveren bezwaardossier", () => {
       const url = `${Cypress.env("baseUrlAcc")}cases/*/processes/`
       cy.intercept(url).as("getProcesses")
       cy.wait("@getProcesses").then(() => {
-      cy.get('[data-e2e-id="workflowProcess"]')
+      cy.get('[data-testid="workflowProcess"]')
         .select(extraTasks.taskObjectionFile)
-      cy.get(`[data-e2e-id="submit"]`)
+      cy.get(`[data-testid="submit"]`)
         .click()
 
       cy.get(`[role="dialog"]`).should("have.length", 1)
@@ -71,7 +71,7 @@ describe('Add extra task "Objection File', () => {
     })
   })
 
-  describe("PHH processes ObjectionFile", () => {  
+  describe("PHH processes ObjectionFile", () => {
     it.skip("Login as PHH", () => {
       cy.loginAsHh()
     })
@@ -85,7 +85,7 @@ describe('Add extra task "Objection File', () => {
           .contains(`${address.street}, ${address.zipCode}`)
       })
     })
-  
+
     it("Select case by caseId", () => {
       cy.scrollTo(0, 400)
       cy.getCaseId().then((e) => {
@@ -96,7 +96,7 @@ describe('Add extra task "Objection File', () => {
     })
 
     it('PHH can finish task "ObjectionFile"', () => {
-  
+
       cy.get("tbody>tr>td")
         .eq(1)
         .should("contain",extraTasks.taskObjectionFile)
@@ -106,16 +106,16 @@ describe('Add extra task "Objection File', () => {
         .siblings('td')
         .contains("Taak afronden")
         .click({force: true})
-  
+
       cy.get(`[role="dialog"]`)
           .should('have.length', 1)
           .contains("h4", extraTasks.taskObjectionFile)
-          
+
       cy.get(`[role="dialog"]`)
         .find('input[name="completed"]')
         .first()
         .check()
-      
+
       cy.get(`[role="dialog"]`)
           .find('button')
           .contains("Taak afronden")
@@ -123,7 +123,7 @@ describe('Add extra task "Objection File', () => {
     })
   })
 
-  describe("Check request is processed", () => {  
+  describe("Check request is processed", () => {
 
     it.skip("Login as projectmedewerker", () => {
       cy.loginAsPm()

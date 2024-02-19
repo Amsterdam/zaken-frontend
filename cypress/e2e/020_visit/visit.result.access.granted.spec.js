@@ -53,30 +53,30 @@ describe("Test visit.result.access.granted.spec", () => {
       });
     });
 
-    cy.get('[data-e2e-id="author1"] > option')
+    cy.get('[data-testid="author1"] > option')
       .eq(visit.author1)
       .then((element) =>
-        cy.get('[data-e2e-id="author1"]').select(element.val())
+        cy.get('[data-testid="author1"]').select(element.val())
       );
 
-    cy.get('[data-e2e-id="author2"] > option')
+    cy.get('[data-testid="author2"] > option')
       .eq(visit.author2)
       .then((element) =>
-        cy.get('[data-e2e-id="author2"]').select(element.val())
+        cy.get('[data-testid="author2"]').select(element.val())
       );
 
-    cy.get('[data-e2e-id="start_time"]')
+    cy.get('[data-testid="start_time"]')
       .clear()
       .type(new Date().toJSON().substring(0, 16));
 
-    cy.get(`[data-e2e-id=${visit.situation}]`).check({ force: true });
+    cy.get(`[data-testid=${visit.situation}]`).check({ force: true });
 
-    cy.get('[data-e2e-id="notes"').type(visit.notes);
+    cy.get('[data-testid="notes"').type(visit.notes);
 
     const url = `${Cypress.env("baseUrlAcc")}cases/*/`;
     cy.intercept(url).as("getDebriefTask");
 
-    cy.get('button[data-e2e-id="submit"]').contains("Toevoegen").click();
+    cy.get('button[data-testid="submit"]').contains("Toevoegen").click();
 
     cy.wait("@getDebriefTask").then(() => {
       cy.scrollTo(0, 400);

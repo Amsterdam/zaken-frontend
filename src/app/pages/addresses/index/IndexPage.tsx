@@ -49,7 +49,7 @@ const IndexPage: React.FC = () => {
             to={ to("/adres/:bagId/zaken/nieuw", { bagId }) }
             text="Nieuwe zaak aanmaken"
             variant="primary"
-            data-e2e-id="btn_add_case"
+            data-testid="btn_add_case"
           />
         </RowWithColumn>
       </DefaultLayout>

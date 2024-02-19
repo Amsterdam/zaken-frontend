@@ -29,7 +29,7 @@ describe("Test report.short.spec", () => {
       .should("have.length", 1)
       .contains(debrief.closingTask1);
 
-    cy.get('[data-e2e-id="next_step"]').select(debrief.closingTask2);
+    cy.get('[data-testid="next_step"]').select(debrief.closingTask2);
 
     cy.get(`[role="dialog"]`).find("button").contains("Taak afronden").click();
 

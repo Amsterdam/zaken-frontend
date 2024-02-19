@@ -25,9 +25,11 @@ Cypress.Commands.add("kcLogin", (username, password) => {
     // This should be more strict depending on your login page template.
     const loginForm = _el.getElementsByTagName("form");
     const isAlreadyLoggedIn = !loginForm.length;
+
     if (isAlreadyLoggedIn) {
       return;
     }
+
     return cy.request({
       form: true,
       method: "POST",

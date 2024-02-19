@@ -50,18 +50,18 @@ describe('Process Summon"', () => {
   describe('Fill in "Summon" form', () => {
 
     it("Select type of summon", () => {
-      cy.get('[data-e2e-id="type"]')
+      cy.get('[data-testid="type"]')
         .select(summon.typeWarningVv)
     })
 
     it("Type name person 1", () => {
-      cy.get('[data-e2e-id="persons[0]first_name"]')
+      cy.get('[data-testid="persons[0]first_name"]')
         .type(summon.firstName1)
-      cy.get('[data-e2e-id="persons[0]preposition"]')
+      cy.get('[data-testid="persons[0]preposition"]')
         .type(summon.preposition1)
-      cy.get('[data-e2e-id="persons[0]last_name"]')
+      cy.get('[data-testid="persons[0]last_name"]')
         .type(summon.lastName1)
-      cy.get('[data-e2e-id="persons[0]person_role"]')
+      cy.get('[data-testid="persons[0]person_role"]')
         .select(summon.role1)
     })
 
@@ -69,18 +69,18 @@ describe('Process Summon"', () => {
       cy.get("#button-add-persons")
         .click()
 
-      cy.get('[data-e2e-id="persons[1]first_name"]')
+      cy.get('[data-testid="persons[1]first_name"]')
         .type(summon.firstName2)
-      cy.get('[data-e2e-id="persons[1]preposition"]')
+      cy.get('[data-testid="persons[1]preposition"]')
         .type(summon.preposition2)
-      cy.get('[data-e2e-id="persons[1]last_name"]')
+      cy.get('[data-testid="persons[1]last_name"]')
         .type(summon.lastName2)
-      cy.get('[data-e2e-id="persons[1]person_role"]')
+      cy.get('[data-testid="persons[1]person_role"]')
         .select(summon.role2)
     })
 
     it("Fill in description", () => {
-      cy.get('[data-e2e-id="description"]')
+      cy.get('[data-testid="description"]')
         .type(summon.description)
     })
 
@@ -88,7 +88,7 @@ describe('Process Summon"', () => {
       const url = `${Cypress.env("baseUrlAcc")}cases/*/`
       cy.intercept(url).as('getNextTask')
 
-      cy.get('button[data-e2e-id="submit"]')
+      cy.get('button[data-testid="submit"]')
         .contains(summon.formButtonText)
         .click()
 

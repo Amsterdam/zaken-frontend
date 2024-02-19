@@ -54,38 +54,38 @@ describe('Plan "huisbezoek"', () => {
   describe('Fill in "Bezoek inplannen" form', () => {
 
     it("Schedule day", () => {
-      cy.get('[data-e2e-id="week_segment"]')
+      cy.get('[data-testid="week_segment"]')
         .select(visit.weekSegment)
     })
 
     it("Schedule daypart", () => {
-      cy.get('[data-e2e-id="day_segment"]')
+      cy.get('[data-testid="day_segment"]')
         .select(visit.daySegment)
     })
 
     it("Schedule visit from", () => {
-      cy.get('[data-e2e-id="visit_from"]')
+      cy.get('[data-testid="visit_from"]')
         .select(visit.visitFrom)
     })
 
     it("Schedule visit from date", () => {
-      cy.get('[data-e2e-id="visit_from_datetime"]')
+      cy.get('[data-testid="visit_from_datetime"]')
         .type(moment().format("YYYY-MM-DD"))
     })
 
     it("Schedule priority", () => {
-      cy.get('[data-e2e-id="priority"]')
+      cy.get('[data-testid="priority"]')
         .select(visit.priorityAuthorization)
 
     })
 
     it("Fill in description", () => {
-      cy.get('[data-e2e-id="description"]')
+      cy.get('[data-testid="description"]')
         .type(visit.description)
     })
 
     it("Submit form", () => {
-      cy.get(`[data-e2e-id="submit"]`)
+      cy.get(`[data-testid="submit"]`)
         .click()
     })
 

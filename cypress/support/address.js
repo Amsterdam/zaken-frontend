@@ -34,7 +34,7 @@ Cypress.Commands.add("createCaseForAddress", (queryString, addressString) => {
 
   cy.selectAddress(queryString, addressString)
 
-  cy.get("span[data-e2e-id=btn_add_case]")
+  cy.get("span[data-testid=btn_add_case]")
     .click()
 
   cy.wait("@getThemes").then(() => {
