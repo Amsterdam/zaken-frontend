@@ -1,12 +1,10 @@
-import { RouteComponentProps } from "@reach/router"
-
 import useKeycloak from "app/state/auth/keycloak/useKeycloak"
 import AuthorizedPage from "./AuthorizedPage"
 
 type Props = {
   page: React.ComponentType
   permissionNames?: Components.Schemas.PermissionsEnum[]
-} & RouteComponentProps
+}
 
 /**
  * The user needs to be logged on to visit this route

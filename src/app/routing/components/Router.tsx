@@ -1,30 +1,29 @@
 
-import { Router as ReachRouter } from "@reach/router"
-
+import { Routes, Route } from "react-router-dom"
 import routes from "app/routing/routes"
 import ProtectedPage from "./ProtectedPage"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
 
-const Router: React.FC = () => (
-  <ReachRouter>
+
+const Routing: React.FC = () => (
+  <Routes>
     {
       Object
         .entries(routes)
         .map(([path, { publicly, Page, permissionNames }]) => (
-          publicly ? <Page key={path} path={path} />
+          publicly ? <Route key={path} path={path} element={<Page />} />
             : (
-              <ProtectedPage
+              <Route
                 key={path}
                 path={path}
-                page={Page}
-                permissionNames={permissionNames}
+                element={<ProtectedPage permissionNames={permissionNames} page={Page} />}
               />
             )
           )
         )
     }
-    <NotFoundPage default />
-  </ReachRouter>
+    <Route path="*" element={<NotFoundPage />} />
+  </Routes>
 )
 
-export default Router
+export default Routing

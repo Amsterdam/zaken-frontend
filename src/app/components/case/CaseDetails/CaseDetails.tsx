@@ -2,10 +2,12 @@ import styled from "styled-components"
 import { DefinitionList, CaseIdDisplay, DateDisplay } from "@amsterdam/wonen-ui"
 import type { DefinitionListData } from "@amsterdam/wonen-ui"
 import { useCase } from "app/state/rest"
-import ChangeableSubject from "../tasks/ChangeSubject/ChangeableSubject"
-import DisplayCorporation from "./DisplayCorporation"
+import ChangeableSubject from "./ChangeSubject/ChangeableSubject"
+import ChangeHousingCorporation from "./ChangeHousingCorporation/ChangeHousingCorporation"
 import SensitiveCaseIcon from "../icons/SensitiveCaseIcon/SensitiveCaseIcon"
 import EnforcementIcon from "../icons/EnforcementIcon/EnforcementIcon"
+import translationsCaseStates from "app/translations/translationsCaseStates"
+import EditableTag from "./EditableTag/EditableTag"
 
 type Props = {
   caseId: Components.Schemas.CaseCreate["id"]
@@ -25,11 +27,11 @@ const StyledDiv = styled.div`
   }
 `
 
-const CLOSED: Components.Schemas.CaseCreate["state"] = "AFGESLOTEN"
-
-const getDataFirstCol = (isClosed: boolean, caseItem?: Components.Schemas.CaseCreate) => {
-  if (caseItem === undefined) return
-  const { id, start_date, sensitive, previous_case, is_enforcement_request } = caseItem
+const getDataFirstCol = (caseItem?: Components.Schemas.CaseCreate) => {
+  if (caseItem === undefined) {
+    return undefined
+  }
+  const { id, start_date, sensitive, previous_case, is_enforcement_request, state } = caseItem
   const data: DefinitionListData = {
     "Zaak ID": (
       <Wrap>
@@ -38,28 +40,34 @@ const getDataFirstCol = (isClosed: boolean, caseItem?: Components.Schemas.CaseCr
         <EnforcementIcon show={ is_enforcement_request } />
       </Wrap>
     ),
-    "Status": isClosed ? <strong>Gesloten</strong> : "Open",
+    "Status": translationsCaseStates[state],
     "Startdatum": <DateDisplay date={ start_date ?? undefined } emptyText="-" />
   }
   if (previous_case) {
     data["Overgedragen zaak"] = previous_case
   }
+  data["Tag"] = <EditableTag case={ caseItem } />
   return data
 }
 
-const getDataSecondCol = (isClosed: boolean, caseItem?: Components.Schemas.CaseCreate) => {
-  if (caseItem === undefined) return
-  const { id, theme, reason, project, subjects, address: { housing_corporation } } = caseItem
+const getDataSecondCol = (caseItem?: Components.Schemas.CaseCreate) => {
+  if (caseItem === undefined) {
+    return undefined
+  }
+
+  const { id, theme, reason, project, subjects, address: { housing_corporation, bag_id } } = caseItem
   const hasProject = project?.name !== undefined
   const data: DefinitionListData = {
     "Thema": theme.name,
     "Aanleiding": `${ reason.name }${ hasProject ? ": " : "" }${ hasProject ? project.name : "" }`,
-    "Onderwerp(en)": isClosed
-      ? subjects.map((subject) => subject.name).join(", ")
-      : <ChangeableSubject subjects={ subjects } caseId={ id } themeId={ theme.id } />
-  }
-  if (theme.id === 6) {
-    data["Corporatie"] = <DisplayCorporation id={ housing_corporation } />
+    "Onderwerp(en)": <ChangeableSubject subjects={ subjects } caseId={ id } themeId={ theme.id } />,
+    "Corporatie": (
+      <ChangeHousingCorporation
+        housingCorporationId={ housing_corporation }
+        bagId={ bag_id }
+        caseId={ id }
+      />
+    )
   }
   return data
 }
@@ -67,9 +75,8 @@ const getDataSecondCol = (isClosed: boolean, caseItem?: Components.Schemas.CaseC
 const CaseDetails: React.FC<Props> = ({ caseId }) => {
   const [data, { isBusy }] = useCase(caseId)
 
-  const isClosed = data?.state === CLOSED
-  const dataFirstCol = getDataFirstCol(isClosed, data)
-  const dataSecondCol = getDataSecondCol(isClosed, data)
+  const dataFirstCol = getDataFirstCol(data)
+  const dataSecondCol = getDataSecondCol(data)
 
   return (
     <StyledDiv>

@@ -1,5 +1,4 @@
 import { useEffect } from "react"
-import { globalHistory } from "@reach/router"
 import find from "../utils/find"
 import routes from "app/routing/routes"
 
@@ -13,15 +12,10 @@ const setPageTitle = () => {
 }
 
 const PageTitle: React.FC = () => {
-
   useEffect(() => {
     setPageTitle()
-    return globalHistory.listen(({ action }) => {
-      if (action !== "PUSH") return
-      setPageTitle()
-    })
   }, [])
-
   return null
 }
+
 export default PageTitle

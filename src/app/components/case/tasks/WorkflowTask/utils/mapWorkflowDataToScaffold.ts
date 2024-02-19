@@ -17,9 +17,16 @@ const arrayToObject = (array: Array<{ label: string, value: string }>) => array.
   (acc, val) => ({ ...acc, [val.value]: val.label }), {} as Record<string, string>
 )
 
-const mapItemToOptions = (item: any) => (
-  item.type === "checkbox" ? { [item.name]: item.label } : item.type === "multiselect" ? arrayToObject(item.options) : item.options ?? undefined
-)
+const mapItemToOptions = (item: any) => {
+  if (item.type === "checkbox") {
+    return { [item.name]: item.label }
+  } else if (item.type === "multiselect") {
+    return arrayToObject(item.options)
+  } else if (item.options) {
+    return item.options
+  }
+  return undefined
+}
 
 export default (workflowForm: Components.Schemas.CaseUserTaskWorkdflow["form"], onCancel = () => {}) => {
 

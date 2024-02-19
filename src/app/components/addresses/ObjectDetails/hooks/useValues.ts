@@ -1,9 +1,9 @@
-export default (BAGAddressResponse?: BAGAddressResponse, BAGObjectResponse?: BAGObjectResponse) => {
+export default (BAGAddress?: BAGAddressResponse["results"][number], BAGObjectResponse?: BAGObjectResponse) => {
 
-  if (BAGAddressResponse === undefined || BAGObjectResponse === undefined) return
+  if (BAGAddress === undefined || BAGObjectResponse === undefined) return
 
   const values = [
-    ["Bestemming", BAGAddressResponse.results[0]?.type ?? "-"],
+    ["Bestemming", BAGAddress?.type ?? "-"],
     ["Oppervlakte", BAGObjectResponse.oppervlakte ? `${ BAGObjectResponse.oppervlakte }m²` : "-"],
     ["Bouwlagen", BAGObjectResponse.bouwlagen],
     ["Aantal kamers", BAGObjectResponse.aantal_kamers]

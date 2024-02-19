@@ -1,10 +1,8 @@
-import { KeycloakInstance } from "keycloak-js"
-
+import Keyloack from "keycloak-js"
 import { makeApiUrl } from "app/state/rest/hooks/utils/apiUrl"
 import createAuthHeaders from "app/state/rest/hooks/utils/createAuthHeaders"
-import navigateTo from "app/routing/navigateTo"
 
-export default async (keycloak: KeycloakInstance, isAuthenticated: boolean) => {
+export default async (keycloak: Keyloack, isAuthenticated: boolean) => {
   if (isAuthenticated === false) return
   const response = await fetch(makeApiUrl("is-authorized"), {
     headers: {
@@ -13,5 +11,8 @@ export default async (keycloak: KeycloakInstance, isAuthenticated: boolean) => {
     }
   })
   const { is_authorized } = await response.json()
-  if (is_authorized === false) navigateTo("/auth")
+  if (is_authorized === false) {
+    // This is not working outside the routing wrapper.
+    // navigateTo("/auth")
+  }
 }

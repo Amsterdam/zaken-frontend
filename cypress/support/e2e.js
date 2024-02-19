@@ -21,6 +21,7 @@ import "./case"
 import "./login"
 import "./formchecks"
 import "./case"
+import "./kcLogin"
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')

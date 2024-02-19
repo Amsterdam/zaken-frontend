@@ -1,5 +1,5 @@
 import { Spinner, Heading, Paragraph, themeColor } from "@amsterdam/asc-ui"
-import { Link } from "@reach/router"
+import { Link } from "react-router-dom"
 import { DefinitionList } from "@amsterdam/wonen-ui"
 import styled from "styled-components"
 
@@ -33,11 +33,11 @@ const PermitOverview: React.FC<Props> = ({ bagId }) => {
           <Heading forwardedAs="h2">Vergunningen</Heading>
           <Paragraph>Geen vergunningen gevonden</Paragraph>
         </>
-        ) : (
-          <DefinitionList loading={ isBusy } numLoadingRows={ 2 } title="Vergunningen" data={ values } />
-        )
+      ) : (
+        <DefinitionList loading={ isBusy } numLoadingRows={ 2 } title="Vergunningen" data={ values } />
+      )
       }
-      <StyledLink to={ to("/adres/:bagId/vergunningen", { bagId })} >Alle vergunningen details</StyledLink>
+      <StyledLink to={ to("/adres/:bagId/vergunningen", { bagId }) } >Alle vergunningen details</StyledLink>
     </>
   )
 }

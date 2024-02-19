@@ -1,6 +1,5 @@
 
-import { RouteComponentProps } from "@reach/router"
-
+import { useParams } from "react-router-dom"
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
@@ -11,19 +10,19 @@ import { Column } from "app/components/layouts/Grid"
 import SummonForm from "app/components/case/forms/SummonForm/SummonForm"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
 
-type Props = {
+type RouteParams = {
   id: string
   caseUserTaskId: string
 }
 
-const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString, caseUserTaskId }) => {
-
+const CreatePage: React.FC = () => {
+  const { id: idString, caseUserTaskId  } = useParams<RouteParams>()
   const id = parseUrlParamId(idString)
 
   return (
-    isValidUrlParamId<Components.Schemas.CaseDetail["id"]>(id) &&
-    isValidUrlParamId<Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"]>(caseUserTaskId) ?
-      <DefaultLayout>
+    isValidUrlParamId<Components.Schemas.CaseDetail["id"]>(id)
+    && isValidUrlParamId<Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"]>(caseUserTaskId)
+      ? <DefaultLayout>
         <RowWithColumn>
           <PageHeading />
         </RowWithColumn>
@@ -31,12 +30,12 @@ const CreatePage: React.FC<RouteComponentProps<Props>> = ({ id: idString, caseUs
           <CaseHeading id={ id } />
         </RowWithColumn>
         <Row>
-          <Column spanLarge={50}>
+          <Column spanLarge={ 50 }>
             <SummonForm id={ id } caseUserTaskId={ caseUserTaskId } />
           </Column>
         </Row>
-      </DefaultLayout> :
-      <NotFoundPage />
+      </DefaultLayout>
+      : <NotFoundPage />
   )
 }
 

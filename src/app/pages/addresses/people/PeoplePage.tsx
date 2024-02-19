@@ -1,6 +1,5 @@
 
-import { RouteComponentProps } from "@reach/router"
-
+import { useParams } from "react-router-dom"
 import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId"
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
 import Row from "app/components/layouts/Grid/Row"
@@ -14,24 +13,27 @@ type Props = {
   bagId: string
 }
 
-const PeoplePage: React.FC<RouteComponentProps<Props>> = ({ bagId }) => (
-  isValidUrlParamBAGId(bagId) ? (
-    <DefaultLayout>
-      <Row>
-        <Column spanLarge={ 50 }>
-          <PageHeading />
-        </Column>
-        <Column spanLarge={ 50 }>
-          <DetailHeader bagId={ bagId } />
-        </Column>
-      </Row>
-      <Row>
-        <Column spanLarge={ 50 }>
-          <ResidentsOverview bagId={ bagId } />
-        </Column>
-      </Row>
-    </DefaultLayout>
-  ) : <NotFoundPage />
-)
+const PeoplePage: React.FC = () => {
+  const { bagId } = useParams<Props>()
+  return (
+    isValidUrlParamBAGId(bagId) ? (
+      <DefaultLayout>
+        <Row>
+          <Column spanLarge={ 50 }>
+            <PageHeading />
+          </Column>
+          <Column spanLarge={ 50 }>
+            <DetailHeader bagId={ bagId } />
+          </Column>
+        </Row>
+        <Row>
+          <Column spanLarge={ 50 }>
+            <ResidentsOverview bagId={ bagId } />
+          </Column>
+        </Row>
+      </DefaultLayout>
+    ) : <NotFoundPage />
+  )
+}
 
 export default PeoplePage

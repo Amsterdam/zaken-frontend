@@ -3,7 +3,7 @@ import { Heading, themeSpacing } from "@amsterdam/asc-ui"
 
 import { useCasesByBagId } from "app/state/rest"
 import { Table } from "@amsterdam/wonen-ui"
-import navigateTo from "app/routing/navigateTo"
+import useNavigation from "app/routing/useNavigation"
 import { columnsClosedCases, columnsOpenCases } from "./columns"
 
 type Props = {
@@ -25,8 +25,10 @@ const Div = styled.div`
 
 const CasesByBagId: React.FC<Props> = ({ bagId, openCases = false, title = defaultTitle, emptyText = defaultEmptyText }) => {
   const [data, { isBusy }] = useCasesByBagId(bagId)
+  const { navigateTo } = useNavigation()
   const caseList = data?.results?.filter(result => openCases ? result.end_date === null : result.end_date !== null) || []
   const numCases = caseList.length
+
   const onClickRow = (data: any) => {
     navigateTo("/zaken/:id", { id: data.id })
   }

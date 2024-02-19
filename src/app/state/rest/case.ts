@@ -1,6 +1,6 @@
 import type { Options } from "./"
 import { useErrorHandler } from "./hooks/utils/errorHandler"
-import { makeApiUrl } from "./hooks/utils/apiUrl"
+import { makeApiUrl } from "app/state/rest/hooks/utils/apiUrl"
 import useApiRequest from "./hooks/useApiRequest"
 import qs from "qs"
 
@@ -82,6 +82,17 @@ export const useDecisions = (options?: Options) => {
   return useApiRequest<Components.Schemas.Decision>({
     ...options,
     url: makeApiUrl("decisions"),
+    groupName: "cases",
+    handleError,
+    isProtected: true
+  })
+}
+
+export const useQuickDecisions = (options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<Components.Schemas.QuickDecision>({
+    ...options,
+    url: makeApiUrl("quick-decisions"),
     groupName: "cases",
     handleError,
     isProtected: true

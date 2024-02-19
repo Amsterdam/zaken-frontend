@@ -1,14 +1,15 @@
 import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
-import navigateTo from "app/routing/navigateTo"
+import type { NavigateToFunction } from "app/routing/useNavigation"
 import isValidUrl from "app/routing/utils/isValidUrl"
+
 
 export default (
   caseId: Components.Schemas.CaseDetail["id"],
+  navigateTo: NavigateToFunction,
   themeName: Components.Schemas.CaseTheme["name"]
-  ) => {
-
+) => {
 
   const fields = {
     reporter_anonymous: {
@@ -109,7 +110,7 @@ export default (
     advertisement: {
       type: "ShowHide",
       props: {
-        shouldShow: (() => themeName !== "Kamerverhuur" && themeName !== "Ondermijning"),
+        shouldShow: (() => themeName !== "Kamerverhuur" && themeName !== "Ondermijning" && themeName !== "Goed verhuurderschap"),
         field: {
           type: "RadioFields",
           props: {

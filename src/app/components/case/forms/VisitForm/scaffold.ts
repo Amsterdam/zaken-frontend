@@ -1,8 +1,12 @@
 import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
-import navigateTo from "app/routing/navigateTo"
+import type { NavigateToFunction } from "app/routing/useNavigation"
 
-const scaffold = (caseId: Components.Schemas.CaseDetail["id"], authors: Components.Schemas.User[]) => {
+const scaffold = (
+  caseId: Components.Schemas.CaseDetail["id"],
+  navigateTo: NavigateToFunction,
+  authors: Components.Schemas.User[]
+) => {
 
   const fields = {
     author1: {

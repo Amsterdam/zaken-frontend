@@ -1,6 +1,6 @@
 import useOtherAddressesByBagId from "app/state/rest/custom/useOtherAddresses/useOtherAddresses"
 import { Table } from "@amsterdam/wonen-ui"
-import navigateTo from "app/routing/navigateTo"
+import useNavigation from "app/routing/useNavigation"
 import columns from "./columns"
 
 type Props = {
@@ -10,6 +10,7 @@ type Props = {
 
 const OtherAddressesTable: React.FC<Props> = ({ bagId, onAddressChosen }) => {
   const [data, { isBusy }] = useOtherAddressesByBagId(bagId)
+  const { navigateTo } = useNavigation()
 
   const onClickRow = (data: any) => {
     onAddressChosen()

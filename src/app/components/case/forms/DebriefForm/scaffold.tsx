@@ -2,9 +2,7 @@ import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import InfoContent from "./components/InfoContent"
-import navigateTo from "app/routing/navigateTo"
-import translationsViolationTypes from "app/translations/translationsViolationTypes"
-import translationsMap from "app/translations/translationsMap"
+import type { NavigateToFunction } from "app/routing/useNavigation"
 
 const options = {
   "-": "-",
@@ -25,16 +23,21 @@ const getThemeOptions = (themeName?: string) => {
   return options
 }
 
-export default (caseId: Components.Schemas.CaseDetail["id"], violationTypes: Components.Schemas.PaginatedViolationTypeList["results"], themeName?: string) => {
+export default (
+  caseId: Components.Schemas.CaseDetail["id"],
+  navigateTo: NavigateToFunction,
+  violationTypes: Components.Schemas.PaginatedViolationTypeList["results"],
+  themeName?: string
+) => {
 
-  const violationOptions = violationTypes?.map(({ key }) => key).reduce((acc, item) => { acc[item] = translationsMap(translationsViolationTypes, item); return acc }, {} as Record<string, string>)
+  const violationOptions = violationTypes?.reduce((acc, item) => ({ ...acc, [item.key]: [item.value] }), {})
 
   const fields = {
     violation: {
       type: "RadioFields",
       props: {
         isRequired: true,
-        label: "Wat is de uitkomst van het bezoek?",
+        label: themeName === "Goed verhuurderschap" ? "Wat is de uitkomst van het debriefen?" : "Wat is de uitkomst van het bezoek?",
         extraLabel: <InfoButton infoTitle="Niet duidelijk of er een overtreding is? Twee opties:" infoText={ InfoContent }></InfoButton>,
         name: "violation",
         options: violationOptions

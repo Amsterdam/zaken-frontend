@@ -1,12 +1,13 @@
 // Module mocking should always be on top:
 // -----------------------------------------
 import { renderHook } from "@testing-library/react-hooks"
-import { AxiosError } from "axios"
+import { AxiosError, AxiosRequestHeaders } from "axios"
+// import { useFlashMessages } from "../../../flashMessages/useFlashMessages"
 
 import { useErrorHandler } from "./errorHandler"
 
 const mockAddErrorFlashMessage = jest.fn()
-jest.mock("app/state/flashMessages/useFlashMessages", () => ({
+jest.mock("../../../flashMessages/useFlashMessages", () => ({
   __esModule: true,
   useFlashMessages: () => ({ addErrorFlashMessage: mockAddErrorFlashMessage })
 }))
@@ -22,7 +23,7 @@ describe("rest hook utils", () => {
         isAxiosError: true,
         name: "error",
         message: "S.O.S.",
-        config: { url: "http://www.foo.com" },
+        config: { url: "http://www.foo.com", headers: {} as AxiosRequestHeaders },
         toJSON: () => ({})
       }
 

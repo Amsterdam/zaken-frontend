@@ -1,6 +1,6 @@
 import { Fragment } from "react"
 import { ThemeProvider, GlobalStyle } from "@amsterdam/asc-ui"
-import { LocationProvider } from "@reach/router"
+import { BrowserRouter } from "react-router-dom"
 
 import KeycloakProvider from "app/state/auth/keycloak/KeycloakProvider"
 import initializedCallback from "app/state/auth/keycloak/initializedCallback"
@@ -19,8 +19,11 @@ const App = () => (
     <PageTitle />
     <ThemeProvider>
       <GlobalStyle />
-      <KeycloakProvider shouldInitialize={ isLocalDevelopment === false } initializedCallback={ initializedCallback }>
-        <LocationProvider>
+      <KeycloakProvider
+        shouldInitialize={ isLocalDevelopment === false }
+        initializedCallback={ initializedCallback }
+      >
+        <BrowserRouter>
           <FlashMessageProvider>
             <ApiProvider>
               <ValueProvider>
@@ -28,7 +31,7 @@ const App = () => (
               </ValueProvider>
             </ApiProvider>
           </FlashMessageProvider>
-        </LocationProvider>
+        </BrowserRouter>
       </KeycloakProvider>
     </ThemeProvider>
   </SentryErrorBoundary>

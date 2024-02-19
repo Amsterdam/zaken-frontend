@@ -1,5 +1,4 @@
 module.exports = {
-  plugins: ["unused-imports"],
   extends: [
     "react-app"
   ],
@@ -15,7 +14,6 @@ module.exports = {
     "space-infix-ops": ["error"],
     "semi": ["error", "never"],
     "template-curly-spacing": ["error", "always"],
-    "unused-imports/no-unused-imports": "warn",
     "react/jsx-indent-props": ["error", 2],
     "react/jsx-indent" : ["error", 2],
 

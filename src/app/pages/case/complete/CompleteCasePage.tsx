@@ -1,6 +1,5 @@
 
-import { RouteComponentProps } from "@reach/router"
-
+import { useParams } from "react-router-dom"
 import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
@@ -11,13 +10,14 @@ import CaseCompleteForm from "app/components/case/forms/CaseCompleteForm/CaseCom
 import NotFoundPage from "app/pages/errors/NotFoundPage"
 import { Column } from "app/components/layouts/Grid"
 
-type Props = {
+
+type RouteParams = {
   id: string
   caseUserTaskId: string
 }
 
-const CompleteCasePage: React.FC<RouteComponentProps<Props>> = ({ id: idString, caseUserTaskId }) => {
-
+const CompleteCasePage: React.FC = () => {
+  const { id: idString, caseUserTaskId  } = useParams<RouteParams>()
   const id = parseUrlParamId(idString)
 
   const isValid = isValidUrlParamId<Components.Schemas.CaseDetail["id"]>(id)
