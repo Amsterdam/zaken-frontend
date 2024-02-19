@@ -74,7 +74,7 @@ jobs:
                   };
                   const result = await github.graphql(stateQuery, vars);
                   const [{ commit }] = result.repository.pullRequest.commits.nodes;
-                  const state = commit.statusCheckRollup.state
+                  const state = commit.statusCheckRollup ? commit.statusCheckRollup.state : null;
                   console.log('Validating status: ' + state);
                   if(state != 'SUCCESS') {
                     console.log('Discarding ' + branch + ' with status ' + state);
