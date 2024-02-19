@@ -63,7 +63,7 @@ pipeline {
     stage("Push and deploy acceptance image") {
       when {
         not { buildingTag() }
-        branch 'master'
+        branch 'main'
       }
       steps {
         tag_image_as("acceptance")

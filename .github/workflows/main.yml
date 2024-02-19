@@ -2,9 +2,9 @@ name: 'Install, lint, test, E2E & build'
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   main:

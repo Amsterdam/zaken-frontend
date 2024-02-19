@@ -16,7 +16,7 @@
 - `npm run start`
 
 ### Bypassing authentication
-- When running zaken-frontend and zaken-backend locally, it's possible to bypass Keycloak authentication. See https://github.com/Amsterdam/zaken-frontend/tree/master/src/app/state/auth/keycloak.
+- When running zaken-frontend and zaken-backend locally, it's possible to bypass Keycloak authentication. See https://github.com/Amsterdam/zaken-frontend/tree/main/src/app/state/auth/keycloak.
 
 ### Required access to services for development
 - ADW account (@amsterdam.nl)
@@ -28,17 +28,17 @@
 - NPM (https://www.npmjs.com/settings/amsterdam/packages) OIS Slack #frontend-amsterdam
 
 ### Connecting to Acceptance API
-- It's possible to connect a locally run zaken-frontend to Acceptance API. Add `REACT_APP_API_HOST=https://acc.api.wonen.zaken.amsterdam.nl/api/v1/` to `.env.development.local`. See [.env.development](https://github.com/Amsterdam/zaken-frontend/blob/master/.env.development) for examples.
+- It's possible to connect a locally run zaken-frontend to Acceptance API. Add `REACT_APP_API_HOST=https://acc.api.wonen.zaken.amsterdam.nl/api/v1/` to `.env.development.local`. See [.env.development](https://github.com/Amsterdam/zaken-frontend/blob/main/.env.development) for examples.
 
 ## Deployment
 
-The `master` branch is automatically deployed to [acceptance](https://acc.wonen.zaken.amsterdam.nl/).
+The `main` branch is automatically deployed to [acceptance](https://acc.wonen.zaken.amsterdam.nl/).
 
-Tag any branch, but preferably master, with a tag like `v1.0.0` to deploy that specific commit
+Tag any branch, but preferably main, with a tag like `v1.0.0` to deploy that specific commit
 to [production](https://wonen.zaken.amsterdam.nl/).
 
 A `npm run deploy:prod` convenience script is also available. This also guarantees the versions between the Git tag and NPM (package.json) are in sync.
 
 ## E2E testing with Cypress
 
-[README.md](https://github.com/Amsterdam/zaken-frontend/blob/master/cypress/README.md)
+[README.md](https://github.com/Amsterdam/zaken-frontend/blob/main/cypress/README.md)
