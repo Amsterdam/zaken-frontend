@@ -4,12 +4,8 @@ import { env } from "app/config/env"
 /**
  * Utility function to create an API URL
  */
-<<<<<<< HEAD
-export const makeApiUrl = (...paths: Array<number|string|undefined>) => slashSandwich([process.env.REACT_APP_API_HOST, process.env.REACT_APP_API_PATH, ...paths])
-=======
 export const makeApiUrl = (...paths: Array<number|string|undefined>) =>
   slashSandwich([env.REACT_APP_API_HOST, env.REACT_APP_API_PATH, ...paths])
->>>>>>> 4f30997b (Change build to work for multiple environments)
 
 /**
  * Utility function to strip API host from URL
