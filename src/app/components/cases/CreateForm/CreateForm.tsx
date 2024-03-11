@@ -21,10 +21,10 @@ const advertisementOptions = {
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
-  tonId?: number | undefined
+  tonId?: string
 }
 
-const mapData = (bagId: Components.Schemas.Address["bag_id"], tonId: number | undefined) =>
+const mapData = (bagId: Components.Schemas.Address["bag_id"], tonId?: string) =>
   (data: any): any => {
     const mappedData = {
       ...data,
