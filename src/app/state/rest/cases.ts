@@ -48,7 +48,8 @@ export const useCases = (
     page: pagination.page,
     page_size: pagination.pageSize,
     from_start_date,
-    open_cases: true
+    open_cases: true,
+    simplified: true
   }
   if (sensitive === false) {
     urlParams.sensitive = false
