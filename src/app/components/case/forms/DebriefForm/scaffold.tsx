@@ -4,22 +4,25 @@ import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import InfoContent from "./components/InfoContent"
 import type { NavigateToFunction } from "app/routing/useNavigation"
 
-const options = {
-  "-": "-",
-  "Kamerverhuur": "Kamerverhuur",
-  "Leegstand": "Leegstand",
-  "Onderhuur": "Onderhuur",
-  "Ondermijning": "Ondermijning",
-  "Vakantieverhuur": "Vakantieverhuur",
-  "Woningverbetering": "Woningverbetering"
+
+const createObjectFromArray = (arr: any) => {
+  const obj: any = {}
+  arr.forEach((item: any) => {
+    obj[item] = item
+  })
+  return obj
 }
 
-// Remove current theme from options
-const getThemeOptions = (themeName?: string) => {
-  if (themeName !== undefined) {
-    const { [themeName]: remove, ...rest }: any = options
-    return rest
-  }
+const getThemeOptions = (themes: Components.Schemas.CaseTheme[], themeName?: string) => {
+  const optionsArray: any = [ "-", "Woningverbetering" ]
+  themes.forEach((theme) => {
+    // Remove current theme from options
+    if (theme.name !== themeName) {
+      optionsArray.push([theme.name])
+    }
+  })
+  optionsArray.sort()
+  const options = createObjectFromArray(optionsArray)
   return options
 }
 
@@ -27,9 +30,9 @@ export default (
   caseId: Components.Schemas.CaseDetail["id"],
   navigateTo: NavigateToFunction,
   violationTypes: Components.Schemas.PaginatedViolationTypeList["results"],
+  themes: Components.Schemas.CaseTheme[],
   themeName?: string
 ) => {
-
   const violationOptions = violationTypes?.reduce((acc, item) => ({ ...acc, [item.key]: [item.value] }), {})
 
   const fields = {
@@ -53,7 +56,7 @@ export default (
             isRequired: true,
             name: "violation_result.theme",
             label: "Naar welk thema overdragen?",
-            options: getThemeOptions(themeName)
+            options: getThemeOptions(themes, themeName)
           }
         }
       }
