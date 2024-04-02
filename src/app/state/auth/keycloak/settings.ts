@@ -1,7 +1,7 @@
 import { env } from "app/config/env"
 
 export default {
-  "url": "https://iam.amsterdam.nl/auth/",
+  "url": env.REACT_APP_AUTH_URL ?? "https://iam.amsterdam.nl/auth/",
   "realm": env.REACT_APP_KEYCLOAK_REALM ?? "",
   "ssl-required": "external",
   "resource": env.REACT_APP_KEYCLOAK_CLIENT_ID ?? "wonen-woon-o-azure",
