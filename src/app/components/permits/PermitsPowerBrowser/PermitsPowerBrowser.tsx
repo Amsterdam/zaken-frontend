@@ -25,7 +25,7 @@ type Props = {
 
 const PermitsPowerBrowser: React.FC<Props> = ({ bagId }) => {
   const [data, { isBusy }] = usePermitsPowerBrowser(bagId)
-  const [isChecked, setIsChecked] = useState(false)
+  const [isChecked, setIsChecked] = useState(true)
   const permits: any = data || []
   return (
     <>
@@ -39,8 +39,8 @@ const PermitsPowerBrowser: React.FC<Props> = ({ bagId }) => {
               data-testid="checkBox_display_all_permts"
               onChange={ (e: React.ChangeEvent<HTMLInputElement>) => {
                 setIsChecked(e.target.checked)
-              } }
-
+              }}
+              defaultChecked={true}
             />
           </StyledSpan>
         )}
