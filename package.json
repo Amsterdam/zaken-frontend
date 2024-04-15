@@ -7,6 +7,12 @@
     "npm": ">=8"
   },
   "scripts": {
+    "start": "PORT=2999 env-cmd -f .env.development vite",
+    "acc": "PORT=2999 env-cmd -f .env.acceptance vite",
+    "build": "vite build",
+    "build:acc": "env-cmd -f .env.acceptance vite build",
+    "deploy:prod": "npm version patch && git push origin HEAD --follow-tags",
+    "swagger:generate-schema": "TS_NODE_PROJECT='./scripts/tsconfig.json' NODE_ENV='development' ts-node scripts/src/generateSwaggerSchema.ts",
     "lint": "eslint --max-warnings 0 --cache --ext .ts,.tsx src",
     "lint:fix": "eslint --fix --ext .ts,.tsx src",
     "test": "env-cmd -f .env.development jest --watchAll=false",
@@ -14,12 +20,6 @@
     "test:coverage": "jest --coverage --watchAll=false",
     "cy": "npx cypress open",
     "cy:run": "cypress run",
-    "start": "PORT=2999 vite",
-    "acc": "PORT=2999 env-cmd -f .env.acceptance vite",
-    "swagger:generate-schema": "TS_NODE_PROJECT='./scripts/tsconfig.json' NODE_ENV='development' ts-node scripts/src/generateSwaggerSchema.ts",
-    "build": "vite build",
-    "build:acc": "env-cmd -f .env.acceptance vite build",
-    "deploy:prod": "npm version patch && git push origin HEAD --follow-tags",
     "dev": "vite",
     "preview": "vite preview"
   },
