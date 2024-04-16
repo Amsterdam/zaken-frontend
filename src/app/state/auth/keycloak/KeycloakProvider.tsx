@@ -19,6 +19,10 @@ const KeycloakProvider: React.FC<Props> = ({
   shouldInitialize = true, initializedCallback, children
 }) => {
   const [isInitialized, setIsInitialized] = useState(false)
+
+
+
+
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   useEffect(() => {
