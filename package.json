@@ -21,7 +21,8 @@
     "cy": "npx cypress open",
     "cy:run": "cypress run",
     "dev": "vite",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepare": "husky"
   },
   "dependencies": {
     "@amsterdam/amsterdam-react-final-form": "^0.1.140",
@@ -81,6 +82,7 @@
     "cypress": "^13.6.6",
     "dotenv-flow": "^3.2.0",
     "dtsgenerator": "^3.18.0",
+    "husky": "^9.0.11",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "nock": "^13.5.4",
