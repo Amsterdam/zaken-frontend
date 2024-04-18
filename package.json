@@ -7,7 +7,7 @@
     "npm": ">=8"
   },
   "scripts": {
-    "start": "PORT=2999 env-cmd -f .env.development vite",
+    "start": "PORT=2999 vite",
     "acc": "PORT=2999 env-cmd -f .env.acceptance vite",
     "build": "vite build",
     "build:acc": "env-cmd -f .env.acceptance vite build",
