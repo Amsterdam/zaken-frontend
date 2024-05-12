@@ -12,6 +12,7 @@ export type StateType = {
     results: Components.Schemas.Case[]
     sorting: TABLE.Schemas.Sorting
     subjects: string[]
+    tags: string[]
     theme: string
     updateContextCases: (payload: any) => void
   }
@@ -28,6 +29,7 @@ export type StateType = {
     sorting: TABLE.Schemas.Sorting
     theme: string
     subjects: string[]
+    tags: string[]
     taskNames: Components.Schemas.CaseUserTaskTaskName["name"][]
     updateContextTasks: (payload: any) => void
   }
@@ -52,6 +54,7 @@ export const initialState: StateType = {
       order: "DESCEND"
     },
     subjects: [],
+    tags: [],
     theme: "",
     updateContextCases: noop
   },
@@ -73,6 +76,7 @@ export const initialState: StateType = {
       order: "ASCEND"
     },
     subjects: [],
+    tags: [],
     taskNames: [],
     theme: "",
     updateContextTasks: noop
