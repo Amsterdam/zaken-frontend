@@ -24,6 +24,7 @@ type Props = {
   selectedCorporations: string[]
   selectedProjects: string[]
   selectedSubjects: string[]
+  selectedTags: string[]
   selectedTaskNames: string[]
   setDistrictNames: (value: Components.Schemas.District["name"][]) => void
   setPageSize: (value: string) => void
@@ -32,10 +33,12 @@ type Props = {
   setSelectedCorporations: (value: Components.Schemas.HousingCorporation["name"][]) => void
   setSelectedProjects: (value: string[]) => void
   setSelectedSubjects: (value: string[]) => void
+  setSelectedTags: (value: string[]) => void
   setSelectedTaskNames: (value: Components.Schemas.CaseUserTaskTaskName["name"][]) => void
   setTheme: (value: string) => void
   setOwner: (value: string) => void
   subjects?: Components.Schemas.Subject[]
+  tags?: Components.Schemas.Tag[]
   taskNames?: Components.Schemas.CaseUserTaskTaskName[]
   theme: string
   themes?: Components.Schemas.CaseTheme[]
@@ -45,7 +48,8 @@ const TasksFilter: React.FC<Props> = ({
   role, roles, setRole, theme, themes, setTheme, pageSize, setPageSize, owner,
   setOwner, taskNames, selectedTaskNames, setSelectedTaskNames, reasons, reason, setReason,
   districts, districtNames, setDistrictNames, corporations, selectedCorporations,
-  setSelectedCorporations, subjects, setSelectedSubjects, selectedSubjects, projects,
+  setSelectedCorporations, subjects, setSelectedSubjects, selectedSubjects,
+  tags, selectedTags, setSelectedTags, projects,
   selectedProjects, setSelectedProjects
 }) => (
   <>
@@ -106,6 +110,15 @@ const TasksFilter: React.FC<Props> = ({
           options={ subjects }
           selectedOptions={ selectedSubjects }
           setSelectedOptions={ setSelectedSubjects }
+          byId
+        />
+      )}
+      { tags !== undefined && (
+        <MultipleOptionsFilterBox
+          label="Tags"
+          options={ tags }
+          selectedOptions={ selectedTags }
+          setSelectedOptions={ setSelectedTags }
           byId
         />
       )}

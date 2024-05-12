@@ -43,6 +43,7 @@ export const getQueryUrl = (
   projects?: string[],
   reason?: string,
   subjects?: string[],
+  tags?: string[],
   districtNames?: Components.Schemas.District["name"][],
   housingCorporations?: string[]
 ) => {
@@ -66,6 +67,9 @@ export const getQueryUrl = (
   }
   if (subjects && subjects?.length > 0) {
     urlParams.subject = subjects
+  }
+  if (tags && tags?.length > 0) {
+    urlParams.tag = tags
   }
   if (taskNames && taskNames?.length > 0) {
     urlParams.name = taskNames
@@ -103,6 +107,7 @@ export const useTasks = (
   projects?: string[],
   reason?: string,
   subjects?: string[],
+  tags?: string[],
   districtNames?: Components.Schemas.District["name"][],
   housingCorporations?: string[],
   options?: Options
@@ -120,6 +125,7 @@ export const useTasks = (
     projects,
     reason,
     subjects,
+    tags,
     districtNames,
     housingCorporations
   )

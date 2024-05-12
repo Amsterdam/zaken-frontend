@@ -4,7 +4,7 @@ import { Heading } from "@amsterdam/asc-ui"
 import TableCases from "app/components/cases/TableCases/TableCases"
 import CasesFilter from "app/components/cases/CasesFilter/CasesFilter"
 import { useCases, useCaseThemes, useTasksReasons, useDistricts,
-  useCorporations, useSubjects, useProjects
+  useCorporations, useSubjects, useProjects, useTags
 } from "app/state/rest"
 import useHasPermission, { SENSITIVE_CASE_PERMISSION } from "app/state/rest/custom/usePermissions/useHasPermission"
 import { ContextValues } from "app/state/context/ValueProvider"
@@ -34,7 +34,7 @@ const UNDERMINING = "Ondermijning"
 const Cases: React.FC = () => {
   const {
     count, districtNames, fromStartDate, housingCorporations, pagination, projects,
-    reason, results, sorting, subjects, theme, updateContextCases
+    reason, results, sorting, subjects, tags, theme, updateContextCases
   } = useContext(ContextValues)["cases"]
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const [caseThemes] = useCaseThemes()
@@ -42,6 +42,7 @@ const Cases: React.FC = () => {
   const themeId = getThemeId(caseThemes?.results, theme)
   const [projectsTheme] = useProjects(themeId)
   const [subjectsTheme] = useSubjects(themeId)
+  const [tagsTheme] = useTags(themeId)
   const [caseDistricts] = useDistricts()
   const [corporationData] = useCorporations()
   const [dataSource, { isBusy }] = useCases(
@@ -53,6 +54,7 @@ const Cases: React.FC = () => {
     projects,
     reason,
     subjects,
+    tags,
     districtNames,
     housingCorporations
   )
@@ -85,6 +87,7 @@ const Cases: React.FC = () => {
       casesContextItem.reason = ""
       casesContextItem.projects = []
       casesContextItem.subjects = []
+      casesContextItem.tags = []
     }
     updateContextCases(casesContextItem)
   }
@@ -140,6 +143,7 @@ const Cases: React.FC = () => {
             selectedCorporations={ housingCorporations }
             selectedProjects={ projects }
             selectedSubjects={ subjects }
+            selectedTags={ tags }
             setDate={ (value: string) => onChangeFilter("fromStartDate", value) }
             setDistrictNames={ (value: Components.Schemas.District["name"][]) => onChangeFilter("districtNames", value) }
             setPageSize={ onChangePageSize }
@@ -147,8 +151,10 @@ const Cases: React.FC = () => {
             setSelectedCorporations={ (value: string[]) => onChangeFilter("housingCorporations", value) }
             setSelectedProjects={ (value: string[]) => onChangeFilter("projects", value) }
             setSelectedSubjects={ (value: string[]) => onChangeFilter("subjects", value) }
+            setSelectedTags={ (value: string[]) => onChangeFilter("tags", value) }
             setTheme={ (value: string) => onChangeFilter("theme", value) }
             subjects={ subjectsTheme?.results }
+            tags={ tagsTheme?.results }
             theme={ theme }
             themes={ themes }
           />
