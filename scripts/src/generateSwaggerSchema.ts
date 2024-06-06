@@ -1,12 +1,8 @@
 #!/usr/bin/env ts-node-script
 import { exec } from "child_process"
-import { config } from "dotenv-flow"
+import { env } from "app/config/env"
 
-// Loads .env.development or .env.production based on NODE_ENV
-config()
-
-const url = `${ process.env.REACT_APP_API_HOST }${ process.env.REACT_APP_API_PATH }schema/`
-
+const url = `${ env.REACT_APP_API_HOST }${ env.REACT_APP_API_PATH }schema/`
 exec(`dtsgen -o ./src/__generated__/apiSchema.d.ts --url ${ url }`,
   (error, stdout, stderr) => {
     if (error) {

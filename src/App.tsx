@@ -11,8 +11,9 @@ import ValueProvider from "app/state/context/ValueProvider"
 import isLocalDevelopment from "app/state/auth/keycloak/isLocalDevelopment"
 import { ErrorBoundary } from "@sentry/react"
 import PageTitle from "app/routing/components/PageTitle"
+import { env } from "app/config/env"
 
-const SentryErrorBoundary = process.env.REACT_APP_ENVIRONMENT !== undefined ? ErrorBoundary : Fragment
+const SentryErrorBoundary = env.REACT_APP_ENVIRONMENT !== undefined ? ErrorBoundary : Fragment
 
 const App = () => (
   <SentryErrorBoundary>
