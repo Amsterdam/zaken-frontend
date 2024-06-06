@@ -2,8 +2,9 @@ version: "3"
 services:
   zaken-frontend:
     build:
+      context: .
       dockerfile: Dockerfile
     container_name: zaken-frontend
     image: ${REGISTRY:-127.0.0.1:5001}/${REPOSITORY:-salmagundi/zaken-frontend}:${VERSION:-latest}
     ports:
-      - "8080:8000"
+      - "8081:8000"
