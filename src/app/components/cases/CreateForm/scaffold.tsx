@@ -163,6 +163,25 @@ export default (
         }
       }
     },
+    consent_to_share_info: {
+      type: "ShowHide",
+      props: {
+        shouldShow: (formValues: { values?:  { reporter_anonymous: string } }) => formValues?.values?.reporter_anonymous === "no",
+        field: {
+          type: "RadioFields",
+          props: {
+            isRequired: true,
+            name: "consent_to_share_info",
+            label: "Geeft de melder toestemming voor het delen contactgegevens?",
+            extraLabel: <InfoButton infoTitle="Delen contactgegevens" infoText="Als de melder toestemming geeft, zou bijvoorbeeld een woningcorporatie deze gegevens in kunnen zien."></InfoButton>,
+            options: {
+              yes: "Ja, de melder geeft toestemming",
+              no: "Nee, de melder geeft geen toestemming"
+            }
+          }
+        }
+      }
+    },
     identification: {
       type: "ShowHide",
       props: {
@@ -358,6 +377,7 @@ export default (
       ["reporter_name"],
       ["reporter_phone"],
       ["reporter_email"],
+      ["consent_to_share_info", "consent_to_share_info"],
       ["identification"],
       ["description_citizenreport", "description_citizenreport"],
       ["nuisance"],
