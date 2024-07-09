@@ -1,11 +1,12 @@
 import styled from "styled-components"
 import { breakpoint, themeSpacing, Typography } from "@amsterdam/asc-ui"
+import { SmallSkeleton } from "@amsterdam/wonen-ui"
 
-import { useBAG } from "app/state/rest"
+import { useBagPdok } from "app/state/rest"
 import ShowOtherAddressesButton, { Index } from "app/components/addresses/AddressSuffixSwitcher/ShowOtherAddressesButton"
 import useOtherAddressesByBagId from "app/state/rest/custom/useOtherAddresses/useOtherAddresses"
 import AddressLink from "./components/AddressLink"
-import getAddressFromBagResults from "app/components/addresses/utils/getAddressFromBagResults"
+import { getAddressFromBagPdokResponse } from "app/components/addresses/utils"
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -28,14 +29,11 @@ const ButtonWrap = styled.div`
 `
 
 const AddressHeader: React.FC<Props> = ({ bagId, headingSize = "h2", isHeader = false, enableSwitch = true }) => {
-  const [data] = useBAG(bagId)
-  const foundAddress = getAddressFromBagResults(data)
-  const title = foundAddress?.adres ? `${ foundAddress.adres }, ${ foundAddress.postcode }` : undefined
-  const showTitle = title !== undefined
-
+  const [data, { isBusy }] = useBagPdok(bagId)
+  const foundAddress = getAddressFromBagPdokResponse(data)
   const [filteredAddresses] = useOtherAddressesByBagId(bagId)
   const showButton = enableSwitch && (filteredAddresses?.length ?? 0) > 1
-  const isCurrentAddress = (address: { adres: string }) => address.adres.trim() === foundAddress?.adres.trim()
+  const isCurrentAddress = (address: BAGPdokAddress ) => address.weergavenaam === foundAddress?.weergavenaam
   const addressIndex = filteredAddresses?.findIndex(isCurrentAddress) ?? -1
   let index: Index = undefined
   if (addressIndex === 0) {
@@ -44,10 +42,11 @@ const AddressHeader: React.FC<Props> = ({ bagId, headingSize = "h2", isHeader = 
     index = "last"
   }
 
-  // TODO: Show loading status visually
+  const title = foundAddress?.weergavenaam
   return (
     <Div isHeader={ isHeader }>
-      { showTitle && <AddressLink title={ title } bagId={ bagId } as={ headingSize ?? "span" } /> }
+      { isBusy && <SmallSkeleton height={ 10 } /> }
+      { title && <AddressLink title={ title } bagId={ bagId } as={ headingSize ?? "span" } /> }
       { showButton && (
         <ButtonWrap>
           <ShowOtherAddressesButton bagId={ bagId } index={ index } />

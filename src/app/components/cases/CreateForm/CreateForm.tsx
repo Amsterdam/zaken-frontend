@@ -2,13 +2,12 @@ import { useState, useEffect } from "react"
 import scaffold from "./scaffold"
 import {
   useCaseThemes, useReasons, useCaseCreate, useProjects,
-  useListing, useSubjects, useCasesByBagId, useCorporations, useBAG
+  useListing, useSubjects, useCasesByBagId, useCorporations, useBagPdok
 } from "app/state/rest"
 import ConfirmScaffoldForm from "app/components/shared/ConfirmScaffoldForm/ConfirmScaffoldForm"
 import useNavigateWithFlashMessage from "app/state/flashMessages/useNavigateWithFlashMessage"
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
-import getAddressAsString from "app/components/addresses/utils/getAddressAsString"
-import getAddressFromBagResults from "app/components/addresses/utils/getAddressFromBagResults"
+import { getAddressFromBagPdokResponse } from "app/components/addresses/utils"
 import useNavigation from "app/routing/useNavigation"
 
 
@@ -65,8 +64,8 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
   const [listing] = useListing(tonId)
   const [cases] = useCasesByBagId(bagId)
   const [corporations] = useCorporations()
-  const [bagAddressResponse] = useBAG(bagId)
-  const bagAddress = getAddressFromBagResults(bagAddressResponse)
+  const [bagAddressResponse] = useBagPdok(bagId)
+  const bagAddress = getAddressFromBagPdokResponse(bagAddressResponse)
   const { navigateTo } = useNavigation()
 
 
@@ -140,9 +139,7 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
     } : {}
   }
 
-  const addressString = getAddressAsString(bagAddress)
-  const title = `${ addressString } - Controleer de gegevens`
-
+  const title = `${ bagAddress?.weergavenaam } - Controleer de gegevens`
   return (
     <ConfirmScaffoldForm
       fields={ fields }
