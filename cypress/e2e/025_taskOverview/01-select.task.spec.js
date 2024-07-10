@@ -10,14 +10,14 @@ beforeEach(() => {
 
 describe("Test select.task.spec", () => {
   it("Pick up task and put away in Takenoverzicht", () => {
-    const urlTasks = `${Cypress.env("baseUrlAcc")}tasks/*`;
+    const urlTasks = `**/tasks/*`;
     cy.intercept(urlTasks).as("getTasks");
     cy.visit("/taken");
     cy.wait("@getTasks").then(() => {
       cy.get("h1").contains("Takenoverzicht");
     });
 
-    const urlTasksUpdate = `${Cypress.env("baseUrlAcc")}tasks/*/`;
+    const urlTasksUpdate = `**/tasks/*/`;
     cy.intercept(urlTasksUpdate).as("updateTask");
     const checkBox = cy.get('[type="checkbox"][title="Beschikbaar"]').first();
     checkBox.check();

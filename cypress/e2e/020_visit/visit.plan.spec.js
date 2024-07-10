@@ -10,7 +10,7 @@ beforeEach(() => {
 
 describe('Test visit.plan.spec', () => {
   it("Go to Adresoverzicht and select address", () => {
-    const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/`;
+    const url = `**/addresses/*/cases/`;
     cy.intercept(url).as("getCases");
     cy.visit(`/adres/${address.bagId}`);
     cy.wait("@getCases").then(() => {
@@ -40,7 +40,7 @@ describe('Test visit.plan.spec', () => {
 
     cy.get(`[data-testid="submit"]`).click();
 
-    const urlCases = `${Cypress.env("baseUrlAcc")}cases/*/`;
+    const urlCases = `**/cases/*/`;
     cy.intercept(urlCases).as("getCase");
     cy.wait("@getCase").then(() => {
       cy.get("tbody>tr").contains("td", "Bezoek inplannen");
@@ -50,9 +50,7 @@ describe('Test visit.plan.spec', () => {
   it("Schedule `Huisbezoek`", () => {
     cy.goToCaseDetailPage();
 
-    const urlScheduleTypes = `${Cypress.env(
-      "baseUrlAcc"
-    )}themes/*/schedule-types/`;
+    const urlScheduleTypes = "**/themes/*/schedule-types/";
     cy.intercept(urlScheduleTypes).as("getScheduleTypes");
 
     cy.get("tbody>tr").contains("td", "Bezoek inplannen").click();
@@ -88,7 +86,7 @@ describe('Test visit.plan.spec', () => {
       .contains("Bezoek inplannen")
       .click();
 
-    const url = `${Cypress.env("baseUrlAcc")}cases/*/events/`;
+    const url = `**/cases/*/events/`;
     cy.intercept(url).as("getEvents");
     cy.wait("@getEvents").then(() => {
       cy.history("Bezoek ingepland", "Datum");

@@ -1,16 +1,25 @@
 # Zaken frontend - Cypress integration
 
 ## Local testing
+
+Start your local env:
+
+```JavaScript
+npm run acc
+```
+
 To open the Cypress UI, enter the following command after installing dependencies:
 
 - `npx cypress open` or `npm run cy`
 
 ## Run specific tests
-- `npm run cy:run -- --spec "cypress/integration/my-spec.js"`
+```JavaScript
+npm run cy:run -- --spec "cypress/integration/my-spec.js"
+```
 
 ## Global variables
 
-Global Cypress variables can be found in `cypress.json` in the root of the project. You can acces them by using: `Cypress.env("emailPm")`.
+Global Cypress variables can be found in `cypress.config.ts` in the root of the project. You can acces them by using: `Cypress.env("emailPm")`.
 
 ## Credentials or secrets
 

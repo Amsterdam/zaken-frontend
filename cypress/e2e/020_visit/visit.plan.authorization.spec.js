@@ -4,7 +4,7 @@ import visit from "../../fixtures/visit.json"
 describe('Plan "huisbezoek"', () => {
 
   it("Go to Adresoverzicht and check address", () => {
-    const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/`
+    const url = `**/addresses/*/cases/`
     cy.intercept(url).as("getCases")
     cy.visit(`/adres/${address.bagId}`)
     cy.wait("@getCases").then(() => {
@@ -29,7 +29,7 @@ describe('Plan "huisbezoek"', () => {
   describe('Go to "Bezoek inplannen" form', () => {
 
     it("Click on task Bezoek inplannen", () => {
-      const url = `${Cypress.env("baseUrlAcc")}cases/*/`
+      const url = `**/cases/*/`
       cy.intercept(url).as("getTasks")
       cy.wait("@getTasks").then(() => {
         cy.get("tbody>tr")
@@ -39,7 +39,7 @@ describe('Plan "huisbezoek"', () => {
     })
 
     it("Bezoek inplannen page is visible", () => {
-      const url = `${Cypress.env("baseUrlAcc")}themes/*/schedule-types/`
+      const url = `**/themes/*/schedule-types/`
       cy.intercept(url).as("getScheduleTypes")
       cy.wait("@getScheduleTypes").then(() => {
         cy.get("h1")

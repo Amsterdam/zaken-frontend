@@ -10,7 +10,6 @@ export default defineConfig({
   defaultCommandTimeout: 10000,
   requestTimeout: 10000,
   env: {
-    baseUrlAcc: "https://acc.api.wonen.zaken.amsterdam.nl/api/v1/",
     baseUrlData: "https://api.data.amsterdam.nl/",
     userHh: "handhaver-noreply@amsterdam.nl",
     userHhj: "handhavingsjurist-noreply@amsterdam.nl",

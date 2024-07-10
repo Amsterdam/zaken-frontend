@@ -6,7 +6,7 @@ import summon from "../../fixtures/summon.json"
 describe('Process Summon"', () => {
 
   it("Go to Adresoverzicht and check address", () => {
-    const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/`
+    const url = `**/addresses/*/cases/`
     cy.intercept(url).as('getCases')
     cy.visit(`/adres/${address.bagId}`)
     cy.wait('@getCases').then(() => {
@@ -76,7 +76,7 @@ describe('Process Summon"', () => {
     })
 
     it('Submit form and check debrief status', () => {
-      const url = `${Cypress.env("baseUrlAcc")}cases/*/`
+      const url = `**/cases/*/`
       cy.intercept(url).as('getNextTask')
 
       cy.get('button[data-testid="submit"]')
@@ -99,7 +99,7 @@ describe('Process Summon"', () => {
     })
 
     it("Check next task is 'Uitzetten vervolgstap'", () => {
-      const url = `${Cypress.env("baseUrlAcc")}cases/*/`
+      const url = `**/cases/*/`
       cy.intercept(url).as('getNextTask')
 
       cy.wait('@getNextTask').then(() => {

@@ -4,7 +4,7 @@ import address from "../../fixtures/address.json"
 describe('Select Next Step - closing case"', () => {
 
   it("Go to Adresoverzicht and check address", () => {
-    const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/`
+    const url = `**/addresses/*/cases/`
     cy.intercept(url).as('getCases')
     cy.visit(`/adres/${address.bagId}`)
     cy.wait('@getCases').then(() => {
@@ -23,7 +23,7 @@ describe('Select Next Step - closing case"', () => {
   })
 
   it("Select to close this case", () => {
-    const url = `${Cypress.env("baseUrlAcc")}cases/*/`
+    const url = `**/cases/*/`
     cy.intercept(url).as('getNextTask')
 
     cy.wait('@getNextTask').then(() => {
@@ -48,7 +48,7 @@ describe('Select Next Step - closing case"', () => {
   })
 
   it("Request is successfully processed", () => {
-    const url = `${Cypress.env("baseUrlAcc")}cases/*/events/`
+    const url = `**/cases/*/events/`
     cy.intercept(url).as('getEvents')
     cy.wait('@getEvents').then(() => {
       cy.get("h1").contains("Zaakdetails")

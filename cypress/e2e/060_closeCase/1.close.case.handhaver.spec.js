@@ -10,7 +10,7 @@ beforeEach(() => {
 
 describe("Select Next Step - closing case as handhaver", () => {
   it('Go to Adresoverzicht and case has task "Afsluiten zaak"', () => {
-    const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/`;
+    const url = `**/addresses/*/cases/`;
     cy.intercept(url).as("getCases");
     cy.visit(`/adres/${address.bagId}`);
     cy.wait("@getCases").then(() => {
@@ -28,7 +28,7 @@ describe("Select Next Step - closing case as handhaver", () => {
 
     cy.get("tbody>tr>td").eq(2).should("contain", roles.PM);
 
-    const url = `${Cypress.env("baseUrlAcc")}themes/*/case-close-reasons/`;
+    const url = `**/themes/*/case-close-reasons/`;
     cy.intercept(url).as("getCloseReasons");
 
     cy.get("tbody>tr").contains("td", "Zaak afsluiten").click();

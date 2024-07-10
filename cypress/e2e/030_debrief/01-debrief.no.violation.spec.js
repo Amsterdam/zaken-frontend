@@ -20,7 +20,7 @@ describe("Test debrief.no.violation.spec", () => {
 
     cy.get('[data-testid="feedback"]').type(debrief.descriptionNoViolation);
 
-    const url = `${Cypress.env("baseUrlAcc")}cases/*/`;
+    const url = `**/cases/*/`;
     cy.intercept(url).as("getNextTask");
 
     cy.get('button[data-testid="submit"]')
@@ -58,7 +58,7 @@ describe("Test debrief.no.violation.spec", () => {
         .contains("Taak afronden")
         .click();
 
-      const urlEvents = `${Cypress.env("baseUrlAcc")}cases/*/events/`;
+      const urlEvents = `**/cases/*/events/`;
       cy.intercept(urlEvents).as("getEvents");
       cy.wait("@getEvents").then(() => {
         cy.history(debrief.noViolationNextTask, roles.PM);

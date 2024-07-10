@@ -32,7 +32,7 @@ Cypress.Commands.add("login", (email, password) => {
 
   cy.get("#password").should("be.visible").type(password, { log: false });
 
-  const url = `${Cypress.env("baseUrlAcc")}is-authorized/`;
+  const url = `**/is-authorized/`;
   cy.intercept(url).as("isAuthorized");
 
   cy.get("#kc-login").click();

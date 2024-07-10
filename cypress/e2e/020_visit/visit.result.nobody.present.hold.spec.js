@@ -13,7 +13,7 @@ describe('Result "huisbezoek" with nobody present and hold', () => {
     })
 
     it("Go to Adresoverzicht and check address", () => {
-      const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/`
+      const url = `**/addresses/*/cases/`
       cy.intercept(url).as('getCases')
       cy.visit(`/adres/${address.bagId}`)
       cy.wait('@getCases').then(() => {
@@ -33,7 +33,7 @@ describe('Result "huisbezoek" with nobody present and hold', () => {
 
     it('Intercept TOP URL and load page', () => {
 
-      const url = `${Cypress.env("baseUrlAcc")}cases/*/`
+      const url = `**/cases/*/`
       cy.intercept(url).as('getTasks')
 
       cy.wait('@getTasks').then(({ response }) => {
@@ -49,7 +49,7 @@ describe('Result "huisbezoek" with nobody present and hold', () => {
         // check dueDate
         cy.testDueDate("tbody>tr>td", 0)
 
-        const url = `${Cypress.env("baseUrlAcc")}users/`
+        const url = `**/users/`
         cy.intercept(url).as('getUsers')
 
         cy.visit(`/zaken/${caseId}/huisbezoek/${taskId}`)
@@ -105,7 +105,7 @@ describe('Result "huisbezoek" with nobody present and hold', () => {
     })
 
     it('Submit form and check for plan new visit', () => {
-      const url = `${Cypress.env("baseUrlAcc")}cases/*/events/`
+      const url = `**/cases/*/events/`
       cy.intercept(url).as('getEvents')
 
       cy.get('button[data-testid="submit"]')
