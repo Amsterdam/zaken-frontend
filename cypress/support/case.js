@@ -7,7 +7,7 @@
 const PATH = "cypress/fixtures/case.json"
 
 Cypress.Commands.add("setCaseId", () => {
-  const url = `${Cypress.env("baseUrlAcc")}cases/*/`
+  const url = `**/cases/*/`
   cy.intercept(url).as("getCase")
 
   cy.wait("@getCase", { timeout: 20000 })
