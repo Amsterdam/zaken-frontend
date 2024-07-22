@@ -11,7 +11,7 @@ Cypress.Commands.add("selectAddress", (queryString, addressString) => {
   const urlAddress = `${Cypress.env("baseUrlData")}atlas/search/postcode/*`
   cy.intercept(urlAddress).as("getAddress")
 
-  const urlCases = `${Cypress.env("baseUrlAcc")}addresses/*/cases/`
+  const urlCases = `**/addresses/*/cases/`
   cy.intercept(urlCases).as("getCases")
 
   cy.visit(`/?query=${queryString}`)

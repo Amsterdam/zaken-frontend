@@ -11,7 +11,7 @@ beforeEach(() => {
 
 describe('Close case as projectmedwerker"', () => {
   it('Go to Adresoverzicht and case has task "Afsluiten zaak"', () => {
-    const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/`;
+    const url = `**/addresses/*/cases/`;
     cy.intercept(url).as("getCases");
     cy.visit(`/adres/${address.bagId}`);
     cy.wait("@getCases").then(() => {
@@ -26,7 +26,7 @@ describe('Close case as projectmedwerker"', () => {
 
   it("Intercept Afronding URL and load page", () => {
     cy.goToCaseDetailPage();
-    const url = `${Cypress.env("baseUrlAcc")}cases/*/`;
+    const url = `**/cases/*/`;
     cy.intercept(url).as("getTasks");
 
     //force intercept
@@ -42,7 +42,7 @@ describe('Close case as projectmedwerker"', () => {
       const caseId = closingTask?.case;
       const taskId = closingTask.case_user_task_id;
 
-      const url = `${Cypress.env("baseUrlAcc")}themes/*/case-close-reasons`;
+      const url = `**/themes/*/case-close-reasons`;
       cy.intercept(url).as("getCloseReasons");
       cy.get("h4").contains(debrief.closingTask2);
       cy.get("tbody>tr")
@@ -79,7 +79,7 @@ describe('Close case as projectmedwerker"', () => {
       .contains("Verwerken")
       .click();
 
-    const urlEvents = `${Cypress.env("baseUrlAcc")}cases/*/events/`;
+    const urlEvents = `**/cases/*/events/`;
     cy.intercept(urlEvents).as("getEvents");
     cy.wait("@getEvents").then(() => {
       cy.history("Zaak afgerond", "Projectmedewerker");
