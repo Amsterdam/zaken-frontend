@@ -8,6 +8,7 @@ export default defineConfig({
   viewportWidth: 1280,
   viewportHeight: 1024,
   defaultCommandTimeout: 10000,
+  pageLoadTimeout: 30000,
   requestTimeout: 10000,
   env: {
     baseUrlData: "https://api.data.amsterdam.nl/",
@@ -35,8 +36,8 @@ export default defineConfig({
   },
   component: {
     devServer: {
-      framework: "create-react-app",
-      bundler: "webpack"
+      framework: "react", 
+      bundler: "vite"
     }
   }
 })
