@@ -51,7 +51,7 @@ const DetailsPage: React.FC = () => {
     <Tab id="1" key="1" label="Open taken & historie">
       <PaddedContent>
         <RowWithColumn>
-          <CaseStatus id={ id } workflows={ caseItem?.workflows! } />
+          <CaseStatus id={ id } />
         </RowWithColumn>
         <RowWithColumn>
           <Heading as="h2">Zaakhistorie</Heading>

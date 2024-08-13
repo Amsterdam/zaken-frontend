@@ -10,8 +10,19 @@ export const makeApiUrl = (...paths: Array<number|string|undefined>) =>
 /**
  * Utility function to strip API host from URL
  */
-export const stripApiHostFromUrl = (url: string) =>
-  url.replace(new RegExp(`^${ env.REACT_APP_API_HOST }${ env.REACT_APP_API_PATH }`), "")
+export const stripApiHostFromUrl = (url: string) => {
+  const apiHost = env.REACT_APP_API_HOST
+  const apiPath = env.REACT_APP_API_PATH
+
+  // Ensure the host and path are escaped properly for regular expression usage
+  const escapedApiHost = apiHost.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+  const escapedApiPath = apiPath.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+
+  const fullPattern = `^${ escapedApiHost }${ escapedApiPath }`
+  const regex = new RegExp(fullPattern)
+
+  return url.replace(regex, "")
+}
 
 /**
  * Utility function to create an API URL for TON

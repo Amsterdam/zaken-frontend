@@ -11,7 +11,7 @@ describe('Add extra task "Correspondentie', () => {
     })
 
     it("Go to Adresoverzicht and check address", () => {
-      const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/`
+      const url = `**/addresses/*/cases/`
       cy.intercept(url).as("getCases")
       cy.visit(`/adres/${address.bagId}`)
       cy.wait("@getCases").then(() => {
@@ -40,7 +40,7 @@ describe('Add extra task "Correspondentie', () => {
   describe("Submit in form 'Taak opvoeren'", () => {
 
     it("Select Task Correspondence", () => {
-      const url = `${Cypress.env("baseUrlAcc")}cases/*/processes/`
+      const url = `**/cases/*/processes/`
       cy.intercept(url).as("getProcesses")
       cy.wait("@getProcesses").then(() => {
       cy.get('[data-testid="workflowProcess"]')
@@ -59,7 +59,7 @@ describe('Add extra task "Correspondentie', () => {
     })
 
     it("Request is successfully processed", () => {
-      const url = `${Cypress.env("baseUrlAcc")}cases/*/events/`
+      const url = `**/cases/*/events/`
       cy.intercept(url).as("getEvents")
       cy.wait("@getEvents").then(() => {
         cy.get("h4")
@@ -77,7 +77,7 @@ describe('Add extra task "Correspondentie', () => {
     })
 
     it("Go to Adresoverzicht and check address", () => {
-      const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/`
+      const url = `**/addresses/*/cases/`
       cy.intercept(url).as('getCases')
       cy.visit(`/adres/${address.bagId}`)
       cy.wait('@getCases').then(() => {
@@ -129,7 +129,7 @@ describe('Add extra task "Correspondentie', () => {
     })
 
     it("Go to Adresoverzicht and check address", () => {
-      const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/`
+      const url = `**/addresses/*/cases/`
       cy.intercept(url).as("getCases")
       cy.visit(`/adres/${address.bagId}`)
       cy.wait("@getCases").then(() => {

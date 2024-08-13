@@ -12,14 +12,14 @@ beforeEach(() => {
 
 describe("Test visit.result.access.granted.spec", () => {
   it("Mock TOP result for visit", () => {
-    const urlCases = `${Cypress.env("baseUrlAcc")}addresses/*/cases/`;
+    const urlCases = `**/addresses/*/cases/`;
     cy.intercept(urlCases).as("getCases");
     cy.visit(`/adres/${address.bagId}`);
     cy.wait("@getCases").then(() => {
       cy.get("h1").contains(`${address.street}, ${address.zipCode}`);
     });
 
-    const urlCase = `${Cypress.env("baseUrlAcc")}cases/*/`;
+    const urlCase = `**/cases/*/`;
     cy.intercept(urlCase).as("getCase");
 
     cy.scrollTo(0, 400);
@@ -42,7 +42,7 @@ describe("Test visit.result.access.granted.spec", () => {
 
       cy.testDueDate("tbody>tr>td", 0);
 
-      const url = `${Cypress.env("baseUrlAcc")}users/`;
+      const url = `**/users/`;
       cy.intercept(url).as("getUsers");
 
       cy.visit(`/zaken/${caseId}/huisbezoek/${taskId}`);
@@ -73,7 +73,7 @@ describe("Test visit.result.access.granted.spec", () => {
 
     cy.get('[data-testid="notes"').type(visit.notes);
 
-    const url = `${Cypress.env("baseUrlAcc")}cases/*/`;
+    const url = `**/cases/*/`;
     cy.intercept(url).as("getDebriefTask");
 
     cy.get('button[data-testid="submit"]').contains("Toevoegen").click();

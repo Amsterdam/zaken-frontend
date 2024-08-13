@@ -228,3 +228,14 @@ export const useDocumentTypesByCase = (caseId: Components.Schemas.CaseDetail["id
     isProtected: true
   })
 }
+
+export const useCaseWorkflows = (caseId: Components.Schemas.CaseDetail["id"], options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<Components.Schemas.PaginatedCaseWorkflowList>({
+    ...options,
+    url: makeApiUrl("cases", caseId, "workflows"),
+    groupName: "cases",
+    handleError,
+    isProtected: true
+  })
+}
