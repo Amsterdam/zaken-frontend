@@ -7,9 +7,6 @@ import * as serviceWorker from "./serviceWorker"
 import packageInfo from "../package.json"
 import { env } from "app/config/env"
 
-// Sentry
-import initSentry from "./app/sentry/init"
-initSentry()
 
 ReactDOM.render(
   <StrictMode>
