@@ -7,6 +7,7 @@ import { createNameAbbreviation } from "app/components/shared/Helpers/helpers"
 import CustomTooltip from "app/components/help/HelpContent/CustomTooltip"
 import { makeApiUrl } from "app/state/rest/hooks/utils/apiUrl"
 import UserIcon from "./UserInitials"
+import useHasPermission, { CAN_PERFORM_TASK } from "app/state/rest/custom/usePermissions/useHasPermission"
 
 
 type Props = {
@@ -33,8 +34,8 @@ const SelectTaskWorkflow: React.FC<Props> = ({ task }) => {
   const [me, { isBusy }] = useUsersMe()
   const [, { execPatch }] = useTask(taskId)
   const apiUrl = makeApiUrl("cases", caseId, "workflows")
-  
   const { getContextItem, updateContextItem } = useContextCache("cases", apiUrl)
+  const [hasPermission] = useHasPermission([CAN_PERFORM_TASK])
 
   useEffect(() => {
     // Check if userId is matching with the taskOwner.
@@ -88,13 +89,13 @@ const SelectTaskWorkflow: React.FC<Props> = ({ task }) => {
   if (taskOwner && taskOwner !==  me?.id ) {
     return <UserIcon owner={ taskOwner }/>
   }
-  return (
+  return hasPermission ? (
     <StyledLabel htmlFor={ `cb_${ taskId }` } label={ me && me?.id === taskOwner ? `${ createNameAbbreviation(me) }` : "" }>
       <CustomTooltip title={ isChecked ? "Mijn taak" : "Beschikbaar" }>
         <StyledCheckbox data-testid={ `${ taskId }` } id={ `cb_${ taskId }` } checked={ isChecked } onChange={ onChange }/>
       </CustomTooltip>
     </StyledLabel>
-  )
+  ) : <>-</>
 }
 
 export default SelectTaskWorkflow

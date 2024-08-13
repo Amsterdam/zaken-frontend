@@ -2,6 +2,7 @@
 import styled, { keyframes } from "styled-components"
 import { Icon, themeSpacing } from "@amsterdam/asc-ui"
 import { Edit } from "app/components/shared/Icons"
+import useHasPermission, { CAN_PERFORM_TASK } from "app/state/rest/custom/usePermissions/useHasPermission"
 
 
 type Props = {
@@ -43,16 +44,19 @@ const StyledIcon = styled(Icon)`
   cursor: pointer;
 `
 
-const CaseTags: React.FC<Props> = ({ tags = [], titleAccess = "Wijzig tag", onClick }) => (
-  <ClickableSpan
-    role="link"
-    onClick={ onClick }
-  >
-    { tags.map(tag => <Tag key={ tag.id }>{ tag.name }</Tag>)}
-    <StyledIcon size={ 20 }>
-      <Edit titleAccess={ titleAccess } />
-    </StyledIcon>
-  </ClickableSpan>
-)
+const CaseTags: React.FC<Props> = ({ tags = [], titleAccess = "Wijzig tag", onClick }) => {
+  const [hasPermission] = useHasPermission([CAN_PERFORM_TASK])
+  return hasPermission ? (
+    <ClickableSpan
+      role="link"
+      onClick={ onClick }
+    >
+      { tags.map(tag => <Tag key={ tag.id }>{ tag.name }</Tag>)}
+      <StyledIcon size={ 20 }>
+        <Edit titleAccess={ titleAccess } />
+      </StyledIcon>
+    </ClickableSpan>
+  ) : <>{ tags.length > 0 ? tags.map(tag => <Tag key={ tag.id }>{ tag.name }</Tag>) : "-"}</>
+}
 
 export default CaseTags

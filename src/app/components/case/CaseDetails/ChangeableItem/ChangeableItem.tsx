@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import { Icon, themeSpacing } from "@amsterdam/asc-ui"
 import { Edit } from "app/components/shared/Icons"
+import useHasPermission, { CAN_PERFORM_TASK } from "app/state/rest/custom/usePermissions/useHasPermission"
 
 type Props = {
   name?: string
@@ -27,16 +28,19 @@ const StyledIcon = styled(Icon)`
   margin-left: ${ themeSpacing(1) };
 `
 
-const ChangeableItem = ({ name = "-", titleAccess = "", onClick }: Props) => (
-  <Span
-    role="link"
-    onClick={ onClick }
-  >
-    { name }
-    <StyledIcon size={ 20 }>
-      <Edit titleAccess={ titleAccess } />
-    </StyledIcon>
-  </Span>
-)
+const ChangeableItem = ({ name = "-", titleAccess = "", onClick }: Props) => {
+  const [hasPermission] = useHasPermission([CAN_PERFORM_TASK])
+  return hasPermission ? (
+    <Span
+      role="link"
+      onClick={ onClick }
+    >
+      { name }
+      <StyledIcon size={ 20 }>
+        <Edit titleAccess={ titleAccess } />
+      </StyledIcon>
+    </Span>
+  ) : <>{ name }</>
+}
 
 export default ChangeableItem

@@ -26,3 +26,4 @@ export default (permissionsToCheck?: Components.Schemas.PermissionsEnum[]) => {
 }
 
 export const SENSITIVE_CASE_PERMISSION = "access_sensitive_dossiers"
+export const CAN_PERFORM_TASK = "perform_task"

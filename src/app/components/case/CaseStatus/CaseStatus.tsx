@@ -1,11 +1,12 @@
 
 import styled from "styled-components"
-import { Button, Divider, Heading, themeSpacing } from "@amsterdam/asc-ui"
+import { Divider, Heading, themeSpacing } from "@amsterdam/asc-ui"
 
 import Workflow from "../Workflow/Workflow"
 import { Row, Column, RowWithColumn } from "app/components/layouts/Grid"
-import ButtonLink from "app/components/shared/ButtonLink/ButtonLink"
 import to from "app/routing/utils/to"
+import IsAuthorizedButtonLink from "app/components/shared/ButtonLink/IsAuthorizedButtonLink"
+import { CAN_PERFORM_TASK } from "app/state/rest/custom/usePermissions/useHasPermission"
 
 type Props = {
   id: Components.Schemas.CaseDetail["id"]
@@ -29,9 +30,13 @@ const CaseStatus: React.FC<Props> = ({ id }) => (
       </Column>
       <Column spanSmall={ 50 } spanLarge={ 50 }>
         <ButtonWrap>
-          <ButtonLink to={ to("/zaken/:id/taak", { id }) }>
-            <Button as="span" variant="tertiary">Taak opvoeren</Button>
-          </ButtonLink>
+          <IsAuthorizedButtonLink
+            permissionNames={ [CAN_PERFORM_TASK] }
+            to={ to("/zaken/:id/taak", { id }) }
+            text="Taak opvoeren"
+            variant="tertiary"
+            data-testid="btn_add_extra_task"
+          />
         </ButtonWrap>
       </Column>
     </Row>
