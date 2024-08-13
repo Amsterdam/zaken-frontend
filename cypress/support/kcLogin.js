@@ -1,6 +1,6 @@
 
 Cypress.Commands.add("kcLogin", (username, password) => {
-  const kcRoot = "https://iam.amsterdam.nl";
+  const kcRoot = "https://acc.iam.amsterdam.nl";
   const kcRealm = "datapunt-ad-acc";
   const kcClient = "wonen-zaaksysteem-frontend";
   const kcRedirectUri = "http://localhost:2999/";
@@ -58,7 +58,7 @@ Cypress.Commands.add("kcLogin", (username, password) => {
 });
 
 Cypress.Commands.add("kcLogout", () => {
-  const kcRoot = "https://iam.amsterdam.nl";
+  const kcRoot = "https://acc.iam.amsterdam.nl";
   const kcRealm = "datapunt-ad-acc";
   const kcRedirectUri = "http://localhost:2999/";
   return cy.request({

@@ -33,7 +33,7 @@ describe("Test report.short.spec", () => {
 
     cy.get(`[role="dialog"]`).find("button").contains("Taak afronden").click();
 
-    const url = `${Cypress.env("baseUrlAcc")}cases/*/`;
+    const url = `**/cases/*/`;
     cy.intercept(url).as("getNextTask");
 
     cy.wait("@getNextTask").then(() => {

@@ -1,5 +1,5 @@
 import { useCallback, useReducer } from "react"
-import produce from "immer"
+import { produce } from "immer"
 
 export type ApiCacheItem = {
   valid: boolean

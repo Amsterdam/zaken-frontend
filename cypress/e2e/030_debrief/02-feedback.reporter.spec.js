@@ -5,7 +5,7 @@ import address from "../../fixtures/address.json"
 describe('Process Feedback reporter"', () => {
 
   it("Go to Adresoverzicht and check address", () => {
-    const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/`
+    const url = `**/addresses/*/cases/`
     cy.intercept(url).as('getCases')
     cy.visit(`/adres/${address.bagId}`)
     cy.wait('@getCases').then(() => {
@@ -48,7 +48,7 @@ describe('Process Feedback reporter"', () => {
   })
 
   it("Check Terugkoppeling melder event in history", () => {
-    const url = `${Cypress.env("baseUrlAcc")}cases/*/`
+    const url = `**/cases/*/`
     cy.intercept(url).as('getNextTask')
 
     cy.wait('@getNextTask').then(() => {

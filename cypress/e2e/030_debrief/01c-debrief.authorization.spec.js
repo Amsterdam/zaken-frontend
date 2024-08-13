@@ -11,7 +11,7 @@ describe('Process Debrief - Authorization required"', () => {
     })
 
     it("Go to Adresoverzicht and check address", () => {
-      const url = `${Cypress.env("baseUrlAcc")}addresses/*/cases/`
+      const url = `**/addresses/*/cases/`
       cy.intercept(url).as('getCases')
       cy.visit(`/adres/${address.bagId}`)
       cy.wait('@getCases').then(() => {
@@ -33,7 +33,7 @@ describe('Process Debrief - Authorization required"', () => {
 
     it('Intercept Debrief URL and load page', () => {
 
-      const url = `${Cypress.env("baseUrlAcc")}cases/*/`
+      const url = `**/cases/*/`
       cy.intercept(url).as('getTasks')
 
       cy.wait('@getTasks').then(({ response }) => {
