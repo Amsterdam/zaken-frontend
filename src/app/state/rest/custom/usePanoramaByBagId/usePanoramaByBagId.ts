@@ -6,8 +6,8 @@ const usePanoramaByBagId = (bagId: string, width: number | undefined, aspect: nu
   const foundAddress = getAddressFromBagResults(data)
 
   return usePanorama(
-    foundAddress?.centroid[1],
-    foundAddress?.centroid[0],
+    foundAddress?.centroid?.[1],
+    foundAddress?.centroid?.[0],
     width,
     aspect,
     radius,

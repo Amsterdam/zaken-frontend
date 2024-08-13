@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import { themeColor, ascDefaultTheme } from "@amsterdam/asc-ui"
+import { env } from "app/config/env"
 
 type Props = {
   hasPadding?: boolean
@@ -19,7 +20,7 @@ const Div = styled.div<DivProps>`
 `
 
 const MockWrapper: React.FC<Props> = ({ hasPadding = true, children }) => (
-  <Div isProduction={ process.env.REACT_APP_ENVIRONMENT === "production" } hasPadding={ hasPadding }>
+  <Div isProduction={ env.REACT_APP_ENVIRONMENT === "production" } hasPadding={ hasPadding }>
     { children }
   </Div>
 )

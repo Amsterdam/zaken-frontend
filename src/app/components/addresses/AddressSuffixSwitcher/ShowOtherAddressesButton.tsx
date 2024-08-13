@@ -5,6 +5,7 @@ import { Button, Icon } from "@amsterdam/asc-ui"
 
 import { useModal } from "app/components/shared/Modal/hooks/useModal"
 import OtherAddressesModal from "./OtherAddressesModal"
+import { env } from "app/config/env"
 
 export type Index = "first" | "last" | undefined
 type Props = {
@@ -27,7 +28,7 @@ const renderIcon = (index: Index) => {
     default:
       return <StyledIcon
         size={ 32 }
-        iconUrl={ `${ process.env.PUBLIC_URL }/icons/chevron_up_down.svg` }
+        iconUrl={ `${ env.REACT_APP_AZA_FE }/icons/chevron_up_down.svg` }
         inline
       />
   }

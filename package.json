@@ -7,6 +7,12 @@
     "npm": ">=8"
   },
   "scripts": {
+    "start": "PORT=2999 vite",
+    "acc": "PORT=2999 env-cmd -f .env.acceptance vite",
+    "build": "vite build",
+    "build:acc": "env-cmd -f .env.acceptance vite build",
+    "deploy:prod": "npm version patch && git push origin HEAD --follow-tags",
+    "swagger:generate-schema": "TS_NODE_PROJECT='./scripts/tsconfig.json' NODE_ENV='development' ts-node scripts/src/generateSwaggerSchema.ts",
     "lint": "eslint --max-warnings 0 --cache --ext .ts,.tsx src",
     "lint:fix": "eslint --fix --ext .ts,.tsx src",
     "test": "env-cmd -f .env.development jest --watchAll=false",
@@ -14,14 +20,9 @@
     "test:coverage": "jest --coverage --watchAll=false",
     "cy": "npx cypress open",
     "cy:run": "cypress run",
-    "start": "PORT=2999 vite",
-    "acc": "PORT=2999 env-cmd -f .env.acceptance vite",
-    "swagger:generate-schema": "TS_NODE_PROJECT='./scripts/tsconfig.json' NODE_ENV='development' ts-node scripts/src/generateSwaggerSchema.ts",
-    "build": "vite build",
-    "build:acc": "env-cmd -f .env.acceptance vite build",
-    "deploy:prod": "npm version patch && git push origin HEAD --follow-tags",
     "dev": "vite",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepare": "husky"
   },
   "dependencies": {
     "@amsterdam/amsterdam-react-final-form": "^0.1.140",
@@ -66,8 +67,8 @@
     "react-router-dom": "^6.22.3",
     "resize-observer-polyfill": "^1.5.1",
     "styled-components": "^5.3.11",
-    "typescript": "^5.4.2",
-    "vite": "^5.1.6",
+    "typescript": "5.1.6",
+    "vite": "^5.2.10",
     "vite-plugin-eslint": "^1.8.1",
     "vite-tsconfig-paths": "^4.3.1"
   },
@@ -78,9 +79,10 @@
     "@types/dotenv-flow": "^3.2.0",
     "@types/jest": "^29.5.3",
     "@types/node": "^20.11.25",
-    "cypress": "^13.6.6",
+    "cypress": "^13.11.0",
     "dotenv-flow": "^3.2.0",
     "dtsgenerator": "^3.18.0",
+    "husky": "^9.0.11",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "nock": "^13.5.4",

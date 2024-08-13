@@ -1,6 +1,6 @@
 
 import styled, { keyframes } from "styled-components"
-import { Icon, Tag, themeSpacing } from "@amsterdam/asc-ui"
+import { Icon, themeSpacing } from "@amsterdam/asc-ui"
 import { Edit } from "app/components/shared/Icons"
 
 
@@ -26,7 +26,12 @@ const ClickableSpan = styled.span`
   cursor: pointer;
 `
 
-const StyledTag = styled(Tag)`
+const Tag = styled.span`
+  background-color: #f9f9f9;
+  padding: 0 0.5em;
+  font-family: "Nimbus Mono PS", "Courier New", monospace;
+  border: 1px solid #eee;
+  border-radius: 2px;
   margin-right: ${ themeSpacing(2) };
   animation: 0.5s ${ fadeIn } cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 `
@@ -43,7 +48,7 @@ const CaseTags: React.FC<Props> = ({ tags = [], titleAccess = "Wijzig tag", onCl
     role="link"
     onClick={ onClick }
   >
-    { tags.map(tag => <StyledTag colorType="tint" colorSubtype="level3" key={ tag.id }>{ tag.name }</StyledTag>)}
+    { tags.map(tag => <Tag key={ tag.id }>{ tag.name }</Tag>)}
     <StyledIcon size={ 20 }>
       <Edit titleAccess={ titleAccess } />
     </StyledIcon>

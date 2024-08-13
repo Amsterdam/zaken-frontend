@@ -1,9 +1,11 @@
+import { env } from "app/config/env"
+
 export default {
-  "url": "https://iam.amsterdam.nl/auth/",
-  "realm": process.env.REACT_APP_KEYCLOAK_REALM ?? "datapunt-ad-acc",
+  "url": env.REACT_APP_AUTH_URL ?? "https://iam.amsterdam.nl/auth/",
+  "realm": env.REACT_APP_KEYCLOAK_REALM ?? "",
   "ssl-required": "external",
-  "resource": "wonen-zaaksysteem-frontend",
+  "resource": env.REACT_APP_KEYCLOAK_CLIENT_ID ?? "wonen-woon-o-azure",
   "public-client": true,
   "confidential-port": 0,
-  "clientId": "wonen-zaaksysteem-frontend"
+  "clientId": env.REACT_APP_KEYCLOAK_CLIENT_ID ?? "wonen-woon-o-azure"
 }
