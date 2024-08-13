@@ -1,6 +1,6 @@
 
 import { useEffect } from "react"
-import produce from "immer"
+import { produce } from "immer"
 import { useFormState, useForm } from "react-final-form"
 import { FormState } from "final-form"
 import { Dimensions, Responsive } from "@amsterdam/amsterdam-react-final-form"
