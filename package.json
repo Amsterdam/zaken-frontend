@@ -51,7 +51,7 @@
     "final-form": "^4.20.10",
     "final-form-arrays": "^3.0.2",
     "immer": "^10.1.1",
-    "keycloak-js": "^24.0.5",
+    "keycloak-js": "^25.0.2",
     "lodash.debounce": "^4.0.8",
     "lodash.isempty": "^4.4.0",
     "lodash.merge": "^4.6.2",
