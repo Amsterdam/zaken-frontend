@@ -2,9 +2,9 @@ import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import { personRoleMap } from "@amsterdam/wonen-ui/helpers/dictionaries"
-import { redirect } from "react-router-dom"
+import type { NavigateToFunction } from "app/routing/useNavigation"
 
-export default (caseId: Components.Schemas.CaseDetail["id"], summonTypes?: Components.Schemas.SummonType[]) => {
+export default (caseId: Components.Schemas.CaseDetail["id"], navigateTo: NavigateToFunction, summonTypes?: Components.Schemas.SummonType[]) => {
   const roleEntries = Object.entries(personRoleMap)
   const personRoles = roleEntries.filter(([key]) => key !== "PERSON_ROLE_PLATFORM").map(([key, label]) => ({ key, label }))
   const legalEntityRoles = roleEntries.filter(([key]) => !["PERSON_ROLE_HEIR", "PERSON_ROLE_RESIDENT"].includes(key)).map(([key, label]) => ({ key, label }))
@@ -221,7 +221,7 @@ export default (caseId: Components.Schemas.CaseDetail["id"], summonTypes?: Compo
       props: {
         label: "Annuleren",
         variant: "primaryInverted",
-        onClick: () => redirect(`/zaken/${ caseId }`)
+        onClick: () => navigateTo("/zaken/:id", { id: caseId })
       }
     },
     submit: {
