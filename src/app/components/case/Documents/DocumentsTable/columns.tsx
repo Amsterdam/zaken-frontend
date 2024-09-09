@@ -1,4 +1,4 @@
-import moment from "moment"
+import dayjs from "dayjs"
 import styled from "styled-components"
 import formatBytes from "../utils/formatBytes"
 import TableActions from "./TableActions/TableActions"
@@ -42,7 +42,7 @@ const getColumns = (getDocuments: () => Promise<unknown>, documentTypes?: Compon
     header: "Aangemaakt",
     dataIndex: "creatiedatum",
     minWidth: 100,
-    render: (text: any) => text ? moment(text).format("DD-MM-YYYY") : "-"
+    render: (text: any) => text ? dayjs(text).format("DD-MM-YYYY") : "-"
   }, {
     header: "Media type",
     dataIndex: "formaat",

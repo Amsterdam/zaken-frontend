@@ -1,4 +1,4 @@
-import moment from "moment"
+import dayjs from "dayjs"
 import ArrayFieldList from "../components/ArrayFieldList"
 import type { RequestBody, NamedFields } from "../ConfirmScaffoldFields"
 import { Field } from "../../Form/ScaffoldField"
@@ -26,7 +26,7 @@ const mapField = <T extends RequestBody>(field: Field, key: string, data: T) => 
       const typeResult: Record<string, string> = data["type_result"] as {}
       return Object.values(typeResult)
     } else if (type === "DateField") {
-      return typeof v === "string" ? moment(v).format("DD-MM-YYYY") : v
+      return typeof v === "string" ? dayjs(v).format("DD-MM-YYYY") : v
     } else {
       return v
     }
