@@ -1,6 +1,6 @@
 import { ComponentProps, ReactNode, useCallback, useEffect, useReducer } from "react"
 import { useLocation } from "react-router-dom"
-import produce from "immer"
+import { produce } from "immer"
 import { Alert } from "@amsterdam/asc-ui"
 
 export type FlashMessage = ComponentProps<typeof Alert>

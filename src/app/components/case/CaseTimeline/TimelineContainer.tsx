@@ -1,6 +1,7 @@
 import { Spinner, ErrorMessage } from "@amsterdam/asc-ui"
 import { EventsTimeline } from "@amsterdam/wonen-ui"
 import { useCaseEvents } from "app/state/rest"
+import { env } from "app/config/env"
 
 type Props = {
   caseId: Components.Schemas.CaseEvent["id"]
@@ -20,7 +21,7 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
               <EventsTimeline
                 events={ timelineEvents }
                 spacingHorizontal={ 3 }
-                prefixUrl={ `${ process.env.REACT_APP_AZA_FE }zaken/` }
+                prefixUrl={ `${ env.REACT_APP_AZA_FE }zaken/` }
               />
               )
             }

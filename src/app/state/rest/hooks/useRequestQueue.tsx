@@ -1,5 +1,5 @@
 import { useReducer, useCallback, useEffect, useState } from "react"
-import produce from "immer"
+import { produce } from "immer"
 
 type QueuedPromise = () => Promise<any>
 

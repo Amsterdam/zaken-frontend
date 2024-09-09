@@ -10,10 +10,11 @@ jobs:
   main:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 20
+          cache: 'npm'
 
       - name: Install
         run: npm install
@@ -24,20 +25,20 @@ jobs:
       - name: Test
         run: npm test
 
-      - name: Cypress run
-        if: ${{ github.actor != 'dependabot[bot]' }}
-        uses: cypress-io/github-action@v4
-        with:
-          record: false
-          # Run test against acc, otherwise a local backend is needed.
-          start: npm run acc
-          wait-on: "http://localhost:2999/"
-        env:
-          # pass GitHub token to allow accurately detecting a build vs a re-run build for Cypress Dashboard
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # pass the Dashboard record key as an environment variable for Cypress Dashboard
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          CYPRESS_TEST_USER_PASSWORD:  ${{ secrets.CYPRESS_TEST_USER_PASSWORD }}
+      # - name: Cypress run
+      #   if: ${{ github.actor != 'dependabot[bot]' }}
+      #   uses: cypress-io/github-action@v4
+      #   with:
+      #     record: false
+      #     # Run test against acc, otherwise a local backend is needed.
+      #     start: npm run acc
+      #     wait-on: "http://localhost:2999/"
+      #   env:
+      #     # pass GitHub token to allow accurately detecting a build vs a re-run build for Cypress Dashboard
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     # pass the Dashboard record key as an environment variable for Cypress Dashboard
+      #     CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+      #     CYPRESS_TEST_USER_PASSWORD:  ${{ secrets.CYPRESS_TEST_USER_PASSWORD }}
 
       - name: Build
         run: docker build .

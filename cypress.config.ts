@@ -3,14 +3,14 @@ import { defineConfig } from "cypress"
 export default defineConfig({
   projectId: "tbpt8b",
   chromeWebSecurity: false,
-  screenshotOnRunFailure: false,
-  video: false,
+  screenshotOnRunFailure: true,
+  video: true,
   viewportWidth: 1280,
   viewportHeight: 1024,
   defaultCommandTimeout: 10000,
+  pageLoadTimeout: 30000,
   requestTimeout: 10000,
   env: {
-    baseUrlAcc: "https://acc.api.wonen.zaken.amsterdam.nl/api/v1/",
     baseUrlData: "https://api.data.amsterdam.nl/",
     userHh: "handhaver-noreply@amsterdam.nl",
     userHhj: "handhavingsjurist-noreply@amsterdam.nl",
@@ -36,8 +36,8 @@ export default defineConfig({
   },
   component: {
     devServer: {
-      framework: "create-react-app",
-      bundler: "webpack"
+      framework: "react", 
+      bundler: "vite"
     }
   }
 })

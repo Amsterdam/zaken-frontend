@@ -6,7 +6,7 @@ import UserIcon from "./UserIcon"
 import useContextCache from "app/state/rest/provider/useContextCache"
 import { createNameAbbreviation } from "app/components/shared/Helpers/helpers"
 import CustomTooltip from "app/components/help/HelpContent/CustomTooltip"
-import useHasPermission, { SENSITIVE_CASE_PERMISSION } from "app/state/rest/custom/usePermissions/useHasPermission"
+import useHasPermission, { CAN_PERFORM_TASK, SENSITIVE_CASE_PERMISSION } from "app/state/rest/custom/usePermissions/useHasPermission"
 import { ContextValues } from "app/state/context/ValueProvider"
 import { getQueryUrl } from "app/state/rest/tasks"
 
@@ -34,9 +34,10 @@ const SelectTask: React.FC<Props> = ({ taskId, taskOwner, isEnforcement }) => {
   // Two different providers are being used. :(
   const {
     pagination, sorting, role, theme, owner, projects, subjects,
-    taskNames, reason, districtNames, housingCorporations
+    tags, taskNames, reason, districtNames, housingCorporations
   } = useContext(ContextValues)["tasks"]
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
+  const [hasPerformTaskPermission] = useHasPermission([CAN_PERFORM_TASK])
   const [isChecked, setIsChecked] = useState(false)
   const [loading, setLoading] = useState(false)
   const [data, { isBusy }] = useUsersMe()
@@ -54,6 +55,7 @@ const SelectTask: React.FC<Props> = ({ taskId, taskOwner, isEnforcement }) => {
     projects,
     reason,
     subjects,
+    tags,
     districtNames,
     housingCorporations
   )
@@ -92,13 +94,14 @@ const SelectTask: React.FC<Props> = ({ taskId, taskOwner, isEnforcement }) => {
   if (taskOwner && taskOwner !==  data?.id ) {
     return <UserIcon owner={ taskOwner }/>
   }
-  return (
+  
+  return hasPerformTaskPermission ? (
     <StyledLabel htmlFor={ `cb_${ taskId }` } label={ data && data?.id === taskOwner ? `${ createNameAbbreviation(data) }` : "" }>
       <CustomTooltip title={ isChecked ? "Mijn taak" : "Beschikbaar" }>
         <Checkbox data-testid={ `${ taskId }` } id={ `cb_${ taskId }` } checked={ isChecked } onChange={ onChange }/>
       </CustomTooltip>
     </StyledLabel>
-  )
+  ) : <>-</>
 }
 
 export default SelectTask

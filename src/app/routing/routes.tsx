@@ -6,6 +6,7 @@ import helpRoutes from "../pages/help/routes"
 import fineRoutes from "../pages/fines/routes"
 import homeRoutes from "../pages/home/routes"
 import tonRoutes from "../pages/ton/routes"
+import { env } from "app/config/env"
 
 import routesToRouteConfig, { RouteConfigObject } from "./utils/routesToRouteConfig"
 
@@ -22,6 +23,6 @@ const routes = {
 
 const homeRoutesObject = routesToRouteConfig(homeRoutes, [])
 const routesObject = routesToRouteConfig(routes as RouteConfigObject, homeRoutesObject["/"].path, homeRoutesObject)
-if (process.env.NODE_ENV === "development") console.log("Routes:", routesObject)
+if (env.NODE_ENV === "development") console.log("Routes:", routesObject)
 export type Routes = typeof routesObject
 export default routesObject

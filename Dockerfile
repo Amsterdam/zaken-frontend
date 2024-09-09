@@ -8,35 +8,35 @@ ARG COMMIT_HASH
 
 ENV DIR /var/www
 COPY . $DIR/
+RUN ls -la $DIR
 
 # build dirs
-RUN mkdir -p $DIR/builds/acceptance
-RUN mkdir -p $DIR/builds/production
+RUN mkdir -p $DIR/builds/application
 
 WORKDIR $DIR
-
-# install dependencies
+COPY package*.json $DIR/
 RUN npm ci --production --unsafe-perm --ignore-scripts .
 
 # global variables
-RUN echo "REACT_APP_GIT_COMMIT_HASH=$COMMIT_HASH" > .env.local
+# RUN echo "REACT_APP_GIT_COMMIT_HASH=$COMMIT_HASH" > .env.local
 
-# build production
+# remove storybook files
+RUN find src -type f -name "*.stories.tsx" -delete
+
 RUN npm run build
-RUN mv $DIR/build/* $DIR/builds/production/
 
-# build acceptance
-RUN npm run build:acc
-RUN mv $DIR/build/* $DIR/builds/acceptance/
+RUN mv $DIR/build/* $DIR/builds/application/
 
-# Use the official Nginx image as the final stage
 FROM nginx:stable-alpine
 
-# Copy the nginx configuration
 ADD nginx.conf /etc/nginx/nginx.conf
-
-# Copy the build artifacts from the builder stage
 COPY --from=builder /var/www/builds /var/www
+COPY --from=builder /var/www/env.* /var/www
+COPY --from=builder /var/www/package.json /var/www/package.json
 
-# Start nginx
+COPY entrypoint.sh /entrypoint.sh
+
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT [ "/entrypoint.sh" ]
 CMD nginx -g 'daemon off;'

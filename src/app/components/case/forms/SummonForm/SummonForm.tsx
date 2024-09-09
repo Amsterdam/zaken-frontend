@@ -5,6 +5,7 @@ import { useSummons, useSummonTypesByTaskId } from "app/state/rest"
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
 import scaffold from "app/components/case/forms/SummonForm/scaffold"
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
+import useNavigation from "app/routing/useNavigation"
 
 type Props = {
   id: Components.Schemas.CaseDetail["id"]
@@ -54,7 +55,8 @@ const mapData = (data: SummonData) => {
 const SummonForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
   const [data] = useSummonTypesByTaskId(caseUserTaskId)
   const summonTypes = data?.results
-  const fields = useScaffoldedFields(scaffold, id, summonTypes)
+  const { navigateTo } = useNavigation()
+  const fields = useScaffoldedFields(scaffold, id, navigateTo, summonTypes)
   const [, { execPost }] = useSummons({ lazy: true })
 
   return (

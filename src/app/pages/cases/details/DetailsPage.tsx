@@ -19,6 +19,7 @@ import useHasPermission, { SENSITIVE_CASE_PERMISSION } from "app/state/rest/cust
 import NotAuthorizedPage from "app/pages/auth/NotAuthorizedPage"
 import { Tabs, Tab } from "app/components/Tabs"
 import Documents from "app/components/case/Documents/Documents"
+import { env } from "app/config/env"
 
 
 type Props = {
@@ -39,7 +40,6 @@ const DetailsPage: React.FC = () => {
   const showNotFound = has404
   const [isDocumentsTabActive, setIsDocumentsTabActive] = useState(false)
 
-
   if (showSpinner) {
     return <PageSpinner />
   }
@@ -51,7 +51,7 @@ const DetailsPage: React.FC = () => {
     <Tab id="1" key="1" label="Open taken & historie">
       <PaddedContent>
         <RowWithColumn>
-          <CaseStatus id={ id } workflows={ caseItem?.workflows! } />
+          <CaseStatus id={ id } />
         </RowWithColumn>
         <RowWithColumn>
           <Heading as="h2">Zaakhistorie</Heading>
@@ -63,7 +63,7 @@ const DetailsPage: React.FC = () => {
       </PaddedContent>
     </Tab>
   ]
-  if (process.env.REACT_APP_ENVIRONMENT !== "production") {
+  if (env.REACT_APP_ENVIRONMENT !== "production") {
     tabs.push(
       <Tab id="2" key="2" label="Documenten" onClick={ () => setIsDocumentsTabActive(true) } >
         <PaddedContent>
