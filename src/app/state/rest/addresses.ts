@@ -1,6 +1,6 @@
 
 import qs from "qs"
-import moment from "moment"
+import dayjs from "dayjs"
 import type { Options } from "./"
 import { useErrorHandler, useSuppressErrorHandler } from "./hooks/utils/errorHandler"
 import { makeApiUrl } from "./hooks/utils/apiUrl"
@@ -39,7 +39,7 @@ export const usePermitsPowerBrowser = (bagId: string) => {
 
 export const useMeldingen = (bagId: string) => {
   const queryString = qs.stringify({
-    start_date: moment().subtract(1, "years").startOf("year").format()
+    start_date: dayjs().subtract(1, "years").startOf("year").format()
   }, {
     addQueryPrefix: true
   })

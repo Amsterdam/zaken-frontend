@@ -1,5 +1,5 @@
 import { FormTitle } from "@amsterdam/asc-ui"
-import moment from "moment"
+import dayjs from "dayjs"
 import { useCase, useScheduleTypes, useScheduleCreate } from "app/state/rest"
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
 import scaffold from "./scaffold"
@@ -22,7 +22,7 @@ const mapData = (data: ScheduleTypeFormData) => ({
   week_segment: data.week_segment.id,
   day_segment: data.day_segment.id,
   priority: data.priority.id,
-  visit_from_datetime: data.visit_from_datetime ? moment(data.visit_from_datetime).format() : null
+  visit_from_datetime: data.visit_from_datetime ? dayjs(data.visit_from_datetime).format() : null
 })
 
 const visitFromOptions: { id: number, name: string }[] = [{

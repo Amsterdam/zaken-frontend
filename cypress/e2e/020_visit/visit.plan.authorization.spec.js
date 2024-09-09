@@ -70,7 +70,7 @@ describe('Plan "huisbezoek"', () => {
 
     it("Schedule visit from date", () => {
       cy.get('[data-testid="visit_from_datetime"]')
-        .type(moment().format("YYYY-MM-DD"))
+        .type(dayjs().format("YYYY-MM-DD"))
     })
 
     it("Schedule priority", () => {

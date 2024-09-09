@@ -1,14 +1,14 @@
-import moment from "moment"
+import dayjs from "dayjs"
 import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 
 const DATE_FORMAT = "YYYY-MM-DD"
 
 const getOptions = () => {
-  const today = moment().format(DATE_FORMAT)
-  const yesterday = moment().subtract(1, "days").format(DATE_FORMAT)
-  const sevenDaysAgo = moment().subtract(7, "days").format(DATE_FORMAT)
-  const thirtyDaysAgo = moment().subtract(30, "days").format(DATE_FORMAT)
+  const today = dayjs().format(DATE_FORMAT)
+  const yesterday = dayjs().subtract(1, "days").format(DATE_FORMAT)
+  const sevenDaysAgo = dayjs().subtract(7, "days").format(DATE_FORMAT)
+  const thirtyDaysAgo = dayjs().subtract(30, "days").format(DATE_FORMAT)
   return {
     "": "Alle zaken",
    [today]: "Vandaag",

@@ -1,4 +1,4 @@
-import moment from "moment";
+import dayjs from "dayjs";
 import address from "../../fixtures/address.json";
 import visit from "../../fixtures/visit.json";
 
@@ -67,7 +67,7 @@ describe('Test visit.plan.spec', () => {
     cy.get('[data-testid="visit_from"]').select(visit.visitFrom);
 
     cy.get('[data-testid="visit_from_datetime"]').type(
-      moment().format("YYYY-MM-DD")
+      dayjs().format("YYYY-MM-DD")
     );
 
     cy.get('[data-testid="priority"]').select(visit.priority);
