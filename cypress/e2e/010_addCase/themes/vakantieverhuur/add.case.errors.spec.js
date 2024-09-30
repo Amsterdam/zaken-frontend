@@ -60,12 +60,12 @@ describe("Fill in form and validate", () => {
 
     cy.checkRequiredField(
       '[data-testid="identification"]',
-      dummyData.siaIdentification
+      dummyData.sigIdentification
     )
 
     cy.checkRequiredField(
       '[data-testid="description_citizenreport"]',
-      dummyData.siaDescription
+      dummyData.sigDescription
     )
 
     cy.get("#advertisement_yes")

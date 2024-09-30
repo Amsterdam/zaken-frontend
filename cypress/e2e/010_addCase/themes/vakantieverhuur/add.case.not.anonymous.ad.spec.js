@@ -26,7 +26,7 @@ describe("Create case and validate input", () => {
 
     cy.wait(["@getReasons", "@getSubjects"]).then(() => {
       cy.get("span")
-        .contains(/^SIA melding$/)
+        .contains(/^SIG melding$/)
         .siblings()
         .find("input")
         .check({force: true})
@@ -51,10 +51,10 @@ describe("Create case and validate input", () => {
       .type(testData.reporterEmail)
 
     cy.get('[data-testid="identification"]')
-      .type(testData.siaIdentification)
+      .type(testData.sigIdentification)
 
     cy.get('[data-testid="description_citizenreport"]')
-      .type(testData.siaDescription)
+      .type(testData.sigDescription)
 
     cy.get("#advertisement_yes")
       .check({force: true})
@@ -90,8 +90,8 @@ describe("Create case and validate input", () => {
       .and("contain", testData.reporterName)
       .and("contain", testData.reporterPhone)
       .and("contain", testData.reporterEmail)
-      .and("contain", testData.siaIdentification)
-      .and("contain", testData.siaDescription)
+      .and("contain", testData.sigIdentification)
+      .and("contain", testData.sigDescription)
       .and("contain", testData.description)
       .find("button")
       .contains("Zaak aanmaken")

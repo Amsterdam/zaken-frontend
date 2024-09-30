@@ -1,6 +1,6 @@
 {
-  "siaIdentification": "123456",
-  "siaDescription": "Test samenvatting melding",
+  "sigIdentification": "123456",
+  "sigDescription": "Test samenvatting melding",
   "description": "Test toelichting",
   "reporterName": "Naam reporter",
   "reporterPhone": "0123456789",
