@@ -5,10 +5,7 @@ const columns = [
   {
     header: "Adres",
     dataIndex: "weergavenaam",
-    minWidth: 100,
-    render: (adres: any, obj: any) => (
-      `${ adres } ${ obj.adrestype === "nevenadres" ? "(Nevenadres)" : "" }`
-    )
+    minWidth: 100
   },
   {
     dataIndex: "adresseerbaarobject_id",

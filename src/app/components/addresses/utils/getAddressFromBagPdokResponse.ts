@@ -1,6 +1,4 @@
 export const getAddressFromBagPdokResponse = (data?: BAGPdokResponse):  BAGPdokAddress | undefined => {
   const docs = data?.response?.docs
-  return (
-    docs?.find((result) => result.adrestype === "hoofdadres")
-  ) 
+  return docs && docs[0] ? docs[0] : undefined
 }
