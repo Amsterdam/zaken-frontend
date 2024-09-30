@@ -26,7 +26,7 @@ describe("Test add.case.anonymous.no.ad.spec", () => {
 
     cy.wait(["@getReasons", "@getSubjects"]).then(() => {
       cy.get("span")
-        .contains(/^SIA melding$/)
+        .contains(/^SIG melding$/)
         .siblings()
         .find("input")
         .check({ force: true });
@@ -40,10 +40,10 @@ describe("Test add.case.anonymous.no.ad.spec", () => {
 
     cy.get('[data-testid="yes"]').check({ force: true });
 
-    cy.get('[data-testid="identification"]').type(dummyData.siaIdentification);
+    cy.get('[data-testid="identification"]').type(dummyData.sigIdentification);
 
     cy.get('[data-testid="description_citizenreport"]').type(
-      dummyData.siaDescription
+      dummyData.sigDescription
     );
 
     cy.get("#advertisement_no").check({ force: true });
@@ -56,12 +56,12 @@ describe("Test add.case.anonymous.no.ad.spec", () => {
 
     cy.get(`[role="dialog"]`)
       .should("contain", "Vakantieverhuur")
-      .and("contain", "SIA melding")
+      .and("contain", "SIG melding")
       .and("contain", "Ja, de melder is anoniem")
       .and("contain", "Nee, er is geen advertentie")
       .and("contain", dummyData.subject)
-      .and("contain", dummyData.siaIdentification)
-      .and("contain", dummyData.siaDescription)
+      .and("contain", dummyData.sigIdentification)
+      .and("contain", dummyData.sigDescription)
       .and("contain", dummyData.description)
       .find("button")
       .contains("Zaak aanmaken")
@@ -78,6 +78,6 @@ describe("Test add.case.anonymous.no.ad.spec", () => {
 
     cy.get("h2").contains(`${address.street}, ${address.zipCode}`);
 
-    cy.history("SIA melding verwerken", roles.PM);
+    cy.history("SIG melding verwerken", roles.PM);
   });
 });

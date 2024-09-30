@@ -170,8 +170,8 @@ export default (
         field: {
           type: "NumberField",
           props: {
-            label: "SIA-nummer",
-            extraLabel: <InfoButton infoTitle="SIA-nummer" infoText="Vermeld hier het corresponderende SIA-nummer, zodat de melding makkelijk terug te vinden is in SIA."></InfoButton>,
+            label: "SIG-nummer",
+            extraLabel: <InfoButton infoTitle="SIG-nummer" infoText="Vermeld hier het corresponderende SIG-nummer, zodat de melding makkelijk terug te vinden is in SIG."></InfoButton>,
             name: "identification",
             placeholder: "123456",
             min: 1,
