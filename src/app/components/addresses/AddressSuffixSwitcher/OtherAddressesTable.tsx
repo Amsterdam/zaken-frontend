@@ -14,7 +14,7 @@ const OtherAddressesTable: React.FC<Props> = ({ bagId, onAddressChosen }) => {
 
   const onClickRow = (data: any) => {
     onAddressChosen()
-    navigateTo("/adres/:bagId", { bagId: data.adresseerbaar_object_id })
+    navigateTo("/adres/:bagId", { bagId: data.adresseerbaarobject_id })
   }
 
   return (
