@@ -6,6 +6,7 @@ import { appendTimeToDate } from "app/components/shared/Helpers/helpers"
 import DueDate from "app/components/shared/DueDate/DueDate"
 import ChangeDueDateModal from "./ChangeDueDateModal"
 import { useTaskUpdate } from "app/state/rest"
+import useHasPermission, { CAN_PERFORM_TASK } from "app/state/rest/custom/usePermissions/useHasPermission"
 
 type Props = {
   caseId: Components.Schemas.CaseDetail["id"]
@@ -30,9 +31,9 @@ const StyledIcon = styled(Icon)`
 `
 
 const ChangeableDueDate: React.FC<Props> = ({ dueDate, caseId, caseUserTaskId }) => {
-
   const { isModalOpen, openModal, closeModal } = useModal()
   const [, { execPatch }] = useTaskUpdate(caseUserTaskId)
+  const [hasPermission] = useHasPermission([CAN_PERFORM_TASK])
 
   const onSubmit = (data: { date: string, id: string }) => {
     appendTimeToDate(data.date) !== dueDate
@@ -40,7 +41,7 @@ const ChangeableDueDate: React.FC<Props> = ({ dueDate, caseId, caseUserTaskId })
       : closeModal()
   }
 
-  return (
+  return hasPermission ? (
     <>
       <Span
         role="link"
@@ -57,7 +58,7 @@ const ChangeableDueDate: React.FC<Props> = ({ dueDate, caseId, caseUserTaskId })
         taskId={ caseUserTaskId }
         />
     </>
-  )
+  ) : <DueDate date={ dueDate } />
 }
 
 export default ChangeableDueDate

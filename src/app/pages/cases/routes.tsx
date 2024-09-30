@@ -25,47 +25,56 @@ export default {
           "afronding/:caseUserTaskId": {
             Page: CompleteCasePage,
             title: "Zaak afronden",
-            icon: "Edit"
+            icon: "Edit",
+            permissionNames: ["perform_task"]
           },
           "taak": {
             Page: TaskCreatePage,
             title: "Taak opvoeren",
-            icon: "Edit"
+            icon: "Edit",
+            permissionNames: ["perform_task"]
           },
           "debriefing/:caseUserTaskId": {
             Page: DebriefCreatePage,
             title: "Debrief terugkoppeling geven",
-            icon: "Edit"
+            icon: "Edit",
+            permissionNames: ["perform_task"]
           },
           "besluit/:caseUserTaskId": {
             Page: DecisionCreatePage,
             title: "Resultaat besluit",
-            icon: "Edit"
+            icon: "Edit",
+            permissionNames: ["perform_task"]
           },
           "snel-besluit/:caseUserTaskId": {
             Page: QuickDecisionCreatePage,
             title: "Resultaat besluit",
-            icon: "Edit"
+            icon: "Edit",
+            permissionNames: ["perform_task"]
           },
           "aanschrijving/:caseUserTaskId": {
             Page: SummonCreatePage,
             title: "Resultaat aanschrijving",
-            icon: "Edit"
+            icon: "Edit",
+            permissionNames: ["perform_task"]
           },
           "inplanning/:caseUserTaskId": {
             Page: ScheduleCreatePage,
             title: "Bezoek inplannen",
-            icon: "Edit"
+            icon: "Edit",
+            permissionNames: ["perform_task"]
           },
           "huisbezoek/:caseUserTaskId": {
             Page: VisitCreatePage,
             title: "Resultaat bezoek",
-            icon: "Edit"
+            icon: "Edit",
+            permissionNames: ["perform_task"]
           },
           "melding/:caseUserTaskId": {
             Page: CitizenReportPage,
             title: "Melding verwerken",
-            icon: "Edit"
+            icon: "Edit",
+            permissionNames: ["perform_task"]
           }
         }
       }

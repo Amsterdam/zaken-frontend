@@ -1,5 +1,5 @@
 import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
-import moment from "moment"
+import dayjs from "dayjs"
 import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import type { NavigateToFunction } from "app/routing/useNavigation"
@@ -56,8 +56,8 @@ export default (
             name: "visit_from_datetime",
             isRequired: true,
             validate: (value: string | undefined) => {
-              const now = moment()
-              const valueDate = moment(value)
+              const now = dayjs()
+              const valueDate = dayjs(value)
               const isInvalidDate = valueDate.isBefore(now, "day") // Date cannot be in the past.
               return isInvalidDate ? "Selecteer vandaag of een dag in de toekomst!" : false
             }
