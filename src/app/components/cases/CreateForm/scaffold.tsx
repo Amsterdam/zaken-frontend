@@ -104,7 +104,7 @@ export default (
     reporter_anonymous: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { reason?: Components.Schemas.CaseReason } }) => formValues?.values?.reason?.name === "SIA melding",
+        shouldShow: (formValues: { values?: { reason?: Components.Schemas.CaseReason } }) => formValues?.values?.reason?.name === "SIG melding",
         field: {
           type: "RadioFields",
           props: {
@@ -166,7 +166,7 @@ export default (
     identification: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { reason?: Components.Schemas.CaseReason } }) => formValues?.values?.reason?.name === "SIA melding",
+        shouldShow: (formValues: { values?: { reason?: Components.Schemas.CaseReason } }) => formValues?.values?.reason?.name === "SIG melding",
         field: {
           type: "NumberField",
           props: {
@@ -185,7 +185,7 @@ export default (
     description_citizenreport: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { reason?: Components.Schemas.CaseReason } }) => formValues?.values?.reason?.name === "SIA melding",
+        shouldShow: (formValues: { values?: { reason?: Components.Schemas.CaseReason } }) => formValues?.values?.reason?.name === "SIG melding",
         field: {
           type: "TextAreaField",
           props: {
@@ -200,7 +200,7 @@ export default (
       type: "ShowHide",
       props: {
         shouldShow: (formValues: { values?: { reason?: Components.Schemas.CaseReason, theme?: Components.Schemas.CaseTheme } }) => (
-          formValues?.values?.theme?.name === "Vakantieverhuur" && formValues?.values?.reason?.name === "SIA melding"
+          formValues?.values?.theme?.name === "Vakantieverhuur" && formValues?.values?.reason?.name === "SIG melding"
         ),
         field: {
           type: "CheckboxFields",
