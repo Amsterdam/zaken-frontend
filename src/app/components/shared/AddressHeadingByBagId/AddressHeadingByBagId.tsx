@@ -1,6 +1,6 @@
 
 import { Heading } from "@amsterdam/asc-ui"
-import { useBagPdok } from "app/state/rest"
+import { useBagPdokByBagId } from "app/state/rest"
 import { getAddressFromBagPdokResponse } from "app/components/addresses/utils"
 
 type Props = {
@@ -8,7 +8,7 @@ type Props = {
 }
 
 const AddressHeadingByBagId: React.FC<Props> = ({ bagId }) => {
-  const [data] = useBagPdok(bagId)
+  const [data] = useBagPdokByBagId(bagId)
   const address = getAddressFromBagPdokResponse(data)
 
   return (

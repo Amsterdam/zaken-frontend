@@ -2,7 +2,7 @@ import styled from "styled-components"
 import { breakpoint, themeSpacing, Typography } from "@amsterdam/asc-ui"
 import { SmallSkeleton } from "@amsterdam/wonen-ui"
 
-import { useBagPdok } from "app/state/rest"
+import { useBagPdokByBagId } from "app/state/rest"
 import ShowOtherAddressesButton, { Index } from "app/components/addresses/AddressSuffixSwitcher/ShowOtherAddressesButton"
 import useOtherAddressesByBagId from "app/state/rest/custom/useOtherAddresses/useOtherAddresses"
 import AddressLink from "./components/AddressLink"
@@ -29,7 +29,7 @@ const ButtonWrap = styled.div`
 `
 
 const AddressHeader: React.FC<Props> = ({ bagId, headingSize = "h2", isHeader = false, enableSwitch = true }) => {
-  const [data, { isBusy }] = useBagPdok(bagId)
+  const [data, { isBusy }] = useBagPdokByBagId(bagId)
   const foundAddress = getAddressFromBagPdokResponse(data)
   const [filteredAddresses] = useOtherAddressesByBagId(bagId)
   const showButton = enableSwitch && (filteredAddresses?.length ?? 0) > 1

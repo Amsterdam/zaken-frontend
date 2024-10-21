@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import scaffold from "./scaffold"
 import {
   useCaseThemes, useReasons, useCaseCreate, useProjects,
-  useListing, useSubjects, useCasesByBagId, useCorporations, useBagPdok
+  useListing, useSubjects, useCasesByBagId, useCorporations, useBagPdokByBagId
 } from "app/state/rest"
 import ConfirmScaffoldForm from "app/components/shared/ConfirmScaffoldForm/ConfirmScaffoldForm"
 import useNavigateWithFlashMessage from "app/state/flashMessages/useNavigateWithFlashMessage"
@@ -64,7 +64,7 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
   const [listing] = useListing(tonId)
   const [cases] = useCasesByBagId(bagId)
   const [corporations] = useCorporations()
-  const [bagAddressResponse] = useBagPdok(bagId)
+  const [bagAddressResponse] = useBagPdokByBagId(bagId)
   const bagAddress = getAddressFromBagPdokResponse(bagAddressResponse)
   const { navigateTo } = useNavigation()
 
