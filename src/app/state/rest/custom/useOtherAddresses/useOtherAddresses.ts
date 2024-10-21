@@ -1,15 +1,18 @@
-import { useBAG, useBAGWithStreet } from "app/state/rest/index"
-import getAddressFromBagResults from "app/components/addresses/utils/getAddressFromBagResults"
+import { useBagPdok, useBagPdokByBagId } from "app/state/rest/index"
+import { getAddressFromBagPdokResponse } from "app/components/addresses/utils"
 
 /**
  * Returns other addresses with the same postcode + huisnummer
  * @param bagId
  */
 const useOtherAddressesByBagId = (bagId: Components.Schemas.Address["bag_id"]) => {
-  const [data] = useBAG(bagId)
-  const foundAddress = getAddressFromBagResults(data)
+  const [data] = useBagPdokByBagId(bagId)
+  const foundAddress = getAddressFromBagPdokResponse(data)
   const searchQuery = `${ foundAddress?.postcode } ${ foundAddress?.huisnummer }`
-  const [otherAddresses, otherAddressesMethods] = useBAGWithStreet(searchQuery, { lazy: data === undefined })
-  return [otherAddresses?.results?.filter(({ huisnummer }) => huisnummer === foundAddress?.huisnummer), otherAddressesMethods] as const
+  const [moreAddresses, otherAddressesMethods] = useBagPdok(searchQuery, { lazy: data === undefined })
+  const otherAddresses = moreAddresses?.response?.docs?.filter(({ huisnummer, postcode }) => (
+    huisnummer === foundAddress?.huisnummer && postcode === foundAddress?.postcode 
+  ))
+  return [otherAddresses, otherAddressesMethods] as const
 }
 export default useOtherAddressesByBagId
