@@ -2,6 +2,9 @@ module.exports = {
   extends: [
     "react-app"
   ],
+  "parserOptions": {
+    "warnOnUnsupportedTypeScriptVersion": false
+  },
   rules: {
     "arrow-body-style": ["error", "as-needed"],
     "block-spacing": ["error", "always"],
