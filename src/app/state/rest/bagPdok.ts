@@ -3,10 +3,15 @@ import { useErrorHandler } from "./hooks/utils/errorHandler"
 import useApiRequest from "./hooks/useApiRequest"
 import qs from "qs"
 
+/**
+ * Custom hook to fetch data from the PDOK API using a search string.
+ * Difference between /free and /suggest endpoint is the speed and the search criteria 
+ * /suggest is faster but you cannot search on bagId
+ */
+
 const PDOK_URL = "https://api.pdok.nl/bzk/locatieserver/search/v3_1"
 const MUNICIPALITY_FILTER = "gemeentenaam:(amsterdam)"
 const ADDRESS_FILTER = "AND (type:adres) AND (adrestype: hoofdadres)"
-// const ADDRESS_SORT = "straatnaam asc, huisnummer asc, huisletter asc, huisnummertoevoeging asc"
 const DEFAULT_SORT = "score desc, weergavenaam asc"
 const FIELD_LIST = "weergavenaam,adrestype,gemeentenaam,nummeraanduiding_id,adresseerbaarobject_id,straatnaam,huisnummer,huisletter,huisnummertoevoeging,postcode,woonplaatsnaam,centroide_ll,score"
 const START = 0
