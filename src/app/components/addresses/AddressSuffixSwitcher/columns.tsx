@@ -4,10 +4,10 @@ import to from "app/routing/utils/to"
 const columns = [
   {
     header: "Adres",
-    dataIndex: "adres",
+    dataIndex: "weergavenaam",
     minWidth: 300
   }, {
-    dataIndex: "adresseerbaar_object_id",
+    dataIndex: "adresseerbaarobject_id",
     minWidth: 100,
     render: (bagId: any) => (
       <TableAction to={ to("/adres/:bagId", { bagId })}>

@@ -1,18 +1,15 @@
+import address from "../fixtures/address.json"
 /*
  ** Search address for cases by queryString.
  ** Select first case.
  ** Check Adresoverzicht for right address
  */
 Cypress.Commands.add("selectAddress", (queryString, addressString) => {
-
   expect(queryString, "queryString was set").to.be.a("string").and.not.be.empty
   expect(addressString, "addressString was set").to.be.a("string").and.not.be.empty
 
-  const urlAddress = `${Cypress.env("baseUrlData")}atlas/search/postcode/*`
-  cy.intercept(urlAddress).as("getAddress")
-
-  const urlCases = `**/addresses/*/cases/`
-  cy.intercept(urlCases).as("getCases")
+  cy.intercept(`**${ address.zipCode }**`).as("getAddress")
+  cy.intercept("**/addresses/*/cases/").as("getCases")
 
   cy.visit(`/?query=${queryString}`)
 
