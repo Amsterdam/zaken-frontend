@@ -7,6 +7,7 @@ import FlashMessages from "app/components/layouts/FlashMessages/FlashMessages"
 import UserInfo from "app/components/shared/UserInfo/UserInfo"
 import SkipLinks from "app/components/shared/SkipLinks/SkipLinks"
 import BreadCrumbsWrap from "app/components/shared/BreadCrumbs/BreadCrumbsWrap"
+import { env } from "app/config/env"
 
 type Props = {
   showSearchButton?: boolean
@@ -43,7 +44,7 @@ const DefaultLayout: React.FC<Props> = ({ showSearchButton = true, children }) =
       <Header
         tall
         fullWidth={ false }
-        title="Amsterdamse Zaak Administratie"
+        title={`${ env.VITE_APP_TITLE ?? "Amsterdamse Zaak Administratie" } ${ env.VITE_APP_ENV_SHORT }`}
         homeLink={ to("/") }
         navigation={
           <MenuWrap>

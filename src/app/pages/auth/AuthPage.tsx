@@ -1,15 +1,14 @@
 
 import { Heading } from "@amsterdam/asc-ui"
-
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
 import NotAuthorizedAlert from "app/components/auth/NotAuthorizedAlert/NotAuthorizedAlert"
-import KeycloakValues from "app/components/auth/KeycloakValues/KeycloadValues"
+import OidcValues from "app/components/auth/OidcValues/OidcValues"
 
 const AuthPage: React.FC = () => (
   <DefaultLayout>
-    <Heading as="h2">Keycloak gebruiker</Heading>
+    <Heading as="h2">Microsoft Entra-ID gebruiker</Heading>
     <NotAuthorizedAlert />
-    <KeycloakValues />
+    <OidcValues />
   </DefaultLayout>
 )
 

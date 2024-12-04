@@ -2,7 +2,7 @@ import { Button, Spinner } from "@amsterdam/asc-ui"
 import { Download } from "@amsterdam/asc-assets"
 import { makeApiUrl } from "app/state/rest/hooks/utils/apiUrl"
 import { useState } from "react"
-import useKeycloak from "app/state/auth/keycloak/useKeycloak"
+import { useAuth } from "react-oidc-context"
 
 type Props = {
   record: any
@@ -12,14 +12,15 @@ type Props = {
 const DownloadDocument: React.FC<Props> = ({ record, size = 20 }) => {
   const [loading, setLoading] = useState(false)
   const apiUrl = makeApiUrl("documents", record.id, "download")
-  const keycloak = useKeycloak()
+  const auth = useAuth()
 
   const downloadFile = async () => {
     setLoading(true)
+    const token = auth.user?.access_token
     fetch(apiUrl, {
       method: "GET",
       headers: {
-        "Authorization": `Bearer ${ keycloak.token }`
+        "Authorization": `Bearer ${ token }`
       }
     })
     .then((response) => {
