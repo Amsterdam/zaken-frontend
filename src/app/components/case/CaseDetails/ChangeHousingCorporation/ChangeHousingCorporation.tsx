@@ -4,7 +4,7 @@ import { useCorporations, useAddresses, useCase } from "app/state/rest"
 import ChangeableItem from "../ChangeableItem/ChangeableItem"
 import Modal, { ModalBlock } from "app/components/shared/Modal/Modal"
 import ChangeHousingCorporationForm from "./ChangeHousingCorporationForm"
-import SpinnerWrapper from "app/components/shared/SpinnerWrapper/SpinnerWrapper"
+import { SpinnerWrapper } from "app/components/shared/loading"
 
 type Props = {
   housingCorporationId?: Components.Schemas.HousingCorporation["id"] | null

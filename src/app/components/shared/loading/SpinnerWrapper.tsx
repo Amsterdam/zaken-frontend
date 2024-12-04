@@ -20,7 +20,7 @@ const SpinnerContainer = styled.div`
 `
 
 
-const SpinnerWrapper: React.FC<Props> = ({ spinning = true, children }) => (
+export const SpinnerWrapper: React.FC<Props> = ({ spinning = true, children }) => (
   <div>
     { spinning && (
       <SpinnerContainer>
