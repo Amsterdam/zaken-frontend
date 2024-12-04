@@ -11,7 +11,7 @@ type Props = {
  */
 const ProtectedPage: React.FC<Props> = (props) => {
   const auth = useAuth()
-  const token = auth.user?.access_token
+  const token = auth.user?.id_token
 
   if (token === undefined) return null
 

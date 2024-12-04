@@ -16,7 +16,7 @@ const DownloadDocument: React.FC<Props> = ({ record, size = 20 }) => {
 
   const downloadFile = async () => {
     setLoading(true)
-    const token = auth.user?.access_token
+    const token = auth.user?.id_token
     fetch(apiUrl, {
       method: "GET",
       headers: {

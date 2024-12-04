@@ -4,6 +4,7 @@ import { useDecodedToken } from "app/state/auth/oidc/useDecodedToken"
 
 const OidcValues: React.FC = () => {
   const decodedToken = useDecodedToken()
+  
   const values = decodedToken ? {
     "Voornaam": decodedToken?.given_name,
     "Achternaam": decodedToken?.family_name,

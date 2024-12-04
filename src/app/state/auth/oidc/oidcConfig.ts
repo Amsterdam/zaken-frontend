@@ -6,7 +6,7 @@ export const oidcConfig = {
   client_id: `${ env.VITE_OIDC_CLIENT_ID }`,
   redirect_uri: `${ env.VITE_OIDC_REDIRECT_URL }`,
   response_type: "code",
-  scope: "openid",
+  scope: "openid email",
   post_logout_redirect_uri: `${ env.VITE_OIDC_REDIRECT_URL }`,
   metadata: {
     issuer: "https://login.microsoftonline.com/72fca1b1-2c2e-4376-a445-294d80196804/v2.0",
