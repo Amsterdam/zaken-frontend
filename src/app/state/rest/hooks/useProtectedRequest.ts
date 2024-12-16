@@ -14,7 +14,7 @@ export default () => {
     async <Schema>(method: Method, url: string, data?: unknown, additionalHeaders = {}) => {
       try {
         // Update the access token when it expires in less than 30 seconds
-        const token = auth.user?.id_token
+        const token = auth.user?.access_token
         const headers = {
           Authorization: `Bearer ${ token }`,
           ...additionalHeaders
@@ -34,6 +34,6 @@ export default () => {
         if (error !== undefined) throw error
       }
     },
-    [auth.user?.id_token, request, navigateTo]
+    [auth.user?.access_token, request, navigateTo]
   )
 }

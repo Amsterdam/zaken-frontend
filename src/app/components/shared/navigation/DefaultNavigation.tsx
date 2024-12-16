@@ -17,7 +17,7 @@ const IconButton = styled(Button)`
 
 const DefaultNavigation: React.FC<Props> = ({ showSearchButton }) => {
   const auth = useAuth()
-  const token = auth.user?.id_token
+  const token = auth.user?.access_token
 
   if (!token) return null
 
