@@ -52,13 +52,13 @@ const reducer = (state: State, action: Action) => {
         .reduce((acc, [key, val]) => ({
           ...acc,
           [key]: { valid: false, value: val.value, errors: [] }
-        }), {})
+        }), {} as State)
     }
   }
 }
 
 export const useApiCache = () => {
-  const [ cache, dispatch ] = useReducer(reducer, {})
+  const [ cache, dispatch ] = useReducer(reducer, {} as State)
 
   const getCacheItem = useCallback((key: string) => cache[key], [ cache ])
   const setCacheItem = useCallback((key: string, value: any) => dispatch({ type: "SET_ITEM", key, value }), [ dispatch ])

@@ -1,14 +1,18 @@
 import { StrictMode } from "react"
 import ReactDOM from "react-dom"
+import { AuthProvider } from "react-oidc-context"
 import App from "./App"
 import * as serviceWorker from "./serviceWorker"
 import packageInfo from "../package.json"
 import { env } from "app/config/env"
+import { oidcConfig } from "app/state/auth/oidc/oidcConfig"
 
 
 ReactDOM.render(
   <StrictMode>
-    <App />
+    <AuthProvider {...oidcConfig} >
+      <App />
+    </AuthProvider>
   </StrictMode>,
   document.getElementById("root")
 )
