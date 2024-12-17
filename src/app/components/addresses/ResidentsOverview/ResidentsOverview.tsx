@@ -9,12 +9,13 @@ type Props = {
 
 const ResidentsOverview: React.FC<Props> = ({ bagId }) => {
   const [data, { isBusy }] = useResidents(bagId)
+  const dataSource = (data || []) as Components.Schemas.Residents
 
   if (isBusy) {
     return <LoadingDetails numRows={4} />
   }
   return (
-    <Residents data={ data } loading={ isBusy } header />
+    <Residents data={ dataSource } header />
   )
 }
 

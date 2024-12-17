@@ -52,17 +52,6 @@ export const useMeldingen = (bagId: string) => {
   })
 }
 
-export const useResidents = (bagId: Components.Schemas.Address["bag_id"], options?: Options) => {
-  const handleError = useErrorHandler()
-  return useApiRequest<Components.Schemas.Residents>({
-    ...options,
-    url: makeApiUrl("addresses", bagId, "residents"),
-    groupName: "addresses",
-    handleError,
-    isProtected: true
-  })
-}
-
 export const useCorporations = (options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.PaginatedHousingCorporationList>({

@@ -168,7 +168,7 @@ function importPrefixPlugin(): Plugin {
 // Migration guide: Follow the guide below, you may need to rename your environment variable to a name that begins with VITE_ instead of REACT_APP_
 // https://vitejs.dev/guide/env-and-mode.html#html-env-replacement
 function htmlPlugin(mode: string): Plugin {
-  const env = loadEnv(mode, ".", ["REACT_APP_", "NODE_ENV", "PUBLIC_URL"])
+  const env = loadEnv(mode, ".", ["REACT_APP_", "NODE_ENV", "PUBLIC_URL", "VITE_"])
   return {
     name: "html-plugin",
     transformIndexHtml: {
