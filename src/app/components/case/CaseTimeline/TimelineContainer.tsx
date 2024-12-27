@@ -21,7 +21,7 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
               <EventsTimeline
                 events={ timelineEvents }
                 spacingHorizontal={ 3 }
-                prefixUrl={ `${ env.REACT_APP_AZA_FE }zaken/` }
+                prefixUrl={ `${ env.VITE_AZA_FRONTEND_URL }zaken/` }
               />
               )
             }

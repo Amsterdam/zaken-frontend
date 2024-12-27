@@ -2,7 +2,7 @@
 import { exec } from "child_process"
 import { env } from "app/config/env"
 
-const url = `${ env.REACT_APP_API_HOST }${ env.REACT_APP_API_PATH }schema/`
+const url = `${ env.VITE_API_URL }schema/`
 exec(`dtsgen -o ./src/__generated__/apiSchema.d.ts --url ${ url }`,
   (error, stdout, stderr) => {
     if (error) {

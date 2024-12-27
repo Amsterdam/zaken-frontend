@@ -20,7 +20,7 @@ const Div = styled.div<DivProps>`
 `
 
 const MockWrapper: React.FC<Props> = ({ hasPadding = true, children }) => (
-  <Div isProduction={ env.REACT_APP_ENVIRONMENT === "production" } hasPadding={ hasPadding }>
+  <Div isProduction={ env.VITE_ENVIRONMENT === "production" } hasPadding={ hasPadding }>
     { children }
   </Div>
 )

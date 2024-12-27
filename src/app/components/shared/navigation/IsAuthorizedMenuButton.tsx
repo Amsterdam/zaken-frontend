@@ -53,7 +53,7 @@ const IsAuthorizedMenuButton: React.FC<Props> = ({ permissionNames, isHidden, to
    */
   if (isAuthorized && text === "Digitaal toezicht") {
     return (
-      <StyledLink href={env.REACT_APP_HOST_TON} target="_blank" rel="noopener noreferrer">{ text }</StyledLink>
+      <StyledLink href={env.VITE_TON_FRONTEND_URL} target="_blank" rel="noopener noreferrer">{ text }</StyledLink>
     )
   } else if (isAuthorized) {
     return (

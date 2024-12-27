@@ -13,7 +13,7 @@ import DetailHeaderByCaseId from "app/components/shared/DetailHeader/DetailHeade
 import { Column } from "app/components/layouts/Grid"
 import CaseStatus from "app/components/case/CaseStatus/CaseStatus"
 import useExistingCase from "./hooks/useExistingCase"
-import PageSpinner from "app/components/shared/PageSpinner/PageSpinner"
+import { LoadingScreen } from "app/components/shared/loading"
 import CaseNuisanceAlert from "app/components/case/CaseNuisanceAlert/CaseNuisanceAlert"
 import useHasPermission, { SENSITIVE_CASE_PERMISSION } from "app/state/rest/custom/usePermissions/useHasPermission"
 import NotAuthorizedPage from "app/pages/auth/NotAuthorizedPage"
@@ -41,7 +41,7 @@ const DetailsPage: React.FC = () => {
   const [isDocumentsTabActive, setIsDocumentsTabActive] = useState(false)
 
   if (showSpinner) {
-    return <PageSpinner />
+    return <LoadingScreen />
   }
   if (exists && !isAuthorized) {
     return <NotAuthorizedPage />
@@ -63,7 +63,7 @@ const DetailsPage: React.FC = () => {
       </PaddedContent>
     </Tab>
   ]
-  if (env.REACT_APP_ENVIRONMENT !== "production") {
+  if (env.VITE_ENVIRONMENT !== "production") {
     tabs.push(
       <Tab id="2" key="2" label="Documenten" onClick={ () => setIsDocumentsTabActive(true) } >
         <PaddedContent>

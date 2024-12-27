@@ -26,7 +26,7 @@
 - NPM (https://www.npmjs.com/settings/amsterdam/packages) OIS Slack #frontend-amsterdam
 
 ### Connecting to Acceptance API
-- It's possible to connect a locally run zaken-frontend to Acceptance API. Add `REACT_APP_API_HOST=https://acc.api.wonen.zaken.amsterdam.nl/api/v1/` to `.env.development.local`. See [.env.development](https://github.com/Amsterdam/zaken-frontend/blob/main/.env.development) for examples.
+- It's possible to connect a locally run zaken-frontend to Acceptance API. Add `VITE_API_URL=https://acc.api.wonen.zaken.amsterdam.nl/api/v1/` to `.env.development.local`. See [.env.development](https://github.com/Amsterdam/zaken-frontend/blob/main/.env.development) for examples.
 
 ## Deployment
 
