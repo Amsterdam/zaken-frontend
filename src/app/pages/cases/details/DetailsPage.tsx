@@ -63,7 +63,7 @@ const DetailsPage: React.FC = () => {
       </PaddedContent>
     </Tab>
   ]
-  if (env.REACT_APP_ENVIRONMENT !== "production") {
+  if (env.VITE_ENVIRONMENT !== "production") {
     tabs.push(
       <Tab id="2" key="2" label="Documenten" onClick={ () => setIsDocumentsTabActive(true) } >
         <PaddedContent>
