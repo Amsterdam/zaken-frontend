@@ -9,7 +9,7 @@ set -x
 echo "window.env = {" >> /var/www/application/config/env.js
 
 for var in $(printenv); do
-    if [[ $var == REACT_APP* ]]; then
+    if [[ $var == VITE* ]]; then
         key=$(echo $var | cut -f1 -d=)
         value=$(echo $var | cut -f2 -d=)
         echo "  \"$key\": \"$value\"," >> /var/www/application/config/env.js
