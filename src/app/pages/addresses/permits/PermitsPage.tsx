@@ -5,7 +5,8 @@ import PageHeading from "app/components/shared/PageHeading/PageHeading"
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
 import PermitDetailsList from "app/components/permits/PermitDetails/PermitDetails"
 import PermitsPowerBrowser from "app/components/permits/PermitsPowerBrowser/PermitsPowerBrowser"
-import VacationRental from "app/components/permits/VacationRental/VacationRental"
+import HolidayRentalReports from "app/components/permits/HolidayRental/VacationRental"
+import HolidayRentalRegistrations from "app/components/permits/HolidayRental/Registrations"
 import DetailHeader from "app/components/shared/DetailHeader/DetailHeader"
 import Column from "app/components/layouts/Grid/Column"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
@@ -31,12 +32,13 @@ const PermitsPage: React.FC = () => {
         </Row>
         <Row>
           <Column spanLarge={ 50 }>
-            <PermitDetailsList bagId={ bagId }></PermitDetailsList>
-            <VacationRental bagId={ bagId }></VacationRental>
+            <PermitDetailsList bagId={ bagId } />
+            <HolidayRentalReports bagId={ bagId } />
             <DecosLink bagId={ bagId } />
           </Column>
           <Column spanLarge={ 50 }>
-            <PermitsPowerBrowser bagId={ bagId }></PermitsPowerBrowser>
+            <PermitsPowerBrowser bagId={ bagId } />
+            <HolidayRentalRegistrations bagId={ bagId } />
           </Column>
         </Row>
       </DefaultLayout>

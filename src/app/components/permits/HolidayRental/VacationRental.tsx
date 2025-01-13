@@ -5,7 +5,7 @@ type Props = {
   bagId: string
 }
 
-const VacationRental: React.FC<Props> = ({ bagId }) => {
+const RentalReports: React.FC<Props> = ({ bagId }) => {
   const [data, { isBusy }] = useMeldingen(bagId)
 
   return (
@@ -16,4 +16,4 @@ const VacationRental: React.FC<Props> = ({ bagId }) => {
   )
 }
 
-export default VacationRental
+export default RentalReports
