@@ -1,14 +1,5 @@
 import { env } from "app/config/env"
 
-/*
- ** You must provide an implementation of onSigninCallback to oidcConfig to remove the payload from the URL upon successful login.
- ** Otherwise if you refresh the page and the payload is still there, signinSilent - which handles renewing your token - won't work.
- */
-
-export const onSigninCallback = () => {
-  window.history.replaceState({}, document.title, window.location.pathname)
-}
-
 export const oidcConfig = {
   authority:
     "https://login.microsoftonline.com/72fca1b1-2c2e-4376-a445-294d80196804",
@@ -26,6 +17,5 @@ export const oidcConfig = {
       "https://login.microsoftonline.com/72fca1b1-2c2e-4376-a445-294d80196804/oauth2/v2.0/token",
     end_session_endpoint:
       "https://login.microsoftonline.com/common/oauth2/v2.0/logout"
-  },
-  onSigninCallback
+  }
 }

@@ -22,12 +22,12 @@ const App = () => {
       !auth.isLoading &&
       !hasTriedSignin
     ) {
-      // TODO: Redirect to the current URL after login
-      // Redirect uri must be change to enable this: http://localhost:2999/*  ?
-      // auth.signinRedirect({
-      //   redirect_uri: `${ env.VITE_OIDC_REDIRECT_URL }${ window.location.pathname }`
-      // })
-      auth.signinRedirect()
+      const currentUrl = new URL(window.location.href)
+      const fullPathWithQuery = `${ currentUrl.pathname }${ currentUrl.search }`
+
+      auth.signinRedirect({        
+        url_state: fullPathWithQuery 
+      })
       setHasTriedSignin(true)
     }
   }, [auth, hasTriedSignin])
