@@ -15,6 +15,7 @@ const Registrations: React.FC<Props> = ({ bagId }) => {
       <HolidayRentalRegistrations
         data={ (data || []) as HolidayRentalRegistration[]}
         loading={ isBusy }
+        defaultOpen={ true }
       />
     </>
   )
