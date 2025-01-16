@@ -12,6 +12,8 @@ export const useResidents = (bagId: Components.Schemas.Address["bag_id"]) => {
   const [data, setData] = useState<Components.Schemas.Residents | undefined>(
     undefined
   )
+  const [mksError, setMKSError] = useState(null)
+  const [myAccessError, setMyAccessError] = useState(null)
 
   const url = makeApiUrl("addresses", bagId, "residents")
 
@@ -33,6 +35,11 @@ export const useResidents = (bagId: Components.Schemas.Address["bag_id"]) => {
         .then((response) => {
           setData(response.data)
         })
+        .catch((error) => {
+          if (error.status === 403) {
+            setMKSError(error?.response?.data?.message || error?.message)
+          }
+        })
         .finally(() => {
           setIsBusy(false)
         })
@@ -41,10 +48,14 @@ export const useResidents = (bagId: Components.Schemas.Address["bag_id"]) => {
   )
 
   useEffect(() => {
-    fetchOboToken().then((oboToken) => {
+    fetchOboToken()
+    .then((oboToken) => {
       fetchResidents(oboToken)
+    })
+    .catch((error) => {
+      setMyAccessError(error?.response?.data?.message || error?.message)
     })
   }, [fetchOboToken, fetchResidents])
 
-  return [ data, { isBusy }] as const
+  return [ data, { isBusy, mksError, myAccessError }] as const
 }
