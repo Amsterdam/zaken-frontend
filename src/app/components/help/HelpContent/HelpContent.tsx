@@ -1,10 +1,10 @@
 import { Accordion, Heading, Paragraph, themeSpacing } from "@amsterdam/asc-ui"
 import { RowWithColumn } from "app/components/layouts/Grid"
 import EmailLink from "./EmailLink"
-import { Refresh } from "app/components/shared/Icons"
 import styled from "styled-components"
+import CustomIcon from "app/components/shared/CustomIcon/CustomIcon"
 
-const RefreshIcon = styled (Refresh)`
+const StyledIcon = styled.span`
   vertical-align: text-top;
 `
 
@@ -49,7 +49,7 @@ const HelpContent: React.FC = () => {
             <Paragraph>
               Werkt { title } niet (goed)? Dan kan je de volgende dingen proberen:
               <ul>
-                <li>De pagina opnieuw te laden door op het refresh icoon <RefreshIcon /> te klikken.</li>
+                <li>De pagina opnieuw te laden door op het refresh icoon <StyledIcon><CustomIcon name="Refresh"/></StyledIcon> te klikken.</li>
                 <li>Uit te loggen, om vervolgens opnieuw in te loggen.</li>
               </ul>
             </Paragraph>

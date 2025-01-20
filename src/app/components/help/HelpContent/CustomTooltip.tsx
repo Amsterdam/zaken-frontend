@@ -1,11 +1,24 @@
-import { Tooltip } from "@material-ui/core"
-import { withStyles } from "@material-ui/core/styles"
+import { Tooltip } from "react-tooltip"
 
-const CustomTooltip = withStyles(theme => ({
-  tooltip: {
-    boxShadow: theme.shadows[1],
-    fontSize: 14
-  }
-}))(Tooltip)
+type Props = {
+  children: React.ReactNode
+  title: string
+}
+
+const CustomTooltip: React.FC<Props> = ({ children, title }) => {
+  const tooltipId = `tooltip-${ title }`
+  return (
+    <>
+      <span data-tooltip-id={tooltipId} >
+        {children}
+      </span>
+      <Tooltip
+        id={tooltipId}
+        content={title}
+        place="bottom"
+      />
+    </>
+  )
+}
 
 export default CustomTooltip

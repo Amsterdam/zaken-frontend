@@ -1,12 +1,12 @@
 import styled from "styled-components"
 import { Icon, themeSpacing } from "@amsterdam/asc-ui"
 import { useModal } from "app/components/shared/Modal/hooks/useModal"
-import { Edit } from "app/components/shared/Icons"
 import { appendTimeToDate } from "app/components/shared/Helpers/helpers"
 import DueDate from "app/components/shared/DueDate/DueDate"
 import ChangeDueDateModal from "./ChangeDueDateModal"
 import { useTaskUpdate } from "app/state/rest"
 import useHasPermission, { CAN_PERFORM_TASK } from "app/state/rest/custom/usePermissions/useHasPermission"
+import CustomIcon from "app/components/shared/CustomIcon/CustomIcon"
 
 type Props = {
   caseId: Components.Schemas.CaseDetail["id"]
@@ -48,7 +48,7 @@ const ChangeableDueDate: React.FC<Props> = ({ dueDate, caseId, caseUserTaskId })
         onClick={ openModal }
         >
         <DueDate date={ dueDate } />
-        <StyledIcon size={ 20 }><Edit titleAccess="Pas de slotdatum aan" /></StyledIcon>
+        <StyledIcon size={ 20 }><CustomIcon name="Edit" titleAccess="Pas de slotdatum aan" /></StyledIcon>
       </Span>
       <ChangeDueDateModal
         onSubmit={ onSubmit }

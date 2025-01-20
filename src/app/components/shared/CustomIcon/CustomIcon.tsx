@@ -1,13 +1,19 @@
 import React from "react"
 import icons from "./icons"
 
-type CustomIconProps = {
+export type CustomIconProps = {
   name: keyof typeof icons
   color?: string
   size?: number
+  titleAccess?: string
 }
 
-const CustomIcon: React.FC<CustomIconProps> = ({ name, color = "currentColor", size = 24 }) => {
+const CustomIcon: React.FC<CustomIconProps> = ({ 
+  name, 
+  color = "currentColor", 
+  size = 24,
+  titleAccess 
+}) => {
   const SvgComponent: any = icons[name]
 
   if (!SvgComponent) {
@@ -24,6 +30,7 @@ const CustomIcon: React.FC<CustomIconProps> = ({ name, color = "currentColor", s
       height={size}
       aria-hidden="true"
     >
+      {titleAccess && <title>{titleAccess}</title>}`
       <SvgComponent />
     </svg>
   )

@@ -1,11 +1,11 @@
 import React, { useState } from "react"
 import styled from "styled-components"
-import { themeColor, themeSpacing, Icon, Spinner } from "@amsterdam/asc-ui"
-import { CloudUpload } from "app/components/shared/Icons"
+import { themeColor, themeSpacing, Spinner } from "@amsterdam/asc-ui"
 import useProtectedRequest from "app/state/rest/hooks/useProtectedRequest"
 import { makeApiUrl } from "app/state/rest/hooks/utils/apiUrl"
 import DocumentTypeModal from "./DocumentTypeModal"
 import { useModal } from "app/components/shared/Modal/hooks/useModal"
+import CustomIcon from "app/components/shared/CustomIcon/CustomIcon"
 
 type Props = {
   caseId: Components.Schemas.CaseEvent["id"]
@@ -98,8 +98,10 @@ const FileUploader: React.FC<Props> = ({ caseId, getDocuments, documentTypes }) 
       <StyledLabel htmlFor="file-upload">
         Klik hier en selecteer een bestand om te uploaden
         <StyledIconSpan>
-          { loading ? <Spinner size={28} color={ themeColor("primary") }/> : (
-            <Icon size={28}><CloudUpload /></Icon>
+          { loading ? (
+            <Spinner size={28} color={ themeColor("primary") }/>
+          ) : (
+            <CustomIcon name="CloudUpload" size={ 28 } />
           )}
         </StyledIconSpan>
       </StyledLabel>

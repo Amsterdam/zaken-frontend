@@ -8,6 +8,7 @@ import Euro from "./Euro"
 import ExpandLess from "./ExpandLess"
 import ExpandMore from "./ExpandMore"
 import Folder from "./Folder"
+import Help from "./Help"
 import Home from "./Home"
 import Info from "./Info"
 import LockOpen from "./LockOpen"
@@ -31,6 +32,7 @@ const icons = {
   ExpandLess,
   ExpandMore,
   Folder,
+  Help,
   Home,
   Info,
   LockOpen,

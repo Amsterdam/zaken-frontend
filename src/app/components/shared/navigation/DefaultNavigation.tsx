@@ -3,9 +3,9 @@ import styled from "styled-components"
 import ButtonLink from "app/components/shared/ButtonLink/ButtonLink"
 import to from "app/routing/utils/to"
 import useKeycloak from "app/state/auth/keycloak/useKeycloak"
-import { Search, Help } from "app/components/shared/Icons"
 import MenuItems from "app/components/shared/navigation/MenuItems"
 import UserInfo from "../UserInfo/UserInfo"
+import CustomIcon from "../CustomIcon/CustomIcon"
 
 type Props = {
   showSearchButton: boolean
@@ -30,12 +30,24 @@ const DefaultNavigation: React.FC<Props> = ({ showSearchButton }) => {
       <div style={{ marginRight: "-10px" }}>
         <Hidden maxBreakpoint="laptopM">
           <ButtonLink to={ to("/hulp") } title="Help">
-            <IconButton size={ 50 } variant="blank" iconSize={ 28 } icon={ <Help /> } tabIndex={ -1 } />
+            <IconButton 
+              size={ 50 }   
+              variant="blank" 
+              iconSize={ 28 } 
+              icon={ <CustomIcon name="Help" /> } 
+              tabIndex={ -1 } 
+            />
           </ButtonLink>
         </Hidden>
         { showSearchButton &&
           <ButtonLink to={ to("/") } title="Zoeken">
-            <IconButton size={ 50 } variant="blank" iconSize={ 28 } icon={ <Search /> } tabIndex={ -1 } />
+            <IconButton 
+              size={ 50 } 
+              variant="blank" 
+              iconSize={ 28 } 
+              icon={ <CustomIcon name="Search" /> } 
+              tabIndex={ -1 } 
+            />
           </ButtonLink>
         }
       </div>

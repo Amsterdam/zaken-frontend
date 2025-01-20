@@ -1,9 +1,8 @@
 
 import styled, { keyframes } from "styled-components"
 import { Icon, themeSpacing } from "@amsterdam/asc-ui"
-import { Edit } from "app/components/shared/Icons"
 import useHasPermission, { CAN_PERFORM_TASK } from "app/state/rest/custom/usePermissions/useHasPermission"
-
+import CustomIcon from "app/components/shared/CustomIcon/CustomIcon"
 
 type Props = {
   tags: Components.Schemas.Tag[]
@@ -53,7 +52,7 @@ const CaseTags: React.FC<Props> = ({ tags = [], titleAccess = "Wijzig tag", onCl
     >
       { tags.map(tag => <Tag key={ tag.id }>{ tag.name }</Tag>)}
       <StyledIcon size={ 20 }>
-        <Edit titleAccess={ titleAccess } />
+        <CustomIcon name="Edit" titleAccess={ titleAccess } />
       </StyledIcon>
     </ClickableSpan>
   ) : <>{ tags.length > 0 ? tags.map(tag => <Tag key={ tag.id }>{ tag.name }</Tag>) : "-"}</>

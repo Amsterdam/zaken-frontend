@@ -1,15 +1,7 @@
 import { DateDisplay, isDate, CaseIdDisplay } from "@amsterdam/wonen-ui"
-import styled from "styled-components"
 import TableAction from "app/components/shared/TableAction/TableAction"
 import to from "app/routing/utils/to"
-import SensitiveCaseIcon from "app/components/case/icons/SensitiveCaseIcon/SensitiveCaseIcon"
-import EnforcementIcon from "app/components/case/icons/EnforcementIcon/EnforcementIcon"
 
-
-const Wrap = styled.div`
-  display: flex;
-  align-items: center;
-`
 
 const getStatus = (record: Record<string, any>) => {
   const { workflows, end_date } = record
@@ -31,13 +23,7 @@ const getColumns = (sorting: any) => {
     {
       header: "Zaak ID",
       dataIndex: "id",
-      render: (text: any, record: any) => (
-        <Wrap>
-          <CaseIdDisplay id={ record.id } />
-          <SensitiveCaseIcon sensitive={ record.sensitive }/>
-          <EnforcementIcon show={ record.is_enforcement_request } />
-        </Wrap>
-      )
+      render: (text: any, record: any) => <CaseIdDisplay id={ record.id } />
     }, {
       header: "Straat",
       dataIndex: "address.street_name",
