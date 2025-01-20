@@ -1,7 +1,7 @@
 
 import styled from "styled-components"
-import { Modal as AscModal, TopBar, Heading, Button, Icon, themeSpacing, themeColor } from "@amsterdam/asc-ui"
-import { Close } from "app/components/shared/Icons"
+import { Modal as AscModal, TopBar, Heading, Button, themeSpacing, themeColor } from "@amsterdam/asc-ui"
+import CustomIcon from "../CustomIcon/CustomIcon"
 
 type Props = {
   title: string
@@ -39,7 +39,7 @@ const Modal: React.FC<Props> = ({ children, title, isOpen, showCloseButton = tru
             variant="blank"
             style={{ alignSelf: "flex-start" }}
             >
-            <Icon size={28}><Close /></Icon>
+            <CustomIcon name="Close" size={ 28 }/>
           </Button>
         )}
       </Heading>

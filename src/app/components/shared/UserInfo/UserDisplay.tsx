@@ -1,6 +1,6 @@
 import styled from "styled-components"
-import { breakpoint, Icon, MenuButton } from "@amsterdam/asc-ui"
-import { PermIdentity, Logout } from "app/components/shared/Icons"
+import { breakpoint, MenuButton } from "@amsterdam/asc-ui"
+import CustomIcon from "../CustomIcon/CustomIcon"
 
 type Props = {
   name?: string
@@ -12,13 +12,10 @@ const UserWrapper = styled.div`
   vertical-align: middle;
   height: 54px;
 
-  span {
+  svg {
     display: inline-block;
     vertical-align: middle;
     margin-right: 10px;
-  }
-
-  svg {
     display: inline-block;
     transform: translateY(-2px);
   }
@@ -41,20 +38,19 @@ const StyledMenuButton = styled(MenuButton)`
 
 const UserDisplay: React.FC<Props> = ({ name, onClick }) => (
   <>
-    {name && (
+    { name && (
       <UserWrapper>
-        <Icon size={32}>
-          <PermIdentity />
-        </Icon>
-        <span>{name}</span>
+        <CustomIcon name="PermIdentity" size={ 32 }/>
+        <span>{ name }</span>
       </UserWrapper>
-    )}
+      )
+    }
     <StyledMenuButton
-      tabIndex={0}
-      onClick={onClick}
-      iconLeft={<Logout />}
+      tabIndex={ 0 }
+      onClick={ onClick }
+      iconLeft={ <CustomIcon name="Logout"/> }
       title="Uitloggen"
-      iconSize={24}
+      iconSize={ 24 }
     >
       Uitloggen
     </StyledMenuButton>
