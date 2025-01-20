@@ -4,9 +4,9 @@ import to from "app/routing/utils/to"
 import ChangeableDueDate from "app/components/case/tasks/ChangeDueDate/ChangebleDueDate"
 import TaskButton from "app/components/case/tasks/TaskButton/TaskButton"
 import taskActionMap from "./utils/taskActionMap"
-import LockIcon from "./components/LockIcon"
 import TableAction from "app/components/shared/TableAction/TableAction"
 import SelectTaskWorkflow from "./components/SelectTaskWorkflow"
+import CustomIcon from "app/components/shared/CustomIcon/CustomIcon"
 
 // This width value (113px) is the width of a date + edit icon including the spacing between them
 const Span = styled.span`
@@ -18,7 +18,7 @@ export default (execPost: (payload?: any) => Promise<unknown>) => (
   [
     {
       minWidth: 50,
-      render: () => <LockIcon />
+      render: () => <CustomIcon name="LockOpen" size={ 28 } />
     }, {
       header: "Open taken",
       dataIndex: "name",
