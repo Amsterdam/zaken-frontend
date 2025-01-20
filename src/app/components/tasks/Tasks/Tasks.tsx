@@ -11,7 +11,7 @@ import { getQueryUrl } from "app/state/rest/tasks"
 import useContextCache from "app/state/rest/provider/useContextCache"
 import { Heading, themeSpacing } from "@amsterdam/asc-ui"
 import styled from "styled-components"
-import EnforcementIcon from "app/components/case/icons/EnforcementIcon/EnforcementIcon"
+import CaseEnforcement from "app/components/case/icons/CaseEnforcement"
 import getThemeId from "app/components/tasks/utils/getThemeId"
 
 type Item = string | Components.Schemas.District["name"][]
@@ -172,7 +172,7 @@ const Tasks: React.FC = () => {
           <Wrap>
             <StyledHeading as="h2">
               Handhavingsverzoeken ({ enforcementDataSource?.count })
-              <EnforcementIcon show />
+              <CaseEnforcement isVisible={ true } />
             </StyledHeading>
             <TableTasks
               data={ enforcementDataSource?.results || [] }

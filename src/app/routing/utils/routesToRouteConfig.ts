@@ -1,5 +1,5 @@
 
-import * as Assets from "app/components/shared/Icons"
+import { CustomIconProps } from "app/components/shared/CustomIcon/CustomIcon"
 import slashSandwich from "./slashSandwich"
 
 export type RouteConfigObject = Record<string, RouteConfig | Page>
@@ -8,7 +8,7 @@ type RouteConfig = {
   Page: Page
   publicly?: boolean
   title?: string
-  icon?: keyof typeof Assets
+  icon?: CustomIconProps["name"]
   subRoutes?: RouteConfigObject
   permissionNames?: Components.Schemas.PermissionsEnum[]
 }

@@ -1,12 +1,12 @@
 import styled from "styled-components"
 import { Link } from "react-router-dom"
 import useHasPermission from "app/state/rest/custom/usePermissions/useHasPermission"
-import { Card, CardContent, Icon, Heading, themeColor, themeSpacing } from "@amsterdam/asc-ui"
-import * as Assets from "app/components/shared/Icons"
+import { Card, CardContent, Heading, themeColor, themeSpacing } from "@amsterdam/asc-ui"
+import CustomIcon, { CustomIconProps } from "app/components/shared/CustomIcon/CustomIcon"
 
 type Props = {
   to: string
-  icon: keyof typeof Assets
+  icon: CustomIconProps["name"]
   header: string
   count?: string | number
   permissionNames?: Components.Schemas.PermissionsEnum[]
@@ -42,19 +42,18 @@ const NavBlock: React.FC<Props> = ({ to: toPath, icon, header, count, permission
 
   const [hasPermission] = useHasPermission(permissionNames)
 
-  const Asset = Assets[icon]
   const card = (
-    <Wrap disabled={ !hasPermission }>
+    <Wrap disabled={!hasPermission}>
       <StyledCard backgroundColor="level2" shadow>
         <CardContent>
-          <Icon size={ 48 }>{ Asset ? <Asset /> : <span></span> }</Icon>
-          <StyledHeading as="h3">{ header }{ count ? ` (${ count })` : "" }</StyledHeading>
+          <CustomIcon name={icon} size={48} />
+          <StyledHeading as="h3">{header}{count ? ` (${ count })` : ""}</StyledHeading>
         </CardContent>
       </StyledCard>
     </Wrap>
   )
 
-  return hasPermission ? <StyledLink to={ toPath }>{ card }</StyledLink> : card
+  return hasPermission ? <StyledLink to={toPath}>{card}</StyledLink> : card
 }
 
 export default NavBlock

@@ -4,8 +4,8 @@ import type { DefinitionListData } from "@amsterdam/wonen-ui"
 import { useCase } from "app/state/rest"
 import ChangeableSubject from "./ChangeSubject/ChangeableSubject"
 import ChangeHousingCorporation from "./ChangeHousingCorporation/ChangeHousingCorporation"
-import SensitiveCaseIcon from "../icons/SensitiveCaseIcon/SensitiveCaseIcon"
-import EnforcementIcon from "../icons/EnforcementIcon/EnforcementIcon"
+import CaseSensitive from "../icons/CaseSensitive"
+import CaseEnforcement from "../icons/CaseEnforcement"
 import translationsCaseStates from "app/translations/translationsCaseStates"
 import EditableTag from "./EditableTag/EditableTag"
 
@@ -16,6 +16,7 @@ type Props = {
 const Wrap = styled.div`
   display: flex;
   align-items: center;
+  gap: 8px;
 `
 
 const StyledDiv = styled.div`
@@ -36,8 +37,8 @@ const getDataFirstCol = (caseItem?: Components.Schemas.CaseCreate) => {
     "Zaak ID": (
       <Wrap>
         <CaseIdDisplay id={ id } />
-        <SensitiveCaseIcon sensitive={ sensitive }/>
-        <EnforcementIcon show={ is_enforcement_request } />
+        <CaseSensitive isVisible={ sensitive }/>
+        <CaseEnforcement isVisible={ is_enforcement_request } />
       </Wrap>
     ),
     "Status": translationsCaseStates[state],

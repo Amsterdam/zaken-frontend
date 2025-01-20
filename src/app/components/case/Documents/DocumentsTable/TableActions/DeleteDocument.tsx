@@ -1,9 +1,9 @@
 import { Button, Paragraph, Spinner } from "@amsterdam/asc-ui"
-import { Delete } from "app/components/shared/Icons"
 import useProtectedRequest from "app/state/rest/hooks/useProtectedRequest"
 import { makeApiUrl } from "app/state/rest/hooks/utils/apiUrl"
 import { useState } from "react"
 import ConfirmModal from "app/components/shared/Modal/ConfirmModal"
+import CustomIcon from "app/components/shared/CustomIcon/CustomIcon"
 
 type Props = {
   record: any
@@ -39,7 +39,7 @@ const DeleteDocument: React.FC<Props> = ({ record, getDocuments, size = 20 }) =>
         size={ size + 4 }
         variant="blank"
         iconSize={ size + 4 }
-        icon={ loading ? <Spinner /> : <Delete /> }
+        icon={ loading ? <Spinner /> : <CustomIcon name="Delete" /> }
         onClick={ () => setIsOpen(true) }
         data-testid="delete-document"
       />

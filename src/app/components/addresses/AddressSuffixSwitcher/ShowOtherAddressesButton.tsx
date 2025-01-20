@@ -1,11 +1,10 @@
 
 import styled from "styled-components"
-import { ExpandMore, ExpandLess } from "app/components/shared/Icons"
 import { Button, Icon } from "@amsterdam/asc-ui"
-
 import { useModal } from "app/components/shared/Modal/hooks/useModal"
 import OtherAddressesModal from "./OtherAddressesModal"
 import { env } from "app/config/env"
+import CustomIcon from "app/components/shared/CustomIcon/CustomIcon"
 
 export type Index = "first" | "last" | undefined
 type Props = {
@@ -22,9 +21,9 @@ const StyledIcon = styled(Icon)`
 const renderIcon = (index: Index) => {
   switch(index) {
     case "first":
-      return <StyledIcon size={ 32 }><ExpandMore/></StyledIcon>
+      return <StyledIcon size={ 32 }><CustomIcon name="ExpandMore"/></StyledIcon>
     case "last":
-      return <StyledIcon size={ 32 }><ExpandLess/></StyledIcon>
+      return <StyledIcon size={ 32 }><CustomIcon name="ExpandLess"/></StyledIcon>
     default:
       return <StyledIcon
         size={ 32 }
