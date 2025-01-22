@@ -44,7 +44,7 @@ const DefaultLayout: React.FC<Props> = ({ showSearchButton = true, children }) =
       <Header
         tall
         fullWidth={ false }
-        title={`${ env.VITE_APP_TITLE ?? "Amsterdamse Zaak Administratie" } ${ env.VITE_ENVIRONMENT_SHORT }`}
+        title={`${ env.VITE_APP_TITLE ?? "Amsterdamse Zaak Administratie" } ${ env.VITE_ENVIRONMENT_SHORT } -v1`}
         homeLink={ to("/") }
         navigation={
           <MenuWrap>
