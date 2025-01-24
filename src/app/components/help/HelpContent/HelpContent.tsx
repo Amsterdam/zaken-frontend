@@ -13,7 +13,7 @@ const AccordionWrapper = styled.div`
 `
 
 const HelpContent: React.FC = () => {
-  const title = "AZA, TOP, de Planningstool en TON"
+  const title = "AZA, TON, TOP en de Planningstool"
   const titleShort = "AZA"
 
   return (
