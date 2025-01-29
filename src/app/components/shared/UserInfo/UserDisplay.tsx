@@ -7,7 +7,7 @@ type Props = {
   onClick: () => void
 }
 
-const Div = styled.div`
+const UserWrapper = styled.div`
   padding: 12px 0 0 16px;
   vertical-align: middle;
   height: 54px;
@@ -36,13 +36,13 @@ const StyledMenuButton = styled(MenuButton)`
   padding: 12px 16px 9px;
 `
 
-const UserDisplay: React.FC<Props> = ({ name, onClick }) =>
+const UserDisplay: React.FC<Props> = ({ name, onClick }) => (
   <>
     { name && (
-      <Div>
+      <UserWrapper>
         <CustomIcon name="PermIdentity" size={ 32 }/>
         <span>{ name }</span>
-      </Div>
+      </UserWrapper>
       )
     }
     <StyledMenuButton
@@ -55,4 +55,5 @@ const UserDisplay: React.FC<Props> = ({ name, onClick }) =>
       Uitloggen
     </StyledMenuButton>
   </>
+)
 export default UserDisplay

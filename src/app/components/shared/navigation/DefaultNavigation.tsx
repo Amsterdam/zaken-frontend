@@ -1,8 +1,8 @@
+import { useAuth } from "react-oidc-context"
 import { MenuInline, Button, MenuToggle, Hidden } from "@amsterdam/asc-ui"
 import styled from "styled-components"
 import ButtonLink from "app/components/shared/ButtonLink/ButtonLink"
 import to from "app/routing/utils/to"
-import useKeycloak from "app/state/auth/keycloak/useKeycloak"
 import MenuItems from "app/components/shared/navigation/MenuItems"
 import UserInfo from "../UserInfo/UserInfo"
 import CustomIcon from "../CustomIcon/CustomIcon"
@@ -16,7 +16,8 @@ const IconButton = styled(Button)`
 `
 
 const DefaultNavigation: React.FC<Props> = ({ showSearchButton }) => {
-  const { token } = useKeycloak()
+  const auth = useAuth()
+  const token = auth.user?.access_token
 
   if (!token) return null
 

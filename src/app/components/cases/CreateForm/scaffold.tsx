@@ -353,7 +353,6 @@ export default (
     .setGrid("mobileS", "1fr 1fr", [
       ["theme", "theme"],
       ["reason", "reason"],
-      ["housing_corporation"],
       ["reporter_anonymous", "reporter_anonymous"],
       ["reporter_name"],
       ["reporter_phone"],
@@ -363,6 +362,7 @@ export default (
       ["nuisance"],
       ["project"],
       ["mma_number"],
+      ["housing_corporation"],
       ["advertisement", "advertisement"],
       ["advertisements", "advertisements"],
       ["subjects", "subjects"],

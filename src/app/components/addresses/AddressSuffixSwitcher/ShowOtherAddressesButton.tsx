@@ -27,7 +27,7 @@ const renderIcon = (index: Index) => {
     default:
       return <StyledIcon
         size={ 32 }
-        iconUrl={ `${ env.REACT_APP_AZA_FE }/icons/chevron_up_down.svg` }
+        iconUrl={ `${ env.VITE_AZA_FRONTEND_URL }/icons/chevron_up_down.svg` }
         inline
       />
   }

@@ -1,20 +1,23 @@
-
-import type KeycloakTokenParsedExtended from "app/state/auth/keycloak/KeycloakTokenParsedExtended"
-
-import useKeycloak from "app/state/auth/keycloak/useKeycloak"
+import { useAuth } from "react-oidc-context"
 import UserDisplay from "./UserDisplay"
+import { useDecodedToken } from "app/state/auth/oidc/useDecodedToken"
 
 type Props = {
   showAsListItem?: boolean
-}
+};
 
 const UserInfo: React.FC<Props> = ({ showAsListItem = false }) => {
-  const { tokenParsed, logout } = useKeycloak()
-  const name = (tokenParsed as KeycloakTokenParsedExtended)?.name
-  const userDisplay = <UserDisplay name={ name } onClick={ logout } />
+  const auth = useAuth()
+  const decodedToken = useDecodedToken()
 
-  return showAsListItem ?
-    <li>{ userDisplay }</li> :
-    <span style={{ marginRight: "-20px" }}>{ userDisplay }</span>
+  const userDisplay = (
+    <UserDisplay name={decodedToken?.given_name} onClick={auth.signoutRedirect} />
+  )
+
+  return showAsListItem ? (
+    <li>{userDisplay}</li>
+  ) : (
+    <span style={{ marginRight: "-20px" }}>{userDisplay}</span>
+  )
 }
 export default UserInfo

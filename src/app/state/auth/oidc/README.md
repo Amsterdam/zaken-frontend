@@ -1,9 +1,10 @@
-# Keycloak, React, TypeScript
+# Entra-ID, React, TypeScript
+
+<!-- TODO: CREATE a option for local development -->
 
 ## Implement
 - Add `` to [App.tsx](https://github.com/Amsterdam/zaken-frontend/blob/main/src/App.tsx)
 - Optionally add a `initializedCallback` function
-- Use `useKeycloak` hook in your components
 
 ## Local development
 - Make sure to set `LOCAL_DEVELOPMENT_AUTHENTICATION=True` in `zaken-backend`

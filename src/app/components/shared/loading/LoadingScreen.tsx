@@ -9,7 +9,8 @@ const Wrap = styled.div`
   justify-content: center;
   height: 400px;
 `
-const PageSpinner: React.FC = () => (
+
+export const LoadingScreen: React.FC = () => (
   <DefaultLayout>
     <Wrap>
       <Spinner size={ 36 } />
@@ -17,4 +18,4 @@ const PageSpinner: React.FC = () => (
   </DefaultLayout>
 )
 
-export default PageSpinner
+export default LoadingScreen

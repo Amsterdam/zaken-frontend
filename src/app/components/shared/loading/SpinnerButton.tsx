@@ -7,7 +7,7 @@ type Props = Omit<ComponentProps<typeof Button>, "onClick"> & {
   onClick: () => Promise<any>
 }
 
-const SpinnerButton: React.FC<Props> = ({ onClick, ...restProps }) => {
+export const SpinnerButton: React.FC<Props> = ({ onClick, ...restProps }) => {
   const isMounted = useIsMounted()
   const [isSpinning, setIsSpinning] = useState(false)
 
