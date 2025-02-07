@@ -52,94 +52,85 @@ const TasksFilter: React.FC<Props> = ({
   tags, selectedTags, setSelectedTags, projects,
   selectedProjects, setSelectedProjects
 }) => (
-  <>
-    <FilterMenu>
-      <ScaffoldForm>
-        <ScaffoldFields { ...scaffoldMyTasks(owner, setOwner) } />
-      </ScaffoldForm>
-      { themes === undefined
-        ? <Spinner />
-        : (
-          <ScaffoldForm>
-            <ScaffoldFields { ...scaffoldTheme(theme, themes, setTheme) } />
-          </ScaffoldForm>
-        )
-      }
-      { roles === undefined
-        ? <Spinner />
-        : (
-          <ScaffoldForm>
-            <ScaffoldFields { ...scaffoldRole(role, roles, setRole) } />
-          </ScaffoldForm>
-        )
-      }
-      { reasons === undefined ? <Spinner /> : (
+  <FilterMenu>
+    <ScaffoldForm>
+      <ScaffoldFields {...scaffoldMyTasks(owner, setOwner)} />
+    </ScaffoldForm>
+    {themes === undefined
+      ? <Spinner />
+      : (
         <ScaffoldForm>
-          <ScaffoldFields { ...scaffoldReasons(reason, setReason, reasons) } />
+          <ScaffoldFields {...scaffoldTheme(theme, themes, setTheme)} />
         </ScaffoldForm>
-      )}
-      { taskNames === undefined ? <Spinner /> : (
-        <MultipleOptionsFilterBox
-          label="Taak namen"
-          options={ taskNames }
-          selectedOptions={ selectedTaskNames }
-          setSelectedOptions={ setSelectedTaskNames }
-        />
-      )}
+      )
+    }
+    {roles === undefined
+      ? <Spinner />
+      : (
+        <ScaffoldForm>
+          <ScaffoldFields {...scaffoldRole(role, roles, setRole)} />
+        </ScaffoldForm>
+      )
+    }
+    {reasons === undefined ? <Spinner /> : (
+      <ScaffoldForm>
+        <ScaffoldFields {...scaffoldReasons(reason, setReason, reasons)} />
+      </ScaffoldForm>
+    )}
+    {taskNames === undefined ? <Spinner /> : (
       <MultipleOptionsFilterBox
-        label="Corporaties"
-        options={ corporations }
-        selectedOptions={ selectedCorporations }
-        setSelectedOptions={ setSelectedCorporations }
+        label="Taak namen"
+        options={taskNames}
+        selectedOptions={selectedTaskNames}
+        setSelectedOptions={setSelectedTaskNames}
+      />
+    )}
+    <MultipleOptionsFilterBox
+      label="Corporaties"
+      options={corporations}
+      selectedOptions={selectedCorporations}
+      setSelectedOptions={setSelectedCorporations}
+      byId
+    />
+
+    {projects !== undefined && (
+      <MultipleOptionsFilterBox
+        label="Projecten"
+        options={projects}
+        selectedOptions={selectedProjects}
+        setSelectedOptions={setSelectedProjects}
         byId
       />
+    )}
 
-      { projects !== undefined && (
-        <MultipleOptionsFilterBox
-          label="Projecten"
-          options={ projects }
-          selectedOptions={ selectedProjects }
-          setSelectedOptions={ setSelectedProjects }
-          byId
-        />
-      )}
-
-      { subjects !== undefined && (
-        <MultipleOptionsFilterBox
-          label="Onderwerpen"
-          options={ subjects }
-          selectedOptions={ selectedSubjects }
-          setSelectedOptions={ setSelectedSubjects }
-          byId
-        />
-      )}
-      { tags !== undefined && (
-        <MultipleOptionsFilterBox
-          label="Tags"
-          options={ tags }
-          selectedOptions={ selectedTags }
-          setSelectedOptions={ setSelectedTags }
-          byId
-        />
-      )}
+    {subjects !== undefined && (
       <MultipleOptionsFilterBox
-        label="Stadsdelen"
-        options={ districts }
-        selectedOptions={ districtNames }
-        setSelectedOptions={ setDistrictNames }
+        label="Onderwerpen"
+        options={subjects}
+        selectedOptions={selectedSubjects}
+        setSelectedOptions={setSelectedSubjects}
+        byId
       />
-      <ScaffoldForm>
-        <ScaffoldFields { ...scaffoldPageSize(pageSize, setPageSize) } />
-      </ScaffoldForm>
-    </FilterMenu>
-    <FilterMenu>
-      <i>
-        <a href={ `${ window.location.pathname }${ window.location.search }` }>
-          Herlaad taken
-        </a>
-      </i>
-    </FilterMenu>
-  </>
+    )}
+    {tags !== undefined && (
+      <MultipleOptionsFilterBox
+        label="Tags"
+        options={tags}
+        selectedOptions={selectedTags}
+        setSelectedOptions={setSelectedTags}
+        byId
+      />
+    )}
+    <MultipleOptionsFilterBox
+      label="Stadsdelen"
+      options={districts}
+      selectedOptions={districtNames}
+      setSelectedOptions={setDistrictNames}
+    />
+    <ScaffoldForm>
+      <ScaffoldFields {...scaffoldPageSize(pageSize, setPageSize)} />
+    </ScaffoldForm>
+  </FilterMenu>
 )
 
 
