@@ -7,8 +7,8 @@ import FlashMessageProvider from "app/state/flashMessages/FlashMessageProvider"
 import ApiProvider from "app/state/rest/provider/ApiProvider"
 import ValueProvider from "app/state/context/ValueProvider"
 import PageTitle from "app/routing/components/PageTitle"
-// import { env } from "app/config/env"
 import { LoadingScreenBasic, FullScreenWrapper } from "app/components/shared/loading"
+import FeedbackWrapper from "app/components/FeedbackWrapper"
 
 const App = () => {
   const auth = useAuth()
@@ -53,6 +53,7 @@ const App = () => {
           <FlashMessageProvider>
             <ApiProvider>
               <ValueProvider>
+                <FeedbackWrapper />
                 <Router />
               </ValueProvider>
             </ApiProvider>
