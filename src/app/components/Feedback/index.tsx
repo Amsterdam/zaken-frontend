@@ -27,7 +27,7 @@ const ListItem = styled.div`
   margin-bottom: 12px;
 `
 
-const FeedbackWrapper: React.FC = () => {
+const Feedback: React.FC = () => {
   const { isModalOpen, openModal, closeModal } = useModal()
   const auth = useAuth()
   const email = auth.user?.profile?.email
@@ -104,4 +104,4 @@ const FeedbackWrapper: React.FC = () => {
   )
 }
 
-export default FeedbackWrapper
+export default Feedback

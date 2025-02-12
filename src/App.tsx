@@ -8,7 +8,7 @@ import ApiProvider from "app/state/rest/provider/ApiProvider"
 import ValueProvider from "app/state/context/ValueProvider"
 import PageTitle from "app/routing/components/PageTitle"
 import { LoadingScreenBasic, FullScreenWrapper } from "app/components/shared/loading"
-import FeedbackWrapper from "app/components/FeedbackWrapper"
+import Feedback from "app/components/Feedback"
 
 const App = () => {
   const auth = useAuth()
@@ -53,7 +53,7 @@ const App = () => {
           <FlashMessageProvider>
             <ApiProvider>
               <ValueProvider>
-                <FeedbackWrapper />
+                <Feedback />
                 <Router />
               </ValueProvider>
             </ApiProvider>
