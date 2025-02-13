@@ -484,6 +484,10 @@ declare namespace Components {
             omschrijving: string;
             url: string; // uri
         }
+        export interface Feedback {
+            feedback: string;
+            url: string;
+        }
         export interface Fine {
             identificatienummer: string;
             vorderingnummer: number;

@@ -1,8 +1,7 @@
 #!/usr/bin/env ts-node-script
 import { exec } from "child_process"
-import { env } from "app/config/env"
 
-const url = `${ env.VITE_API_URL }schema/`
+const url = "http://localhost:8080/api/v1/schema/"
 exec(`dtsgen -o ./src/__generated__/apiSchema.d.ts --url ${ url }`,
   (error, stdout, stderr) => {
     if (error) {
