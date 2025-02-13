@@ -42,12 +42,14 @@ const Feedback: React.FC = () => {
       feedback,
       url: window.location.href
     })
-      .then(() => {
-        addSuccessFlashMessage(
-          window.location.pathname,
-          "Succes",
-          "Bedankt voor je feedback!"
-        )
+      .then((e) => {
+        if ((e as { status: number })?.status === 200) {
+          addSuccessFlashMessage(
+            window.location.pathname,
+            "Succes",
+            "Bedankt voor je feedback!"
+          )
+        }
       })
       .finally(() => {
         setLoading(false)
