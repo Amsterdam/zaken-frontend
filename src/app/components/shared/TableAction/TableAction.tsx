@@ -1,7 +1,7 @@
 import { Button, Hidden } from "@amsterdam/asc-ui"
-import { ChevronRight } from "../Icons"
 import ButtonLink from "../ButtonLink/ButtonLink"
 import CustomTooltip from "app/components/help/HelpContent/CustomTooltip"
+import CustomIcon from "../CustomIcon/CustomIcon"
 
 type Props = React.ComponentProps<typeof Button> & {
   to?: string
@@ -21,8 +21,7 @@ const TableAction: React.FC<Props> = ({ to, disabled = false, children, ...restP
           variant="textButton"
           as={ isLink ? "span" : "button" }
           disabled={ disabled }
-          iconLeft={ <ChevronRight /> }
-          iconSize={ 24 }
+          iconLeft={ <CustomIcon name="ChevronRight" /> }
           { ...restProps }
           style={ disabled ? { pointerEvents: "none" } : {} } // https://mui.com/components/tooltips/#disabled-elements
         >

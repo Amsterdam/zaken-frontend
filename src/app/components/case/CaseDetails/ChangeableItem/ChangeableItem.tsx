@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { Icon, themeSpacing } from "@amsterdam/asc-ui"
-import { Edit } from "app/components/shared/Icons"
 import useHasPermission, { CAN_PERFORM_TASK } from "app/state/rest/custom/usePermissions/useHasPermission"
+import CustomIcon from "app/components/shared/CustomIcon/CustomIcon"
 
 type Props = {
   name?: string
@@ -37,7 +37,7 @@ const ChangeableItem = ({ name = "-", titleAccess = "", onClick }: Props) => {
     >
       { name }
       <StyledIcon size={ 20 }>
-        <Edit titleAccess={ titleAccess } />
+        <CustomIcon name="Edit" titleAccess={ titleAccess } />
       </StyledIcon>
     </Span>
   ) : <>{ name }</>

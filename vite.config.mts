@@ -1,6 +1,6 @@
 import { resolve } from "node:path"
 import { readFileSync } from "node:fs"
-import { defineConfig, loadEnv, Plugin } from "vite"
+import { defineConfig, loadEnv, Plugin, createFilter, transformWithEsbuild } from "vite"
 import react from "@vitejs/plugin-react"
 import tsconfigPaths from "vite-tsconfig-paths"
 import eslint from 'vite-plugin-eslint';
@@ -20,7 +20,8 @@ export default defineConfig(({ mode }) => {
       buildPathPlugin(),
       basePlugin(),
       importPrefixPlugin(),
-      htmlPlugin(mode)
+      htmlPlugin(mode),
+      svgrPlugin()
     ]
   }
 })
@@ -28,7 +29,7 @@ export default defineConfig(({ mode }) => {
 function setEnv(mode: string) {
   Object.assign(
     process.env,
-    loadEnv(mode, ".", ["REACT_APP_", "NODE_ENV", "PUBLIC_URL"])
+    loadEnv(mode, ".", ["REACT_APP_", "NODE_ENV", "PUBLIC_URL", "VITE_"])
   )
   process.env.NODE_ENV ||= mode
   const { homepage } = JSON.parse(readFileSync("package.json", "utf-8"))
@@ -48,7 +49,7 @@ function envPlugin(): Plugin {
   return {
     name: "env-plugin",
     config(_, { mode }) {
-      const env = loadEnv(mode, ".", ["REACT_APP_", "NODE_ENV", "PUBLIC_URL"])
+      const env = loadEnv(mode, ".", ["REACT_APP_", "NODE_ENV", "PUBLIC_URL", "VITE_"])
       return {
         define: Object.fromEntries(
           Object.entries(env).map(([key, value]) => [
@@ -168,13 +169,51 @@ function importPrefixPlugin(): Plugin {
 // Migration guide: Follow the guide below, you may need to rename your environment variable to a name that begins with VITE_ instead of REACT_APP_
 // https://vitejs.dev/guide/env-and-mode.html#html-env-replacement
 function htmlPlugin(mode: string): Plugin {
-  const env = loadEnv(mode, ".", ["REACT_APP_", "NODE_ENV", "PUBLIC_URL"])
+  const env = loadEnv(mode, ".", ["REACT_APP_", "NODE_ENV", "PUBLIC_URL", "VITE_"])
   return {
     name: "html-plugin",
     transformIndexHtml: {
       order: "pre",
       handler(html) {
         return html.replace(/%(.*?)%/g, (match, p1) => env[p1] ?? match)
+      }
+    }
+  }
+}
+
+
+// In Create React App, SVGs can be imported directly as React components. This is achieved by svgr libraries.
+// https://create-react-app.dev/docs/adding-images-fonts-and-files/#adding-svgs
+function svgrPlugin(): Plugin {
+  const filter = createFilter("**/*.svg")
+  const postfixRE = /[?#].*$/s
+
+  return {
+    name: "svgr-plugin",
+    async transform(code, id) {
+      if (filter(id)) {
+        const { transform } = await import("@svgr/core")
+        const { default: jsx } = await import("@svgr/plugin-jsx")
+
+        const filePath = id.replace(postfixRE, "")
+        const svgCode = readFileSync(filePath, "utf8")
+
+        const componentCode = await transform(svgCode, undefined, {
+          filePath,
+          caller: {
+            previousExport: code,
+            defaultPlugins: [jsx]
+          }
+        })
+
+        const res = await transformWithEsbuild(componentCode, id, {
+          loader: "jsx"
+        })
+
+        return {
+          code: res.code,
+          map: null
+        }
       }
     }
   }

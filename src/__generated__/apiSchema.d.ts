@@ -570,11 +570,25 @@ declare namespace Components {
             data: {
                 startDatum: string;
                 eindDatum: string;
+                gemaaktOp: string;
                 nachten: number;
                 gasten: number;
                 isAangepast: Boolean;
                 isVerwijderd: Boolean;
             }[];
+        }
+        export interface RegistrationDetails {
+            registrationNumber: string;
+            requester: {
+                [name: string]: any;
+            };
+            rentalHouse: {
+                [name: string]: any;
+            };
+            requestForOther: boolean;
+            requestForBedAndBreakfast: boolean;
+            createdAt: string; // date-time
+            agreementDate: string; // date-time
         }
         export interface OIDCAuthenticate {
             code: string;

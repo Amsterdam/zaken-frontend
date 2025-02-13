@@ -1,25 +1,54 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { ThemeProvider, GlobalStyle } from "@amsterdam/asc-ui"
 import { BrowserRouter } from "react-router-dom"
-import KeycloakProvider from "app/state/auth/keycloak/KeycloakProvider"
-import initializedCallback from "app/state/auth/keycloak/initializedCallback"
+import { hasAuthParams, useAuth } from "react-oidc-context"
 import Router from "app/routing/components/Router"
 import FlashMessageProvider from "app/state/flashMessages/FlashMessageProvider"
 import ApiProvider from "app/state/rest/provider/ApiProvider"
 import ValueProvider from "app/state/context/ValueProvider"
-import isLocalDevelopment from "app/state/auth/keycloak/isLocalDevelopment"
 import PageTitle from "app/routing/components/PageTitle"
+// import { env } from "app/config/env"
+import { LoadingScreenBasic, FullScreenWrapper } from "app/components/shared/loading"
 
+const App = () => {
+  const auth = useAuth()
+  const [hasTriedSignin, setHasTriedSignin] = useState(false)
 
-const App = () => (
-  <React.Fragment>
-    <PageTitle />
-    <ThemeProvider>
-      <GlobalStyle />
-      <KeycloakProvider
-        shouldInitialize={ isLocalDevelopment === false }
-        initializedCallback={ initializedCallback }
-      >
+  useEffect(() => {
+    if (
+      !hasAuthParams() &&
+      !auth.isAuthenticated &&
+      !auth.activeNavigator &&
+      !auth.isLoading &&
+      !hasTriedSignin
+    ) {
+      const currentUrl = new URL(window.location.href)
+      const fullPathWithQuery = `${ currentUrl.pathname }${ currentUrl.search }`
+
+      auth.signinRedirect({        
+        url_state: fullPathWithQuery 
+      })
+      setHasTriedSignin(true)
+    }
+  }, [auth, hasTriedSignin])
+
+  if (auth.isLoading) {
+    return <LoadingScreenBasic/>
+  }
+
+  if (auth.error) {
+    return <FullScreenWrapper>Oops... {auth.error.message}</FullScreenWrapper>
+  }
+
+  if (!auth.isAuthenticated) {
+    return <FullScreenWrapper>Sorry, het is niet gelukt om in te loggen.</FullScreenWrapper>
+  }
+
+  return (
+    <React.Fragment>
+      <PageTitle />
+      <ThemeProvider>
+        <GlobalStyle />
         <BrowserRouter>
           <FlashMessageProvider>
             <ApiProvider>
@@ -29,9 +58,9 @@ const App = () => (
             </ApiProvider>
           </FlashMessageProvider>
         </BrowserRouter>
-      </KeycloakProvider>
-    </ThemeProvider>
-  </React.Fragment>
-)
+      </ThemeProvider>
+    </React.Fragment>
+  )
+}
 
 export default App

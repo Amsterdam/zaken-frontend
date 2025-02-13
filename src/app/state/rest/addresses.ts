@@ -52,11 +52,10 @@ export const useMeldingen = (bagId: string) => {
   })
 }
 
-export const useResidents = (bagId: Components.Schemas.Address["bag_id"], options?: Options) => {
-  const handleError = useErrorHandler()
-  return useApiRequest<Components.Schemas.Residents>({
-    ...options,
-    url: makeApiUrl("addresses", bagId, "residents"),
+export const useRegistrations = (bagId: string) => {
+  const handleError = useSuppressErrorHandler()
+  return useApiRequest<Components.Schemas.RegistrationDetails>({
+    url: makeApiUrl("addresses", bagId, "registrations"),
     groupName: "addresses",
     handleError,
     isProtected: true

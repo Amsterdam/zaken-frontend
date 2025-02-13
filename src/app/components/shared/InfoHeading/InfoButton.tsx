@@ -1,9 +1,8 @@
 import styled from "styled-components"
-import { Button, Icon } from "@amsterdam/asc-ui"
-import { Info } from "app/components/shared/Icons"
-
+import { Button } from "@amsterdam/asc-ui"
 import Modal, { ModalBlock } from "app/components/shared/Modal/Modal"
 import { useModal } from "app/components/shared/Modal/hooks/useModal"
+import CustomIcon from "../CustomIcon/CustomIcon"
 
 type Props = {
   infoTitle: string
@@ -28,7 +27,7 @@ const InfoButton: React.FC<Props> = ({ infoTitle, infoText }) => {
           as="span"
           variant="blank"
           onClick={ openModal }
-          icon={ <Icon><Info /></Icon> }
+          icon={ <CustomIcon name="Info" /> }
         />
       </ButtonWrap>
       <Modal title={ infoTitle } isOpen={ isModalOpen } onClose={ closeModal }>
