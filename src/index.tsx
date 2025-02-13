@@ -4,7 +4,6 @@ import { AuthProvider } from "react-oidc-context"
 import App from "./App"
 import * as serviceWorker from "./serviceWorker"
 import packageInfo from "../package.json"
-import { env } from "app/config/env"
 import { oidcConfig } from "app/state/auth/oidc/oidcConfig"
 
 
@@ -23,4 +22,3 @@ ReactDOM.render(
 serviceWorker.unregister()
 
 console.log("Name:", packageInfo.name, packageInfo.version)
-console.log("Commit hash:", env.REACT_APP_GIT_COMMIT_HASH ?? "n/a")
