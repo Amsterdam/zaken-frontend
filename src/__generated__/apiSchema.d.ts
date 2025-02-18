@@ -487,6 +487,8 @@ declare namespace Components {
         export interface Feedback {
             feedback: string;
             url: string;
+            user_agent?: string;
+            screen?: string;
         }
         export interface Fine {
             identificatienummer: string;

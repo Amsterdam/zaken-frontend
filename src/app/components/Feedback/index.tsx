@@ -40,7 +40,9 @@ const Feedback: React.FC = () => {
     setLoading(true)
     execPost({
       feedback,
-      url: window.location.href
+      url: window.location.href,
+      user_agent: navigator.userAgent,
+      screen: `${ window.innerWidth }x${ window.innerHeight }`
     })
       .then((e) => {
         if ((e as { status: number })?.status === 200) {
