@@ -6,17 +6,11 @@ type Props = {
 }
 
 const CustomTooltip: React.FC<Props> = ({ children, title }) => {
-  const tooltipId = `tooltip-${ title }`
+  const tooltipId = `tooltip-${title}`
   return (
     <>
-      <span data-tooltip-id={tooltipId} >
-        {children}
-      </span>
-      <Tooltip
-        id={tooltipId}
-        content={title}
-        place="bottom"
-      />
+      <span data-tooltip-id={tooltipId}>{children}</span>
+      <Tooltip id={tooltipId} content={title} place="bottom" />
     </>
   )
 }

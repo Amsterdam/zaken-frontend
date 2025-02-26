@@ -16,7 +16,6 @@ module.exports = {
     "space-unary-ops": ["error"],
     "space-infix-ops": ["error"],
     "semi": ["error", "never"],
-    "template-curly-spacing": ["error", "always"],
     "react/jsx-indent-props": ["error", 2],
     "react/jsx-indent" : ["error", 2],
 

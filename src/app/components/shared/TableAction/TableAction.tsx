@@ -2,45 +2,49 @@ import { Button, Hidden } from "@amsterdam/asc-ui"
 import ButtonLink from "../ButtonLink/ButtonLink"
 import CustomTooltip from "app/components/help/HelpContent/CustomTooltip"
 import CustomIcon from "../CustomIcon/CustomIcon"
+import styled from "styled-components"
 
 type Props = React.ComponentProps<typeof Button> & {
   to?: string
   disabled?: boolean
 }
 
-const TableAction: React.FC<Props> = ({ to, disabled = false, children, ...restProps }) => {
+const ButtonWrapper = styled.span`
+  display: flex;
+  align-items: center;
+  height: 100%;
+`
 
-  const onClick = (event: React.MouseEvent) => event.stopPropagation()
-
+const TableAction: React.FC<Props> = ({ to, disabled = false, children }) => {
   const isLink = to !== undefined && disabled === false
 
-  const action = (
-    <CustomTooltip title={disabled ? "U heeft geen rechten om deze actie uit te voeren" : ""}>
-      <span>
-        <Button
-          variant="textButton"
-          as={ isLink ? "span" : "button" }
-          disabled={ disabled }
-          iconLeft={ <CustomIcon name="ChevronRight" /> }
-          { ...restProps }
-          style={ disabled ? { pointerEvents: "none" } : {} } // https://mui.com/components/tooltips/#disabled-elements
-        >
-          <Hidden maxBreakpoint="laptopM">
-            <span>
-              { children }
-            </span>
-          </Hidden>
-        </Button>
-      </span>
+  const actionButton = (
+    <CustomTooltip
+      title={disabled ? "U heeft geen rechten om deze actie uit te voeren" : ""}
+    >
+      <Button
+        variant="textButton"
+        as={isLink ? "span" : "button"}
+        disabled={disabled}
+        iconLeft={<CustomIcon name="ChevronRight" />}
+      >
+        <Hidden maxBreakpoint="laptopM">
+          <span>{children}</span>
+        </Hidden>
+      </Button>
     </CustomTooltip>
   )
 
-  return (
-    isLink ? (
-      <ButtonLink to={ to! } onClick={ onClick } flex>
-        { action }
-      </ButtonLink>
-    ) : action
+  return to ? (
+    <ButtonLink
+      to={to!}
+      onClick={(e: React.MouseEvent) => e.stopPropagation()}
+      flex
+    >
+      {actionButton}
+    </ButtonLink>
+  ) : (
+    <ButtonWrapper>{actionButton}</ButtonWrapper>
   )
 }
 
