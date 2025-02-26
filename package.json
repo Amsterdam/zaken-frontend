@@ -42,7 +42,7 @@
     "@types/resize-observer-browser": "^0.1.7",
     "@types/styled-components": "^5.1.26",
     "@vitejs/plugin-react": "^4.3.4",
-    "axios": "^1.7.3",
+    "axios": "^1.8.0",
     "dayjs": "^1.11.13",
     "env-cmd": "^10.1.0",
     "eslint-config-react-app": "^7.0.1",
