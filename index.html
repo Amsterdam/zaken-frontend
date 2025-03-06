@@ -8,6 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta name="description" content="%VITE_APP_TITLE_SHORT%" />
+    <meta http-equiv="Content-Security-Policy" 
+    content="
+      script-src 'self';
+      form-action 'self';
+      upgrade-insecure-requests;
+      style-src 'self' 'unsafe-inline';
+      img-src 'self' data: https://api.data.amsterdam.nl;
+    ">
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <base href="/">
     <title>%VITE_APP_TITLE_SHORT%</title>
@@ -19,12 +27,7 @@
     <div id="root">
       <p id="chunk-js-loading-failure" style="display:none;">Het lijkt erop dat onderdelen van deze website niet correct kunnen worden geladen. <a href="">Probeer te herladen</a></p>
     </div>
-    <script>
-      window.setTimeout(function () {
-        var elem = document.querySelector("#chunk-js-loading-failure");
-        if (elem != null) elem.style.display = "block";
-      }, 4000);
-    </script>
+    <script src=%PUBLIC_URL%/load.js></script>
   </body>
 </html>
 
