@@ -7,6 +7,7 @@ import styled from "styled-components"
 type Props = React.ComponentProps<typeof Button> & {
   to?: string
   disabled?: boolean
+  onClick?: () => void
 }
 
 const ButtonWrapper = styled.span`
@@ -15,8 +16,20 @@ const ButtonWrapper = styled.span`
   height: 100%;
 `
 
-const TableAction: React.FC<Props> = ({ to, disabled = false, children }) => {
+const TableAction: React.FC<Props> = ({
+  to,
+  disabled = false,
+  onClick,
+  children
+}) => {
   const isLink = to !== undefined && disabled === false
+
+  const handleClick = (event: React.MouseEvent) => {
+    if (onClick) {
+      onClick()
+    }
+    event.stopPropagation()
+  }
 
   const actionButton = (
     <CustomTooltip
@@ -27,6 +40,7 @@ const TableAction: React.FC<Props> = ({ to, disabled = false, children }) => {
         as={isLink ? "span" : "button"}
         disabled={disabled}
         iconLeft={<CustomIcon name="ChevronRight" />}
+        onClick={handleClick}
       >
         <Hidden maxBreakpoint="laptopM">
           <span>{children}</span>
@@ -38,7 +52,7 @@ const TableAction: React.FC<Props> = ({ to, disabled = false, children }) => {
   return to ? (
     <ButtonLink
       to={to!}
-      onClick={(e: React.MouseEvent) => e.stopPropagation()}
+      onClick={handleClick}
       flex
     >
       {actionButton}
