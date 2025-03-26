@@ -28,7 +28,7 @@ const ResidentsOverview: React.FC<Props> = ({ bagId }) => {
         <Paragraph>
           Om toegang te krijgen tot de BRP-gegevens, moet je de juiste rechten aanvragen voor <strong>Makelaarsuite (MKS)</strong>. 
           <br />
-          Volg de onderstaande stappen om toegang aan te vragen.<br /><br />
+          Vraag je teamleider of doe een melding bij de servicedesk.<br /><br />
         </Paragraph>
       </>
     )
