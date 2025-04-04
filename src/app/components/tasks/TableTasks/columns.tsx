@@ -8,7 +8,7 @@ export default (sorting: any, myId?: string, isEnforcement?: boolean) => ([
     header: "Opgepakt door",
     dataIndex: "owner",
     render: (owner: any, record: any) => (
-      <SelectTask taskId={ record.id } taskOwner={ owner } isEnforcement={ !!isEnforcement }/>
+      <SelectTask taskId={record.id} taskOwner={owner} isEnforcement={!!isEnforcement} />
     )
   }, {
     header: "Straat",
@@ -18,7 +18,7 @@ export default (sorting: any, myId?: string, isEnforcement?: boolean) => ([
     minWidth: 200,
     render: (text: any, record: any) => {
       const { number, suffix, suffix_letter } = record.case.address
-      return `${ text } ${ number }${ suffix ? "-" : "" }${ suffix || "" }${ suffix_letter ? "-" : "" }${ suffix_letter || "" }`
+      return `${text} ${number}${suffix ? "-" : ""}${suffix || ""}${suffix_letter ? "-" : ""}${suffix_letter || ""}`
     }
   }, {
     header: "Postcode",
@@ -37,17 +37,17 @@ export default (sorting: any, myId?: string, isEnforcement?: boolean) => ([
     sorter: (a: any, b: any) => new Date(a.case.start_date).getTime() - new Date(b.case.start_date).getTime(),
     sortOrder: sorting.dataIndex === "start_date" && sorting.order,
     minWidth: 100,
-    render: (text: any) => <DateDisplay date={ text } emptyText="-" />
+    render: (text: any) => <DateDisplay date={text} emptyText="-" />
   }, {
     header: "Slotdatum",
     dataIndex: "due_date",
     minWidth: 50,
     sorter: (a: any, b: any) => new Date(a?.due_date).getTime() - new Date(b?.due_date).getTime(),
     sortOrder: sorting.dataIndex === "due_date" && sorting.order,
-    render: (due_date: any) => <DueDate date={ due_date ?? undefined } emptyText="-" />
+    render: (due_date: any) => <DueDate date={due_date ?? undefined} emptyText="-" />
   }, {
     dataIndex: "case.id",
     minWidth: 140,
-    render: (id: any) => <LinkButton text="Zaakdetails" path={ `/zaken/${id }` } />
+    render: (id: any) => <LinkButton text="Zaakdetails" path={`/zaken/${id}`} />
   }
 ])

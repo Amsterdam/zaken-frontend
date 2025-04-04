@@ -18,9 +18,6 @@ const getStatus = (record: Record<string, any>) => {
 }
 
 const getColumns = (sorting: any) => {
-  console.log("TO1", "/zaken/:id")
-  console.log("TO2", to("/zaken/:id"))
-
   const columns = [
     {
       header: "Zaak ID",
