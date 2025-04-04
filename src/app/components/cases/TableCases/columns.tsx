@@ -1,5 +1,4 @@
 import { DateDisplay, isDate, CaseIdDisplay } from "@amsterdam/wonen-ui"
-import to from "app/routing/utils/to"
 import LinkButton from "app/components/shared/LinkButton/LinkButton"
 
 
