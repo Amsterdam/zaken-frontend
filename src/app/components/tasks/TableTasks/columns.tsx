@@ -1,8 +1,7 @@
 import { DateDisplay } from "@amsterdam/wonen-ui"
 import DueDate from "app/components/shared/DueDate/DueDate"
-import TableAction from "app/components/shared/TableAction/TableAction"
-import to from "app/routing/utils/to"
 import SelectTask from "./SelectTask/SelectTask"
+import LinkButton from "app/components/shared/LinkButton/LinkButton"
 
 export default (sorting: any, myId?: string, isEnforcement?: boolean) => ([
   {
@@ -49,6 +48,6 @@ export default (sorting: any, myId?: string, isEnforcement?: boolean) => ([
   }, {
     dataIndex: "case.id",
     minWidth: 140,
-    render: (id: any) => <TableAction to={ to("/zaken/:id", { id }) }>Zaakdetails</TableAction>
+    render: (id: any) => <LinkButton text="Zaakdetails" path={ `/zaken/${id }` } />
   }
 ])
