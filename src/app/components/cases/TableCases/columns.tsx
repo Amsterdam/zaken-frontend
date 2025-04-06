@@ -1,6 +1,5 @@
 import { DateDisplay, isDate, CaseIdDisplay } from "@amsterdam/wonen-ui"
-import TableAction from "app/components/shared/TableAction/TableAction"
-import to from "app/routing/utils/to"
+import LinkButton from "app/components/shared/LinkButton/LinkButton"
 
 
 const getStatus = (record: Record<string, any>) => {
@@ -18,7 +17,6 @@ const getStatus = (record: Record<string, any>) => {
 }
 
 const getColumns = (sorting: any) => {
-
   const columns = [
     {
       header: "Zaak ID",
@@ -77,7 +75,7 @@ const getColumns = (sorting: any) => {
     }, {
       dataIndex: "navigateId",
       minWidth: 140,
-      render: (id: any, record: any) => <TableAction to={ to("/zaken/:id", { id: record.id }) }>Zaakdetails</TableAction>
+      render: (id: any, record: any) => <LinkButton text="Zaakdetails" />
     }
   ]
 
