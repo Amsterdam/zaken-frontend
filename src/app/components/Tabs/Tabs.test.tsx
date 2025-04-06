@@ -1,18 +1,16 @@
 import { useState } from "react"
 import { fireEvent, render } from "@testing-library/react"
+// import { describe, it, expect, afterEach, beforeEach } from "vitest"
 import { Tab, Tabs } from "."
 
 describe("Tabs", () => {
   const consoleOutput: string[] = []
-  // eslint-disable-next-line no-console
   const originalWarning = console.warn
   const mockedWarn = (output: string) => consoleOutput.push(output)
   beforeEach(() => {
-    // eslint-disable-next-line no-console
     console.warn = mockedWarn
   })
   afterEach(() => {
-    // eslint-disable-next-line no-console
     console.warn = originalWarning
   })
   it("should render the labels and contents of the tabs", () => {
@@ -32,10 +30,10 @@ describe("Tabs", () => {
     const tabPanelOne = container.querySelector("#panel-one")
     const tabPanelTwo = container.querySelector("#panel-two")
 
-    expect(tabOne).toHaveTextContent("First")
-    expect(tabTwo).toHaveTextContent("Second")
-    expect(tabPanelOne).toHaveTextContent("Contents of the first tab.")
-    expect(tabPanelTwo).toHaveTextContent("Contents of the second tab.")
+    expect(tabOne?.textContent).toContain("First")
+    expect(tabTwo?.textContent).toContain("Second")
+    expect(tabPanelOne?.textContent).toContain("Contents of the first tab.")
+    expect(tabPanelTwo?.textContent).toContain("Contents of the second tab.")
   })
 
   it("should set up aria attributes and associate the tab buttons with the tab panels", () => {
@@ -50,27 +48,24 @@ describe("Tabs", () => {
       </Tabs>
     )
 
-    expect(getByRole("tablist")).toHaveAttribute(
-      "aria-label",
-      "An example of tabs"
-    )
+    expect(getByRole("tablist").getAttribute("aria-label")).toBe("An example of tabs")
 
     const tabOne = container.querySelector("#tab-one")
     const tabTwo = container.querySelector("#tab-two")
     const tabPanelOne = container.querySelector("#panel-one")
     const tabPanelTwo = container.querySelector("#panel-two")
 
-    expect(tabOne).toHaveAttribute("role", "tab")
-    expect(tabOne).toHaveAttribute("aria-controls", "panel-one")
+    expect(tabOne?.getAttribute("role")).toBe("tab")
+    expect(tabOne?.getAttribute("aria-controls")).toBe("panel-one")
 
-    expect(tabTwo).toHaveAttribute("role", "tab")
-    expect(tabTwo).toHaveAttribute("aria-controls", "panel-two")
+    expect(tabTwo?.getAttribute("role")).toBe("tab")
+    expect(tabTwo?.getAttribute("aria-controls")).toBe("panel-two")
 
-    expect(tabPanelOne).toHaveAttribute("role", "tabpanel")
-    expect(tabPanelOne).toHaveAttribute("aria-labelledby", "tab-one")
+    expect(tabPanelOne?.getAttribute("role")).toBe("tabpanel")
+    expect(tabPanelOne?.getAttribute("aria-labelledby")).toBe("tab-one")
 
-    expect(tabPanelTwo).toHaveAttribute("role", "tabpanel")
-    expect(tabPanelTwo).toHaveAttribute("aria-labelledby", "tab-two")
+    expect(tabPanelTwo?.getAttribute("role")).toBe("tabpanel")
+    expect(tabPanelTwo?.getAttribute("aria-labelledby")).toBe("tab-two")
   })
 
   it("should select a tab when clicked", () => {
@@ -90,27 +85,27 @@ describe("Tabs", () => {
     const tabPanelOne = container.querySelector("#panel-one")
     const tabPanelTwo = container.querySelector("#panel-two")
 
-    expect(tabOne).toHaveAttribute("aria-selected", "true")
-    expect(tabOne).toHaveAttribute("tabindex", "0")
+    expect(tabOne?.getAttribute("aria-selected")).toBe("true")
+    expect(tabOne?.getAttribute("tabindex")).toBe("0")
 
-    expect(tabTwo).toHaveAttribute("aria-selected", "false")
-    expect(tabTwo).toHaveAttribute("tabindex", "-1")
+    expect(tabTwo?.getAttribute("aria-selected")).toBe("false")
+    expect(tabTwo?.getAttribute("tabindex")).toBe("-1")
 
-    expect(tabPanelOne).not.toHaveAttribute("hidden")
-    expect(tabPanelTwo).toHaveAttribute("hidden")
+    expect(tabPanelOne?.hasAttribute("hidden")).toBeFalsy()
+    expect(tabPanelTwo?.hasAttribute("hidden")).toBeTruthy()
 
     if (tabTwo) {
       fireEvent.click(tabTwo)
     }
 
-    expect(tabOne).toHaveAttribute("aria-selected", "false")
-    expect(tabOne).toHaveAttribute("tabindex", "-1")
+    expect(tabOne?.getAttribute("aria-selected")).toBe("false")
+    expect(tabOne?.getAttribute("tabindex")).toBe("-1")
 
-    expect(tabTwo).toHaveAttribute("aria-selected", "true")
-    expect(tabTwo).toHaveAttribute("tabindex", "0")
+    expect(tabTwo?.getAttribute("aria-selected")).toBe("true")
+    expect(tabTwo?.getAttribute("tabindex")).toBe("0")
 
-    expect(tabPanelOne).toHaveAttribute("hidden")
-    expect(tabPanelTwo).not.toHaveAttribute("hidden")
+    expect(tabPanelOne?.hasAttribute("hidden")).toBeTruthy()
+    expect(tabPanelTwo?.hasAttribute("hidden")).toBeFalsy()
   })
 
   it("should have tab panels reachable by keyboard navigation", () => {
@@ -128,12 +123,12 @@ describe("Tabs", () => {
     const tabPanelOne = container.querySelector("#panel-one")
     const tabPanelTwo = container.querySelector("#panel-two")
 
-    expect(tabPanelOne).toHaveAttribute("tabindex", "0")
-    expect(tabPanelTwo).toHaveAttribute("tabindex", "0")
+    expect(tabPanelOne?.getAttribute("tabindex")).toBe("0")
+    expect(tabPanelTwo?.getAttribute("tabindex")).toBe("0")
   })
 
   it("should forward the onClick event on the Tab", () => {
-    const onClick = jest.fn()
+    const onClick = vi.fn()
     const { container } = render(
       <Tabs label="An example of tabs">
         <Tab id="one" label="First" onClick={onClick}>
@@ -166,7 +161,7 @@ describe("Tabs", () => {
       </Tabs>
     )
 
-    expect(container.querySelector("#tab-one")).toHaveAttribute("title", "foo")
+    expect(container.querySelector("#tab-one")?.getAttribute("title")).toBe("foo")
   })
 
   it("should be able to set the active initial tab", () => {
@@ -184,10 +179,7 @@ describe("Tabs", () => {
       </Tabs>
     )
 
-    expect(container.querySelector("#tab-three")).toHaveAttribute(
-      "tabindex",
-      "0"
-    )
+    expect(container.querySelector("#tab-three")?.getAttribute("tabindex")).toBe("0")
   })
 
   it("should log a warning and set the active tab to the first when passing a wrong activeTab", () => {
@@ -205,7 +197,7 @@ describe("Tabs", () => {
       </Tabs>
     )
 
-    expect(container.querySelector("#tab-one")).toHaveAttribute("tabindex", "0")
+    expect(container.querySelector("#tab-one")?.getAttribute("tabindex")).toBe("0")
 
     expect(consoleOutput).toEqual([
       "You passed a wrong activeTab value to Tabs component. Given ID: foo"
@@ -240,19 +232,10 @@ describe("Tabs", () => {
     }
     const { container, getByTestId } = render(<Wrapper />)
 
-    expect(container.querySelector("#tab-two")).toHaveAttribute("tabindex", "0")
-    expect(container.querySelector("#tab-three")).toHaveAttribute(
-      "tabindex",
-      "-1"
-    )
+    expect(container.querySelector("#tab-two")?.getAttribute("tabindex")).toBe("0")
+    expect(container.querySelector("#tab-three")?.getAttribute("tabindex")).toBe("-1")
     fireEvent.click(getByTestId("button"))
-    expect(container.querySelector("#tab-two")).toHaveAttribute(
-      "tabindex",
-      "-1"
-    )
-    expect(container.querySelector("#tab-three")).toHaveAttribute(
-      "tabindex",
-      "0"
-    )
+    expect(container.querySelector("#tab-two")?.getAttribute("tabindex")).toBe("-1")
+    expect(container.querySelector("#tab-three")?.getAttribute("tabindex")).toBe("0")
   })
 })

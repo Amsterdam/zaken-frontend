@@ -19,9 +19,9 @@ describe("useRequestQueue", () => {
     const { result, waitForNextUpdate } = renderHook(() => useRequestQueue())
 
     const deferred1 = new Deferred()
-    const execDeferred1 = jest.fn(() => deferred1.promise)
+    const execDeferred1 = vi.fn(() => deferred1.promise)
     const deferred2 = new Deferred()
-    const execDeferred2 = jest.fn(() => deferred2.promise)
+    const execDeferred2 = vi.fn(() => deferred2.promise)
 
     act(() => {
       // Pushing two requests:
@@ -57,9 +57,9 @@ describe("useRequestQueue", () => {
     const { result, waitForNextUpdate } = renderHook(() => useRequestQueue())
 
     const deferred1 = new Deferred()
-    const execDeferred1 = jest.fn(() => deferred1.promise)
+    const execDeferred1 = vi.fn(() => deferred1.promise)
     const deferred2 = new Deferred()
-    const execDeferred2 = jest.fn(() => deferred2.promise)
+    const execDeferred2 = vi.fn(() => deferred2.promise)
 
     await act(() => {
       // Pushing two requests:

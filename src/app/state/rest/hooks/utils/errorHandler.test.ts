@@ -6,8 +6,8 @@ import { AxiosError, AxiosRequestHeaders } from "axios"
 
 import { useErrorHandler } from "./errorHandler"
 
-const mockAddErrorFlashMessage = jest.fn()
-jest.mock("../../../flashMessages/useFlashMessages", () => ({
+const mockAddErrorFlashMessage = vi.fn()
+vi.mock("../../../flashMessages/useFlashMessages", () => ({
   __esModule: true,
   useFlashMessages: () => ({ addErrorFlashMessage: mockAddErrorFlashMessage })
 }))
@@ -18,7 +18,7 @@ describe("rest hook utils", () => {
       mockAddErrorFlashMessage.mockReset()
     })
 
-    it ("should return a callback pushes a flash message", () => {
+    it("should return a callback pushes a flash message", () => {
       const mockedError: AxiosError = {
         isAxiosError: true,
         name: "error",

@@ -6,7 +6,7 @@ import ShowHide from "./ShowHide"
 describe("ShowHide", () => {
   const renderFields = (shouldShow: (obj: FormState<any>) => boolean) => (
     <Form
-      onSubmit={jest.fn()}
+      onSubmit={vi.fn()}
       render={({ form }) => (
         <ShowHide
           shouldShow={shouldShow}
@@ -18,16 +18,18 @@ describe("ShowHide", () => {
 
   it("should render component when shouldShow function returns true", () => {
     const { getByLabelText } = render(renderFields(() => true))
-    expect(getByLabelText("Foo")).toBeInTheDocument()
+    const element = getByLabelText("Foo")
+    expect(element).toBeTruthy() // Checks that the element is present in the DOM
   })
 
   it("should NOT render component when shouldShow function returns false", () => {
     const { queryByLabelText } = render(renderFields(() => false))
-    expect(queryByLabelText("Foo")).not.toBeInTheDocument()
+    const element = queryByLabelText("Foo")
+    expect(element).toBeNull() // Checks that the element is not in the DOM
   })
 
   it("should call the shouldShow method with updated values", () => {
-    const shouldShow = jest.fn(() => true)
+    const shouldShow = vi.fn(() => true)
     const { getByLabelText } = render(renderFields(shouldShow))
 
     fireEvent.change(getByLabelText("Foo"), { target: { value: "changed" } })
