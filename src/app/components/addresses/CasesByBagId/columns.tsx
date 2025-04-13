@@ -24,7 +24,7 @@ export const columnsOpenCases = [
   }, {
     dataIndex: "id",
     minWidth: 140,
-    render: () => <LinkButton text="Zaakdetails" />
+    render: (id: any) => <LinkButton text="Zaakdetails" path={`/zaken/${id}`}/>
   }
 ]
 
@@ -51,6 +51,6 @@ export const columnsClosedCases = [
   }, {
     dataIndex: "id",
     minWidth: 140,
-    render: (id: any) => <LinkButton text="Zaakdetails"/>
+    render: (id: any) => <LinkButton text="Zaakdetails" path={`/zaken/${id}`}/>
   }
 ]

@@ -75,7 +75,7 @@ const getColumns = (sorting: any) => {
     }, {
       dataIndex: "navigateId",
       minWidth: 140,
-      render: (id: any, record: any) => <LinkButton text="Zaakdetails" />
+      render: (id: any, record: any) => <LinkButton text="Zaakdetails" path={`/zaken/${record.id}`} />
     }
   ]
 
