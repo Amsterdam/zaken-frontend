@@ -8,7 +8,7 @@ const columns = [
   }, {
     dataIndex: "adresseerbaarobject_id",
     minWidth: 100,
-    render: () => <LinkButton text="Bekijk" />
+    render: (bagId: any) => <LinkButton text="Bekijk" path={`/adres/${bagId}`}/>
   }
 ]
 
