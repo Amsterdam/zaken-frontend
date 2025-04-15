@@ -57,7 +57,7 @@
     "react-tooltip": "^5.28.0",
     "styled-components": "^5.3.11",
     "typescript": "5.8.2",
-    "vite": "^6.2.5",
+    "vite": "^6.2.6",
     "vite-plugin-eslint": "^1.8.1",
     "vite-tsconfig-paths": "^5.1.3"
   },
