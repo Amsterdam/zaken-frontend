@@ -1,5 +1,4 @@
-import TableAction from "app/components/shared/TableAction/TableAction"
-import to from "app/routing/utils/to"
+import LinkButton from "app/components/shared/LinkButton/LinkButton"
 
 const columns = [
   {
@@ -10,11 +9,7 @@ const columns = [
   {
     dataIndex: "adresseerbaarobject_id",
     minWidth: 140,
-    render: (bagId: any) => (
-      <TableAction to={ to("/adres/:bagId", { bagId }) }>
-        Bekijk
-      </TableAction>
-    )
+    render: (bagId: any) => <LinkButton text="Bekijk" path={`/adres/${bagId}`}/>
   }
 ]
 

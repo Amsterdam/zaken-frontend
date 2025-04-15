@@ -1,6 +1,9 @@
 import { useModal } from "app/components/shared/Modal/hooks/useModal"
-import TableAction from "app/components/shared/TableAction/TableAction"
 import FormModal from "../FormModal/FormModal"
+import { Button } from "@amsterdam/asc-ui"
+import CustomTooltip from "app/components/help/HelpContent/CustomTooltip"
+import CustomIcon from "app/components/shared/CustomIcon/CustomIcon"
+import Hidden from "app/components/shared/Hidden/Hidden"
 
 type Props = {
   onSubmit: (
@@ -23,9 +26,25 @@ const TaskButton: React.FC<Props> = ({
 
   return (
     <>
-      <TableAction onClick={openModal} disabled={disabled}>
-        Taak afronden
-      </TableAction>
+      <div style={{ display: "flex", alignItems: "center", height: "100%" }}>
+        <CustomTooltip
+          title={
+            disabled ? "U heeft geen rechten om deze actie uit te voeren" : ""
+          }
+        >
+          <Button
+            variant="textButton"
+            as="button"
+            disabled={disabled}
+            iconLeft={<CustomIcon name="ChevronRight" />}
+            onClick={openModal}
+          >
+            <Hidden maxBreakpoint="laptopM">
+              <span>Taak afronden</span>
+            </Hidden>
+          </Button>
+        </CustomTooltip>
+      </div>
       <FormModal
         taskName={taskName}
         caseId={caseId}

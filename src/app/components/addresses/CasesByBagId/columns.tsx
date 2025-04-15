@@ -1,6 +1,5 @@
-import to from "app/routing/utils/to"
 import { CaseIdDisplay, DateDisplay } from "@amsterdam/wonen-ui"
-import TableAction from "app/components/shared/TableAction/TableAction"
+import LinkButton from "app/components/shared/LinkButton/LinkButton"
 
 export const columnsOpenCases = [
   {
@@ -25,7 +24,7 @@ export const columnsOpenCases = [
   }, {
     dataIndex: "id",
     minWidth: 140,
-    render: (id: any) => <TableAction to={ to("/zaken/:id", { id }) }>Zaakdetails</TableAction>
+    render: (id: any) => <LinkButton text="Zaakdetails" path={`/zaken/${id}`}/>
   }
 ]
 
@@ -52,7 +51,6 @@ export const columnsClosedCases = [
   }, {
     dataIndex: "id",
     minWidth: 140,
-    render: (id: any) => <TableAction to={ to("/zaken/:id", { id }) }>Zaakdetails</TableAction>
+    render: (id: any) => <LinkButton text="Zaakdetails" path={`/zaken/${id}`}/>
   }
 ]
-

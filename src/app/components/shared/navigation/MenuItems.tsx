@@ -1,9 +1,10 @@
-import { MenuItem, MenuButton, Hidden } from "@amsterdam/asc-ui"
+import { MenuItem, MenuButton } from "@amsterdam/asc-ui"
 
 import routes from "app/routing/routes"
 import to from "app/routing/utils/to"
 import StyledButtonLink from "./StyledButtonLink"
 import IsAuthorizedMenuButton from "./IsAuthorizedMenuButton"
+import Hidden from "app/components/shared/Hidden/Hidden"
 
 const items = [
   {

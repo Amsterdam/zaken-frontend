@@ -22,7 +22,11 @@ export default defineConfig(({ mode }) => {
       importPrefixPlugin(),
       htmlPlugin(mode),
       svgrPlugin()
-    ]
+    ],
+    test: {
+      globals: true, // Enables global API like `describe`, `it`, `expect`, etc.
+      environment: "jsdom",
+    },
   }
 })
 
@@ -34,11 +38,10 @@ function setEnv(mode: string) {
   process.env.NODE_ENV ||= mode
   const { homepage } = JSON.parse(readFileSync("package.json", "utf-8"))
   process.env.PUBLIC_URL ||= homepage
-    ? `${
-      homepage.startsWith("http") || homepage.startsWith("/")
-        ? homepage
-        : `/${ homepage }`
-    }`.replace(/\/$/, "")
+    ? `${homepage.startsWith("http") || homepage.startsWith("/")
+      ? homepage
+      : `/${homepage}`
+      }`.replace(/\/$/, "")
     : ""
 }
 
@@ -53,7 +56,7 @@ function envPlugin(): Plugin {
       return {
         define: Object.fromEntries(
           Object.entries(env).map(([key, value]) => [
-            `process.env.${ key }`,
+            `process.env.${key}`,
             JSON.stringify(value)
           ])
         )
@@ -83,8 +86,8 @@ function devServerPlugin(): Plugin {
           port: parseInt(PORT || "3000", 10),
           open: true,
           ...(https
-						&& SSL_CRT_FILE
-						&& SSL_KEY_FILE && {
+            && SSL_CRT_FILE
+            && SSL_KEY_FILE && {
             https: {
               cert: readFileSync(resolve(SSL_CRT_FILE)),
               key: readFileSync(resolve(SSL_KEY_FILE))

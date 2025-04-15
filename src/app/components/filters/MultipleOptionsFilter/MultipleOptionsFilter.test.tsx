@@ -10,20 +10,21 @@ const mockedOptions = [
   { id: 6, name: "Foxtrot" }
 ]
 
-const mockedSetDistrictNames = jest.fn()
+const mockedSetDistrictNames = vi.fn()
 
 test("has correct option values", () => {
   const { queryByText } = render(
     <MultipleOptionsFilter
       label="test"
-      options={ mockedOptions }
-      selectedOptions={ [] }
-      setSelectedOptions={ mockedSetDistrictNames }
+      options={mockedOptions}
+      selectedOptions={[]}
+      setSelectedOptions={mockedSetDistrictNames}
     />
   )
 
   for (let i = 0; i < mockedOptions.length; i++) {
-    expect(queryByText(mockedOptions[i].name)).toBeInTheDocument()
+    const option = queryByText(mockedOptions[i].name)
+    expect(option).toBeTruthy()
   }
 })
 
@@ -35,24 +36,23 @@ test("checkboxes are checked", () => {
   render(
     <MultipleOptionsFilter
       label="test"
-      options={ mockedOptions }
-      selectedOptions={ ARR_1.map((item) => item.name) }
-      setSelectedOptions={ mockedSetDistrictNames }
+      options={mockedOptions}
+      selectedOptions={ARR_1.map((item) => item.name)}
+      setSelectedOptions={mockedSetDistrictNames}
     />
   )
 
-  // checkboxes in first array are checked
+  // checkboxes in the first array are checked
   for (let i = 0; i < ARR_1.length; i++) {
-    const checkbox = screen.getByTestId(ARR_1[i].name)
-    expect(checkbox).toBeChecked()
+    const checkbox = screen.getByTestId(ARR_1[i].name) as HTMLInputElement
+    expect(checkbox.checked).toBeTruthy() // Checks that the checkbox is checked
   }
 
-  // checkboxes in second array are NOT checked
+  // checkboxes in the second array are NOT checked
   for (let i = 0; i < ARR_2.length; i++) {
-    const checkbox = screen.getByTestId(ARR_2[i].name)
-    expect(checkbox).not.toBeChecked()
+    const checkbox = screen.getByTestId(ARR_2[i].name) as HTMLInputElement
+    expect(checkbox.checked).toBeFalsy() // Checks that the checkbox is not checked
   }
-
 })
 
 test("label is set and changed", () => {
@@ -61,23 +61,23 @@ test("label is set and changed", () => {
 
   const { rerender, queryByText } = render(
     <MultipleOptionsFilter
-      label={ LABEL_1 }
-      options={ mockedOptions }
-      selectedOptions={ [] }
-      setSelectedOptions={ mockedSetDistrictNames }
+      label={LABEL_1}
+      options={mockedOptions}
+      selectedOptions={[]}
+      setSelectedOptions={mockedSetDistrictNames}
     />
   )
-  expect(queryByText(LABEL_1)).toBeInTheDocument()
+  expect(queryByText(LABEL_1)).toBeTruthy()
 
   rerender(
     <MultipleOptionsFilter
-      label={ LABEL_2 }
-      options={ mockedOptions }
-      selectedOptions={ [] }
-      setSelectedOptions={ mockedSetDistrictNames }
+      label={LABEL_2}
+      options={mockedOptions}
+      selectedOptions={[]}
+      setSelectedOptions={mockedSetDistrictNames}
     />
   )
-  expect(queryByText(LABEL_2)).toBeInTheDocument()
+  expect(queryByText(LABEL_2)).toBeTruthy()
 
 })
 
@@ -86,14 +86,14 @@ test("onChange is called and checkbox is checked", () => {
   const { rerender } = render(
     <MultipleOptionsFilter
       label="test"
-      options={ mockedOptions }
-      selectedOptions={ [] }
-      setSelectedOptions={ mockedSetDistrictNames }
+      options={mockedOptions}
+      selectedOptions={[]}
+      setSelectedOptions={mockedSetDistrictNames}
     />
   )
 
-  const checkbox = screen.getByTestId(testOptionName)
-  expect(checkbox).not.toBeChecked()
+  const checkbox = screen.getByTestId(testOptionName) as HTMLInputElement
+  expect(checkbox.checked).toBeFalsy()
 
   fireEvent.click(checkbox)
 
@@ -103,12 +103,12 @@ test("onChange is called and checkbox is checked", () => {
   rerender(
     <MultipleOptionsFilter
       label="test"
-      options={ mockedOptions }
-      selectedOptions={ [testOptionName] }
-      setSelectedOptions={ mockedSetDistrictNames }
+      options={mockedOptions}
+      selectedOptions={[testOptionName]}
+      setSelectedOptions={mockedSetDistrictNames}
     />
   )
   // testOptionName is set as prop so checkbox must be checked.
-  expect(screen.getByTestId(testOptionName)).toBeChecked()
+  expect(checkbox.checked).toBeTruthy()
 
 })
