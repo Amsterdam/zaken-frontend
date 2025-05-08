@@ -6,7 +6,7 @@ import HomeMenu from "app/components/home/HomeMenu/HomeMenu"
 import SearchWrapper from "app/components/search/SearchWrapper/SearchWrapper"
 import { useRedirectFromState } from "app/routing/useRedirectFromState"
 
-const IndexPage: React.FC = () => {
+const HomePage: React.FC = () => {
   useRedirectFromState()
   
   return (
@@ -22,4 +22,4 @@ const IndexPage: React.FC = () => {
   )
 }
 
-export default IndexPage
+export default HomePage
