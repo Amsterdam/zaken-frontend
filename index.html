@@ -15,7 +15,7 @@
       upgrade-insecure-requests;
       style-src 'self' 'unsafe-inline';
       default-src 'self';
-      connect-src %CONNECT_SRC%;
+      connect-src %VITE_CSP_CONNECT_SRC%;
       img-src 'self' data: https://api.data.amsterdam.nl;
     ">
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
