@@ -49,10 +49,12 @@ function setEnv(mode: string) {
 // Migration guide: Follow the guide below to replace process.env with import.meta.env in your app, you may also need to rename your environment variable to a name that begins with VITE_ instead of REACT_APP_
 // https://vitejs.dev/guide/env-and-mode.html#env-variables
 function envPlugin(): Plugin {
+  let env: Record<string, string> = {}
+
   return {
     name: "env-plugin",
     config(_, { mode }) {
-      const env = loadEnv(mode, ".", ["REACT_APP_", "NODE_ENV", "PUBLIC_URL", "VITE_"])
+      env = loadEnv(mode, ".", ["REACT_APP_", "NODE_ENV", "PUBLIC_URL", "VITE_"])
       return {
         define: Object.fromEntries(
           Object.entries(env).map(([key, value]) => [
@@ -61,6 +63,10 @@ function envPlugin(): Plugin {
           ])
         )
       }
+    },
+    transformIndexHtml(html) {
+      const connectSrc = `'self' ${env.VITE_CSP_CONNECT_SRC ?? ''}`.trim()
+      return html.replace(/%CONNECT_SRC%/g, connectSrc)
     }
   }
 }
