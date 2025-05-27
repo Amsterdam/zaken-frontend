@@ -21,6 +21,7 @@ export default defineConfig(({ mode }) => {
       basePlugin(),
       importPrefixPlugin(),
       htmlPlugin(mode),
+      cspPlugin(mode),
       svgrPlugin()
     ],
     test: {
@@ -33,7 +34,7 @@ export default defineConfig(({ mode }) => {
 function setEnv(mode: string) {
   Object.assign(
     process.env,
-    loadEnv(mode, ".", ["REACT_APP_", "NODE_ENV", "PUBLIC_URL", "VITE_"])
+    loadEnv(mode, ".", ["NODE_ENV", "PUBLIC_URL", "VITE_"])
   )
   process.env.NODE_ENV ||= mode
   const { homepage } = JSON.parse(readFileSync("package.json", "utf-8"))
@@ -45,6 +46,25 @@ function setEnv(mode: string) {
     : ""
 }
 
+// Plugin om de juiste CSP connect-src waarde in de HTML te injecteren
+function cspPlugin(mode: string): Plugin {
+  return {
+    name: "csp-plugin",
+    transformIndexHtml(html) {
+      // Haal de waarde van VITE_CSP_CONNECT_SRC uit de omgevingsvariabelen
+      const env = loadEnv(mode, ".", ["VITE_"])
+      const connectSrc = env.VITE_CSP_CONNECT_SRC || "'self'"
+
+      // Vervang de placeholder in de meta-tag
+      return html.replace(
+        '%VITE_CSP_CONNECT_SRC%',
+        connectSrc
+      )
+    },
+  }
+}
+
+
 // Expose `process.env` environment variables to your client code
 // Migration guide: Follow the guide below to replace process.env with import.meta.env in your app, you may also need to rename your environment variable to a name that begins with VITE_ instead of REACT_APP_
 // https://vitejs.dev/guide/env-and-mode.html#env-variables
@@ -52,7 +72,7 @@ function envPlugin(): Plugin {
   return {
     name: "env-plugin",
     config(_, { mode }) {
-      const env = loadEnv(mode, ".", ["REACT_APP_", "NODE_ENV", "PUBLIC_URL", "VITE_"])
+      const env = loadEnv(mode, ".", ["NODE_ENV", "PUBLIC_URL", "VITE_"])
       return {
         define: Object.fromEntries(
           Object.entries(env).map(([key, value]) => [
