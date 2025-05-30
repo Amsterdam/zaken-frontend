@@ -11,6 +11,7 @@ export type StateType = {
     reason: string
     results: Components.Schemas.Case[]
     sorting: TABLE.Schemas.Sorting
+    streetName: string
     subjects: string[]
     tags: string[]
     theme: string
@@ -53,6 +54,7 @@ export const initialState: StateType = {
       dataIndex: "start_date",
       order: "DESCEND"
     },
+    streetName: "",
     subjects: [],
     tags: [],
     theme: "",

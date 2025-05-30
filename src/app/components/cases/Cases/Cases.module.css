@@ -1,0 +1,12 @@
+.Grid {
+  margin: 0 auto;
+  display: grid;
+  grid-gap: 1rem;
+  @media (min-width: 1600px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.Filter {
+  min-width: 300px;
+  max-width: 400px;
+}
