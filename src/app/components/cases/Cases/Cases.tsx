@@ -21,7 +21,7 @@ const ONDERMIJNING = "Ondermijning"
 
 const Cases: React.FC = () => {
   const {
-    count, districtNames, fromStartDate, housingCorporations, pagination, projects,
+    count, districtNames, fromStartDate, housingCorporations, openCases, pagination, projects,
     reason, results, sorting, streetName, subjects, tags, theme, updateContextCases
   } = useContext(ContextValues)["cases"]
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
@@ -39,6 +39,7 @@ const Cases: React.FC = () => {
     sorting,
     theme,
     fromStartDate,
+    openCases,
     projects,
     reason,
     streetName,
@@ -125,6 +126,7 @@ const Cases: React.FC = () => {
             districts={districts}
             districtNames={districtNames}
             pageSize={pagination.pageSize?.toString() || "10"}
+            openCases={openCases}
             projects={projectsTheme?.results}
             reason={reason}
             reasons={reasons}
@@ -135,6 +137,7 @@ const Cases: React.FC = () => {
             setDate={(value: string) => onChangeFilter("fromStartDate", value)}
             setDistrictNames={(value: Components.Schemas.District["name"][]) => onChangeFilter("districtNames", value)}
             setPageSize={onChangePageSize}
+            setOpenCases={(value: string) => onChangeFilter("openCases", value)}
             setReason={(value: string) => onChangeFilter("reason", value)}
             setSelectedCorporations={(value: string[]) => onChangeFilter("housingCorporations", value)}
             setSelectedProjects={(value: string[]) => onChangeFilter("projects", value)}
