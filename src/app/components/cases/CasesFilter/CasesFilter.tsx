@@ -9,6 +9,7 @@ import scaffoldPageSize from "./scaffoldPageSize"
 import scaffoldReason from "./scaffoldReason"
 import MultipleOptionsFilterBox from "app/components/filters/MultipleOptionsFilterBox/MultipleOptionsFilterBox"
 import scaffoldClosedCases from "./scaffoldClosedCases"
+import { useFilterHandler } from "./useFilterHandler"
 
 type Props = {
   date: string
@@ -24,16 +25,6 @@ type Props = {
   selectedProjects: string[]
   selectedSubjects: string[]
   selectedTags: string[]
-  setDate: (value: string) => void
-  setDistrictNames: (value: Components.Schemas.District["name"][]) => void
-  setOpenCases: (value: string) => void
-  setPageSize: (value: string) => void
-  setReason: (value: string) => void
-  setSelectedCorporations: (value: Components.Schemas.HousingCorporation["name"][]) => void
-  setSelectedProjects: (value: string[]) => void
-  setSelectedSubjects: (value: string[]) => void
-  setSelectedTags: (value: string[]) => void
-  setTheme: (value: string) => void
   subjects?: Components.Schemas.Subject[]
   tags?: Components.Schemas.Tag[]
   theme: string
@@ -41,71 +32,114 @@ type Props = {
 }
 
 const CasesFilter: React.FC<Props> = ({
-  date, setDate, theme, themes, setTheme, pageSize, setPageSize,
-  reasons, reason, setReason, districts, districtNames, setDistrictNames,
-  corporations, selectedCorporations, setSelectedCorporations, subjects,
-  setSelectedSubjects, selectedSubjects, tags, selectedTags, setSelectedTags,
-  projects, selectedProjects, setSelectedProjects, openCases, setOpenCases
-}) => (
-  <FilterMenu>
-    <ScaffoldForm>
-      <ScaffoldFields { ...scaffoldTheme(theme, themes, setTheme) } />
-    </ScaffoldForm>
-    <ScaffoldForm>
-      <ScaffoldFields { ...scaffoldDate(date, setDate) } />
-    </ScaffoldForm>
-    { reasons === undefined ? <Spinner /> : (
+  date,
+  theme,
+  themes,
+  pageSize,
+  reasons,
+  reason,
+  districts,
+  districtNames,
+  corporations,
+  selectedCorporations,
+  subjects,
+  selectedSubjects,
+  tags,
+  selectedTags,
+  projects,
+  selectedProjects,
+  openCases
+}) => {
+  const { onChangeFilter, onChangePageSize } = useFilterHandler()
+  const setDate = (value: string) => onChangeFilter("fromStartDate", value)
+  const setDistrictNames = (value: Components.Schemas.District["name"][]) =>
+    onChangeFilter("districtNames", value)
+  const setPageSize = onChangePageSize
+  const setOpenCases = (value: string) => onChangeFilter("openCases", value)
+  const setReason = (value: string) => onChangeFilter("reason", value)
+  const setSelectedCorporations = (value: string[]) =>
+    onChangeFilter("housingCorporations", value)
+  const setSelectedProjects = (value: string[]) =>
+    onChangeFilter("projects", value)
+  const setSelectedSubjects = (value: string[]) =>
+    onChangeFilter("subjects", value)
+  const setSelectedTags = (value: string[]) => onChangeFilter("tags", value)
+  const setTheme = (value: string) => onChangeFilter("theme", value)
+
+  const multipleFilters = [
+    {
+      label: "Corporaties",
+      options: corporations,
+      selected: selectedCorporations,
+      setSelected: setSelectedCorporations,
+      byId: true
+    },
+    {
+      label: "Projecten",
+      options: projects,
+      selected: selectedProjects,
+      setSelected: setSelectedProjects,
+      byId: true
+    },
+    {
+      label: "Onderwerpen",
+      options: subjects,
+      selected: selectedSubjects,
+      setSelected: setSelectedSubjects,
+      byId: true
+    },
+    {
+      label: "Tags",
+      options: tags,
+      selected: selectedTags,
+      setSelected: setSelectedTags,
+      byId: true
+    },
+    {
+      label: "Stadsdelen",
+      options: districts,
+      selected: districtNames,
+      setSelected: setDistrictNames,
+      byId: false
+    }
+  ]
+
+  return (
+    <FilterMenu>
       <ScaffoldForm>
-        <ScaffoldFields { ...scaffoldReason(reason, setReason, reasons) } />
+        <ScaffoldFields {...scaffoldTheme(theme, themes, setTheme)} />
       </ScaffoldForm>
-    )}
-    <MultipleOptionsFilterBox
-      label="Corporaties"
-      options={ corporations }
-      selectedOptions={ selectedCorporations }
-      setSelectedOptions={ setSelectedCorporations }
-      byId
-    />
-    { projects !== undefined && (
-      <MultipleOptionsFilterBox
-        label="Projecten"
-        options={ projects }
-        selectedOptions={ selectedProjects }
-        setSelectedOptions={ setSelectedProjects }
-        byId
-      />
-    )}
-    { subjects !== undefined && (
-      <MultipleOptionsFilterBox
-        label="Onderwerpen"
-        options={ subjects }
-        selectedOptions={ selectedSubjects }
-        setSelectedOptions={ setSelectedSubjects }
-        byId
-      />
-    )}
-    { subjects !== undefined && (
-      <MultipleOptionsFilterBox
-        label="Tags"
-        options={ tags }
-        selectedOptions={ selectedTags }
-        setSelectedOptions={ setSelectedTags }
-        byId
-      />
-    )}
-    <MultipleOptionsFilterBox
-      label="Stadsdelen"
-      options={ districts }
-      selectedOptions={ districtNames }
-      setSelectedOptions={ setDistrictNames }
-    />
-    <ScaffoldForm>
-      <ScaffoldFields { ...scaffoldPageSize(pageSize, setPageSize) } />
-    </ScaffoldForm>
-    <ScaffoldForm>
-      <ScaffoldFields { ...scaffoldClosedCases(openCases, setOpenCases) } />
-    </ScaffoldForm>
-  </FilterMenu>
-)
+      <ScaffoldForm>
+        <ScaffoldFields {...scaffoldDate(date, setDate)} />
+      </ScaffoldForm>
+      {reasons === undefined ? (
+        <Spinner />
+      ) : (
+        <ScaffoldForm>
+          <ScaffoldFields {...scaffoldReason(reason, setReason, reasons)} />
+        </ScaffoldForm>
+      )}
+      {multipleFilters.map(
+        ({ label, options, selected, setSelected, byId }) =>
+          options !== undefined && (
+            <MultipleOptionsFilterBox
+              key={label}
+              label={label}
+              options={options}
+              selectedOptions={selected}
+              setSelectedOptions={setSelected}
+              byId={byId}
+            />
+          )
+      )}
+      <ScaffoldForm>
+        <ScaffoldFields {...scaffoldPageSize(pageSize, setPageSize)} />
+      </ScaffoldForm>
+      <ScaffoldForm>
+        <ScaffoldFields {...scaffoldClosedCases(openCases, setOpenCases)} />
+      </ScaffoldForm>
+    </FilterMenu>
+  )
+}
 
 export default CasesFilter

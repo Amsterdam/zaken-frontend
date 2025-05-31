@@ -3,26 +3,51 @@ import { Heading } from "@amsterdam/asc-ui"
 import TableCases from "app/components/cases/TableCases/TableCases"
 import CasesFilter from "app/components/cases/CasesFilter/CasesFilter"
 import {
-  useCases, useCaseThemes, useTasksReasons, useDistricts,
-  useCorporations, useSubjects, useProjects, useTags
+  useCases,
+  useCaseThemes,
+  useTasksReasons,
+  useDistricts,
+  useCorporations,
+  useSubjects,
+  useProjects,
+  useTags
 } from "app/state/rest"
-import useHasPermission, { SENSITIVE_CASE_PERMISSION } from "app/state/rest/custom/usePermissions/useHasPermission"
+import useHasPermission, {
+  SENSITIVE_CASE_PERMISSION
+} from "app/state/rest/custom/usePermissions/useHasPermission"
 import { ContextValues } from "app/state/context/ValueProvider"
 import { RowWithColumn } from "app/components/layouts/Grid"
 import getThemeId from "app/components/tasks/utils/getThemeId"
 import SearchBarCases from "app/components/cases/SearchBarCases/SearchBarCases"
 import styles from "./Cases.module.css"
 
-type Item = string | Components.Schemas.District["name"][]
-
-const EMPTY_TEXT_NO_PERMISSION = "Helaas, u bent niet geautoriseerd om deze zaken te bekijken."
+const EMPTY_TEXT_NO_PERMISSION =
+  "Helaas, u bent niet geautoriseerd om deze zaken te bekijken."
 const EMPTY_TEXT = "Er zijn momenteel geen open zaken voor de gekozen filters."
 const ONDERMIJNING = "Ondermijning"
 
+const getThemeIdByName = (
+  themes: Components.Schemas.CaseTheme[],
+  themeName?: string
+) => themes.find((e) => e.name === themeName)?.id
+
 const Cases: React.FC = () => {
   const {
-    count, districtNames, fromStartDate, housingCorporations, openCases, pagination, projects,
-    reason, results, sorting, streetName, subjects, tags, theme, updateContextCases
+    count,
+    districtNames,
+    fromStartDate,
+    housingCorporations,
+    openCases,
+    pagination,
+    projects,
+    reason,
+    results,
+    sorting,
+    streetName,
+    subjects,
+    tags,
+    theme,
+    updateContextCases
   } = useContext(ContextValues)["cases"]
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const [caseThemes] = useCaseThemes()
@@ -53,58 +78,28 @@ const Cases: React.FC = () => {
     updateContextCases(dataSource ?? { results: [], count: 0 })
   }, [dataSource, updateContextCases])
 
-  const onChangeFilter = (key: string, item: Item) => {
-    const casesContextItem = {
-      [key]: item,
-      pagination: {
-        ...pagination,
-        page: 1
-      }
-    }
-
-    /*
-     ** When theme is set we need to reset the selection for reason and
-     ** housingCorporations to avoid a stale selection:
-     */
-    if (key === "theme") {
-      casesContextItem.reason = ""
-      casesContextItem.projects = []
-      casesContextItem.subjects = []
-      casesContextItem.tags = []
-    }
-    updateContextCases(casesContextItem)
-  }
-
-  const onChangePageSize = (pageSize: string) => {
-    updateContextCases({
-      pagination: {
-        ...pagination,
-        pageSize: parseInt(pageSize),
-        page: 1
-      }
-    })
-  }
-
-  const onChangeTable = (pagination: TABLE.Schemas.Pagination, sorting: TABLE.Schemas.Sorting) => {
+  const onChangeTable = (
+    pagination: TABLE.Schemas.Pagination,
+    sorting: TABLE.Schemas.Sorting
+  ) => {
     updateContextCases({ pagination, sorting })
   }
 
   const themes = caseThemes?.results || []
-  const underminingId = themes.find((e) => e.name === ONDERMIJNING)?.id
+  const ondermijningId = getThemeIdByName(themes, ONDERMIJNING)
   const districts = caseDistricts?.results || []
-  const emptyPlaceholder = hasPermission === false && theme === underminingId?.toString()
-    ? EMPTY_TEXT_NO_PERMISSION : EMPTY_TEXT
+  const emptyPlaceholder =
+    hasPermission === false && theme === ondermijningId?.toString()
+      ? EMPTY_TEXT_NO_PERMISSION
+      : EMPTY_TEXT
 
   return (
-    <div className={styles.Test}>
+    <>
       <RowWithColumn bottomSpacing={6}>
         <Heading>Zakenoverzicht ({count})</Heading>
       </RowWithColumn>
       <RowWithColumn bottomSpacing={6}>
-        <SearchBarCases
-          onChange={(value: string) => onChangeFilter("streetName", value)}
-          searchString={streetName}
-      />
+        <SearchBarCases searchString={streetName} />
       </RowWithColumn>
       <div className={styles.Grid}>
         <TableCases
@@ -134,16 +129,6 @@ const Cases: React.FC = () => {
             selectedProjects={projects}
             selectedSubjects={subjects}
             selectedTags={tags}
-            setDate={(value: string) => onChangeFilter("fromStartDate", value)}
-            setDistrictNames={(value: Components.Schemas.District["name"][]) => onChangeFilter("districtNames", value)}
-            setPageSize={onChangePageSize}
-            setOpenCases={(value: string) => onChangeFilter("openCases", value)}
-            setReason={(value: string) => onChangeFilter("reason", value)}
-            setSelectedCorporations={(value: string[]) => onChangeFilter("housingCorporations", value)}
-            setSelectedProjects={(value: string[]) => onChangeFilter("projects", value)}
-            setSelectedSubjects={(value: string[]) => onChangeFilter("subjects", value)}
-            setSelectedTags={(value: string[]) => onChangeFilter("tags", value)}
-            setTheme={(value: string) => onChangeFilter("theme", value)}
             subjects={subjectsTheme?.results}
             tags={tagsTheme?.results}
             theme={theme}
@@ -151,7 +136,7 @@ const Cases: React.FC = () => {
           />
         </div>
       </div>
-    </div>
+    </>
   )
 }
 

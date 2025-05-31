@@ -1,15 +1,19 @@
 import { SearchBar } from "@amsterdam/asc-ui"
 import debounce from "lodash.debounce"
+import { useFilterHandler } from "../CasesFilter/useFilterHandler"
 
 type Props = {
-  onChange: (value: string) => void
   searchString: string
 }
 
 const DELAY = 750
 
-const SearchBarCases: React.FC<Props> = ({ onChange, searchString }) => {
-  const debouncedSetSearchString = debounce(onChange, DELAY)
+const SearchBarCases: React.FC<Props> = ({ searchString }) => {
+  const { onChangeFilter } = useFilterHandler()
+  const debouncedSetSearchString = debounce(
+    (value: string) => onChangeFilter("streetName", value),
+    DELAY
+  )
 
   const onChangeSearch = (event: React.ChangeEvent<HTMLInputElement>) =>
     debouncedSetSearchString(event.target.value.trim())
