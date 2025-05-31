@@ -8,12 +8,14 @@ import scaffoldTheme from "./scaffoldTheme"
 import scaffoldPageSize from "./scaffoldPageSize"
 import scaffoldReason from "./scaffoldReason"
 import MultipleOptionsFilterBox from "app/components/filters/MultipleOptionsFilterBox/MultipleOptionsFilterBox"
+import scaffoldClosedCases from "./scaffoldClosedCases"
 
 type Props = {
   date: string
   corporations?: Components.Schemas.HousingCorporation[]
   districts: Components.Schemas.District[]
   districtNames: Components.Schemas.District["name"][]
+  openCases: string
   pageSize: string
   projects?: Components.Schemas.CaseProject[]
   reason: string
@@ -24,6 +26,7 @@ type Props = {
   selectedTags: string[]
   setDate: (value: string) => void
   setDistrictNames: (value: Components.Schemas.District["name"][]) => void
+  setOpenCases: (value: string) => void
   setPageSize: (value: string) => void
   setReason: (value: string) => void
   setSelectedCorporations: (value: Components.Schemas.HousingCorporation["name"][]) => void
@@ -42,7 +45,7 @@ const CasesFilter: React.FC<Props> = ({
   reasons, reason, setReason, districts, districtNames, setDistrictNames,
   corporations, selectedCorporations, setSelectedCorporations, subjects,
   setSelectedSubjects, selectedSubjects, tags, selectedTags, setSelectedTags,
-  projects, selectedProjects, setSelectedProjects
+  projects, selectedProjects, setSelectedProjects, openCases, setOpenCases
 }) => (
   <FilterMenu>
     <ScaffoldForm>
@@ -98,6 +101,9 @@ const CasesFilter: React.FC<Props> = ({
     />
     <ScaffoldForm>
       <ScaffoldFields { ...scaffoldPageSize(pageSize, setPageSize) } />
+    </ScaffoldForm>
+    <ScaffoldForm>
+      <ScaffoldFields { ...scaffoldClosedCases(openCases, setOpenCases) } />
     </ScaffoldForm>
   </FilterMenu>
 )

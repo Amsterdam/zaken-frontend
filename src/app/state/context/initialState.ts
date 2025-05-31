@@ -6,6 +6,7 @@ export type StateType = {
     districtNames: Components.Schemas.District["name"][]
     fromStartDate: string
     housingCorporations: string[]
+    openCases: string
     pagination: TABLE.Schemas.Pagination
     projects: string[]
     reason: string
@@ -43,6 +44,7 @@ export const initialState: StateType = {
     districtNames: [],
     fromStartDate: "",
     housingCorporations: [],
+    openCases: "open",
     pagination: {
       page: 1,
       pageSize: 25

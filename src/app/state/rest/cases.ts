@@ -20,6 +20,12 @@ const sortingIndexMapping: any = {
   last_updated: "last_updated, start_date"
 }
 
+const getOpenCasesValue = (openCases?: string): boolean | undefined => {
+  if (openCases === "open") return true
+  if (openCases === "closed") return false
+  return undefined
+}
+
 const getOrderingValue = (sorting: TABLE.Schemas.Sorting) => {
   let value = ""
   if (sorting?.dataIndex) {
@@ -37,6 +43,7 @@ export const useCases = (
   sorting?: TABLE.Schemas.Sorting,
   theme?: string,
   from_start_date?: string,
+  openCases?: string,
   projects?: string[],
   reason?: string,
   streetName?: string,
@@ -52,7 +59,7 @@ export const useCases = (
       page: pagination.page,
       page_size: pagination.pageSize,
       from_start_date,
-      open_cases: true,
+      open_cases: getOpenCasesValue(openCases),
       simplified: true,
       sensitive: sensitive === false ? false : undefined,
       theme_name: theme,
@@ -84,6 +91,7 @@ export const useCases = (
     from_start_date,
     sensitive,
     theme,
+    openCases,
     projects,
     reason,
     streetName,
