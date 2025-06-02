@@ -32,30 +32,30 @@ type Props = {
 }
 
 const CasesFilter: React.FC<Props> = ({
-  date,
-  theme,
-  themes,
-  pageSize,
-  reasons,
-  reason,
-  districts,
-  districtNames,
   corporations,
-  selectedCorporations,
-  subjects,
-  selectedSubjects,
-  tags,
-  selectedTags,
+  date,
+  districtNames,
+  districts,
+  openCases,
+  pageSize,
   projects,
+  reason,
+  reasons,
+  selectedCorporations,
   selectedProjects,
-  openCases
+  selectedSubjects,
+  selectedTags,
+  subjects,
+  tags,
+  theme,
+  themes
 }) => {
   const { onChangeFilter, onChangePageSize } = useFilterHandler()
   const setDate = (value: string) => onChangeFilter("fromStartDate", value)
   const setDistrictNames = (value: Components.Schemas.District["name"][]) =>
     onChangeFilter("districtNames", value)
-  const setPageSize = onChangePageSize
   const setOpenCases = (value: string) => onChangeFilter("openCases", value)
+  const setPageSize = onChangePageSize
   const setReason = (value: string) => onChangeFilter("reason", value)
   const setSelectedCorporations = (value: string[]) =>
     onChangeFilter("housingCorporations", value)
