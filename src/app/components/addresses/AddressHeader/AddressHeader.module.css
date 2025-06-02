@@ -1,0 +1,21 @@
+.default {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+@media screen and (min-width: 1200px) {
+  .default {
+    justify-content: flex-end;
+  }
+
+  .header {
+    justify-content: flex-start;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
