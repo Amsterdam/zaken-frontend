@@ -3,22 +3,22 @@
 
 <head>
   <meta charset="utf-8" />
-  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-  <link rel="icon" href="%PUBLIC_URL%/icon.svg" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="%PUBLIC_URL%/apple-touch-icon.png" />
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#000000" />
-  <meta name="description" content="%VITE_APP_TITLE_SHORT%" />
+  <meta name="description" content="Amsterdamse Zaak Administratie" />
   <meta http-equiv="Content-Security-Policy" content="
-    script-src 'self';
-    form-action 'self';
-    upgrade-insecure-requests;
-    style-src 'self' 'unsafe-inline';
-    img-src 'self' data: https://api.data.amsterdam.nl;
+  script-src 'self';
+  form-action 'self';
+  upgrade-insecure-requests;
+  style-src 'self' 'unsafe-inline';
+  img-src 'self' data: https://api.data.amsterdam.nl;
   ">
-  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <title>AZA</title>
+  <link rel="manifest" href="/manifest.json" />
   <base href="/">
-  <title>%VITE_APP_TITLE_SHORT%</title>
   <script src='/config/env.js'></script>
   <script type="module" src="src/index"></script>
 </head>
@@ -29,7 +29,7 @@
     <p id="chunk-js-loading-failure" style="display:none;">Het lijkt erop dat onderdelen van deze website niet correct
       kunnen worden geladen. <a href="">Probeer te herladen</a></p>
   </div>
-  <script src=%PUBLIC_URL%/load.js></script>
+  <script src=/load.js></script>
 </body>
 
 </html>
