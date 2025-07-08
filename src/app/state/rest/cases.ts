@@ -1,9 +1,10 @@
 import qs from "qs"
-import isEmpty from "lodash.isempty"
 import type { Options } from "./"
 import { useErrorHandler } from "./hooks/utils/errorHandler"
 import { makeApiUrl } from "./hooks/utils/apiUrl"
 import useApiRequest from "./hooks/useApiRequest"
+import { cleanParamObject } from "./hooks/utils/cleanParamObject"
+import { useMemo } from "react"
 
 const sortingOrder = {
   ASCEND: "ASCEND",
@@ -15,8 +16,14 @@ const sortingIndexMapping: any = {
   "address.street_name": "address__street_name, start_date",
   "address.postal_code": "address__postal_code, start_date",
   "reason.name": "reason__name, start_date",
-  "start_date": "start_date, id",
-  "last_updated": "last_updated, start_date"
+  start_date: "start_date, id",
+  last_updated: "last_updated, start_date"
+}
+
+const getOpenCasesValue = (openCases?: string): boolean | undefined => {
+  if (openCases === "open") return true
+  if (openCases === "closed") return false
+  return undefined
 }
 
 const getOrderingValue = (sorting: TABLE.Schemas.Sorting) => {
@@ -25,7 +32,7 @@ const getOrderingValue = (sorting: TABLE.Schemas.Sorting) => {
     value = sortingIndexMapping[sorting.dataIndex]
   }
   if (sorting.order === sortingOrder.DESCEND) {
-    value = `-${ value }`
+    value = `-${value}`
   }
   return value
 }
@@ -36,8 +43,10 @@ export const useCases = (
   sorting?: TABLE.Schemas.Sorting,
   theme?: string,
   from_start_date?: string,
+  openCases?: string,
   projects?: string[],
   reason?: string,
+  streetName?: string,
   subjects?: string[],
   tags?: string[],
   districtNames?: Components.Schemas.District["name"][],
@@ -45,63 +54,76 @@ export const useCases = (
   options?: Options
 ) => {
   const handleError = useErrorHandler()
-  const urlParams: any = {
-    page: pagination.page,
-    page_size: pagination.pageSize,
+  const urlParams = useMemo(() => {
+    const params: Record<string, any> = {
+      page: pagination.page,
+      page_size: pagination.pageSize,
+      from_start_date,
+      open_cases: getOpenCasesValue(openCases),
+      simplified: true,
+      sensitive: sensitive === false ? false : undefined,
+      theme_name: theme,
+      project: projects && projects.length > 0 ? projects : undefined,
+      reason_name: reason,
+      street_name: streetName,
+      subject: subjects && subjects?.length > 0 ? subjects : undefined,
+      tag: tags && tags?.length > 0 ? tags : undefined,
+      district_name:
+        districtNames && districtNames?.length > 0 ? districtNames : undefined,
+      housing_corporation:
+        housingCorporations && housingCorporations?.length > 0
+          ? housingCorporations
+          : undefined,
+      ordering: sorting ? getOrderingValue(sorting) : undefined
+    }
+    /*
+     ** indices: false is used to prevent parsing arrays by qs to code like this: %5B0%5D,
+     ** which cannot be parsed by the Django Python back-end or
+     ** maybe config must be changed somewhere.
+     */
+    return qs.stringify(cleanParamObject(params), {
+      addQueryPrefix: true,
+      indices: false
+    })
+  }, [
+    pagination.page,
+    pagination.pageSize,
     from_start_date,
-    open_cases: true,
-    simplified: true
-  }
-  if (sensitive === false) {
-    urlParams.sensitive = false
-  }
-  if (theme) {
-    urlParams.theme_name = theme
-  }
-  if (projects && projects.length > 0) {
-    urlParams.project = projects
-  }
-  if (reason) {
-    urlParams.reason_name = reason
-  }
-  if (subjects && subjects?.length > 0) {
-    urlParams.subject = subjects
-  }
-  if (tags && tags?.length > 0) {
-    urlParams.tag = tags
-  }
-  if (districtNames && districtNames?.length > 0) {
-    urlParams.district_name = districtNames
-  }
-  if (housingCorporations && housingCorporations?.length > 0) {
-    urlParams.housing_corporation = housingCorporations
-  }
-  if (sorting) {
-    urlParams.ordering = getOrderingValue(sorting)
-  }
-
-  /*
-   ** indices: false is used to prevent parsing arrays by qs to code like this: %5B0%5D,
-   ** which cannot be parsed by the Django Python back-end or
-   ** maybe config must be changed somewhere.
-   */
-  const queryString = isEmpty(urlParams) ? "" : qs.stringify(urlParams, { addQueryPrefix: true, indices: false })
+    sensitive,
+    theme,
+    openCases,
+    projects,
+    reason,
+    streetName,
+    subjects,
+    tags,
+    districtNames,
+    housingCorporations,
+    sorting
+  ])
 
   return useApiRequest<Components.Schemas.PaginatedCaseList>({
     ...options,
-    url: `${ makeApiUrl("cases") }${ queryString }`,
+    url: `${makeApiUrl("cases")}${urlParams}`,
     groupName: "cases",
     handleError,
     isProtected: true
   })
 }
 
-export const useCasesByBagId = (bagId: Components.Schemas.Address["bag_id"], openCases?: boolean, options?: Options) => {
+export const useCasesByBagId = (
+  bagId: Components.Schemas.Address["bag_id"],
+  openCases?: boolean,
+  options?: Options
+) => {
   const handleError = useErrorHandler()
-  const queryString = openCases === true ? qs.stringify({ open_cases: true }, { addQueryPrefix: true }) : ""
+  const queryString =
+    openCases === true
+      ? qs.stringify({ open_cases: true }, { addQueryPrefix: true })
+      : ""
   return useApiRequest<Components.Schemas.PaginatedCaseList>({
     ...options,
-    url: `${ makeApiUrl("addresses", bagId, "cases") }${ queryString }`,
+    url: `${makeApiUrl("addresses", bagId, "cases")}${queryString}`,
     groupName: "cases",
     handleError,
     isProtected: true
