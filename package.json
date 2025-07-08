@@ -3,8 +3,8 @@
   "version": "1.0.56",
   "private": true,
   "engines": {
-    "node": ">=20",
-    "npm": ">=8"
+    "node": ">=22",
+    "npm": ">=10"
   },
   "scripts": {
     "start": "PORT=2999 vite",
