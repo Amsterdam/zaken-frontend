@@ -40,7 +40,7 @@
     "dayjs": "^1.11.13",
     "env-cmd": "^10.1.0",
     "eslint-config-react-app": "^7.0.1",
-    "final-form": "^4.20.10",
+    "final-form": "^5.0.0",
     "final-form-arrays": "^3.0.2",
     "immer": "^10.1.1",
     "jwt-decode": "^4.0.0",
