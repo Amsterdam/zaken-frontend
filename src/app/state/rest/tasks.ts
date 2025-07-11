@@ -26,7 +26,7 @@ const getOrderingValue = (sorting: TABLE.Schemas.Sorting) => {
     value = sortingIndexMapping[sorting.dataIndex]
   }
   if (sorting.order === sortingOrder.DESCEND) {
-    value = `-${ value }`
+    value = `-${value}`
   }
   return value
 }
@@ -83,16 +83,18 @@ export const getQueryUrl = (
   if (districtNames && districtNames?.length > 0) {
     urlParams.district_name = districtNames
   }
-  if (housingCorporations && housingCorporations?.length > 0) {
+  if (housingCorporations?.includes("housing_corporation_isnull")) {
+    urlParams.housing_corporation_isnull = true
+  } else if (housingCorporations?.length) {
     urlParams.housing_corporation = housingCorporations
   }
   if (sorting) {
     urlParams.ordering = getOrderingValue(sorting)
   }
 
-  const queryString = isEmpty(urlParams) ? "" : qs.stringify(urlParams, { addQueryPrefix: true, indices: false  })
+  const queryString = isEmpty(urlParams) ? "" : qs.stringify(urlParams, { addQueryPrefix: true, indices: false })
 
-  return `${ makeApiUrl("tasks") }${ queryString }`
+  return `${makeApiUrl("tasks")}${queryString}`
 }
 
 export const useTasks = (
@@ -167,7 +169,7 @@ export const useTaskNames = (role: string) => {
   const handleError = useErrorHandler()
   const queryParams = { completed: false, role }
   const queryString = qs.stringify(queryParams, { addQueryPrefix: true })
-  const apiUrl = `${ makeApiUrl("tasks", "task-names") }${ queryString }`
+  const apiUrl = `${makeApiUrl("tasks", "task-names")}${queryString}`
   return useApiRequest<Components.Schemas.CaseUserTaskTaskName[]>({
     url: apiUrl,
     groupName: "themes",

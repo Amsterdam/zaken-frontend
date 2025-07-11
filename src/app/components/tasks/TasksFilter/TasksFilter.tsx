@@ -87,7 +87,10 @@ const TasksFilter: React.FC<Props> = ({
     )}
     <MultipleOptionsFilterBox
       label="Corporaties"
-      options={corporations}
+      options={[
+        ...(corporations || []),
+        { id: "housing_corporation_isnull", name: "Zonder corporatie" }
+      ]}
       selectedOptions={selectedCorporations}
       setSelectedOptions={setSelectedCorporations}
       byId

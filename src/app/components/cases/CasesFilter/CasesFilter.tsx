@@ -66,10 +66,15 @@ const CasesFilter: React.FC<Props> = ({
   const setSelectedTags = (value: string[]) => onChangeFilter("tags", value)
   const setTheme = (value: string) => onChangeFilter("theme", value)
 
+  const corporationOptions = [
+    ...(corporations || []),
+    { id: "housing_corporation_isnull", name: "Zonder corporatie" }
+  ]
+
   const multipleFilters = [
     {
       label: "Corporaties",
-      options: corporations,
+      options: corporationOptions,
       selected: selectedCorporations,
       setSelected: setSelectedCorporations,
       byId: true
