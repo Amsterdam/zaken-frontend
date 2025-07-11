@@ -1,4 +1,6 @@
 import { useEffect, useContext } from "react"
+import { Heading, themeSpacing } from "@amsterdam/asc-ui"
+import styled from "styled-components"
 import { useRoles, useTasks, useCaseThemes, useTaskNames,
   useProjects, useUsersMe, useTasksReasons, useDistricts,
   useCorporations, useSubjects, useTags
@@ -9,8 +11,7 @@ import useHasPermission, { SENSITIVE_CASE_PERMISSION } from "app/state/rest/cust
 import { ContextValues } from "app/state/context/ValueProvider"
 import { getQueryUrl } from "app/state/rest/tasks"
 import useContextCache from "app/state/rest/provider/useContextCache"
-import { Heading, themeSpacing } from "@amsterdam/asc-ui"
-import styled from "styled-components"
+
 import CaseEnforcement from "app/components/case/icons/CaseEnforcement"
 import getThemeId from "app/components/tasks/utils/getThemeId"
 
