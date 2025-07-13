@@ -54,7 +54,10 @@ export const useCases = (
   options?: Options
 ) => {
   const handleError = useErrorHandler()
+
   const urlParams = useMemo(() => {
+    const hasValues = (arr?: any[]) => Array.isArray(arr) && arr.length > 0
+
     const params: Record<string, any> = {
       page: pagination.page,
       page_size: pagination.pageSize,
@@ -63,17 +66,24 @@ export const useCases = (
       simplified: true,
       sensitive: sensitive === false ? false : undefined,
       theme_name: theme,
-      project: projects && projects.length > 0 ? projects : undefined,
+      project: hasValues(projects) ? projects : undefined,
       reason_name: reason,
       street_name: streetName,
-      subject: subjects && subjects?.length > 0 ? subjects : undefined,
-      tag: tags && tags?.length > 0 ? tags : undefined,
-      district_name:
-        districtNames && districtNames?.length > 0 ? districtNames : undefined,
-      housing_corporation:
-        housingCorporations && housingCorporations?.length > 0
+      subject: hasValues(subjects) ? subjects : undefined,
+      tag: hasValues(tags) ? tags : undefined,
+      district_name: hasValues(districtNames) ? districtNames : undefined,
+      housing_corporation: housingCorporations?.includes(
+        "housing_corporation_isnull"
+      )
+        ? undefined
+        : hasValues(housingCorporations)
           ? housingCorporations
           : undefined,
+      housing_corporation_isnull: housingCorporations?.includes(
+        "housing_corporation_isnull"
+      )
+        ? true
+        : undefined,
       ordering: sorting ? getOrderingValue(sorting) : undefined
     }
     /*
@@ -104,7 +114,7 @@ export const useCases = (
 
   return useApiRequest<Components.Schemas.PaginatedCaseList>({
     ...options,
-    url: `${makeApiUrl("cases")}${urlParams}`,
+    url: `${makeApiUrl("cases")}${ urlParams }`,
     groupName: "cases",
     handleError,
     isProtected: true

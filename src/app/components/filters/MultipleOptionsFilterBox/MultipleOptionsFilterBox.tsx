@@ -4,7 +4,10 @@ import FilterCard from "./FilterCard"
 import FilterSearch from "./FilterSearch"
 import { FilterWrapper, StyledLabel } from "../FilterStyle"
 
-type Option = { id?: number, name: string }
+type Option = { 
+  id?: number | string
+  name: string 
+}
 
 type Props = {
   label: string
