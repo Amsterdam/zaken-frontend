@@ -37,6 +37,7 @@ const Cases: React.FC = () => {
     districtNames,
     fromStartDate,
     housingCorporations,
+    housingCorporationIsNull,
     openCases,
     pagination,
     projects,
@@ -71,7 +72,8 @@ const Cases: React.FC = () => {
     subjects,
     tags,
     districtNames,
-    housingCorporations
+    housingCorporations,
+    housingCorporationIsNull
   )
 
   useEffect(() => {
@@ -118,6 +120,7 @@ const Cases: React.FC = () => {
           <CasesFilter
             date={fromStartDate}
             corporations={corporationData?.results}
+            corporationIsNull={housingCorporationIsNull}
             districts={districts}
             districtNames={districtNames}
             pageSize={pagination.pageSize?.toString() || "10"}

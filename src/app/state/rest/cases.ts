@@ -51,6 +51,7 @@ export const useCases = (
   tags?: string[],
   districtNames?: Components.Schemas.District["name"][],
   housingCorporations?: string[],
+  housingCorporationIsNull?: boolean,
   options?: Options
 ) => {
   const handleError = useErrorHandler()
@@ -72,18 +73,10 @@ export const useCases = (
       subject: hasValues(subjects) ? subjects : undefined,
       tag: hasValues(tags) ? tags : undefined,
       district_name: hasValues(districtNames) ? districtNames : undefined,
-      housing_corporation: housingCorporations?.includes(
-        "housing_corporation_isnull"
-      )
-        ? undefined
-        : hasValues(housingCorporations)
-          ? housingCorporations
-          : undefined,
-      housing_corporation_isnull: housingCorporations?.includes(
-        "housing_corporation_isnull"
-      )
-        ? true
+      housing_corporation: hasValues(housingCorporations)
+        ? housingCorporations
         : undefined,
+      housing_corporation_isnull: housingCorporationIsNull ? true : undefined,
       ordering: sorting ? getOrderingValue(sorting) : undefined
     }
     /*
@@ -109,12 +102,13 @@ export const useCases = (
     tags,
     districtNames,
     housingCorporations,
+    housingCorporationIsNull,
     sorting
   ])
 
   return useApiRequest<Components.Schemas.PaginatedCaseList>({
     ...options,
-    url: `${makeApiUrl("cases")}${ urlParams }`,
+    url: `${makeApiUrl("cases")}${urlParams}`,
     groupName: "cases",
     handleError,
     isProtected: true

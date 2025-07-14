@@ -11,16 +11,16 @@ const sortingOrder = {
 }
 
 // A second sorter parameter is added because of the huge number of duplicate values.
-const sortingIndexMapping: any = {
-  "owner": "owner, due_date",
+const sortingIndexMapping: Record<string, string> = {
+  owner: "owner, due_date",
   "case.address.street_name": "case__address__street_name, due_date",
   "case.address.postal_code": "case__address__postal_code, due_date",
-  "due_date": "due_date, id",
-  "name": "name, due_date",
+  due_date: "due_date, id",
+  name: "name, due_date",
   "case.start_date": "case__start_date, due_date"
 }
 
-const getOrderingValue = (sorting: TABLE.Schemas.Sorting) => {
+const getOrderingValue = (sorting: TABLE.Schemas.Sorting): string => {
   let value = ""
   if (sorting?.dataIndex) {
     value = sortingIndexMapping[sorting.dataIndex]
@@ -45,76 +45,76 @@ export const getQueryUrl = (
   subjects?: string[],
   tags?: string[],
   districtNames?: Components.Schemas.District["name"][],
-  housingCorporations?: string[]
-) => {
-  let urlParams: any = {
+  housingCorporations?: string[],
+  housingCorporationIsNull?: boolean
+): string => {
+  const urlParams: Record<string, any> = {
     completed: false,
     page: pagination.page,
     page_size: pagination.pageSize,
     is_enforcement_request: isEnforcementRequest
   }
-  if (sensitive === false) {
-    urlParams.sensitive = false
-  }
-  if (theme) {
-    urlParams.theme_name = theme
-  }
-  if (projects && projects.length > 0) {
-    urlParams.project = projects
-  }
-  if (reason) {
-    urlParams.reason_name = reason
-  }
-  if (subjects && subjects?.length > 0) {
-    urlParams.subject = subjects
-  }
-  if (tags && tags?.length > 0) {
-    urlParams.tag = tags
-  }
-  if (taskNames && taskNames?.length > 0) {
-    urlParams.name = taskNames
-  }
-  if (role) {
-    urlParams.role = role
-  }
-  if (owner) {
-    urlParams.owner = owner
-  }
-  if (districtNames && districtNames?.length > 0) {
-    urlParams.district_name = districtNames
-  }
-  if (housingCorporations?.includes("housing_corporation_isnull")) {
-    urlParams.housing_corporation_isnull = true
-  } else if (housingCorporations?.length) {
-    urlParams.housing_corporation = housingCorporations
-  }
+
+  if (sensitive === false) urlParams.sensitive = false
+  if (theme) urlParams.theme_name = theme
+  if (projects?.length) urlParams.project = projects
+  if (reason) urlParams.reason_name = reason
+  if (subjects?.length) urlParams.subject = subjects
+  if (tags?.length) urlParams.tag = tags
+  if (taskNames?.length) urlParams.name = taskNames
+  if (role) urlParams.role = role
+  if (owner) urlParams.owner = owner
+  if (districtNames?.length) urlParams.district_name = districtNames
+  if (housingCorporations) urlParams.housing_corporation = housingCorporations
+  if (housingCorporationIsNull) urlParams.housing_corporation_isnull = true
   if (sorting) {
     urlParams.ordering = getOrderingValue(sorting)
   }
 
-  const queryString = isEmpty(urlParams) ? "" : qs.stringify(urlParams, { addQueryPrefix: true, indices: false })
+  const queryString = isEmpty(urlParams)
+    ? ""
+    : qs.stringify(urlParams, { addQueryPrefix: true, indices: false })
 
   return `${makeApiUrl("tasks")}${queryString}`
 }
 
-export const useTasks = (
+type UseTasksParams = {
+  districtNames?: Components.Schemas.District["name"][]
+  housingCorporationIsNull?: boolean
+  housingCorporations?: string[]
+  isEnforcementRequest?: boolean
+  owner?: string
+  pagination: TABLE.Schemas.Pagination
+  projects?: string[]
+  reason?: string
+  role?: string
+  sensitive?: boolean
+  sorting?: TABLE.Schemas.Sorting
+  subjects?: string[]
+  tags?: string[]
+  taskNames?: Components.Schemas.CaseUserTaskTaskName["name"][]
+  theme?: string
+}
+
+export const useTasks = ({
+  districtNames,
+  housingCorporationIsNull = false,
+  housingCorporations,
+  isEnforcementRequest,
+  owner,
+  pagination,
+  projects,
+  reason,
+  role,
   sensitive = false,
-  pagination: TABLE.Schemas.Pagination,
-  sorting?: TABLE.Schemas.Sorting,
-  theme?: string,
-  role?: string,
-  owner?: string,
-  isEnforcementRequest?: boolean,
-  taskNames?: Components.Schemas.CaseUserTaskTaskName["name"][],
-  projects?: string[],
-  reason?: string,
-  subjects?: string[],
-  tags?: string[],
-  districtNames?: Components.Schemas.District["name"][],
-  housingCorporations?: string[],
-  options?: Options
-) => {
+  sorting,
+  subjects,
+  tags,
+  taskNames,
+  theme
+}: UseTasksParams) => {
   const handleError = useErrorHandler()
+
   const queryUrl = getQueryUrl(
     sensitive,
     pagination,
@@ -129,11 +129,11 @@ export const useTasks = (
     subjects,
     tags,
     districtNames,
-    housingCorporations
+    housingCorporations,
+    housingCorporationIsNull
   )
 
   return useApiRequest<Components.Schemas.PaginatedCaseUserTaskList>({
-    ...options,
     url: queryUrl,
     groupName: "cases",
     handleError,
@@ -179,7 +179,10 @@ export const useTaskNames = (role: string) => {
 }
 
 // useSummonTypesByTaskId for getting the available summonTypes for a specific task and thus Theme.
-export const useSummonTypesByTaskId = (id: Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"], options?: Options) => {
+export const useSummonTypesByTaskId = (
+  id: Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"],
+  options?: Options
+) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.PaginatedSummonTypeList>({
     ...options,
