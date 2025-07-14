@@ -1,7 +1,7 @@
 import { useCallback, useContext } from "react"
 import { ContextValues } from "app/state/context/ValueProvider"
 
-type Item = string | string[]
+type Item = string | string[] | boolean
 
 export function useFilterHandler() {
   const { pagination, updateContextCases } = useContext(ContextValues)["cases"]

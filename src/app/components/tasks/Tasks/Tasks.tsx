@@ -1,7 +1,7 @@
 import { useEffect, useContext } from "react"
-import { Heading, themeSpacing } from "@amsterdam/asc-ui"
-import styled from "styled-components"
-import { useRoles, useTasks, useCaseThemes, useTaskNames,
+import { Heading } from "@amsterdam/asc-ui"
+import {
+  useRoles, useTasks, useCaseThemes, useTaskNames,
   useProjects, useUsersMe, useTasksReasons, useDistricts,
   useCorporations, useSubjects, useTags
 } from "app/state/rest"
@@ -15,41 +15,22 @@ import useContextCache from "app/state/rest/provider/useContextCache"
 import CaseEnforcement from "app/components/case/icons/CaseEnforcement"
 import getThemeId from "app/components/tasks/utils/getThemeId"
 
+import styles from "./Tasks.module.css"
+
 type Item = string | Components.Schemas.District["name"][]
 
 const EMPTY_TEXT_NO_PERMISSION = "Helaas, u bent niet geautoriseerd om deze taken te bekijken."
 const EMPTY_TEXT = "Er zijn momenteel geen open taken voor de gekozen filters."
-const UNDERMINING = "Ondermijning"
-
-const StyledHeading = styled(Heading)`
-  display: flex;
-  align-items: center;
-  justify-content: start;
-`
-
-const Wrap = styled.div`
-  margin-bottom: ${ themeSpacing(12) };
-`
-
-const Container = styled.div`
-  margin: 0 auto;
-  display: grid;
-  grid-gap: 1rem;
-  @media (min-width: 1400px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-`
-
-const FilterContainer = styled.div`
-  min-width: 300px;
-  max-width: 400px;
-`
+const ONDERMIJNING = "Ondermijning"
 
 const Tasks: React.FC = () => {
+  const { tasks: context, tasks: { updateContextTasks } } = useContext(ContextValues)
   const {
-    count, districtNames, housingCorporations, owner, pagination, projects,
-    reason, results, role, sorting, subjects, tags, taskNames, theme, updateContextTasks
-  } = useContext(ContextValues)["tasks"]
+    count, districtNames, housingCorporations, housingCorporationIsNull, owner, pagination,
+    projects, reason, results, role, sorting, subjects,
+    tags, taskNames, theme
+  } = context
+
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const [roles] = useRoles()
   const [me] = useUsersMe()
@@ -61,42 +42,35 @@ const Tasks: React.FC = () => {
   const [tagsTheme] = useTags(themeId)
   const [tasksDistricts] = useDistricts()
   const [corporationData] = useCorporations()
-  const [dataSource, { isBusy }] = useTasks(
-    hasPermission,
+  const commonTaskArgs = {
+    sensitive: hasPermission,
+    sorting,
+    theme,
+    role,
+    owner,
+    taskNames,
+    projects,
+    reason,
+    subjects,
+    tags,
+    districtNames,
+    housingCorporations,
+    housingCorporationIsNull
+  }
+  const [dataSource, { isBusy }] = useTasks({
+    ...commonTaskArgs,
     pagination,
-    sorting,
-    theme,
-    role,
-    owner,
-    false,
-    taskNames,
-    projects,
-    reason,
-    subjects,
-    tags,
-    districtNames,
-    housingCorporations
-  )
-  const [enforcementDataSource, { isBusy: isBusyEnforcement }] = useTasks(
-    hasPermission,
-    {
-      page: 1, // There is no pagination for enforcement tasks
-      pageSize: 1000 // 1000 is the maximum
+    isEnforcementRequest: false
+  })
+  const [enforcementDataSource, { isBusy: isBusyEnforcement }] = useTasks({
+    ...commonTaskArgs,
+    pagination: {
+      page: 1,
+      pageSize: 1000
     },
-    sorting,
-    theme,
-    role,
-    owner,
-    true,
-    taskNames,
-    projects,
-    reason,
-    subjects,
-    tags,
-    districtNames,
-    housingCorporations
-  )
-  const [ taskNamesData ] = useTaskNames(role ?? "")
+    isEnforcementRequest: true
+  })
+  const [taskNamesData] = useTaskNames(role ?? "")
   const queryUrl = getQueryUrl(hasPermission, pagination, sorting, theme, role, owner)
   const { clearContextCache } = useContextCache("cases", queryUrl)
 
@@ -104,18 +78,13 @@ const Tasks: React.FC = () => {
   useEffect(() => {
     // Set initial role when loaded for the first time
     if (me?.role && role === undefined) {
-      updateContextTasks({
-        role: me.role
-      })
+      updateContextTasks({ role: me.role })
     }
   }, [me, role, updateContextTasks])
 
   useEffect(() => {
     if (dataSource === undefined) {
-      updateContextTasks({
-        results: [],
-        count: 0
-      })
+      updateContextTasks({ results: [], count: 0 })
     } else {
       updateContextTasks(dataSource)
     }
@@ -124,28 +93,23 @@ const Tasks: React.FC = () => {
   const onChangeFilter = (key: string, item: Item) => {
     // Empty cache to force a new data fetch.
     clearContextCache()
-    const tasksContextItem = {
+    const updates = {
       [key]: item,
-      pagination: {
-        ...pagination,
-        page: 1
-      }
+      pagination: { ...pagination, page: 1 }
     }
     // When role is set we need to reset the taskNames dropdown to avoid a stale selection:
-    if (key === "role") {
-      tasksContextItem.taskNames = ""
-    }
+    if (key === "role") updates.taskNames = ""
     /*
      ** When theme is set we need to reset the selection for reason and
      ** housingCorporations to avoid a stale selection:
      */
     if (key === "theme") {
-      tasksContextItem.projects = []
-      tasksContextItem.reason = ""
-      tasksContextItem.subjects = []
-      tasksContextItem.tags = []
+      updates.projects = []
+      updates.reason = ""
+      updates.subjects = []
+      updates.tags = []
     }
-    updateContextTasks(tasksContextItem)
+    updateContextTasks(updates)
   }
 
   const onChangePageSize = (pageSize: string) => {
@@ -163,82 +127,76 @@ const Tasks: React.FC = () => {
   }
 
   const districts = tasksDistricts?.results || []
-  const emptyPlaceholder = hasPermission === false && theme === UNDERMINING ? EMPTY_TEXT_NO_PERMISSION : EMPTY_TEXT
+  const emptyPlaceholder = hasPermission === false && theme === ONDERMIJNING ? EMPTY_TEXT_NO_PERMISSION : EMPTY_TEXT
   const enforcementTasksAvailable = !!enforcementDataSource?.results?.length
 
   return (
-    <Container>
+    <div className={styles.container}>
       <div>
-        { enforcementTasksAvailable &&  (
-          <Wrap>
-            <StyledHeading as="h2">
-              Handhavingsverzoeken ({ enforcementDataSource?.count })
-              <CaseEnforcement isVisible={ true } />
-            </StyledHeading>
+        {enforcementTasksAvailable && (
+          <div className={styles.wrap}>
+            <Heading as="h2" className={styles.heading}>
+              <span>
+                Handhavingsverzoeken ({enforcementDataSource?.count})
+                <CaseEnforcement isVisible={true} />
+              </span>
+            </Heading>
             <TableTasks
-              data={ enforcementDataSource?.results || [] }
-              isBusy={ isBusyEnforcement }
-              onChange={ onChangeTable }
-              pagination={ false }
-              sorting={ sorting }
-              emptyPlaceholder={ emptyPlaceholder }
+              data={enforcementDataSource?.results || []}
+              isBusy={isBusyEnforcement}
+              onChange={onChangeTable}
+              pagination={false}
+              sorting={sorting}
+              emptyPlaceholder={emptyPlaceholder}
               isEnforcement
             />
-          </Wrap>
+          </div>
         )}
-        <StyledHeading as="h2">
-          Alle { enforcementTasksAvailable ? "overige" : "" } taken ({ count })
-        </StyledHeading>
+        <Heading as="h2">
+          Alle {enforcementTasksAvailable ? "overige" : ""} taken ({count})
+        </Heading>
         <TableTasks
-          data={ results || [] }
-          isBusy={ isBusy }
-          onChange={ onChangeTable }
-          pagination={ {
+          data={results || []}
+          isBusy={isBusy}
+          onChange={onChangeTable}
+          pagination={{
             page: pagination.page,
             pageSize: pagination.pageSize,
             collectionSize: count || 1,
             paginationLength: 9
-          } }
-          sorting={ sorting }
-          emptyPlaceholder={ emptyPlaceholder }
+          }}
+          sorting={sorting}
+          emptyPlaceholder={emptyPlaceholder}
         />
       </div>
-      <FilterContainer>
+      <div className={styles.filterContainer}>
         <TasksFilter
-          districtNames={ districtNames }
-          districts={ districts }
-          corporations={ corporationData?.results }
-          owner={ owner }
-          pageSize={ pagination.pageSize?.toString() || "25" }
-          projects={ projectsTheme?.results }
-          role={ role ?? "" }
-          roles={ roles }
-          reason={ reason }
-          reasons={ reasons }
-          selectedCorporations={ housingCorporations }
-          selectedProjects={ projects }
-          selectedSubjects={ subjects }
-          selectedTags={ tags }
-          selectedTaskNames={ taskNames }
-          setDistrictNames={ (value: Components.Schemas.District["name"][]) => onChangeFilter("districtNames", value) }
-          setOwner={ (value: string) => onChangeFilter("owner", value) }
-          setPageSize={ onChangePageSize }
-          setReason={ (value: string) => onChangeFilter("reason", value) }
-          setRole={ (value: string) => onChangeFilter("role", value) }
-          setSelectedCorporations={ (value: string[]) => onChangeFilter("housingCorporations", value) }
-          setSelectedProjects={ (value: string[]) => onChangeFilter("projects", value) }
-          setSelectedSubjects={ (value: string[]) => onChangeFilter("subjects", value) }
-          setSelectedTags={ (value: string[]) => onChangeFilter("tags", value) }
-          setSelectedTaskNames={ (value: Components.Schemas.CaseUserTaskTaskName["name"][]) => onChangeFilter("taskNames", value) }
-          setTheme={ (value: string) => onChangeFilter("theme", value) }
-          subjects={ subjectsTheme?.results }
-          tags={ tagsTheme?.results }
-          taskNames={ taskNamesData }
-          theme={ theme }
-          themes={ caseThemes?.results }
+          districtNames={districtNames}
+          districts={districts}
+          corporations={corporationData?.results}
+          corporationIsNull={housingCorporationIsNull}
+          owner={owner}
+          pageSize={pagination.pageSize?.toString() || "25"}
+          projects={projectsTheme?.results}
+          role={role ?? ""}
+          roles={roles}
+          reason={reason}
+          reasons={reasons}
+          selectedCorporations={housingCorporations}
+          selectedProjects={projects}
+          selectedSubjects={subjects}
+          selectedTags={tags}
+          selectedTaskNames={taskNames}
+          onChangePageSize={onChangePageSize}
+          onChangeFilter={onChangeFilter}
+          subjects={subjectsTheme?.results}
+          tags={tagsTheme?.results}
+          taskNames={taskNamesData}
+          theme={theme}
+          themes={caseThemes?.results}
         />
-      </FilterContainer>
-    </Container>
+      </div>
+    </div>
   )
 }
 

@@ -10,10 +10,12 @@ import scaffoldReason from "./scaffoldReason"
 import MultipleOptionsFilterBox from "app/components/filters/MultipleOptionsFilterBox/MultipleOptionsFilterBox"
 import scaffoldClosedCases from "./scaffoldClosedCases"
 import { useFilterHandler } from "./useFilterHandler"
+import NoCorporationFilter from "app/components/filters/NoCorporationFilter/NoCorporationFilter"
 
 type Props = {
   date: string
   corporations?: Components.Schemas.HousingCorporation[]
+  corporationIsNull: boolean
   districts: Components.Schemas.District[]
   districtNames: Components.Schemas.District["name"][]
   openCases: string
@@ -33,6 +35,7 @@ type Props = {
 
 const CasesFilter: React.FC<Props> = ({
   corporations,
+  corporationIsNull,
   date,
   districtNames,
   districts,
@@ -65,16 +68,13 @@ const CasesFilter: React.FC<Props> = ({
     onChangeFilter("subjects", value)
   const setSelectedTags = (value: string[]) => onChangeFilter("tags", value)
   const setTheme = (value: string) => onChangeFilter("theme", value)
-
-  const corporationOptions = [
-    ...(corporations || []),
-    { id: "housing_corporation_isnull", name: "Zonder corporatie" }
-  ]
+  const setCorporationIsNull = (value: boolean) =>
+    onChangeFilter("housingCorporationIsNull", value)
 
   const multipleFilters = [
     {
       label: "Corporaties",
-      options: corporationOptions,
+      options: corporations,
       selected: selectedCorporations,
       setSelected: setSelectedCorporations,
       byId: true
@@ -126,15 +126,23 @@ const CasesFilter: React.FC<Props> = ({
       )}
       {multipleFilters.map(
         ({ label, options, selected, setSelected, byId }) =>
-          options !== undefined && (
-            <MultipleOptionsFilterBox
-              key={label}
-              label={label}
-              options={options}
-              selectedOptions={selected}
-              setSelectedOptions={setSelected}
-              byId={byId}
-            />
+          options && (
+            <>
+              <MultipleOptionsFilterBox
+                key={label}
+                label={label}
+                options={options}
+                selectedOptions={selected}
+                setSelectedOptions={setSelected}
+                byId={byId}
+              />
+              {label === "Corporaties" && (
+                <NoCorporationFilter
+                  checked={corporationIsNull}
+                  setChecked={setCorporationIsNull}
+                />
+              )}
+            </>
           )
       )}
       <ScaffoldForm>

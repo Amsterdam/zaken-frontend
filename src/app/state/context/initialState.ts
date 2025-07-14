@@ -6,6 +6,7 @@ export type StateType = {
     districtNames: Components.Schemas.District["name"][]
     fromStartDate: string
     housingCorporations: string[]
+    housingCorporationIsNull: boolean
     openCases: string
     pagination: TABLE.Schemas.Pagination
     projects: string[]
@@ -22,6 +23,7 @@ export type StateType = {
     count: number
     districtNames: Components.Schemas.District["name"][]
     housingCorporations: string[]
+    housingCorporationIsNull: boolean
     owner: string
     pagination: TABLE.Schemas.Pagination
     projects: string[]
@@ -44,6 +46,7 @@ export const initialState: StateType = {
     districtNames: [],
     fromStartDate: "",
     housingCorporations: [],
+    housingCorporationIsNull: false,
     openCases: "open",
     pagination: {
       page: 1,
@@ -66,6 +69,7 @@ export const initialState: StateType = {
     count: 0,
     districtNames: [],
     housingCorporations: [],
+    housingCorporationIsNull: false,
     owner: "",
     pagination: {
       page: 1,
