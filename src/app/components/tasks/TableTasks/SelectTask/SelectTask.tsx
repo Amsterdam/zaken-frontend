@@ -6,7 +6,10 @@ import UserIcon from "./UserIcon"
 import useContextCache from "app/state/rest/provider/useContextCache"
 import { createNameAbbreviation } from "app/components/shared/Helpers/helpers"
 import CustomTooltip from "app/components/help/HelpContent/CustomTooltip"
-import useHasPermission, { CAN_PERFORM_TASK, SENSITIVE_CASE_PERMISSION } from "app/state/rest/custom/usePermissions/useHasPermission"
+import useHasPermission, {
+  CAN_PERFORM_TASK,
+  SENSITIVE_CASE_PERMISSION
+} from "app/state/rest/custom/usePermissions/useHasPermission"
 import { ContextValues } from "app/state/context/ValueProvider"
 import { getQueryUrl } from "app/state/rest/tasks"
 
@@ -17,7 +20,7 @@ type Props = {
 }
 
 const StyledSpinner = styled(Spinner)`
-  margin: ${ themeSpacing(2) };
+  margin: ${themeSpacing(2)};
 `
 
 const StyledLabel = styled(Label)`
@@ -33,8 +36,19 @@ const SelectTask: React.FC<Props> = ({ taskId, taskOwner, isEnforcement }) => {
   // Get tasks params to create the query params url for the Context.
   // Two different providers are being used. :(
   const {
-    pagination, sorting, role, theme, owner, projects, subjects,
-    tags, taskNames, reason, districtNames, housingCorporations
+    pagination,
+    sorting,
+    role,
+    theme,
+    owner,
+    projects,
+    subjects,
+    tags,
+    taskNames,
+    reason,
+    districtNames,
+    housingCorporations,
+    housingCorporationIsNull
   } = useContext(ContextValues)["tasks"]
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const [hasPerformTaskPermission] = useHasPermission([CAN_PERFORM_TASK])
@@ -57,9 +71,13 @@ const SelectTask: React.FC<Props> = ({ taskId, taskOwner, isEnforcement }) => {
     subjects,
     tags,
     districtNames,
-    housingCorporations
+    housingCorporations,
+    housingCorporationIsNull
   )
-  const { getContextItem, updateContextItem } = useContextCache("cases", queryUrl)
+  const { getContextItem, updateContextItem } = useContextCache(
+    "cases",
+    queryUrl
+  )
 
   useEffect(() => {
     // Check if userId is matching with the taskOwner.
@@ -70,38 +88,51 @@ const SelectTask: React.FC<Props> = ({ taskId, taskOwner, isEnforcement }) => {
   const onChange = () => {
     setLoading((prevLoading) => !prevLoading)
     const newOwner = isChecked ? null : data?.id
-    execPatch({ owner: newOwner })
-      .then((resp: any) => {
-        if (resp.status === 200) {
-          // Owner changed so update context.
-          const tasksRespponse = getContextItem()
-          const tasks = tasksRespponse?.results
-          let newTasks = [...tasks]
-          const index = tasks.findIndex((task: { id: number }) => task.id === taskId)
-          const obj = newTasks[index]
-          newTasks[index] = { ...obj, owner: newOwner }
-          const newContextItem = { ...tasksRespponse, results: newTasks }
-          updateContextItem(newContextItem)
-        }
-        setLoading((prevLoading) => !prevLoading)
-      })
+    execPatch({ owner: newOwner }).then((resp: any) => {
+      if (resp.status === 200) {
+        // Owner changed so update context.
+        const tasksRespponse = getContextItem()
+        const tasks = tasksRespponse?.results
+        let newTasks = [...tasks]
+        const index = tasks.findIndex(
+          (task: { id: number }) => task.id === taskId
+        )
+        const obj = newTasks[index]
+        newTasks[index] = { ...obj, owner: newOwner }
+        const newContextItem = { ...tasksRespponse, results: newTasks }
+        updateContextItem(newContextItem)
+      }
+      setLoading((prevLoading) => !prevLoading)
+    })
   }
 
   if (isBusy || loading) {
     return <StyledSpinner />
   }
   // If taskOwner is known but the the taskOwner is not the active user, show a user icon.
-  if (taskOwner && taskOwner !==  data?.id ) {
-    return <UserIcon owner={ taskOwner }/>
+  if (taskOwner && taskOwner !== data?.id) {
+    return <UserIcon owner={taskOwner} />
   }
-  
+
   return hasPerformTaskPermission ? (
-    <StyledLabel htmlFor={ `cb_${ taskId }` } label={ data && data?.id === taskOwner ? `${ createNameAbbreviation(data) }` : "" }>
-      <CustomTooltip title={ isChecked ? "Mijn taak" : "Beschikbaar" }>
-        <Checkbox data-testid={ `${ taskId }` } id={ `cb_${ taskId }` } checked={ isChecked } onChange={ onChange }/>
+    <StyledLabel
+      htmlFor={`cb_${taskId}`}
+      label={
+        data && data?.id === taskOwner ? `${createNameAbbreviation(data)}` : ""
+      }
+    >
+      <CustomTooltip title={isChecked ? "Mijn taak" : "Beschikbaar"}>
+        <Checkbox
+          data-testid={`${taskId}`}
+          id={`cb_${taskId}`}
+          checked={isChecked}
+          onChange={onChange}
+        />
       </CustomTooltip>
     </StyledLabel>
-  ) : <>-</>
+  ) : (
+    <>-</>
+  )
 }
 
 export default SelectTask

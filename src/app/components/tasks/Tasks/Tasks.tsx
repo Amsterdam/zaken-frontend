@@ -1,13 +1,23 @@
 import { useEffect, useContext } from "react"
 import { Heading } from "@amsterdam/asc-ui"
 import {
-  useRoles, useTasks, useCaseThemes, useTaskNames,
-  useProjects, useUsersMe, useTasksReasons, useDistricts,
-  useCorporations, useSubjects, useTags
+  useRoles,
+  useTasks,
+  useCaseThemes,
+  useTaskNames,
+  useProjects,
+  useUsersMe,
+  useTasksReasons,
+  useDistricts,
+  useCorporations,
+  useSubjects,
+  useTags
 } from "app/state/rest"
 import TableTasks from "app/components/tasks/TableTasks/TableTasks"
 import TasksFilter from "../TasksFilter/TasksFilter"
-import useHasPermission, { SENSITIVE_CASE_PERMISSION } from "app/state/rest/custom/usePermissions/useHasPermission"
+import useHasPermission, {
+  SENSITIVE_CASE_PERMISSION
+} from "app/state/rest/custom/usePermissions/useHasPermission"
 import { ContextValues } from "app/state/context/ValueProvider"
 import { getQueryUrl } from "app/state/rest/tasks"
 import useContextCache from "app/state/rest/provider/useContextCache"
@@ -19,16 +29,32 @@ import styles from "./Tasks.module.css"
 
 type Item = string | Components.Schemas.District["name"][]
 
-const EMPTY_TEXT_NO_PERMISSION = "Helaas, u bent niet geautoriseerd om deze taken te bekijken."
+const EMPTY_TEXT_NO_PERMISSION =
+  "Helaas, u bent niet geautoriseerd om deze taken te bekijken."
 const EMPTY_TEXT = "Er zijn momenteel geen open taken voor de gekozen filters."
 const ONDERMIJNING = "Ondermijning"
 
 const Tasks: React.FC = () => {
-  const { tasks: context, tasks: { updateContextTasks } } = useContext(ContextValues)
   const {
-    count, districtNames, housingCorporations, housingCorporationIsNull, owner, pagination,
-    projects, reason, results, role, sorting, subjects,
-    tags, taskNames, theme
+    tasks: context,
+    tasks: { updateContextTasks }
+  } = useContext(ContextValues)
+  const {
+    count,
+    districtNames,
+    housingCorporations,
+    housingCorporationIsNull,
+    owner,
+    pagination,
+    projects,
+    reason,
+    results,
+    role,
+    sorting,
+    subjects,
+    tags,
+    taskNames,
+    theme
   } = context
 
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
@@ -71,9 +97,15 @@ const Tasks: React.FC = () => {
     isEnforcementRequest: true
   })
   const [taskNamesData] = useTaskNames(role ?? "")
-  const queryUrl = getQueryUrl(hasPermission, pagination, sorting, theme, role, owner)
+  const queryUrl = getQueryUrl(
+    hasPermission,
+    pagination,
+    sorting,
+    theme,
+    role,
+    owner
+  )
   const { clearContextCache } = useContextCache("cases", queryUrl)
-
 
   useEffect(() => {
     // Set initial role when loaded for the first time
@@ -122,12 +154,18 @@ const Tasks: React.FC = () => {
     })
   }
 
-  const onChangeTable = (pagination: TABLE.Schemas.Pagination, sorting: TABLE.Schemas.Sorting) => {
+  const onChangeTable = (
+    pagination: TABLE.Schemas.Pagination,
+    sorting: TABLE.Schemas.Sorting
+  ) => {
     updateContextTasks({ pagination, sorting })
   }
 
   const districts = tasksDistricts?.results || []
-  const emptyPlaceholder = hasPermission === false && theme === ONDERMIJNING ? EMPTY_TEXT_NO_PERMISSION : EMPTY_TEXT
+  const emptyPlaceholder =
+    hasPermission === false && theme === ONDERMIJNING
+      ? EMPTY_TEXT_NO_PERMISSION
+      : EMPTY_TEXT
   const enforcementTasksAvailable = !!enforcementDataSource?.results?.length
 
   return (
