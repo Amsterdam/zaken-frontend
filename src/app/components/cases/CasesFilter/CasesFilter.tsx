@@ -1,3 +1,4 @@
+import React from "react"
 import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
 import { Spinner } from "@amsterdam/asc-ui"
 
@@ -127,7 +128,7 @@ const CasesFilter: React.FC<Props> = ({
       {multipleFilters.map(
         ({ label, options, selected, setSelected, byId }) =>
           options && (
-            <>
+            <React.Fragment key={label}>
               <MultipleOptionsFilterBox
                 key={label}
                 label={label}
@@ -142,7 +143,7 @@ const CasesFilter: React.FC<Props> = ({
                   setChecked={setCorporationIsNull}
                 />
               )}
-            </>
+            </React.Fragment>
           )
       )}
       <ScaffoldForm>
