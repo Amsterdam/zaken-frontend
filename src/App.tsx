@@ -46,13 +46,13 @@ const App = () => {
 
   return (
     <React.Fragment>
-      <PageTitle />
       <ThemeProvider>
         <GlobalStyle />
         <BrowserRouter>
           <FlashMessageProvider>
             <ApiProvider>
               <ValueProvider>
+                <PageTitle />
                 <Feedback />
                 <Router />
               </ValueProvider>
