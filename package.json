@@ -67,7 +67,7 @@
     "@babel/preset-typescript": "^7.27.0",
     "@svgr/core": "^8.1.0",
     "@svgr/plugin-jsx": "^8.1.0",
-    "@types/node": "^24.0.10",
+    "@types/node": "^24.2.0",
     "cypress": "^14.3.3",
     "ts-node": "^10.9.1",
     "vitest": "^3.2.4"
