@@ -176,7 +176,9 @@ const Tasks: React.FC = () => {
             <Heading as="h2" className={styles.heading}>
               <span>
                 Handhavingsverzoeken ({enforcementDataSource?.count})
-                <CaseEnforcement isVisible={true} />
+                <span style={{ marginLeft: "0.5rem" }}>
+                  <CaseEnforcement isVisible={true} />
+                </span>
               </span>
             </Heading>
             <TableTasks
