@@ -207,28 +207,6 @@ export const useVisitsCreate = (options?: Options) => {
   })
 }
 
-export const useCaseDocuments = (caseId: Components.Schemas.CaseDetail["id"], options?: Options) => {
-  const handleError = useErrorHandler()
-  return useApiRequest<Components.Schemas.PaginatedDocumentTypeList>({
-    ...options,
-    url: makeApiUrl("cases", caseId, "documents"),
-    groupName: "cases",
-    handleError,
-    isProtected: true
-  })
-}
-
-export const useDocumentTypesByCase = (caseId: Components.Schemas.CaseDetail["id"], options?: Options) => {
-  const handleError = useErrorHandler()
-  return useApiRequest<Components.Schemas.DocumentType[]>({
-    ...options,
-    url: makeApiUrl("cases", caseId, "document-types"),
-    groupName: "cases",
-    handleError,
-    isProtected: true
-  })
-}
-
 export const useCaseWorkflows = (caseId: Components.Schemas.CaseDetail["id"], options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.PaginatedCaseWorkflowList>({
