@@ -3,6 +3,7 @@ import { Fields } from "app/components/shared/Form/ScaffoldFields"
 import InfoButton from "app/components/shared/InfoHeading/InfoButton"
 import type { NavigateToFunction } from "app/routing/useNavigation"
 import isValidUrl from "app/routing/utils/isValidUrl"
+import { EXCLUDED_THEMES_ADVERTISEMENTS } from "app/constants/themeNames"
 
 export default (
   bagId: Components.Schemas.Address["bag_id"],
@@ -238,9 +239,7 @@ export default (
       props: {
         shouldShow: (formValues: { values?: { theme?: Components.Schemas.CaseTheme } }) => {
           const themeName = formValues?.values?.theme?.name
-          const isVisible = themeName !== undefined && themeName !== "Kamerverhuur"
-            && themeName !== "Ondermijning" && themeName !== "Goed verhuurderschap"
-          return isVisible
+          return themeName !== undefined && !EXCLUDED_THEMES_ADVERTISEMENTS.includes(themeName)
         },
         field: {
           type: "RadioFields",

@@ -6,7 +6,7 @@ import ChangeableSubject from "./ChangeSubject/ChangeableSubject"
 import ChangeHousingCorporation from "./ChangeHousingCorporation/ChangeHousingCorporation"
 import CaseSensitive from "../icons/CaseSensitive"
 import CaseEnforcement from "../icons/CaseEnforcement"
-import translationsCaseStates from "app/translations/translationsCaseStates"
+import caseStates from "app/constants/caseStates"
 import EditableTag from "./EditableTag/EditableTag"
 
 type Props = {
@@ -41,7 +41,7 @@ const getDataFirstCol = (caseItem?: Components.Schemas.CaseCreate) => {
         <CaseEnforcement isVisible={ is_enforcement_request } />
       </Wrap>
     ),
-    "Status": translationsCaseStates[state],
+    "Status": caseStates[state],
     "Startdatum": <DateDisplay date={ start_date ?? undefined } emptyText="-" />
   }
   if (previous_case) {
