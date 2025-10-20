@@ -1,7 +1,13 @@
 #!/usr/bin/env ts-node-script
 import { exec } from "child_process"
+import { config } from "dotenv"
 
-const url = "http://localhost:8080/api/v1/schema/"
+config({ path: ".env.local" })
+
+const url = process.env.VITE_SWAGGER_SCHEMA_URL || "https://acc.api.wonen.zaken.amsterdam.nl/api/v1/schema/"
+
+console.log(`👉 Generating schema from \`${ url }\``)
+
 exec(`dtsgen -o ./src/__generated__/apiSchema.d.ts --url ${ url }`,
   (error, stdout, stderr) => {
     if (error) {

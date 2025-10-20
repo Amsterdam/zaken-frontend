@@ -206,6 +206,7 @@ declare namespace Components {
             state: string;
             workflows: CaseWorkflow[];
             subjects: Subject[];
+            tags: Tag[];
             project: {
                 id: number;
                 name: string;
@@ -243,7 +244,6 @@ declare namespace Components {
             case_deleted?: boolean;
             previous_case?: number | null;
             author?: string | null; // uuid
-            tags?: number[];
         }
         export interface CaseDetail {
             id: number;
@@ -1604,6 +1604,7 @@ declare namespace Components {
         }
         export interface Schedule {
             priority: PriorityTiny;
+            is_additional?: boolean;
         }
         export interface ScheduleCreate {
             action: number;
@@ -1629,6 +1630,7 @@ declare namespace Components {
             date_modified: string; // date-time
             visit_from_datetime?: string | null; // date-time
             housing_corporation_combiteam?: boolean;
+            is_additional?: boolean;
             case: number;
             author?: string | null; // uuid
         }
@@ -1765,6 +1767,7 @@ declare namespace Components {
             suggest_next_visit_description?: string | null;
             notes?: string | null;
             top_visit_id: number; // int64
+            is_additional?: boolean;
             case: number;
         }
         export interface WeekSegment {
@@ -2010,6 +2013,7 @@ declare namespace Paths {
             export type HousingCorporation = number;
             export type HousingCorporationIsnull = boolean;
             export type Id = number;
+            export type Ids = number;
             export type IsEnforcementRequest = boolean;
             export type Number = string;
             export type OpenCases = boolean;
@@ -2052,6 +2056,7 @@ declare namespace Paths {
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
             housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
+            ids?: Parameters.Ids;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             number?: Parameters.Number;
             open_cases?: Parameters.OpenCases;
@@ -2096,6 +2101,7 @@ declare namespace Paths {
             export type FromStartDate = string; // date
             export type HousingCorporation = number;
             export type HousingCorporationIsnull = boolean;
+            export type Ids = number;
             export type IsEnforcementRequest = boolean;
             export type Number = string;
             export type OpenCases = boolean;
@@ -2135,6 +2141,7 @@ declare namespace Paths {
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
             housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
+            ids?: Parameters.Ids;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             number?: Parameters.Number;
             open_cases?: Parameters.OpenCases;
@@ -2180,6 +2187,7 @@ declare namespace Paths {
             export type HousingCorporation = number;
             export type HousingCorporationIsnull = boolean;
             export type Id = number;
+            export type Ids = number;
             export type IsEnforcementRequest = boolean;
             export type OpenCases = boolean;
             export type Ordering = string;
@@ -2217,6 +2225,7 @@ declare namespace Paths {
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
             housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
+            ids?: Parameters.Ids;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
@@ -2257,6 +2266,7 @@ declare namespace Paths {
             export type FromStartDate = string; // date
             export type HousingCorporation = number;
             export type HousingCorporationIsnull = boolean;
+            export type Ids = number;
             export type IsEnforcementRequest = boolean;
             export type OpenCases = boolean;
             export type Ordering = string;
@@ -2291,6 +2301,7 @@ declare namespace Paths {
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
             housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
+            ids?: Parameters.Ids;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
@@ -2330,6 +2341,7 @@ declare namespace Paths {
             export type FromStartDate = string; // date
             export type HousingCorporation = number;
             export type HousingCorporationIsnull = boolean;
+            export type Ids = number;
             export type IsEnforcementRequest = boolean;
             export type OpenCases = boolean;
             export type Ordering = string;
@@ -2364,6 +2376,7 @@ declare namespace Paths {
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
             housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
+            ids?: Parameters.Ids;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
@@ -2404,6 +2417,7 @@ declare namespace Paths {
             export type FromStartDate = string; // date
             export type HousingCorporation = number;
             export type HousingCorporationIsnull = boolean;
+            export type Ids = number;
             export type IsEnforcementRequest = boolean;
             export type Number = string;
             export type OpenCases = boolean;
@@ -2443,6 +2457,7 @@ declare namespace Paths {
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
             housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
+            ids?: Parameters.Ids;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             number?: Parameters.Number;
             open_cases?: Parameters.OpenCases;
@@ -2487,6 +2502,7 @@ declare namespace Paths {
             export type FromStartDate = string; // date
             export type HousingCorporation = number;
             export type HousingCorporationIsnull = boolean;
+            export type Ids = number;
             export type IsEnforcementRequest = boolean;
             export type Number = string;
             export type OpenCases = boolean;
@@ -2526,6 +2542,7 @@ declare namespace Paths {
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
             housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
+            ids?: Parameters.Ids;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             number?: Parameters.Number;
             open_cases?: Parameters.OpenCases;
@@ -2588,6 +2605,7 @@ declare namespace Paths {
             export type HousingCorporation = number;
             export type HousingCorporationIsnull = boolean;
             export type Id = number;
+            export type Ids = number;
             export type IsEnforcementRequest = boolean;
             export type OpenCases = boolean;
             export type Ordering = string;
@@ -2625,6 +2643,7 @@ declare namespace Paths {
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
             housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
+            ids?: Parameters.Ids;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
@@ -2664,6 +2683,7 @@ declare namespace Paths {
             export type FromStartDate = string; // date
             export type HousingCorporation = number;
             export type HousingCorporationIsnull = boolean;
+            export type Ids = number;
             export type IsEnforcementRequest = boolean;
             export type Number = string;
             export type OpenCases = boolean;
@@ -2703,6 +2723,7 @@ declare namespace Paths {
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
             housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
+            ids?: Parameters.Ids;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             number?: Parameters.Number;
             open_cases?: Parameters.OpenCases;
@@ -2748,6 +2769,7 @@ declare namespace Paths {
             export type HousingCorporation = number;
             export type HousingCorporationIsnull = boolean;
             export type Id = number;
+            export type Ids = number;
             export type IsEnforcementRequest = boolean;
             export type OpenCases = boolean;
             export type Ordering = string;
@@ -2785,6 +2807,7 @@ declare namespace Paths {
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
             housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
+            ids?: Parameters.Ids;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
@@ -2826,6 +2849,7 @@ declare namespace Paths {
             export type HousingCorporation = number;
             export type HousingCorporationIsnull = boolean;
             export type Id = number;
+            export type Ids = number;
             export type IsEnforcementRequest = boolean;
             export type Number = string;
             export type OpenCases = boolean;
@@ -2868,6 +2892,7 @@ declare namespace Paths {
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
             housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
+            ids?: Parameters.Ids;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             number?: Parameters.Number;
             open_cases?: Parameters.OpenCases;
@@ -2913,6 +2938,7 @@ declare namespace Paths {
             export type HousingCorporation = number;
             export type HousingCorporationIsnull = boolean;
             export type Id = number;
+            export type Ids = number;
             export type IsEnforcementRequest = boolean;
             export type OpenCases = boolean;
             export type Ordering = string;
@@ -2950,6 +2976,7 @@ declare namespace Paths {
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
             housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
+            ids?: Parameters.Ids;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
@@ -2990,6 +3017,7 @@ declare namespace Paths {
             export type FromStartDate = string; // date
             export type HousingCorporation = number;
             export type HousingCorporationIsnull = boolean;
+            export type Ids = number;
             export type IsEnforcementRequest = boolean;
             export type Number = string;
             export type OpenCases = boolean;
@@ -3029,6 +3057,7 @@ declare namespace Paths {
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
             housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
+            ids?: Parameters.Ids;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             number?: Parameters.Number;
             open_cases?: Parameters.OpenCases;
@@ -3091,6 +3120,7 @@ declare namespace Paths {
             export type HousingCorporation = number;
             export type HousingCorporationIsnull = boolean;
             export type Id = number;
+            export type Ids = number;
             export type IsEnforcementRequest = boolean;
             export type OpenCases = boolean;
             export type Ordering = string;
@@ -3128,6 +3158,7 @@ declare namespace Paths {
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
             housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
+            ids?: Parameters.Ids;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
@@ -3168,6 +3199,7 @@ declare namespace Paths {
             export type HousingCorporation = number;
             export type HousingCorporationIsnull = boolean;
             export type Id = number;
+            export type Ids = number;
             export type IsEnforcementRequest = boolean;
             export type Number = string;
             export type OpenCases = boolean;
@@ -3210,6 +3242,7 @@ declare namespace Paths {
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
             housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
+            ids?: Parameters.Ids;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             number?: Parameters.Number;
             open_cases?: Parameters.OpenCases;
@@ -3255,6 +3288,7 @@ declare namespace Paths {
             export type HousingCorporation = number;
             export type HousingCorporationIsnull = boolean;
             export type Id = number;
+            export type Ids = number;
             export type IsEnforcementRequest = boolean;
             export type OpenCases = boolean;
             export type Ordering = string;
@@ -3292,6 +3326,7 @@ declare namespace Paths {
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
             housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
+            ids?: Parameters.Ids;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
@@ -3333,6 +3368,7 @@ declare namespace Paths {
             export type HousingCorporation = number;
             export type HousingCorporationIsnull = boolean;
             export type Id = number;
+            export type Ids = number;
             export type IsEnforcementRequest = boolean;
             export type Number = string;
             export type OpenCases = boolean;
@@ -3375,6 +3411,7 @@ declare namespace Paths {
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
             housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
+            ids?: Parameters.Ids;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             number?: Parameters.Number;
             open_cases?: Parameters.OpenCases;
