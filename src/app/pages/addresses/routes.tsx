@@ -24,8 +24,7 @@ export default {
       "personen/nieuw": {
         Page: PeopleNewBrp,
         icon: "Portrait",
-        title: "Persoonsgegevens nieuwe BRP-API",
-        permissionNames: ["access_personal_data_register"]
+        title: "Persoonsgegevens nieuwe BRP-API"
       },
       "vergunningen": {
         Page: PermitsPage,
