@@ -44,7 +44,7 @@ const Cases: React.FC = () => {
     reason,
     results,
     sorting,
-    streetName,
+    addressSearch,
     subjects,
     tags,
     theme,
@@ -68,7 +68,7 @@ const Cases: React.FC = () => {
     openCases,
     projects,
     reason,
-    streetName,
+    addressSearch,
     subjects,
     tags,
     districtNames,
@@ -101,7 +101,7 @@ const Cases: React.FC = () => {
         <Heading>Zakenoverzicht ({count})</Heading>
       </RowWithColumn>
       <RowWithColumn bottomSpacing={6}>
-        <SearchBarCases searchString={streetName} />
+        <SearchBarCases searchString={addressSearch} />
       </RowWithColumn>
       <div className={styles.Grid}>
         <TableCases
