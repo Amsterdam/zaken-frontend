@@ -29,7 +29,7 @@ const getColumns = (sorting: any) => {
       sortOrder: sorting.dataIndex === "address.street_name" && sorting.order,
       minWidth: 200,
       render: (text: any, record: any) => {
-        const { number, suffix, suffix_letter } = record.address
+        const { number, suffix, suffix_letter } = record.address ?? {}
         return `${ text } ${ number }${ suffix ? "-" : "" }${ suffix || "" }${ suffix_letter ? "-" : "" }${ suffix_letter || "" }`
       }
     }, {
