@@ -33,11 +33,11 @@ const CaseHeading: React.FC<Props> = ({ id }) => {
             <Dt>Adres</Dt>
             <dd>
               <FullAddressDisplay
-                streetName={ data.address.street_name }
-                streetNumber={ data.address.number }
-                suffix={ data.address.suffix_letter }
-                etage={ data.address.suffix }
-                postalCode={ data.address.postal_code }
+                streetName={ data?.address?.street_name }
+                streetNumber={ data?.address?.number }
+                suffix={ data?.address?.suffix_letter }
+                etage={ data?.address?.suffix }
+                postalCode={ data?.address?.postal_code }
                 city={ "Amsterdam" }
               />
             </dd>
