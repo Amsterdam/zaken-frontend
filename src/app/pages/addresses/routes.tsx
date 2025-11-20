@@ -16,15 +16,15 @@ export default {
         title: "Adresdetails"
       },
       "personen": {
-        Page: PeoplePage,
+        Page: PeopleNewBrp,
         icon: "Portrait",
         title: "Persoonsgegevens",
         permissionNames: ["access_personal_data_register"]
       },
       "personen/nieuw": {
-        Page: PeopleNewBrp,
+        Page: PeoplePage,
         icon: "Portrait",
-        title: "Persoonsgegevens nieuwe BRP-API",
+        title: "Persoonsgegevens oude BRP-Proxy",
         permissionNames: ["access_personal_data_register"]
       },
       "vergunningen": {
