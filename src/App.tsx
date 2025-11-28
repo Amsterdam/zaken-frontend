@@ -9,6 +9,8 @@ import ValueProvider from "app/state/context/ValueProvider"
 import PageTitle from "app/routing/components/PageTitle"
 import { LoadingScreenBasic, FullScreenWrapper } from "app/components/shared/loading"
 import Feedback from "app/components/Feedback"
+import MaintenanceMode from "app/components/layouts/MaintenanceMode/MaintenanceMode"
+import { IS_MAINTENANCE_IN_PROGRESS } from "app/config/maintenance"
 
 const App = () => {
   const auth = useAuth()
@@ -31,6 +33,15 @@ const App = () => {
       setHasTriedSignin(true)
     }
   }, [auth, hasTriedSignin])
+
+  if (IS_MAINTENANCE_IN_PROGRESS) {
+    return (
+      <ThemeProvider>
+        <GlobalStyle />
+        <MaintenanceMode />
+      </ThemeProvider>
+    )
+  }
 
   if (auth.isLoading) {
     return <LoadingScreenBasic/>
