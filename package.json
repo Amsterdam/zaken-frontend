@@ -73,7 +73,7 @@
     "dtsgenerator": "^3.19.2",
     "jsdom": "^26.1.0",
     "ts-node": "^10.9.1",
-    "vitest": "^3.2.4"
+    "vitest": "^4.0.14"
   },
   "eslintConfig": {
     "extends": "react-app"
