@@ -7,6 +7,7 @@ import FlashMessages from "app/components/layouts/FlashMessages/FlashMessages"
 import UserInfo from "app/components/shared/UserInfo/UserInfo"
 import SkipLinks from "app/components/shared/SkipLinks/SkipLinks"
 import BreadCrumbsWrap from "app/components/shared/BreadCrumbs/BreadCrumbsWrap"
+import MaintenanceBanner from "app/components/layouts/MaintenanceBanner/MaintenanceBanner"
 import { env } from "app/config/env"
 
 type Props = {
@@ -40,6 +41,7 @@ const DefaultLayout: React.FC<Props> = ({ showSearchButton = true, children }) =
     <SkipLinks linkList={ [
       { title: "Direct naar: inhoud", target: "a11y_content" }
     ] }/>
+    <MaintenanceBanner />
     <HeaderWrap>
       <Header
         tall
