@@ -1,7 +1,7 @@
 
 import styled from "styled-components"
 import { Alert, themeSpacing } from "@amsterdam/asc-ui"
-import { useCase, useCaseEvents } from "app/state/rest"
+import { useCase, useCaseEvents, useCaseWorkflows } from "app/state/rest"
 
 const MAX_NUMBER_NUISANCE = 3
 
@@ -14,12 +14,13 @@ const StyledAlert = styled(Alert)`
 `
 
 const CaseNuisanceAlert: React.FC<Props> = ({ caseId }) => {
-  const [caseData] = useCase(caseId)
   const [caseEvents] = useCaseEvents(caseId)
+  const [data] = useCaseWorkflows(caseId)
+  const workflows = data?.results ?? []
 
   const totalNuisance = caseEvents?.reduce((acc, cur) => cur?.event_values?.nuisance_detected ? ++acc : acc, 0)
   const isMaxExceeded = totalNuisance !== undefined && totalNuisance >= MAX_NUMBER_NUISANCE
-  const isNuisanceReportedInStates = caseData?.workflows.find((workflow) => workflow.state.name === "Melding overlast")
+  const isNuisanceReportedInStates = workflows.find((workflow) => workflow.state.name === "Melding overlast")
   const isNuisanceReportedInEvents = caseEvents?.find((event) => event?.event_values?.description === "Doorzetten melding overlast")
 
   const isVisible = isMaxExceeded && !isNuisanceReportedInStates && !isNuisanceReportedInEvents
