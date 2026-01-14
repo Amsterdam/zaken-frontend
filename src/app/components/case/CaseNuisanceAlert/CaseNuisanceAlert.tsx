@@ -15,8 +15,8 @@ const StyledAlert = styled(Alert)`
 
 const CaseNuisanceAlert: React.FC<Props> = ({ caseId }) => {
   const [caseEvents] = useCaseEvents(caseId)
-  const [data] = useCaseWorkflows(caseId)
-  const workflows = data?.results ?? []
+  const [caseWorkflowData] = useCaseWorkflows(caseId)
+  const workflows = caseWorkflowData?.results ?? []
 
   const totalNuisance = caseEvents?.reduce((acc, cur) => cur?.event_values?.nuisance_detected ? ++acc : acc, 0)
   const isMaxExceeded = totalNuisance !== undefined && totalNuisance >= MAX_NUMBER_NUISANCE
