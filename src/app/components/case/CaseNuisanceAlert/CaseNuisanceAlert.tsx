@@ -1,7 +1,7 @@
 
 import styled from "styled-components"
 import { Alert, themeSpacing } from "@amsterdam/asc-ui"
-import { useCase, useCaseEvents, useCaseWorkflows } from "app/state/rest"
+import { useCaseEvents, useCaseWorkflows } from "app/state/rest"
 
 const MAX_NUMBER_NUISANCE = 3
 
