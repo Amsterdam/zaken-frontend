@@ -38,7 +38,7 @@
     "@vitejs/plugin-react": "^4.6.0",
     "axios": "^1.13.4",
     "dayjs": "^1.11.13",
-    "env-cmd": "^10.1.0",
+    "env-cmd": "^11.0.0",
     "eslint-config-react-app": "^7.0.1",
     "final-form": "^4.20.10",
     "final-form-arrays": "^3.0.2",
