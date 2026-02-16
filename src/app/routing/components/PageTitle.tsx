@@ -25,7 +25,7 @@ const PageTitle: React.FC = () => {
     if (pageConfig?.title === "Zaakdetails" && caseId && caseData?.address) {
       const { postal_code, number, suffix, suffix_letter } = caseData.address
       const formattedAddress = `${postal_code} ${number}${suffix ? `-${suffix}` : ""}${suffix_letter || ""}`
-      title = `${PAGE_TITLE} | ${formattedAddress}`
+      title = `${formattedAddress} | ${PAGE_TITLE}`
     }
 
     document.title = title

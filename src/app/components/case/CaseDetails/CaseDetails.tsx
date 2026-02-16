@@ -6,7 +6,7 @@ import ChangeableSubject from "./ChangeSubject/ChangeableSubject"
 import ChangeHousingCorporation from "./ChangeHousingCorporation/ChangeHousingCorporation"
 import CaseSensitive from "../icons/CaseSensitive"
 import CaseEnforcement from "../icons/CaseEnforcement"
-import translationsCaseStates from "app/translations/translationsCaseStates"
+import caseStates from "app/constants/caseStates"
 import EditableTag from "./EditableTag/EditableTag"
 
 type Props = {
@@ -41,7 +41,7 @@ const getDataFirstCol = (caseItem?: Components.Schemas.CaseCreate) => {
         <CaseEnforcement isVisible={ is_enforcement_request } />
       </Wrap>
     ),
-    "Status": translationsCaseStates[state],
+    "Status": caseStates[state],
     "Startdatum": <DateDisplay date={ start_date ?? undefined } emptyText="-" />
   }
   if (previous_case) {
@@ -56,7 +56,7 @@ const getDataSecondCol = (caseItem?: Components.Schemas.CaseCreate) => {
     return undefined
   }
 
-  const { id, theme, reason, project, subjects, address: { housing_corporation, bag_id } } = caseItem
+  const { id, theme, reason, project, subjects, address } = caseItem
   const hasProject = project?.name !== undefined
   const data: DefinitionListData = {
     "Thema": theme.name,
@@ -64,8 +64,8 @@ const getDataSecondCol = (caseItem?: Components.Schemas.CaseCreate) => {
     "Onderwerp(en)": <ChangeableSubject subjects={ subjects } caseId={ id } themeId={ theme.id } />,
     "Corporatie": (
       <ChangeHousingCorporation
-        housingCorporationId={ housing_corporation }
-        bagId={ bag_id }
+        housingCorporationId={ address?.housing_corporation }
+        bagId={ address?.bag_id }
         caseId={ id }
       />
     )

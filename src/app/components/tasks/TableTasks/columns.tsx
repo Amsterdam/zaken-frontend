@@ -17,7 +17,7 @@ export default (sorting: any, myId?: string, isEnforcement?: boolean) => ([
     sortOrder: sorting.dataIndex === "case.address.street_name" && sorting.order,
     minWidth: 200,
     render: (text: any, record: any) => {
-      const { number, suffix, suffix_letter } = record.case.address
+      const { number, suffix, suffix_letter } = record.case.address ?? {}
       return `${text} ${number}${suffix ? "-" : ""}${suffix || ""}${suffix_letter ? "-" : ""}${suffix_letter || ""}`
     }
   }, {
