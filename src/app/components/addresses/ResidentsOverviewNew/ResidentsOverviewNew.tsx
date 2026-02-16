@@ -1,5 +1,5 @@
 
-import { ResidentsV2 } from "@amsterdam/wonen-ui"
+import { Residents } from "@amsterdam/wonen-ui"
 import { useResidentsNew } from "app/state/rest"
 import LoadingDetails from "app/components/shared/Details/LoadingDetails"
 
@@ -15,7 +15,7 @@ const ResidentsOverviewNew: React.FC<Props> = ({ bagId }) => {
     return <LoadingDetails numRows={4} />
   }
   return (
-    <ResidentsV2 data={dataSource} header />
+    <Residents data={dataSource} header />
   )
 }
 
