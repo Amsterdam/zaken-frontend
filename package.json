@@ -68,7 +68,7 @@
     "@svgr/core": "^8.1.0",
     "@svgr/plugin-jsx": "^8.1.0",
     "@types/node": "^25.2.0",
-    "cypress": "^15.10.0",
+    "cypress": "^15.11.0",
     "dotenv": "^17.2.3",
     "dtsgenerator": "^3.19.2",
     "jsdom": "^28.0.0",
