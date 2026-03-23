@@ -47,7 +47,7 @@
     "lodash.debounce": "^4.0.8",
     "lodash.isempty": "^4.4.0",
     "lodash.merge": "^4.6.2",
-    "qs": "^6.14.1",
+    "qs": "^6.15.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-final-form": "^6.5.9",
@@ -59,7 +59,7 @@
     "typescript": "5.9.3",
     "vite": "^7.3.1",
     "vite-plugin-eslint": "^1.8.1",
-    "vite-tsconfig-paths": "^6.0.5"
+    "vite-tsconfig-paths": "^6.1.1"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.29.0",
@@ -67,13 +67,13 @@
     "@babel/preset-typescript": "^7.28.5",
     "@svgr/core": "^8.1.0",
     "@svgr/plugin-jsx": "^8.1.0",
-    "@types/node": "^25.2.0",
+    "@types/node": "^25.5.0",
     "cypress": "^15.10.0",
-    "dotenv": "^17.2.3",
+    "dotenv": "^17.3.1",
     "dtsgenerator": "^3.19.2",
-    "jsdom": "^28.0.0",
+    "jsdom": "^29.0.1",
     "ts-node": "^10.9.1",
-    "vitest": "^4.0.18"
+    "vitest": "^4.1.0"
   },
   "eslintConfig": {
     "extends": "react-app"
