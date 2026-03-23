@@ -29,7 +29,7 @@ const getColumns = (sorting: any) => {
       sortOrder: sorting.dataIndex === "address.street_name" && sorting.order,
       minWidth: 200,
       render: (text: any, record: any) => {
-        const { number, suffix, suffix_letter } = record.address
+        const { number, suffix, suffix_letter } = record.address ?? {}
         return `${ text } ${ number }${ suffix ? "-" : "" }${ suffix || "" }${ suffix_letter ? "-" : "" }${ suffix_letter || "" }`
       }
     }, {
@@ -56,7 +56,13 @@ const getColumns = (sorting: any) => {
       dataIndex: "reason.name",
       sorter: (a: any, b: any) => a?.reason?.name.localeCompare(b?.reason?.name),
       sortOrder: sorting.dataIndex === "reason.name" && sorting.order,
-      minWidth: 140
+      minWidth: 140,
+      render: (reasonName: Text, record: any) => {
+        if (record.reason.name === "Project" && record.project) {
+          return record.project.name
+        }
+        return reasonName
+      }
     }, {
       header: "Startdatum",
       dataIndex: "start_date",

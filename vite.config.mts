@@ -1,14 +1,19 @@
-import { resolve } from "node:path"
-import { readFileSync } from "node:fs"
-import { defineConfig, loadEnv, Plugin, createFilter, transformWithEsbuild } from "vite"
-import react from "@vitejs/plugin-react"
-import tsconfigPaths from "vite-tsconfig-paths"
-import eslint from 'vite-plugin-eslint';
-
+import { resolve } from "node:path";
+import { readFileSync } from "node:fs";
+import {
+  defineConfig,
+  loadEnv,
+  Plugin,
+  createFilter,
+  transformWithEsbuild,
+} from "vite";
+import react from "@vitejs/plugin-react";
+import tsconfigPaths from "vite-tsconfig-paths";
+import eslint from "vite-plugin-eslint";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  setEnv(mode)
+  setEnv(mode);
   return {
     plugins: [
       react(),
@@ -21,28 +26,30 @@ export default defineConfig(({ mode }) => {
       basePlugin(),
       importPrefixPlugin(),
       htmlPlugin(mode),
-      svgrPlugin()
+      svgrPlugin(),
     ],
     test: {
       globals: true, // Enables global API like `describe`, `it`, `expect`, etc.
       environment: "jsdom",
+      include: ["src/**/*.test.{ts,tsx,js,jsx}"],
     },
-  }
-})
+  };
+});
 
 function setEnv(mode: string) {
   Object.assign(
     process.env,
-    loadEnv(mode, ".", ["NODE_ENV", "PUBLIC_URL", "VITE_"])
-  )
-  process.env.NODE_ENV ||= mode
-  const { homepage } = JSON.parse(readFileSync("package.json", "utf-8"))
+    loadEnv(mode, ".", ["NODE_ENV", "PUBLIC_URL", "VITE_"]),
+  );
+  process.env.NODE_ENV ||= mode;
+  const { homepage } = JSON.parse(readFileSync("package.json", "utf-8"));
   process.env.PUBLIC_URL ||= homepage
-    ? `${homepage.startsWith("http") || homepage.startsWith("/")
-      ? homepage
-      : `/${homepage}`
+    ? `${
+        homepage.startsWith("http") || homepage.startsWith("/")
+          ? homepage
+          : `/${homepage}`
       }`.replace(/\/$/, "")
-    : ""
+    : "";
 }
 
 // Expose `process.env` environment variables to your client code
@@ -52,17 +59,17 @@ function envPlugin(): Plugin {
   return {
     name: "env-plugin",
     config(_, { mode }) {
-      const env = loadEnv(mode, ".", ["NODE_ENV", "PUBLIC_URL", "VITE_"])
+      const env = loadEnv(mode, ".", ["NODE_ENV", "PUBLIC_URL", "VITE_"]);
       return {
         define: Object.fromEntries(
           Object.entries(env).map(([key, value]) => [
             `process.env.${key}`,
-            JSON.stringify(value)
-          ])
-        )
-      }
-    }
-  }
+            JSON.stringify(value),
+          ]),
+        ),
+      };
+    },
+  };
 }
 
 // Setup HOST, SSL, PORT
@@ -77,26 +84,26 @@ function devServerPlugin(): Plugin {
       const { HOST, PORT, HTTPS, SSL_CRT_FILE, SSL_KEY_FILE } = loadEnv(
         mode,
         ".",
-        ["HOST", "PORT", "HTTPS", "SSL_CRT_FILE", "SSL_KEY_FILE"]
-      )
-      const https = HTTPS === "true"
+        ["HOST", "PORT", "HTTPS", "SSL_CRT_FILE", "SSL_KEY_FILE"],
+      );
+      const https = HTTPS === "true";
       return {
         server: {
           host: HOST || "localhost",
           port: parseInt(PORT || "3000", 10),
           open: true,
-          ...(https
-            && SSL_CRT_FILE
-            && SSL_KEY_FILE && {
-            https: {
-              cert: readFileSync(resolve(SSL_CRT_FILE)),
-              key: readFileSync(resolve(SSL_KEY_FILE))
-            }
-          })
-        }
-      }
-    }
-  }
+          ...(https &&
+            SSL_CRT_FILE &&
+            SSL_KEY_FILE && {
+              https: {
+                cert: readFileSync(resolve(SSL_CRT_FILE)),
+                key: readFileSync(resolve(SSL_KEY_FILE)),
+              },
+            }),
+        },
+      };
+    },
+  };
 }
 
 // Migration guide: Follow the guide below
@@ -105,16 +112,14 @@ function sourcemapPlugin(): Plugin {
   return {
     name: "sourcemap-plugin",
     config(_, { mode }) {
-      const { GENERATE_SOURCEMAP } = loadEnv(mode, ".", [
-        "GENERATE_SOURCEMAP"
-      ])
+      const { GENERATE_SOURCEMAP } = loadEnv(mode, ".", ["GENERATE_SOURCEMAP"]);
       return {
         build: {
-          sourcemap: GENERATE_SOURCEMAP === "true"
-        }
-      }
-    }
-  }
+          sourcemap: GENERATE_SOURCEMAP === "true",
+        },
+      };
+    },
+  };
 }
 
 // Migration guide: Follow the guide below
@@ -123,16 +128,14 @@ function buildPathPlugin(): Plugin {
   return {
     name: "build-path-plugin",
     config(_, { mode }) {
-      const { BUILD_PATH } = loadEnv(mode, ".", [
-        "BUILD_PATH"
-      ])
+      const { BUILD_PATH } = loadEnv(mode, ".", ["BUILD_PATH"]);
       return {
         build: {
-          outDir: BUILD_PATH || "build"
-        }
-      }
-    }
-  }
+          outDir: BUILD_PATH || "build",
+        },
+      };
+    },
+  };
 }
 
 // Migration guide: Follow the guide below and remove homepage field in package.json
@@ -141,12 +144,12 @@ function basePlugin(): Plugin {
   return {
     name: "base-plugin",
     config(_, { mode }) {
-      const { PUBLIC_URL } = loadEnv(mode, ".", ["PUBLIC_URL"])
+      const { PUBLIC_URL } = loadEnv(mode, ".", ["PUBLIC_URL"]);
       return {
-        base: PUBLIC_URL || ""
-      }
-    }
-  }
+        base: PUBLIC_URL || "",
+      };
+    },
+  };
 }
 
 // To resolve modules from node_modules, you can prefix paths with ~
@@ -159,65 +162,63 @@ function importPrefixPlugin(): Plugin {
     config() {
       return {
         resolve: {
-          alias: [{ find: /^~([^/])/, replacement: "$1" }]
-        }
-      }
-    }
-  }
+          alias: [{ find: /^~([^/])/, replacement: "$1" }],
+        },
+      };
+    },
+  };
 }
-
 
 // Replace %ENV_VARIABLES% in index.html
 // https://vitejs.dev/guide/api-plugin.html#transformindexhtml
 // Migration guide: Follow the guide below, you may need to rename your environment variable to a name that begins with VITE_ instead of REACT_APP_
 // https://vitejs.dev/guide/env-and-mode.html#html-env-replacement
 function htmlPlugin(mode: string): Plugin {
-  const env = loadEnv(mode, ".", ["NODE_ENV", "PUBLIC_URL", "VITE_"])
+  const env = loadEnv(mode, ".", ["NODE_ENV", "PUBLIC_URL", "VITE_"]);
   return {
     name: "html-plugin",
     transformIndexHtml: {
       order: "pre",
       handler(html) {
-        return html.replace(/%(.*?)%/g, (match, p1) => env[p1] ?? match)
-      }
-    }
-  }
+        return html.replace(/%(.*?)%/g, (match, p1) => env[p1] ?? match);
+      },
+    },
+  };
 }
-
 
 // In Create React App, SVGs can be imported directly as React components. This is achieved by svgr libraries.
 // https://create-react-app.dev/docs/adding-images-fonts-and-files/#adding-svgs
 function svgrPlugin(): Plugin {
-  const filter = createFilter("**/*.svg")
-  const postfixRE = /[?#].*$/s
+  const filter = createFilter("**/*.svg");
+  const postfixRE = /[?#].*$/s;
 
   return {
     name: "svgr-plugin",
     async transform(code, id) {
       if (filter(id)) {
-        const { transform } = await import("@svgr/core")
-        const { default: jsx } = await import("@svgr/plugin-jsx")
+        const { transform } = await import("@svgr/core");
+        const { default: jsx } = await import("@svgr/plugin-jsx");
 
-        const filePath = id.replace(postfixRE, "")
-        const svgCode = readFileSync(filePath, "utf8")
+        const filePath = id.replace(postfixRE, "");
+        const svgCode = readFileSync(filePath, "utf8");
 
         const componentCode = await transform(svgCode, undefined, {
           filePath,
           caller: {
             previousExport: code,
-            defaultPlugins: [jsx]
-          }
-        })
+            defaultPlugins: [jsx],
+          },
+        });
 
         const res = await transformWithEsbuild(componentCode, id, {
-          loader: "jsx"
-        })
+          loader: "jsx",
+        });
 
         return {
           code: res.code,
-          map: null
-        }
+          map: null,
+        };
       }
-    }
-  }
+    },
+  };
 }

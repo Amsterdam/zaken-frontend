@@ -11,7 +11,7 @@ const DELAY = 750
 const SearchBarCases: React.FC<Props> = ({ searchString }) => {
   const { onChangeFilter } = useFilterHandler()
   const debouncedSetSearchString = debounce(
-    (value: string) => onChangeFilter("streetName", value),
+    (value: string) => onChangeFilter("addressSearch", value),
     DELAY
   )
 

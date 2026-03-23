@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { Typography } from "@amsterdam/asc-ui"
 import { SmallSkeleton } from "@amsterdam/wonen-ui"
 
-import { useBagPdokByBagId } from "app/state/rest"
+import { useAddresses, useBagPdokByBagId } from "app/state/rest"
 import ShowOtherAddressesButton, {
   Index
 } from "app/components/addresses/AddressSuffixSwitcher/ShowOtherAddressesButton"
@@ -29,11 +29,14 @@ const AddressHeader: React.FC<Props> = ({
   const foundAddress = getAddressFromBagPdokResponse(data)
   const [filteredAddresses] = useOtherAddressesByBagId(bagId)
   const { addErrorFlashMessage } = useFlashMessages()
+  const [, { execGet }] = useAddresses(bagId, { lazy: true })
+
   const showButton = enableSwitch && (filteredAddresses?.length ?? 0) > 1
   const isCurrentAddress = (address: BAGPdokAddress) =>
     address.weergavenaam === foundAddress?.weergavenaam
   const addressIndex = filteredAddresses?.findIndex(isCurrentAddress) ?? -1
   let index: Index = undefined
+
   if (addressIndex === 0) {
     index = "first"
   } else if (
@@ -44,13 +47,24 @@ const AddressHeader: React.FC<Props> = ({
   }
 
   useEffect(() => {
-    if (!isBusy && data?.response?.docs?.length === 0) {
-      addErrorFlashMessage(
-        "Oeps er ging iets mis!",
-        "Het ophalen van de BAG-informatie uit het BRK is mislukt. Zijn de adresgegevens gewijzigd? Maak een melding via de feedbackknop."
-      )
+    // Gebruik een simpele boolean in plaats van de hele array
+    const hasNoDocs = !isBusy && data?.response?.docs?.length === 0
+
+    if (hasNoDocs) {
+      execGet().then((resp) => {
+        const response = resp as { data: { full_address?: string } }
+        const fullAddress = response.data?.full_address || "onbekend adres"
+
+        addErrorFlashMessage(
+          "Oeps er ging iets mis!",
+          `Het ophalen van de BAG-informatie uit het BRK is mislukt voor ${fullAddress}. 
+          Zijn de adresgegevens gewijzigd? Maak een melding via de feedbackknop.`
+        )
+      })
     }
-  }, [addErrorFlashMessage, data?.response?.docs, isBusy])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bagId, isBusy])
+
 
   const title = foundAddress?.weergavenaam
   const className = isHeader ? styles.header : styles.default

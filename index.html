@@ -10,26 +10,28 @@
   <meta name="theme-color" content="#000000" />
   <meta name="description" content="Amsterdamse Zaak Administratie" />
   <meta http-equiv="Content-Security-Policy" content="
-  script-src 'self';
-  form-action 'self';
-  upgrade-insecure-requests;
-  style-src 'self' 'unsafe-inline';
-  img-src 'self' data: https://api.data.amsterdam.nl;
+    script-src 'self';
+    form-action 'self';
+    upgrade-insecure-requests;
+    style-src 'self' 'unsafe-inline';
+    img-src 'self' data: https://api.data.amsterdam.nl https://*.zaken.amsterdam.nl;
   ">
   <title>AZA</title>
   <link rel="manifest" href="/manifest.json" />
   <base href="/">
-  <script src='/config/env.js'></script>
+  <script src="/config/env.js"></script>
   <script type="module" src="src/index"></script>
 </head>
 
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root">
-    <p id="chunk-js-loading-failure" style="display:none;">Het lijkt erop dat onderdelen van deze website niet correct
-      kunnen worden geladen. <a href="">Probeer te herladen</a></p>
+    <p id="chunk-js-loading-failure" style="display:none;">
+      Het lijkt erop dat onderdelen van deze website niet correct kunnen worden geladen.
+      <a href="">Probeer te herladen</a>
+    </p>
   </div>
-  <script src=/load.js></script>
+  <script src="/load.js"></script>
 </body>
 
 </html>

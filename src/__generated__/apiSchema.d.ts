@@ -6,27 +6,31 @@ declare namespace Components {
         }
         export interface Address {
             bag_id: string;
-            id: number;
-            full_address: string;
-            street_name: string;
-            number: number;
-            suffix_letter: string;
-            suffix: string;
-            postal_code: string;
-            lat: number; // float
-            lng: number; // float
             district: District;
+            /**
+             * Retrieves a string with the full address of the object.
+             */
+            full_address: string;
             housing_corporation?: number | null;
+            id: number;
+            lat: number | null; // double
+            lng: number | null; // double
+            number: number | null;
+            nummeraanduiding_id?: string | null;
+            postal_code: string | null;
+            street_name: string | null;
+            suffix: string | null;
+            suffix_letter: string | null;
         }
         export interface AddressTiny {
             bag_id: string;
-            street_name: string;
-            number: number;
-            suffix_letter: string;
-            suffix: string;
-            postal_code: string;
-            lat: number; // float
-            lng: number; // float
+            street_name: string | null;
+            number: number | null;
+            suffix_letter: string | null;
+            suffix: string | null;
+            postal_code: string | null;
+            lat: number | null; // double
+            lng: number | null; // double
             district: District;
             housing_corporation: HousingCorporation;
         }
@@ -35,17 +39,23 @@ declare namespace Components {
             link: string;
             date_added: string; // date-time
         }
+        export interface Brp {
+            type: string;
+            personen: {
+                [name: string]: any;
+            }[];
+        }
         export interface Case {
             id: number;
             address: {
                 bag_id: string;
-                street_name: string;
-                number: number;
-                suffix_letter: string;
-                suffix: string;
-                postal_code: string;
-                lat: number; // float
-                lng: number; // float
+                street_name: string | null;
+                number: number | null;
+                suffix_letter: string | null;
+                suffix: string | null;
+                postal_code: string | null;
+                lat: number | null; // double
+                lng: number | null; // double
                 district: District;
                 housing_corporation: HousingCorporation;
             };
@@ -80,11 +90,17 @@ declare namespace Components {
             sensitive?: boolean;
             start_date?: string | null; // date
         }
+        export interface CaseBagIds {
+            id: number;
+            created: string; // date-time
+            bag_id: string;
+            nummeraanduiding_id: string;
+        }
         export interface CaseClose {
             id: number;
             case_user_task_id?: string;
             description: string;
-            date_added: string; // date-time
+            date_added: string | null; // date-time
             case: number;
             reason: number;
             result?: number | null;
@@ -107,17 +123,21 @@ declare namespace Components {
             id: number;
             address: {
                 bag_id: string;
-                id: number;
-                full_address: string;
-                street_name: string;
-                number: number;
-                suffix_letter: string;
-                suffix: string;
-                postal_code: string;
-                lat: number; // float
-                lng: number; // float
                 district: District;
+                /**
+                 * Retrieves a string with the full address of the object.
+                 */
+                full_address: string;
                 housing_corporation?: number | null;
+                id: number;
+                lat: number | null; // double
+                lng: number | null; // double
+                number: number | null;
+                nummeraanduiding_id?: string | null;
+                postal_code: string | null;
+                street_name: string | null;
+                suffix: string | null;
+                suffix_letter: string | null;
             };
             bag_id: string;
             theme: {
@@ -167,21 +187,26 @@ declare namespace Components {
             id: number;
             address: {
                 bag_id: string;
-                id: number;
-                full_address: string;
-                street_name: string;
-                number: number;
-                suffix_letter: string;
-                suffix: string;
-                postal_code: string;
-                lat: number; // float
-                lng: number; // float
                 district: District;
+                /**
+                 * Retrieves a string with the full address of the object.
+                 */
+                full_address: string;
                 housing_corporation?: number | null;
+                id: number;
+                lat: number | null; // double
+                lng: number | null; // double
+                number: number | null;
+                nummeraanduiding_id?: string | null;
+                postal_code: string | null;
+                street_name: string | null;
+                suffix: string | null;
+                suffix_letter: string | null;
             };
             state: string;
             workflows: CaseWorkflow[];
             subjects: Subject[];
+            tags: Tag[];
             project: {
                 id: number;
                 name: string;
@@ -219,23 +244,26 @@ declare namespace Components {
             case_deleted?: boolean;
             previous_case?: number | null;
             author?: string | null; // uuid
-            tags?: number[];
         }
         export interface CaseDetail {
             id: number;
             address: {
                 bag_id: string;
-                id: number;
-                full_address: string;
-                street_name: string;
-                number: number;
-                suffix_letter: string;
-                suffix: string;
-                postal_code: string;
-                lat: number; // float
-                lng: number; // float
                 district: District;
+                /**
+                 * Retrieves a string with the full address of the object.
+                 */
+                full_address: string;
                 housing_corporation?: number | null;
+                id: number;
+                lat: number | null; // double
+                lng: number | null; // double
+                number: number | null;
+                nummeraanduiding_id?: string | null;
+                postal_code: string | null;
+                street_name: string | null;
+                suffix: string | null;
+                suffix_letter: string | null;
             };
             state: string;
             workflows: CaseWorkflow[];
@@ -265,31 +293,35 @@ declare namespace Components {
             is_enforcement_request?: boolean;
             previous_case?: number | null;
         }
-        export interface CaseDocument {
-            id: number;
-            document_url: string; // uri
-            document_content: string; // uri
-            case_document_connection_url?: string; // uri
-            connected?: boolean;
-            case: number;
-        }
-        export interface CaseDocumentUpload {
-            file: string; // uri
-            documenttype_url?: string; // uri
-        }
         export interface CaseEvent {
             id: number;
-            event_values: {
-                [name: string]: any;
-            };
-            event_variables: {
-                [name: string]: any;
-            };
+            event_values: any;
+            event_variables: any;
             date_created: string; // date-time
-            type: CaseEventTypeEnum;
+            type: /**
+             * * `DEBRIEFING` - DEBRIEFING
+             * * `VISIT` - VISIT
+             * * `CASE` - CASE
+             * * `CASE_CLOSE` - CASE_CLOSE
+             * * `SUMMON` - SUMMON
+             * * `GENERIC_TASK` - GENERIC_TASK
+             * * `SCHEDULE` - SCHEDULE
+             * * `CITIZEN_REPORT` - CITIZEN_REPORT
+             */
+            CaseEventTypeEnum;
             emitter_id: number;
             case: number;
         }
+        /**
+         * * `DEBRIEFING` - DEBRIEFING
+         * * `VISIT` - VISIT
+         * * `CASE` - CASE
+         * * `CASE_CLOSE` - CASE_CLOSE
+         * * `SUMMON` - SUMMON
+         * * `GENERIC_TASK` - GENERIC_TASK
+         * * `SCHEDULE` - SCHEDULE
+         * * `CITIZEN_REPORT` - CITIZEN_REPORT
+         */
         export type CaseEventTypeEnum = "DEBRIEFING" | "VISIT" | "CASE" | "CASE_CLOSE" | "SUMMON" | "GENERIC_TASK" | "SCHEDULE" | "CITIZEN_REPORT";
         export interface CaseProject {
             id: number;
@@ -301,7 +333,12 @@ declare namespace Components {
         }
         export interface CaseState {
             id: number;
-            status?: StatusEnum;
+            status?: /**
+             * * `TOEZICHT` - Toezicht
+             * * `HANDHAVING` - Handhaving
+             * * `AFGESLOTEN` - Afgesloten
+             */
+            StatusEnum;
             created: string; // date-time
             last_updated: string; // date-time
             case: number;
@@ -347,7 +384,13 @@ declare namespace Components {
                 name: string;
             };
             tasks: CaseUserTaskWorkdflow[];
+            /**
+             * Retrieves information from the object. Value from names.
+             */
             information: string;
+            created: string; // date-time
+            date_modified: string; // date-time
+            completed?: boolean;
         }
         export interface CaseWorkflowBase {
             state: {
@@ -399,33 +442,31 @@ declare namespace Components {
             case_user_task_id?: string;
             date_added: string; // date-time
             date_modified: string; // date-time
-            violation?: ViolationEnum;
-            violation_result?: {
-                [name: string]: any;
-            } | null;
+            violation_old?: string;
+            violation_result?: null;
             feedback: string;
             nuisance_detected?: boolean;
             case: number;
             author: string; // uuid
+            violation?: number | null;
         }
         export interface DebriefingCreate {
             id: number;
             nuisance_detected?: boolean;
+            violation?: string;
             case_user_task_id?: string;
-            violation?: ViolationEnum;
-            violation_result?: {
-                [name: string]: any;
-            } | null;
+            violation_old?: string;
+            violation_result?: null;
             feedback: string;
             case: number;
         }
         export interface Decision {
             id: number;
             case_user_task_id?: string;
-            sanction_amount?: string | null; // decimal ^\d{0,98}(\.\d{0,2})?$
+            sanction_amount?: string | null; // decimal ^-?\d{0,98}(?:\.\d{0,2})?$
             description?: string | null;
             date_added: string; // date-time
-            sanction_id: string;
+            sanction_id: string | null;
             active?: boolean;
             case: number;
             decision_type: number;
@@ -434,17 +475,21 @@ declare namespace Components {
             id: number;
             address: {
                 bag_id: string;
-                id: number;
-                full_address: string;
-                street_name: string;
-                number: number;
-                suffix_letter: string;
-                suffix: string;
-                postal_code: string;
-                lat: number; // float
-                lng: number; // float
                 district: District;
+                /**
+                 * Retrieves a string with the full address of the object.
+                 */
+                full_address: string;
                 housing_corporation?: number | null;
+                id: number;
+                lat: number | null; // double
+                lng: number | null; // double
+                number: number | null;
+                nummeraanduiding_id?: string | null;
+                postal_code: string | null;
+                street_name: string | null;
+                suffix: string | null;
+                suffix_letter: string | null;
             };
             theme: {
                 id: number;
@@ -454,7 +499,7 @@ declare namespace Components {
                 id: number;
                 name: string;
             };
-            sanction_amount?: string | null; // decimal ^\d{0,98}(\.\d{0,2})?$
+            sanction_amount?: string | null; // decimal ^-?\d{0,98}(?:\.\d{0,2})?$
             date_added: string; // date-time
             sanction_id?: string | null;
             active?: boolean;
@@ -480,10 +525,6 @@ declare namespace Components {
             id: number;
             name: string;
         }
-        export interface DocumentType {
-            omschrijving: string;
-            url: string; // uri
-        }
         export interface Feedback {
             feedback: string;
             url: string;
@@ -494,9 +535,19 @@ declare namespace Components {
             identificatienummer: string;
             vorderingnummer: number;
             jaar: number;
-            soort_vordering: SoortVorderingEnum;
+            soort_vordering: /**
+             * * `PBF` - PBF
+             * * `PBN` - PBN
+             * * `PRV` - PRV
+             * * `SOC` - SOC
+             */
+            SoortVorderingEnum;
             omschrijving_soort_vordering: string;
-            indicatie_publiekrechtelijk: IndicatiePubliekrechtelijkEnum;
+            indicatie_publiekrechtelijk: /**
+             * * `J` - J
+             * * `N` - N
+             */
+            IndicatiePubliekrechtelijkEnum;
             subjectnr: number; // int64
             opgemaaktenaam: string;
             subjectnr_opdrachtgever: number;
@@ -507,18 +558,27 @@ declare namespace Components {
             omschrijving_runwijze: string;
             dagtekening: string; // date-time
             vervaldatum: string; // date-time
-            indicatie_combi_dwangbevel: IndicatieCombiDwangbevelEnum;
+            indicatie_combi_dwangbevel: /**
+             * * `J` - J
+             * * `N` - N
+             * * `O` - O
+             */
+            IndicatieCombiDwangbevelEnum;
             notatekst: string | null;
             omschrijving: string | null;
             invorderingstatus: string;
-            indicatie_bet_hern_bevel: IndicatieBetHernBevelEnum;
+            indicatie_bet_hern_bevel: /**
+             * * `J` - J
+             * * `N` - N
+             */
+            IndicatieBetHernBevelEnum;
             landcode: string | null;
             kenteken: string | null;
             bonnummer: string | null;
-            bedrag_opgelegd: string; // decimal ^\d{0,10}(\.\d{0,2})?$
-            bedrag_open_post_incl_rente: string; // decimal ^\d{0,10}(\.\d{0,2})?$
-            totaalbedrag_open_kosten: string; // decimal ^\d{0,10}(\.\d{0,2})?$
-            bedrag_open_rente: string; // decimal ^\d{0,10}(\.\d{0,2})?$
+            bedrag_opgelegd: string; // decimal ^-?\d{0,10}(?:\.\d{0,2})?$
+            bedrag_open_post_incl_rente: string; // decimal ^-?\d{0,10}(?:\.\d{0,2})?$
+            totaalbedrag_open_kosten: string; // decimal ^-?\d{0,10}(?:\.\d{0,2})?$
+            bedrag_open_rente: string; // decimal ^-?\d{0,10}(?:\.\d{0,2})?$
             reden_opschorting: string | null;
             omschrijving_1: string | null;
             omschrijving_2: string | null;
@@ -532,9 +592,7 @@ declare namespace Components {
             date_added: string; // date-time
             task_name: string;
             description: string;
-            variables?: {
-                [name: string]: any;
-            } | null;
+            variables?: null;
             case: number;
             author: string; // uuid
         }
@@ -542,9 +600,7 @@ declare namespace Components {
             id: number;
             case_user_task_id: string;
             case: number;
-            variables: {
-                [name: string]: any;
-            };
+            variables: any;
             description?: string;
             date_added: string; // date-time
         }
@@ -552,7 +608,12 @@ declare namespace Components {
             name: string;
             label: string;
             options?: GenericFormFieldOption[];
-            type: GenericFormFieldTypeEnum;
+            type: /**
+             * * `text` - text
+             * * `select` - select
+             * * `checkbox` - checkbox
+             */
+            GenericFormFieldTypeEnum;
             tooltip?: string;
             required: boolean;
         }
@@ -560,41 +621,43 @@ declare namespace Components {
             label: string;
             value: string;
         }
+        /**
+         * * `text` - text
+         * * `select` - select
+         * * `checkbox` - checkbox
+         */
         export type GenericFormFieldTypeEnum = "text" | "select" | "checkbox";
         export interface HousingCorporation {
             id: number;
             name: string;
         }
+        /**
+         * * `J` - J
+         * * `N` - N
+         */
         export type IndicatieBetHernBevelEnum = "J" | "N";
+        /**
+         * * `J` - J
+         * * `N` - N
+         * * `O` - O
+         */
         export type IndicatieCombiDwangbevelEnum = "J" | "N" | "O";
+        /**
+         * * `J` - J
+         * * `N` - N
+         */
         export type IndicatiePubliekrechtelijkEnum = "J" | "N";
+        export interface IsAuthorized {
+            is_authorized: boolean;
+        }
         export interface Meldingen {
             pageNumber: number;
             pageSize: number;
             totalPages: number;
             totalRecords: number;
             data: {
-                startDatum: string;
-                eindDatum: string;
-                gemaaktOp: string;
-                nachten: number;
-                gasten: number;
-                isAangepast: Boolean;
-                isVerwijderd: Boolean;
+                [name: string]: any;
             }[];
-        }
-        export interface RegistrationDetails {
-            registrationNumber: string;
-            requester: {
-                [name: string]: any;
-            };
-            rentalHouse: {
-                [name: string]: any;
-            };
-            requestForOther: boolean;
-            requestForBedAndBreakfast: boolean;
-            createdAt: string; // date-time
-            agreementDate: string; // date-time
         }
         export interface OIDCAuthenticate {
             code: string;
@@ -604,7 +667,7 @@ declare namespace Components {
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?offset=400&limit=100
@@ -615,14 +678,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
-            results?: Action[];
+            results: Action[];
         }
         export interface PaginatedAdvertisementList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?offset=400&limit=100
@@ -633,14 +696,32 @@ declare namespace Components {
              * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
-            results?: Advertisement[];
+            results: Advertisement[];
+        }
+        export interface PaginatedCaseBagIdsList {
+            /**
+             * example:
+             * 123
+             */
+            count: number;
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=4
+             */
+            next?: string | null; // uri
+            /**
+             * example:
+             * http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null; // uri
+            results: CaseBagIds[];
         }
         export interface PaginatedCaseCloseList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?offset=400&limit=100
@@ -651,14 +732,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
-            results?: CaseClose[];
+            results: CaseClose[];
         }
         export interface PaginatedCaseCloseReasonList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?offset=400&limit=100
@@ -669,14 +750,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
-            results?: CaseCloseReason[];
+            results: CaseCloseReason[];
         }
         export interface PaginatedCaseCloseResultList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?offset=400&limit=100
@@ -687,14 +768,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
-            results?: CaseCloseResult[];
+            results: CaseCloseResult[];
         }
         export interface PaginatedCaseDataList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?page=4
@@ -705,14 +786,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?page=2
              */
             previous?: string | null; // uri
-            results?: CaseData[];
+            results: CaseData[];
         }
         export interface PaginatedCaseList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?offset=400&limit=100
@@ -723,14 +804,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
-            results?: Case[];
+            results: Case[];
         }
         export interface PaginatedCaseProjectList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?offset=400&limit=100
@@ -741,14 +822,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
-            results?: CaseProject[];
+            results: CaseProject[];
         }
         export interface PaginatedCaseReasonList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?offset=400&limit=100
@@ -759,14 +840,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
-            results?: CaseReason[];
+            results: CaseReason[];
         }
         export interface PaginatedCaseStateList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?offset=400&limit=100
@@ -777,14 +858,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
-            results?: CaseState[];
+            results: CaseState[];
         }
         export interface PaginatedCaseThemeList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?offset=400&limit=100
@@ -795,14 +876,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
-            results?: CaseTheme[];
+            results: CaseTheme[];
         }
         export interface PaginatedCaseUserTaskList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?page=4
@@ -813,14 +894,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?page=2
              */
             previous?: string | null; // uri
-            results?: CaseUserTask[];
+            results: CaseUserTask[];
         }
         export interface PaginatedCaseUserTaskTaskNameList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?page=4
@@ -831,14 +912,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?page=2
              */
             previous?: string | null; // uri
-            results?: CaseUserTaskTaskName[];
+            results: CaseUserTaskTaskName[];
         }
         export interface PaginatedCaseWorkflowList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?page=4
@@ -849,14 +930,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?page=2
              */
             previous?: string | null; // uri
-            results?: CaseWorkflow[];
+            results: CaseWorkflow[];
         }
         export interface PaginatedCitizenReportAnonomizedList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?offset=400&limit=100
@@ -867,14 +948,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
-            results?: CitizenReportAnonomized[];
+            results: CitizenReportAnonomized[];
         }
         export interface PaginatedDaySegmentList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?offset=400&limit=100
@@ -885,14 +966,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
-            results?: DaySegment[];
+            results: DaySegment[];
         }
         export interface PaginatedDebriefingList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?offset=400&limit=100
@@ -903,14 +984,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
-            results?: Debriefing[];
+            results: Debriefing[];
         }
         export interface PaginatedDecisionList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?offset=400&limit=100
@@ -921,14 +1002,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
-            results?: Decision[];
+            results: Decision[];
         }
         export interface PaginatedDecisionSanctionList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?offset=400&limit=100
@@ -939,14 +1020,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
-            results?: DecisionSanction[];
+            results: DecisionSanction[];
         }
         export interface PaginatedDecisionTypeList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?offset=400&limit=100
@@ -957,14 +1038,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
-            results?: DecisionType[];
+            results: DecisionType[];
         }
         export interface PaginatedDistrictList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?offset=400&limit=100
@@ -975,32 +1056,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
-            results?: District[];
-        }
-        export interface PaginatedDocumentTypeList {
-            /**
-             * example:
-             * 123
-             */
-            count?: number;
-            /**
-             * example:
-             * http://api.example.org/accounts/?page=4
-             */
-            next?: string | null; // uri
-            /**
-             * example:
-             * http://api.example.org/accounts/?page=2
-             */
-            previous?: string | null; // uri
-            results?: DocumentType[];
+            results: District[];
         }
         export interface PaginatedGenericCompletedTaskList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?page=4
@@ -1011,14 +1074,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?page=2
              */
             previous?: string | null; // uri
-            results?: GenericCompletedTask[];
+            results: GenericCompletedTask[];
         }
         export interface PaginatedHousingCorporationList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?offset=400&limit=100
@@ -1029,14 +1092,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
-            results?: HousingCorporation[];
+            results: HousingCorporation[];
         }
         export interface PaginatedMeldingenList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?offset=400&limit=100
@@ -1047,14 +1110,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
-            results?: Meldingen[];
+            results: Meldingen[];
         }
         export interface PaginatedPriorityList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?offset=400&limit=100
@@ -1065,14 +1128,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
-            results?: Priority[];
+            results: Priority[];
         }
         export interface PaginatedQuickDecisionList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?offset=400&limit=100
@@ -1083,14 +1146,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
-            results?: QuickDecision[];
+            results: QuickDecision[];
         }
         export interface PaginatedQuickDecisionTypeList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?offset=400&limit=100
@@ -1101,14 +1164,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
-            results?: QuickDecisionType[];
+            results: QuickDecisionType[];
         }
         export interface PaginatedScheduleCreateList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?offset=400&limit=100
@@ -1119,14 +1182,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
-            results?: ScheduleCreate[];
+            results: ScheduleCreate[];
         }
         export interface PaginatedSubjectList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?page=4
@@ -1137,14 +1200,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?page=2
              */
             previous?: string | null; // uri
-            results?: Subject[];
+            results: Subject[];
         }
         export interface PaginatedSummonList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?offset=400&limit=100
@@ -1155,14 +1218,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
-            results?: Summon[];
+            results: Summon[];
         }
         export interface PaginatedSummonTypeList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?offset=400&limit=100
@@ -1173,14 +1236,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
-            results?: SummonType[];
+            results: SummonType[];
         }
         export interface PaginatedSummonedPersonAnonomizedList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?offset=400&limit=100
@@ -1191,14 +1254,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
-            results?: SummonedPersonAnonomized[];
+            results: SummonedPersonAnonomized[];
         }
         export interface PaginatedSupportContactList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?offset=400&limit=100
@@ -1209,14 +1272,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
-            results?: SupportContact[];
+            results: SupportContact[];
         }
         export interface PaginatedTagList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?offset=400&limit=100
@@ -1227,14 +1290,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
-            results?: Tag[];
+            results: Tag[];
         }
         export interface PaginatedThemeScheduleTypesList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?offset=400&limit=100
@@ -1245,14 +1308,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
-            results?: ThemeScheduleTypes[];
+            results: ThemeScheduleTypes[];
         }
         export interface PaginatedUserList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?offset=400&limit=100
@@ -1263,14 +1326,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
-            results?: User[];
+            results: User[];
         }
         export interface PaginatedViolationTypeList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?offset=400&limit=100
@@ -1281,14 +1344,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
-            results?: ViolationType[];
+            results: ViolationType[];
         }
         export interface PaginatedVisitList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?offset=400&limit=100
@@ -1299,14 +1362,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
-            results?: Visit[];
+            results: Visit[];
         }
         export interface PaginatedWeekSegmentList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?offset=400&limit=100
@@ -1317,14 +1380,14 @@ declare namespace Components {
              * http://api.example.org/accounts/?offset=200&limit=100
              */
             previous?: string | null; // uri
-            results?: WeekSegment[];
+            results: WeekSegment[];
         }
         export interface PaginatedWorkflowOptionList {
             /**
              * example:
              * 123
              */
-            count?: number;
+            count: number;
             /**
              * example:
              * http://api.example.org/accounts/?page=4
@@ -1335,21 +1398,25 @@ declare namespace Components {
              * http://api.example.org/accounts/?page=2
              */
             previous?: string | null; // uri
-            results?: WorkflowOption[];
+            results: WorkflowOption[];
         }
         export interface PatchedAddress {
             bag_id?: string;
-            id?: number;
-            full_address?: string;
-            street_name?: string;
-            number?: number;
-            suffix_letter?: string;
-            suffix?: string;
-            postal_code?: string;
-            lat?: number; // float
-            lng?: number; // float
             district?: District;
+            /**
+             * Retrieves a string with the full address of the object.
+             */
+            full_address?: string;
             housing_corporation?: number | null;
+            id?: number;
+            lat?: number | null; // double
+            lng?: number | null; // double
+            number?: number | null;
+            nummeraanduiding_id?: string | null;
+            postal_code?: string | null;
+            street_name?: string | null;
+            suffix?: string | null;
+            suffix_letter?: string | null;
         }
         /**
          * Adds nested create feature
@@ -1358,17 +1425,21 @@ declare namespace Components {
             id?: number;
             address?: {
                 bag_id: string;
-                id: number;
-                full_address: string;
-                street_name: string;
-                number: number;
-                suffix_letter: string;
-                suffix: string;
-                postal_code: string;
-                lat: number; // float
-                lng: number; // float
                 district: District;
+                /**
+                 * Retrieves a string with the full address of the object.
+                 */
+                full_address: string;
                 housing_corporation?: number | null;
+                id: number;
+                lat: number | null; // double
+                lng: number | null; // double
+                number: number | null;
+                nummeraanduiding_id?: string | null;
+                postal_code: string | null;
+                street_name: string | null;
+                suffix: string | null;
+                suffix_letter: string | null;
             };
             bag_id?: string;
             theme?: {
@@ -1425,9 +1496,26 @@ declare namespace Components {
             updated?: string; // date-time
             owner?: string | null; // uuid
         }
-        export type PermissionsEnum = "create_case" | "create_digital_surveilance_case" | "close_case" | "perform_task" | "access_personal_data_register" | "access_business_register" | "access_signals" | "access_recovery_check" | "access_sensitive_dossiers" | "access_sigital_surveillance" | "access_document_management_system";
+        /**
+         * * `create_case` - Create a new Case
+         * * `create_digital_surveilance_case` - Create a new 'Digitaal toezicht' Case
+         * * `close_case` - Close a Case (by performing the last task)
+         * * `perform_task` - Can perform a tasks
+         * * `access_personal_data_register` - Can access 'BRP' (persoonsgegevens / ingeschreven personen)
+         * * `access_business_register` - Can access 'Handelsregister' (bedrijfseigenaren van panden, bedrijfsinformatie)
+         * * `access_recovery_check` - Can access 'invorderingscheck'
+         * * `access_sensitive_dossiers` - Can read gevoelige dossiers
+         * * `access_sigital_surveillance` - Can read 'Digitaal toezicht'
+         * * `access_document_management_system` - Can access 'DMS' (Alfresco / Decos)
+         */
+        export type PermissionsEnum = "create_case" | "create_digital_surveilance_case" | "close_case" | "perform_task" | "access_personal_data_register" | "access_business_register" | "access_recovery_check" | "access_sensitive_dossiers" | "access_sigital_surveillance" | "access_document_management_system";
         export interface Permit {
-            permit_granted: PermitGrantedEnum;
+            permit_granted: /**
+             * * `GRANTED` - GRANTED
+             * * `NOT_GRANTED` - NOT_GRANTED
+             * * `UNKNOWN` - UNKNOWN
+             */
+            PermitGrantedEnum;
             permit_type: string;
             raw_data: {
                 [name: string]: any;
@@ -1436,28 +1524,42 @@ declare namespace Components {
                 [name: string]: any;
             } | null;
         }
+        /**
+         * * `GRANTED` - GRANTED
+         * * `NOT_GRANTED` - NOT_GRANTED
+         * * `UNKNOWN` - UNKNOWN
+         */
         export type PermitGrantedEnum = "GRANTED" | "NOT_GRANTED" | "UNKNOWN";
-        export type PersonRoleEnum = "PERSON_ROLE_OWNER" | "PERSON_ROLE_RESIDENT" | "PERSON_ROLE_MIDDLEMAN" | "PERSON_ROLE_PLATFORM" | "PERSON_ROLE_HEIR";
+        /**
+         * * `PERSON_ROLE_OWNER` - PERSON_ROLE_OWNER
+         * * `PERSON_ROLE_RESIDENT` - PERSON_ROLE_RESIDENT
+         * * `PERSON_ROLE_MIDDLEMAN` - PERSON_ROLE_MIDDLEMAN
+         * * `PERSON_ROLE_PLATFORM` - PERSON_ROLE_PLATFORM
+         * * `PERSON_ROLE_HEIR` - PERSON_ROLE_HEIR
+         * * `PERSON_ROLE_LANDLORD` - PERSON_ROLE_LANDLORD
+         */
+        export type PersonRoleEnum = "PERSON_ROLE_OWNER" | "PERSON_ROLE_RESIDENT" | "PERSON_ROLE_MIDDLEMAN" | "PERSON_ROLE_PLATFORM" | "PERSON_ROLE_HEIR" | "PERSON_ROLE_LANDLORD";
         export interface Powerbrowser {
             baG_ID: string;
-            product: string;
-            kenmerk: string | null;
+            datuM_TOT?: string | null; // date-time
+            einddatum?: string | null; // date-time
+            initator?: string | null;
+            kenmerk?: string | null;
             muT_DAT: string; // date-time
-            status: string;
-            resultaat: string | null;
-            startdatum: string; // date-time
-            einddatum: string | null; // date-time
-            vergunninghouder: string | null;
-            initator: string | null;
-            datuM_TOT: string | null // date-time
+            omschrijvinG_KORT?: string | null;
+            product: string;
+            resultaat?: string | null;
+            startdatum?: string | null; // date-time
+            status?: string | null;
+            vergunninghouder?: string | null;
         }
         export interface Priority {
             id: number;
             name: string;
-            weight: number; // float
+            weight: number; // double
         }
         export interface PriorityTiny {
-            weight: number; // float
+            weight: number; // double
         }
         export interface QuickDecision {
             id: number;
@@ -1472,6 +1574,19 @@ declare namespace Components {
             name: string;
             workflow_option: string;
             theme: number;
+        }
+        export interface RegistrationDetails {
+            registrationNumber: string;
+            requester: {
+                [name: string]: any;
+            };
+            rentalHouse: {
+                [name: string]: any;
+            };
+            requestForOther: boolean;
+            requestForBedAndBreakfast: boolean;
+            createdAt: string; // date-time
+            agreementDate: string; // date-time
         }
         export interface Residents {
             /**
@@ -1489,6 +1604,7 @@ declare namespace Components {
         }
         export interface Schedule {
             priority: PriorityTiny;
+            is_additional?: boolean;
         }
         export interface ScheduleCreate {
             action: number;
@@ -1514,13 +1630,25 @@ declare namespace Components {
             date_modified: string; // date-time
             visit_from_datetime?: string | null; // date-time
             housing_corporation_combiteam?: boolean;
+            is_additional?: boolean;
             case: number;
             author?: string | null; // uuid
         }
+        /**
+         * * `PBF` - PBF
+         * * `PBN` - PBN
+         * * `PRV` - PRV
+         * * `SOC` - SOC
+         */
         export type SoortVorderingEnum = "PBF" | "PBN" | "PRV" | "SOC";
         export interface StartWorkflow {
             workflow_option_id: number;
         }
+        /**
+         * * `TOEZICHT` - Toezicht
+         * * `HANDHAVING` - Handhaving
+         * * `AFGESLOTEN` - Afgesloten
+         */
         export type StatusEnum = "TOEZICHT" | "HANDHAVING" | "AFGESLOTEN";
         export interface Subject {
             id: number;
@@ -1533,9 +1661,7 @@ declare namespace Components {
             case: number;
             persons: SummonedPerson[];
             case_user_task_id?: string;
-            type_result?: {
-                [name: string]: any;
-            } | null;
+            type_result?: null;
             date_added: string; // date-time
             description?: string | null;
         }
@@ -1549,15 +1675,31 @@ declare namespace Components {
             first_name?: string | null;
             preposition?: string | null;
             last_name?: string | null;
-            person_role?: PersonRoleEnum;
-            summon: number;
+            person_role?: /**
+             * * `PERSON_ROLE_OWNER` - PERSON_ROLE_OWNER
+             * * `PERSON_ROLE_RESIDENT` - PERSON_ROLE_RESIDENT
+             * * `PERSON_ROLE_MIDDLEMAN` - PERSON_ROLE_MIDDLEMAN
+             * * `PERSON_ROLE_PLATFORM` - PERSON_ROLE_PLATFORM
+             * * `PERSON_ROLE_HEIR` - PERSON_ROLE_HEIR
+             * * `PERSON_ROLE_LANDLORD` - PERSON_ROLE_LANDLORD
+             */
+            PersonRoleEnum;
+            summon: number | null;
             entity_name?: string | null;
             function?: string | null;
         }
         export interface SummonedPersonAnonomized {
             id: number;
-            person_role?: PersonRoleEnum;
-            summon: number;
+            person_role?: /**
+             * * `PERSON_ROLE_OWNER` - PERSON_ROLE_OWNER
+             * * `PERSON_ROLE_RESIDENT` - PERSON_ROLE_RESIDENT
+             * * `PERSON_ROLE_MIDDLEMAN` - PERSON_ROLE_MIDDLEMAN
+             * * `PERSON_ROLE_PLATFORM` - PERSON_ROLE_PLATFORM
+             * * `PERSON_ROLE_HEIR` - PERSON_ROLE_HEIR
+             * * `PERSON_ROLE_LANDLORD` - PERSON_ROLE_LANDLORD
+             */
+            PersonRoleEnum;
+            summon: number | null;
         }
         export interface SupportContact {
             id: number;
@@ -1591,11 +1733,23 @@ declare namespace Components {
             first_name?: string;
             last_name?: string;
             full_name?: string;
-            permissions: PermissionsEnum[];
+            permissions: /**
+             * * `create_case` - Create a new Case
+             * * `create_digital_surveilance_case` - Create a new 'Digitaal toezicht' Case
+             * * `close_case` - Close a Case (by performing the last task)
+             * * `perform_task` - Can perform a tasks
+             * * `access_personal_data_register` - Can access 'BRP' (persoonsgegevens / ingeschreven personen)
+             * * `access_business_register` - Can access 'Handelsregister' (bedrijfseigenaren van panden, bedrijfsinformatie)
+             * * `access_recovery_check` - Can access 'invorderingscheck'
+             * * `access_sensitive_dossiers` - Can read gevoelige dossiers
+             * * `access_sigital_surveillance` - Can read 'Digitaal toezicht'
+             * * `access_document_management_system` - Can access 'DMS' (Alfresco / Decos)
+             */
+            PermissionsEnum[];
             role: string;
         }
-        export type ViolationEnum = "NO" | "YES" | "ADDITIONAL_RESEARCH_REQUIRED" | "ADDITIONAL_VISIT_REQUIRED" | "ADDITIONAL_VISIT_WITH_AUTHORIZATION" | "SEND_TO_OTHER_THEME" | "LIKELY_INHABITED" | "SERVICE_COSTS" | "SCHEDULE_CONVERSATION" | "ADVICE_OTHER_DISCIPLINE" | "REQUEST_DOCUMENTS";
         export interface ViolationType {
+            id: number;
             key: string;
             value: string;
         }
@@ -1613,6 +1767,7 @@ declare namespace Components {
             suggest_next_visit_description?: string | null;
             notes?: string | null;
             top_visit_id: number; // int64
+            is_additional?: boolean;
             case: number;
         }
         export interface WeekSegment {
@@ -1747,7 +1902,7 @@ declare namespace Paths {
             export type $200 = Components.Schemas.Decos;
         }
     }
-    namespace AddressesResidentsRetrieve {
+    namespace AddressesRegistrationsList {
         namespace Parameters {
             export type BagId = string;
         }
@@ -1755,7 +1910,30 @@ declare namespace Paths {
             bag_id: Parameters.BagId;
         }
         namespace Responses {
+            export type $200 = Components.Schemas.RegistrationDetails[];
+        }
+    }
+    namespace AddressesResidentsCreate {
+        namespace Parameters {
+            export type BagId = string;
+        }
+        export interface PathParameters {
+            bag_id: Parameters.BagId;
+        }
+        export type RequestBody = Components.Schemas.Residents;
+        namespace Responses {
             export type $200 = Components.Schemas.Residents;
+        }
+    }
+    namespace AddressesResidentsNewRetrieve {
+        namespace Parameters {
+            export type BagId = string;
+        }
+        export interface PathParameters {
+            bag_id: Parameters.BagId;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.Brp;
         }
     }
     namespace CaseCloseCreate {
@@ -1833,7 +2011,9 @@ declare namespace Paths {
             export type DistrictName = string;
             export type FromStartDate = string; // date
             export type HousingCorporation = number;
+            export type HousingCorporationIsnull = boolean;
             export type Id = number;
+            export type Ids = number;
             export type IsEnforcementRequest = boolean;
             export type Number = string;
             export type OpenCases = boolean;
@@ -1853,6 +2033,7 @@ declare namespace Paths {
             export type ScheduleVisitFrom = string; // date
             export type ScheduleWeekSegment = number;
             export type Sensitive = boolean;
+            export type Simplified = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StateTypesName = string;
@@ -1860,6 +2041,7 @@ declare namespace Paths {
             export type Subject = number;
             export type SubjectName = string;
             export type Suffix = string;
+            export type Tag = number;
             export type Task = string;
             export type Theme = number;
             export type ThemeName = string;
@@ -1873,6 +2055,8 @@ declare namespace Paths {
             district_name?: Parameters.DistrictName;
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
+            housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
+            ids?: Parameters.Ids;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             number?: Parameters.Number;
             open_cases?: Parameters.OpenCases;
@@ -1892,6 +2076,7 @@ declare namespace Paths {
             schedule_visit_from?: Parameters.ScheduleVisitFrom /* date */;
             schedule_week_segment?: Parameters.ScheduleWeekSegment;
             sensitive?: Parameters.Sensitive;
+            simplified?: Parameters.Simplified;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
@@ -1899,6 +2084,7 @@ declare namespace Paths {
             subject?: Parameters.Subject;
             subject_name?: Parameters.SubjectName;
             suffix?: Parameters.Suffix;
+            tag?: Parameters.Tag;
             task?: Parameters.Task;
             theme?: Parameters.Theme;
             theme_name?: Parameters.ThemeName;
@@ -1908,13 +2094,100 @@ declare namespace Paths {
             export type $200 = Components.Schemas.PaginatedAdvertisementList;
         }
     }
+    namespace CasesBagIdsList {
+        namespace Parameters {
+            export type District = number;
+            export type DistrictName = string;
+            export type FromStartDate = string; // date
+            export type HousingCorporation = number;
+            export type HousingCorporationIsnull = boolean;
+            export type Ids = number;
+            export type IsEnforcementRequest = boolean;
+            export type Number = string;
+            export type OpenCases = boolean;
+            export type Ordering = string;
+            export type Page = number;
+            export type PageSize = number;
+            export type PostalCode = string;
+            export type PostalCodeRange = string;
+            export type Priority = number;
+            export type Project = number;
+            export type ProjectName = string;
+            export type Reason = number;
+            export type ReasonName = string;
+            export type ScheduleDaySegment = number;
+            export type ScheduleFromDateAdded = string; // date
+            export type ScheduleHousingCorporationCombiteam = boolean;
+            export type ScheduleVisitFrom = string; // date
+            export type ScheduleWeekSegment = number;
+            export type Sensitive = boolean;
+            export type Simplified = boolean;
+            export type StartDate = string; // date
+            export type StateTypes = number;
+            export type StateTypesName = string;
+            export type StreetName = string;
+            export type Subject = number;
+            export type SubjectName = string;
+            export type Suffix = string;
+            export type Tag = number;
+            export type Task = string;
+            export type Theme = number;
+            export type ThemeName = string;
+            export type TonIds = number;
+        }
+        export interface QueryParameters {
+            district?: Parameters.District;
+            district_name?: Parameters.DistrictName;
+            from_start_date?: Parameters.FromStartDate /* date */;
+            housing_corporation?: Parameters.HousingCorporation;
+            housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
+            ids?: Parameters.Ids;
+            is_enforcement_request?: Parameters.IsEnforcementRequest;
+            number?: Parameters.Number;
+            open_cases?: Parameters.OpenCases;
+            ordering?: Parameters.Ordering;
+            page?: Parameters.Page;
+            page_size?: Parameters.PageSize;
+            postal_code?: Parameters.PostalCode;
+            postal_code_range?: Parameters.PostalCodeRange;
+            priority?: Parameters.Priority;
+            project?: Parameters.Project;
+            project_name?: Parameters.ProjectName;
+            reason?: Parameters.Reason;
+            reason_name?: Parameters.ReasonName;
+            schedule_day_segment?: Parameters.ScheduleDaySegment;
+            schedule_from_date_added?: Parameters.ScheduleFromDateAdded /* date */;
+            schedule_housing_corporation_combiteam?: Parameters.ScheduleHousingCorporationCombiteam;
+            schedule_visit_from?: Parameters.ScheduleVisitFrom /* date */;
+            schedule_week_segment?: Parameters.ScheduleWeekSegment;
+            sensitive?: Parameters.Sensitive;
+            simplified?: Parameters.Simplified;
+            start_date?: Parameters.StartDate /* date */;
+            state_types?: Parameters.StateTypes;
+            state_types__name?: Parameters.StateTypesName;
+            street_name?: Parameters.StreetName;
+            subject?: Parameters.Subject;
+            subject_name?: Parameters.SubjectName;
+            suffix?: Parameters.Suffix;
+            tag?: Parameters.Tag;
+            task?: Parameters.Task;
+            theme?: Parameters.Theme;
+            theme_name?: Parameters.ThemeName;
+            ton_ids?: Parameters.TonIds;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedCaseBagIdsList;
+        }
+    }
     namespace CasesCitizenReportsCreate {
         namespace Parameters {
             export type District = number;
             export type DistrictName = string;
             export type FromStartDate = string; // date
             export type HousingCorporation = number;
+            export type HousingCorporationIsnull = boolean;
             export type Id = number;
+            export type Ids = number;
             export type IsEnforcementRequest = boolean;
             export type OpenCases = boolean;
             export type Ordering = string;
@@ -1931,11 +2204,13 @@ declare namespace Paths {
             export type ScheduleVisitFrom = string; // date
             export type ScheduleWeekSegment = number;
             export type Sensitive = boolean;
+            export type Simplified = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StateTypesName = string;
             export type Subject = number;
             export type SubjectName = string;
+            export type Tag = number;
             export type Task = string;
             export type Theme = number;
             export type ThemeName = string;
@@ -1949,6 +2224,8 @@ declare namespace Paths {
             district_name?: Parameters.DistrictName;
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
+            housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
+            ids?: Parameters.Ids;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
@@ -1965,11 +2242,13 @@ declare namespace Paths {
             schedule_visit_from?: Parameters.ScheduleVisitFrom /* date */;
             schedule_week_segment?: Parameters.ScheduleWeekSegment;
             sensitive?: Parameters.Sensitive;
+            simplified?: Parameters.Simplified;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
             subject?: Parameters.Subject;
             subject_name?: Parameters.SubjectName;
+            tag?: Parameters.Tag;
             task?: Parameters.Task;
             theme?: Parameters.Theme;
             theme_name?: Parameters.ThemeName;
@@ -1986,6 +2265,8 @@ declare namespace Paths {
             export type DistrictName = string;
             export type FromStartDate = string; // date
             export type HousingCorporation = number;
+            export type HousingCorporationIsnull = boolean;
+            export type Ids = number;
             export type IsEnforcementRequest = boolean;
             export type OpenCases = boolean;
             export type Ordering = string;
@@ -2002,11 +2283,13 @@ declare namespace Paths {
             export type ScheduleVisitFrom = string; // date
             export type ScheduleWeekSegment = number;
             export type Sensitive = boolean;
+            export type Simplified = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StateTypesName = string;
             export type Subject = number;
             export type SubjectName = string;
+            export type Tag = number;
             export type Task = string;
             export type Theme = number;
             export type ThemeName = string;
@@ -2017,6 +2300,8 @@ declare namespace Paths {
             district_name?: Parameters.DistrictName;
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
+            housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
+            ids?: Parameters.Ids;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
@@ -2033,11 +2318,13 @@ declare namespace Paths {
             schedule_visit_from?: Parameters.ScheduleVisitFrom /* date */;
             schedule_week_segment?: Parameters.ScheduleWeekSegment;
             sensitive?: Parameters.Sensitive;
+            simplified?: Parameters.Simplified;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
             subject?: Parameters.Subject;
             subject_name?: Parameters.SubjectName;
+            tag?: Parameters.Tag;
             task?: Parameters.Task;
             theme?: Parameters.Theme;
             theme_name?: Parameters.ThemeName;
@@ -2053,6 +2340,8 @@ declare namespace Paths {
             export type DistrictName = string;
             export type FromStartDate = string; // date
             export type HousingCorporation = number;
+            export type HousingCorporationIsnull = boolean;
+            export type Ids = number;
             export type IsEnforcementRequest = boolean;
             export type OpenCases = boolean;
             export type Ordering = string;
@@ -2069,11 +2358,13 @@ declare namespace Paths {
             export type ScheduleVisitFrom = string; // date
             export type ScheduleWeekSegment = number;
             export type Sensitive = boolean;
+            export type Simplified = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StateTypesName = string;
             export type Subject = number;
             export type SubjectName = string;
+            export type Tag = number;
             export type Task = string;
             export type Theme = number;
             export type ThemeName = string;
@@ -2084,6 +2375,8 @@ declare namespace Paths {
             district_name?: Parameters.DistrictName;
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
+            housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
+            ids?: Parameters.Ids;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
@@ -2100,11 +2393,13 @@ declare namespace Paths {
             schedule_visit_from?: Parameters.ScheduleVisitFrom /* date */;
             schedule_week_segment?: Parameters.ScheduleWeekSegment;
             sensitive?: Parameters.Sensitive;
+            simplified?: Parameters.Simplified;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
             subject?: Parameters.Subject;
             subject_name?: Parameters.SubjectName;
+            tag?: Parameters.Tag;
             task?: Parameters.Task;
             theme?: Parameters.Theme;
             theme_name?: Parameters.ThemeName;
@@ -2121,6 +2416,8 @@ declare namespace Paths {
             export type DistrictName = string;
             export type FromStartDate = string; // date
             export type HousingCorporation = number;
+            export type HousingCorporationIsnull = boolean;
+            export type Ids = number;
             export type IsEnforcementRequest = boolean;
             export type Number = string;
             export type OpenCases = boolean;
@@ -2140,6 +2437,7 @@ declare namespace Paths {
             export type ScheduleVisitFrom = string; // date
             export type ScheduleWeekSegment = number;
             export type Sensitive = boolean;
+            export type Simplified = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StateTypesName = string;
@@ -2147,6 +2445,7 @@ declare namespace Paths {
             export type Subject = number;
             export type SubjectName = string;
             export type Suffix = string;
+            export type Tag = number;
             export type Task = string;
             export type Theme = number;
             export type ThemeName = string;
@@ -2157,6 +2456,8 @@ declare namespace Paths {
             district_name?: Parameters.DistrictName;
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
+            housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
+            ids?: Parameters.Ids;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             number?: Parameters.Number;
             open_cases?: Parameters.OpenCases;
@@ -2176,6 +2477,7 @@ declare namespace Paths {
             schedule_visit_from?: Parameters.ScheduleVisitFrom /* date */;
             schedule_week_segment?: Parameters.ScheduleWeekSegment;
             sensitive?: Parameters.Sensitive;
+            simplified?: Parameters.Simplified;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
@@ -2183,6 +2485,7 @@ declare namespace Paths {
             subject?: Parameters.Subject;
             subject_name?: Parameters.SubjectName;
             suffix?: Parameters.Suffix;
+            tag?: Parameters.Tag;
             task?: Parameters.Task;
             theme?: Parameters.Theme;
             theme_name?: Parameters.ThemeName;
@@ -2198,6 +2501,8 @@ declare namespace Paths {
             export type DistrictName = string;
             export type FromStartDate = string; // date
             export type HousingCorporation = number;
+            export type HousingCorporationIsnull = boolean;
+            export type Ids = number;
             export type IsEnforcementRequest = boolean;
             export type Number = string;
             export type OpenCases = boolean;
@@ -2217,6 +2522,7 @@ declare namespace Paths {
             export type ScheduleVisitFrom = string; // date
             export type ScheduleWeekSegment = number;
             export type Sensitive = boolean;
+            export type Simplified = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StateTypesName = string;
@@ -2224,6 +2530,7 @@ declare namespace Paths {
             export type Subject = number;
             export type SubjectName = string;
             export type Suffix = string;
+            export type Tag = number;
             export type Task = string;
             export type Theme = number;
             export type ThemeName = string;
@@ -2234,6 +2541,8 @@ declare namespace Paths {
             district_name?: Parameters.DistrictName;
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
+            housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
+            ids?: Parameters.Ids;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             number?: Parameters.Number;
             open_cases?: Parameters.OpenCases;
@@ -2253,6 +2562,7 @@ declare namespace Paths {
             schedule_visit_from?: Parameters.ScheduleVisitFrom /* date */;
             schedule_week_segment?: Parameters.ScheduleWeekSegment;
             sensitive?: Parameters.Sensitive;
+            simplified?: Parameters.Simplified;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
@@ -2260,6 +2570,7 @@ declare namespace Paths {
             subject?: Parameters.Subject;
             subject_name?: Parameters.SubjectName;
             suffix?: Parameters.Suffix;
+            tag?: Parameters.Tag;
             task?: Parameters.Task;
             theme?: Parameters.Theme;
             theme_name?: Parameters.ThemeName;
@@ -2271,7 +2582,7 @@ declare namespace Paths {
                  * example:
                  * 123
                  */
-                count?: number;
+                count: number;
                 /**
                  * example:
                  * http://api.example.org/accounts/?page=4
@@ -2282,260 +2593,7 @@ declare namespace Paths {
                  * http://api.example.org/accounts/?page=2
                  */
                 previous?: string | null; // uri
-                results?: string[];
-            }
-        }
-    }
-    namespace CasesDocumentTypesList {
-        namespace Parameters {
-            export type District = number;
-            export type DistrictName = string;
-            export type FromStartDate = string; // date
-            export type HousingCorporation = number;
-            export type Id = number;
-            export type IsEnforcementRequest = boolean;
-            export type Number = string;
-            export type OpenCases = boolean;
-            export type Ordering = string;
-            export type Page = number;
-            export type PageSize = number;
-            export type PostalCode = string;
-            export type PostalCodeRange = string;
-            export type Priority = number;
-            export type Project = number;
-            export type ProjectName = string;
-            export type Reason = number;
-            export type ReasonName = string;
-            export type ScheduleDaySegment = number;
-            export type ScheduleFromDateAdded = string; // date
-            export type ScheduleHousingCorporationCombiteam = boolean;
-            export type ScheduleVisitFrom = string; // date
-            export type ScheduleWeekSegment = number;
-            export type Sensitive = boolean;
-            export type StartDate = string; // date
-            export type StateTypes = number;
-            export type StateTypesName = string;
-            export type StreetName = string;
-            export type Subject = number;
-            export type SubjectName = string;
-            export type Suffix = string;
-            export type Task = string;
-            export type Theme = number;
-            export type ThemeName = string;
-            export type TonIds = number;
-        }
-        export interface PathParameters {
-            id: Parameters.Id;
-        }
-        export interface QueryParameters {
-            district?: Parameters.District;
-            district_name?: Parameters.DistrictName;
-            from_start_date?: Parameters.FromStartDate /* date */;
-            housing_corporation?: Parameters.HousingCorporation;
-            is_enforcement_request?: Parameters.IsEnforcementRequest;
-            number?: Parameters.Number;
-            open_cases?: Parameters.OpenCases;
-            ordering?: Parameters.Ordering;
-            page?: Parameters.Page;
-            page_size?: Parameters.PageSize;
-            postal_code?: Parameters.PostalCode;
-            postal_code_range?: Parameters.PostalCodeRange;
-            priority?: Parameters.Priority;
-            project?: Parameters.Project;
-            project_name?: Parameters.ProjectName;
-            reason?: Parameters.Reason;
-            reason_name?: Parameters.ReasonName;
-            schedule_day_segment?: Parameters.ScheduleDaySegment;
-            schedule_from_date_added?: Parameters.ScheduleFromDateAdded /* date */;
-            schedule_housing_corporation_combiteam?: Parameters.ScheduleHousingCorporationCombiteam;
-            schedule_visit_from?: Parameters.ScheduleVisitFrom /* date */;
-            schedule_week_segment?: Parameters.ScheduleWeekSegment;
-            sensitive?: Parameters.Sensitive;
-            start_date?: Parameters.StartDate /* date */;
-            state_types?: Parameters.StateTypes;
-            state_types__name?: Parameters.StateTypesName;
-            street_name?: Parameters.StreetName;
-            subject?: Parameters.Subject;
-            subject_name?: Parameters.SubjectName;
-            suffix?: Parameters.Suffix;
-            task?: Parameters.Task;
-            theme?: Parameters.Theme;
-            theme_name?: Parameters.ThemeName;
-            ton_ids?: Parameters.TonIds;
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.PaginatedDocumentTypeList;
-        }
-    }
-    namespace CasesDocumentsCreateCreate {
-        namespace Parameters {
-            export type District = number;
-            export type DistrictName = string;
-            export type FromStartDate = string; // date
-            export type HousingCorporation = number;
-            export type Id = number;
-            export type IsEnforcementRequest = boolean;
-            export type OpenCases = boolean;
-            export type Ordering = string;
-            export type PageSize = number;
-            export type PostalCodeRange = string;
-            export type Priority = number;
-            export type Project = number;
-            export type ProjectName = string;
-            export type Reason = number;
-            export type ReasonName = string;
-            export type ScheduleDaySegment = number;
-            export type ScheduleFromDateAdded = string; // date
-            export type ScheduleHousingCorporationCombiteam = boolean;
-            export type ScheduleVisitFrom = string; // date
-            export type ScheduleWeekSegment = number;
-            export type Sensitive = boolean;
-            export type StartDate = string; // date
-            export type StateTypes = number;
-            export type StateTypesName = string;
-            export type Subject = number;
-            export type SubjectName = string;
-            export type Task = string;
-            export type Theme = number;
-            export type ThemeName = string;
-            export type TonIds = number;
-        }
-        export interface PathParameters {
-            id: Parameters.Id;
-        }
-        export interface QueryParameters {
-            district?: Parameters.District;
-            district_name?: Parameters.DistrictName;
-            from_start_date?: Parameters.FromStartDate /* date */;
-            housing_corporation?: Parameters.HousingCorporation;
-            is_enforcement_request?: Parameters.IsEnforcementRequest;
-            open_cases?: Parameters.OpenCases;
-            ordering?: Parameters.Ordering;
-            page_size?: Parameters.PageSize;
-            postal_code_range?: Parameters.PostalCodeRange;
-            priority?: Parameters.Priority;
-            project?: Parameters.Project;
-            project_name?: Parameters.ProjectName;
-            reason?: Parameters.Reason;
-            reason_name?: Parameters.ReasonName;
-            schedule_day_segment?: Parameters.ScheduleDaySegment;
-            schedule_from_date_added?: Parameters.ScheduleFromDateAdded /* date */;
-            schedule_housing_corporation_combiteam?: Parameters.ScheduleHousingCorporationCombiteam;
-            schedule_visit_from?: Parameters.ScheduleVisitFrom /* date */;
-            schedule_week_segment?: Parameters.ScheduleWeekSegment;
-            sensitive?: Parameters.Sensitive;
-            start_date?: Parameters.StartDate /* date */;
-            state_types?: Parameters.StateTypes;
-            state_types__name?: Parameters.StateTypesName;
-            subject?: Parameters.Subject;
-            subject_name?: Parameters.SubjectName;
-            task?: Parameters.Task;
-            theme?: Parameters.Theme;
-            theme_name?: Parameters.ThemeName;
-            ton_ids?: Parameters.TonIds;
-        }
-        export type RequestBody = Components.Schemas.CaseDocumentUpload;
-        namespace Responses {
-            export type $200 = Components.Schemas.CaseDocument;
-        }
-    }
-    namespace CasesDocumentsList {
-        namespace Parameters {
-            export type District = number;
-            export type DistrictName = string;
-            export type FromStartDate = string; // date
-            export type HousingCorporation = number;
-            export type Id = number;
-            export type IsEnforcementRequest = boolean;
-            export type Number = string;
-            export type OpenCases = boolean;
-            export type Ordering = string;
-            export type Page = number;
-            export type PageSize = number;
-            export type PostalCode = string;
-            export type PostalCodeRange = string;
-            export type Priority = number;
-            export type Project = number;
-            export type ProjectName = string;
-            export type Reason = number;
-            export type ReasonName = string;
-            export type ScheduleDaySegment = number;
-            export type ScheduleFromDateAdded = string; // date
-            export type ScheduleHousingCorporationCombiteam = boolean;
-            export type ScheduleVisitFrom = string; // date
-            export type ScheduleWeekSegment = number;
-            export type Sensitive = boolean;
-            export type StartDate = string; // date
-            export type StateTypes = number;
-            export type StateTypesName = string;
-            export type StreetName = string;
-            export type Subject = number;
-            export type SubjectName = string;
-            export type Suffix = string;
-            export type Task = string;
-            export type Theme = number;
-            export type ThemeName = string;
-            export type TonIds = number;
-        }
-        export interface PathParameters {
-            id: Parameters.Id;
-        }
-        export interface QueryParameters {
-            district?: Parameters.District;
-            district_name?: Parameters.DistrictName;
-            from_start_date?: Parameters.FromStartDate /* date */;
-            housing_corporation?: Parameters.HousingCorporation;
-            is_enforcement_request?: Parameters.IsEnforcementRequest;
-            number?: Parameters.Number;
-            open_cases?: Parameters.OpenCases;
-            ordering?: Parameters.Ordering;
-            page?: Parameters.Page;
-            page_size?: Parameters.PageSize;
-            postal_code?: Parameters.PostalCode;
-            postal_code_range?: Parameters.PostalCodeRange;
-            priority?: Parameters.Priority;
-            project?: Parameters.Project;
-            project_name?: Parameters.ProjectName;
-            reason?: Parameters.Reason;
-            reason_name?: Parameters.ReasonName;
-            schedule_day_segment?: Parameters.ScheduleDaySegment;
-            schedule_from_date_added?: Parameters.ScheduleFromDateAdded /* date */;
-            schedule_housing_corporation_combiteam?: Parameters.ScheduleHousingCorporationCombiteam;
-            schedule_visit_from?: Parameters.ScheduleVisitFrom /* date */;
-            schedule_week_segment?: Parameters.ScheduleWeekSegment;
-            sensitive?: Parameters.Sensitive;
-            start_date?: Parameters.StartDate /* date */;
-            state_types?: Parameters.StateTypes;
-            state_types__name?: Parameters.StateTypesName;
-            street_name?: Parameters.StreetName;
-            subject?: Parameters.Subject;
-            subject_name?: Parameters.SubjectName;
-            suffix?: Parameters.Suffix;
-            task?: Parameters.Task;
-            theme?: Parameters.Theme;
-            theme_name?: Parameters.ThemeName;
-            ton_ids?: Parameters.TonIds;
-        }
-        namespace Responses {
-            export interface $200 {
-                /**
-                 * example:
-                 * 123
-                 */
-                count?: number;
-                /**
-                 * example:
-                 * http://api.example.org/accounts/?page=4
-                 */
-                next?: string | null; // uri
-                /**
-                 * example:
-                 * http://api.example.org/accounts/?page=2
-                 */
-                previous?: string | null; // uri
-                results?: {
-                    [name: string]: any;
-                }[];
+                results: string[];
             }
         }
     }
@@ -2545,7 +2603,9 @@ declare namespace Paths {
             export type DistrictName = string;
             export type FromStartDate = string; // date
             export type HousingCorporation = number;
+            export type HousingCorporationIsnull = boolean;
             export type Id = number;
+            export type Ids = number;
             export type IsEnforcementRequest = boolean;
             export type OpenCases = boolean;
             export type Ordering = string;
@@ -2562,11 +2622,13 @@ declare namespace Paths {
             export type ScheduleVisitFrom = string; // date
             export type ScheduleWeekSegment = number;
             export type Sensitive = boolean;
+            export type Simplified = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StateTypesName = string;
             export type Subject = number;
             export type SubjectName = string;
+            export type Tag = number;
             export type Task = string;
             export type Theme = number;
             export type ThemeName = string;
@@ -2580,6 +2642,8 @@ declare namespace Paths {
             district_name?: Parameters.DistrictName;
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
+            housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
+            ids?: Parameters.Ids;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
@@ -2596,11 +2660,13 @@ declare namespace Paths {
             schedule_visit_from?: Parameters.ScheduleVisitFrom /* date */;
             schedule_week_segment?: Parameters.ScheduleWeekSegment;
             sensitive?: Parameters.Sensitive;
+            simplified?: Parameters.Simplified;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
             subject?: Parameters.Subject;
             subject_name?: Parameters.SubjectName;
+            tag?: Parameters.Tag;
             task?: Parameters.Task;
             theme?: Parameters.Theme;
             theme_name?: Parameters.ThemeName;
@@ -2616,6 +2682,8 @@ declare namespace Paths {
             export type DistrictName = string;
             export type FromStartDate = string; // date
             export type HousingCorporation = number;
+            export type HousingCorporationIsnull = boolean;
+            export type Ids = number;
             export type IsEnforcementRequest = boolean;
             export type Number = string;
             export type OpenCases = boolean;
@@ -2635,6 +2703,7 @@ declare namespace Paths {
             export type ScheduleVisitFrom = string; // date
             export type ScheduleWeekSegment = number;
             export type Sensitive = boolean;
+            export type Simplified = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StateTypesName = string;
@@ -2642,6 +2711,7 @@ declare namespace Paths {
             export type Subject = number;
             export type SubjectName = string;
             export type Suffix = string;
+            export type Tag = number;
             export type Task = string;
             export type Theme = number;
             export type ThemeName = string;
@@ -2652,6 +2722,8 @@ declare namespace Paths {
             district_name?: Parameters.DistrictName;
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
+            housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
+            ids?: Parameters.Ids;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             number?: Parameters.Number;
             open_cases?: Parameters.OpenCases;
@@ -2671,6 +2743,7 @@ declare namespace Paths {
             schedule_visit_from?: Parameters.ScheduleVisitFrom /* date */;
             schedule_week_segment?: Parameters.ScheduleWeekSegment;
             sensitive?: Parameters.Sensitive;
+            simplified?: Parameters.Simplified;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
@@ -2678,6 +2751,7 @@ declare namespace Paths {
             subject?: Parameters.Subject;
             subject_name?: Parameters.SubjectName;
             suffix?: Parameters.Suffix;
+            tag?: Parameters.Tag;
             task?: Parameters.Task;
             theme?: Parameters.Theme;
             theme_name?: Parameters.ThemeName;
@@ -2693,7 +2767,9 @@ declare namespace Paths {
             export type DistrictName = string;
             export type FromStartDate = string; // date
             export type HousingCorporation = number;
+            export type HousingCorporationIsnull = boolean;
             export type Id = number;
+            export type Ids = number;
             export type IsEnforcementRequest = boolean;
             export type OpenCases = boolean;
             export type Ordering = string;
@@ -2710,11 +2786,13 @@ declare namespace Paths {
             export type ScheduleVisitFrom = string; // date
             export type ScheduleWeekSegment = number;
             export type Sensitive = boolean;
+            export type Simplified = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StateTypesName = string;
             export type Subject = number;
             export type SubjectName = string;
+            export type Tag = number;
             export type Task = string;
             export type Theme = number;
             export type ThemeName = string;
@@ -2728,6 +2806,8 @@ declare namespace Paths {
             district_name?: Parameters.DistrictName;
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
+            housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
+            ids?: Parameters.Ids;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
@@ -2744,11 +2824,13 @@ declare namespace Paths {
             schedule_visit_from?: Parameters.ScheduleVisitFrom /* date */;
             schedule_week_segment?: Parameters.ScheduleWeekSegment;
             sensitive?: Parameters.Sensitive;
+            simplified?: Parameters.Simplified;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
             subject?: Parameters.Subject;
             subject_name?: Parameters.SubjectName;
+            tag?: Parameters.Tag;
             task?: Parameters.Task;
             theme?: Parameters.Theme;
             theme_name?: Parameters.ThemeName;
@@ -2765,7 +2847,9 @@ declare namespace Paths {
             export type DistrictName = string;
             export type FromStartDate = string; // date
             export type HousingCorporation = number;
+            export type HousingCorporationIsnull = boolean;
             export type Id = number;
+            export type Ids = number;
             export type IsEnforcementRequest = boolean;
             export type Number = string;
             export type OpenCases = boolean;
@@ -2785,6 +2869,7 @@ declare namespace Paths {
             export type ScheduleVisitFrom = string; // date
             export type ScheduleWeekSegment = number;
             export type Sensitive = boolean;
+            export type Simplified = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StateTypesName = string;
@@ -2792,6 +2877,7 @@ declare namespace Paths {
             export type Subject = number;
             export type SubjectName = string;
             export type Suffix = string;
+            export type Tag = number;
             export type Task = string;
             export type Theme = number;
             export type ThemeName = string;
@@ -2805,6 +2891,8 @@ declare namespace Paths {
             district_name?: Parameters.DistrictName;
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
+            housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
+            ids?: Parameters.Ids;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             number?: Parameters.Number;
             open_cases?: Parameters.OpenCases;
@@ -2824,6 +2912,7 @@ declare namespace Paths {
             schedule_visit_from?: Parameters.ScheduleVisitFrom /* date */;
             schedule_week_segment?: Parameters.ScheduleWeekSegment;
             sensitive?: Parameters.Sensitive;
+            simplified?: Parameters.Simplified;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
@@ -2831,6 +2920,7 @@ declare namespace Paths {
             subject?: Parameters.Subject;
             subject_name?: Parameters.SubjectName;
             suffix?: Parameters.Suffix;
+            tag?: Parameters.Tag;
             task?: Parameters.Task;
             theme?: Parameters.Theme;
             theme_name?: Parameters.ThemeName;
@@ -2846,7 +2936,9 @@ declare namespace Paths {
             export type DistrictName = string;
             export type FromStartDate = string; // date
             export type HousingCorporation = number;
+            export type HousingCorporationIsnull = boolean;
             export type Id = number;
+            export type Ids = number;
             export type IsEnforcementRequest = boolean;
             export type OpenCases = boolean;
             export type Ordering = string;
@@ -2863,11 +2955,13 @@ declare namespace Paths {
             export type ScheduleVisitFrom = string; // date
             export type ScheduleWeekSegment = number;
             export type Sensitive = boolean;
+            export type Simplified = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StateTypesName = string;
             export type Subject = number;
             export type SubjectName = string;
+            export type Tag = number;
             export type Task = string;
             export type Theme = number;
             export type ThemeName = string;
@@ -2881,6 +2975,8 @@ declare namespace Paths {
             district_name?: Parameters.DistrictName;
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
+            housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
+            ids?: Parameters.Ids;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
@@ -2897,11 +2993,13 @@ declare namespace Paths {
             schedule_visit_from?: Parameters.ScheduleVisitFrom /* date */;
             schedule_week_segment?: Parameters.ScheduleWeekSegment;
             sensitive?: Parameters.Sensitive;
+            simplified?: Parameters.Simplified;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
             subject?: Parameters.Subject;
             subject_name?: Parameters.SubjectName;
+            tag?: Parameters.Tag;
             task?: Parameters.Task;
             theme?: Parameters.Theme;
             theme_name?: Parameters.ThemeName;
@@ -2918,6 +3016,8 @@ declare namespace Paths {
             export type DistrictName = string;
             export type FromStartDate = string; // date
             export type HousingCorporation = number;
+            export type HousingCorporationIsnull = boolean;
+            export type Ids = number;
             export type IsEnforcementRequest = boolean;
             export type Number = string;
             export type OpenCases = boolean;
@@ -2937,6 +3037,7 @@ declare namespace Paths {
             export type ScheduleVisitFrom = string; // date
             export type ScheduleWeekSegment = number;
             export type Sensitive = boolean;
+            export type Simplified = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StateTypesName = string;
@@ -2944,6 +3045,7 @@ declare namespace Paths {
             export type Subject = number;
             export type SubjectName = string;
             export type Suffix = string;
+            export type Tag = number;
             export type Task = string;
             export type Theme = number;
             export type ThemeName = string;
@@ -2954,6 +3056,8 @@ declare namespace Paths {
             district_name?: Parameters.DistrictName;
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
+            housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
+            ids?: Parameters.Ids;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             number?: Parameters.Number;
             open_cases?: Parameters.OpenCases;
@@ -2973,6 +3077,7 @@ declare namespace Paths {
             schedule_visit_from?: Parameters.ScheduleVisitFrom /* date */;
             schedule_week_segment?: Parameters.ScheduleWeekSegment;
             sensitive?: Parameters.Sensitive;
+            simplified?: Parameters.Simplified;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
@@ -2980,6 +3085,7 @@ declare namespace Paths {
             subject?: Parameters.Subject;
             subject_name?: Parameters.SubjectName;
             suffix?: Parameters.Suffix;
+            tag?: Parameters.Tag;
             task?: Parameters.Task;
             theme?: Parameters.Theme;
             theme_name?: Parameters.ThemeName;
@@ -2991,7 +3097,7 @@ declare namespace Paths {
                  * example:
                  * 123
                  */
-                count?: number;
+                count: number;
                 /**
                  * example:
                  * http://api.example.org/accounts/?page=4
@@ -3002,7 +3108,7 @@ declare namespace Paths {
                  * http://api.example.org/accounts/?page=2
                  */
                 previous?: string | null; // uri
-                results?: string[];
+                results: string[];
             }
         }
     }
@@ -3012,7 +3118,9 @@ declare namespace Paths {
             export type DistrictName = string;
             export type FromStartDate = string; // date
             export type HousingCorporation = number;
+            export type HousingCorporationIsnull = boolean;
             export type Id = number;
+            export type Ids = number;
             export type IsEnforcementRequest = boolean;
             export type OpenCases = boolean;
             export type Ordering = string;
@@ -3029,11 +3137,13 @@ declare namespace Paths {
             export type ScheduleVisitFrom = string; // date
             export type ScheduleWeekSegment = number;
             export type Sensitive = boolean;
+            export type Simplified = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StateTypesName = string;
             export type Subject = number;
             export type SubjectName = string;
+            export type Tag = number;
             export type Task = string;
             export type Theme = number;
             export type ThemeName = string;
@@ -3047,6 +3157,8 @@ declare namespace Paths {
             district_name?: Parameters.DistrictName;
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
+            housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
+            ids?: Parameters.Ids;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
@@ -3063,11 +3175,13 @@ declare namespace Paths {
             schedule_visit_from?: Parameters.ScheduleVisitFrom /* date */;
             schedule_week_segment?: Parameters.ScheduleWeekSegment;
             sensitive?: Parameters.Sensitive;
+            simplified?: Parameters.Simplified;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
             subject?: Parameters.Subject;
             subject_name?: Parameters.SubjectName;
+            tag?: Parameters.Tag;
             task?: Parameters.Task;
             theme?: Parameters.Theme;
             theme_name?: Parameters.ThemeName;
@@ -3083,7 +3197,9 @@ declare namespace Paths {
             export type DistrictName = string;
             export type FromStartDate = string; // date
             export type HousingCorporation = number;
+            export type HousingCorporationIsnull = boolean;
             export type Id = number;
+            export type Ids = number;
             export type IsEnforcementRequest = boolean;
             export type Number = string;
             export type OpenCases = boolean;
@@ -3103,6 +3219,7 @@ declare namespace Paths {
             export type ScheduleVisitFrom = string; // date
             export type ScheduleWeekSegment = number;
             export type Sensitive = boolean;
+            export type Simplified = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StateTypesName = string;
@@ -3110,6 +3227,7 @@ declare namespace Paths {
             export type Subject = number;
             export type SubjectName = string;
             export type Suffix = string;
+            export type Tag = number;
             export type Task = string;
             export type Theme = number;
             export type ThemeName = string;
@@ -3123,6 +3241,8 @@ declare namespace Paths {
             district_name?: Parameters.DistrictName;
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
+            housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
+            ids?: Parameters.Ids;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             number?: Parameters.Number;
             open_cases?: Parameters.OpenCases;
@@ -3142,6 +3262,7 @@ declare namespace Paths {
             schedule_visit_from?: Parameters.ScheduleVisitFrom /* date */;
             schedule_week_segment?: Parameters.ScheduleWeekSegment;
             sensitive?: Parameters.Sensitive;
+            simplified?: Parameters.Simplified;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
@@ -3149,6 +3270,7 @@ declare namespace Paths {
             subject?: Parameters.Subject;
             subject_name?: Parameters.SubjectName;
             suffix?: Parameters.Suffix;
+            tag?: Parameters.Tag;
             task?: Parameters.Task;
             theme?: Parameters.Theme;
             theme_name?: Parameters.ThemeName;
@@ -3164,7 +3286,9 @@ declare namespace Paths {
             export type DistrictName = string;
             export type FromStartDate = string; // date
             export type HousingCorporation = number;
+            export type HousingCorporationIsnull = boolean;
             export type Id = number;
+            export type Ids = number;
             export type IsEnforcementRequest = boolean;
             export type OpenCases = boolean;
             export type Ordering = string;
@@ -3181,11 +3305,13 @@ declare namespace Paths {
             export type ScheduleVisitFrom = string; // date
             export type ScheduleWeekSegment = number;
             export type Sensitive = boolean;
+            export type Simplified = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StateTypesName = string;
             export type Subject = number;
             export type SubjectName = string;
+            export type Tag = number;
             export type Task = string;
             export type Theme = number;
             export type ThemeName = string;
@@ -3199,6 +3325,8 @@ declare namespace Paths {
             district_name?: Parameters.DistrictName;
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
+            housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
+            ids?: Parameters.Ids;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             open_cases?: Parameters.OpenCases;
             ordering?: Parameters.Ordering;
@@ -3215,11 +3343,13 @@ declare namespace Paths {
             schedule_visit_from?: Parameters.ScheduleVisitFrom /* date */;
             schedule_week_segment?: Parameters.ScheduleWeekSegment;
             sensitive?: Parameters.Sensitive;
+            simplified?: Parameters.Simplified;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
             subject?: Parameters.Subject;
             subject_name?: Parameters.SubjectName;
+            tag?: Parameters.Tag;
             task?: Parameters.Task;
             theme?: Parameters.Theme;
             theme_name?: Parameters.ThemeName;
@@ -3236,7 +3366,9 @@ declare namespace Paths {
             export type DistrictName = string;
             export type FromStartDate = string; // date
             export type HousingCorporation = number;
+            export type HousingCorporationIsnull = boolean;
             export type Id = number;
+            export type Ids = number;
             export type IsEnforcementRequest = boolean;
             export type Number = string;
             export type OpenCases = boolean;
@@ -3256,6 +3388,7 @@ declare namespace Paths {
             export type ScheduleVisitFrom = string; // date
             export type ScheduleWeekSegment = number;
             export type Sensitive = boolean;
+            export type Simplified = boolean;
             export type StartDate = string; // date
             export type StateTypes = number;
             export type StateTypesName = string;
@@ -3263,6 +3396,7 @@ declare namespace Paths {
             export type Subject = number;
             export type SubjectName = string;
             export type Suffix = string;
+            export type Tag = number;
             export type Task = string;
             export type Theme = number;
             export type ThemeName = string;
@@ -3276,6 +3410,8 @@ declare namespace Paths {
             district_name?: Parameters.DistrictName;
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
+            housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
+            ids?: Parameters.Ids;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             number?: Parameters.Number;
             open_cases?: Parameters.OpenCases;
@@ -3295,6 +3431,7 @@ declare namespace Paths {
             schedule_visit_from?: Parameters.ScheduleVisitFrom /* date */;
             schedule_week_segment?: Parameters.ScheduleWeekSegment;
             sensitive?: Parameters.Sensitive;
+            simplified?: Parameters.Simplified;
             start_date?: Parameters.StartDate /* date */;
             state_types?: Parameters.StateTypes;
             state_types__name?: Parameters.StateTypesName;
@@ -3302,6 +3439,7 @@ declare namespace Paths {
             subject?: Parameters.Subject;
             subject_name?: Parameters.SubjectName;
             suffix?: Parameters.Suffix;
+            tag?: Parameters.Tag;
             task?: Parameters.Task;
             theme?: Parameters.Theme;
             theme_name?: Parameters.ThemeName;
@@ -3412,44 +3550,10 @@ declare namespace Paths {
             export type $200 = Components.Schemas.PaginatedDecisionSanctionList;
         }
     }
-    namespace DocumentTypesRetrieve {
+    namespace FeedbackCreate {
+        export type RequestBody = Components.Schemas.Feedback;
         namespace Responses {
-            export interface $200 {
-            }
-        }
-    }
-    namespace DocumentsDestroy {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export interface PathParameters {
-            id: Parameters.Id;
-        }
-        namespace Responses {
-            export interface $204 {
-            }
-        }
-    }
-    namespace DocumentsDownloadRetrieve {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export interface PathParameters {
-            id: Parameters.Id;
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.CaseDocument;
-        }
-    }
-    namespace DocumentsRetrieve {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export interface PathParameters {
-            id: Parameters.Id;
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.CaseDocument;
+            export type $200 = Components.Schemas.Feedback;
         }
     }
     namespace FinesRetrieve {
@@ -3457,6 +3561,9 @@ declare namespace Paths {
             export type Id = string;
         }
         export interface PathParameters {
+            id: Parameters.Id;
+        }
+        export interface QueryParameters {
             id: Parameters.Id;
         }
         namespace Responses {
@@ -3491,7 +3598,7 @@ declare namespace Paths {
     namespace GenericTasksList {
         namespace Parameters {
             export type Case = number;
-            export type CaseProject = string[];
+            export type CaseProject = number[];
             export type CaseReason = number;
             export type CaseTheme = number;
             export type Description = string;
@@ -3521,20 +3628,13 @@ declare namespace Paths {
     }
     namespace IsAuthorizedRetrieve {
         namespace Responses {
-            export interface $200 {
-            }
+            export type $200 = Components.Schemas.IsAuthorized;
         }
     }
     namespace OidcAuthenticateCreate {
         export type RequestBody = Components.Schemas.OIDCAuthenticate;
         namespace Responses {
             export type $200 = Components.Schemas.OIDCAuthenticate;
-        }
-    }
-    namespace OpenzaakCallbacksCreate {
-        namespace Responses {
-            export interface $200 {
-            }
         }
     }
     namespace PermissionsList {
@@ -3650,7 +3750,7 @@ declare namespace Paths {
     namespace SchemaRetrieve {
         namespace Parameters {
             export type Format = "json" | "yaml";
-            export type Lang = "af" | "ar" | "ar-dz" | "ast" | "az" | "be" | "bg" | "bn" | "br" | "bs" | "ca" | "cs" | "cy" | "da" | "de" | "dsb" | "el" | "en" | "en-au" | "en-gb" | "eo" | "es" | "es-ar" | "es-co" | "es-mx" | "es-ni" | "es-ve" | "et" | "eu" | "fa" | "fi" | "fr" | "fy" | "ga" | "gd" | "gl" | "he" | "hi" | "hr" | "hsb" | "hu" | "hy" | "ia" | "id" | "ig" | "io" | "is" | "it" | "ja" | "ka" | "kab" | "kk" | "km" | "kn" | "ko" | "ky" | "lb" | "lt" | "lv" | "mk" | "ml" | "mn" | "mr" | "my" | "nb" | "ne" | "nl" | "nn" | "os" | "pa" | "pl" | "pt" | "pt-br" | "ro" | "ru" | "sk" | "sl" | "sq" | "sr" | "sr-latn" | "sv" | "sw" | "ta" | "te" | "tg" | "th" | "tk" | "tr" | "tt" | "udm" | "uk" | "ur" | "uz" | "vi" | "zh-hans" | "zh-hant";
+            export type Lang = "af" | "ar" | "ar-dz" | "ast" | "az" | "be" | "bg" | "bn" | "br" | "bs" | "ca" | "ckb" | "cs" | "cy" | "da" | "de" | "dsb" | "el" | "en" | "en-au" | "en-gb" | "eo" | "es" | "es-ar" | "es-co" | "es-mx" | "es-ni" | "es-ve" | "et" | "eu" | "fa" | "fi" | "fr" | "fy" | "ga" | "gd" | "gl" | "he" | "hi" | "hr" | "hsb" | "hu" | "hy" | "ia" | "id" | "ig" | "io" | "is" | "it" | "ja" | "ka" | "kab" | "kk" | "km" | "kn" | "ko" | "ky" | "lb" | "lt" | "lv" | "mk" | "ml" | "mn" | "mr" | "ms" | "my" | "nb" | "ne" | "nl" | "nn" | "os" | "pa" | "pl" | "pt" | "pt-br" | "ro" | "ru" | "sk" | "sl" | "sq" | "sr" | "sr-latn" | "sv" | "sw" | "ta" | "te" | "tg" | "th" | "tk" | "tr" | "tt" | "udm" | "ug" | "uk" | "ur" | "uz" | "vi" | "zh-hans" | "zh-hant";
         }
         export interface QueryParameters {
             format?: Parameters.Format;
@@ -3730,6 +3830,7 @@ declare namespace Paths {
             export type DueDate = string; // date
             export type FromStartDate = string; // date
             export type HousingCorporation = number;
+            export type HousingCorporationIsnull = boolean;
             export type IsEnforcementRequest = boolean;
             export type Name = string;
             export type Number = string;
@@ -3751,6 +3852,7 @@ declare namespace Paths {
             export type Subject = number;
             export type SubjectName = string;
             export type Suffix = string;
+            export type Tag = number;
             export type Theme = number;
             export type ThemeName = string;
             export type TonIds = number;
@@ -3762,6 +3864,7 @@ declare namespace Paths {
             due_date?: Parameters.DueDate /* date */;
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
+            housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             name?: Parameters.Name;
             number?: Parameters.Number;
@@ -3783,6 +3886,7 @@ declare namespace Paths {
             subject?: Parameters.Subject;
             subject_name?: Parameters.SubjectName;
             suffix?: Parameters.Suffix;
+            tag?: Parameters.Tag;
             theme?: Parameters.Theme;
             theme_name?: Parameters.ThemeName;
             ton_ids?: Parameters.TonIds;
@@ -3793,7 +3897,7 @@ declare namespace Paths {
                  * example:
                  * 123
                  */
-                count?: number;
+                count: number;
                 /**
                  * example:
                  * http://api.example.org/accounts/?page=4
@@ -3804,7 +3908,7 @@ declare namespace Paths {
                  * http://api.example.org/accounts/?page=2
                  */
                 previous?: string | null; // uri
-                results?: string[];
+                results: string[];
             }
         }
     }
@@ -3816,6 +3920,7 @@ declare namespace Paths {
             export type DueDate = string; // date
             export type FromStartDate = string; // date
             export type HousingCorporation = number;
+            export type HousingCorporationIsnull = boolean;
             export type IsEnforcementRequest = boolean;
             export type Name = string;
             export type Number = string;
@@ -3837,6 +3942,7 @@ declare namespace Paths {
             export type Subject = number;
             export type SubjectName = string;
             export type Suffix = string;
+            export type Tag = number;
             export type Theme = number;
             export type ThemeName = string;
             export type TonIds = number;
@@ -3848,6 +3954,7 @@ declare namespace Paths {
             due_date?: Parameters.DueDate /* date */;
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
+            housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             name?: Parameters.Name;
             number?: Parameters.Number;
@@ -3869,6 +3976,7 @@ declare namespace Paths {
             subject?: Parameters.Subject;
             subject_name?: Parameters.SubjectName;
             suffix?: Parameters.Suffix;
+            tag?: Parameters.Tag;
             theme?: Parameters.Theme;
             theme_name?: Parameters.ThemeName;
             ton_ids?: Parameters.TonIds;
@@ -3885,6 +3993,7 @@ declare namespace Paths {
             export type DueDate = string; // date
             export type FromStartDate = string; // date
             export type HousingCorporation = number;
+            export type HousingCorporationIsnull = boolean;
             export type Id = number;
             export type IsEnforcementRequest = boolean;
             export type Name = string;
@@ -3902,6 +4011,7 @@ declare namespace Paths {
             export type StateTypes = number;
             export type Subject = number;
             export type SubjectName = string;
+            export type Tag = number;
             export type Theme = number;
             export type ThemeName = string;
             export type TonIds = number;
@@ -3916,6 +4026,7 @@ declare namespace Paths {
             due_date?: Parameters.DueDate /* date */;
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
+            housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             name?: Parameters.Name;
             open_cases?: Parameters.OpenCases;
@@ -3932,6 +4043,7 @@ declare namespace Paths {
             state_types?: Parameters.StateTypes;
             subject?: Parameters.Subject;
             subject_name?: Parameters.SubjectName;
+            tag?: Parameters.Tag;
             theme?: Parameters.Theme;
             theme_name?: Parameters.ThemeName;
             ton_ids?: Parameters.TonIds;
@@ -3949,6 +4061,7 @@ declare namespace Paths {
             export type DueDate = string; // date
             export type FromStartDate = string; // date
             export type HousingCorporation = number;
+            export type HousingCorporationIsnull = boolean;
             export type IsEnforcementRequest = boolean;
             export type Name = string;
             export type Number = string;
@@ -3970,6 +4083,7 @@ declare namespace Paths {
             export type Subject = number;
             export type SubjectName = string;
             export type Suffix = string;
+            export type Tag = number;
             export type Theme = number;
             export type ThemeName = string;
             export type TonIds = number;
@@ -3981,6 +4095,7 @@ declare namespace Paths {
             due_date?: Parameters.DueDate /* date */;
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
+            housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             name?: Parameters.Name;
             number?: Parameters.Number;
@@ -4002,6 +4117,7 @@ declare namespace Paths {
             subject?: Parameters.Subject;
             subject_name?: Parameters.SubjectName;
             suffix?: Parameters.Suffix;
+            tag?: Parameters.Tag;
             theme?: Parameters.Theme;
             theme_name?: Parameters.ThemeName;
             ton_ids?: Parameters.TonIds;
@@ -4012,7 +4128,7 @@ declare namespace Paths {
                  * example:
                  * 123
                  */
-                count?: number;
+                count: number;
                 /**
                  * example:
                  * http://api.example.org/accounts/?page=4
@@ -4023,11 +4139,11 @@ declare namespace Paths {
                  * http://api.example.org/accounts/?page=2
                  */
                 previous?: string | null; // uri
-                results?: string[];
+                results: string[];
             }
         }
     }
-    namespace TasksTaskNamesList {
+    namespace TasksSummonTypesList {
         namespace Parameters {
             export type Completed = boolean;
             export type District = number;
@@ -4035,6 +4151,8 @@ declare namespace Paths {
             export type DueDate = string; // date
             export type FromStartDate = string; // date
             export type HousingCorporation = number;
+            export type HousingCorporationIsnull = boolean;
+            export type Id = number;
             export type IsEnforcementRequest = boolean;
             export type Name = string;
             export type Number = string;
@@ -4056,9 +4174,13 @@ declare namespace Paths {
             export type Subject = number;
             export type SubjectName = string;
             export type Suffix = string;
+            export type Tag = number;
             export type Theme = number;
             export type ThemeName = string;
             export type TonIds = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
         }
         export interface QueryParameters {
             completed?: Parameters.Completed;
@@ -4067,6 +4189,7 @@ declare namespace Paths {
             due_date?: Parameters.DueDate /* date */;
             from_start_date?: Parameters.FromStartDate /* date */;
             housing_corporation?: Parameters.HousingCorporation;
+            housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
             is_enforcement_request?: Parameters.IsEnforcementRequest;
             name?: Parameters.Name;
             number?: Parameters.Number;
@@ -4088,6 +4211,80 @@ declare namespace Paths {
             subject?: Parameters.Subject;
             subject_name?: Parameters.SubjectName;
             suffix?: Parameters.Suffix;
+            tag?: Parameters.Tag;
+            theme?: Parameters.Theme;
+            theme_name?: Parameters.ThemeName;
+            ton_ids?: Parameters.TonIds;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.PaginatedSummonTypeList;
+        }
+    }
+    namespace TasksTaskNamesList {
+        namespace Parameters {
+            export type Completed = boolean;
+            export type District = number;
+            export type DistrictName = string;
+            export type DueDate = string; // date
+            export type FromStartDate = string; // date
+            export type HousingCorporation = number;
+            export type HousingCorporationIsnull = boolean;
+            export type IsEnforcementRequest = boolean;
+            export type Name = string;
+            export type Number = string;
+            export type OpenCases = boolean;
+            export type Ordering = string;
+            export type Owner = string;
+            export type Page = number;
+            export type PageSize = number;
+            export type PostalCode = string;
+            export type Project = number;
+            export type ProjectName = string;
+            export type Reason = number;
+            export type ReasonName = string;
+            export type Role = string;
+            export type Sensitive = boolean;
+            export type StartDate = string; // date
+            export type StateTypes = number;
+            export type StreetName = string;
+            export type Subject = number;
+            export type SubjectName = string;
+            export type Suffix = string;
+            export type Tag = number;
+            export type Theme = number;
+            export type ThemeName = string;
+            export type TonIds = number;
+        }
+        export interface QueryParameters {
+            completed?: Parameters.Completed;
+            district?: Parameters.District;
+            district_name?: Parameters.DistrictName;
+            due_date?: Parameters.DueDate /* date */;
+            from_start_date?: Parameters.FromStartDate /* date */;
+            housing_corporation?: Parameters.HousingCorporation;
+            housing_corporation_isnull?: Parameters.HousingCorporationIsnull;
+            is_enforcement_request?: Parameters.IsEnforcementRequest;
+            name?: Parameters.Name;
+            number?: Parameters.Number;
+            open_cases?: Parameters.OpenCases;
+            ordering?: Parameters.Ordering;
+            owner?: Parameters.Owner;
+            page?: Parameters.Page;
+            page_size?: Parameters.PageSize;
+            postal_code?: Parameters.PostalCode;
+            project?: Parameters.Project;
+            project_name?: Parameters.ProjectName;
+            reason?: Parameters.Reason;
+            reason_name?: Parameters.ReasonName;
+            role?: Parameters.Role;
+            sensitive?: Parameters.Sensitive;
+            start_date?: Parameters.StartDate /* date */;
+            state_types?: Parameters.StateTypes;
+            street_name?: Parameters.StreetName;
+            subject?: Parameters.Subject;
+            subject_name?: Parameters.SubjectName;
+            suffix?: Parameters.Suffix;
+            tag?: Parameters.Tag;
             theme?: Parameters.Theme;
             theme_name?: Parameters.ThemeName;
             ton_ids?: Parameters.TonIds;
