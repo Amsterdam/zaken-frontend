@@ -1,6 +1,6 @@
 
 import { Residents } from "@amsterdam/wonen-ui"
-import { useResidentsNew } from "app/state/rest"
+import { useResidents } from "app/state/rest"
 import LoadingDetails from "app/components/shared/Details/LoadingDetails"
 
 type Props = {
@@ -8,7 +8,7 @@ type Props = {
 }
 
 const ResidentsOverviewNew: React.FC<Props> = ({ bagId }) => {
-  const [data, { isBusy }] = useResidentsNew(bagId)
+  const [data, { isBusy }] = useResidents(bagId)
   const dataSource = (data || []) as Components.Schemas.Brp
 
   if (isBusy) {
