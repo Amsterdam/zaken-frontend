@@ -1,0 +1,16 @@
+.link {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  height: var(--spacing-5, 20px);
+  cursor: pointer;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.icon {
+  display: inline-block;
+  margin-left: var(--spacing-2, 8px);
+}
