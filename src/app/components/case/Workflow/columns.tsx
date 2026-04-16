@@ -24,7 +24,7 @@ export function getColumns(
   )
 
   const updateScheduleColumn = {
-    header: "Planning",
+    header: "Urgentie",
     dataIndex: "task_name",
     render: (_: any, record: any) =>
       record.task_name === "task_create_visit" ? (

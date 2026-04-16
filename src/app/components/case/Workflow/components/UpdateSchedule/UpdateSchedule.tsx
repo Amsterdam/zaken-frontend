@@ -34,17 +34,17 @@ const getLatestSchedule = (schedules?: Schedule[]): Schedule | null => {
 
 const UpdateSchedule: React.FC<Props> = ({ caseId, themeId }) => {
   const { isModalOpen, openModal, closeModal } = useModal()
-  const [schedules, { execGet: getSchedules }] =
-    useSchedulesByCaseId(caseId)
+  const [schedules] = useSchedulesByCaseId(caseId)
   const latestSchedule = getLatestSchedule(schedules as unknown as Schedule[])
   const [, { execPatch: updateSchedule }] = useSchedule(latestSchedule?.id)
-  const [scheduleTypes, { execGet: getScheduleTypes }] =
-    useScheduleTypes(themeId, { lazy: true })
+  const [scheduleTypes, { execGet: getScheduleTypes }] = useScheduleTypes(
+    themeId,
+    { lazy: true },
+  )
   const [hasPermission] = useHasPermission([CAN_PERFORM_TASK])
 
   useEffect(() => {
     if (isModalOpen) {
-      getSchedules()
       getScheduleTypes()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -54,10 +54,12 @@ const UpdateSchedule: React.FC<Props> = ({ caseId, themeId }) => {
     updateSchedule(data)
   }
 
+  const priorityName = latestSchedule?.priority?.name ?? "-"
+
   return hasPermission ? (
     <>
       <span className={styles.link} role="link" onClick={openModal}>
-        Wijzigen
+        {priorityName}
         <span className={styles.icon}>
           <CustomIcon
             name="Edit"
@@ -76,7 +78,7 @@ const UpdateSchedule: React.FC<Props> = ({ caseId, themeId }) => {
       )}
     </>
   ) : (
-    <span>-</span>
+    <span>{priorityName}</span>
   )
 }
 

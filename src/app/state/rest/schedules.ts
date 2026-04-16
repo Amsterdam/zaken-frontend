@@ -19,7 +19,7 @@ export const useSchedulesByCaseId = (caseId: number, options?: Options) => {
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.ScheduleCreate[]>({
     ...options,
-    lazy: true,
+    lazy: options?.lazy ?? caseId === undefined,
     url: makeApiUrl("cases", caseId, "schedules"),
     groupName: "cases",
     handleError,
