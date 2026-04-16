@@ -105,7 +105,7 @@ export const useScheduleTypes = (themeId?: Components.Schemas.CaseTheme["id"], o
   const handleError = useErrorHandler()
   return useApiRequest<Components.Schemas.ThemeScheduleTypes>({
     ...options,
-    lazy: themeId === undefined,
+    lazy: options?.lazy ?? themeId === undefined,
     url: makeApiUrl("themes", themeId, "schedule-types"),
     groupName: "cases",
     handleError,

@@ -14,3 +14,27 @@ export const useScheduleCreate = (options?: Options) => {
     isProtected: true
   })
 }
+
+export const useSchedulesByCaseId = (caseId: number, options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<Components.Schemas.ScheduleCreate[]>({
+    ...options,
+    lazy: options?.lazy ?? caseId === undefined,
+    url: makeApiUrl("cases", caseId, "schedules"),
+    groupName: "cases",
+    handleError,
+    isProtected: true
+  })
+}
+
+export const useSchedule = (scheduleId?: number, options?: Options) => {
+  const handleError = useErrorHandler()
+  return useApiRequest<Components.Schemas.ScheduleCreate>({
+    ...options,
+    lazy: true,
+    url: makeApiUrl("schedules", scheduleId),
+    groupName: "cases",
+    handleError,
+    isProtected: true
+  })
+}
