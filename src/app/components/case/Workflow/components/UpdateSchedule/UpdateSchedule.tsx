@@ -1,4 +1,5 @@
 import { useEffect } from "react"
+import dayjs from "dayjs"
 
 import { useModal } from "app/components/shared/Modal/hooks/useModal"
 import {
@@ -51,7 +52,15 @@ const UpdateSchedule: React.FC<Props> = ({ caseId, themeId }) => {
   }, [isModalOpen])
 
   const onSubmit = (data: any) => {
-    updateSchedule(data)
+    const payload = {
+      week_segment: data.week_segment.id,
+      day_segment: data.day_segment.id,
+      priority: data.priority.id,
+      visit_from_datetime: data.visit_from_datetime
+        ? dayjs(data.visit_from_datetime).format()
+        : null,
+    }
+    updateSchedule(payload)
   }
 
   const priorityName = latestSchedule?.priority?.name ?? "-"
