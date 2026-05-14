@@ -14,21 +14,10 @@ module.exports = {
     "quotes": ["error", "double", { "avoidEscape": true }],
     "space-unary-ops": ["error"],
     "space-infix-ops": ["error"],
-    "semi": ["error", "never"],
     "react/jsx-indent-props": ["error", 2],
     "react/jsx-indent" : ["error", 2],
 
     "@typescript-eslint/consistent-type-definitions": ["error", "type"],
-    "@typescript-eslint/member-delimiter-style": ["error", {
-      multiline: {
-        delimiter: "none",
-        requireLast: true
-      },
-      singleline: {
-        delimiter: "comma",
-        requireLast: false
-      }
-    }],
     "@typescript-eslint/type-annotation-spacing": ["error", {
       before: false,
       after: true,
