@@ -22,6 +22,10 @@ on:
         required: true
         default: 'nocombine'
 
+permissions:
+  contents: write
+  pull-requests: write
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "combine-prs"
@@ -31,7 +35,7 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: actions/github-script@v6
+      - uses: actions/github-script@v7
         id: create-combined-pr
         name: Create Combined PR
         with:

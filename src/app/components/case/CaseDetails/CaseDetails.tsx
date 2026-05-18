@@ -56,7 +56,7 @@ const getDataSecondCol = (caseItem?: Components.Schemas.CaseCreate) => {
     return undefined
   }
 
-  const { id, theme, reason, project, subjects, address: { housing_corporation, bag_id } } = caseItem
+  const { id, theme, reason, project, subjects, address } = caseItem
   const hasProject = project?.name !== undefined
   const data: DefinitionListData = {
     "Thema": theme.name,
@@ -64,8 +64,8 @@ const getDataSecondCol = (caseItem?: Components.Schemas.CaseCreate) => {
     "Onderwerp(en)": <ChangeableSubject subjects={ subjects } caseId={ id } themeId={ theme.id } />,
     "Corporatie": (
       <ChangeHousingCorporation
-        housingCorporationId={ housing_corporation }
-        bagId={ bag_id }
+        housingCorporationId={ address?.housing_corporation }
+        bagId={ address?.bag_id }
         caseId={ id }
       />
     )
