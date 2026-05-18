@@ -14,7 +14,7 @@ const RentalReports: React.FC<Props> = ({ bagId }) => {
 
   return (
     <>
-      {data?.fifteen_nights_rule_applicable && (
+      {data?.fifteenNightsRuleApplicable && (
         <>
           <InfoAlert
             title="15-nachtenregel van toepassing!"
