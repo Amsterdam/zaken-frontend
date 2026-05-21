@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
 const FeedbackButton = styled.div`
   z-index: 999;
@@ -20,6 +20,6 @@ const FeedbackButton = styled.div`
     transform-origin: center;
   }
   box-shadow: rgba(0, 0, 0, 0.15) -1.95px 1.95px 2.6px;
-`
+`;
 
-export default FeedbackButton
+export default FeedbackButton;

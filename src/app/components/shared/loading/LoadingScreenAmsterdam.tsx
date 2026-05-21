@@ -1,5 +1,5 @@
-import React from "react"
-import styled, { keyframes } from "styled-components"
+import React from "react";
+import styled, { keyframes } from "styled-components";
 
 const CenterWrapper = styled.div`
   display: flex;
@@ -8,13 +8,13 @@ const CenterWrapper = styled.div`
   flex-direction: column;
   height: 100vh;
   width: 100vw;
-`
+`;
 
 const spin = keyframes`
   100% {
     transform: rotate(calc(var(--s, 1) * 1turn));
   }
-`
+`;
 
 const Cross = styled.div<{ duration: number, delay: number }>`
   width: 100px;
@@ -40,7 +40,7 @@ const Cross = styled.div<{ duration: number, delay: number }>`
   &::after {
     --s: -1;
   }
-`
+`;
 
 export const LoadingScreenAmsterdam: React.FC = () => (
   <CenterWrapper>
@@ -48,6 +48,6 @@ export const LoadingScreenAmsterdam: React.FC = () => (
     <Cross duration={3} delay={0} />
     <Cross duration={3} delay={0} />
   </CenterWrapper>
-)
+);
 
-export default LoadingScreenAmsterdam
+export default LoadingScreenAmsterdam;

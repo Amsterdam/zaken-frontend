@@ -1,6 +1,6 @@
-import styled from "styled-components"
-import { breakpoint, MenuButton } from "@amsterdam/asc-ui"
-import CustomIcon from "../CustomIcon/CustomIcon"
+import styled from "styled-components";
+import { breakpoint, MenuButton } from "@amsterdam/asc-ui";
+import CustomIcon from "../CustomIcon/CustomIcon";
 
 type Props = {
   name?: string
@@ -28,13 +28,13 @@ const UserWrapper = styled.div`
     display: inline-block;
     padding: 8px 0 0 24px;
   }
-`
+`;
 
 const StyledMenuButton = styled(MenuButton)`
   height: 54px;
   font-weight: normal;
   padding: 12px 16px 9px;
-`
+`;
 
 const UserDisplay: React.FC<Props> = ({ name, onClick }) => (
   <>
@@ -55,5 +55,5 @@ const UserDisplay: React.FC<Props> = ({ name, onClick }) => (
       Uitloggen
     </StyledMenuButton>
   </>
-)
-export default UserDisplay
+);
+export default UserDisplay;

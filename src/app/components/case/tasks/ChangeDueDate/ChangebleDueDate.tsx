@@ -1,12 +1,12 @@
-import styled from "styled-components"
-import { Icon, themeSpacing } from "@amsterdam/asc-ui"
-import { useModal } from "app/components/shared/Modal/hooks/useModal"
-import { appendTimeToDate } from "app/components/shared/Helpers/helpers"
-import DueDate from "app/components/shared/DueDate/DueDate"
-import ChangeDueDateModal from "./ChangeDueDateModal"
-import { useTaskUpdate } from "app/state/rest"
-import useHasPermission, { CAN_PERFORM_TASK } from "app/state/rest/custom/usePermissions/useHasPermission"
-import CustomIcon from "app/components/shared/CustomIcon/CustomIcon"
+import styled from "styled-components";
+import { Icon, themeSpacing } from "@amsterdam/asc-ui";
+import { useModal } from "app/components/shared/Modal/hooks/useModal";
+import { appendTimeToDate } from "app/components/shared/Helpers/helpers";
+import DueDate from "app/components/shared/DueDate/DueDate";
+import ChangeDueDateModal from "./ChangeDueDateModal";
+import { useTaskUpdate } from "app/state/rest";
+import useHasPermission, { CAN_PERFORM_TASK } from "app/state/rest/custom/usePermissions/useHasPermission";
+import CustomIcon from "app/components/shared/CustomIcon/CustomIcon";
 
 type Props = {
   caseId: Components.Schemas.CaseDetail["id"]
@@ -23,23 +23,23 @@ const Span = styled.span`
   &:hover {
     text-decoration: underline;
   }
-`
+`;
 
 const StyledIcon = styled(Icon)`
   display: inline-block;
   margin-left: ${ themeSpacing(2) };
-`
+`;
 
 const ChangeableDueDate: React.FC<Props> = ({ dueDate, caseId, caseUserTaskId }) => {
-  const { isModalOpen, openModal, closeModal } = useModal()
-  const [, { execPatch }] = useTaskUpdate(caseUserTaskId)
-  const [hasPermission] = useHasPermission([CAN_PERFORM_TASK])
+  const { isModalOpen, openModal, closeModal } = useModal();
+  const [, { execPatch }] = useTaskUpdate(caseUserTaskId);
+  const [hasPermission] = useHasPermission([CAN_PERFORM_TASK]);
 
   const onSubmit = (data: { date: string, id: string }) => {
     appendTimeToDate(data.date) !== dueDate
       ? execPatch( { due_date: appendTimeToDate( data.date ) })
-      : closeModal()
-  }
+      : closeModal();
+  };
 
   return hasPermission ? (
     <>
@@ -58,7 +58,7 @@ const ChangeableDueDate: React.FC<Props> = ({ dueDate, caseId, caseUserTaskId })
         taskId={ caseUserTaskId }
         />
     </>
-  ) : <DueDate date={ dueDate } />
-}
+  ) : <DueDate date={ dueDate } />;
+};
 
-export default ChangeableDueDate
+export default ChangeableDueDate;

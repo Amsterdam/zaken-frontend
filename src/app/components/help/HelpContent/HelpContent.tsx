@@ -1,20 +1,20 @@
-import { Accordion, Heading, Paragraph, themeSpacing } from "@amsterdam/asc-ui"
-import { RowWithColumn } from "app/components/layouts/Grid"
-import EmailLink from "./EmailLink"
-import styled from "styled-components"
-import CustomIcon from "app/components/shared/CustomIcon/CustomIcon"
+import { Accordion, Heading, Paragraph, themeSpacing } from "@amsterdam/asc-ui";
+import { RowWithColumn } from "app/components/layouts/Grid";
+import EmailLink from "./EmailLink";
+import styled from "styled-components";
+import CustomIcon from "app/components/shared/CustomIcon/CustomIcon";
 
 const StyledIcon = styled.span`
   vertical-align: text-top;
-`
+`;
 
 const AccordionWrapper = styled.div`
   margin-bottom: ${ themeSpacing(1) };
-`
+`;
 
 const HelpContent: React.FC = () => {
-  const title = "AZA, TON, TOP en de Planningstool"
-  const titleShort = "AZA"
+  const title = "AZA, TON, TOP en de Planningstool";
+  const titleShort = "AZA";
 
   return (
     <>
@@ -86,7 +86,7 @@ const HelpContent: React.FC = () => {
         </AccordionWrapper>
       </RowWithColumn>
     </>
-  )
-}
+  );
+};
 
-export default HelpContent
+export default HelpContent;

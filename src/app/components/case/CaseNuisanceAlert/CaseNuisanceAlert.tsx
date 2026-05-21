@@ -1,9 +1,9 @@
 
-import styled from "styled-components"
-import { Alert, themeSpacing } from "@amsterdam/asc-ui"
-import { useCaseEvents, useCaseWorkflows } from "app/state/rest"
+import styled from "styled-components";
+import { Alert, themeSpacing } from "@amsterdam/asc-ui";
+import { useCaseEvents, useCaseWorkflows } from "app/state/rest";
 
-const MAX_NUMBER_NUISANCE = 3
+const MAX_NUMBER_NUISANCE = 3;
 
 type Props = {
   caseId: Components.Schemas.CaseDetail["id"]
@@ -11,19 +11,19 @@ type Props = {
 
 const StyledAlert = styled(Alert)`
   margin-bottom: ${ themeSpacing(6) };
-`
+`;
 
 const CaseNuisanceAlert: React.FC<Props> = ({ caseId }) => {
-  const [caseEvents] = useCaseEvents(caseId)
-  const [caseWorkflowData] = useCaseWorkflows(caseId)
-  const workflows = caseWorkflowData?.results ?? []
+  const [caseEvents] = useCaseEvents(caseId);
+  const [caseWorkflowData] = useCaseWorkflows(caseId);
+  const workflows = caseWorkflowData?.results ?? [];
 
-  const totalNuisance = caseEvents?.reduce((acc, cur) => cur?.event_values?.nuisance_detected ? ++acc : acc, 0)
-  const isMaxExceeded = totalNuisance !== undefined && totalNuisance >= MAX_NUMBER_NUISANCE
-  const isNuisanceReportedInStates = workflows.find((workflow) => workflow.state.name === "Melding overlast")
-  const isNuisanceReportedInEvents = caseEvents?.find((event) => event?.event_values?.description === "Doorzetten melding overlast")
+  const totalNuisance = caseEvents?.reduce((acc, cur) => cur?.event_values?.nuisance_detected ? ++acc : acc, 0);
+  const isMaxExceeded = totalNuisance !== undefined && totalNuisance >= MAX_NUMBER_NUISANCE;
+  const isNuisanceReportedInStates = workflows.find((workflow) => workflow.state.name === "Melding overlast");
+  const isNuisanceReportedInEvents = caseEvents?.find((event) => event?.event_values?.description === "Doorzetten melding overlast");
 
-  const isVisible = isMaxExceeded && !isNuisanceReportedInStates && !isNuisanceReportedInEvents
+  const isVisible = isMaxExceeded && !isNuisanceReportedInStates && !isNuisanceReportedInEvents;
 
   return (
     isVisible ? (
@@ -31,7 +31,7 @@ const CaseNuisanceAlert: React.FC<Props> = ({ caseId }) => {
         {`LET OP: er is ${ MAX_NUMBER_NUISANCE } keer overlast geconstateerd. Voer de taak 'Melding overlast' op!`}
       </StyledAlert>
     ) : null
-  )
-}
+  );
+};
 
-export default CaseNuisanceAlert
+export default CaseNuisanceAlert;

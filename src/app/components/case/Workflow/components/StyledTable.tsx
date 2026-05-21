@@ -1,6 +1,6 @@
-import styled from "styled-components"
-import { Table } from "@amsterdam/wonen-ui"
-import { themeColor, themeSpacing } from "@amsterdam/asc-ui"
+import styled from "styled-components";
+import { Table } from "@amsterdam/wonen-ui";
+import { themeColor, themeSpacing } from "@amsterdam/asc-ui";
 
 export default styled(Table)`
   margin-bottom: ${ themeSpacing(5) };
@@ -15,4 +15,4 @@ export default styled(Table)`
       width: 32px;
     }
   }
-`
+`;

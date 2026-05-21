@@ -1,11 +1,11 @@
 
-import { FormTitle } from "@amsterdam/asc-ui"
+import { FormTitle } from "@amsterdam/asc-ui";
 
-import { useCaseClose, useCaseCloseResults, useCaseCloseReasons, useCase } from "app/state/rest"
-import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
-import scaffold from "app/components/case/forms/CaseCompleteForm/scaffold"
-import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
-import useNavigation from "app/routing/useNavigation"
+import { useCaseClose, useCaseCloseResults, useCaseCloseReasons, useCase } from "app/state/rest";
+import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm";
+import scaffold from "app/components/case/forms/CaseCompleteForm/scaffold";
+import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields";
+import useNavigation from "app/routing/useNavigation";
 
 type Props = {
   id: Components.Schemas.CaseDetail["id"]
@@ -20,18 +20,18 @@ const mapData = (data: CaseCloseTypeFormData): Components.Schemas.CaseClose => (
   {
     ...data,
     reason: data.reason.id,
-    result: data.result?.id ?? null
+    result: data.result?.id ?? null,
   }
-)
+);
 
 const CaseCompleteForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
-  const [caseItem] = useCase(id)
-  const { navigateTo } = useNavigation()
-  const themeId = caseItem?.theme.id
-  const [caseCloseReasons] = useCaseCloseReasons(themeId)
-  const [caseCloseResults] = useCaseCloseResults(themeId)
-  const [, { execPost }] = useCaseClose()
-  const fields = useScaffoldedFields(scaffold, id, navigateTo, caseCloseReasons?.results, caseCloseResults?.results)
+  const [caseItem] = useCase(id);
+  const { navigateTo } = useNavigation();
+  const themeId = caseItem?.theme.id;
+  const [caseCloseReasons] = useCaseCloseReasons(themeId);
+  const [caseCloseResults] = useCaseCloseResults(themeId);
+  const [, { execPost }] = useCaseClose();
+  const fields = useScaffoldedFields(scaffold, id, navigateTo, caseCloseReasons?.results, caseCloseResults?.results);
 
   return (
     <>
@@ -44,7 +44,7 @@ const CaseCompleteForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
         caseUserTaskId={ caseUserTaskId }
       />
     </>
-  )
-}
+  );
+};
 
-export default CaseCompleteForm
+export default CaseCompleteForm;

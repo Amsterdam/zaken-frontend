@@ -1,5 +1,5 @@
-import { Heading } from "@amsterdam/asc-ui"
-import InfoButton from "./InfoButton"
+import { Heading } from "@amsterdam/asc-ui";
+import InfoButton from "./InfoButton";
 
 type Props = {
   infoTitle: string
@@ -12,6 +12,6 @@ const InfoHeading: React.FC<Props> = ({ infoTitle, infoText, as = "h2", children
   <Heading as={ as }>
     { children }
     <InfoButton infoTitle={ infoTitle} infoText = { infoText} />
-  </Heading>
+  </Heading>;
 
-export default InfoHeading
+export default InfoHeading;

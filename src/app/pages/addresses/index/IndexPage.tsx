@@ -1,21 +1,21 @@
-import { useParams } from "react-router-dom"
-import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId"
-import { RowWithColumn } from "app/components/layouts/Grid/Row"
-import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
-import AddressHeader from "app/components/addresses/AddressHeader/AddressHeader"
-import AddressMenu from "app/components/addresses/AddressMenu/AddressMenu"
-import PanoramaPreview from "app/components/addresses/Panorama/PanoramaPreview"
-import to from "app/routing/utils/to"
-import CasesByBagId from "app/components/addresses/CasesByBagId/CasesByBagId"
-import NotFoundPage from "app/pages/errors/NotFoundPage"
-import IsAuthorizedButtonLink from "app/components/shared/ButtonLink/IsAuthorizedButtonLink"
+import { useParams } from "react-router-dom";
+import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId";
+import { RowWithColumn } from "app/components/layouts/Grid/Row";
+import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout";
+import AddressHeader from "app/components/addresses/AddressHeader/AddressHeader";
+import AddressMenu from "app/components/addresses/AddressMenu/AddressMenu";
+import PanoramaPreview from "app/components/addresses/Panorama/PanoramaPreview";
+import to from "app/routing/utils/to";
+import CasesByBagId from "app/components/addresses/CasesByBagId/CasesByBagId";
+import NotFoundPage from "app/pages/errors/NotFoundPage";
+import IsAuthorizedButtonLink from "app/components/shared/ButtonLink/IsAuthorizedButtonLink";
 
 type Props = {
   bagId: string
 }
 
 const IndexPage: React.FC = () => {
-  const { bagId } = useParams<Props>()
+  const { bagId } = useParams<Props>();
   return (
     isValidUrlParamBAGId(bagId) ? (
       <DefaultLayout>
@@ -54,7 +54,7 @@ const IndexPage: React.FC = () => {
         </RowWithColumn>
       </DefaultLayout>
     ) : <NotFoundPage />
-  )
-}
+  );
+};
 
-export default IndexPage
+export default IndexPage;

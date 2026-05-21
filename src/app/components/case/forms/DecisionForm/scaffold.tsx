@@ -1,14 +1,14 @@
-import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
-import { Fields } from "app/components/shared/Form/ScaffoldFields"
-import InfoButton from "app/components/shared/InfoHeading/InfoButton"
-import type { NavigateToFunction } from "app/routing/useNavigation"
+import { FormPositioner } from "@amsterdam/amsterdam-react-final-form";
+import { Fields } from "app/components/shared/Form/ScaffoldFields";
+import InfoButton from "app/components/shared/InfoHeading/InfoButton";
+import type { NavigateToFunction } from "app/routing/useNavigation";
 
-const descriptionRequired = (idDecision: number | undefined, shouldMatch = true) => shouldMatch ? idDecision === 9 : idDecision !== 9
+const descriptionRequired = (idDecision: number | undefined, shouldMatch = true) => shouldMatch ? idDecision === 9 : idDecision !== 9;
 
 export default (
   caseId: Components.Schemas.CaseDetail["id"],
   navigateTo: NavigateToFunction,
-  decisions?: Components.Schemas.DecisionType[]
+  decisions?: Components.Schemas.DecisionType[],
 ) => {
 
   const fields = {
@@ -21,8 +21,8 @@ export default (
         optionLabelField: "name",
         options: decisions,
         withEmptyOption: true,
-        emptyOptionLabel: "Maak een keuze"
-      }
+        emptyOptionLabel: "Maak een keuze",
+      },
     },
     sanction_amount: {
       type: "ShowHide",
@@ -37,10 +37,10 @@ export default (
             name: "sanction_amount",
             pattern: "[0-9]",
             min: 0,
-            validate: (value: number | undefined) => Number.isInteger(value) ? false : "Voer alleen cijfers in, geen punten of komma's!"
-          }
-        }
-      }
+            validate: (value: number | undefined) => Number.isInteger(value) ? false : "Voer alleen cijfers in, geen punten of komma's!",
+          },
+        },
+      },
     },
     description: {
       type: "ShowHide",
@@ -51,10 +51,10 @@ export default (
           props: {
             label: "Korte toelichting",
             extraLabel: "(niet verplicht)",
-            name: "description"
-          }
-        }
-      }
+            name: "description",
+          },
+        },
+      },
     },
     description_closing: {
       type: "ShowHide",
@@ -65,28 +65,28 @@ export default (
           props: {
             label: "Korte toelichting",
             name: "description_closing",
-            isRequired: true
-          }
-        }
-      }
+            isRequired: true,
+          },
+        },
+      },
     },
     secondaryButton: {
       type: "Button",
       props: {
         label: "Annuleren",
         variant: "primaryInverted",
-        onClick: () => navigateTo("/zaken/:id", { id: caseId })
-      }
+        onClick: () => navigateTo("/zaken/:id", { id: caseId }),
+      },
     },
     submit: {
       type: "SubmitButton",
       props: {
         label: "Resultaat verwerken",
         variant: "secondary",
-        align: "right"
-      }
-    }
-  }
+        align: "right",
+      },
+    },
+  };
 
   return new FormPositioner(fields as Fields)
     .setGrid("mobileS", "1fr 1fr", [
@@ -94,8 +94,8 @@ export default (
       ["sanction_amount", "sanction_amount"],
       ["description", "description"],
       ["description_closing", "description_closing"],
-      ["secondaryButton", "submit"]
+      ["secondaryButton", "submit"],
     ])
-    .getScaffoldProps()
-}
+    .getScaffoldProps();
+};
 

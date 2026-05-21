@@ -1,6 +1,6 @@
-import { useSummonsWithCaseId } from "app/state/rest"
-import useValues from "../hooks/useValues"
-import { DefinitionList } from "@amsterdam/wonen-ui"
+import { useSummonsWithCaseId } from "app/state/rest";
+import useValues from "../hooks/useValues";
+import { DefinitionList } from "@amsterdam/wonen-ui";
 
 type Props = {
   caseId: Components.Schemas.CaseDetail["id"]
@@ -10,13 +10,13 @@ type Props = {
 
 const DecisionHeader: React.FC<Props> = ({ caseId, caseUserTaskId, workflows }) => {
 
-  const [summons, { isBusy }] = useSummonsWithCaseId(caseId)
+  const [summons, { isBusy }] = useSummonsWithCaseId(caseId);
 
-  const task = workflows?.map(({ tasks }) => tasks).flat().find(({ case_user_task_id }) => case_user_task_id === caseUserTaskId)
+  const task = workflows?.map(({ tasks }) => tasks).flat().find(({ case_user_task_id }) => case_user_task_id === caseUserTaskId);
   // TODO: The use of form_variables + hardcoded key `summon_id` is tight-coupling
-  const summonId = task?.form_variables.summon_id?.value
-  const summon = summons?.results?.find(({ id }) => id === summonId)
-  const values = useValues(summon)
+  const summonId = task?.form_variables.summon_id?.value;
+  const summon = summons?.results?.find(({ id }) => id === summonId);
+  const values = useValues(summon);
 
   return (
     <DefinitionList
@@ -27,7 +27,7 @@ const DecisionHeader: React.FC<Props> = ({ caseId, caseUserTaskId, workflows }) 
       data={ values }
       emptyPlaceholder="Geen aanschrijving aanwezig"
     />
-  )
-}
+  );
+};
 
-export default DecisionHeader
+export default DecisionHeader;

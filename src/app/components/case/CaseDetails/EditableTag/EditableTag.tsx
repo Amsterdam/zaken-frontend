@@ -1,14 +1,14 @@
-import { useModal } from "app/components/shared/Modal/hooks/useModal"
-import ChangeTagModal from "./ChangeTagModal"
-import CaseTags from "./CaseTags"
+import { useModal } from "app/components/shared/Modal/hooks/useModal";
+import ChangeTagModal from "./ChangeTagModal";
+import CaseTags from "./CaseTags";
 
 type Props = {
   case: Components.Schemas.CaseCreate
 }
 
 const EditableTag: React.FC<Props> = ({ case: caseItem }) => {
-  const { tags } = caseItem
-  const { isModalOpen, openModal, closeModal } = useModal()
+  const { tags } = caseItem;
+  const { isModalOpen, openModal, closeModal } = useModal();
 
   return (
     <>
@@ -19,7 +19,7 @@ const EditableTag: React.FC<Props> = ({ case: caseItem }) => {
         case={ caseItem }
       />
     </>
-  )
-}
+  );
+};
 
-export default EditableTag
+export default EditableTag;

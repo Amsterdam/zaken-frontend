@@ -1,7 +1,7 @@
-import { Button, Checkbox, Spinner } from "@amsterdam/asc-ui"
-import { useCaseThemes, useSubjects } from "app/state/rest"
-import { useState } from "react"
-import { ButtonContainer, StyledLabel, StyledSelect, StyledButton } from "../layout"
+import { Button, Checkbox, Spinner } from "@amsterdam/asc-ui";
+import { useCaseThemes, useSubjects } from "app/state/rest";
+import { useState } from "react";
+import { ButtonContainer, StyledLabel, StyledSelect, StyledButton } from "../layout";
 
 type Props = {
   onSubmit: (data: any) => void
@@ -13,28 +13,28 @@ type Props = {
 }
 
 const ChangeSubjectForm: React.FC<Props> = ({ isLoading, onSubmit, onCancel, themeId, initialValues }) => {
-  const [subjectsTheme] = useSubjects(themeId)
-  const [caseTheme] = useCaseThemes()
-  const [ otherTheme, setOtherTheme ] = useState<number | undefined>(undefined)
-  const [ otherSubjects ] = useSubjects(otherTheme)
-  const [selectedSubjects, setSelectedSubjects] = useState<Components.Schemas.Subject[] | undefined>(initialValues?.subjects)
+  const [subjectsTheme] = useSubjects(themeId);
+  const [caseTheme] = useCaseThemes();
+  const [ otherTheme, setOtherTheme ] = useState<number | undefined>(undefined);
+  const [ otherSubjects ] = useSubjects(otherTheme);
+  const [selectedSubjects, setSelectedSubjects] = useState<Components.Schemas.Subject[] | undefined>(initialValues?.subjects);
 
   const isSelected = (subjectId: number) => (
     !!selectedSubjects?.filter((subject) => subject.id === subjectId).length
-  )
+  );
 
   const handleCheck = (subject: Components.Schemas.Subject) => {
     if (isSelected(subject.id)) {
-      setSelectedSubjects(selectedSubjects?.filter(sub => sub.id !== subject.id))
+      setSelectedSubjects(selectedSubjects?.filter(sub => sub.id !== subject.id));
     } else {
-      setSelectedSubjects([...selectedSubjects || [], subject])
+      setSelectedSubjects([...selectedSubjects || [], subject]);
     }
-  }
+  };
 
   const submit = (data: any) => {
-    data.subjects = selectedSubjects
-    onSubmit(data)
-  }
+    data.subjects = selectedSubjects;
+    onSubmit(data);
+  };
 
   type CheckBoxesProps = {
     subjects: Components.Schemas.Subject[]
@@ -56,7 +56,7 @@ const ChangeSubjectForm: React.FC<Props> = ({ isLoading, onSubmit, onCancel, the
         </StyledLabel>
       ))}
     </>
-  )
+  );
 
   return (
     <>
@@ -84,7 +84,7 @@ const ChangeSubjectForm: React.FC<Props> = ({ isLoading, onSubmit, onCancel, the
       : <Spinner />
     }
     </>
-  )
-}
+  );
+};
 
-export default ChangeSubjectForm
+export default ChangeSubjectForm;

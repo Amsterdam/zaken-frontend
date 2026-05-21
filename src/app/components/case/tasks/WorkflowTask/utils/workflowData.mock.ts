@@ -7,7 +7,7 @@ export default [
     "default_value": "",
     "required": true,
     "is_date": false,
-    "options": null
+    "options": null,
   },
   {
     "label": "Kan volgende bezoek doorgaan?",
@@ -17,7 +17,7 @@ export default [
     "default_value": "",
     "required": true,
     "is_date": false,
-    "options": null
+    "options": null,
   },
   {
     "label": "LABEL 0",
@@ -29,8 +29,8 @@ export default [
     "is_date": false,
     "options": [
       { "label": "test", "value": "Value_0iaq2tn" },
-      { "label": "asffassfa", "value": "Value_0qd0jvv" }
-    ]
+      { "label": "asffassfa", "value": "Value_0qd0jvv" },
+    ],
   },
   {
     "label": "LABEL 1",
@@ -40,7 +40,7 @@ export default [
     "default_value": "",
     "required": true,
     "is_date": true,
-    "options": null
+    "options": null,
   },
   {
     "label": "LABEL 3",
@@ -50,6 +50,6 @@ export default [
     "default_value": "",
     "required": true,
     "is_date": false,
-    "options": null
-  }
-]
+    "options": null,
+  },
+];

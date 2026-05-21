@@ -1,8 +1,8 @@
 
-import styled, { keyframes } from "styled-components"
-import { Icon, themeSpacing } from "@amsterdam/asc-ui"
-import useHasPermission, { CAN_PERFORM_TASK } from "app/state/rest/custom/usePermissions/useHasPermission"
-import CustomIcon from "app/components/shared/CustomIcon/CustomIcon"
+import styled, { keyframes } from "styled-components";
+import { Icon, themeSpacing } from "@amsterdam/asc-ui";
+import useHasPermission, { CAN_PERFORM_TASK } from "app/state/rest/custom/usePermissions/useHasPermission";
+import CustomIcon from "app/components/shared/CustomIcon/CustomIcon";
 
 type Props = {
   tags: Components.Schemas.Tag[]
@@ -20,11 +20,11 @@ const fadeIn = keyframes`
     transform: scale(1);
     opacity: 1;
   }
-`
+`;
 
 const ClickableSpan = styled.span`
   cursor: pointer;
-`
+`;
 
 const Tag = styled.span`
   background-color: #f9f9f9;
@@ -34,17 +34,17 @@ const Tag = styled.span`
   border-radius: 2px;
   margin-right: ${ themeSpacing(2) };
   animation: 0.5s ${ fadeIn } cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-`
+`;
 
 const StyledIcon = styled(Icon)`
   display: inline-block;
   vertical-align: middle;
   margin-left: ${ themeSpacing(1) };
   cursor: pointer;
-`
+`;
 
 const CaseTags: React.FC<Props> = ({ tags = [], titleAccess = "Wijzig tag", onClick }) => {
-  const [hasPermission] = useHasPermission([CAN_PERFORM_TASK])
+  const [hasPermission] = useHasPermission([CAN_PERFORM_TASK]);
   return hasPermission ? (
     <ClickableSpan
       role="link"
@@ -55,7 +55,7 @@ const CaseTags: React.FC<Props> = ({ tags = [], titleAccess = "Wijzig tag", onCl
         <CustomIcon name="Edit" titleAccess={ titleAccess } />
       </StyledIcon>
     </ClickableSpan>
-  ) : <>{ tags.length > 0 ? tags.map(tag => <Tag key={ tag.id }>{ tag.name }</Tag>) : "-"}</>
-}
+  ) : <>{ tags.length > 0 ? tags.map(tag => <Tag key={ tag.id }>{ tag.name }</Tag>) : "-"}</>;
+};
 
-export default CaseTags
+export default CaseTags;

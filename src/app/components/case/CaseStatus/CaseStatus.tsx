@@ -1,12 +1,12 @@
 
-import styled from "styled-components"
-import { Divider, Heading, themeSpacing } from "@amsterdam/asc-ui"
+import styled from "styled-components";
+import { Divider, Heading, themeSpacing } from "@amsterdam/asc-ui";
 
-import Workflow from "../Workflow/Workflow"
-import { Row, Column, RowWithColumn } from "app/components/layouts/Grid"
-import to from "app/routing/utils/to"
-import IsAuthorizedButtonLink from "app/components/shared/ButtonLink/IsAuthorizedButtonLink"
-import { CAN_PERFORM_TASK } from "app/state/rest/custom/usePermissions/useHasPermission"
+import Workflow from "../Workflow/Workflow";
+import { Row, Column, RowWithColumn } from "app/components/layouts/Grid";
+import to from "app/routing/utils/to";
+import IsAuthorizedButtonLink from "app/components/shared/ButtonLink/IsAuthorizedButtonLink";
+import { CAN_PERFORM_TASK } from "app/state/rest/custom/usePermissions/useHasPermission";
 
 type Props = {
   id: Components.Schemas.CaseDetail["id"]
@@ -16,11 +16,11 @@ const ButtonWrap = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-top: -${ themeSpacing(3) };
-`
+`;
 
 const StyledDivider = styled(Divider)`
   margin-bottom: ${ themeSpacing(8) };
-`
+`;
 
 const CaseStatus: React.FC<Props> = ({ id }) => (
   <>
@@ -45,7 +45,7 @@ const CaseStatus: React.FC<Props> = ({ id }) => (
       <Workflow id={ id } />
     </RowWithColumn>
   </>
-)
+);
 
 
-export default CaseStatus
+export default CaseStatus;

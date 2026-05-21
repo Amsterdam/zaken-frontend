@@ -1,5 +1,5 @@
-import { Link, List, ListItem, themeColor } from "@amsterdam/asc-ui"
-import styled from "styled-components"
+import { Link, List, ListItem, themeColor } from "@amsterdam/asc-ui";
+import styled from "styled-components";
 
 type Props = {
   linkList: {
@@ -13,7 +13,7 @@ const StyledList = styled(List)`
   li {
     margin: 0;
   }
-`
+`;
 
 const StyledLink = styled(Link)`
 
@@ -34,7 +34,7 @@ const StyledLink = styled(Link)`
       transform: translate(-50%, 0%);
       z-index: 999;
     }
-`
+`;
 
 const SkipLinks: React.FC<Props> = ( { linkList }) => (
   <nav>
@@ -42,10 +42,10 @@ const SkipLinks: React.FC<Props> = ( { linkList }) => (
       {linkList.map((link, index) =>
         <ListItem key={ `${ link.target }_${ index }` }>
           <StyledLink href={ `#${ link.target }` }>{ link.title }</StyledLink>
-        </ListItem>
+        </ListItem>,
       )}
     </StyledList>
   </nav>
-)
+);
 
-export default SkipLinks
+export default SkipLinks;

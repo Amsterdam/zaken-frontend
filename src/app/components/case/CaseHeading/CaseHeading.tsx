@@ -1,10 +1,10 @@
 
-import styled from "styled-components"
-import { Heading, Spinner, themeColor, themeSpacing } from "@amsterdam/asc-ui"
-import { CaseIdDisplay } from "@amsterdam/wonen-ui"
+import styled from "styled-components";
+import { Heading, Spinner, themeColor, themeSpacing } from "@amsterdam/asc-ui";
+import { CaseIdDisplay } from "@amsterdam/wonen-ui";
 
-import { useCase } from "app/state/rest"
-import FullAddressDisplay from "app/components/addresses/FullAddressDisplay/FullAddressDisplay"
+import { useCase } from "app/state/rest";
+import FullAddressDisplay from "app/components/addresses/FullAddressDisplay/FullAddressDisplay";
 
 type Props = {
   id: Components.Schemas.CaseDetail["id"]
@@ -13,15 +13,15 @@ type Props = {
 const Div = styled.div`
   display: flex;
   margin-bottom: ${ themeSpacing(3) };
-`
+`;
 const Dt = styled.dt`
   color: ${ themeColor("tint", "level5") };
   min-width: 120px;
-`
+`;
 
 const CaseHeading: React.FC<Props> = ({ id }) => {
 
-  const [data] = useCase(id)
+  const [data] = useCase(id);
 
   return (
     <>
@@ -51,6 +51,6 @@ const CaseHeading: React.FC<Props> = ({ id }) => {
         </dl>
       }
     </>
-  )
-}
-export default CaseHeading
+  );
+};
+export default CaseHeading;

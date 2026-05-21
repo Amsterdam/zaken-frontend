@@ -1,5 +1,5 @@
-import { useEffect, useContext } from "react"
-import { Heading } from "@amsterdam/asc-ui"
+import { useEffect, useContext } from "react";
+import { Heading } from "@amsterdam/asc-ui";
 import {
   useRoles,
   useTasks,
@@ -11,34 +11,34 @@ import {
   useDistricts,
   useCorporations,
   useSubjects,
-  useTags
-} from "app/state/rest"
-import TableTasks from "app/components/tasks/TableTasks/TableTasks"
-import TasksFilter from "../TasksFilter/TasksFilter"
+  useTags,
+} from "app/state/rest";
+import TableTasks from "app/components/tasks/TableTasks/TableTasks";
+import TasksFilter from "../TasksFilter/TasksFilter";
 import useHasPermission, {
-  SENSITIVE_CASE_PERMISSION
-} from "app/state/rest/custom/usePermissions/useHasPermission"
-import { ContextValues } from "app/state/context/ValueProvider"
-import { getQueryUrl } from "app/state/rest/tasks"
-import useContextCache from "app/state/rest/provider/useContextCache"
+  SENSITIVE_CASE_PERMISSION,
+} from "app/state/rest/custom/usePermissions/useHasPermission";
+import { ContextValues } from "app/state/context/ValueProvider";
+import { getQueryUrl } from "app/state/rest/tasks";
+import useContextCache from "app/state/rest/provider/useContextCache";
 
-import CaseEnforcement from "app/components/case/icons/CaseEnforcement"
-import getThemeId from "app/components/tasks/utils/getThemeId"
+import CaseEnforcement from "app/components/case/icons/CaseEnforcement";
+import getThemeId from "app/components/tasks/utils/getThemeId";
 
-import styles from "./Tasks.module.css"
+import styles from "./Tasks.module.css";
 
 type Item = string | Components.Schemas.District["name"][]
 
 const EMPTY_TEXT_NO_PERMISSION =
-  "Helaas, u bent niet geautoriseerd om deze taken te bekijken."
-const EMPTY_TEXT = "Er zijn momenteel geen open taken voor de gekozen filters."
-const ONDERMIJNING = "Ondermijning"
+  "Helaas, u bent niet geautoriseerd om deze taken te bekijken.";
+const EMPTY_TEXT = "Er zijn momenteel geen open taken voor de gekozen filters.";
+const ONDERMIJNING = "Ondermijning";
 
 const Tasks: React.FC = () => {
   const {
     tasks: context,
-    tasks: { updateContextTasks }
-  } = useContext(ContextValues)
+    tasks: { updateContextTasks },
+  } = useContext(ContextValues);
   const {
     count,
     districtNames,
@@ -54,20 +54,20 @@ const Tasks: React.FC = () => {
     subjects,
     tags,
     taskNames,
-    theme
-  } = context
+    theme,
+  } = context;
 
-  const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
-  const [roles] = useRoles()
-  const [me] = useUsersMe()
-  const [caseThemes] = useCaseThemes()
-  const [reasons] = useTasksReasons(theme)
-  const themeId = getThemeId(caseThemes?.results, theme)
-  const [projectsTheme] = useProjects(themeId)
-  const [subjectsTheme] = useSubjects(themeId)
-  const [tagsTheme] = useTags(themeId)
-  const [tasksDistricts] = useDistricts()
-  const [corporationData] = useCorporations()
+  const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION]);
+  const [roles] = useRoles();
+  const [me] = useUsersMe();
+  const [caseThemes] = useCaseThemes();
+  const [reasons] = useTasksReasons(theme);
+  const themeId = getThemeId(caseThemes?.results, theme);
+  const [projectsTheme] = useProjects(themeId);
+  const [subjectsTheme] = useSubjects(themeId);
+  const [tagsTheme] = useTags(themeId);
+  const [tasksDistricts] = useDistricts();
+  const [corporationData] = useCorporations();
   const commonTaskArgs = {
     sensitive: hasPermission,
     sorting,
@@ -81,92 +81,92 @@ const Tasks: React.FC = () => {
     tags,
     districtNames,
     housingCorporations,
-    housingCorporationIsNull
-  }
+    housingCorporationIsNull,
+  };
   const [dataSource, { isBusy }] = useTasks({
     ...commonTaskArgs,
     pagination,
-    isEnforcementRequest: false
-  })
+    isEnforcementRequest: false,
+  });
   const [enforcementDataSource, { isBusy: isBusyEnforcement }] = useTasks({
     ...commonTaskArgs,
     pagination: {
       page: 1,
-      pageSize: 1000
+      pageSize: 1000,
     },
-    isEnforcementRequest: true
-  })
-  const [taskNamesData] = useTaskNames(role ?? "")
+    isEnforcementRequest: true,
+  });
+  const [taskNamesData] = useTaskNames(role ?? "");
   const queryUrl = getQueryUrl(
     hasPermission,
     pagination,
     sorting,
     theme,
     role,
-    owner
-  )
-  const { clearContextCache } = useContextCache("cases", queryUrl)
+    owner,
+  );
+  const { clearContextCache } = useContextCache("cases", queryUrl);
 
   useEffect(() => {
     // Set initial role when loaded for the first time
     if (me?.role && role === undefined) {
-      updateContextTasks({ role: me.role })
+      updateContextTasks({ role: me.role });
     }
-  }, [me, role, updateContextTasks])
+  }, [me, role, updateContextTasks]);
 
   useEffect(() => {
     if (dataSource === undefined) {
-      updateContextTasks({ results: [], count: 0 })
+      updateContextTasks({ results: [], count: 0 });
     } else {
-      updateContextTasks(dataSource)
+      updateContextTasks(dataSource);
     }
-  }, [dataSource, updateContextTasks])
+  }, [dataSource, updateContextTasks]);
 
   const onChangeFilter = (key: string, item: Item) => {
     // Empty cache to force a new data fetch.
-    clearContextCache()
+    clearContextCache();
     const updates = {
       [key]: item,
-      pagination: { ...pagination, page: 1 }
-    }
+      pagination: { ...pagination, page: 1 },
+    };
     // When role is set we need to reset the taskNames dropdown to avoid a stale selection:
-    if (key === "role") updates.taskNames = ""
+    if (key === "role") updates.taskNames = "";
     /*
      ** When theme is set we need to reset the selection for reason and
      ** housingCorporations to avoid a stale selection:
      */
     if (key === "theme") {
-      updates.projects = []
-      updates.reason = ""
-      updates.subjects = []
-      updates.tags = []
+      updates.projects = [];
+      updates.reason = "";
+      updates.subjects = [];
+      updates.tags = [];
     }
-    updateContextTasks(updates)
-  }
+    updateContextTasks(updates);
+  };
 
   const onChangePageSize = (pageSize: string) => {
     updateContextTasks({
       pagination: {
         ...pagination,
         pageSize: parseInt(pageSize),
-        page: 1
-      }
-    })
-  }
+        page: 1,
+      },
+    });
+  };
 
   const onChangeTable = (
     pagination: TABLE.Schemas.Pagination,
-    sorting: TABLE.Schemas.Sorting
+    sorting: TABLE.Schemas.Sorting,
   ) => {
-    updateContextTasks({ pagination, sorting })
-  }
+    updateContextTasks({ pagination, sorting });
+  };
 
-  const districts = tasksDistricts?.results || []
+  const districts = tasksDistricts?.results || [];
   const emptyPlaceholder =
     hasPermission === false && theme === ONDERMIJNING
       ? EMPTY_TEXT_NO_PERMISSION
-      : EMPTY_TEXT
-  const enforcementTasksAvailable = !!enforcementDataSource?.results?.length
+      : EMPTY_TEXT;
+  const enforcementTasksAvailable = !!enforcementDataSource?.results?.length;
 
   return (
     <div className={styles.container}>
@@ -203,7 +203,7 @@ const Tasks: React.FC = () => {
             page: pagination.page,
             pageSize: pagination.pageSize,
             collectionSize: count || 1,
-            paginationLength: 9
+            paginationLength: 9,
           }}
           sorting={sorting}
           emptyPlaceholder={emptyPlaceholder}
@@ -237,7 +237,7 @@ const Tasks: React.FC = () => {
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Tasks
+export default Tasks;

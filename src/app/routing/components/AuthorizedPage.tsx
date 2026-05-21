@@ -1,6 +1,6 @@
-import NotAuthorizedPage from "app/pages/auth/NotAuthorizedPage"
-import useHasPermission from "app/state/rest/custom/usePermissions/useHasPermission"
-import SpinnerWrap from "app/components/shared/ConfirmScaffoldForm/components/SpinnerWrap"
+import NotAuthorizedPage from "app/pages/auth/NotAuthorizedPage";
+import useHasPermission from "app/state/rest/custom/usePermissions/useHasPermission";
+import SpinnerWrap from "app/components/shared/ConfirmScaffoldForm/components/SpinnerWrap";
 
 type Props = {
   page: React.ComponentType
@@ -12,14 +12,14 @@ type Props = {
  */
 
 const AuthorizedPage: React.FC<Props> = ({ page: Page, permissionNames, ...restProps }) => {
-  const [hasPermission, isBusy] = useHasPermission(permissionNames)
+  const [hasPermission, isBusy] = useHasPermission(permissionNames);
 
   if (isBusy) {
-    return <SpinnerWrap />
+    return <SpinnerWrap />;
   }
   return (
     hasPermission ? <Page {...restProps} /> : <NotAuthorizedPage />
-  )
-}
+  );
+};
 
-export default AuthorizedPage
+export default AuthorizedPage;

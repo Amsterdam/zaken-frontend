@@ -1,7 +1,7 @@
 const caseStates: Record<string, string> = {
   "TOEZICHT": "Toezicht",
   "HANDHAVING": "Handhaving",
-  "AFGESLOTEN": "Afgesloten"
-}
+  "AFGESLOTEN": "Afgesloten",
+};
 
-export default caseStates
+export default caseStates;

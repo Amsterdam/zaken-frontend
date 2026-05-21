@@ -1,22 +1,22 @@
-import { useState, useEffect } from "react"
-import scaffold from "./scaffold"
+import { useState, useEffect } from "react";
+import scaffold from "./scaffold";
 import {
   useCaseThemes, useReasons, useCaseCreate, useProjects,
-  useListing, useSubjects, useCasesByBagId, useCorporations, useBagPdokByBagId
-} from "app/state/rest"
-import ConfirmScaffoldForm from "app/components/shared/ConfirmScaffoldForm/ConfirmScaffoldForm"
-import useNavigateWithFlashMessage from "app/state/flashMessages/useNavigateWithFlashMessage"
-import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
-import { getAddressFromBagPdokResponse } from "app/components/addresses/utils"
-import useNavigation from "app/routing/useNavigation"
+  useListing, useSubjects, useCasesByBagId, useCorporations, useBagPdokByBagId,
+} from "app/state/rest";
+import ConfirmScaffoldForm from "app/components/shared/ConfirmScaffoldForm/ConfirmScaffoldForm";
+import useNavigateWithFlashMessage from "app/state/flashMessages/useNavigateWithFlashMessage";
+import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields";
+import { getAddressFromBagPdokResponse } from "app/components/addresses/utils";
+import useNavigation from "app/routing/useNavigation";
 
 
-const TON_THEME_NAME = "Vakantieverhuur"
-const TON_REASON_NAME = "Digitaal toezicht"
+const TON_THEME_NAME = "Vakantieverhuur";
+const TON_REASON_NAME = "Digitaal toezicht";
 const advertisementOptions = {
   yes: "Ja, er is een advertentie",
-  no: "Nee, er is geen advertentie"
-}
+  no: "Nee, er is geen advertentie",
+};
 
 type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -34,69 +34,69 @@ const mapData = (bagId: Components.Schemas.Address["bag_id"], tonId?: string) =>
       ton_ids: tonId !== undefined ? [ tonId ] : undefined,
       subject_ids: data.subjects.map((subject: any) => subject.id),
       previous_case: data.previous_case?.id || undefined,
-      housing_corporation: data.housing_corporation?.id || undefined
-    }
+      housing_corporation: data.housing_corporation?.id || undefined,
+    };
     if (data.identification) {
       mappedData.citizen_reports = [{
         ...data,
         nuisance: Array.isArray(data?.nuisance) && data?.nuisance?.includes("nuisance"),
-        advertisements: undefined
-      }]
+        advertisements: undefined,
+      }];
     }
-    return mappedData
-  }
+    return mappedData;
+  };
 
 const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
-  const [caseThemes] = useCaseThemes()
-  const [themeId, setThemeId] = useState<Components.Schemas.CaseTheme["id"]>()
+  const [caseThemes] = useCaseThemes();
+  const [themeId, setThemeId] = useState<Components.Schemas.CaseTheme["id"]>();
 
   useEffect(() => {
     const caseThemeId = tonId !== undefined
       ? caseThemes?.results?.find(({ name }) => name === TON_THEME_NAME)?.id
-      : undefined
-    setThemeId(caseThemeId)
-  }, [tonId, caseThemes, setThemeId])
+      : undefined;
+    setThemeId(caseThemeId);
+  }, [tonId, caseThemes, setThemeId]);
 
-  const [reasons] = useReasons(themeId)
-  const [projects] = useProjects(themeId)
-  const [subjects] = useSubjects(themeId)
-  const [, { execPost }] = useCaseCreate()
-  const [listing] = useListing(tonId)
-  const [cases] = useCasesByBagId(bagId)
-  const [corporations] = useCorporations()
-  const [bagAddressResponse] = useBagPdokByBagId(bagId)
-  const bagAddress = getAddressFromBagPdokResponse(bagAddressResponse)
-  const { navigateTo } = useNavigation()
+  const [reasons] = useReasons(themeId);
+  const [projects] = useProjects(themeId);
+  const [subjects] = useSubjects(themeId);
+  const [, { execPost }] = useCaseCreate();
+  const [listing] = useListing(tonId);
+  const [cases] = useCasesByBagId(bagId);
+  const [corporations] = useCorporations();
+  const [bagAddressResponse] = useBagPdokByBagId(bagId);
+  const bagAddress = getAddressFromBagPdokResponse(bagAddressResponse);
+  const { navigateTo } = useNavigation();
 
 
   // Only show Vakantieverhuur, Digitaal Toezicht and Yes as an option for TON.
-  const caseThemesOptions = tonId ? caseThemes?.results?.filter(({ name }) => name === TON_THEME_NAME) : caseThemes?.results
+  const caseThemesOptions = tonId ? caseThemes?.results?.filter(({ name }) => name === TON_THEME_NAME) : caseThemes?.results;
   const reasonOptions = tonId ? reasons?.results?.filter(({ name }) => name === TON_REASON_NAME)
-    : reasons?.results?.filter(({ name }) => name !== TON_REASON_NAME)
-  const adOptions = tonId ? { yes: advertisementOptions.yes } : advertisementOptions
+    : reasons?.results?.filter(({ name }) => name !== TON_REASON_NAME);
+  const adOptions = tonId ? { yes: advertisementOptions.yes } : advertisementOptions;
 
   // Get cases and sort them by id for the option to link a previous case.
-  const casesArray = cases?.results ? [...cases.results] : []
+  const casesArray = cases?.results ? [...cases.results] : [];
   // Add a more explicit label to the options
   const casesWithLabel = casesArray.map((item) => ({
     ...item,
-    label: `${ item.id }: ${ item?.theme?.name }`
-  }))
-  const sortedCases = casesWithLabel.sort((a, b) => (a.id > b.id) ? 1 : -1)
+    label: `${ item.id }: ${ item?.theme?.name }`,
+  }));
+  const sortedCases = casesWithLabel.sort((a, b) => (a.id > b.id) ? 1 : -1);
 
-  const corporationsArray = corporations?.results ? [...corporations.results] : []
-  const sortedCorporations = corporationsArray.sort((a, b) => a.name.localeCompare(b.name))
+  const corporationsArray = corporations?.results ? [...corporations.results] : [];
+  const sortedCorporations = corporationsArray.sort((a, b) => a.name.localeCompare(b.name));
 
   const onChangeThemeId = (newThemeId: number | undefined) => {
     /**
      * use undefined first, otherwise the state does not necessarily change when switching themes
      * delay is needed for updating state twice
      */
-    setThemeId(undefined)
+    setThemeId(undefined);
     setTimeout(() => {
-      setThemeId(newThemeId)
-    }, 0)
-  }
+      setThemeId(newThemeId);
+    }, 0);
+  };
 
   /*
   ** themeId ?? -1 is ugly coding.
@@ -116,18 +116,18 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
     subjects?.results ?? [],
     adOptions,
     sortedCases,
-    sortedCorporations
-  )
+    sortedCorporations,
+  );
 
-  const navigateWithFlashMessage = useNavigateWithFlashMessage()
+  const navigateWithFlashMessage = useNavigateWithFlashMessage();
   const afterSubmit = async (result: Components.Schemas.CaseDetail) =>
     await navigateWithFlashMessage(
       "/zaken/:id",
       { id: result.id },
       "info",
       "Succes",
-      "De zaak is succesvol toegevoegd"
-    )
+      "De zaak is succesvol toegevoegd",
+    );
 
   // If the user has been redirected via ton, fill out the form in advance.
   const initialValues = {
@@ -135,11 +135,11 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
     ...tonId !== undefined ? {
       reason: reasons?.results?.find(({ name }) => name === TON_REASON_NAME),
       advertisement: "yes",
-      advertisements: [{ link: listing?.url }]
-    } : {}
-  }
+      advertisements: [{ link: listing?.url }],
+    } : {},
+  };
 
-  const title = `${ bagAddress?.weergavenaam } - Controleer de gegevens`
+  const title = `${ bagAddress?.weergavenaam } - Controleer de gegevens`;
   return (
     <ConfirmScaffoldForm
       fields={ fields }
@@ -150,7 +150,7 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
       submittingTitle="De zaak wordt aangemaakt. Wacht met sluiten van dit venster."
       title={ title }
     />
-  )
-}
+  );
+};
 
-export default CreateForm
+export default CreateForm;

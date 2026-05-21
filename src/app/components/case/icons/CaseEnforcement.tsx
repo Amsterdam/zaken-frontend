@@ -1,5 +1,5 @@
-import CustomIcon from "app/components/shared/CustomIcon/CustomIcon"
-import CustomTooltip from "app/components/help/HelpContent/CustomTooltip"
+import CustomIcon from "app/components/shared/CustomIcon/CustomIcon";
+import CustomTooltip from "app/components/help/HelpContent/CustomTooltip";
 
 type Props = {
   isVisible?: boolean
@@ -11,6 +11,6 @@ const CaseEnforcement: React.FC<Props> = ({ isVisible = false }) => (
       <CustomIcon name="PanTool" color="#f44336" size={ 18 } />
     </CustomTooltip>
   ) : null
-)
+);
 
-export default CaseEnforcement
+export default CaseEnforcement;

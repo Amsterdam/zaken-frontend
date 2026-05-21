@@ -1,10 +1,10 @@
-import { FormTitle } from "@amsterdam/asc-ui"
-import dayjs from "dayjs"
-import { useCase, useScheduleTypes, useScheduleCreate } from "app/state/rest"
-import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
-import scaffold from "./scaffold"
-import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
-import useNavigation from "app/routing/useNavigation"
+import { FormTitle } from "@amsterdam/asc-ui";
+import dayjs from "dayjs";
+import { useCase, useScheduleTypes, useScheduleCreate } from "app/state/rest";
+import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm";
+import scaffold from "./scaffold";
+import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields";
+import useNavigation from "app/routing/useNavigation";
 
 type Props = {
   id: Components.Schemas.CaseDetail["id"]
@@ -22,22 +22,22 @@ const mapData = (data: ScheduleTypeFormData) => ({
   week_segment: data.week_segment.id,
   day_segment: data.day_segment.id,
   priority: data.priority.id,
-  visit_from_datetime: data.visit_from_datetime ? dayjs(data.visit_from_datetime).format() : null
-})
+  visit_from_datetime: data.visit_from_datetime ? dayjs(data.visit_from_datetime).format() : null,
+});
 
 const visitFromOptions: { id: number, name: string }[] = [{
-  id: 1, name: "Vanaf vandaag"
+  id: 1, name: "Vanaf vandaag",
 }, {
-  id: 2, name: "Vanaf een specifieke datum"
-}]
+  id: 2, name: "Vanaf een specifieke datum",
+}];
 
 const ScheduleForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
-  const [caseItem] = useCase(id)
-  const themeId = caseItem?.theme.id
-  const [scheduleTypes] = useScheduleTypes(themeId)
-  const { navigateTo } = useNavigation()
-  const fields = useScaffoldedFields(scaffold, id, navigateTo, scheduleTypes, visitFromOptions)
-  const [, { execPost }] = useScheduleCreate()
+  const [caseItem] = useCase(id);
+  const themeId = caseItem?.theme.id;
+  const [scheduleTypes] = useScheduleTypes(themeId);
+  const { navigateTo } = useNavigation();
+  const fields = useScaffoldedFields(scaffold, id, navigateTo, scheduleTypes, visitFromOptions);
+  const [, { execPost }] = useScheduleCreate();
 
   const initialValues = {
     action: scheduleTypes?.actions[0].id,
@@ -45,9 +45,9 @@ const ScheduleForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
       week_segment: scheduleTypes?.week_segments.find((e) => e.name === "Doordeweeks"),
       day_segment: scheduleTypes?.day_segments.find((e) => e.name === "Overdag"),
       visit_from: visitFromOptions[0],
-      priority: scheduleTypes?.priorities.find((e) => e.name === "Machtiging")
-    } : {}
-  }
+      priority: scheduleTypes?.priorities.find((e) => e.name === "Machtiging"),
+    } : {},
+  };
 
   return (
     <>
@@ -61,7 +61,7 @@ const ScheduleForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
         caseUserTaskId={ caseUserTaskId }
       />
     </>
-  )
-}
+  );
+};
 
-export default ScheduleForm
+export default ScheduleForm;

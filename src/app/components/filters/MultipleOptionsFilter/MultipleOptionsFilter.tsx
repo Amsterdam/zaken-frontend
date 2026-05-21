@@ -1,6 +1,6 @@
-import { useMemo } from "react"
-import { Checkbox, Label } from "@amsterdam/asc-ui"
-import { FilterWrapper, StyledLabel  } from "../FilterStyle"
+import { useMemo } from "react";
+import { Checkbox, Label } from "@amsterdam/asc-ui";
+import { FilterWrapper, StyledLabel  } from "../FilterStyle";
 
 type Option = { id: number, name: string }
 
@@ -16,24 +16,24 @@ const MultipleOptionsFilter: React.FC<Props> = ({ label, options, selectedOption
 
   const sortedOptions = useMemo(() => (
     options?.sort((a, b) => a.name.localeCompare(b.name))
-  ), [options])
+  ), [options]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { checked, value } = e.target
-    let newSelectedOptions = [...selectedOptions]
+    const { checked, value } = e.target;
+    let newSelectedOptions = [...selectedOptions];
     if (checked) {
-      newSelectedOptions.push(value)
+      newSelectedOptions.push(value);
     } else {
-      newSelectedOptions = selectedOptions.filter((selectedOption) => selectedOption !== value)
+      newSelectedOptions = selectedOptions.filter((selectedOption) => selectedOption !== value);
     }
-    setSelectedOptions(newSelectedOptions)
-  }
+    setSelectedOptions(newSelectedOptions);
+  };
 
   return (
     <FilterWrapper>
       <StyledLabel label={ label } />
       { sortedOptions?.map((option) => {
-        const value = byId ? option.id.toString() : option.name
+        const value = byId ? option.id.toString() : option.name;
         return (
           <Label
             htmlFor={ option.name }
@@ -48,10 +48,10 @@ const MultipleOptionsFilter: React.FC<Props> = ({ label, options, selectedOption
               checked={ selectedOptions.includes(value) }
             />
           </Label>
-        ) })
+        ); })
       }
     </FilterWrapper>
-  )
-}
+  );
+};
 
-export default MultipleOptionsFilter
+export default MultipleOptionsFilter;

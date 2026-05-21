@@ -1,8 +1,8 @@
-import styled, { css } from "styled-components"
-import { themeColor, themeSpacing } from "@amsterdam/asc-ui"
+import styled, { css } from "styled-components";
+import { themeColor, themeSpacing } from "@amsterdam/asc-ui";
 
 const TabButton = styled.button.attrs({
-  role: "tab"
+  role: "tab",
 })<{ isSelected?: boolean }>`
   background-color: transparent;
   padding: ${ themeSpacing(3, 0) };
@@ -30,6 +30,6 @@ const TabButton = styled.button.attrs({
         color: ${ themeColor("secondary", "main") };
       }
     ` }
-`
+`;
 
-export default TabButton
+export default TabButton;

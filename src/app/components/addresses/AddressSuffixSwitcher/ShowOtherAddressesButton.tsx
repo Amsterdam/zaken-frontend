@@ -1,9 +1,9 @@
-import { Button, Icon } from "@amsterdam/asc-ui"
-import { useModal } from "app/components/shared/Modal/hooks/useModal"
-import OtherAddressesModal from "./OtherAddressesModal"
-import { env } from "app/config/env"
-import CustomIcon from "app/components/shared/CustomIcon/CustomIcon"
-import styles from "./ShowOtherAddressesButton.module.css"
+import { Button, Icon } from "@amsterdam/asc-ui";
+import { useModal } from "app/components/shared/Modal/hooks/useModal";
+import OtherAddressesModal from "./OtherAddressesModal";
+import { env } from "app/config/env";
+import CustomIcon from "app/components/shared/CustomIcon/CustomIcon";
+import styles from "./ShowOtherAddressesButton.module.css";
 
 export type Index = "first" | "last" | undefined
 type Props = {
@@ -18,13 +18,13 @@ const renderIcon = (index: Index) => {
         <Icon size={32} className={styles.icon}>
           <CustomIcon name="ExpandMore" />
         </Icon>
-      )
+      );
     case "last":
       return (
         <Icon size={32} className={styles.icon}>
           <CustomIcon name="ExpandLess" />
         </Icon>
-      )
+      );
     default:
       return (
         <Icon
@@ -33,12 +33,12 @@ const renderIcon = (index: Index) => {
           iconUrl={`${env.VITE_AZA_FRONTEND_URL}/icons/chevron_up_down.svg`}
           inline
         />
-      )
+      );
   }
-}
+};
 
 const ShowOtherAddressesButton: React.FC<Props> = ({ bagId, index }) => {
-  const { isModalOpen, openModal, closeModal } = useModal()
+  const { isModalOpen, openModal, closeModal } = useModal();
 
   return (
     <div>
@@ -49,7 +49,7 @@ const ShowOtherAddressesButton: React.FC<Props> = ({ bagId, index }) => {
         closeModal={closeModal}
       />
     </div>
-  )
-}
+  );
+};
 
-export default ShowOtherAddressesButton
+export default ShowOtherAddressesButton;

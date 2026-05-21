@@ -1,8 +1,8 @@
 
-import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
+import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form";
 
-import ScaffoldFields from "app/components/shared/Form/ScaffoldFields"
-import createScaffoldProps from "./scaffold"
+import ScaffoldFields from "app/components/shared/Form/ScaffoldFields";
+import createScaffoldProps from "./scaffold";
 
 type Props = {
   onSubmit: (data: any) => void
@@ -15,13 +15,13 @@ type Props = {
 
 // TODO: Move to util file
 const formatDate = (dateStr: string | Date) => {
-  const date = new Date(dateStr)
-  const day = `0${ date.getDate() }`.slice(-2)
-  const month = `0${ date.getMonth() + 1 }`.slice(-2)
-  const year = date.getFullYear()
+  const date = new Date(dateStr);
+  const day = `0${ date.getDate() }`.slice(-2);
+  const month = `0${ date.getMonth() + 1 }`.slice(-2);
+  const year = date.getFullYear();
 
-  return `${ year }-${ month }-${ day }`
-}
+  return `${ year }-${ month }-${ day }`;
+};
 
 const ChangeDueDateForm: React.FC<Props> = ({ isLoading, onSubmit, onCancel , dueDate, minDate = new Date(), taskId }) =>
   <div>
@@ -33,6 +33,6 @@ const ChangeDueDateForm: React.FC<Props> = ({ isLoading, onSubmit, onCancel , du
     >
       <ScaffoldFields { ...createScaffoldProps(onCancel, formatDate(minDate) ) } />
     </ScaffoldForm>
-  </div>
+  </div>;
 
-export default ChangeDueDateForm
+export default ChangeDueDateForm;

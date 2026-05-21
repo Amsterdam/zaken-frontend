@@ -1,37 +1,37 @@
-import { MenuItem, MenuButton } from "@amsterdam/asc-ui"
+import { MenuItem, MenuButton } from "@amsterdam/asc-ui";
 
-import routes from "app/routing/routes"
-import to from "app/routing/utils/to"
-import StyledButtonLink from "./StyledButtonLink"
-import IsAuthorizedMenuButton from "./IsAuthorizedMenuButton"
-import Hidden from "app/components/shared/Hidden/Hidden"
+import routes from "app/routing/routes";
+import to from "app/routing/utils/to";
+import StyledButtonLink from "./StyledButtonLink";
+import IsAuthorizedMenuButton from "./IsAuthorizedMenuButton";
+import Hidden from "app/components/shared/Hidden/Hidden";
 
 const items = [
   {
-    path: "/zaken"
+    path: "/zaken",
   },
   {
-    path: "/taken"
+    path: "/taken",
   },
   {
     path: "/invorderingen",
-    permissionNames: ["access_recovery_check"] as Components.Schemas.PermissionsEnum[]
+    permissionNames: ["access_recovery_check"] as Components.Schemas.PermissionsEnum[],
   },
   {
     path: "/digitaaltoezicht",
     permissionNames: ["access_sigital_surveillance"] as Components.Schemas.PermissionsEnum[],
-    isHidden: true
+    isHidden: true,
   },
   {
     path: "/hulp",
-    hiddenLaptopM: true
-  }
-]
+    hiddenLaptopM: true,
+  },
+];
 
 const MenuItems: React.FC = () => (
   <>
     { items.map(({ path, hiddenLaptopM, permissionNames, isHidden }) => {
-      const { title } = routes[`${ path }/`]
+      const { title } = routes[`${ path }/`];
       const menuItem = (
         <MenuItem key={ path }>
           { permissionNames !== undefined
@@ -43,11 +43,11 @@ const MenuItems: React.FC = () => (
             )
           }
         </MenuItem>
-      )
-      return hiddenLaptopM ? <Hidden minBreakpoint="laptopM" key={ path }>{ menuItem }</Hidden> : menuItem
+      );
+      return hiddenLaptopM ? <Hidden minBreakpoint="laptopM" key={ path }>{ menuItem }</Hidden> : menuItem;
     })
   }
   </>
-)
+);
 
-export default MenuItems
+export default MenuItems;

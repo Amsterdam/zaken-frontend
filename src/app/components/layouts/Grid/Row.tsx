@@ -1,8 +1,8 @@
-import styled from "styled-components"
-import { breakpoint, themeSpacing } from "@amsterdam/asc-ui"
-import layouts from "@amsterdam/asc-ui/lib/theme/default/layouts"
+import styled from "styled-components";
+import { breakpoint, themeSpacing } from "@amsterdam/asc-ui";
+import layouts from "@amsterdam/asc-ui/lib/theme/default/layouts";
 
-import Column from "app/components/layouts/Grid/Column"
+import Column from "app/components/layouts/Grid/Column";
 
 /** Rows for page layout
  * optional props:
@@ -19,7 +19,7 @@ export type TypeProps = {
   topSpacing?: number
 }
 
-const GUTTER = layouts.large.gutter
+const GUTTER = layouts.large.gutter;
 
 const RowStyle = styled.div<TypeProps>`
   box-sizing: border-box;
@@ -47,7 +47,7 @@ const RowStyle = styled.div<TypeProps>`
       margin-bottom: ${ props => themeSpacing(props.bottomSpacing ?? 12) };
     }
   }
-`
+`;
 
 export const RowWithColumn: React.FC<TypeProps> = ({ children, ...props }) => (
   <RowStyle { ...props }>
@@ -55,12 +55,12 @@ export const RowWithColumn: React.FC<TypeProps> = ({ children, ...props }) => (
       { children }
     </Column>
   </RowStyle>
-)
+);
 
 const Row: React.FC<TypeProps> = ({ children, ...props }) => (
   <RowStyle { ...props }>
     { children }
   </RowStyle>
-)
+);
 
-export default Row
+export default Row;

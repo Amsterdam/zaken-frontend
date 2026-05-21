@@ -1,9 +1,9 @@
 
 
-import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
-import ScaffoldFields from "app/components/shared/Form/ScaffoldFields"
-import createScaffoldProps from "./scaffold"
-import styled from "styled-components"
+import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form";
+import ScaffoldFields from "app/components/shared/Form/ScaffoldFields";
+import createScaffoldProps from "./scaffold";
+import styled from "styled-components";
 
 type Props = {
   onSubmit: (data: Components.Schemas.GenericCompletedTask) => Promise<unknown>
@@ -16,7 +16,7 @@ const Div = styled.div`
     float: right;
     clear: both;
   }
-`
+`;
 
 const CompleteTaskForm: React.FC<Props> = ({ isLoading, onSubmit, onCancel }) =>
   <Div>
@@ -27,6 +27,6 @@ const CompleteTaskForm: React.FC<Props> = ({ isLoading, onSubmit, onCancel }) =>
     >
       <ScaffoldFields {...createScaffoldProps(onCancel) } />
     </ScaffoldForm>
-  </Div>
+  </Div>;
 
-export default CompleteTaskForm
+export default CompleteTaskForm;

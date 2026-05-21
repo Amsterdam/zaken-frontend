@@ -1,8 +1,8 @@
-import { Spinner } from "@amsterdam/asc-ui"
-import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
-import ScaffoldFields, { Fields } from "app/components/shared/Form/ScaffoldFields"
-import ConfirmScaffoldFields from "./ConfirmScaffoldFields"
-import useSubmitConfirmation from "./hooks/useSubmitConfirmation"
+import { Spinner } from "@amsterdam/asc-ui";
+import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form";
+import ScaffoldFields, { Fields } from "app/components/shared/Form/ScaffoldFields";
+import ConfirmScaffoldFields from "./ConfirmScaffoldFields";
+import useSubmitConfirmation from "./hooks/useSubmitConfirmation";
 
 type Rec = Record<string, any>
 type Props<T, U, V> = {
@@ -18,23 +18,23 @@ type Props<T, U, V> = {
 
 const ConfirmScaffoldForm = <T extends Rec, U extends Rec, V extends Rec>(props: Props<T, U, V>) => {
 
-  const { fields, postMethod, mapData, afterSubmit, initialValues, submittingTitle, title } = props
+  const { fields, postMethod, mapData, afterSubmit, initialValues, submittingTitle, title } = props;
   const {
     isSubmitted,
     data,
     onSubmit,
     onSubmitConfirm,
-    onCancelConfirm
-  } = useSubmitConfirmation(postMethod, mapData)
+    onCancelConfirm,
+  } = useSubmitConfirmation(postMethod, mapData);
 
-  const submitTitle = fields?.fields.submit?.props?.label
+  const submitTitle = fields?.fields.submit?.props?.label;
 
   const onSubmitConfirmWrap = async () => {
-    const result = await onSubmitConfirm()
-    if (result === undefined) return
-    if (afterSubmit === undefined) return
-    await afterSubmit(result.data)
-  }
+    const result = await onSubmitConfirm();
+    if (result === undefined) return;
+    if (afterSubmit === undefined) return;
+    await afterSubmit(result.data);
+  };
 
   return (
     fields === undefined ? <Spinner /> : (
@@ -55,7 +55,7 @@ const ConfirmScaffoldForm = <T extends Rec, U extends Rec, V extends Rec>(props:
         )}
       </ScaffoldForm>
     )
-  )
-}
+  );
+};
 
-export default ConfirmScaffoldForm
+export default ConfirmScaffoldForm;

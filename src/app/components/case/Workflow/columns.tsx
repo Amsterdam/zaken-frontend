@@ -1,18 +1,18 @@
-import { List } from "@amsterdam/wonen-ui"
-import styled from "styled-components"
-import ChangeableDueDate from "app/components/case/tasks/ChangeDueDate/ChangebleDueDate"
-import TaskButton from "app/components/case/tasks/TaskButton/TaskButton"
-import taskActionMap from "./utils/taskActionMap"
-import SelectTaskWorkflow from "./components/SelectTaskWorkflow"
-import CustomIcon from "app/components/shared/CustomIcon/CustomIcon"
-import LinkButton from "app/components/shared/LinkButton/LinkButton"
-import UpdateSchedule from "./components/UpdateSchedule/UpdateSchedule"
+import { List } from "@amsterdam/wonen-ui";
+import styled from "styled-components";
+import ChangeableDueDate from "app/components/case/tasks/ChangeDueDate/ChangebleDueDate";
+import TaskButton from "app/components/case/tasks/TaskButton/TaskButton";
+import taskActionMap from "./utils/taskActionMap";
+import SelectTaskWorkflow from "./components/SelectTaskWorkflow";
+import CustomIcon from "app/components/shared/CustomIcon/CustomIcon";
+import LinkButton from "app/components/shared/LinkButton/LinkButton";
+import UpdateSchedule from "./components/UpdateSchedule/UpdateSchedule";
 
 // This width value (113px) is the width of a date + edit icon including the spacing between them
 const Span = styled.span`
   display: inline-block;
   min-width: 113px;
-`
+`;
 
 export function getColumns(
   execPost: (payload?: any) => Promise<unknown>,
@@ -21,7 +21,7 @@ export function getColumns(
 ) {
   const hasCreateVisitTask = tasks?.some(
     (task) => task.task_name === "task_create_visit",
-  )
+  );
 
   const updateScheduleColumn = {
     header: "Urgentie",
@@ -32,7 +32,7 @@ export function getColumns(
       ) : (
         <Span>-</Span>
       ),
-  }
+  };
 
   return [
     {
@@ -82,18 +82,18 @@ export function getColumns(
           user_has_permission,
           name,
           form,
-        } = record
+        } = record;
 
-        const action = taskActionMap[task_name]
+        const action = taskActionMap[task_name];
 
         const onSubmitTaskComplete = (
           variables:
             | Components.Schemas.CaseUserTaskWorkdflow["form_variables"]
             | null = {},
-        ) => execPost({ case: id, case_user_task_id, variables })
+        ) => execPost({ case: id, case_user_task_id, variables });
 
         const disabled =
-          task_name === "task_create_visit" || !user_has_permission
+          task_name === "task_create_visit" || !user_has_permission;
 
         return action !== undefined ? (
           <LinkButton
@@ -109,10 +109,10 @@ export function getColumns(
             form={form}
             disabled={disabled}
           />
-        )
+        );
       },
     },
-  ]
+  ];
 }
 
-export default getColumns
+export default getColumns;

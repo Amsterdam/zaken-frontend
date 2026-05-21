@@ -1,8 +1,8 @@
 
-import { Heading, themeSpacing } from "@amsterdam/asc-ui"
-import { useCase } from "app/state/rest"
-import AddressDisplay from "app/components/addresses/AddressDisplay/AddressDisplay"
-import styled from "styled-components"
+import { Heading, themeSpacing } from "@amsterdam/asc-ui";
+import { useCase } from "app/state/rest";
+import AddressDisplay from "app/components/addresses/AddressDisplay/AddressDisplay";
+import styled from "styled-components";
 
 type Props = {
   caseId: Components.Schemas.CaseDetail["id"]
@@ -10,10 +10,10 @@ type Props = {
 
 const Div = styled.div`
   margin-bottom: ${ themeSpacing(7) }
-`
+`;
 
 const AddressHeading: React.FC<Props> = ({ caseId }) => {
-  const [data] = useCase(caseId)
+  const [data] = useCase(caseId);
 
   return (
     <>
@@ -25,6 +25,6 @@ const AddressHeading: React.FC<Props> = ({ caseId }) => {
       </Div>
       }
     </>
-  )
-}
-export default AddressHeading
+  );
+};
+export default AddressHeading;

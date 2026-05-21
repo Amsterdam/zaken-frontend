@@ -1,7 +1,7 @@
-import { useCallback } from "react"
-import axios, { Method, AxiosError } from "axios"
+import { useCallback } from "react";
+import axios, { Method, AxiosError } from "axios";
 
-export type { Method } from "axios"
+export type { Method } from "axios";
 export type RequestError = AxiosError
 
 export default () => useCallback(
@@ -10,7 +10,7 @@ export default () => useCallback(
       method,
       url,
       headers,
-      data
+      data,
     }),
-  []
-)
+  [],
+);

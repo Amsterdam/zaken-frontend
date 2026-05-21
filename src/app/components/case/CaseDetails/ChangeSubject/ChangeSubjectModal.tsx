@@ -1,5 +1,5 @@
-import Modal, { ModalBlock } from "app/components/shared/Modal/Modal"
-import ChangeSubjectForm from "./ChangeSubjectForm"
+import Modal, { ModalBlock } from "app/components/shared/Modal/Modal";
+import ChangeSubjectForm from "./ChangeSubjectForm";
 
 export type Props = {
   isOpen: boolean
@@ -24,6 +24,6 @@ const ChangeSubjectModal: React.FC<Props> = ({ isOpen, closeModal, onSubmit, sub
         initialValues={{ subjects: subjects }}
       />
     </ModalBlock>
-  </Modal>
+  </Modal>;
 
-export default ChangeSubjectModal
+export default ChangeSubjectModal;

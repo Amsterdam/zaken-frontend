@@ -1,2 +1,2 @@
-export * from "./getAddressFromBagPdokResponse"
-export * from "./getAddressFromBenkAggResponse"
+export * from "./getAddressFromBagPdokResponse";
+export * from "./getAddressFromBenkAggResponse";

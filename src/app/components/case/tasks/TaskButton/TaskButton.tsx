@@ -1,9 +1,9 @@
-import { useModal } from "app/components/shared/Modal/hooks/useModal"
-import FormModal from "../FormModal/FormModal"
-import { Button } from "@amsterdam/asc-ui"
-import CustomTooltip from "app/components/help/HelpContent/CustomTooltip"
-import CustomIcon from "app/components/shared/CustomIcon/CustomIcon"
-import Hidden from "app/components/shared/Hidden/Hidden"
+import { useModal } from "app/components/shared/Modal/hooks/useModal";
+import FormModal from "../FormModal/FormModal";
+import { Button } from "@amsterdam/asc-ui";
+import CustomTooltip from "app/components/help/HelpContent/CustomTooltip";
+import CustomIcon from "app/components/shared/CustomIcon/CustomIcon";
+import Hidden from "app/components/shared/Hidden/Hidden";
 
 type Props = {
   onSubmit: (
@@ -20,9 +20,9 @@ const TaskButton: React.FC<Props> = ({
   taskName,
   caseId,
   form,
-  disabled = false
+  disabled = false,
 }) => {
-  const { isModalOpen, openModal, closeModal } = useModal()
+  const { isModalOpen, openModal, closeModal } = useModal();
 
   return (
     <>
@@ -54,7 +54,7 @@ const TaskButton: React.FC<Props> = ({
         form={form}
       />
     </>
-  )
-}
+  );
+};
 
-export default TaskButton
+export default TaskButton;

@@ -1,10 +1,10 @@
-import { Button, Heading, themeSpacing } from "@amsterdam/asc-ui"
-import { useTaskComplete, useCaseWorkflows, useCase } from "app/state/rest"
-import StyledTable from "./components/StyledTable"
-import styled from "styled-components"
-import getColumns from "./columns"
-import { LoadingRows } from "@amsterdam/wonen-ui"
-import usePollingRefetch from "app/state/rest/hooks/usePollingRefetch"
+import { Button, Heading, themeSpacing } from "@amsterdam/asc-ui";
+import { useTaskComplete, useCaseWorkflows, useCase } from "app/state/rest";
+import StyledTable from "./components/StyledTable";
+import styled from "styled-components";
+import getColumns from "./columns";
+import { LoadingRows } from "@amsterdam/wonen-ui";
+import usePollingRefetch from "app/state/rest/hooks/usePollingRefetch";
 
 type Props = {
   id: Components.Schemas.CaseDetail["id"]
@@ -15,37 +15,37 @@ const Wrap = styled.div`
   &:last-child {
     margin-bottom: 0;
   }
-`
+`;
 
 const Div = styled.div`
   margin-bottom: ${themeSpacing(4)};
-`
+`;
 
 const Workflow: React.FC<Props> = ({ id }) => {
-  const [, { execPost }] = useTaskComplete({ lazy: true })
-  const [data, { isBusy, execGet }] = useCaseWorkflows(id)
-  const [caseData] = useCase(id)
+  const [, { execPost }] = useTaskComplete({ lazy: true });
+  const [data, { isBusy, execGet }] = useCaseWorkflows(id);
+  const [caseData] = useCase(id);
 
-  const workflows = data?.results ?? []
-  const isClosed = caseData?.end_date !== null
+  const workflows = data?.results ?? [];
+  const isClosed = caseData?.end_date !== null;
 
-  const shouldPoll = !isClosed || workflows.length > 0
-  const isPolling = usePollingRefetch(workflows, execGet, shouldPoll)
+  const shouldPoll = !isClosed || workflows.length > 0;
+  const isPolling = usePollingRefetch(workflows, execGet, shouldPoll);
 
   if ((isBusy || isPolling) && workflows.length === 0) {
-    return <LoadingRows numRows={2} />
+    return <LoadingRows numRows={2} />;
   }
 
   const onClickLink = (e: React.MouseEvent) => {
-    e.preventDefault()
-    execGet()
-  }
+    e.preventDefault();
+    execGet();
+  };
 
   return (
     <>
       {workflows.length > 0 ? (
         workflows.map(({ state, tasks, information }, index) => {
-          const columns = getColumns(execPost, tasks, caseData?.theme.id)
+          const columns = getColumns(execPost, tasks, caseData?.theme.id);
 
           return (
             <Wrap key={`${state.name}_${index}`}>
@@ -60,7 +60,7 @@ const Workflow: React.FC<Props> = ({ id }) => {
                 pagination={false}
               />
             </Wrap>
-          )
+          );
         })
       ) : (
         <>
@@ -75,7 +75,7 @@ const Workflow: React.FC<Props> = ({ id }) => {
         </>
       )}
     </>
-  )
-}
+  );
+};
 
-export default Workflow
+export default Workflow;

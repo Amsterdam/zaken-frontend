@@ -1,8 +1,8 @@
-import { useFine } from "app/state/rest"
-import { Heading, Spinner } from "@amsterdam/asc-ui"
-import { List } from "@amsterdam/wonen-ui"
-import FinesSearchResult from "./FinesSearchResult"
-import InfoButton from "app/components/shared/InfoHeading/InfoButton"
+import { useFine } from "app/state/rest";
+import { Heading, Spinner } from "@amsterdam/asc-ui";
+import { List } from "@amsterdam/wonen-ui";
+import FinesSearchResult from "./FinesSearchResult";
+import InfoButton from "app/components/shared/InfoHeading/InfoButton";
 
 type Props = {
   searchString: string
@@ -10,8 +10,8 @@ type Props = {
 
 const FinesSearchResultsList: React.FC<Props> = ({ searchString }) => {
 
-  const [data, { isBusy }] = useFine(searchString.length > 0 ? searchString : undefined)
-  const items = data?.items.map((fine) => <FinesSearchResult fine={ fine } />) ?? []
+  const [data, { isBusy }] = useFine(searchString.length > 0 ? searchString : undefined);
+  const items = data?.items.map((fine) => <FinesSearchResult fine={ fine } />) ?? [];
 
   return (
     <>
@@ -41,7 +41,7 @@ const FinesSearchResultsList: React.FC<Props> = ({ searchString }) => {
         </>
       }
     </>
-  )
-}
+  );
+};
 
-export default FinesSearchResultsList
+export default FinesSearchResultsList;

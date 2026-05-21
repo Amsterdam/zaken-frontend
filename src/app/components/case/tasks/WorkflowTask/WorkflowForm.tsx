@@ -1,10 +1,10 @@
 
-import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
+import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form";
 
-import ScaffoldFields from "app/components/shared/Form/ScaffoldFields"
-import mapWorkflowDataToScaffold from "./utils/mapWorkflowDataToScaffold"
-import mapWorkflowDataToInitialValues from "./utils/mapWorkflowDataToInitialValues"
-import mapSubmitData from "./utils/mapSubmitData"
+import ScaffoldFields from "app/components/shared/Form/ScaffoldFields";
+import mapWorkflowDataToScaffold from "./utils/mapWorkflowDataToScaffold";
+import mapWorkflowDataToInitialValues from "./utils/mapWorkflowDataToInitialValues";
+import mapSubmitData from "./utils/mapSubmitData";
 
 type Props = {
   workflowForm: Components.Schemas.CaseUserTaskWorkdflow["form"]
@@ -17,13 +17,13 @@ const WorkflowForm: React.FC<Props> = ({ workflowForm, isLoading, onSubmit, onCa
   <div>
     <ScaffoldForm
       showSpinner={ isLoading }
-      onSubmit={ (data: unknown) => { onSubmit(mapSubmitData(workflowForm, data)) } }
+      onSubmit={ (data: unknown) => { onSubmit(mapSubmitData(workflowForm, data)); } }
       onCancel={ onCancel }
       initialValues={ mapWorkflowDataToInitialValues(workflowForm) }
     >
       <ScaffoldFields { ...mapWorkflowDataToScaffold(workflowForm, onCancel) } />
     </ScaffoldForm>
   </div>
-)
+);
 
-export default WorkflowForm
+export default WorkflowForm;

@@ -1,13 +1,13 @@
-import styled from "styled-components"
-import { DefinitionList, CaseIdDisplay, DateDisplay } from "@amsterdam/wonen-ui"
-import type { DefinitionListData } from "@amsterdam/wonen-ui"
-import { useCase } from "app/state/rest"
-import ChangeableSubject from "./ChangeSubject/ChangeableSubject"
-import ChangeHousingCorporation from "./ChangeHousingCorporation/ChangeHousingCorporation"
-import CaseSensitive from "../icons/CaseSensitive"
-import CaseEnforcement from "../icons/CaseEnforcement"
-import caseStates from "app/constants/caseStates"
-import EditableTag from "./EditableTag/EditableTag"
+import styled from "styled-components";
+import { DefinitionList, CaseIdDisplay, DateDisplay } from "@amsterdam/wonen-ui";
+import type { DefinitionListData } from "@amsterdam/wonen-ui";
+import { useCase } from "app/state/rest";
+import ChangeableSubject from "./ChangeSubject/ChangeableSubject";
+import ChangeHousingCorporation from "./ChangeHousingCorporation/ChangeHousingCorporation";
+import CaseSensitive from "../icons/CaseSensitive";
+import CaseEnforcement from "../icons/CaseEnforcement";
+import caseStates from "app/constants/caseStates";
+import EditableTag from "./EditableTag/EditableTag";
 
 type Props = {
   caseId: Components.Schemas.CaseCreate["id"]
@@ -17,7 +17,7 @@ const Wrap = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
-`
+`;
 
 const StyledDiv = styled.div`
   display: flex;
@@ -26,13 +26,13 @@ const StyledDiv = styled.div`
     flex: 1;
     min-width: 60%;
   }
-`
+`;
 
 const getDataFirstCol = (caseItem?: Components.Schemas.CaseCreate) => {
   if (caseItem === undefined) {
-    return undefined
+    return undefined;
   }
-  const { id, start_date, sensitive, previous_case, is_enforcement_request, state } = caseItem
+  const { id, start_date, sensitive, previous_case, is_enforcement_request, state } = caseItem;
   const data: DefinitionListData = {
     "Zaak ID": (
       <Wrap>
@@ -42,22 +42,22 @@ const getDataFirstCol = (caseItem?: Components.Schemas.CaseCreate) => {
       </Wrap>
     ),
     "Status": caseStates[state],
-    "Startdatum": <DateDisplay date={ start_date ?? undefined } emptyText="-" />
-  }
+    "Startdatum": <DateDisplay date={ start_date ?? undefined } emptyText="-" />,
+  };
   if (previous_case) {
-    data["Overgedragen zaak"] = previous_case
+    data["Overgedragen zaak"] = previous_case;
   }
-  data["Tag"] = <EditableTag case={ caseItem } />
-  return data
-}
+  data["Tag"] = <EditableTag case={ caseItem } />;
+  return data;
+};
 
 const getDataSecondCol = (caseItem?: Components.Schemas.CaseCreate) => {
   if (caseItem === undefined) {
-    return undefined
+    return undefined;
   }
 
-  const { id, theme, reason, project, subjects, address } = caseItem
-  const hasProject = project?.name !== undefined
+  const { id, theme, reason, project, subjects, address } = caseItem;
+  const hasProject = project?.name !== undefined;
   const data: DefinitionListData = {
     "Thema": theme.name,
     "Aanleiding": `${ reason.name }${ hasProject ? ": " : "" }${ hasProject ? project.name : "" }`,
@@ -68,16 +68,16 @@ const getDataSecondCol = (caseItem?: Components.Schemas.CaseCreate) => {
         bagId={ address?.bag_id }
         caseId={ id }
       />
-    )
-  }
-  return data
-}
+    ),
+  };
+  return data;
+};
 
 const CaseDetails: React.FC<Props> = ({ caseId }) => {
-  const [data, { isBusy }] = useCase(caseId)
+  const [data, { isBusy }] = useCase(caseId);
 
-  const dataFirstCol = getDataFirstCol(data)
-  const dataSecondCol = getDataSecondCol(data)
+  const dataFirstCol = getDataFirstCol(data);
+  const dataSecondCol = getDataSecondCol(data);
 
   return (
     <StyledDiv>
@@ -94,7 +94,7 @@ const CaseDetails: React.FC<Props> = ({ caseId }) => {
         data={ dataSecondCol }
       />
     </StyledDiv>
-  )
-}
+  );
+};
 
-export default CaseDetails
+export default CaseDetails;

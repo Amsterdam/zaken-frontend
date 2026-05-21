@@ -1,8 +1,8 @@
-import { Table } from "@amsterdam/wonen-ui"
-import { useUsersMe } from "app/state/rest"
-import getColumns from "./columns"
-import useMediaQuery from "app/hooks/useMediaQuery/useMediaQuery"
-import createResponsiveColumns from "./createPrioritizedColumns"
+import { Table } from "@amsterdam/wonen-ui";
+import { useUsersMe } from "app/state/rest";
+import getColumns from "./columns";
+import useMediaQuery from "app/hooks/useMediaQuery/useMediaQuery";
+import createResponsiveColumns from "./createPrioritizedColumns";
 
 type Props = {
   data?: Components.Schemas.CaseUserTask[]
@@ -15,13 +15,13 @@ type Props = {
 }
 
 const TableTasks: React.FC<Props> = ({
-  data, isBusy, onChange, pagination, sorting, emptyPlaceholder, isEnforcement
+  data, isBusy, onChange, pagination, sorting, emptyPlaceholder, isEnforcement,
 }) => {
-  const [me] = useUsersMe()
-  const columns = getColumns(sorting, me?.id, isEnforcement)
-  const { windowWidth } = useMediaQuery()
+  const [me] = useUsersMe();
+  const columns = getColumns(sorting, me?.id, isEnforcement);
+  const { windowWidth } = useMediaQuery();
 
-  const prioritizedColumns = createResponsiveColumns(columns, windowWidth)
+  const prioritizedColumns = createResponsiveColumns(columns, windowWidth);
 
   return (
     <Table
@@ -34,7 +34,7 @@ const TableTasks: React.FC<Props> = ({
       pagination={pagination}
       emptyPlaceholder={ emptyPlaceholder }
     />
-  )
-}
+  );
+};
 
-export default TableTasks
+export default TableTasks;

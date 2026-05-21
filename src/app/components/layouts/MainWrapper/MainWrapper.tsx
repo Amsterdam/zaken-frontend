@@ -1,7 +1,7 @@
 
-import styled from "styled-components"
-import { breakpoint, themeSpacing } from "@amsterdam/asc-ui"
-import { sizes } from "@amsterdam/asc-ui/lib/theme/default/breakpoints"
+import styled from "styled-components";
+import { breakpoint, themeSpacing } from "@amsterdam/asc-ui";
+import { sizes } from "@amsterdam/asc-ui/lib/theme/default/breakpoints";
 
 const Main = styled.main`
   box-sizing: border-box;
@@ -13,11 +13,11 @@ const Main = styled.main`
   @media screen and ${ breakpoint("min-width", "laptopM") } {
     padding: ${ themeSpacing(2) } ${ themeSpacing(10) } ${ themeSpacing(12) };
   }
-`
+`;
 const MainWrapper: React.FC = ({ children }) => (
   <Main id="a11y_content">
     { children }
   </Main>
-)
+);
 
-export default MainWrapper
+export default MainWrapper;
