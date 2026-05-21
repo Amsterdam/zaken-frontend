@@ -1,6 +1,6 @@
-import styled from "styled-components"
-import { breakpoint } from "@amsterdam/asc-ui"
-import layouts from "@amsterdam/asc-ui/lib/theme/default/layouts"
+import styled from "styled-components";
+import { breakpoint } from "@amsterdam/asc-ui";
+import layouts from "@amsterdam/asc-ui/lib/theme/default/layouts";
 
 /** Columns for page layout
  * optional props:
@@ -16,7 +16,7 @@ export type TypeProps = {
   spanLarge?: number
 }
 
-const GUTTER = layouts.large.gutter
+const GUTTER = layouts.large.gutter;
 
 const ColumnStyle = styled.div<TypeProps>`
   flex:1;
@@ -29,12 +29,12 @@ const ColumnStyle = styled.div<TypeProps>`
     flex-basis: ${ props => props.spanLarge ? `${ props.spanLarge }%` : "100%" };
     flex-grow: ${ props => props.spanLarge ? 0 : 1 };
   }
-`
+`;
 
 const Column: React.FC<TypeProps> = ({ children, ...props }) => (
   <ColumnStyle { ...props } >
     { children }
   </ColumnStyle>
-)
+);
 
-export default Column
+export default Column;

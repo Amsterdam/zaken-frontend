@@ -1,15 +1,15 @@
-import { Spinner, ErrorMessage } from "@amsterdam/asc-ui"
-import { EventsTimeline } from "@amsterdam/wonen-ui"
-import { useCaseEvents } from "app/state/rest"
-import { env } from "app/config/env"
+import { Spinner, ErrorMessage } from "@amsterdam/asc-ui";
+import { EventsTimeline } from "@amsterdam/wonen-ui";
+import { useCaseEvents } from "app/state/rest";
+import { env } from "app/config/env";
 
 type Props = {
   caseId: Components.Schemas.CaseEvent["id"]
 }
 
 const TimelineContainer: React.FC<Props> = ({ caseId }) => {
-  const [timelineEvents, { hasErrors }] = useCaseEvents(caseId)
-  const showEmpty = timelineEvents?.length === 0
+  const [timelineEvents, { hasErrors }] = useCaseEvents(caseId);
+  const showEmpty = timelineEvents?.length === 0;
 
   return (
     <>
@@ -30,7 +30,7 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
       }
       { showEmpty && <p>Geen tijdlijn evenementen beschikbaar</p> }
     </>
-  )
-}
+  );
+};
 
-export default TimelineContainer
+export default TimelineContainer;

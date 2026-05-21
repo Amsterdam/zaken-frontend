@@ -1,13 +1,13 @@
-import { useParams, useSearchParams } from "react-router-dom"
-import { FormTitle } from "@amsterdam/asc-ui"
-import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId"
-import Row, { RowWithColumn } from "app/components/layouts/Grid/Row"
-import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
-import PageHeading from "app/components/shared/PageHeading/PageHeading"
-import AddressHeadingByBagId from "app/components/shared/AddressHeadingByBagId/AddressHeadingByBagId"
-import CreateForm from "app/components/cases/CreateForm/CreateForm"
-import NotFoundPage from "app/pages/errors/NotFoundPage"
-import { Column } from "app/components/layouts/Grid"
+import { useParams, useSearchParams } from "react-router-dom";
+import { FormTitle } from "@amsterdam/asc-ui";
+import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId";
+import Row, { RowWithColumn } from "app/components/layouts/Grid/Row";
+import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout";
+import PageHeading from "app/components/shared/PageHeading/PageHeading";
+import AddressHeadingByBagId from "app/components/shared/AddressHeadingByBagId/AddressHeadingByBagId";
+import CreateForm from "app/components/cases/CreateForm/CreateForm";
+import NotFoundPage from "app/pages/errors/NotFoundPage";
+import { Column } from "app/components/layouts/Grid";
 
 type RouteParams = {
   bagId: string
@@ -15,9 +15,9 @@ type RouteParams = {
 }
 
 const CreateCasePage: React.FC = () => {
-  const { bagId  } = useParams<RouteParams>()
-  const [searchParams] = useSearchParams()
-  const tonId = searchParams.get("tonId")
+  const { bagId  } = useParams<RouteParams>();
+  const [searchParams] = useSearchParams();
+  const tonId = searchParams.get("tonId");
 
   return (
     isValidUrlParamBAGId(bagId) ? (
@@ -36,7 +36,7 @@ const CreateCasePage: React.FC = () => {
         </Row>
       </DefaultLayout>
     ) : <NotFoundPage />
-  )
-}
+  );
+};
 
-export default CreateCasePage
+export default CreateCasePage;

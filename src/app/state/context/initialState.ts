@@ -1,4 +1,4 @@
-const noop = () => {}
+const noop = () => {};
 
 export type StateType = {
   cases: {
@@ -50,20 +50,20 @@ export const initialState: StateType = {
     openCases: "open",
     pagination: {
       page: 1,
-      pageSize: 25
+      pageSize: 25,
     },
     projects: [],
     reason: "",
     results: [],
     sorting: {
       dataIndex: "start_date",
-      order: "DESCEND"
+      order: "DESCEND",
     },
     addressSearch: "",
     subjects: [],
     tags: [],
     theme: "",
-    updateContextCases: noop
+    updateContextCases: noop,
   },
   tasks: {
     count: 0,
@@ -73,7 +73,7 @@ export const initialState: StateType = {
     owner: "",
     pagination: {
       page: 1,
-      pageSize: 25
+      pageSize: 25,
     },
     projects: [],
     reason: "",
@@ -81,14 +81,14 @@ export const initialState: StateType = {
     role: undefined,
     sorting: {
       dataIndex: "due_date",
-      order: "ASCEND"
+      order: "ASCEND",
     },
     subjects: [],
     tags: [],
     taskNames: [],
     theme: "",
-    updateContextTasks: noop
-  }
-}
+    updateContextTasks: noop,
+  },
+};
 
-export default initialState
+export default initialState;

@@ -1,11 +1,11 @@
-import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
-import { Fields } from "app/components/shared/Form/ScaffoldFields"
-import type { NavigateToFunction } from "app/routing/useNavigation"
+import { FormPositioner } from "@amsterdam/amsterdam-react-final-form";
+import { Fields } from "app/components/shared/Form/ScaffoldFields";
+import type { NavigateToFunction } from "app/routing/useNavigation";
 
 export default (
   id: Components.Schemas.CaseDetail["id"],
   navigateTo: NavigateToFunction,
-  processes?: Components.Schemas.WorkflowOption[]
+  processes?: Components.Schemas.WorkflowOption[],
 ) => {
   const fields = {
     workflowProcess: {
@@ -17,31 +17,31 @@ export default (
         withEmptyOption: true,
         emptyOptionLabel: "Selecteer een taak",
         isRequired: true,
-        options: processes
-      }
+        options: processes,
+      },
     },
     cancel: {
       type: "Button",
       props: {
         label: "Annuleren",
         variant: "primaryInverted",
-        onClick: () => navigateTo("/zaken/:id", { id })
-      }
+        onClick: () => navigateTo("/zaken/:id", { id }),
+      },
     },
     submit: {
       type: "SubmitButton",
       props: {
         variant: "secondary",
         label: "Taak opvoeren",
-        align: "right"
-      }
-    }
-  }
+        align: "right",
+      },
+    },
+  };
 
   return new FormPositioner(fields as Fields)
     .setGrid("mobileS", "1fr 1fr", [
       ["workflowProcess", "workflowProcess"],
-      ["cancel", "submit"]
+      ["cancel", "submit"],
     ])
-    .getScaffoldProps()
-}
+    .getScaffoldProps();
+};

@@ -1,8 +1,8 @@
 
-import { Routes, Route } from "react-router-dom"
-import routes from "app/routing/routes"
-import ProtectedPage from "./ProtectedPage"
-import NotFoundPage from "app/pages/errors/NotFoundPage"
+import { Routes, Route } from "react-router-dom";
+import routes from "app/routing/routes";
+import ProtectedPage from "./ProtectedPage";
+import NotFoundPage from "app/pages/errors/NotFoundPage";
 
 
 const Routing: React.FC = () => (
@@ -19,11 +19,11 @@ const Routing: React.FC = () => (
                 element={<ProtectedPage permissionNames={permissionNames} page={Page} />}
               />
             )
-          )
+          ),
         )
     }
     <Route path="*" element={<NotFoundPage />} />
   </Routes>
-)
+);
 
-export default Routing
+export default Routing;

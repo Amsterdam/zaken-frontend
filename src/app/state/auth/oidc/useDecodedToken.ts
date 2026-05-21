@@ -1,5 +1,5 @@
-import { useAuth } from "react-oidc-context"
-import { jwtDecode } from "jwt-decode"
+import { useAuth } from "react-oidc-context";
+import { jwtDecode } from "jwt-decode";
 
 export type DecodedToken = {
   given_name: string  // firstname
@@ -10,11 +10,11 @@ export type DecodedToken = {
 }
 
 export const useDecodedToken = (): DecodedToken | undefined => {
-  const auth = useAuth()
-  const token = auth.user?.access_token
+  const auth = useAuth();
+  const token = auth.user?.access_token;
 
-  if (!token) return
+  if (!token) return;
 
-  const decoded = jwtDecode<DecodedToken>(token)
-  return decoded
-}
+  const decoded = jwtDecode<DecodedToken>(token);
+  return decoded;
+};

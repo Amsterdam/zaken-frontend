@@ -1,6 +1,6 @@
-import styled from "styled-components"
-import { Link } from "react-router-dom"
-import { themeColor } from "@amsterdam/asc-ui"
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { themeColor } from "@amsterdam/asc-ui";
 
 // Filter all non-standard props like flex.
 export default styled(({ flex, ...props }) => <Link {...props} />)`
@@ -9,4 +9,4 @@ export default styled(({ flex, ...props }) => <Link {...props} />)`
   text-decoration: none;
   color: ${ themeColor("tint", "level7") };
   height: 100%;
-`
+`;

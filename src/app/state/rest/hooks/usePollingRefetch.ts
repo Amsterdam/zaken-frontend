@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react";
 
 /**
  * Hook that automatically polls for data when empty results are detected after mount.
@@ -16,11 +16,11 @@ const usePollingRefetch = (
   data: any[] | undefined,
   execGet: () => void,
   enabled: boolean = true,
-  maxAttempts = 5
+  maxAttempts = 5,
 ): boolean => {
-  const attemptRef = useRef(0)
-  const mountTimeRef = useRef(Date.now())
-  const [isPolling, setIsPolling] = useState(false)
+  const attemptRef = useRef(0);
+  const mountTimeRef = useRef(Date.now());
+  const [isPolling, setIsPolling] = useState(false);
 
   useEffect(() => {
     // Only poll if:
@@ -28,27 +28,27 @@ const usePollingRefetch = (
     // 2. Data is empty array (not undefined/loading)
     // 3. Within first 30 seconds after mount (e.g. recent navigation or page reload)
     // 4. Hasn't exceeded max attempts
-    const isEmpty = Array.isArray(data) && data.length === 0
-    const isRecent = Date.now() - mountTimeRef.current < 30000
-    const shouldPoll = enabled && isEmpty && isRecent && attemptRef.current < maxAttempts
+    const isEmpty = Array.isArray(data) && data.length === 0;
+    const isRecent = Date.now() - mountTimeRef.current < 30000;
+    const shouldPoll = enabled && isEmpty && isRecent && attemptRef.current < maxAttempts;
 
     if (shouldPoll) {
-      setIsPolling(true)
+      setIsPolling(true);
       // Exponential backoff: 1s, 2s, 4s, 8s, 16s
-      const delay = 1000 * Math.pow(2, attemptRef.current)
+      const delay = 1000 * Math.pow(2, attemptRef.current);
       const timer = setTimeout(() => {
-        attemptRef.current++
-        execGet()
-      }, delay)
+        attemptRef.current++;
+        execGet();
+      }, delay);
 
-      return () => clearTimeout(timer)
+      return () => clearTimeout(timer);
     } else {
-      setIsPolling(false)
+      setIsPolling(false);
     }
-  }, [data, execGet, enabled, maxAttempts])
+  }, [data, execGet, enabled, maxAttempts]);
 
-  return isPolling
-}
+  return isPolling;
+};
 
-export default usePollingRefetch
+export default usePollingRefetch;
 

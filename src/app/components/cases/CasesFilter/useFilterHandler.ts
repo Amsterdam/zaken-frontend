@@ -1,10 +1,10 @@
-import { useCallback, useContext } from "react"
-import { ContextValues } from "app/state/context/ValueProvider"
+import { useCallback, useContext } from "react";
+import { ContextValues } from "app/state/context/ValueProvider";
 
 type Item = string | string[] | boolean
 
 export function useFilterHandler() {
-  const { pagination, updateContextCases } = useContext(ContextValues)["cases"]
+  const { pagination, updateContextCases } = useContext(ContextValues)["cases"];
 
   const onChangeFilter = useCallback(
     (key: string, item: Item) => {
@@ -12,22 +12,22 @@ export function useFilterHandler() {
         [key]: item,
         pagination: {
           ...pagination,
-          page: 1
-        }
-      }
+          page: 1,
+        },
+      };
 
       // Reset dependent filters if theme is changing
       if (key === "theme") {
-        casesContextItem.reason = ""
-        casesContextItem.projects = []
-        casesContextItem.subjects = []
-        casesContextItem.tags = []
+        casesContextItem.reason = "";
+        casesContextItem.projects = [];
+        casesContextItem.subjects = [];
+        casesContextItem.tags = [];
       }
 
-      updateContextCases(casesContextItem)
+      updateContextCases(casesContextItem);
     },
-    [pagination, updateContextCases]
-  )
+    [pagination, updateContextCases],
+  );
 
   const onChangePageSize = useCallback(
     (pageSize: string) => {
@@ -35,23 +35,23 @@ export function useFilterHandler() {
         pagination: {
           ...pagination,
           pageSize: parseInt(pageSize),
-          page: 1
-        }
-      })
+          page: 1,
+        },
+      });
     },
-    [pagination, updateContextCases]
-  )
+    [pagination, updateContextCases],
+  );
 
   const onChangeTable = useCallback(
     (pagination: TABLE.Schemas.Pagination, sorting: TABLE.Schemas.Sorting) => {
-      updateContextCases({ pagination, sorting })
+      updateContextCases({ pagination, sorting });
     },
-    [updateContextCases]
-  )
+    [updateContextCases],
+  );
 
   return {
     onChangeFilter,
     onChangePageSize,
-    onChangeTable
-  }
+    onChangeTable,
+  };
 }

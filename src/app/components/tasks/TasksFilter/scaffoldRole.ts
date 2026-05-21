@@ -1,13 +1,13 @@
-import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
-import { Fields } from "app/components/shared/Form/ScaffoldFields"
+import { FormPositioner } from "@amsterdam/amsterdam-react-final-form";
+import { Fields } from "app/components/shared/Form/ScaffoldFields";
 
-export const ROLE = "Projectmedewerker"
+export const ROLE = "Projectmedewerker";
 
 const createOptions = (roles: MockComponents.Schemas.Role[]) =>
   roles.reduce((acc, cur) => {
-    acc[cur] = cur
-    return acc
-  }, { "": "Alle rollen" } as Record<string, MockComponents.Schemas.Role>)
+    acc[cur] = cur;
+    return acc;
+  }, { "": "Alle rollen" } as Record<string, MockComponents.Schemas.Role>);
 
 export default (role: MockComponents.Schemas.Role, roles: MockComponents.Schemas.Role[], onChange: (value: string) => void) => {
   const fields = {
@@ -19,12 +19,12 @@ export default (role: MockComponents.Schemas.Role, roles: MockComponents.Schemas
         optionLabelField: "title",
         options: createOptions(roles),
         onChange,
-        value: role
-      }
-    }
-  }
+        value: role,
+      },
+    },
+  };
 
   return new FormPositioner(fields as Fields)
     .setVertical("mobileS")
-    .getScaffoldProps()
-}
+    .getScaffoldProps();
+};

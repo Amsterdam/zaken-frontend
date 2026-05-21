@@ -1,5 +1,5 @@
-import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
-import { Fields } from "app/components/shared/Form/ScaffoldFields"
+import { FormPositioner } from "@amsterdam/amsterdam-react-final-form";
+import { Fields } from "app/components/shared/Form/ScaffoldFields";
 
 const scaffold = (onCancel: () => void, minDate: string) => {
   const fields = {
@@ -9,37 +9,37 @@ const scaffold = (onCancel: () => void, minDate: string) => {
         label: "Nieuwe datum",
         name: "date",
         min: minDate,
-        isRequired: true
-      }
+        isRequired: true,
+      },
     },
     cancel: {
       type: "Button",
       props: {
         label: "Annuleer",
         variant: "primaryInverted",
-        onClick: onCancel
-      }
+        onClick: onCancel,
+      },
     },
     submit: {
       type: "SubmitButton",
       variant: "primary",
       props: {
         label: "Verwerken",
-        align: "right"
-      }
-    }
-  }
+        align: "right",
+      },
+    },
+  };
 
   return new FormPositioner(fields as Fields)
     .setGrid("mobileS", "1fr 1fr", [
       ["dueDate", "dueDate"],
-      ["cancel", "submit"]
+      ["cancel", "submit"],
     ])
     .setGrid("laptopM", "1fr 1fr", [
       ["dueDate"],
-      ["cancel", "submit"]
+      ["cancel", "submit"],
     ])
-    .getScaffoldProps()
-}
+    .getScaffoldProps();
+};
 
-export default scaffold
+export default scaffold;

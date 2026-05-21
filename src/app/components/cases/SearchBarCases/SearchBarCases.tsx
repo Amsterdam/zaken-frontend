@@ -1,23 +1,23 @@
-import { SearchBar } from "@amsterdam/asc-ui"
-import debounce from "lodash.debounce"
-import { useFilterHandler } from "../CasesFilter/useFilterHandler"
+import { SearchBar } from "@amsterdam/asc-ui";
+import debounce from "lodash.debounce";
+import { useFilterHandler } from "../CasesFilter/useFilterHandler";
 
 type Props = {
   searchString: string
 }
 
-const DELAY = 750
+const DELAY = 750;
 
 const SearchBarCases: React.FC<Props> = ({ searchString }) => {
-  const { onChangeFilter } = useFilterHandler()
+  const { onChangeFilter } = useFilterHandler();
   const debouncedSetSearchString = debounce(
     (value: string) => onChangeFilter("addressSearch", value),
-    DELAY
-  )
+    DELAY,
+  );
 
   const onChangeSearch = (event: React.ChangeEvent<HTMLInputElement>) =>
-    debouncedSetSearchString(event.target.value.trim())
-  const onClear = () => debouncedSetSearchString("")
+    debouncedSetSearchString(event.target.value.trim());
+  const onClear = () => debouncedSetSearchString("");
 
   return (
     <SearchBar
@@ -28,7 +28,7 @@ const SearchBarCases: React.FC<Props> = ({ searchString }) => {
       autoFocus={true}
       style={{ maxWidth: "500px" }}
     />
-  )
-}
+  );
+};
 
-export default SearchBarCases
+export default SearchBarCases;

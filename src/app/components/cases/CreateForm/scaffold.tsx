@@ -1,9 +1,9 @@
-import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
-import { Fields } from "app/components/shared/Form/ScaffoldFields"
-import InfoButton from "app/components/shared/InfoHeading/InfoButton"
-import type { NavigateToFunction } from "app/routing/useNavigation"
-import isValidUrl from "app/routing/utils/isValidUrl"
-import { EXCLUDED_THEMES_ADVERTISEMENTS } from "app/constants/themeNames"
+import { FormPositioner } from "@amsterdam/amsterdam-react-final-form";
+import { Fields } from "app/components/shared/Form/ScaffoldFields";
+import InfoButton from "app/components/shared/InfoHeading/InfoButton";
+import type { NavigateToFunction } from "app/routing/useNavigation";
+import isValidUrl from "app/routing/utils/isValidUrl";
+import { EXCLUDED_THEMES_ADVERTISEMENTS } from "app/constants/themeNames";
 
 export default (
   bagId: Components.Schemas.Address["bag_id"],
@@ -16,7 +16,7 @@ export default (
   subjects: Components.Schemas.Subject[],
   advertisementOptions: Record<string, string>,
   cases: Components.Schemas.Case[],
-  corporations: Components.Schemas.HousingCorporation[]
+  corporations: Components.Schemas.HousingCorporation[],
 ) => {
 
   const fields = {
@@ -28,8 +28,8 @@ export default (
         options: themes,
         optionLabelField: "name",
         isRequired: true,
-        onChange: (index: string) => setTheme(themes?.[parseInt(index, 10)]?.id)
-      }
+        onChange: (index: string) => setTheme(themes?.[parseInt(index, 10)]?.id),
+      },
     },
     reason: {
       type: "ShowHide",
@@ -42,10 +42,10 @@ export default (
             name: "reason",
             options: reasons,
             optionLabelField: "name",
-            isRequired: true
-          }
-        }
-      }
+            isRequired: true,
+          },
+        },
+      },
     },
     mma_number: {
       type: "ShowHide",
@@ -62,10 +62,10 @@ export default (
             min: 1,
             step: 1,
             isRequired: true,
-            hideNumberSpinner: true
-          }
-        }
-      }
+            hideNumberSpinner: true,
+          },
+        },
+      },
     },
     housing_corporation: {
       type: "ShowHide",
@@ -80,10 +80,10 @@ export default (
             optionLabelField: "name",
             withEmptyOption: true,
             emptyOptionLabel: "Geen corporatie",
-            isRequired: false
-          }
-        }
-      }
+            isRequired: false,
+          },
+        },
+      },
     },
     subjects: {
       type: "ShowHide",
@@ -96,10 +96,10 @@ export default (
             name: "subjects",
             options: subjects,
             optionLabelField: "name",
-            isRequired: true
-          }
-        }
-      }
+            isRequired: true,
+          },
+        },
+      },
     },
 
     reporter_anonymous: {
@@ -114,11 +114,11 @@ export default (
             label: "Is de melder anoniem?",
             options: {
               yes: "Ja, de melder is anoniem",
-              no: "Nee, de melder is niet anoniem"
-            }
-          }
-        }
-      }
+              no: "Nee, de melder is niet anoniem",
+            },
+          },
+        },
+      },
     },
     reporter_name: {
       type: "ShowHide",
@@ -129,10 +129,10 @@ export default (
           props: {
             label: "Naam melder",
             extraLabel: "(indien bekend)",
-            name: "reporter_name"
-          }
-        }
-      }
+            name: "reporter_name",
+          },
+        },
+      },
     },
     reporter_phone: {
       type: "ShowHide",
@@ -145,10 +145,10 @@ export default (
             extraLabel: "(indien bekend)",
             name: "reporter_phone",
             hint: "Vul hier alleen cijfers in",
-            validate: (value: string | undefined) => (value === undefined || /^[0-9]{10}$/.test(value.trim())) ? false : "Vul hier enkel 10 cijfers in"
-          }
-        }
-      }
+            validate: (value: string | undefined) => (value === undefined || /^[0-9]{10}$/.test(value.trim())) ? false : "Vul hier enkel 10 cijfers in",
+          },
+        },
+      },
     },
     reporter_email: {
       type: "ShowHide",
@@ -159,10 +159,10 @@ export default (
           props: {
             label: "E-mailadres melder",
             extraLabel: "(indien bekend)",
-            name: "reporter_email"
-          }
-        }
-      }
+            name: "reporter_email",
+          },
+        },
+      },
     },
     identification: {
       type: "ShowHide",
@@ -178,10 +178,10 @@ export default (
             min: 1,
             step: 1,
             isRequired: true,
-            hideNumberSpinner: true
-          }
-        }
-      }
+            hideNumberSpinner: true,
+          },
+        },
+      },
     },
     description_citizenreport: {
       type: "ShowHide",
@@ -192,10 +192,10 @@ export default (
           props: {
             label: "Korte samenvatting melding",
             name: "description_citizenreport",
-            isRequired: true
-          }
-        }
-      }
+            isRequired: true,
+          },
+        },
+      },
     },
     nuisance: {
       type: "ShowHide",
@@ -210,11 +210,11 @@ export default (
             name: "nuisance",
             extraLabel: <InfoButton infoTitle="Betreft overlast" infoText="Aanvinken indien in de melding sprake is van overlast zoals geluid, lawaai, stank en vuil overlast."></InfoButton>,
             options: {
-              nuisance: "Ja"
-            }
-          }
-        }
-      }
+              nuisance: "Ja",
+            },
+          },
+        },
+      },
     },
     project: {
       type: "ShowHide",
@@ -229,17 +229,17 @@ export default (
             optionLabelField: "name",
             withEmptyOption: true,
             emptyOptionLabel: "Maak een keuze",
-            isRequired: true
-          }
-        }
-      }
+            isRequired: true,
+          },
+        },
+      },
     },
     advertisement: {
       type: "ShowHide",
       props: {
         shouldShow: (formValues: { values?: { theme?: Components.Schemas.CaseTheme } }) => {
-          const themeName = formValues?.values?.theme?.name
-          return themeName !== undefined && !EXCLUDED_THEMES_ADVERTISEMENTS.includes(themeName)
+          const themeName = formValues?.values?.theme?.name;
+          return themeName !== undefined && !EXCLUDED_THEMES_ADVERTISEMENTS.includes(themeName);
         },
         field: {
           type: "RadioFields",
@@ -247,10 +247,10 @@ export default (
             isRequired: true,
             name: "advertisement",
             label: "Is er een advertentie bekend?",
-            options: advertisementOptions
-          }
-        }
-      }
+            options: advertisementOptions,
+          },
+        },
+      },
     },
     advertisements: {
       type: "ShowHide",
@@ -273,13 +273,13 @@ export default (
                   name: "link",
                   hint: "Vul hier de volledige url in, inclusief http(s)://",
                   isRequired: true,
-                  validate: (value: string | undefined) => isValidUrl(value) ? false : "Dit is geen geldige url!"
-                }
-              }
-            }
-          }
-        }
-      }
+                  validate: (value: string | undefined) => isValidUrl(value) ? false : "Dit is geen geldige url!",
+                },
+              },
+            },
+          },
+        },
+      },
     },
     otherTheme: {
       type: "ShowHide",
@@ -291,11 +291,11 @@ export default (
             label: "Overgedragen vanuit ander thema",
             name: "otherTheme",
             options: {
-              otherTheme: "Ja"
-            }
-          }
-        }
-      }
+              otherTheme: "Ja",
+            },
+          },
+        },
+      },
     },
     previous_case: {
       type: "ShowHide",
@@ -312,10 +312,10 @@ export default (
             optionLabelField: "label",
             withEmptyOption: true,
             emptyOptionLabel: "Maak een keuze",
-            isRequired: true
-          }
-        }
-      }
+            isRequired: true,
+          },
+        },
+      },
     },
     description: {
       type: "ShowHide",
@@ -326,27 +326,27 @@ export default (
           props: {
             label: "Korte toelichting",
             name: "description",
-            extraLabel: "(Niet verplicht)"
-          }
-        }
-      }
+            extraLabel: "(Niet verplicht)",
+          },
+        },
+      },
     },
     cancel: {
       type: "Button",
       props: {
         label: "Annuleer",
         variant: "primaryInverted",
-        onClick: () => navigateTo(`/adres/${ bagId }`)
-      }
+        onClick: () => navigateTo(`/adres/${ bagId }`),
+      },
     },
     submit: {
       type: "SubmitButton",
       props: {
         label: "Zaak aanmaken",
-        align: "right"
-      }
-    }
-  }
+        align: "right",
+      },
+    },
+  };
 
   return new FormPositioner(fields as Fields)
     .setGrid("mobileS", "1fr 1fr", [
@@ -368,7 +368,7 @@ export default (
       ["otherTheme", "otherTheme"],
       ["previous_case"],
       ["description", "description"],
-      ["cancel", "submit"]
+      ["cancel", "submit"],
     ])
-    .getScaffoldProps()
-}
+    .getScaffoldProps();
+};

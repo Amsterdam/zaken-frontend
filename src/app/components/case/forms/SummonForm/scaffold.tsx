@@ -1,13 +1,13 @@
-import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
-import { Fields } from "app/components/shared/Form/ScaffoldFields"
-import InfoButton from "app/components/shared/InfoHeading/InfoButton"
-import { personRoleMap } from "@amsterdam/wonen-ui/helpers/dictionaries"
-import type { NavigateToFunction } from "app/routing/useNavigation"
+import { FormPositioner } from "@amsterdam/amsterdam-react-final-form";
+import { Fields } from "app/components/shared/Form/ScaffoldFields";
+import InfoButton from "app/components/shared/InfoHeading/InfoButton";
+import { personRoleMap } from "@amsterdam/wonen-ui/helpers/dictionaries";
+import type { NavigateToFunction } from "app/routing/useNavigation";
 
 export default (caseId: Components.Schemas.CaseDetail["id"], navigateTo: NavigateToFunction, summonTypes?: Components.Schemas.SummonType[]) => {
-  const roleEntries = Object.entries(personRoleMap)
-  const personRoles = roleEntries.filter(([key]) => key !== "PERSON_ROLE_PLATFORM").map(([key, label]) => ({ key, label }))
-  const legalEntityRoles = roleEntries.filter(([key]) => !["PERSON_ROLE_HEIR", "PERSON_ROLE_RESIDENT"].includes(key)).map(([key, label]) => ({ key, label }))
+  const roleEntries = Object.entries(personRoleMap);
+  const personRoles = roleEntries.filter(([key]) => key !== "PERSON_ROLE_PLATFORM").map(([key, label]) => ({ key, label }));
+  const legalEntityRoles = roleEntries.filter(([key]) => !["PERSON_ROLE_HEIR", "PERSON_ROLE_RESIDENT"].includes(key)).map(([key, label]) => ({ key, label }));
   const fields = {
     type: {
       type: "ComplexSelectField",
@@ -18,8 +18,8 @@ export default (caseId: Components.Schemas.CaseDetail["id"], navigateTo: Navigat
         extraLabel: <InfoButton infoTitle="Meerdere aanschrijvingen?" infoText="Verwerk eerst deze aanschrijving. Selecteer vervolgens bij ‘Taak opvoeren' op de zaakdetail pagina 'Opstellen concept aanschrijving’. Vul vervolgens het formulier in en rond af met de knop resultaat verwerken. Herhaal deze actie per opgestelde aanschrijving."></InfoButton>,
         name: "type",
         optionLabelField: "name",
-        options: summonTypes
-      }
+        options: summonTypes,
+      },
     },
     "type_result.number_of_accommodations": {
       type: "ShowHide",
@@ -31,10 +31,10 @@ export default (caseId: Components.Schemas.CaseDetail["id"], navigateTo: Navigat
             isRequired: true,
             label: "Aantal gesloten logiesverblijven",
             name: "type_result.number_of_accommodations",
-            min: 0
-          }
-        }
-      }
+            min: 0,
+          },
+        },
+      },
     },
     entity_type: {
       type: "RadioFields",
@@ -45,9 +45,9 @@ export default (caseId: Components.Schemas.CaseDetail["id"], navigateTo: Navigat
         label: "Aan wie is de aanschrijving gericht?",
         options: {
           natural: "Natuurlijk persoon",
-          legal: "Rechtspersoon"
-        }
-      }
+          legal: "Rechtspersoon",
+        },
+      },
     },
     legal_entity_role: {
       type: "ShowHide",
@@ -62,10 +62,10 @@ export default (caseId: Components.Schemas.CaseDetail["id"], navigateTo: Navigat
             optionLabelField: "label",
             isRequired: true,
             withEmptyOption: true,
-            emptyOptionLabel: "Kies rol"
-          }
-        }
-      }
+            emptyOptionLabel: "Kies rol",
+          },
+        },
+      },
     },
     legal_entity_name: {
       type: "ShowHide",
@@ -77,10 +77,10 @@ export default (caseId: Components.Schemas.CaseDetail["id"], navigateTo: Navigat
             name: "legal_entity_name",
             isRequired: true,
             label: "Aangeschreven rechtspersoon",
-            placeholder: "Bedrijfsnaam"
-          }
-        }
-      }
+            placeholder: "Bedrijfsnaam",
+          },
+        },
+      },
     },
     legal_entity_type: {
       type: "ShowHide",
@@ -96,11 +96,11 @@ export default (caseId: Components.Schemas.CaseDetail["id"], navigateTo: Navigat
             isRequired: true,
             options: {
               board: "Aan bestuur",
-              person: "Aan persoon"
-            }
-          }
-        }
-      }
+              person: "Aan persoon",
+            },
+          },
+        },
+      },
     },
     persons: {
       type: "ShowHide",
@@ -126,23 +126,23 @@ export default (caseId: Components.Schemas.CaseDetail["id"], navigateTo: Navigat
                 props: {
                   placeholder:"Voornaam",
                   name: "first_name",
-                  isRequired: true
-                }
+                  isRequired: true,
+                },
               },
               preposition: {
                 type: "TextField",
                 props: {
                   placeholder:"Tussenvoegsel",
-                  name: "preposition"
-                }
+                  name: "preposition",
+                },
               },
               last_name: {
                 type: "TextField",
                 props: {
                   placeholder: "Achternaam",
                   name: "last_name",
-                  isRequired: true
-                }
+                  isRequired: true,
+                },
               },
               person_role: {
                 type: "ComplexSelectField",
@@ -152,13 +152,13 @@ export default (caseId: Components.Schemas.CaseDetail["id"], navigateTo: Navigat
                   optionLabelField: "label",
                   isRequired: true,
                   withEmptyOption: true,
-                  emptyOptionLabel: "Kies rol"
-                }
-              }
-            }
-          }
-        }
-      }
+                  emptyOptionLabel: "Kies rol",
+                },
+              },
+            },
+          },
+        },
+      },
     },
     persons_legal_entity: {
       type: "ShowHide",
@@ -185,53 +185,53 @@ export default (caseId: Components.Schemas.CaseDetail["id"], navigateTo: Navigat
                 props: {
                   placeholder:"Voornaam",
                   name: "first_name",
-                  isRequired: true
-                }
+                  isRequired: true,
+                },
               },
               preposition: {
                 type: "TextField",
                 props: {
                   placeholder:"Tussenvoegsel",
-                  name: "preposition"
-                }
+                  name: "preposition",
+                },
               },
               last_name: {
                 type: "TextField",
                 props: {
                   placeholder: "Achternaam",
                   name: "last_name",
-                  isRequired: true
-                }
-              }
-            }
-          }
-        }
-      }
+                  isRequired: true,
+                },
+              },
+            },
+          },
+        },
+      },
     },
     description: {
       type: "TextAreaField",
       props: {
         label: "Korte toelichting",
         extraLabel: "(Niet verplicht)",
-        name: "description"
-      }
+        name: "description",
+      },
     },
     secondaryButton: {
       type: "Button",
       props: {
         label: "Annuleren",
         variant: "primaryInverted",
-        onClick: () => navigateTo("/zaken/:id", { id: caseId })
-      }
+        onClick: () => navigateTo("/zaken/:id", { id: caseId }),
+      },
     },
     submit: {
       type: "SubmitButton",
       props: {
         label: "Resultaat verwerken",
-        align: "right"
-      }
-    }
-  }
+        align: "right",
+      },
+    },
+  };
 
   return new FormPositioner(fields as Fields)
     .setGrid("mobileS", "1fr 1fr", [
@@ -243,8 +243,8 @@ export default (caseId: Components.Schemas.CaseDetail["id"], navigateTo: Navigat
       ["persons_legal_entity", "persons_legal_entity"],
       ["persons", "persons"],
       ["description", "description"],
-      ["secondaryButton", "submit"]
+      ["secondaryButton", "submit"],
     ])
-    .getScaffoldProps()
-}
+    .getScaffoldProps();
+};
 

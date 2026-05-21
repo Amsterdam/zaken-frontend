@@ -1,6 +1,6 @@
-import { env } from "app/config/env"
-import routesObject, { Routes } from "app/routing/routes"
-import slashSandwich from "./slashSandwich"
+import { env } from "app/config/env";
+import routesObject, { Routes } from "app/routing/routes";
+import slashSandwich from "./slashSandwich";
 
 // RouteParams for given K in Routes
 type RouteParams<T extends Routes, K extends keyof T> =
@@ -13,12 +13,12 @@ type RouteParams<T extends Routes, K extends keyof T> =
 // Safely convert any object to a string, even null or undefined
 const toString = (val: unknown): string => {
   switch (typeof val) {
-    case "string": return val
-    case "number": return String(val)
-    case "boolean": return val ? "1" : "0"
-    default: return ""
+    case "string": return val;
+    case "number": return String(val);
+    case "boolean": return val ? "1" : "0";
+    default: return "";
   }
-}
+};
 
 /**
  * Example:
@@ -30,8 +30,8 @@ const applyRouteParams = <T extends Routes, K extends keyof T>
     .entries(params)
     .reduce(
       (url, [key, value]) => url.replace(`:${ key }`, toString(value)),
-      url
-    )
+      url,
+    );
 
 /**
  * Typesafe routes.
@@ -39,9 +39,9 @@ const applyRouteParams = <T extends Routes, K extends keyof T>
  */
 export default <T extends Routes, K extends keyof T>
 (path: K, params?: RouteParams<T, K>) => {
-  const str = path.toString()
-  if (env.NODE_ENV === "development" && !(slashSandwich([str], { trailingSlash: true }) in routesObject)) console.warn(`${ str } is not an existing route`)
+  const str = path.toString();
+  if (env.NODE_ENV === "development" && !(slashSandwich([str], { trailingSlash: true }) in routesObject)) console.warn(`${ str } is not an existing route`);
   return params !== undefined
     ? applyRouteParams(str, params)
-    : str
-}
+    : str;
+};

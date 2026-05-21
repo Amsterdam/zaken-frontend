@@ -1,10 +1,10 @@
-import { createContext } from "react"
+import { createContext } from "react";
 
-import { ApiCache, useApiCache } from "../hooks/useApiCache"
-import { RequestQueue, useRequestQueue } from "../hooks/useRequestQueue"
-import { noopContext } from "./noopContext"
+import { ApiCache, useApiCache } from "../hooks/useApiCache";
+import { RequestQueue, useRequestQueue } from "../hooks/useRequestQueue";
+import { noopContext } from "./noopContext";
 
-import { ApiGroup } from "../index"
+import { ApiGroup } from "../index";
 
 type GroupedContext = Record<ApiGroup, ApiCache & RequestQueue>
 export const ApiContext = createContext<GroupedContext>({
@@ -22,78 +22,78 @@ export const ApiContext = createContext<GroupedContext>({
   permissions: noopContext,
   listings: noopContext,
   task: noopContext,
-  housingCorporations: noopContext
-})
+  housingCorporations: noopContext,
+});
 
 const ApiProvider: React.FC = ({ children }) => {
   const value: GroupedContext = {
     auth: {
       ...useApiCache(),
-      ...useRequestQueue()
+      ...useRequestQueue(),
     },
     users: {
       ...useApiCache(),
-      ...useRequestQueue()
+      ...useRequestQueue(),
     },
     addresses: {
       ...useApiCache(),
-      ...useRequestQueue()
+      ...useRequestQueue(),
     },
     cases: {
       ...useApiCache(),
-      ...useRequestQueue()
+      ...useRequestQueue(),
     },
     case: {
       ...useApiCache(),
-      ...useRequestQueue()
+      ...useRequestQueue(),
     },
     fines: {
       ...useApiCache(),
-      ...useRequestQueue()
+      ...useRequestQueue(),
     },
     dataPunt: {
       ...useApiCache(),
-      ...useRequestQueue()
+      ...useRequestQueue(),
     },
     permits: {
       ...useApiCache(),
-      ...useRequestQueue()
+      ...useRequestQueue(),
     },
     supportContacts: {
       ...useApiCache(),
-      ...useRequestQueue()
+      ...useRequestQueue(),
     },
     themes: {
       ...useApiCache(),
-      ...useRequestQueue()
+      ...useRequestQueue(),
     },
     roles: {
       ...useApiCache(),
-      ...useRequestQueue()
+      ...useRequestQueue(),
     },
     permissions: {
       ...useApiCache(),
-      ...useRequestQueue()
+      ...useRequestQueue(),
     },
     listings: {
       ...useApiCache(),
-      ...useRequestQueue()
+      ...useRequestQueue(),
     },
     task: {
       ...useApiCache(),
-      ...useRequestQueue()
+      ...useRequestQueue(),
     },
     housingCorporations: {
       ...useApiCache(),
-      ...useRequestQueue()
-    }
-  }
+      ...useRequestQueue(),
+    },
+  };
 
   return (
     <ApiContext.Provider value={ value }>
       { children }
     </ApiContext.Provider>
-  )
-}
+  );
+};
 
-export default ApiProvider
+export default ApiProvider;

@@ -1,6 +1,6 @@
-import { Fields } from "app/components/shared/Form/ScaffoldFields"
-import ConfirmScaffoldForm from "app/components/shared/ConfirmScaffoldForm/ConfirmScaffoldForm"
-import useNavigateWithFlashMessage from "app/state/flashMessages/useNavigateWithFlashMessage"
+import { Fields } from "app/components/shared/Form/ScaffoldFields";
+import ConfirmScaffoldForm from "app/components/shared/ConfirmScaffoldForm/ConfirmScaffoldForm";
+import useNavigateWithFlashMessage from "app/state/flashMessages/useNavigateWithFlashMessage";
 
 type Rec = Record<string, any>
 type Props<T, U> = {
@@ -13,16 +13,16 @@ type Props<T, U> = {
 }
 
 const WorkflowForm = <T extends Rec, U extends Rec>(props: Props<T, U>) => {
-  const { id, fields, postMethod, mapData, caseUserTaskId, initialValues = {} } = props
+  const { id, fields, postMethod, mapData, caseUserTaskId, initialValues = {} } = props;
 
-  const navigateWithFlashMessage = useNavigateWithFlashMessage()
+  const navigateWithFlashMessage = useNavigateWithFlashMessage();
   const afterSubmit = async () => await navigateWithFlashMessage(
     "/zaken/:id",
     { id },
     "info",
     "Succes",
-    "Het resultaat is verwerkt"
-  )
+    "Het resultaat is verwerkt",
+  );
 
   return (
     <ConfirmScaffoldForm
@@ -32,7 +32,7 @@ const WorkflowForm = <T extends Rec, U extends Rec>(props: Props<T, U>) => {
       afterSubmit={ afterSubmit }
       initialValues={ { case: id, case_user_task_id: caseUserTaskId, ...initialValues } }
     />
-  )
-}
+  );
+};
 
-export default WorkflowForm
+export default WorkflowForm;

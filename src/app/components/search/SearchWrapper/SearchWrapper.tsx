@@ -1,19 +1,19 @@
-import { Heading, FormTitle, SearchBar } from "@amsterdam/asc-ui"
-import debounce from "lodash.debounce"
+import { Heading, FormTitle, SearchBar } from "@amsterdam/asc-ui";
+import debounce from "lodash.debounce";
 
-import Row, { RowWithColumn } from "app/components/layouts/Grid/Row"
-import Column from "app/components/layouts/Grid/Column"
-import SearchResults from "app/components/search/SearchResults/SearchResults"
-import useURLState from "app/hooks/useURLState/useURLState"
+import Row, { RowWithColumn } from "app/components/layouts/Grid/Row";
+import Column from "app/components/layouts/Grid/Column";
+import SearchResults from "app/components/search/SearchResults/SearchResults";
+import useURLState from "app/hooks/useURLState/useURLState";
 
-const DELAY = 750
+const DELAY = 750;
 
 const SearchWrapper: React.FC = () => {
-  const [searchString, setSearchString] = useURLState("query")
-  const debouncedSetSearchString = debounce(setSearchString, DELAY)
+  const [searchString, setSearchString] = useURLState("query");
+  const debouncedSetSearchString = debounce(setSearchString, DELAY);
 
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => debouncedSetSearchString(event.target.value.trim())
-  const onClear = () => debouncedSetSearchString("")
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => debouncedSetSearchString(event.target.value.trim());
+  const onClear = () => debouncedSetSearchString("");
 
   return (
     <>
@@ -34,7 +34,7 @@ const SearchWrapper: React.FC = () => {
         <SearchResults searchString={ searchString } />
       </RowWithColumn>
     </>
-  )
-}
+  );
+};
 
-export default SearchWrapper
+export default SearchWrapper;

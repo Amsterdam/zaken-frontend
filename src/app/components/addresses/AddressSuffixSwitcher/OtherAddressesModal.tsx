@@ -1,7 +1,7 @@
 
 
-import Modal, { ModalBlock } from "app/components/shared/Modal/Modal"
-import OtherAddressesTable from "./OtherAddressesTable"
+import Modal, { ModalBlock } from "app/components/shared/Modal/Modal";
+import OtherAddressesTable from "./OtherAddressesTable";
 
 export type Props = {
   bagId: Components.Schemas.Address["bag_id"]
@@ -15,6 +15,6 @@ const OtherAddressesModal: React.FC<Props> = ({ isOpen, closeModal, bagId }) => 
       <OtherAddressesTable bagId={bagId} onAddressChosen={closeModal} />
     </ModalBlock>
   </Modal>
-)
+);
 
-export default OtherAddressesModal
+export default OtherAddressesModal;

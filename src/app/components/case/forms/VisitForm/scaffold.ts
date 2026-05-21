@@ -1,11 +1,11 @@
-import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
-import { Fields } from "app/components/shared/Form/ScaffoldFields"
-import type { NavigateToFunction } from "app/routing/useNavigation"
+import { FormPositioner } from "@amsterdam/amsterdam-react-final-form";
+import { Fields } from "app/components/shared/Form/ScaffoldFields";
+import type { NavigateToFunction } from "app/routing/useNavigation";
 
 const scaffold = (
   caseId: Components.Schemas.CaseDetail["id"],
   navigateTo: NavigateToFunction,
-  authors: Components.Schemas.User[]
+  authors: Components.Schemas.User[],
 ) => {
 
   const fields = {
@@ -16,8 +16,8 @@ const scaffold = (
         name: "author1",
         label: "Toezichthouder 1",
         optionLabelField: "full_name",
-        options: authors
-      }
+        options: authors,
+      },
     },
     author2: {
       type: "ComplexSelectField",
@@ -26,8 +26,8 @@ const scaffold = (
         name: "author2",
         label: "Toezichthouder 2",
         optionLabelField: "full_name",
-        options: authors
-      }
+        options: authors,
+      },
     },
     time: {
       type: "CurrentTime",
@@ -35,8 +35,8 @@ const scaffold = (
         name: "start_time",
         label: "Starttijd onderzoek",
         pattern: "2[0-9]{3}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}",
-        title: "2021-12-30T12:34"
-      }
+        title: "2021-12-30T12:34",
+      },
     },
     status: {
       type: "RadioFields",
@@ -47,9 +47,9 @@ const scaffold = (
         options: {
           nobody_present: "Niemand aanwezig",
           no_cooperation: "Geen medewerking",
-          access_granted: "Toegang verleend"
-        }
-      }
+          access_granted: "Toegang verleend",
+        },
+      },
     },
     observations: {
       type: "CheckboxFields",
@@ -61,9 +61,9 @@ const scaffold = (
           intercom: "Contact via intercom",
           hotel_furnished: "Hotelmatig ingericht",
           vacant: "Leegstand",
-          likely_inhabited: "Vermoedelijk bewoond"
-        }
-      }
+          likely_inhabited: "Vermoedelijk bewoond",
+        },
+      },
     },
     suggest_next_visit: {
       type: "RadioFields",
@@ -74,16 +74,16 @@ const scaffold = (
           daytime: "Overdag",
           weekend: "Weekend",
           evening: "'s Avonds",
-          unknown: "Niet meer uitzetten"
-        }
-      }
+          unknown: "Niet meer uitzetten",
+        },
+      },
     },
     suggest_next_visit_description: {
       type: "TextAreaField",
       props: {
         label: "Geef toelichting (niet verplicht)",
-        name: "suggest_next_visit_description"
-      }
+        name: "suggest_next_visit_description",
+      },
     },
     next_visit: {
       type: "RadioFields",
@@ -92,41 +92,41 @@ const scaffold = (
         label: "Kan het adres direct worden uitgezet?",
         options: {
           yes: "Ja, doorlaten",
-          no: "Nee, tegenhouden"
-        }
-      }
+          no: "Nee, tegenhouden",
+        },
+      },
     },
     next_visit_description: {
       type: "TextAreaField",
       props: {
         name: "can_next_visit_go_ahead_description",
-        label: "Geef toelichting (niet verplicht)"
-      }
+        label: "Geef toelichting (niet verplicht)",
+      },
     },
     description: {
       type: "TextAreaField",
       props: {
         isRequired: false,
         name: "notes",
-        label: "Opmerkingen"
-      }
+        label: "Opmerkingen",
+      },
     },
     secondaryButton: {
       type: "Button",
       props: {
         label: "Annuleer",
         variant: "primaryInverted",
-        onClick: () => navigateTo("/zaken/:id", { id: caseId })
-      }
+        onClick: () => navigateTo("/zaken/:id", { id: caseId }),
+      },
     },
     submit: {
       type: "SubmitButton",
       props: {
         label: "Toevoegen",
-        align: "right"
-      }
-    }
-  }
+        align: "right",
+      },
+    },
+  };
 
   return new FormPositioner(fields as Fields)
     .setGrid("mobileS", "1fr 1fr", [
@@ -140,7 +140,7 @@ const scaffold = (
       ["suggest_next_visit", "suggest_next_visit"],
       ["suggest_next_visit_description", "suggest_next_visit_description"],
       ["description", "description"],
-      ["secondaryButton", "submit"]
+      ["secondaryButton", "submit"],
     ])
     .setGrid("laptopM", "1fr 1fr", [
       ["author1", "author2"],
@@ -150,9 +150,9 @@ const scaffold = (
       ["next_visit", "next_visit_description"],
       ["suggest_next_visit", "suggest_next_visit_description"],
       ["description", "description"],
-      ["secondaryButton", "submit"]
+      ["secondaryButton", "submit"],
     ])
-    .getScaffoldProps()
-}
+    .getScaffoldProps();
+};
 
-export default scaffold
+export default scaffold;

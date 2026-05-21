@@ -1,8 +1,8 @@
-import styled from "styled-components"
-import { themeColor, themeSpacing } from "@amsterdam/asc-ui"
+import styled from "styled-components";
+import { themeColor, themeSpacing } from "@amsterdam/asc-ui";
 
 const TabList = styled.div.attrs({
-  role: "tablist"
+  role: "tablist",
 })`
   min-width: 100%;
   box-shadow: inset 0 -2px 0 0 ${ themeColor("tint", "level2") };
@@ -26,6 +26,6 @@ const TabList = styled.div.attrs({
     width: 0;
     height: 0;
   }
-`
+`;
 
-export default TabList
+export default TabList;

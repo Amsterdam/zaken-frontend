@@ -5,6 +5,6 @@
 export const cleanParamObject = (obj: Record<string, any>) =>
   Object.fromEntries(
     Object.entries(obj).filter(
-      ([_, v]) => v !== undefined && v !== null && v !== ""
-    )
-  )
+      ([_, v]) => v !== undefined && v !== null && v !== "",
+    ),
+  );

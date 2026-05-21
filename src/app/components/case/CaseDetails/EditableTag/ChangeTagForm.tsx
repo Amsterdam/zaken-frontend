@@ -1,7 +1,7 @@
-import { useState } from "react"
-import { Button, RadioGroup, Label, Radio } from "@amsterdam/asc-ui"
-import { useTags, useCase } from "app/state/rest"
-import { ButtonContainer, StyledButton } from "../layout"
+import { useState } from "react";
+import { Button, RadioGroup, Label, Radio } from "@amsterdam/asc-ui";
+import { useTags, useCase } from "app/state/rest";
+import { ButtonContainer, StyledButton } from "../layout";
 
 
 type Props = {
@@ -10,17 +10,17 @@ type Props = {
 }
 
 const ChangeTagForm: React.FC<Props> = ({ case: caseItem, onCancel }) => {
-  const [selectedTag, setSelectedTag] = useState<Components.Schemas.Tag["id"] | undefined>(undefined)
-  const [data] = useTags(caseItem.theme.id)
-  const [, { execPatch }] = useCase(caseItem.id)
+  const [selectedTag, setSelectedTag] = useState<Components.Schemas.Tag["id"] | undefined>(undefined);
+  const [data] = useTags(caseItem.theme.id);
+  const [, { execPatch }] = useCase(caseItem.id);
 
   const submit = () => {
-    const tag_ids = selectedTag ? [selectedTag] : []
-    execPatch( { tag_ids })
-  }
+    const tag_ids = selectedTag ? [selectedTag] : [];
+    execPatch( { tag_ids });
+  };
 
-  const tags = data?.results ?? []
-  const initialValue = caseItem.tags.length > 0 ? caseItem.tags[0].id : "-"
+  const tags = data?.results ?? [];
+  const initialValue = caseItem.tags.length > 0 ? caseItem.tags[0].id : "-";
   return (
     <>
       <RadioGroup name="tags">
@@ -46,7 +46,7 @@ const ChangeTagForm: React.FC<Props> = ({ case: caseItem, onCancel }) => {
         </Button>
       </ButtonContainer>
     </>
-  )
-}
+  );
+};
 
-export default ChangeTagForm
+export default ChangeTagForm;

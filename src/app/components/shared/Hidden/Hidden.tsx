@@ -1,5 +1,5 @@
-import React, { ReactNode } from "react"
-import styles from "./Hidden.module.css"
+import React, { ReactNode } from "react";
+import styles from "./Hidden.module.css";
 
 type Breakpoint =
   | "mobileS"
@@ -22,19 +22,19 @@ type HiddenProps = {
 export const Hidden: React.FC<HiddenProps> = ({
   maxBreakpoint,
   minBreakpoint,
-  children
+  children,
 }) => {
-  let classes = ""
+  let classes = "";
 
   if (minBreakpoint) {
-    classes += ` ${styles[`hideUntil-${minBreakpoint}`]}`
+    classes += ` ${styles[`hideUntil-${minBreakpoint}`]}`;
   }
 
   if (maxBreakpoint) {
-    classes += ` ${styles[`hideFrom-${maxBreakpoint}`]}`
+    classes += ` ${styles[`hideFrom-${maxBreakpoint}`]}`;
   }
 
-  return <span className={classes.trim()}>{children}</span>
-}
+  return <span className={classes.trim()}>{children}</span>;
+};
 
-export default Hidden
+export default Hidden;

@@ -1,8 +1,8 @@
 
-import { ScaffoldAvailableFields, ScaffoldField as AmsterdamScaffoldField } from "@amsterdam/amsterdam-react-final-form"
+import { ScaffoldAvailableFields, ScaffoldField as AmsterdamScaffoldField } from "@amsterdam/amsterdam-react-final-form";
 
-import AutoFillButton, { AutoFillButtonProps } from "./AutoFillButton/AutoFillButton"
-import ShowHide, { ShowHideProps } from "./ShowHide/ShowHide"
+import AutoFillButton, { AutoFillButtonProps } from "./AutoFillButton/AutoFillButton";
+import ShowHide, { ShowHideProps } from "./ShowHide/ShowHide";
 
 export type Field =
 // NOTE: add your own custom types here:
@@ -17,12 +17,12 @@ type ScaffoldFieldProps = {
 const ScaffoldField: React.FC<ScaffoldFieldProps> = ({ field }) => {
   switch (field.type) {
     case "AutoFillButton":
-      return <AutoFillButton {...field.props} />
+      return <AutoFillButton {...field.props} />;
       case "ShowHide":
-      return <ShowHide {...field.props} />
+      return <ShowHide {...field.props} />;
     default:
-      return <AmsterdamScaffoldField field={field} />
+      return <AmsterdamScaffoldField field={field} />;
   }
-}
+};
 
-export default ScaffoldField
+export default ScaffoldField;

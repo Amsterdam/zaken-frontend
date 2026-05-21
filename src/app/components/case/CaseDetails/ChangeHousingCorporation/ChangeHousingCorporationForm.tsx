@@ -1,6 +1,6 @@
-import { useState } from "react"
-import { Button, RadioGroup, Label, Radio } from "@amsterdam/asc-ui"
-import { ButtonContainer, StyledButton } from "../layout"
+import { useState } from "react";
+import { Button, RadioGroup, Label, Radio } from "@amsterdam/asc-ui";
+import { ButtonContainer, StyledButton } from "../layout";
 
 type Props = {
   onSubmit: (id?: Components.Schemas.HousingCorporation["id"] | null) => void
@@ -10,17 +10,17 @@ type Props = {
 }
 
 const ChangeHousingCorporationForm: React.FC<Props> = ({
-  onSubmit, onCancel, housingCorporations, housingCorporationId
+  onSubmit, onCancel, housingCorporations, housingCorporationId,
 }) => {
-  const [selectedCorpo, setSelectedCorpo] = useState<typeof housingCorporationId | undefined | null>(null)
+  const [selectedCorpo, setSelectedCorpo] = useState<typeof housingCorporationId | undefined | null>(null);
 
   const saveHousingCorporation = () => {
     if (selectedCorpo !== housingCorporationId) {
-      onSubmit(selectedCorpo)
+      onSubmit(selectedCorpo);
     } else {
-      onCancel()
+      onCancel();
     }
-  }
+  };
 
   return (
     <>
@@ -50,7 +50,7 @@ const ChangeHousingCorporationForm: React.FC<Props> = ({
         </Button>
       </ButtonContainer>
     </>
-  )
-}
+  );
+};
 
-export default ChangeHousingCorporationForm
+export default ChangeHousingCorporationForm;

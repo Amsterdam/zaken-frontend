@@ -1,6 +1,6 @@
-import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
-import { Fields } from "app/components/shared/Form/ScaffoldFields"
-import type { NavigateToFunction } from "app/routing/useNavigation"
+import { FormPositioner } from "@amsterdam/amsterdam-react-final-form";
+import { Fields } from "app/components/shared/Form/ScaffoldFields";
+import type { NavigateToFunction } from "app/routing/useNavigation";
 
 export default (caseId: Components.Schemas.CaseDetail["id"], navigateTo: NavigateToFunction, completeCaseReasons?: Components.Schemas.CaseCloseReason[], completeCaseResults?: Components.Schemas.CaseCloseResult[]) => {
 
@@ -12,8 +12,8 @@ export default (caseId: Components.Schemas.CaseDetail["id"], navigateTo: Navigat
             label: "Wat is de reden?",
             name: "reason",
             optionLabelField: "name",
-            options: completeCaseReasons
-          }
+            options: completeCaseReasons,
+          },
     },
     result: {
       type: "ShowHide",
@@ -26,44 +26,44 @@ export default (caseId: Components.Schemas.CaseDetail["id"], navigateTo: Navigat
             label: "Wat is het resultaat?",
             name: "result",
             optionLabelField: "name",
-            options: completeCaseResults
-          }
+            options: completeCaseResults,
+          },
 
-        }
-      }
+        },
+      },
     },
     description: {
       type: "TextAreaField",
       props: {
         label: "Toelichting",
         name: "description",
-        isRequired: true
-      }
+        isRequired: true,
+      },
     },
     secondaryButton: {
       type: "Button",
       props: {
         label: "Annuleren",
         variant: "primaryInverted",
-        onClick: () => navigateTo("/zaken/:id", { id: caseId })
-      }
+        onClick: () => navigateTo("/zaken/:id", { id: caseId }),
+      },
     },
     submit: {
       type: "SubmitButton",
       props: {
         label: "Verwerken",
-        align: "right"
-      }
-    }
-  }
+        align: "right",
+      },
+    },
+  };
 
   return new FormPositioner(fields as Fields)
     .setGrid("laptop", "1fr 1fr", [
       ["reason", "reason"],
       ["result", "result"],
       ["description", "description"],
-      ["secondaryButton", "submit"]
+      ["secondaryButton", "submit"],
     ])
-    .getScaffoldProps()
-}
+    .getScaffoldProps();
+};
 

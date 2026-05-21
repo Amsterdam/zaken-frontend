@@ -1,12 +1,12 @@
-import { useAuth } from "react-oidc-context"
-import { MenuInline, Button, MenuToggle } from "@amsterdam/asc-ui"
-import styled from "styled-components"
-import ButtonLink from "app/components/shared/ButtonLink/ButtonLink"
-import to from "app/routing/utils/to"
-import MenuItems from "app/components/shared/navigation/MenuItems"
-import UserInfo from "../UserInfo/UserInfo"
-import CustomIcon from "../CustomIcon/CustomIcon"
-import Hidden from "app/components/shared/Hidden/Hidden"
+import { useAuth } from "react-oidc-context";
+import { MenuInline, Button, MenuToggle } from "@amsterdam/asc-ui";
+import styled from "styled-components";
+import ButtonLink from "app/components/shared/ButtonLink/ButtonLink";
+import to from "app/routing/utils/to";
+import MenuItems from "app/components/shared/navigation/MenuItems";
+import UserInfo from "../UserInfo/UserInfo";
+import CustomIcon from "../CustomIcon/CustomIcon";
+import Hidden from "app/components/shared/Hidden/Hidden";
 
 type Props = {
   showSearchButton: boolean
@@ -14,13 +14,13 @@ type Props = {
 
 const IconButton = styled(Button)`
   background-color: transparent;
-`
+`;
 
 const DefaultNavigation: React.FC<Props> = ({ showSearchButton }) => {
-  const auth = useAuth()
-  const token = auth.user?.access_token
+  const auth = useAuth();
+  const token = auth.user?.access_token;
 
-  if (!token) return null
+  if (!token) return null;
 
   return (
     <>
@@ -60,7 +60,7 @@ const DefaultNavigation: React.FC<Props> = ({ showSearchButton }) => {
         </MenuToggle>
       </Hidden>
     </>
-  )
-}
+  );
+};
 
-export default DefaultNavigation
+export default DefaultNavigation;

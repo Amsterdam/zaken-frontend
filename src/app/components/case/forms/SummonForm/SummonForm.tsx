@@ -1,11 +1,11 @@
 
-import { FormTitle } from "@amsterdam/asc-ui"
+import { FormTitle } from "@amsterdam/asc-ui";
 
-import { useSummons, useSummonTypesByTaskId } from "app/state/rest"
-import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
-import scaffold from "app/components/case/forms/SummonForm/scaffold"
-import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
-import useNavigation from "app/routing/useNavigation"
+import { useSummons, useSummonTypesByTaskId } from "app/state/rest";
+import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm";
+import scaffold from "app/components/case/forms/SummonForm/scaffold";
+import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields";
+import useNavigation from "app/routing/useNavigation";
 
 type Props = {
   id: Components.Schemas.CaseDetail["id"]
@@ -23,41 +23,41 @@ type SummonData = Omit<Components.Schemas.Summon, "type"> & {
 }
 
 const mapData = (data: SummonData) => {
-  let persons: any[] = []
+  let persons: any[] = [];
   if (data.entity_type === "legal") {
     if (data.legal_entity_type === "board") {
       persons.push({
         person_role: (data.legal_entity_role as any).key,
         function: "Bestuur",
-        entity_name: data.legal_entity_name
-      })
+        entity_name: data.legal_entity_name,
+      });
     } else {
-      const legalEntityPerson = data.persons_legal_entity[0]
+      const legalEntityPerson = data.persons_legal_entity[0];
       if (legalEntityPerson) {
         persons.push({
           ...legalEntityPerson,
           person_role: (data.legal_entity_role as any).key,
-          entity_name: data.legal_entity_name
-        })
+          entity_name: data.legal_entity_name,
+        });
       }
     }
   } else {
     data.persons?.forEach((person: Components.Schemas.SummonedPerson) => {
-      const p = person
-      p.person_role = (person.person_role as any).key
-      p.entity_name = data.legal_entity_name
-      persons.push(p)
-    })
+      const p = person;
+      p.person_role = (person.person_role as any).key;
+      p.entity_name = data.legal_entity_name;
+      persons.push(p);
+    });
   }
-  return ({ ...data, type: data.type.id, persons })
-}
+  return ({ ...data, type: data.type.id, persons });
+};
 
 const SummonForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
-  const [data] = useSummonTypesByTaskId(caseUserTaskId)
-  const summonTypes = data?.results
-  const { navigateTo } = useNavigation()
-  const fields = useScaffoldedFields(scaffold, id, navigateTo, summonTypes)
-  const [, { execPost }] = useSummons({ lazy: true })
+  const [data] = useSummonTypesByTaskId(caseUserTaskId);
+  const summonTypes = data?.results;
+  const { navigateTo } = useNavigation();
+  const fields = useScaffoldedFields(scaffold, id, navigateTo, summonTypes);
+  const [, { execPost }] = useSummons({ lazy: true });
 
   return (
     <>
@@ -70,7 +70,7 @@ const SummonForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
         caseUserTaskId={ caseUserTaskId }
       />
     </>
-  )
-}
+  );
+};
 
-export default SummonForm
+export default SummonForm;

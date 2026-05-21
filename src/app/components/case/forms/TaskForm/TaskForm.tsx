@@ -1,23 +1,23 @@
 
-import { FormTitle } from "@amsterdam/asc-ui"
+import { FormTitle } from "@amsterdam/asc-ui";
 
-import { useWorkflowProcesses, useWorkflowProcess } from "app/state/rest"
-import scaffold from "./scaffold"
-import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
-import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
-import useNavigation from "app/routing/useNavigation"
+import { useWorkflowProcesses, useWorkflowProcess } from "app/state/rest";
+import scaffold from "./scaffold";
+import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields";
+import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm";
+import useNavigation from "app/routing/useNavigation";
 
 type Props = {
   id: Components.Schemas.CaseDetail["id"]
 }
 
-const mapData = (data: { workflowProcess: Components.Schemas.WorkflowOption }) => ({ workflow_option_id: data.workflowProcess.id })
+const mapData = (data: { workflowProcess: Components.Schemas.WorkflowOption }) => ({ workflow_option_id: data.workflowProcess.id });
 
 const TaskForm: React.FC<Props> = ({ id }) => {
-  const [processes] = useWorkflowProcesses(id)
-  const { navigateTo } = useNavigation()
-  const fields = useScaffoldedFields(scaffold, id, navigateTo, processes)
-  const [, { execPost }] = useWorkflowProcess(id, { lazy: true })
+  const [processes] = useWorkflowProcesses(id);
+  const { navigateTo } = useNavigation();
+  const fields = useScaffoldedFields(scaffold, id, navigateTo, processes);
+  const [, { execPost }] = useWorkflowProcess(id, { lazy: true });
 
   return (
     <>
@@ -29,7 +29,7 @@ const TaskForm: React.FC<Props> = ({ id }) => {
         mapData={ mapData }
       />
     </>
-  )
-}
+  );
+};
 
-export default TaskForm
+export default TaskForm;

@@ -1,6 +1,6 @@
 
-import AddressDisplay from "../AddressDisplay/AddressDisplay"
-import PostalCodeDisplay from "../PostalCodeDisplay/PostalCodeDisplay"
+import AddressDisplay from "../AddressDisplay/AddressDisplay";
+import PostalCodeDisplay from "../PostalCodeDisplay/PostalCodeDisplay";
 
 type Props = {
   streetName: string
@@ -17,6 +17,6 @@ const FullAddressDisplay: React.FC<Props> = ({ streetName, streetNumber, suffix,
     { postalCode && <>, <PostalCodeDisplay postalCode={ postalCode } /></> }
     { city ? ` ${ city }` : "" }
   </>
-)
+);
 
-export default FullAddressDisplay
+export default FullAddressDisplay;

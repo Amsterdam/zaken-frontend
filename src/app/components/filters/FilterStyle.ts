@@ -1,11 +1,11 @@
-import styled from "styled-components"
-import { Label, themeSpacing } from "@amsterdam/asc-ui"
+import styled from "styled-components";
+import { Label, themeSpacing } from "@amsterdam/asc-ui";
 
 export const FilterWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: ${ themeSpacing(5) };
-`
+`;
 
 export const StyledLabel = styled(Label)`
   line-height: 18px;
@@ -18,4 +18,4 @@ export const StyledLabel = styled(Label)`
     align-items: center;
     display: flex;
   }
-`
+`;

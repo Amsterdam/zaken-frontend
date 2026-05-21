@@ -1,9 +1,9 @@
-import { Button } from "@amsterdam/asc-ui"
-import { Link } from "react-router-dom"
-import CustomTooltip from "app/components/help/HelpContent/CustomTooltip"
-import CustomIcon from "app/components/shared/CustomIcon/CustomIcon"
-import Hidden from "app/components/shared/Hidden/Hidden"
-import styles from "./LinkButton.module.css"
+import { Button } from "@amsterdam/asc-ui";
+import { Link } from "react-router-dom";
+import CustomTooltip from "app/components/help/HelpContent/CustomTooltip";
+import CustomIcon from "app/components/shared/CustomIcon/CustomIcon";
+import Hidden from "app/components/shared/Hidden/Hidden";
+import styles from "./LinkButton.module.css";
 
 type Props = {
   text: string
@@ -32,6 +32,6 @@ export const LinkButton: React.FC<Props> = ({ text, path, disabled }) => (
       </Link>
     )}
   </span>
-)
+);
 
-export default LinkButton
+export default LinkButton;

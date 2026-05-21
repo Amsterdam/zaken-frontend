@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components"
+import styled, { keyframes } from "styled-components";
 
 export const FullScreenWrapper = styled.div`
   display: flex;
@@ -6,13 +6,13 @@ export const FullScreenWrapper = styled.div`
   align-items: center;
   height: 100vh;
   width: 100vw;
-`
+`;
 
 const spin = keyframes`
   100% {
     transform: rotate(1turn);
   }
-`
+`;
 
 export const BasicSpinner = styled.div<{ color?: string, size?: number }>`
   width: ${ ({ size }) => size ?? 50 }px;
@@ -28,7 +28,7 @@ export const BasicSpinner = styled.div<{ color?: string, size?: number }>`
     conic-gradient(#0000 30%, ${ ({ color }) => color ?? "#ffa516" });
   -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
   animation: ${ spin } 1s infinite linear;
-`
+`;
 
 export const LoadingScreenBasic: React.FC<{
   color?: string
@@ -37,4 +37,4 @@ export const LoadingScreenBasic: React.FC<{
   <FullScreenWrapper>
     <BasicSpinner color={ color } size={ size } />
   </FullScreenWrapper>
-)
+);

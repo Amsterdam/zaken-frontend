@@ -1,4 +1,4 @@
-const noop = () => {}
+const noop = () => {};
 
 export const noopContext = {
   isRequestPendingInQueue: () => false,
@@ -7,5 +7,5 @@ export const noopContext = {
   setCacheItem: noop,
   updateCacheItem: noop,
   addErrorToCacheItem: noop,
-  clearCache: noop
-}
+  clearCache: noop,
+};

@@ -1,12 +1,12 @@
-import dayjs from "dayjs"
-import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
+import dayjs from "dayjs";
+import { FormPositioner } from "@amsterdam/amsterdam-react-final-form";
 
-import { Fields } from "app/components/shared/Form/ScaffoldFields"
+import { Fields } from "app/components/shared/Form/ScaffoldFields";
 
 function scaffold(
   onCancel: () => void,
   scheduleTypes?: Components.Schemas.ThemeScheduleTypes,
-  visitFromOptions?: { id: number, name: string }[]
+  visitFromOptions?: { id: number, name: string }[],
 ) {
   const fields = {
     week_segment: {
@@ -52,12 +52,12 @@ function scaffold(
             name: "visit_from_datetime",
             isRequired: true,
             validate: (value: string | undefined) => {
-              const now = dayjs()
-              const valueDate = dayjs(value)
-              const isInvalidDate = valueDate.isBefore(now, "day") // Date cannot be in the past.
+              const now = dayjs();
+              const valueDate = dayjs(value);
+              const isInvalidDate = valueDate.isBefore(now, "day"); // Date cannot be in the past.
               return isInvalidDate
                 ? "Selecteer vandaag of een dag in de toekomst!"
-                : false
+                : false;
             },
           },
         },
@@ -71,7 +71,7 @@ function scaffold(
         optionLabelField: "name",
         isRequired: true,
         withEmptyOption: true,
-        options: scheduleTypes?.priorities
+        options: scheduleTypes?.priorities,
       },
     },
     cancel: {
@@ -90,7 +90,7 @@ function scaffold(
         align: "right",
       },
     },
-  }
+  };
 
   return new FormPositioner(fields as Fields)
     .setGrid("mobileS", "1fr 1fr", [
@@ -101,7 +101,7 @@ function scaffold(
       ["priority", "priority"],
       ["cancel", "submit"],
     ])
-    .getScaffoldProps()
+    .getScaffoldProps();
 }
 
-export default scaffold
+export default scaffold;

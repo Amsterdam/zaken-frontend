@@ -1,9 +1,7 @@
 module.exports = {
-  extends: [
-    "react-app"
-  ],
-  "parserOptions": {
-    "warnOnUnsupportedTypeScriptVersion": false
+  extends: ["react-app"],
+  parserOptions: {
+    warnOnUnsupportedTypeScriptVersion: false,
   },
   rules: {
     "arrow-body-style": ["error", "as-needed"],
@@ -11,17 +9,21 @@ module.exports = {
     "import/no-anonymous-default-export": "off",
     "no-multiple-empty-lines": ["error"],
     "object-curly-spacing": ["error", "always"],
-    "quotes": ["error", "double", { "avoidEscape": true }],
+    quotes: ["error", "double", { avoidEscape: true }],
     "space-unary-ops": ["error"],
     "space-infix-ops": ["error"],
     "react/jsx-indent-props": ["error", 2],
-    "react/jsx-indent" : ["error", 2],
-
+    "react/jsx-indent": ["error", 2],
+    semi: ["error", "always"],
+    "comma-dangle": ["error", "always-multiline"],
     "@typescript-eslint/consistent-type-definitions": ["error", "type"],
-    "@typescript-eslint/type-annotation-spacing": ["error", {
-      before: false,
-      after: true,
-      overrides: { arrow: { before: true, after: true } }
-    }]
-  }
-}
+    "@typescript-eslint/type-annotation-spacing": [
+      "error",
+      {
+        before: false,
+        after: true,
+        overrides: { arrow: { before: true, after: true } },
+      },
+    ],
+  },
+};

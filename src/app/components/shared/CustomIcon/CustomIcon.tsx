@@ -1,5 +1,5 @@
-import React from "react"
-import icons from "./icons"
+import React from "react";
+import icons from "./icons";
 
 export type CustomIconProps = {
   name: keyof typeof icons
@@ -12,13 +12,13 @@ const CustomIcon: React.FC<CustomIconProps> = ({
   name, 
   color = "currentColor", 
   size = 24,
-  titleAccess 
+  titleAccess, 
 }) => {
-  const SvgComponent: any = icons[name]
+  const SvgComponent: any = icons[name];
 
   if (!SvgComponent) {
-    console.error(`Icon with name "${ name }" does not exist.`)
-    return null
+    console.error(`Icon with name "${ name }" does not exist.`);
+    return null;
   }
 
   return (
@@ -33,7 +33,7 @@ const CustomIcon: React.FC<CustomIconProps> = ({
       {titleAccess && <title>{titleAccess}</title>}`
       <SvgComponent />
     </svg>
-  )
-}
+  );
+};
 
-export default CustomIcon
+export default CustomIcon;

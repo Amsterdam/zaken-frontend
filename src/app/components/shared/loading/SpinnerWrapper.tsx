@@ -1,5 +1,5 @@
-import styled from "styled-components"
-import { Spinner } from "@amsterdam/asc-ui"
+import styled from "styled-components";
+import { Spinner } from "@amsterdam/asc-ui";
 
 type Props = {
   spinning?: boolean
@@ -17,7 +17,7 @@ const SpinnerContainer = styled.div`
   z-index: 10;
   -webkit-backdrop-filter: blur(1px);
   backdrop-filter: blur(1px);
-`
+`;
 
 
 export const SpinnerWrapper: React.FC<Props> = ({ spinning = true, children }) => (
@@ -29,6 +29,6 @@ export const SpinnerWrapper: React.FC<Props> = ({ spinning = true, children }) =
     )}
     { children }
   </div>
-)
+);
 
-export default SpinnerWrapper
+export default SpinnerWrapper;

@@ -1,14 +1,14 @@
-import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
-import { Spinner } from "@amsterdam/asc-ui"
-import FilterMenu from "app/components/shared/FilterMenu/FilterMenu"
-import ScaffoldFields from "app/components/shared/Form/ScaffoldFields"
-import scaffoldTheme from "./scaffoldTheme"
-import scaffoldRole from "./scaffoldRole"
-import scaffoldPageSize from "./scaffoldPageSize"
-import scaffoldMyTasks from "./scaffoldMyTasks"
-import scaffoldReasons from "./scaffoldReasons"
-import MultipleOptionsFilterBox from "app/components/filters/MultipleOptionsFilterBox/MultipleOptionsFilterBox"
-import NoCorporationFilter from "app/components/filters/NoCorporationFilter/NoCorporationFilter"
+import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form";
+import { Spinner } from "@amsterdam/asc-ui";
+import FilterMenu from "app/components/shared/FilterMenu/FilterMenu";
+import ScaffoldFields from "app/components/shared/Form/ScaffoldFields";
+import scaffoldTheme from "./scaffoldTheme";
+import scaffoldRole from "./scaffoldRole";
+import scaffoldPageSize from "./scaffoldPageSize";
+import scaffoldMyTasks from "./scaffoldMyTasks";
+import scaffoldReasons from "./scaffoldReasons";
+import MultipleOptionsFilterBox from "app/components/filters/MultipleOptionsFilterBox/MultipleOptionsFilterBox";
+import NoCorporationFilter from "app/components/filters/NoCorporationFilter/NoCorporationFilter";
 
 type Props = {
   corporations?: Components.Schemas.HousingCorporation[]
@@ -59,26 +59,26 @@ const TasksFilter: React.FC<Props> = ({
   tags,
   taskNames,
   theme,
-  themes
+  themes,
 }) => {
   const setDistrictNames = (value: Components.Schemas.District["name"][]) =>
-    onChangeFilter("districtNames", value)
-  const setOwner = (value: string) => onChangeFilter("owner", value)
-  const setReason = (value: string) => onChangeFilter("reason", value)
-  const setRole = (value: string) => onChangeFilter("role", value)
+    onChangeFilter("districtNames", value);
+  const setOwner = (value: string) => onChangeFilter("owner", value);
+  const setReason = (value: string) => onChangeFilter("reason", value);
+  const setRole = (value: string) => onChangeFilter("role", value);
   const setSelectedCorporations = (value: string[]) =>
-    onChangeFilter("housingCorporations", value)
+    onChangeFilter("housingCorporations", value);
   const setCorporationIsNull = (value: boolean) =>
-    onChangeFilter("housingCorporationIsNull", value)
+    onChangeFilter("housingCorporationIsNull", value);
   const setSelectedProjects = (value: string[]) =>
-    onChangeFilter("projects", value)
+    onChangeFilter("projects", value);
   const setSelectedSubjects = (value: string[]) =>
-    onChangeFilter("subjects", value)
-  const setSelectedTags = (value: string[]) => onChangeFilter("tags", value)
+    onChangeFilter("subjects", value);
+  const setSelectedTags = (value: string[]) => onChangeFilter("tags", value);
   const setSelectedTaskNames = (
-    value: Components.Schemas.CaseUserTaskTaskName["name"][]
-  ) => onChangeFilter("taskNames", value)
-  const setTheme = (value: string) => onChangeFilter("theme", value)
+    value: Components.Schemas.CaseUserTaskTaskName["name"][],
+  ) => onChangeFilter("taskNames", value);
+  const setTheme = (value: string) => onChangeFilter("theme", value);
 
   return (
     <FilterMenu>
@@ -164,7 +164,7 @@ const TasksFilter: React.FC<Props> = ({
         <ScaffoldFields {...scaffoldPageSize(pageSize, onChangePageSize)} />
       </ScaffoldForm>
     </FilterMenu>
-  )
-}
+  );
+};
 
-export default TasksFilter
+export default TasksFilter;

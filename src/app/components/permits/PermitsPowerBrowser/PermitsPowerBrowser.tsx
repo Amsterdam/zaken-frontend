@@ -1,9 +1,9 @@
 
-import { useState } from "react"
-import { PermitsSynopsis } from "@amsterdam/wonen-ui"
-import { Heading, Switch, themeColor, themeSpacing } from "@amsterdam/asc-ui"
-import styled from "styled-components"
-import { usePermitsPowerBrowser } from "app/state/rest"
+import { useState } from "react";
+import { PermitsSynopsis } from "@amsterdam/wonen-ui";
+import { Heading, Switch, themeColor, themeSpacing } from "@amsterdam/asc-ui";
+import styled from "styled-components";
+import { usePermitsPowerBrowser } from "app/state/rest";
 
 
 const StyledSpan = styled.span`
@@ -12,11 +12,11 @@ const StyledSpan = styled.span`
   font-size: 16px;
   display: flex;
   align-items: center;
-`
+`;
 
 const StyledSwitch = styled(Switch)`
   margin-left: ${ themeSpacing(2) };
-`
+`;
 
 type Props = {
   bagId: string
@@ -24,9 +24,9 @@ type Props = {
 
 
 const PermitsPowerBrowser: React.FC<Props> = ({ bagId }) => {
-  const [data, { isBusy }] = usePermitsPowerBrowser(bagId)
-  const [isChecked, setIsChecked] = useState(true)
-  const permits: any = data || []
+  const [data, { isBusy }] = usePermitsPowerBrowser(bagId);
+  const [isChecked, setIsChecked] = useState(true);
+  const permits: any = data || [];
   return (
     <>
       <Heading forwardedAs="h4">
@@ -38,7 +38,7 @@ const PermitsPowerBrowser: React.FC<Props> = ({ bagId }) => {
               aria-label="This is a checkbox!"
               data-testid="checkBox_display_all_permts"
               onChange={ (e: React.ChangeEvent<HTMLInputElement>) => {
-                setIsChecked(e.target.checked)
+                setIsChecked(e.target.checked);
               }}
               defaultChecked={true}
             />
@@ -51,7 +51,7 @@ const PermitsPowerBrowser: React.FC<Props> = ({ bagId }) => {
         displayOnlyValidPermits={ !isChecked }
       />
     </>
-  )
-}
+  );
+};
 
-export default PermitsPowerBrowser
+export default PermitsPowerBrowser;

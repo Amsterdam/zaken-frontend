@@ -1,10 +1,10 @@
 
-import { useEffect } from "react"
-import { produce } from "immer"
-import { useFormState, useForm } from "react-final-form"
-import { FormState } from "final-form"
-import { Dimensions, Responsive } from "@amsterdam/amsterdam-react-final-form"
-import ScaffoldField, { Field } from "../ScaffoldField"
+import { useEffect } from "react";
+import { produce } from "immer";
+import { useFormState, useForm } from "react-final-form";
+import { FormState } from "final-form";
+import { Dimensions, Responsive } from "@amsterdam/amsterdam-react-final-form";
+import ScaffoldField, { Field } from "../ScaffoldField";
 
 export type ShowHideProps = {
   position?: Responsive<Dimensions>
@@ -16,26 +16,26 @@ export type ShowHideProps = {
 
 const ShowHide: React.FC<ShowHideProps> = ({ shouldShow, field, position }) => {
 
-  const formState = useFormState()
-  const form = useForm()
+  const formState = useFormState();
+  const form = useForm();
 
-  const isShown = shouldShow(formState)
+  const isShown = shouldShow(formState);
 
   // UseEffect to prevent state change when rendering
   useEffect(() => {
     if (isShown === false && field.props.name !== undefined) {
-      form.change(field.props.name, undefined)
+      form.change(field.props.name, undefined);
     }
-  }, [isShown, form, field.props.name])
+  }, [isShown, form, field.props.name]);
 
   if (isShown) {
     const positionedField = produce(field, draft => {
-      draft.props.position = position
-    })
-    return <ScaffoldField field={ positionedField } />
+      draft.props.position = position;
+    });
+    return <ScaffoldField field={ positionedField } />;
   } else {
-    return null
+    return null;
   }
-}
+};
 
-export default ShowHide
+export default ShowHide;

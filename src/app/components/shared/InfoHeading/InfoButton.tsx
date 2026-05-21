@@ -1,8 +1,8 @@
-import styled from "styled-components"
-import { Button } from "@amsterdam/asc-ui"
-import Modal, { ModalBlock } from "app/components/shared/Modal/Modal"
-import { useModal } from "app/components/shared/Modal/hooks/useModal"
-import CustomIcon from "../CustomIcon/CustomIcon"
+import styled from "styled-components";
+import { Button } from "@amsterdam/asc-ui";
+import Modal, { ModalBlock } from "app/components/shared/Modal/Modal";
+import { useModal } from "app/components/shared/Modal/hooks/useModal";
+import CustomIcon from "../CustomIcon/CustomIcon";
 
 type Props = {
   infoTitle: string
@@ -16,10 +16,10 @@ const ButtonWrap = styled.span`
     height: 20px;
     border-radius: 10px;
   }
-`
+`;
 
 const InfoButton: React.FC<Props> = ({ infoTitle, infoText }) => {
-  const { isModalOpen, openModal, closeModal } = useModal()
+  const { isModalOpen, openModal, closeModal } = useModal();
   return (
     <>
       <ButtonWrap>
@@ -36,6 +36,6 @@ const InfoButton: React.FC<Props> = ({ infoTitle, infoText }) => {
         </ModalBlock>
       </Modal>
     </>
-  )
-}
-export default InfoButton
+  );
+};
+export default InfoButton;
