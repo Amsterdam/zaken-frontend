@@ -655,6 +655,7 @@ declare namespace Components {
             pageSize: number;
             totalPages: number;
             totalRecords: number;
+            fifteenNightsRuleApplicable: boolean;
             data: {
                 [name: string]: any;
             }[];
