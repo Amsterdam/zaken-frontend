@@ -1,9 +1,8 @@
 import IndexPage from "app/pages/addresses/index/IndexPage"
 import DetailsPage from "app/pages/addresses/details/DetailsPage"
-import PeoplePage from "app/pages/addresses/people/PeoplePage"
 import PermitsPage from "app/pages/addresses/permits/PermitsPage"
 import CreateCasePage from "app/pages/cases/create/CreateCasePage"
-import PeopleNewBrp from "app/pages/addresses/peopleNewBrp/PeopleNewBrp"
+import PeoplePage from "app/pages/addresses/people/PeoplePage"
 
 export default {
   "adres/:bagId": {
@@ -16,15 +15,9 @@ export default {
         title: "Adresdetails"
       },
       "personen": {
-        Page: PeopleNewBrp,
-        icon: "Portrait",
-        title: "Persoonsgegevens",
-        permissionNames: ["access_personal_data_register"]
-      },
-      "personen/nieuw": {
         Page: PeoplePage,
         icon: "Portrait",
-        title: "Persoonsgegevens oude BRP-Proxy",
+        title: "Persoonsgegevens",
         permissionNames: ["access_personal_data_register"]
       },
       "vergunningen": {
