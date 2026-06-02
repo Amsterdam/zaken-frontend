@@ -79,22 +79,22 @@ export const getQueryUrl = (
 };
 
 type UseTasksParams = {
-  districtNames?: Components.Schemas.District["name"][]
-  housingCorporationIsNull?: boolean
-  housingCorporations?: string[]
-  isEnforcementRequest?: boolean
-  owner?: string
-  pagination: TABLE.Schemas.Pagination
-  projects?: string[]
-  reason?: string
-  role?: string
-  sensitive?: boolean
-  sorting?: TABLE.Schemas.Sorting
-  subjects?: string[]
-  tags?: string[]
-  taskNames?: Components.Schemas.CaseUserTaskTaskName["name"][]
-  theme?: string
-}
+  districtNames?: Components.Schemas.District["name"][];
+  housingCorporationIsNull?: boolean;
+  housingCorporations?: string[];
+  isEnforcementRequest?: boolean;
+  owner?: string;
+  pagination: TABLE.Schemas.Pagination;
+  projects?: string[];
+  reason?: string;
+  role?: string;
+  sensitive?: boolean;
+  sorting?: TABLE.Schemas.Sorting;
+  subjects?: string[];
+  tags?: string[];
+  taskNames?: Components.Schemas.CaseUserTaskTaskName["name"][];
+  theme?: string;
+};
 
 export const useTasks = ({
   districtNames,
@@ -165,10 +165,21 @@ export const useTaskUpdate = (id: number | string, options?: Options) => {
   });
 };
 
-export const useTaskNames = (role: string) => {
+export const useTaskNames = (
+  theme_name: string | null,
+  role: string | null,
+) => {
   const handleError = useErrorHandler();
-  const queryParams = { completed: false, role };
-  const queryString = qs.stringify(queryParams, { addQueryPrefix: true });
+
+  const queryParams = {
+    completed: false,
+    theme_name: theme_name || undefined,
+    role: role || undefined,
+  };
+  const queryString = qs.stringify(queryParams, {
+    addQueryPrefix: true,
+    skipNulls: true,
+  });
   const apiUrl = `${makeApiUrl("tasks", "task-names")}${queryString}`;
   return useApiRequest<Components.Schemas.CaseUserTaskTaskName[]>({
     url: apiUrl,
