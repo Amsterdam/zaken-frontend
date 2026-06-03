@@ -27,7 +27,7 @@ import getThemeId from "app/components/tasks/utils/getThemeId";
 
 import styles from "./Tasks.module.css";
 
-type Item = string | Components.Schemas.District["name"][]
+type Item = string | Components.Schemas.District["name"][];
 
 const EMPTY_TEXT_NO_PERMISSION =
   "Helaas, u bent niet geautoriseerd om deze taken te bekijken.";
@@ -96,7 +96,7 @@ const Tasks: React.FC = () => {
     },
     isEnforcementRequest: true,
   });
-  const [taskNamesData] = useTaskNames(role ?? "");
+  const [taskNamesData] = useTaskNames(theme ?? null, role ?? null);
   const queryUrl = getQueryUrl(
     hasPermission,
     pagination,
