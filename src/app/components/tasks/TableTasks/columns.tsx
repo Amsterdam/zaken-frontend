@@ -5,8 +5,9 @@ import LinkButton from "app/components/shared/LinkButton/LinkButton";
 
 export default (sorting: any, myId?: string, isEnforcement?: boolean) => ([
   {
-    header: "Opgepakt door",
+    header: "Toegewezen aan",
     dataIndex: "owner",
+    minWidth: 150,
     render: (owner: any, record: any) => (
       <SelectTask taskId={record.id} taskOwner={owner} isEnforcement={!!isEnforcement} />
     ),

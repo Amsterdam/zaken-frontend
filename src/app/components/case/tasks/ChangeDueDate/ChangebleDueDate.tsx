@@ -10,7 +10,7 @@ import CustomIcon from "app/components/shared/CustomIcon/CustomIcon";
 
 type Props = {
   caseId: Components.Schemas.CaseDetail["id"]
-  caseUserTaskId: Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"]
+  caseUserTaskId: string
   dueDate: Components.Schemas.CaseUserTaskWorkdflow["due_date"]
 }
 

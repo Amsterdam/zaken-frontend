@@ -2,42 +2,42 @@ const noop = () => {};
 
 export type StateType = {
   cases: {
-    count: number
-    districtNames: Components.Schemas.District["name"][]
-    fromStartDate: string
-    housingCorporations: string[]
-    housingCorporationIsNull: boolean
-    openCases: string
-    pagination: TABLE.Schemas.Pagination
-    projects: string[]
-    reason: string
-    results: Components.Schemas.Case[]
-    sorting: TABLE.Schemas.Sorting
-    addressSearch: string
-    subjects: string[]
-    tags: string[]
-    theme: string
-    updateContextCases: (payload: any) => void
-  }
+    count: number;
+    districtNames: Components.Schemas.District["name"][];
+    fromStartDate: string;
+    housingCorporations: string[];
+    housingCorporationIsNull: boolean;
+    openCases: string;
+    pagination: TABLE.Schemas.Pagination;
+    projects: string[];
+    reason: string;
+    results: Components.Schemas.Case[];
+    sorting: TABLE.Schemas.Sorting;
+    addressSearch: string;
+    subjects: string[];
+    tags: string[];
+    theme: string;
+    updateContextCases: (payload: any) => void;
+  };
   tasks: {
-    count: number
-    districtNames: Components.Schemas.District["name"][]
-    housingCorporations: string[]
-    housingCorporationIsNull: boolean
-    owner: string
-    pagination: TABLE.Schemas.Pagination
-    projects: string[]
-    reason: string
-    results: Components.Schemas.CaseUserTask[]
-    role?: string
-    sorting: TABLE.Schemas.Sorting
-    theme: string
-    subjects: string[]
-    tags: string[]
-    taskNames: Components.Schemas.CaseUserTaskTaskName["name"][]
-    updateContextTasks: (payload: any) => void
-  }
-}
+    count: number;
+    districtNames: Components.Schemas.District["name"][];
+    housingCorporations: string[];
+    housingCorporationIsNull: boolean;
+    owners: string[];
+    pagination: TABLE.Schemas.Pagination;
+    projects: string[];
+    reason: string;
+    results: Components.Schemas.CaseUserTask[];
+    role?: string;
+    sorting: TABLE.Schemas.Sorting;
+    theme: string;
+    subjects: string[];
+    tags: string[];
+    taskNames: Components.Schemas.CaseUserTaskTaskName["name"][];
+    updateContextTasks: (payload: any) => void;
+  };
+};
 
 // Initial State
 export const initialState: StateType = {
@@ -70,7 +70,7 @@ export const initialState: StateType = {
     districtNames: [],
     housingCorporations: [],
     housingCorporationIsNull: false,
-    owner: "",
+    owners: [],
     pagination: {
       page: 1,
       pageSize: 25,

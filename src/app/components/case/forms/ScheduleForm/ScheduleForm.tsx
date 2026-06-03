@@ -8,7 +8,7 @@ import useNavigation from "app/routing/useNavigation";
 
 type Props = {
   id: Components.Schemas.CaseDetail["id"]
-  caseUserTaskId: Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"]
+  caseUserTaskId: string
 }
 
 type ScheduleTypeFormData = Omit<Components.Schemas.ScheduleCreate, "week_segment" | "day_segment" | "priority"> & {

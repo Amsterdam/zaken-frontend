@@ -21,7 +21,7 @@ const CompleteCasePage: React.FC = () => {
   const id = parseUrlParamId(idString);
 
   const isValid = isValidUrlParamId<Components.Schemas.CaseDetail["id"]>(id)
-    && isValidUrlParamId<Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"]>(caseUserTaskId);
+    && isValidUrlParamId<string>(caseUserTaskId);
 
     return (
       isValid ? (

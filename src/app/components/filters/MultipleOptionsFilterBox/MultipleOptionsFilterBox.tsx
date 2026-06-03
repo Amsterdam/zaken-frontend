@@ -4,7 +4,7 @@ import FilterCard from "./FilterCard";
 import FilterSearch from "./FilterSearch";
 import { FilterWrapper, StyledLabel } from "../FilterStyle";
 
-type Option = { 
+export type Option = { 
   id?: number | string
   name: string 
 }

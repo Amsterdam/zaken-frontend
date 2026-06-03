@@ -9,7 +9,7 @@ type Props<T, U> = {
   mapData?: (data: T) => U
   postMethod: (data: U) => Promise<any>
   initialValues?: Record<string, unknown>
-  caseUserTaskId?: Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"]
+  caseUserTaskId?: string
 }
 
 const WorkflowForm = <T extends Rec, U extends Rec>(props: Props<T, U>) => {

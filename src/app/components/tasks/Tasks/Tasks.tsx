@@ -12,6 +12,7 @@ import {
   useCorporations,
   useSubjects,
   useTags,
+  getQueryUrl as getTasksQueryUrl,
 } from "app/state/rest";
 import TableTasks from "app/components/tasks/TableTasks/TableTasks";
 import TasksFilter from "../TasksFilter/TasksFilter";
@@ -19,11 +20,10 @@ import useHasPermission, {
   SENSITIVE_CASE_PERMISSION,
 } from "app/state/rest/custom/usePermissions/useHasPermission";
 import { ContextValues } from "app/state/context/ValueProvider";
-import { getQueryUrl } from "app/state/rest/tasks";
 import useContextCache from "app/state/rest/provider/useContextCache";
-
 import CaseEnforcement from "app/components/case/icons/CaseEnforcement";
 import getThemeId from "app/components/tasks/utils/getThemeId";
+import { useMappedTaskOwners } from "../hooks/useMappedTaskOwners";
 
 import styles from "./Tasks.module.css";
 
@@ -44,7 +44,7 @@ const Tasks: React.FC = () => {
     districtNames,
     housingCorporations,
     housingCorporationIsNull,
-    owner,
+    owners,
     pagination,
     projects,
     reason,
@@ -68,20 +68,21 @@ const Tasks: React.FC = () => {
   const [tagsTheme] = useTags(themeId);
   const [tasksDistricts] = useDistricts();
   const [corporationData] = useCorporations();
+  const mappedTaskOwners = useMappedTaskOwners();
   const commonTaskArgs = {
-    sensitive: hasPermission,
-    sorting,
-    theme,
-    role,
-    owner,
-    taskNames,
-    projects,
-    reason,
-    subjects,
-    tags,
     districtNames,
     housingCorporations,
     housingCorporationIsNull,
+    owner: owners,
+    projects,
+    reason,
+    role,
+    sensitive: hasPermission,
+    sorting,
+    subjects,
+    tags,
+    taskNames,
+    theme,
   };
   const [dataSource, { isBusy }] = useTasks({
     ...commonTaskArgs,
@@ -97,13 +98,13 @@ const Tasks: React.FC = () => {
     isEnforcementRequest: true,
   });
   const [taskNamesData] = useTaskNames(theme ?? null, role ?? null);
-  const queryUrl = getQueryUrl(
+  const queryUrl = getTasksQueryUrl(
     hasPermission,
     pagination,
     sorting,
     theme,
     role,
-    owner,
+    owners,
   );
   const { clearContextCache } = useContextCache("cases", queryUrl);
 
@@ -130,7 +131,9 @@ const Tasks: React.FC = () => {
       pagination: { ...pagination, page: 1 },
     };
     // When role is set we need to reset the taskNames dropdown to avoid a stale selection:
-    if (key === "role") updates.taskNames = "";
+    if (key === "role" || key === "theme") {
+      updates.taskNames = "";
+    }
     /*
      ** When theme is set we need to reset the selection for reason and
      ** housingCorporations to avoid a stale selection:
@@ -215,7 +218,6 @@ const Tasks: React.FC = () => {
           districts={districts}
           corporations={corporationData?.results}
           corporationIsNull={housingCorporationIsNull}
-          owner={owner}
           pageSize={pagination.pageSize?.toString() || "25"}
           projects={projectsTheme?.results}
           role={role ?? ""}
@@ -223,6 +225,7 @@ const Tasks: React.FC = () => {
           reason={reason}
           reasons={reasons}
           selectedCorporations={housingCorporations}
+          selectedOwners={owners}
           selectedProjects={projects}
           selectedSubjects={subjects}
           selectedTags={tags}
@@ -232,6 +235,7 @@ const Tasks: React.FC = () => {
           subjects={subjectsTheme?.results}
           tags={tagsTheme?.results}
           taskNames={taskNamesData}
+          taskOwners={mappedTaskOwners}
           theme={theme}
           themes={caseThemes?.results}
         />
