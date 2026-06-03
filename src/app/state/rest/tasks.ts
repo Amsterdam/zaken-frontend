@@ -37,7 +37,7 @@ export const getQueryUrl = (
   sorting?: TABLE.Schemas.Sorting,
   theme?: string,
   role?: string,
-  owner?: string,
+  owner?: string[],
   isEnforcementRequest?: boolean,
   taskNames?: Components.Schemas.CaseUserTaskTaskName["name"][],
   projects?: string[],
@@ -63,7 +63,7 @@ export const getQueryUrl = (
   if (tags?.length) urlParams.tag = tags;
   if (taskNames?.length) urlParams.name = taskNames;
   if (role) urlParams.role = role;
-  if (owner) urlParams.owner = owner;
+  if (owner?.length) urlParams.owner = owner;
   if (districtNames?.length) urlParams.district_name = districtNames;
   if (housingCorporations) urlParams.housing_corporation = housingCorporations;
   if (housingCorporationIsNull) urlParams.housing_corporation_isnull = true;
@@ -73,7 +73,7 @@ export const getQueryUrl = (
 
   const queryString = isEmpty(urlParams)
     ? ""
-    : qs.stringify(urlParams, { addQueryPrefix: true, indices: false });
+    : qs.stringify(urlParams, { addQueryPrefix: true, indices: false, arrayFormat: "repeat" });
 
   return `${makeApiUrl("tasks")}${queryString}`;
 };
@@ -83,7 +83,7 @@ type UseTasksParams = {
   housingCorporationIsNull?: boolean;
   housingCorporations?: string[];
   isEnforcementRequest?: boolean;
-  owner?: string;
+  owner?: string[];
   pagination: TABLE.Schemas.Pagination;
   projects?: string[];
   reason?: string;
@@ -191,7 +191,7 @@ export const useTaskNames = (
 
 // useSummonTypesByTaskId for getting the available summonTypes for a specific task and thus Theme.
 export const useSummonTypesByTaskId = (
-  id: Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"],
+  id: string,
   options?: Options,
 ) => {
   const handleError = useErrorHandler();
@@ -199,6 +199,17 @@ export const useSummonTypesByTaskId = (
     ...options,
     url: makeApiUrl("tasks", id, "summon-types"),
     groupName: "task",
+    handleError,
+    isProtected: true,
+  });
+};
+
+export const useTaskOwners = (options?: Options) => {
+  const handleError = useErrorHandler();
+  return useApiRequest<Components.Schemas.User[]>({
+    ...options,
+    url: makeApiUrl("tasks", "owners"),
+    groupName: "themes",
     handleError,
     isProtected: true,
   });

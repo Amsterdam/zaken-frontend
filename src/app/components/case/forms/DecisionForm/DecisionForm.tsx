@@ -11,7 +11,7 @@ import useNavigation from "app/routing/useNavigation";
 
 type Props = {
   id: Components.Schemas.CaseDetail["id"]
-  caseUserTaskId: Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"]
+  caseUserTaskId: string
 }
 
 type DecisionData = Omit<Components.Schemas.Decision, "decision_type"> & { decision_type: { id: number }, description_closing?: string }

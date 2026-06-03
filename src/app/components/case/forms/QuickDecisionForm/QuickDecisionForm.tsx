@@ -9,7 +9,7 @@ import useNavigation from "app/routing/useNavigation";
 
 type Props = {
   id: Components.Schemas.CaseDetail["id"]
-  caseUserTaskId: Components.Schemas.CaseUserTaskWorkdflow["case_user_task_id"]
+  caseUserTaskId: string
 }
 
 type QuickDecisionData = Omit<Components.Schemas.QuickDecision, "quick_decision_type"> & { quick_decision_type: { id: number } }

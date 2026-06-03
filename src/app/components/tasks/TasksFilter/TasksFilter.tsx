@@ -5,43 +5,44 @@ import ScaffoldFields from "app/components/shared/Form/ScaffoldFields";
 import scaffoldTheme from "./scaffoldTheme";
 import scaffoldRole from "./scaffoldRole";
 import scaffoldPageSize from "./scaffoldPageSize";
-import scaffoldMyTasks from "./scaffoldMyTasks";
 import scaffoldReasons from "./scaffoldReasons";
-import MultipleOptionsFilterBox from "app/components/filters/MultipleOptionsFilterBox/MultipleOptionsFilterBox";
+import MultipleOptionsFilterBox, {
+  type Option,
+} from "app/components/filters/MultipleOptionsFilterBox/MultipleOptionsFilterBox";
 import NoCorporationFilter from "app/components/filters/NoCorporationFilter/NoCorporationFilter";
 
 type Props = {
-  corporations?: Components.Schemas.HousingCorporation[]
-  corporationIsNull: boolean
-  districtNames: Components.Schemas.District["name"][]
-  districts: Components.Schemas.District[]
-  owner: string
-  onChangeFilter: (key: string, value: any) => void
-  onChangePageSize: (value: string) => void
-  pageSize: string
-  projects?: Components.Schemas.CaseProject[]
-  reason: string
-  reasons?: Components.Schemas.CaseReason[]
-  role: MockComponents.Schemas.Role
-  roles?: MockComponents.Schemas.Role[]
-  selectedCorporations: string[]
-  selectedProjects: string[]
-  selectedSubjects: string[]
-  selectedTags: string[]
-  selectedTaskNames: string[]
-  subjects?: Components.Schemas.Subject[]
-  tags?: Components.Schemas.Tag[]
-  taskNames?: Components.Schemas.CaseUserTaskTaskName[]
-  theme: string
-  themes?: Components.Schemas.CaseTheme[]
-}
+  corporations?: Components.Schemas.HousingCorporation[];
+  corporationIsNull: boolean;
+  districtNames: Components.Schemas.District["name"][];
+  districts: Components.Schemas.District[];
+  onChangeFilter: (key: string, value: any) => void;
+  onChangePageSize: (value: string) => void;
+  pageSize: string;
+  projects?: Components.Schemas.CaseProject[];
+  reason: string;
+  reasons?: Components.Schemas.CaseReason[];
+  role: MockComponents.Schemas.Role;
+  roles?: MockComponents.Schemas.Role[];
+  selectedCorporations: string[];
+  selectedOwners: string[];
+  selectedProjects: string[];
+  selectedSubjects: string[];
+  selectedTags: string[];
+  selectedTaskNames: string[];
+  subjects?: Components.Schemas.Subject[];
+  tags?: Components.Schemas.Tag[];
+  taskNames?: Components.Schemas.CaseUserTaskTaskName[];
+  taskOwners?: Option[];
+  theme: string;
+  themes?: Components.Schemas.CaseTheme[];
+};
 
 const TasksFilter: React.FC<Props> = ({
   corporations,
   corporationIsNull,
   districtNames,
   districts,
-  owner,
   onChangeFilter,
   onChangePageSize,
   pageSize,
@@ -51,6 +52,7 @@ const TasksFilter: React.FC<Props> = ({
   role,
   roles,
   selectedCorporations,
+  selectedOwners,
   selectedProjects,
   selectedSubjects,
   selectedTags,
@@ -58,33 +60,28 @@ const TasksFilter: React.FC<Props> = ({
   subjects,
   tags,
   taskNames,
+  taskOwners,
   theme,
   themes,
 }) => {
-  const setDistrictNames = (value: Components.Schemas.District["name"][]) =>
-    onChangeFilter("districtNames", value);
-  const setOwner = (value: string) => onChangeFilter("owner", value);
   const setReason = (value: string) => onChangeFilter("reason", value);
   const setRole = (value: string) => onChangeFilter("role", value);
-  const setSelectedCorporations = (value: string[]) =>
-    onChangeFilter("housingCorporations", value);
   const setCorporationIsNull = (value: boolean) =>
     onChangeFilter("housingCorporationIsNull", value);
-  const setSelectedProjects = (value: string[]) =>
-    onChangeFilter("projects", value);
-  const setSelectedSubjects = (value: string[]) =>
-    onChangeFilter("subjects", value);
-  const setSelectedTags = (value: string[]) => onChangeFilter("tags", value);
-  const setSelectedTaskNames = (
-    value: Components.Schemas.CaseUserTaskTaskName["name"][],
-  ) => onChangeFilter("taskNames", value);
   const setTheme = (value: string) => onChangeFilter("theme", value);
 
+  
   return (
     <FilterMenu>
-      <ScaffoldForm>
-        <ScaffoldFields {...scaffoldMyTasks(owner, setOwner)} />
-      </ScaffoldForm>
+      <MultipleOptionsFilterBox
+        label="Toegewezen aan"
+        options={taskOwners}
+        selectedOptions={selectedOwners}
+        setSelectedOptions={(value: string[]) =>
+          onChangeFilter("owners", value)
+        }
+        byId
+      />
       {themes === undefined ? (
         <Spinner />
       ) : (
@@ -113,25 +110,34 @@ const TasksFilter: React.FC<Props> = ({
           label="Taak namen"
           options={taskNames}
           selectedOptions={selectedTaskNames}
-          setSelectedOptions={setSelectedTaskNames}
+          setSelectedOptions={(value: string[]) =>
+            onChangeFilter("taskNames", value)
+          }
         />
       )}
       <MultipleOptionsFilterBox
         label="Corporaties"
         options={corporations}
         selectedOptions={selectedCorporations}
-        setSelectedOptions={setSelectedCorporations}
+        setSelectedOptions={(value: string[]) =>
+          onChangeFilter("housingCorporations", value)
+        }
         byId
       />
 
-      <NoCorporationFilter checked={corporationIsNull} setChecked={setCorporationIsNull}/>
+      <NoCorporationFilter
+        checked={corporationIsNull}
+        setChecked={setCorporationIsNull}
+      />
 
       {projects && (
         <MultipleOptionsFilterBox
           label="Projecten"
           options={projects}
           selectedOptions={selectedProjects}
-          setSelectedOptions={setSelectedProjects}
+          setSelectedOptions={(value: string[]) =>
+            onChangeFilter("projects", value)
+          }
           byId
         />
       )}
@@ -141,7 +147,9 @@ const TasksFilter: React.FC<Props> = ({
           label="Onderwerpen"
           options={subjects}
           selectedOptions={selectedSubjects}
-          setSelectedOptions={setSelectedSubjects}
+          setSelectedOptions={(value: string[]) =>
+            onChangeFilter("subjects", value)
+          }
           byId
         />
       )}
@@ -150,7 +158,9 @@ const TasksFilter: React.FC<Props> = ({
           label="Tags"
           options={tags}
           selectedOptions={selectedTags}
-          setSelectedOptions={setSelectedTags}
+          setSelectedOptions={(value: string[]) =>
+            onChangeFilter("tags", value)
+          }
           byId
         />
       )}
@@ -158,7 +168,9 @@ const TasksFilter: React.FC<Props> = ({
         label="Stadsdelen"
         options={districts}
         selectedOptions={districtNames}
-        setSelectedOptions={setDistrictNames}
+        setSelectedOptions={(value: string[]) =>
+          onChangeFilter("districtNames", value)
+        }
       />
       <ScaffoldForm>
         <ScaffoldFields {...scaffoldPageSize(pageSize, onChangePageSize)} />
