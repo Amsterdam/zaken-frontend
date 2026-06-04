@@ -1,0 +1,54 @@
+/**
+ * Tijdelijk bestand: Amsterdam Design System tokens
+ * Verwijder dit bestand zodra de AMS CSS globaal beschikbaar is in de app.
+ *
+ * Bron: @amsterdam/design-system-tokens
+ */
+:root {
+  /* Kleuren */
+  --ams-color-background: #fff;
+  --ams-color-text: #202020;
+  --ams-color-text-inverse: #fff;
+  --ams-color-text-secondary: #767676;
+  --ams-color-interactive: #004699;
+  --ams-color-interactive-hover: #003677;
+  --ams-color-interactive-disabled: #767676;
+  --ams-color-separator: #d1d1d1;
+  --ams-color-highlight-orange: #ff9100;
+  --ams-color-highlight-purple: #a00078;
+
+  /* Spacing */
+  --ams-space-xs: clamp(0.25rem, 0.2143rem + 0.1786vw, 0.375rem);
+  --ams-space-s: clamp(0.5rem, 0.4286rem + 0.3571vw, 0.75rem);
+  --ams-space-m: clamp(1rem, 0.8571rem + 0.7143vw, 1.5rem);
+
+  /* Border */
+  --ams-border-width-m: 0.125rem;
+
+  /* Focus */
+  --ams-focus-outline-offset: 0.25rem;
+
+  /* Typography */
+  --ams-typography-font-family: "Amsterdam Sans", Arial, sans-serif;
+  --ams-typography-body-text-small-font-size: 1rem;
+  --ams-typography-body-text-small-line-height: 1.5;
+  --ams-typography-body-text-font-weight: 400;
+
+  /* Avatar tokens */
+  --ams-avatar-aspect-ratio: 1 / 1;
+  --ams-avatar-background-color: var(--ams-color-highlight-purple);
+  --ams-avatar-border-color: var(--ams-color-highlight-purple);
+  --ams-avatar-border-style: solid;
+  --ams-avatar-border-width: var(--ams-border-width-m);
+  --ams-avatar-color: var(--ams-color-text-inverse);
+  --ams-avatar-font-family: var(--ams-typography-font-family);
+  --ams-avatar-font-size: var(--ams-typography-body-text-small-font-size);
+  --ams-avatar-font-weight: var(--ams-typography-body-text-font-weight);
+  --ams-avatar-line-height: var(--ams-typography-body-text-small-line-height);
+  --ams-avatar-padding-block: var(--ams-space-xs);
+  --ams-avatar-padding-inline: var(--ams-space-xs);
+
+  /* Cursor */
+  --ams-cursor-interactive: pointer;
+  --ams-cursor-disabled: not-allowed;
+}

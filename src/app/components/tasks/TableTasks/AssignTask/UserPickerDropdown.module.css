@@ -1,0 +1,174 @@
+@import "app/components/shared/ams-tokens.css";
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  min-width: 240px;
+  background: #ffffff;
+  border: 1px solid var(--ams-color-separator);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  animation: dropIn 0.12s ease;
+}
+
+@keyframes dropIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Search */
+.searchWrapper {
+  position: relative;
+  padding: 8px;
+  border-bottom: 1px solid var(--ams-color-separator);
+}
+
+.searchIcon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--ams-color-text);
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px 8px 6px 28px;
+  border: 1px solid var(--ams-color-separator);
+  line-height: 1.4;
+  color: var(--ams-color-text);
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.searchInput:focus {
+  border-color: var(--ams-color-interactive);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+}
+
+/* List */
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 4px 0;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.divider {
+  height: 1px;
+  background: var(--ams-color-separator);
+  margin: 0;
+}
+
+/* Items */
+.item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+  user-select: none;
+}
+
+.item:hover {
+  background-color: #eff6ff;
+}
+
+.item:focus-visible {
+  outline: none;
+  background-color: #dbeafe;
+}
+
+.itemActive {
+  background-color: #eff6ff;
+  color: var(--ams-color-text-secondary);
+}
+
+.itemDisabled {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* Unassign item */
+.unassignItem {
+  color: var(--ams-color-text);
+}
+
+.unassignAvatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #e5e7eb;
+  color: var(--ams-color-text);
+}
+
+.selfIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  color: var(--ams-color-highlight-orange);
+}
+
+/* User initials in list */
+.userInitials {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--ams-color-text-secondary);
+  color: var(--ams-color-text-inverse);
+  font-size: 0.625rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.itemName {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.currentBadge {
+  font-size: 0.6875rem;
+  color: #9ca3af;
+  font-style: italic;
+  flex-shrink: 0;
+}
+
+.checkmark {
+  color: var(--ams-color-text-secondary);
+  flex-shrink: 0;
+}
+
+/* Loading / empty */
+.statusItem {
+  padding: 10px 12px;
+  color: #9ca3af;
+  text-align: center;
+}

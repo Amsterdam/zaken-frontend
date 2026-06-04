@@ -5,6 +5,7 @@ const columnPriority = [
   "case.address.street_name",
   "name",
   "owner",
+  "owner2",
   "case.address.postal_code",
   "due_date",
   "case.start_date",
