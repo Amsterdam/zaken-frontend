@@ -11,7 +11,7 @@ import CustomIcon from "app/components/shared/CustomIcon/CustomIcon";
 type Props = {
   caseId: Components.Schemas.CaseDetail["id"]
   caseUserTaskId: string
-  dueDate: Components.Schemas.CaseUserTaskWorkdflow["due_date"]
+  dueDate: Tasks.WorkflowTask["due_date"]
 }
 
 const Span = styled.span`

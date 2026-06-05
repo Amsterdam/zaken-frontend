@@ -17,6 +17,7 @@ type Props = {
   taskId: any;
   taskOwner?: string | null;
   isEnforcement: boolean;
+  onOwnerChange?: (taskId: any, newOwner: string | null) => void;
 };
 
 const enforcementPagination = {
@@ -24,7 +25,12 @@ const enforcementPagination = {
   pageSize: 1000,
 };
 
-const AssignTask: React.FC<Props> = ({ taskId, taskOwner, isEnforcement }) => {
+const AssignTask: React.FC<Props> = ({
+  taskId,
+  taskOwner,
+  isEnforcement,
+  onOwnerChange,
+}) => {
   const {
     pagination,
     sorting,
@@ -105,22 +111,26 @@ const AssignTask: React.FC<Props> = ({ taskId, taskOwner, isEnforcement }) => {
       try {
         const resp: any = await execPatch({ owner: newOwner });
         if (resp?.status === 200) {
-          const tasksResponse = getContextItem();
-          const tasks = tasksResponse?.results ?? [];
-          const newTasks = [...tasks];
-          const index = newTasks.findIndex(
-            (task: { id: number }) => task.id === taskId,
-          );
-          if (index !== -1) {
-            newTasks[index] = { ...newTasks[index], owner: newOwner };
+          if (onOwnerChange) {
+            onOwnerChange(taskId, newOwner);
+          } else {
+            const tasksResponse = getContextItem();
+            const tasks = tasksResponse?.results ?? [];
+            const newTasks = [...tasks];
+            const index = newTasks.findIndex(
+              (task: { id: number }) => task.id === taskId,
+            );
+            if (index !== -1) {
+              newTasks[index] = { ...newTasks[index], owner: newOwner };
+            }
+            updateContextItem({ ...tasksResponse, results: newTasks });
           }
-          updateContextItem({ ...tasksResponse, results: newTasks });
         }
       } finally {
         setLoading(false);
       }
     },
-    [execPatch, getContextItem, updateContextItem, taskId],
+    [execPatch, getContextItem, updateContextItem, onOwnerChange, taskId],
   );
 
   const handleUserSelect = (userId: string | null) => {

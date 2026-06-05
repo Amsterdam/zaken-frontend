@@ -3,7 +3,7 @@ const TASK_EXCEPTIONS: string[] = [
 ];
 
 // There are some tasks that can be done by everyone.
-const checkTaskExceptionsForRoles = (task: Components.Schemas.CaseUserTaskWorkdflow) => {
+const checkTaskExceptionsForRoles = (task: Tasks.WorkflowTask) => {
   if (TASK_EXCEPTIONS.includes(task?.task_name)) {
     return ["Alle rollen"];
   }

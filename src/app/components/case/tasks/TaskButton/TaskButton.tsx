@@ -7,11 +7,11 @@ import Hidden from "app/components/shared/Hidden/Hidden";
 
 type Props = {
   onSubmit: (
-    variables: Components.Schemas.GenericCompletedTask["variables"]
+    variables: Tasks.WorkflowTask["form_variables"],
   ) => Promise<unknown>
   taskName: string
   caseId: Components.Schemas.CaseDetail["id"]
-  form?: Components.Schemas.CaseUserTaskWorkdflow["form"]
+  form?: Tasks.WorkflowTask["form"]
   disabled?: boolean
 }
 

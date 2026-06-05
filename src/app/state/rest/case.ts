@@ -209,7 +209,7 @@ export const useVisitsCreate = (options?: Options) => {
 
 export const useCaseWorkflows = (caseId: Components.Schemas.CaseDetail["id"], options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.PaginatedCaseWorkflowList>({
+  return useApiRequest<Tasks.PaginatedWorkflowList>({
     ...options,
     url: makeApiUrl("cases", caseId, "workflows"),
     groupName: "cases",

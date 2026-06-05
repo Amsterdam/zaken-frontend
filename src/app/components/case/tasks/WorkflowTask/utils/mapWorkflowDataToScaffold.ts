@@ -13,9 +13,11 @@ const mapItemToType = (item: any) => {
   return "TextField";
 };
 
-const arrayToObject = (array: Array<{ label: string, value: string }>) => array.reduce(
-  (acc, val) => ({ ...acc, [val.value]: val.label }), {} as Record<string, string>,
-);
+const arrayToObject = (array: Array<{ label: string; value: string }>) =>
+  array.reduce(
+    (acc, val) => ({ ...acc, [val.value]: val.label }),
+    {} as Record<string, string>,
+  );
 
 const mapItemToOptions = (item: any) => {
   if (item.type === "checkbox") {
@@ -28,8 +30,10 @@ const mapItemToOptions = (item: any) => {
   return undefined;
 };
 
-export default (workflowForm: Components.Schemas.CaseUserTaskWorkdflow["form"], onCancel = () => {}) => {
-
+export default (
+  workflowForm: Tasks.WorkflowTask["form"],
+  onCancel = () => {},
+) => {
   const fields = workflowForm.reduce((acc: Fields, item: any) => {
     if (item === undefined) return acc;
     const mappedItemType = mapItemToType(item);
@@ -74,7 +78,7 @@ export default (workflowForm: Components.Schemas.CaseUserTaskWorkdflow["form"], 
   const allFields = { ...fields, ...buttons };
   return new FormPositioner(allFields as Fields)
     .setGrid("mobileS", "1fr 1fr", [
-      ...Object.keys(fields).map(field => [field, field]),
+      ...Object.keys(fields).map((field) => [field, field]),
       ["cancel", "submit"],
     ])
     .getScaffoldProps();
