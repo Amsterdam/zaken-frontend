@@ -1,26 +1,12 @@
 import { DateDisplay } from "@amsterdam/wonen-ui";
 import DueDate from "app/components/shared/DueDate/DueDate";
-import SelectTask from "./SelectTask/SelectTask";
 import LinkButton from "app/components/shared/LinkButton/LinkButton";
 import AssignTask from "./AssignTask/AssignTask";
 
 export default (sorting: any, myId?: string, isEnforcement?: boolean) => [
   {
-    header: "Toegewezen aan",
+    header: "Toegewezen",
     dataIndex: "owner",
-    minWidth: 150,
-    render: (owner: any, record: any) => (
-      <SelectTask
-        taskId={record.id}
-        taskOwner={owner}
-        isEnforcement={!!isEnforcement}
-      />
-    ),
-  },
-  {
-    header: "Toegewezen aan (avatar)",
-    dataIndex: "owner2",
-    minWidth: 150,
     render: (_: any, record: any) => (
       <AssignTask
         taskId={record.id}

@@ -1,11 +1,6 @@
 @import "app/components/shared/ams-tokens.css";
 
 .dropdown {
-  position: absolute;
-  top: calc(100% + 6px);
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 100;
   min-width: 240px;
   background: #ffffff;
   border: 1px solid var(--ams-color-separator);
@@ -18,12 +13,10 @@
 
 @keyframes dropIn {
   from {
-    opacity: 0;
-    transform: translateX(-50%) translateY(-4px);
+    transform: translateY(-4px);
   }
   to {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
+    transform: translateY(0);
   }
 }
 
