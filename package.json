@@ -63,7 +63,7 @@
   "devDependencies": {
     "@babel/preset-env": "^7.29.0",
     "@babel/preset-react": "^7.28.5",
-    "@babel/preset-typescript": "^7.28.5",
+    "@babel/preset-typescript": "^7.29.7",
     "@svgr/core": "^8.1.0",
     "@svgr/plugin-jsx": "^8.1.0",
     "@types/node": "^25.8.0",
