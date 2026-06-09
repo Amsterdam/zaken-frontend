@@ -55,7 +55,7 @@
     "react-oidc-context": "^3.3.0",
     "react-router-dom": "^6.30.3",
     "react-tooltip": "^6.0.3",
-    "styled-components": "^5.3.11",
+    "styled-components": "^6.4.2",
     "typescript": "6.0.3",
     "vite": "^8.0.13",
     "vite-plugin-eslint": "^1.8.1"
