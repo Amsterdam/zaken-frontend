@@ -1,0 +1,10 @@
+.container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.noPermission {
+  color: var(--color-neutral-400, #9ca3af);
+  font-size: 0.875rem;
+}

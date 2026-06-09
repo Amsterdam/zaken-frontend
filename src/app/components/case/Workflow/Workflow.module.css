@@ -1,0 +1,11 @@
+.wrap {
+  margin-bottom: 48px;
+}
+
+.wrap:last-child {
+  margin-bottom: 0;
+}
+
+.content {
+  margin-bottom: 16px;
+}

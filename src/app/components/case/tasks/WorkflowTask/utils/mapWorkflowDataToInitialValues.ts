@@ -1,5 +1,8 @@
-type Rec = Record<string, Array<string> | string | { label: string, value: string }>
-export default (workflowForm: Components.Schemas.CaseUserTaskWorkdflow["form"]) => (
+type Rec = Record<
+  string,
+  Array<string> | string | { label: string; value: string }
+>;
+export default (workflowForm: Tasks.WorkflowTask["form"]) =>
   workflowForm.reduce((acc: Rec, item: any) => {
     const { default_value, name, type } = item;
     // The API response is somewhat inconsistent
@@ -16,5 +19,4 @@ export default (workflowForm: Components.Schemas.CaseUserTaskWorkdflow["form"]) 
     // if (default_value == null) return acc
     // acc[name] = default_value
     return acc;
-  }, {} as Rec)
-);
+  }, {} as Rec);

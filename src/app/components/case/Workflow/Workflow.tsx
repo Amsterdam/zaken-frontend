@@ -1,25 +1,13 @@
-import { Button, Heading, themeSpacing } from "@amsterdam/asc-ui";
+import { Button, Heading } from "@amsterdam/asc-ui";
 import { useTaskComplete, useCaseWorkflows, useCase } from "app/state/rest";
-import StyledTable from "./components/StyledTable";
-import styled from "styled-components";
 import getColumns from "./columns";
-import { LoadingRows } from "@amsterdam/wonen-ui";
+import { LoadingRows, Table } from "@amsterdam/wonen-ui";
 import usePollingRefetch from "app/state/rest/hooks/usePollingRefetch";
+import styles from "./Workflow.module.css";
 
 type Props = {
-  id: Components.Schemas.CaseDetail["id"]
+  id: Components.Schemas.CaseDetail["id"];
 };
-
-const Wrap = styled.div`
-  margin-bottom: ${themeSpacing(12)};
-  &:last-child {
-    margin-bottom: 0;
-  }
-`;
-
-const Div = styled.div`
-  margin-bottom: ${themeSpacing(4)};
-`;
 
 const Workflow: React.FC<Props> = ({ id }) => {
   const [, { execPost }] = useTaskComplete({ lazy: true });
@@ -48,18 +36,18 @@ const Workflow: React.FC<Props> = ({ id }) => {
           const columns = getColumns(execPost, tasks, caseData?.theme.id);
 
           return (
-            <Wrap key={`${state.name}_${index}`}>
-              <Div>
+            <div className={styles.wrap} key={`${state.name}_${index}`}>
+              <div className={styles.content}>
                 <Heading as="h4">{state.name}</Heading>
                 {information && <p>{information}</p>}
-              </Div>
-              <StyledTable
+              </div>
+              <Table
                 columns={columns}
                 lastColumnFixed
                 data={tasks || []}
                 pagination={false}
               />
-            </Wrap>
+            </div>
           );
         })
       ) : (

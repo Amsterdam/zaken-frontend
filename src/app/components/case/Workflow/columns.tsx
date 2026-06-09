@@ -1,22 +1,64 @@
 import { List } from "@amsterdam/wonen-ui";
-import styled from "styled-components";
 import ChangeableDueDate from "app/components/case/tasks/ChangeDueDate/ChangebleDueDate";
 import TaskButton from "app/components/case/tasks/TaskButton/TaskButton";
 import taskActionMap from "./utils/taskActionMap";
-import SelectTaskWorkflow from "./components/SelectTaskWorkflow";
 import CustomIcon from "app/components/shared/CustomIcon/CustomIcon";
 import LinkButton from "app/components/shared/LinkButton/LinkButton";
 import UpdateSchedule from "./components/UpdateSchedule/UpdateSchedule";
+import AssignTask from "app/components/tasks/TableTasks/AssignTask/AssignTask";
+import { makeApiUrl } from "app/state/rest/hooks/utils/apiUrl";
+import useContextCache from "app/state/rest/provider/useContextCache";
 
-// This width value (113px) is the width of a date + edit icon including the spacing between them
-const Span = styled.span`
-  display: inline-block;
-  min-width: 113px;
-`;
+const useWorkflowOwnerChange = (caseId: any) => {
+  const apiUrl = makeApiUrl("cases", caseId, "workflows");
+  const { getContextItem, updateContextItem } = useContextCache(
+    "cases",
+    apiUrl,
+  );
+
+  return (taskId: any, newOwner: string | null) => {
+    const response = getContextItem();
+    const workflows = response?.results;
+    const workflowIndex = workflows?.findIndex((workflow: any) =>
+      workflow.tasks.some((task: any) => task.case_user_task_id === taskId),
+    );
+    if (workflowIndex === -1 || workflowIndex === undefined) return;
+
+    const taskIndex = workflows[workflowIndex].tasks.findIndex(
+      (task: any) => task.case_user_task_id === taskId,
+    );
+    if (taskIndex === -1) return;
+
+    const updatedResponse = structuredClone(response);
+    updatedResponse.results[workflowIndex].tasks[taskIndex].owner = newOwner;
+    updateContextItem(updatedResponse);
+  };
+};
+
+/**
+ * Kleine wrapper zodat de hook per rij aangeroepen kan worden.
+ * Hooks mogen niet conditioneel of in callbacks aangeroepen worden,
+ * dus we pakken dit op via een component.
+ */
+const AssignTaskWorkflow: React.FC<{
+  task: Tasks.WorkflowTask;
+}> = ({ task }) => {
+  const { case_user_task_id: taskId, owner: taskOwner, case: caseId } = task;
+  const onOwnerChange = useWorkflowOwnerChange(caseId);
+
+  return (
+    <AssignTask
+      taskId={taskId}
+      taskOwner={taskOwner}
+      isEnforcement={false}
+      onOwnerChange={onOwnerChange}
+    />
+  );
+};
 
 export function getColumns(
   execPost: (payload?: any) => Promise<unknown>,
-  tasks: Components.Schemas.CaseUserTaskWorkdflow[] | undefined,
+  tasks: Tasks.WorkflowTask[] | undefined,
   themeId?: number,
 ) {
   const hasCreateVisitTask = tasks?.some(
@@ -30,7 +72,7 @@ export function getColumns(
       record.task_name === "task_create_visit" ? (
         <UpdateSchedule caseId={record.case} themeId={themeId} />
       ) : (
-        <Span>-</Span>
+        <span style={{ display: "inline-block", minWidth: 113 }}> - </span>
       ),
   };
 
@@ -52,9 +94,9 @@ export function getColumns(
       render: (roles: any) => <List data={roles} emptyPlaceholder="-" />,
     },
     {
-      header: "Opgepakt door",
+      header: "Toegewezen",
       dataIndex: "owner",
-      render: (owner: any, task: any) => <SelectTaskWorkflow task={task} />,
+      render: (_: any, task: any) => <AssignTaskWorkflow task={task} />,
     },
     {
       header: "Slotdatum",
@@ -68,7 +110,7 @@ export function getColumns(
             caseUserTaskId={record.case_user_task_id}
           />
         ) : (
-          <Span>-</Span>
+          <span style={{ display: "inline-block", minWidth: 113 }}> - </span>
         ),
     },
     {
@@ -87,9 +129,7 @@ export function getColumns(
         const action = taskActionMap[task_name];
 
         const onSubmitTaskComplete = (
-          variables:
-            | Components.Schemas.CaseUserTaskWorkdflow["form_variables"]
-            | null = {},
+          variables: Tasks.WorkflowTask["form_variables"] | null = {},
         ) => execPost({ case: id, case_user_task_id, variables });
 
         const disabled =

@@ -1,0 +1,83 @@
+@import "app/components/shared/ams-tokens.css";
+/* Importeer tijdelijk totdat AMS CSS globaal beschikbaar is */
+
+.spinnerWrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+}
+
+.avatarButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  aspect-ratio: var(--ams-avatar-aspect-ratio);
+  border-radius: 50%;
+  border-style: var(--ams-avatar-border-style);
+  border-width: var(--ams-avatar-border-width);
+  border-color: transparent;
+  padding: 0;
+  cursor: var(--ams-cursor-interactive);
+  background: none;
+  font-family: var(--ams-avatar-font-family);
+  will-change: transform;
+  transition:
+    box-shadow 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.avatarButton:hover {
+  transform: scale(1.10);
+}
+
+.avatarButton:focus-visible {
+  outline: var(--ams-border-width-m) solid var(--ams-color-interactive);
+  outline-offset: var(--ams-focus-outline-offset);
+}
+
+/* Niet toegewezen */
+.unassigned {
+  background-color: var(--ams-color-separator);
+  border-color: var(--ams-color-separator);
+  color: var(--ams-color-text);
+}
+
+.unassigned:hover {
+  background-color: color-mix(in srgb, var(--ams-color-separator) 90%, #000);
+  border-color: var(--ams-color-text-secondary);
+}
+
+.placeholder {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Toegewezen */
+.assigned {
+  background-color: var(--ams-color-text-secondary);
+  border-color: var(--ams-color-text-secondary);
+  color: var(--ams-avatar-color);
+}
+
+.ownTask {
+  background-color: var(--ams-color-interactive);
+  border-color: var(--ams-color-interactive);
+  box-shadow: 0 0 0 var(--ams-border-width-m) color-mix(in srgb, var(--ams-color-interactive) 40%, transparent);
+}
+
+/* Initialen */
+.initials {
+  font-size: var(--ams-avatar-font-size);
+  font-weight: var(--ams-typography-body-text-font-weight);
+  color: var(--ams-avatar-color);
+  letter-spacing: 0.03em;
+  user-select: none;
+  text-transform: uppercase;
+  line-height: var(--ams-avatar-line-height);
+}
