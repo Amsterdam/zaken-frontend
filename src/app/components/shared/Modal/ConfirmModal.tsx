@@ -1,4 +1,3 @@
-
 import styled from "styled-components";
 import { Button, Paragraph } from "@amsterdam/asc-ui";
 
@@ -6,30 +5,40 @@ import Modal, { ModalBlock } from "./Modal";
 import { SpinnerButton } from "app/components/shared/loading";
 
 export type Props = {
-  title: string
-  isOpen: boolean
-  onClose: () => void
-  onConfirm: () => Promise<any>
-  okValue?: string
-  cancelValue?: string
-}
+  title: string;
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirm: () => Promise<any>;
+  okValue?: string;
+  cancelValue?: string;
+};
 
 const ModalBlockFlex = styled(ModalBlock)`
-  display: flex
+  display: flex;
 `;
 
 const Flex = styled.div`
   flex: 1;
 `;
 
-const ConfirmModal: React.FC<Props> = ({ isOpen, onClose, title, children, okValue = "Ok", cancelValue = "Annuleren", onConfirm }) => (
+const ConfirmModal: React.FC<Props> = ({
+  isOpen,
+  onClose,
+  title,
+  children,
+  okValue = "Ok",
+  cancelValue = "Annuleren",
+  onConfirm,
+}) => (
   <Modal isOpen={isOpen} onClose={onClose} title={title}>
     <ModalBlock>
-      <Paragraph>{ children }</Paragraph>
+      <Paragraph>{children}</Paragraph>
     </ModalBlock>
     <ModalBlockFlex>
       <Flex>
-        <Button variant="tertiary" onClick={onClose}>{ cancelValue }</Button>
+        <Button variant="tertiary" onClick={onClose}>
+          {cancelValue}
+        </Button>
       </Flex>
       <div>
         <SpinnerButton
@@ -37,7 +46,7 @@ const ConfirmModal: React.FC<Props> = ({ isOpen, onClose, title, children, okVal
           onClick={onConfirm}
           variant="secondary"
         >
-          { okValue }
+          {okValue}
         </SpinnerButton>
       </div>
     </ModalBlockFlex>

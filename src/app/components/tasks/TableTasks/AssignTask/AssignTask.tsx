@@ -130,7 +130,7 @@ const AssignTask: React.FC<Props> = ({
         setLoading(false);
       }
     },
-    [execPatch, getContextItem, updateContextItem, onOwnerChange, taskId],
+    [execPatch, getContextItem, updateContextItem, taskId],
   );
 
   const handleUserSelect = (userId: string | null) => {
@@ -169,27 +169,36 @@ const AssignTask: React.FC<Props> = ({
     if (!rect) return;
 
     const dropdownWidth = 240;
+    const dropdownHeight = 380; // geschatte max hoogte
     const viewportWidth = window.innerWidth;
-    const centerX = rect.left + window.scrollX + rect.width / 2;
+    const viewportHeight = window.innerHeight;
 
+    // Horizontale positie — relatief aan viewport (fixed)
+    const centerX = rect.left + rect.width / 2;
     const wouldOverflowLeft = centerX - dropdownWidth / 2 < 8;
     const wouldOverflowRight = centerX + dropdownWidth / 2 > viewportWidth - 8;
 
     let left: number;
     let transform: string;
-
     if (wouldOverflowLeft) {
-      left = rect.left + window.scrollX;
+      left = rect.left;
       transform = "none";
     } else if (wouldOverflowRight) {
-      left = rect.right + window.scrollX - dropdownWidth;
+      left = rect.right - dropdownWidth;
       transform = "none";
     } else {
       left = centerX;
       transform = "translateX(-50%)";
     }
 
-    setDropdownPos({ top: rect.bottom + window.scrollY + 6, left, transform });
+    // Verticale positie — open boven de avatar als er onvoldoende ruimte onder is
+    const wouldOverflowBottom =
+      rect.bottom + dropdownHeight > viewportHeight - 8;
+    const top = wouldOverflowBottom
+      ? rect.top - dropdownHeight - 6 // boven de avatar
+      : rect.bottom + 6; // onder de avatar
+
+    setDropdownPos({ top, left, transform });
     setDropdownOpen((prev) => !prev);
   };
 

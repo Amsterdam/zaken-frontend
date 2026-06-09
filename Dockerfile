@@ -21,12 +21,6 @@ RUN npm ci --omit=dev --ignore-scripts
 # Copy the rest of the source code
 COPY . .
 
-# global variables
-# RUN echo "REACT_APP_GIT_COMMIT_HASH=$COMMIT_HASH" > .env.local
-
-# remove storybook files
-RUN find src -type f -name "*.stories.tsx" -delete
-
 RUN npm run build
 
 RUN mv $DIR/build/* $DIR/builds/application/
