@@ -7,21 +7,19 @@ FROM node:$NODE_VERSION-alpine AS builder
 ARG COMMIT_HASH
 
 ENV DIR=/var/www
-COPY . $DIR/
-RUN ls -la $DIR
 
 # build dirs
 RUN mkdir -p $DIR/builds/application
 
 WORKDIR $DIR
-COPY package*.json $DIR/
-RUN npm ci --omit=dev --ignore-scripts .
 
-# global variables
-# RUN echo "REACT_APP_GIT_COMMIT_HASH=$COMMIT_HASH" > .env.local
+# Copy package files first for better layer caching:
+# Docker only re-runs npm ci when package*.json changes, not on every code change.
+COPY package*.json ./
+RUN npm ci --omit=dev --ignore-scripts
 
-# remove storybook files
-RUN find src -type f -name "*.stories.tsx" -delete
+# Copy the rest of the source code
+COPY . .
 
 RUN npm run build
 

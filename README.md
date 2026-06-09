@@ -40,3 +40,9 @@ A `npm run deploy:prod` convenience script is also available. This also guarante
 ## E2E testing with Cypress
 
 [README.md](https://github.com/Amsterdam/zaken-frontend/blob/main/cypress/README.md)
+
+# Directory tree structure
+
+```typescript
+tree -I "node_modules|.next|.git" -L 10 > directory-tree.txt
+```
