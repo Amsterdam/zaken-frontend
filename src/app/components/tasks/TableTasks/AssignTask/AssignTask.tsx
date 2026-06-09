@@ -130,7 +130,7 @@ const AssignTask: React.FC<Props> = ({
         setLoading(false);
       }
     },
-    [execPatch, getContextItem, updateContextItem, taskId],
+    [execPatch, getContextItem, updateContextItem, taskId, onOwnerChange],
   );
 
   const handleUserSelect = (userId: string | null) => {
