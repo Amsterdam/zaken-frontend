@@ -61,7 +61,7 @@
     "vite-plugin-eslint": "^1.8.1"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.29.0",
+    "@babel/preset-env": "^8.0.1",
     "@babel/preset-react": "^7.28.5",
     "@babel/preset-typescript": "^7.28.5",
     "@svgr/core": "^8.1.0",
