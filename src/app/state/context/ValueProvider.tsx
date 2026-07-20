@@ -1,4 +1,4 @@
-import { createContext, useReducer, useCallback } from "react";
+import { createContext, useReducer, useCallback, type ReactNode } from "react";
 import actions from "./actions";
 import initialState, { StateType } from "./initialState";
 import reducer from "./reducer";
@@ -6,7 +6,7 @@ import reducer from "./reducer";
 // Context and Provider
 export const ContextValues = createContext(initialState);
 
-const ValueProvider: React.FC = ({ children }) => {
+const ValueProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const value: StateType = {

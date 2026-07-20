@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, type ReactNode } from "react";
 
 import { ApiCache, useApiCache } from "../hooks/useApiCache";
 import { RequestQueue, useRequestQueue } from "../hooks/useRequestQueue";
@@ -6,7 +6,7 @@ import { noopContext } from "./noopContext";
 
 import { ApiGroup } from "../index";
 
-type GroupedContext = Record<ApiGroup, ApiCache & RequestQueue>
+type GroupedContext = Record<ApiGroup, ApiCache & RequestQueue>;
 export const ApiContext = createContext<GroupedContext>({
   auth: noopContext,
   users: noopContext,
@@ -25,7 +25,7 @@ export const ApiContext = createContext<GroupedContext>({
   housingCorporations: noopContext,
 });
 
-const ApiProvider: React.FC = ({ children }) => {
+const ApiProvider = ({ children }: { children: ReactNode }) => {
   const value: GroupedContext = {
     auth: {
       ...useApiCache(),
@@ -89,11 +89,7 @@ const ApiProvider: React.FC = ({ children }) => {
     },
   };
 
-  return (
-    <ApiContext.Provider value={ value }>
-      { children }
-    </ApiContext.Provider>
-  );
+  return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;
 };
 
 export default ApiProvider;

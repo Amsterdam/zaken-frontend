@@ -1,4 +1,4 @@
-@import "app/components/shared/ams-tokens.css";
+@import "../../../shared/ams-tokens.css";
 
 .dropdown {
   min-width: 240px;

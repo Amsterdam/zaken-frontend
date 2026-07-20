@@ -10,8 +10,9 @@ import BreadCrumbsWrap from "app/components/shared/BreadCrumbs/BreadCrumbsWrap";
 import { env } from "app/config/env";
 
 type Props = {
-  showSearchButton?: boolean
-}
+  showSearchButton?: boolean;
+  children: React.ReactNode;
+};
 
 // This is needed to fix a bug where SVG where displayed above the header / menu.
 // Caused by the CSS property `position: fixed`.
@@ -26,38 +27,41 @@ const MenuWrap = styled.div`
   justify-content: flex-end;
   width: 100%;
 
-  @media screen and ${ breakpoint("min-width", "laptopM") } {
+  @media screen and ${breakpoint("min-width", "laptopM")} {
     justify-content: space-between;
-    
+
     ul {
       margin-left: -10px;
     }
   }
 `;
 
-const DefaultLayout: React.FC<Props> = ({ showSearchButton = true, children }) => (
+const DefaultLayout: React.FC<Props> = ({
+  showSearchButton = true,
+  children,
+}) => (
   <>
-    <SkipLinks linkList={ [
-      { title: "Direct naar: inhoud", target: "a11y_content" },
-    ] }/>
+    <SkipLinks
+      linkList={[{ title: "Direct naar: inhoud", target: "a11y_content" }]}
+    />
     <HeaderWrap>
       <Header
         tall
-        fullWidth={ false }
-        title={`${ env.VITE_APP_TITLE ?? "Amsterdamse Zaak Administratie" } ${ env.VITE_ENVIRONMENT_SHORT }`}
-        homeLink={ to("/") }
+        fullWidth={false}
+        title={`${env.VITE_APP_TITLE ?? "Amsterdamse Zaak Administratie"} ${env.VITE_ENVIRONMENT_SHORT}`}
+        homeLink={to("/")}
         navigation={
           <MenuWrap>
-            <DefaultNavigation showSearchButton={ showSearchButton } />
+            <DefaultNavigation showSearchButton={showSearchButton} />
           </MenuWrap>
         }
-        links={ <UserInfo /> }
+        links={<UserInfo />}
       />
       <BreadCrumbsWrap />
     </HeaderWrap>
     <MainWrapper>
       <FlashMessages />
-      { children }
+      {children}
     </MainWrapper>
   </>
 );

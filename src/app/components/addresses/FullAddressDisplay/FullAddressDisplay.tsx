@@ -1,21 +1,36 @@
-
 import AddressDisplay from "../AddressDisplay/AddressDisplay";
 import PostalCodeDisplay from "../PostalCodeDisplay/PostalCodeDisplay";
 
 type Props = {
-  streetName: string
-  streetNumber: string | number
-  suffix?: string
-  etage?: string | number
-  postalCode?: string
-  city?: string
-}
+  streetName?: string | null;
+  streetNumber?: string | number | null;
+  suffix?: string | null;
+  etage?: string | number | null;
+  postalCode?: string | null;
+  city?: string;
+};
 
-const FullAddressDisplay: React.FC<Props> = ({ streetName, streetNumber, suffix, etage, postalCode, city }) => (
+const FullAddressDisplay: React.FC<Props> = ({
+  streetName,
+  streetNumber,
+  suffix,
+  etage,
+  postalCode,
+  city,
+}) => (
   <>
-    <AddressDisplay streetName={ streetName } streetNumber={ streetNumber } suffix={ suffix } etage={ etage } />
-    { postalCode && <>, <PostalCodeDisplay postalCode={ postalCode } /></> }
-    { city ? ` ${ city }` : "" }
+    <AddressDisplay
+      streetName={streetName ?? ""}
+      streetNumber={streetNumber ?? ""}
+      suffix={suffix ?? undefined}
+      etage={etage ?? undefined}
+    />
+    {postalCode && (
+      <>
+        , <PostalCodeDisplay postalCode={postalCode} />
+      </>
+    )}
+    {city ? ` ${city}` : ""}
   </>
 );
 

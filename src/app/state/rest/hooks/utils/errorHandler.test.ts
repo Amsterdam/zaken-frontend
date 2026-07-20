@@ -1,6 +1,6 @@
 // Module mocking should always be on top:
 // -----------------------------------------
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 import { AxiosError, AxiosRequestHeaders } from "axios";
 // import { useFlashMessages } from "../../../flashMessages/useFlashMessages"
 
@@ -23,14 +23,20 @@ describe("rest hook utils", () => {
         isAxiosError: true,
         name: "error",
         message: "S.O.S.",
-        config: { url: "http://www.foo.com", headers: {} as AxiosRequestHeaders },
+        config: {
+          url: "http://www.foo.com",
+          headers: {} as AxiosRequestHeaders,
+        },
         toJSON: () => ({}),
       };
 
       const { result } = renderHook(() => useErrorHandler());
       result.current(mockedError);
 
-      expect(mockAddErrorFlashMessage).toHaveBeenCalledWith("Oeps er ging iets mis!", "S.O.S. (URL: http://www.foo.com)");
+      expect(mockAddErrorFlashMessage).toHaveBeenCalledWith(
+        "Oeps er ging iets mis!",
+        "S.O.S. (URL: http://www.foo.com)",
+      );
     });
   });
 });

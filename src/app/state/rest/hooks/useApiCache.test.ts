@@ -1,4 +1,4 @@
-import { renderHook, act } from "@testing-library/react-hooks";
+import { renderHook, act } from "@testing-library/react";
 import { useApiCache } from "./useApiCache";
 
 describe("useApiCache", () => {
@@ -12,7 +12,11 @@ describe("useApiCache", () => {
     act(() => {
       result.current.setCacheItem("my/path", { foo: "bar" });
     });
-    expect(result.current.getCacheItem("my/path")).toEqual({ valid: true, value: { foo: "bar" }, errors: [] });
+    expect(result.current.getCacheItem("my/path")).toEqual({
+      valid: true,
+      value: { foo: "bar" },
+      errors: [],
+    });
   });
 
   it("should be able to clear a group", () => {
@@ -21,6 +25,10 @@ describe("useApiCache", () => {
       result.current.setCacheItem("my/path", { foo: "group1" });
       result.current.clearCache();
     });
-    expect(result.current.getCacheItem("my/path")).toEqual({ valid: false, value: { foo: "group1" }, errors: [] });
+    expect(result.current.getCacheItem("my/path")).toEqual({
+      valid: false,
+      value: { foo: "group1" },
+      errors: [],
+    });
   });
 });

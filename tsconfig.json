@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
+    "target": "ES2018",
     "lib": [
       "dom",
       "dom.iterable",
@@ -21,8 +21,9 @@
     "noFallthroughCasesInSwitch": true,
     "types": ["vitest/globals"],
     "paths": {
-      "*": ["./src/*"]
+      "*": ["./src/*"],
+      "vite-plugin-eslint": ["./node_modules/vite-plugin-eslint/dist/index.d.ts"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "vite.config.ts"]
 }

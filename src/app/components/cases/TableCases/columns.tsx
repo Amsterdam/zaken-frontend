@@ -57,7 +57,7 @@ const getColumns = (sorting: any) => {
       sorter: (a: any, b: any) => a?.reason?.name.localeCompare(b?.reason?.name),
       sortOrder: sorting.dataIndex === "reason.name" && sorting.order,
       minWidth: 140,
-      render: (reasonName: Text, record: any) => {
+      render: (reasonName: any, record: any) => {
         if (record.reason.name === "Project" && record.project) {
           return record.project.name;
         }
