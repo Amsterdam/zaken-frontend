@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import { resolve } from "path";
 
@@ -15,5 +15,9 @@ export default defineConfig({
       app: resolve(__dirname, "src/app"),
       __mocked__: resolve(__dirname, "src/__mocked__"),
     },
+  },
+  test: {
+    globals: true,
+    environment: "jsdom",
   },
 });
