@@ -26,4 +26,4 @@ export const stripApiHostFromUrl = (url: string) => {
  * Utility function to create an API URL for TON
  */
 export const makeTonApiUrl = (...paths: Array<number|string|undefined>) =>
-  slashSandwich([env.VITE_TON_API_URL, env.REACT_APP_API_PATH_TON, ...paths], { trailingSlash: false });
+  slashSandwich([env.VITE_TON_API_URL, ...paths], { trailingSlash: false });
