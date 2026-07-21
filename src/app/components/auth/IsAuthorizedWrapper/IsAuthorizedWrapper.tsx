@@ -8,19 +8,17 @@ import useHasPermission from "app/state/rest/custom/usePermissions/useHasPermiss
  */
 
 type Props = {
-  permissionNames: Components.Schemas.PermissionsEnum[]
-}
+  permissionNames: Components.Schemas.PermissionsEnum[];
+  children: React.ReactNode;
+};
 
-const IsAuthorizedWrapper: React.FC<Props> = ({ permissionNames, children }) => {
+const IsAuthorizedWrapper: React.FC<Props> = ({
+  permissionNames,
+  children,
+}) => {
   const [hasPermission, isBusy] = useHasPermission(permissionNames);
 
-  return (
-    isBusy ?
-      <Spinner /> :
-      hasPermission ?
-        <>{ children }</>
-      : null
-  );
+  return isBusy ? <Spinner /> : hasPermission ? <>{children}</> : null;
 };
 
 export default IsAuthorizedWrapper;

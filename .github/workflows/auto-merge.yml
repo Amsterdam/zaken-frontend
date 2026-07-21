@@ -7,7 +7,7 @@ on:
     types:
       - completed
     workflows:
-      - 'Install, lint, test, E2E & build'
+      - 'Install, lint, test & build'
 
 permissions:
   pull-requests: write

@@ -1,19 +1,20 @@
 import { StrictMode } from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { AuthProvider } from "react-oidc-context";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import packageInfo from "../package.json";
 import { oidcConfig } from "app/state/auth/oidc/oidcConfig";
 
+const container = document.getElementById("root")!;
+const root = createRoot(container);
 
-ReactDOM.render(
+root.render(
   <StrictMode>
-    <AuthProvider {...oidcConfig} >
+    <AuthProvider {...oidcConfig}>
       <App />
     </AuthProvider>
   </StrictMode>,
-  document.getElementById("root"),
 );
 
 // If you want your app to work offline and load faster, you can change

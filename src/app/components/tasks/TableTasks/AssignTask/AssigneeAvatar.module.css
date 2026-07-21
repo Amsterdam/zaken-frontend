@@ -1,4 +1,4 @@
-@import "app/components/shared/ams-tokens.css";
+@import "../../../shared/ams-tokens.css";
 /* Importeer tijdelijk totdat AMS CSS globaal beschikbaar is */
 
 .spinnerWrapper {

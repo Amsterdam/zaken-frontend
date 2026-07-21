@@ -1,8 +1,8 @@
-import { renderHook, act } from "@testing-library/react-hooks";
+import { renderHook, act } from "@testing-library/react";
 import usePollingRefetch from "./usePollingRefetch";
 
 describe("usePollingRefetch", () => {
-  let execGet: ReturnType<typeof vi.fn>;
+  let execGet: ReturnType<typeof vi.fn<() => void>>;
 
   beforeEach(() => {
     execGet = vi.fn();

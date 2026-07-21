@@ -7,10 +7,11 @@
 
 # testing
 /coverage
-/cypress/fixtures/case.json
 
 # production
 /build
+
+/dist
 
 # misc
 .DS_Store
@@ -19,10 +20,6 @@
 .env.test.local
 .env.production.local
 .eslintcache
-
-# Cypress local secrets
-cypress.env.json
-/cypress/fixtures/case.json
 
 npm-debug.log*
 yarn-debug.log*

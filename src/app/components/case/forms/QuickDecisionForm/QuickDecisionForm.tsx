@@ -3,16 +3,21 @@ import { useCase, useQuickDecisions } from "app/state/rest";
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm";
 import scaffold from "app/components/case/forms/QuickDecisionForm/scaffold";
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields";
-import DecisionHeader from "../DecisionForm/components/DecisionHeader";
+import DecisionHeader, {
+  type Workflow,
+} from "../DecisionForm/components/DecisionHeader";
 import { useQuickDecisionTypes } from "app/state/rest/themes";
 import useNavigation from "app/routing/useNavigation";
 
 type Props = {
-  id: Components.Schemas.CaseDetail["id"]
-  caseUserTaskId: string
-}
+  id: Components.Schemas.CaseDetail["id"];
+  caseUserTaskId: string;
+};
 
-type QuickDecisionData = Omit<Components.Schemas.QuickDecision, "quick_decision_type"> & { quick_decision_type: { id: number } }
+type QuickDecisionData = Omit<
+  Components.Schemas.QuickDecision,
+  "quick_decision_type"
+> & { quick_decision_type: { id: number } };
 
 const mapData = (data: QuickDecisionData) => ({
   ...data,
@@ -25,20 +30,31 @@ const QuickDecisionForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
   const [data] = useQuickDecisionTypes(themeId);
   const quickDecisionTypes = data?.results;
   const { navigateTo } = useNavigation();
-  const fields = useScaffoldedFields(scaffold, id, navigateTo, quickDecisionTypes);
+  const fields = useScaffoldedFields(
+    scaffold,
+    id,
+    navigateTo,
+    quickDecisionTypes,
+  );
 
   const [, { execPost }] = useQuickDecisions({ lazy: true });
 
   return (
     <>
-      <DecisionHeader caseId={ id } caseUserTaskId={ caseUserTaskId } workflows={ caseItem?.workflows! } />
-      <FormTitle>Gebruik dit formulier om aan te geven welk besluit is genomen</FormTitle>
+      <DecisionHeader
+        caseId={id}
+        caseUserTaskId={caseUserTaskId}
+        workflows={(caseItem?.workflows ?? []) as unknown as Workflow[]}
+      />
+      <FormTitle>
+        Gebruik dit formulier om aan te geven welk besluit is genomen
+      </FormTitle>
       <WorkflowForm
-        id={ id }
-        fields={ fields }
-        mapData={ mapData }
-        postMethod={ execPost }
-        caseUserTaskId={ caseUserTaskId }
+        id={id}
+        fields={fields}
+        mapData={mapData}
+        postMethod={execPost}
+        caseUserTaskId={caseUserTaskId}
       />
     </>
   );

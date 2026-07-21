@@ -1,3 +1,4 @@
+import { type ReactNode } from "react";
 import styled from "styled-components";
 import { themeSpacing, breakpoint } from "@amsterdam/asc-ui";
 
@@ -7,7 +8,7 @@ const Div = styled.div`
   padding: 0;
 
   ul {
-    margin: 0 -${ themeSpacing(1.5) };
+    margin: 0 -${themeSpacing(1.5)};
     padding: 0;
     list-style: none;
     display: flex;
@@ -18,19 +19,21 @@ const Div = styled.div`
   li {
     display: inline-block;
     width: 100%;
-    margin-bottom: ${ themeSpacing(3) };
-    @media screen and ${ breakpoint("min-width", "tabletS") } {
+    margin-bottom: ${themeSpacing(3)};
+    @media screen and ${breakpoint("min-width", "tabletS")} {
       width: 50%;
     }
-    @media screen and ${ breakpoint("min-width", "laptopM") } {
+    @media screen and ${breakpoint("min-width", "laptopM")} {
       width: 25%;
     }
   }
 
   li > div {
-    margin: 0 ${ themeSpacing(1.5) };
+    margin: 0 ${themeSpacing(1.5)};
   }
 `;
 
-const BlockMenu: React.FC = ({ children }) => <Div>{ children }</Div>;
+const BlockMenu = ({ children }: { children: ReactNode }) => (
+  <Div>{children}</Div>
+);
 export default BlockMenu;

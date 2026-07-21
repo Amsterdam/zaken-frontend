@@ -11,6 +11,7 @@ export type Props = {
   onConfirm: () => Promise<any>;
   okValue?: string;
   cancelValue?: string;
+  children: React.ReactNode;
 };
 
 const ModalBlockFlex = styled(ModalBlock)`

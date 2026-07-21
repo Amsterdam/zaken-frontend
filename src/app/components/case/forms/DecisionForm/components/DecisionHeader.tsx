@@ -2,7 +2,7 @@ import { useSummonsWithCaseId } from "app/state/rest";
 import useValues from "../hooks/useValues";
 import { DefinitionList } from "@amsterdam/wonen-ui";
 
-type Workflow = {
+export type Workflow = {
   tasks: Tasks.WorkflowTask[];
 };
 

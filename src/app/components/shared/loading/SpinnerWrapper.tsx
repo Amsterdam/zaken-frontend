@@ -2,11 +2,12 @@ import styled from "styled-components";
 import { Spinner } from "@amsterdam/asc-ui";
 
 type Props = {
-  spinning?: boolean
-}
+  spinning?: boolean;
+  children: React.ReactNode;
+};
 
 const SpinnerContainer = styled.div`
-  background: rgba(0,0,0,0.1);
+  background: rgba(0, 0, 0, 0.1);
   width: 100%;
   height: 100%;
   position: absolute;
@@ -19,15 +20,17 @@ const SpinnerContainer = styled.div`
   backdrop-filter: blur(1px);
 `;
 
-
-export const SpinnerWrapper: React.FC<Props> = ({ spinning = true, children }) => (
+export const SpinnerWrapper: React.FC<Props> = ({
+  spinning = true,
+  children,
+}) => (
   <div>
-    { spinning && (
+    {spinning && (
       <SpinnerContainer>
         <Spinner />
       </SpinnerContainer>
     )}
-    { children }
+    {children}
   </div>
 );
 

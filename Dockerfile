@@ -16,14 +16,12 @@ WORKDIR $DIR
 # Copy package files first for better layer caching:
 # Docker only re-runs npm ci when package*.json changes, not on every code change.
 COPY package*.json ./
-RUN npm ci --omit=dev --ignore-scripts
+RUN npm ci --ignore-scripts
 
-# Copy the rest of the source code
 COPY . .
-
 RUN npm run build
 
-RUN mv $DIR/build/* $DIR/builds/application/
+RUN mv $DIR/dist/* $DIR/builds/application/
 
 FROM nginx:stable-alpine
 
