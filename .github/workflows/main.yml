@@ -1,4 +1,4 @@
-name: 'Install, lint, test, E2E & build'
+name: 'Install, lint, test & build'
 
 on:
   push:

@@ -44,11 +44,6 @@
     "styled-components": "^5.3.11"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.29.0",
-    "@babel/preset-react": "^7.28.5",
-    "@babel/preset-typescript": "^7.28.5",
-    "@svgr/core": "^8.1.0",
-    "@svgr/plugin-jsx": "^8.1.0",
     "@testing-library/react": "^13.4.0",
     "@types/lodash.debounce": "^4.0.7",
     "@types/lodash.isempty": "^4.4.7",
@@ -68,9 +63,6 @@
     "typescript": "6.0.3",
     "vite": "^8.0.13",
     "vitest": "^4.1.0"
-  },
-  "overrides": {
-    "@babel/plugin-transform-runtime": "^7.29.7"
   },
   "eslintConfig": {
     "extends": "react-app"
