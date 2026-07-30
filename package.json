@@ -23,7 +23,7 @@
     "@amsterdam/asc-assets": "^0.38.0",
     "@amsterdam/asc-ui": "^0.38.0",
     "@amsterdam/wonen-ui": "^1.0.82",
-    "axios": "^1.16.1",
+    "axios": "^1.19.0",
     "dayjs": "^1.11.13",
     "final-form": "^4.20.10",
     "final-form-arrays": "^3.0.2",
