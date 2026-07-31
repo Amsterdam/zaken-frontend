@@ -15,11 +15,11 @@ const items = [
   },
   {
     path: "/invorderingen",
-    permissionNames: ["access_recovery_check"] as Components.Schemas.PermissionsEnum[],
+    permissionNames: ["access_recovery_check"] as components["schemas"]["PermissionsEnum"][],
   },
   {
     path: "/digitaaltoezicht",
-    permissionNames: ["access_sigital_surveillance"] as Components.Schemas.PermissionsEnum[],
+    permissionNames: ["access_sigital_surveillance"] as components["schemas"]["PermissionsEnum"][],
     isHidden: true,
   },
   {

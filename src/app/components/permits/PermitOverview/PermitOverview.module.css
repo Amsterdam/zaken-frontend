@@ -1,0 +1,8 @@
+.styledLink {
+  color: #004699;
+  font-size: 18px;
+}
+
+.styledLink:hover {
+  color: #ec0000;
+}

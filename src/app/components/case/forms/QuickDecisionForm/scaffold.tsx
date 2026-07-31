@@ -3,9 +3,9 @@ import { Fields } from "app/components/shared/Form/ScaffoldFields";
 import type { NavigateToFunction } from "app/routing/useNavigation";
 
 export default (
-  caseId: Components.Schemas.CaseDetail["id"],
+  caseId: components["schemas"]["CaseDetail"]["id"],
   navigateTo: NavigateToFunction,
-  quickDecisionTypes?: Components.Schemas.QuickDecisionType[],
+  quickDecisionTypes?: components["schemas"]["QuickDecisionType"][],
 ) => {
 
   const fields = {

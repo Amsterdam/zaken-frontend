@@ -8,7 +8,7 @@ export const useTasksReasons = (theme: string, options?: Options) => {
   const handleError = useErrorHandler();
   const queryString = qs.stringify({ thema_name: theme }, { addQueryPrefix: true });
   const apiUrl = `${ makeApiUrl("tasks", "reason-names") }${ queryString }`;
-  return useApiRequest<Components.Schemas.CaseReason[]>({
+  return useApiRequest<components["schemas"]["CaseReason"][]>({
     ...options,
     url: apiUrl,
     groupName: "themes",

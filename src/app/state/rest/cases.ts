@@ -49,7 +49,7 @@ export const useCases = (
   addressSearch?: string,
   subjects?: string[],
   tags?: string[],
-  districtNames?: Components.Schemas.District["name"][],
+  districtNames?: components["schemas"]["District"]["name"][],
   housingCorporations?: string[],
   housingCorporationIsNull?: boolean,
   options?: Options,
@@ -106,7 +106,7 @@ export const useCases = (
     sorting,
   ]);
 
-  return useApiRequest<Components.Schemas.PaginatedCaseList>({
+  return useApiRequest<components["schemas"]["PaginatedCaseList"]>({
     ...options,
     url: `${makeApiUrl("cases")}${urlParams}`,
     groupName: "cases",
@@ -116,7 +116,7 @@ export const useCases = (
 };
 
 export const useCasesByBagId = (
-  bagId: Components.Schemas.Address["bag_id"],
+  bagId: components["schemas"]["Address"]["bag_id"],
   openCases?: boolean,
   options?: Options,
 ) => {
@@ -125,7 +125,7 @@ export const useCasesByBagId = (
     openCases === true
       ? qs.stringify({ open_cases: true }, { addQueryPrefix: true })
       : "";
-  return useApiRequest<Components.Schemas.PaginatedCaseList>({
+  return useApiRequest<components["schemas"]["PaginatedCaseList"]>({
     ...options,
     url: `${makeApiUrl("addresses", bagId, "cases")}${queryString}`,
     groupName: "cases",

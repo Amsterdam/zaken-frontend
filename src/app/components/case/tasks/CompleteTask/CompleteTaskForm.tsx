@@ -1,25 +1,16 @@
-
-
 import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form";
 import ScaffoldFields from "app/components/shared/Form/ScaffoldFields";
 import createScaffoldProps from "./scaffold";
-import styled from "styled-components";
+import styles from "./CompleteTaskForm.module.css";
 
 type Props = {
-  onSubmit: (data: Components.Schemas.GenericCompletedTask) => Promise<unknown>
+  onSubmit: (data: components["schemas"]["GenericCompletedTask"]) => Promise<unknown>
   isLoading?: boolean
   onCancel: () => void
 }
 
-const Div = styled.div`
-  button[type=submit] {
-    float: right;
-    clear: both;
-  }
-`;
-
 const CompleteTaskForm: React.FC<Props> = ({ isLoading, onSubmit, onCancel }) =>
-  <Div>
+  <div className={ styles.div }>
     <ScaffoldForm
       showSpinner={ isLoading }
       onSubmit={ onSubmit }
@@ -27,6 +18,6 @@ const CompleteTaskForm: React.FC<Props> = ({ isLoading, onSubmit, onCancel }) =>
     >
       <ScaffoldFields {...createScaffoldProps(onCancel) } />
     </ScaffoldForm>
-  </Div>;
+  </div>;
 
 export default CompleteTaskForm;

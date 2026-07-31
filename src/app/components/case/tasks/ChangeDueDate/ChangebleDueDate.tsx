@@ -9,7 +9,7 @@ import useHasPermission, { CAN_PERFORM_TASK } from "app/state/rest/custom/usePer
 import CustomIcon from "app/components/shared/CustomIcon/CustomIcon";
 
 type Props = {
-  caseId: Components.Schemas.CaseDetail["id"]
+  caseId: components["schemas"]["CaseDetail"]["id"]
   caseUserTaskId: string
   dueDate: Tasks.WorkflowTask["due_date"]
 }

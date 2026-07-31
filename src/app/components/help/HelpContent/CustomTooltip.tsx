@@ -1,16 +1,10 @@
 import { Tooltip } from "react-tooltip";
-import styled from "styled-components";
+import styles from "./CustomTooltip.module.css";
 
 type Props = {
   children: React.ReactNode;
   title: string;
 };
-
-const StyledTooltip = styled(Tooltip)`
-  z-index: 1000;
-  font-size: 0.875rem !important;
-  font-weight: 400;
-`;
 
 const CustomTooltip: React.FC<Props> = ({ children, title }) => {
   const tooltipId = `tooltip-${title}`;
@@ -19,11 +13,11 @@ const CustomTooltip: React.FC<Props> = ({ children, title }) => {
     <>
       <span data-tooltip-id={tooltipId}>{children}</span>
       {title && (
-        <StyledTooltip
+        <Tooltip
           id={tooltipId}
           content={title}
           place="bottom"
-          className="custom-tooltip"
+          className={ `${ styles.styledTooltip } custom-tooltip` }
         />
       )}
     </>

@@ -5,7 +5,7 @@ import { createNameAbbreviation } from "app/components/shared/Helpers/helpers";
 import styles from "./UserPickerDropdown.module.css";
 
 type User = Pick<
-  Components.Schemas.User,
+  components["schemas"]["User"],
   "id" | "first_name" | "last_name" | "full_name"
 >;
 

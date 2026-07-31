@@ -3,9 +3,9 @@ import { useErrorHandler } from "./hooks/utils/errorHandler";
 import { makeApiUrl } from "./hooks/utils/apiUrl";
 import useApiRequest from "./hooks/useApiRequest";
 
-export const useWorkflowProcesses = (id: Components.Schemas.Case["id"], options?: Options) => {
+export const useWorkflowProcesses = (id: components["schemas"]["Case"]["id"], options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.WorkflowOption[]>({
+  return useApiRequest<components["schemas"]["WorkflowOption"][]>({
     ...options,
     url: makeApiUrl(`cases/${ id }/processes`),
     groupName: "cases",
@@ -14,9 +14,9 @@ export const useWorkflowProcesses = (id: Components.Schemas.Case["id"], options?
   });
 };
 
-export const useWorkflowProcess = (id: Components.Schemas.CaseDetail["id"], options?: Options) => {
+export const useWorkflowProcess = (id: components["schemas"]["CaseDetail"]["id"], options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.StartWorkflow>({
+  return useApiRequest<components["schemas"]["StartWorkflow"]>({
     ...options,
     lazy: true,
     url: makeApiUrl(`cases/${ id }/processes/start`),

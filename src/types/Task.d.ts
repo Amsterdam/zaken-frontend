@@ -10,7 +10,7 @@ declare namespace Tasks {
 
   /** Taak zoals gebruikt in TableTasks */
   type Task = BaseTask & {
-    case: Components.Schemas.Case;
+    case: components["schemas"]["Case"];
   };
 
   type FormField = {

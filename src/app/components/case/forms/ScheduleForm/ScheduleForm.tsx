@@ -7,14 +7,14 @@ import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks
 import useNavigation from "app/routing/useNavigation";
 
 type Props = {
-  id: Components.Schemas.CaseDetail["id"]
+  id: components["schemas"]["CaseDetail"]["id"]
   caseUserTaskId: string
 }
 
-type ScheduleTypeFormData = Omit<Components.Schemas.ScheduleCreate, "week_segment" | "day_segment" | "priority"> & {
-  week_segment: Components.Schemas.ThemeScheduleTypes["week_segments"][0]
-  day_segment: Components.Schemas.ThemeScheduleTypes["day_segments"][0]
-  priority: Components.Schemas.ThemeScheduleTypes["priorities"][0]
+type ScheduleTypeFormData = Omit<components["schemas"]["ScheduleCreate"], "week_segment" | "day_segment" | "priority"> & {
+  week_segment: components["schemas"]["ThemeScheduleTypes"]["week_segments"][0]
+  day_segment: components["schemas"]["ThemeScheduleTypes"]["day_segments"][0]
+  priority: components["schemas"]["ThemeScheduleTypes"]["priorities"][0]
 }
 
 const mapData = (data: ScheduleTypeFormData) => ({

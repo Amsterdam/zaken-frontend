@@ -5,7 +5,7 @@ import useApiRequest from "./hooks/useApiRequest";
 
 export const useScheduleCreate = (options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.ScheduleCreate>({
+  return useApiRequest<components["schemas"]["ScheduleCreate"]>({
     ...options,
     lazy: true,
     url: makeApiUrl("schedules"),
@@ -17,7 +17,7 @@ export const useScheduleCreate = (options?: Options) => {
 
 export const useSchedulesByCaseId = (caseId: number, options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.ScheduleCreate[]>({
+  return useApiRequest<components["schemas"]["ScheduleCreate"][]>({
     ...options,
     lazy: options?.lazy ?? caseId === undefined,
     url: makeApiUrl("cases", caseId, "schedules"),
@@ -29,7 +29,7 @@ export const useSchedulesByCaseId = (caseId: number, options?: Options) => {
 
 export const useSchedule = (scheduleId?: number, options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.ScheduleCreate>({
+  return useApiRequest<components["schemas"]["ScheduleCreate"]>({
     ...options,
     lazy: true,
     url: makeApiUrl("schedules", scheduleId),

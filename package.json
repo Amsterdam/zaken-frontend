@@ -1,6 +1,7 @@
 {
   "name": "zaken-frontend",
   "version": "1.0.56",
+  "type": "module",
   "private": true,
   "engines": {
     "node": ">=22",
@@ -14,7 +15,7 @@
     "generate:api-schema:acc": "npx --yes openapi-typescript https://acc.api.wonen.zaken.amsterdam.nl/api/v1/schema/ -o ./src/__generated__/apiSchema.d.ts",
     "lint": "eslint --max-warnings 0 --cache --ext .ts,.tsx src",
     "lint:fix": "eslint --fix --ext .ts,.tsx src",
-    "typecheck": "tsc --noEmit --incremental",
+    "typecheck": "tsc -b --noEmit",
     "test": "vitest run --mode development",
     "preview": "vite preview"
   },

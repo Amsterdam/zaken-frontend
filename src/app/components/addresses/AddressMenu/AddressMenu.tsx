@@ -6,12 +6,12 @@ import { useCasesByBagId, usePermitDetails } from "app/state/rest";
 import MockWrapper from "app/components/shared/MockWrapper/MockWrapper";
 
 type Props = {
-  bagId: Components.Schemas.Address["bag_id"]
+  bagId: components["schemas"]["Address"]["bag_id"]
 }
 
 const routes = [
   "/adres/:bagId/details/",
-  { path: "/adres/:bagId/personen/", permissionNames: ["access_personal_data_register"] as Components.Schemas.PermissionsEnum[] },
+  { path: "/adres/:bagId/personen/", permissionNames: ["access_personal_data_register"] as components["schemas"]["PermissionsEnum"][] },
   "/adres/:bagId/vergunningen/",
 ];
 

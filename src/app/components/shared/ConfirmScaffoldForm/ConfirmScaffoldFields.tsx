@@ -1,5 +1,4 @@
 import { useState, useMemo } from "react";
-import styled from "styled-components";
 import { Heading, Button } from "@amsterdam/asc-ui";
 
 import Modal, { ModalBlock } from "app/components/shared/Modal/Modal";
@@ -8,33 +7,25 @@ import createValuesObject from "./utils/createValuesObject";
 import { DefinitionList } from "@amsterdam/wonen-ui";
 import SpinnerWrap from "./components/SpinnerWrap";
 
-export type RequestBody = Record<string, unknown>
-export type NamedFields<T> = Record<keyof T, Field>
+export type RequestBody = Record<string, unknown>;
+export type NamedFields<T> = Record<keyof T, Field>;
 type Props<RequestBody> = {
-  fields: NamedFields<RequestBody>
-  data: RequestBody | undefined
-  showFields?: string[]
-  title?: string
-  onCancel?: () => void
-  cancelTitle?: string
-  onSubmit?: () => Promise<unknown>
-  submitTitle?: string
-  showInModal?: boolean
-  submittingTitle?: string
-}
+  fields: NamedFields<RequestBody>;
+  data: RequestBody | undefined;
+  showFields?: string[];
+  title?: string;
+  onCancel?: () => void;
+  cancelTitle?: string;
+  onSubmit?: () => Promise<unknown>;
+  submitTitle?: string;
+  showInModal?: boolean;
+  submittingTitle?: string;
+};
 
 const DEFAULT_TITLE = "Controleer of onderstaande gegevens kloppen";
 const DEFAULT_CANCEL_TITLE = "Wijzig";
 const DEFAULT_SUBMIT_TITLE = "Opslaan";
 const noop = () => {};
-
-const ButtonWrap = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-const Wrap = styled.div`
-  position: relative;
-`;
 
 const ConfirmScaffoldFields = <T extends RequestBody>(props: Props<T>) => {
   const {
@@ -50,7 +41,10 @@ const ConfirmScaffoldFields = <T extends RequestBody>(props: Props<T>) => {
     submittingTitle,
   } = props;
   const [isSubmitting, setSubmitting] = useState(false);
-  const values = useMemo(() => createValuesObject<T>(fields, data, showFields), [data, fields, showFields]);
+  const values = useMemo(
+    () => createValuesObject<T>(fields, data, showFields),
+    [data, fields, showFields],
+  );
 
   const onSubmitWrap = async () => {
     setSubmitting(true);
@@ -59,30 +53,34 @@ const ConfirmScaffoldFields = <T extends RequestBody>(props: Props<T>) => {
 
   const content = (
     <>
-      { showInModal === false && <Heading>{ title }</Heading> }
-      <Wrap>
-        <DefinitionList data={ values } />
-        <ButtonWrap>
-          <Button variant="primaryInverted" onClick={ onCancel }>{ cancelTitle }</Button>
-          <Button variant="secondary" onClick={ onSubmitWrap }>{ submitTitle }</Button>
-        </ButtonWrap>
-        { isSubmitting && <SpinnerWrap /> }
-      </Wrap>
+      {showInModal === false && <Heading>{title}</Heading>}
+      <div style={{ position: "relative" }}>
+        <DefinitionList data={values} />
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <Button variant="primaryInverted" onClick={onCancel}>
+            {cancelTitle}
+          </Button>
+          <Button variant="secondary" onClick={onSubmitWrap}>
+            {submitTitle}
+          </Button>
+        </div>
+        {isSubmitting && <SpinnerWrap />}
+      </div>
     </>
   );
 
   return showInModal ? (
     <Modal
-      title={ isSubmitting && submittingTitle ? submittingTitle : title }
-      isOpen={ true }
-      showCloseButton={ !isSubmitting }
-      onClose={ onCancel }
+      title={isSubmitting && submittingTitle ? submittingTitle : title}
+      isOpen={true}
+      showCloseButton={!isSubmitting}
+      onClose={onCancel}
     >
-      <ModalBlock>
-        { content }
-      </ModalBlock>
+      <ModalBlock>{content}</ModalBlock>
     </Modal>
-  ) : content;
+  ) : (
+    content
+  );
 };
 
 export default ConfirmScaffoldFields;

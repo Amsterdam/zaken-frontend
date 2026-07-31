@@ -17,7 +17,7 @@ type RouteParams = {
 const CreatePage: React.FC = () => {
   const { id: idString, caseUserTaskId  } = useParams<RouteParams>();
   const id = parseUrlParamId(idString);
-  const isValid = isValidUrlParamId<Components.Schemas.CaseDetail["id"]>(id)
+  const isValid = isValidUrlParamId<components["schemas"]["CaseDetail"]["id"]>(id)
     && isValidUrlParamId<string>(caseUserTaskId);
 
   return (

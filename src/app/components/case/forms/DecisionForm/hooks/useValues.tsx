@@ -1,6 +1,6 @@
 import { List, PersonNameDisplay, PersonRoleDisplay, PersonEntityDisplay } from "@amsterdam/wonen-ui";
 
-export default (summon?: Components.Schemas.Summon) => {
+export default (summon?: components["schemas"]["Summon"]) => {
 
   if (summon === undefined) return;
 

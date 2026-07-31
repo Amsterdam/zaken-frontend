@@ -1,6 +1,5 @@
 import { DateDisplay } from "@amsterdam/wonen-ui";
 import isDateInPast from "../Date/isDateInPast";
-import styles from "./DueDate.module.css";
 
 type Props = {
   date: Tasks.WorkflowTask["due_date"] | undefined;
@@ -9,7 +8,9 @@ type Props = {
 
 const DueDate: React.FC<Props> = ({ date, emptyText }) =>
   date !== undefined && isDateInPast(new Date(date)) ? (
-    <DateDisplay date={date} className={styles.invalid} />
+    <span style={{ color: "#ec0000" }}>
+      <DateDisplay date={date} />
+    </span>
   ) : (
     <DateDisplay date={date} emptyText={emptyText} />
   );

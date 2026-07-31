@@ -5,7 +5,7 @@ import useApiRequest from "./hooks/useApiRequest";
 
 const BENKAGG_URL = "https://api.data.amsterdam.nl/v1/benkagg/adresseerbareobjecten";
 
-export const useBenkAgg = (bagId?: Components.Schemas.Address["bag_id"], options?: Options) => {
+export const useBenkAgg = (bagId?: components["schemas"]["Address"]["bag_id"], options?: Options) => {
   const handleError = useErrorHandler();
   const queryString = qs.stringify({ adresseertVerblijfsobjectIdentificatie: bagId }, { addQueryPrefix: true });
   return useApiRequest<BAGBenkAggResponse>({

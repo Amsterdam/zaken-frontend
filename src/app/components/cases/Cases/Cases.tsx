@@ -27,7 +27,7 @@ const EMPTY_TEXT = "Er zijn momenteel geen open zaken voor de gekozen filters.";
 const ONDERMIJNING = "Ondermijning";
 
 const getThemeIdByName = (
-  themes: Components.Schemas.CaseTheme[],
+  themes: components["schemas"]["CaseTheme"][],
   themeName?: string,
 ) => themes.find((e) => e.name === themeName)?.id;
 

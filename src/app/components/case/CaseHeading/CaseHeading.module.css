@@ -1,0 +1,9 @@
+.div {
+  display: flex;
+  margin-bottom: 12px;
+}
+
+.dt {
+  color: #767676;
+  min-width: 120px;
+}

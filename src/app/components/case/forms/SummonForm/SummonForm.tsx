@@ -8,18 +8,18 @@ import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks
 import useNavigation from "app/routing/useNavigation";
 
 type Props = {
-  id: Components.Schemas.CaseDetail["id"]
+  id: components["schemas"]["CaseDetail"]["id"]
   caseUserTaskId: string
 }
 
 //TODO Schema from backend should be improved
-type SummonData = Omit<Components.Schemas.Summon, "type"> & {
+type SummonData = Omit<components["schemas"]["Summon"], "type"> & {
   type: { id: number }
   entity_type: "natural" | "legal"
   legal_entity_type: "board" | "person"
   legal_entity_name: string
-  legal_entity_role: Components.Schemas.PersonRoleEnum
-  persons_legal_entity: Components.Schemas.SummonedPerson[]
+  legal_entity_role: components["schemas"]["PersonRoleEnum"]
+  persons_legal_entity: components["schemas"]["SummonedPerson"][]
 }
 
 const mapData = (data: SummonData) => {
@@ -42,7 +42,7 @@ const mapData = (data: SummonData) => {
       }
     }
   } else {
-    data.persons?.forEach((person: Components.Schemas.SummonedPerson) => {
+    data.persons?.forEach((person: components["schemas"]["SummonedPerson"]) => {
       const p = person;
       p.person_role = (person.person_role as any).key;
       p.entity_name = data.legal_entity_name;

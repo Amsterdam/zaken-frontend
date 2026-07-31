@@ -1,6 +1,6 @@
 import usePermissions from "app/state/rest/custom/usePermissions/usePermissions";
 
-export default (permissionsToCheck?: Components.Schemas.PermissionsEnum[]) => {
+export default (permissionsToCheck?: components["schemas"]["PermissionsEnum"][]) => {
   const [permissions, { isBusy }] = usePermissions();
 
   // When no permission is needed

@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-export default (data?: Components.Schemas.Decos) => (
+export default (data?: components["schemas"]["Decos"]) => (
   useMemo(
     () => {
       const permits = data?.permits.filter(({ permit_granted }) => ["GRANTED", "NOT_GRANTED"].includes(permit_granted));

@@ -6,7 +6,7 @@ import useApiRequest from "./hooks/useApiRequest";
 
 export const useFeedback = (options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.Feedback>({
+  return useApiRequest<components["schemas"]["Feedback"]>({
     lazy: true,
     ...options,
     url: makeApiUrl("feedback"),

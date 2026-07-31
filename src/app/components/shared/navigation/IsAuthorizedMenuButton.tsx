@@ -5,7 +5,7 @@ import StyledButtonLink from "./StyledButtonLink";
 import { env } from "app/config/env";
 
 type Props = React.ComponentProps<typeof MenuButton> & {
-  permissionNames: Components.Schemas.PermissionsEnum[]
+  permissionNames: components["schemas"]["PermissionsEnum"][]
   isHidden?: boolean
   to: string
   text: string | undefined

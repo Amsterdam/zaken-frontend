@@ -1,0 +1,5 @@
+.styledTooltip {
+  z-index: 1000;
+  font-size: 0.875rem !important;
+  font-weight: 400;
+}

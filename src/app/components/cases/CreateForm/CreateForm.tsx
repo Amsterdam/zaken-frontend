@@ -19,11 +19,11 @@ const advertisementOptions = {
 };
 
 type Props = {
-  bagId: Components.Schemas.Address["bag_id"]
+  bagId: components["schemas"]["Address"]["bag_id"]
   tonId?: string
 }
 
-const mapData = (bagId: Components.Schemas.Address["bag_id"], tonId?: string) =>
+const mapData = (bagId: components["schemas"]["Address"]["bag_id"], tonId?: string) =>
   (data: any): any => {
     const mappedData = {
       ...data,
@@ -48,7 +48,7 @@ const mapData = (bagId: Components.Schemas.Address["bag_id"], tonId?: string) =>
 
 const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
   const [caseThemes] = useCaseThemes();
-  const [themeId, setThemeId] = useState<Components.Schemas.CaseTheme["id"]>();
+  const [themeId, setThemeId] = useState<components["schemas"]["CaseTheme"]["id"]>();
 
   useEffect(() => {
     const caseThemeId = tonId !== undefined
@@ -120,7 +120,7 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
   );
 
   const navigateWithFlashMessage = useNavigateWithFlashMessage();
-  const afterSubmit = async (result: Components.Schemas.CaseDetail) =>
+  const afterSubmit = async (result: components["schemas"]["CaseDetail"]) =>
     await navigateWithFlashMessage(
       "/zaken/:id",
       { id: result.id },

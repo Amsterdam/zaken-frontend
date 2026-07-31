@@ -2,7 +2,7 @@ import { FormPositioner } from "@amsterdam/amsterdam-react-final-form";
 import { Fields } from "app/components/shared/Form/ScaffoldFields";
 import type { NavigateToFunction } from "app/routing/useNavigation";
 
-export default (caseId: Components.Schemas.CaseDetail["id"], navigateTo: NavigateToFunction, completeCaseReasons?: Components.Schemas.CaseCloseReason[], completeCaseResults?: Components.Schemas.CaseCloseResult[]) => {
+export default (caseId: components["schemas"]["CaseDetail"]["id"], navigateTo: NavigateToFunction, completeCaseReasons?: components["schemas"]["CaseCloseReason"][], completeCaseResults?: components["schemas"]["CaseCloseResult"][]) => {
 
   const fields = {
     reason: {
@@ -18,7 +18,7 @@ export default (caseId: Components.Schemas.CaseDetail["id"], navigateTo: Navigat
     result: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { reason: Components.Schemas.CaseCloseReason } }) => formValues?.values?.reason?.result === true,
+        shouldShow: (formValues: { values?: { reason: components["schemas"]["CaseCloseReason"] } }) => formValues?.values?.reason?.result === true,
         field: {
           type: "ComplexRadioFields",
           props: {

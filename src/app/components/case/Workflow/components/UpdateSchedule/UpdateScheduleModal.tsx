@@ -7,7 +7,7 @@ export type Props = {
   closeModal: () => void
   onSubmit: (data: any) => void
   schedule: Schedule
-  scheduleTypes: Components.Schemas.ThemeScheduleTypes
+  scheduleTypes: components["schemas"]["ThemeScheduleTypes"]
 };
 
 const UpdateScheduleModal: React.FC<Props> = ({

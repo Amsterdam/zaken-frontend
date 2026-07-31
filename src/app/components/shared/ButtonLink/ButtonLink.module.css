@@ -1,0 +1,14 @@
+.link {
+  align-items: center;
+  text-decoration: none;
+  color: #000000;
+  height: 100%;
+}
+
+.flex {
+  display: flex;
+}
+
+.inlineBlock {
+  display: inline-block;
+}

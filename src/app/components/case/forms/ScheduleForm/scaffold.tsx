@@ -5,9 +5,9 @@ import InfoButton from "app/components/shared/InfoHeading/InfoButton";
 import type { NavigateToFunction } from "app/routing/useNavigation";
 
 export default (
-    caseId: Components.Schemas.CaseDetail["id"],
+    caseId: components["schemas"]["CaseDetail"]["id"],
     navigateTo: NavigateToFunction,
-    scheduleTypes?: Components.Schemas.ThemeScheduleTypes,
+    scheduleTypes?: components["schemas"]["ThemeScheduleTypes"],
     visitFromOptions?: { id: number, name: string }[],
   ) => {
 

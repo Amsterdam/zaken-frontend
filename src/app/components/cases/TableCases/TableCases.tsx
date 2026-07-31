@@ -5,7 +5,7 @@ import useMediaQuery from "app/hooks/useMediaQuery/useMediaQuery";
 import createResponsiveColumns from "./createPrioritizedColumns";
 
 type Props = {
-  data: Components.Schemas.Case[]
+  data: components["schemas"]["Case"][]
   isBusy: boolean
   onChange: (pagination: any, sorting: any) => void
   pagination: TABLE.Schemas.Pagination

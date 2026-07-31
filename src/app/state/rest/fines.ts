@@ -6,7 +6,7 @@ import useApiRequest from "./hooks/useApiRequest";
 
 export const useFine = (id?: string, options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.FineList>({
+  return useApiRequest<components["schemas"]["FineList"]>({
     ...options,
     lazy: id === undefined,
     url: makeApiUrl("fines", id),

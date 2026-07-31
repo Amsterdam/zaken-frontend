@@ -7,15 +7,15 @@ import ChangeHousingCorporationForm from "./ChangeHousingCorporationForm";
 import { SpinnerWrapper } from "app/components/shared/loading";
 
 type Props = {
-  housingCorporationId?: Components.Schemas.HousingCorporation["id"] | null
-  bagId: Components.Schemas.Address["bag_id"]
-  caseId: Components.Schemas.Case["id"]
+  housingCorporationId?: components["schemas"]["HousingCorporation"]["id"] | null
+  bagId: components["schemas"]["Address"]["bag_id"]
+  caseId: components["schemas"]["Case"]["id"]
 }
 
 const ChangeHousingCorporation: React.FC<Props> = ({ housingCorporationId, bagId, caseId }) => {
   const { isModalOpen, openModal, closeModal } = useModal();
   const [loading, setLoading] = useState(false);
-  const [housingCorporations, setHousingCorporations] = useState<Components.Schemas.HousingCorporation[]>([]);
+  const [housingCorporations, setHousingCorporations] = useState<components["schemas"]["HousingCorporation"][]>([]);
   const [caseItem, { updateCache }] = useCase(caseId);
   const [data] = useCorporations();
   const [, { execPatch }] = useAddresses(bagId, { lazy: true });
@@ -29,7 +29,7 @@ const ChangeHousingCorporation: React.FC<Props> = ({ housingCorporationId, bagId
     }
   }, [data?.results]);
 
-  const onSubmit = (housing_corporation?: Components.Schemas.HousingCorporation["id"] | null) => {
+  const onSubmit = (housing_corporation?: components["schemas"]["HousingCorporation"]["id"] | null) => {
     setLoading(true);
     execPatch({ housing_corporation })
       .then((response: any) => {

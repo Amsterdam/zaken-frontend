@@ -1,6 +1,6 @@
 import { DateDisplay } from "@amsterdam/wonen-ui";
 
-export default (fine: Components.Schemas.Fine) => {
+export default (fine: components["schemas"]["Fine"]) => {
 
   const { identificatienummer, invorderingstatus, dagtekening } = fine;
 

@@ -1,0 +1,26 @@
+.tabButton {
+  background-color: transparent;
+  padding: 12px 0;
+  color: #000000;
+  border: none;
+  margin-right: 28px;
+  transition: box-shadow 0.1s ease-in-out, color 0.1s ease-in-out;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.tabButton:hover {
+  box-shadow: inset 0 -2.5px #ec0000;
+  color: #ec0000;
+}
+
+.tabButton.isSelected {
+  color: #000000;
+  box-shadow: inset 0 -2.5px #000000;
+}
+
+.tabButton.isSelected:hover {
+  box-shadow: inset 0 -2.5px #ec0000;
+  color: #ec0000;
+}

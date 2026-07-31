@@ -10,12 +10,12 @@ import { useQuickDecisionTypes } from "app/state/rest/themes";
 import useNavigation from "app/routing/useNavigation";
 
 type Props = {
-  id: Components.Schemas.CaseDetail["id"];
+  id: components["schemas"]["CaseDetail"]["id"];
   caseUserTaskId: string;
 };
 
 type QuickDecisionData = Omit<
-  Components.Schemas.QuickDecision,
+  components["schemas"]["QuickDecision"],
   "quick_decision_type"
 > & { quick_decision_type: { id: number } };
 

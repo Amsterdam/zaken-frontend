@@ -1,0 +1,29 @@
+.row {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  width: calc(100% + 24px);
+  margin-left: -12px;
+  margin-right: -12px;
+}
+
+/* Column */
+.row > div {
+  margin-bottom: var(--bottom-spacing, 24px);
+  margin-top: var(--top-spacing, 0px);
+}
+
+@media screen and (min-width: 1200px) {
+  .row {
+    width: calc(100% + 24px);
+    margin-left: -12px;
+    margin-right: -12px;
+  }
+
+  /* Column */
+  .row > div {
+    margin-bottom: var(--bottom-spacing, 48px);
+  }
+}

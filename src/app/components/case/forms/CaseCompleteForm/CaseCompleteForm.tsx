@@ -8,15 +8,15 @@ import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks
 import useNavigation from "app/routing/useNavigation";
 
 type Props = {
-  id: Components.Schemas.CaseDetail["id"]
+  id: components["schemas"]["CaseDetail"]["id"]
   caseUserTaskId: string
 }
 
-type CaseCloseTypeFormData = Omit<Components.Schemas.CaseClose, "reason" | "result"> & {
-  reason: Components.Schemas.CaseCloseReason
-  result: Components.Schemas.CaseCloseResult | null
+type CaseCloseTypeFormData = Omit<components["schemas"]["CaseClose"], "reason" | "result"> & {
+  reason: components["schemas"]["CaseCloseReason"]
+  result: components["schemas"]["CaseCloseResult"] | null
 }
-const mapData = (data: CaseCloseTypeFormData): Components.Schemas.CaseClose => (
+const mapData = (data: CaseCloseTypeFormData): components["schemas"]["CaseClose"] => (
   {
     ...data,
     reason: data.reason.id,

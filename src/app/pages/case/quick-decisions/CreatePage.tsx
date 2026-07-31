@@ -20,7 +20,7 @@ const CreatePage: React.FC = () => {
   const id = parseUrlParamId(idString);
 
   return (
-    isValidUrlParamId<Components.Schemas.CaseDetail["id"]>(id)
+    isValidUrlParamId<components["schemas"]["CaseDetail"]["id"]>(id)
     && isValidUrlParamId<string>(caseUserTaskId)
       ? <DefaultLayout>
         <RowWithColumn>

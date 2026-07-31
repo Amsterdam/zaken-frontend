@@ -7,7 +7,7 @@ export type Workflow = {
 };
 
 type Props = {
-  caseId: Components.Schemas.CaseDetail["id"];
+  caseId: components["schemas"]["CaseDetail"]["id"];
   caseUserTaskId: string;
   workflows: Workflow[];
 };

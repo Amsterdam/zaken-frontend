@@ -9,7 +9,7 @@ type Props = {
   onSubmit: (data: any) => void
   onCancel: () => void
   schedule?: Schedule
-  scheduleTypes?: Components.Schemas.ThemeScheduleTypes
+  scheduleTypes?: components["schemas"]["ThemeScheduleTypes"]
 };
 
 const visitFromOptions: { id: number, name: string }[] = [

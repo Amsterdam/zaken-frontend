@@ -1,8 +1,6 @@
-import styled from "styled-components";
-import { breakpoint, themeSpacing } from "@amsterdam/asc-ui";
-import layouts from "@amsterdam/asc-ui/lib/theme/default/layouts";
-
+import type { CSSProperties } from "react";
 import Column from "app/components/layouts/Grid/Column";
+import styles from "./Row.module.css";
 
 /** Rows for page layout
  * optional props:
@@ -19,48 +17,23 @@ export type TypeProps = {
   topSpacing?: number
 }
 
-const GUTTER = layouts.large.gutter;
-
-const RowStyle = styled.div<TypeProps>`
-  box-sizing: border-box;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  width: calc(100% + ${ GUTTER } px);
-  margin-left: -${ GUTTER / 2 }px;
-  margin-right: -${ GUTTER / 2 }px;
-
-  /* Column */
-  > div {
-    margin-bottom: ${ props => themeSpacing(props.bottomSpacing ?? 6) };
-    margin-top: ${ props => themeSpacing(props.topSpacing ?? 0) };
-  }
-
-  @media screen and ${ breakpoint("min-width", "laptopM") } {
-    width: calc(100% + ${ GUTTER }px);
-    margin-left: -${ GUTTER / 2 }px;
-    margin-right: -${ GUTTER  / 2 }px;
-
-    /* Column */
-    > div {
-      margin-bottom: ${ props => themeSpacing(props.bottomSpacing ?? 12) };
-    }
-  }
-`;
+const getRowStyle = ({ bottomSpacing, topSpacing }: Omit<TypeProps, "children">): CSSProperties => ({
+  "--bottom-spacing": bottomSpacing !== undefined ? `${bottomSpacing * 4}px` : undefined,
+  "--top-spacing": topSpacing !== undefined ? `${topSpacing * 4}px` : undefined,
+} as CSSProperties);
 
 export const RowWithColumn: React.FC<TypeProps> = ({ children, ...props }) => (
-  <RowStyle { ...props }>
+  <div className={ styles.row } style={ getRowStyle(props) }>
     <Column>
       { children }
     </Column>
-  </RowStyle>
+  </div>
 );
 
 const Row: React.FC<TypeProps> = ({ children, ...props }) => (
-  <RowStyle { ...props }>
+  <div className={ styles.row } style={ getRowStyle(props) }>
     { children }
-  </RowStyle>
+  </div>
 );
 
 export default Row;

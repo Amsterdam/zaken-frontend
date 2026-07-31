@@ -7,9 +7,9 @@ type Props = {
   onSubmit: (data: any) => void
   isLoading?: boolean
   onCancel: () => void
-  subjects: Components.Schemas.Subject[]
-  themeId: Components.Schemas.CaseTheme["id"]
-  initialValues?: { subjects: Components.Schemas.Subject[]}
+  subjects: components["schemas"]["Subject"][]
+  themeId: components["schemas"]["CaseTheme"]["id"]
+  initialValues?: { subjects: components["schemas"]["Subject"][]}
 }
 
 const ChangeSubjectForm: React.FC<Props> = ({ isLoading, onSubmit, onCancel, themeId, initialValues }) => {
@@ -17,13 +17,13 @@ const ChangeSubjectForm: React.FC<Props> = ({ isLoading, onSubmit, onCancel, the
   const [caseTheme] = useCaseThemes();
   const [ otherTheme, setOtherTheme ] = useState<number | undefined>(undefined);
   const [ otherSubjects ] = useSubjects(otherTheme);
-  const [selectedSubjects, setSelectedSubjects] = useState<Components.Schemas.Subject[] | undefined>(initialValues?.subjects);
+  const [selectedSubjects, setSelectedSubjects] = useState<components["schemas"]["Subject"][] | undefined>(initialValues?.subjects);
 
   const isSelected = (subjectId: number) => (
     !!selectedSubjects?.filter((subject) => subject.id === subjectId).length
   );
 
-  const handleCheck = (subject: Components.Schemas.Subject) => {
+  const handleCheck = (subject: components["schemas"]["Subject"]) => {
     if (isSelected(subject.id)) {
       setSelectedSubjects(selectedSubjects?.filter(sub => sub.id !== subject.id));
     } else {
@@ -37,7 +37,7 @@ const ChangeSubjectForm: React.FC<Props> = ({ isLoading, onSubmit, onCancel, the
   };
 
   type CheckBoxesProps = {
-    subjects: Components.Schemas.Subject[]
+    subjects: components["schemas"]["Subject"][]
   }
 
   const CheckBoxes = ({ subjects }: CheckBoxesProps) => (

@@ -12,16 +12,16 @@ import MultipleOptionsFilterBox, {
 import NoCorporationFilter from "app/components/filters/NoCorporationFilter/NoCorporationFilter";
 
 type Props = {
-  corporations?: Components.Schemas.HousingCorporation[];
+  corporations?: components["schemas"]["HousingCorporation"][];
   corporationIsNull: boolean;
-  districtNames: Components.Schemas.District["name"][];
-  districts: Components.Schemas.District[];
+  districtNames: components["schemas"]["District"]["name"][];
+  districts: components["schemas"]["District"][];
   onChangeFilter: (key: string, value: any) => void;
   onChangePageSize: (value: string) => void;
   pageSize: string;
-  projects?: Components.Schemas.CaseProject[];
+  projects?: components["schemas"]["CaseProject"][];
   reason: string;
-  reasons?: Components.Schemas.CaseReason[];
+  reasons?: components["schemas"]["CaseReason"][];
   role: MockComponents.Schemas.Role;
   roles?: MockComponents.Schemas.Role[];
   selectedCorporations: string[];
@@ -30,12 +30,12 @@ type Props = {
   selectedSubjects: string[];
   selectedTags: string[];
   selectedTaskNames: string[];
-  subjects?: Components.Schemas.Subject[];
-  tags?: Components.Schemas.Tag[];
-  taskNames?: Components.Schemas.CaseUserTaskTaskName[];
+  subjects?: components["schemas"]["Subject"][];
+  tags?: components["schemas"]["Tag"][];
+  taskNames?: components["schemas"]["CaseUserTaskTaskName"][];
   taskOwners?: Option[];
   theme: string;
-  themes?: Components.Schemas.CaseTheme[];
+  themes?: components["schemas"]["CaseTheme"][];
 };
 
 const TasksFilter: React.FC<Props> = ({

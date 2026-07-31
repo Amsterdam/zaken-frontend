@@ -3,7 +3,7 @@ import ButtonLink from "app/components/shared/ButtonLink/ButtonLink";
 import useHasPermission from "app/state/rest/custom/usePermissions/useHasPermission";
 
 type Props = React.ComponentProps<typeof Button> & {
-  permissionNames: Components.Schemas.PermissionsEnum[]
+  permissionNames: components["schemas"]["PermissionsEnum"][]
   to: string
   text: string
 }

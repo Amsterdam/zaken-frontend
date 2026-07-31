@@ -9,7 +9,7 @@ import IsAuthorizedButtonLink from "app/components/shared/ButtonLink/IsAuthorize
 import { CAN_PERFORM_TASK } from "app/state/rest/custom/usePermissions/useHasPermission";
 
 type Props = {
-  id: Components.Schemas.CaseDetail["id"]
+  id: components["schemas"]["CaseDetail"]["id"]
 }
 
 const ButtonWrap = styled.div`

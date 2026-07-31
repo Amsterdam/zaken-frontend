@@ -7,7 +7,7 @@ import styles from "./ShowOtherAddressesButton.module.css";
 
 export type Index = "first" | "last" | undefined
 type Props = {
-  bagId: Components.Schemas.Address["bag_id"]
+  bagId: components["schemas"]["Address"]["bag_id"]
   index: Index
 }
 

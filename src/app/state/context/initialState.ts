@@ -3,7 +3,7 @@ const noop = () => {};
 export type StateType = {
   cases: {
     count: number;
-    districtNames: Components.Schemas.District["name"][];
+    districtNames: components["schemas"]["District"]["name"][];
     fromStartDate: string;
     housingCorporations: string[];
     housingCorporationIsNull: boolean;
@@ -11,7 +11,7 @@ export type StateType = {
     pagination: TABLE.Schemas.Pagination;
     projects: string[];
     reason: string;
-    results: Components.Schemas.Case[];
+    results: components["schemas"]["Case"][];
     sorting: TABLE.Schemas.Sorting;
     addressSearch: string;
     subjects: string[];
@@ -21,20 +21,20 @@ export type StateType = {
   };
   tasks: {
     count: number;
-    districtNames: Components.Schemas.District["name"][];
+    districtNames: components["schemas"]["District"]["name"][];
     housingCorporations: string[];
     housingCorporationIsNull: boolean;
     owners: string[];
     pagination: TABLE.Schemas.Pagination;
     projects: string[];
     reason: string;
-    results: Components.Schemas.CaseUserTask[];
+    results: components["schemas"]["CaseUserTask"][];
     role?: string;
     sorting: TABLE.Schemas.Sorting;
     theme: string;
     subjects: string[];
     tags: string[];
-    taskNames: Components.Schemas.CaseUserTaskTaskName["name"][];
+    taskNames: components["schemas"]["CaseUserTaskTaskName"]["name"][];
     updateContextTasks: (payload: any) => void;
   };
 };

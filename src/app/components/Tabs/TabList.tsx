@@ -1,31 +1,15 @@
-import styled from "styled-components";
-import { themeColor, themeSpacing } from "@amsterdam/asc-ui";
+import { forwardRef } from "react";
+import styles from "./TabList.module.css";
 
-const TabList = styled.div.attrs({
-  role: "tablist",
-})`
-  min-width: 100%;
-  box-shadow: inset 0 -2px 0 0 ${ themeColor("tint", "level2") };
-  white-space: nowrap;
-  overflow-x: scroll;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
-  mask: linear-gradient(
-      to right,
-      black calc(100% - ${ themeSpacing(7) }),
-      transparent
-    ),
-    linear-gradient(
-      to bottom,
-      transparent calc(100% - 6px),
-      black calc(100% - 6px)
-    );
-
-  &::-webkit-scrollbar {
-    /* WebKit */
-    width: 0;
-    height: 0;
-  }
-`;
+const TabList = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => (
+    <div
+      role="tablist"
+      ref={ ref }
+      className={ [styles.tabList, className].filter(Boolean).join(" ") }
+      { ...props }
+    />
+  ),
+);
 
 export default TabList;

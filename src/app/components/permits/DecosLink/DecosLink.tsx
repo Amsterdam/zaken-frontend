@@ -1,7 +1,7 @@
 import { Link } from "@amsterdam/asc-ui";
 
 type Props = {
-  bagId: Components.Schemas.Address["bag_id"]
+  bagId: components["schemas"]["Address"]["bag_id"]
 }
 
 // TODO: make hardcoded link dynamic

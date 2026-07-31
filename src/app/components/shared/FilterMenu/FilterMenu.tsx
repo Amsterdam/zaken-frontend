@@ -1,8 +1,9 @@
-import styled from "styled-components";
-import { themeColor, themeSpacing } from "@amsterdam/asc-ui";
+import { type ReactNode } from "react";
 
-export default styled.div`
-  background: ${ themeColor("tint", "level2") };
-  margin-top: ${ themeSpacing(8) };
-  padding: ${ themeSpacing(4) } ${ themeSpacing(6) };
-`;
+const FilterMenu = ({ children }: { children: ReactNode }) => (
+  <div style={{ background: "#f5f5f5", marginTop: 32, padding: "16px 24px" }}>
+    {children}
+  </div>
+);
+
+export default FilterMenu;

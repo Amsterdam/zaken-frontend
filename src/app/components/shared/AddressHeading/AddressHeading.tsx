@@ -1,15 +1,10 @@
-import { Heading, themeSpacing } from "@amsterdam/asc-ui";
+import { Heading } from "@amsterdam/asc-ui";
 import { useCase } from "app/state/rest";
 import AddressDisplay from "app/components/addresses/AddressDisplay/AddressDisplay";
-import styled from "styled-components";
 
 type Props = {
-  caseId: Components.Schemas.CaseDetail["id"];
+  caseId: components["schemas"]["CaseDetail"]["id"];
 };
-
-const Div = styled.div`
-  margin-bottom: ${themeSpacing(7)};
-`;
 
 const AddressHeading: React.FC<Props> = ({ caseId }) => {
   const [data] = useCase(caseId);
@@ -18,7 +13,7 @@ const AddressHeading: React.FC<Props> = ({ caseId }) => {
     <>
       <Heading as="h3">Adres</Heading>
       {data && (
-        <Div>
+        <div style={{ marginBottom: 28 }}>
           <p>
             <AddressDisplay
               streetName={data.address.street_name ?? ""}
@@ -28,7 +23,7 @@ const AddressHeading: React.FC<Props> = ({ caseId }) => {
             />
           </p>
           <p>{data.address.postal_code} Amsterdam</p>
-        </Div>
+        </div>
       )}
     </>
   );

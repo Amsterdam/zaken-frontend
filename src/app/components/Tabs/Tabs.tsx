@@ -4,7 +4,6 @@ import type {
   PropsWithChildren,
   ReactElement,
 } from "react";
-import styled from "styled-components";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useFocusWithArrows } from "@amsterdam/asc-ui";
 import type { Tab, TabProps } from "./Tab";
@@ -13,11 +12,6 @@ import TabList from "./TabList";
 
 // For more information about the accessibility features of this code check out the following references:
 // - https://www.w3.org/TR/wai-aria-practices-1.1/examples/tabs/tabs-2/tabs.html
-
-const TabPanel = styled.div.attrs({
-  role: "tabpanel",
-  tabIndex: 0,
-})``;
 
 export type TabsProps = {
   /**
@@ -127,14 +121,16 @@ export function Tabs({
         const panelId = formatPanelId(props.id);
 
         return (
-          <TabPanel
+          <div
+            role="tabpanel"
+            tabIndex={0}
             key={props.id}
             id={panelId}
             aria-labelledby={tabId}
             hidden={!isSelected}
           >
             {props.children}
-          </TabPanel>
+          </div>
         );
       })}
     </>

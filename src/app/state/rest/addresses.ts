@@ -6,9 +6,9 @@ import { useErrorHandler, useSuppressErrorHandler } from "./hooks/utils/errorHan
 import { makeApiUrl } from "./hooks/utils/apiUrl";
 import useApiRequest from "./hooks/useApiRequest";
 
-export const useAddresses = (bagId: Components.Schemas.Address["bag_id"], options?: Options) => {
+export const useAddresses = (bagId: components["schemas"]["Address"]["bag_id"], options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.Address>({
+  return useApiRequest<components["schemas"]["Address"]>({
     ...options,
     url: makeApiUrl("addresses", bagId),
     groupName: "addresses",
@@ -19,7 +19,7 @@ export const useAddresses = (bagId: Components.Schemas.Address["bag_id"], option
 
 export const usePermitDetails = (bagId: string) => {
   const handleError = useSuppressErrorHandler();
-  return useApiRequest<Components.Schemas.Decos>({
+  return useApiRequest<components["schemas"]["Decos"]>({
     url: makeApiUrl("addresses", bagId, "permits"),
     groupName: "addresses",
     handleError,
@@ -29,7 +29,7 @@ export const usePermitDetails = (bagId: string) => {
 
 export const usePermitsPowerBrowser = (bagId: string) => {
   const handleError = useSuppressErrorHandler();
-  return useApiRequest<Components.Schemas.Powerbrowser[]>({
+  return useApiRequest<components["schemas"]["Powerbrowser"][]>({
     url: makeApiUrl("addresses", bagId, "permits-powerbrowser"),
     groupName: "addresses",
     handleError,
@@ -44,7 +44,7 @@ export const useMeldingen = (bagId: string) => {
     addQueryPrefix: true,
   });
   const handleError = useSuppressErrorHandler();
-  return useApiRequest<Components.Schemas.Meldingen>({
+  return useApiRequest<components["schemas"]["Meldingen"]>({
     url: `${ makeApiUrl("addresses", bagId, "meldingen") }${ queryString }`,
     groupName: "addresses",
     handleError,
@@ -54,7 +54,7 @@ export const useMeldingen = (bagId: string) => {
 
 export const useRegistrations = (bagId: string) => {
   const handleError = useSuppressErrorHandler();
-  return useApiRequest<Components.Schemas.RegistrationDetails>({
+  return useApiRequest<components["schemas"]["RegistrationDetails"]>({
     url: makeApiUrl("addresses", bagId, "registrations"),
     groupName: "addresses",
     handleError,
@@ -64,7 +64,7 @@ export const useRegistrations = (bagId: string) => {
 
 export const useCorporations = (options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.PaginatedHousingCorporationList>({
+  return useApiRequest<components["schemas"]["PaginatedHousingCorporationList"]>({
     ...options,
     url: makeApiUrl("addresses", "housing-corporations"),
     groupName: "housingCorporations",
@@ -75,7 +75,7 @@ export const useCorporations = (options?: Options) => {
 
 export const useDistricts = (options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.PaginatedDistrictList>({
+  return useApiRequest<components["schemas"]["PaginatedDistrictList"]>({
     ...options,
     url: makeApiUrl("addresses", "districts"),
     groupName: "addresses",

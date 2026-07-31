@@ -39,12 +39,12 @@ export const getQueryUrl = (
   role?: string,
   owner?: string[],
   isEnforcementRequest?: boolean,
-  taskNames?: Components.Schemas.CaseUserTaskTaskName["name"][],
+  taskNames?: components["schemas"]["CaseUserTaskTaskName"]["name"][],
   projects?: string[],
   reason?: string,
   subjects?: string[],
   tags?: string[],
-  districtNames?: Components.Schemas.District["name"][],
+  districtNames?: components["schemas"]["District"]["name"][],
   housingCorporations?: string[],
   housingCorporationIsNull?: boolean,
 ): string => {
@@ -79,7 +79,7 @@ export const getQueryUrl = (
 };
 
 type UseTasksParams = {
-  districtNames?: Components.Schemas.District["name"][];
+  districtNames?: components["schemas"]["District"]["name"][];
   housingCorporationIsNull?: boolean;
   housingCorporations?: string[];
   isEnforcementRequest?: boolean;
@@ -92,7 +92,7 @@ type UseTasksParams = {
   sorting?: TABLE.Schemas.Sorting;
   subjects?: string[];
   tags?: string[];
-  taskNames?: Components.Schemas.CaseUserTaskTaskName["name"][];
+  taskNames?: components["schemas"]["CaseUserTaskTaskName"]["name"][];
   theme?: string;
 };
 
@@ -133,7 +133,7 @@ export const useTasks = ({
     housingCorporationIsNull,
   );
 
-  return useApiRequest<Components.Schemas.PaginatedCaseUserTaskList>({
+  return useApiRequest<components["schemas"]["PaginatedCaseUserTaskList"]>({
     url: queryUrl,
     groupName: "cases",
     handleError,
@@ -143,7 +143,7 @@ export const useTasks = ({
 
 export const useTask = (id: number | string, options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.CaseUserTask>({
+  return useApiRequest<components["schemas"]["CaseUserTask"]>({
     ...options,
     lazy: true,
     url: makeApiUrl("tasks", id),
@@ -155,7 +155,7 @@ export const useTask = (id: number | string, options?: Options) => {
 
 export const useTaskUpdate = (id: number | string, options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.CaseUserTask>({
+  return useApiRequest<components["schemas"]["CaseUserTask"]>({
     ...options,
     lazy: true,
     url: makeApiUrl("tasks", id),
@@ -181,7 +181,7 @@ export const useTaskNames = (
     skipNulls: true,
   });
   const apiUrl = `${makeApiUrl("tasks", "task-names")}${queryString}`;
-  return useApiRequest<Components.Schemas.CaseUserTaskTaskName[]>({
+  return useApiRequest<components["schemas"]["CaseUserTaskTaskName"][]>({
     url: apiUrl,
     groupName: "themes",
     handleError,
@@ -195,7 +195,7 @@ export const useSummonTypesByTaskId = (
   options?: Options,
 ) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.PaginatedSummonTypeList>({
+  return useApiRequest<components["schemas"]["PaginatedSummonTypeList"]>({
     ...options,
     url: makeApiUrl("tasks", id, "summon-types"),
     groupName: "task",
@@ -206,7 +206,7 @@ export const useSummonTypesByTaskId = (
 
 export const useTaskOwners = (options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.User[]>({
+  return useApiRequest<components["schemas"]["User"][]>({
     ...options,
     url: makeApiUrl("tasks", "owners"),
     groupName: "themes",

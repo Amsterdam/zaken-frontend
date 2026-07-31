@@ -8,7 +8,7 @@ import useHasPermission from "app/state/rest/custom/usePermissions/useHasPermiss
  */
 
 type Props = {
-  permissionNames: Components.Schemas.PermissionsEnum[];
+  permissionNames: components["schemas"]["PermissionsEnum"][];
   children: React.ReactNode;
 };
 

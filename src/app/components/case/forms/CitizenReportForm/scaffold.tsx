@@ -6,9 +6,9 @@ import isValidUrl from "app/routing/utils/isValidUrl";
 import { EXCLUDED_THEMES_ADVERTISEMENTS } from "app/constants/themeNames";
 
 export default (
-  caseId: Components.Schemas.CaseDetail["id"],
+  caseId: components["schemas"]["CaseDetail"]["id"],
   navigateTo: NavigateToFunction,
-  themeName: Components.Schemas.CaseTheme["name"],
+  themeName: components["schemas"]["CaseTheme"]["name"],
 ) => {
 
   const fields = {

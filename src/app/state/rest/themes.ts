@@ -5,7 +5,7 @@ import useApiRequest from "./hooks/useApiRequest";
 
 export const useCaseThemes = (options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.PaginatedCaseThemeList>({
+  return useApiRequest<components["schemas"]["PaginatedCaseThemeList"]>({
     ...options,
     url: makeApiUrl("themes"),
     groupName: "themes",
@@ -14,9 +14,9 @@ export const useCaseThemes = (options?: Options) => {
   });
 };
 
-export const useReasons = (themeId?: Components.Schemas.CaseTheme["id"], options?: Options) => {
+export const useReasons = (themeId?: components["schemas"]["CaseTheme"]["id"], options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.PaginatedCaseReasonList>({
+  return useApiRequest<components["schemas"]["PaginatedCaseReasonList"]>({
     lazy: themeId === undefined,
     ...options,
     url: makeApiUrl("themes", themeId, "reasons"),
@@ -26,9 +26,9 @@ export const useReasons = (themeId?: Components.Schemas.CaseTheme["id"], options
   });
 };
 
-export const useProjects = (themeId?: Components.Schemas.CaseTheme["id"], options?: Options) => {
+export const useProjects = (themeId?: components["schemas"]["CaseTheme"]["id"], options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.PaginatedCaseProjectList>({
+  return useApiRequest<components["schemas"]["PaginatedCaseProjectList"]>({
     lazy: themeId === undefined,
     ...options,
     url: makeApiUrl("themes", themeId, "case-projects"),
@@ -39,9 +39,9 @@ export const useProjects = (themeId?: Components.Schemas.CaseTheme["id"], option
 };
 
 
-export const useSubjects = (themeId?: Components.Schemas.CaseTheme["id"], options?: Options) => {
+export const useSubjects = (themeId?: components["schemas"]["CaseTheme"]["id"], options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.PaginatedSubjectList>({
+  return useApiRequest<components["schemas"]["PaginatedSubjectList"]>({
     lazy: themeId === undefined,
     ...options,
     url: makeApiUrl("themes", themeId, "subjects"),
@@ -53,9 +53,9 @@ export const useSubjects = (themeId?: Components.Schemas.CaseTheme["id"], option
 
 
 // useSummonTypes for getting the available summonTypes for a specific theme
-export const useSummonTypes = (themeId?: Components.Schemas.CaseTheme["id"], options?: Options) => {
+export const useSummonTypes = (themeId?: components["schemas"]["CaseTheme"]["id"], options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.PaginatedSummonTypeList>({
+  return useApiRequest<components["schemas"]["PaginatedSummonTypeList"]>({
     ...options,
     lazy: themeId === undefined,
     url: makeApiUrl("themes", themeId, "summon-types"),
@@ -65,9 +65,9 @@ export const useSummonTypes = (themeId?: Components.Schemas.CaseTheme["id"], opt
   });
 };
 
-export const useTags = (themeId?: Components.Schemas.CaseTheme["id"], options?: Options) => {
+export const useTags = (themeId?: components["schemas"]["CaseTheme"]["id"], options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.PaginatedTagList>({
+  return useApiRequest<components["schemas"]["PaginatedTagList"]>({
     lazy: themeId === undefined,
     ...options,
     url: makeApiUrl("themes", themeId, "tags"),
@@ -77,9 +77,9 @@ export const useTags = (themeId?: Components.Schemas.CaseTheme["id"], options?: 
   });
 };
 
-export const useDecisionTypes = (themeId?: Components.Schemas.CaseTheme["id"], options?: Options) => {
+export const useDecisionTypes = (themeId?: components["schemas"]["CaseTheme"]["id"], options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.PaginatedDecisionTypeList>({
+  return useApiRequest<components["schemas"]["PaginatedDecisionTypeList"]>({
     ...options,
     lazy: themeId === undefined,
     url: makeApiUrl("themes", themeId, "decision-types"),
@@ -89,9 +89,9 @@ export const useDecisionTypes = (themeId?: Components.Schemas.CaseTheme["id"], o
   });
 };
 
-export const useQuickDecisionTypes = (themeId?: Components.Schemas.CaseTheme["id"], options?: Options) => {
+export const useQuickDecisionTypes = (themeId?: components["schemas"]["CaseTheme"]["id"], options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.PaginatedQuickDecisionTypeList>({
+  return useApiRequest<components["schemas"]["PaginatedQuickDecisionTypeList"]>({
     ...options,
     lazy: themeId === undefined,
     url: makeApiUrl("themes", themeId, "quick-decision-types"),
@@ -101,9 +101,9 @@ export const useQuickDecisionTypes = (themeId?: Components.Schemas.CaseTheme["id
   });
 };
 
-export const useScheduleTypes = (themeId?: Components.Schemas.CaseTheme["id"], options?: Options) => {
+export const useScheduleTypes = (themeId?: components["schemas"]["CaseTheme"]["id"], options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.ThemeScheduleTypes>({
+  return useApiRequest<components["schemas"]["ThemeScheduleTypes"]>({
     ...options,
     lazy: options?.lazy ?? themeId === undefined,
     url: makeApiUrl("themes", themeId, "schedule-types"),
@@ -113,9 +113,9 @@ export const useScheduleTypes = (themeId?: Components.Schemas.CaseTheme["id"], o
   });
 };
 
-export const useViolationTypes = (themeId?: Components.Schemas.CaseTheme["id"], options?: Options) => {
+export const useViolationTypes = (themeId?: components["schemas"]["CaseTheme"]["id"], options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.PaginatedViolationTypeList>({
+  return useApiRequest<components["schemas"]["PaginatedViolationTypeList"]>({
     ...options,
     lazy: themeId === undefined,
     url: makeApiUrl("themes", themeId, "violation-types"),

@@ -5,7 +5,7 @@ import { createNameAbbreviation } from "app/components/shared/Helpers/helpers";
 
 type Props = {
   taskOwner: string | null;
-  currentUser: Components.Schemas.User | null;
+  currentUser: components["schemas"]["User"] | null;
   currentUserId: string | null;
   isBusy: boolean;
   onClick: () => void;

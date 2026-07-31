@@ -1,24 +1,10 @@
-import styled from "styled-components";
 import { Spinner } from "@amsterdam/asc-ui";
+import styles from "./SpinnerWrapper.module.css";
 
 type Props = {
   spinning?: boolean;
   children: React.ReactNode;
 };
-
-const SpinnerContainer = styled.div`
-  background: rgba(0, 0, 0, 0.1);
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
-  -webkit-backdrop-filter: blur(1px);
-  backdrop-filter: blur(1px);
-`;
 
 export const SpinnerWrapper: React.FC<Props> = ({
   spinning = true,
@@ -26,9 +12,9 @@ export const SpinnerWrapper: React.FC<Props> = ({
 }) => (
   <div>
     {spinning && (
-      <SpinnerContainer>
+      <div className={ styles.spinnerContainer }>
         <Spinner />
-      </SpinnerContainer>
+      </div>
     )}
     {children}
   </div>

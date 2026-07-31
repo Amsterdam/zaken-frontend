@@ -1,27 +1,19 @@
-import styled from "styled-components";
-import { themeColor, ascDefaultTheme } from "@amsterdam/asc-ui";
 import { env } from "app/config/env";
+import styles from "./MockWrapper.module.css";
 
 type Props = {
   hasPadding?: boolean
   children: React.ReactNode
 }
 
-type DivProps = {
-  hasPadding: boolean
-  isProduction: boolean
-}
+const MockWrapper: React.FC<Props> = ({ hasPadding = true, children }) => {
+  const isProduction = env.VITE_ENVIRONMENT === "production";
+  const className = [
+    styles.div,
+    !isProduction && styles.notProduction,
+    !isProduction && hasPadding && styles.hasPadding,
+  ].filter(Boolean).join(" ");
 
-// TODO: Remove theme call. Currently needed cause of a bug in ASC.
-const Div = styled.div<DivProps>`
-  border: ${ ({ isProduction }) => isProduction ? "none" : `solid 2px ${ themeColor("supplement", "pink")({ theme: ascDefaultTheme }) }` };
-  padding: ${ ({ isProduction, hasPadding }) => !isProduction && hasPadding ? "4px" : 0 };
-  display: ${ ({ isProduction }) => isProduction ? "none" : "block" };
-`;
-
-const MockWrapper: React.FC<Props> = ({ hasPadding = true, children }) => (
-  <Div isProduction={ env.VITE_ENVIRONMENT === "production" } hasPadding={ hasPadding }>
-    { children }
-  </Div>
-);
+  return <div className={ className }>{ children }</div>;
+};
 export default MockWrapper;
