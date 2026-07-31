@@ -1802,6 +1802,8 @@ export interface components {
             url: string;
             user_agent?: string;
             screen?: string;
+            /** @default AZA */
+            app_name: string;
         };
         Fine: {
             identificatienummer: string;
