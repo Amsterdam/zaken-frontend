@@ -1,5 +1,4 @@
-import styled from "styled-components";
-import { Divider, Heading, themeSpacing } from "@amsterdam/asc-ui";
+import { Divider, Heading } from "@amsterdam/asc-ui";
 import { useParams } from "react-router-dom";
 import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout";
 import Row, { RowWithColumn } from "app/components/layouts/Grid/Row";
@@ -14,25 +13,28 @@ import CaseStatus from "app/components/case/CaseStatus/CaseStatus";
 import useExistingCase from "./hooks/useExistingCase";
 import { LoadingScreen } from "app/components/shared/loading";
 import CaseNuisanceAlert from "app/components/case/CaseNuisanceAlert/CaseNuisanceAlert";
-import useHasPermission, { SENSITIVE_CASE_PERMISSION } from "app/state/rest/custom/usePermissions/useHasPermission";
+import useHasPermission, {
+  SENSITIVE_CASE_PERMISSION,
+} from "app/state/rest/custom/usePermissions/useHasPermission";
 import NotAuthorizedPage from "app/pages/auth/NotAuthorizedPage";
 
-
 type Props = {
-  id: string
-}
-
-const PaddedContent = styled.div`
-  padding-top: ${ themeSpacing(8) };
-`;
+  id: string;
+};
 
 const DetailsPage: React.FC = () => {
   const { id: idString } = useParams<Props>();
-  const [exists, isBusy, has404, id, caseItem] = useExistingCase(parseUrlParamId(idString));
-  const [hasPermission, isLoading] = useHasPermission([SENSITIVE_CASE_PERMISSION]);
+  const [exists, isBusy, has404, id, caseItem] = useExistingCase(
+    parseUrlParamId(idString),
+  );
+  const [hasPermission, isLoading] = useHasPermission([
+    SENSITIVE_CASE_PERMISSION,
+  ]);
   const showSpinner = isBusy || isLoading;
   // Don't show if sensitive case and no permission
-  const isAuthorized = caseItem?.sensitive === false || (caseItem?.sensitive === true && hasPermission);
+  const isAuthorized =
+    caseItem?.sensitive === false ||
+    (caseItem?.sensitive === true && hasPermission);
   const showNotFound = has404;
 
   if (showSpinner) {
@@ -44,39 +46,39 @@ const DetailsPage: React.FC = () => {
 
   return (
     <>
-      { exists && isAuthorized && (
+      {exists && isAuthorized && (
         <DefaultLayout>
           <Row>
-            <Column spanLarge={ 50 }>
+            <Column spanLarge={50}>
               <PageHeading />
             </Column>
-            <Column spanLarge={ 50 }>
-              <DetailHeaderByCaseId caseId={ id } enableSwitch={ false } />
+            <Column spanLarge={50}>
+              <DetailHeaderByCaseId caseId={id} enableSwitch={false} />
             </Column>
           </Row>
-          <Row bottomSpacing={ 4 }>
-            <Column spanLarge={ 75 }>
-              <CaseDetails caseId={ id } />
+          <Row bottomSpacing={4}>
+            <Column spanLarge={75}>
+              <CaseDetails caseId={id} />
             </Column>
           </Row>
 
-          <CaseNuisanceAlert caseId={ id } />
+          <CaseNuisanceAlert caseId={id} />
 
-          <PaddedContent>
+          <div style={{ paddingTop: 32 }}>
             <RowWithColumn>
-              <CaseStatus id={ id } />
+              <CaseStatus id={id} />
             </RowWithColumn>
             <RowWithColumn>
               <Heading as="h2">Zaakhistorie</Heading>
               <Divider />
             </RowWithColumn>
             <RowWithColumn>
-              <TimelineContainer caseId={ id } />
+              <TimelineContainer caseId={id} />
             </RowWithColumn>
-          </PaddedContent>
+          </div>
         </DefaultLayout>
       )}
-      { showNotFound && <NotFoundPage /> }
+      {showNotFound && <NotFoundPage />}
     </>
   );
 };

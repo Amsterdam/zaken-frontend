@@ -1,12 +1,16 @@
-import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { themeColor } from "@amsterdam/asc-ui";
+import styles from "./ButtonLink.module.css";
+
+type Props = React.ComponentProps<typeof Link> & {
+  flex?: boolean
+}
 
 // Filter all non-standard props like flex.
-export default styled(({ flex, ...props }) => <Link {...props} />)`
-  display: ${ ({ flex }) => flex ? "flex" : "inline-block" };
-  align-items: center;
-  text-decoration: none;
-  color: ${ themeColor("tint", "level7") };
-  height: 100%;
-`;
+const ButtonLink: React.FC<Props> = ({ flex, className, ...props }) => (
+  <Link
+    className={ [styles.link, flex ? styles.flex : styles.inlineBlock, className].filter(Boolean).join(" ") }
+    { ...props }
+  />
+);
+
+export default ButtonLink;

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styles from "./CaseDetails.module.css";
 import { DefinitionList, CaseIdDisplay, DateDisplay } from "@amsterdam/wonen-ui";
 import type { DefinitionListData } from "@amsterdam/wonen-ui";
 import { useCase } from "app/state/rest";
@@ -13,21 +13,6 @@ type Props = {
   caseId: components["schemas"]["CaseCreate"]["id"]
 }
 
-const Wrap = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-`;
-
-const StyledDiv = styled.div`
-  display: flex;
-  width: 100%;
-  > div {
-    flex: 1;
-    min-width: 60%;
-  }
-`;
-
 const getDataFirstCol = (caseItem?: components["schemas"]["CaseCreate"]) => {
   if (caseItem === undefined) {
     return undefined;
@@ -35,11 +20,11 @@ const getDataFirstCol = (caseItem?: components["schemas"]["CaseCreate"]) => {
   const { id, start_date, sensitive, previous_case, is_enforcement_request, state } = caseItem;
   const data: DefinitionListData = {
     "Zaak ID": (
-      <Wrap>
+      <div className={ styles.wrap }>
         <CaseIdDisplay id={ id } />
         <CaseSensitive isVisible={ sensitive }/>
         <CaseEnforcement isVisible={ is_enforcement_request } />
-      </Wrap>
+      </div>
     ),
     "Status": caseStates[state],
     "Startdatum": <DateDisplay date={ start_date ?? undefined } emptyText="-" />,
@@ -80,7 +65,7 @@ const CaseDetails: React.FC<Props> = ({ caseId }) => {
   const dataSecondCol = getDataSecondCol(data);
 
   return (
-    <StyledDiv>
+    <div className={ styles.styledDiv }>
       <DefinitionList
         loading={ isBusy }
         numLoadingRows={ 2 }
@@ -93,7 +78,7 @@ const CaseDetails: React.FC<Props> = ({ caseId }) => {
         horizontalBordered={ false }
         data={ dataSecondCol }
       />
-    </StyledDiv>
+    </div>
   );
 };
 

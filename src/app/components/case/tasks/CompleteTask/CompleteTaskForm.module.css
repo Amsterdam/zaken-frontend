@@ -1,0 +1,4 @@
+.div button[type="submit"] {
+  float: right;
+  clear: both;
+}

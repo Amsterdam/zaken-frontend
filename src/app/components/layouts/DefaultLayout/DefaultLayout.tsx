@@ -1,5 +1,5 @@
-import { breakpoint, Header } from "@amsterdam/asc-ui";
-import styled from "styled-components";
+import { Header } from "@amsterdam/asc-ui";
+import styles from "./DefaultLayout.module.css";
 import DefaultNavigation from "app/components/shared/navigation/DefaultNavigation";
 import MainWrapper from "app/components/layouts/MainWrapper/MainWrapper";
 import to from "app/routing/utils/to";
@@ -14,28 +14,6 @@ type Props = {
   children: React.ReactNode;
 };
 
-// This is needed to fix a bug where SVG where displayed above the header / menu.
-// Caused by the CSS property `position: fixed`.
-const HeaderWrap = styled.div`
-  > div {
-    z-index: 1;
-  }
-`;
-
-const MenuWrap = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  width: 100%;
-
-  @media screen and ${breakpoint("min-width", "laptopM")} {
-    justify-content: space-between;
-
-    ul {
-      margin-left: -10px;
-    }
-  }
-`;
-
 const DefaultLayout: React.FC<Props> = ({
   showSearchButton = true,
   children,
@@ -44,21 +22,21 @@ const DefaultLayout: React.FC<Props> = ({
     <SkipLinks
       linkList={[{ title: "Direct naar: inhoud", target: "a11y_content" }]}
     />
-    <HeaderWrap>
+    <div className={ styles.headerWrap }>
       <Header
         tall
         fullWidth={false}
         title={`${env.VITE_APP_TITLE ?? "Amsterdamse Zaak Administratie"} ${env.VITE_ENVIRONMENT_SHORT}`}
         homeLink={to("/")}
         navigation={
-          <MenuWrap>
+          <div className={ styles.menuWrap }>
             <DefaultNavigation showSearchButton={showSearchButton} />
-          </MenuWrap>
+          </div>
         }
         links={<UserInfo />}
       />
       <BreadCrumbsWrap />
-    </HeaderWrap>
+    </div>
     <MainWrapper>
       <FlashMessages />
       {children}

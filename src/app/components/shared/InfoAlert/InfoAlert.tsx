@@ -1,5 +1,4 @@
 import CustomIcon from "../CustomIcon/CustomIcon";
-import styles from "./InfoAlert.module.css";
 
 type InfoAlertProps = {
   title?: string;
@@ -10,10 +9,10 @@ const InfoAlert: React.FC<InfoAlertProps> = ({
   title = "Vul de gegevens aan",
   message = "Sommige verplichte velden zijn nog niet ingevuld.",
 }) => (
-  <div className={styles.container}>
-    <div className={styles.titleWrapper}>
+  <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
       <CustomIcon name="Info" size={24} color="#009de6" />
-      <div className={styles.title}>{title}</div>
+      <div style={{ fontWeight: 700 }}>{title}</div>
     </div>
     <div>{message}</div>
   </div>

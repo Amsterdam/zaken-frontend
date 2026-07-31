@@ -1,0 +1,14 @@
+.div {
+  border: none;
+  padding: 0;
+  display: none;
+}
+
+.notProduction {
+  border: solid 2px #e50082;
+  display: block;
+}
+
+.notProduction.hasPadding {
+  padding: 4px;
+}

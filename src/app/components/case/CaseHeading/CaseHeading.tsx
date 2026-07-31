@@ -1,7 +1,7 @@
 
-import styled from "styled-components";
-import { Heading, Spinner, themeColor, themeSpacing } from "@amsterdam/asc-ui";
+import { Heading, Spinner } from "@amsterdam/asc-ui";
 import { CaseIdDisplay } from "@amsterdam/wonen-ui";
+import styles from "./CaseHeading.module.css";
 
 import { useCase } from "app/state/rest";
 import FullAddressDisplay from "app/components/addresses/FullAddressDisplay/FullAddressDisplay";
@@ -9,15 +9,6 @@ import FullAddressDisplay from "app/components/addresses/FullAddressDisplay/Full
 type Props = {
   id: components["schemas"]["CaseDetail"]["id"]
 }
-
-const Div = styled.div`
-  display: flex;
-  margin-bottom: ${ themeSpacing(3) };
-`;
-const Dt = styled.dt`
-  color: ${ themeColor("tint", "level5") };
-  min-width: 120px;
-`;
 
 const CaseHeading: React.FC<Props> = ({ id }) => {
 
@@ -29,8 +20,8 @@ const CaseHeading: React.FC<Props> = ({ id }) => {
       { data === undefined ?
         <Spinner /> :
         <dl>
-          <Div>
-            <Dt>Adres</Dt>
+          <div className={ styles.div }>
+            <dt className={ styles.dt }>Adres</dt>
             <dd>
               <FullAddressDisplay
                 streetName={ data?.address?.street_name }
@@ -41,13 +32,13 @@ const CaseHeading: React.FC<Props> = ({ id }) => {
                 city={ "Amsterdam" }
               />
             </dd>
-          </Div>
-          <Div>
-            <Dt>Zaak ID</Dt>
+          </div>
+          <div className={ styles.div }>
+            <dt className={ styles.dt }>Zaak ID</dt>
             <dd>
               <CaseIdDisplay id={ data?.id } />
             </dd>
-          </Div>
+          </div>
         </dl>
       }
     </>

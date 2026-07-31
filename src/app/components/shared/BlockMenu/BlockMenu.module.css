@@ -1,0 +1,36 @@
+.div {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.div ul {
+  margin: 0 -6px;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+}
+
+.div li {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+@media screen and (min-width: 540px) {
+  .div li {
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .div li {
+    width: 25%;
+  }
+}
+
+.div li > div {
+  margin: 0 6px;
+}

@@ -1,0 +1,21 @@
+/* This is needed to fix a bug where SVG where displayed above the header / menu. */
+/* Caused by the CSS property `position: fixed`. */
+.headerWrap > div {
+  z-index: 1;
+}
+
+.menuWrap {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+@media screen and (min-width: 1200px) {
+  .menuWrap {
+    justify-content: space-between;
+  }
+
+  .menuWrap ul {
+    margin-left: -10px;
+  }
+}

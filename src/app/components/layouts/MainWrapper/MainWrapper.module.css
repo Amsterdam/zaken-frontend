@@ -1,0 +1,13 @@
+.main {
+  box-sizing: border-box;
+  margin: 0 auto 32px;
+  padding: 24px 12px;
+  width: 100%;
+  max-width: 1430px;
+}
+
+@media screen and (min-width: 1200px) {
+  .main {
+    padding: 8px 40px 48px;
+  }
+}

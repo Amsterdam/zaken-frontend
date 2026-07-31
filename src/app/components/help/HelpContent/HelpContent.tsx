@@ -1,16 +1,8 @@
-import { Accordion, Heading, Paragraph, themeSpacing } from "@amsterdam/asc-ui";
+import { Accordion, Heading, Paragraph } from "@amsterdam/asc-ui";
 import { RowWithColumn } from "app/components/layouts/Grid";
 import EmailLink from "./EmailLink";
-import styled from "styled-components";
+import styles from "./HelpContent.module.css";
 import CustomIcon from "app/components/shared/CustomIcon/CustomIcon";
-
-const StyledIcon = styled.span`
-  vertical-align: text-top;
-`;
-
-const AccordionWrapper = styled.div`
-  margin-bottom: ${ themeSpacing(1) };
-`;
 
 const HelpContent: React.FC = () => {
   const title = "AZA, TON, TOP en de Planningstool";
@@ -22,14 +14,14 @@ const HelpContent: React.FC = () => {
         <Heading as="h2">Waar kan ik terecht met vragen over { title }?</Heading>
       </RowWithColumn>
       <RowWithColumn>
-        <AccordionWrapper>
+        <div className={ styles.accordionWrapper }>
           <Accordion title="Werkproces">
             <Paragraph>
               Voor afspraken over het werkproces met betrekking tot het gebruik van de applicaties, kan je terecht bij je teamleider. De teamleider is er verder ook om vragen en suggesties betreft het werkproces te beantwoorden.
             </Paragraph>
           </Accordion>
-        </AccordionWrapper>
-        <AccordionWrapper>
+        </div>
+        <div className={ styles.accordionWrapper }>
           <Accordion title="Algemeen gebruik">
             <Paragraph>
               De belangrijkste functionaliteiten van { titleShort } staan omschreven in een factsheet.
@@ -43,13 +35,13 @@ const HelpContent: React.FC = () => {
               </strong>
             </Paragraph>
           </Accordion>
-        </AccordionWrapper>
-        <AccordionWrapper>
+        </div>
+        <div className={ styles.accordionWrapper }>
           <Accordion title="Support" >
             <Paragraph>
               Werkt { title } niet (goed)? Dan kan je de volgende dingen proberen:
               <ul>
-                <li>De pagina opnieuw te laden door op het refresh icoon <StyledIcon><CustomIcon name="Refresh"/></StyledIcon> te klikken.</li>
+                <li>De pagina opnieuw te laden door op het refresh icoon <span className={ styles.styledIcon }><CustomIcon name="Refresh"/></span> te klikken.</li>
                 <li>Uit te loggen, om vervolgens opnieuw in te loggen.</li>
               </ul>
             </Paragraph>
@@ -76,14 +68,14 @@ const HelpContent: React.FC = () => {
 
             </Paragraph>
           </Accordion>
-        </AccordionWrapper>
-        <AccordionWrapper>
+        </div>
+        <div className={ styles.accordionWrapper }>
           <Accordion title="Feedback">
             <Paragraph>
               Ontdek je dingen die niet kloppen of heb je suggesties om AZA nog beter te maken? Op elke pagina van AZA zie je aan de rechterkant een rood label: Feedback. Via dit formulier kan je alles aan ons kwijt. We nemen daarna zo snel mogelijk contact met je op om je vragen te beantwoorden.
             </Paragraph>
           </Accordion>
-        </AccordionWrapper>
+        </div>
       </RowWithColumn>
     </>
   );
