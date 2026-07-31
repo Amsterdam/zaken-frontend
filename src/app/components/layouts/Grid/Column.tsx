@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { breakpoint } from "@amsterdam/asc-ui";
-import layouts from "@amsterdam/asc-ui/lib/theme/default/layouts";
+import layouts from "@amsterdam/asc-ui/es/theme/default/layouts";
 
 /** Columns for page layout
  * optional props:

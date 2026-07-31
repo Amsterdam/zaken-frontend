@@ -1,6 +1,7 @@
 {
   "name": "zaken-frontend",
   "version": "1.0.56",
+  "type": "module",
   "private": true,
   "engines": {
     "node": ">=22",

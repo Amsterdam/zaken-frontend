@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { breakpoint, themeSpacing } from "@amsterdam/asc-ui";
-import layouts from "@amsterdam/asc-ui/lib/theme/default/layouts";
+import layouts from "@amsterdam/asc-ui/es/theme/default/layouts";
 
 import Column from "app/components/layouts/Grid/Column";
 
