@@ -5,7 +5,7 @@ import { getAddressFromBagPdokResponse } from "app/components/addresses/utils";
  * Returns other addresses with the same postcode + huisnummer
  * @param bagId
  */
-const useOtherAddressesByBagId = (bagId: Components.Schemas.Address["bag_id"]) => {
+const useOtherAddressesByBagId = (bagId: components["schemas"]["Address"]["bag_id"]) => {
   const [data] = useBagPdokByBagId(bagId);
   const foundAddress = getAddressFromBagPdokResponse(data);
   const searchQuery = `${ foundAddress?.postcode } ${ foundAddress?.huisnummer }`;

@@ -13,7 +13,7 @@ const createObjectFromArray = (arr: any) => {
 };
 
 const getThemeOptions = (
-  themes: Components.Schemas.CaseTheme[],
+  themes: components["schemas"]["CaseTheme"][],
   themeName?: string,
 ) => {
   const optionsArray: any = ["-", "Woningverbetering"];
@@ -29,10 +29,10 @@ const getThemeOptions = (
 };
 
 export default (
-  caseId: Components.Schemas.CaseDetail["id"],
+  caseId: components["schemas"]["CaseDetail"]["id"],
   navigateTo: NavigateToFunction,
-  violationTypes: Components.Schemas.PaginatedViolationTypeList["results"],
-  themes: Components.Schemas.CaseTheme[],
+  violationTypes: components["schemas"]["PaginatedViolationTypeList"]["results"],
+  themes: components["schemas"]["CaseTheme"][],
   themeName?: string,
 ) => {
   const violationOptions = violationTypes?.reduce(

@@ -7,7 +7,7 @@ import useNavigation from "app/routing/useNavigation";
 import { columnsClosedCases, columnsOpenCases } from "./columns";
 
 type Props = {
-  bagId: Components.Schemas.Address["bag_id"]
+  bagId: components["schemas"]["Address"]["bag_id"]
   openCases?: boolean
   title?: string
   emptyText?: string

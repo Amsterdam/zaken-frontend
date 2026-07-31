@@ -10,7 +10,7 @@ import caseStates from "app/constants/caseStates";
 import EditableTag from "./EditableTag/EditableTag";
 
 type Props = {
-  caseId: Components.Schemas.CaseCreate["id"]
+  caseId: components["schemas"]["CaseCreate"]["id"]
 }
 
 const Wrap = styled.div`
@@ -28,7 +28,7 @@ const StyledDiv = styled.div`
   }
 `;
 
-const getDataFirstCol = (caseItem?: Components.Schemas.CaseCreate) => {
+const getDataFirstCol = (caseItem?: components["schemas"]["CaseCreate"]) => {
   if (caseItem === undefined) {
     return undefined;
   }
@@ -51,7 +51,7 @@ const getDataFirstCol = (caseItem?: Components.Schemas.CaseCreate) => {
   return data;
 };
 
-const getDataSecondCol = (caseItem?: Components.Schemas.CaseCreate) => {
+const getDataSecondCol = (caseItem?: components["schemas"]["CaseCreate"]) => {
   if (caseItem === undefined) {
     return undefined;
   }

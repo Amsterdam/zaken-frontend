@@ -9,12 +9,12 @@ import { useFlashMessages } from "app/state/flashMessages/useFlashMessages";
 import useNavigation from "app/routing/useNavigation";
 
 type Props = {
-  id: Components.Schemas.CaseDetail["id"]
+  id: components["schemas"]["CaseDetail"]["id"]
   caseUserTaskId: string
 
 }
 
-export type VisitData = Omit<Components.Schemas.Visit, "author_ids"> & { author1: Components.Schemas.User, author2: Components.Schemas.User, task: number | null, top_visit_id: number,  completed: boolean }
+export type VisitData = Omit<components["schemas"]["Visit"], "author_ids"> & { author1: components["schemas"]["User"], author2: components["schemas"]["User"], task: number | null, top_visit_id: number,  completed: boolean }
 const filterUndefined = <T extends unknown>(arr: Array<T | undefined>) => arr.filter((item): item is T => item !== undefined);
 const mapData = (data: VisitData) => ({ ...data, author_ids: filterUndefined([data.author1?.id, data.author2?.id]) });
 

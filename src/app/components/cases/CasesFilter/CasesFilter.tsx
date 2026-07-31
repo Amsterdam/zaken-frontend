@@ -15,23 +15,23 @@ import NoCorporationFilter from "app/components/filters/NoCorporationFilter/NoCo
 
 type Props = {
   date: string
-  corporations?: Components.Schemas.HousingCorporation[]
+  corporations?: components["schemas"]["HousingCorporation"][]
   corporationIsNull: boolean
-  districts: Components.Schemas.District[]
-  districtNames: Components.Schemas.District["name"][]
+  districts: components["schemas"]["District"][]
+  districtNames: components["schemas"]["District"]["name"][]
   openCases: string
   pageSize: string
-  projects?: Components.Schemas.CaseProject[]
+  projects?: components["schemas"]["CaseProject"][]
   reason: string
-  reasons?: Components.Schemas.CaseReason[]
+  reasons?: components["schemas"]["CaseReason"][]
   selectedCorporations: string[]
   selectedProjects: string[]
   selectedSubjects: string[]
   selectedTags: string[]
-  subjects?: Components.Schemas.Subject[]
-  tags?: Components.Schemas.Tag[]
+  subjects?: components["schemas"]["Subject"][]
+  tags?: components["schemas"]["Tag"][]
   theme: string
-  themes: Components.Schemas.CaseTheme[]
+  themes: components["schemas"]["CaseTheme"][]
 }
 
 const CasesFilter: React.FC<Props> = ({
@@ -56,7 +56,7 @@ const CasesFilter: React.FC<Props> = ({
 }) => {
   const { onChangeFilter, onChangePageSize } = useFilterHandler();
   const setDate = (value: string) => onChangeFilter("fromStartDate", value);
-  const setDistrictNames = (value: Components.Schemas.District["name"][]) =>
+  const setDistrictNames = (value: components["schemas"]["District"]["name"][]) =>
     onChangeFilter("districtNames", value);
   const setOpenCases = (value: string) => onChangeFilter("openCases", value);
   const setPageSize = onChangePageSize;

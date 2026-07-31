@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useCasesByBagId } from "app/state/rest";
 
 type Props = {
-  bagId: Components.Schemas.Address["bag_id"]
+  bagId: components["schemas"]["Address"]["bag_id"]
 }
 
 const StyledLink = styled(Link)`
@@ -16,7 +16,7 @@ const IS_OPEN_CASES = true;
 const Advertisements: React.FC<Props> = ({ bagId }) => {
   const [data, { isBusy }] = useCasesByBagId(bagId, IS_OPEN_CASES);
   const cases = data?.results || [];
-  let mergedAds: Components.Schemas.Advertisement[] = [];
+  let mergedAds: components["schemas"]["Advertisement"][] = [];
   // Merge all advertisement arrays to one.
   cases.forEach(c => {
     if (c.advertisements !== undefined && c.advertisements?.length > 0) {

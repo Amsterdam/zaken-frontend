@@ -6,9 +6,9 @@ import type { NavigateToFunction } from "app/routing/useNavigation";
 const descriptionRequired = (idDecision: number | undefined, shouldMatch = true) => shouldMatch ? idDecision === 9 : idDecision !== 9;
 
 export default (
-  caseId: Components.Schemas.CaseDetail["id"],
+  caseId: components["schemas"]["CaseDetail"]["id"],
   navigateTo: NavigateToFunction,
-  decisions?: Components.Schemas.DecisionType[],
+  decisions?: components["schemas"]["DecisionType"][],
 ) => {
 
   const fields = {
@@ -27,7 +27,7 @@ export default (
     sanction_amount: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { decision_type: Components.Schemas.DecisionType } }) => formValues?.values?.decision_type?.is_sanction === true,
+        shouldShow: (formValues: { values?: { decision_type: components["schemas"]["DecisionType"] } }) => formValues?.values?.decision_type?.is_sanction === true,
         field: {
           type: "NumberField",
           props: {
@@ -45,7 +45,7 @@ export default (
     description: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { decision_type: Components.Schemas.DecisionType } }) => descriptionRequired(formValues?.values?.decision_type?.id, false),
+        shouldShow: (formValues: { values?: { decision_type: components["schemas"]["DecisionType"] } }) => descriptionRequired(formValues?.values?.decision_type?.id, false),
         field: {
           type: "TextAreaField",
           props: {
@@ -59,7 +59,7 @@ export default (
     description_closing: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { decision_type: Components.Schemas.DecisionType } }) => descriptionRequired(formValues?.values?.decision_type?.id),
+        shouldShow: (formValues: { values?: { decision_type: components["schemas"]["DecisionType"] } }) => descriptionRequired(formValues?.values?.decision_type?.id),
         field: {
           type: "TextAreaField",
           props: {

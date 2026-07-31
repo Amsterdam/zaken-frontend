@@ -13,7 +13,7 @@ import { useFlashMessages } from "app/state/flashMessages/useFlashMessages";
 import styles from "./AddressHeader.module.css";
 
 type Props = {
-  bagId: Components.Schemas.Address["bag_id"]
+  bagId: components["schemas"]["Address"]["bag_id"]
   headingSize?: React.ComponentProps<typeof Typography>["styleAs"]
   isHeader?: boolean
   enableSwitch?: boolean

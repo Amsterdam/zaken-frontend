@@ -2,7 +2,7 @@ import { FormPositioner } from "@amsterdam/amsterdam-react-final-form";
 import { Fields } from "app/components/shared/Form/ScaffoldFields";
 import { BaseSyntheticEvent } from "react";
 
-export default (value: string, onChange: (value: string) => void, reasons: Components.Schemas.CaseReason[] = []) => {
+export default (value: string, onChange: (value: string) => void, reasons: components["schemas"]["CaseReason"][] = []) => {
   const reasonsOptions = Object.fromEntries(reasons.map(name => [name, name]));
   const fields = {
     taskName: {

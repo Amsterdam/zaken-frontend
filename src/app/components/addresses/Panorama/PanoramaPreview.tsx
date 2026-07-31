@@ -6,7 +6,7 @@ import usePanoramaByBagId from "app/state/rest/custom/usePanoramaByBagId/usePano
 import useRect from "./hooks/useRect";
 
 type Props = {
-  bagId: Components.Schemas.Address["bag_id"]
+  bagId: components["schemas"]["Address"]["bag_id"]
   width?: number
   aspect?: number
   radius?: number

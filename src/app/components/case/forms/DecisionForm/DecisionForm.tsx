@@ -10,11 +10,11 @@ import stripThousandSeparator from "./utils/stripThousandSeparator";
 import useNavigation from "app/routing/useNavigation";
 
 type Props = {
-  id: Components.Schemas.CaseDetail["id"];
+  id: components["schemas"]["CaseDetail"]["id"];
   caseUserTaskId: string;
 };
 
-type DecisionData = Omit<Components.Schemas.Decision, "decision_type"> & {
+type DecisionData = Omit<components["schemas"]["Decision"], "decision_type"> & {
   decision_type: { id: number };
   description_closing?: string;
 };

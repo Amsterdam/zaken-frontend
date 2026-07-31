@@ -3,7 +3,7 @@ import AuthorizedPage from "./AuthorizedPage";
 
 type Props = {
   page: React.ComponentType
-  permissionNames?: Components.Schemas.PermissionsEnum[]
+  permissionNames?: components["schemas"]["PermissionsEnum"][]
 }
 
 /**

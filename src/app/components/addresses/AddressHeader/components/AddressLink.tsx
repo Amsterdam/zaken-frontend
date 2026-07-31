@@ -4,7 +4,7 @@ import styled from "styled-components";
 import to from "app/routing/utils/to";
 
 type Props = {
-  bagId: Components.Schemas.Address["bag_id"]
+  bagId: components["schemas"]["Address"]["bag_id"]
   as?: React.ComponentProps<typeof Typography>["styleAs"]
   title?: string
 }

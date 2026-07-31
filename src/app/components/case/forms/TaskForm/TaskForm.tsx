@@ -8,10 +8,10 @@ import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm";
 import useNavigation from "app/routing/useNavigation";
 
 type Props = {
-  id: Components.Schemas.CaseDetail["id"]
+  id: components["schemas"]["CaseDetail"]["id"]
 }
 
-const mapData = (data: { workflowProcess: Components.Schemas.WorkflowOption }) => ({ workflow_option_id: data.workflowProcess.id });
+const mapData = (data: { workflowProcess: components["schemas"]["WorkflowOption"] }) => ({ workflow_option_id: data.workflowProcess.id });
 
 const TaskForm: React.FC<Props> = ({ id }) => {
   const [processes] = useWorkflowProcesses(id);

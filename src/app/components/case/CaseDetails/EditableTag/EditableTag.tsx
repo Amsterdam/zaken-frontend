@@ -3,7 +3,7 @@ import ChangeTagModal from "./ChangeTagModal";
 import CaseTags from "./CaseTags";
 
 type Props = {
-  case: Components.Schemas.CaseCreate
+  case: components["schemas"]["CaseCreate"]
 }
 
 const EditableTag: React.FC<Props> = ({ case: caseItem }) => {

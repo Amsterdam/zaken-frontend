@@ -10,7 +10,7 @@ type Props = {
     variables: Tasks.WorkflowTask["form_variables"],
   ) => Promise<unknown>
   taskName: string
-  caseId: Components.Schemas.CaseDetail["id"]
+  caseId: components["schemas"]["CaseDetail"]["id"]
   form?: Tasks.WorkflowTask["form"]
   disabled?: boolean
 }

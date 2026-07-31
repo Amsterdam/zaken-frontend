@@ -4,17 +4,17 @@ import ChangeSubjectModal from "./ChangeSubjectModal";
 import ChangeableItem from "../ChangeableItem/ChangeableItem";
 
 type Props = {
-  caseId: Components.Schemas.CaseCreate["id"]
-  themeId: Components.Schemas.CaseTheme["id"]
-  subjects: Components.Schemas.Subject[]
+  caseId: components["schemas"]["CaseCreate"]["id"]
+  themeId: components["schemas"]["CaseTheme"]["id"]
+  subjects: components["schemas"]["Subject"][]
 }
 
 const ChangeableSubject: React.FC<Props> = ({ subjects, caseId, themeId }) => {
   const { isModalOpen, openModal, closeModal } = useModal();
   const [, { execPatch }] = useCase(caseId);
 
-  const onSubmit = (data: { subjects: Components.Schemas.Subject[] }) => {
-    execPatch( { subject_ids: data.subjects.map((subject: Components.Schemas.Subject) => subject.id) });
+  const onSubmit = (data: { subjects: components["schemas"]["Subject"][] }) => {
+    execPatch( { subject_ids: data.subjects.map((subject: components["schemas"]["Subject"]) => subject.id) });
   };
 
   return (

@@ -10,7 +10,7 @@ type RouteConfig = {
   title?: string
   icon?: CustomIconProps["name"]
   subRoutes?: RouteConfigObject
-  permissionNames?: Components.Schemas.PermissionsEnum[]
+  permissionNames?: components["schemas"]["PermissionsEnum"][]
 }
 type Path = (Pick<RouteConfig, "title" | "icon"> & { path: string })[]
 type RouteConfigWithPath = RouteConfig & { path: Path }

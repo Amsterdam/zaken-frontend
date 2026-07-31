@@ -6,7 +6,7 @@ import { useCaseEvents, useCaseWorkflows } from "app/state/rest";
 const MAX_NUMBER_NUISANCE = 3;
 
 type Props = {
-  caseId: Components.Schemas.CaseDetail["id"]
+  caseId: components["schemas"]["CaseDetail"]["id"]
 }
 
 const StyledAlert = styled(Alert)`
@@ -18,10 +18,10 @@ const CaseNuisanceAlert: React.FC<Props> = ({ caseId }) => {
   const [caseWorkflowData] = useCaseWorkflows(caseId);
   const workflows = caseWorkflowData?.results ?? [];
 
-  const totalNuisance = caseEvents?.reduce((acc, cur) => cur?.event_values?.nuisance_detected ? ++acc : acc, 0);
+  const totalNuisance = caseEvents?.reduce((acc, cur) => (cur?.event_values as { nuisance_detected?: boolean } | undefined)?.nuisance_detected ? ++acc : acc, 0);
   const isMaxExceeded = totalNuisance !== undefined && totalNuisance >= MAX_NUMBER_NUISANCE;
   const isNuisanceReportedInStates = workflows.find((workflow) => workflow.state.name === "Melding overlast");
-  const isNuisanceReportedInEvents = caseEvents?.find((event) => event?.event_values?.description === "Doorzetten melding overlast");
+  const isNuisanceReportedInEvents = caseEvents?.find((event) => (event?.event_values as { description?: string } | undefined)?.description === "Doorzetten melding overlast");
 
   const isVisible = isMaxExceeded && !isNuisanceReportedInStates && !isNuisanceReportedInEvents;
 

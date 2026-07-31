@@ -7,7 +7,7 @@ import { useCase } from "app/state/rest";
 import FullAddressDisplay from "app/components/addresses/FullAddressDisplay/FullAddressDisplay";
 
 type Props = {
-  id: Components.Schemas.CaseDetail["id"]
+  id: components["schemas"]["CaseDetail"]["id"]
 }
 
 const Div = styled.div`

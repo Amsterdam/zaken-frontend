@@ -3,10 +3,10 @@ import { Button, RadioGroup, Label, Radio } from "@amsterdam/asc-ui";
 import { ButtonContainer, StyledButton } from "../layout";
 
 type Props = {
-  onSubmit: (id?: Components.Schemas.HousingCorporation["id"] | null) => void
+  onSubmit: (id?: components["schemas"]["HousingCorporation"]["id"] | null) => void
   onCancel: () => void
-  housingCorporations: Components.Schemas.HousingCorporation[]
-  housingCorporationId?: Components.Schemas.HousingCorporation["id"] | null
+  housingCorporations: components["schemas"]["HousingCorporation"][]
+  housingCorporationId?: components["schemas"]["HousingCorporation"]["id"] | null
 }
 
 const ChangeHousingCorporationForm: React.FC<Props> = ({

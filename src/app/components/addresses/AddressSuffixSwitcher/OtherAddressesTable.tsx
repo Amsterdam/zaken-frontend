@@ -4,7 +4,7 @@ import useNavigation from "app/routing/useNavigation";
 import columns from "./columns";
 
 type Props = {
-  bagId: Components.Schemas.Address["bag_id"]
+  bagId: components["schemas"]["Address"]["bag_id"]
   onAddressChosen: () => void
 }
 

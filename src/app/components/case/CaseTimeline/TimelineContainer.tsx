@@ -1,10 +1,11 @@
 import { Spinner, ErrorMessage } from "@amsterdam/asc-ui";
 import { EventsTimeline } from "@amsterdam/wonen-ui";
+import type { CaseEvent } from "@amsterdam/wonen-ui";
 import { useCaseEvents } from "app/state/rest";
 import { env } from "app/config/env";
 
 type Props = {
-  caseId: Components.Schemas.CaseEvent["id"]
+  caseId: components["schemas"]["CaseEvent"]["id"]
 }
 
 const TimelineContainer: React.FC<Props> = ({ caseId }) => {
@@ -19,7 +20,7 @@ const TimelineContainer: React.FC<Props> = ({ caseId }) => {
           <>
             { timelineEvents === undefined ? <Spinner /> : (
               <EventsTimeline
-                events={ timelineEvents }
+                events={ timelineEvents as unknown as CaseEvent[] }
                 spacingHorizontal={ 3 }
                 prefixUrl={ `${ env.VITE_AZA_FRONTEND_URL }zaken/` }
               />

@@ -3,9 +3,9 @@ import { Fields } from "app/components/shared/Form/ScaffoldFields";
 import type { NavigateToFunction } from "app/routing/useNavigation";
 
 export default (
-  id: Components.Schemas.CaseDetail["id"],
+  id: components["schemas"]["CaseDetail"]["id"],
   navigateTo: NavigateToFunction,
-  processes?: Components.Schemas.WorkflowOption[],
+  processes?: components["schemas"]["WorkflowOption"][],
 ) => {
   const fields = {
     workflowProcess: {

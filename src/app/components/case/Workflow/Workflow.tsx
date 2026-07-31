@@ -6,7 +6,7 @@ import usePollingRefetch from "app/state/rest/hooks/usePollingRefetch";
 import styles from "./Workflow.module.css";
 
 type Props = {
-  id: Components.Schemas.CaseDetail["id"];
+  id: components["schemas"]["CaseDetail"]["id"];
 };
 
 const Workflow: React.FC<Props> = ({ id }) => {

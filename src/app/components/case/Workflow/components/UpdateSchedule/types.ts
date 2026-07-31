@@ -1,5 +1,5 @@
 export type Schedule = Omit<
-  Components.Schemas.ScheduleCreate,
+  components["schemas"]["ScheduleCreate"],
   "priority"
 > & {
   id: number

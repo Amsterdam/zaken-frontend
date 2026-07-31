@@ -17,7 +17,7 @@ import type { Schedule } from "./types";
 import styles from "./UpdateSchedule.module.css";
 
 type Props = {
-  caseId: Components.Schemas.CaseDetail["id"]
+  caseId: components["schemas"]["CaseDetail"]["id"]
   themeId?: number
 };
 

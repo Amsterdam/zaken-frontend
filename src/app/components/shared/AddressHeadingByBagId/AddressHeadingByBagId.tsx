@@ -4,7 +4,7 @@ import { useBagPdokByBagId } from "app/state/rest";
 import { getAddressFromBagPdokResponse } from "app/components/addresses/utils";
 
 type Props = {
-  bagId: Components.Schemas.Address["bag_id"]
+  bagId: components["schemas"]["Address"]["bag_id"]
 }
 
 const AddressHeadingByBagId: React.FC<Props> = ({ bagId }) => {

@@ -4,9 +4,9 @@ import { makeApiUrl } from "app/state/rest/hooks/utils/apiUrl";
 import useApiRequest from "./hooks/useApiRequest";
 import qs from "qs";
 
-export const useCase = (id?: Components.Schemas.CaseCreate["id"], options?: Options) => {
+export const useCase = (id?: components["schemas"]["CaseCreate"]["id"], options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.CaseCreate>({
+  return useApiRequest<components["schemas"]["CaseCreate"]>({
     lazy: id === undefined,
     ...options,
     url: makeApiUrl("cases", id),
@@ -28,9 +28,9 @@ export const useCaseCreate = (options?: Options) => {
   });
 };
 
-export const useCaseEvents = (caseId: Components.Schemas.CaseDetail["id"], options?: Options) => {
+export const useCaseEvents = (caseId: components["schemas"]["CaseDetail"]["id"], options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.CaseEvent[]>({
+  return useApiRequest<components["schemas"]["CaseEvent"][]>({
     ...options,
     url: makeApiUrl("cases", caseId, "events"),
     groupName: "cases",
@@ -41,7 +41,7 @@ export const useCaseEvents = (caseId: Components.Schemas.CaseDetail["id"], optio
 
 export const useDebriefingCreate = (options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.DebriefingCreate>({
+  return useApiRequest<components["schemas"]["DebriefingCreate"]>({
     lazy: true,
     ...options,
     url: makeApiUrl("debriefings"),
@@ -54,7 +54,7 @@ export const useDebriefingCreate = (options?: Options) => {
 // Post a summon
 export const useSummons = (options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.Summon>({
+  return useApiRequest<components["schemas"]["Summon"]>({
     ...options,
     url: makeApiUrl("summons"),
     groupName: "cases",
@@ -64,10 +64,10 @@ export const useSummons = (options?: Options) => {
 };
 
 // Get summons for a specific case
-export const useSummonsWithCaseId = (caseId?: Components.Schemas.CaseDetail["id"], options?: Options) => {
+export const useSummonsWithCaseId = (caseId?: components["schemas"]["CaseDetail"]["id"], options?: Options) => {
   const handleError = useErrorHandler();
   const queryString = qs.stringify({ case: caseId }, { addQueryPrefix: true });
-  return useApiRequest<Components.Schemas.PaginatedSummonList>({
+  return useApiRequest<components["schemas"]["PaginatedSummonList"]>({
     ...options,
     url: `${ makeApiUrl("summons") }${ queryString }`,
     lazy: caseId === undefined,
@@ -79,7 +79,7 @@ export const useSummonsWithCaseId = (caseId?: Components.Schemas.CaseDetail["id"
 
 export const useDecisions = (options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.Decision>({
+  return useApiRequest<components["schemas"]["Decision"]>({
     ...options,
     url: makeApiUrl("decisions"),
     groupName: "cases",
@@ -90,7 +90,7 @@ export const useDecisions = (options?: Options) => {
 
 export const useQuickDecisions = (options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.QuickDecision>({
+  return useApiRequest<components["schemas"]["QuickDecision"]>({
     ...options,
     url: makeApiUrl("quick-decisions"),
     groupName: "cases",
@@ -128,7 +128,7 @@ export const useCorrespondence = (options?: Options) => {
 
 export const useCaseClose = (options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.CaseClose>({
+  return useApiRequest<components["schemas"]["CaseClose"]>({
     ...options,
     url: makeApiUrl("case-close"),
     groupName: "cases",
@@ -137,9 +137,9 @@ export const useCaseClose = (options?: Options) => {
   });
 };
 
-export const useCaseCloseReasons = (themeId?: Components.Schemas.CaseTheme["id"], options?: Options) => {
+export const useCaseCloseReasons = (themeId?: components["schemas"]["CaseTheme"]["id"], options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.PaginatedCaseCloseReasonList>({
+  return useApiRequest<components["schemas"]["PaginatedCaseCloseReasonList"]>({
     ...options,
     lazy: themeId === undefined,
     url: makeApiUrl("themes", themeId, "case-close-reasons"),
@@ -149,9 +149,9 @@ export const useCaseCloseReasons = (themeId?: Components.Schemas.CaseTheme["id"]
   });
 };
 
-export const useCaseCloseResults = (themeId?: Components.Schemas.CaseTheme["id"], options?: Options) => {
+export const useCaseCloseResults = (themeId?: components["schemas"]["CaseTheme"]["id"], options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.PaginatedCaseCloseResultList>({
+  return useApiRequest<components["schemas"]["PaginatedCaseCloseResultList"]>({
     ...options,
     lazy: themeId === undefined,
     url: makeApiUrl("themes", themeId, "case-close-results"),
@@ -161,9 +161,9 @@ export const useCaseCloseResults = (themeId?: Components.Schemas.CaseTheme["id"]
   });
 };
 
-export const useCitizenReports = (caseId: Components.Schemas.CaseDetail["id"], options?: Options) => {
+export const useCitizenReports = (caseId: components["schemas"]["CaseDetail"]["id"], options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.CitizenReport>({
+  return useApiRequest<components["schemas"]["CitizenReport"]>({
     ...options,
     lazy: true,
     url: makeApiUrl("cases", caseId, "citizen-reports"),
@@ -175,7 +175,7 @@ export const useCitizenReports = (caseId: Components.Schemas.CaseDetail["id"], o
 
 export const useTaskComplete = (options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.GenericCompletedTask>({
+  return useApiRequest<components["schemas"]["GenericCompletedTask"]>({
     ...options,
     url: makeApiUrl("generic-tasks", "complete"),
     groupName: "cases",
@@ -184,9 +184,9 @@ export const useTaskComplete = (options?: Options) => {
   });
 };
 
-export const useCaseVisits = (caseId: Components.Schemas.CaseDetail["id"], options?: Options) => {
+export const useCaseVisits = (caseId: components["schemas"]["CaseDetail"]["id"], options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.Visit>({
+  return useApiRequest<components["schemas"]["Visit"]>({
     ...options,
     url: makeApiUrl("cases", caseId, "visits"),
     groupName: "cases",
@@ -197,7 +197,7 @@ export const useCaseVisits = (caseId: Components.Schemas.CaseDetail["id"], optio
 
 export const useVisitsCreate = (options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.Visit>({
+  return useApiRequest<components["schemas"]["Visit"]>({
     ...options,
     lazy: true,
     url: makeApiUrl("visits"),
@@ -207,7 +207,7 @@ export const useVisitsCreate = (options?: Options) => {
   });
 };
 
-export const useCaseWorkflows = (caseId: Components.Schemas.CaseDetail["id"], options?: Options) => {
+export const useCaseWorkflows = (caseId: components["schemas"]["CaseDetail"]["id"], options?: Options) => {
   const handleError = useErrorHandler();
   return useApiRequest<Tasks.PaginatedWorkflowList>({
     ...options,

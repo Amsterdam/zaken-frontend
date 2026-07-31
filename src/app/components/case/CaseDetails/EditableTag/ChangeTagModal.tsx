@@ -4,7 +4,7 @@ import ChangeTagForm from "./ChangeTagForm";
 export type Props = {
   isOpen: boolean
   closeModal: () => void
-  case: Components.Schemas.CaseCreate
+  case: components["schemas"]["CaseCreate"]
 }
 
 const ChangeTagModal: React.FC<Props> = ({ isOpen, closeModal, case: caseItem }) => (

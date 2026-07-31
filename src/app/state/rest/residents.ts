@@ -4,11 +4,11 @@ import { useErrorHandler } from "./hooks/utils/errorHandler";
 import useApiRequest from "./hooks/useApiRequest";
 
 export const useResidents = (
-  bagId: Components.Schemas.Address["bag_id"],
+  bagId: components["schemas"]["Address"]["bag_id"],
   options?: Options,
 ) => {
   const handleError = useErrorHandler();
-  return useApiRequest<Components.Schemas.Brp>({
+  return useApiRequest<components["schemas"]["Brp"]>({
     ...options,
     url: makeApiUrl("addresses", bagId, "residents"),
     groupName: "addresses",

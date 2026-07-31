@@ -6,11 +6,11 @@ import { ButtonContainer, StyledButton } from "../layout";
 
 type Props = {
   onCancel: () => void
-  case: Components.Schemas.CaseCreate
+  case: components["schemas"]["CaseCreate"]
 }
 
 const ChangeTagForm: React.FC<Props> = ({ case: caseItem, onCancel }) => {
-  const [selectedTag, setSelectedTag] = useState<Components.Schemas.Tag["id"] | undefined>(undefined);
+  const [selectedTag, setSelectedTag] = useState<components["schemas"]["Tag"]["id"] | undefined>(undefined);
   const [data] = useTags(caseItem.theme.id);
   const [, { execPatch }] = useCase(caseItem.id);
 

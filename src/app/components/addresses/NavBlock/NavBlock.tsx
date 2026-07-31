@@ -9,7 +9,7 @@ type Props = {
   icon: CustomIconProps["name"]
   header: string
   count?: string | number
-  permissionNames?: Components.Schemas.PermissionsEnum[]
+  permissionNames?: components["schemas"]["PermissionsEnum"][]
 }
 
 const Wrap = styled.div<{ disabled: boolean }>`

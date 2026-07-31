@@ -12,7 +12,7 @@ import {
 import useNavigation from "app/routing/useNavigation";
 
 type Props = {
-  id: Components.Schemas.CaseDetail["id"];
+  id: components["schemas"]["CaseDetail"]["id"];
   caseUserTaskId: string;
 };
 

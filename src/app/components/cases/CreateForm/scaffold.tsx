@@ -6,17 +6,17 @@ import isValidUrl from "app/routing/utils/isValidUrl";
 import { EXCLUDED_THEMES_ADVERTISEMENTS } from "app/constants/themeNames";
 
 export default (
-  bagId: Components.Schemas.Address["bag_id"],
+  bagId: components["schemas"]["Address"]["bag_id"],
   navigateTo: NavigateToFunction,
-  themeId: Components.Schemas.CaseTheme["id"],
-  setTheme: (id?: Components.Schemas.CaseTheme["id"]) => void,
-  themes: Components.Schemas.CaseTheme[] | undefined,
-  reasons: Components.Schemas.CaseReason[],
-  projects: Components.Schemas.CaseProject[],
-  subjects: Components.Schemas.Subject[],
+  themeId: components["schemas"]["CaseTheme"]["id"],
+  setTheme: (id?: components["schemas"]["CaseTheme"]["id"]) => void,
+  themes: components["schemas"]["CaseTheme"][] | undefined,
+  reasons: components["schemas"]["CaseReason"][],
+  projects: components["schemas"]["CaseProject"][],
+  subjects: components["schemas"]["Subject"][],
   advertisementOptions: Record<string, string>,
-  cases: Components.Schemas.Case[],
-  corporations: Components.Schemas.HousingCorporation[],
+  cases: components["schemas"]["Case"][],
+  corporations: components["schemas"]["HousingCorporation"][],
 ) => {
 
   const fields = {
@@ -50,7 +50,7 @@ export default (
     mma_number: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { reason?: Components.Schemas.CaseReason } }) => (
+        shouldShow: (formValues: { values?: { reason?: components["schemas"]["CaseReason"] } }) => (
           formValues?.values?.reason?.name === "MMA"
         ),
         field: {
@@ -70,7 +70,7 @@ export default (
     housing_corporation: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { theme?: Components.Schemas.CaseTheme } }) => formValues?.values?.theme !== undefined && corporations.length > 0,
+        shouldShow: (formValues: { values?: { theme?: components["schemas"]["CaseTheme"] } }) => formValues?.values?.theme !== undefined && corporations.length > 0,
         field: {
           type: "ComplexSelectField",
           props: {
@@ -105,7 +105,7 @@ export default (
     reporter_anonymous: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { reason?: Components.Schemas.CaseReason } }) => formValues?.values?.reason?.name === "SIG melding",
+        shouldShow: (formValues: { values?: { reason?: components["schemas"]["CaseReason"] } }) => formValues?.values?.reason?.name === "SIG melding",
         field: {
           type: "RadioFields",
           props: {
@@ -167,7 +167,7 @@ export default (
     identification: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { reason?: Components.Schemas.CaseReason } }) => formValues?.values?.reason?.name === "SIG melding",
+        shouldShow: (formValues: { values?: { reason?: components["schemas"]["CaseReason"] } }) => formValues?.values?.reason?.name === "SIG melding",
         field: {
           type: "NumberField",
           props: {
@@ -186,7 +186,7 @@ export default (
     description_citizenreport: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { reason?: Components.Schemas.CaseReason } }) => formValues?.values?.reason?.name === "SIG melding",
+        shouldShow: (formValues: { values?: { reason?: components["schemas"]["CaseReason"] } }) => formValues?.values?.reason?.name === "SIG melding",
         field: {
           type: "TextAreaField",
           props: {
@@ -200,7 +200,7 @@ export default (
     nuisance: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { reason?: Components.Schemas.CaseReason, theme?: Components.Schemas.CaseTheme } }) => (
+        shouldShow: (formValues: { values?: { reason?: components["schemas"]["CaseReason"], theme?: components["schemas"]["CaseTheme"] } }) => (
           formValues?.values?.theme?.name === "Vakantieverhuur" && formValues?.values?.reason?.name === "SIG melding"
         ),
         field: {
@@ -219,7 +219,7 @@ export default (
     project: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { reason?: Components.Schemas.CaseReason } }) => formValues?.values?.reason?.name === "Project",
+        shouldShow: (formValues: { values?: { reason?: components["schemas"]["CaseReason"] } }) => formValues?.values?.reason?.name === "Project",
         field: {
           type: "ComplexSelectField",
           props: {
@@ -237,7 +237,7 @@ export default (
     advertisement: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { theme?: Components.Schemas.CaseTheme } }) => {
+        shouldShow: (formValues: { values?: { theme?: components["schemas"]["CaseTheme"] } }) => {
           const themeName = formValues?.values?.theme?.name;
           return themeName !== undefined && !EXCLUDED_THEMES_ADVERTISEMENTS.includes(themeName);
         },
@@ -284,7 +284,7 @@ export default (
     otherTheme: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { theme?: Components.Schemas.CaseTheme } }) => formValues?.values?.theme !== undefined,
+        shouldShow: (formValues: { values?: { theme?: components["schemas"]["CaseTheme"] } }) => formValues?.values?.theme !== undefined,
         field: {
           type: "CheckboxFields",
           props: {
@@ -320,7 +320,7 @@ export default (
     description: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { theme?: Components.Schemas.CaseTheme } }) => formValues?.values?.theme !== undefined,
+        shouldShow: (formValues: { values?: { theme?: components["schemas"]["CaseTheme"] } }) => formValues?.values?.theme !== undefined,
         field: {
           type: "TextAreaField",
           props: {

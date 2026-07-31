@@ -5,7 +5,7 @@ import { Fields } from "app/components/shared/Form/ScaffoldFields";
 
 function scaffold(
   onCancel: () => void,
-  scheduleTypes?: Components.Schemas.ThemeScheduleTypes,
+  scheduleTypes?: components["schemas"]["ThemeScheduleTypes"],
   visitFromOptions?: { id: number, name: string }[],
 ) {
   const fields = {

@@ -27,7 +27,7 @@ import { useMappedTaskOwners } from "../hooks/useMappedTaskOwners";
 
 import styles from "./Tasks.module.css";
 
-type Item = string | Components.Schemas.District["name"][];
+type Item = string | components["schemas"]["District"]["name"][];
 
 const EMPTY_TEXT_NO_PERMISSION =
   "Helaas, u bent niet geautoriseerd om deze taken te bekijken.";

@@ -9,7 +9,7 @@ type GroupName = "cases" | "case" | "auth" | "users" | "themes" | "roles" | "per
 
     EXAMPLE:
     export const useTask = (id: number | string, options?: Options) => {
-      return useApiRequest<Components.Schemas.CaseUserTask>({
+      return useApiRequest<components["schemas"]["CaseUserTask"]>({
         ...options,
         lazy: true,
         url: makeApiUrl("tasks"),

@@ -4,7 +4,7 @@ import InfoButton from "app/components/shared/InfoHeading/InfoButton";
 import { personRoleMap } from "@amsterdam/wonen-ui/helpers/dictionaries";
 import type { NavigateToFunction } from "app/routing/useNavigation";
 
-export default (caseId: Components.Schemas.CaseDetail["id"], navigateTo: NavigateToFunction, summonTypes?: Components.Schemas.SummonType[]) => {
+export default (caseId: components["schemas"]["CaseDetail"]["id"], navigateTo: NavigateToFunction, summonTypes?: components["schemas"]["SummonType"][]) => {
   const roleEntries = Object.entries(personRoleMap);
   const personRoles = roleEntries.filter(([key]) => key !== "PERSON_ROLE_PLATFORM").map(([key, label]) => ({ key, label }));
   const legalEntityRoles = roleEntries.filter(([key]) => !["PERSON_ROLE_HEIR", "PERSON_ROLE_RESIDENT"].includes(key)).map(([key, label]) => ({ key, label }));
@@ -24,7 +24,7 @@ export default (caseId: Components.Schemas.CaseDetail["id"], navigateTo: Navigat
     "type_result.number_of_accommodations": {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { type: Components.Schemas.SummonType } }) => formValues?.values?.type?.workflow_option === "sluiting",
+        shouldShow: (formValues: { values?: { type: components["schemas"]["SummonType"] } }) => formValues?.values?.type?.workflow_option === "sluiting",
         field: {
           type: "NumberField",
           props: {

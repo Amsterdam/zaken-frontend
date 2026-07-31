@@ -10,7 +10,7 @@ type ResidentsResponse = {
 };
 
 type Props = {
-  bagId: Components.Schemas.Address["bag_id"];
+  bagId: components["schemas"]["Address"]["bag_id"];
 };
 
 const ResidentsOverview: React.FC<Props> = ({ bagId }) => {

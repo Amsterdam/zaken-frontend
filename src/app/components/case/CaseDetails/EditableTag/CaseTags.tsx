@@ -5,7 +5,7 @@ import useHasPermission, { CAN_PERFORM_TASK } from "app/state/rest/custom/usePer
 import CustomIcon from "app/components/shared/CustomIcon/CustomIcon";
 
 type Props = {
-  tags: Components.Schemas.Tag[]
+  tags: components["schemas"]["Tag"][]
   name?: string
   titleAccess?: string
   onClick?: (event: React.MouseEvent<HTMLDivElement>) => void

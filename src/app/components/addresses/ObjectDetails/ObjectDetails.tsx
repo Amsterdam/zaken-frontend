@@ -4,7 +4,7 @@ import { getAddressFromBenkAggResponse } from "app/components/addresses/utils";
 import useValues from "./hooks/useValues";
 
 type Props = {
-  bagId: Components.Schemas.Address["bag_id"]
+  bagId: components["schemas"]["Address"]["bag_id"]
 }
 
 const ObjectDetails: React.FC<Props> = ({ bagId }) => {

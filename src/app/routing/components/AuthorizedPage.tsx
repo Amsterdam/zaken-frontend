@@ -4,7 +4,7 @@ import SpinnerWrap from "app/components/shared/ConfirmScaffoldForm/components/Sp
 
 type Props = {
   page: React.ComponentType
-  permissionNames?: Components.Schemas.PermissionsEnum[]
+  permissionNames?: components["schemas"]["PermissionsEnum"][]
 }
 
 /**
