@@ -5,6 +5,6 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: zaken-frontend
-    image: ${REGISTRY:-127.0.0.1:5001}/${REPOSITORY:-salmagundi/zaken-frontend}:${VERSION:-latest}
+    image: ${REGISTRY:-127.0.0.1:5001}/${REPOSITORY:-ams-woon/zaken/frontend}:${VERSION:-latest}
     ports:
       - "8081:8000"
