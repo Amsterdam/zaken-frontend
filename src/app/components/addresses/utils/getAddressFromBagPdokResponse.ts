@@ -1,4 +1,8 @@
-export const getAddressFromBagPdokResponse = (data?: BAGPdokResponse):  BAGPdokAddress | undefined => {
+export const getAddressFromBagPdokResponse = (
+  data?: BAGPdokResponse,
+): BAGPdokAddress | undefined => {
   const docs = data?.response?.docs;
-  return docs && docs[0] ? docs[0] : undefined;
+  const hoofdadres = docs?.find((doc) => doc.adrestype === "hoofdadres");
+
+  return hoofdadres ?? docs?.[0];
 };
