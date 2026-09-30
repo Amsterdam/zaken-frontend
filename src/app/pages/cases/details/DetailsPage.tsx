@@ -13,6 +13,7 @@ import CaseStatus from "app/components/case/CaseStatus/CaseStatus";
 import useExistingCase from "./hooks/useExistingCase";
 import { LoadingScreen } from "app/components/shared/loading";
 import CaseNuisanceAlert from "app/components/case/CaseNuisanceAlert/CaseNuisanceAlert";
+import CaseSensitiveAddressAlert from "app/components/case/CaseSensitiveAddressAlert/CaseSensitiveAddressAlert";
 import useHasPermission, {
   SENSITIVE_CASE_PERMISSION,
 } from "app/state/rest/custom/usePermissions/useHasPermission";
@@ -56,6 +57,9 @@ const DetailsPage: React.FC = () => {
               <DetailHeaderByCaseId caseId={id} enableSwitch={false} />
             </Column>
           </Row>
+          <CaseSensitiveAddressAlert
+            isVisible={caseItem?.has_open_sensitive_case_on_address}
+          />
           <Row bottomSpacing={4}>
             <Column spanLarge={75}>
               <CaseDetails caseId={id} />

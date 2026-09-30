@@ -1409,6 +1409,7 @@ export interface components {
             readonly subjects: components["schemas"]["Subject"][];
             readonly tags: components["schemas"]["Tag"][];
             readonly project: components["schemas"]["CaseProject"];
+            readonly has_open_sensitive_case_on_address: boolean;
             /** Format: date */
             start_date?: string | null;
             /** Format: date */
@@ -1547,6 +1548,7 @@ export interface components {
             readonly reason: components["schemas"]["CaseReason"];
             readonly schedules: components["schemas"]["Schedule"][];
             readonly advertisements: components["schemas"]["Advertisement"][];
+            readonly has_open_sensitive_case_on_address: boolean;
             /** Format: date */
             start_date?: string | null;
             /** Format: date */

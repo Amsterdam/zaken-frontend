@@ -6,7 +6,7 @@ import qs from "qs";
 
 export const useCase = (id?: components["schemas"]["CaseCreate"]["id"], options?: Options) => {
   const handleError = useErrorHandler();
-  return useApiRequest<components["schemas"]["CaseCreate"]>({
+  return useApiRequest<CaseItem>({
     lazy: id === undefined,
     ...options,
     url: makeApiUrl("cases", id),
