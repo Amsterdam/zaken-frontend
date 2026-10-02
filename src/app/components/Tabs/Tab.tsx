@@ -8,5 +8,4 @@ export type TabProps = {
   label: ReactNode
 } & Omit<HTMLAttributes<HTMLButtonElement>, OmittedProps>
 
-// eslint-disable-next-line react/function-component-definition
 export const Tab: FunctionComponent<TabProps> = () => null;

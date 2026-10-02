@@ -30,15 +30,17 @@ const StyledIcon = styled(Icon)`
   margin-left: ${ themeSpacing(2) };
 `;
 
-const ChangeableDueDate: React.FC<Props> = ({ dueDate, caseId, caseUserTaskId }) => {
+const ChangeableDueDate: React.FC<Props> = ({ dueDate, caseUserTaskId }) => {
   const { isModalOpen, openModal, closeModal } = useModal();
   const [, { execPatch }] = useTaskUpdate(caseUserTaskId);
   const [hasPermission] = useHasPermission([CAN_PERFORM_TASK]);
 
   const onSubmit = (data: { date: string, id: string }) => {
-    appendTimeToDate(data.date) !== dueDate
-      ? execPatch( { due_date: appendTimeToDate( data.date ) })
-      : closeModal();
+    if (appendTimeToDate(data.date) !== dueDate) {
+      execPatch({ due_date: appendTimeToDate(data.date) });
+    } else {
+      closeModal();
+    }
   };
 
   return hasPermission ? (

@@ -15,7 +15,7 @@ type Props = {
 }
 
 export type VisitData = Omit<components["schemas"]["Visit"], "author_ids"> & { author1: components["schemas"]["User"], author2: components["schemas"]["User"], task: number | null, top_visit_id: number,  completed: boolean }
-const filterUndefined = <T extends unknown>(arr: Array<T | undefined>) => arr.filter((item): item is T => item !== undefined);
+const filterUndefined = <T,>(arr: Array<T | undefined>) => arr.filter((item): item is T => item !== undefined);
 const mapData = (data: VisitData) => ({ ...data, author_ids: filterUndefined([data.author1?.id, data.author2?.id]) });
 
 

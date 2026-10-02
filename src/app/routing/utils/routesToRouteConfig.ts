@@ -3,7 +3,7 @@ import { CustomIconProps } from "app/components/shared/CustomIcon/CustomIcon";
 import slashSandwich from "./slashSandwich";
 
 export type RouteConfigObject = Record<string, RouteConfig | Page>
-export type Page = React.FC<{}>;
+export type Page = React.FC;
 type RouteConfig = {
   Page: Page
   publicly?: boolean
