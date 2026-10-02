@@ -14,8 +14,8 @@ const fieldRenderer: FieldRenderer = (field) => <ScaffoldField field={field} />
 /**
  * Scaffolds the default amsterdam-react-final-form fields, as well as custom defined fields for zaken-frontend
  */
-// @ts-expect-error -- props van AmsterdamScaffold sluiten niet aan op Props
 const ScaffoldFields: React.FC<Props> = (props) => (
+  // @ts-expect-error -- props van AmsterdamScaffold sluiten niet aan op Props
   <AmsterdamScaffold fieldRenderer={fieldRenderer} {...props} />
 )
 
