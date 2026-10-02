@@ -89,12 +89,16 @@ Daarna Fase 2 (ADS-fundament), dan Fase 3 (eerste kleine pagina als voorbeeld, t
 
 Doel: een stabiele basis waarop elke volgende PR veilig kan landen.
 
-- [ ] **Path alias `@/`** toevoegen naast de bestaande `app/` en `__mocked__` aliases (`tsconfig.json` → `"@/*": ["./src/*"]`). Nieuwe code gebruikt `@/`, oude imports mogen blijven tot ze aangeraakt worden. Verwijder de `"*": ["./src/*"]` wildcard pas aan het einde.
-- [ ] **ESLint flat config** overnemen van `top-frontend-v2/eslint.config.js` (`@eslint/js`, `typescript-eslint`, `eslint-plugin-react-hooks` v7, `eslint-plugin-react-refresh`, `eslint-config-prettier`). `eslint-config-react-app` verwijderen; die is unmaintained.
-- [ ] **Prettier** toevoegen (zelfde config als top-frontend-v2) en in één aparte PR de hele codebase formatteren, zodat latere diffs schoon blijven.
-- [ ] **Testinfrastructuur**: `@testing-library/react` 13 → 16 (+ `@testing-library/dom`). Werkt op React 18 én 19. Optioneel een `test-utils/` met `renderWithProviders` (QueryClient, Router, Auth-mock) zoals in top-frontend-v2.
-- [ ] **React 18.3 deprecation warnings** opruimen: draai de app en tests, los alle console-warnings op (string refs, `defaultProps` op function components, legacy context). Dit zijn precies de dingen die in React 19 breken.
-- [ ] `AGENTS.md` toevoegen met de stack- en dependency-regels (zie top-frontend-v2).
+- [x] **Path alias `@/`** toegevoegd naast de bestaande `app/` en `__mocked__` aliases (`tsconfig.json` → `"@/*": ["./src/*"]`; Vite had de alias al). Nieuwe code gebruikt `@/`, oude imports mogen blijven tot ze aangeraakt worden. Verwijder de `"*": ["./src/*"]` wildcard pas aan het einde. De dode `vite-plugin-eslint`-mapping is weg.
+- [x] **ESLint flat config** (`eslint.config.js`) overgenomen van top-frontend-v2. `eslint-config-react-app`, `.eslintrc.cjs` en `.eslintignore` zijn weg. Twee niet-stilistische regels uit de oude config zijn behouden (`arrow-body-style`, `consistent-type-definitions: type`).
+  - Kleine fouten die de nieuwe regels vonden zijn opgelost (o.a. een onveilige optional chain in `ChangeHousingCorporation`, ongebruikte variabelen en overbodige `eslint-disable`-regels).
+  - Bestaande overtredingen in oude code zijn vastgelegd met [ESLint bulk suppressions](https://eslint.org/docs/latest/use/suppressions) in `eslint-suppressions.json` (78 bestanden): `no-explicit-any` (180×), `react-refresh/only-export-components` (18×) en de React Compiler-regels uit `react-hooks` v7 (13×). Nieuwe code krijgt de regels wel als error. Na het oplossen: `npx eslint . --prune-suppressions`. Het doel is dat dit bestand aan het eind van Fase 3 leeg is.
+- [ ] **Prettier**: config staat er (`.prettierrc` gelijk aan top-frontend-v2, `.prettierignore`, `.editorconfig`, scripts `format` en `format:check`). **Nog te doen:** in één aparte PR `npm run format` draaien. Dat raakt vrijwel elk bestand (onder andere puntkomma's eruit), dus doe het los van inhoudelijke wijzigingen. Daarna eventueel `format:check` in CI.
+- [x] **Testinfrastructuur**: `@testing-library/react` 13 → 16 + `@testing-library/dom`. Alle 77 tests slagen. `renderWithProviders` volgt in de pilot van Fase 1, zodra er een `QueryClient` is.
+- [x] **React 18.3 deprecations**: onze eigen code bevat geen `defaultProps`, string refs, legacy context, `findDOMNode`, `ReactDOM.render` of `useRef()` zonder argument, en de tests geven geen React-waarschuwingen. Wat nog in de browserconsole verschijnt komt uit `asc-ui`/`wonen-ui` en verdwijnt met die libraries. Handmatig te controleren: de dev-console na inloggen.
+- [x] `AGENTS.md` toegevoegd met de stack-, migratie-, dependency- en lintregels.
+
+> **Gevonden tijdens Fase 0:** `@amsterdam/amsterdam-react-final-form` importeert `lodash/isEqual` zonder `lodash` als dependency te declareren. Dat werkte alleen omdat `eslint-config-react-app` toevallig `lodash` meeinstalleerde; zonder die package faalde de productie-build. `lodash` staat daarom nu expliciet in `dependencies` (zelfde versie als voorheen) en gaat in Fase 5 samen met `amsterdam-react-final-form` weer weg.
 
 ## Fase 1 — Datalaag naar TanStack Query (± 1–2 weken)
 
@@ -306,7 +310,7 @@ Voorwaarde: `grep -r "@amsterdam/asc-ui\|wonen-ui\|amsterdam-react-final-form\|s
 >
 > **✅ Akkoord** na de test op acceptatie → pas dan mergen en naar productie.
 
-- [ ] Dependencies verwijderen: `@amsterdam/asc-ui`, `@amsterdam/asc-assets`, `@amsterdam/wonen-ui`, `@amsterdam/amsterdam-react-final-form`, `final-form`, `final-form-arrays`, `react-final-form`, `react-final-form-arrays`, `styled-components`, `@types/styled-components`, `lodash.isempty`, `lodash.merge`, `immer`, `axios`, `qs`, `react-router-dom`. Controleer `react-tooltip` (alleen in `CustomTooltip`; ADS-alternatief of native `title`/popover).
+- [ ] Dependencies verwijderen: `@amsterdam/asc-ui`, `@amsterdam/asc-assets`, `@amsterdam/wonen-ui`, `@amsterdam/amsterdam-react-final-form`, `final-form`, `final-form-arrays`, `react-final-form`, `react-final-form-arrays`, `styled-components`, `@types/styled-components`, `lodash` (tijdelijk toegevoegd in Fase 0), `lodash.isempty`, `lodash.merge`, `immer`, `axios`, `qs`, `react-router-dom`. Controleer `react-tooltip` (alleen in `CustomTooltip`; ADS-alternatief of native `title`/popover).
 - [ ] `ThemeProvider`/`GlobalStyle` uit `App.tsx`.
 - [ ] Upgrade: `react@^19`, `react-dom@^19`, `@types/react@^19`, `@types/react-dom@^19`.
 - [ ] Codemods draaien: `npx codemod@latest react/19/migration-recipe` en `npx types-react-codemod@latest preset-19 ./src`.

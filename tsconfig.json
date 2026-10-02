@@ -21,8 +21,8 @@
     "noFallthroughCasesInSwitch": true,
     "types": ["vitest/globals"],
     "paths": {
-      "*": ["./src/*"],
-      "vite-plugin-eslint": ["./node_modules/vite-plugin-eslint/dist/index.d.ts"]
+      "@/*": ["./src/*"],
+      "*": ["./src/*"]
     }
   },
   "include": ["src", "vite.config.ts"]

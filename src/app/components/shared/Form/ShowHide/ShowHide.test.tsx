@@ -7,7 +7,7 @@ describe("ShowHide", () => {
   const renderFields = (shouldShow: (obj: FormState<any>) => boolean) => (
     <Form
       onSubmit={vi.fn()}
-      render={({ form }) => (
+      render={() => (
         <ShowHide
           shouldShow={shouldShow}
           field={{ type: "TextField", props: { label: "Foo", name: "foo" } }}

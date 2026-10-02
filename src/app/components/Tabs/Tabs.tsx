@@ -59,7 +59,6 @@ export function Tabs({
 
   useEffect(() => {
     if (activeTab  && !foundInitialTab) {
-      // eslint-disable-next-line no-console
       console.warn(
         `You passed a wrong activeTab value to Tabs component. Given ID: ${ activeTab }`,
       );
@@ -83,16 +82,12 @@ export function Tabs({
         className={className}
       >
         {children.map(({ props }) => {
-          // See: https://github.com/typescript-eslint/typescript-eslint/issues/2715
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const { id, label: tabLabel, onClick, ...otherChildrenProps } = props;
           const isSelected = id === selectedTab;
           const tabId = formatTabId(id);
           const panelId = formatPanelId(id);
 
           const onTabButtonClick: MouseEventHandler<HTMLButtonElement> = (
-            // See: https://github.com/typescript-eslint/typescript-eslint/issues/2715
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             event,
           ) => {
             setSelectedTab(id);
