@@ -14,6 +14,13 @@ Doel: zaken-frontend omzetten naar dezelfde toekomstbestendige stack als [`top-f
 
 ---
 
+## Stand van zaken (okt 2026)
+
+- **Fase 0 ✅** Tooling: ESLint flat config (met bulk suppressions), Prettier (hele codebase geformatteerd), Testing Library 16, `@/`-alias, `AGENTS.md`.
+- **Fase 1 ✅** Alle data via TanStack Query (`src/api/`); de oude laag `src/app/state/rest/` en `axios`, `qs`, `lodash.merge`, `lodash.isempty` zijn weg. Mutaties werken alleen bij wat de gewijzigde data toont, vaak zonder refetch.
+- **Volgende:** Fase 2, beginnend met de pilot (ADS naast `asc-ui`, één gedeeld component op één pagina).
+- **Restpunten:** filters van de overzichten naar de URL (eigen pilot, past bij Fase 3); `immer` (weg met flash messages → toasts en `ShowHide`); `lodash` (weg met `amsterdam-react-final-form`); 155 vastgelegde lint-overtredingen in `eslint-suppressions.json` (lossen grotendeels op in Fase 3).
+
 ## 1. Uitgangssituatie (gemeten op `main`, okt 2026)
 
 | Wat                                               | Omvang                                               |
@@ -93,27 +100,29 @@ Doel: een stabiele basis waarop elke volgende PR veilig kan landen.
 - [x] **ESLint flat config** (`eslint.config.js`) overgenomen van top-frontend-v2. `eslint-config-react-app`, `.eslintrc.cjs` en `.eslintignore` zijn weg. Twee niet-stilistische regels uit de oude config zijn behouden (`arrow-body-style`, `consistent-type-definitions: type`).
   - Kleine fouten die de nieuwe regels vonden zijn opgelost (o.a. een onveilige optional chain in `ChangeHousingCorporation`, ongebruikte variabelen en overbodige `eslint-disable`-regels).
   - Bestaande overtredingen in oude code zijn vastgelegd met [ESLint bulk suppressions](https://eslint.org/docs/latest/use/suppressions) in `eslint-suppressions.json` (78 bestanden): `no-explicit-any` (180×), `react-refresh/only-export-components` (18×) en de React Compiler-regels uit `react-hooks` v7 (13×). Nieuwe code krijgt de regels wel als error. Na het oplossen: `npx eslint . --prune-suppressions`. Het doel is dat dit bestand aan het eind van Fase 3 leeg is.
-- [ ] **Prettier**: config staat er (`.prettierrc` gelijk aan top-frontend-v2, `.prettierignore`, `.editorconfig`, scripts `format` en `format:check`). **Nog te doen:** in één aparte PR `npm run format` draaien. Dat raakt vrijwel elk bestand (onder andere puntkomma's eruit), dus doe het los van inhoudelijke wijzigingen. Daarna eventueel `format:check` in CI.
+- [x] **Prettier**: config gelijk aan top-frontend-v2 (`.prettierrc`, `.prettierignore`, `.editorconfig`, scripts `format` en `format:check`). De hele codebase is in een aparte commit geformatteerd (na Fase 1).
+  - Les: Prettier kan een regel met een `// @ts-expect-error` erboven over meerdere regels verdelen, waarna de directive niet meer op de regel met de fout staat (gebeurd in `ScaffoldFields.tsx`). Na `npm run format` dus altijd `npm run typecheck`.
+  - Tip: zet de hash van de formatting-commit in `.git-blame-ignore-revs` (en lokaal `git config blame.ignoreRevsFile .git-blame-ignore-revs`), zodat `git blame` en GitHub die commit overslaan. Overweeg `npm run format:check` in CI.
 - [x] **Testinfrastructuur**: `@testing-library/react` 13 → 16 + `@testing-library/dom`. Alle 77 tests slagen. `renderWithProviders` volgt in de pilot van Fase 1, zodra er een `QueryClient` is.
 - [x] **React 18.3 deprecations**: onze eigen code bevat geen `defaultProps`, string refs, legacy context, `findDOMNode`, `ReactDOM.render` of `useRef()` zonder argument, en de tests geven geen React-waarschuwingen. Wat nog in de browserconsole verschijnt komt uit `asc-ui`/`wonen-ui` en verdwijnt met die libraries. Handmatig te controleren: de dev-console na inloggen.
 - [x] `AGENTS.md` toegevoegd met de stack-, migratie-, dependency- en lintregels.
 
 > **Gevonden tijdens Fase 0:** `@amsterdam/amsterdam-react-final-form` importeert `lodash/isEqual` zonder `lodash` als dependency te declareren. Dat werkte alleen omdat `eslint-config-react-app` toevallig `lodash` meeinstalleerde; zonder die package faalde de productie-build. `lodash` staat daarom nu expliciet in `dependencies` (zelfde versie als voorheen) en gaat in Fase 5 samen met `amsterdam-react-final-form` weer weg.
 
-## Fase 1 — Datalaag naar TanStack Query (± 1–2 weken)
+## Fase 1 — Datalaag naar TanStack Query ✅ afgerond (okt 2026)
 
 Doel: `useApiRequest` en de `ApiProvider` vervangen door TanStack Query, zonder UI-wijzigingen.
 
 ### 1a. Infrastructuur
 
-- [ ] Installeren: `@tanstack/react-query`, `@tanstack/react-query-devtools` (dev).
-- [ ] Overnemen uit top-frontend-v2:
+- [x] Installeren: `@tanstack/react-query`, `@tanstack/react-query-devtools` (dev).
+- [x] Overnemen uit top-frontend-v2:
   - `src/api/queryClient.ts`: globale defaults (`retry: false`, `refetchOnWindowFocus: false`, `staleTime`) + globale error-toast via `QueryCache`/`MutationCache` met `meta.globalErrorToast` opt-out.
   - `src/api/useApiFetch.ts`: token-gebonden `fetch` wrapper (vervangt `axios` + `useRequestWrapper` + `useProtectedRequest`).
   - `src/api/queryKeys.ts`: hiërarchische key-factory. Maak één entry per huidige `ApiGroup` (`addresses`, `case`, `cases`, `fines`, `permissions`, `roles`, `task`, `themes`, `users`, …).
   - `src/api/utils/` (`makeApiUrl`, `normalizeApiError`, `stringifyQueryParams`).
-- [ ] `QueryClientProvider` in `App.tsx` **naast** de bestaande `ApiProvider` hangen (ze kunnen tijdelijk samen bestaan).
-- [ ] De huidige `useErrorHandler` / flash-message-afhandeling koppelen aan de `QueryCache.onError`, zodat foutmeldingen hetzelfde blijven.
+- [x] `QueryClientProvider` in `App.tsx` **naast** de bestaande `ApiProvider` hangen (ze kunnen tijdelijk samen bestaan).
+- [x] De huidige `useErrorHandler` / flash-message-afhandeling koppelen aan de `QueryCache.onError`, zodat foutmeldingen hetzelfde blijven.
 
 ### 1b. Hooks migreren, per `ApiGroup`
 
@@ -178,29 +187,31 @@ Bewuste verschillen met het oude gedrag:
 
 Testchecklist voor acceptatie:
 
-- [ ] Zakenoverzicht en takenoverzicht: het themafilter toont alle thema's en filteren werkt.
-- [ ] Zaak aanmaken: themakeuze werkt, ook via de TON-flow (alleen het TON-thema).
-- [ ] Debrief-formulier en "Onderwerp wijzigen" op zaakdetail: thema's laden.
-- [ ] Devtools (lokaal): één query `["themes","list"]`, ook als je tussen deze pagina's wisselt (geen dubbele requests in het Network-tabblad).
-- [ ] Feedback versturen: knop disabled met spinner tijdens versturen, daarna "Bedankt voor je feedback!" en de modal sluit.
-- [ ] Fout: zet in de Network-tab request blocking op `/themes/` of `/feedback/` → zelfde rode melding "Oeps er ging iets mis!" als voorheen, met de URL.
-- [ ] 403: een gebruiker zonder rechten komt op `/auth`, zoals nu.
+- [x] Zakenoverzicht en takenoverzicht: het themafilter toont alle thema's en filteren werkt.
+- [x] Zaak aanmaken: themakeuze werkt, ook via de TON-flow (alleen het TON-thema).
+- [x] Debrief-formulier en "Onderwerp wijzigen" op zaakdetail: thema's laden.
+- [x] Devtools (lokaal): één query `["themes","list"]`, ook als je tussen deze pagina's wisselt (geen dubbele requests in het Network-tabblad).
+- [x] Feedback versturen: knop disabled met spinner tijdens versturen, daarna "Bedankt voor je feedback!" en de modal sluit.
+- [x] Fout: zet in de Network-tab request blocking op `/themes/` of `/feedback/` → zelfde rode melding "Oeps er ging iets mis!" als voorheen, met de URL.
+- [x] 403: een gebruiker zonder rechten komt op `/auth`, zoals nu.
 
 #### Status uitrol
 
-Principe: **per oude `ApiGroup` volledig migreren** (alle queries én mutaties van een groep tegelijk). Elke query-key begint met de groepsnaam, en een mutatie invalideert `queryKeys.<groep>.all`. Omdat de oude `clearCache()` alleen de eigen groep leegmaakte, blijft het invalidatiegedrag 1-op-1 gelijk en is er tijdens de overgang geen brug tussen oude en nieuwe cache nodig.
+Principe: **per oude `ApiGroup` volledig migreren** (alle queries én mutaties van een groep tegelijk). Elke query-key begint met de groepsnaam. Voor de kleine groepen was dat genoeg: de oude `clearCache()` maakte alleen de eigen groep leeg, dus er was geen brug tussen oude en nieuwe cache nodig. De `cases`-groep (32 hooks) ging wél in delen over en had tijdelijk een brug nodig (zie de pilot hieronder); die is in 1c verwijderd.
 
-| Groep                                      | Status         | Hooks                                                                                                                                                       |
-| ------------------------------------------ | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `themes`                                   | ✅             | `useCaseThemes`, `useReasons`, `useProjects`, `useSubjects`, `useTags`, `useTasksReasons`, `useTaskNames`, `useTaskOwners`                                  |
-| `auth`                                     | ✅             | `useUsersMe`, `useIsAuthorized`                                                                                                                             |
-| `users`                                    | ✅             | `useUsers`                                                                                                                                                  |
-| `roles`                                    | ✅             | `useRoles` (nog steeds mockdata, er is geen endpoint)                                                                                                       |
-| `fines`, `listings`, `housingCorporations` | ✅             | `useFine`, `useListing`, `useCorporations`                                                                                                                  |
-| `addresses`                                | ✅             | `useAddress` + `useUpdateAddress`, `usePermitDetails`, `usePermitsPowerBrowser`, `useMeldingen`, `useRegistrations`, `useResidents`, `useDistricts`         |
-| `dataPunt`                                 | ✅             | `useBagPdok`, `useBagPdokByBagId`, `useBenkAgg`, `usePanorama`                                                                                              |
-| `supportContacts`, `permissions`           | ✅ verwijderd  | `useSupportContacts`, `usePermissions` (`/permissions/`) werden nergens gebruikt                                                                            |
-| `cases`, `case`, `task`                    | ⏳ eerst pilot | zie hieronder. De opzoeklijsten `useDecisionTypes`, `useQuickDecisionTypes`, `useScheduleTypes` en `useViolationTypes` zijn al over, met keys onder `cases` |
+Gaandeweg is het principe "1-op-1 met de oude groep" losgelaten voor mutaties: die werken nu alleen bij wat de gewijzigde data echt toont, vaak zonder refetch (zie de punten onder de pilot `cases`).
+
+| Groep                                      | Status        | Hooks                                                                                                                                                       |
+| ------------------------------------------ | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `themes`                                   | ✅            | `useCaseThemes`, `useReasons`, `useProjects`, `useSubjects`, `useTags`, `useTasksReasons`, `useTaskNames`, `useTaskOwners`                                  |
+| `auth`                                     | ✅            | `useUsersMe`, `useIsAuthorized`                                                                                                                             |
+| `users`                                    | ✅            | `useUsers`                                                                                                                                                  |
+| `roles`                                    | ✅            | `useRoles` (nog steeds mockdata, er is geen endpoint)                                                                                                       |
+| `fines`, `listings`, `housingCorporations` | ✅            | `useFine`, `useListing`, `useCorporations`                                                                                                                  |
+| `addresses`                                | ✅            | `useAddress` + `useUpdateAddress`, `usePermitDetails`, `usePermitsPowerBrowser`, `useMeldingen`, `useRegistrations`, `useResidents`, `useDistricts`         |
+| `dataPunt`                                 | ✅            | `useBagPdok`, `useBagPdokByBagId`, `useBenkAgg`, `usePanorama`                                                                                              |
+| `supportContacts`, `permissions`           | ✅ verwijderd | `useSupportContacts`, `usePermissions` (`/permissions/`) werden nergens gebruikt                                                                            |
+| `cases`, `case`, `task`                    | ✅            | zie hieronder. De opzoeklijsten `useDecisionTypes`, `useQuickDecisionTypes`, `useScheduleTypes` en `useViolationTypes` zijn al over, met keys onder `cases` |
 
 Gedaan tijdens de uitrol:
 
@@ -269,20 +280,20 @@ Verschil voor gebruikers: na een wijziging (tag, onderwerp, taak afronden) toond
 
 Testchecklist voor acceptatie (zaakdetailpagina):
 
-- [ ] Zaak openen: gegevens, kop, adres en paginatitel laden. Een niet-bestaand id (`/zaken/999999999`) toont "niet gevonden".
-- [ ] Gevoelige zaak zonder recht → "niet geautoriseerd", zoals nu.
-- [ ] Tag wijzigen en onderwerp wijzigen: de nieuwe waarde verschijnt, tijdlijn/events verversen ook. _(Tag: de modal bleef open, opgelost.)_
-- [ ] Woningcorporatie wijzigen: de nieuwe corporatie staat direct op de zaak.
-- [ ] Taak afronden: de takenlijst ververst en toont de volgende taak. Network: eerst de POST op `generic-tasks/complete/`, daarna pas `workflows/` en `events/`; geen `cases/:id/`. _(Gevonden: de GET's liepen vóór de POST, opgelost.)_
-- [ ] Een oude mutatie, bijv. een besluit of debrief opslaan: terug op de zaak staan de nieuwe gegevens (niet de stand van vóór het opslaan).
-- [ ] Nieuwe zaak aanmaken en direct openen: de takenlijst toont kort laadregels en vult zich binnen enkele seconden (polling). Network-tab: herhaalde `/workflows/`-requests met oplopende tussenpozen, die stoppen zodra er taken zijn.
-- [ ] Afgesloten zaak zonder taken: geen polling, wel de tekst "Deze zaak is afgesloten…" en "Herlaad taken." werkt.
-- [ ] Taak toewijzen vanuit de takenlijst op de zaak: de nieuwe behandelaar verschijnt direct.
-- [ ] Blokkeer `*/workflows/*` en open een zaak (ook als al de eerste fetch faalt): géén rode melding, de takenlijst blijft laadregels tonen terwijl er gepold wordt (requests na ±1, 3, 7, 15 en 31 s), daarna niets meer en "Geen taken beschikbaar." met "Herlaad taken.". Een afgesloten zaak toont direct "Deze zaak is afgesloten…" zonder te pollen.
-- [ ] Na opslaan sluit de modal bij: tag, onderwerp, woningcorporatie, deadline van een taak, planning van een bezoek, taak afronden.
-- [ ] Deadline wijzigen: na de PATCH alleen een request naar `cases/:id/workflows/` (niet naar de zaak, events of schedules). Daarna naar het takenoverzicht: dat toont de nieuwe deadline.
-- [ ] Tag en onderwerp wijzigen: na de PATCH géén andere requests. De nieuwe tag/onderwerpen staan direct op de zaak, de onderwerpen ook in het zaak-event in de tijdlijn. Daarna in het zakenoverzicht filteren op die tag: de zaak staat erbij.
-- [ ] Planning wijzigen: na de PATCH géén andere requests. De urgentie in de takenlijst én het planning-event in de tijdlijn tonen toch direct de nieuwe waarde, en na herladen van de pagina nog steeds.
+- [x] Zaak openen: gegevens, kop, adres en paginatitel laden. Een niet-bestaand id (`/zaken/999999999`) toont "niet gevonden".
+- [x] Gevoelige zaak zonder recht → "niet geautoriseerd", zoals nu.
+- [x] Tag wijzigen en onderwerp wijzigen: de nieuwe waarde verschijnt, tijdlijn/events verversen ook. _(Tag: de modal bleef open, opgelost.)_
+- [x] Woningcorporatie wijzigen: de nieuwe corporatie staat direct op de zaak.
+- [x] Taak afronden: de takenlijst ververst en toont de volgende taak. Network: eerst de POST op `generic-tasks/complete/`, daarna pas `workflows/` en `events/`; geen `cases/:id/`. _(Gevonden: de GET's liepen vóór de POST, opgelost.)_
+- [x] Een oude mutatie, bijv. een besluit of debrief opslaan: terug op de zaak staan de nieuwe gegevens (niet de stand van vóór het opslaan).
+- [x] Nieuwe zaak aanmaken en direct openen: de takenlijst toont kort laadregels en vult zich binnen enkele seconden (polling). Network-tab: herhaalde `/workflows/`-requests met oplopende tussenpozen, die stoppen zodra er taken zijn.
+- [x] Afgesloten zaak zonder taken: geen polling, wel de tekst "Deze zaak is afgesloten…" en "Herlaad taken." werkt.
+- [x] Taak toewijzen vanuit de takenlijst op de zaak: de nieuwe behandelaar verschijnt direct.
+- [x] Blokkeer `*/workflows/*` en open een zaak (ook als al de eerste fetch faalt): géén rode melding, de takenlijst blijft laadregels tonen terwijl er gepold wordt (requests na ±1, 3, 7, 15 en 31 s), daarna niets meer en "Geen taken beschikbaar." met "Herlaad taken.". Een afgesloten zaak toont direct "Deze zaak is afgesloten…" zonder te pollen.
+- [x] Na opslaan sluit de modal bij: tag, onderwerp, woningcorporatie, deadline van een taak, planning van een bezoek, taak afronden.
+- [x] Deadline wijzigen: na de PATCH alleen een request naar `cases/:id/workflows/` (niet naar de zaak, events of schedules). Daarna naar het takenoverzicht: dat toont de nieuwe deadline.
+- [x] Tag en onderwerp wijzigen: na de PATCH géén andere requests. De nieuwe tag/onderwerpen staan direct op de zaak, de onderwerpen ook in het zaak-event in de tijdlijn. Daarna in het zakenoverzicht filteren op die tag: de zaak staat erbij.
+- [x] Planning wijzigen: na de PATCH géén andere requests. De urgentie in de takenlijst én het planning-event in de tijdlijn tonen toch direct de nieuwe waarde, en na herladen van de pagina nog steeds.
 
 #### Takenoverzicht: ✅ akkoord (okt 2026)
 
@@ -300,13 +311,13 @@ Andere mutaties (deadline, taak afronden, tag/onderwerp) markeren de takenlijste
 
 Testchecklist:
 
-- [ ] Takenoverzicht laden; aantallen kloppen; de handhavingsverzoeken staan bovenaan als die er zijn.
-- [ ] Bladeren, sorteren (o.a. slotdatum, straat) en paginagrootte wijzigen: de tabel toont laden en daarna de juiste taken.
-- [ ] Alle filters (thema, rol, taaknaam, behandelaar, aanleiding, project, onderwerp, tag, stadsdeel, corporatie) geven de juiste taken; bij een filterwijziging wordt alleen `tasks/?…` opgehaald.
-- [ ] Taak aan jezelf, aan iemand anders en aan niemand toewijzen (ook herverdelen met bevestiging): de eigenaar verandert direct, zonder extra requests na de PATCH. Ook in de tabel met handhavingsverzoeken.
-- [ ] Taak toewijzen op de zaakpagina: idem.
-- [ ] Taak toewijzen in het overzicht, dan de zaak openen (binnen 5 minuten): de takenlijst op de zaak toont de nieuwe behandelaar.
-- [ ] Deadline wijzigen of taak afronden op een zaak, dan terug naar het overzicht: de nieuwe stand wordt opgehaald.
+- [x] Takenoverzicht laden; aantallen kloppen; de handhavingsverzoeken staan bovenaan als die er zijn.
+- [x] Bladeren, sorteren (o.a. slotdatum, straat) en paginagrootte wijzigen: de tabel toont laden en daarna de juiste taken.
+- [x] Alle filters (thema, rol, taaknaam, behandelaar, aanleiding, project, onderwerp, tag, stadsdeel, corporatie) geven de juiste taken; bij een filterwijziging wordt alleen `tasks/?…` opgehaald.
+- [x] Taak aan jezelf, aan iemand anders en aan niemand toewijzen (ook herverdelen met bevestiging): de eigenaar verandert direct, zonder extra requests na de PATCH. Ook in de tabel met handhavingsverzoeken.
+- [x] Taak toewijzen op de zaakpagina: idem.
+- [x] Taak toewijzen in het overzicht, dan de zaak openen (binnen 5 minuten): de takenlijst op de zaak toont de nieuwe behandelaar.
+- [x] Deadline wijzigen of taak afronden op een zaak, dan terug naar het overzicht: de nieuwe stand wordt opgehaald.
 
 #### Zakenoverzicht en zaken per adres: ✅ akkoord (okt 2026)
 
@@ -320,13 +331,13 @@ Testchecklist:
 
 Testchecklist:
 
-- [ ] Zakenoverzicht laden; het aantal klopt.
-- [ ] Bladeren, sorteren (straat, postcode, aanleiding, startdatum, laatst gewijzigd) en paginagrootte wijzigen.
-- [ ] Alle filters (thema, aanleiding, project, onderwerp, tag, stadsdeel, corporatie, open/gesloten, startdatum) en de zoekbalk op adres. Een leeg gemaakt filter verdwijnt uit de query (Network: geen `theme_name=` zonder waarde).
-- [ ] Gevoelige zaken alleen met het recht daarvoor; zonder recht bij Ondermijning de juiste lege tekst.
-- [ ] Adrespagina: de zaken op het adres, de advertenties en het adresmenu (aantal zaken).
-- [ ] Zaak aanmaken op een adres met bestaande zaken: de melding over bestaande zaken klopt. Na het aanmaken toont de adrespagina de nieuwe zaak.
-- [ ] Tag wijzigen op een zaak, dan in het zakenoverzicht op die tag filteren: de zaak staat erbij.
+- [x] Zakenoverzicht laden; het aantal klopt.
+- [x] Bladeren, sorteren (straat, postcode, aanleiding, startdatum, laatst gewijzigd) en paginagrootte wijzigen.
+- [x] Alle filters (thema, aanleiding, project, onderwerp, tag, stadsdeel, corporatie, open/gesloten, startdatum) en de zoekbalk op adres. Een leeg gemaakt filter verdwijnt uit de query (Network: geen `theme_name=` zonder waarde).
+- [x] Gevoelige zaken alleen met het recht daarvoor; zonder recht bij Ondermijning de juiste lege tekst.
+- [x] Adrespagina: de zaken op het adres, de advertenties en het adresmenu (aantal zaken).
+- [x] Zaak aanmaken op een adres met bestaande zaken: de melding over bestaande zaken klopt. Na het aanmaken toont de adrespagina de nieuwe zaak.
+- [x] Tag wijzigen op een zaak, dan in het zakenoverzicht op die tag filteren: de zaak staat erbij.
 
 #### Zaakformulieren en overige `cases`-hooks: ✅ akkoord (okt 2026)
 
@@ -346,15 +357,15 @@ Testchecklist:
 
 Testchecklist (per formulier: invullen, bevestigen, terug op de zaak):
 
-- [ ] Debrief, besluit, snel besluit, dagvaarding (dagvaardingstypes per taak gevuld), bezoek, melding, planning aanmaken, zaak afsluiten (redenen en resultaten gevuld), taak opvoeren (processen gevuld).
-- [ ] Na elk formulier: terug op de zaak staat de nieuwe stand (takenlijst, tijdlijn, en bij afsluiten "Deze zaak is afgesloten…"). Network: op het formulier na de POST geen extra GET's; op de zaakpagina één keer de gegevens van de zaak.
-- [ ] Een formulier dat op de server faalt: foutmelding, je blijft op het formulier.
-- [ ] Besluitformulier: de lijst met dagvaardingen bovenaan laadt.
-- [ ] Zaak aanmaken: na opslaan naar de nieuwe zaak; het zakenoverzicht en de adrespagina tonen hem.
-- [ ] Afsluitformulier openen: géén GET op `case-close/` meer.
-- [ ] Tijdlijn en overlastmelding (`CaseNuisanceAlert`) op de zaakpagina tonen de events.
+- [x] Debrief, besluit, snel besluit, dagvaarding (dagvaardingstypes per taak gevuld), bezoek, melding, planning aanmaken, zaak afsluiten (redenen en resultaten gevuld), taak opvoeren (processen gevuld).
+- [x] Na elk formulier: terug op de zaak staat de nieuwe stand (takenlijst, tijdlijn, en bij afsluiten "Deze zaak is afgesloten…"). Network: op het formulier na de POST geen extra GET's; op de zaakpagina één keer de gegevens van de zaak.
+- [x] Een formulier dat op de server faalt: foutmelding, je blijft op het formulier.
+- [x] Besluitformulier: de lijst met dagvaardingen bovenaan laadt.
+- [x] Zaak aanmaken: na opslaan naar de nieuwe zaak; het zakenoverzicht en de adrespagina tonen hem.
+- [x] Afsluitformulier openen: géén GET op `case-close/` meer.
+- [x] Tijdlijn en overlastmelding (`CaseNuisanceAlert`) op de zaakpagina tonen de events.
 
-### 1c. Opruimen ✅ (wacht op test)
+### 1c. Opruimen ✅ (getest, okt 2026)
 
 - [x] De hele oude laag `src/app/state/rest/` is verwijderd: `ApiProvider`, `useApiRequest`, de request-queue, `useApiCache`, `useContextCache`, de mock-requests, `errorHandler`, `cleanParamObject` en de brug in `useApiRequest`. `ApiProvider` is uit `App.tsx`.
 - [x] Wat nog gebruikt werd is verhuisd: `makeApiUrl`/`makeTonApiUrl` → `src/api/utils/makeApiUrl.ts`; `useHasPermission` (samengevoegd met `usePermissions`, met test; de oude "zoek dubbelen"-check — samengevoegde lijsten in een `Set` — is vervangen door `permissionsToCheck.some(p => permissions.includes(p))`, die geen onterechte toegang meer geeft bij een dubbel recht in de lijst van de gebruiker of in de vraag), `useOtherAddressesByBagId` en `usePanoramaByBagId` → `src/hooks/` (de doelmap uit Fase 5).
@@ -365,10 +376,10 @@ Testchecklist (per formulier: invullen, bevestigen, terug op de zaak):
 
 Testchecklist (de app moet zich precies zo gedragen als na de vorige stappen):
 
-- [ ] Inloggen, startpagina, zakenoverzicht, takenoverzicht, zaakpagina, adrespagina, een formulier: alles laadt, geen fouten in de console (behalve de bekende `defaultProps`-waarschuwingen van `asc-ui`).
-- [ ] Knoppen en menu's die van rechten afhangen (taak afronden/toewijzen, gevoelige zaken) verschijnen zoals voorheen.
-- [ ] Adrespagina: andere adressen (huisletter/toevoeging) en het panorama.
-- [ ] Filters in zaken- en takenoverzicht blijven bewaard als je naar een zaak gaat en terugkomt.
+- [x] Inloggen, startpagina, zakenoverzicht, takenoverzicht, zaakpagina, adrespagina, een formulier: alles laadt, geen fouten in de console (behalve de bekende `defaultProps`-waarschuwingen van `asc-ui`).
+- [x] Knoppen en menu's die van rechten afhangen (taak afronden/toewijzen, gevoelige zaken) verschijnen zoals voorheen.
+- [x] Adrespagina: andere adressen (huisletter/toevoeging) en het panorama.
+- [x] Filters in zaken- en takenoverzicht blijven bewaard als je naar een zaak gaat en terugkomt.
 
 ## Fase 2 — Amsterdam Design System-fundament (± 1 week)
 
@@ -544,14 +555,14 @@ Voorwaarde: `grep -r "@amsterdam/asc-ui\|wonen-ui\|amsterdam-react-final-form\|s
 
 ## 4. Samenvatting planning
 
-| #   | Fase                          | Afhankelijk van | Pilot (eerst testen + akkoord)                 | Indicatie | Zichtbaar voor gebruiker? |
-| --- | ----------------------------- | --------------- | ---------------------------------------------- | --------- | ------------------------- |
-| 0   | Tooling & voorbereiding       | –               | –                                              | 1–2 dagen | Nee                       |
-| 1   | TanStack Query                | 0               | `themes` + één mutatie (`feedback`)            | 1–2 weken | Nee (alleen sneller)      |
-| 2   | ADS-fundament                 | 0               | één gedeeld component op één pagina            | 1 week    | Beperkt (layout)          |
-| 3   | Verticale migratie per domein | 1, 2            | één voorbeeld per soort wijziging (zie Fase 3) | 4–8 weken | Ja                        |
-| 4   | Routing                       | 0               | één routegroep                                 | 2–3 dagen | Nee                       |
-| 5   | React 19 + opruimen           | 3 (volledig)    | upgrade-branch eerst alleen op acceptatie      | 2–3 dagen | Nee                       |
+| #   | Fase                          | Status      | Afhankelijk van | Pilot (eerst testen + akkoord)                 | Indicatie | Zichtbaar voor gebruiker? |
+| --- | ----------------------------- | ----------- | --------------- | ---------------------------------------------- | --------- | ------------------------- |
+| 0   | Tooling & voorbereiding       | ✅          | –               | –                                              | 1–2 dagen | Nee                       |
+| 1   | TanStack Query                | ✅          | 0               | `themes` + één mutatie (`feedback`)            | 1–2 weken | Nee (alleen sneller)      |
+| 2   | ADS-fundament                 | ⏭️ volgende | 0               | één gedeeld component op één pagina            | 1 week    | Beperkt (layout)          |
+| 3   | Verticale migratie per domein | –           | 1, 2            | één voorbeeld per soort wijziging (zie Fase 3) | 4–8 weken | Ja                        |
+| 4   | Routing                       | –           | 0               | één routegroep                                 | 2–3 dagen | Nee                       |
+| 5   | React 19 + opruimen           | –           | 3 (volledig)    | upgrade-branch eerst alleen op acceptatie      | 2–3 dagen | Nee                       |
 
 De indicaties gaan over bouwtijd. Reken per pilot op extra doorlooptijd voor test en akkoord.
 
