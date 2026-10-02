@@ -4,7 +4,7 @@ import { DefinitionList } from "@amsterdam/wonen-ui";
 import styles from "./PermitOverview.module.css";
 
 import to from "app/routing/utils/to";
-import { usePermitDetails } from "app/state/rest";
+import { usePermitDetails } from "@/api/hooks";
 import usePermitValues from "./hooks/usePermitValues";
 
 type Props = {
@@ -12,7 +12,7 @@ type Props = {
 }
 
 const PermitOverview: React.FC<Props> = ({ bagId }) => {
-  const [data, { isBusy }] = usePermitDetails(bagId);
+  const { data, isLoading: isBusy } = usePermitDetails(bagId);
   const values = usePermitValues(data);
 
   if (isBusy) {

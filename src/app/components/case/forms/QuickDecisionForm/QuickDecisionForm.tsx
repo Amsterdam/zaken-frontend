@@ -6,7 +6,7 @@ import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks
 import DecisionHeader, {
   type Workflow,
 } from "../DecisionForm/components/DecisionHeader";
-import { useQuickDecisionTypes } from "app/state/rest/themes";
+import { useQuickDecisionTypes } from "@/api/hooks";
 import useNavigation from "app/routing/useNavigation";
 
 type Props = {
@@ -27,7 +27,7 @@ const mapData = (data: QuickDecisionData) => ({
 const QuickDecisionForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
   const [caseItem] = useCase(id);
   const themeId = caseItem?.theme.id;
-  const [data] = useQuickDecisionTypes(themeId);
+  const { data } = useQuickDecisionTypes(themeId);
   const quickDecisionTypes = data?.results;
   const { navigateTo } = useNavigation();
   const fields = useScaffoldedFields(

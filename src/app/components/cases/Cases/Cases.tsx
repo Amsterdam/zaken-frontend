@@ -2,16 +2,8 @@ import { useEffect, useContext } from "react";
 import { Heading } from "@amsterdam/asc-ui";
 import TableCases from "app/components/cases/TableCases/TableCases";
 import CasesFilter from "app/components/cases/CasesFilter/CasesFilter";
-import {
-  useCases,
-  useTasksReasons,
-  useDistricts,
-  useCorporations,
-  useSubjects,
-  useProjects,
-  useTags,
-} from "app/state/rest";
-import { useCaseThemes } from "@/api/hooks";
+import { useCases } from "app/state/rest";
+import { useCaseThemes, useCorporations, useDistricts, useProjects, useSubjects, useTags, useTasksReasons } from "@/api/hooks";
 import useHasPermission, {
   SENSITIVE_CASE_PERMISSION,
 } from "app/state/rest/custom/usePermissions/useHasPermission";
@@ -52,13 +44,13 @@ const Cases: React.FC = () => {
   } = useContext(ContextValues)["cases"];
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION]);
   const { data: caseThemes } = useCaseThemes();
-  const [reasons] = useTasksReasons(theme);
+  const { data: reasons } = useTasksReasons(theme);
   const themeId = getThemeId(caseThemes?.results, theme);
-  const [projectsTheme] = useProjects(themeId);
-  const [subjectsTheme] = useSubjects(themeId);
-  const [tagsTheme] = useTags(themeId);
-  const [caseDistricts] = useDistricts();
-  const [corporationData] = useCorporations();
+  const { data: projectsTheme } = useProjects(themeId);
+  const { data: subjectsTheme } = useSubjects(themeId);
+  const { data: tagsTheme } = useTags(themeId);
+  const { data: caseDistricts } = useDistricts();
+  const { data: corporationData } = useCorporations();
   const [dataSource, { isBusy }] = useCases(
     hasPermission,
     pagination,

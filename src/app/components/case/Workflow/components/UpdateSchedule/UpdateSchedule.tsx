@@ -1,12 +1,8 @@
-import { useEffect } from "react";
 import dayjs from "dayjs";
 
 import { useModal } from "app/components/shared/Modal/hooks/useModal";
-import {
-  useSchedule,
-  useSchedulesByCaseId,
-  useScheduleTypes,
-} from "app/state/rest";
+import { useSchedule, useSchedulesByCaseId } from "app/state/rest";
+import { useScheduleTypes } from "@/api/hooks";
 import useHasPermission, {
   CAN_PERFORM_TASK,
 } from "app/state/rest/custom/usePermissions/useHasPermission";
@@ -38,18 +34,11 @@ const UpdateSchedule: React.FC<Props> = ({ caseId, themeId }) => {
   const [schedules] = useSchedulesByCaseId(caseId);
   const latestSchedule = getLatestSchedule(schedules as unknown as Schedule[]);
   const [, { execPatch: updateSchedule }] = useSchedule(latestSchedule?.id);
-  const [scheduleTypes, { execGet: getScheduleTypes }] = useScheduleTypes(
-    themeId,
-    { lazy: true },
-  );
+  // Only needed (and fetched) once the modal is opened.
+  const { data: scheduleTypes } = useScheduleTypes(themeId, {
+    enabled: isModalOpen,
+  });
   const [hasPermission] = useHasPermission([CAN_PERFORM_TASK]);
-
-  useEffect(() => {
-    if (isModalOpen) {
-      getScheduleTypes();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isModalOpen]);
 
   const onSubmit = (data: any) => {
     const payload = {

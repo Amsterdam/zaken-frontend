@@ -4,7 +4,8 @@ import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form";
 
 import ScaffoldFields from "app/components/shared/Form/ScaffoldFields";
 import scaffold from "./scaffold";
-import { useUsers, useVisitsCreate } from "app/state/rest";
+import { useVisitsCreate } from "app/state/rest";
+import { useUsers } from "@/api/hooks";
 import { useFlashMessages } from "app/state/flashMessages/useFlashMessages";
 import useNavigation from "app/routing/useNavigation";
 
@@ -21,7 +22,7 @@ const mapData = (data: VisitData) => ({ ...data, author_ids: filterUndefined([da
 
 const VisitForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
   const { navigateTo } = useNavigation();
-  const [data] = useUsers();
+  const { data } = useUsers();
   const authors = data?.results ?? [];
 
   const [, { execPost }] = useVisitsCreate();

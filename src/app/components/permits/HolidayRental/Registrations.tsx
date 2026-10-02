@@ -1,13 +1,13 @@
 import { Heading } from "@amsterdam/asc-ui";
 import { HolidayRentalRegistration, HolidayRentalRegistrations } from "@amsterdam/wonen-ui";
-import { useRegistrations } from "app/state/rest";
+import { useRegistrations } from "@/api/hooks";
 
 type Props = {
   bagId: string
 }
 
 const Registrations: React.FC<Props> = ({ bagId }) => {
-  const [data, { isBusy }] = useRegistrations(bagId);
+  const { data, isLoading: isBusy } = useRegistrations(bagId);
 
   return (
     <>

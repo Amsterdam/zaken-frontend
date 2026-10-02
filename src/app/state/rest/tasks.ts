@@ -165,30 +165,6 @@ export const useTaskUpdate = (id: number | string, options?: Options) => {
   });
 };
 
-export const useTaskNames = (
-  theme_name: string | null,
-  role: string | null,
-) => {
-  const handleError = useErrorHandler();
-
-  const queryParams = {
-    completed: false,
-    theme_name: theme_name || undefined,
-    role: role || undefined,
-  };
-  const queryString = qs.stringify(queryParams, {
-    addQueryPrefix: true,
-    skipNulls: true,
-  });
-  const apiUrl = `${makeApiUrl("tasks", "task-names")}${queryString}`;
-  return useApiRequest<components["schemas"]["CaseUserTaskTaskName"][]>({
-    url: apiUrl,
-    groupName: "themes",
-    handleError,
-    isProtected: true,
-  });
-};
-
 // useSummonTypesByTaskId for getting the available summonTypes for a specific task and thus Theme.
 export const useSummonTypesByTaskId = (
   id: string,
@@ -199,17 +175,6 @@ export const useSummonTypesByTaskId = (
     ...options,
     url: makeApiUrl("tasks", id, "summon-types"),
     groupName: "task",
-    handleError,
-    isProtected: true,
-  });
-};
-
-export const useTaskOwners = (options?: Options) => {
-  const handleError = useErrorHandler();
-  return useApiRequest<components["schemas"]["User"][]>({
-    ...options,
-    url: makeApiUrl("tasks", "owners"),
-    groupName: "themes",
     handleError,
     isProtected: true,
   });

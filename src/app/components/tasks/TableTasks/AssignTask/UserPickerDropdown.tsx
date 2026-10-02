@@ -1,6 +1,6 @@
 import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-import { useUsers } from "app/state/rest";
+import { useUsers } from "@/api/hooks";
 import { createNameAbbreviation } from "app/components/shared/Helpers/helpers";
 import styles from "./UserPickerDropdown.module.css";
 
@@ -32,7 +32,7 @@ const UserPickerDropdown: React.FC<Props> = ({
 }) => {
   const [search, setSearch] = useState("");
   const [isPositioned, setIsPositioned] = useState(false);
-  const [data, { isBusy }] = useUsers();
+  const { data, isLoading: isBusy } = useUsers();
   const users: User[] = (data?.results ?? []).filter(
     (u) => u.first_name && u.last_name,
   );

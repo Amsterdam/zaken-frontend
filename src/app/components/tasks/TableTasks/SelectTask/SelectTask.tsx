@@ -1,7 +1,8 @@
 import { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import { Spinner, Checkbox, themeSpacing, Label } from "@amsterdam/asc-ui";
-import { useTask, useUsersMe } from "app/state/rest";
+import { useTask } from "app/state/rest";
+import { useUsersMe } from "@/api/hooks";
 import UserIcon from "./UserIcon";
 import useContextCache from "app/state/rest/provider/useContextCache";
 import { createNameAbbreviation } from "app/components/shared/Helpers/helpers";
@@ -54,7 +55,7 @@ const SelectTask: React.FC<Props> = ({ taskId, taskOwner, isEnforcement }) => {
   const [hasPerformTaskPermission] = useHasPermission([CAN_PERFORM_TASK]);
   const [isChecked, setIsChecked] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [data, { isBusy }] = useUsersMe();
+  const { data, isLoading: isBusy } = useUsersMe();
   const [, { execPatch }] = useTask(taskId);
   // Filtered tasks are stored with the search query as a parameter in the context.
   const queryUrl = getQueryUrl(

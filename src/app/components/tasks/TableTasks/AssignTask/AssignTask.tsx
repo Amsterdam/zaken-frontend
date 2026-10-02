@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext, useRef, useCallback } from "react";
 import { createPortal } from "react-dom";
-import { useTask, useUsersMe } from "app/state/rest";
+import { useTask } from "app/state/rest";
+import { useUsersMe } from "@/api/hooks";
 import useContextCache from "app/state/rest/provider/useContextCache";
 import useHasPermission, {
   CAN_PERFORM_TASK,
@@ -65,7 +66,7 @@ const AssignTask: React.FC<Props> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const [currentUser, { isBusy: isMeBusy }] = useUsersMe();
+  const { data: currentUser, isLoading: isMeBusy } = useUsersMe();
   const [, { execPatch }] = useTask(taskId);
 
   const queryUrl = getQueryUrl(

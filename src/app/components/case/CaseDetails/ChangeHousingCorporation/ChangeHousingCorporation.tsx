@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useModal } from "app/components/shared/Modal/hooks/useModal";
-import { useCorporations, useAddresses, useCase } from "app/state/rest";
+import { useCase } from "app/state/rest";
+import { useCorporations, useUpdateAddress } from "@/api/hooks";
 import ChangeableItem from "../ChangeableItem/ChangeableItem";
 import Modal, { ModalBlock } from "app/components/shared/Modal/Modal";
 import ChangeHousingCorporationForm from "./ChangeHousingCorporationForm";
@@ -14,11 +15,10 @@ type Props = {
 
 const ChangeHousingCorporation: React.FC<Props> = ({ housingCorporationId, bagId, caseId }) => {
   const { isModalOpen, openModal, closeModal } = useModal();
-  const [loading, setLoading] = useState(false);
   const [housingCorporations, setHousingCorporations] = useState<components["schemas"]["HousingCorporation"][]>([]);
   const [caseItem, { updateCache }] = useCase(caseId);
-  const [data] = useCorporations();
-  const [, { execPatch }] = useAddresses(bagId, { lazy: true });
+  const { data } = useCorporations();
+  const { mutate: updateAddress, isPending } = useUpdateAddress(bagId);
 
   useEffect(() => {
     if (data?.results) {
@@ -30,25 +30,23 @@ const ChangeHousingCorporation: React.FC<Props> = ({ housingCorporationId, bagId
   }, [data?.results]);
 
   const onSubmit = (housing_corporation?: components["schemas"]["HousingCorporation"]["id"] | null) => {
-    setLoading(true);
-    execPatch({ housing_corporation })
-      .then((response: any) => {
-        // Update the case context for housing corporation
-        if (response?.data) {
+    updateAddress(
+      { housing_corporation },
+      {
+        onSuccess: (address) => {
+          // Update the case context for housing corporation
           const updatedCase = {
             ...caseItem,
             address: {
               ...caseItem?.address,
-              housing_corporation: response.data.housing_corporation,
+              housing_corporation: address.housing_corporation,
             },
           };
           updateCache(() => updatedCase);
-        }
-      })
-      .finally(() => {
-        setLoading(false);
-        closeModal();
-      });
+        },
+        onSettled: closeModal,
+      },
+    );
   };
 
   return (
@@ -63,7 +61,7 @@ const ChangeHousingCorporation: React.FC<Props> = ({ housingCorporationId, bagId
         onClose={ closeModal }
         title="Wijzig woningcorporatie"
       >
-        <SpinnerWrapper spinning={ loading }>
+        <SpinnerWrapper spinning={ isPending }>
           <ModalBlock>
             <ChangeHousingCorporationForm
               onSubmit={ onSubmit }

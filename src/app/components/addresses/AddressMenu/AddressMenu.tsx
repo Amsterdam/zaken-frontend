@@ -2,7 +2,8 @@ import BlockMenu from "app/components/shared/BlockMenu/BlockMenu";
 import NavBlock from "app/components/addresses/NavBlock/NavBlock";
 import to from "app/routing/utils/to";
 import routesObject from "app/routing/routes";
-import { useCasesByBagId, usePermitDetails } from "app/state/rest";
+import { useCasesByBagId } from "app/state/rest";
+import { usePermitDetails } from "@/api/hooks";
 import MockWrapper from "app/components/shared/MockWrapper/MockWrapper";
 
 type Props = {
@@ -18,7 +19,7 @@ const routes = [
 const mockedRoutes: string[] = [];
 
 const AddressMenu: React.FC<Props> = ({ bagId }) => {
-  const [permitDetails] = usePermitDetails(bagId);
+  const { data: permitDetails } = usePermitDetails(bagId);
   const [data] = useCasesByBagId(bagId);
   const numCases = data?.results?.length ?? 0;
   const permitsGranted = permitDetails?.permits?.filter(p => p.permit_granted === "GRANTED").length;

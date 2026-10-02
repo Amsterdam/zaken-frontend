@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Spinner, themeSpacing } from "@amsterdam/asc-ui";
-import { useUsers } from "app/state/rest/index";
+import { useUsers } from "@/api/hooks";
 import { createNameAbbreviation } from "app/components/shared/Helpers/helpers";
 import CustomTooltip from "app/components/help/HelpContent/CustomTooltip";
 import CustomIcon from "app/components/shared/CustomIcon/CustomIcon";
@@ -24,7 +24,7 @@ const StyledDiv = styled.div`
 `;
 
 const UserIcon: React.FC<Props> = ({ owner }) => {
-  const [data, { isBusy }] = useUsers();
+  const { data, isLoading: isBusy } = useUsers();
   const users = data?.results;
   const user = users && users.find((user) => user.id === owner);
 

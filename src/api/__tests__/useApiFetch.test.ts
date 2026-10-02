@@ -52,10 +52,7 @@ describe("useApiFetch", () => {
     expect(data).toEqual({ hello: "world" })
     expect(fetchMock).toHaveBeenCalledWith("https://api.test/things/", {
       method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer mock-token",
-      },
+      headers: { Authorization: "Bearer mock-token" },
       body: undefined,
     })
   })
@@ -67,9 +64,18 @@ describe("useApiFetch", () => {
 
     await renderApiFetch()("https://api.test/things/")
 
-    expect(fetchMock.mock.calls[0][1].headers).toEqual({
-      "Content-Type": "application/json",
+    expect(fetchMock.mock.calls[0][1].headers).toEqual({})
+  })
+
+  it("never sends the token to an external API", async () => {
+    const fetchMock = vi.fn().mockResolvedValue(createResponse("null"))
+    vi.stubGlobal("fetch", fetchMock)
+
+    await renderApiFetch()("https://api.pdok.nl/search", {
+      authenticated: false,
     })
+
+    expect(fetchMock.mock.calls[0][1].headers).toEqual({})
   })
 
   it("sends the payload as JSON", async () => {
@@ -84,6 +90,10 @@ describe("useApiFetch", () => {
     expect(data).toBeNull()
     expect(fetchMock.mock.calls[0][1]).toMatchObject({
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer mock-token",
+      },
       body: JSON.stringify({ name: "foo" }),
     })
   })
@@ -124,5 +134,20 @@ describe("useApiFetch", () => {
       renderApiFetch()("https://api.test/things/"),
     ).rejects.toMatchObject({ status: 403 })
     expect(navigateTo).toHaveBeenCalledWith("/auth")
+  })
+  it("does not redirect on a 403 from an external API", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi
+        .fn()
+        .mockResolvedValue(
+          createResponse("", { status: 403, statusText: "Forbidden" }),
+        ),
+    )
+
+    await expect(
+      renderApiFetch()("https://api.pdok.nl/search", { authenticated: false }),
+    ).rejects.toMatchObject({ status: 403 })
+    expect(navigateTo).not.toHaveBeenCalled()
   })
 })

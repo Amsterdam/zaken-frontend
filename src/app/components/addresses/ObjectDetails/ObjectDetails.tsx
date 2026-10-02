@@ -1,4 +1,4 @@
-import { useBenkAgg } from "app/state/rest";
+import { useBenkAgg } from "@/api/hooks";
 import { DefinitionList } from "@amsterdam/wonen-ui";
 import { getAddressFromBenkAggResponse } from "app/components/addresses/utils";
 import useValues from "./hooks/useValues";
@@ -8,7 +8,7 @@ type Props = {
 }
 
 const ObjectDetails: React.FC<Props> = ({ bagId }) => {
-  const [benkAggResponse, { isBusy }] = useBenkAgg(bagId);
+  const { data: benkAggResponse, isLoading: isBusy } = useBenkAgg(bagId);
   const benkAggAddress = getAddressFromBenkAggResponse(benkAggResponse);
   const values = useValues(benkAggAddress);
 

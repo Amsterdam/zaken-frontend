@@ -1,6 +1,5 @@
 import { Button, Checkbox, Spinner } from "@amsterdam/asc-ui";
-import { useSubjects } from "app/state/rest";
-import { useCaseThemes } from "@/api/hooks";
+import { useCaseThemes, useSubjects } from "@/api/hooks";
 import { useState } from "react";
 import { ButtonContainer, StyledLabel, StyledSelect, StyledButton } from "../layout";
 
@@ -14,10 +13,10 @@ type Props = {
 }
 
 const ChangeSubjectForm: React.FC<Props> = ({ isLoading, onSubmit, onCancel, themeId, initialValues }) => {
-  const [subjectsTheme] = useSubjects(themeId);
+  const { data: subjectsTheme } = useSubjects(themeId);
   const { data: caseTheme } = useCaseThemes();
   const [ otherTheme, setOtherTheme ] = useState<number | undefined>(undefined);
-  const [ otherSubjects ] = useSubjects(otherTheme);
+  const { data: otherSubjects } = useSubjects(otherTheme);
   const [selectedSubjects, setSelectedSubjects] = useState<components["schemas"]["Subject"][] | undefined>(initialValues?.subjects);
 
   const isSelected = (subjectId: number) => (

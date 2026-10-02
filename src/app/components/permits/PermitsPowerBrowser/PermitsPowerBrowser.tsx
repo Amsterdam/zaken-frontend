@@ -3,7 +3,7 @@ import { useState } from "react";
 import { PermitsSynopsis } from "@amsterdam/wonen-ui";
 import { Heading, Switch, themeColor, themeSpacing } from "@amsterdam/asc-ui";
 import styled from "styled-components";
-import { usePermitsPowerBrowser } from "app/state/rest";
+import { usePermitsPowerBrowser } from "@/api/hooks";
 
 
 const StyledSpan = styled.span`
@@ -24,7 +24,7 @@ type Props = {
 
 
 const PermitsPowerBrowser: React.FC<Props> = ({ bagId }) => {
-  const [data, { isBusy }] = usePermitsPowerBrowser(bagId);
+  const { data, isLoading: isBusy } = usePermitsPowerBrowser(bagId);
   const [isChecked, setIsChecked] = useState(true);
   const permits: any = data || [];
   return (

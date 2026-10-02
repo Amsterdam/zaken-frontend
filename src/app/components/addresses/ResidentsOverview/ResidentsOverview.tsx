@@ -1,5 +1,5 @@
 import { Residents } from "@amsterdam/wonen-ui";
-import { useResidents } from "app/state/rest";
+import { useResidents } from "@/api/hooks";
 import LoadingDetails from "app/components/shared/Details/LoadingDetails";
 
 type ResidentsResponse = {
@@ -14,7 +14,7 @@ type Props = {
 };
 
 const ResidentsOverview: React.FC<Props> = ({ bagId }) => {
-  const [data, { isBusy }] = useResidents(bagId);
+  const { data, isLoading: isBusy } = useResidents(bagId);
   const dataSource = (data || []) as unknown as ResidentsResponse;
 
   if (isBusy) {

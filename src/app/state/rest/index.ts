@@ -21,22 +21,8 @@ export type Options = {
   isMockExtended?: boolean
 }
 
-export * from "./addresses";
-export * from "./auth";
-export * from "./bagPdok";
-export * from "./benkAgg";
 export * from "./case";
 export * from "./cases";
-export * from "./dataPunt";
-export * from "./fines";
-export * from "./help";
-export * from "./listing";
-export * from "./permissions";
 export * from "./processes";
-export * from "./reasons";
-export * from "./residents";
-export * from "./roles";
 export * from "./schedules";
 export * from "./tasks";
-export * from "./themes";
-export * from "./users";

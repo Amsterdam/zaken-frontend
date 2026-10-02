@@ -1,10 +1,7 @@
 import { useState, useEffect } from "react";
 import scaffold from "./scaffold";
-import {
-  useReasons, useCaseCreate, useProjects,
-  useListing, useSubjects, useCasesByBagId, useCorporations, useBagPdokByBagId,
-} from "app/state/rest";
-import { useCaseThemes } from "@/api/hooks";
+import { useCaseCreate, useCasesByBagId } from "app/state/rest";
+import { useBagPdokByBagId, useCaseThemes, useCorporations, useListing, useProjects, useReasons, useSubjects } from "@/api/hooks";
 import ConfirmScaffoldForm from "app/components/shared/ConfirmScaffoldForm/ConfirmScaffoldForm";
 import useNavigateWithFlashMessage from "app/state/flashMessages/useNavigateWithFlashMessage";
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields";
@@ -58,14 +55,14 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
     setThemeId(caseThemeId);
   }, [tonId, caseThemes, setThemeId]);
 
-  const [reasons] = useReasons(themeId);
-  const [projects] = useProjects(themeId);
-  const [subjects] = useSubjects(themeId);
+  const { data: reasons } = useReasons(themeId);
+  const { data: projects } = useProjects(themeId);
+  const { data: subjects } = useSubjects(themeId);
   const [, { execPost }] = useCaseCreate();
-  const [listing] = useListing(tonId);
+  const { data: listing } = useListing(tonId);
   const [cases] = useCasesByBagId(bagId);
-  const [corporations] = useCorporations();
-  const [bagAddressResponse] = useBagPdokByBagId(bagId);
+  const { data: corporations } = useCorporations();
+  const { data: bagAddressResponse } = useBagPdokByBagId(bagId);
   const bagAddress = getAddressFromBagPdokResponse(bagAddressResponse);
   const { navigateTo } = useNavigation();
 

@@ -8,6 +8,11 @@ export type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE"
 export type ApiFetchOptions = {
   method?: HttpMethod
   data?: unknown
+  /**
+   * Send the user's token. Set to false for external APIs (PDOK, data.amsterdam.nl):
+   * they don't need it, and it must never leave our own API.
+   */
+  authenticated?: boolean
 }
 
 /**
@@ -22,13 +27,16 @@ export const useApiFetch = () => {
   return useCallback(
     async <Schema>(
       url: string,
-      { method = "GET", data }: ApiFetchOptions = {},
+      { method = "GET", data, authenticated = true }: ApiFetchOptions = {},
     ): Promise<Schema> => {
-      const headers: HeadersInit = {
-        "Content-Type": "application/json",
+      const headers: Record<string, string> = {}
+
+      // Like axios did: only with a body, so a plain GET to an external API stays a "simple" CORS request.
+      if (data !== undefined) {
+        headers["Content-Type"] = "application/json"
       }
 
-      if (token) {
+      if (authenticated && token) {
         headers.Authorization = `Bearer ${token}`
       }
 
@@ -48,7 +56,7 @@ export const useApiFetch = () => {
 
       if (!response.ok) {
         // Same as the old useProtectedRequest: the auth page explains the missing permissions.
-        if (response.status === 403) {
+        if (authenticated && response.status === 403) {
           navigateTo("/auth")
         }
 

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, RadioGroup, Label, Radio } from "@amsterdam/asc-ui";
-import { useTags, useCase } from "app/state/rest";
+import { useCase } from "app/state/rest";
+import { useTags } from "@/api/hooks";
 import { ButtonContainer, StyledButton } from "../layout";
 
 
@@ -11,7 +12,7 @@ type Props = {
 
 const ChangeTagForm: React.FC<Props> = ({ case: caseItem, onCancel }) => {
   const [selectedTag, setSelectedTag] = useState<components["schemas"]["Tag"]["id"] | undefined>(undefined);
-  const [data] = useTags(caseItem.theme.id);
+  const { data } = useTags(caseItem.theme.id);
   const [, { execPatch }] = useCase(caseItem.id);
 
   const submit = () => {

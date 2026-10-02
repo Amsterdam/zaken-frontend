@@ -1,4 +1,4 @@
-import { useFine } from "app/state/rest";
+import { useFine } from "@/api/hooks";
 import { Heading, Spinner } from "@amsterdam/asc-ui";
 import { List } from "@amsterdam/wonen-ui";
 import FinesSearchResult from "./FinesSearchResult";
@@ -10,7 +10,7 @@ type Props = {
 
 const FinesSearchResultsList: React.FC<Props> = ({ searchString }) => {
 
-  const [data, { isBusy }] = useFine(searchString.length > 0 ? searchString : undefined);
+  const { data, isLoading: isBusy } = useFine(searchString.length > 0 ? searchString : undefined);
   const items = data?.items.map((fine) => <FinesSearchResult fine={ fine } />) ?? [];
 
   return (

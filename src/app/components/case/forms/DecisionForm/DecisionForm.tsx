@@ -5,7 +5,7 @@ import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm";
 import scaffold from "app/components/case/forms/DecisionForm/scaffold";
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields";
 import DecisionHeader, { type Workflow } from "./components/DecisionHeader";
-import { useDecisionTypes } from "app/state/rest/themes";
+import { useDecisionTypes } from "@/api/hooks";
 import stripThousandSeparator from "./utils/stripThousandSeparator";
 import useNavigation from "app/routing/useNavigation";
 
@@ -38,7 +38,7 @@ const mapData = (data: DecisionData) => {
 const DecisionForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
   const [caseItem] = useCase(id);
   const themeId = caseItem?.theme.id;
-  const [data] = useDecisionTypes(themeId);
+  const { data } = useDecisionTypes(themeId);
   const decisionTypes = data?.results;
   const { navigateTo } = useNavigation();
   const fields = useScaffoldedFields(scaffold, id, navigateTo, decisionTypes);

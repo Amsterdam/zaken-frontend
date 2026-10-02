@@ -1,4 +1,4 @@
-import { useBagPdokByBagId, usePanorama } from "app/state/rest/index";
+import { useBagPdokByBagId, usePanorama } from "@/api/hooks";
 import { getAddressFromBagPdokResponse } from "app/components/addresses/utils";
 
 const extractLatLng = (point?: BAGPdokAddress["centroide_ll"]) => {
@@ -18,18 +18,13 @@ const extractLatLng = (point?: BAGPdokAddress["centroide_ll"]) => {
 };
 
 const usePanoramaByBagId = (bagId: string, width: number | undefined, aspect: number | undefined, radius: number, fov: number | undefined) => {
-  const [data] = useBagPdokByBagId(bagId);
+  const { data } = useBagPdokByBagId(bagId);
   const foundAddress = getAddressFromBagPdokResponse(data);
   const latLng = extractLatLng(foundAddress?.centroide_ll);
 
   return usePanorama(
-    latLng?.lat,
-    latLng?.lng,
-    width,
-    aspect,
-    radius,
-    fov,
-    { lazy: foundAddress === undefined || width === undefined },
+    { lat: latLng?.lat, lon: latLng?.lng, width, aspect, radius, fov },
+    { enabled: foundAddress !== undefined && width !== undefined },
   );
 };
 

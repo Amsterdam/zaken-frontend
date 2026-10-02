@@ -3,12 +3,8 @@ import { FormTitle } from "@amsterdam/asc-ui";
 import scaffold from "./scaffold";
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields";
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm";
-import {
-  useCase,
-  useDebriefingCreate,
-  useViolationTypes,
-} from "app/state/rest";
-import { useCaseThemes } from "@/api/hooks";
+import { useCase, useDebriefingCreate } from "app/state/rest";
+import { useCaseThemes, useViolationTypes } from "@/api/hooks";
 import useNavigation from "app/routing/useNavigation";
 
 type Props = {
@@ -20,7 +16,7 @@ const DebriefCreateForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
   const [caseItem] = useCase(id);
   const themeId = caseItem?.theme.id;
   const themeName = caseItem?.theme.name;
-  const [data] = useViolationTypes(themeId);
+  const { data } = useViolationTypes(themeId);
   const violationTypes = data?.results ?? [];
   const [, { execPost }] = useDebriefingCreate();
   const { navigateTo } = useNavigation();

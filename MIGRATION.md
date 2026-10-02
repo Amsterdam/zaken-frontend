@@ -149,7 +149,7 @@ Per groep: hook herschrijven → alle consumenten aanpassen → oude hook verwij
 >
 > **✅ Akkoord** op dit voorbeeld → pas daarna de overige groepen in de volgorde hierboven.
 
-#### Status pilot: gebouwd, wacht op test en akkoord
+#### Status pilot: ✅ akkoord (okt 2026)
 
 Wat er staat:
 
@@ -179,6 +179,39 @@ Testchecklist voor acceptatie:
 - [ ] Feedback versturen: knop disabled met spinner tijdens versturen, daarna "Bedankt voor je feedback!" en de modal sluit.
 - [ ] Fout: zet in de Network-tab request blocking op `/themes/` of `/feedback/` → zelfde rode melding "Oeps er ging iets mis!" als voorheen, met de URL.
 - [ ] 403: een gebruiker zonder rechten komt op `/auth`, zoals nu.
+
+#### Status uitrol
+
+Principe: **per oude `ApiGroup` volledig migreren** (alle queries én mutaties van een groep tegelijk). Elke query-key begint met de groepsnaam, en een mutatie invalideert `queryKeys.<groep>.all`. Omdat de oude `clearCache()` alleen de eigen groep leegmaakte, blijft het invalidatiegedrag 1-op-1 gelijk en is er tijdens de overgang geen brug tussen oude en nieuwe cache nodig.
+
+| Groep | Status | Hooks |
+| --- | --- | --- |
+| `themes` | ✅ | `useCaseThemes`, `useReasons`, `useProjects`, `useSubjects`, `useTags`, `useTasksReasons`, `useTaskNames`, `useTaskOwners` |
+| `auth` | ✅ | `useUsersMe`, `useIsAuthorized` |
+| `users` | ✅ | `useUsers` |
+| `roles` | ✅ | `useRoles` (nog steeds mockdata, er is geen endpoint) |
+| `fines`, `listings`, `housingCorporations` | ✅ | `useFine`, `useListing`, `useCorporations` |
+| `addresses` | ✅ | `useAddress` + `useUpdateAddress`, `usePermitDetails`, `usePermitsPowerBrowser`, `useMeldingen`, `useRegistrations`, `useResidents`, `useDistricts` |
+| `dataPunt` | ✅ | `useBagPdok`, `useBagPdokByBagId`, `useBenkAgg`, `usePanorama` |
+| `supportContacts`, `permissions` | ✅ verwijderd | `useSupportContacts`, `usePermissions` (`/permissions/`) werden nergens gebruikt |
+| `cases`, `case`, `task` | ⏳ eerst pilot | zie hieronder. De opzoeklijsten `useDecisionTypes`, `useQuickDecisionTypes`, `useScheduleTypes` en `useViolationTypes` zijn al over, met keys onder `cases` |
+
+Gedaan tijdens de uitrol:
+- `useApiFetch` heeft de optie `authenticated: false` voor externe API's (PDOK, BenkAgg, Panorama). De oude code stuurde daar geen token heen, en dat moet zo blijven. `Content-Type` gaat alleen nog mee bij een body, net als bij axios; zo blijft een GET naar een externe API een "simple" CORS-request.
+- `useSuppressErrorHandler` → `meta: { globalErrorToast: false }` (vergunningen, meldingen, registraties, panorama).
+- `UpdateSchedule` haalt planningstypes op met `enabled: isModalOpen` in plaats van een `useEffect` met `execGet` en een `eslint-disable`.
+- `AddressHeader` haalt het adres uit onze eigen API op met `enabled: hasNoDocs` in plaats van een imperatieve `execGet().then(...)`. Bij een fout van die call crashte de oude `.then` op `response.data`; nu verschijnt dan "onbekend adres" in de melding.
+- `ChangeHousingCorporation` gebruikt `useUpdateAddress` (met `isPending` in plaats van een eigen `loading`-state). De zaak-cache wordt nog via de oude `updateCache` bijgewerkt, tot `cases` over is.
+- `isBusy` → `isLoading` (alleen `true` tijdens de eerste keer laden; een uitgeschakelde query is niet "loading").
+
+> **🧪 Volgende pilot: `cases` / `case` / `task`**
+>
+> Deze groepen gebruiken patronen die de eerste pilot niet dekte:
+> - **Cache direct aanpassen:** `updateCache` (`ChangeHousingCorporation`) en `useContextCache` (`SelectTask`, `AssignTask`, `Workflow/columns`, `Tasks`) → `queryClient.setQueryData` / `invalidateQueries`.
+> - **Polling:** `usePollingRefetch` in `Workflow` → `refetchInterval`.
+> - **Paginering, sortering en filters:** `useCases`, `useTasks` → `placeholderData: keepPreviousData`.
+>
+> Voorstel voor het voorbeeld: `useCase` + `useCaseWorkflows` met polling op de zaakdetailpagina, plus de `updateCache` in `ChangeHousingCorporation`. Na akkoord volgen het takenoverzicht (`useContextCache`) en de overige formulieren.
 
 ### 1c. Opruimen
 - [ ] `src/app/state/rest/hooks/*`, `provider/*` en `ApiProvider` verwijderen.

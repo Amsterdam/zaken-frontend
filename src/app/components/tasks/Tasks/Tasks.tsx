@@ -1,19 +1,7 @@
 import { useEffect, useContext } from "react";
 import { Heading } from "@amsterdam/asc-ui";
-import {
-  useRoles,
-  useTasks,
-  useTaskNames,
-  useProjects,
-  useUsersMe,
-  useTasksReasons,
-  useDistricts,
-  useCorporations,
-  useSubjects,
-  useTags,
-  getQueryUrl as getTasksQueryUrl,
-} from "app/state/rest";
-import { useCaseThemes } from "@/api/hooks";
+import { useTasks, getQueryUrl as getTasksQueryUrl } from "app/state/rest";
+import { useCaseThemes, useCorporations, useDistricts, useProjects, useRoles, useSubjects, useTags, useTaskNames, useTasksReasons, useUsersMe } from "@/api/hooks";
 import TableTasks from "app/components/tasks/TableTasks/TableTasks";
 import TasksFilter from "../TasksFilter/TasksFilter";
 import useHasPermission, {
@@ -58,16 +46,16 @@ const Tasks: React.FC = () => {
   } = context;
 
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION]);
-  const [roles] = useRoles();
-  const [me] = useUsersMe();
+  const { data: roles } = useRoles();
+  const { data: me } = useUsersMe();
   const { data: caseThemes } = useCaseThemes();
-  const [reasons] = useTasksReasons(theme);
+  const { data: reasons } = useTasksReasons(theme);
   const themeId = getThemeId(caseThemes?.results, theme);
-  const [projectsTheme] = useProjects(themeId);
-  const [subjectsTheme] = useSubjects(themeId);
-  const [tagsTheme] = useTags(themeId);
-  const [tasksDistricts] = useDistricts();
-  const [corporationData] = useCorporations();
+  const { data: projectsTheme } = useProjects(themeId);
+  const { data: subjectsTheme } = useSubjects(themeId);
+  const { data: tagsTheme } = useTags(themeId);
+  const { data: tasksDistricts } = useDistricts();
+  const { data: corporationData } = useCorporations();
   const mappedTaskOwners = useMappedTaskOwners();
   const commonTaskArgs = {
     districtNames,
@@ -97,7 +85,7 @@ const Tasks: React.FC = () => {
     },
     isEnforcementRequest: true,
   });
-  const [taskNamesData] = useTaskNames(theme ?? null, role ?? null);
+  const { data: taskNamesData } = useTaskNames(theme ?? null, role ?? null);
   const queryUrl = getTasksQueryUrl(
     hasPermission,
     pagination,

@@ -1,9 +1,9 @@
-import { useTaskOwners, useUsersMe } from "app/state/rest";
+import { useTaskOwners, useUsersMe } from "@/api/hooks";
 import { mapUserToOption } from "../utils/mapUserToOption";
 
 export const useMappedTaskOwners = () => {
-  const [taskOwners] = useTaskOwners();
-  const [me] = useUsersMe();
+  const { data: taskOwners } = useTaskOwners();
+  const { data: me } = useUsersMe();
 
   return taskOwners
     ?.map(mapUserToOption)

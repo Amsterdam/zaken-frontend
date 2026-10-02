@@ -3,14 +3,14 @@ import {
   type HolidayRentalReport,
 } from "@amsterdam/wonen-ui";
 import InfoAlert from "app/components/shared/InfoAlert/InfoAlert";
-import { useMeldingen } from "app/state/rest";
+import { useMeldingen } from "@/api/hooks";
 
 type Props = {
   bagId: string;
 };
 
 const RentalReports: React.FC<Props> = ({ bagId }) => {
-  const [data, { isBusy }] = useMeldingen(bagId);
+  const { data, isLoading: isBusy } = useMeldingen(bagId);
 
   return (
     <>

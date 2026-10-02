@@ -1,5 +1,5 @@
 import { Table } from "@amsterdam/wonen-ui";
-import { useBagPdok } from "app/state/rest";
+import { useBagPdok } from "@/api/hooks";
 import useNavigation from "app/routing/useNavigation";
 import columns from "./columns";
 
@@ -14,7 +14,7 @@ const SearchResults: React.FC<Props> = ({ searchString }) => {
   const { navigateTo } = useNavigation();
   const isValid = isValidSearchString(searchString);
   const searchStringBagPdok = isValid ? searchString : undefined;
-  const [bagData, { isBusy: loading }] = useBagPdok(searchStringBagPdok);
+  const { data: bagData, isLoading: loading } = useBagPdok(searchStringBagPdok);
   
   const onClickRow = (data: any) => {
     navigateTo("/adres/:bagId", { bagId: data.adresseerbaarobject_id });

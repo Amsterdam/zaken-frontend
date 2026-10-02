@@ -1,14 +1,14 @@
 
 import { PermitsOverview } from "@amsterdam/wonen-ui";
 import { Heading } from "@amsterdam/asc-ui";
-import { usePermitDetails } from "app/state/rest";
+import { usePermitDetails } from "@/api/hooks";
 
 type Props = {
   bagId: string
 }
 
 const PermitDetails: React.FC<Props> = ({ bagId }) => {
-  const [data, { isBusy }] = usePermitDetails(bagId);
+  const { data, isLoading: isBusy } = usePermitDetails(bagId);
 
   return (
     <>

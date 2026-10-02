@@ -1,6 +1,6 @@
 import { Alert, themeSpacing } from "@amsterdam/asc-ui";
 import styled from "styled-components";
-import { useIsAuthorized } from "app/state/rest";
+import { useIsAuthorized } from "@/api/hooks";
 
 const StyledAlert = styled(Alert)`
   margin: ${ themeSpacing(12) } 0
@@ -8,7 +8,7 @@ const StyledAlert = styled(Alert)`
 
 const NotAuthorizedAlert: React.FC = () => {
 
-  const [data] = useIsAuthorized();
+  const { data } = useIsAuthorized();
   const showUnauthorized = data?.is_authorized === false;
 
   return showUnauthorized ?

@@ -1,6 +1,6 @@
-import { useUsersMe } from "app/state/rest";
+import { useUsersMe } from "@/api/hooks";
 
 export default () => {
-  const response = useUsersMe();
-  return [response[0]?.permissions, response[1]] as const;
+  const { data, isLoading } = useUsersMe();
+  return [data?.permissions, { isBusy: isLoading }] as const;
 };
