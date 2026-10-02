@@ -1,5 +1,5 @@
-import Modal, { ModalBlock } from "app/components/shared/Modal/Modal";
-import ChangeTagForm from "./ChangeTagForm";
+import Modal, { ModalBlock } from "app/components/shared/Modal/Modal"
+import ChangeTagForm from "./ChangeTagForm"
 
 export type Props = {
   isOpen: boolean
@@ -7,16 +7,20 @@ export type Props = {
   case: components["schemas"]["CaseCreate"]
 }
 
-const ChangeTagModal: React.FC<Props> = ({ isOpen, closeModal, case: caseItem }) => (
-  <Modal
-    isOpen={ isOpen }
-    onClose={ closeModal }
-    title="Wijzig tag"
-  >
+const ChangeTagModal: React.FC<Props> = ({
+  isOpen,
+  closeModal,
+  case: caseItem,
+}) => (
+  <Modal isOpen={isOpen} onClose={closeModal} title="Wijzig tag">
     <ModalBlock>
-      <ChangeTagForm onCancel={ closeModal } onSaved={ closeModal } case={ caseItem } />
+      <ChangeTagForm
+        onCancel={closeModal}
+        onSaved={closeModal}
+        case={caseItem}
+      />
     </ModalBlock>
   </Modal>
-);
+)
 
-export default ChangeTagModal;
+export default ChangeTagModal

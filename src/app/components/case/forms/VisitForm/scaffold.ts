@@ -1,13 +1,12 @@
-import { FormPositioner } from "@amsterdam/amsterdam-react-final-form";
-import { Fields } from "app/components/shared/Form/ScaffoldFields";
-import type { NavigateToFunction } from "app/routing/useNavigation";
+import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
+import { Fields } from "app/components/shared/Form/ScaffoldFields"
+import type { NavigateToFunction } from "app/routing/useNavigation"
 
 const scaffold = (
   caseId: components["schemas"]["CaseDetail"]["id"],
   navigateTo: NavigateToFunction,
   authors: components["schemas"]["User"][],
 ) => {
-
   const fields = {
     author1: {
       type: "ComplexSelectField",
@@ -126,7 +125,7 @@ const scaffold = (
         align: "right",
       },
     },
-  };
+  }
 
   return new FormPositioner(fields as Fields)
     .setGrid("mobileS", "1fr 1fr", [
@@ -152,7 +151,7 @@ const scaffold = (
       ["description", "description"],
       ["secondaryButton", "submit"],
     ])
-    .getScaffoldProps();
-};
+    .getScaffoldProps()
+}
 
-export default scaffold;
+export default scaffold

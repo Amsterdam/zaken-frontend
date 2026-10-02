@@ -1,11 +1,11 @@
-import type { CSSProperties } from "react";
-import styles from "./Column.module.css";
+import type { CSSProperties } from "react"
+import styles from "./Column.module.css"
 
 /** Columns for page layout
  * optional props:
  *    - spanSmall: percentage for width of column used on screens with width < 1024
  *    - spanLarge: percentage for width of column used on screens with width > 1024
-* Implementation :
+ * Implementation :
  * <Column spanSmall={100} spanLarge={40}>
  */
 
@@ -21,13 +21,13 @@ const Column: React.FC<TypeProps> = ({ children, spanSmall, spanLarge }) => {
     "--span-small-grow": spanSmall ? 0 : undefined,
     "--span-large": spanLarge ? `${spanLarge}%` : undefined,
     "--span-large-grow": spanLarge ? 0 : undefined,
-  } as CSSProperties;
+  } as CSSProperties
 
   return (
     <div className={styles.column} style={style}>
-      { children }
+      {children}
     </div>
-  );
-};
+  )
+}
 
-export default Column;
+export default Column

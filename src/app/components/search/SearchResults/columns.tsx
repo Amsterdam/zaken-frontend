@@ -1,4 +1,4 @@
-import LinkButton from "app/components/shared/LinkButton/LinkButton";
+import LinkButton from "app/components/shared/LinkButton/LinkButton"
 
 const columns = [
   {
@@ -9,8 +9,10 @@ const columns = [
   {
     dataIndex: "adresseerbaarobject_id",
     minWidth: 140,
-    render: (bagId: any) => <LinkButton text="Bekijk" path={`/adres/${bagId}`}/>,
+    render: (bagId: any) => (
+      <LinkButton text="Bekijk" path={`/adres/${bagId}`} />
+    ),
   },
-];
+]
 
-export default columns;
+export default columns

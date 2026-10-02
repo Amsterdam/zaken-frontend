@@ -1,12 +1,12 @@
-import { List } from "@amsterdam/wonen-ui";
-import ChangeableDueDate from "app/components/case/tasks/ChangeDueDate/ChangebleDueDate";
-import TaskButton from "app/components/case/tasks/TaskButton/TaskButton";
-import taskActionMap from "./utils/taskActionMap";
-import CustomIcon from "app/components/shared/CustomIcon/CustomIcon";
-import LinkButton from "app/components/shared/LinkButton/LinkButton";
-import UpdateSchedule from "./components/UpdateSchedule/UpdateSchedule";
-import AssignTask from "app/components/tasks/TableTasks/AssignTask/AssignTask";
-import type { CompleteTaskPayload } from "@/api/hooks";
+import { List } from "@amsterdam/wonen-ui"
+import ChangeableDueDate from "app/components/case/tasks/ChangeDueDate/ChangebleDueDate"
+import TaskButton from "app/components/case/tasks/TaskButton/TaskButton"
+import taskActionMap from "./utils/taskActionMap"
+import CustomIcon from "app/components/shared/CustomIcon/CustomIcon"
+import LinkButton from "app/components/shared/LinkButton/LinkButton"
+import UpdateSchedule from "./components/UpdateSchedule/UpdateSchedule"
+import AssignTask from "app/components/tasks/TableTasks/AssignTask/AssignTask"
+import type { CompleteTaskPayload } from "@/api/hooks"
 
 export function getColumns(
   completeTask: (payload: CompleteTaskPayload) => Promise<unknown>,
@@ -15,7 +15,7 @@ export function getColumns(
 ) {
   const hasCreateVisitTask = tasks?.some(
     (task) => task.task_name === "task_create_visit",
-  );
+  )
 
   const updateScheduleColumn = {
     header: "Urgentie",
@@ -26,7 +26,7 @@ export function getColumns(
       ) : (
         <span style={{ display: "inline-block", minWidth: 113 }}> - </span>
       ),
-  };
+  }
 
   return [
     {
@@ -78,16 +78,16 @@ export function getColumns(
           user_has_permission,
           name,
           form,
-        } = record;
+        } = record
 
-        const action = taskActionMap[task_name];
+        const action = taskActionMap[task_name]
 
         const onSubmitTaskComplete = (
           variables: Tasks.WorkflowTask["form_variables"] | null = {},
-        ) => completeTask({ case: id, case_user_task_id, variables });
+        ) => completeTask({ case: id, case_user_task_id, variables })
 
         const disabled =
-          task_name === "task_create_visit" || !user_has_permission;
+          task_name === "task_create_visit" || !user_has_permission
 
         return action !== undefined ? (
           <LinkButton
@@ -103,10 +103,10 @@ export function getColumns(
             form={form}
             disabled={disabled}
           />
-        );
+        )
       },
     },
-  ];
+  ]
 }
 
-export default getColumns;
+export default getColumns

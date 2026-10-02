@@ -4,11 +4,11 @@
 // `suffix_letter` = `suffix`
 // `suffix` = `etage`
 type Props = {
-  streetName: string;
-  streetNumber: string | number;
-  suffix?: string;
-  etage?: string | number;
-};
+  streetName: string
+  streetNumber: string | number
+  suffix?: string
+  etage?: string | number
+}
 
 const AddressDisplay: React.FC<Props> = ({
   streetName,
@@ -22,6 +22,6 @@ const AddressDisplay: React.FC<Props> = ({
       {`${streetNumber}${suffix ? suffix : ""}${etage ? `-${etage}` : ""}`.trim()}
     </span>
   </>
-);
+)
 
-export default AddressDisplay;
+export default AddressDisplay

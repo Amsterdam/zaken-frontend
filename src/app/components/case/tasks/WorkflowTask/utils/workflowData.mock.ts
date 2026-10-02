@@ -57,4 +57,4 @@ export default [
     options: [],
     tooltip: null,
   },
-];
+]

@@ -4,7 +4,9 @@
   color: #000000;
   border: none;
   margin-right: 28px;
-  transition: box-shadow 0.1s ease-in-out, color 0.1s ease-in-out;
+  transition:
+    box-shadow 0.1s ease-in-out,
+    color 0.1s ease-in-out;
   font-size: 18px;
   font-weight: 700;
   cursor: pointer;

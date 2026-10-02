@@ -1,43 +1,48 @@
-import dayjs from "dayjs";
+import dayjs from "dayjs"
 
-import { useModal } from "app/components/shared/Modal/hooks/useModal";
-import { useSchedulesByCaseId, useScheduleTypes, useUpdateSchedule } from "@/api/hooks";
-import useHasPermission, {
-  CAN_PERFORM_TASK,
-} from "@/hooks/useHasPermission";
-import CustomIcon from "app/components/shared/CustomIcon/CustomIcon";
-import UpdateScheduleModal from "./UpdateScheduleModal";
-import type { Schedule } from "./types";
+import { useModal } from "app/components/shared/Modal/hooks/useModal"
+import {
+  useSchedulesByCaseId,
+  useScheduleTypes,
+  useUpdateSchedule,
+} from "@/api/hooks"
+import useHasPermission, { CAN_PERFORM_TASK } from "@/hooks/useHasPermission"
+import CustomIcon from "app/components/shared/CustomIcon/CustomIcon"
+import UpdateScheduleModal from "./UpdateScheduleModal"
+import type { Schedule } from "./types"
 
-import styles from "./UpdateSchedule.module.css";
+import styles from "./UpdateSchedule.module.css"
 
 type Props = {
   caseId: components["schemas"]["CaseDetail"]["id"]
   themeId?: number
-};
+}
 
 const getLatestSchedule = (schedules?: Schedule[]): Schedule | null => {
-  if (!schedules || schedules.length === 0) return null;
+  if (!schedules || schedules.length === 0) return null
 
   return schedules.reduce<Schedule | null>((latest, current) => {
-    if (!latest) return current;
+    if (!latest) return current
 
     return new Date(current.date_modified) > new Date(latest.date_modified)
       ? current
-      : latest;
-  }, null);
-};
+      : latest
+  }, null)
+}
 
 const UpdateSchedule: React.FC<Props> = ({ caseId, themeId }) => {
-  const { isModalOpen, openModal, closeModal } = useModal();
-  const { data: schedules } = useSchedulesByCaseId(caseId);
-  const latestSchedule = getLatestSchedule(schedules as unknown as Schedule[]);
-  const { mutate: updateSchedule } = useUpdateSchedule(latestSchedule?.id, caseId);
+  const { isModalOpen, openModal, closeModal } = useModal()
+  const { data: schedules } = useSchedulesByCaseId(caseId)
+  const latestSchedule = getLatestSchedule(schedules as unknown as Schedule[])
+  const { mutate: updateSchedule } = useUpdateSchedule(
+    latestSchedule?.id,
+    caseId,
+  )
   // Only needed (and fetched) once the modal is opened.
   const { data: scheduleTypes } = useScheduleTypes(themeId, {
     enabled: isModalOpen,
-  });
-  const [hasPermission] = useHasPermission([CAN_PERFORM_TASK]);
+  })
+  const [hasPermission] = useHasPermission([CAN_PERFORM_TASK])
 
   const onSubmit = (data: any) => {
     // The options (with their names), so the hook can update the cached schedule and timeline.
@@ -48,11 +53,11 @@ const UpdateSchedule: React.FC<Props> = ({ caseId, themeId }) => {
       visit_from_datetime: data.visit_from_datetime
         ? dayjs(data.visit_from_datetime).format()
         : null,
-    };
-    updateSchedule(update, { onSettled: closeModal });
-  };
+    }
+    updateSchedule(update, { onSettled: closeModal })
+  }
 
-  const priorityName = latestSchedule?.priority?.name ?? "-";
+  const priorityName = latestSchedule?.priority?.name ?? "-"
 
   return hasPermission ? (
     <>
@@ -77,7 +82,7 @@ const UpdateSchedule: React.FC<Props> = ({ caseId, themeId }) => {
     </>
   ) : (
     <span>{priorityName}</span>
-  );
-};
+  )
+}
 
-export default UpdateSchedule;
+export default UpdateSchedule

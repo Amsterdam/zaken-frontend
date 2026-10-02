@@ -1,4 +1,4 @@
-import { Label, Checkbox } from "@amsterdam/asc-ui";
+import { Label, Checkbox } from "@amsterdam/asc-ui"
 
 type Props = {
   checked: boolean
@@ -16,6 +16,6 @@ export const NoCorporationFilter: React.FC<Props> = ({
       onChange={(e) => setChecked((e.target as HTMLInputElement).checked)}
     />
   </Label>
-);
+)
 
-export default NoCorporationFilter;
+export default NoCorporationFilter

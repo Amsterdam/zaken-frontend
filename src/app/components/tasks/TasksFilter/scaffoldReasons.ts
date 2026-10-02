@@ -1,9 +1,13 @@
-import { FormPositioner } from "@amsterdam/amsterdam-react-final-form";
-import { Fields } from "app/components/shared/Form/ScaffoldFields";
-import { BaseSyntheticEvent } from "react";
+import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
+import { Fields } from "app/components/shared/Form/ScaffoldFields"
+import { BaseSyntheticEvent } from "react"
 
-export default (value: string, onChange: (value: string) => void, reasons: components["schemas"]["CaseReason"][] = []) => {
-  const reasonsOptions = Object.fromEntries(reasons.map(name => [name, name]));
+export default (
+  value: string,
+  onChange: (value: string) => void,
+  reasons: components["schemas"]["CaseReason"][] = [],
+) => {
+  const reasonsOptions = Object.fromEntries(reasons.map((name) => [name, name]))
   const fields = {
     taskName: {
       type: "SelectField",
@@ -14,13 +18,13 @@ export default (value: string, onChange: (value: string) => void, reasons: compo
           "": "Alle",
           ...reasonsOptions,
         },
-        onChange: (value: BaseSyntheticEvent) => onChange(value.target.value) ,
+        onChange: (value: BaseSyntheticEvent) => onChange(value.target.value),
         value,
       },
     },
-  };
+  }
 
   return new FormPositioner(fields as Fields)
     .setVertical("mobileS")
-    .getScaffoldProps();
-};
+    .getScaffoldProps()
+}

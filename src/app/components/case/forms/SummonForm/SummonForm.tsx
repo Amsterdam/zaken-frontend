@@ -1,12 +1,11 @@
+import { FormTitle } from "@amsterdam/asc-ui"
 
-import { FormTitle } from "@amsterdam/asc-ui";
-
-import { useCreateSummon, useSummonTypesByTaskId } from "@/api/hooks";
-import { toPostMethod } from "@/api/utils/toPostMethod";
-import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm";
-import scaffold from "app/components/case/forms/SummonForm/scaffold";
-import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields";
-import useNavigation from "app/routing/useNavigation";
+import { useCreateSummon, useSummonTypesByTaskId } from "@/api/hooks"
+import { toPostMethod } from "@/api/utils/toPostMethod"
+import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
+import scaffold from "app/components/case/forms/SummonForm/scaffold"
+import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
+import useNavigation from "app/routing/useNavigation"
 
 type Props = {
   id: components["schemas"]["CaseDetail"]["id"]
@@ -24,54 +23,57 @@ type SummonData = Omit<components["schemas"]["Summon"], "type"> & {
 }
 
 const mapData = (data: SummonData) => {
-  const persons: any[] = [];
+  const persons: any[] = []
   if (data.entity_type === "legal") {
     if (data.legal_entity_type === "board") {
       persons.push({
         person_role: (data.legal_entity_role as any).key,
         function: "Bestuur",
         entity_name: data.legal_entity_name,
-      });
+      })
     } else {
-      const legalEntityPerson = data.persons_legal_entity[0];
+      const legalEntityPerson = data.persons_legal_entity[0]
       if (legalEntityPerson) {
         persons.push({
           ...legalEntityPerson,
           person_role: (data.legal_entity_role as any).key,
           entity_name: data.legal_entity_name,
-        });
+        })
       }
     }
   } else {
     data.persons?.forEach((person: components["schemas"]["SummonedPerson"]) => {
-      const p = person;
-      p.person_role = (person.person_role as any).key;
-      p.entity_name = data.legal_entity_name;
-      persons.push(p);
-    });
+      const p = person
+      p.person_role = (person.person_role as any).key
+      p.entity_name = data.legal_entity_name
+      persons.push(p)
+    })
   }
-  return ({ ...data, type: data.type.id, persons });
-};
+  return { ...data, type: data.type.id, persons }
+}
 
 const SummonForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
-  const { data } = useSummonTypesByTaskId(caseUserTaskId);
-  const summonTypes = data?.results;
-  const { navigateTo } = useNavigation();
-  const fields = useScaffoldedFields(scaffold, id, navigateTo, summonTypes);
-  const createSummon = toPostMethod(useCreateSummon(id).mutateAsync);
+  const { data } = useSummonTypesByTaskId(caseUserTaskId)
+  const summonTypes = data?.results
+  const { navigateTo } = useNavigation()
+  const fields = useScaffoldedFields(scaffold, id, navigateTo, summonTypes)
+  const createSummon = toPostMethod(useCreateSummon(id).mutateAsync)
 
   return (
     <>
-      <FormTitle>Meld welke aanschrijving is opgesteld en voor wie. Doe dit nadat de brief daadwerkelijk verstuurd is.</FormTitle>
+      <FormTitle>
+        Meld welke aanschrijving is opgesteld en voor wie. Doe dit nadat de
+        brief daadwerkelijk verstuurd is.
+      </FormTitle>
       <WorkflowForm
-        id={ id }
-        fields={ fields }
-        mapData={ mapData }
-        postMethod={ createSummon }
-        caseUserTaskId={ caseUserTaskId }
+        id={id}
+        fields={fields}
+        mapData={mapData}
+        postMethod={createSummon}
+        caseUserTaskId={caseUserTaskId}
       />
     </>
-  );
-};
+  )
+}
 
-export default SummonForm;
+export default SummonForm

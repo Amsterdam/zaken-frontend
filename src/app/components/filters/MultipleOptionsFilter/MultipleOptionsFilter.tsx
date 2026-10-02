@@ -1,8 +1,8 @@
-import { useMemo } from "react";
-import { Checkbox, Label } from "@amsterdam/asc-ui";
-import { FilterWrapper, StyledLabel } from "../FilterStyle";
+import { useMemo } from "react"
+import { Checkbox, Label } from "@amsterdam/asc-ui"
+import { FilterWrapper, StyledLabel } from "../FilterStyle"
 
-type Option = { id: number, name: string }
+type Option = { id: number; name: string }
 
 type Props = {
   label: string
@@ -12,46 +12,50 @@ type Props = {
   byId?: boolean
 }
 
-const MultipleOptionsFilter: React.FC<Props> = ({ label, options, selectedOptions, setSelectedOptions, byId = false }) => {
-
-  const sortedOptions = useMemo(() => (
-    options?.sort((a, b) => a.name.localeCompare(b.name))
-  ), [options]);
+const MultipleOptionsFilter: React.FC<Props> = ({
+  label,
+  options,
+  selectedOptions,
+  setSelectedOptions,
+  byId = false,
+}) => {
+  const sortedOptions = useMemo(
+    () => options?.sort((a, b) => a.name.localeCompare(b.name)),
+    [options],
+  )
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { checked, value } = e.target;
-    let newSelectedOptions = [...selectedOptions];
+    const { checked, value } = e.target
+    let newSelectedOptions = [...selectedOptions]
     if (checked) {
-      newSelectedOptions.push(value);
+      newSelectedOptions.push(value)
     } else {
-      newSelectedOptions = selectedOptions.filter((selectedOption) => selectedOption !== value);
+      newSelectedOptions = selectedOptions.filter(
+        (selectedOption) => selectedOption !== value,
+      )
     }
-    setSelectedOptions(newSelectedOptions);
-  };
+    setSelectedOptions(newSelectedOptions)
+  }
 
   return (
     <FilterWrapper>
-      <StyledLabel label={ label } />
-      { sortedOptions?.map((option) => {
-        const value = byId ? option.id.toString() : option.name;
+      <StyledLabel label={label} />
+      {sortedOptions?.map((option) => {
+        const value = byId ? option.id.toString() : option.name
         return (
-          <Label
-            htmlFor={ option.name }
-            label={ option.name }
-            key={ option.name }
-          >
+          <Label htmlFor={option.name} label={option.name} key={option.name}>
             <Checkbox
-              id={ option.name }
-              data-testid={ option.name }
-              defaultValue={ value }
-              onChange={ onChange }
-              checked={ selectedOptions.includes(value) }
+              id={option.name}
+              data-testid={option.name}
+              defaultValue={value}
+              onChange={onChange}
+              checked={selectedOptions.includes(value)}
             />
           </Label>
-        ); })
-      }
+        )
+      })}
     </FilterWrapper>
-  );
-};
+  )
+}
 
-export default MultipleOptionsFilter;
+export default MultipleOptionsFilter

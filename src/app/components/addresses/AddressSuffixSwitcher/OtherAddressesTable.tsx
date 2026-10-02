@@ -1,7 +1,7 @@
-import useOtherAddressesByBagId from "@/hooks/useOtherAddressesByBagId";
-import { Table } from "@amsterdam/wonen-ui";
-import useNavigation from "app/routing/useNavigation";
-import columns from "./columns";
+import useOtherAddressesByBagId from "@/hooks/useOtherAddressesByBagId"
+import { Table } from "@amsterdam/wonen-ui"
+import useNavigation from "app/routing/useNavigation"
+import columns from "./columns"
 
 type Props = {
   bagId: components["schemas"]["Address"]["bag_id"]
@@ -9,26 +9,26 @@ type Props = {
 }
 
 const OtherAddressesTable: React.FC<Props> = ({ bagId, onAddressChosen }) => {
-  const [data, { isBusy }] = useOtherAddressesByBagId(bagId);
-  const { navigateTo } = useNavigation();
+  const [data, { isBusy }] = useOtherAddressesByBagId(bagId)
+  const { navigateTo } = useNavigation()
 
   const onClickRow = (data: any) => {
-    onAddressChosen();
-    navigateTo("/adres/:bagId", { bagId: data.adresseerbaarobject_id });
-  };
+    onAddressChosen()
+    navigateTo("/adres/:bagId", { bagId: data.adresseerbaarobject_id })
+  }
 
   return (
     <Table
       lastColumnFixed
-      columns={ columns }
-      loading={ isBusy }
-      numLoadingRows={ 3 }
-      data={ data || [] }
-      onClickRow={ onClickRow }
+      columns={columns}
+      loading={isBusy}
+      numLoadingRows={3}
+      data={data || []}
+      onClickRow={onClickRow}
       emptyPlaceholder="Er zijn geen andere adressen gevonden"
-      pagination={ false }
+      pagination={false}
     />
-  );
-};
+  )
+}
 
-export default OtherAddressesTable;
+export default OtherAddressesTable

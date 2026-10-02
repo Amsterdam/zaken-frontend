@@ -1,56 +1,62 @@
-import { useState } from "react";
-import { Button, RadioGroup, Label, Radio } from "@amsterdam/asc-ui";
-import { ButtonContainer, StyledButton } from "../layout";
+import { useState } from "react"
+import { Button, RadioGroup, Label, Radio } from "@amsterdam/asc-ui"
+import { ButtonContainer, StyledButton } from "../layout"
 
 type Props = {
-  onSubmit: (id?: components["schemas"]["HousingCorporation"]["id"] | null) => void
+  onSubmit: (
+    id?: components["schemas"]["HousingCorporation"]["id"] | null,
+  ) => void
   onCancel: () => void
   housingCorporations: components["schemas"]["HousingCorporation"][]
-  housingCorporationId?: components["schemas"]["HousingCorporation"]["id"] | null
+  housingCorporationId?:
+    components["schemas"]["HousingCorporation"]["id"] | null
 }
 
 const ChangeHousingCorporationForm: React.FC<Props> = ({
-  onSubmit, onCancel, housingCorporations, housingCorporationId,
+  onSubmit,
+  onCancel,
+  housingCorporations,
+  housingCorporationId,
 }) => {
-  const [selectedCorpo, setSelectedCorpo] = useState<typeof housingCorporationId | undefined | null>(null);
+  const [selectedCorpo, setSelectedCorpo] = useState<
+    typeof housingCorporationId | undefined | null
+  >(null)
 
   const saveHousingCorporation = () => {
     if (selectedCorpo !== housingCorporationId) {
-      onSubmit(selectedCorpo);
+      onSubmit(selectedCorpo)
     } else {
-      onCancel();
+      onCancel()
     }
-  };
+  }
 
   return (
     <>
       <RadioGroup name="group">
-        {
-          housingCorporations.map(housingCorporation => (
-            <Label
-              htmlFor={ `housingCorporation-${ housingCorporation.id }` }
-              label={ housingCorporation.name }
-              key={ `housingCorporation-${ housingCorporation.id }` }
-            >
-              <Radio
-                id={ `housingCorporation-${ housingCorporation.id }` }
-                checked={ housingCorporation.id === housingCorporationId }
-                onChange={() => setSelectedCorpo(housingCorporation.id)}
-              />
-            </Label>
-          ))
-        }
+        {housingCorporations.map((housingCorporation) => (
+          <Label
+            htmlFor={`housingCorporation-${housingCorporation.id}`}
+            label={housingCorporation.name}
+            key={`housingCorporation-${housingCorporation.id}`}
+          >
+            <Radio
+              id={`housingCorporation-${housingCorporation.id}`}
+              checked={housingCorporation.id === housingCorporationId}
+              onChange={() => setSelectedCorpo(housingCorporation.id)}
+            />
+          </Label>
+        ))}
       </RadioGroup>
       <ButtonContainer>
         <StyledButton onClick={onCancel} variant="primaryInverted">
           Annuleer
         </StyledButton>
-        <Button onClick={ saveHousingCorporation } variant="primary">
+        <Button onClick={saveHousingCorporation} variant="primary">
           Opslaan
         </Button>
       </ButtonContainer>
     </>
-  );
-};
+  )
+}
 
-export default ChangeHousingCorporationForm;
+export default ChangeHousingCorporationForm

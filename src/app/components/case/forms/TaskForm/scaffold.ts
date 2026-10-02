@@ -1,6 +1,6 @@
-import { FormPositioner } from "@amsterdam/amsterdam-react-final-form";
-import { Fields } from "app/components/shared/Form/ScaffoldFields";
-import type { NavigateToFunction } from "app/routing/useNavigation";
+import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
+import { Fields } from "app/components/shared/Form/ScaffoldFields"
+import type { NavigateToFunction } from "app/routing/useNavigation"
 
 export default (
   id: components["schemas"]["CaseDetail"]["id"],
@@ -36,12 +36,12 @@ export default (
         align: "right",
       },
     },
-  };
+  }
 
   return new FormPositioner(fields as Fields)
     .setGrid("mobileS", "1fr 1fr", [
       ["workflowProcess", "workflowProcess"],
       ["cancel", "submit"],
     ])
-    .getScaffoldProps();
-};
+    .getScaffoldProps()
+}

@@ -1,13 +1,13 @@
-import { env } from "app/config/env";
+import { env } from "app/config/env"
 
 export const oidcConfig = {
   authority:
     "https://login.microsoftonline.com/72fca1b1-2c2e-4376-a445-294d80196804",
-  client_id: `${ env.VITE_OIDC_CLIENT_ID }`,
-  redirect_uri: `${ env.VITE_OIDC_REDIRECT_URL }`,
+  client_id: `${env.VITE_OIDC_CLIENT_ID}`,
+  redirect_uri: `${env.VITE_OIDC_REDIRECT_URL}`,
   response_type: "code",
-  scope: `openid email api://${ env.VITE_OIDC_CLIENT_ID }/user_impersonation`,
-  post_logout_redirect_uri: `${ env.VITE_OIDC_REDIRECT_URL }`,
+  scope: `openid email api://${env.VITE_OIDC_CLIENT_ID}/user_impersonation`,
+  post_logout_redirect_uri: `${env.VITE_OIDC_REDIRECT_URL}`,
   metadata: {
     issuer:
       "https://login.microsoftonline.com/72fca1b1-2c2e-4376-a445-294d80196804/v2.0",
@@ -18,4 +18,4 @@ export const oidcConfig = {
     end_session_endpoint:
       "https://login.microsoftonline.com/common/oauth2/v2.0/logout",
   },
-};
+}

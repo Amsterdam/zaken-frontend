@@ -1,26 +1,35 @@
-import { useContext } from "react";
-import { Heading } from "@amsterdam/asc-ui";
-import TableCases from "app/components/cases/TableCases/TableCases";
-import CasesFilter from "app/components/cases/CasesFilter/CasesFilter";
-import { useCases, useCaseThemes, useCorporations, useDistricts, useProjects, useSubjects, useTags, useTasksReasons } from "@/api/hooks";
+import { useContext } from "react"
+import { Heading } from "@amsterdam/asc-ui"
+import TableCases from "app/components/cases/TableCases/TableCases"
+import CasesFilter from "app/components/cases/CasesFilter/CasesFilter"
+import {
+  useCases,
+  useCaseThemes,
+  useCorporations,
+  useDistricts,
+  useProjects,
+  useSubjects,
+  useTags,
+  useTasksReasons,
+} from "@/api/hooks"
 import useHasPermission, {
   SENSITIVE_CASE_PERMISSION,
-} from "@/hooks/useHasPermission";
-import { ContextValues } from "app/state/context/ValueProvider";
-import { RowWithColumn } from "app/components/layouts/Grid";
-import getThemeId from "app/components/tasks/utils/getThemeId";
-import SearchBarCases from "app/components/cases/SearchBarCases/SearchBarCases";
-import styles from "./Cases.module.css";
+} from "@/hooks/useHasPermission"
+import { ContextValues } from "app/state/context/ValueProvider"
+import { RowWithColumn } from "app/components/layouts/Grid"
+import getThemeId from "app/components/tasks/utils/getThemeId"
+import SearchBarCases from "app/components/cases/SearchBarCases/SearchBarCases"
+import styles from "./Cases.module.css"
 
 const EMPTY_TEXT_NO_PERMISSION =
-  "Helaas, u bent niet geautoriseerd om deze zaken te bekijken.";
-const EMPTY_TEXT = "Er zijn momenteel geen open zaken voor de gekozen filters.";
-const ONDERMIJNING = "Ondermijning";
+  "Helaas, u bent niet geautoriseerd om deze zaken te bekijken."
+const EMPTY_TEXT = "Er zijn momenteel geen open zaken voor de gekozen filters."
+const ONDERMIJNING = "Ondermijning"
 
 const getThemeIdByName = (
   themes: components["schemas"]["CaseTheme"][],
   themeName?: string,
-) => themes.find((e) => e.name === themeName)?.id;
+) => themes.find((e) => e.name === themeName)?.id
 
 const Cases: React.FC = () => {
   const {
@@ -38,18 +47,22 @@ const Cases: React.FC = () => {
     tags,
     theme,
     updateContextCases,
-  } = useContext(ContextValues)["cases"];
-  const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION]);
-  const { data: caseThemes } = useCaseThemes();
-  const { data: reasons } = useTasksReasons(theme);
-  const themeId = getThemeId(caseThemes?.results, theme);
-  const { data: projectsTheme } = useProjects(themeId);
-  const { data: subjectsTheme } = useSubjects(themeId);
-  const { data: tagsTheme } = useTags(themeId);
-  const { data: caseDistricts } = useDistricts();
-  const { data: corporationData } = useCorporations();
+  } = useContext(ContextValues)["cases"]
+  const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
+  const { data: caseThemes } = useCaseThemes()
+  const { data: reasons } = useTasksReasons(theme)
+  const themeId = getThemeId(caseThemes?.results, theme)
+  const { data: projectsTheme } = useProjects(themeId)
+  const { data: subjectsTheme } = useSubjects(themeId)
+  const { data: tagsTheme } = useTags(themeId)
+  const { data: caseDistricts } = useDistricts()
+  const { data: corporationData } = useCorporations()
   // While the next page/filter loads, the previous results stay visible (isPlaceholderData).
-  const { data: dataSource, isLoading, isPlaceholderData } = useCases({
+  const {
+    data: dataSource,
+    isLoading,
+    isPlaceholderData,
+  } = useCases({
     sensitive: hasPermission,
     pagination,
     sorting,
@@ -64,22 +77,22 @@ const Cases: React.FC = () => {
     districtNames,
     housingCorporations,
     housingCorporationIsNull,
-  });
+  })
 
   const onChangeTable = (
     pagination: TABLE.Schemas.Pagination,
     sorting: TABLE.Schemas.Sorting,
   ) => {
-    updateContextCases({ pagination, sorting });
-  };
+    updateContextCases({ pagination, sorting })
+  }
 
-  const themes = caseThemes?.results || [];
-  const ondermijningId = getThemeIdByName(themes, ONDERMIJNING);
-  const districts = caseDistricts?.results || [];
+  const themes = caseThemes?.results || []
+  const ondermijningId = getThemeIdByName(themes, ONDERMIJNING)
+  const districts = caseDistricts?.results || []
   const emptyPlaceholder =
     hasPermission === false && theme === ondermijningId?.toString()
       ? EMPTY_TEXT_NO_PERMISSION
-      : EMPTY_TEXT;
+      : EMPTY_TEXT
 
   return (
     <>
@@ -126,7 +139,7 @@ const Cases: React.FC = () => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Cases;
+export default Cases

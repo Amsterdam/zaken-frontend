@@ -1,13 +1,23 @@
-import { FormPositioner } from "@amsterdam/amsterdam-react-final-form";
-import { Fields } from "app/components/shared/Form/ScaffoldFields";
-import InfoButton from "app/components/shared/InfoHeading/InfoButton";
-import { personRoleMap } from "@amsterdam/wonen-ui/helpers/dictionaries";
-import type { NavigateToFunction } from "app/routing/useNavigation";
+import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
+import { Fields } from "app/components/shared/Form/ScaffoldFields"
+import InfoButton from "app/components/shared/InfoHeading/InfoButton"
+import { personRoleMap } from "@amsterdam/wonen-ui/helpers/dictionaries"
+import type { NavigateToFunction } from "app/routing/useNavigation"
 
-export default (caseId: components["schemas"]["CaseDetail"]["id"], navigateTo: NavigateToFunction, summonTypes?: components["schemas"]["SummonType"][]) => {
-  const roleEntries = Object.entries(personRoleMap);
-  const personRoles = roleEntries.filter(([key]) => key !== "PERSON_ROLE_PLATFORM").map(([key, label]) => ({ key, label }));
-  const legalEntityRoles = roleEntries.filter(([key]) => !["PERSON_ROLE_HEIR", "PERSON_ROLE_RESIDENT"].includes(key)).map(([key, label]) => ({ key, label }));
+export default (
+  caseId: components["schemas"]["CaseDetail"]["id"],
+  navigateTo: NavigateToFunction,
+  summonTypes?: components["schemas"]["SummonType"][],
+) => {
+  const roleEntries = Object.entries(personRoleMap)
+  const personRoles = roleEntries
+    .filter(([key]) => key !== "PERSON_ROLE_PLATFORM")
+    .map(([key, label]) => ({ key, label }))
+  const legalEntityRoles = roleEntries
+    .filter(
+      ([key]) => !["PERSON_ROLE_HEIR", "PERSON_ROLE_RESIDENT"].includes(key),
+    )
+    .map(([key, label]) => ({ key, label }))
   const fields = {
     type: {
       type: "ComplexSelectField",
@@ -15,7 +25,12 @@ export default (caseId: components["schemas"]["CaseDetail"]["id"], navigateTo: N
         isRequired: true,
         withEmptyOption: true,
         label: "Welke aanschrijving is opgesteld?",
-        extraLabel: <InfoButton infoTitle="Meerdere aanschrijvingen?" infoText="Verwerk eerst deze aanschrijving. Selecteer vervolgens bij ‘Taak opvoeren' op de zaakdetail pagina 'Opstellen concept aanschrijving’. Vul vervolgens het formulier in en rond af met de knop resultaat verwerken. Herhaal deze actie per opgestelde aanschrijving."></InfoButton>,
+        extraLabel: (
+          <InfoButton
+            infoTitle="Meerdere aanschrijvingen?"
+            infoText="Verwerk eerst deze aanschrijving. Selecteer vervolgens bij ‘Taak opvoeren' op de zaakdetail pagina 'Opstellen concept aanschrijving’. Vul vervolgens het formulier in en rond af met de knop resultaat verwerken. Herhaal deze actie per opgestelde aanschrijving."
+          ></InfoButton>
+        ),
         name: "type",
         optionLabelField: "name",
         options: summonTypes,
@@ -24,7 +39,9 @@ export default (caseId: components["schemas"]["CaseDetail"]["id"], navigateTo: N
     "type_result.number_of_accommodations": {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { type: components["schemas"]["SummonType"] } }) => formValues?.values?.type?.workflow_option === "sluiting",
+        shouldShow: (formValues: {
+          values?: { type: components["schemas"]["SummonType"] }
+        }) => formValues?.values?.type?.workflow_option === "sluiting",
         field: {
           type: "NumberField",
           props: {
@@ -52,7 +69,8 @@ export default (caseId: components["schemas"]["CaseDetail"]["id"], navigateTo: N
     legal_entity_role: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: {entity_type: string}}) => formValues?.values?.entity_type === "legal",
+        shouldShow: (formValues: { values?: { entity_type: string } }) =>
+          formValues?.values?.entity_type === "legal",
         field: {
           type: "ComplexSelectField",
           props: {
@@ -70,7 +88,8 @@ export default (caseId: components["schemas"]["CaseDetail"]["id"], navigateTo: N
     legal_entity_name: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: {entity_type: string}}) => formValues?.values?.entity_type === "legal",
+        shouldShow: (formValues: { values?: { entity_type: string } }) =>
+          formValues?.values?.entity_type === "legal",
         field: {
           type: "InputField",
           props: {
@@ -85,7 +104,8 @@ export default (caseId: components["schemas"]["CaseDetail"]["id"], navigateTo: N
     legal_entity_type: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: {entity_type: string}}) => formValues?.values?.entity_type === "legal",
+        shouldShow: (formValues: { values?: { entity_type: string } }) =>
+          formValues?.values?.entity_type === "legal",
         field: {
           type: "SelectField",
           props: {
@@ -105,12 +125,12 @@ export default (caseId: components["schemas"]["CaseDetail"]["id"], navigateTo: N
     persons: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: {
+        shouldShow: (formValues: {
+          values?: {
             entity_type: string
             legal_entity_type: string
-          }}) => (
-          formValues?.values?.entity_type === "natural"
-        ),
+          }
+        }) => formValues?.values?.entity_type === "natural",
         field: {
           type: "ArrayField",
           props: {
@@ -124,7 +144,7 @@ export default (caseId: components["schemas"]["CaseDetail"]["id"], navigateTo: N
               first_name: {
                 type: "TextField",
                 props: {
-                  placeholder:"Voornaam",
+                  placeholder: "Voornaam",
                   name: "first_name",
                   isRequired: true,
                 },
@@ -132,7 +152,7 @@ export default (caseId: components["schemas"]["CaseDetail"]["id"], navigateTo: N
               preposition: {
                 type: "TextField",
                 props: {
-                  placeholder:"Tussenvoegsel",
+                  placeholder: "Tussenvoegsel",
                   name: "preposition",
                 },
               },
@@ -163,13 +183,14 @@ export default (caseId: components["schemas"]["CaseDetail"]["id"], navigateTo: N
     persons_legal_entity: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: {
+        shouldShow: (formValues: {
+          values?: {
             entity_type: string
             legal_entity_type: string
-          }}) => (
+          }
+        }) =>
           formValues?.values?.entity_type === "legal" &&
-          formValues?.values?.legal_entity_type === "person"
-        ),
+          formValues?.values?.legal_entity_type === "person",
         field: {
           type: "ArrayField",
           props: {
@@ -183,7 +204,7 @@ export default (caseId: components["schemas"]["CaseDetail"]["id"], navigateTo: N
               first_name: {
                 type: "TextField",
                 props: {
-                  placeholder:"Voornaam",
+                  placeholder: "Voornaam",
                   name: "first_name",
                   isRequired: true,
                 },
@@ -191,7 +212,7 @@ export default (caseId: components["schemas"]["CaseDetail"]["id"], navigateTo: N
               preposition: {
                 type: "TextField",
                 props: {
-                  placeholder:"Tussenvoegsel",
+                  placeholder: "Tussenvoegsel",
                   name: "preposition",
                 },
               },
@@ -231,7 +252,7 @@ export default (caseId: components["schemas"]["CaseDetail"]["id"], navigateTo: N
         align: "right",
       },
     },
-  };
+  }
 
   return new FormPositioner(fields as Fields)
     .setGrid("mobileS", "1fr 1fr", [
@@ -245,6 +266,5 @@ export default (caseId: components["schemas"]["CaseDetail"]["id"], navigateTo: N
       ["description", "description"],
       ["secondaryButton", "submit"],
     ])
-    .getScaffoldProps();
-};
-
+    .getScaffoldProps()
+}

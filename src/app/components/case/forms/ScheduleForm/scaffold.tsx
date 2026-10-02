@@ -1,16 +1,15 @@
-import { FormPositioner } from "@amsterdam/amsterdam-react-final-form";
-import dayjs from "dayjs";
-import { Fields } from "app/components/shared/Form/ScaffoldFields";
-import InfoButton from "app/components/shared/InfoHeading/InfoButton";
-import type { NavigateToFunction } from "app/routing/useNavigation";
+import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
+import dayjs from "dayjs"
+import { Fields } from "app/components/shared/Form/ScaffoldFields"
+import InfoButton from "app/components/shared/InfoHeading/InfoButton"
+import type { NavigateToFunction } from "app/routing/useNavigation"
 
 export default (
-    caseId: components["schemas"]["CaseDetail"]["id"],
-    navigateTo: NavigateToFunction,
-    scheduleTypes?: components["schemas"]["ThemeScheduleTypes"],
-    visitFromOptions?: { id: number, name: string }[],
-  ) => {
-
+  caseId: components["schemas"]["CaseDetail"]["id"],
+  navigateTo: NavigateToFunction,
+  scheduleTypes?: components["schemas"]["ThemeScheduleTypes"],
+  visitFromOptions?: { id: number; name: string }[],
+) => {
   const fields = {
     week_segment: {
       type: "ComplexSelectField",
@@ -26,7 +25,8 @@ export default (
     day_segment: {
       type: "ComplexSelectField",
       props: {
-        label: "Tijdens welk dagdeel kan het bezoek het beste worden ingepland?",
+        label:
+          "Tijdens welk dagdeel kan het bezoek het beste worden ingepland?",
         name: "day_segment",
         optionLabelField: "name",
         isRequired: true,
@@ -48,7 +48,8 @@ export default (
     visit_from_datetime: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { visit_from: { id: number } } }) => formValues?.values?.visit_from?.id === 2,
+        shouldShow: (formValues: { values?: { visit_from: { id: number } } }) =>
+          formValues?.values?.visit_from?.id === 2,
         field: {
           type: "DateField",
           props: {
@@ -56,10 +57,12 @@ export default (
             name: "visit_from_datetime",
             isRequired: true,
             validate: (value: string | undefined) => {
-              const now = dayjs();
-              const valueDate = dayjs(value);
-              const isInvalidDate = valueDate.isBefore(now, "day"); // Date cannot be in the past.
-              return isInvalidDate ? "Selecteer vandaag of een dag in de toekomst!" : false;
+              const now = dayjs()
+              const valueDate = dayjs(value)
+              const isInvalidDate = valueDate.isBefore(now, "day") // Date cannot be in the past.
+              return isInvalidDate
+                ? "Selecteer vandaag of een dag in de toekomst!"
+                : false
             },
           },
         },
@@ -71,7 +74,12 @@ export default (
         label: "Wat is de urgentie voor het bezoek?",
         name: "priority",
         optionLabelField: "name",
-        extraLabel: <InfoButton infoTitle="Urgentie bezoek" infoText="Gebruik hoge urgentie indien er nu toeristen aanwezig zijn, kies machtiging als het bezoek prioriteit krijgt in verband met een machtiging."></InfoButton>,
+        extraLabel: (
+          <InfoButton
+            infoTitle="Urgentie bezoek"
+            infoText="Gebruik hoge urgentie indien er nu toeristen aanwezig zijn, kies machtiging als het bezoek prioriteit krijgt in verband met een machtiging."
+          ></InfoButton>
+        ),
         isRequired: true,
         withEmptyOption: true,
         options: scheduleTypes?.priorities,
@@ -100,7 +108,7 @@ export default (
         align: "right",
       },
     },
-  };
+  }
 
   return new FormPositioner(fields as Fields)
     .setGrid("mobileS", "1fr 1fr", [
@@ -112,6 +120,5 @@ export default (
       ["description", "description"],
       ["secondaryButton", "submit"],
     ])
-    .getScaffoldProps();
-};
-
+    .getScaffoldProps()
+}

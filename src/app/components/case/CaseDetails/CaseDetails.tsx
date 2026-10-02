@@ -1,13 +1,13 @@
-import styles from "./CaseDetails.module.css";
-import { DefinitionList, CaseIdDisplay, DateDisplay } from "@amsterdam/wonen-ui";
-import type { DefinitionListData } from "@amsterdam/wonen-ui";
-import { useCase } from "@/api/hooks";
-import ChangeableSubject from "./ChangeSubject/ChangeableSubject";
-import ChangeHousingCorporation from "./ChangeHousingCorporation/ChangeHousingCorporation";
-import CaseSensitive from "../icons/CaseSensitive";
-import CaseEnforcement from "../icons/CaseEnforcement";
-import caseStates from "app/constants/caseStates";
-import EditableTag from "./EditableTag/EditableTag";
+import styles from "./CaseDetails.module.css"
+import { DefinitionList, CaseIdDisplay, DateDisplay } from "@amsterdam/wonen-ui"
+import type { DefinitionListData } from "@amsterdam/wonen-ui"
+import { useCase } from "@/api/hooks"
+import ChangeableSubject from "./ChangeSubject/ChangeableSubject"
+import ChangeHousingCorporation from "./ChangeHousingCorporation/ChangeHousingCorporation"
+import CaseSensitive from "../icons/CaseSensitive"
+import CaseEnforcement from "../icons/CaseEnforcement"
+import caseStates from "app/constants/caseStates"
+import EditableTag from "./EditableTag/EditableTag"
 
 type Props = {
   caseId: components["schemas"]["CaseCreate"]["id"]
@@ -15,71 +15,80 @@ type Props = {
 
 const getDataFirstCol = (caseItem?: components["schemas"]["CaseCreate"]) => {
   if (caseItem === undefined) {
-    return undefined;
+    return undefined
   }
-  const { id, start_date, sensitive, previous_case, is_enforcement_request, state } = caseItem;
+  const {
+    id,
+    start_date,
+    sensitive,
+    previous_case,
+    is_enforcement_request,
+    state,
+  } = caseItem
   const data: DefinitionListData = {
     "Zaak ID": (
-      <div className={ styles.wrap }>
-        <CaseIdDisplay id={ id } />
-        <CaseSensitive isVisible={ sensitive }/>
-        <CaseEnforcement isVisible={ is_enforcement_request } />
+      <div className={styles.wrap}>
+        <CaseIdDisplay id={id} />
+        <CaseSensitive isVisible={sensitive} />
+        <CaseEnforcement isVisible={is_enforcement_request} />
       </div>
     ),
-    "Status": caseStates[state],
-    "Startdatum": <DateDisplay date={ start_date ?? undefined } emptyText="-" />,
-  };
-  if (previous_case) {
-    data["Overgedragen zaak"] = previous_case;
+    Status: caseStates[state],
+    Startdatum: <DateDisplay date={start_date ?? undefined} emptyText="-" />,
   }
-  data["Tag"] = <EditableTag case={ caseItem } />;
-  return data;
-};
+  if (previous_case) {
+    data["Overgedragen zaak"] = previous_case
+  }
+  data["Tag"] = <EditableTag case={caseItem} />
+  return data
+}
 
 const getDataSecondCol = (caseItem?: components["schemas"]["CaseCreate"]) => {
   if (caseItem === undefined) {
-    return undefined;
+    return undefined
   }
 
-  const { id, theme, reason, project, subjects, address } = caseItem;
-  const hasProject = project?.name !== undefined;
+  const { id, theme, reason, project, subjects, address } = caseItem
+  const hasProject = project?.name !== undefined
   const data: DefinitionListData = {
-    "Thema": theme.name,
-    "Aanleiding": `${ reason.name }${ hasProject ? ": " : "" }${ hasProject ? project.name : "" }`,
-    "Onderwerp(en)": <ChangeableSubject subjects={ subjects } caseId={ id } themeId={ theme.id } />,
-    "Corporatie": (
+    Thema: theme.name,
+    Aanleiding: `${reason.name}${hasProject ? ": " : ""}${hasProject ? project.name : ""}`,
+    "Onderwerp(en)": (
+      <ChangeableSubject subjects={subjects} caseId={id} themeId={theme.id} />
+    ),
+    Corporatie: (
       <ChangeHousingCorporation
-        housingCorporationId={ address?.housing_corporation }
-        bagId={ address?.bag_id }
-        caseId={ id }
+        housingCorporationId={address?.housing_corporation}
+        bagId={address?.bag_id}
+        caseId={id}
       />
     ),
-  };
-  return data;
-};
+  }
+  return data
+}
 
 const CaseDetails: React.FC<Props> = ({ caseId }) => {
-  const { data, isLoading: isBusy } = useCase(caseId);
+  const { data, isLoading: isBusy } = useCase(caseId)
 
-  const dataFirstCol = getDataFirstCol(data);
-  const dataSecondCol = getDataSecondCol(data);
+  const dataFirstCol = getDataFirstCol(data)
+  const dataSecondCol = getDataSecondCol(data)
 
   return (
-    <div className={ styles.styledDiv }>
+    <div className={styles.styledDiv}>
       <DefinitionList
-        loading={ isBusy }
-        numLoadingRows={ 2 }
-        horizontalBordered={ false }
-        data={ dataFirstCol }
+        loading={isBusy}
+        numLoadingRows={2}
+        horizontalBordered={false}
+        data={dataFirstCol}
       />
       <DefinitionList
-        loading={ isBusy }
-        numLoadingRows={ 2 }
-        horizontalBordered={ false }
-        data={ dataSecondCol }
+        loading={isBusy}
+        numLoadingRows={2}
+        horizontalBordered={false}
+        data={dataSecondCol}
       />
     </div>
-  );
-};
+  )
+}
 
-export default CaseDetails;
+export default CaseDetails

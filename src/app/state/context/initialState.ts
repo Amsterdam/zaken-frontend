@@ -1,39 +1,39 @@
-const noop = () => {};
+const noop = () => {}
 
 export type StateType = {
   cases: {
-    districtNames: components["schemas"]["District"]["name"][];
-    fromStartDate: string;
-    housingCorporations: string[];
-    housingCorporationIsNull: boolean;
-    openCases: string;
-    pagination: TABLE.Schemas.Pagination;
-    projects: string[];
-    reason: string;
-    sorting: TABLE.Schemas.Sorting;
-    addressSearch: string;
-    subjects: string[];
-    tags: string[];
-    theme: string;
-    updateContextCases: (payload: any) => void;
-  };
+    districtNames: components["schemas"]["District"]["name"][]
+    fromStartDate: string
+    housingCorporations: string[]
+    housingCorporationIsNull: boolean
+    openCases: string
+    pagination: TABLE.Schemas.Pagination
+    projects: string[]
+    reason: string
+    sorting: TABLE.Schemas.Sorting
+    addressSearch: string
+    subjects: string[]
+    tags: string[]
+    theme: string
+    updateContextCases: (payload: any) => void
+  }
   tasks: {
-    districtNames: components["schemas"]["District"]["name"][];
-    housingCorporations: string[];
-    housingCorporationIsNull: boolean;
-    owners: string[];
-    pagination: TABLE.Schemas.Pagination;
-    projects: string[];
-    reason: string;
-    role?: string;
-    sorting: TABLE.Schemas.Sorting;
-    theme: string;
-    subjects: string[];
-    tags: string[];
-    taskNames: components["schemas"]["CaseUserTaskTaskName"]["name"][];
-    updateContextTasks: (payload: any) => void;
-  };
-};
+    districtNames: components["schemas"]["District"]["name"][]
+    housingCorporations: string[]
+    housingCorporationIsNull: boolean
+    owners: string[]
+    pagination: TABLE.Schemas.Pagination
+    projects: string[]
+    reason: string
+    role?: string
+    sorting: TABLE.Schemas.Sorting
+    theme: string
+    subjects: string[]
+    tags: string[]
+    taskNames: components["schemas"]["CaseUserTaskTaskName"]["name"][]
+    updateContextTasks: (payload: any) => void
+  }
+}
 
 // Initial State
 export const initialState: StateType = {
@@ -81,6 +81,6 @@ export const initialState: StateType = {
     theme: "",
     updateContextTasks: noop,
   },
-};
+}
 
-export default initialState;
+export default initialState

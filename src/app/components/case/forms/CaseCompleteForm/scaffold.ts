@@ -1,24 +1,30 @@
-import { FormPositioner } from "@amsterdam/amsterdam-react-final-form";
-import { Fields } from "app/components/shared/Form/ScaffoldFields";
-import type { NavigateToFunction } from "app/routing/useNavigation";
+import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
+import { Fields } from "app/components/shared/Form/ScaffoldFields"
+import type { NavigateToFunction } from "app/routing/useNavigation"
 
-export default (caseId: components["schemas"]["CaseDetail"]["id"], navigateTo: NavigateToFunction, completeCaseReasons?: components["schemas"]["CaseCloseReason"][], completeCaseResults?: components["schemas"]["CaseCloseResult"][]) => {
-
+export default (
+  caseId: components["schemas"]["CaseDetail"]["id"],
+  navigateTo: NavigateToFunction,
+  completeCaseReasons?: components["schemas"]["CaseCloseReason"][],
+  completeCaseResults?: components["schemas"]["CaseCloseResult"][],
+) => {
   const fields = {
     reason: {
       type: "ComplexRadioFields",
-          props: {
-            isRequired: true,
-            label: "Wat is de reden?",
-            name: "reason",
-            optionLabelField: "name",
-            options: completeCaseReasons,
-          },
+      props: {
+        isRequired: true,
+        label: "Wat is de reden?",
+        name: "reason",
+        optionLabelField: "name",
+        options: completeCaseReasons,
+      },
     },
     result: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { reason: components["schemas"]["CaseCloseReason"] } }) => formValues?.values?.reason?.result === true,
+        shouldShow: (formValues: {
+          values?: { reason: components["schemas"]["CaseCloseReason"] }
+        }) => formValues?.values?.reason?.result === true,
         field: {
           type: "ComplexRadioFields",
           props: {
@@ -28,7 +34,6 @@ export default (caseId: components["schemas"]["CaseDetail"]["id"], navigateTo: N
             optionLabelField: "name",
             options: completeCaseResults,
           },
-
         },
       },
     },
@@ -55,7 +60,7 @@ export default (caseId: components["schemas"]["CaseDetail"]["id"], navigateTo: N
         align: "right",
       },
     },
-  };
+  }
 
   return new FormPositioner(fields as Fields)
     .setGrid("laptop", "1fr 1fr", [
@@ -64,6 +69,5 @@ export default (caseId: components["schemas"]["CaseDetail"]["id"], navigateTo: N
       ["description", "description"],
       ["secondaryButton", "submit"],
     ])
-    .getScaffoldProps();
-};
-
+    .getScaffoldProps()
+}

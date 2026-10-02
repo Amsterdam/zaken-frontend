@@ -1,13 +1,13 @@
-import { Tooltip } from "react-tooltip";
-import styles from "./CustomTooltip.module.css";
+import { Tooltip } from "react-tooltip"
+import styles from "./CustomTooltip.module.css"
 
 type Props = {
-  children: React.ReactNode;
-  title: string;
-};
+  children: React.ReactNode
+  title: string
+}
 
 const CustomTooltip: React.FC<Props> = ({ children, title }) => {
-  const tooltipId = `tooltip-${title}`;
+  const tooltipId = `tooltip-${title}`
 
   return (
     <>
@@ -17,11 +17,11 @@ const CustomTooltip: React.FC<Props> = ({ children, title }) => {
           id={tooltipId}
           content={title}
           place="bottom"
-          className={ `${ styles.styledTooltip } custom-tooltip` }
+          className={`${styles.styledTooltip} custom-tooltip`}
         />
       )}
     </>
-  );
-};
+  )
+}
 
-export default CustomTooltip;
+export default CustomTooltip

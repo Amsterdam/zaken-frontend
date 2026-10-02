@@ -1,7 +1,7 @@
-import styled from "styled-components";
-import { Icon, themeSpacing } from "@amsterdam/asc-ui";
-import useHasPermission, { CAN_PERFORM_TASK } from "@/hooks/useHasPermission";
-import CustomIcon from "app/components/shared/CustomIcon/CustomIcon";
+import styled from "styled-components"
+import { Icon, themeSpacing } from "@amsterdam/asc-ui"
+import useHasPermission, { CAN_PERFORM_TASK } from "@/hooks/useHasPermission"
+import CustomIcon from "app/components/shared/CustomIcon/CustomIcon"
 
 type Props = {
   name?: string
@@ -16,31 +16,30 @@ const Span = styled.span`
   &:hover {
     text-decoration: underline;
   }
-  >span {
+  > span {
     position: absolute;
     bottom: 2px;
     left: 100%;
   }
-`;
+`
 
 const StyledIcon = styled(Icon)`
   display: inline-block;
-  margin-left: ${ themeSpacing(1) };
-`;
+  margin-left: ${themeSpacing(1)};
+`
 
 const ChangeableItem = ({ name = "-", titleAccess = "", onClick }: Props) => {
-  const [hasPermission] = useHasPermission([CAN_PERFORM_TASK]);
+  const [hasPermission] = useHasPermission([CAN_PERFORM_TASK])
   return hasPermission ? (
-    <Span
-      role="link"
-      onClick={ onClick }
-    >
-      { name }
-      <StyledIcon size={ 20 }>
-        <CustomIcon name="Edit" titleAccess={ titleAccess } />
+    <Span role="link" onClick={onClick}>
+      {name}
+      <StyledIcon size={20}>
+        <CustomIcon name="Edit" titleAccess={titleAccess} />
       </StyledIcon>
     </Span>
-  ) : <>{ name }</>;
-};
+  ) : (
+    <>{name}</>
+  )
+}
 
-export default ChangeableItem;
+export default ChangeableItem

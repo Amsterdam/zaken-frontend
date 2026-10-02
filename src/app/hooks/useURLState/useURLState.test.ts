@@ -1,33 +1,33 @@
-import { renderHook, act } from "@testing-library/react";
-import useURLState from "./useURLState";
+import { renderHook, act } from "@testing-library/react"
+import useURLState from "./useURLState"
 
 describe("useURLState", () => {
   it("should have initial value", () => {
-    const { result } = renderHook(() => useURLState("q", "initialValue"));
-    const [value] = result.current;
-    expect(value).toBe("initialValue");
-  });
+    const { result } = renderHook(() => useURLState("q", "initialValue"))
+    const [value] = result.current
+    expect(value).toBe("initialValue")
+  })
 
   it("should set search param", () => {
-    const { result } = renderHook(() => useURLState("q"));
-    const [, set] = result.current;
+    const { result } = renderHook(() => useURLState("q"))
+    const [, set] = result.current
     act(() => {
-      set("Abc");
-    });
-    const [value] = result.current;
-    expect(value).toBe("Abc");
-    expect(window.location.search).toBe("?q=Abc");
-  });
+      set("Abc")
+    })
+    const [value] = result.current
+    expect(value).toBe("Abc")
+    expect(window.location.search).toBe("?q=Abc")
+  })
 
   it("should read search param", () => {
-    const { result } = renderHook(() => useURLState("q"));
-    const [value] = result.current;
-    expect(value).toBe("Abc");
-  });
+    const { result } = renderHook(() => useURLState("q"))
+    const [value] = result.current
+    expect(value).toBe("Abc")
+  })
 
   it("parse", () => {
-    const { result } = renderHook(() => useURLState("q", "", () => ""));
-    const [value] = result.current;
-    expect(value).toBe("");
-  });
-});
+    const { result } = renderHook(() => useURLState("q", "", () => ""))
+    const [value] = result.current
+    expect(value).toBe("")
+  })
+})

@@ -32,7 +32,7 @@
 }
 
 .avatarButton:hover {
-  transform: scale(1.10);
+  transform: scale(1.1);
 }
 
 .avatarButton:focus-visible {
@@ -68,7 +68,8 @@
 .ownTask {
   background-color: var(--ams-color-interactive);
   border-color: var(--ams-color-interactive);
-  box-shadow: 0 0 0 var(--ams-border-width-m) color-mix(in srgb, var(--ams-color-interactive) 40%, transparent);
+  box-shadow: 0 0 0 var(--ams-border-width-m)
+    color-mix(in srgb, var(--ams-color-interactive) 40%, transparent);
 }
 
 /* Initialen */

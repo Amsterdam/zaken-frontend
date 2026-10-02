@@ -1,8 +1,8 @@
-import { Table } from "@amsterdam/wonen-ui";
-import useNavigation from "app/routing/useNavigation";
-import getColumns from "./columns";
-import useMediaQuery from "app/hooks/useMediaQuery/useMediaQuery";
-import createResponsiveColumns from "./createPrioritizedColumns";
+import { Table } from "@amsterdam/wonen-ui"
+import useNavigation from "app/routing/useNavigation"
+import getColumns from "./columns"
+import useMediaQuery from "app/hooks/useMediaQuery/useMediaQuery"
+import createResponsiveColumns from "./createPrioritizedColumns"
 
 type Props = {
   data: components["schemas"]["Case"][]
@@ -13,33 +13,40 @@ type Props = {
   emptyPlaceholder: string
 }
 
-const TableCases: React.FC<Props> = ({ data, isBusy, onChange, pagination, sorting, emptyPlaceholder }) => {
-  const { windowWidth } = useMediaQuery();
-  const { navigateTo } = useNavigation();
+const TableCases: React.FC<Props> = ({
+  data,
+  isBusy,
+  onChange,
+  pagination,
+  sorting,
+  emptyPlaceholder,
+}) => {
+  const { windowWidth } = useMediaQuery()
+  const { navigateTo } = useNavigation()
 
-  const columns = getColumns(sorting);
-  const prioritizedColumns = createResponsiveColumns(columns, windowWidth);
+  const columns = getColumns(sorting)
+  const prioritizedColumns = createResponsiveColumns(columns, windowWidth)
 
   const onClickRow = (data: any) => {
-    navigateTo("/zaken/:id", { id: data.id });
-  };
+    navigateTo("/zaken/:id", { id: data.id })
+  }
 
   return (
     <Table
       lastColumnFixed
-      loading={ isBusy }
-      numLoadingRows={ 10 }
-      columns={ prioritizedColumns }
-      data={ data }
-      onClickRow={ onClickRow }
-      onChange={ onChange }
+      loading={isBusy}
+      numLoadingRows={10}
+      columns={prioritizedColumns}
+      data={data}
+      onClickRow={onClickRow}
+      onChange={onChange}
       pagination={{
         ...pagination,
         paginationLength: 9,
       }}
-      emptyPlaceholder={ emptyPlaceholder }
+      emptyPlaceholder={emptyPlaceholder}
     />
-  );
-};
+  )
+}
 
-export default TableCases;
+export default TableCases

@@ -1,17 +1,17 @@
-import React from "react";
-import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form";
-import { Spinner } from "@amsterdam/asc-ui";
+import React from "react"
+import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
+import { Spinner } from "@amsterdam/asc-ui"
 
-import FilterMenu from "app/components/shared/FilterMenu/FilterMenu";
-import ScaffoldFields from "app/components/shared/Form/ScaffoldFields";
-import scaffoldDate from "./scaffoldDate";
-import scaffoldTheme from "./scaffoldTheme";
-import scaffoldPageSize from "./scaffoldPageSize";
-import scaffoldReason from "./scaffoldReason";
-import MultipleOptionsFilterBox from "app/components/filters/MultipleOptionsFilterBox/MultipleOptionsFilterBox";
-import scaffoldClosedCases from "./scaffoldClosedCases";
-import { useFilterHandler } from "./useFilterHandler";
-import NoCorporationFilter from "app/components/filters/NoCorporationFilter/NoCorporationFilter";
+import FilterMenu from "app/components/shared/FilterMenu/FilterMenu"
+import ScaffoldFields from "app/components/shared/Form/ScaffoldFields"
+import scaffoldDate from "./scaffoldDate"
+import scaffoldTheme from "./scaffoldTheme"
+import scaffoldPageSize from "./scaffoldPageSize"
+import scaffoldReason from "./scaffoldReason"
+import MultipleOptionsFilterBox from "app/components/filters/MultipleOptionsFilterBox/MultipleOptionsFilterBox"
+import scaffoldClosedCases from "./scaffoldClosedCases"
+import { useFilterHandler } from "./useFilterHandler"
+import NoCorporationFilter from "app/components/filters/NoCorporationFilter/NoCorporationFilter"
 
 type Props = {
   date: string
@@ -54,23 +54,24 @@ const CasesFilter: React.FC<Props> = ({
   theme,
   themes,
 }) => {
-  const { onChangeFilter, onChangePageSize } = useFilterHandler();
-  const setDate = (value: string) => onChangeFilter("fromStartDate", value);
-  const setDistrictNames = (value: components["schemas"]["District"]["name"][]) =>
-    onChangeFilter("districtNames", value);
-  const setOpenCases = (value: string) => onChangeFilter("openCases", value);
-  const setPageSize = onChangePageSize;
-  const setReason = (value: string) => onChangeFilter("reason", value);
+  const { onChangeFilter, onChangePageSize } = useFilterHandler()
+  const setDate = (value: string) => onChangeFilter("fromStartDate", value)
+  const setDistrictNames = (
+    value: components["schemas"]["District"]["name"][],
+  ) => onChangeFilter("districtNames", value)
+  const setOpenCases = (value: string) => onChangeFilter("openCases", value)
+  const setPageSize = onChangePageSize
+  const setReason = (value: string) => onChangeFilter("reason", value)
   const setSelectedCorporations = (value: string[]) =>
-    onChangeFilter("housingCorporations", value);
+    onChangeFilter("housingCorporations", value)
   const setSelectedProjects = (value: string[]) =>
-    onChangeFilter("projects", value);
+    onChangeFilter("projects", value)
   const setSelectedSubjects = (value: string[]) =>
-    onChangeFilter("subjects", value);
-  const setSelectedTags = (value: string[]) => onChangeFilter("tags", value);
-  const setTheme = (value: string) => onChangeFilter("theme", value);
+    onChangeFilter("subjects", value)
+  const setSelectedTags = (value: string[]) => onChangeFilter("tags", value)
+  const setTheme = (value: string) => onChangeFilter("theme", value)
   const setCorporationIsNull = (value: boolean) =>
-    onChangeFilter("housingCorporationIsNull", value);
+    onChangeFilter("housingCorporationIsNull", value)
 
   const multipleFilters = [
     {
@@ -108,7 +109,7 @@ const CasesFilter: React.FC<Props> = ({
       setSelected: setDistrictNames,
       byId: false,
     },
-  ];
+  ]
 
   return (
     <FilterMenu>
@@ -153,7 +154,7 @@ const CasesFilter: React.FC<Props> = ({
         <ScaffoldFields {...scaffoldClosedCases(openCases, setOpenCases)} />
       </ScaffoldForm>
     </FilterMenu>
-  );
-};
+  )
+}
 
-export default CasesFilter;
+export default CasesFilter

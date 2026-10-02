@@ -1,10 +1,10 @@
-import { MenuItem, MenuButton } from "@amsterdam/asc-ui";
+import { MenuItem, MenuButton } from "@amsterdam/asc-ui"
 
-import routes from "app/routing/routes";
-import to from "app/routing/utils/to";
-import StyledButtonLink from "./StyledButtonLink";
-import IsAuthorizedMenuButton from "./IsAuthorizedMenuButton";
-import Hidden from "app/components/shared/Hidden/Hidden";
+import routes from "app/routing/routes"
+import to from "app/routing/utils/to"
+import StyledButtonLink from "./StyledButtonLink"
+import IsAuthorizedMenuButton from "./IsAuthorizedMenuButton"
+import Hidden from "app/components/shared/Hidden/Hidden"
 
 const items = [
   {
@@ -15,39 +15,52 @@ const items = [
   },
   {
     path: "/invorderingen",
-    permissionNames: ["access_recovery_check"] as components["schemas"]["PermissionsEnum"][],
+    permissionNames: [
+      "access_recovery_check",
+    ] as components["schemas"]["PermissionsEnum"][],
   },
   {
     path: "/digitaaltoezicht",
-    permissionNames: ["access_sigital_surveillance"] as components["schemas"]["PermissionsEnum"][],
+    permissionNames: [
+      "access_sigital_surveillance",
+    ] as components["schemas"]["PermissionsEnum"][],
     isHidden: true,
   },
   {
     path: "/hulp",
     hiddenLaptopM: true,
   },
-];
+]
 
 const MenuItems: React.FC = () => (
   <>
-    { items.map(({ path, hiddenLaptopM, permissionNames, isHidden }) => {
-      const { title } = routes[`${ path }/`];
+    {items.map(({ path, hiddenLaptopM, permissionNames, isHidden }) => {
+      const { title } = routes[`${path}/`]
       const menuItem = (
-        <MenuItem key={ path }>
-          { permissionNames !== undefined
-              ? <IsAuthorizedMenuButton permissionNames={ permissionNames } isHidden={ isHidden } text={ title } to={ to(path) } />
-              : (
-                <StyledButtonLink to={ to(path) }>
-                  <MenuButton as="span">{ title }</MenuButton>
-                </StyledButtonLink>
-            )
-          }
+        <MenuItem key={path}>
+          {permissionNames !== undefined ? (
+            <IsAuthorizedMenuButton
+              permissionNames={permissionNames}
+              isHidden={isHidden}
+              text={title}
+              to={to(path)}
+            />
+          ) : (
+            <StyledButtonLink to={to(path)}>
+              <MenuButton as="span">{title}</MenuButton>
+            </StyledButtonLink>
+          )}
         </MenuItem>
-      );
-      return hiddenLaptopM ? <Hidden minBreakpoint="laptopM" key={ path }>{ menuItem }</Hidden> : menuItem;
-    })
-  }
+      )
+      return hiddenLaptopM ? (
+        <Hidden minBreakpoint="laptopM" key={path}>
+          {menuItem}
+        </Hidden>
+      ) : (
+        menuItem
+      )
+    })}
   </>
-);
+)
 
-export default MenuItems;
+export default MenuItems

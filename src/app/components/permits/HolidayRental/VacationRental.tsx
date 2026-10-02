@@ -1,16 +1,16 @@
 import {
   HolidayRentalReports,
   type HolidayRentalReport,
-} from "@amsterdam/wonen-ui";
-import InfoAlert from "app/components/shared/InfoAlert/InfoAlert";
-import { useMeldingen } from "@/api/hooks";
+} from "@amsterdam/wonen-ui"
+import InfoAlert from "app/components/shared/InfoAlert/InfoAlert"
+import { useMeldingen } from "@/api/hooks"
 
 type Props = {
-  bagId: string;
-};
+  bagId: string
+}
 
 const RentalReports: React.FC<Props> = ({ bagId }) => {
-  const { data, isLoading: isBusy } = useMeldingen(bagId);
+  const { data, isLoading: isBusy } = useMeldingen(bagId)
 
   return (
     <>
@@ -28,7 +28,7 @@ const RentalReports: React.FC<Props> = ({ bagId }) => {
         loading={isBusy}
       />
     </>
-  );
-};
+  )
+}
 
-export default RentalReports;
+export default RentalReports

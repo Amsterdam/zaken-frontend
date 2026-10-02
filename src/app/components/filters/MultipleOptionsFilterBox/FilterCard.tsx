@@ -1,11 +1,11 @@
-import styled from "styled-components";
-import { Card, themeColor, themeSpacing } from "@amsterdam/asc-ui";
+import styled from "styled-components"
+import { Card, themeColor, themeSpacing } from "@amsterdam/asc-ui"
 
 type Props = {
-  isVisible: boolean;
-  hasItems: boolean;
-  children: React.ReactNode;
-};
+  isVisible: boolean
+  hasItems: boolean
+  children: React.ReactNode
+}
 
 const StyledCard = styled(Card)<{ isVisible: boolean }>`
   display: flex;
@@ -21,18 +21,18 @@ const StyledCard = styled(Card)<{ isVisible: boolean }>`
   padding: ${({ isVisible }) =>
     isVisible ? themeSpacing(2) : themeSpacing(0, 2)};
   border-width: ${({ isVisible }) => (isVisible ? "1px" : 0)};
-`;
+`
 
 const StyledSpan = styled.span`
   padding: ${themeSpacing(2)};
   font-style: italic;
-`;
+`
 
 const FilterCard: React.FC<Props> = ({ isVisible, hasItems, children }) => (
   <StyledCard isVisible={isVisible}>
     {children}
     {!hasItems && <StyledSpan>Geen resultaten beschikbaar</StyledSpan>}
   </StyledCard>
-);
+)
 
-export default FilterCard;
+export default FilterCard

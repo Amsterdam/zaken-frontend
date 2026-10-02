@@ -1,42 +1,42 @@
-import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form";
-import { Spinner } from "@amsterdam/asc-ui";
-import FilterMenu from "app/components/shared/FilterMenu/FilterMenu";
-import ScaffoldFields from "app/components/shared/Form/ScaffoldFields";
-import scaffoldTheme from "./scaffoldTheme";
-import scaffoldRole from "./scaffoldRole";
-import scaffoldPageSize from "./scaffoldPageSize";
-import scaffoldReasons from "./scaffoldReasons";
+import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
+import { Spinner } from "@amsterdam/asc-ui"
+import FilterMenu from "app/components/shared/FilterMenu/FilterMenu"
+import ScaffoldFields from "app/components/shared/Form/ScaffoldFields"
+import scaffoldTheme from "./scaffoldTheme"
+import scaffoldRole from "./scaffoldRole"
+import scaffoldPageSize from "./scaffoldPageSize"
+import scaffoldReasons from "./scaffoldReasons"
 import MultipleOptionsFilterBox, {
   type Option,
-} from "app/components/filters/MultipleOptionsFilterBox/MultipleOptionsFilterBox";
-import NoCorporationFilter from "app/components/filters/NoCorporationFilter/NoCorporationFilter";
+} from "app/components/filters/MultipleOptionsFilterBox/MultipleOptionsFilterBox"
+import NoCorporationFilter from "app/components/filters/NoCorporationFilter/NoCorporationFilter"
 
 type Props = {
-  corporations?: components["schemas"]["HousingCorporation"][];
-  corporationIsNull: boolean;
-  districtNames: components["schemas"]["District"]["name"][];
-  districts: components["schemas"]["District"][];
-  onChangeFilter: (key: string, value: any) => void;
-  onChangePageSize: (value: string) => void;
-  pageSize: string;
-  projects?: components["schemas"]["CaseProject"][];
-  reason: string;
-  reasons?: components["schemas"]["CaseReason"][];
-  role: MockComponents.Schemas.Role;
-  roles?: MockComponents.Schemas.Role[];
-  selectedCorporations: string[];
-  selectedOwners: string[];
-  selectedProjects: string[];
-  selectedSubjects: string[];
-  selectedTags: string[];
-  selectedTaskNames: string[];
-  subjects?: components["schemas"]["Subject"][];
-  tags?: components["schemas"]["Tag"][];
-  taskNames?: components["schemas"]["CaseUserTaskTaskName"][];
-  taskOwners?: Option[];
-  theme: string;
-  themes?: components["schemas"]["CaseTheme"][];
-};
+  corporations?: components["schemas"]["HousingCorporation"][]
+  corporationIsNull: boolean
+  districtNames: components["schemas"]["District"]["name"][]
+  districts: components["schemas"]["District"][]
+  onChangeFilter: (key: string, value: any) => void
+  onChangePageSize: (value: string) => void
+  pageSize: string
+  projects?: components["schemas"]["CaseProject"][]
+  reason: string
+  reasons?: components["schemas"]["CaseReason"][]
+  role: MockComponents.Schemas.Role
+  roles?: MockComponents.Schemas.Role[]
+  selectedCorporations: string[]
+  selectedOwners: string[]
+  selectedProjects: string[]
+  selectedSubjects: string[]
+  selectedTags: string[]
+  selectedTaskNames: string[]
+  subjects?: components["schemas"]["Subject"][]
+  tags?: components["schemas"]["Tag"][]
+  taskNames?: components["schemas"]["CaseUserTaskTaskName"][]
+  taskOwners?: Option[]
+  theme: string
+  themes?: components["schemas"]["CaseTheme"][]
+}
 
 const TasksFilter: React.FC<Props> = ({
   corporations,
@@ -64,13 +64,12 @@ const TasksFilter: React.FC<Props> = ({
   theme,
   themes,
 }) => {
-  const setReason = (value: string) => onChangeFilter("reason", value);
-  const setRole = (value: string) => onChangeFilter("role", value);
+  const setReason = (value: string) => onChangeFilter("reason", value)
+  const setRole = (value: string) => onChangeFilter("role", value)
   const setCorporationIsNull = (value: boolean) =>
-    onChangeFilter("housingCorporationIsNull", value);
-  const setTheme = (value: string) => onChangeFilter("theme", value);
+    onChangeFilter("housingCorporationIsNull", value)
+  const setTheme = (value: string) => onChangeFilter("theme", value)
 
-  
   return (
     <FilterMenu>
       <MultipleOptionsFilterBox
@@ -176,7 +175,7 @@ const TasksFilter: React.FC<Props> = ({
         <ScaffoldFields {...scaffoldPageSize(pageSize, onChangePageSize)} />
       </ScaffoldForm>
     </FilterMenu>
-  );
-};
+  )
+}
 
-export default TasksFilter;
+export default TasksFilter

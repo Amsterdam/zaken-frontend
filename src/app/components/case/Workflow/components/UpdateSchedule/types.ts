@@ -8,4 +8,4 @@ export type Schedule = Omit<
     id: number
     name: string
   }
-};
+}

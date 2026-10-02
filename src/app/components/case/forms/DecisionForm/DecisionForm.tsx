@@ -1,48 +1,48 @@
-import { FormTitle } from "@amsterdam/asc-ui";
+import { FormTitle } from "@amsterdam/asc-ui"
 
-import { useCase, useCreateDecision, useDecisionTypes } from "@/api/hooks";
-import { toPostMethod } from "@/api/utils/toPostMethod";
-import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm";
-import scaffold from "app/components/case/forms/DecisionForm/scaffold";
-import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields";
-import DecisionHeader, { type Workflow } from "./components/DecisionHeader";
-import stripThousandSeparator from "./utils/stripThousandSeparator";
-import useNavigation from "app/routing/useNavigation";
+import { useCase, useCreateDecision, useDecisionTypes } from "@/api/hooks"
+import { toPostMethod } from "@/api/utils/toPostMethod"
+import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
+import scaffold from "app/components/case/forms/DecisionForm/scaffold"
+import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
+import DecisionHeader, { type Workflow } from "./components/DecisionHeader"
+import stripThousandSeparator from "./utils/stripThousandSeparator"
+import useNavigation from "app/routing/useNavigation"
 
 type Props = {
-  id: components["schemas"]["CaseDetail"]["id"];
-  caseUserTaskId: string;
-};
+  id: components["schemas"]["CaseDetail"]["id"]
+  caseUserTaskId: string
+}
 
 type DecisionData = Omit<components["schemas"]["Decision"], "decision_type"> & {
-  decision_type: { id: number };
-  description_closing?: string;
-};
+  decision_type: { id: number }
+  description_closing?: string
+}
 const mapData = (data: DecisionData) => {
-  const decision_type = data.decision_type.id;
+  const decision_type = data.decision_type.id
   const sanctionAmount = data.sanction_amount
     ? Math.round(parseFloat(stripThousandSeparator(data.sanction_amount)))
-    : Number.NaN;
+    : Number.NaN
   const sanction_amount = !Number.isNaN(sanctionAmount)
     ? String(sanctionAmount)
-    : null;
-  const description = data.description ?? data.description_closing;
+    : null
+  const description = data.description ?? data.description_closing
   return {
     ...data,
     decision_type,
     sanction_amount,
     description,
-  };
-};
+  }
+}
 
 const DecisionForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
-  const { data: caseItem } = useCase(id);
-  const themeId = caseItem?.theme.id;
-  const { data } = useDecisionTypes(themeId);
-  const decisionTypes = data?.results;
-  const { navigateTo } = useNavigation();
-  const fields = useScaffoldedFields(scaffold, id, navigateTo, decisionTypes);
-  const createDecision = toPostMethod(useCreateDecision(id).mutateAsync);
+  const { data: caseItem } = useCase(id)
+  const themeId = caseItem?.theme.id
+  const { data } = useDecisionTypes(themeId)
+  const decisionTypes = data?.results
+  const { navigateTo } = useNavigation()
+  const fields = useScaffoldedFields(scaffold, id, navigateTo, decisionTypes)
+  const createDecision = toPostMethod(useCreateDecision(id).mutateAsync)
 
   return (
     <>
@@ -62,7 +62,7 @@ const DecisionForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
         caseUserTaskId={caseUserTaskId}
       />
     </>
-  );
-};
+  )
+}
 
-export default DecisionForm;
+export default DecisionForm

@@ -1,30 +1,42 @@
-import { useEffect, useContext } from "react";
-import { Heading } from "@amsterdam/asc-ui";
-import { useCaseThemes, useCorporations, useDistricts, useProjects, useRoles, useSubjects, useTags, useTaskNames, useTasks, useTasksReasons, useUsersMe } from "@/api/hooks";
-import TableTasks from "app/components/tasks/TableTasks/TableTasks";
-import TasksFilter from "../TasksFilter/TasksFilter";
+import { useEffect, useContext } from "react"
+import { Heading } from "@amsterdam/asc-ui"
+import {
+  useCaseThemes,
+  useCorporations,
+  useDistricts,
+  useProjects,
+  useRoles,
+  useSubjects,
+  useTags,
+  useTaskNames,
+  useTasks,
+  useTasksReasons,
+  useUsersMe,
+} from "@/api/hooks"
+import TableTasks from "app/components/tasks/TableTasks/TableTasks"
+import TasksFilter from "../TasksFilter/TasksFilter"
 import useHasPermission, {
   SENSITIVE_CASE_PERMISSION,
-} from "@/hooks/useHasPermission";
-import { ContextValues } from "app/state/context/ValueProvider";
-import CaseEnforcement from "app/components/case/icons/CaseEnforcement";
-import getThemeId from "app/components/tasks/utils/getThemeId";
-import { useMappedTaskOwners } from "../hooks/useMappedTaskOwners";
+} from "@/hooks/useHasPermission"
+import { ContextValues } from "app/state/context/ValueProvider"
+import CaseEnforcement from "app/components/case/icons/CaseEnforcement"
+import getThemeId from "app/components/tasks/utils/getThemeId"
+import { useMappedTaskOwners } from "../hooks/useMappedTaskOwners"
 
-import styles from "./Tasks.module.css";
+import styles from "./Tasks.module.css"
 
-type Item = string | components["schemas"]["District"]["name"][];
+type Item = string | components["schemas"]["District"]["name"][]
 
 const EMPTY_TEXT_NO_PERMISSION =
-  "Helaas, u bent niet geautoriseerd om deze taken te bekijken.";
-const EMPTY_TEXT = "Er zijn momenteel geen open taken voor de gekozen filters.";
-const ONDERMIJNING = "Ondermijning";
+  "Helaas, u bent niet geautoriseerd om deze taken te bekijken."
+const EMPTY_TEXT = "Er zijn momenteel geen open taken voor de gekozen filters."
+const ONDERMIJNING = "Ondermijning"
 
 const Tasks: React.FC = () => {
   const {
     tasks: context,
     tasks: { updateContextTasks },
-  } = useContext(ContextValues);
+  } = useContext(ContextValues)
   const {
     districtNames,
     housingCorporations,
@@ -39,20 +51,20 @@ const Tasks: React.FC = () => {
     tags,
     taskNames,
     theme,
-  } = context;
+  } = context
 
-  const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION]);
-  const { data: roles } = useRoles();
-  const { data: me } = useUsersMe();
-  const { data: caseThemes } = useCaseThemes();
-  const { data: reasons } = useTasksReasons(theme);
-  const themeId = getThemeId(caseThemes?.results, theme);
-  const { data: projectsTheme } = useProjects(themeId);
-  const { data: subjectsTheme } = useSubjects(themeId);
-  const { data: tagsTheme } = useTags(themeId);
-  const { data: tasksDistricts } = useDistricts();
-  const { data: corporationData } = useCorporations();
-  const mappedTaskOwners = useMappedTaskOwners();
+  const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
+  const { data: roles } = useRoles()
+  const { data: me } = useUsersMe()
+  const { data: caseThemes } = useCaseThemes()
+  const { data: reasons } = useTasksReasons(theme)
+  const themeId = getThemeId(caseThemes?.results, theme)
+  const { data: projectsTheme } = useProjects(themeId)
+  const { data: subjectsTheme } = useSubjects(themeId)
+  const { data: tagsTheme } = useTags(themeId)
+  const { data: tasksDistricts } = useDistricts()
+  const { data: corporationData } = useCorporations()
+  const mappedTaskOwners = useMappedTaskOwners()
   const commonTaskArgs = {
     districtNames,
     housingCorporations,
@@ -67,7 +79,7 @@ const Tasks: React.FC = () => {
     tags,
     taskNames,
     theme,
-  };
+  }
   // While the next page/filter loads, the previous results stay visible (isPlaceholderData).
   const {
     data: dataSource,
@@ -77,7 +89,7 @@ const Tasks: React.FC = () => {
     ...commonTaskArgs,
     pagination,
     isEnforcementRequest: false,
-  });
+  })
   const {
     data: enforcementDataSource,
     isLoading: isLoadingEnforcement,
@@ -89,37 +101,37 @@ const Tasks: React.FC = () => {
       pageSize: 1000,
     },
     isEnforcementRequest: true,
-  });
-  const { data: taskNamesData } = useTaskNames(theme ?? null, role ?? null);
+  })
+  const { data: taskNamesData } = useTaskNames(theme ?? null, role ?? null)
 
   useEffect(() => {
     // Set initial role when loaded for the first time
     if (me?.role && role === undefined) {
-      updateContextTasks({ role: me.role });
+      updateContextTasks({ role: me.role })
     }
-  }, [me, role, updateContextTasks]);
+  }, [me, role, updateContextTasks])
 
   const onChangeFilter = (key: string, item: Item) => {
     const updates = {
       [key]: item,
       pagination: { ...pagination, page: 1 },
-    };
+    }
     // When role is set we need to reset the taskNames dropdown to avoid a stale selection:
     if (key === "role" || key === "theme") {
-      updates.taskNames = "";
+      updates.taskNames = ""
     }
     /*
      ** When theme is set we need to reset the selection for reason and
      ** housingCorporations to avoid a stale selection:
      */
     if (key === "theme") {
-      updates.projects = [];
-      updates.reason = "";
-      updates.subjects = [];
-      updates.tags = [];
+      updates.projects = []
+      updates.reason = ""
+      updates.subjects = []
+      updates.tags = []
     }
-    updateContextTasks(updates);
-  };
+    updateContextTasks(updates)
+  }
 
   const onChangePageSize = (pageSize: string) => {
     updateContextTasks({
@@ -128,22 +140,22 @@ const Tasks: React.FC = () => {
         pageSize: parseInt(pageSize),
         page: 1,
       },
-    });
-  };
+    })
+  }
 
   const onChangeTable = (
     pagination: TABLE.Schemas.Pagination,
     sorting: TABLE.Schemas.Sorting,
   ) => {
-    updateContextTasks({ pagination, sorting });
-  };
+    updateContextTasks({ pagination, sorting })
+  }
 
-  const districts = tasksDistricts?.results || [];
+  const districts = tasksDistricts?.results || []
   const emptyPlaceholder =
     hasPermission === false && theme === ONDERMIJNING
       ? EMPTY_TEXT_NO_PERMISSION
-      : EMPTY_TEXT;
-  const enforcementTasksAvailable = !!enforcementDataSource?.results?.length;
+      : EMPTY_TEXT
+  const enforcementTasksAvailable = !!enforcementDataSource?.results?.length
 
   return (
     <div className={styles.container}>
@@ -169,7 +181,8 @@ const Tasks: React.FC = () => {
           </div>
         )}
         <Heading as="h2">
-          Alle {enforcementTasksAvailable ? "overige" : ""} taken ({dataSource?.count ?? 0})
+          Alle {enforcementTasksAvailable ? "overige" : ""} taken (
+          {dataSource?.count ?? 0})
         </Heading>
         <TableTasks
           data={dataSource?.results ?? []}
@@ -214,7 +227,7 @@ const Tasks: React.FC = () => {
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Tasks;
+export default Tasks

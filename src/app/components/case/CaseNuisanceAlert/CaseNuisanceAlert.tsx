@@ -1,37 +1,49 @@
+import styled from "styled-components"
+import { Alert, themeSpacing } from "@amsterdam/asc-ui"
+import { useCaseEvents, useCaseWorkflows } from "@/api/hooks"
 
-import styled from "styled-components";
-import { Alert, themeSpacing } from "@amsterdam/asc-ui";
-import { useCaseEvents, useCaseWorkflows } from "@/api/hooks";
-
-const MAX_NUMBER_NUISANCE = 3;
+const MAX_NUMBER_NUISANCE = 3
 
 type Props = {
   caseId: components["schemas"]["CaseDetail"]["id"]
 }
 
 const StyledAlert = styled(Alert)`
-  margin-bottom: ${ themeSpacing(6) };
-`;
+  margin-bottom: ${themeSpacing(6)};
+`
 
 const CaseNuisanceAlert: React.FC<Props> = ({ caseId }) => {
-  const { data: caseEvents } = useCaseEvents(caseId);
-  const { data: caseWorkflowData } = useCaseWorkflows(caseId);
-  const workflows = caseWorkflowData?.results ?? [];
+  const { data: caseEvents } = useCaseEvents(caseId)
+  const { data: caseWorkflowData } = useCaseWorkflows(caseId)
+  const workflows = caseWorkflowData?.results ?? []
 
-  const totalNuisance = caseEvents?.reduce((acc, cur) => (cur?.event_values as { nuisance_detected?: boolean } | undefined)?.nuisance_detected ? acc + 1 : acc, 0);
-  const isMaxExceeded = totalNuisance !== undefined && totalNuisance >= MAX_NUMBER_NUISANCE;
-  const isNuisanceReportedInStates = workflows.find((workflow) => workflow.state.name === "Melding overlast");
-  const isNuisanceReportedInEvents = caseEvents?.find((event) => (event?.event_values as { description?: string } | undefined)?.description === "Doorzetten melding overlast");
+  const totalNuisance = caseEvents?.reduce(
+    (acc, cur) =>
+      (cur?.event_values as { nuisance_detected?: boolean } | undefined)
+        ?.nuisance_detected
+        ? acc + 1
+        : acc,
+    0,
+  )
+  const isMaxExceeded =
+    totalNuisance !== undefined && totalNuisance >= MAX_NUMBER_NUISANCE
+  const isNuisanceReportedInStates = workflows.find(
+    (workflow) => workflow.state.name === "Melding overlast",
+  )
+  const isNuisanceReportedInEvents = caseEvents?.find(
+    (event) =>
+      (event?.event_values as { description?: string } | undefined)
+        ?.description === "Doorzetten melding overlast",
+  )
 
-  const isVisible = isMaxExceeded && !isNuisanceReportedInStates && !isNuisanceReportedInEvents;
+  const isVisible =
+    isMaxExceeded && !isNuisanceReportedInStates && !isNuisanceReportedInEvents
 
-  return (
-    isVisible ? (
-      <StyledAlert level="warning" dismissible>
-        {`LET OP: er is ${ MAX_NUMBER_NUISANCE } keer overlast geconstateerd. Voer de taak 'Melding overlast' op!`}
-      </StyledAlert>
-    ) : null
-  );
-};
+  return isVisible ? (
+    <StyledAlert level="warning" dismissible>
+      {`LET OP: er is ${MAX_NUMBER_NUISANCE} keer overlast geconstateerd. Voer de taak 'Melding overlast' op!`}
+    </StyledAlert>
+  ) : null
+}
 
-export default CaseNuisanceAlert;
+export default CaseNuisanceAlert

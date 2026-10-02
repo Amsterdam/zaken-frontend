@@ -1,8 +1,8 @@
-import { Alert, Heading, Paragraph } from "@amsterdam/asc-ui";
+import { Alert, Heading, Paragraph } from "@amsterdam/asc-ui"
 
 type Props = {
-  isVisible?: boolean;
-};
+  isVisible?: boolean
+}
 
 const CaseSensitiveAddressAlert: React.FC<Props> = ({ isVisible = false }) =>
   isVisible ? (
@@ -14,6 +14,6 @@ const CaseSensitiveAddressAlert: React.FC<Props> = ({ isVisible = false }) =>
         informatie contact op met team Ondermijning.
       </Paragraph>
     </Alert>
-  ) : null;
+  ) : null
 
-export default CaseSensitiveAddressAlert;
+export default CaseSensitiveAddressAlert
