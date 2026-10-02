@@ -342,7 +342,7 @@ Testchecklist (per formulier: invullen, bevestigen, terug op de zaak):
 
 ### 1c. Opruimen ✅ (wacht op test)
 - [x] De hele oude laag `src/app/state/rest/` is verwijderd: `ApiProvider`, `useApiRequest`, de request-queue, `useApiCache`, `useContextCache`, de mock-requests, `errorHandler`, `cleanParamObject` en de brug in `useApiRequest`. `ApiProvider` is uit `App.tsx`.
-- [x] Wat nog gebruikt werd is verhuisd: `makeApiUrl`/`makeTonApiUrl` → `src/api/utils/makeApiUrl.ts`; `useHasPermission` (samengevoegd met `usePermissions`, logica ongewijzigd, nu met test), `useOtherAddressesByBagId` en `usePanoramaByBagId` → `src/hooks/` (de doelmap uit Fase 5).
+- [x] Wat nog gebruikt werd is verhuisd: `makeApiUrl`/`makeTonApiUrl` → `src/api/utils/makeApiUrl.ts`; `useHasPermission` (samengevoegd met `usePermissions`, met test; de oude "zoek dubbelen"-check — samengevoegde lijsten in een `Set` — is vervangen door `permissionsToCheck.some(p => permissions.includes(p))`, die geen onterechte toegang meer geeft bij een dubbel recht in de lijst van de gebruiker of in de vraag), `useOtherAddressesByBagId` en `usePanoramaByBagId` → `src/hooks/` (de doelmap uit Fase 5).
 - [x] Dependencies weg: `axios`, `qs`, `lodash.merge`, `lodash.isempty` (+ `@types/qs`, `@types/lodash.merge`, `@types/lodash.isempty`). De build controleert dat geen andere library er stilletjes op leunde.
 - [ ] `immer` blijft nog: gebruikt door `useFlashMessagesReducer` en `ShowHide` (gaan weg met de flash messages → toasts in Fase 2 en `ShowHide` in Fase 3).
 - [x] `ValueProvider`: de ongebruikte `results`/`count` zijn weg; alleen de filterwaarden staan er nog in.

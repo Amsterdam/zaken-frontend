@@ -25,13 +25,9 @@ const useHasPermission = (
   if (!Array.isArray(permissionsToCheck) || !Array.isArray(permissions)) {
     return [false, false] as const
   }
-  /*
-   ** Merge permissions and check for duplicates.
-   ** If one or more values are duplicated, user has permission
-   */
-  const mergedPermissions = [...permissions, ...permissionsToCheck]
-  const hasPermission =
-    new Set(mergedPermissions).size !== mergedPermissions.length
+  const hasPermission = permissionsToCheck.some((permission) =>
+    permissions.includes(permission),
+  )
 
   return [hasPermission, false] as const
 }

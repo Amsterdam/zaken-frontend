@@ -37,4 +37,24 @@ describe("useHasPermission", () => {
   it("denies when the user has none of the permissions", () => {
     expect(render([SENSITIVE_CASE_PERMISSION])).toEqual([false, false])
   })
+
+  it("denies when nothing is asked", () => {
+    expect(render([])).toEqual([false, false])
+  })
+
+  // The old check looked for a duplicate in both lists merged, which gave
+  // access in these cases too.
+  it("denies when the user's own permissions contain a duplicate", () => {
+    me = {
+      data: { permissions: [CAN_PERFORM_TASK, CAN_PERFORM_TASK] },
+      isLoading: false,
+    }
+    expect(render([SENSITIVE_CASE_PERMISSION])).toEqual([false, false])
+  })
+
+  it("denies when a permission the user doesn't have is asked twice", () => {
+    expect(
+      render([SENSITIVE_CASE_PERMISSION, SENSITIVE_CASE_PERMISSION]),
+    ).toEqual([false, false])
+  })
 })
