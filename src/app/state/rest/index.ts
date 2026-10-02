@@ -28,7 +28,6 @@ export * from "./benkAgg";
 export * from "./case";
 export * from "./cases";
 export * from "./dataPunt";
-export * from "./feedback";
 export * from "./fines";
 export * from "./help";
 export * from "./listing";

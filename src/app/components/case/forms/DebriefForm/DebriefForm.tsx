@@ -5,10 +5,10 @@ import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm";
 import {
   useCase,
-  useCaseThemes,
   useDebriefingCreate,
   useViolationTypes,
 } from "app/state/rest";
+import { useCaseThemes } from "@/api/hooks";
 import useNavigation from "app/routing/useNavigation";
 
 type Props = {
@@ -24,7 +24,7 @@ const DebriefCreateForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
   const violationTypes = data?.results ?? [];
   const [, { execPost }] = useDebriefingCreate();
   const { navigateTo } = useNavigation();
-  const [themesData] = useCaseThemes();
+  const { data: themesData } = useCaseThemes();
   const fields = useScaffoldedFields(
     scaffold,
     id,

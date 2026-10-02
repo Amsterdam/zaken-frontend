@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import scaffold from "./scaffold";
 import {
-  useCaseThemes, useReasons, useCaseCreate, useProjects,
+  useReasons, useCaseCreate, useProjects,
   useListing, useSubjects, useCasesByBagId, useCorporations, useBagPdokByBagId,
 } from "app/state/rest";
+import { useCaseThemes } from "@/api/hooks";
 import ConfirmScaffoldForm from "app/components/shared/ConfirmScaffoldForm/ConfirmScaffoldForm";
 import useNavigateWithFlashMessage from "app/state/flashMessages/useNavigateWithFlashMessage";
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields";
@@ -47,7 +48,7 @@ const mapData = (bagId: components["schemas"]["Address"]["bag_id"], tonId?: stri
   };
 
 const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
-  const [caseThemes] = useCaseThemes();
+  const { data: caseThemes } = useCaseThemes();
   const [themeId, setThemeId] = useState<components["schemas"]["CaseTheme"]["id"]>();
 
   useEffect(() => {

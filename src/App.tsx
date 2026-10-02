@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { ThemeProvider, GlobalStyle } from "@amsterdam/asc-ui";
 import { BrowserRouter } from "react-router-dom";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { queryClient } from "@/api/queryClient";
 import { hasAuthParams, useAuth } from "react-oidc-context";
 import Router from "app/routing/components/Router";
 import FlashMessageProvider from "app/state/flashMessages/FlashMessageProvider";
@@ -50,13 +53,16 @@ const App = () => {
         <GlobalStyle />
         <BrowserRouter>
           <FlashMessageProvider>
-            <ApiProvider>
-              <ValueProvider>
-                <PageTitle />
-                <Feedback />
-                <Router />
-              </ValueProvider>
-            </ApiProvider>
+            <QueryClientProvider client={queryClient}>
+              <ApiProvider>
+                <ValueProvider>
+                  <PageTitle />
+                  <Feedback />
+                  <Router />
+                </ValueProvider>
+              </ApiProvider>
+              {import.meta.env.DEV && <ReactQueryDevtools />}
+            </QueryClientProvider>
           </FlashMessageProvider>
         </BrowserRouter>
       </ThemeProvider>

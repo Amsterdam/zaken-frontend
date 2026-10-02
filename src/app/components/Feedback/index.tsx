@@ -6,7 +6,7 @@ import { ExternalLink, PersonalLogin } from "@amsterdam/asc-assets";
 import FeedbackButton from "./FeedbackButton";
 import Modal, { ModalBlock } from "app/components/shared/Modal/Modal";
 import { useModal } from "app/components/shared/Modal/hooks/useModal";
-import { useFeedback } from "app/state/rest";
+import { useCreateFeedback } from "@/api/hooks";
 import { useFlashMessages } from "app/state/flashMessages/useFlashMessages";
 
 const StyledTextArea = styled(TextArea)`
@@ -31,33 +31,32 @@ const Feedback: React.FC = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
   const auth = useAuth();
   const email = auth.user?.profile?.email;
-  const [, { execPost }] = useFeedback();
+  const { mutate: createFeedback, isPending } = useCreateFeedback();
   const { addSuccessFlashMessage } = useFlashMessages();
   const [feedback, setFeedback] = useState("");
-  const [loading, setLoading] = useState(false);
 
   const onSubmitFeedback = () => {
-    setLoading(true);
-    execPost({
-      feedback,
-      url: window.location.href,
-      user_agent: navigator.userAgent,
-      screen: `${ window.innerWidth }x${ window.innerHeight }`,
-    })
-      .then((e) => {
-        if ((e as { status: number })?.status === 200) {
+    createFeedback(
+      {
+        feedback,
+        url: window.location.href,
+        user_agent: navigator.userAgent,
+        screen: `${ window.innerWidth }x${ window.innerHeight }`,
+      },
+      {
+        onSuccess: () => {
           addSuccessFlashMessage(
             window.location.pathname,
             "Succes",
             "Bedankt voor je feedback!",
           );
-        }
-      })
-      .finally(() => {
-        setLoading(false);
-        closeModal();
-        setFeedback("");
-      });
+        },
+        onSettled: () => {
+          closeModal();
+          setFeedback("");
+        },
+      },
+    );
   };
 
   const onCloseModal = () => {
@@ -96,8 +95,8 @@ const Feedback: React.FC = () => {
             <Button
               onClick={onSubmitFeedback}
               variant="primary"
-              disabled={!feedback.trim() || loading}
-              iconLeft={loading ? <Spinner /> : null}
+              disabled={!feedback.trim() || isPending}
+              iconLeft={isPending ? <Spinner /> : null}
             >
               Versturen
             </Button>

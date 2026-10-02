@@ -4,7 +4,6 @@ import TableCases from "app/components/cases/TableCases/TableCases";
 import CasesFilter from "app/components/cases/CasesFilter/CasesFilter";
 import {
   useCases,
-  useCaseThemes,
   useTasksReasons,
   useDistricts,
   useCorporations,
@@ -12,6 +11,7 @@ import {
   useProjects,
   useTags,
 } from "app/state/rest";
+import { useCaseThemes } from "@/api/hooks";
 import useHasPermission, {
   SENSITIVE_CASE_PERMISSION,
 } from "app/state/rest/custom/usePermissions/useHasPermission";
@@ -51,7 +51,7 @@ const Cases: React.FC = () => {
     updateContextCases,
   } = useContext(ContextValues)["cases"];
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION]);
-  const [caseThemes] = useCaseThemes();
+  const { data: caseThemes } = useCaseThemes();
   const [reasons] = useTasksReasons(theme);
   const themeId = getThemeId(caseThemes?.results, theme);
   const [projectsTheme] = useProjects(themeId);

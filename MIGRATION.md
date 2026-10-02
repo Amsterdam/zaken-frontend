@@ -149,6 +149,37 @@ Per groep: hook herschrijven → alle consumenten aanpassen → oude hook verwij
 >
 > **✅ Akkoord** op dit voorbeeld → pas daarna de overige groepen in de volgorde hierboven.
 
+#### Status pilot: gebouwd, wacht op test en akkoord
+
+Wat er staat:
+
+| Bestand | Wat |
+| --- | --- |
+| `src/api/useApiFetch.ts` | `fetch` met Bearer-token; gooit een `ApiError` (`status`, `message`, `url`, plus de JSON-body zoals `detail`); bij 403 → `/auth`, net als `useProtectedRequest` |
+| `src/api/queryClient.ts` | Defaults (`retry: false`, `refetchOnWindowFocus: false`, `staleTime` 5 min) en een globale foutmelding met precies dezelfde titel en opbouw als de oude `useErrorHandler`; opt-out via `meta: { globalErrorToast: false }` |
+| `src/app/state/flashMessages/flashMessageBridge.ts` | Laat de `QueryClient` (buiten React) de bestaande flash messages tonen; `FlashMessageProvider` registreert zich |
+| `src/api/queryKeys.ts` | Key-factory, nu alleen `themes` |
+| `src/api/hooks/themes.ts` | `useCaseThemes()` → `useQuery` (vervangt de oude in `app/state/rest/themes.ts`) |
+| `src/api/hooks/feedback.ts` | `useCreateFeedback()` → `useMutation` (vervangt `app/state/rest/feedback.ts`, verwijderd) |
+| `src/test-utils/createQueryWrapper.tsx` | Verse `QueryClient` per test |
+| `src/api/**/__tests__` | 11 tests: fetch/headers/body, `ApiError`, 403-redirect, opmaak foutmelding, dedupe van `useCaseThemes`, POST van feedback |
+
+`QueryClientProvider` hangt in `App.tsx` naast de bestaande `ApiProvider`; de React Query Devtools staan alleen aan in development. Aangepaste consumenten: `Cases`, `Tasks`, `CreateForm`, `DebriefForm`, `ChangeSubjectForm` en `Feedback`. Die laatste gebruikt nu `isPending` in plaats van een eigen `loading`-state.
+
+Bewuste verschillen met het oude gedrag:
+- **Verversen:** de oude cache werd nooit opnieuw opgehaald tenzij hij ongeldig werd gemaakt. Nu zijn thema's 5 minuten "vers"; daarna worden ze bij het openen van een pagina op de achtergrond opnieuw opgehaald (de oude data blijft zichtbaar).
+- **Foutmelding zonder `detail`:** toont nu de HTTP-statustekst (bijv. `Internal Server Error`) in plaats van de axios-tekst `Request failed with status code 500`.
+- **Feedback** maakte bij de POST de cachegroep `supportContacts` leeg. Feedback verandert de supportcontacten niet, dus dat is niet overgenomen.
+
+Testchecklist voor acceptatie:
+- [ ] Zakenoverzicht en takenoverzicht: het themafilter toont alle thema's en filteren werkt.
+- [ ] Zaak aanmaken: themakeuze werkt, ook via de TON-flow (alleen het TON-thema).
+- [ ] Debrief-formulier en "Onderwerp wijzigen" op zaakdetail: thema's laden.
+- [ ] Devtools (lokaal): één query `["themes","list"]`, ook als je tussen deze pagina's wisselt (geen dubbele requests in het Network-tabblad).
+- [ ] Feedback versturen: knop disabled met spinner tijdens versturen, daarna "Bedankt voor je feedback!" en de modal sluit.
+- [ ] Fout: zet in de Network-tab request blocking op `/themes/` of `/feedback/` → zelfde rode melding "Oeps er ging iets mis!" als voorheen, met de URL.
+- [ ] 403: een gebruiker zonder rechten komt op `/auth`, zoals nu.
+
 ### 1c. Opruimen
 - [ ] `src/app/state/rest/hooks/*`, `provider/*` en `ApiProvider` verwijderen.
 - [ ] Dependencies weg: `axios`, `immer` (ook uit `useFlashMessagesReducer` en `ShowHide`, of die laatste pas in Fase 3), `lodash.merge`, `qs` (vervangen door `URLSearchParams`/`stringifyQueryParams`).

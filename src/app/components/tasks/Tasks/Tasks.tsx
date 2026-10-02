@@ -3,7 +3,6 @@ import { Heading } from "@amsterdam/asc-ui";
 import {
   useRoles,
   useTasks,
-  useCaseThemes,
   useTaskNames,
   useProjects,
   useUsersMe,
@@ -14,6 +13,7 @@ import {
   useTags,
   getQueryUrl as getTasksQueryUrl,
 } from "app/state/rest";
+import { useCaseThemes } from "@/api/hooks";
 import TableTasks from "app/components/tasks/TableTasks/TableTasks";
 import TasksFilter from "../TasksFilter/TasksFilter";
 import useHasPermission, {
@@ -60,7 +60,7 @@ const Tasks: React.FC = () => {
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION]);
   const [roles] = useRoles();
   const [me] = useUsersMe();
-  const [caseThemes] = useCaseThemes();
+  const { data: caseThemes } = useCaseThemes();
   const [reasons] = useTasksReasons(theme);
   const themeId = getThemeId(caseThemes?.results, theme);
   const [projectsTheme] = useProjects(themeId);

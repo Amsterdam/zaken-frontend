@@ -3,17 +3,6 @@ import { useErrorHandler } from "./hooks/utils/errorHandler";
 import { makeApiUrl } from "./hooks/utils/apiUrl";
 import useApiRequest from "./hooks/useApiRequest";
 
-export const useCaseThemes = (options?: Options) => {
-  const handleError = useErrorHandler();
-  return useApiRequest<components["schemas"]["PaginatedCaseThemeList"]>({
-    ...options,
-    url: makeApiUrl("themes"),
-    groupName: "themes",
-    handleError,
-    isProtected: true,
-  });
-};
-
 export const useReasons = (themeId?: components["schemas"]["CaseTheme"]["id"], options?: Options) => {
   const handleError = useErrorHandler();
   return useApiRequest<components["schemas"]["PaginatedCaseReasonList"]>({
