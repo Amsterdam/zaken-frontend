@@ -1,6 +1,6 @@
-import Modal, { ModalBlock } from "app/components/shared/Modal/Modal";
-import UpdateScheduleForm from "./form/UpdateScheduleForm";
-import { Schedule } from "./types";
+import Modal, { ModalBlock } from "app/components/shared/Modal/Modal"
+import UpdateScheduleForm from "./form/UpdateScheduleForm"
+import { Schedule } from "./types"
 
 export type Props = {
   isOpen: boolean
@@ -8,7 +8,7 @@ export type Props = {
   onSubmit: (data: any) => void
   schedule: Schedule
   scheduleTypes: components["schemas"]["ThemeScheduleTypes"]
-};
+}
 
 const UpdateScheduleModal: React.FC<Props> = ({
   isOpen,
@@ -27,6 +27,6 @@ const UpdateScheduleModal: React.FC<Props> = ({
       />
     </ModalBlock>
   </Modal>
-);
+)
 
-export default UpdateScheduleModal;
+export default UpdateScheduleModal

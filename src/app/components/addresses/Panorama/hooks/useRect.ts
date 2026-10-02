@@ -1,6 +1,6 @@
 // LINK: https://codesandbox.io/s/userect-hook-1y5t7?file=/src/useRect.tsx:0-1521
-import { useLayoutEffect, useCallback, useState } from "react";
-import debounce from "lodash.debounce";
+import { useLayoutEffect, useCallback, useState } from "react"
+import debounce from "lodash.debounce"
 
 type RectResult = {
   bottom: number
@@ -9,7 +9,7 @@ type RectResult = {
   right: number
   top: number
   width: number
-};
+}
 
 const getRect = <T extends HTMLElement>(element?: T): RectResult => {
   let rect: RectResult = {
@@ -19,10 +19,10 @@ const getRect = <T extends HTMLElement>(element?: T): RectResult => {
     right: 0,
     top: 0,
     width: 0,
-  };
-  if (element) rect = element.getBoundingClientRect();
-  return rect;
-};
+  }
+  if (element) rect = element.getBoundingClientRect()
+  return rect
+}
 
 export default <T extends HTMLElement>(
   ref: React.RefObject<T>,
@@ -30,32 +30,32 @@ export default <T extends HTMLElement>(
 ): RectResult => {
   const [rect, setRect] = useState<RectResult>(
     ref?.current ? getRect(ref.current) : getRect(),
-  );
+  )
 
   const handleResize = useCallback(() => {
-    if (ref.current == null) return;
-    setRect(getRect(ref.current)); // Update client rect
-  }, [ref]);
+    if (ref.current == null) return
+    setRect(getRect(ref.current)) // Update client rect
+  }, [ref])
 
   useLayoutEffect(() => {
-    const element = ref.current;
-    if (element == null) return;
+    const element = ref.current
+    if (element == null) return
 
-    handleResize();
+    handleResize()
 
-    const debounced = debounce(handleResize, delay);
+    const debounced = debounce(handleResize, delay)
 
     if (typeof ResizeObserver === "function") {
-      const resizeObserver = new ResizeObserver(debounced);
-      resizeObserver.observe(element);
+      const resizeObserver = new ResizeObserver(debounced)
+      resizeObserver.observe(element)
       return () => {
-        resizeObserver.disconnect();
-      };
+        resizeObserver.disconnect()
+      }
     } else {
-      window.addEventListener("resize", debounced); // Browser support, remove freely
-      return () => window.removeEventListener("resize", debounced);
+      window.addEventListener("resize", debounced) // Browser support, remove freely
+      return () => window.removeEventListener("resize", debounced)
     }
-  }, [ref, delay, handleResize]);
+  }, [ref, delay, handleResize])
 
-  return rect;
-};
+  return rect
+}

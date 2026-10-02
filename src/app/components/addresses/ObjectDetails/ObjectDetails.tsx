@@ -1,24 +1,18 @@
-import { useBenkAgg } from "app/state/rest";
-import { DefinitionList } from "@amsterdam/wonen-ui";
-import { getAddressFromBenkAggResponse } from "app/components/addresses/utils";
-import useValues from "./hooks/useValues";
+import { useBenkAgg } from "@/api/hooks"
+import { DefinitionList } from "@amsterdam/wonen-ui"
+import { getAddressFromBenkAggResponse } from "app/components/addresses/utils"
+import useValues from "./hooks/useValues"
 
 type Props = {
   bagId: components["schemas"]["Address"]["bag_id"]
 }
 
 const ObjectDetails: React.FC<Props> = ({ bagId }) => {
-  const [benkAggResponse, { isBusy }] = useBenkAgg(bagId);
-  const benkAggAddress = getAddressFromBenkAggResponse(benkAggResponse);
-  const values = useValues(benkAggAddress);
+  const { data: benkAggResponse, isLoading: isBusy } = useBenkAgg(bagId)
+  const benkAggAddress = getAddressFromBenkAggResponse(benkAggResponse)
+  const values = useValues(benkAggAddress)
 
-  return (
-    <DefinitionList
-      loading={ isBusy }
-      title="Objectdetails"
-      data={ values }
-    />
-  );
-};
+  return <DefinitionList loading={isBusy} title="Objectdetails" data={values} />
+}
 
-export default ObjectDetails;
+export default ObjectDetails

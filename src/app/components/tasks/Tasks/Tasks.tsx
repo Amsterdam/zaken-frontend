@@ -1,46 +1,43 @@
-import { useEffect, useContext } from "react";
-import { Heading } from "@amsterdam/asc-ui";
+import { useEffect, useContext } from "react"
+import { Heading } from "@amsterdam/asc-ui"
 import {
-  useRoles,
-  useTasks,
   useCaseThemes,
-  useTaskNames,
-  useProjects,
-  useUsersMe,
-  useTasksReasons,
-  useDistricts,
   useCorporations,
+  useDistricts,
+  useProjects,
+  useRoles,
   useSubjects,
   useTags,
-  getQueryUrl as getTasksQueryUrl,
-} from "app/state/rest";
-import TableTasks from "app/components/tasks/TableTasks/TableTasks";
-import TasksFilter from "../TasksFilter/TasksFilter";
+  useTaskNames,
+  useTasks,
+  useTasksReasons,
+  useUsersMe,
+} from "@/api/hooks"
+import TableTasks from "app/components/tasks/TableTasks/TableTasks"
+import TasksFilter from "../TasksFilter/TasksFilter"
 import useHasPermission, {
   SENSITIVE_CASE_PERMISSION,
-} from "app/state/rest/custom/usePermissions/useHasPermission";
-import { ContextValues } from "app/state/context/ValueProvider";
-import useContextCache from "app/state/rest/provider/useContextCache";
-import CaseEnforcement from "app/components/case/icons/CaseEnforcement";
-import getThemeId from "app/components/tasks/utils/getThemeId";
-import { useMappedTaskOwners } from "../hooks/useMappedTaskOwners";
+} from "@/hooks/useHasPermission"
+import { ContextValues } from "app/state/context/ValueProvider"
+import CaseEnforcement from "app/components/case/icons/CaseEnforcement"
+import getThemeId from "app/components/tasks/utils/getThemeId"
+import { useMappedTaskOwners } from "../hooks/useMappedTaskOwners"
 
-import styles from "./Tasks.module.css";
+import styles from "./Tasks.module.css"
 
-type Item = string | components["schemas"]["District"]["name"][];
+type Item = string | components["schemas"]["District"]["name"][]
 
 const EMPTY_TEXT_NO_PERMISSION =
-  "Helaas, u bent niet geautoriseerd om deze taken te bekijken.";
-const EMPTY_TEXT = "Er zijn momenteel geen open taken voor de gekozen filters.";
-const ONDERMIJNING = "Ondermijning";
+  "Helaas, u bent niet geautoriseerd om deze taken te bekijken."
+const EMPTY_TEXT = "Er zijn momenteel geen open taken voor de gekozen filters."
+const ONDERMIJNING = "Ondermijning"
 
 const Tasks: React.FC = () => {
   const {
     tasks: context,
     tasks: { updateContextTasks },
-  } = useContext(ContextValues);
+  } = useContext(ContextValues)
   const {
-    count,
     districtNames,
     housingCorporations,
     housingCorporationIsNull,
@@ -48,27 +45,26 @@ const Tasks: React.FC = () => {
     pagination,
     projects,
     reason,
-    results,
     role,
     sorting,
     subjects,
     tags,
     taskNames,
     theme,
-  } = context;
+  } = context
 
-  const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION]);
-  const [roles] = useRoles();
-  const [me] = useUsersMe();
-  const [caseThemes] = useCaseThemes();
-  const [reasons] = useTasksReasons(theme);
-  const themeId = getThemeId(caseThemes?.results, theme);
-  const [projectsTheme] = useProjects(themeId);
-  const [subjectsTheme] = useSubjects(themeId);
-  const [tagsTheme] = useTags(themeId);
-  const [tasksDistricts] = useDistricts();
-  const [corporationData] = useCorporations();
-  const mappedTaskOwners = useMappedTaskOwners();
+  const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
+  const { data: roles } = useRoles()
+  const { data: me } = useUsersMe()
+  const { data: caseThemes } = useCaseThemes()
+  const { data: reasons } = useTasksReasons(theme)
+  const themeId = getThemeId(caseThemes?.results, theme)
+  const { data: projectsTheme } = useProjects(themeId)
+  const { data: subjectsTheme } = useSubjects(themeId)
+  const { data: tagsTheme } = useTags(themeId)
+  const { data: tasksDistricts } = useDistricts()
+  const { data: corporationData } = useCorporations()
+  const mappedTaskOwners = useMappedTaskOwners()
   const commonTaskArgs = {
     districtNames,
     housingCorporations,
@@ -83,69 +79,59 @@ const Tasks: React.FC = () => {
     tags,
     taskNames,
     theme,
-  };
-  const [dataSource, { isBusy }] = useTasks({
+  }
+  // While the next page/filter loads, the previous results stay visible (isPlaceholderData).
+  const {
+    data: dataSource,
+    isLoading,
+    isPlaceholderData,
+  } = useTasks({
     ...commonTaskArgs,
     pagination,
     isEnforcementRequest: false,
-  });
-  const [enforcementDataSource, { isBusy: isBusyEnforcement }] = useTasks({
+  })
+  const {
+    data: enforcementDataSource,
+    isLoading: isLoadingEnforcement,
+    isPlaceholderData: isPlaceholderEnforcement,
+  } = useTasks({
     ...commonTaskArgs,
     pagination: {
       page: 1,
       pageSize: 1000,
     },
     isEnforcementRequest: true,
-  });
-  const [taskNamesData] = useTaskNames(theme ?? null, role ?? null);
-  const queryUrl = getTasksQueryUrl(
-    hasPermission,
-    pagination,
-    sorting,
-    theme,
-    role,
-    owners,
-  );
-  const { clearContextCache } = useContextCache("cases", queryUrl);
+  })
+  const { data: taskNamesData } = useTaskNames(theme ?? null, role ?? null)
 
   useEffect(() => {
     // Set initial role when loaded for the first time
     if (me?.role && role === undefined) {
-      updateContextTasks({ role: me.role });
+      updateContextTasks({ role: me.role })
     }
-  }, [me, role, updateContextTasks]);
-
-  useEffect(() => {
-    if (dataSource === undefined) {
-      updateContextTasks({ results: [], count: 0 });
-    } else {
-      updateContextTasks(dataSource);
-    }
-  }, [dataSource, updateContextTasks]);
+  }, [me, role, updateContextTasks])
 
   const onChangeFilter = (key: string, item: Item) => {
-    // Empty cache to force a new data fetch.
-    clearContextCache();
     const updates = {
       [key]: item,
       pagination: { ...pagination, page: 1 },
-    };
+    }
     // When role is set we need to reset the taskNames dropdown to avoid a stale selection:
     if (key === "role" || key === "theme") {
-      updates.taskNames = "";
+      updates.taskNames = ""
     }
     /*
      ** When theme is set we need to reset the selection for reason and
      ** housingCorporations to avoid a stale selection:
      */
     if (key === "theme") {
-      updates.projects = [];
-      updates.reason = "";
-      updates.subjects = [];
-      updates.tags = [];
+      updates.projects = []
+      updates.reason = ""
+      updates.subjects = []
+      updates.tags = []
     }
-    updateContextTasks(updates);
-  };
+    updateContextTasks(updates)
+  }
 
   const onChangePageSize = (pageSize: string) => {
     updateContextTasks({
@@ -154,22 +140,22 @@ const Tasks: React.FC = () => {
         pageSize: parseInt(pageSize),
         page: 1,
       },
-    });
-  };
+    })
+  }
 
   const onChangeTable = (
     pagination: TABLE.Schemas.Pagination,
     sorting: TABLE.Schemas.Sorting,
   ) => {
-    updateContextTasks({ pagination, sorting });
-  };
+    updateContextTasks({ pagination, sorting })
+  }
 
-  const districts = tasksDistricts?.results || [];
+  const districts = tasksDistricts?.results || []
   const emptyPlaceholder =
     hasPermission === false && theme === ONDERMIJNING
       ? EMPTY_TEXT_NO_PERMISSION
-      : EMPTY_TEXT;
-  const enforcementTasksAvailable = !!enforcementDataSource?.results?.length;
+      : EMPTY_TEXT
+  const enforcementTasksAvailable = !!enforcementDataSource?.results?.length
 
   return (
     <div className={styles.container}>
@@ -186,26 +172,26 @@ const Tasks: React.FC = () => {
             </Heading>
             <TableTasks
               data={enforcementDataSource?.results || []}
-              isBusy={isBusyEnforcement}
+              isBusy={isLoadingEnforcement || isPlaceholderEnforcement}
               onChange={onChangeTable}
               pagination={false}
               sorting={sorting}
               emptyPlaceholder={emptyPlaceholder}
-              isEnforcement
             />
           </div>
         )}
         <Heading as="h2">
-          Alle {enforcementTasksAvailable ? "overige" : ""} taken ({count})
+          Alle {enforcementTasksAvailable ? "overige" : ""} taken (
+          {dataSource?.count ?? 0})
         </Heading>
         <TableTasks
-          data={results || []}
-          isBusy={isBusy}
+          data={dataSource?.results ?? []}
+          isBusy={isLoading || isPlaceholderData}
           onChange={onChangeTable}
           pagination={{
             page: pagination.page,
             pageSize: pagination.pageSize,
-            collectionSize: count || 1,
+            collectionSize: dataSource?.count || 1,
             paginationLength: 9,
           }}
           sorting={sorting}
@@ -241,7 +227,7 @@ const Tasks: React.FC = () => {
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Tasks;
+export default Tasks

@@ -1,16 +1,18 @@
-import { FormPositioner } from "@amsterdam/amsterdam-react-final-form";
-import { Fields } from "app/components/shared/Form/ScaffoldFields";
-import InfoButton from "app/components/shared/InfoHeading/InfoButton";
-import type { NavigateToFunction } from "app/routing/useNavigation";
+import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
+import { Fields } from "app/components/shared/Form/ScaffoldFields"
+import InfoButton from "app/components/shared/InfoHeading/InfoButton"
+import type { NavigateToFunction } from "app/routing/useNavigation"
 
-const descriptionRequired = (idDecision: number | undefined, shouldMatch = true) => shouldMatch ? idDecision === 9 : idDecision !== 9;
+const descriptionRequired = (
+  idDecision: number | undefined,
+  shouldMatch = true,
+) => (shouldMatch ? idDecision === 9 : idDecision !== 9)
 
 export default (
   caseId: components["schemas"]["CaseDetail"]["id"],
   navigateTo: NavigateToFunction,
   decisions?: components["schemas"]["DecisionType"][],
 ) => {
-
   const fields = {
     decision_type: {
       type: "ComplexSelectField",
@@ -27,17 +29,27 @@ export default (
     sanction_amount: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { decision_type: components["schemas"]["DecisionType"] } }) => formValues?.values?.decision_type?.is_sanction === true,
+        shouldShow: (formValues: {
+          values?: { decision_type: components["schemas"]["DecisionType"] }
+        }) => formValues?.values?.decision_type?.is_sanction === true,
         field: {
           type: "NumberField",
           props: {
             isRequired: true,
             label: "Wat is het opgelegde bedrag?",
-            extraLabel: <InfoButton infoTitle="Hoe vul ik het bedrag in?" infoText="Vul hier alleen cijfers in, geen punten, komma's of tekens."></InfoButton>,
+            extraLabel: (
+              <InfoButton
+                infoTitle="Hoe vul ik het bedrag in?"
+                infoText="Vul hier alleen cijfers in, geen punten, komma's of tekens."
+              ></InfoButton>
+            ),
             name: "sanction_amount",
             pattern: "[0-9]",
             min: 0,
-            validate: (value: number | undefined) => Number.isInteger(value) ? false : "Voer alleen cijfers in, geen punten of komma's!",
+            validate: (value: number | undefined) =>
+              Number.isInteger(value)
+                ? false
+                : "Voer alleen cijfers in, geen punten of komma's!",
           },
         },
       },
@@ -45,7 +57,9 @@ export default (
     description: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { decision_type: components["schemas"]["DecisionType"] } }) => descriptionRequired(formValues?.values?.decision_type?.id, false),
+        shouldShow: (formValues: {
+          values?: { decision_type: components["schemas"]["DecisionType"] }
+        }) => descriptionRequired(formValues?.values?.decision_type?.id, false),
         field: {
           type: "TextAreaField",
           props: {
@@ -59,7 +73,9 @@ export default (
     description_closing: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { decision_type: components["schemas"]["DecisionType"] } }) => descriptionRequired(formValues?.values?.decision_type?.id),
+        shouldShow: (formValues: {
+          values?: { decision_type: components["schemas"]["DecisionType"] }
+        }) => descriptionRequired(formValues?.values?.decision_type?.id),
         field: {
           type: "TextAreaField",
           props: {
@@ -86,7 +102,7 @@ export default (
         align: "right",
       },
     },
-  };
+  }
 
   return new FormPositioner(fields as Fields)
     .setGrid("mobileS", "1fr 1fr", [
@@ -96,6 +112,5 @@ export default (
       ["description_closing", "description_closing"],
       ["secondaryButton", "submit"],
     ])
-    .getScaffoldProps();
-};
-
+    .getScaffoldProps()
+}

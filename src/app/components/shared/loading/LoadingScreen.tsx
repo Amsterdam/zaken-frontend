@@ -1,5 +1,5 @@
-import { Spinner } from "@amsterdam/asc-ui";
-import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout";
+import { Spinner } from "@amsterdam/asc-ui"
+import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
 
 export const LoadingScreen: React.FC = () => (
   <DefaultLayout>
@@ -14,6 +14,6 @@ export const LoadingScreen: React.FC = () => (
       <Spinner size={36} />
     </div>
   </DefaultLayout>
-);
+)
 
-export default LoadingScreen;
+export default LoadingScreen

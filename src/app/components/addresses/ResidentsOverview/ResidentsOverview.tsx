@@ -1,26 +1,26 @@
-import { Residents } from "@amsterdam/wonen-ui";
-import { useResidents } from "app/state/rest";
-import LoadingDetails from "app/components/shared/Details/LoadingDetails";
+import { Residents } from "@amsterdam/wonen-ui"
+import { useResidents } from "@/api/hooks"
+import LoadingDetails from "app/components/shared/Details/LoadingDetails"
 
 type ResidentsResponse = {
-    type: string;
-    personen: {
-        [name: string]: any;
-    };
-};
+  type: string
+  personen: {
+    [name: string]: any
+  }
+}
 
 type Props = {
-  bagId: components["schemas"]["Address"]["bag_id"];
-};
+  bagId: components["schemas"]["Address"]["bag_id"]
+}
 
 const ResidentsOverview: React.FC<Props> = ({ bagId }) => {
-  const [data, { isBusy }] = useResidents(bagId);
-  const dataSource = (data || []) as unknown as ResidentsResponse;
+  const { data, isLoading: isBusy } = useResidents(bagId)
+  const dataSource = (data || []) as unknown as ResidentsResponse
 
   if (isBusy) {
-    return <LoadingDetails numRows={4} />;
+    return <LoadingDetails numRows={4} />
   }
-  return <Residents data={dataSource} header />;
-};
+  return <Residents data={dataSource} header />
+}
 
-export default ResidentsOverview;
+export default ResidentsOverview

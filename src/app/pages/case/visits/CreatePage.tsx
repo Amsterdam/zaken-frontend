@@ -1,13 +1,12 @@
-
-import { useParams } from "react-router-dom";
-import parseUrlParamId from "app/routing/utils/parseUrlParamId";
-import isValidUrlParamId from "app/routing/utils/isValidUrlParamId";
-import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout";
-import PageHeading from "app/components/shared/PageHeading/PageHeading";
-import { RowWithColumn } from "app/components/layouts/Grid/Row";
-import VisitCreateForm from "app/components/case/forms/VisitForm/VisitForm";
-import CaseHeading from "app/components/case/CaseHeading/CaseHeading";
-import NotFoundPage from "app/pages/errors/NotFoundPage";
+import { useParams } from "react-router-dom"
+import parseUrlParamId from "app/routing/utils/parseUrlParamId"
+import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
+import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
+import PageHeading from "app/components/shared/PageHeading/PageHeading"
+import { RowWithColumn } from "app/components/layouts/Grid/Row"
+import VisitCreateForm from "app/components/case/forms/VisitForm/VisitForm"
+import CaseHeading from "app/components/case/CaseHeading/CaseHeading"
+import NotFoundPage from "app/pages/errors/NotFoundPage"
 
 type RouteParams = {
   id: string
@@ -15,25 +14,25 @@ type RouteParams = {
 }
 
 const CreatePage: React.FC = () => {
-  const { id: idString, caseUserTaskId  } = useParams<RouteParams>();
-  const id = parseUrlParamId(idString);
+  const { id: idString, caseUserTaskId } = useParams<RouteParams>()
+  const id = parseUrlParamId(idString)
 
-  return (
-    isValidUrlParamId<components["schemas"]["CaseDetail"]["id"]>(id) &&
-    isValidUrlParamId<string>(caseUserTaskId) ?
-      <DefaultLayout>
-        <RowWithColumn>
-          <PageHeading />
-        </RowWithColumn>
-        <RowWithColumn>
-          <CaseHeading id={ id } />
-        </RowWithColumn>
-        <RowWithColumn>
-          <VisitCreateForm id={ id } caseUserTaskId={ caseUserTaskId } />
-        </RowWithColumn>
-      </DefaultLayout> :
-      <NotFoundPage />
-  );
-};
+  return isValidUrlParamId<components["schemas"]["CaseDetail"]["id"]>(id) &&
+    isValidUrlParamId<string>(caseUserTaskId) ? (
+    <DefaultLayout>
+      <RowWithColumn>
+        <PageHeading />
+      </RowWithColumn>
+      <RowWithColumn>
+        <CaseHeading id={id} />
+      </RowWithColumn>
+      <RowWithColumn>
+        <VisitCreateForm id={id} caseUserTaskId={caseUserTaskId} />
+      </RowWithColumn>
+    </DefaultLayout>
+  ) : (
+    <NotFoundPage />
+  )
+}
 
-export default CreatePage;
+export default CreatePage

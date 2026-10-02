@@ -1,18 +1,14 @@
-import { DateDisplay } from "@amsterdam/wonen-ui";
-import DueDate from "app/components/shared/DueDate/DueDate";
-import LinkButton from "app/components/shared/LinkButton/LinkButton";
-import AssignTask from "./AssignTask/AssignTask";
+import { DateDisplay } from "@amsterdam/wonen-ui"
+import DueDate from "app/components/shared/DueDate/DueDate"
+import LinkButton from "app/components/shared/LinkButton/LinkButton"
+import AssignTask from "./AssignTask/AssignTask"
 
-export default (sorting: any, myId?: string, isEnforcement?: boolean) => [
+export default (sorting: any) => [
   {
     header: "Toegewezen",
     dataIndex: "owner",
     render: (_: any, record: any) => (
-      <AssignTask
-        taskId={record.id}
-        taskOwner={record.owner}
-        isEnforcement={!!isEnforcement}
-      />
+      <AssignTask taskId={record.id} taskOwner={record.owner} />
     ),
   },
   {
@@ -26,8 +22,8 @@ export default (sorting: any, myId?: string, isEnforcement?: boolean) => [
       sorting.dataIndex === "case.address.street_name" && sorting.order,
     minWidth: 200,
     render: (text: any, record: any) => {
-      const { number, suffix, suffix_letter } = record.case.address ?? {};
-      return `${text} ${number}${suffix ? "-" : ""}${suffix || ""}${suffix_letter ? "-" : ""}${suffix_letter || ""}`;
+      const { number, suffix, suffix_letter } = record.case.address ?? {}
+      return `${text} ${number}${suffix ? "-" : ""}${suffix || ""}${suffix_letter ? "-" : ""}${suffix_letter || ""}`
     },
   },
   {
@@ -75,4 +71,4 @@ export default (sorting: any, myId?: string, isEnforcement?: boolean) => [
       <LinkButton text="Zaakdetails" path={`/zaken/${id}`} />
     ),
   },
-];
+]

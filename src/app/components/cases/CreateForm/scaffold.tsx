@@ -1,9 +1,9 @@
-import { FormPositioner } from "@amsterdam/amsterdam-react-final-form";
-import { Fields } from "app/components/shared/Form/ScaffoldFields";
-import InfoButton from "app/components/shared/InfoHeading/InfoButton";
-import type { NavigateToFunction } from "app/routing/useNavigation";
-import isValidUrl from "app/routing/utils/isValidUrl";
-import { EXCLUDED_THEMES_ADVERTISEMENTS } from "app/constants/themeNames";
+import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
+import { Fields } from "app/components/shared/Form/ScaffoldFields"
+import InfoButton from "app/components/shared/InfoHeading/InfoButton"
+import type { NavigateToFunction } from "app/routing/useNavigation"
+import isValidUrl from "app/routing/utils/isValidUrl"
+import { EXCLUDED_THEMES_ADVERTISEMENTS } from "app/constants/themeNames"
 
 export default (
   bagId: components["schemas"]["Address"]["bag_id"],
@@ -18,7 +18,6 @@ export default (
   cases: components["schemas"]["Case"][],
   corporations: components["schemas"]["HousingCorporation"][],
 ) => {
-
   const fields = {
     theme: {
       type: "ComplexRadioFields",
@@ -28,7 +27,8 @@ export default (
         options: themes,
         optionLabelField: "name",
         isRequired: true,
-        onChange: (index: string) => setTheme(themes?.[parseInt(index, 10)]?.id),
+        onChange: (index: string) =>
+          setTheme(themes?.[parseInt(index, 10)]?.id),
       },
     },
     reason: {
@@ -50,9 +50,9 @@ export default (
     mma_number: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { reason?: components["schemas"]["CaseReason"] } }) => (
-          formValues?.values?.reason?.name === "MMA"
-        ),
+        shouldShow: (formValues: {
+          values?: { reason?: components["schemas"]["CaseReason"] }
+        }) => formValues?.values?.reason?.name === "MMA",
         field: {
           type: "NumberField",
           props: {
@@ -70,7 +70,10 @@ export default (
     housing_corporation: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { theme?: components["schemas"]["CaseTheme"] } }) => formValues?.values?.theme !== undefined && corporations.length > 0,
+        shouldShow: (formValues: {
+          values?: { theme?: components["schemas"]["CaseTheme"] }
+        }) =>
+          formValues?.values?.theme !== undefined && corporations.length > 0,
         field: {
           type: "ComplexSelectField",
           props: {
@@ -105,7 +108,9 @@ export default (
     reporter_anonymous: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { reason?: components["schemas"]["CaseReason"] } }) => formValues?.values?.reason?.name === "SIG melding",
+        shouldShow: (formValues: {
+          values?: { reason?: components["schemas"]["CaseReason"] }
+        }) => formValues?.values?.reason?.name === "SIG melding",
         field: {
           type: "RadioFields",
           props: {
@@ -123,7 +128,8 @@ export default (
     reporter_name: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?:  { reporter_anonymous: string } }) => formValues?.values?.reporter_anonymous === "no",
+        shouldShow: (formValues: { values?: { reporter_anonymous: string } }) =>
+          formValues?.values?.reporter_anonymous === "no",
         field: {
           type: "TextField",
           props: {
@@ -137,7 +143,8 @@ export default (
     reporter_phone: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?:  { reporter_anonymous: string } }) => formValues?.values?.reporter_anonymous === "no",
+        shouldShow: (formValues: { values?: { reporter_anonymous: string } }) =>
+          formValues?.values?.reporter_anonymous === "no",
         field: {
           type: "TelField",
           props: {
@@ -145,7 +152,10 @@ export default (
             extraLabel: "(indien bekend)",
             name: "reporter_phone",
             hint: "Vul hier alleen cijfers in",
-            validate: (value: string | undefined) => (value === undefined || /^[0-9]{10}$/.test(value.trim())) ? false : "Vul hier enkel 10 cijfers in",
+            validate: (value: string | undefined) =>
+              value === undefined || /^[0-9]{10}$/.test(value.trim())
+                ? false
+                : "Vul hier enkel 10 cijfers in",
           },
         },
       },
@@ -153,7 +163,8 @@ export default (
     reporter_email: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?:  { reporter_anonymous: string } }) => formValues?.values?.reporter_anonymous === "no",
+        shouldShow: (formValues: { values?: { reporter_anonymous: string } }) =>
+          formValues?.values?.reporter_anonymous === "no",
         field: {
           type: "EmailField",
           props: {
@@ -167,12 +178,19 @@ export default (
     identification: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { reason?: components["schemas"]["CaseReason"] } }) => formValues?.values?.reason?.name === "SIG melding",
+        shouldShow: (formValues: {
+          values?: { reason?: components["schemas"]["CaseReason"] }
+        }) => formValues?.values?.reason?.name === "SIG melding",
         field: {
           type: "NumberField",
           props: {
             label: "SIG-nummer",
-            extraLabel: <InfoButton infoTitle="SIG-nummer" infoText="Vermeld hier het corresponderende SIG-nummer, zodat de melding makkelijk terug te vinden is in SIG."></InfoButton>,
+            extraLabel: (
+              <InfoButton
+                infoTitle="SIG-nummer"
+                infoText="Vermeld hier het corresponderende SIG-nummer, zodat de melding makkelijk terug te vinden is in SIG."
+              ></InfoButton>
+            ),
             name: "identification",
             placeholder: "123456",
             min: 1,
@@ -186,7 +204,9 @@ export default (
     description_citizenreport: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { reason?: components["schemas"]["CaseReason"] } }) => formValues?.values?.reason?.name === "SIG melding",
+        shouldShow: (formValues: {
+          values?: { reason?: components["schemas"]["CaseReason"] }
+        }) => formValues?.values?.reason?.name === "SIG melding",
         field: {
           type: "TextAreaField",
           props: {
@@ -200,15 +220,25 @@ export default (
     nuisance: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { reason?: components["schemas"]["CaseReason"], theme?: components["schemas"]["CaseTheme"] } }) => (
-          formValues?.values?.theme?.name === "Vakantieverhuur" && formValues?.values?.reason?.name === "SIG melding"
-        ),
+        shouldShow: (formValues: {
+          values?: {
+            reason?: components["schemas"]["CaseReason"]
+            theme?: components["schemas"]["CaseTheme"]
+          }
+        }) =>
+          formValues?.values?.theme?.name === "Vakantieverhuur" &&
+          formValues?.values?.reason?.name === "SIG melding",
         field: {
           type: "CheckboxFields",
           props: {
             label: "Betreft overlast",
             name: "nuisance",
-            extraLabel: <InfoButton infoTitle="Betreft overlast" infoText="Aanvinken indien in de melding sprake is van overlast zoals geluid, lawaai, stank en vuil overlast."></InfoButton>,
+            extraLabel: (
+              <InfoButton
+                infoTitle="Betreft overlast"
+                infoText="Aanvinken indien in de melding sprake is van overlast zoals geluid, lawaai, stank en vuil overlast."
+              ></InfoButton>
+            ),
             options: {
               nuisance: "Ja",
             },
@@ -219,7 +249,9 @@ export default (
     project: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { reason?: components["schemas"]["CaseReason"] } }) => formValues?.values?.reason?.name === "Project",
+        shouldShow: (formValues: {
+          values?: { reason?: components["schemas"]["CaseReason"] }
+        }) => formValues?.values?.reason?.name === "Project",
         field: {
           type: "ComplexSelectField",
           props: {
@@ -237,9 +269,14 @@ export default (
     advertisement: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { theme?: components["schemas"]["CaseTheme"] } }) => {
-          const themeName = formValues?.values?.theme?.name;
-          return themeName !== undefined && !EXCLUDED_THEMES_ADVERTISEMENTS.includes(themeName);
+        shouldShow: (formValues: {
+          values?: { theme?: components["schemas"]["CaseTheme"] }
+        }) => {
+          const themeName = formValues?.values?.theme?.name
+          return (
+            themeName !== undefined &&
+            !EXCLUDED_THEMES_ADVERTISEMENTS.includes(themeName)
+          )
         },
         field: {
           type: "RadioFields",
@@ -255,7 +292,8 @@ export default (
     advertisements: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { advertisement: string } }) => formValues?.values?.advertisement === "yes",
+        shouldShow: (formValues: { values?: { advertisement: string } }) =>
+          formValues?.values?.advertisement === "yes",
         field: {
           type: "ArrayField",
           props: {
@@ -273,7 +311,8 @@ export default (
                   name: "link",
                   hint: "Vul hier de volledige url in, inclusief http(s)://",
                   isRequired: true,
-                  validate: (value: string | undefined) => isValidUrl(value) ? false : "Dit is geen geldige url!",
+                  validate: (value: string | undefined) =>
+                    isValidUrl(value) ? false : "Dit is geen geldige url!",
                 },
               },
             },
@@ -284,7 +323,9 @@ export default (
     otherTheme: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { theme?: components["schemas"]["CaseTheme"] } }) => formValues?.values?.theme !== undefined,
+        shouldShow: (formValues: {
+          values?: { theme?: components["schemas"]["CaseTheme"] }
+        }) => formValues?.values?.theme !== undefined,
         field: {
           type: "CheckboxFields",
           props: {
@@ -300,9 +341,8 @@ export default (
     previous_case: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { otherTheme?: any } }) => (
-          formValues?.values?.otherTheme?.includes("otherTheme")
-        ),
+        shouldShow: (formValues: { values?: { otherTheme?: any } }) =>
+          formValues?.values?.otherTheme?.includes("otherTheme"),
         field: {
           type: "ComplexSelectField",
           props: {
@@ -320,7 +360,9 @@ export default (
     description: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { theme?: components["schemas"]["CaseTheme"] } }) => formValues?.values?.theme !== undefined,
+        shouldShow: (formValues: {
+          values?: { theme?: components["schemas"]["CaseTheme"] }
+        }) => formValues?.values?.theme !== undefined,
         field: {
           type: "TextAreaField",
           props: {
@@ -336,7 +378,7 @@ export default (
       props: {
         label: "Annuleer",
         variant: "primaryInverted",
-        onClick: () => navigateTo(`/adres/${ bagId }`),
+        onClick: () => navigateTo(`/adres/${bagId}`),
       },
     },
     submit: {
@@ -346,7 +388,7 @@ export default (
         align: "right",
       },
     },
-  };
+  }
 
   return new FormPositioner(fields as Fields)
     .setGrid("mobileS", "1fr 1fr", [
@@ -370,5 +412,5 @@ export default (
       ["description", "description"],
       ["cancel", "submit"],
     ])
-    .getScaffoldProps();
-};
+    .getScaffoldProps()
+}

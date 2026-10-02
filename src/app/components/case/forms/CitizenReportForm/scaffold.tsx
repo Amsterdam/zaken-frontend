@@ -1,16 +1,15 @@
-import { FormPositioner } from "@amsterdam/amsterdam-react-final-form";
-import { Fields } from "app/components/shared/Form/ScaffoldFields";
-import InfoButton from "app/components/shared/InfoHeading/InfoButton";
-import type { NavigateToFunction } from "app/routing/useNavigation";
-import isValidUrl from "app/routing/utils/isValidUrl";
-import { EXCLUDED_THEMES_ADVERTISEMENTS } from "app/constants/themeNames";
+import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
+import { Fields } from "app/components/shared/Form/ScaffoldFields"
+import InfoButton from "app/components/shared/InfoHeading/InfoButton"
+import type { NavigateToFunction } from "app/routing/useNavigation"
+import isValidUrl from "app/routing/utils/isValidUrl"
+import { EXCLUDED_THEMES_ADVERTISEMENTS } from "app/constants/themeNames"
 
 export default (
   caseId: components["schemas"]["CaseDetail"]["id"],
   navigateTo: NavigateToFunction,
   themeName: components["schemas"]["CaseTheme"]["name"],
 ) => {
-
   const fields = {
     reporter_anonymous: {
       type: "RadioFields",
@@ -27,7 +26,8 @@ export default (
     reporter_name: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?:  { reporter_anonymous: string } }) => formValues?.values?.reporter_anonymous === "no",
+        shouldShow: (formValues: { values?: { reporter_anonymous: string } }) =>
+          formValues?.values?.reporter_anonymous === "no",
         field: {
           type: "TextField",
           props: {
@@ -41,7 +41,8 @@ export default (
     reporter_phone: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?:  { reporter_anonymous: string } }) => formValues?.values?.reporter_anonymous === "no",
+        shouldShow: (formValues: { values?: { reporter_anonymous: string } }) =>
+          formValues?.values?.reporter_anonymous === "no",
         field: {
           type: "TelField",
           props: {
@@ -49,7 +50,10 @@ export default (
             extraLabel: "(indien bekend)",
             name: "reporter_phone",
             hint: "Vul hier alleen cijfers in",
-            validate: (value: string | undefined) => (value === undefined || /^[0-9]{10}$/.test(value.trim())) ? false : "Vul hier enkel 10 cijfers in",
+            validate: (value: string | undefined) =>
+              value === undefined || /^[0-9]{10}$/.test(value.trim())
+                ? false
+                : "Vul hier enkel 10 cijfers in",
           },
         },
       },
@@ -57,7 +61,8 @@ export default (
     reporter_email: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?:  { reporter_anonymous: string } }) => formValues?.values?.reporter_anonymous === "no",
+        shouldShow: (formValues: { values?: { reporter_anonymous: string } }) =>
+          formValues?.values?.reporter_anonymous === "no",
         field: {
           type: "EmailField",
           props: {
@@ -72,7 +77,12 @@ export default (
       type: "NumberField",
       props: {
         label: "SIG-nummer",
-        extraLabel: <InfoButton infoTitle="SIG-nummer" infoText="Vermeld hier het corresponderende SIG-nummer, zodat de melding makkelijk terug te vinden is in SIG."></InfoButton>,
+        extraLabel: (
+          <InfoButton
+            infoTitle="SIG-nummer"
+            infoText="Vermeld hier het corresponderende SIG-nummer, zodat de melding makkelijk terug te vinden is in SIG."
+          ></InfoButton>
+        ),
         name: "identification",
         placeholder: "123456",
         min: 1,
@@ -85,7 +95,12 @@ export default (
       type: "TextAreaField",
       props: {
         label: "Korte samenvatting melding",
-        extraLabel: <InfoButton infoTitle="Korte samenvatting melding" infoText="Geef een korte beschrijving van de melding. Deze informatie komt ook door in TOP voor de toezichthouder."></InfoButton>,
+        extraLabel: (
+          <InfoButton
+            infoTitle="Korte samenvatting melding"
+            infoText="Geef een korte beschrijving van de melding. Deze informatie komt ook door in TOP voor de toezichthouder."
+          ></InfoButton>
+        ),
         name: "description_citizenreport",
         isRequired: true,
       },
@@ -93,13 +108,18 @@ export default (
     nuisance: {
       type: "ShowHide",
       props: {
-        shouldShow: (() => themeName === "Vakantieverhuur" ),
+        shouldShow: () => themeName === "Vakantieverhuur",
         field: {
           type: "CheckboxFields",
           props: {
             label: "Betreft overlast",
             name: "nuisance",
-            extraLabel: <InfoButton infoTitle="Betreft overlast" infoText="Aanvinken indien in de melding sprake is van overlast zoals geluid, lawaai, stank en vuil overlast."></InfoButton>,
+            extraLabel: (
+              <InfoButton
+                infoTitle="Betreft overlast"
+                infoText="Aanvinken indien in de melding sprake is van overlast zoals geluid, lawaai, stank en vuil overlast."
+              ></InfoButton>
+            ),
             options: {
               nuisance: "Ja",
             },
@@ -128,7 +148,8 @@ export default (
     advertisements: {
       type: "ShowHide",
       props: {
-        shouldShow: (formValues: { values?: { advertisement: string } }) => formValues?.values?.advertisement === "yes",
+        shouldShow: (formValues: { values?: { advertisement: string } }) =>
+          formValues?.values?.advertisement === "yes",
         field: {
           type: "ArrayField",
           props: {
@@ -146,7 +167,8 @@ export default (
                   name: "link",
                   hint: "Vul hier de volledige url in, inclusief http(s)://",
                   isRequired: true,
-                  validate: (value: string | undefined) => isValidUrl(value) ? false : "Dit is geen geldige url!",
+                  validate: (value: string | undefined) =>
+                    isValidUrl(value) ? false : "Dit is geen geldige url!",
                 },
               },
             },
@@ -169,7 +191,7 @@ export default (
         align: "right",
       },
     },
-  };
+  }
 
   return new FormPositioner(fields as Fields)
     .setGrid("mobileS", "1fr 1fr", [
@@ -184,6 +206,5 @@ export default (
       ["advertisements", "advertisements"],
       ["secondaryButton", "submit"],
     ])
-    .getScaffoldProps();
-};
-
+    .getScaffoldProps()
+}

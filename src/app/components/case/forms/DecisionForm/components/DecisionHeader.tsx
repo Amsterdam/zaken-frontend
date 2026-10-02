@@ -1,31 +1,31 @@
-import { useSummonsWithCaseId } from "app/state/rest";
-import useValues from "../hooks/useValues";
-import { DefinitionList } from "@amsterdam/wonen-ui";
+import { useSummonsByCaseId } from "@/api/hooks"
+import useValues from "../hooks/useValues"
+import { DefinitionList } from "@amsterdam/wonen-ui"
 
 export type Workflow = {
-  tasks: Tasks.WorkflowTask[];
-};
+  tasks: Tasks.WorkflowTask[]
+}
 
 type Props = {
-  caseId: components["schemas"]["CaseDetail"]["id"];
-  caseUserTaskId: string;
-  workflows: Workflow[];
-};
+  caseId: components["schemas"]["CaseDetail"]["id"]
+  caseUserTaskId: string
+  workflows: Workflow[]
+}
 
 const DecisionHeader: React.FC<Props> = ({
   caseId,
   caseUserTaskId,
   workflows,
 }) => {
-  const [summons, { isBusy }] = useSummonsWithCaseId(caseId);
+  const { data: summons, isLoading: isBusy } = useSummonsByCaseId(caseId)
 
   const task = workflows
     ?.flatMap(({ tasks }) => tasks)
-    .find((task) => String(task.case_user_task_id) === caseUserTaskId);
+    .find((task) => String(task.case_user_task_id) === caseUserTaskId)
 
-  const summonId = task?.form_variables?.summon_id?.value;
-  const summon = summons?.results?.find(({ id }) => id === summonId);
-  const values = useValues(summon);
+  const summonId = task?.form_variables?.summon_id?.value
+  const summon = summons?.results?.find(({ id }) => id === summonId)
+  const values = useValues(summon)
 
   return (
     <DefinitionList
@@ -36,7 +36,7 @@ const DecisionHeader: React.FC<Props> = ({
       data={values}
       emptyPlaceholder="Geen aanschrijving aanwezig"
     />
-  );
-};
+  )
+}
 
-export default DecisionHeader;
+export default DecisionHeader

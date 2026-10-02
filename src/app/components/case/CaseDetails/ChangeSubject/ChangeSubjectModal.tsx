@@ -1,5 +1,5 @@
-import Modal, { ModalBlock } from "app/components/shared/Modal/Modal";
-import ChangeSubjectForm from "./ChangeSubjectForm";
+import Modal, { ModalBlock } from "app/components/shared/Modal/Modal"
+import ChangeSubjectForm from "./ChangeSubjectForm"
 
 export type Props = {
   isOpen: boolean
@@ -9,7 +9,13 @@ export type Props = {
   themeId: components["schemas"]["CaseTheme"]["id"]
 }
 
-const ChangeSubjectModal: React.FC<Props> = ({ isOpen, closeModal, onSubmit, subjects = [], themeId }) =>
+const ChangeSubjectModal: React.FC<Props> = ({
+  isOpen,
+  closeModal,
+  onSubmit,
+  subjects = [],
+  themeId,
+}) => (
   <Modal
     isOpen={isOpen}
     onClose={closeModal}
@@ -17,13 +23,14 @@ const ChangeSubjectModal: React.FC<Props> = ({ isOpen, closeModal, onSubmit, sub
   >
     <ModalBlock>
       <ChangeSubjectForm
-        onSubmit={ onSubmit }
-        onCancel={ closeModal }
-        themeId={ themeId }
+        onSubmit={onSubmit}
+        onCancel={closeModal}
+        themeId={themeId}
         subjects={subjects}
         initialValues={{ subjects: subjects }}
       />
     </ModalBlock>
-  </Modal>;
+  </Modal>
+)
 
-export default ChangeSubjectModal;
+export default ChangeSubjectModal

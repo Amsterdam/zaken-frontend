@@ -1,5 +1,5 @@
-import { Spinner } from "@amsterdam/asc-ui";
-import useHasPermission from "app/state/rest/custom/usePermissions/useHasPermission";
+import { Spinner } from "@amsterdam/asc-ui"
+import useHasPermission from "@/hooks/useHasPermission"
 
 /*
  ** IsAuthorizedWrapper is used to manage permissions.
@@ -8,17 +8,17 @@ import useHasPermission from "app/state/rest/custom/usePermissions/useHasPermiss
  */
 
 type Props = {
-  permissionNames: components["schemas"]["PermissionsEnum"][];
-  children: React.ReactNode;
-};
+  permissionNames: components["schemas"]["PermissionsEnum"][]
+  children: React.ReactNode
+}
 
 const IsAuthorizedWrapper: React.FC<Props> = ({
   permissionNames,
   children,
 }) => {
-  const [hasPermission, isBusy] = useHasPermission(permissionNames);
+  const [hasPermission, isBusy] = useHasPermission(permissionNames)
 
-  return isBusy ? <Spinner /> : hasPermission ? <>{children}</> : null;
-};
+  return isBusy ? <Spinner /> : hasPermission ? <>{children}</> : null
+}
 
-export default IsAuthorizedWrapper;
+export default IsAuthorizedWrapper

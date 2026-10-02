@@ -1,32 +1,32 @@
-import { FormPositioner } from "@amsterdam/amsterdam-react-final-form";
-import { Fields } from "app/components/shared/Form/ScaffoldFields";
-import InfoButton from "app/components/shared/InfoHeading/InfoButton";
-import InfoContent from "./components/InfoContent";
-import type { NavigateToFunction } from "app/routing/useNavigation";
+import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
+import { Fields } from "app/components/shared/Form/ScaffoldFields"
+import InfoButton from "app/components/shared/InfoHeading/InfoButton"
+import InfoContent from "./components/InfoContent"
+import type { NavigateToFunction } from "app/routing/useNavigation"
 
 const createObjectFromArray = (arr: any) => {
-  const obj: any = {};
+  const obj: any = {}
   arr.forEach((item: any) => {
-    obj[item] = item;
-  });
-  return obj;
-};
+    obj[item] = item
+  })
+  return obj
+}
 
 const getThemeOptions = (
   themes: components["schemas"]["CaseTheme"][],
   themeName?: string,
 ) => {
-  const optionsArray: any = ["-", "Woningverbetering"];
+  const optionsArray: any = ["-", "Woningverbetering"]
   themes.forEach((theme) => {
     // Remove current theme from options
     if (theme.name !== themeName) {
-      optionsArray.push([theme.name]);
+      optionsArray.push([theme.name])
     }
-  });
-  optionsArray.sort();
-  const options = createObjectFromArray(optionsArray);
-  return options;
-};
+  })
+  optionsArray.sort()
+  const options = createObjectFromArray(optionsArray)
+  return options
+}
 
 export default (
   caseId: components["schemas"]["CaseDetail"]["id"],
@@ -38,7 +38,7 @@ export default (
   const violationOptions = violationTypes?.reduce(
     (acc, item) => ({ ...acc, [item.key]: [item.value] }),
     {},
-  );
+  )
 
   const fields = {
     violation: {
@@ -120,7 +120,7 @@ export default (
         align: "right",
       },
     },
-  };
+  }
 
   return new FormPositioner(fields as Fields)
     .setGrid("mobileS", "1fr 1fr", [
@@ -130,5 +130,5 @@ export default (
       ["feedback", "feedback"],
       ["secondaryButton", "submit"],
     ])
-    .getScaffoldProps();
-};
+    .getScaffoldProps()
+}

@@ -1,15 +1,15 @@
-import { useRef } from "react";
+import { useRef } from "react"
 
-import usePanoramaByBagId from "app/state/rest/custom/usePanoramaByBagId/usePanoramaByBagId";
-import useRect from "./hooks/useRect";
+import usePanoramaByBagId from "@/hooks/usePanoramaByBagId"
+import useRect from "./hooks/useRect"
 
 type Props = {
-  bagId: components["schemas"]["Address"]["bag_id"];
-  width?: number;
-  aspect?: number;
-  radius?: number;
-  fov?: number;
-};
+  bagId: components["schemas"]["Address"]["bag_id"]
+  width?: number
+  aspect?: number
+  radius?: number
+  fov?: number
+}
 
 const PanoramaPreview: React.FC<Props> = ({
   bagId,
@@ -18,11 +18,11 @@ const PanoramaPreview: React.FC<Props> = ({
   radius = 180,
   fov = 80,
 }) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const rect = useRect(ref, 100);
-  const width = w ?? rect.width;
-  const height = width !== undefined ? width / aspect : undefined;
-  const [data] = usePanoramaByBagId(bagId, width, aspect, radius, fov);
+  const ref = useRef<HTMLDivElement>(null)
+  const rect = useRect(ref, 100)
+  const width = w ?? rect.width
+  const height = width !== undefined ? width / aspect : undefined
+  const { data } = usePanoramaByBagId(bagId, width, aspect, radius, fov)
 
   return (
     <div ref={ref} style={{ height, backgroundColor: "#f5f5f5" }}>
@@ -34,7 +34,7 @@ const PanoramaPreview: React.FC<Props> = ({
         />
       ) : null}
     </div>
-  );
-};
+  )
+}
 
-export default PanoramaPreview;
+export default PanoramaPreview

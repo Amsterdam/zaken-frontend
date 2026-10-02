@@ -1,43 +1,49 @@
-import { FormTitle } from "@amsterdam/asc-ui";
-import { useCase, useQuickDecisions } from "app/state/rest";
-import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm";
-import scaffold from "app/components/case/forms/QuickDecisionForm/scaffold";
-import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields";
+import { FormTitle } from "@amsterdam/asc-ui"
+import {
+  useCase,
+  useCreateQuickDecision,
+  useQuickDecisionTypes,
+} from "@/api/hooks"
+import { toPostMethod } from "@/api/utils/toPostMethod"
+import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
+import scaffold from "app/components/case/forms/QuickDecisionForm/scaffold"
+import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
 import DecisionHeader, {
   type Workflow,
-} from "../DecisionForm/components/DecisionHeader";
-import { useQuickDecisionTypes } from "app/state/rest/themes";
-import useNavigation from "app/routing/useNavigation";
+} from "../DecisionForm/components/DecisionHeader"
+import useNavigation from "app/routing/useNavigation"
 
 type Props = {
-  id: components["schemas"]["CaseDetail"]["id"];
-  caseUserTaskId: string;
-};
+  id: components["schemas"]["CaseDetail"]["id"]
+  caseUserTaskId: string
+}
 
 type QuickDecisionData = Omit<
   components["schemas"]["QuickDecision"],
   "quick_decision_type"
-> & { quick_decision_type: { id: number } };
+> & { quick_decision_type: { id: number } }
 
 const mapData = (data: QuickDecisionData) => ({
   ...data,
   quick_decision_type: data.quick_decision_type.id,
-});
+})
 
 const QuickDecisionForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
-  const [caseItem] = useCase(id);
-  const themeId = caseItem?.theme.id;
-  const [data] = useQuickDecisionTypes(themeId);
-  const quickDecisionTypes = data?.results;
-  const { navigateTo } = useNavigation();
+  const { data: caseItem } = useCase(id)
+  const themeId = caseItem?.theme.id
+  const { data } = useQuickDecisionTypes(themeId)
+  const quickDecisionTypes = data?.results
+  const { navigateTo } = useNavigation()
   const fields = useScaffoldedFields(
     scaffold,
     id,
     navigateTo,
     quickDecisionTypes,
-  );
+  )
 
-  const [, { execPost }] = useQuickDecisions({ lazy: true });
+  const createQuickDecision = toPostMethod(
+    useCreateQuickDecision(id).mutateAsync,
+  )
 
   return (
     <>
@@ -53,11 +59,11 @@ const QuickDecisionForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
         id={id}
         fields={fields}
         mapData={mapData}
-        postMethod={execPost}
+        postMethod={createQuickDecision}
         caseUserTaskId={caseUserTaskId}
       />
     </>
-  );
-};
+  )
+}
 
-export default QuickDecisionForm;
+export default QuickDecisionForm

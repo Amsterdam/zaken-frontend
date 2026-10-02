@@ -1,9 +1,9 @@
-import CustomIcon from "../CustomIcon/CustomIcon";
+import CustomIcon from "../CustomIcon/CustomIcon"
 
 type InfoAlertProps = {
-  title?: string;
-  message?: string;
-};
+  title?: string
+  message?: string
+}
 
 const InfoAlert: React.FC<InfoAlertProps> = ({
   title = "Vul de gegevens aan",
@@ -16,6 +16,6 @@ const InfoAlert: React.FC<InfoAlertProps> = ({
     </div>
     <div>{message}</div>
   </div>
-);
+)
 
-export default InfoAlert;
+export default InfoAlert

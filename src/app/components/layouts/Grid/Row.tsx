@@ -1,6 +1,6 @@
-import type { CSSProperties } from "react";
-import Column from "app/components/layouts/Grid/Column";
-import styles from "./Row.module.css";
+import type { CSSProperties } from "react"
+import Column from "app/components/layouts/Grid/Column"
+import styles from "./Row.module.css"
 
 /** Rows for page layout
  * optional props:
@@ -17,23 +17,27 @@ export type TypeProps = {
   topSpacing?: number
 }
 
-const getRowStyle = ({ bottomSpacing, topSpacing }: Omit<TypeProps, "children">): CSSProperties => ({
-  "--bottom-spacing": bottomSpacing !== undefined ? `${bottomSpacing * 4}px` : undefined,
-  "--top-spacing": topSpacing !== undefined ? `${topSpacing * 4}px` : undefined,
-} as CSSProperties);
+const getRowStyle = ({
+  bottomSpacing,
+  topSpacing,
+}: Omit<TypeProps, "children">): CSSProperties =>
+  ({
+    "--bottom-spacing":
+      bottomSpacing !== undefined ? `${bottomSpacing * 4}px` : undefined,
+    "--top-spacing":
+      topSpacing !== undefined ? `${topSpacing * 4}px` : undefined,
+  }) as CSSProperties
 
 export const RowWithColumn: React.FC<TypeProps> = ({ children, ...props }) => (
-  <div className={ styles.row } style={ getRowStyle(props) }>
-    <Column>
-      { children }
-    </Column>
+  <div className={styles.row} style={getRowStyle(props)}>
+    <Column>{children}</Column>
   </div>
-);
+)
 
 const Row: React.FC<TypeProps> = ({ children, ...props }) => (
-  <div className={ styles.row } style={ getRowStyle(props) }>
-    { children }
+  <div className={styles.row} style={getRowStyle(props)}>
+    {children}
   </div>
-);
+)
 
-export default Row;
+export default Row

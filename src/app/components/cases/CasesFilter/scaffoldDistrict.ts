@@ -1,15 +1,21 @@
-import { FormPositioner } from "@amsterdam/amsterdam-react-final-form";
-import { Fields } from "app/components/shared/Form/ScaffoldFields";
+import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
+import { Fields } from "app/components/shared/Form/ScaffoldFields"
 
-const createOptions = (districts: components["schemas"]["District"][]) => (
-  districts.reduce((acc, cur) => {
-    acc[cur.name] = cur.name;
-    return acc;
-  }, { "": "Alle stadsdelen" } as Record<string, string>)
-);
+const createOptions = (districts: components["schemas"]["District"][]) =>
+  districts.reduce(
+    (acc, cur) => {
+      acc[cur.name] = cur.name
+      return acc
+    },
+    { "": "Alle stadsdelen" } as Record<string, string>,
+  )
 
-export default (district: string, districts: components["schemas"]["District"][], onChange: (value: string) => void) => {
-  const sortedDistricts = districts.sort((a, b) => a.name.localeCompare(b.name));
+export default (
+  district: string,
+  districts: components["schemas"]["District"][],
+  onChange: (value: string) => void,
+) => {
+  const sortedDistricts = districts.sort((a, b) => a.name.localeCompare(b.name))
   const fields = {
     period: {
       type: "RadioFields",
@@ -22,9 +28,9 @@ export default (district: string, districts: components["schemas"]["District"][]
         value: district,
       },
     },
-  };
+  }
 
   return new FormPositioner(fields as Fields)
     .setVertical("mobileS")
-    .getScaffoldProps();
-};
+    .getScaffoldProps()
+}

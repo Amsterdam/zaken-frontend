@@ -1,13 +1,13 @@
-import { Heading } from "@amsterdam/asc-ui";
-import { useCase } from "app/state/rest";
-import AddressDisplay from "app/components/addresses/AddressDisplay/AddressDisplay";
+import { Heading } from "@amsterdam/asc-ui"
+import { useCase } from "@/api/hooks"
+import AddressDisplay from "app/components/addresses/AddressDisplay/AddressDisplay"
 
 type Props = {
-  caseId: components["schemas"]["CaseDetail"]["id"];
-};
+  caseId: components["schemas"]["CaseDetail"]["id"]
+}
 
 const AddressHeading: React.FC<Props> = ({ caseId }) => {
-  const [data] = useCase(caseId);
+  const { data } = useCase(caseId)
 
   return (
     <>
@@ -26,6 +26,6 @@ const AddressHeading: React.FC<Props> = ({ caseId }) => {
         </div>
       )}
     </>
-  );
-};
-export default AddressHeading;
+  )
+}
+export default AddressHeading

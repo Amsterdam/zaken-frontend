@@ -1,15 +1,15 @@
-import { Spinner } from "@amsterdam/asc-ui";
-import styles from "./AssigneeAvatar.module.css";
-import { useUserById } from "./hooks/useUserById";
-import { createNameAbbreviation } from "app/components/shared/Helpers/helpers";
+import { Spinner } from "@amsterdam/asc-ui"
+import styles from "./AssigneeAvatar.module.css"
+import { useUserById } from "./hooks/useUserById"
+import { createNameAbbreviation } from "app/components/shared/Helpers/helpers"
 
 type Props = {
-  taskOwner: string | null;
-  currentUser: components["schemas"]["User"] | null;
-  currentUserId: string | null;
-  isBusy: boolean;
-  onClick: () => void;
-};
+  taskOwner: string | null
+  currentUser: components["schemas"]["User"] | null
+  currentUserId: string | null
+  isBusy: boolean
+  onClick: () => void
+}
 
 const AssigneeAvatar: React.FC<Props> = ({
   taskOwner,
@@ -21,26 +21,26 @@ const AssigneeAvatar: React.FC<Props> = ({
   // Fetch the assigned user's profile when there is an owner.
   const [assignedUser, { isBusy: isUserBusy }] = useUserById(
     taskOwner ?? undefined,
-  );
+  )
 
   if (isBusy || isUserBusy) {
     return (
       <span className={styles.spinnerWrapper}>
         <Spinner />
       </span>
-    );
+    )
   }
 
-  const isUnassigned = !taskOwner;
-  const isOwnTask = taskOwner === currentUserId;
-  const resolvedUser = assignedUser ?? (isOwnTask ? currentUser : null);
+  const isUnassigned = !taskOwner
+  const isOwnTask = taskOwner === currentUserId
+  const resolvedUser = assignedUser ?? (isOwnTask ? currentUser : null)
 
   const tooltipLabel = isUnassigned
     ? "Niet toegewezen – klik om toe te wijzen"
     : isOwnTask
       ? "Mijn taak – klik om te wijzigen"
       : `Toegewezen aan ${assignedUser?.first_name ?? ""} ${assignedUser?.last_name ?? ""}`.trim() +
-        " – klik om te wijzigen";
+        " – klik om te wijzigen"
 
   return (
     <button
@@ -77,7 +77,7 @@ const AssigneeAvatar: React.FC<Props> = ({
         </span>
       )}
     </button>
-  );
-};
+  )
+}
 
-export default AssigneeAvatar;
+export default AssigneeAvatar

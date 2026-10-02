@@ -7,7 +7,7 @@ export const THEME_NAMES = {
   ONDERMIJNING: "Ondermijning",
   OPKOOPBESCHERMING: "Opkoopbescherming",
   VAKANTIEVERHUUR: "Vakantieverhuur",
-} as { [key: string]: components["schemas"]["CaseTheme"]["name"] };
+} as { [key: string]: components["schemas"]["CaseTheme"]["name"] }
 
 // Array of theme names that should be excluded for advertisement questions in scaffold.tsx
 export const EXCLUDED_THEMES_ADVERTISEMENTS = [
@@ -15,4 +15,4 @@ export const EXCLUDED_THEMES_ADVERTISEMENTS = [
   THEME_NAMES.HUISVESTINGSVERGUNNING,
   THEME_NAMES.KAMERVERHUUR,
   THEME_NAMES.ONDERMIJNING,
-] as const;
+] as const

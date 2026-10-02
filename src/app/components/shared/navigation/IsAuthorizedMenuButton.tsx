@@ -1,8 +1,8 @@
-import { MenuButton, Link } from "@amsterdam/asc-ui";
-import styled from "styled-components";
-import useHasPermission from "app/state/rest/custom/usePermissions/useHasPermission";
-import StyledButtonLink from "./StyledButtonLink";
-import { env } from "app/config/env";
+import { MenuButton, Link } from "@amsterdam/asc-ui"
+import styled from "styled-components"
+import useHasPermission from "@/hooks/useHasPermission"
+import StyledButtonLink from "./StyledButtonLink"
+import { env } from "app/config/env"
 
 type Props = React.ComponentProps<typeof MenuButton> & {
   permissionNames: components["schemas"]["PermissionsEnum"][]
@@ -15,10 +15,10 @@ const StyledMenuButton = styled(MenuButton)`
   background: none !important;
   margin-left: 8px;
   span {
-    color: #B4B4B4 !important;
+    color: #b4b4b4 !important;
     border-bottom: none !important;
   }
-`;
+`
 
 const StyledLink = styled(Link)`
   position: relative;
@@ -39,13 +39,23 @@ const StyledLink = styled(Link)`
   font-size: 16px;
   font-weight: 700;
   padding: 12px 16px;
-  -webkit-transition: color 0.1s ease-in-out,background-color 0.1s ease-in-out;
-  transition: color 0.1s ease-in-out,background-color 0.1s ease-in-out;
-`;
+  -webkit-transition:
+    color 0.1s ease-in-out,
+    background-color 0.1s ease-in-out;
+  transition:
+    color 0.1s ease-in-out,
+    background-color 0.1s ease-in-out;
+`
 
-const IsAuthorizedMenuButton: React.FC<Props> = ({ permissionNames, isHidden, to, text, ...restProps }) => {
-  const [hasPermission, isBusy] = useHasPermission(permissionNames);
-  const isAuthorized = !isBusy && hasPermission;
+const IsAuthorizedMenuButton: React.FC<Props> = ({
+  permissionNames,
+  isHidden,
+  to,
+  text,
+  ...restProps
+}) => {
+  const [hasPermission, isBusy] = useHasPermission(permissionNames)
+  const isAuthorized = !isBusy && hasPermission
   /*
    ** Exception for "Digitaal toezicht".
    ** First it will be an external link, at a later stage it will be a library within AZA.
@@ -53,23 +63,33 @@ const IsAuthorizedMenuButton: React.FC<Props> = ({ permissionNames, isHidden, to
    */
   if (isAuthorized && text === "Digitaal toezicht") {
     return (
-      <StyledLink href={env.VITE_TON_FRONTEND_URL} target="_blank" rel="noopener noreferrer">{ text }</StyledLink>
-    );
+      <StyledLink
+        href={env.VITE_TON_FRONTEND_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {text}
+      </StyledLink>
+    )
   } else if (isAuthorized) {
     return (
-      <StyledButtonLink to={ to }>
-        <MenuButton { ...restProps }>{ text }</MenuButton>
+      <StyledButtonLink to={to}>
+        <MenuButton {...restProps}>{text}</MenuButton>
       </StyledButtonLink>
-    );
+    )
   } else if (isHidden) {
-    return null;
+    return null
   } else {
     return (
-      <StyledMenuButton disabled={ true } { ...restProps } title="U heeft geen permissie tot deze actie">
-        { text }
+      <StyledMenuButton
+        disabled={true}
+        {...restProps}
+        title="U heeft geen permissie tot deze actie"
+      >
+        {text}
       </StyledMenuButton>
-    );
+    )
   }
-};
+}
 
-export default IsAuthorizedMenuButton;
+export default IsAuthorizedMenuButton

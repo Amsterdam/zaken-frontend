@@ -1,12 +1,12 @@
-import { Heading } from "@amsterdam/asc-ui";
-import CustomIcon, { CustomIconProps } from "../CustomIcon/CustomIcon";
+import { Heading } from "@amsterdam/asc-ui"
+import CustomIcon, { CustomIconProps } from "../CustomIcon/CustomIcon"
 
 type Props = {
-  header: string;
-  headingSize?: React.ComponentProps<typeof Heading>["forwardedAs"];
-  icon?: CustomIconProps["name"];
-  iconSize?: number;
-};
+  header: string
+  headingSize?: React.ComponentProps<typeof Heading>["forwardedAs"]
+  icon?: CustomIconProps["name"]
+  iconSize?: number
+}
 
 const HeadingWithIcon: React.FC<Props> = ({
   icon,
@@ -18,5 +18,5 @@ const HeadingWithIcon: React.FC<Props> = ({
     {icon && <CustomIcon name={icon} size={iconSize} />}
     <Heading forwardedAs={headingSize}>{header}</Heading>
   </div>
-);
-export default HeadingWithIcon;
+)
+export default HeadingWithIcon

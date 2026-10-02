@@ -1,4 +1,4 @@
-import IndexPage from "./IndexPage";
+import IndexPage from "./IndexPage"
 
 export default {
   "/taken": {
@@ -6,4 +6,4 @@ export default {
     Page: IndexPage,
     icon: "Edit",
   },
-};
+}

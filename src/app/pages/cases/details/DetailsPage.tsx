@@ -1,48 +1,48 @@
-import { Divider, Heading } from "@amsterdam/asc-ui";
-import { useParams } from "react-router-dom";
-import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout";
-import Row, { RowWithColumn } from "app/components/layouts/Grid/Row";
-import PageHeading from "app/components/shared/PageHeading/PageHeading";
-import TimelineContainer from "app/components/case/CaseTimeline/TimelineContainer";
-import CaseDetails from "app/components/case/CaseDetails/CaseDetails";
-import parseUrlParamId from "app/routing/utils/parseUrlParamId";
-import NotFoundPage from "app/pages/errors/NotFoundPage";
-import DetailHeaderByCaseId from "app/components/shared/DetailHeader/DetailHeaderByCaseId";
-import { Column } from "app/components/layouts/Grid";
-import CaseStatus from "app/components/case/CaseStatus/CaseStatus";
-import useExistingCase from "./hooks/useExistingCase";
-import { LoadingScreen } from "app/components/shared/loading";
-import CaseNuisanceAlert from "app/components/case/CaseNuisanceAlert/CaseNuisanceAlert";
-import CaseSensitiveAddressAlert from "app/components/case/CaseSensitiveAddressAlert/CaseSensitiveAddressAlert";
+import { Divider, Heading } from "@amsterdam/asc-ui"
+import { useParams } from "react-router-dom"
+import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
+import Row, { RowWithColumn } from "app/components/layouts/Grid/Row"
+import PageHeading from "app/components/shared/PageHeading/PageHeading"
+import TimelineContainer from "app/components/case/CaseTimeline/TimelineContainer"
+import CaseDetails from "app/components/case/CaseDetails/CaseDetails"
+import parseUrlParamId from "app/routing/utils/parseUrlParamId"
+import NotFoundPage from "app/pages/errors/NotFoundPage"
+import DetailHeaderByCaseId from "app/components/shared/DetailHeader/DetailHeaderByCaseId"
+import { Column } from "app/components/layouts/Grid"
+import CaseStatus from "app/components/case/CaseStatus/CaseStatus"
+import useExistingCase from "./hooks/useExistingCase"
+import { LoadingScreen } from "app/components/shared/loading"
+import CaseNuisanceAlert from "app/components/case/CaseNuisanceAlert/CaseNuisanceAlert"
+import CaseSensitiveAddressAlert from "app/components/case/CaseSensitiveAddressAlert/CaseSensitiveAddressAlert"
 import useHasPermission, {
   SENSITIVE_CASE_PERMISSION,
-} from "app/state/rest/custom/usePermissions/useHasPermission";
-import NotAuthorizedPage from "app/pages/auth/NotAuthorizedPage";
+} from "@/hooks/useHasPermission"
+import NotAuthorizedPage from "app/pages/auth/NotAuthorizedPage"
 
 type Props = {
-  id: string;
-};
+  id: string
+}
 
 const DetailsPage: React.FC = () => {
-  const { id: idString } = useParams<Props>();
+  const { id: idString } = useParams<Props>()
   const [exists, isBusy, has404, id, caseItem] = useExistingCase(
     parseUrlParamId(idString),
-  );
+  )
   const [hasPermission, isLoading] = useHasPermission([
     SENSITIVE_CASE_PERMISSION,
-  ]);
-  const showSpinner = isBusy || isLoading;
+  ])
+  const showSpinner = isBusy || isLoading
   // Don't show if sensitive case and no permission
   const isAuthorized =
     caseItem?.sensitive === false ||
-    (caseItem?.sensitive === true && hasPermission);
-  const showNotFound = has404;
+    (caseItem?.sensitive === true && hasPermission)
+  const showNotFound = has404
 
   if (showSpinner) {
-    return <LoadingScreen />;
+    return <LoadingScreen />
   }
   if (exists && !isAuthorized) {
-    return <NotAuthorizedPage />;
+    return <NotAuthorizedPage />
   }
 
   return (
@@ -84,7 +84,7 @@ const DetailsPage: React.FC = () => {
       )}
       {showNotFound && <NotFoundPage />}
     </>
-  );
-};
+  )
+}
 
-export default DetailsPage;
+export default DetailsPage

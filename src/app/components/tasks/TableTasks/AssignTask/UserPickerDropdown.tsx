@@ -1,24 +1,24 @@
-import { useState, useEffect, useLayoutEffect, useRef } from "react";
-import { createPortal } from "react-dom";
-import { useUsers } from "app/state/rest";
-import { createNameAbbreviation } from "app/components/shared/Helpers/helpers";
-import styles from "./UserPickerDropdown.module.css";
+import { useState, useEffect, useLayoutEffect, useRef } from "react"
+import { createPortal } from "react-dom"
+import { useUsers } from "@/api/hooks"
+import { createNameAbbreviation } from "app/components/shared/Helpers/helpers"
+import styles from "./UserPickerDropdown.module.css"
 
 type User = Pick<
   components["schemas"]["User"],
   "id" | "first_name" | "last_name" | "full_name"
->;
+>
 
 type Props = {
-  currentUserId: string | null;
-  currentOwnerId: string | null;
-  onSelect: (userId: string | null) => void;
-  onClose: () => void;
-  positionTop: number;
-  positionLeft: number;
-  positionTransform: string;
-  dropdownRef: React.RefObject<HTMLDivElement>;
-};
+  currentUserId: string | null
+  currentOwnerId: string | null
+  onSelect: (userId: string | null) => void
+  onClose: () => void
+  positionTop: number
+  positionLeft: number
+  positionTransform: string
+  dropdownRef: React.RefObject<HTMLDivElement>
+}
 
 const UserPickerDropdown: React.FC<Props> = ({
   currentUserId,
@@ -30,31 +30,31 @@ const UserPickerDropdown: React.FC<Props> = ({
   positionTransform,
   dropdownRef,
 }) => {
-  const [search, setSearch] = useState("");
-  const [isPositioned, setIsPositioned] = useState(false);
-  const [data, { isBusy }] = useUsers();
+  const [search, setSearch] = useState("")
+  const [isPositioned, setIsPositioned] = useState(false)
+  const { data, isLoading: isBusy } = useUsers()
   const users: User[] = (data?.results ?? []).filter(
     (u) => u.first_name && u.last_name,
-  );
-  const searchRef = useRef<HTMLInputElement>(null);
+  )
+  const searchRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    searchRef.current?.focus();
-  }, []);
+    searchRef.current?.focus()
+  }, [])
 
   useLayoutEffect(() => {
-    setIsPositioned(true);
-  }, []);
+    setIsPositioned(true)
+  }, [])
 
   const filtered: User[] = users.filter((u: User) => {
-    if (!search.trim()) return true;
-    const full = `${u.first_name} ${u.last_name}`.toLowerCase();
-    return full.includes(search.toLowerCase());
-  });
+    if (!search.trim()) return true
+    const full = `${u.first_name} ${u.last_name}`.toLowerCase()
+    return full.includes(search.toLowerCase())
+  })
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Escape") onClose();
-  };
+    if (e.key === "Escape") onClose()
+  }
 
   const dropdown = (
     <div
@@ -171,8 +171,8 @@ const UserPickerDropdown: React.FC<Props> = ({
             <li className={styles.statusItem}>Geen medewerkers gevonden</li>
           )}
           {filtered.map((user: User) => {
-            const isSelected = user.id === currentOwnerId;
-            const initials = createNameAbbreviation(user);
+            const isSelected = user.id === currentOwnerId
+            const initials = createNameAbbreviation(user)
             return (
               <li
                 key={user.id}
@@ -208,14 +208,14 @@ const UserPickerDropdown: React.FC<Props> = ({
                   </svg>
                 )}
               </li>
-            );
+            )
           })}
         </ul>
       </div>
     </div>
-  );
+  )
 
-  return createPortal(dropdown, document.body);
-};
+  return createPortal(dropdown, document.body)
+}
 
-export default UserPickerDropdown;
+export default UserPickerDropdown

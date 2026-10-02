@@ -1,5 +1,5 @@
-import { FormPositioner } from "@amsterdam/amsterdam-react-final-form";
-import { Fields } from "app/components/shared/Form/ScaffoldFields";
+import { FormPositioner } from "@amsterdam/amsterdam-react-final-form"
+import { Fields } from "app/components/shared/Form/ScaffoldFields"
 
 const scaffold = (onCancel: () => void) => {
   const fields = {
@@ -29,14 +29,14 @@ const scaffold = (onCancel: () => void) => {
         onClick: onCancel,
       },
     },
-  };
+  }
 
   return new FormPositioner(fields as Fields)
     .setGrid("mobileS", "1fr 1fr", [
       ["completed", "completed"],
       ["cancel", "submit"],
     ])
-    .getScaffoldProps();
-};
+    .getScaffoldProps()
+}
 
-export default scaffold;
+export default scaffold

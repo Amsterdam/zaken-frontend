@@ -3,12 +3,12 @@ import type {
   MouseEventHandler,
   PropsWithChildren,
   ReactElement,
-} from "react";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { useFocusWithArrows } from "@amsterdam/asc-ui";
-import type { Tab, TabProps } from "./Tab";
-import TabButton from "./TabButton";
-import TabList from "./TabList";
+} from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
+import { useFocusWithArrows } from "@amsterdam/asc-ui"
+import type { Tab, TabProps } from "./Tab"
+import TabButton from "./TabButton"
+import TabList from "./TabList"
 
 // For more information about the accessibility features of this code check out the following references:
 // - https://www.w3.org/TR/wai-aria-practices-1.1/examples/tabs/tabs-2/tabs.html
@@ -29,11 +29,11 @@ export type TabsProps = {
 }
 
 function formatTabId(id: string) {
-  return `tab-${ id }`;
+  return `tab-${id}`
 }
 
 function formatPanelId(id: string) {
-  return `panel-${ id }`;
+  return `panel-${id}`
 }
 
 export function Tabs({
@@ -45,33 +45,33 @@ export function Tabs({
   const allTabs = useMemo(
     () => children.map(({ props }) => props.id),
     [children],
-  );
+  )
   const foundInitialTab = useMemo(
     () => allTabs.find((id) => id === activeTab),
     [allTabs, activeTab],
-  );
+  )
 
   // default to first tab
   const initialActiveTab = useMemo(
     () => foundInitialTab ?? allTabs[0],
     [foundInitialTab, allTabs],
-  );
+  )
 
   useEffect(() => {
-    if (activeTab  && !foundInitialTab) {
+    if (activeTab && !foundInitialTab) {
       console.warn(
-        `You passed a wrong activeTab value to Tabs component. Given ID: ${ activeTab }`,
-      );
+        `You passed a wrong activeTab value to Tabs component. Given ID: ${activeTab}`,
+      )
     }
-  }, [initialActiveTab, activeTab, foundInitialTab]);
+  }, [initialActiveTab, activeTab, foundInitialTab])
 
-  const [selectedTab, setSelectedTab] = useState(initialActiveTab);
-  const tabListRef = useRef<HTMLDivElement>(null);
-  const { keyDown } = useFocusWithArrows(tabListRef, true, true, true);
+  const [selectedTab, setSelectedTab] = useState(initialActiveTab)
+  const tabListRef = useRef<HTMLDivElement>(null)
+  const { keyDown } = useFocusWithArrows(tabListRef, true, true, true)
 
   useEffect(() => {
-    setSelectedTab(initialActiveTab);
-  }, [initialActiveTab]);
+    setSelectedTab(initialActiveTab)
+  }, [initialActiveTab])
 
   return (
     <>
@@ -82,17 +82,17 @@ export function Tabs({
         className={className}
       >
         {children.map(({ props }) => {
-          const { id, label: tabLabel, onClick, ...otherChildrenProps } = props;
-          const isSelected = id === selectedTab;
-          const tabId = formatTabId(id);
-          const panelId = formatPanelId(id);
+          const { id, label: tabLabel, onClick, ...otherChildrenProps } = props
+          const isSelected = id === selectedTab
+          const tabId = formatTabId(id)
+          const panelId = formatPanelId(id)
 
           const onTabButtonClick: MouseEventHandler<HTMLButtonElement> = (
             event,
           ) => {
-            setSelectedTab(id);
-            onClick?.(event);
-          };
+            setSelectedTab(id)
+            onClick?.(event)
+          }
 
           return (
             <TabButton
@@ -107,13 +107,13 @@ export function Tabs({
             >
               {tabLabel}
             </TabButton>
-          );
+          )
         })}
       </TabList>
       {children.map(({ props }) => {
-        const isSelected = props.id === selectedTab;
-        const tabId = formatTabId(props.id);
-        const panelId = formatPanelId(props.id);
+        const isSelected = props.id === selectedTab
+        const tabId = formatTabId(props.id)
+        const panelId = formatPanelId(props.id)
 
         return (
           <div
@@ -126,8 +126,8 @@ export function Tabs({
           >
             {props.children}
           </div>
-        );
+        )
       })}
     </>
-  );
+  )
 }

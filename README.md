@@ -1,12 +1,15 @@
 # Zaken frontend
 
 ## Production
+
 [wonen.zaken.amsterdam.nl](https://wonen.zaken.amsterdam.nl)
 
 ## Acceptance
+
 [acc.wonen.zaken.amsterdam.nl](https://acc.wonen.zaken.amsterdam.nl)
 
 ## Development
+
 - There is a dependency on https://github.com/Amsterdam/zaken-backend
 
 - `git clone https://github.com/Amsterdam/zaken-frontend.git`
@@ -16,9 +19,11 @@
 - `npm run start`
 
 ### Bypassing authentication
+
 - When running zaken-frontend and zaken-backend locally, it's possible to bypass Keycloak authentication. See https://github.com/Amsterdam/zaken-frontend/tree/main/src/app/state/auth/keycloak.
 
 ### Required access to services for development
+
 - ADW account (@amsterdam.nl)
 - GitHub repository (https://github.com/Amsterdam/zaken-frontend) OIS Basis
 - GitHub repository dependency (https://github.com/Amsterdam/wonen-ui) OIS Basis
@@ -26,6 +31,7 @@
 - NPM (https://www.npmjs.com/settings/amsterdam/packages) OIS Slack #frontend-amsterdam
 
 ### Connecting to Acceptance API
+
 - It's possible to connect a locally run zaken-frontend to Acceptance API. Add `VITE_API_URL=https://acc.api.wonen.zaken.amsterdam.nl/api/v1/` to `.env.development.local`. See [.env.development](https://github.com/Amsterdam/zaken-frontend/blob/main/.env.development) for examples.
 
 ## Deployment

@@ -1,10 +1,10 @@
-import { DateDisplay } from "@amsterdam/wonen-ui";
-import isDateInPast from "../Date/isDateInPast";
+import { DateDisplay } from "@amsterdam/wonen-ui"
+import isDateInPast from "../Date/isDateInPast"
 
 type Props = {
-  date: Tasks.WorkflowTask["due_date"] | undefined;
-  emptyText?: string;
-};
+  date: Tasks.WorkflowTask["due_date"] | undefined
+  emptyText?: string
+}
 
 const DueDate: React.FC<Props> = ({ date, emptyText }) =>
   date !== undefined && isDateInPast(new Date(date)) ? (
@@ -13,6 +13,6 @@ const DueDate: React.FC<Props> = ({ date, emptyText }) =>
     </span>
   ) : (
     <DateDisplay date={date} emptyText={emptyText} />
-  );
+  )
 
-export default DueDate;
+export default DueDate
