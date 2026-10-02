@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query"
 import { useApiFetch } from "@/api/useApiFetch"
-import { makeApiUrl } from "app/state/rest/hooks/utils/apiUrl"
+import { makeApiUrl } from "@/api/utils/makeApiUrl"
 
 type Feedback = components["schemas"]["Feedback"]
 

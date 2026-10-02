@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Icon, themeSpacing } from "@amsterdam/asc-ui";
-import useHasPermission, { CAN_PERFORM_TASK } from "app/state/rest/custom/usePermissions/useHasPermission";
+import useHasPermission, { CAN_PERFORM_TASK } from "@/hooks/useHasPermission";
 import CustomIcon from "app/components/shared/CustomIcon/CustomIcon";
 
 type Props = {

@@ -315,7 +315,7 @@ Testchecklist:
 - [ ] Zaak aanmaken op een adres met bestaande zaken: de melding over bestaande zaken klopt. Na het aanmaken toont de adrespagina de nieuwe zaak.
 - [ ] Tag wijzigen op een zaak, dan in het zakenoverzicht op die tag filteren: de zaak staat erbij.
 
-#### Zaakformulieren en overige `cases`-hooks: gebouwd, wacht op test
+#### Zaakformulieren en overige `cases`-hooks: ✅ akkoord (okt 2026)
 
 **Alle hooks uit `app/state/rest` zijn nu over.** Geen component gebruikt de oude laag nog; alleen `ApiProvider` hangt nog in `App.tsx` (weg in 1c).
 
@@ -340,10 +340,19 @@ Testchecklist (per formulier: invullen, bevestigen, terug op de zaak):
 - [ ] Afsluitformulier openen: géén GET op `case-close/` meer.
 - [ ] Tijdlijn en overlastmelding (`CaseNuisanceAlert`) op de zaakpagina tonen de events.
 
-### 1c. Opruimen
-- [ ] `src/app/state/rest/hooks/*`, `provider/*` en `ApiProvider` verwijderen.
-- [ ] Dependencies weg: `axios`, `immer` (ook uit `useFlashMessagesReducer` en `ShowHide`, of die laatste pas in Fase 3), `lodash.merge`, `qs` (vervangen door `URLSearchParams`/`stringifyQueryParams`).
-- [ ] `ValueProvider` herzien: de filterstate voor cases/tasks (`results`, `count`) hoort nu in de query-cache; alleen de filterwaarden zelf blijven over. Overweeg die in de URL (search params) te zetten, dan kan de context weg.
+### 1c. Opruimen ✅ (wacht op test)
+- [x] De hele oude laag `src/app/state/rest/` is verwijderd: `ApiProvider`, `useApiRequest`, de request-queue, `useApiCache`, `useContextCache`, de mock-requests, `errorHandler`, `cleanParamObject` en de brug in `useApiRequest`. `ApiProvider` is uit `App.tsx`.
+- [x] Wat nog gebruikt werd is verhuisd: `makeApiUrl`/`makeTonApiUrl` → `src/api/utils/makeApiUrl.ts`; `useHasPermission` (samengevoegd met `usePermissions`, logica ongewijzigd, nu met test), `useOtherAddressesByBagId` en `usePanoramaByBagId` → `src/hooks/` (de doelmap uit Fase 5).
+- [x] Dependencies weg: `axios`, `qs`, `lodash.merge`, `lodash.isempty` (+ `@types/qs`, `@types/lodash.merge`, `@types/lodash.isempty`). De build controleert dat geen andere library er stilletjes op leunde.
+- [ ] `immer` blijft nog: gebruikt door `useFlashMessagesReducer` en `ShowHide` (gaan weg met de flash messages → toasts in Fase 2 en `ShowHide` in Fase 3).
+- [x] `ValueProvider`: de ongebruikte `results`/`count` zijn weg; alleen de filterwaarden staan er nog in.
+- [ ] `ValueProvider` vervangen door de URL (search params) voor de filters van het zaken- en takenoverzicht. Bewust nog niet gedaan: dat verandert gedrag (links met filters, terugknop) en verdient een eigen pilot.
+
+Testchecklist (de app moet zich precies zo gedragen als na de vorige stappen):
+- [ ] Inloggen, startpagina, zakenoverzicht, takenoverzicht, zaakpagina, adrespagina, een formulier: alles laadt, geen fouten in de console (behalve de bekende `defaultProps`-waarschuwingen van `asc-ui`).
+- [ ] Knoppen en menu's die van rechten afhangen (taak afronden/toewijzen, gevoelige zaken) verschijnen zoals voorheen.
+- [ ] Adrespagina: andere adressen (huisletter/toevoeging) en het panorama.
+- [ ] Filters in zaken- en takenoverzicht blijven bewaard als je naar een zaak gaat en terugkomt.
 
 ## Fase 2 — Amsterdam Design System-fundament (± 1 week)
 
@@ -501,7 +510,7 @@ Voorwaarde: `grep -r "@amsterdam/asc-ui\|wonen-ui\|amsterdam-react-final-form\|s
 >
 > **✅ Akkoord** na de test op acceptatie → pas dan mergen en naar productie.
 
-- [ ] Dependencies verwijderen: `@amsterdam/asc-ui`, `@amsterdam/asc-assets`, `@amsterdam/wonen-ui`, `@amsterdam/amsterdam-react-final-form`, `final-form`, `final-form-arrays`, `react-final-form`, `react-final-form-arrays`, `styled-components`, `@types/styled-components`, `lodash` (tijdelijk toegevoegd in Fase 0), `lodash.isempty`, `lodash.merge`, `immer`, `axios`, `qs`, `react-router-dom`. Controleer `react-tooltip` (alleen in `CustomTooltip`; ADS-alternatief of native `title`/popover).
+- [ ] Dependencies verwijderen: `@amsterdam/asc-ui`, `@amsterdam/asc-assets`, `@amsterdam/wonen-ui`, `@amsterdam/amsterdam-react-final-form`, `final-form`, `final-form-arrays`, `react-final-form`, `react-final-form-arrays`, `styled-components`, `@types/styled-components`, `lodash` (tijdelijk toegevoegd in Fase 0), `immer`, `react-router-dom`. (`axios`, `qs`, `lodash.merge` en `lodash.isempty` zijn al weg in Fase 1c.) Controleer `react-tooltip` (alleen in `CustomTooltip`; ADS-alternatief of native `title`/popover).
 - [ ] `ThemeProvider`/`GlobalStyle` uit `App.tsx`.
 - [ ] Upgrade: `react@^19`, `react-dom@^19`, `@types/react@^19`, `@types/react-dom@^19`.
 - [ ] Codemods draaien: `npx codemod@latest react/19/migration-recipe` en `npx types-react-codemod@latest preset-19 ./src`.

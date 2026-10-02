@@ -5,7 +5,7 @@ import CasesFilter from "app/components/cases/CasesFilter/CasesFilter";
 import { useCases, useCaseThemes, useCorporations, useDistricts, useProjects, useSubjects, useTags, useTasksReasons } from "@/api/hooks";
 import useHasPermission, {
   SENSITIVE_CASE_PERMISSION,
-} from "app/state/rest/custom/usePermissions/useHasPermission";
+} from "@/hooks/useHasPermission";
 import { ContextValues } from "app/state/context/ValueProvider";
 import { RowWithColumn } from "app/components/layouts/Grid";
 import getThemeId from "app/components/tasks/utils/getThemeId";

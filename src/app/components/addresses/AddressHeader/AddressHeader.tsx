@@ -6,7 +6,7 @@ import { useAddress, useBagPdokByBagId } from "@/api/hooks";
 import ShowOtherAddressesButton, {
   Index,
 } from "app/components/addresses/AddressSuffixSwitcher/ShowOtherAddressesButton";
-import useOtherAddressesByBagId from "app/state/rest/custom/useOtherAddresses/useOtherAddresses";
+import useOtherAddressesByBagId from "@/hooks/useOtherAddressesByBagId";
 import AddressLink from "./components/AddressLink";
 import { getAddressFromBagPdokResponse } from "app/components/addresses/utils";
 import { useFlashMessages } from "app/state/flashMessages/useFlashMessages";

@@ -1,4 +1,4 @@
-import useOtherAddressesByBagId from "app/state/rest/custom/useOtherAddresses/useOtherAddresses";
+import useOtherAddressesByBagId from "@/hooks/useOtherAddressesByBagId";
 import { Table } from "@amsterdam/wonen-ui";
 import useNavigation from "app/routing/useNavigation";
 import columns from "./columns";

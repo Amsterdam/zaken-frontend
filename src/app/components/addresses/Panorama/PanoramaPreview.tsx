@@ -1,6 +1,6 @@
 import { useRef } from "react";
 
-import usePanoramaByBagId from "app/state/rest/custom/usePanoramaByBagId/usePanoramaByBagId";
+import usePanoramaByBagId from "@/hooks/usePanoramaByBagId";
 import useRect from "./hooks/useRect";
 
 type Props = {

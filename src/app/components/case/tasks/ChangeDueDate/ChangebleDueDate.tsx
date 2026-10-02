@@ -5,7 +5,7 @@ import { appendTimeToDate } from "app/components/shared/Helpers/helpers";
 import DueDate from "app/components/shared/DueDate/DueDate";
 import ChangeDueDateModal from "./ChangeDueDateModal";
 import { useUpdateTask } from "@/api/hooks";
-import useHasPermission, { CAN_PERFORM_TASK } from "app/state/rest/custom/usePermissions/useHasPermission";
+import useHasPermission, { CAN_PERFORM_TASK } from "@/hooks/useHasPermission";
 import CustomIcon from "app/components/shared/CustomIcon/CustomIcon";
 
 type Props = {

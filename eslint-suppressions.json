@@ -326,59 +326,6 @@
       "count": 1
     }
   },
-  "src/app/state/rest/hooks/useApiCache.ts": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 11
-    }
-  },
-  "src/app/state/rest/hooks/useApiRequest.ts": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    }
-  },
-  "src/app/state/rest/hooks/useMockedRequest.ts": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    }
-  },
-  "src/app/state/rest/hooks/useRequest.ts": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    }
-  },
-  "src/app/state/rest/hooks/useRequestQueue.test.ts": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 2
-    }
-  },
-  "src/app/state/rest/hooks/useRequestQueue.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    },
-    "react-hooks/set-state-in-effect": {
-      "count": 1
-    }
-  },
-  "src/app/state/rest/hooks/utils/cleanParamObject.ts": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    }
-  },
-  "src/app/state/rest/hooks/utils/errorHandler.ts": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    }
-  },
-  "src/app/state/rest/provider/ApiProvider.tsx": {
-    "react-refresh/only-export-components": {
-      "count": 1
-    }
-  },
-  "src/app/state/rest/provider/useContextCache.ts": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    }
-  },
   "src/types/Task.d.ts": {
     "@typescript-eslint/no-explicit-any": {
       "count": 2

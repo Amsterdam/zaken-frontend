@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useApiFetch } from "@/api/useApiFetch"
 import { queryKeys } from "@/api/queryKeys"
-import { makeApiUrl } from "app/state/rest/hooks/utils/apiUrl"
+import { makeApiUrl } from "@/api/utils/makeApiUrl"
 
 type CaseId = components["schemas"]["CaseDetail"]["id"]
 type Option = { id: number; name: string }

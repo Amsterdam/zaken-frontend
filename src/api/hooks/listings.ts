@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { useApiFetch } from "@/api/useApiFetch"
 import { queryKeys } from "@/api/queryKeys"
-import { makeTonApiUrl } from "app/state/rest/hooks/utils/apiUrl"
+import { makeTonApiUrl } from "@/api/utils/makeApiUrl"
 
 export const useListing = (tonId?: string) => {
   const fetch = useApiFetch()

@@ -5,7 +5,7 @@ import TableTasks from "app/components/tasks/TableTasks/TableTasks";
 import TasksFilter from "../TasksFilter/TasksFilter";
 import useHasPermission, {
   SENSITIVE_CASE_PERMISSION,
-} from "app/state/rest/custom/usePermissions/useHasPermission";
+} from "@/hooks/useHasPermission";
 import { ContextValues } from "app/state/context/ValueProvider";
 import CaseEnforcement from "app/components/case/icons/CaseEnforcement";
 import getThemeId from "app/components/tasks/utils/getThemeId";

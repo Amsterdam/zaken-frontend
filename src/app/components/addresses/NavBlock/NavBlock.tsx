@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import useHasPermission from "app/state/rest/custom/usePermissions/useHasPermission";
+import useHasPermission from "@/hooks/useHasPermission";
 import { Card, CardContent, Heading, themeColor, themeSpacing } from "@amsterdam/asc-ui";
 import CustomIcon, { CustomIconProps } from "app/components/shared/CustomIcon/CustomIcon";
 

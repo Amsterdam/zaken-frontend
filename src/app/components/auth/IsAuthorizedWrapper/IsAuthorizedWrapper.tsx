@@ -1,5 +1,5 @@
 import { Spinner } from "@amsterdam/asc-ui";
-import useHasPermission from "app/state/rest/custom/usePermissions/useHasPermission";
+import useHasPermission from "@/hooks/useHasPermission";
 
 /*
  ** IsAuthorizedWrapper is used to manage permissions.

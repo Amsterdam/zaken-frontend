@@ -16,7 +16,7 @@ import CaseNuisanceAlert from "app/components/case/CaseNuisanceAlert/CaseNuisanc
 import CaseSensitiveAddressAlert from "app/components/case/CaseSensitiveAddressAlert/CaseSensitiveAddressAlert";
 import useHasPermission, {
   SENSITIVE_CASE_PERMISSION,
-} from "app/state/rest/custom/usePermissions/useHasPermission";
+} from "@/hooks/useHasPermission";
 import NotAuthorizedPage from "app/pages/auth/NotAuthorizedPage";
 
 type Props = {

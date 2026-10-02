@@ -1,6 +1,6 @@
 import { Button } from "@amsterdam/asc-ui";
 import ButtonLink from "app/components/shared/ButtonLink/ButtonLink";
-import useHasPermission from "app/state/rest/custom/usePermissions/useHasPermission";
+import useHasPermission from "@/hooks/useHasPermission";
 
 type Props = React.ComponentProps<typeof Button> & {
   permissionNames: components["schemas"]["PermissionsEnum"][]

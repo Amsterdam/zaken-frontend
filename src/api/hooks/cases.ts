@@ -12,7 +12,7 @@ import {
   nonEmpty,
   stringifyQueryParams,
 } from "@/api/utils/stringifyQueryParams"
-import { makeApiUrl } from "app/state/rest/hooks/utils/apiUrl"
+import { makeApiUrl } from "@/api/utils/makeApiUrl"
 
 type CaseId = components["schemas"]["CaseDetail"]["id"]
 

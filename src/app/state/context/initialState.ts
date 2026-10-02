@@ -2,7 +2,6 @@ const noop = () => {};
 
 export type StateType = {
   cases: {
-    count: number;
     districtNames: components["schemas"]["District"]["name"][];
     fromStartDate: string;
     housingCorporations: string[];
@@ -11,7 +10,6 @@ export type StateType = {
     pagination: TABLE.Schemas.Pagination;
     projects: string[];
     reason: string;
-    results: components["schemas"]["Case"][];
     sorting: TABLE.Schemas.Sorting;
     addressSearch: string;
     subjects: string[];
@@ -20,7 +18,6 @@ export type StateType = {
     updateContextCases: (payload: any) => void;
   };
   tasks: {
-    count: number;
     districtNames: components["schemas"]["District"]["name"][];
     housingCorporations: string[];
     housingCorporationIsNull: boolean;
@@ -28,7 +25,6 @@ export type StateType = {
     pagination: TABLE.Schemas.Pagination;
     projects: string[];
     reason: string;
-    results: components["schemas"]["CaseUserTask"][];
     role?: string;
     sorting: TABLE.Schemas.Sorting;
     theme: string;
@@ -42,7 +38,6 @@ export type StateType = {
 // Initial State
 export const initialState: StateType = {
   cases: {
-    count: 0,
     districtNames: [],
     fromStartDate: "",
     housingCorporations: [],
@@ -54,7 +49,6 @@ export const initialState: StateType = {
     },
     projects: [],
     reason: "",
-    results: [],
     sorting: {
       dataIndex: "start_date",
       order: "DESCEND",
@@ -66,7 +60,6 @@ export const initialState: StateType = {
     updateContextCases: noop,
   },
   tasks: {
-    count: 0,
     districtNames: [],
     housingCorporations: [],
     housingCorporationIsNull: false,
@@ -77,7 +70,6 @@ export const initialState: StateType = {
     },
     projects: [],
     reason: "",
-    results: [],
     role: undefined,
     sorting: {
       dataIndex: "due_date",

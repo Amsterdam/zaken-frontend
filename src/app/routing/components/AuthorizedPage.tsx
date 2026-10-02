@@ -1,5 +1,5 @@
 import NotAuthorizedPage from "app/pages/auth/NotAuthorizedPage";
-import useHasPermission from "app/state/rest/custom/usePermissions/useHasPermission";
+import useHasPermission from "@/hooks/useHasPermission";
 import SpinnerWrap from "app/components/shared/ConfirmScaffoldForm/components/SpinnerWrap";
 
 type Props = {

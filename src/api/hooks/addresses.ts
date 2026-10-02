@@ -3,7 +3,7 @@ import dayjs from "dayjs"
 import { useApiFetch } from "@/api/useApiFetch"
 import { queryKeys } from "@/api/queryKeys"
 import { stringifyQueryParams } from "@/api/utils/stringifyQueryParams"
-import { makeApiUrl } from "app/state/rest/hooks/utils/apiUrl"
+import { makeApiUrl } from "@/api/utils/makeApiUrl"
 
 type Address = components["schemas"]["Address"]
 type BagId = Address["bag_id"]

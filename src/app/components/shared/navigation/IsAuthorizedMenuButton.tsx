@@ -1,6 +1,6 @@
 import { MenuButton, Link } from "@amsterdam/asc-ui";
 import styled from "styled-components";
-import useHasPermission from "app/state/rest/custom/usePermissions/useHasPermission";
+import useHasPermission from "@/hooks/useHasPermission";
 import StyledButtonLink from "./StyledButtonLink";
 import { env } from "app/config/env";
 

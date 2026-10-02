@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import { useAssignTask, useUsersMe } from "@/api/hooks";
 import useHasPermission, {
   CAN_PERFORM_TASK,
-} from "app/state/rest/custom/usePermissions/useHasPermission";
+} from "@/hooks/useHasPermission";
 import AssigneeAvatar from "./AssigneeAvatar";
 import UserPickerDropdown from "./UserPickerDropdown";
 import ConfirmReassignDialog from "./ConfirmReassignDialog";

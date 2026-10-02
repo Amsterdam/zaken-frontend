@@ -4,7 +4,7 @@ import { useModal } from "app/components/shared/Modal/hooks/useModal";
 import { useSchedulesByCaseId, useScheduleTypes, useUpdateSchedule } from "@/api/hooks";
 import useHasPermission, {
   CAN_PERFORM_TASK,
-} from "app/state/rest/custom/usePermissions/useHasPermission";
+} from "@/hooks/useHasPermission";
 import CustomIcon from "app/components/shared/CustomIcon/CustomIcon";
 import UpdateScheduleModal from "./UpdateScheduleModal";
 import type { Schedule } from "./types";

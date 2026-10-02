@@ -6,7 +6,7 @@ import Workflow from "../Workflow/Workflow";
 import { Row, Column, RowWithColumn } from "app/components/layouts/Grid";
 import to from "app/routing/utils/to";
 import IsAuthorizedButtonLink from "app/components/shared/ButtonLink/IsAuthorizedButtonLink";
-import { CAN_PERFORM_TASK } from "app/state/rest/custom/usePermissions/useHasPermission";
+import { CAN_PERFORM_TASK } from "@/hooks/useHasPermission";
 
 type Props = {
   id: components["schemas"]["CaseDetail"]["id"]

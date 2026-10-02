@@ -5,10 +5,12 @@ type CaseId = components["schemas"]["CaseDetail"]["id"]
 /**
  * Hierarchical query key factory, one entry per resource exposed by src/api/hooks/*.
  *
- * The first part of every key is the ApiGroup the hook had in the old
- * app/state/rest layer. A mutation there cleared its whole group; here that
- * is invalidateQueries({ queryKey: queryKeys.<group>.all }), so the
- * invalidation behavior stays exactly the same.
+ * Keys are structured so that invalidating a parent key (e.g. queryKeys.cases.detail(id))
+ * also invalidates every child key (its workflows, events, schedules, ...). The first part
+ * is the group the request belonged to before the migration to TanStack Query.
+ *
+ * Mutations invalidate or update as little as possible: only what shows the changed data
+ * (see the comments on the mutation hooks).
  */
 export const queryKeys = {
   addresses: {
@@ -50,7 +52,7 @@ export const queryKeys = {
     byAddressAll: ["cases", "byAddress"] as const,
     byAddress: (bagId: BagId, openCases?: boolean) =>
       ["cases", "byAddress", bagId, { openCases }] as const,
-    // The task lists of the overview; in the old layer they were in the cases group too.
+    // The task lists of the overview.
     tasksAll: ["cases", "tasks"] as const,
     tasks: (params: Record<string, unknown>) =>
       ["cases", "tasks", params] as const,

@@ -7,7 +7,6 @@ import { queryClient } from "@/api/queryClient";
 import { hasAuthParams, useAuth } from "react-oidc-context";
 import Router from "app/routing/components/Router";
 import FlashMessageProvider from "app/state/flashMessages/FlashMessageProvider";
-import ApiProvider from "app/state/rest/provider/ApiProvider";
 import ValueProvider from "app/state/context/ValueProvider";
 import PageTitle from "app/routing/components/PageTitle";
 import { LoadingScreenBasic, FullScreenWrapper } from "app/components/shared/loading";
@@ -54,13 +53,11 @@ const App = () => {
         <BrowserRouter>
           <FlashMessageProvider>
             <QueryClientProvider client={queryClient}>
-              <ApiProvider>
-                <ValueProvider>
-                  <PageTitle />
-                  <Feedback />
-                  <Router />
-                </ValueProvider>
-              </ApiProvider>
+              <ValueProvider>
+                <PageTitle />
+                <Feedback />
+                <Router />
+              </ValueProvider>
               {import.meta.env.DEV && <ReactQueryDevtools />}
             </QueryClientProvider>
           </FlashMessageProvider>
