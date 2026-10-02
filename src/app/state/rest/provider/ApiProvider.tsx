@@ -25,68 +25,34 @@ export const ApiContext = createContext<GroupedContext>({
   housingCorporations: noopContext,
 });
 
+/**
+ * Cache + request queue for one ApiGroup.
+ *
+ * Note: clearCache() only clears this old cache. Invalidating the migrated TanStack
+ * queries of the group happens in useApiRequest, after the mutation is done.
+ */
+const useApiGroup = (): ApiCache & RequestQueue => ({
+  ...useApiCache(),
+  ...useRequestQueue(),
+});
+
 const ApiProvider = ({ children }: { children: ReactNode }) => {
   const value: GroupedContext = {
-    auth: {
-      ...useApiCache(),
-      ...useRequestQueue(),
-    },
-    users: {
-      ...useApiCache(),
-      ...useRequestQueue(),
-    },
-    addresses: {
-      ...useApiCache(),
-      ...useRequestQueue(),
-    },
-    cases: {
-      ...useApiCache(),
-      ...useRequestQueue(),
-    },
-    case: {
-      ...useApiCache(),
-      ...useRequestQueue(),
-    },
-    fines: {
-      ...useApiCache(),
-      ...useRequestQueue(),
-    },
-    dataPunt: {
-      ...useApiCache(),
-      ...useRequestQueue(),
-    },
-    permits: {
-      ...useApiCache(),
-      ...useRequestQueue(),
-    },
-    supportContacts: {
-      ...useApiCache(),
-      ...useRequestQueue(),
-    },
-    themes: {
-      ...useApiCache(),
-      ...useRequestQueue(),
-    },
-    roles: {
-      ...useApiCache(),
-      ...useRequestQueue(),
-    },
-    permissions: {
-      ...useApiCache(),
-      ...useRequestQueue(),
-    },
-    listings: {
-      ...useApiCache(),
-      ...useRequestQueue(),
-    },
-    task: {
-      ...useApiCache(),
-      ...useRequestQueue(),
-    },
-    housingCorporations: {
-      ...useApiCache(),
-      ...useRequestQueue(),
-    },
+    auth: useApiGroup(),
+    users: useApiGroup(),
+    addresses: useApiGroup(),
+    cases: useApiGroup(),
+    case: useApiGroup(),
+    fines: useApiGroup(),
+    dataPunt: useApiGroup(),
+    permits: useApiGroup(),
+    supportContacts: useApiGroup(),
+    themes: useApiGroup(),
+    roles: useApiGroup(),
+    permissions: useApiGroup(),
+    listings: useApiGroup(),
+    task: useApiGroup(),
+    housingCorporations: useApiGroup(),
   };
 
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;

@@ -4,20 +4,35 @@ import { produce } from "immer";
 import { Alert } from "@amsterdam/asc-ui";
 
 export type FlashMessage = ComponentProps<typeof Alert>
-export type State = Record<string, FlashMessage[]>
+// messageId: a stable React key, so dismissing one message doesn't hide another.
+export type StoredFlashMessage = FlashMessage & { messageId: number }
+export type State = Record<string, StoredFlashMessage[]>
 export type FlashMessageLevel = "info" | "error"
 
 type Action =
   | { type: "add", path: string, props: FlashMessage }
   | { type: "clear", path: string }
+  | { type: "remove", path: string, messageId: number }
 
-export const reducer = produce((draft, action: Action) => {
+let nextId = 0;
+
+const isSameMessage = (a: FlashMessage, b: FlashMessage) =>
+  a.level === b.level && a.title === b.title && a.children === b.children;
+
+export const reducer = produce((draft: State, action: Action) => {
   if (draft[action.path] === undefined) {
     draft[action.path] = [];
   }
   switch (action.type) {
     case "add":
-      draft[action.path].push(action.props);
+      // The same message twice (e.g. every failed poll attempt) adds nothing.
+      if (draft[action.path].some((message) => isSameMessage(message, action.props))) {
+        break;
+      }
+      draft[action.path].push({ ...action.props, messageId: nextId++ });
+      break;
+    case "remove":
+      draft[action.path] = draft[action.path].filter(({ messageId }) => messageId !== action.messageId);
       break;
     case "clear":
       delete draft[action.path];
@@ -49,6 +64,11 @@ export const useFlashMessagesReducer = () => {
     [dispatch, clearFlashMessages],
   );
 
+  const removeFlashMessage = useCallback(
+    (path: string, messageId: number) => dispatch({ type: "remove", path, messageId }),
+    [dispatch],
+  );
+
   const addErrorFlashMessage = useCallback(
     (title: string, body?: ReactNode) => dispatch({
       path: "current",
@@ -67,5 +87,6 @@ export const useFlashMessagesReducer = () => {
     addSuccessFlashMessage,
     addErrorFlashMessage,
     clearFlashMessages,
+    removeFlashMessage,
   };
 };

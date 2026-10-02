@@ -213,6 +213,66 @@ Gedaan tijdens de uitrol:
 >
 > Voorstel voor het voorbeeld: `useCase` + `useCaseWorkflows` met polling op de zaakdetailpagina, plus de `updateCache` in `ChangeHousingCorporation`. Na akkoord volgen het takenoverzicht (`useContextCache`) en de overige formulieren.
 
+#### Status pilot `cases`: ✅ akkoord (okt 2026)
+
+De `cases`-groep (32 hooks) gaat in delen over. Daarom is er een **tijdelijke brug tussen oude en nieuwe cache**, te verwijderen samen met de oude laag (1c):
+- `useApiRequest`: een oude mutatie invalideert ook de TanStack-queries van haar groep, **pas nadat het verzoek klaar is**. Eerst gebeurde dat in `ApiProvider` bij `clearCache()`, maar de oude laag roept die vóór het verzoek aan. Oude GET's wachten via de request-queue netjes tot de mutatie klaar is, TanStack niet: die haalde de oude stand op terwijl de POST nog liep (gevonden bij het testen: na taak afronden bleef de oude taak staan). Getest in `useApiRequest.test.tsx`.
+- `src/api/legacyCacheBridge.ts`: nieuwe mutaties kunnen gericht items in de oude cache bijwerken (`useUpdateLegacyCacheItem`) of als verouderd markeren op URL-prefix (`useInvalidateLegacyCacheItems`), in plaats van de hele groep te legen.
+
+| Oud | Nieuw |
+| --- | --- |
+| `useCase` (16 plekken) | `useCase(caseId)`; uitgeschakeld zolang `caseId` ontbreekt |
+| `useCase().execPatch` (`ChangeTagForm`, `ChangeableSubject`) | `useUpdateCase(caseId)` → werkt de caches bij zonder refetch (zie hieronder) |
+| `useCase().updateCache` (`ChangeHousingCorporation`) | `useSetCaseData(caseId)` → `queryClient.setQueryData` |
+| `useExistingCase`: `lazy` + `execGet` in een `useEffect` + `errors` | `useCase(valid ? id : undefined)` + `error.status === 404` |
+| `useCaseWorkflows` + `usePollingRefetch` | `useCaseWorkflows(caseId, { pollWhileEmpty })` met `refetchInterval`: 1, 2, 4, 8, 16 s, max. 5 pogingen, geteld vanaf mount; geeft `isPolling` terug. Ook mislukte pogingen tellen mee (anders bleef een falend endpoint eeuwig gepold; gevonden bij nalopen, met test). Verschil: "Herlaad taken." telt nu als poging. `usePollingRefetch` is verwijderd. |
+| `useContextCache` op de workflows (`Workflow/columns`) | `useSetWorkflowTaskOwner(caseId)` → `setQueryData` |
+
+Verschil voor gebruikers: na een wijziging (tag, onderwerp, taak afronden) toonde de zaakpagina kort een volledig laadscherm, omdat de oude cache de data weggooide tijdens het verversen. Nu blijft de pagina staan en ververst hij op de achtergrond.
+
+> **⚠️ Gevonden bij het testen: modals die "vanzelf" sloten.** Vijf modals op de zaakpagina sloten na opslaan niet zelf. Ze verdwenen alleen omdat het oude laadscherm de hele pagina (en dus de modal) opnieuw opbouwde. Nu de pagina blijft staan, bleven ze open. Opgelost door de modal te sluiten zodra het verzoek klaar is, ook bij een fout (die verschijnt als flash message, zoals voorheen):
+> - tag (`ChangeTagForm`, nu met een `onSaved`-prop en een uitgeschakelde knop tijdens opslaan; met regressietest);
+> - onderwerp (`ChangeableSubject`);
+> - deadline (`ChangebleDueDate`);
+> - planning (`UpdateSchedule`);
+> - taak afronden (`FormModal`).
+>
+> **Bij elke volgende groep controleren:** zoek in de geraakte schermen naar `useModal()` en formulieren die na `exec*`/`mutate` niet zelf `closeModal` aanroepen of state resetten.
+
+> **Gerichter invalideren (gevonden bij het testen).** Deadline wijzigen haalde daarna ook de zaak, workflows, events en schedules opnieuw op. Dat gebeurde al vóór de migratie: de oude `useTaskUpdate` zat in de `cases`-groep en een mutatie leegde de hele groep. Nu: `useUpdateTask(taskId, caseId)` ververst alleen `cases/:id/workflows/` direct, en markeert de (nog oude) takenlijsten `tasks/?…` als verouderd, zodat die pas laden als ze weer getoond worden. De backend maakt geen event aan voor een deadlinewijziging (zie `TypeEnum`), dus events hoeven niet mee. Hiervoor heeft de oude cache tijdelijk `invalidateCacheItems(urlPrefix)` gekregen.
+>
+> Planning wijzigen (`PATCH /schedules/:id/`): **geen enkele refetch.** `useUpdateSchedule(scheduleId, caseId)` werkt na de PATCH de gecachte `cases/:id/schedules/` (kolom "Urgentie") en het `SCHEDULE`-event in `cases/:id/events/` zelf bij. Dat event moet mee: de backend leest zijn waarden live uit de schedule, als namen (`CaseEvent.event_values` → `emitter.__get_event_values__()`). Daarom krijgt de hook de gekozen opties mét naam uit het formulier. Beide caches zitten nog in de oude laag; daarvoor is er tijdelijk `useUpdateLegacyCacheItem` in `src/api/legacyCacheBridge.ts`. Van 4 naar 0 requests.
+>
+> Tag en onderwerp wijzigen (`PATCH /cases/:id/`): **geen enkele refetch.** `useUpdateCase` neemt `tags` en `subjects` uit de response over in de gecachte zaak (de PATCH-serializer `CaseCreateSerializer` gebruikt voor deze velden dezelfde `TagSerializer`/`SubjectSerializer` als de GET; de rest van de response wijkt af en wordt dus niet overgenomen). Het `CASE`-event in de tijdlijn krijgt de nieuwe onderwerpnamen, want de backend leest die live uit de zaak (`Case.__get_event_values__`). Het zaken- en takenoverzicht (filterbaar op tag en onderwerp) worden alleen als verouderd gemarkeerd en laden pas bij het volgende bezoek. Van 4 naar 0 requests.
+>
+> Taak afronden (`POST /generic-tasks/complete/`): `useCompleteTask(caseId)` ververst ná de POST `cases/:id/workflows/` (volgende taak) en de events (de backend maakt een `GENERIC_TASK`-event). De zaak wordt alleen als verouderd gemarkeerd: het veld `workflows` verandert, wat deze pagina niet toont maar het besluitformulier wel gebruikt. De lijsten worden als verouderd gemarkeerd.
+>
+> **Pollen ook als al de eerste fetch faalt, en laden blijven tonen.** Eerst pollde `useCaseWorkflows` alleen bij een lege lijst; faalde al de eerste fetch, dan was er geen data en werd er niet gepold (de oude code deed dat wel, via `data?.results ?? []`). Nu telt "nog geen workflows" ook bij een fout zonder data, en `isPolling` blijft `true` tot de laatste poging, zodat `Workflow` laadregels blijft tonen. Daarnaast geldt een zaak in `Workflow` als open zolang de zaakgegevens nog laden (eerst gold hij dan als afgesloten, waardoor er niet gepold werd en kort "afgesloten" kon verschijnen).
+>
+> **Geen foutmelding voor workflows.** Op verzoek toont `useCaseWorkflows` nooit een foutmelding (`meta: { globalErrorToast: false }`): zonder workflows toont de tabel "Geen taken beschikbaar." met "Herlaad taken.". Getest met de echte `queryClient`.
+>
+> **Dubbele foutmeldingen (gevonden bij het testen).** Bij een falend `workflows/`-endpoint gaf elke mislukte pollpoging een eigen rode melding (5×). Dat deed de oude `usePollingRefetch` ook (en zelfs 6× bij een falende eerste fetch). Nu voegt de flash-message-reducer een melding die al op het scherm staat (zelfde niveau, titel en tekst) niet nog een keer toe. Dit geldt voor alle meldingen, ook uit de oude laag. Wegklikken haalt een melding nu ook uit de state (`removeFlashMessage`), zodat dezelfde fout later weer kan verschijnen; elke melding heeft een vaste `messageId` als React-key, zodat wegklikken niet de verkeerde melding verbergt.
+>
+> **Werkwijze:** controleer in `zaken-backend` welke responses de gewijzigde data bevatten (serializers, en `event_values` die live uit het emitter-object komen) voordat je een invalidatie weglaat.
+>
+> Dit is een bewuste afwijking van "1-op-1 met de oude groep". **Bij elke volgende mutatie afwegen:** welke queries tonen deze data echt? Andere oude mutaties in `cases` (taak afronden, planning wijzigen, besluiten, …) legen nog de hele groep; dat wordt bekeken als ze overgaan.
+
+Testchecklist voor acceptatie (zaakdetailpagina):
+- [ ] Zaak openen: gegevens, kop, adres en paginatitel laden. Een niet-bestaand id (`/zaken/999999999`) toont "niet gevonden".
+- [ ] Gevoelige zaak zonder recht → "niet geautoriseerd", zoals nu.
+- [ ] Tag wijzigen en onderwerp wijzigen: de nieuwe waarde verschijnt, tijdlijn/events verversen ook. _(Tag: de modal bleef open, opgelost.)_
+- [ ] Woningcorporatie wijzigen: de nieuwe corporatie staat direct op de zaak.
+- [ ] Taak afronden: de takenlijst ververst en toont de volgende taak. Network: eerst de POST op `generic-tasks/complete/`, daarna pas `workflows/` en `events/`; geen `cases/:id/`. _(Gevonden: de GET's liepen vóór de POST, opgelost.)_
+- [ ] Een oude mutatie, bijv. een besluit of debrief opslaan: terug op de zaak staan de nieuwe gegevens (niet de stand van vóór het opslaan).
+- [ ] Nieuwe zaak aanmaken en direct openen: de takenlijst toont kort laadregels en vult zich binnen enkele seconden (polling). Network-tab: herhaalde `/workflows/`-requests met oplopende tussenpozen, die stoppen zodra er taken zijn.
+- [ ] Afgesloten zaak zonder taken: geen polling, wel de tekst "Deze zaak is afgesloten…" en "Herlaad taken." werkt.
+- [ ] Taak toewijzen vanuit de takenlijst op de zaak: de nieuwe behandelaar verschijnt direct.
+- [ ] Blokkeer `*/workflows/*` en open een zaak (ook als al de eerste fetch faalt): géén rode melding, de takenlijst blijft laadregels tonen terwijl er gepold wordt (requests na ±1, 3, 7, 15 en 31 s), daarna niets meer en "Geen taken beschikbaar." met "Herlaad taken.". Een afgesloten zaak toont direct "Deze zaak is afgesloten…" zonder te pollen.
+- [ ] Na opslaan sluit de modal bij: tag, onderwerp, woningcorporatie, deadline van een taak, planning van een bezoek, taak afronden.
+- [ ] Deadline wijzigen: na de PATCH alleen een request naar `cases/:id/workflows/` (niet naar de zaak, events of schedules). Daarna naar het takenoverzicht: dat toont de nieuwe deadline.
+- [ ] Tag en onderwerp wijzigen: na de PATCH géén andere requests. De nieuwe tag/onderwerpen staan direct op de zaak, de onderwerpen ook in het zaak-event in de tijdlijn. Daarna in het zakenoverzicht filteren op die tag: de zaak staat erbij.
+- [ ] Planning wijzigen: na de PATCH géén andere requests. De urgentie in de takenlijst én het planning-event in de tijdlijn tonen toch direct de nieuwe waarde, en na herladen van de pagina nog steeds.
+
 ### 1c. Opruimen
 - [ ] `src/app/state/rest/hooks/*`, `provider/*` en `ApiProvider` verwijderen.
 - [ ] Dependencies weg: `axios`, `immer` (ook uit `useFlashMessagesReducer` en `ShowHide`, of die laatste pas in Fase 3), `lodash.merge`, `qs` (vervangen door `URLSearchParams`/`stringifyQueryParams`).

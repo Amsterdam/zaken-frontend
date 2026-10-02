@@ -11,13 +11,19 @@ const StyledAlert = styled(Alert)`
 
 const FlashMessages: React.FC = () => {
   const { pathname } = useLocation();
-  const { state } = useFlashMessages();
+  const { state, removeFlashMessage } = useFlashMessages();
+
+  // Dismissing also removes the message, so the same message can be shown again later.
+  const renderMessages = (path: string) =>
+    state[path]?.map(({ messageId, ...props }) => (
+      <StyledAlert key={ messageId } { ...props } onDismiss={ () => removeFlashMessage(path, messageId) } />
+    ));
 
   return (
     <Row bottomSpacing={ 0 }>
       <Column>
-        { state[pathname] && state[pathname].map((props, index) => <StyledAlert key={ index } { ...props } />) }
-        { state["current"] && state["current"].map((props, index) => <StyledAlert key={ index } { ...props } />) }
+        { renderMessages(pathname) }
+        { renderMessages("current") }
       </Column>
     </Row>
   );

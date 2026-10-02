@@ -1,5 +1,5 @@
 import { useModal } from "app/components/shared/Modal/hooks/useModal";
-import { useCase } from "app/state/rest";
+import { useUpdateCase } from "@/api/hooks";
 import ChangeSubjectModal from "./ChangeSubjectModal";
 import ChangeableItem from "../ChangeableItem/ChangeableItem";
 
@@ -11,10 +11,13 @@ type Props = {
 
 const ChangeableSubject: React.FC<Props> = ({ subjects, caseId, themeId }) => {
   const { isModalOpen, openModal, closeModal } = useModal();
-  const [, { execPatch }] = useCase(caseId);
+  const { mutate: updateCase } = useUpdateCase(caseId);
 
   const onSubmit = (data: { subjects: components["schemas"]["Subject"][] }) => {
-    execPatch( { subject_ids: data.subjects.map((subject: components["schemas"]["Subject"]) => subject.id) });
+    updateCase(
+      { subject_ids: data.subjects.map((subject: components["schemas"]["Subject"]) => subject.id) },
+      { onSettled: closeModal },
+    );
   };
 
   return (

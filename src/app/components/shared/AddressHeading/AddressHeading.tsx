@@ -1,5 +1,5 @@
 import { Heading } from "@amsterdam/asc-ui";
-import { useCase } from "app/state/rest";
+import { useCase } from "@/api/hooks";
 import AddressDisplay from "app/components/addresses/AddressDisplay/AddressDisplay";
 
 type Props = {
@@ -7,7 +7,7 @@ type Props = {
 };
 
 const AddressHeading: React.FC<Props> = ({ caseId }) => {
-  const [data] = useCase(caseId);
+  const { data } = useCase(caseId);
 
   return (
     <>

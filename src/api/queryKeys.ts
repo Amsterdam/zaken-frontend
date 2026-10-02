@@ -1,5 +1,6 @@
 type ThemeId = components["schemas"]["CaseTheme"]["id"]
 type BagId = components["schemas"]["Address"]["bag_id"]
+type CaseId = components["schemas"]["CaseDetail"]["id"]
 
 /**
  * Hierarchical query key factory, one entry per resource exposed by src/api/hooks/*.
@@ -32,6 +33,8 @@ export const queryKeys = {
 
   cases: {
     all: ["cases"] as const,
+    detail: (caseId?: CaseId) => ["cases", caseId] as const,
+    workflows: (caseId: CaseId) => ["cases", caseId, "workflows"] as const,
     decisionTypes: (themeId?: ThemeId) =>
       ["cases", "themes", themeId, "decision-types"] as const,
     quickDecisionTypes: (themeId?: ThemeId) =>

@@ -4,18 +4,6 @@ import { makeApiUrl } from "app/state/rest/hooks/utils/apiUrl";
 import useApiRequest from "./hooks/useApiRequest";
 import qs from "qs";
 
-export const useCase = (id?: components["schemas"]["CaseCreate"]["id"], options?: Options) => {
-  const handleError = useErrorHandler();
-  return useApiRequest<CaseItem>({
-    lazy: id === undefined,
-    ...options,
-    url: makeApiUrl("cases", id),
-    groupName: "cases",
-    handleError,
-    isProtected: true,
-  });
-};
-
 export const useCaseCreate = (options?: Options) => {
   const handleError = useErrorHandler();
   return useApiRequest<any, any>({
@@ -173,17 +161,6 @@ export const useCitizenReports = (caseId: components["schemas"]["CaseDetail"]["i
   });
 };
 
-export const useTaskComplete = (options?: Options) => {
-  const handleError = useErrorHandler();
-  return useApiRequest<components["schemas"]["GenericCompletedTask"]>({
-    ...options,
-    url: makeApiUrl("generic-tasks", "complete"),
-    groupName: "cases",
-    handleError,
-    isProtected: true,
-  });
-};
-
 export const useCaseVisits = (caseId: components["schemas"]["CaseDetail"]["id"], options?: Options) => {
   const handleError = useErrorHandler();
   return useApiRequest<components["schemas"]["Visit"]>({
@@ -201,17 +178,6 @@ export const useVisitsCreate = (options?: Options) => {
     ...options,
     lazy: true,
     url: makeApiUrl("visits"),
-    groupName: "cases",
-    handleError,
-    isProtected: true,
-  });
-};
-
-export const useCaseWorkflows = (caseId: components["schemas"]["CaseDetail"]["id"], options?: Options) => {
-  const handleError = useErrorHandler();
-  return useApiRequest<Tasks.PaginatedWorkflowList>({
-    ...options,
-    url: makeApiUrl("cases", caseId, "workflows"),
     groupName: "cases",
     handleError,
     isProtected: true,

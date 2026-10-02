@@ -1,7 +1,8 @@
 
 import styled from "styled-components";
 import { Alert, themeSpacing } from "@amsterdam/asc-ui";
-import { useCaseEvents, useCaseWorkflows } from "app/state/rest";
+import { useCaseEvents } from "app/state/rest";
+import { useCaseWorkflows } from "@/api/hooks";
 
 const MAX_NUMBER_NUISANCE = 3;
 
@@ -15,7 +16,7 @@ const StyledAlert = styled(Alert)`
 
 const CaseNuisanceAlert: React.FC<Props> = ({ caseId }) => {
   const [caseEvents] = useCaseEvents(caseId);
-  const [caseWorkflowData] = useCaseWorkflows(caseId);
+  const { data: caseWorkflowData } = useCaseWorkflows(caseId);
   const workflows = caseWorkflowData?.results ?? [];
 
   const totalNuisance = caseEvents?.reduce((acc, cur) => (cur?.event_values as { nuisance_detected?: boolean } | undefined)?.nuisance_detected ? acc + 1 : acc, 0);

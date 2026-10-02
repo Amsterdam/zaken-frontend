@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useModal } from "app/components/shared/Modal/hooks/useModal";
-import { useCase } from "app/state/rest";
-import { useCorporations, useUpdateAddress } from "@/api/hooks";
+import { useCorporations, useSetCaseData, useUpdateAddress } from "@/api/hooks";
 import ChangeableItem from "../ChangeableItem/ChangeableItem";
 import Modal, { ModalBlock } from "app/components/shared/Modal/Modal";
 import ChangeHousingCorporationForm from "./ChangeHousingCorporationForm";
@@ -16,7 +15,7 @@ type Props = {
 const ChangeHousingCorporation: React.FC<Props> = ({ housingCorporationId, bagId, caseId }) => {
   const { isModalOpen, openModal, closeModal } = useModal();
   const [housingCorporations, setHousingCorporations] = useState<components["schemas"]["HousingCorporation"][]>([]);
-  const [caseItem, { updateCache }] = useCase(caseId);
+  const setCaseData = useSetCaseData(caseId);
   const { data } = useCorporations();
   const { mutate: updateAddress, isPending } = useUpdateAddress(bagId);
 
@@ -34,15 +33,14 @@ const ChangeHousingCorporation: React.FC<Props> = ({ housingCorporationId, bagId
       { housing_corporation },
       {
         onSuccess: (address) => {
-          // Update the case context for housing corporation
-          const updatedCase = {
+          // Show the new housing corporation on the case right away.
+          setCaseData((caseItem) => ({
             ...caseItem,
             address: {
-              ...caseItem?.address,
+              ...caseItem.address,
               housing_corporation: address.housing_corporation,
             },
-          };
-          updateCache(() => updatedCase);
+          }));
         },
         onSettled: closeModal,
       },

@@ -3,7 +3,7 @@ import { Heading, Spinner } from "@amsterdam/asc-ui";
 import { CaseIdDisplay } from "@amsterdam/wonen-ui";
 import styles from "./CaseHeading.module.css";
 
-import { useCase } from "app/state/rest";
+import { useCase } from "@/api/hooks";
 import FullAddressDisplay from "app/components/addresses/FullAddressDisplay/FullAddressDisplay";
 
 type Props = {
@@ -12,7 +12,7 @@ type Props = {
 
 const CaseHeading: React.FC<Props> = ({ id }) => {
 
-  const [data] = useCase(id);
+  const { data } = useCase(id);
 
   return (
     <>

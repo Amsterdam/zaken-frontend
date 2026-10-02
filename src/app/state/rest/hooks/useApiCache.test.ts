@@ -31,4 +31,21 @@ describe("useApiCache", () => {
       errors: [],
     });
   });
+
+  it("should invalidate only the items whose key starts with the prefix", () => {
+    const { result } = renderHook(() => useApiCache());
+    act(() => {
+      result.current.setCacheItem("api/tasks/?page=1", { foo: "tasks" });
+      result.current.setCacheItem("api/cases/1/", { foo: "case" });
+    });
+    act(() => {
+      result.current.invalidateCacheItems("api/tasks/");
+    });
+    expect(result.current.getCacheItem("api/tasks/?page=1")).toEqual({
+      valid: false,
+      value: { foo: "tasks" },
+      errors: [],
+    });
+    expect(result.current.getCacheItem("api/cases/1/").valid).toBe(true);
+  });
 });

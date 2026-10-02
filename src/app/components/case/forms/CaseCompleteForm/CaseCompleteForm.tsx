@@ -1,7 +1,8 @@
 
 import { FormTitle } from "@amsterdam/asc-ui";
 
-import { useCaseClose, useCaseCloseResults, useCaseCloseReasons, useCase } from "app/state/rest";
+import { useCaseClose, useCaseCloseResults, useCaseCloseReasons } from "app/state/rest";
+import { useCase } from "@/api/hooks";
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm";
 import scaffold from "app/components/case/forms/CaseCompleteForm/scaffold";
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields";
@@ -25,7 +26,7 @@ const mapData = (data: CaseCloseTypeFormData): components["schemas"]["CaseClose"
 );
 
 const CaseCompleteForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
-  const [caseItem] = useCase(id);
+  const { data: caseItem } = useCase(id);
   const { navigateTo } = useNavigation();
   const themeId = caseItem?.theme.id;
   const [caseCloseReasons] = useCaseCloseReasons(themeId);

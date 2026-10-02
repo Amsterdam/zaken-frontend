@@ -1,23 +1,24 @@
 import { useState } from "react";
 import { Button, RadioGroup, Label, Radio } from "@amsterdam/asc-ui";
-import { useCase } from "app/state/rest";
-import { useTags } from "@/api/hooks";
+import { useTags, useUpdateCase } from "@/api/hooks";
 import { ButtonContainer, StyledButton } from "../layout";
 
 
 type Props = {
   onCancel: () => void
+  /** Called when saving is done (also on an error, which is shown as a flash message). */
+  onSaved: () => void
   case: components["schemas"]["CaseCreate"]
 }
 
-const ChangeTagForm: React.FC<Props> = ({ case: caseItem, onCancel }) => {
+const ChangeTagForm: React.FC<Props> = ({ case: caseItem, onCancel, onSaved }) => {
   const [selectedTag, setSelectedTag] = useState<components["schemas"]["Tag"]["id"] | undefined>(undefined);
   const { data } = useTags(caseItem.theme.id);
-  const [, { execPatch }] = useCase(caseItem.id);
+  const { mutate: updateCase, isPending } = useUpdateCase(caseItem.id);
 
   const submit = () => {
     const tag_ids = selectedTag ? [selectedTag] : [];
-    execPatch( { tag_ids });
+    updateCase({ tag_ids }, { onSettled: onSaved });
   };
 
   const tags = data?.results ?? [];
@@ -42,7 +43,7 @@ const ChangeTagForm: React.FC<Props> = ({ case: caseItem, onCancel }) => {
         <StyledButton onClick={ onCancel } variant="primaryInverted">
           Annuleer
         </StyledButton>
-        <Button onClick={ submit } variant="primary">
+        <Button onClick={ submit } variant="primary" disabled={ isPending }>
           Opslaan
         </Button>
       </ButtonContainer>

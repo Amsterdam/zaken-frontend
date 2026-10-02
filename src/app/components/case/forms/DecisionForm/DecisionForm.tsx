@@ -1,6 +1,7 @@
 import { FormTitle } from "@amsterdam/asc-ui";
 
-import { useCase, useDecisions } from "app/state/rest";
+import { useDecisions } from "app/state/rest";
+import { useCase } from "@/api/hooks";
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm";
 import scaffold from "app/components/case/forms/DecisionForm/scaffold";
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields";
@@ -36,7 +37,7 @@ const mapData = (data: DecisionData) => {
 };
 
 const DecisionForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
-  const [caseItem] = useCase(id);
+  const { data: caseItem } = useCase(id);
   const themeId = caseItem?.theme.id;
   const { data } = useDecisionTypes(themeId);
   const decisionTypes = data?.results;

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useContext } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 
 import { ApiContext } from "../provider/ApiProvider";
 import { ApiGroup } from "../index";
@@ -45,6 +46,7 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
   } = useContext(ApiContext)[groupName];
 
   const request = useRequestWrapper(isProtected, isMocked, isMockExtended);
+  const queryClient = useQueryClient();
 
   /**
    * Executes an API request
@@ -56,6 +58,13 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
       }
 
       const response: any = await request<Schema>(options.method, url, payload); //TODO any used to be unknown
+
+      // Migration bridge (MIGRATION.md Fase 1): a mutation also invalidates the migrated TanStack
+      // queries of its group. Only now that it's done: the old cache refetches through the request
+      // queue (so after this request), TanStack would refetch right away and get the old state.
+      if (isMutateOptions(options) && !options.skipCacheClear) {
+        void queryClient.invalidateQueries({ queryKey: [groupName] });
+      }
 
       if (isGetOptions(options) || (isMutateOptions(options) && options.useResponseAsCache)) {
         setCacheItem(url, response?.data);
@@ -70,7 +79,7 @@ const useApiRequest = <Schema, Payload = Partial<Schema>>({ url, groupName, hand
         throw error;
       }
     }
-  }, [request, url, clearCache, setCacheItem, handleError, addErrorToCacheItem]);
+  }, [request, url, clearCache, setCacheItem, handleError, addErrorToCacheItem, queryClient, groupName]);
 
   /**
    * Queues an API request

@@ -26,15 +26,3 @@ export const useSchedulesByCaseId = (caseId: number, options?: Options) => {
     isProtected: true,
   });
 };
-
-export const useSchedule = (scheduleId?: number, options?: Options) => {
-  const handleError = useErrorHandler();
-  return useApiRequest<components["schemas"]["ScheduleCreate"]>({
-    ...options,
-    lazy: true,
-    url: makeApiUrl("schedules", scheduleId),
-    groupName: "cases",
-    handleError,
-    isProtected: true,
-  });
-};

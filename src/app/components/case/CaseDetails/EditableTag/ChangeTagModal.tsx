@@ -14,7 +14,7 @@ const ChangeTagModal: React.FC<Props> = ({ isOpen, closeModal, case: caseItem })
     title="Wijzig tag"
   >
     <ModalBlock>
-      <ChangeTagForm onCancel={ closeModal } case={ caseItem } />
+      <ChangeTagForm onCancel={ closeModal } onSaved={ closeModal } case={ caseItem } />
     </ModalBlock>
   </Modal>
 );

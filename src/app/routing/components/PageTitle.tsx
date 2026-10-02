@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import find from "../utils/find";
 import routes from "app/routing/routes";
 import { env } from "app/config/env";
-import { useCase } from "app/state/rest";
+import { useCase } from "@/api/hooks";
 
 const PAGE_TITLE = env.VITE_APP_TITLE_SHORT ?? "";
 
@@ -10,7 +10,7 @@ const PageTitle: React.FC = () => {
   const path = window.location.pathname;
   const match = path.match(/\/zaken\/(\d+)/);
   const caseId = match ? parseInt(match[1], 10) : undefined;
-  const [caseData] = useCase(caseId);
+  const { data: caseData } = useCase(caseId);
 
   useEffect(() => {
     const routeKey = find(routes, path);

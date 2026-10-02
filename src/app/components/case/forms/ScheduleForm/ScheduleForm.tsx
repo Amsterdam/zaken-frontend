@@ -1,6 +1,7 @@
 import { FormTitle } from "@amsterdam/asc-ui";
 import dayjs from "dayjs";
-import { useCase, useScheduleCreate } from "app/state/rest";
+import { useScheduleCreate } from "app/state/rest";
+import { useCase } from "@/api/hooks";
 import { useScheduleTypes } from "@/api/hooks";
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm";
 import scaffold from "./scaffold";
@@ -33,7 +34,7 @@ const visitFromOptions: { id: number, name: string }[] = [{
 }];
 
 const ScheduleForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
-  const [caseItem] = useCase(id);
+  const { data: caseItem } = useCase(id);
   const themeId = caseItem?.theme.id;
   const { data: scheduleTypes } = useScheduleTypes(themeId);
   const { navigateTo } = useNavigation();

@@ -1,5 +1,6 @@
 import { FormTitle } from "@amsterdam/asc-ui";
-import { useCase, useQuickDecisions } from "app/state/rest";
+import { useQuickDecisions } from "app/state/rest";
+import { useCase } from "@/api/hooks";
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm";
 import scaffold from "app/components/case/forms/QuickDecisionForm/scaffold";
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields";
@@ -25,7 +26,7 @@ const mapData = (data: QuickDecisionData) => ({
 });
 
 const QuickDecisionForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
-  const [caseItem] = useCase(id);
+  const { data: caseItem } = useCase(id);
   const themeId = caseItem?.theme.id;
   const { data } = useQuickDecisionTypes(themeId);
   const quickDecisionTypes = data?.results;

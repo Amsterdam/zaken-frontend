@@ -33,6 +33,8 @@ const FormModal: React.FC<Props> = ({
   ) => {
     const requestBody = form ? variables : {};
     const result = await onSubmit(requestBody);
+    // Errors are shown as a flash message, so close in both cases.
+    closeModal();
     if (result === undefined) return;
     const path = `/zaken/${caseId}`;
     addSuccessFlashMessage(

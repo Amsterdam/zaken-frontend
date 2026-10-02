@@ -153,18 +153,6 @@ export const useTask = (id: number | string, options?: Options) => {
   });
 };
 
-export const useTaskUpdate = (id: number | string, options?: Options) => {
-  const handleError = useErrorHandler();
-  return useApiRequest<components["schemas"]["CaseUserTask"]>({
-    ...options,
-    lazy: true,
-    url: makeApiUrl("tasks", id),
-    groupName: "cases",
-    handleError,
-    isProtected: true,
-  });
-};
-
 // useSummonTypesByTaskId for getting the available summonTypes for a specific task and thus Theme.
 export const useSummonTypesByTaskId = (
   id: string,

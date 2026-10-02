@@ -8,4 +8,5 @@ export const noopContext = {
   updateCacheItem: noop,
   addErrorToCacheItem: noop,
   clearCache: noop,
+  invalidateCacheItems: noop,
 };

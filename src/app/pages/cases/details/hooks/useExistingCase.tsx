@@ -1,18 +1,12 @@
-import { useEffect } from "react";
-
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId";
-import { useCase } from "app/state/rest";
+import { useCase } from "@/api/hooks";
+import type { ApiError } from "@/api/types/apiError";
 
 export default (oId: number | undefined) => {
   const valid = isValidUrlParamId<components["schemas"]["CaseDetail"]["id"]>(oId);
-  const [caseItem, { execGet, isBusy }, errors] = useCase(oId, { lazy: true });
-  const has404 = errors.find(error => error.response?.status === 404) !== undefined;
+  const { data: caseItem, isLoading: isBusy, error } = useCase(valid ? oId : undefined);
+  const has404 = (error as ApiError | null)?.status === 404;
   const exists = caseItem !== undefined && !has404;
-
-  useEffect(() => {
-    if (!valid || caseItem || has404) return;
-      execGet();
-  }, [oId, caseItem, valid, has404, execGet]);
 
   return [exists, isBusy, has404, oId!, caseItem] as const;
 };

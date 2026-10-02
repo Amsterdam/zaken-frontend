@@ -57,7 +57,7 @@
   },
   "src/app/components/case/Workflow/columns.tsx": {
     "@typescript-eslint/no-explicit-any": {
-      "count": 15
+      "count": 9
     },
     "react-refresh/only-export-components": {
       "count": 1
@@ -364,19 +364,6 @@
   },
   "src/app/state/rest/hooks/useMockedRequest.ts": {
     "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    }
-  },
-  "src/app/state/rest/hooks/usePollingRefetch.test.ts": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 11
-    }
-  },
-  "src/app/state/rest/hooks/usePollingRefetch.ts": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    },
-    "react-hooks/purity": {
       "count": 1
     }
   },

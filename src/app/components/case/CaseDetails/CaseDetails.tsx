@@ -1,7 +1,7 @@
 import styles from "./CaseDetails.module.css";
 import { DefinitionList, CaseIdDisplay, DateDisplay } from "@amsterdam/wonen-ui";
 import type { DefinitionListData } from "@amsterdam/wonen-ui";
-import { useCase } from "app/state/rest";
+import { useCase } from "@/api/hooks";
 import ChangeableSubject from "./ChangeSubject/ChangeableSubject";
 import ChangeHousingCorporation from "./ChangeHousingCorporation/ChangeHousingCorporation";
 import CaseSensitive from "../icons/CaseSensitive";
@@ -59,7 +59,7 @@ const getDataSecondCol = (caseItem?: components["schemas"]["CaseCreate"]) => {
 };
 
 const CaseDetails: React.FC<Props> = ({ caseId }) => {
-  const [data, { isBusy }] = useCase(caseId);
+  const { data, isLoading: isBusy } = useCase(caseId);
 
   const dataFirstCol = getDataFirstCol(data);
   const dataSecondCol = getDataSecondCol(data);
