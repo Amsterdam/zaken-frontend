@@ -1,7 +1,7 @@
 import { Spinner, ErrorMessage } from "@amsterdam/asc-ui";
 import { EventsTimeline } from "@amsterdam/wonen-ui";
 import type { CaseEvent } from "@amsterdam/wonen-ui";
-import { useCaseEvents } from "app/state/rest";
+import { useCaseEvents } from "@/api/hooks";
 import { env } from "app/config/env";
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
 }
 
 const TimelineContainer: React.FC<Props> = ({ caseId }) => {
-  const [timelineEvents, { hasErrors }] = useCaseEvents(caseId);
+  const { data: timelineEvents, isError: hasErrors } = useCaseEvents(caseId);
   const showEmpty = timelineEvents?.length === 0;
 
   return (

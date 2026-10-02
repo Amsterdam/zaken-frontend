@@ -1,8 +1,7 @@
 import dayjs from "dayjs";
 
 import { useModal } from "app/components/shared/Modal/hooks/useModal";
-import { useSchedulesByCaseId } from "app/state/rest";
-import { useScheduleTypes, useUpdateSchedule } from "@/api/hooks";
+import { useSchedulesByCaseId, useScheduleTypes, useUpdateSchedule } from "@/api/hooks";
 import useHasPermission, {
   CAN_PERFORM_TASK,
 } from "app/state/rest/custom/usePermissions/useHasPermission";
@@ -31,7 +30,7 @@ const getLatestSchedule = (schedules?: Schedule[]): Schedule | null => {
 
 const UpdateSchedule: React.FC<Props> = ({ caseId, themeId }) => {
   const { isModalOpen, openModal, closeModal } = useModal();
-  const [schedules] = useSchedulesByCaseId(caseId);
+  const { data: schedules } = useSchedulesByCaseId(caseId);
   const latestSchedule = getLatestSchedule(schedules as unknown as Schedule[]);
   const { mutate: updateSchedule } = useUpdateSchedule(latestSchedule?.id, caseId);
   // Only needed (and fetched) once the modal is opened.

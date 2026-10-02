@@ -3,9 +3,8 @@ import { FormTitle } from "@amsterdam/asc-ui";
 import scaffold from "./scaffold";
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields";
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm";
-import { useDebriefingCreate } from "app/state/rest";
-import { useCase } from "@/api/hooks";
-import { useCaseThemes, useViolationTypes } from "@/api/hooks";
+import { useCase, useCaseThemes, useCreateDebriefing, useViolationTypes } from "@/api/hooks";
+import { toPostMethod } from "@/api/utils/toPostMethod";
 import useNavigation from "app/routing/useNavigation";
 
 type Props = {
@@ -19,7 +18,7 @@ const DebriefCreateForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
   const themeName = caseItem?.theme.name;
   const { data } = useViolationTypes(themeId);
   const violationTypes = data?.results ?? [];
-  const [, { execPost }] = useDebriefingCreate();
+  const createDebriefing = toPostMethod(useCreateDebriefing(id).mutateAsync);
   const { navigateTo } = useNavigation();
   const { data: themesData } = useCaseThemes();
   const fields = useScaffoldedFields(
@@ -45,7 +44,7 @@ const DebriefCreateForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
       <WorkflowForm
         id={id}
         fields={fields}
-        postMethod={execPost}
+        postMethod={createDebriefing}
         caseUserTaskId={caseUserTaskId}
         mapData={mapData}
       />

@@ -1,8 +1,7 @@
 import { FormTitle } from "@amsterdam/asc-ui";
 import dayjs from "dayjs";
-import { useScheduleCreate } from "app/state/rest";
-import { useCase } from "@/api/hooks";
-import { useScheduleTypes } from "@/api/hooks";
+import { useCase, useCreateSchedule, useScheduleTypes } from "@/api/hooks";
+import { toPostMethod } from "@/api/utils/toPostMethod";
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm";
 import scaffold from "./scaffold";
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields";
@@ -39,7 +38,7 @@ const ScheduleForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
   const { data: scheduleTypes } = useScheduleTypes(themeId);
   const { navigateTo } = useNavigation();
   const fields = useScaffoldedFields(scaffold, id, navigateTo, scheduleTypes, visitFromOptions);
-  const [, { execPost }] = useScheduleCreate();
+  const createSchedule = toPostMethod(useCreateSchedule(id).mutateAsync);
 
   const initialValues = {
     action: scheduleTypes?.actions[0].id,
@@ -58,7 +57,7 @@ const ScheduleForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
         id={ id }
         fields={ fields }
         mapData={ mapData }
-        postMethod={ execPost }
+        postMethod={ createSchedule }
         initialValues={ initialValues }
         caseUserTaskId={ caseUserTaskId }
       />

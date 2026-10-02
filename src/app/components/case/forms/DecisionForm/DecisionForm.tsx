@@ -1,12 +1,11 @@
 import { FormTitle } from "@amsterdam/asc-ui";
 
-import { useDecisions } from "app/state/rest";
-import { useCase } from "@/api/hooks";
+import { useCase, useCreateDecision, useDecisionTypes } from "@/api/hooks";
+import { toPostMethod } from "@/api/utils/toPostMethod";
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm";
 import scaffold from "app/components/case/forms/DecisionForm/scaffold";
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields";
 import DecisionHeader, { type Workflow } from "./components/DecisionHeader";
-import { useDecisionTypes } from "@/api/hooks";
 import stripThousandSeparator from "./utils/stripThousandSeparator";
 import useNavigation from "app/routing/useNavigation";
 
@@ -43,7 +42,7 @@ const DecisionForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
   const decisionTypes = data?.results;
   const { navigateTo } = useNavigation();
   const fields = useScaffoldedFields(scaffold, id, navigateTo, decisionTypes);
-  const [, { execPost }] = useDecisions({ lazy: true });
+  const createDecision = toPostMethod(useCreateDecision(id).mutateAsync);
 
   return (
     <>
@@ -59,7 +58,7 @@ const DecisionForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
         id={id}
         fields={fields}
         mapData={mapData}
-        postMethod={execPost}
+        postMethod={createDecision}
         caseUserTaskId={caseUserTaskId}
       />
     </>

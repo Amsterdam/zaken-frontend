@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Heading, themeSpacing } from "@amsterdam/asc-ui";
 
-import { useCasesByBagId } from "app/state/rest";
+import { useCasesByBagId } from "@/api/hooks";
 import { Table } from "@amsterdam/wonen-ui";
 import useNavigation from "app/routing/useNavigation";
 import { columnsClosedCases, columnsOpenCases } from "./columns";
@@ -24,7 +24,7 @@ const Div = styled.div`
 `;
 
 const CasesByBagId: React.FC<Props> = ({ bagId, openCases = false, title = defaultTitle, emptyText = defaultEmptyText }) => {
-  const [data, { isBusy }] = useCasesByBagId(bagId);
+  const { data, isLoading: isBusy } = useCasesByBagId(bagId);
   const { navigateTo } = useNavigation();
   const caseList = data?.results?.filter(result => openCases ? result.end_date === null : result.end_date !== null) || [];
   const numCases = caseList.length;

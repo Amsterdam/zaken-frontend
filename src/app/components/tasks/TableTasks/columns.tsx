@@ -3,16 +3,12 @@ import DueDate from "app/components/shared/DueDate/DueDate";
 import LinkButton from "app/components/shared/LinkButton/LinkButton";
 import AssignTask from "./AssignTask/AssignTask";
 
-export default (sorting: any, myId?: string, isEnforcement?: boolean) => [
+export default (sorting: any) => [
   {
     header: "Toegewezen",
     dataIndex: "owner",
     render: (_: any, record: any) => (
-      <AssignTask
-        taskId={record.id}
-        taskOwner={record.owner}
-        isEnforcement={!!isEnforcement}
-      />
+      <AssignTask taskId={record.id} taskOwner={record.owner} />
     ),
   },
   {

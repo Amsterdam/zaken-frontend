@@ -6,28 +6,7 @@ import CustomIcon from "app/components/shared/CustomIcon/CustomIcon";
 import LinkButton from "app/components/shared/LinkButton/LinkButton";
 import UpdateSchedule from "./components/UpdateSchedule/UpdateSchedule";
 import AssignTask from "app/components/tasks/TableTasks/AssignTask/AssignTask";
-import { useSetWorkflowTaskOwner, type CompleteTaskPayload } from "@/api/hooks";
-
-/**
- * Kleine wrapper zodat de hook per rij aangeroepen kan worden.
- * Hooks mogen niet conditioneel of in callbacks aangeroepen worden,
- * dus we pakken dit op via een component.
- */
-const AssignTaskWorkflow: React.FC<{
-  task: Tasks.WorkflowTask;
-}> = ({ task }) => {
-  const { case_user_task_id: taskId, owner: taskOwner, case: caseId } = task;
-  const onOwnerChange = useSetWorkflowTaskOwner(caseId);
-
-  return (
-    <AssignTask
-      taskId={taskId}
-      taskOwner={taskOwner}
-      isEnforcement={false}
-      onOwnerChange={onOwnerChange}
-    />
-  );
-};
+import type { CompleteTaskPayload } from "@/api/hooks";
 
 export function getColumns(
   completeTask: (payload: CompleteTaskPayload) => Promise<unknown>,
@@ -69,7 +48,9 @@ export function getColumns(
     {
       header: "Toegewezen",
       dataIndex: "owner",
-      render: (_: any, task: any) => <AssignTaskWorkflow task={task} />,
+      render: (_: any, task: any) => (
+        <AssignTask taskId={task.case_user_task_id} taskOwner={task.owner} />
+      ),
     },
     {
       header: "Slotdatum",

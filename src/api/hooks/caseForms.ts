@@ -1,0 +1,90 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useApiFetch } from "@/api/useApiFetch"
+import { queryKeys } from "@/api/queryKeys"
+import { makeApiUrl } from "app/state/rest/hooks/utils/apiUrl"
+import { invalidateCaseAndTaskLists } from "./cases"
+
+type CaseId = components["schemas"]["CaseDetail"]["id"]
+
+/**
+ * POST of a case form (debrief, decision, summon, visit, ...). These complete a
+ * workflow task and/or add events, after which the form navigates back to the
+ * case. So everything of this case is marked stale without refetching on the
+ * form itself (refetchType "none"): the case page refetches what it shows once
+ * it's back. The case and task lists are marked stale too.
+ */
+export const useCaseFormMutation = <Payload, Response = unknown>(
+  caseId: CaseId,
+  url: string,
+) => {
+  const fetch = useApiFetch()
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (data: Payload) =>
+      fetch<Response>(url, { method: "POST", data }),
+    onSuccess: () =>
+      Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: queryKeys.cases.detail(caseId),
+          refetchType: "none",
+        }),
+        invalidateCaseAndTaskLists(queryClient),
+      ]),
+  })
+}
+
+export const useCreateDebriefing = (caseId: CaseId) =>
+  useCaseFormMutation<
+    components["schemas"]["DebriefingCreate"],
+    components["schemas"]["DebriefingCreate"]
+  >(caseId, makeApiUrl("debriefings"))
+
+export const useCreateSummon = (caseId: CaseId) =>
+  useCaseFormMutation<
+    components["schemas"]["Summon"],
+    components["schemas"]["Summon"]
+  >(caseId, makeApiUrl("summons"))
+
+export const useCreateDecision = (caseId: CaseId) =>
+  useCaseFormMutation<
+    components["schemas"]["Decision"],
+    components["schemas"]["Decision"]
+  >(caseId, makeApiUrl("decisions"))
+
+export const useCreateQuickDecision = (caseId: CaseId) =>
+  useCaseFormMutation<
+    components["schemas"]["QuickDecision"],
+    components["schemas"]["QuickDecision"]
+  >(caseId, makeApiUrl("quick-decisions"))
+
+export const useCloseCase = (caseId: CaseId) =>
+  useCaseFormMutation<
+    components["schemas"]["CaseClose"],
+    components["schemas"]["CaseClose"]
+  >(caseId, makeApiUrl("case-close"))
+
+export const useCreateCitizenReport = (caseId: CaseId) =>
+  useCaseFormMutation<
+    components["schemas"]["CitizenReport"],
+    components["schemas"]["CitizenReport"]
+  >(caseId, makeApiUrl("cases", caseId, "citizen-reports"))
+
+export const useCreateVisit = (caseId: CaseId) =>
+  useCaseFormMutation<
+    components["schemas"]["Visit"],
+    components["schemas"]["Visit"]
+  >(caseId, makeApiUrl("visits"))
+
+export const useCreateSchedule = (caseId: CaseId) =>
+  useCaseFormMutation<
+    components["schemas"]["ScheduleCreate"],
+    components["schemas"]["ScheduleCreate"]
+  >(caseId, makeApiUrl("schedules"))
+
+/** Start an extra workflow process ("Taak opvoeren"). */
+export const useStartWorkflowProcess = (caseId: CaseId) =>
+  useCaseFormMutation<
+    components["schemas"]["StartWorkflow"],
+    components["schemas"]["StartWorkflow"]
+  >(caseId, makeApiUrl("cases", caseId, "processes", "start"))

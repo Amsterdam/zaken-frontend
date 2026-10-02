@@ -1,7 +1,8 @@
 
 import { FormTitle } from "@amsterdam/asc-ui";
 
-import { useWorkflowProcesses, useWorkflowProcess } from "app/state/rest";
+import { useStartWorkflowProcess, useWorkflowProcesses } from "@/api/hooks";
+import { toPostMethod } from "@/api/utils/toPostMethod";
 import scaffold from "./scaffold";
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields";
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm";
@@ -14,10 +15,10 @@ type Props = {
 const mapData = (data: { workflowProcess: components["schemas"]["WorkflowOption"] }) => ({ workflow_option_id: data.workflowProcess.id });
 
 const TaskForm: React.FC<Props> = ({ id }) => {
-  const [processes] = useWorkflowProcesses(id);
+  const { data: processes } = useWorkflowProcesses(id);
   const { navigateTo } = useNavigation();
   const fields = useScaffoldedFields(scaffold, id, navigateTo, processes);
-  const [, { execPost }] = useWorkflowProcess(id, { lazy: true });
+  const startWorkflowProcess = toPostMethod(useStartWorkflowProcess(id).mutateAsync);
 
   return (
     <>
@@ -25,7 +26,7 @@ const TaskForm: React.FC<Props> = ({ id }) => {
       <WorkflowForm
         id={ id }
         fields={ fields }
-        postMethod={ execPost }
+        postMethod={ startWorkflowProcess }
         mapData={ mapData }
       />
     </>

@@ -1,9 +1,8 @@
-import { useEffect, useContext } from "react";
+import { useContext } from "react";
 import { Heading } from "@amsterdam/asc-ui";
 import TableCases from "app/components/cases/TableCases/TableCases";
 import CasesFilter from "app/components/cases/CasesFilter/CasesFilter";
-import { useCases } from "app/state/rest";
-import { useCaseThemes, useCorporations, useDistricts, useProjects, useSubjects, useTags, useTasksReasons } from "@/api/hooks";
+import { useCases, useCaseThemes, useCorporations, useDistricts, useProjects, useSubjects, useTags, useTasksReasons } from "@/api/hooks";
 import useHasPermission, {
   SENSITIVE_CASE_PERMISSION,
 } from "app/state/rest/custom/usePermissions/useHasPermission";
@@ -25,7 +24,6 @@ const getThemeIdByName = (
 
 const Cases: React.FC = () => {
   const {
-    count,
     districtNames,
     fromStartDate,
     housingCorporations,
@@ -34,7 +32,6 @@ const Cases: React.FC = () => {
     pagination,
     projects,
     reason,
-    results,
     sorting,
     addressSearch,
     subjects,
@@ -51,8 +48,9 @@ const Cases: React.FC = () => {
   const { data: tagsTheme } = useTags(themeId);
   const { data: caseDistricts } = useDistricts();
   const { data: corporationData } = useCorporations();
-  const [dataSource, { isBusy }] = useCases(
-    hasPermission,
+  // While the next page/filter loads, the previous results stay visible (isPlaceholderData).
+  const { data: dataSource, isLoading, isPlaceholderData } = useCases({
+    sensitive: hasPermission,
     pagination,
     sorting,
     theme,
@@ -66,11 +64,7 @@ const Cases: React.FC = () => {
     districtNames,
     housingCorporations,
     housingCorporationIsNull,
-  );
-
-  useEffect(() => {
-    updateContextCases(dataSource ?? { results: [], count: 0 });
-  }, [dataSource, updateContextCases]);
+  });
 
   const onChangeTable = (
     pagination: TABLE.Schemas.Pagination,
@@ -90,20 +84,20 @@ const Cases: React.FC = () => {
   return (
     <>
       <RowWithColumn bottomSpacing={6}>
-        <Heading>Zakenoverzicht ({count})</Heading>
+        <Heading>Zakenoverzicht ({dataSource?.count ?? 0})</Heading>
       </RowWithColumn>
       <RowWithColumn bottomSpacing={6}>
         <SearchBarCases searchString={addressSearch} />
       </RowWithColumn>
       <div className={styles.Grid}>
         <TableCases
-          data={results || []}
-          isBusy={isBusy}
+          data={dataSource?.results ?? []}
+          isBusy={isLoading || isPlaceholderData}
           onChange={onChangeTable}
           pagination={{
             page: pagination.page,
             pageSize: pagination.pageSize,
-            collectionSize: count || 1,
+            collectionSize: dataSource?.count || 1,
           }}
           sorting={sorting}
           emptyPlaceholder={emptyPlaceholder}

@@ -1,4 +1,4 @@
-import { useSummonsWithCaseId } from "app/state/rest";
+import { useSummonsByCaseId } from "@/api/hooks";
 import useValues from "../hooks/useValues";
 import { DefinitionList } from "@amsterdam/wonen-ui";
 
@@ -17,7 +17,7 @@ const DecisionHeader: React.FC<Props> = ({
   caseUserTaskId,
   workflows,
 }) => {
-  const [summons, { isBusy }] = useSummonsWithCaseId(caseId);
+  const { data: summons, isLoading: isBusy } = useSummonsByCaseId(caseId);
 
   const task = workflows
     ?.flatMap(({ tasks }) => tasks)

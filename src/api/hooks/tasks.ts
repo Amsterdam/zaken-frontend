@@ -1,9 +1,17 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import {
+  keepPreviousData,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query"
 import { useApiFetch } from "@/api/useApiFetch"
 import { queryKeys } from "@/api/queryKeys"
-import { stringifyQueryParams } from "@/api/utils/stringifyQueryParams"
-import { useInvalidateLegacyCacheItems } from "@/api/legacyCacheBridge"
+import {
+  nonEmpty,
+  stringifyQueryParams,
+} from "@/api/utils/stringifyQueryParams"
 import { makeApiUrl } from "app/state/rest/hooks/utils/apiUrl"
+import { invalidateCaseAndTaskLists } from "./cases"
 
 export const useTasksReasons = (theme?: string) => {
   const fetch = useApiFetch()
@@ -47,8 +55,8 @@ export const useTaskOwners = () => {
 
 /**
  * PATCH a task (e.g. its due date). Only refreshes what shows the task: the
- * workflows of its case right away, and the (still old) task lists the next
- * time they're shown. The old useTaskUpdate cleared the whole cases group,
+ * workflows of its case right away, and the task lists the next time they're
+ * shown (they're sorted on due date, so not updated in place). The old useTaskUpdate cleared the whole cases group,
  * which also refetched the case, its events and schedules for nothing.
  */
 export const useUpdateTask = (
@@ -57,7 +65,6 @@ export const useUpdateTask = (
 ) => {
   const fetch = useApiFetch()
   const queryClient = useQueryClient()
-  const invalidateOldCasesItems = useInvalidateLegacyCacheItems("cases")
 
   return useMutation({
     mutationFn: (data: Partial<components["schemas"]["CaseUserTask"]>) =>
@@ -69,10 +76,13 @@ export const useUpdateTask = (
         },
       ),
     onSuccess: async () => {
-      invalidateOldCasesItems(makeApiUrl("tasks"))
-      await queryClient.invalidateQueries({
-        queryKey: queryKeys.cases.workflows(caseId),
-      })
+      await Promise.all([
+        // Not shown on the case page, so only marked stale (inactive queries don't refetch).
+        queryClient.invalidateQueries({ queryKey: queryKeys.cases.tasksAll }),
+        queryClient.invalidateQueries({
+          queryKey: queryKeys.cases.workflows(caseId),
+        }),
+      ])
     },
   })
 }
@@ -89,14 +99,13 @@ export type CompleteTaskPayload = {
  * - the events refetch (the backend adds a GENERIC_TASK event);
  * - the case itself is only marked stale: its `workflows` field changed, which this
  *   page doesn't show but e.g. the decision form uses, so the next screen refetches it;
- * - the (still old) case and task lists are marked stale.
+ * - the case and task lists are marked stale (they're not shown here).
  */
 export const useCompleteTask = (
   caseId: components["schemas"]["CaseDetail"]["id"],
 ) => {
   const fetch = useApiFetch()
   const queryClient = useQueryClient()
-  const invalidateOldCasesItems = useInvalidateLegacyCacheItems("cases")
 
   return useMutation({
     mutationFn: (data: CompleteTaskPayload) =>
@@ -105,10 +114,11 @@ export const useCompleteTask = (
         data,
       }),
     onSuccess: async () => {
-      invalidateOldCasesItems(makeApiUrl("cases", caseId, "events"))
-      invalidateOldCasesItems(`${makeApiUrl("cases")}?`)
-      invalidateOldCasesItems(makeApiUrl("tasks"))
       await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: queryKeys.cases.events(caseId),
+        }),
+        invalidateCaseAndTaskLists(queryClient),
         queryClient.invalidateQueries({
           queryKey: queryKeys.cases.detail(caseId),
           exact: true,
@@ -119,5 +129,155 @@ export const useCompleteTask = (
         }),
       ])
     },
+  })
+}
+
+const sortingIndexMapping: Record<string, string> = {
+  // A second sorter parameter is added because of the huge number of duplicate values.
+  owner: "owner, due_date",
+  "case.address.street_name": "case__address__street_name, due_date",
+  "case.address.postal_code": "case__address__postal_code, due_date",
+  due_date: "due_date, id",
+  name: "name, due_date",
+  "case.start_date": "case__start_date, due_date",
+}
+
+const getOrdering = (sorting?: TABLE.Schemas.Sorting) => {
+  if (!sorting) return undefined
+  const value = sorting.dataIndex ? sortingIndexMapping[sorting.dataIndex] : ""
+  return sorting.order === "DESCEND" ? `-${value}` : value
+}
+
+export type TasksParams = {
+  districtNames?: components["schemas"]["District"]["name"][]
+  housingCorporationIsNull?: boolean
+  housingCorporations?: string[]
+  isEnforcementRequest?: boolean
+  owner?: string[]
+  pagination: TABLE.Schemas.Pagination
+  projects?: string[]
+  reason?: string
+  role?: string
+  sensitive?: boolean
+  sorting?: TABLE.Schemas.Sorting
+  subjects?: string[]
+  tags?: string[]
+  taskNames?: components["schemas"]["CaseUserTaskTaskName"]["name"][]
+  theme?: string
+}
+
+/**
+ * The open tasks of the overview. Keeps showing the previous page/filter
+ * results while the next ones load (isPlaceholderData).
+ */
+export const useTasks = ({
+  districtNames,
+  housingCorporationIsNull = false,
+  housingCorporations,
+  isEnforcementRequest,
+  owner,
+  pagination,
+  projects,
+  reason,
+  role,
+  sensitive = false,
+  sorting,
+  subjects,
+  tags,
+  taskNames,
+  theme,
+}: TasksParams) => {
+  const fetch = useApiFetch()
+  const queryParams = {
+    completed: false,
+    page: pagination.page,
+    page_size: pagination.pageSize,
+    is_enforcement_request: isEnforcementRequest,
+    sensitive: sensitive === false ? false : undefined,
+    theme_name: theme || undefined,
+    project: nonEmpty(projects),
+    reason_name: reason || undefined,
+    subject: nonEmpty(subjects),
+    tag: nonEmpty(tags),
+    name: nonEmpty(taskNames),
+    role: role || undefined,
+    owner: nonEmpty(owner),
+    district_name: nonEmpty(districtNames),
+    housing_corporation: housingCorporations,
+    housing_corporation_isnull: housingCorporationIsNull ? true : undefined,
+    ordering: getOrdering(sorting),
+  }
+
+  return useQuery({
+    queryKey: queryKeys.cases.tasks(queryParams),
+    queryFn: () =>
+      fetch<components["schemas"]["PaginatedCaseUserTaskList"]>(
+        `${makeApiUrl("tasks")}${stringifyQueryParams(queryParams)}`,
+      ),
+    placeholderData: keepPreviousData,
+  })
+}
+
+const isTask = (id: Tasks.TaskId | undefined, taskId: Tasks.TaskId) =>
+  // The workflows return the id as a string (case_user_task_id), the task lists as a number.
+  id !== undefined && String(id) === String(taskId)
+
+/**
+ * Assign a task to someone (or nobody, with null). Updates the owner in place
+ * wherever the task is cached, without refetching: in the task lists of the
+ * overview and in the workflows on the case page.
+ */
+export const useAssignTask = (taskId: Tasks.TaskId) => {
+  const fetch = useApiFetch()
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (owner: string | null) =>
+      fetch(makeApiUrl("tasks", taskId), { method: "PATCH", data: { owner } }),
+    onSuccess: (_, owner) => {
+      queryClient.setQueriesData<
+        components["schemas"]["PaginatedCaseUserTaskList"]
+      >({ queryKey: queryKeys.cases.tasksAll }, (data) =>
+        data
+          ? {
+              ...data,
+              results: data.results.map((task) =>
+                isTask(task.id, taskId) ? { ...task, owner } : task,
+              ),
+            }
+          : data,
+      )
+      queryClient.setQueriesData<Tasks.PaginatedWorkflowList>(
+        {
+          predicate: ({ queryKey }) =>
+            queryKey[0] === "cases" && queryKey[2] === "workflows",
+        },
+        (data) =>
+          data && {
+            ...data,
+            results: data.results.map((workflow) => ({
+              ...workflow,
+              tasks: workflow.tasks.map((task) =>
+                isTask(task.case_user_task_id, taskId)
+                  ? { ...task, owner }
+                  : task,
+              ),
+            })),
+          },
+      )
+    },
+  })
+}
+
+/** The summon types that can be chosen for a task (its theme). */
+export const useSummonTypesByTaskId = (taskId: Tasks.TaskId) => {
+  const fetch = useApiFetch()
+
+  return useQuery({
+    queryKey: queryKeys.task.summonTypes(taskId),
+    queryFn: () =>
+      fetch<components["schemas"]["PaginatedSummonTypeList"]>(
+        makeApiUrl("tasks", taskId, "summon-types"),
+      ),
   })
 }

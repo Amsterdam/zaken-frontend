@@ -1,12 +1,14 @@
 import { act, renderHook, waitFor } from "@testing-library/react"
 import {
+  useAssignTask,
   useCase,
   useCaseWorkflows,
   useCompleteTask,
+  useTasks,
   useUpdateTask,
 } from "@/api/hooks"
+import { createQueryWrapper } from "@/test-utils/createQueryWrapper"
 import { queryKeys } from "@/api/queryKeys"
-import { createLegacyApiWrapper } from "@/test-utils/createLegacyApiWrapper"
 
 vi.mock("react-oidc-context", () => ({
   useAuth: () => ({ user: { access_token: "mock-token" } }),
@@ -28,20 +30,16 @@ describe("useUpdateTask", () => {
     vi.unstubAllGlobals()
   })
 
-  it("only refreshes the workflows of the case and marks the old task lists stale", async () => {
+  it("only refreshes the workflows of the case and marks the task lists stale", async () => {
     const fetchMock = vi.fn().mockResolvedValue(jsonResponse({ id: 7 }))
     vi.stubGlobal("fetch", fetchMock)
-    const clearOldCasesCache = vi.fn()
-    const invalidateOldCasesItems = vi.fn()
-    const { Wrapper, queryClient } = createLegacyApiWrapper({
-      cases: {
-        clearCache: clearOldCasesCache,
-        invalidateCacheItems: invalidateOldCasesItems,
-      },
-    })
+    const { Wrapper, queryClient } = createQueryWrapper()
     queryClient.setQueryData(queryKeys.cases.detail(5567), {})
+    queryClient.setQueryData(queryKeys.cases.events(5567), [])
+    queryClient.setQueryData(queryKeys.cases.schedules(5567), [])
     queryClient.setQueryData(queryKeys.cases.workflows(5567), {})
     queryClient.setQueryData(queryKeys.cases.workflows(1), {})
+    queryClient.setQueryData(queryKeys.cases.tasks({ page: 1 }), {})
 
     const { result } = renderHook(() => useUpdateTask(7, 5567), {
       wrapper: Wrapper,
@@ -63,11 +61,18 @@ describe("useUpdateTask", () => {
     expect(
       queryClient.getQueryState(queryKeys.cases.workflows(1))?.isInvalidated,
     ).toBe(false)
-    // Old cache: only the task lists, not the whole cases group (events, schedules, ...).
-    expect(clearOldCasesCache).not.toHaveBeenCalled()
-    expect(invalidateOldCasesItems).toHaveBeenCalledWith(
-      expect.stringMatching(/\/tasks\/$/),
-    )
+    // The task lists are marked stale (they're sorted on due date).
+    expect(
+      queryClient.getQueryState(queryKeys.cases.tasks({ page: 1 }))
+        ?.isInvalidated,
+    ).toBe(true)
+    // Not the rest of the case (events, schedules, ...).
+    for (const queryKey of [
+      queryKeys.cases.events(5567),
+      queryKeys.cases.schedules(5567),
+    ]) {
+      expect(queryClient.getQueryState(queryKey)?.isInvalidated).toBe(false)
+    }
   })
 })
 
@@ -85,10 +90,9 @@ describe("useCompleteTask", () => {
       ),
     )
     vi.stubGlobal("fetch", fetchMock)
-    const invalidateOldCasesItems = vi.fn()
-    const { Wrapper, queryClient } = createLegacyApiWrapper({
-      cases: { invalidateCacheItems: invalidateOldCasesItems },
-    })
+    const { Wrapper, queryClient } = createQueryWrapper()
+    queryClient.setQueryData(queryKeys.cases.events(5527), [])
+    queryClient.setQueryData(queryKeys.cases.schedules(5527), [])
     const { result } = renderHook(
       () => ({
         caseQuery: useCase(5527),
@@ -120,13 +124,148 @@ describe("useCompleteTask", () => {
       queryClient.getQueryState(queryKeys.cases.detail(5527))?.isInvalidated,
     ).toBe(true)
     expect(urls).not.toContainEqual(expect.stringMatching(/\/cases\/5527\/$/))
-    // Old cache: events (new GENERIC_TASK event) and the lists.
+    // The events (new GENERIC_TASK event), not the schedules.
     expect(
-      invalidateOldCasesItems.mock.calls.map(([prefix]) => prefix),
-    ).toEqual([
-      expect.stringMatching(/\/cases\/5527\/events\/$/),
-      expect.stringMatching(/\/cases\/\?$/),
-      expect.stringMatching(/\/tasks\/$/),
+      queryClient.getQueryState(queryKeys.cases.events(5527))?.isInvalidated,
+    ).toBe(true)
+    expect(
+      queryClient.getQueryState(queryKeys.cases.schedules(5527))?.isInvalidated,
+    ).toBe(false)
+  })
+})
+
+describe("useTasks", () => {
+  afterEach(() => {
+    vi.unstubAllGlobals()
+  })
+
+  it("builds the same query string as before, skipping empty filters", async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValue(jsonResponse({ count: 0, results: [] }))
+    vi.stubGlobal("fetch", fetchMock)
+    const { Wrapper } = createQueryWrapper()
+
+    const { result } = renderHook(
+      () =>
+        useTasks({
+          pagination: { page: 2, pageSize: 25 },
+          sorting: { dataIndex: "due_date", order: "DESCEND" },
+          theme: "Vakantieverhuur",
+          tags: ["Spoed", "Extra"],
+          subjects: [],
+          owner: undefined,
+          role: "",
+          isEnforcementRequest: false,
+          housingCorporationIsNull: true,
+        }),
+      { wrapper: Wrapper },
+    )
+    await waitFor(() => expect(result.current.isSuccess).toBe(true))
+
+    const url = new URL(fetchMock.mock.calls[0][0])
+    expect(url.pathname).toMatch(/\/tasks\/$/)
+    expect([...url.searchParams]).toEqual([
+      ["completed", "false"],
+      ["page", "2"],
+      ["page_size", "25"],
+      ["is_enforcement_request", "false"],
+      ["sensitive", "false"],
+      ["theme_name", "Vakantieverhuur"],
+      ["tag", "Spoed"],
+      ["tag", "Extra"],
+      ["housing_corporation_isnull", "true"],
+      ["ordering", "-due_date, id"],
     ])
+  })
+
+  it("keeps showing the previous page while the next one loads", async () => {
+    let resolveNextPage: (value: unknown) => void = () => {}
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(jsonResponse({ count: 50, results: [{ id: 1 }] }))
+      .mockReturnValueOnce(
+        new Promise((resolve) => {
+          resolveNextPage = resolve
+        }),
+      )
+    vi.stubGlobal("fetch", fetchMock)
+    const { Wrapper } = createQueryWrapper()
+
+    const { result, rerender } = renderHook(
+      ({ page }) => useTasks({ pagination: { page, pageSize: 25 } }),
+      { wrapper: Wrapper, initialProps: { page: 1 } },
+    )
+    await waitFor(() => expect(result.current.isSuccess).toBe(true))
+
+    rerender({ page: 2 })
+    expect(result.current.data?.results).toEqual([{ id: 1 }])
+    expect(result.current.isPlaceholderData).toBe(true)
+
+    await act(async () => {
+      resolveNextPage(jsonResponse({ count: 50, results: [{ id: 26 }] }))
+    })
+    await waitFor(() =>
+      expect(result.current.data?.results).toEqual([{ id: 26 }]),
+    )
+    expect(result.current.isPlaceholderData).toBe(false)
+  })
+})
+
+describe("useAssignTask", () => {
+  afterEach(() => {
+    vi.unstubAllGlobals()
+  })
+
+  it("updates the owner in the task lists and the workflows, without refetching", async () => {
+    const fetchMock = vi.fn().mockResolvedValue(jsonResponse({}))
+    vi.stubGlobal("fetch", fetchMock)
+    const { Wrapper, queryClient } = createQueryWrapper()
+    const listKey = queryKeys.cases.tasks({ page: 1 })
+    queryClient.setQueryData(listKey, {
+      count: 2,
+      results: [
+        { id: 12, owner: null },
+        { id: 13, owner: null },
+      ],
+    })
+    queryClient.setQueryData(queryKeys.cases.workflows(5527), {
+      results: [
+        {
+          state: { name: "Status" },
+          tasks: [
+            // The workflows return the task id as a string.
+            { case_user_task_id: "12", owner: null },
+            { case_user_task_id: "14", owner: null },
+          ],
+        },
+      ],
+    })
+
+    const { result } = renderHook(() => useAssignTask(12), {
+      wrapper: Wrapper,
+    })
+    await act(() => result.current.mutateAsync("jan@amsterdam.nl"))
+
+    expect(fetchMock).toHaveBeenCalledTimes(1)
+    const [url, init] = fetchMock.mock.calls[0]
+    expect(url).toMatch(/\/tasks\/12\/$/)
+    expect(init).toMatchObject({
+      method: "PATCH",
+      body: JSON.stringify({ owner: "jan@amsterdam.nl" }),
+    })
+    expect(
+      queryClient
+        .getQueryData<{ results: { owner: string | null }[] }>(listKey)
+        ?.results.map(({ owner }) => owner),
+    ).toEqual(["jan@amsterdam.nl", null])
+    expect(
+      queryClient
+        .getQueryData<Tasks.PaginatedWorkflowList>(
+          queryKeys.cases.workflows(5527),
+        )
+        ?.results[0].tasks.map(({ owner }) => owner),
+    ).toEqual(["jan@amsterdam.nl", null])
+    expect(queryClient.getQueryState(listKey)?.isInvalidated).toBe(false)
   })
 })

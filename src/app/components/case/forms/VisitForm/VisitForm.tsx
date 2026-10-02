@@ -4,8 +4,8 @@ import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form";
 
 import ScaffoldFields from "app/components/shared/Form/ScaffoldFields";
 import scaffold from "./scaffold";
-import { useVisitsCreate } from "app/state/rest";
-import { useUsers } from "@/api/hooks";
+import { useCreateVisit, useUsers } from "@/api/hooks";
+import { toPostMethod } from "@/api/utils/toPostMethod";
 import { useFlashMessages } from "app/state/flashMessages/useFlashMessages";
 import useNavigation from "app/routing/useNavigation";
 
@@ -25,13 +25,13 @@ const VisitForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
   const { data } = useUsers();
   const authors = data?.results ?? [];
 
-  const [, { execPost }] = useVisitsCreate();
+  const createVisit = toPostMethod(useCreateVisit(id).mutateAsync);
   const { addSuccessFlashMessage } = useFlashMessages();
 
   const showSpinner = data === undefined;
 
   const onSubmit = async (data: VisitData) => {
-    const result = await execPost(mapData(data));
+    const result = await createVisit(mapData(data) as unknown as components["schemas"]["Visit"]);
     if (result === undefined) return;
     const path = `/zaken/${ id }`;
     addSuccessFlashMessage(path, "Succes", "Het resultaat bezoek is succesvol verwerkt");

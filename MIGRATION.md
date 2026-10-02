@@ -273,6 +273,73 @@ Testchecklist voor acceptatie (zaakdetailpagina):
 - [ ] Tag en onderwerp wijzigen: na de PATCH géén andere requests. De nieuwe tag/onderwerpen staan direct op de zaak, de onderwerpen ook in het zaak-event in de tijdlijn. Daarna in het zakenoverzicht filteren op die tag: de zaak staat erbij.
 - [ ] Planning wijzigen: na de PATCH géén andere requests. De urgentie in de takenlijst én het planning-event in de tijdlijn tonen toch direct de nieuwe waarde, en na herladen van de pagina nog steeds.
 
+#### Takenoverzicht: ✅ akkoord (okt 2026)
+
+| Oud | Nieuw |
+| --- | --- |
+| `useTasks` (+ `getQueryUrl`) in de oude `cases`-groep | `useTasks(params)` met key `["cases", "tasks", params]` en `placeholderData: keepPreviousData`: bij een andere pagina, sortering of filter blijft de vorige lijst staan tot de nieuwe binnen is |
+| Resultaten en aantal via `updateContextTasks` in `ValueProvider` | Direct uit de query. De filters staan nog wel in `ValueProvider` (zie 1c) |
+| Filter wijzigen → `clearContextCache()` leegde de hele oude `cases`-groep | Niets nodig: een andere filter is een andere query-key |
+| Toewijzen: `useTask().execPatch` + `useContextCache` met een nagebouwde lijst-URL, of `onOwnerChange` op de zaakpagina | `useAssignTask(taskId)`: werkt de eigenaar bij in álle gecachte takenlijsten én workflows, zonder refetch. `AssignTask` heeft geen `isEnforcement`/`onOwnerChange` meer nodig; `useSetWorkflowTaskOwner` is vervallen |
+| `SelectTask` + `UserIcon` | Verwijderd: werden nergens gebruikt |
+
+Let op: de taak-id is in de workflows een string (`case_user_task_id`, `CharField(source="id")`) en in de takenlijst een getal (`id`); `useAssignTask` vergelijkt daarom als string.
+
+Andere mutaties (deadline, taak afronden, tag/onderwerp) markeren de takenlijsten nu via TanStack als verouderd (`queryKeys.cases.tasksAll`); ze laden pas bij het volgende bezoek aan het overzicht.
+
+Testchecklist:
+- [ ] Takenoverzicht laden; aantallen kloppen; de handhavingsverzoeken staan bovenaan als die er zijn.
+- [ ] Bladeren, sorteren (o.a. slotdatum, straat) en paginagrootte wijzigen: de tabel toont laden en daarna de juiste taken.
+- [ ] Alle filters (thema, rol, taaknaam, behandelaar, aanleiding, project, onderwerp, tag, stadsdeel, corporatie) geven de juiste taken; bij een filterwijziging wordt alleen `tasks/?…` opgehaald.
+- [ ] Taak aan jezelf, aan iemand anders en aan niemand toewijzen (ook herverdelen met bevestiging): de eigenaar verandert direct, zonder extra requests na de PATCH. Ook in de tabel met handhavingsverzoeken.
+- [ ] Taak toewijzen op de zaakpagina: idem.
+- [ ] Taak toewijzen in het overzicht, dan de zaak openen (binnen 5 minuten): de takenlijst op de zaak toont de nieuwe behandelaar.
+- [ ] Deadline wijzigen of taak afronden op een zaak, dan terug naar het overzicht: de nieuwe stand wordt opgehaald.
+
+#### Zakenoverzicht en zaken per adres: ✅ akkoord (okt 2026)
+
+| Oud | Nieuw |
+| --- | --- |
+| `useCases(14 losse argumenten)` | `useCases({ ... })` met key `["cases", "list", params]` en `placeholderData: keepPreviousData`. Lege strings en lijsten blijven uit de query, zoals de oude `cleanParamObject` deed (getest: zelfde query string) |
+| Resultaten en aantal via `updateContextCases` in `ValueProvider` | Direct uit de query; de filters staan nog in `ValueProvider` (zie 1c) |
+| `useCasesByBagId` (adrespagina: zaken, advertenties, adresmenu; zaak aanmaken) | `useCasesByBagId(bagId, openCases?)` met key `["cases", "byAddress", bagId, { openCases }]` |
+
+`app/state/rest/cases.ts` is verwijderd. Mutaties die zaak- of takenlijsten raken (tag/onderwerp, taak afronden) markeren nu alle lijsten via `invalidateCaseAndTaskLists` als verouderd; ze laden pas als ze weer getoond worden. Oude mutaties in de `cases`-groep (zaak aanmaken, besluiten, …) invalideren ze via de brug in `useApiRequest`, zoals voorheen.
+
+Testchecklist:
+- [ ] Zakenoverzicht laden; het aantal klopt.
+- [ ] Bladeren, sorteren (straat, postcode, aanleiding, startdatum, laatst gewijzigd) en paginagrootte wijzigen.
+- [ ] Alle filters (thema, aanleiding, project, onderwerp, tag, stadsdeel, corporatie, open/gesloten, startdatum) en de zoekbalk op adres. Een leeg gemaakt filter verdwijnt uit de query (Network: geen `theme_name=` zonder waarde).
+- [ ] Gevoelige zaken alleen met het recht daarvoor; zonder recht bij Ondermijning de juiste lege tekst.
+- [ ] Adrespagina: de zaken op het adres, de advertenties en het adresmenu (aantal zaken).
+- [ ] Zaak aanmaken op een adres met bestaande zaken: de melding over bestaande zaken klopt. Na het aanmaken toont de adrespagina de nieuwe zaak.
+- [ ] Tag wijzigen op een zaak, dan in het zakenoverzicht op die tag filteren: de zaak staat erbij.
+
+#### Zaakformulieren en overige `cases`-hooks: gebouwd, wacht op test
+
+**Alle hooks uit `app/state/rest` zijn nu over.** Geen component gebruikt de oude laag nog; alleen `ApiProvider` hangt nog in `App.tsx` (weg in 1c).
+
+| Oud | Nieuw |
+| --- | --- |
+| `useDebriefingCreate`, `useSummons`, `useDecisions`, `useQuickDecisions`, `useCaseClose`, `useCitizenReports`, `useVisitsCreate`, `useScheduleCreate`, `useWorkflowProcess` | `useCreateDebriefing`, `useCreateSummon`, `useCreateDecision`, `useCreateQuickDecision`, `useCloseCase`, `useCreateCitizenReport`, `useCreateVisit`, `useCreateSchedule`, `useStartWorkflowProcess`, allemaal via `useCaseFormMutation(caseId, url)` |
+| `useCaseCreate` | `useCreateCase` |
+| `useCaseEvents`, `useSchedulesByCaseId`, `useSummonsWithCaseId`, `useCaseCloseReasons`/`Results`, `useWorkflowProcesses`, `useSummonTypesByTaskId` | Dezelfde namen in `src/api/hooks` (`useSummonsWithCaseId` → `useSummonsByCaseId`) |
+| `useCorrespondence(s)`, `useCaseVisits` | Verwijderd: werden nergens gebruikt |
+
+- **Na opslaan van een formulier** wordt alles van die zaak (`["cases", caseId, …]`) plus de zaak- en takenlijsten als verouderd gemarkeerd, **zonder** direct op te halen (`refetchType: "none"`). Op het formulier zelf gaat er dus niets extra's uit; terug op de zaakpagina laadt precies wat daar getoond wordt één keer. De oude laag leegde de hele groep en haalde ook alles op wat op het formulier zichtbaar was.
+- **`toPostMethod`** (`src/api/utils/toPostMethod.ts`) koppelt een mutatie aan het `postMethod`-contract van de oude formulieren (`{ data }` bij succes, `undefined` bij een fout). Weg in Fase 3.
+- **Afsluitformulier:** de oude `useCaseClose()` stond niet op `lazy` en deed bij openen een GET op `case-close/` (alle afsluitingen). Die is weg.
+- Events en schedules staan nu in TanStack, dus de tijdelijke koppelingen naar de oude cache (planning, tag/onderwerp, taak afronden) zijn gewone `setQueryData`/`invalidateQueries` geworden. `legacyCacheBridge.ts` is verwijderd.
+
+Testchecklist (per formulier: invullen, bevestigen, terug op de zaak):
+- [ ] Debrief, besluit, snel besluit, dagvaarding (dagvaardingstypes per taak gevuld), bezoek, melding, planning aanmaken, zaak afsluiten (redenen en resultaten gevuld), taak opvoeren (processen gevuld).
+- [ ] Na elk formulier: terug op de zaak staat de nieuwe stand (takenlijst, tijdlijn, en bij afsluiten "Deze zaak is afgesloten…"). Network: op het formulier na de POST geen extra GET's; op de zaakpagina één keer de gegevens van de zaak.
+- [ ] Een formulier dat op de server faalt: foutmelding, je blijft op het formulier.
+- [ ] Besluitformulier: de lijst met dagvaardingen bovenaan laadt.
+- [ ] Zaak aanmaken: na opslaan naar de nieuwe zaak; het zakenoverzicht en de adrespagina tonen hem.
+- [ ] Afsluitformulier openen: géén GET op `case-close/` meer.
+- [ ] Tijdlijn en overlastmelding (`CaseNuisanceAlert`) op de zaakpagina tonen de events.
+
 ### 1c. Opruimen
 - [ ] `src/app/state/rest/hooks/*`, `provider/*` en `ApiProvider` verwijderen.
 - [ ] Dependencies weg: `axios`, `immer` (ook uit `useFlashMessagesReducer` en `ShowHide`, of die laatste pas in Fase 3), `lodash.merge`, `qs` (vervangen door `URLSearchParams`/`stringifyQueryParams`).

@@ -1,8 +1,8 @@
 
 import { FormTitle } from "@amsterdam/asc-ui";
 
-import { useCaseClose, useCaseCloseResults, useCaseCloseReasons } from "app/state/rest";
-import { useCase } from "@/api/hooks";
+import { useCase, useCaseCloseReasons, useCaseCloseResults, useCloseCase } from "@/api/hooks";
+import { toPostMethod } from "@/api/utils/toPostMethod";
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm";
 import scaffold from "app/components/case/forms/CaseCompleteForm/scaffold";
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields";
@@ -29,9 +29,9 @@ const CaseCompleteForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
   const { data: caseItem } = useCase(id);
   const { navigateTo } = useNavigation();
   const themeId = caseItem?.theme.id;
-  const [caseCloseReasons] = useCaseCloseReasons(themeId);
-  const [caseCloseResults] = useCaseCloseResults(themeId);
-  const [, { execPost }] = useCaseClose();
+  const { data: caseCloseReasons } = useCaseCloseReasons(themeId);
+  const { data: caseCloseResults } = useCaseCloseResults(themeId);
+  const closeCase = toPostMethod(useCloseCase(id).mutateAsync);
   const fields = useScaffoldedFields(scaffold, id, navigateTo, caseCloseReasons?.results, caseCloseResults?.results);
 
   return (
@@ -41,7 +41,7 @@ const CaseCompleteForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
         id={ id }
         fields={ fields }
         mapData={ mapData }
-        postMethod={ execPost }
+        postMethod={ closeCase }
         caseUserTaskId={ caseUserTaskId }
       />
     </>

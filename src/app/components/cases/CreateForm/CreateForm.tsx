@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import scaffold from "./scaffold";
-import { useCaseCreate, useCasesByBagId } from "app/state/rest";
-import { useBagPdokByBagId, useCaseThemes, useCorporations, useListing, useProjects, useReasons, useSubjects } from "@/api/hooks";
+import { useBagPdokByBagId, useCaseThemes, useCasesByBagId, useCorporations, useCreateCase, useListing, useProjects, useReasons, useSubjects } from "@/api/hooks";
+import { toPostMethod } from "@/api/utils/toPostMethod";
 import ConfirmScaffoldForm from "app/components/shared/ConfirmScaffoldForm/ConfirmScaffoldForm";
 import useNavigateWithFlashMessage from "app/state/flashMessages/useNavigateWithFlashMessage";
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields";
@@ -58,9 +58,9 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
   const { data: reasons } = useReasons(themeId);
   const { data: projects } = useProjects(themeId);
   const { data: subjects } = useSubjects(themeId);
-  const [, { execPost }] = useCaseCreate();
+  const createCase = toPostMethod(useCreateCase().mutateAsync);
   const { data: listing } = useListing(tonId);
-  const [cases] = useCasesByBagId(bagId);
+  const { data: cases } = useCasesByBagId(bagId);
   const { data: corporations } = useCorporations();
   const { data: bagAddressResponse } = useBagPdokByBagId(bagId);
   const bagAddress = getAddressFromBagPdokResponse(bagAddressResponse);
@@ -141,7 +141,7 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
   return (
     <ConfirmScaffoldForm
       fields={ fields }
-      postMethod={ execPost }
+      postMethod={ createCase }
       mapData={ mapData(bagId, tonId) }
       afterSubmit={ afterSubmit }
       initialValues={ initialValues }

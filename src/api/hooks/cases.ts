@@ -1,14 +1,33 @@
 import { useState } from "react"
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import {
+  keepPreviousData,
+  useMutation,
+  useQuery,
+  useQueryClient,
+  type QueryClient,
+} from "@tanstack/react-query"
 import { useApiFetch } from "@/api/useApiFetch"
 import { queryKeys } from "@/api/queryKeys"
 import {
-  useInvalidateLegacyCacheItems,
-  useUpdateLegacyCacheItem,
-} from "@/api/legacyCacheBridge"
+  nonEmpty,
+  stringifyQueryParams,
+} from "@/api/utils/stringifyQueryParams"
 import { makeApiUrl } from "app/state/rest/hooks/utils/apiUrl"
 
 type CaseId = components["schemas"]["CaseDetail"]["id"]
+
+/**
+ * Marks all case and task lists stale. They're not shown on the case page, so
+ * nothing refetches now (only active queries do); they reload when shown again.
+ */
+export const invalidateCaseAndTaskLists = (queryClient: QueryClient) =>
+  Promise.all(
+    [
+      queryKeys.cases.listAll,
+      queryKeys.cases.byAddressAll,
+      queryKeys.cases.tasksAll,
+    ].map((queryKey) => queryClient.invalidateQueries({ queryKey })),
+  )
 
 export const useCase = (caseId?: CaseId) => {
   const fetch = useApiFetch()
@@ -26,14 +45,12 @@ export const useCase = (caseId?: CaseId) => {
  *   serializer uses the same Tag- and SubjectSerializer as the GET);
  * - the timeline's CASE event gets the new subject names, because the backend
  *   reads those live from the case (Case.__get_event_values__);
- * - the (still old) case and task lists, which can be filtered on tag and
- *   subject, are marked stale: they reload the next time they are shown.
+ * - the case and task lists, which can be filtered on tag and subject, are
+ *   marked stale: they reload the next time they are shown.
  */
 export const useUpdateCase = (caseId: CaseId) => {
   const fetch = useApiFetch()
   const queryClient = useQueryClient()
-  const updateOldCasesItem = useUpdateLegacyCacheItem("cases")
-  const invalidateOldCasesItems = useInvalidateLegacyCacheItems("cases")
 
   return useMutation({
     mutationFn: (data: Record<string, unknown>) =>
@@ -43,17 +60,22 @@ export const useUpdateCase = (caseId: CaseId) => {
         queryKeys.cases.detail(caseId),
         (caseItem) => caseItem && { ...caseItem, tags, subjects },
       )
-      updateOldCasesItem<components["schemas"]["CaseEvent"][]>(
-        makeApiUrl("cases", caseId, "events"),
-        (events) => {
-          const event = events.find(({ type }) => type === "CASE")
-          if (!event) return
-          ;(event.event_values as Record<string, unknown>).subjects =
-            subjects.map(({ name }) => name)
-        },
+      queryClient.setQueryData<components["schemas"]["CaseEvent"][]>(
+        queryKeys.cases.events(caseId),
+        (events) =>
+          events?.map((event) =>
+            event.type === "CASE"
+              ? {
+                  ...event,
+                  event_values: {
+                    ...(event.event_values as Record<string, unknown>),
+                    subjects: subjects.map(({ name }) => name),
+                  },
+                }
+              : event,
+          ),
       )
-      invalidateOldCasesItems(`${makeApiUrl("cases")}?`)
-      invalidateOldCasesItems(makeApiUrl("tasks"))
+      void invalidateCaseAndTaskLists(queryClient)
     },
   })
 }
@@ -140,29 +162,207 @@ export const useCaseWorkflows = (
   return { ...query, isPolling }
 }
 
+const casesSortingIndexMapping: Record<string, string> = {
+  // A second sorter parameter is added because of the huge number of duplicate values.
+  "address.street_name": "address__street_name, start_date",
+  "address.postal_code": "address__postal_code, start_date",
+  "reason.name": "reason__name, start_date",
+  start_date: "start_date, id",
+  last_updated: "last_updated, start_date",
+}
+
+const getCasesOrdering = (sorting?: TABLE.Schemas.Sorting) => {
+  if (!sorting) return undefined
+  const value = sorting.dataIndex
+    ? casesSortingIndexMapping[sorting.dataIndex]
+    : ""
+  return sorting.order === "DESCEND" ? `-${value}` : value
+}
+
+const getOpenCasesValue = (openCases?: string) => {
+  if (openCases === "open") return true
+  if (openCases === "closed") return false
+  return undefined
+}
+
+export type CasesParams = {
+  addressSearch?: string
+  districtNames?: components["schemas"]["District"]["name"][]
+  fromStartDate?: string
+  housingCorporationIsNull?: boolean
+  housingCorporations?: string[]
+  openCases?: string
+  pagination: TABLE.Schemas.Pagination
+  projects?: string[]
+  reason?: string
+  sensitive?: boolean
+  sorting?: TABLE.Schemas.Sorting
+  subjects?: string[]
+  tags?: string[]
+  theme?: string
+}
+
 /**
- * Updates the owner of one task in the cached workflows of a case, so the
- * table shows the new owner right away. Replaces useContextCache in
- * Workflow/columns.
+ * The cases overview. Keeps showing the previous page/filter results while the
+ * next ones load (isPlaceholderData). Empty strings and arrays are left out of
+ * the query, like the old cleanParamObject did.
  */
-export const useSetWorkflowTaskOwner = (caseId: CaseId) => {
+export const useCases = ({
+  addressSearch,
+  districtNames,
+  fromStartDate,
+  housingCorporationIsNull,
+  housingCorporations,
+  openCases,
+  pagination,
+  projects,
+  reason,
+  sensitive = false,
+  sorting,
+  subjects,
+  tags,
+  theme,
+}: CasesParams) => {
+  const fetch = useApiFetch()
+  const queryParams = {
+    page: pagination.page,
+    page_size: pagination.pageSize,
+    from_start_date: fromStartDate || undefined,
+    open_cases: getOpenCasesValue(openCases),
+    simplified: true,
+    sensitive: sensitive === false ? false : undefined,
+    theme_name: theme || undefined,
+    project: nonEmpty(projects),
+    reason_name: reason || undefined,
+    address_search: addressSearch || undefined,
+    subject: nonEmpty(subjects),
+    tag: nonEmpty(tags),
+    district_name: nonEmpty(districtNames),
+    housing_corporation: nonEmpty(housingCorporations),
+    housing_corporation_isnull: housingCorporationIsNull ? true : undefined,
+    ordering: getCasesOrdering(sorting),
+  }
+
+  return useQuery({
+    queryKey: queryKeys.cases.list(queryParams),
+    queryFn: () =>
+      fetch<components["schemas"]["PaginatedCaseList"]>(
+        `${makeApiUrl("cases")}${stringifyQueryParams(queryParams)}`,
+      ),
+    placeholderData: keepPreviousData,
+  })
+}
+
+/** The cases of an address; with openCases only the open ones. */
+export const useCasesByBagId = (
+  bagId: components["schemas"]["Address"]["bag_id"],
+  openCases?: boolean,
+) => {
+  const fetch = useApiFetch()
+  const queryString = stringifyQueryParams({
+    open_cases: openCases === true ? true : undefined,
+  })
+
+  return useQuery({
+    queryKey: queryKeys.cases.byAddress(bagId, openCases === true),
+    queryFn: () =>
+      fetch<components["schemas"]["PaginatedCaseList"]>(
+        `${makeApiUrl("addresses", bagId, "cases")}${queryString}`,
+      ),
+  })
+}
+
+export const useCaseEvents = (caseId: CaseId) => {
+  const fetch = useApiFetch()
+
+  return useQuery({
+    queryKey: queryKeys.cases.events(caseId),
+    queryFn: () =>
+      fetch<components["schemas"]["CaseEvent"][]>(
+        makeApiUrl("cases", caseId, "events"),
+      ),
+  })
+}
+
+export const useSummonsByCaseId = (caseId?: CaseId) => {
+  const fetch = useApiFetch()
+
+  return useQuery({
+    queryKey: queryKeys.cases.summons(caseId),
+    queryFn: () =>
+      fetch<components["schemas"]["PaginatedSummonList"]>(
+        `${makeApiUrl("summons")}${stringifyQueryParams({ case: caseId })}`,
+      ),
+    enabled: caseId !== undefined,
+  })
+}
+
+export const useCaseCloseReasons = (
+  themeId?: components["schemas"]["CaseTheme"]["id"],
+) => {
+  const fetch = useApiFetch()
+
+  return useQuery({
+    queryKey: queryKeys.cases.closeReasons(themeId),
+    queryFn: () =>
+      fetch<components["schemas"]["PaginatedCaseCloseReasonList"]>(
+        makeApiUrl("themes", themeId, "case-close-reasons"),
+      ),
+    enabled: themeId !== undefined,
+  })
+}
+
+export const useCaseCloseResults = (
+  themeId?: components["schemas"]["CaseTheme"]["id"],
+) => {
+  const fetch = useApiFetch()
+
+  return useQuery({
+    queryKey: queryKeys.cases.closeResults(themeId),
+    queryFn: () =>
+      fetch<components["schemas"]["PaginatedCaseCloseResultList"]>(
+        makeApiUrl("themes", themeId, "case-close-results"),
+      ),
+    enabled: themeId !== undefined,
+  })
+}
+
+/** The workflow processes that can be started on a case ("Taak opvoeren"). */
+export const useWorkflowProcesses = (caseId: CaseId) => {
+  const fetch = useApiFetch()
+
+  return useQuery({
+    queryKey: queryKeys.cases.processes(caseId),
+    queryFn: () =>
+      fetch<components["schemas"]["WorkflowOption"][]>(
+        makeApiUrl("cases", caseId, "processes"),
+      ),
+  })
+}
+
+/**
+ * Create a case. Afterwards the form navigates to the new case, so the case
+ * lists (overview, cases of the address) are only marked stale.
+ */
+export const useCreateCase = () => {
+  const fetch = useApiFetch()
   const queryClient = useQueryClient()
 
-  return (
-    taskId: Tasks.WorkflowTask["case_user_task_id"],
-    owner: string | null,
-  ) =>
-    queryClient.setQueryData<Tasks.PaginatedWorkflowList>(
-      queryKeys.cases.workflows(caseId),
-      (data) =>
-        data && {
-          ...data,
-          results: data.results.map((workflow) => ({
-            ...workflow,
-            tasks: workflow.tasks.map((task) =>
-              task.case_user_task_id === taskId ? { ...task, owner } : task,
-            ),
-          })),
-        },
-    )
+  return useMutation({
+    mutationFn: (data: Record<string, unknown>) =>
+      fetch<components["schemas"]["CaseDetail"]>(makeApiUrl("cases"), {
+        method: "POST",
+        data,
+      }),
+    onSuccess: () =>
+      Promise.all(
+        [
+          queryKeys.cases.listAll,
+          queryKeys.cases.byAddressAll,
+          queryKeys.cases.tasksAll,
+        ].map((queryKey) =>
+          queryClient.invalidateQueries({ queryKey, refetchType: "none" }),
+        ),
+      ),
+  })
 }

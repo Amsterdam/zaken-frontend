@@ -1,14 +1,12 @@
 import { useEffect, useContext } from "react";
 import { Heading } from "@amsterdam/asc-ui";
-import { useTasks, getQueryUrl as getTasksQueryUrl } from "app/state/rest";
-import { useCaseThemes, useCorporations, useDistricts, useProjects, useRoles, useSubjects, useTags, useTaskNames, useTasksReasons, useUsersMe } from "@/api/hooks";
+import { useCaseThemes, useCorporations, useDistricts, useProjects, useRoles, useSubjects, useTags, useTaskNames, useTasks, useTasksReasons, useUsersMe } from "@/api/hooks";
 import TableTasks from "app/components/tasks/TableTasks/TableTasks";
 import TasksFilter from "../TasksFilter/TasksFilter";
 import useHasPermission, {
   SENSITIVE_CASE_PERMISSION,
 } from "app/state/rest/custom/usePermissions/useHasPermission";
 import { ContextValues } from "app/state/context/ValueProvider";
-import useContextCache from "app/state/rest/provider/useContextCache";
 import CaseEnforcement from "app/components/case/icons/CaseEnforcement";
 import getThemeId from "app/components/tasks/utils/getThemeId";
 import { useMappedTaskOwners } from "../hooks/useMappedTaskOwners";
@@ -28,7 +26,6 @@ const Tasks: React.FC = () => {
     tasks: { updateContextTasks },
   } = useContext(ContextValues);
   const {
-    count,
     districtNames,
     housingCorporations,
     housingCorporationIsNull,
@@ -36,7 +33,6 @@ const Tasks: React.FC = () => {
     pagination,
     projects,
     reason,
-    results,
     role,
     sorting,
     subjects,
@@ -72,12 +68,21 @@ const Tasks: React.FC = () => {
     taskNames,
     theme,
   };
-  const [dataSource, { isBusy }] = useTasks({
+  // While the next page/filter loads, the previous results stay visible (isPlaceholderData).
+  const {
+    data: dataSource,
+    isLoading,
+    isPlaceholderData,
+  } = useTasks({
     ...commonTaskArgs,
     pagination,
     isEnforcementRequest: false,
   });
-  const [enforcementDataSource, { isBusy: isBusyEnforcement }] = useTasks({
+  const {
+    data: enforcementDataSource,
+    isLoading: isLoadingEnforcement,
+    isPlaceholderData: isPlaceholderEnforcement,
+  } = useTasks({
     ...commonTaskArgs,
     pagination: {
       page: 1,
@@ -86,15 +91,6 @@ const Tasks: React.FC = () => {
     isEnforcementRequest: true,
   });
   const { data: taskNamesData } = useTaskNames(theme ?? null, role ?? null);
-  const queryUrl = getTasksQueryUrl(
-    hasPermission,
-    pagination,
-    sorting,
-    theme,
-    role,
-    owners,
-  );
-  const { clearContextCache } = useContextCache("cases", queryUrl);
 
   useEffect(() => {
     // Set initial role when loaded for the first time
@@ -103,17 +99,7 @@ const Tasks: React.FC = () => {
     }
   }, [me, role, updateContextTasks]);
 
-  useEffect(() => {
-    if (dataSource === undefined) {
-      updateContextTasks({ results: [], count: 0 });
-    } else {
-      updateContextTasks(dataSource);
-    }
-  }, [dataSource, updateContextTasks]);
-
   const onChangeFilter = (key: string, item: Item) => {
-    // Empty cache to force a new data fetch.
-    clearContextCache();
     const updates = {
       [key]: item,
       pagination: { ...pagination, page: 1 },
@@ -174,26 +160,25 @@ const Tasks: React.FC = () => {
             </Heading>
             <TableTasks
               data={enforcementDataSource?.results || []}
-              isBusy={isBusyEnforcement}
+              isBusy={isLoadingEnforcement || isPlaceholderEnforcement}
               onChange={onChangeTable}
               pagination={false}
               sorting={sorting}
               emptyPlaceholder={emptyPlaceholder}
-              isEnforcement
             />
           </div>
         )}
         <Heading as="h2">
-          Alle {enforcementTasksAvailable ? "overige" : ""} taken ({count})
+          Alle {enforcementTasksAvailable ? "overige" : ""} taken ({dataSource?.count ?? 0})
         </Heading>
         <TableTasks
-          data={results || []}
-          isBusy={isBusy}
+          data={dataSource?.results ?? []}
+          isBusy={isLoading || isPlaceholderData}
           onChange={onChangeTable}
           pagination={{
             page: pagination.page,
             pageSize: pagination.pageSize,
-            collectionSize: count || 1,
+            collectionSize: dataSource?.count || 1,
             paginationLength: 9,
           }}
           sorting={sorting}

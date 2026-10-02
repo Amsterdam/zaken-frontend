@@ -35,6 +35,25 @@ export const queryKeys = {
     all: ["cases"] as const,
     detail: (caseId?: CaseId) => ["cases", caseId] as const,
     workflows: (caseId: CaseId) => ["cases", caseId, "workflows"] as const,
+    events: (caseId: CaseId) => ["cases", caseId, "events"] as const,
+    schedules: (caseId: CaseId) => ["cases", caseId, "schedules"] as const,
+    summons: (caseId?: CaseId) => ["cases", caseId, "summons"] as const,
+    processes: (caseId: CaseId) => ["cases", caseId, "processes"] as const,
+    closeReasons: (themeId?: ThemeId) =>
+      ["cases", "themes", themeId, "case-close-reasons"] as const,
+    closeResults: (themeId?: ThemeId) =>
+      ["cases", "themes", themeId, "case-close-results"] as const,
+    // The case lists: the overview, and the cases of an address.
+    listAll: ["cases", "list"] as const,
+    list: (params: Record<string, unknown>) =>
+      ["cases", "list", params] as const,
+    byAddressAll: ["cases", "byAddress"] as const,
+    byAddress: (bagId: BagId, openCases?: boolean) =>
+      ["cases", "byAddress", bagId, { openCases }] as const,
+    // The task lists of the overview; in the old layer they were in the cases group too.
+    tasksAll: ["cases", "tasks"] as const,
+    tasks: (params: Record<string, unknown>) =>
+      ["cases", "tasks", params] as const,
     decisionTypes: (themeId?: ThemeId) =>
       ["cases", "themes", themeId, "decision-types"] as const,
     quickDecisionTypes: (themeId?: ThemeId) =>
@@ -73,6 +92,12 @@ export const queryKeys = {
 
   roles: {
     all: ["roles"] as const,
+  },
+
+  task: {
+    all: ["task"] as const,
+    summonTypes: (taskId: Tasks.TaskId) =>
+      ["task", taskId, "summon-types"] as const,
   },
 
   themes: {

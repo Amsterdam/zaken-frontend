@@ -27,3 +27,7 @@ export const stringifyQueryParams = (
   const queryString = searchParams.toString()
   return queryString ? `?${queryString}` : ""
 }
+
+/** Leaves an empty filter list out of the query. */
+export const nonEmpty = <T>(values?: T[]) =>
+  values?.length ? values : undefined

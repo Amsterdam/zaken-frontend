@@ -58,9 +58,6 @@
   "src/app/components/case/Workflow/columns.tsx": {
     "@typescript-eslint/no-explicit-any": {
       "count": 9
-    },
-    "react-refresh/only-export-components": {
-      "count": 1
     }
   },
   "src/app/components/case/Workflow/components/UpdateSchedule/UpdateSchedule.tsx": {
@@ -273,20 +270,7 @@
       "count": 1
     }
   },
-  "src/app/components/tasks/TableTasks/AssignTask/AssignTask.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 3
-    }
-  },
   "src/app/components/tasks/TableTasks/AssignTask/UserPickerDropdown.tsx": {
-    "react-hooks/set-state-in-effect": {
-      "count": 1
-    }
-  },
-  "src/app/components/tasks/TableTasks/SelectTask/SelectTask.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 2
-    },
     "react-hooks/set-state-in-effect": {
       "count": 1
     }
@@ -342,16 +326,6 @@
       "count": 1
     }
   },
-  "src/app/state/rest/case.ts": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 2
-    }
-  },
-  "src/app/state/rest/cases.ts": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 3
-    }
-  },
   "src/app/state/rest/hooks/useApiCache.ts": {
     "@typescript-eslint/no-explicit-any": {
       "count": 11
@@ -401,11 +375,6 @@
     }
   },
   "src/app/state/rest/provider/useContextCache.ts": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    }
-  },
-  "src/app/state/rest/tasks.ts": {
     "@typescript-eslint/no-explicit-any": {
       "count": 1
     }

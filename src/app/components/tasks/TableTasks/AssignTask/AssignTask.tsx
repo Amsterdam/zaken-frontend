@@ -1,54 +1,20 @@
-import { useState, useEffect, useContext, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-import { useTask } from "app/state/rest";
-import { useUsersMe } from "@/api/hooks";
-import useContextCache from "app/state/rest/provider/useContextCache";
+import { useAssignTask, useUsersMe } from "@/api/hooks";
 import useHasPermission, {
   CAN_PERFORM_TASK,
-  SENSITIVE_CASE_PERMISSION,
 } from "app/state/rest/custom/usePermissions/useHasPermission";
-import { ContextValues } from "app/state/context/ValueProvider";
-import { getQueryUrl } from "app/state/rest/tasks";
 import AssigneeAvatar from "./AssigneeAvatar";
 import UserPickerDropdown from "./UserPickerDropdown";
 import ConfirmReassignDialog from "./ConfirmReassignDialog";
 import styles from "./AssignTask.module.css";
 
 type Props = {
-  taskId: any;
+  taskId: Tasks.TaskId;
   taskOwner?: string | null;
-  isEnforcement: boolean;
-  onOwnerChange?: (taskId: any, newOwner: string | null) => void;
 };
 
-const enforcementPagination = {
-  page: 1,
-  pageSize: 1000,
-};
-
-const AssignTask: React.FC<Props> = ({
-  taskId,
-  taskOwner,
-  isEnforcement,
-  onOwnerChange,
-}) => {
-  const {
-    pagination,
-    sorting,
-    role,
-    theme,
-    owners,
-    projects,
-    subjects,
-    tags,
-    taskNames,
-    reason,
-    districtNames,
-    housingCorporations,
-    housingCorporationIsNull,
-  } = useContext(ContextValues)["tasks"];
-
-  const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION]);
+const AssignTask: React.FC<Props> = ({ taskId, taskOwner }) => {
   const [hasPerformTaskPermission] = useHasPermission([CAN_PERFORM_TASK]);
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -61,36 +27,13 @@ const AssignTask: React.FC<Props> = ({
     undefined,
   );
   const [confirmOpen, setConfirmOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const { data: currentUser, isLoading: isMeBusy } = useUsersMe();
-  const [, { execPatch }] = useTask(taskId);
-
-  const queryUrl = getQueryUrl(
-    hasPermission,
-    isEnforcement ? enforcementPagination : pagination,
-    sorting,
-    theme,
-    role,
-    owners,
-    isEnforcement,
-    taskNames,
-    projects,
-    reason,
-    subjects,
-    tags,
-    districtNames,
-    housingCorporations,
-    housingCorporationIsNull,
-  );
-
-  const { getContextItem, updateContextItem } = useContextCache(
-    "cases",
-    queryUrl,
-  );
+  // Updates the owner wherever the task is shown: the overview and the case page.
+  const { mutate: assignTask, isPending } = useAssignTask(taskId);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -105,34 +48,10 @@ const AssignTask: React.FC<Props> = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const applyOwnerChange = useCallback(
-    async (newOwner: string | null) => {
-      setLoading(true);
-      setDropdownOpen(false);
-      try {
-        const resp: any = await execPatch({ owner: newOwner });
-        if (resp?.status === 200) {
-          if (onOwnerChange) {
-            onOwnerChange(taskId, newOwner);
-          } else {
-            const tasksResponse = getContextItem();
-            const tasks = tasksResponse?.results ?? [];
-            const newTasks = [...tasks];
-            const index = newTasks.findIndex(
-              (task: { id: number }) => task.id === taskId,
-            );
-            if (index !== -1) {
-              newTasks[index] = { ...newTasks[index], owner: newOwner };
-            }
-            updateContextItem({ ...tasksResponse, results: newTasks });
-          }
-        }
-      } finally {
-        setLoading(false);
-      }
-    },
-    [execPatch, getContextItem, updateContextItem, taskId, onOwnerChange],
-  );
+  const applyOwnerChange = (newOwner: string | null) => {
+    setDropdownOpen(false);
+    assignTask(newOwner);
+  };
 
   const handleUserSelect = (userId: string | null) => {
     if (userId === null) {
@@ -213,7 +132,7 @@ const AssignTask: React.FC<Props> = ({
         taskOwner={taskOwner ?? null}
         currentUserId={currentUser?.id ?? null}
         currentUser={currentUser ?? null}
-        isBusy={isMeBusy || loading}
+        isBusy={isMeBusy || isPending}
         onClick={handleAvatarClick}
       />
 

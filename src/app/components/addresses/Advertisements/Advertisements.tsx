@@ -1,6 +1,6 @@
 import { Spinner, Heading, Paragraph, Link, themeSpacing } from "@amsterdam/asc-ui";
 import styled from "styled-components";
-import { useCasesByBagId } from "app/state/rest";
+import { useCasesByBagId } from "@/api/hooks";
 
 type Props = {
   bagId: components["schemas"]["Address"]["bag_id"]
@@ -14,7 +14,7 @@ const StyledLink = styled(Link)`
 const IS_OPEN_CASES = true;
 
 const Advertisements: React.FC<Props> = ({ bagId }) => {
-  const [data, { isBusy }] = useCasesByBagId(bagId, IS_OPEN_CASES);
+  const { data, isLoading: isBusy } = useCasesByBagId(bagId, IS_OPEN_CASES);
   const cases = data?.results || [];
   let mergedAds: components["schemas"]["Advertisement"][] = [];
   // Merge all advertisement arrays to one.

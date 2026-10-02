@@ -1,13 +1,12 @@
 import { FormTitle } from "@amsterdam/asc-ui";
-import { useQuickDecisions } from "app/state/rest";
-import { useCase } from "@/api/hooks";
+import { useCase, useCreateQuickDecision, useQuickDecisionTypes } from "@/api/hooks";
+import { toPostMethod } from "@/api/utils/toPostMethod";
 import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm";
 import scaffold from "app/components/case/forms/QuickDecisionForm/scaffold";
 import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields";
 import DecisionHeader, {
   type Workflow,
 } from "../DecisionForm/components/DecisionHeader";
-import { useQuickDecisionTypes } from "@/api/hooks";
 import useNavigation from "app/routing/useNavigation";
 
 type Props = {
@@ -38,7 +37,7 @@ const QuickDecisionForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
     quickDecisionTypes,
   );
 
-  const [, { execPost }] = useQuickDecisions({ lazy: true });
+  const createQuickDecision = toPostMethod(useCreateQuickDecision(id).mutateAsync);
 
   return (
     <>
@@ -54,7 +53,7 @@ const QuickDecisionForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
         id={id}
         fields={fields}
         mapData={mapData}
-        postMethod={execPost}
+        postMethod={createQuickDecision}
         caseUserTaskId={caseUserTaskId}
       />
     </>
