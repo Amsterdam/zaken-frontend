@@ -19,16 +19,6 @@
       "count": 1
     }
   },
-  "src/app/components/addresses/CasesByBagId/CasesByBagId.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    }
-  },
-  "src/app/components/addresses/CasesByBagId/columns.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 9
-    }
-  },
   "src/app/components/addresses/ResidentsOverview/ResidentsOverview.tsx": {
     "@typescript-eslint/no-explicit-any": {
       "count": 1

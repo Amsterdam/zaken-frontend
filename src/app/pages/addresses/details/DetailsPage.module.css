@@ -1,0 +1,12 @@
+/* The object details next to the panorama; below each other on a narrow window. */
+.top {
+  display: grid;
+  gap: var(--ams-space-l);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 60rem) {
+  .top {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}

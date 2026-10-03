@@ -1,9 +1,6 @@
-import styled from "styled-components"
-import { Heading, themeSpacing } from "@amsterdam/asc-ui"
-
+import { Column, Heading, Paragraph } from "@amsterdam/design-system-react"
 import { useCasesByBagId } from "@/api/hooks"
-import { Table } from "@amsterdam/wonen-ui"
-import useNavigation from "app/routing/useNavigation"
+import { Table } from "@/components/Table/Table"
 import { columnsClosedCases, columnsOpenCases } from "./columns"
 
 type Props = {
@@ -16,13 +13,7 @@ type Props = {
 const defaultTitle = "Zaken"
 const defaultEmptyText = "Op dit adres zijn er geen zaken"
 
-const StyledHeading = styled(Heading)`
-  margin-bottom: ${themeSpacing(4)};
-`
-const Div = styled.div`
-  margin-bottom: ${themeSpacing(8)};
-`
-
+/** The open or the closed cases on an address. */
 const CasesByBagId: React.FC<Props> = ({
   bagId,
   openCases = false,
@@ -30,35 +21,30 @@ const CasesByBagId: React.FC<Props> = ({
   emptyText = defaultEmptyText,
 }) => {
   const { data, isLoading: isBusy } = useCasesByBagId(bagId)
-  const { navigateTo } = useNavigation()
   const caseList =
     data?.results?.filter((result) =>
       openCases ? result.end_date === null : result.end_date !== null,
     ) || []
   const numCases = caseList.length
 
-  const onClickRow = (data: any) => {
-    navigateTo("/zaken/:id", { id: data.id })
-  }
-
   return (
-    <Div>
-      <StyledHeading as={"h2"}>
+    <Column gap="small">
+      <Heading level={2}>
         {title}
         {numCases > 0 && ` (${numCases})`}
-      </StyledHeading>
-      <Table
-        lastColumnFixed
-        columns={openCases ? columnsOpenCases : columnsClosedCases}
-        loading={isBusy}
-        numLoadingRows={1}
-        data={caseList}
-        showHeadWhenEmpty={false}
-        onClickRow={onClickRow}
-        emptyPlaceholder={emptyText}
-        pagination={false}
-      />
-    </Div>
+      </Heading>
+      {!isBusy && numCases === 0 ? (
+        <Paragraph>{emptyText}</Paragraph>
+      ) : (
+        <Table
+          columns={openCases ? columnsOpenCases : columnsClosedCases}
+          loading={isBusy}
+          numLoadingRows={1}
+          data={caseList}
+          pagination={false}
+        />
+      )}
+    </Column>
   )
 }
 export default CasesByBagId

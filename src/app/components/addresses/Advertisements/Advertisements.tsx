@@ -1,66 +1,47 @@
 import {
-  Spinner,
+  Column,
   Heading,
-  Paragraph,
   Link,
-  themeSpacing,
-} from "@amsterdam/asc-ui"
-import styled from "styled-components"
+  Paragraph,
+  UnorderedList,
+} from "@amsterdam/design-system-react"
 import { useCasesByBagId } from "@/api/hooks"
+import { SmallSkeleton } from "@/components/SmallSkeleton/SmallSkeleton"
 
 type Props = {
   bagId: components["schemas"]["Address"]["bag_id"]
 }
 
-const StyledLink = styled(Link)`
-  font-size: 18px;
-  margin-bottom: ${themeSpacing(3)};
-`
-
 const IS_OPEN_CASES = true
 
+/** The advertisements of the open cases on an address, each one once. */
 const Advertisements: React.FC<Props> = ({ bagId }) => {
   const { data, isLoading: isBusy } = useCasesByBagId(bagId, IS_OPEN_CASES)
-  const cases = data?.results || []
-  let mergedAds: components["schemas"]["Advertisement"][] = []
-  // Merge all advertisement arrays to one.
-  cases.forEach((c) => {
-    if (c.advertisements !== undefined && c.advertisements?.length > 0) {
-      mergedAds = [...mergedAds, ...c.advertisements]
-    }
-  })
-  // Filter for unique advertisements.
-  const uniqueAds = mergedAds.filter(
+  const ads = (data?.results ?? []).flatMap((c) => c.advertisements ?? [])
+  const uniqueAds = ads.filter(
     (value, index, self) =>
       self.findIndex((v) => v.link === value.link) === index,
   )
 
-  if (isBusy) {
-    return <Spinner />
-  }
   return (
-    <>
-      <Heading forwardedAs="h2">Advertenties</Heading>
-      {uniqueAds.length > 0 ? (
-        <>
+    <Column gap="small">
+      <Heading level={2}>Advertenties</Heading>
+      {isBusy ? (
+        <SmallSkeleton height={10} maxRandomWidth={300} />
+      ) : uniqueAds.length > 0 ? (
+        <UnorderedList markers={false}>
           {uniqueAds.map((ad) => (
-            <div key={ad.id}>
-              <StyledLink
-                href={ad.link}
-                variant="inline"
-                icon="external"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+            <UnorderedList.Item key={ad.id}>
+              <Link href={ad.link} target="_blank" rel="noopener noreferrer">
                 {ad.link}
-              </StyledLink>
-            </div>
+              </Link>
+            </UnorderedList.Item>
           ))}
-        </>
+        </UnorderedList>
       ) : (
         <Paragraph>Geen advertenties gevonden</Paragraph>
       )}
-    </>
+    </Column>
   )
 }
 

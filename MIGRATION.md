@@ -18,7 +18,7 @@ Doel: zaken-frontend omzetten naar dezelfde toekomstbestendige stack als [`top-f
 
 - **Fase 0 ✅** Tooling: ESLint flat config (met bulk suppressions), Prettier (hele codebase geformatteerd), Testing Library 16, `@/`-alias, `AGENTS.md`.
 - **Fase 1 ✅** Alle data via TanStack Query (`src/api/`); de oude laag `src/app/state/rest/` en `axios`, `qs`, `lodash.merge`, `lodash.isempty` zijn weg. Mutaties werken alleen bij wat de gewijzigde data toont, vaak zonder refetch.
-- **Fase 2 (bezig):** ADS staat naast `asc-ui`; de pilot (nieuwe layout `src/components/DefaultLayout/` op de 404-pagina) is ✅ akkoord. Nu pagina voor pagina, met een controle na elke pagina: 404, Hulp, 403 en `/auth` (pilot voor `Description`, de vervanger van `DefinitionList` van `wonen-ui`) de invorderingscheck en de startpagina (adres zoeken) zijn ✅ akkoord. Bezig: het zakenoverzicht, in drie stappen: (1) layout + `Table` — ✅ akkoord; (2) filters naar ADS, boven de tabel — ✅ akkoord; (3) filters naar de URL — ✅ akkoord. Het takenoverzicht is ✅ akkoord; het toewijzen van taken daarin (pilot `ConfirmDialog`, de vervanger van de asc-ui-`ConfirmModal`) is omgezet en wacht op test.
+- **Fase 2 (bezig):** ADS staat naast `asc-ui`; de pilot (nieuwe layout `src/components/DefaultLayout/` op de 404-pagina) is ✅ akkoord. Nu pagina voor pagina, met een controle na elke pagina: 404, Hulp, 403 en `/auth` (pilot voor `Description`, de vervanger van `DefinitionList` van `wonen-ui`) de invorderingscheck en de startpagina (adres zoeken) zijn ✅ akkoord. Bezig: het zakenoverzicht, in drie stappen: (1) layout + `Table` — ✅ akkoord; (2) filters naar ADS, boven de tabel — ✅ akkoord; (3) filters naar de URL — ✅ akkoord. Het takenoverzicht is ✅ akkoord, inclusief het toewijzen van taken (pilot `ConfirmDialog`, de vervanger van de asc-ui-`ConfirmModal`). De adrespagina's hebben tabs; Zaken en Adresdetails zijn ✅ akkoord, Persoonsgegevens en Vergunningen zijn de volgende.
 - **Restpunten:** filters van de overzichten naar de URL (eigen pilot, past bij Fase 3); `immer` (weg met flash messages → toasts en `ShowHide`); `lodash` (weg met `amsterdam-react-final-form`); 155 vastgelegde lint-overtredingen in `eslint-suppressions.json` (lossen grotendeels op in Fase 3).
 
 ## 1. Uitgangssituatie (gemeten op `main`, okt 2026)
@@ -439,16 +439,19 @@ Testchecklist:
 
 #### Pagina voor pagina
 
-| Pagina                                                       | Status                                                                         |
-| ------------------------------------------------------------ | ------------------------------------------------------------------------------ |
-| 404 (`pages/errors/NotFoundPage`)                            | ✅ akkoord (pilot)                                                             |
-| Hulp (`pages/help/HelpPage`)                                 | ✅ akkoord                                                                     |
-| 403 (`pages/auth/NotAuthorizedPage`)                         | ✅ akkoord                                                                     |
-| Gebruiker (`pages/auth/AuthPage`, `/auth`)                   | ✅ akkoord (pilot `Description`)                                               |
-| Invorderingscheck (`pages/fines/FinePage`, `/invorderingen`) | ✅ akkoord                                                                     |
-| Adres zoeken / start (`pages/home/HomePage`, `/`)            | ✅ akkoord                                                                     |
-| Zakenoverzicht (`pages/cases/index/IndexPage`, `/zaken`)     | ✅ akkoord (3 stappen: `Table`, filters, URL)                                  |
-| Takenoverzicht (`pages/tasks/IndexPage`, `/taken`)           | ✅ akkoord; toewijzen van taken (pilot `ConfirmDialog`) omgezet, wacht op test |
+| Pagina                                                                               | Status                                                   |
+| ------------------------------------------------------------------------------------ | -------------------------------------------------------- |
+| 404 (`pages/errors/NotFoundPage`)                                                    | ✅ akkoord (pilot)                                       |
+| Hulp (`pages/help/HelpPage`)                                                         | ✅ akkoord                                               |
+| 403 (`pages/auth/NotAuthorizedPage`)                                                 | ✅ akkoord                                               |
+| Gebruiker (`pages/auth/AuthPage`, `/auth`)                                           | ✅ akkoord (pilot `Description`)                         |
+| Invorderingscheck (`pages/fines/FinePage`, `/invorderingen`)                         | ✅ akkoord                                               |
+| Adres zoeken / start (`pages/home/HomePage`, `/`)                                    | ✅ akkoord                                               |
+| Zakenoverzicht (`pages/cases/index/IndexPage`, `/zaken`)                             | ✅ akkoord (3 stappen: `Table`, filters, URL)            |
+| Takenoverzicht (`pages/tasks/IndexPage`, `/taken`)                                   | ✅ akkoord (incl. taak toewijzen, pilot `ConfirmDialog`) |
+| Adres: Zaken (`pages/addresses/index/IndexPage`, `/adres/:bagId`)                    | ✅ akkoord                                               |
+| Adres: Adresdetails (`pages/addresses/details/DetailsPage`, `/adres/:bagId/details`) | ✅ akkoord                                               |
+| Adres: Persoonsgegevens en Vergunningen (`/adres/:bagId/personen`, `/vergunningen`)  | volgende: nog in de oude layout, zonder tabbalk          |
 
 **Hulp-pagina:** naar het voorbeeld van de veelgestelde-vragenpagina van top-frontend-v2: titel "Hulp" direct op de grijze achtergrond, daaronder één wit vlak met de vier onderwerpen in een ADS-`Accordion` (dicht bij het openen, net als eerst). Geen icoon meer naast de paginatitel. **Breadcrumbs** staan alleen nog op geneste pagina's: een pagina direct onder home (zoals `/hulp`) krijgt er geen. De lijstjes stonden in de oude versie binnen een alinea (ongeldige HTML); dat zijn nu losse ADS-lijsten. `EmailLink` zit in `HelpContent`; het ongebruikte `PhoneLink` en `HelpContent.module.css` zijn weg. `CustomTooltip` staat nog in dezelfde map omdat de zaakpagina's het gebruiken.
 
@@ -605,7 +608,7 @@ Testchecklist takenoverzicht (✅ akkoord):
 - [x] Een taak toewijzen, aan jezelf en aan een ander, en een toegewezen taak overnemen (met de bevestiging) werkt nog precies zoals eerst.
 - [x] Smaller scherm: minder kolommen, de filterrij breekt af.
 
-**Taak toewijzen (kolom Toegewezen) — pilot `ConfirmDialog`** — omgezet, wacht op test:
+**Taak toewijzen (kolom Toegewezen) — pilot `ConfirmDialog`** — ✅ akkoord:
 
 - Nieuw gedeeld component `src/components/ConfirmDialog/` op de ADS-`Dialog` (naar top-frontend-v2): vraagt om bevestiging met een primaire knop en "Annuleren". Je rendert het zolang de vraag open staat; het opent dan als modaal venster. Sluiten met Escape of het kruisje telt als annuleren. Vervangt de asc-ui-`ConfirmModal`, die nog door `shared/ConfirmButton` wordt gebruikt.
 - `ConfirmReassignDialog` (een taak overnemen van iemand anders) gebruikt het; de tekst is gelijk gebleven.
@@ -615,11 +618,36 @@ Testchecklist takenoverzicht (✅ akkoord):
 
 Testchecklist taak toewijzen:
 
-- [ ] Wijs een niet-toegewezen taak aan jezelf toe en aan een ander: direct, zonder vraag; de avatar verandert.
-- [ ] Neem een taak over die al van iemand anders is: het venster "Toewijzing wijzigen" verschijnt in de nieuwe stijl, midden in beeld, met de pagina erachter gedimd. "Ja, toewijzen" wijst toe; "Annuleren", het kruisje en Escape laten de taak zoals hij was.
-- [ ] Maak een toewijzing ongedaan (niemand).
-- [ ] Zonder het recht om taken uit te voeren staat er een streepje.
-- [ ] Hetzelfde toewijzen op de zaakpagina (nog in de oude layout) werkt nog.
+- [x] Wijs een niet-toegewezen taak aan jezelf toe en aan een ander: direct, zonder vraag; de avatar verandert.
+- [x] Neem een taak over die al van iemand anders is: het venster "Toewijzing wijzigen" verschijnt in de nieuwe stijl, midden in beeld, met de pagina erachter gedimd. "Ja, toewijzen" wijst toe; "Annuleren", het kruisje en Escape laten de taak zoals hij was.
+- [x] Maak een toewijzing ongedaan (niemand).
+- [x] Zonder het recht om taken uit te voeren staat er een streepje.
+- [x] Hetzelfde toewijzen op de zaakpagina (nog in de oude layout) werkt nog.
+
+**Adrespagina's (`/adres/:bagId`): tabs Zaken en Adresdetails** — ✅ akkoord:
+
+- Opbouw (`addresses/AddressOverview/AddressPage`, de vaste bovenkant van elke adrespagina): het adres als titel op de grijze achtergrond en daaronder **één wit vlak** met de tabs van het adres en direct daaronder de inhoud van de tab. Het panorama staat niet meer bovenaan maar op de tab Adresdetails. De adrespagina's hebben **geen breadcrumbs** (`hideBreadcrumbs` op de layout): je navigeert met de tabs. De eerste tab: "Open zaken", "Gesloten zaken AZA", "Advertenties" (van de open zaken) en de knop "Nieuwe zaak aanmaken".
+- **Titel** (`addresses/AddressOverview/AddressHeading`): het adres is de h1 (geen link meer naar dezelfde pagina). Zijn er andere adressen op hetzelfde huisnummer, dan staat ernaast de knop "Andere adressen (n)", die een ADS-`Dialog` opent met die adressen als `LinkList` en onderaan de knop "Annuleren". Eerst was dat een knop met alleen pijltjes en een asc-ui-modal met een tabel.
+- **Tabs** (`AddressTabs`): een ADS-`TabNavigation` met Zaken (de eerste en standaardtab, `/adres/:bagId`), Adresdetails, Persoonsgegevens en Vergunningen (met het aantal, bijv. "1/2"). Eerst waren dit drie grote blokken met een icoon (`NavBlock`). Persoonsgegevens is **verborgen** zonder het recht (was een grijs blok), net als in het menu. De tabs zijn links naar de bestaande routes. Adresdetails is omgezet; Persoonsgegevens en Vergunningen openen nu nog de oude pagina's zonder tabbalk en krijgen bij het omzetten dezelfde bovenkant.
+- **Zaken** (`CasesByBagId`): op het gedeelde `Table`, met de link "Zaakdetails" in de laatste kolom en geen klikbare rij. Zonder zaken staat er alleen de tekst, zonder tabel.
+- **Nieuwe zaak aanmaken:** een primaire ADS-knop; zonder het recht uitgeschakeld (zoals eerst).
+- Het ophalen van het adres en de melding als PDOK het adres niet kent zitten nu in de hook `AddressHeader/useBagAddress`, gedeeld met de oude `AddressHeader` (die blijft voor de zaakpagina's).
+- Weg: `addresses/AddressMenu`, `addresses/NavBlock`, `shared/BlockMenu`. `PanoramaPreview` is ongewijzigd (had geen oude stack).
+- **Tab Adresdetails** (`/adres/:bagId/details`): Objectdetails (`Description`; uitgebreid met soort object, type adres, status, verdieping, eigendomsverhouding, WOZ-soort, bouwjaar en type woonobject, plus een groep "Gebied" met stadsdeel, wijk en buurt; lege velden vallen weg) met het panorama ernaast (onder elkaar op een smal scherm). De samenvatting van de vergunningen is hier weg (die hebben een eigen tab; `permits/PermitOverview` is verwijderd) en **Advertenties staan op de tab Zaken**, onder de zaken: het zijn de advertenties van de open zaken. Laden toont een grijze balk in plaats van de asc-ui-`Spinner`.
+- **Idee voor later:** een kaart met een marker op de tab Adresdetails, naast het panorama. Dat vraagt een kaartbibliotheek (zwd-frontend gebruikt `leaflet`), dus een nieuwe dependency met toestemming.
+- Persoonsgegevens, Vergunningen en het formulier Nieuwe zaak zijn nog in de oude layout.
+
+Testchecklist adresoverzicht:
+
+- [x] Zoek een adres en open het: het adres als titel, de tabs (Zaken actief; Vergunningen met het aantal) en direct daaronder de zaken, alles in één wit vlak.
+- [x] Tab Adresdetails: dezelfde titel en tabs (Adresdetails actief), de objectdetails en het gebied met het panorama ernaast. Terug naar de tab Zaken werkt.
+- [x] Een adres met meerdere huisletters/toevoegingen: de knop "Andere adressen (n)" opent het venster; een klik op een adres gaat ernaartoe en sluit het venster.
+- [x] De tabs Persoonsgegevens en Vergunningen openen de oude pagina's (nog zonder tabbalk); Persoonsgegevens ontbreekt zonder het recht.
+- [x] Open en gesloten zaken: de juiste zaken in elke tabel, "Zaakdetails" opent de zaak; een adres zonder zaken toont de tekst.
+- [x] "Nieuwe zaak aanmaken" opent het formulier; zonder het recht is de knop uitgeschakeld.
+- [x] Een adres dat PDOK niet kent geeft de rode melding bovenaan.
+- [x] De adresregel op de zaakpagina's (oude layout) werkt nog, inclusief het wisselen van adres.
+- [x] Smal scherm: de tabs, het panorama en de tabellen blijven bruikbaar.
 
 ## Fase 3 — Verticale migratie per domein (± 4–8 weken)
 

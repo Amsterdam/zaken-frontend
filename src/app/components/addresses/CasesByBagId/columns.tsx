@@ -1,75 +1,62 @@
-import { CaseIdDisplay, DateDisplay } from "@amsterdam/wonen-ui"
-import LinkButton from "app/components/shared/LinkButton/LinkButton"
+import { StandaloneLink } from "@amsterdam/design-system-react"
+import { RouterLink } from "@/components/DefaultLayout/RouterLink"
+import { type ColumnType } from "@/components/Table/types"
+import { formatDate } from "@/shared/dateFormatters"
 
-export const columnsOpenCases = [
-  {
-    header: "Zaak ID",
-    dataIndex: "id",
-    minWidth: 100,
-    render: (id: any) => <CaseIdDisplay id={id} />,
-  },
-  {
-    header: "Thema",
-    dataIndex: "theme.name",
-    minWidth: 100,
-  },
+type Case = components["schemas"]["Case"]
+
+const id: ColumnType<Case> = { header: "ID", dataIndex: "id" }
+const theme: ColumnType<Case> = { header: "Thema", dataIndex: "theme.name" }
+
+// The one way to the case, in every table: a link in the last column (a row
+// is not clickable). Each link has its own name for a screen reader.
+const details: ColumnType<Case> = {
+  dataIndex: "navigateId",
+  noWrap: true,
+  render: (_, record) => (
+    <StandaloneLink
+      linkComponent={RouterLink}
+      href={`/zaken/${record.id}`}
+      aria-label={`Zaakdetails van zaak ${record.id}`}
+    >
+      Zaakdetails
+    </StandaloneLink>
+  ),
+}
+
+export const columnsOpenCases: ColumnType<Case>[] = [
+  id,
+  theme,
   {
     header: "Startdatum",
     dataIndex: "start_date",
-    minWidth: 100,
-    render: (start_date: any) => (
-      <DateDisplay date={start_date ?? undefined} emptyText="-" />
-    ),
+    noWrap: true,
+    render: (_, { start_date }) => formatDate(start_date, undefined, "-"),
   },
   {
     header: "Huidige status",
     dataIndex: "workflows",
-    minWidth: 100,
-    render: (workflows: any) =>
+    render: (_, { workflows }) =>
       workflows?.length > 0
-        ? workflows.map((status: any) => status.state.name).join(", ")
+        ? workflows.map((workflow) => workflow.state.name).join(", ")
         : "-",
   },
-  {
-    dataIndex: "id",
-    minWidth: 140,
-    render: (id: any) => (
-      <LinkButton text="Zaakdetails" path={`/zaken/${id}`} />
-    ),
-  },
+  details,
 ]
 
-export const columnsClosedCases = [
-  {
-    header: "Zaak ID",
-    dataIndex: "id",
-    minWidth: 100,
-    render: (id: any) => <CaseIdDisplay id={id} />,
-  },
-  {
-    header: "Thema",
-    dataIndex: "theme.name",
-    minWidth: 100,
-  },
+export const columnsClosedCases: ColumnType<Case>[] = [
+  id,
+  theme,
   {
     header: "Afsluitdatum",
     dataIndex: "end_date",
-    minWidth: 100,
-    render: (end_date: any) => (
-      <DateDisplay date={end_date ?? undefined} emptyText="-" />
-    ),
+    noWrap: true,
+    render: (_, { end_date }) => formatDate(end_date, undefined, "-"),
   },
   {
     header: "Aanleiding",
-    dataIndex: "reason",
-    minWidth: 100,
-    render: (reason: any) => (reason.name != null ? reason.name : "-"),
+    dataIndex: "reason.name",
+    render: (_, { reason }) => reason?.name ?? "-",
   },
-  {
-    dataIndex: "id",
-    minWidth: 140,
-    render: (id: any) => (
-      <LinkButton text="Zaakdetails" path={`/zaken/${id}`} />
-    ),
-  },
+  details,
 ]

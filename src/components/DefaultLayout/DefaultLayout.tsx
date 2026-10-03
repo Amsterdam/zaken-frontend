@@ -50,6 +50,8 @@ const menuItems: MenuItem[] = [
 
 type Props = {
   children: ReactNode
+  /** For a page with its own navigation (e.g. tabs), where the path adds nothing. */
+  hideBreadcrumbs?: boolean
 }
 
 /**
@@ -57,7 +59,7 @@ type Props = {
  * top-frontend-v2. Replaces app/components/layouts/DefaultLayout page by page.
  * The children are Grid.Cell's: the layout puts them in a Grid.
  */
-export function DefaultLayout({ children }: Props) {
+export function DefaultLayout({ children, hideBreadcrumbs = false }: Props) {
   const auth = useAuth()
   const navigate = useNavigate()
   const { data: me } = useUsersMe()
@@ -120,7 +122,7 @@ export function DefaultLayout({ children }: Props) {
         <main className="ams-page__area--body" id="main">
           {/* Pages render one or more Grid.Cell's (white areas in compact mode). */}
           <Grid paddingVertical="large" gapVertical="large">
-            <Breadcrumbs />
+            {!hideBreadcrumbs && <Breadcrumbs />}
             <FlashMessages />
             {children}
           </Grid>
