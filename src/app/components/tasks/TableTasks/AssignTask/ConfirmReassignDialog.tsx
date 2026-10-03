@@ -1,4 +1,4 @@
-import ConfirmModal from "app/components/shared/Modal/ConfirmModal"
+import { ConfirmDialog } from "@/components/ConfirmDialog/ConfirmDialog"
 import { useUserById } from "./hooks/useUserById"
 
 type Props = {
@@ -19,17 +19,15 @@ const ConfirmReassignDialog: React.FC<Props> = ({
     : "de geselecteerde medewerker"
 
   return (
-    <ConfirmModal
-      isOpen={true}
+    <ConfirmDialog
       title="Toewijzing wijzigen"
-      onClose={onCancel}
-      onConfirm={() => Promise.resolve(onConfirm())}
-      okValue="Ja, toewijzen"
-      cancelValue="Annuleren"
+      onConfirm={onConfirm}
+      onCancel={onCancel}
+      confirmText="Ja, toewijzen"
     >
       Deze taak is al aan iemand toegewezen. Weet je zeker dat je de taak wilt
       toewijzen aan <strong>{name}</strong>?
-    </ConfirmModal>
+    </ConfirmDialog>
   )
 }
 

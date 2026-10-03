@@ -8,6 +8,10 @@
   border-collapse: collapse;
 }
 
+.alignMiddle td {
+  vertical-align: middle;
+}
+
 .headerCell,
 .noWrap {
   white-space: nowrap;

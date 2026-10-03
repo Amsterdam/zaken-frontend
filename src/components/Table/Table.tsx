@@ -24,6 +24,7 @@ export function Table<T extends object>({
   numLoadingRows = 5,
   emptyPlaceholder = "",
   pagination,
+  verticalAlign = "top",
   onChange,
 }: TableProps<T>) {
   const { page, pageSize, collectionSize, setInnerPage } = usePagination(
@@ -49,7 +50,9 @@ export function Table<T extends object>({
 
   return (
     <div className={styles.wrap}>
-      <ADSTable className={styles.table}>
+      <ADSTable
+        className={`${styles.table} ${verticalAlign === "middle" ? styles.alignMiddle : ""}`}
+      >
         <ADSTable.Header>
           <ADSTable.Row>
             {columns.map((column, index) => (

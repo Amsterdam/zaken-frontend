@@ -18,7 +18,7 @@ Doel: zaken-frontend omzetten naar dezelfde toekomstbestendige stack als [`top-f
 
 - **Fase 0 ✅** Tooling: ESLint flat config (met bulk suppressions), Prettier (hele codebase geformatteerd), Testing Library 16, `@/`-alias, `AGENTS.md`.
 - **Fase 1 ✅** Alle data via TanStack Query (`src/api/`); de oude laag `src/app/state/rest/` en `axios`, `qs`, `lodash.merge`, `lodash.isempty` zijn weg. Mutaties werken alleen bij wat de gewijzigde data toont, vaak zonder refetch.
-- **Fase 2 (bezig):** ADS staat naast `asc-ui`; de pilot (nieuwe layout `src/components/DefaultLayout/` op de 404-pagina) is ✅ akkoord. Nu pagina voor pagina, met een controle na elke pagina: 404, Hulp, 403 en `/auth` (pilot voor `Description`, de vervanger van `DefinitionList` van `wonen-ui`) de invorderingscheck en de startpagina (adres zoeken) zijn ✅ akkoord. Bezig: het zakenoverzicht, in drie stappen: (1) layout + `Table` — ✅ akkoord; (2) filters naar ADS, boven de tabel — ✅ akkoord; (3) filters naar de URL — ✅ akkoord. Het takenoverzicht is omgezet met dezelfde tabel, filterrij en URL-opzet en wacht op test.
+- **Fase 2 (bezig):** ADS staat naast `asc-ui`; de pilot (nieuwe layout `src/components/DefaultLayout/` op de 404-pagina) is ✅ akkoord. Nu pagina voor pagina, met een controle na elke pagina: 404, Hulp, 403 en `/auth` (pilot voor `Description`, de vervanger van `DefinitionList` van `wonen-ui`) de invorderingscheck en de startpagina (adres zoeken) zijn ✅ akkoord. Bezig: het zakenoverzicht, in drie stappen: (1) layout + `Table` — ✅ akkoord; (2) filters naar ADS, boven de tabel — ✅ akkoord; (3) filters naar de URL — ✅ akkoord. Het takenoverzicht is ✅ akkoord; het toewijzen van taken daarin (pilot `ConfirmDialog`, de vervanger van de asc-ui-`ConfirmModal`) is omgezet en wacht op test.
 - **Restpunten:** filters van de overzichten naar de URL (eigen pilot, past bij Fase 3); `immer` (weg met flash messages → toasts en `ShowHide`); `lodash` (weg met `amsterdam-react-final-form`); 155 vastgelegde lint-overtredingen in `eslint-suppressions.json` (lossen grotendeels op in Fase 3).
 
 ## 1. Uitgangssituatie (gemeten op `main`, okt 2026)
@@ -439,16 +439,16 @@ Testchecklist:
 
 #### Pagina voor pagina
 
-| Pagina                                                       | Status                                                   |
-| ------------------------------------------------------------ | -------------------------------------------------------- |
-| 404 (`pages/errors/NotFoundPage`)                            | ✅ akkoord (pilot)                                       |
-| Hulp (`pages/help/HelpPage`)                                 | ✅ akkoord                                               |
-| 403 (`pages/auth/NotAuthorizedPage`)                         | ✅ akkoord                                               |
-| Gebruiker (`pages/auth/AuthPage`, `/auth`)                   | ✅ akkoord (pilot `Description`)                         |
-| Invorderingscheck (`pages/fines/FinePage`, `/invorderingen`) | ✅ akkoord                                               |
-| Adres zoeken / start (`pages/home/HomePage`, `/`)            | ✅ akkoord                                               |
-| Zakenoverzicht (`pages/cases/index/IndexPage`, `/zaken`)     | ✅ akkoord (3 stappen: `Table`, filters, URL)            |
-| Takenoverzicht (`pages/tasks/IndexPage`, `/taken`)           | omgezet, wacht op test (toewijzen van taken volgt apart) |
+| Pagina                                                       | Status                                                                         |
+| ------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| 404 (`pages/errors/NotFoundPage`)                            | ✅ akkoord (pilot)                                                             |
+| Hulp (`pages/help/HelpPage`)                                 | ✅ akkoord                                                                     |
+| 403 (`pages/auth/NotAuthorizedPage`)                         | ✅ akkoord                                                                     |
+| Gebruiker (`pages/auth/AuthPage`, `/auth`)                   | ✅ akkoord (pilot `Description`)                                               |
+| Invorderingscheck (`pages/fines/FinePage`, `/invorderingen`) | ✅ akkoord                                                                     |
+| Adres zoeken / start (`pages/home/HomePage`, `/`)            | ✅ akkoord                                                                     |
+| Zakenoverzicht (`pages/cases/index/IndexPage`, `/zaken`)     | ✅ akkoord (3 stappen: `Table`, filters, URL)                                  |
+| Takenoverzicht (`pages/tasks/IndexPage`, `/taken`)           | ✅ akkoord; toewijzen van taken (pilot `ConfirmDialog`) omgezet, wacht op test |
 
 **Hulp-pagina:** naar het voorbeeld van de veelgestelde-vragenpagina van top-frontend-v2: titel "Hulp" direct op de grijze achtergrond, daaronder één wit vlak met de vier onderwerpen in een ADS-`Accordion` (dicht bij het openen, net als eerst). Geen icoon meer naast de paginatitel. **Breadcrumbs** staan alleen nog op geneste pagina's: een pagina direct onder home (zoals `/hulp`) krijgt er geen. De lijstjes stonden in de oude versie binnen een alinea (ongeldige HTML); dat zijn nu losse ADS-lijsten. `EmailLink` zit in `HelpContent`; het ongebruikte `PhoneLink` en `HelpContent.module.css` zijn weg. `CustomTooltip` staat nog in dezelfde map omdat de zaakpagina's het gebruiken.
 
@@ -521,6 +521,7 @@ Testchecklist startpagina:
 Stap 1:
 
 - Nieuw gedeeld component `src/components/Table/` op de ADS-`Table`, naar de tabellen van zwd-frontend en top-frontend-v2: `columns` (`header`, `dataIndex`, `render`, `minWidth`), `data`, `loading`, `numLoadingRows`, `emptyPlaceholder`, `pagination` en `onChange`. Pagineren werkt op de eigen rijen, of van buitenaf (de API pagineert) via `pagination.collectionSize` en `onChange`. Paginering is de ADS-`Pagination`.
+- Optie `verticalAlign="middle"` centreert de celinhoud verticaal (ADS lijnt standaard bovenaan uit). Beide overzichten gebruiken het: in het takenoverzicht maakt de avatar de rij hoger dan een tekstregel, en het zakenoverzicht volgt voor de gelijkheid.
 - **Sorteren zit niet in de tabel** (bewuste keuze): geen klikbare kolomkoppen, maar een aparte select "Sorteren op" boven de tabel (`cases/CasesSorting`, bijv. "Straat A-Z", "Startdatum nieuw-oud"). De tabel toont de rijen in de volgorde van de API. De overige vier plekken met de `wonen-ui`-tabel (`TableTasks`, `Workflow`, `OtherAddressesTable`, `CasesByBagId`) sorteren nu nog via de kolomkop; bij het omzetten krijgen ze zo nodig ook een select.
 - Nieuw `src/components/SmallSkeleton/` (uit zwd-frontend) voor de laadrijen; vervangt later ook `SmallSkeleton` van `wonen-ui`.
 - **Geen klikbare rij** (bewuste keuze, voor toegankelijkheid): een rij-klik werkt niet met toetsenbord of schermlezer en zit tekst selecteren en Ctrl-klik in de weg. **Eén patroon voor alle tabellen:** de laatste kolom heeft een echte link "Zaakdetails" (ADS `StandaloneLink`, met pijltje; geen `LinkList.Link`, want dat is een lijstitem en hoort in een `LinkList`) (voor de schermlezer "Zaakdetails van zaak 12, Amstel 1-H"), en die kolom staat op elke schermbreedte. Het ID en het adres zijn gewone tekst: een adres kan meerdere zaken hebben, en het takenoverzicht heeft geen ID-kolom (een rij is daar een taak), dus alleen de link-kolom is overal hetzelfde. Het gedeelde `Table`-component heeft daarom geen `onClickRow`; de andere tabellen volgen dezelfde lijn.
@@ -582,7 +583,7 @@ Testchecklist zakenoverzicht stap 3:
 - [x] De terugknop van de browser verlaat het overzicht in één keer (niet filter voor filter).
 - [x] Het takenoverzicht (nog met de oude filters) werkt nog precies zoals eerst en onthoudt zijn filters.
 
-**Takenoverzicht (`/taken`)** — omgezet, wacht op test. In één keer, met de patronen van het zakenoverzicht:
+**Takenoverzicht (`/taken`)** — ✅ akkoord. In één keer, met de patronen van het zakenoverzicht:
 
 - Opbouw: titel op de grijze achtergrond en daaronder **één wit vlak** met de filterrij, als er handhavingsverzoeken zijn "Handhavingsverzoeken (n)" met het handje en een tabel zonder paginering, en "Alle (overige) taken (n)" met de tabel en paginering.
 - Tabellen op het gedeelde `Table`: kolommen getypeerd op `CaseUserTask`, datums via `formatDate`, een verlopen slotdatum rood, en als laatste kolom de link "Zaakdetails" (het afgesproken patroon). Geen sortering in de kolomkop; het aantal laadrijen volgt het aantal per pagina.
@@ -593,16 +594,32 @@ Testchecklist zakenoverzicht stap 3:
 - **`ValueProvider` is weg** (`src/app/state/context/` en de provider in `App.tsx`): beide overzichten staan nu in de URL. Ook weg: de zes `scaffold*.ts` van `TasksFilter`, `Tasks.module.css`, `shared/FilterMenu`, en `app/components/filters/` (`MultipleOptionsFilterBox`, `NoCorporationFilter`, `FilterStyle` en het nergens gebruikte `MultipleOptionsFilter` met zijn test).
 - **Nog niet omgezet (volgende stap):** het toewijzen van een taak in de kolom Toegewezen (`AssignTask`: avatar, gebruikerskiezer, bevestigingsdialoog). Dat gebruikt nog de asc-ui-`Spinner` en de oude `ConfirmModal`; de vervanger daarvan (ADS `Dialog`) is een eigen pilot. Het handje bij Handhavingsverzoeken is ook nog het oude icoon met tooltip.
 
-Testchecklist takenoverzicht:
+Testchecklist takenoverzicht (✅ akkoord):
 
-- [ ] `/taken`: titel, filterrij, en de taken van je eigen rol; de aantallen kloppen; handhavingsverzoeken staan bovenaan als die er zijn, in hetzelfde witte vlak.
-- [ ] Toegewezen aan (jijzelf staat bovenaan), Thema, Rol, Taken en Stadsdelen filteren direct. Kies een andere rol: de gekozen taken worden gewist en de lijst met taaknamen past zich aan.
-- [ ] "Alle filters": Aanleiding, Corporaties en, bij een thema, Projecten/Onderwerpen/Tags.
-- [ ] Sorteren op en Items per pagina; de paginering onder de tabel; een verlopen slotdatum is rood.
-- [ ] "Zaakdetails" opent de zaak; terug (terugknop, breadcrumb, menu) geeft dezelfde filters. De URL verandert mee en is te delen.
-- [ ] "Wis alle filters" zet alles terug naar je eigen rol.
-- [ ] Een taak toewijzen, aan jezelf en aan een ander, en een toegewezen taak overnemen (met de bevestiging) werkt nog precies zoals eerst.
-- [ ] Smaller scherm: minder kolommen, de filterrij breekt af.
+- [x] `/taken`: titel, filterrij, en de taken van je eigen rol; de aantallen kloppen; handhavingsverzoeken staan bovenaan als die er zijn, in hetzelfde witte vlak.
+- [x] Toegewezen aan (jijzelf staat bovenaan), Thema, Rol, Taken en Stadsdelen filteren direct. Kies een andere rol: de gekozen taken worden gewist en de lijst met taaknamen past zich aan.
+- [x] "Alle filters": Aanleiding, Corporaties en, bij een thema, Projecten/Onderwerpen/Tags.
+- [x] Sorteren op en Items per pagina; de paginering onder de tabel; een verlopen slotdatum is rood.
+- [x] "Zaakdetails" opent de zaak; terug (terugknop, breadcrumb, menu) geeft dezelfde filters. De URL verandert mee en is te delen.
+- [x] "Wis alle filters" zet alles terug naar je eigen rol.
+- [x] Een taak toewijzen, aan jezelf en aan een ander, en een toegewezen taak overnemen (met de bevestiging) werkt nog precies zoals eerst.
+- [x] Smaller scherm: minder kolommen, de filterrij breekt af.
+
+**Taak toewijzen (kolom Toegewezen) — pilot `ConfirmDialog`** — omgezet, wacht op test:
+
+- Nieuw gedeeld component `src/components/ConfirmDialog/` op de ADS-`Dialog` (naar top-frontend-v2): vraagt om bevestiging met een primaire knop en "Annuleren". Je rendert het zolang de vraag open staat; het opent dan als modaal venster. Sluiten met Escape of het kruisje telt als annuleren. Vervangt de asc-ui-`ConfirmModal`, die nog door `shared/ConfirmButton` wordt gebruikt.
+- `ConfirmReassignDialog` (een taak overnemen van iemand anders) gebruikt het; de tekst is gelijk gebleven.
+- De avatar toont tijdens het laden of wijzigen een pulserend rondje in plaats van de asc-ui-`Spinner`. Daarmee gebruikt het takenoverzicht niets meer van asc-ui, styled-components, wonen-ui of final-form, op het handje bij Handhavingsverzoeken na (`CaseEnforcement`: het oude `CustomIcon` met `react-tooltip`, gedeeld met de zaakpagina).
+- De gebruikerskiezer zelf (`UserPickerDropdown`) was al CSS Modules en is niet aangepast.
+- `setupTests.ts` bootst `showModal()`/`close()` van `<dialog>` na, die jsdom niet heeft.
+
+Testchecklist taak toewijzen:
+
+- [ ] Wijs een niet-toegewezen taak aan jezelf toe en aan een ander: direct, zonder vraag; de avatar verandert.
+- [ ] Neem een taak over die al van iemand anders is: het venster "Toewijzing wijzigen" verschijnt in de nieuwe stijl, midden in beeld, met de pagina erachter gedimd. "Ja, toewijzen" wijst toe; "Annuleren", het kruisje en Escape laten de taak zoals hij was.
+- [ ] Maak een toewijzing ongedaan (niemand).
+- [ ] Zonder het recht om taken uit te voeren staat er een streepje.
+- [ ] Hetzelfde toewijzen op de zaakpagina (nog in de oude layout) werkt nog.
 
 ## Fase 3 — Verticale migratie per domein (± 4–8 weken)
 

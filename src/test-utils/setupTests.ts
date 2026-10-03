@@ -13,3 +13,15 @@ if (!window.matchMedia) {
       dispatchEvent: () => false,
     }) as MediaQueryList
 }
+
+// jsdom has no modal dialogs. In tests showModal() opens the dialog and close()
+// closes it and tells the listeners, like a browser does.
+if (!HTMLDialogElement.prototype.showModal) {
+  HTMLDialogElement.prototype.showModal = function () {
+    this.open = true
+  }
+  HTMLDialogElement.prototype.close = function () {
+    this.open = false
+    this.dispatchEvent(new Event("close"))
+  }
+}

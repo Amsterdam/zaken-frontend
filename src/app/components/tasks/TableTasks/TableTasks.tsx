@@ -33,6 +33,8 @@ const TableTasks: React.FC<Props> = ({
       onChange={onChange}
       pagination={pagination}
       emptyPlaceholder={emptyPlaceholder}
+      // The avatar makes a row higher than a line of text.
+      verticalAlign="middle"
     />
   )
 }

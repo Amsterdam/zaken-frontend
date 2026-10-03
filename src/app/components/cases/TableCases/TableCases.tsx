@@ -32,6 +32,8 @@ const TableCases: React.FC<Props> = ({
       onChange={onChange}
       pagination={pagination}
       emptyPlaceholder={emptyPlaceholder}
+      // Like the tasks overview.
+      verticalAlign="middle"
     />
   )
 }

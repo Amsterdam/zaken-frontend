@@ -26,6 +26,11 @@ export type TableProps<T> = {
   emptyPlaceholder?: ReactNode
   /** `false` for a table without pages. */
   pagination?: false | PaginationType
+  /**
+   * Where a cell's content sits in a row that is higher than one line (e.g. by
+   * an avatar or a text over two lines). The design system's default is "top".
+   */
+  verticalAlign?: "top" | "middle"
   /** The user asked for another page. */
   onChange?: (pagination: PaginationType) => void
 }
