@@ -18,7 +18,8 @@ const DEFAULT_SORT = "score desc, weergavenaam asc"
 const FIELD_LIST =
   "weergavenaam,adrestype,gemeentenaam,nummeraanduiding_id,adresseerbaarobject_id,straatnaam,huisnummer,huisletter,huisnummertoevoeging,postcode,woonplaatsnaam,centroide_ll,score"
 const START = 0
-const RESULTS_PER_PAGE = 25
+/** PDOK returns at most this many addresses. */
+export const BAG_PDOK_MAX_RESULTS = 25
 
 const BENKAGG_URL =
   "https://api.data.amsterdam.nl/v1/benkagg/adresseerbareobjecten"
@@ -33,7 +34,7 @@ const constructPdokQuery = (
     fq: `${MUNICIPALITY_FILTER}${onlyPrimaryAddress ? ADDRESS_TYPE_HOOFDADRES_FILTER : ADDRESS_TYPE_ADRES_FILTER}`,
     fl: FIELD_LIST,
     start: START,
-    rows: RESULTS_PER_PAGE,
+    rows: BAG_PDOK_MAX_RESULTS,
     sort: DEFAULT_SORT,
   })
 

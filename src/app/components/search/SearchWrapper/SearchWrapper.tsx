@@ -1,54 +1,54 @@
-import { Heading, FormTitle, SearchBar } from "@amsterdam/asc-ui"
+import { useMemo, useState } from "react"
+import { useSearchParams } from "react-router-dom"
+import { Column, Heading, SearchField } from "@amsterdam/design-system-react"
 import debounce from "lodash.debounce"
-
-import Row, { RowWithColumn } from "app/components/layouts/Grid/Row"
-import Column from "app/components/layouts/Grid/Column"
-import SearchResults from "app/components/search/SearchResults/SearchResults"
-import useURLState from "app/hooks/useURLState/useURLState"
-import { useRef, useState } from "react"
+import SearchResults from "@/app/components/search/SearchResults/SearchResults"
 
 const DELAY = 750
 
 const SearchWrapper: React.FC = () => {
-  const [searchString, setSearchString] = useURLState("query")
+  // The query is kept in the URL, so you return to the same results.
+  const [searchParams, setSearchParams] = useSearchParams()
+  const searchString = searchParams.get("query") ?? ""
   const [inputValue, setInputValue] = useState(searchString)
 
-  const debouncedSetSearchString = useRef(
-    debounce((value: string) => setSearchString(value.trim()), DELAY),
-  ).current
+  const debouncedSearch = useMemo(
+    () =>
+      debounce((value: string) => {
+        const query = value.trim()
+        setSearchParams(query ? { query } : {}, { replace: true })
+      }, DELAY),
+    [setSearchParams],
+  )
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const raw = event.target.value
-    setInputValue(raw) // input shows always the raw value
-    debouncedSetSearchString(raw) // URL/search query gets trimmed value (after delay)
+    const value = event.currentTarget.value
+    setInputValue(value)
+    debouncedSearch(value)
   }
 
-  const onClear = () => {
-    setInputValue("")
-    debouncedSetSearchString("")
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    debouncedSearch(inputValue)
+    debouncedSearch.flush()
   }
 
   return (
-    <>
-      <Row>
-        <Column spanLarge={50}>
-          <Heading>Adres zoeken</Heading>
-          <FormTitle>
-            Ook om een nieuwe zaak aan te maken op een specifiek adres
-          </FormTitle>
-          <SearchBar
-            placeholder="Zoek op postcode en huisnummer of straat"
-            value={inputValue}
-            onChange={onChange}
-            onClear={onClear}
-            autoFocus={true}
-          />
-        </Column>
-      </Row>
-      <RowWithColumn>
-        <SearchResults searchString={searchString} />
-      </RowWithColumn>
-    </>
+    <Column>
+      <Heading level={2}>Bekijk een adres</Heading>
+      <SearchField onSubmit={onSubmit} style={{ maxWidth: 600 }}>
+        <SearchField.Input
+          label="Adres"
+          placeholder="Zoek een adres op basis van postcode en huisnummer of straatnaam."
+          name="query"
+          value={inputValue}
+          onChange={onChange}
+          autoFocus
+        />
+        <SearchField.Button />
+      </SearchField>
+      <SearchResults searchString={searchString} />
+    </Column>
   )
 }
 

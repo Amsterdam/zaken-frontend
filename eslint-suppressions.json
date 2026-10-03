@@ -199,16 +199,6 @@
       "count": 1
     }
   },
-  "src/app/components/search/SearchResults/SearchResults.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    }
-  },
-  "src/app/components/search/SearchResults/columns.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    }
-  },
   "src/app/components/shared/ConfirmScaffoldForm/ConfirmScaffoldForm.tsx": {
     "@typescript-eslint/no-explicit-any": {
       "count": 2

@@ -51,7 +51,7 @@ const menuItems: MenuItem[] = [
     permission: "access_sigital_surveillance",
     external: true,
   },
-  { href: "/", icon: SearchIcon, label: "Zoeken" },
+  { href: "/", icon: SearchIcon, label: "Adres zoeken" },
   { href: "/hulp", icon: QuestionMarkCircleFillIcon, label: "Hulp" },
 ]
 

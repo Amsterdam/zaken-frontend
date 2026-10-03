@@ -18,7 +18,7 @@ Doel: zaken-frontend omzetten naar dezelfde toekomstbestendige stack als [`top-f
 
 - **Fase 0 ✅** Tooling: ESLint flat config (met bulk suppressions), Prettier (hele codebase geformatteerd), Testing Library 16, `@/`-alias, `AGENTS.md`.
 - **Fase 1 ✅** Alle data via TanStack Query (`src/api/`); de oude laag `src/app/state/rest/` en `axios`, `qs`, `lodash.merge`, `lodash.isempty` zijn weg. Mutaties werken alleen bij wat de gewijzigde data toont, vaak zonder refetch.
-- **Fase 2 (bezig):** ADS staat naast `asc-ui`; de pilot (nieuwe layout `src/components/DefaultLayout/` op de 404-pagina) is ✅ akkoord. Nu pagina voor pagina, met een controle na elke pagina: 404, Hulp, 403 en `/auth` (pilot voor `Description`, de vervanger van `DefinitionList` van `wonen-ui`) zijn ✅ akkoord; de invorderingscheck is omgezet en wacht op test.
+- **Fase 2 (bezig):** ADS staat naast `asc-ui`; de pilot (nieuwe layout `src/components/DefaultLayout/` op de 404-pagina) is ✅ akkoord. Nu pagina voor pagina, met een controle na elke pagina: 404, Hulp, 403 en `/auth` (pilot voor `Description`, de vervanger van `DefinitionList` van `wonen-ui`) en de invorderingscheck zijn ✅ akkoord; de startpagina (adres zoeken) is omgezet en wacht op test. De pilot voor `Table` volgt bij het eerste overzicht.
 - **Restpunten:** filters van de overzichten naar de URL (eigen pilot, past bij Fase 3); `immer` (weg met flash messages → toasts en `ShowHide`); `lodash` (weg met `amsterdam-react-final-form`); 155 vastgelegde lint-overtredingen in `eslint-suppressions.json` (lossen grotendeels op in Fase 3).
 
 ## 1. Uitgangssituatie (gemeten op `main`, okt 2026)
@@ -410,7 +410,7 @@ Doel: ADS geïnstalleerd en gedeelde bouwstenen klaar, terwijl asc-ui nog gewoon
 
 #### Status pilot: ✅ akkoord (okt 2026)
 
-- **Layout** `src/components/DefaultLayout/DefaultLayout.tsx`: `PageHeader` met "Amsterdamse Zaak Administratie <omgeving>" (kort: "AZA <omgeving>") en logo-link naar `/`; menu (in de header op smalle schermen, links op brede) met Zaken, Taken, Invordering, Digitaal toezicht (externe link naar TON, nieuw tabblad), Zoeken, Hulp en "Uitloggen (<voornaam>)". Daaronder breadcrumbs en flash messages.
+- **Layout** `src/components/DefaultLayout/DefaultLayout.tsx`: `PageHeader` met "Amsterdamse Zaak Administratie <omgeving>" (kort: "AZA <omgeving>") en logo-link naar `/`; menu (in de header op smalle schermen, links op brede) met Zaken, Taken, Invordering, Digitaal toezicht (externe link naar TON, nieuw tabblad), Adres zoeken, Hulp en "Uitloggen (<voornaam>)". Daaronder breadcrumbs en flash messages.
 - **Bewuste verschillen met de oude layout:**
   - Menu-items waarvoor je geen recht hebt worden **verborgen** (zoals top-frontend-v2). Invorderingscheck stond eerst uitgeschakeld in beeld.
   - Flash messages zijn ADS-`Alert`s: rood bij een fout, groen bij succes (eerst blauw).
@@ -444,7 +444,8 @@ Testchecklist:
 | Hulp (`pages/help/HelpPage`)                                 | ✅ akkoord                       |
 | 403 (`pages/auth/NotAuthorizedPage`)                         | ✅ akkoord                       |
 | Gebruiker (`pages/auth/AuthPage`, `/auth`)                   | ✅ akkoord (pilot `Description`) |
-| Invorderingscheck (`pages/fines/FinePage`, `/invorderingen`) | omgezet, wacht op test           |
+| Invorderingscheck (`pages/fines/FinePage`, `/invorderingen`) | ✅ akkoord                       |
+| Zoeken / start (`pages/home/HomePage`, `/`)                  | omgezet, wacht op test           |
 
 **Hulp-pagina:** naar het voorbeeld van de veelgestelde-vragenpagina van top-frontend-v2: titel "Hulp" direct op de grijze achtergrond, daaronder één wit vlak met de vier onderwerpen in een ADS-`Accordion` (dicht bij het openen, net als eerst). Geen icoon meer naast de paginatitel. **Breadcrumbs** staan alleen nog op geneste pagina's: een pagina direct onder home (zoals `/hulp`) krijgt er geen. De lijstjes stonden in de oude versie binnen een alinea (ongeldige HTML); dat zijn nu losse ADS-lijsten. `EmailLink` zit in `HelpContent`; het ongebruikte `PhoneLink` en `HelpContent.module.css` zijn weg. `CustomTooltip` staat nog in dezelfde map omdat de zaakpagina's het gebruiken.
 
@@ -483,11 +484,30 @@ Testchecklist `/auth`:
 
 Testchecklist invorderingscheck:
 
-- [ ] `/invorderingen`: titel, uitleg, zoekveld met focus; geen breadcrumbs.
-- [ ] Zoek op een bestaand kenmerk: Kenmerk, Status en Datum (DD-MM-YYYY) verschijnen; de URL krijgt `?query=…`; herladen toont hetzelfde resultaat met het kenmerk in het veld.
-- [ ] Zoek op een onbekend kenmerk: de uitleg dat de beschikking nog niet bekend is.
-- [ ] Zonder het recht `access_recovery_check`: de 403-pagina.
-- [ ] Smal scherm: zoekveld en resultaat blijven bruikbaar.
+- [x] `/invorderingen`: titel, uitleg, zoekveld met focus; geen breadcrumbs.
+- [x] Zoek op een bestaand kenmerk: Kenmerk, Status en Datum (DD-MM-YYYY) verschijnen; de URL krijgt `?query=…`; herladen toont hetzelfde resultaat met het kenmerk in het veld.
+- [x] Zoek op een onbekend kenmerk: de uitleg dat de beschikking nog niet bekend is.
+- [x] Zonder het recht `access_recovery_check`: de 403-pagina.
+- [x] Smal scherm: zoekveld en resultaat blijven bruikbaar.
+
+**Startpagina (`/`, "Adres zoeken"):** titel "Adres zoeken" op de grijze achtergrond (de zin "Ook om een nieuwe zaak aan te maken op een specifiek adres" is weg), daaronder een wit vlak met de h2 "Bekijk een adres", het zoekveld (ADS `SearchField`) en de gevonden adressen.
+
+- Zoeken: tijdens het typen (na 750 ms, zoals eerst) en nu ook direct bij Enter of de zoekknop. De zoekterm staat in de URL (`?query=…`) via `useSearchParams` van React Router in plaats van `useURLState`.
+- Onder het zoekveld staat altijd een regel, zoals in top-frontend-v2: "Voer minimaal 3 tekens in om te zoeken.", "Zoeken naar adressen..." (was een laadrij), "Geen adressen gevonden." of "**4** adressen gevonden voor "tjask"", met "(maximaal 25 getoond)" erachter als PDOK het maximum teruggeeft (`BAG_PDOK_MAX_RESULTS` in `api/hooks/dataPunt.ts`).
+- Resultaat: een ADS-`LinkList` (naar het voorbeeld van `AddressSearch` in keuzewijzeraardgasvrij-frontend); elk adres is zelf de link naar de adrespagina. Eerst was dit een tabel met een klikbare rij en een losse "Bekijk"-link, maar één kolom met links is geen tabeldata.
+- Mislukt het zoeken bij PDOK, dan staat er een rode `Alert` "Niet gelukt" (eerst leek het dan alsof er geen adressen waren).
+- **De `Table`-pilot is verplaatst** naar het eerste overzicht (taken of zaken): daar is het echte tabeldata en zijn sorteren en paginering nodig. Het eerder gebouwde `src/components/Table/` is weer verwijderd.
+- **Bewust anders:** de kop "Home" en de twee blokken "Takenoverzicht" en "Invorderingscheck" (`HomeMenu`) zijn weg; die staan al in het menu. Het menu-item heet "Adres zoeken" (was "Zoeken").
+- Weg: `components/home/HomeMenu`, `search/SearchResults/columns.tsx`.
+
+Testchecklist startpagina:
+
+- [ ] `/`: titel "Adres zoeken", de kop "Bekijk een adres", zoekveld met focus.
+- [ ] Typ een adres (minstens 3 tekens): na een korte pauze verschijnt de lijst met adressen; Enter of de zoekknop zoekt direct.
+- [ ] Onder het zoekveld: eerst "Voer minimaal 3 tekens in om te zoeken.", bij resultaten het aantal met de zoekterm (bij een ruime zoekterm met "(maximaal 25 getoond)"), en bij een onzin-zoekterm "Geen adressen gevonden."
+- [ ] Klik op een adres: de adrespagina opent. Ga terug: de zoekterm en de resultaten staan er nog.
+- [ ] Inloggen vanaf een diepe link (bijv. een zaak) brengt je na het inloggen nog steeds naar die pagina.
+- [ ] Smal scherm: zoekveld en lijst blijven bruikbaar.
 
 ## Fase 3 — Verticale migratie per domein (± 4–8 weken)
 
