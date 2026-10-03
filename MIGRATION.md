@@ -18,7 +18,7 @@ Doel: zaken-frontend omzetten naar dezelfde toekomstbestendige stack als [`top-f
 
 - **Fase 0 ✅** Tooling: ESLint flat config (met bulk suppressions), Prettier (hele codebase geformatteerd), Testing Library 16, `@/`-alias, `AGENTS.md`.
 - **Fase 1 ✅** Alle data via TanStack Query (`src/api/`); de oude laag `src/app/state/rest/` en `axios`, `qs`, `lodash.merge`, `lodash.isempty` zijn weg. Mutaties werken alleen bij wat de gewijzigde data toont, vaak zonder refetch.
-- **Fase 2 (bezig):** ADS staat naast `asc-ui`; de pilot (nieuwe layout `src/components/DefaultLayout/` op de 404-pagina) is ✅ akkoord. Nu pagina voor pagina, met een controle na elke pagina: de Hulp-pagina is omgezet en wacht op test.
+- **Fase 2 (bezig):** ADS staat naast `asc-ui`; de pilot (nieuwe layout `src/components/DefaultLayout/` op de 404-pagina) is ✅ akkoord. Nu pagina voor pagina, met een controle na elke pagina: Hulp en de 403 zijn ✅ akkoord; `/auth` is omgezet (pilot voor `Description`, de vervanger van `DefinitionList` van `wonen-ui`) en wacht op test.
 - **Restpunten:** filters van de overzichten naar de URL (eigen pilot, past bij Fase 3); `immer` (weg met flash messages → toasts en `ShowHide`); `lodash` (weg met `amsterdam-react-final-form`); 155 vastgelegde lint-overtredingen in `eslint-suppressions.json` (lossen grotendeels op in Fase 3).
 
 ## 1. Uitgangssituatie (gemeten op `main`, okt 2026)
@@ -204,7 +204,7 @@ Gaandeweg is het principe "1-op-1 met de oude groep" losgelaten voor mutaties: d
 | Groep                                      | Status        | Hooks                                                                                                                                                       |
 | ------------------------------------------ | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `themes`                                   | ✅            | `useCaseThemes`, `useReasons`, `useProjects`, `useSubjects`, `useTags`, `useTasksReasons`, `useTaskNames`, `useTaskOwners`                                  |
-| `auth`                                     | ✅            | `useUsersMe`, `useIsAuthorized`                                                                                                                             |
+| `auth`                                     | ✅            | `useUsersMe` (`useIsAuthorized` verwijderd in Fase 2)                                                                                                       |
 | `users`                                    | ✅            | `useUsers`                                                                                                                                                  |
 | `roles`                                    | ✅            | `useRoles` (nog steeds mockdata, er is geen endpoint)                                                                                                       |
 | `fines`, `listings`, `housingCorporations` | ✅            | `useFine`, `useListing`, `useCorporations`                                                                                                                  |
@@ -423,7 +423,7 @@ Doel: ADS geïnstalleerd en gedeelde bouwstenen klaar, terwijl asc-ui nog gewoon
 - **Menu-iconen:** de gevulde variant (`…FillIcon`) waar die bestaat, zoals ADS voorschrijft. Zaken heeft de map (`FolderFillIcon`).
 - **CSS-volgorde:** `index.css` (ADS) wordt in `index.tsx` als eerste geïmporteerd, vóór `App`. Anders komen de ADS-regels in de bundel ná de CSS Modules en winnen ze bij gelijk gewicht, waardoor pagina-CSS ADS niet kan overschrijven (gevonden bij de 404: `.ams-icon` heeft `align-self: baseline`, wat het centreren van het icoon tenietdeed).
 - **Pagina-opbouw:** ADS v4 staat in compact mode: grijze pagina (`--ams-color-background-body`) met witte `Grid.Cell`-vlakken. De layout zet de inhoud in een `Grid` (`paddingVertical`/`gapVertical` "large"); **elke pagina levert één of meer `Grid.Cell`s** (zoals top-frontend-v2). Breadcrumbs en flash messages zijn transparante cellen die alleen verschijnen als er iets te tonen is.
-- **404-pagina** zoals in top-frontend-v2: direct op de grijze achtergrond (transparante cel), met verdrietig gezicht, "404 – Oeps! We zijn de weg even kwijt.", uitleg en een knop "Terug naar de startpagina"; opmaak in `NotFoundPage.module.css`.
+- **404-pagina** zoals in top-frontend-v2: direct op de grijze achtergrond (transparante cel), met verdrietig gezicht, "404 – Oeps! We zijn de weg even kwijt.", uitleg en een knop "Terug naar de startpagina"; opmaak in `src/components/ErrorPage/ErrorPage.module.css` (gedeeld met de 403).
 
 Testchecklist:
 
@@ -438,19 +438,39 @@ Testchecklist:
 
 #### Pagina voor pagina
 
-| Pagina                            | Status                 |
-| --------------------------------- | ---------------------- |
-| 404 (`pages/errors/NotFoundPage`) | ✅ akkoord (pilot)     |
-| Hulp (`pages/help/HelpPage`)      | omgezet, wacht op test |
+| Pagina                                     | Status                                       |
+| ------------------------------------------ | -------------------------------------------- |
+| 404 (`pages/errors/NotFoundPage`)          | ✅ akkoord (pilot)                           |
+| Hulp (`pages/help/HelpPage`)               | ✅ akkoord                                   |
+| 403 (`pages/auth/NotAuthorizedPage`)       | ✅ akkoord                                   |
+| Gebruiker (`pages/auth/AuthPage`, `/auth`) | omgezet, wacht op test (pilot `Description`) |
 
 **Hulp-pagina:** naar het voorbeeld van de veelgestelde-vragenpagina van top-frontend-v2: titel "Hulp" direct op de grijze achtergrond, daaronder één wit vlak met de vier onderwerpen in een ADS-`Accordion` (dicht bij het openen, net als eerst). Geen icoon meer naast de paginatitel. **Breadcrumbs** staan alleen nog op geneste pagina's: een pagina direct onder home (zoals `/hulp`) krijgt er geen. De lijstjes stonden in de oude versie binnen een alinea (ongeldige HTML); dat zijn nu losse ADS-lijsten. `EmailLink` zit in `HelpContent`; het ongebruikte `PhoneLink` en `HelpContent.module.css` zijn weg. `CustomTooltip` staat nog in dezelfde map omdat de zaakpagina's het gebruiken.
 
-Testchecklist:
+Testchecklist Hulp:
 
-- [ ] `/hulp`: titel "Hulp", geen breadcrumbs, wit vlak met de vraag en vier onderwerpen.
-- [ ] Elk onderwerp klapt open en dicht; de tekst is gelijk aan de oude pagina, op de zin "We zijn momenteel bezig met het bijwerken van deze paragraaf…" na (weggehaald).
-- [ ] Support: het refresh-icoon staat netjes in de zin; de e-mailadressen openen je mailprogramma.
-- [ ] Smal scherm: de pagina blijft leesbaar.
+- [x] `/hulp`: titel "Hulp", geen breadcrumbs, wit vlak met de vraag en vier onderwerpen.
+- [x] Elk onderwerp klapt open en dicht; de tekst is gelijk aan de oude pagina, op de zin "We zijn momenteel bezig met het bijwerken van deze paragraaf…" na (weggehaald).
+- [x] Support: het refresh-icoon staat netjes in de zin; de e-mailadressen openen je mailprogramma.
+- [x] Smal scherm: de pagina blijft leesbaar.
+
+**403-pagina:** zelfde opzet als de 404 (icoon, kop, uitleg, knop "Terug naar de startpagina"), met een slotje en "403 – Geen toegang". De opzet staat nu in het gedeelde `src/components/ErrorPage/` (de 404 gebruikt het ook; de CSS van de 404 is daarheen verhuisd). De tekst zegt "je bent" in plaats van "u bent", zoals de rest van de app. De pagina verschijnt bij een route waarvoor je het recht mist (`AuthorizedPage`) en bij een zaak die je niet mag inzien.
+
+Testchecklist 403:
+
+- [x] Ga naar `/403` (testroute die de 403-pagina altijd toont), of open een pagina waarvoor je geen recht hebt (bijv. `/invorderingen` zonder het recht voor de invorderingscheck): de 403-pagina in de nieuwe layout, met slotje en de knop naar de startpagina.
+- [x] De 404-pagina (`/bestaat-niet`) ziet er nog precies zo uit als bij de pilot.
+
+**Gebruikerspagina (`/auth`) — pilot `Description`:** de pagina waar je op uitkomt als de API een 403 geeft. Titel "Microsoft Entra-ID gebruiker" op de grijze achtergrond (was een h2, is nu de h1 van de pagina), daaronder een wit vlak met voornaam, achternaam en e-mail. De melding over de Keycloak-groepen (`NotAuthorizedAlert`) is weg: Keycloak wordt niet meer gebruikt. Daarmee zijn ook de hook `useIsAuthorized`, de query key en het type `IsAuthorizedResponse` verwijderd (werden nergens anders gebruikt).
+
+- Nieuw gedeeld component `src/components/Description/` (overgenomen uit top-frontend-v2, op de ADS-`DescriptionList`): een lijst van `{ label, value }`; regels zonder waarde vallen weg. Vervangt `DefinitionList` van `wonen-ui`, dat nog op 6 plekken staat (`CaseDetails` 2×, `FinesSearchResult`, `ConfirmScaffoldFields`, `ObjectDetails`, `PermitOverview`, `DecisionHeader`). Die gebruiken ook `title`, `loading`/`numLoadingRows`; dat komt erbij zodra de eerste pagina het nodig heeft.
+- **Testroute `/403`** toont altijd de 403-pagina (staat in `pages/auth/routes.tsx`, ook in productie; onschuldig).
+- **Tests van pagina's** importeren eerst `app/routing/routes`, net als de app: pagina → layout → `Breadcrumbs` → `routes` → pagina is circulair, en met de pagina als startpunt is die pagina nog `undefined` als `routes` wordt opgebouwd.
+
+Testchecklist `/auth`:
+
+- [ ] `/auth`: titel, wit vlak met je voornaam, achternaam en e-mail naast de labels.
+- [ ] Smal scherm: labels en waarden blijven leesbaar.
 
 ## Fase 3 — Verticale migratie per domein (± 4–8 weken)
 

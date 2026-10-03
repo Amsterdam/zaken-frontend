@@ -1,18 +1,19 @@
-import { DefinitionList } from "@amsterdam/wonen-ui"
+import { Description } from "@/components/Description/Description"
 import { useDecodedToken } from "app/state/auth/oidc/useDecodedToken"
 
 const OidcValues: React.FC = () => {
   const decodedToken = useDecodedToken()
 
-  const values = decodedToken
-    ? {
-        Voornaam: decodedToken?.given_name,
-        Achternaam: decodedToken?.family_name,
-        "E-mail": decodedToken?.unique_name,
-      }
-    : {}
-
-  return <DefinitionList data={values} />
+  return (
+    <Description
+      termsWidth="narrow"
+      data={[
+        { label: "Voornaam", value: decodedToken?.given_name },
+        { label: "Achternaam", value: decodedToken?.family_name },
+        { label: "E-mail", value: decodedToken?.unique_name },
+      ]}
+    />
+  )
 }
 
 export default OidcValues

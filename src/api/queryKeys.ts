@@ -30,7 +30,6 @@ export const queryKeys = {
   auth: {
     all: ["auth"] as const,
     me: () => ["auth", "users", "me"] as const,
-    isAuthorized: () => ["auth", "is-authorized"] as const,
   },
 
   cases: {

@@ -1,13 +1,15 @@
-import { Heading } from "@amsterdam/asc-ui"
-import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
-import NotAuthorizedAlert from "app/components/auth/NotAuthorizedAlert/NotAuthorizedAlert"
+import { Grid, Heading } from "@amsterdam/design-system-react"
+import { DefaultLayout } from "@/components/DefaultLayout/DefaultLayout"
 import OidcValues from "app/components/auth/OidcValues/OidcValues"
 
 const AuthPage: React.FC = () => (
   <DefaultLayout>
-    <Heading as="h2">Microsoft Entra-ID gebruiker</Heading>
-    <NotAuthorizedAlert />
-    <OidcValues />
+    <Grid.Cell span="all" appearance="transparent">
+      <Heading level={1}>Microsoft Entra-ID gebruiker</Heading>
+    </Grid.Cell>
+    <Grid.Cell span="all">
+      <OidcValues />
+    </Grid.Cell>
   </DefaultLayout>
 )
 
