@@ -1,5 +1,4 @@
-import { useId } from "react"
-import { Label, Row, Select } from "@amsterdam/design-system-react"
+import { SelectFilter } from "@/components/filters/SelectFilter"
 
 type Sorting = Required<TABLE.Schemas.Sorting>
 
@@ -56,30 +55,19 @@ type Props = {
 }
 
 /** The order of the cases overview (the API sorts). */
-const CasesSorting: React.FC<Props> = ({ sorting, onChange }) => {
-  const id = useId()
-
-  return (
-    <Row align="center" alignVertical="center" gap="small">
-      <Label htmlFor={id}>Sorteren op</Label>
-      <Select
-        id={id}
-        value={toValue(sorting)}
-        onChange={(event) => {
-          const option = options.find(
-            ({ sorting }) => toValue(sorting) === event.currentTarget.value,
-          )
-          if (option) onChange(option.sorting)
-        }}
-      >
-        {options.map(({ label, sorting }) => (
-          <Select.Option key={label} value={toValue(sorting)}>
-            {label}
-          </Select.Option>
-        ))}
-      </Select>
-    </Row>
-  )
-}
+const CasesSorting: React.FC<Props> = ({ sorting, onChange }) => (
+  <SelectFilter
+    label="Sorteren op"
+    options={options.map(({ label, sorting }) => ({
+      label,
+      value: toValue(sorting),
+    }))}
+    value={toValue(sorting)}
+    onChange={(value) => {
+      const option = options.find(({ sorting }) => toValue(sorting) === value)
+      if (option) onChange(option.sorting)
+    }}
+  />
+)
 
 export default CasesSorting

@@ -18,7 +18,7 @@ Doel: zaken-frontend omzetten naar dezelfde toekomstbestendige stack als [`top-f
 
 - **Fase 0 ✅** Tooling: ESLint flat config (met bulk suppressions), Prettier (hele codebase geformatteerd), Testing Library 16, `@/`-alias, `AGENTS.md`.
 - **Fase 1 ✅** Alle data via TanStack Query (`src/api/`); de oude laag `src/app/state/rest/` en `axios`, `qs`, `lodash.merge`, `lodash.isempty` zijn weg. Mutaties werken alleen bij wat de gewijzigde data toont, vaak zonder refetch.
-- **Fase 2 (bezig):** ADS staat naast `asc-ui`; de pilot (nieuwe layout `src/components/DefaultLayout/` op de 404-pagina) is ✅ akkoord. Nu pagina voor pagina, met een controle na elke pagina: 404, Hulp, 403 en `/auth` (pilot voor `Description`, de vervanger van `DefinitionList` van `wonen-ui`) de invorderingscheck en de startpagina (adres zoeken) zijn ✅ akkoord. Bezig: het zakenoverzicht, in drie stappen: (1) layout + `Table` — omgezet, wacht op test; (2) filters naar ADS + react-hook-form, boven de tabel; (3) filters naar de URL.
+- **Fase 2 (bezig):** ADS staat naast `asc-ui`; de pilot (nieuwe layout `src/components/DefaultLayout/` op de 404-pagina) is ✅ akkoord. Nu pagina voor pagina, met een controle na elke pagina: 404, Hulp, 403 en `/auth` (pilot voor `Description`, de vervanger van `DefinitionList` van `wonen-ui`) de invorderingscheck en de startpagina (adres zoeken) zijn ✅ akkoord. Bezig: het zakenoverzicht, in drie stappen: (1) layout + `Table` — ✅ akkoord; (2) filters naar ADS, boven de tabel — omgezet, wacht op test; (3) filters naar de URL.
 - **Restpunten:** filters van de overzichten naar de URL (eigen pilot, past bij Fase 3); `immer` (weg met flash messages → toasts en `ShowHide`); `lodash` (weg met `amsterdam-react-final-form`); 155 vastgelegde lint-overtredingen in `eslint-suppressions.json` (lossen grotendeels op in Fase 3).
 
 ## 1. Uitgangssituatie (gemeten op `main`, okt 2026)
@@ -438,15 +438,15 @@ Testchecklist:
 
 #### Pagina voor pagina
 
-| Pagina                                                       | Status                                                 |
-| ------------------------------------------------------------ | ------------------------------------------------------ |
-| 404 (`pages/errors/NotFoundPage`)                            | ✅ akkoord (pilot)                                     |
-| Hulp (`pages/help/HelpPage`)                                 | ✅ akkoord                                             |
-| 403 (`pages/auth/NotAuthorizedPage`)                         | ✅ akkoord                                             |
-| Gebruiker (`pages/auth/AuthPage`, `/auth`)                   | ✅ akkoord (pilot `Description`)                       |
-| Invorderingscheck (`pages/fines/FinePage`, `/invorderingen`) | ✅ akkoord                                             |
-| Adres zoeken / start (`pages/home/HomePage`, `/`)            | ✅ akkoord                                             |
-| Zakenoverzicht (`pages/cases/index/IndexPage`, `/zaken`)     | stap 1 van 3 (layout + `Table`) omgezet, wacht op test |
+| Pagina                                                       | Status                                                                          |
+| ------------------------------------------------------------ | ------------------------------------------------------------------------------- |
+| 404 (`pages/errors/NotFoundPage`)                            | ✅ akkoord (pilot)                                                              |
+| Hulp (`pages/help/HelpPage`)                                 | ✅ akkoord                                                                      |
+| 403 (`pages/auth/NotAuthorizedPage`)                         | ✅ akkoord                                                                      |
+| Gebruiker (`pages/auth/AuthPage`, `/auth`)                   | ✅ akkoord (pilot `Description`)                                                |
+| Invorderingscheck (`pages/fines/FinePage`, `/invorderingen`) | ✅ akkoord                                                                      |
+| Adres zoeken / start (`pages/home/HomePage`, `/`)            | ✅ akkoord                                                                      |
+| Zakenoverzicht (`pages/cases/index/IndexPage`, `/zaken`)     | stap 1 ✅ akkoord; stap 2 van 3 (filters boven de tabel) omgezet, wacht op test |
 
 **Hulp-pagina:** naar het voorbeeld van de veelgestelde-vragenpagina van top-frontend-v2: titel "Hulp" direct op de grijze achtergrond, daaronder één wit vlak met de vier onderwerpen in een ADS-`Accordion` (dicht bij het openen, net als eerst). Geen icoon meer naast de paginatitel. **Breadcrumbs** staan alleen nog op geneste pagina's: een pagina direct onder home (zoals `/hulp`) krijgt er geen. De lijstjes stonden in de oude versie binnen een alinea (ongeldige HTML); dat zijn nu losse ADS-lijsten. `EmailLink` zit in `HelpContent`; het ongebruikte `PhoneLink` en `HelpContent.module.css` zijn weg. `CustomTooltip` staat nog in dezelfde map omdat de zaakpagina's het gebruiken.
 
@@ -512,7 +512,7 @@ Testchecklist startpagina:
 
 **Zakenoverzicht (`/zaken`) — in drie stappen** (afgesproken):
 
-1. **Layout + tabel (pilot `Table`)** — omgezet, wacht op test.
+1. **Layout + tabel (pilot `Table`)** — ✅ akkoord.
 2. **Filters** naar ADS + `react-hook-form` + `@amsterdam/ee-ads-rhf` (installeren is akkoord). De filters komen **boven de tabel** in plaats van ernaast, naar het voorbeeld van `zwd-frontend` (`CasesFilters` + `ActiveFilters` op `CasesPage`); de multiselects worden de react-select uit `@amsterdam/ee-ads-rhf`.
 3. **Filters naar de URL** (het restpunt uit Fase 1; nu staan ze in `ValueProvider`).
 
@@ -524,19 +524,42 @@ Stap 1:
 - **Geen klikbare rij** (bewuste keuze, voor toegankelijkheid): een rij-klik werkt niet met toetsenbord of schermlezer en zit tekst selecteren en Ctrl-klik in de weg. **Eén patroon voor alle tabellen:** de laatste kolom heeft een echte link "Zaakdetails" (ADS `StandaloneLink`, met pijltje; geen `LinkList.Link`, want dat is een lijstitem en hoort in een `LinkList`) (voor de schermlezer "Zaakdetails van zaak 12, Amstel 1-H"), en die kolom staat op elke schermbreedte. Het ID en het adres zijn gewone tekst: een adres kan meerdere zaken hebben, en het takenoverzicht heeft geen ID-kolom (een rij is daar een taak), dus alleen de link-kolom is overal hetzelfde. Het gedeelde `Table`-component heeft daarom geen `onClickRow`; de andere tabellen volgen dezelfde lijn.
 - De kolommen zijn getypeerd op `Case` (geen `any` meer); datums via `formatDate`. Datums en postcode breken niet af (`noWrap`); de kop "Zaak ID" is "ID". Het aantal laadrijen is gelijk aan het aantal zaken per pagina, zodat de tabel niet verspringt.
 - Zoekveld: ADS `SearchField`; zoekt tijdens het typen (750 ms) en direct bij Enter. Het veld toont nu wat je typt (stond eerst vast op de laatste zoekopdracht).
-- **Tussenstand:** de filters zijn nog het oude formulier (asc-ui/final-form) en staan nog onder de tabel, of ernaast vanaf 1600 px. De pagina oogt daardoor half oud, half nieuw tot stap 2.
 - Niet meer: de vastgezette laatste kolom (`lastColumnFixed`); de tabel schuift als geheel zijwaarts als hij niet past.
 
-Testchecklist zakenoverzicht stap 1:
+Testchecklist zakenoverzicht stap 1 (✅ akkoord):
 
-- [ ] `/zaken`: titel met het aantal zaken, zoekveld, tabel met zaken in de nieuwe layout.
-- [ ] "Sorteren op" (rechts van het zoekveld): elke keuze sorteert de lijst en zet je terug op pagina 1; de kolomkoppen zijn niet meer klikbaar.
-- [ ] Paginering onder de tabel: volgende/vorige en een paginanummer; tijdens het laden staan er laadrijen.
-- [ ] Klik op "Zaakdetails": de zaak opent (ook met Tab + Enter, en met Ctrl-klik in een nieuw tabblad). De rest van de rij is niet klikbaar. Ga terug: pagina, sortering en filters staan er nog.
-- [ ] Zoeken op straat of postcode filtert de lijst; het aantal in de titel verandert mee.
-- [ ] De oude filters werken nog (thema, aanleiding, stadsdeel, aantal per pagina, …).
-- [ ] Smaller scherm: minder kolommen ("Zaakdetails" blijft altijd staan) en de tabel schuift zo nodig zijwaarts.
-- [ ] Het takenoverzicht (nog oud) werkt nog precies zoals eerst.
+- [x] `/zaken`: titel met het aantal zaken, zoekveld, tabel met zaken in de nieuwe layout.
+- [x] "Sorteren op" (rechts van het zoekveld): elke keuze sorteert de lijst en zet je terug op pagina 1; de kolomkoppen zijn niet meer klikbaar.
+- [x] Paginering onder de tabel: volgende/vorige en een paginanummer; tijdens het laden staan er laadrijen.
+- [x] Klik op "Zaakdetails": de zaak opent (ook met Tab + Enter, en met Ctrl-klik in een nieuw tabblad). De rest van de rij is niet klikbaar. Ga terug: pagina, sortering en filters staan er nog.
+- [x] Zoeken op straat of postcode filtert de lijst; het aantal in de titel verandert mee.
+- [x] De oude filters werken nog (thema, aanleiding, stadsdeel, aantal per pagina, …).
+- [x] Smaller scherm: minder kolommen ("Zaakdetails" blijft altijd staan) en de tabel schuift zo nodig zijwaarts.
+- [x] Het takenoverzicht (nog oud) werkt nog precies zoals eerst.
+
+Stap 2 (filters) — omgezet, wacht op test:
+
+- De filters staan **boven de tabel** in één rij die afbreekt naar een volgende regel (naar zwd-frontend), in plaats van een kolom ernaast of eronder. De volgorde loopt van "welke zaken" naar "hoe ze getoond worden": Zoeken, Thema, Aanleiding, Stadsdelen, dan de filters achter de knop **"Alle filters"** (Projecten, Onderwerpen, Tags — alleen bij een thema dat ze heeft —, Corporaties, Startdatum en als laatste Toon zaken, want gesloten zaken zoek je zelden), en tot slot de weergave: Sorteren op en Items per pagina. Staat er bij het openen van de pagina al zo'n filter aan, dan zijn ze meteen zichtbaar.
+- **Zoeken en sorteren staan in dezelfde rij** als de filters, met het label erboven ("Zoeken", "Sorteren op"); de rij breekt als geheel af.
+- De keuzelijsten met één keuze waren radioknoppen en zijn nu een ADS-`Select`. De lijsten met meerdere keuzes waren een zoekveld met aanvinkvakjes en zijn nu de doorzoekbare multiselect (react-select) uit `@amsterdam/ee-ads-rhf`.
+- **"Zonder corporatie" zit in het filter Corporaties**, als eerste optie, en sluit de corporaties uit (en andersom): de API combineert de twee met "en", dus samen gaven ze altijd een lege lijst. Wil je later "of" (Ymere plus zonder corporatie), dan moet `housing_corporation`/`housing_corporation_isnull` in zaken-backend worden aangepast (zaken én taken); het scherm hoeft daar niet voor te veranderen.
+- De knoppen "Alle filters" en "Wis alle filters" zijn **primair** (keuze, gelijk aan zwd-frontend); dat geldt straks ook voor het takenoverzicht.
+- **"Wis alle filters"** verschijnt zodra er een filter afwijkt van de standaard of er een zoekterm staat, en maakt ook het zoekveld leeg; sortering en aantal per pagina blijven staan.
+- Gedeelde bouwstenen in `src/components/filters/`: `SelectFilter`, `MultiSelectFilter` (om `SelectInput` van ee-ads-rhf) en `filters.module.css`. Het takenoverzicht kan ze hergebruiken.
+- **Geen react-hook-form-formulier om de filters** (afwijking van het plan): een filter werkt direct, zonder verzenden of validatie, dus het zijn gewone gestuurde velden, net als in zwd-frontend. De `...Control`-componenten van ee-ads-rhf zetten bovendien "(niet verplicht)" achter elk label. `react-hook-form` is wel geïnstalleerd (ee-ads-rhf heeft het nodig) en komt in gebruik bij het eerste echte formulier.
+- Geïnstalleerd (met akkoord): `@amsterdam/ee-ads-rhf` ^0.0.8 en `react-hook-form` ^7.89.
+- Het gedrag is gelijk gebleven: een filter zet je terug op pagina 1; een ander thema wist aanleiding, projecten, onderwerpen en tags. De staat zit nog in `ValueProvider` (stap 3 zet hem in de URL).
+- Weg: de zes `scaffold*.ts` van `CasesFilter` en `Cases.module.css`. `FilterMenu`, `MultipleOptionsFilterBox` en `NoCorporationFilter` blijven tot het takenoverzicht om is.
+
+Testchecklist zakenoverzicht stap 2:
+
+- [ ] De filters staan boven de tabel en breken netjes af op een smaller scherm; de tabel gebruikt de volle breedte.
+- [ ] Thema, Aanleiding en Items per pagina: elke keuze filtert direct en het aantal in de titel verandert mee.
+- [ ] Stadsdelen: meerdere kiezen, typen om te zoeken, één verwijderen met het kruisje, alles wissen met het kruisje rechts. De lijst klapt open over de tabel heen en ziet eruit als de andere velden.
+- [ ] "Alle filters" toont Corporaties, Startdatum en Toon zaken, vóór Sorteren op. In Corporaties: kies een corporatie en daarna "Zonder corporatie" (de corporatie vervalt), en andersom; kies een thema en Projecten/Onderwerpen/Tags verschijnen (als dat thema ze heeft). Wissel van thema: die keuzes worden gewist.
+- [ ] "Wis alle filters" verschijnt ook na het typen van een zoekterm, zet alle filters terug en maakt het zoekveld leeg; sortering en aantal per pagina blijven.
+- [ ] Open een zaak en ga terug: de filters staan er nog.
+- [ ] Het takenoverzicht (nog oud, met de oude filters) werkt nog precies zoals eerst.
 
 ## Fase 3 — Verticale migratie per domein (± 4–8 weken)
 

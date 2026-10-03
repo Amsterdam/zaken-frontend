@@ -1,4 +1,5 @@
 import { useCallback, useContext } from "react"
+import { initialState } from "app/state/context/initialState"
 import { ContextValues } from "app/state/context/ValueProvider"
 
 type Item = string | string[] | boolean
@@ -29,6 +30,26 @@ export function useFilterHandler() {
     [pagination, updateContextCases],
   )
 
+  // "Zonder corporatie" and the corporations exclude each other: the API
+  // combines them with "and", which never matches.
+  const onChangeCorporations = useCallback(
+    (housingCorporations: string[], housingCorporationIsNull: boolean) => {
+      updateContextCases({
+        housingCorporations,
+        housingCorporationIsNull,
+        pagination: { ...pagination, page: 1 },
+      })
+    },
+    [pagination, updateContextCases],
+  )
+
+  const onChangeSorting = useCallback(
+    (sorting: TABLE.Schemas.Sorting) => {
+      updateContextCases({ sorting, pagination: { ...pagination, page: 1 } })
+    },
+    [pagination, updateContextCases],
+  )
+
   const onChangePageSize = useCallback(
     (pageSize: string) => {
       updateContextCases({
@@ -42,16 +63,42 @@ export function useFilterHandler() {
     [pagination, updateContextCases],
   )
 
-  const onChangeTable = useCallback(
-    (pagination: TABLE.Schemas.Pagination, sorting: TABLE.Schemas.Sorting) => {
-      updateContextCases({ pagination, sorting })
-    },
-    [updateContextCases],
-  )
+  // Back to the defaults, the search included; the sorting and the page size stay.
+  const onResetFilters = useCallback(() => {
+    const {
+      addressSearch,
+      districtNames,
+      fromStartDate,
+      housingCorporations,
+      housingCorporationIsNull,
+      openCases,
+      projects,
+      reason,
+      subjects,
+      tags,
+      theme,
+    } = initialState.cases
+    const filters = {
+      addressSearch,
+      districtNames,
+      fromStartDate,
+      housingCorporations,
+      housingCorporationIsNull,
+      openCases,
+      projects,
+      reason,
+      subjects,
+      tags,
+      theme,
+    }
+    updateContextCases({ ...filters, pagination: { ...pagination, page: 1 } })
+  }, [pagination, updateContextCases])
 
   return {
     onChangeFilter,
+    onChangeCorporations,
     onChangePageSize,
-    onChangeTable,
+    onChangeSorting,
+    onResetFilters,
   }
 }

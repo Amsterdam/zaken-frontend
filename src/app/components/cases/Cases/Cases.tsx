@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import { Column, Grid, Heading, Row } from "@amsterdam/design-system-react"
+import { Column, Grid, Heading } from "@amsterdam/design-system-react"
 import TableCases from "app/components/cases/TableCases/TableCases"
 import CasesFilter from "app/components/cases/CasesFilter/CasesFilter"
 import {
@@ -17,9 +17,6 @@ import useHasPermission, {
 } from "@/hooks/useHasPermission"
 import { ContextValues } from "app/state/context/ValueProvider"
 import getThemeId from "app/components/tasks/utils/getThemeId"
-import CasesSorting from "app/components/cases/CasesSorting/CasesSorting"
-import SearchBarCases from "app/components/cases/SearchBarCases/SearchBarCases"
-import styles from "./Cases.module.css"
 
 const EMPTY_TEXT_NO_PERMISSION =
   "Helaas, u bent niet geautoriseerd om deze zaken te bekijken."
@@ -83,10 +80,6 @@ const Cases: React.FC = () => {
     updateContextCases({ pagination })
   }
 
-  const onChangeSorting = (sorting: TABLE.Schemas.Sorting) => {
-    updateContextCases({ sorting, pagination: { ...pagination, page: 1 } })
-  }
-
   const themes = caseThemes?.results || []
   const ondermijningId = getThemeIdByName(themes, ONDERMIJNING)
   const districts = caseDistricts?.results || []
@@ -102,46 +95,39 @@ const Cases: React.FC = () => {
       </Grid.Cell>
       <Grid.Cell span="all">
         <Column gap="large">
-          <Row align="between" alignVertical="end" wrap>
-            <SearchBarCases searchString={addressSearch} />
-            <CasesSorting sorting={sorting} onChange={onChangeSorting} />
-          </Row>
-          {/* The filters are still the old form; they move above the table (MIGRATION.md). */}
-          <div className={styles.Grid}>
-            <TableCases
-              data={dataSource?.results ?? []}
-              isBusy={isLoading || isPlaceholderData}
-              onChange={onChangeTable}
-              pagination={{
-                page: pagination.page,
-                pageSize: pagination.pageSize,
-                collectionSize: dataSource?.count || 1,
-              }}
-              emptyPlaceholder={emptyPlaceholder}
-            />
-            <div className={styles.Filter}>
-              <CasesFilter
-                date={fromStartDate}
-                corporations={corporationData?.results}
-                corporationIsNull={housingCorporationIsNull}
-                districts={districts}
-                districtNames={districtNames}
-                pageSize={pagination.pageSize?.toString() || "10"}
-                openCases={openCases}
-                projects={projectsTheme?.results}
-                reason={reason}
-                reasons={reasons}
-                selectedCorporations={housingCorporations}
-                selectedProjects={projects}
-                selectedSubjects={subjects}
-                selectedTags={tags}
-                subjects={subjectsTheme?.results}
-                tags={tagsTheme?.results}
-                theme={theme}
-                themes={themes}
-              />
-            </div>
-          </div>
+          <CasesFilter
+            date={fromStartDate}
+            corporations={corporationData?.results}
+            corporationIsNull={housingCorporationIsNull}
+            districts={districts}
+            districtNames={districtNames}
+            pageSize={pagination.pageSize?.toString() || "10"}
+            openCases={openCases}
+            projects={projectsTheme?.results}
+            reason={reason}
+            reasons={reasons}
+            searchString={addressSearch}
+            sorting={sorting}
+            selectedCorporations={housingCorporations}
+            selectedProjects={projects}
+            selectedSubjects={subjects}
+            selectedTags={tags}
+            subjects={subjectsTheme?.results}
+            tags={tagsTheme?.results}
+            theme={theme}
+            themes={themes}
+          />
+          <TableCases
+            data={dataSource?.results ?? []}
+            isBusy={isLoading || isPlaceholderData}
+            onChange={onChangeTable}
+            pagination={{
+              page: pagination.page,
+              pageSize: pagination.pageSize,
+              collectionSize: dataSource?.count || 1,
+            }}
+            emptyPlaceholder={emptyPlaceholder}
+          />
         </Column>
       </Grid.Cell>
     </>

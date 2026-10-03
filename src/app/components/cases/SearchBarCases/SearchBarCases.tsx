@@ -1,5 +1,6 @@
-import { useMemo, useState } from "react"
-import { SearchField } from "@amsterdam/design-system-react"
+import { useEffect, useId, useMemo, useState } from "react"
+import { Field, Label, SearchField } from "@amsterdam/design-system-react"
+import filterStyles from "@/components/filters/filters.module.css"
 import debounce from "lodash.debounce"
 import { useFilterHandler } from "../CasesFilter/useFilterHandler"
 
@@ -12,6 +13,7 @@ const DELAY = 750
 const SearchBarCases: React.FC<Props> = ({ searchString }) => {
   const { onChangeFilter } = useFilterHandler()
   const [inputValue, setInputValue] = useState(searchString)
+  const id = useId()
 
   const debouncedSearch = useMemo(
     () =>
@@ -21,6 +23,10 @@ const SearchBarCases: React.FC<Props> = ({ searchString }) => {
       ),
     [onChangeFilter],
   )
+
+  // A search that is still waiting must not come back after the field is gone
+  // (e.g. after "Wis alle filters").
+  useEffect(() => () => debouncedSearch.cancel(), [debouncedSearch])
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.currentTarget.value
@@ -35,21 +41,22 @@ const SearchBarCases: React.FC<Props> = ({ searchString }) => {
   }
 
   return (
-    <SearchField
-      onSubmit={onSubmit}
-      // Takes the room next to the sort select.
-      style={{ flex: "1 1 24rem", maxWidth: 600 }}
-    >
-      <SearchField.Input
-        label="Zoek een zaak"
-        placeholder="Zoek een zaak op postcode en huisnummer of straatnaam"
-        name="addressSearch"
-        value={inputValue}
-        onChange={onChange}
-        autoFocus
-      />
-      <SearchField.Button />
-    </SearchField>
+    <Field className={filterStyles.search}>
+      <Label htmlFor={id}>Zoeken</Label>
+      <SearchField onSubmit={onSubmit}>
+        <SearchField.Input
+          id={id}
+          // Label describes the field for screen readers.
+          label="Zoek op straat of postcode"
+          placeholder="Zoek op straat of postcode"
+          name="addressSearch"
+          value={inputValue}
+          onChange={onChange}
+          autoFocus
+        />
+        <SearchField.Button />
+      </SearchField>
+    </Field>
   )
 }
 
