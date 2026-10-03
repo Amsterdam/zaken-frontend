@@ -1,0 +1,42 @@
+/* Overrides of the default Amsterdam Design System styles. */
+
+/*
+ * Coexistence with asc-ui (remove together with asc-ui, MIGRATION.md Fase 5).
+ *
+ * Some ADS elements render with the `hidden` attribute and are only shown by
+ * their own CSS rule, so they stay hidden until the ADS CSS has loaded.
+ * asc-ui's GlobalStyle (polished's normalize) adds `[hidden] { display: none }`
+ * after our CSS, with the same specificity, so it wins and hides them all
+ * (e.g. every icon). This restores the display ADS intends.
+ */
+.ams-icon[hidden] {
+  display: inline-flex;
+}
+
+.ams-checkbox__icon-container[hidden],
+.ams-radio__icon-container[hidden] {
+  display: flex;
+}
+
+.ams-pagination__link-label[hidden] {
+  display: inline;
+}
+
+.ams-tab-navigation__link-label-hidden[hidden] {
+  display: initial;
+}
+
+/* The menu button in the header (narrow window) and the spacer next to it. */
+.ams-page-header__logo-link--hidden[hidden] {
+  display: flex;
+}
+
+.ams-page-header__mega-menu-button-item[hidden] {
+  display: initial;
+}
+
+@media (min-width: 72.5rem) {
+  .ams-page-header__mega-menu-button-item--hide-on-wide-window[hidden] {
+    display: none;
+  }
+}

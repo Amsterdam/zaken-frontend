@@ -18,7 +18,7 @@ Doel: zaken-frontend omzetten naar dezelfde toekomstbestendige stack als [`top-f
 
 - **Fase 0 ✅** Tooling: ESLint flat config (met bulk suppressions), Prettier (hele codebase geformatteerd), Testing Library 16, `@/`-alias, `AGENTS.md`.
 - **Fase 1 ✅** Alle data via TanStack Query (`src/api/`); de oude laag `src/app/state/rest/` en `axios`, `qs`, `lodash.merge`, `lodash.isempty` zijn weg. Mutaties werken alleen bij wat de gewijzigde data toont, vaak zonder refetch.
-- **Volgende:** Fase 2, beginnend met de pilot (ADS naast `asc-ui`, één gedeeld component op één pagina).
+- **Fase 2 (bezig):** ADS staat naast `asc-ui`; de nieuwe layout (`src/components/DefaultLayout/`) is als pilot op de 404-pagina gezet en wacht op test. Daarna pagina voor pagina, met een controle na elke pagina.
 - **Restpunten:** filters van de overzichten naar de URL (eigen pilot, past bij Fase 3); `immer` (weg met flash messages → toasts en `ShowHide`); `lodash` (weg met `amsterdam-react-final-form`); 155 vastgelegde lint-overtredingen in `eslint-suppressions.json` (lossen grotendeels op in Fase 3).
 
 ## 1. Uitgangssituatie (gemeten op `main`, okt 2026)
@@ -381,15 +381,15 @@ Testchecklist (de app moet zich precies zo gedragen als na de vorige stappen):
 - [x] Adrespagina: andere adressen (huisletter/toevoeging) en het panorama.
 - [x] Filters in zaken- en takenoverzicht blijven bewaard als je naar een zaak gaat en terugkomt.
 
-## Fase 2 — Amsterdam Design System-fundament (± 1 week)
+## Fase 2 — Amsterdam Design System-fundament (pilot gebouwd, okt 2026)
 
 Doel: ADS geïnstalleerd en gedeelde bouwstenen klaar, terwijl asc-ui nog gewoon werkt.
 
-- [ ] Installeren: `@amsterdam/design-system-assets`, `-css`, `-react`, `-react-icons`, `-tokens`, `@amsterdam/ee-ads-rhf`, `react-hook-form`.
-- [ ] Global CSS zoals in `top-frontend-v2/src/index.css`: fonts, `design-system-css`, `design-system-tokens` (+ `compact.css`), eigen `styles/design-system-overrides.css`. ADS gebruikt `ams-`-geprefixte classes, dus het botst niet met de styled-components van asc-ui. Controleer wel `GlobalStyle` van asc-ui op conflicterende resets (body/font).
-- [ ] Bestaande `src/app/components/shared/ams-tokens.css` vervangen door de officiële tokens.
+- [x] Installeren: `@amsterdam/design-system-assets`, `-css`, `-react`, `-react-icons`, `-tokens` (versies als top-frontend-v2). `@amsterdam/ee-ads-rhf` en `react-hook-form` volgen bij het eerste formulier (Fase 3).
+- [x] Global CSS in `src/index.css` (geïmporteerd in `index.tsx`), zoals in top-frontend-v2: fonts, `design-system-css`, tokens (+ `compact.css`), `styles/design-system-overrides.css`. Gecontroleerd: de ADS-CSS bevat geen enkele globale element-selector (alleen `.ams-*`, tokens op `:root` en `@font-face`), dus de asc-ui-pagina's merken er niets van.
+- [x] `src/app/components/shared/ams-tokens.css` verwijderd: de officiële tokens bevatten alles (ook de avatar-tokens). Let op: `compact.css` maakt o.a. randen dunner, dus de avatar in het takenoverzicht kan iets anders ogen.
 - [ ] Gedeelde componenten neerzetten in `src/components/`, waar mogelijk overgenomen uit top-frontend-v2:
-  - `DefaultLayout` (ADS `Page`, `PageHeader`, `PageFooter`, navigatie) → vervangt `layouts/DefaultLayout`, `MainWrapper`, asc-ui `Header`/`MenuInline`/`MenuToggle`.
+  - [x] `src/components/DefaultLayout/` (ADS `Page withMenu`, `PageHeader`, `Menu`, `Breadcrumb`, `Alert`, `SkipLink`), naar het voorbeeld van top-frontend-v2 → vervangt per pagina `app/components/layouts/DefaultLayout` (asc-ui `Header`, `MenuInline`/`MenuToggle`, `BreadCrumbs`, `FlashMessages`, `SkipLinks`, `MainWrapper`). Zie de pilot hieronder.
   - `toasts/` (ToastProvider + `toastBridge`) → vervangt `FlashMessageProvider` + `immer` reducer.
   - `Table` → vervangt `wonen-ui` `Table`/`LoadingRows`.
   - `Card`, `spinners/AmsterdamCrossSpinner`, `ErrorState`, `ConfirmDialog` (ADS `Dialog` → vervangt asc-ui `Modal`).
@@ -398,11 +398,43 @@ Doel: ADS geïnstalleerd en gedeelde bouwstenen klaar, terwijl asc-ui nog gewoon
 
 > **🧪 Pilot: eerst één voorbeeld**
 >
-> Installeer ADS en de global CSS en zet **één** gedeeld component (bijvoorbeeld `Card` of `Table`) op **één** bestaande pagina. De rest van de app blijft op asc-ui.
+> Installeer ADS en de global CSS en zet de nieuwe layout op **één** bestaande pagina (de 404-pagina). De rest van de app blijft op asc-ui.
 >
 > Testen: ADS en asc-ui botsen niet (fonts, `GlobalStyle`-resets, spacing), de pagina ziet er goed uit op desktop en mobiel en er zijn geen regressies op de andere pagina's.
 >
-> **✅ Akkoord** → daarna de overige gedeelde componenten bouwen.
+> **✅ Akkoord** → daarna **pagina voor pagina** (afgesproken werkwijze): per pagina de oude layout wisselen voor de nieuwe en de inhoud omzetten, met een controle door jou na elke pagina. Gedeelde componenten (Card, Table, …) worden gebouwd zodra de eerste pagina ze nodig heeft.
+>
+> **Een pagina is klaar** als hij (inclusief de componenten die alleen hij gebruikt) niets meer gebruikt van `@amsterdam/asc-ui`, `styled-components`, `@amsterdam/wonen-ui` en `@amsterdam/amsterdam-react-final-form`/`react-final-form`. Zie de mappings in Fase 3. `@amsterdam/ee-ads-rhf` en `react-hook-form` worden geïnstalleerd bij de eerste pagina met een formulier.
+>
+> Stand bij de start (okt 2026): `wonen-ui` in 32 bestanden (`DefinitionList` 7×, `Table` 6×, `DateDisplay` 6×, `CaseIdDisplay` 4×, `SmallSkeleton` 2×, `List` 2×, `Residents`, `PermitsOverview`, `PermitsSynopsis`, `LoadingRows`, `EventsTimeline` 1×); `amsterdam-react-final-form` in 37 (`FormPositioner` 25×, `ScaffoldForm` 8×, scaffold-velden); `react-final-form` in 3; `asc-ui` in 90; `styled-components` in 23.
+
+#### Status pilot: gebouwd, wacht op test
+
+- **Layout** `src/components/DefaultLayout/DefaultLayout.tsx`: `PageHeader` met "Amsterdamse Zaak Administratie <omgeving>" (kort: "AZA <omgeving>") en logo-link naar `/`; menu (in de header op smalle schermen, links op brede) met Zaken, Taken, Invordering, Digitaal toezicht (externe link naar TON, nieuw tabblad), Zoeken, Hulp en "Uitloggen (<voornaam>)". Daaronder breadcrumbs en flash messages.
+- **Bewuste verschillen met de oude layout:**
+  - Menu-items waarvoor je geen recht hebt worden **verborgen** (zoals top-frontend-v2). Invorderingscheck stond eerst uitgeschakeld in beeld.
+  - Flash messages zijn ADS-`Alert`s: rood bij een fout, groen bij succes (eerst blauw).
+  - De voornaam staat bij "Uitloggen" in het menu, niet meer rechtsboven.
+  - De zwevende feedbackknop is nog de oude (asc-ui); die gaat mee als het feedback-component aan de beurt is.
+- **Pilotpagina:** `app/pages/errors/NotFoundPage.tsx` (ADS `Heading` + `Paragraph`).
+- **Tests:** rendertest van de layout via de 404-pagina (menu met/zonder rechten, externe link, flash message tonen en wegklikken). `src/test-utils/setupTests.ts` bootst `matchMedia` na, die ADS gebruikt en jsdom niet heeft.
+- **Menulabels** zijn kort en staan vast in de layout ("Zaken", "Taken", "Invordering"): het menu is smal en langere woorden (Zakenoverzicht, Invorderingscheck) werden afgebroken met een koppelteken. De paginatitels in `routes` blijven voluit.
+- Gevonden bij het testen: **geen iconen te zien.** ADS rendert sommige elementen met het `hidden`-attribuut en toont ze pas via de eigen CSS (zodat ze verborgen blijven tot de CSS geladen is). De `GlobalStyle` van asc-ui (`normalize()` van polished) voegt `[hidden] { display: none }` toe ná onze CSS, met hetzelfde gewicht, en verbergt ze dus allemaal. `src/styles/design-system-overrides.css` zet de bedoelde `display` terug voor `.ams-icon`, de checkbox-/radio-markering, paginerings- en tabnavigatielabels, en voor de menuknop in de header (daardoor ontbrak op smalle schermen het hele menu). Weg samen met asc-ui (Fase 5).
+- **Menu-iconen:** de gevulde variant (`…FillIcon`) waar die bestaat, zoals ADS voorschrijft. Zaken heeft de map (`FolderFillIcon`).
+- **CSS-volgorde:** `index.css` (ADS) wordt in `index.tsx` als eerste geïmporteerd, vóór `App`. Anders komen de ADS-regels in de bundel ná de CSS Modules en winnen ze bij gelijk gewicht, waardoor pagina-CSS ADS niet kan overschrijven (gevonden bij de 404: `.ams-icon` heeft `align-self: baseline`, wat het centreren van het icoon tenietdeed).
+- **Pagina-opbouw:** ADS v4 staat in compact mode: grijze pagina (`--ams-color-background-body`) met witte `Grid.Cell`-vlakken. De layout zet de inhoud in een `Grid` (`paddingVertical`/`gapVertical` "large"); **elke pagina levert één of meer `Grid.Cell`s** (zoals top-frontend-v2). Breadcrumbs en flash messages zijn transparante cellen die alleen verschijnen als er iets te tonen is.
+- **404-pagina** zoals in top-frontend-v2: direct op de grijze achtergrond (transparante cel), met verdrietig gezicht, "404 – Oeps! We zijn de weg even kwijt.", uitleg en een knop "Terug naar de startpagina"; opmaak in `NotFoundPage.module.css`.
+
+Testchecklist:
+
+- [ ] Ga naar een niet-bestaande url (bijv. `/bestaat-niet`): de 404-pagina in de nieuwe layout, direct op de grijze achtergrond; de knop gaat naar de startpagina.
+- [ ] Het menu toont iconen (breed én smal scherm).
+- [ ] Smal scherm (smaller dan 1160 px): de menuknop staat rechts in de header en klapt het menu open en dicht; op een breed scherm is de knop weg en staat het menu links.
+- [ ] Header: naam van de app met omgeving; het logo gaat naar de startpagina zonder volledige herlaad.
+- [ ] Menu op een breed scherm (links) en smal scherm (menuknop in de header): alle items werken, zonder volledige herlaad en zonder afgebroken labels; Invordering en Digitaal toezicht alleen met het recht; Digitaal toezicht opent TON in een nieuw tabblad.
+- [ ] "Uitloggen (<voornaam>)" logt uit.
+- [ ] Toetsenbord: Tab vanaf de bovenkant toont "Direct naar: inhoud".
+- [ ] De andere pagina's (asc-ui) zien er precies hetzelfde uit als voorheen, ook de avatar in het takenoverzicht.
 
 ## Fase 3 — Verticale migratie per domein (± 4–8 weken)
 
