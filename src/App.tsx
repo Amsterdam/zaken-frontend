@@ -7,7 +7,6 @@ import { queryClient } from "@/api/queryClient"
 import { hasAuthParams, useAuth } from "react-oidc-context"
 import Router from "app/routing/components/Router"
 import FlashMessageProvider from "app/state/flashMessages/FlashMessageProvider"
-import ValueProvider from "app/state/context/ValueProvider"
 import PageTitle from "app/routing/components/PageTitle"
 import {
   LoadingScreenBasic,
@@ -60,11 +59,9 @@ const App = () => {
         <BrowserRouter>
           <FlashMessageProvider>
             <QueryClientProvider client={queryClient}>
-              <ValueProvider>
-                <PageTitle />
-                <Feedback />
-                <Router />
-              </ValueProvider>
+              <PageTitle />
+              <Feedback />
+              <Router />
               {import.meta.env.DEV && <ReactQueryDevtools />}
             </QueryClientProvider>
           </FlashMessageProvider>

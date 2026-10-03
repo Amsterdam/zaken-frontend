@@ -143,7 +143,8 @@ const CasesFilter: React.FC<Props> = ({
     setResetCount((count) => count + 1)
   }
 
-  // Projects, subjects and tags belong to a theme: no theme, no options.
+  // Projects, subjects and tags belong to a theme: without a theme they are
+  // shown, but there is nothing to choose yet.
   const themeFilters = [
     {
       key: "projects",
@@ -158,7 +159,7 @@ const CasesFilter: React.FC<Props> = ({
       selected: selectedSubjects,
     },
     { key: "tags", label: "Tags", options: tags, selected: selectedTags },
-  ].filter(({ options }) => options !== undefined && options.length > 0)
+  ]
 
   return (
     <div className={filterStyles.filters}>
@@ -200,6 +201,8 @@ const CasesFilter: React.FC<Props> = ({
               label={label}
               options={byId(options)}
               value={selected}
+              disabled={theme === ""}
+              placeholder={theme === "" ? "Kies eerst een thema" : undefined}
               onChange={(value) => onChangeFilter(key, value)}
             />
           ))}

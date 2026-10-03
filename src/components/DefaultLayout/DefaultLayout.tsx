@@ -14,7 +14,6 @@ import {
   EuroCoinsFillIcon,
   FolderFillIcon,
   LogOutIcon,
-  MonitorIcon,
   QuestionMarkCircleIcon,
   SearchIcon,
 } from "@amsterdam/design-system-react-icons"
@@ -30,28 +29,22 @@ type MenuItem = {
   icon: typeof FolderFillIcon
   label: string
   permission?: components["schemas"]["PermissionsEnum"]
-  external?: boolean
 }
 
 // Items without the permission are left out (like top-frontend-v2).
-// The labels are short on purpose: the menu is narrow and longer words get hyphenated.
+// The menu is narrow: a long word gets a soft hyphen (\u00AD) where it may
+// break, e.g. "Zaken-overzicht" (see design-system-overrides.css).
 const menuItems: MenuItem[] = [
-  { href: "/zaken", icon: FolderFillIcon, label: "Zaken" },
-  { href: "/taken", icon: ClipboardFillIcon, label: "Taken" },
+  // The start page comes first.
+  { href: "/", icon: SearchIcon, label: "Zoeken" },
+  { href: "/taken", icon: ClipboardFillIcon, label: "Taken\u00ADoverzicht" },
+  { href: "/zaken", icon: FolderFillIcon, label: "Zaken\u00ADoverzicht" },
   {
     href: "/invorderingen",
     icon: EuroCoinsFillIcon,
     label: "Invordering",
     permission: "access_recovery_check",
   },
-  {
-    href: env.VITE_TON_FRONTEND_URL,
-    icon: MonitorIcon,
-    label: "Digitaal toezicht",
-    permission: "access_sigital_surveillance",
-    external: true,
-  },
-  { href: "/", icon: SearchIcon, label: "Zoeken" },
   { href: "/hulp", icon: QuestionMarkCircleIcon, label: "Hulp" },
 ]
 
@@ -76,9 +69,8 @@ export function DefaultLayout({ children }: Props) {
   )
 
   const onClickItem =
-    ({ href, external }: MenuItem) =>
+    ({ href }: MenuItem) =>
     (event: MouseEvent) => {
-      if (external) return
       event.preventDefault()
       navigate(href)
     }
@@ -96,10 +88,6 @@ export function DefaultLayout({ children }: Props) {
           href={item.href}
           icon={item.icon}
           onClick={onClickItem(item)}
-          {...(item.external && {
-            target: "_blank",
-            rel: "noopener noreferrer",
-          })}
         >
           {item.label}
         </Menu.Link>

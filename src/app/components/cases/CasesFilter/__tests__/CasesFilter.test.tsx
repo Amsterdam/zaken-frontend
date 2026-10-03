@@ -124,6 +124,9 @@ describe("CasesFilter", () => {
       "Thema",
       "Aanleiding",
       "Stadsdelen",
+      "Projecten",
+      "Onderwerpen",
+      "Tags",
       "Corporaties",
       "Startdatum",
       "Toon zaken",
@@ -153,7 +156,10 @@ describe("CasesFilter", () => {
 
     expect(state()).toMatchObject({ theme: "", reason: "", projects: [] })
     // No theme, no projects to choose from.
-    expect(screen.queryByLabelText("Projecten")).toBeNull()
+    expect(screen.getByLabelText<HTMLInputElement>("Projecten").disabled).toBe(
+      true,
+    )
+    expect(screen.getAllByText("Kies eerst een thema")).toHaveLength(3)
   })
 
   it("keeps the less used filters behind a button", () => {

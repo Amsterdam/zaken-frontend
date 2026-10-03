@@ -1,5 +1,4 @@
-import { useEffect, useContext } from "react"
-import { Heading } from "@amsterdam/asc-ui"
+import { Column, Grid, Heading, Row } from "@amsterdam/design-system-react"
 import {
   useCaseThemes,
   useCorporations,
@@ -18,14 +17,10 @@ import TasksFilter from "../TasksFilter/TasksFilter"
 import useHasPermission, {
   SENSITIVE_CASE_PERMISSION,
 } from "@/hooks/useHasPermission"
-import { ContextValues } from "app/state/context/ValueProvider"
 import CaseEnforcement from "app/components/case/icons/CaseEnforcement"
 import getThemeId from "app/components/tasks/utils/getThemeId"
 import { useMappedTaskOwners } from "../hooks/useMappedTaskOwners"
-
-import styles from "./Tasks.module.css"
-
-type Item = string | components["schemas"]["District"]["name"][]
+import { useTasksFilters } from "../useTasksFilters"
 
 const EMPTY_TEXT_NO_PERMISSION =
   "Helaas, u bent niet geautoriseerd om deze taken te bekijken."
@@ -33,10 +28,7 @@ const EMPTY_TEXT = "Er zijn momenteel geen open taken voor de gekozen filters."
 const ONDERMIJNING = "Ondermijning"
 
 const Tasks: React.FC = () => {
-  const {
-    tasks: context,
-    tasks: { updateContextTasks },
-  } = useContext(ContextValues)
+  const { filters, update } = useTasksFilters()
   const {
     districtNames,
     housingCorporations,
@@ -45,17 +37,18 @@ const Tasks: React.FC = () => {
     pagination,
     projects,
     reason,
-    role,
     sorting,
     subjects,
     tags,
     taskNames,
     theme,
-  } = context
+  } = filters
 
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const { data: roles } = useRoles()
   const { data: me } = useUsersMe()
+  // Until you choose a role, the overview shows the tasks of your own role.
+  const role = filters.role ?? me?.role ?? ""
   const { data: caseThemes } = useCaseThemes()
   const { data: reasons } = useTasksReasons(theme)
   const themeId = getThemeId(caseThemes?.results, theme)
@@ -104,129 +97,77 @@ const Tasks: React.FC = () => {
   })
   const { data: taskNamesData } = useTaskNames(theme ?? null, role ?? null)
 
-  useEffect(() => {
-    // Set initial role when loaded for the first time
-    if (me?.role && role === undefined) {
-      updateContextTasks({ role: me.role })
-    }
-  }, [me, role, updateContextTasks])
-
-  const onChangeFilter = (key: string, item: Item) => {
-    const updates = {
-      [key]: item,
-      pagination: { ...pagination, page: 1 },
-    }
-    // When role is set we need to reset the taskNames dropdown to avoid a stale selection:
-    if (key === "role" || key === "theme") {
-      updates.taskNames = ""
-    }
-    /*
-     ** When theme is set we need to reset the selection for reason and
-     ** housingCorporations to avoid a stale selection:
-     */
-    if (key === "theme") {
-      updates.projects = []
-      updates.reason = ""
-      updates.subjects = []
-      updates.tags = []
-    }
-    updateContextTasks(updates)
+  const onChangeTable = ({ page = 1 }: TABLE.Schemas.Pagination) => {
+    update((current) => ({ pagination: { ...current.pagination, page } }))
   }
 
-  const onChangePageSize = (pageSize: string) => {
-    updateContextTasks({
-      pagination: {
-        ...pagination,
-        pageSize: parseInt(pageSize),
-        page: 1,
-      },
-    })
-  }
-
-  const onChangeTable = (
-    pagination: TABLE.Schemas.Pagination,
-    sorting: TABLE.Schemas.Sorting,
-  ) => {
-    updateContextTasks({ pagination, sorting })
-  }
-
-  const districts = tasksDistricts?.results || []
   const emptyPlaceholder =
     hasPermission === false && theme === ONDERMIJNING
       ? EMPTY_TEXT_NO_PERMISSION
       : EMPTY_TEXT
-  const enforcementTasksAvailable = !!enforcementDataSource?.results?.length
+  const enforcementTasks = enforcementDataSource?.results ?? []
+  const enforcementTasksAvailable = enforcementTasks.length > 0
 
   return (
-    <div className={styles.container}>
-      <div>
-        {enforcementTasksAvailable && (
-          <div className={styles.wrap}>
-            <Heading as="h2" className={styles.heading}>
-              <span>
-                Handhavingsverzoeken ({enforcementDataSource?.count})
-                <span style={{ marginLeft: "0.5rem" }}>
-                  <CaseEnforcement isVisible={true} />
-                </span>
-              </span>
+    <>
+      <Grid.Cell span="all" appearance="transparent">
+        <Heading level={1}>Takenoverzicht</Heading>
+      </Grid.Cell>
+      <Grid.Cell span="all">
+        <Column gap="large">
+          <TasksFilter
+            corporations={corporationData?.results}
+            districts={tasksDistricts?.results ?? []}
+            myRole={me?.role ?? ""}
+            projects={projectsTheme?.results}
+            reasons={reasons}
+            roles={roles}
+            subjects={subjectsTheme?.results}
+            tags={tagsTheme?.results}
+            taskNames={taskNamesData}
+            taskOwners={mappedTaskOwners}
+            themes={caseThemes?.results}
+          />
+          {enforcementTasksAvailable && (
+            <Column>
+              <Row gap="small" alignVertical="center">
+                <Heading level={2}>
+                  Handhavingsverzoeken ({enforcementDataSource?.count})
+                </Heading>
+                <CaseEnforcement isVisible={true} />
+              </Row>
+              <TableTasks
+                data={enforcementTasks}
+                isBusy={isLoadingEnforcement || isPlaceholderEnforcement}
+                // As many as there are, so the table keeps its height while loading.
+                numLoadingRows={enforcementTasks.length}
+                pagination={false}
+                emptyPlaceholder={emptyPlaceholder}
+              />
+            </Column>
+          )}
+          <Column>
+            <Heading level={2}>
+              Alle {enforcementTasksAvailable ? "overige" : ""} taken (
+              {dataSource?.count ?? 0})
             </Heading>
             <TableTasks
-              data={enforcementDataSource?.results || []}
-              isBusy={isLoadingEnforcement || isPlaceholderEnforcement}
+              data={dataSource?.results ?? []}
+              isBusy={isLoading || isPlaceholderData}
+              // As many as a page has, so the table keeps its height while loading.
+              numLoadingRows={pagination.pageSize}
               onChange={onChangeTable}
-              pagination={false}
-              sorting={sorting}
+              pagination={{
+                page: pagination.page,
+                pageSize: pagination.pageSize,
+                collectionSize: dataSource?.count || 1,
+              }}
               emptyPlaceholder={emptyPlaceholder}
             />
-          </div>
-        )}
-        <Heading as="h2">
-          Alle {enforcementTasksAvailable ? "overige" : ""} taken (
-          {dataSource?.count ?? 0})
-        </Heading>
-        <TableTasks
-          data={dataSource?.results ?? []}
-          isBusy={isLoading || isPlaceholderData}
-          onChange={onChangeTable}
-          pagination={{
-            page: pagination.page,
-            pageSize: pagination.pageSize,
-            collectionSize: dataSource?.count || 1,
-            paginationLength: 9,
-          }}
-          sorting={sorting}
-          emptyPlaceholder={emptyPlaceholder}
-        />
-      </div>
-      <div className={styles.filterContainer}>
-        <TasksFilter
-          districtNames={districtNames}
-          districts={districts}
-          corporations={corporationData?.results}
-          corporationIsNull={housingCorporationIsNull}
-          pageSize={pagination.pageSize?.toString() || "25"}
-          projects={projectsTheme?.results}
-          role={role ?? ""}
-          roles={roles}
-          reason={reason}
-          reasons={reasons}
-          selectedCorporations={housingCorporations}
-          selectedOwners={owners}
-          selectedProjects={projects}
-          selectedSubjects={subjects}
-          selectedTags={tags}
-          selectedTaskNames={taskNames}
-          onChangePageSize={onChangePageSize}
-          onChangeFilter={onChangeFilter}
-          subjects={subjectsTheme?.results}
-          tags={tagsTheme?.results}
-          taskNames={taskNamesData}
-          taskOwners={mappedTaskOwners}
-          theme={theme}
-          themes={caseThemes?.results}
-        />
-      </div>
-    </div>
+          </Column>
+        </Column>
+      </Grid.Cell>
+    </>
   )
 }
 

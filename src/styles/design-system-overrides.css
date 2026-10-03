@@ -26,6 +26,14 @@
   display: initial;
 }
 
+/*
+ * A menu label only breaks where it has a soft hyphen ("Zaken-overzicht"),
+ * not where the browser thinks fit ("Zakenover-zicht").
+ */
+.ams-menu__link {
+  hyphens: manual;
+}
+
 /* The menu button in the header (narrow window) and the spacer next to it. */
 .ams-page-header__logo-link--hidden[hidden] {
   display: flex;

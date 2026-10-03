@@ -10,11 +10,6 @@ vi.mock("@/api/hooks", () => ({
   useUsersMe: () => ({ data: { permissions } }),
 }))
 
-// The .env files are not loaded in tests; without a href the item is no link.
-vi.mock("app/config/env", () => ({
-  env: { VITE_TON_FRONTEND_URL: "https://ton.example/" },
-}))
-
 vi.mock("react-oidc-context", () => ({
   useAuth: () => ({ signoutRedirect: vi.fn() }),
 }))
@@ -63,24 +58,22 @@ describe("DefaultLayout (via the 404 page)", () => {
     expect(screen.getByRole("heading", { name: /^404/ })).toBeTruthy()
     const labels = sideMenu()
       .getAllByRole("link")
-      .map((link) => link.textContent)
+      // Without the soft hyphens of the long labels.
+      .map((link) => link.textContent?.replaceAll("\u00AD", ""))
     expect(labels).toEqual([
-      "Zaken",
-      "Taken",
       "Zoeken",
+      "Takenoverzicht",
+      "Zakenoverzicht",
       "Hulp",
       "Uitloggen (Jan)",
     ])
   })
 
   it("only shows the items you have the permission for", () => {
-    permissions = ["access_recovery_check", "access_sigital_surveillance"]
+    permissions = ["access_recovery_check"]
     renderPage()
 
     expect(sideMenu().getByRole("link", { name: "Invordering" })).toBeTruthy()
-    const external = sideMenu().getByRole("link", { name: "Digitaal toezicht" })
-    expect(external.getAttribute("href")).toBe("https://ton.example/")
-    expect(external.getAttribute("target")).toBe("_blank")
   })
 
   it("shows flash messages, and closing one removes it", () => {

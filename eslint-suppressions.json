@@ -245,24 +245,6 @@
       "count": 1
     }
   },
-  "src/app/components/tasks/TableTasks/TableTasks.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 2
-    }
-  },
-  "src/app/components/tasks/TableTasks/columns.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 18
-    },
-    "react-refresh/only-export-components": {
-      "count": 1
-    }
-  },
-  "src/app/components/tasks/TasksFilter/TasksFilter.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    }
-  },
   "src/app/hooks/useURLState/useURLState.ts": {
     "react-hooks/use-memo": {
       "count": 1
@@ -271,24 +253,6 @@
   "src/app/pages/cases/details/hooks/useExistingCase.tsx": {
     "react-refresh/only-export-components": {
       "count": 1
-    }
-  },
-  "src/app/state/context/ValueProvider.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    },
-    "react-refresh/only-export-components": {
-      "count": 1
-    }
-  },
-  "src/app/state/context/initialState.ts": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    }
-  },
-  "src/app/state/context/reducer.ts": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 2
     }
   },
   "src/app/state/flashMessages/FlashMessageProvider.tsx": {

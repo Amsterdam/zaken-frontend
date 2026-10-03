@@ -18,7 +18,7 @@ Doel: zaken-frontend omzetten naar dezelfde toekomstbestendige stack als [`top-f
 
 - **Fase 0 ✅** Tooling: ESLint flat config (met bulk suppressions), Prettier (hele codebase geformatteerd), Testing Library 16, `@/`-alias, `AGENTS.md`.
 - **Fase 1 ✅** Alle data via TanStack Query (`src/api/`); de oude laag `src/app/state/rest/` en `axios`, `qs`, `lodash.merge`, `lodash.isempty` zijn weg. Mutaties werken alleen bij wat de gewijzigde data toont, vaak zonder refetch.
-- **Fase 2 (bezig):** ADS staat naast `asc-ui`; de pilot (nieuwe layout `src/components/DefaultLayout/` op de 404-pagina) is ✅ akkoord. Nu pagina voor pagina, met een controle na elke pagina: 404, Hulp, 403 en `/auth` (pilot voor `Description`, de vervanger van `DefinitionList` van `wonen-ui`) de invorderingscheck en de startpagina (adres zoeken) zijn ✅ akkoord. Bezig: het zakenoverzicht, in drie stappen: (1) layout + `Table` — ✅ akkoord; (2) filters naar ADS, boven de tabel — ✅ akkoord; (3) filters naar de URL — omgezet, wacht op test.
+- **Fase 2 (bezig):** ADS staat naast `asc-ui`; de pilot (nieuwe layout `src/components/DefaultLayout/` op de 404-pagina) is ✅ akkoord. Nu pagina voor pagina, met een controle na elke pagina: 404, Hulp, 403 en `/auth` (pilot voor `Description`, de vervanger van `DefinitionList` van `wonen-ui`) de invorderingscheck en de startpagina (adres zoeken) zijn ✅ akkoord. Bezig: het zakenoverzicht, in drie stappen: (1) layout + `Table` — ✅ akkoord; (2) filters naar ADS, boven de tabel — ✅ akkoord; (3) filters naar de URL — ✅ akkoord. Het takenoverzicht is omgezet met dezelfde tabel, filterrij en URL-opzet en wacht op test.
 - **Restpunten:** filters van de overzichten naar de URL (eigen pilot, past bij Fase 3); `immer` (weg met flash messages → toasts en `ShowHide`); `lodash` (weg met `amsterdam-react-final-form`); 155 vastgelegde lint-overtredingen in `eslint-suppressions.json` (lossen grotendeels op in Fase 3).
 
 ## 1. Uitgangssituatie (gemeten op `main`, okt 2026)
@@ -372,7 +372,7 @@ Testchecklist (per formulier: invullen, bevestigen, terug op de zaak):
 - [x] Dependencies weg: `axios`, `qs`, `lodash.merge`, `lodash.isempty` (+ `@types/qs`, `@types/lodash.merge`, `@types/lodash.isempty`). De build controleert dat geen andere library er stilletjes op leunde.
 - [ ] `immer` blijft nog: gebruikt door `useFlashMessagesReducer` en `ShowHide` (gaan weg met de flash messages → toasts in Fase 2 en `ShowHide` in Fase 3).
 - [x] `ValueProvider`: de ongebruikte `results`/`count` zijn weg; alleen de filterwaarden staan er nog in.
-- [ ] `ValueProvider` vervangen door de URL (search params) voor de filters van het zaken- en takenoverzicht. Zakenoverzicht: gedaan in Fase 2 (stap 3 van het zakenoverzicht, zie daar). Takenoverzicht: volgt met die pagina.
+- [x] `ValueProvider` vervangen door de URL (search params) voor de filters van het zaken- en takenoverzicht. Gedaan in Fase 2 (zie het zaken- en takenoverzicht daar); `src/app/state/context/` is weg.
 
 Testchecklist (de app moet zich precies zo gedragen als na de vorige stappen):
 
@@ -410,7 +410,7 @@ Doel: ADS geïnstalleerd en gedeelde bouwstenen klaar, terwijl asc-ui nog gewoon
 
 #### Status pilot: ✅ akkoord (okt 2026)
 
-- **Layout** `src/components/DefaultLayout/DefaultLayout.tsx`: `PageHeader` met "Amsterdamse Zaak Administratie <omgeving>" (kort: "AZA <omgeving>") en logo-link naar `/`; menu (in de header op smalle schermen, links op brede) met Zaken, Taken, Invordering, Digitaal toezicht (externe link naar TON, nieuw tabblad), Zoeken, Hulp en "Uitloggen (<voornaam>)". Daaronder breadcrumbs en flash messages.
+- **Layout** `src/components/DefaultLayout/DefaultLayout.tsx`: `PageHeader` met "Amsterdamse Zaak Administratie <omgeving>" (kort: "AZA <omgeving>") en logo-link naar `/`; menu (in de header op smalle schermen, links op brede) met Zoeken (de startpagina, bovenaan), Takenoverzicht (de dagelijkse werklijst, vóór de zaken), Zakenoverzicht, Invordering, Hulp en "Uitloggen (<voornaam>)". Daaronder breadcrumbs en flash messages.
 - **Bewuste verschillen met de oude layout:**
   - Menu-items waarvoor je geen recht hebt worden **verborgen** (zoals top-frontend-v2). Invorderingscheck stond eerst uitgeschakeld in beeld.
   - Flash messages zijn ADS-`Alert`s: rood bij een fout, groen bij succes (eerst blauw).
@@ -418,7 +418,8 @@ Doel: ADS geïnstalleerd en gedeelde bouwstenen klaar, terwijl asc-ui nog gewoon
   - De zwevende feedbackknop is nog de oude (asc-ui); die gaat mee als het feedback-component aan de beurt is.
 - **Pilotpagina:** `app/pages/errors/NotFoundPage.tsx` (ADS `Heading` + `Paragraph`).
 - **Tests:** rendertest van de layout via de 404-pagina (menu met/zonder rechten, externe link, flash message tonen en wegklikken). `src/test-utils/setupTests.ts` bootst `matchMedia` na, die ADS gebruikt en jsdom niet heeft.
-- **Menulabels** zijn kort en staan vast in de layout ("Zaken", "Taken", "Invordering"): het menu is smal en langere woorden (Zakenoverzicht, Invorderingscheck) werden afgebroken met een koppelteken. De paginatitels in `routes` blijven voluit.
+- **"Digitaal toezicht" staat niet meer in het menu** (op verzoek weggehaald, ook uit het oude menu). Ook weg: de route `/digitaaltoezicht` met de lege pagina (`pages/ton/`), de uitzondering in `IsAuthorizedMenuButton` en `VITE_TON_FRONTEND_URL` in de `.env`-bestanden (controleer de configuratie van productie).
+- **Menulabels:** "Zakenoverzicht" en "Takenoverzicht" voluit, "Invordering" kort. Het menu is smal, dus de lange woorden breken af; een zacht afbreekstreepje in het label en `hyphens: manual` op `.ams-menu__link` (in `design-system-overrides.css`) zorgen dat dat op de woordgrens gebeurt ("Zaken-overzicht") en niet ergens midden in ("Zakenover-zicht"). De paginatitels in `routes` blijven voluit.
 - Gevonden bij het testen: **geen iconen te zien.** ADS rendert sommige elementen met het `hidden`-attribuut en toont ze pas via de eigen CSS (zodat ze verborgen blijven tot de CSS geladen is). De `GlobalStyle` van asc-ui (`normalize()` van polished) voegt `[hidden] { display: none }` toe ná onze CSS, met hetzelfde gewicht, en verbergt ze dus allemaal. `src/styles/design-system-overrides.css` zet de bedoelde `display` terug voor `.ams-icon`, de checkbox-/radio-markering, paginerings- en tabnavigatielabels, en voor de menuknop in de header (daardoor ontbrak op smalle schermen het hele menu). Weg samen met asc-ui (Fase 5).
 - **Menu-iconen:** de gevulde variant (`…FillIcon`) waar die bestaat, zoals ADS voorschrijft. Zaken heeft de map (`FolderFillIcon`).
 - **CSS-volgorde:** `index.css` (ADS) wordt in `index.tsx` als eerste geïmporteerd, vóór `App`. Anders komen de ADS-regels in de bundel ná de CSS Modules en winnen ze bij gelijk gewicht, waardoor pagina-CSS ADS niet kan overschrijven (gevonden bij de 404: `.ams-icon` heeft `align-self: baseline`, wat het centreren van het icoon tenietdeed).
@@ -438,15 +439,16 @@ Testchecklist:
 
 #### Pagina voor pagina
 
-| Pagina                                                       | Status                                                                          |
-| ------------------------------------------------------------ | ------------------------------------------------------------------------------- |
-| 404 (`pages/errors/NotFoundPage`)                            | ✅ akkoord (pilot)                                                              |
-| Hulp (`pages/help/HelpPage`)                                 | ✅ akkoord                                                                      |
-| 403 (`pages/auth/NotAuthorizedPage`)                         | ✅ akkoord                                                                      |
-| Gebruiker (`pages/auth/AuthPage`, `/auth`)                   | ✅ akkoord (pilot `Description`)                                                |
-| Invorderingscheck (`pages/fines/FinePage`, `/invorderingen`) | ✅ akkoord                                                                      |
-| Adres zoeken / start (`pages/home/HomePage`, `/`)            | ✅ akkoord                                                                      |
-| Zakenoverzicht (`pages/cases/index/IndexPage`, `/zaken`)     | stap 1 en 2 ✅ akkoord; stap 3 van 3 (filters in de URL) omgezet, wacht op test |
+| Pagina                                                       | Status                                                   |
+| ------------------------------------------------------------ | -------------------------------------------------------- |
+| 404 (`pages/errors/NotFoundPage`)                            | ✅ akkoord (pilot)                                       |
+| Hulp (`pages/help/HelpPage`)                                 | ✅ akkoord                                               |
+| 403 (`pages/auth/NotAuthorizedPage`)                         | ✅ akkoord                                               |
+| Gebruiker (`pages/auth/AuthPage`, `/auth`)                   | ✅ akkoord (pilot `Description`)                         |
+| Invorderingscheck (`pages/fines/FinePage`, `/invorderingen`) | ✅ akkoord                                               |
+| Adres zoeken / start (`pages/home/HomePage`, `/`)            | ✅ akkoord                                               |
+| Zakenoverzicht (`pages/cases/index/IndexPage`, `/zaken`)     | ✅ akkoord (3 stappen: `Table`, filters, URL)            |
+| Takenoverzicht (`pages/tasks/IndexPage`, `/taken`)           | omgezet, wacht op test (toewijzen van taken volgt apart) |
 
 **Hulp-pagina:** naar het voorbeeld van de veelgestelde-vragenpagina van top-frontend-v2: titel "Hulp" direct op de grijze achtergrond, daaronder één wit vlak met de vier onderwerpen in een ADS-`Accordion` (dicht bij het openen, net als eerst). Geen icoon meer naast de paginatitel. **Breadcrumbs** staan alleen nog op geneste pagina's: een pagina direct onder home (zoals `/hulp`) krijgt er geen. De lijstjes stonden in de oude versie binnen een alinea (ongeldige HTML); dat zijn nu losse ADS-lijsten. `EmailLink` zit in `HelpContent`; het ongebruikte `PhoneLink` en `HelpContent.module.css` zijn weg. `CustomTooltip` staat nog in dezelfde map omdat de zaakpagina's het gebruiken.
 
@@ -539,7 +541,7 @@ Testchecklist zakenoverzicht stap 1 (✅ akkoord):
 
 Stap 2 (filters) — ✅ akkoord:
 
-- De filters staan **boven de tabel** in één rij die afbreekt naar een volgende regel (naar zwd-frontend), in plaats van een kolom ernaast of eronder. De volgorde loopt van "welke zaken" naar "hoe ze getoond worden": Zoeken, Thema, Aanleiding, Stadsdelen, dan de filters achter de knop **"Alle filters"** (Projecten, Onderwerpen, Tags — alleen bij een thema dat ze heeft —, Corporaties, Startdatum en als laatste Toon zaken, want gesloten zaken zoek je zelden), en tot slot de weergave: Sorteren op en Items per pagina. Staat er bij het openen van de pagina al zo'n filter aan, dan zijn ze meteen zichtbaar.
+- De filters staan **boven de tabel** in één rij die afbreekt naar een volgende regel (naar zwd-frontend), in plaats van een kolom ernaast of eronder. De volgorde loopt van "welke zaken" naar "hoe ze getoond worden": Zoeken, Thema, Aanleiding, Stadsdelen, dan de filters achter de knop **"Alle filters"** (Projecten, Onderwerpen, Tags — uitgeschakeld met "Kies eerst een thema" zolang er geen thema is gekozen —, Corporaties, Startdatum en als laatste Toon zaken, want gesloten zaken zoek je zelden), en tot slot de weergave: Sorteren op en Items per pagina. Staat er bij het openen van de pagina al zo'n filter aan, dan zijn ze meteen zichtbaar.
 - **Zoeken en sorteren staan in dezelfde rij** als de filters, met het label erboven ("Zoeken", "Sorteren op"); de rij breekt als geheel af.
 - De keuzelijsten met één keuze waren radioknoppen en zijn nu een ADS-`Select`. De lijsten met meerdere keuzes waren een zoekveld met aanvinkvakjes en zijn nu de doorzoekbare multiselect (react-select) uit `@amsterdam/ee-ads-rhf`.
 - **"Zonder corporatie" zit in het filter Corporaties**, als eerste optie, en sluit de corporaties uit (en andersom): de API combineert de twee met "en", dus samen gaven ze altijd een lege lijst. Wil je later "of" (Ymere plus zonder corporatie), dan moet `housing_corporation`/`housing_corporation_isnull` in zaken-backend worden aangepast (zaken én taken); het scherm hoeft daar niet voor te veranderen.
@@ -561,7 +563,7 @@ Testchecklist zakenoverzicht stap 2 (✅ akkoord):
 - [x] Open een zaak en ga terug: de filters staan er nog.
 - [x] Het takenoverzicht (nog oud, met de oude filters) werkt nog precies zoals eerst.
 
-Stap 3 (filters in de URL) — omgezet, wacht op test:
+Stap 3 (filters in de URL) — ✅ akkoord:
 
 - Zoekterm, filters, sortering, pagina en aantal per pagina staan in de URL in plaats van in `ValueProvider`, via `useSearchParams` van React Router (`cases/useCasesFilters.ts`). Alleen wat afwijkt van de standaard staat erin, dus de standaardlijst is gewoon `/zaken`. Voorbeeld: `/zaken?thema=Vakantieverhuur&stadsdeel=Noord&stadsdeel=Centrum&sorteer=straat&pagina=2`.
 - Namen en waarden in de URL zijn Nederlands, net als de paden: `zoekterm`, `thema`, `aanleiding`, `stadsdeel`, `project`, `onderwerp`, `tag`, `corporatie`, `zonderCorporatie=ja`, `vanaf` (startdatum), `toon` (`gesloten`/`alle`), `sorteer` (`startdatum`, `gewijzigd`, `straat`, `postcode`, `aanleiding`; met een `-` ervoor voor aflopend), `pagina`, `perPagina`. Een waarde die niet klopt valt terug op de standaard.
@@ -573,12 +575,34 @@ Stap 3 (filters in de URL) — omgezet, wacht op test:
 
 Testchecklist zakenoverzicht stap 3:
 
-- [ ] Zet een paar filters, een sortering en ga naar pagina 2: de URL verandert mee. Herlaad de pagina: dezelfde lijst.
-- [ ] Kopieer de URL naar een nieuw tabblad: dezelfde lijst, met de filters ingevuld (ook de extra filters klappen open als er één aan staat).
-- [ ] Open een zaak en ga terug met de terugknop, met de breadcrumb "Zakenoverzicht" en met het menu: steeds dezelfde filters.
-- [ ] "Wis alle filters": de URL is weer `/zaken`; ga naar een zaak en terug via het menu: de filters blijven leeg.
-- [ ] De terugknop van de browser verlaat het overzicht in één keer (niet filter voor filter).
-- [ ] Het takenoverzicht (nog met de oude filters) werkt nog precies zoals eerst en onthoudt zijn filters.
+- [x] Zet een paar filters, een sortering en ga naar pagina 2: de URL verandert mee. Herlaad de pagina: dezelfde lijst.
+- [x] Kopieer de URL naar een nieuw tabblad: dezelfde lijst, met de filters ingevuld (ook de extra filters klappen open als er één aan staat).
+- [x] Open een zaak en ga terug met de terugknop, met de breadcrumb "Zakenoverzicht" en met het menu: steeds dezelfde filters.
+- [x] "Wis alle filters": de URL is weer `/zaken`; ga naar een zaak en terug via het menu: de filters blijven leeg.
+- [x] De terugknop van de browser verlaat het overzicht in één keer (niet filter voor filter).
+- [x] Het takenoverzicht (nog met de oude filters) werkt nog precies zoals eerst en onthoudt zijn filters.
+
+**Takenoverzicht (`/taken`)** — omgezet, wacht op test. In één keer, met de patronen van het zakenoverzicht:
+
+- Opbouw: titel op de grijze achtergrond en daaronder **één wit vlak** met de filterrij, als er handhavingsverzoeken zijn "Handhavingsverzoeken (n)" met het handje en een tabel zonder paginering, en "Alle (overige) taken (n)" met de tabel en paginering.
+- Tabellen op het gedeelde `Table`: kolommen getypeerd op `CaseUserTask`, datums via `formatDate`, een verlopen slotdatum rood, en als laatste kolom de link "Zaakdetails" (het afgesproken patroon). Geen sortering in de kolomkop; het aantal laadrijen volgt het aantal per pagina.
+- Filterrij (`tasks/TasksFilter`), van "welke taken" naar "hoe getoond": Toegewezen aan, Thema, Rol, Taken, Stadsdelen; achter "Alle filters": Aanleiding, Projecten, Onderwerpen, Tags (uitgeschakeld zolang er geen thema is gekozen) en Corporaties (met "Zonder corporatie" als uitsluitende optie); daarna Sorteren op en Items per pagina; en de knoppen. De keuzelijsten heten "Alle" als standaard.
+- **Rol:** begint op je eigen rol, zoals eerst. In de URL staat pas iets als je kiest: `rol=alle` voor alle rollen, anders de naam. "Wis alle filters" gaat terug naar je eigen rol.
+- Een andere rol of een ander thema wist de gekozen taken; een ander thema wist ook aanleiding, projecten, onderwerpen en tags (zoals eerst).
+- Filters, sortering en pagina staan in de URL (`tasks/useTasksFilters.ts`), met dezelfde Nederlandse namen als het zakenoverzicht plus `toegewezen`, `taak` en `rol`; sorteren op `slotdatum` (standaard, oplopend), `startdatum`, `straat`, `postcode`, `taak`. Ook hier onthoudt het tabblad de laatste filters voor een link zonder filters.
+- **`ValueProvider` is weg** (`src/app/state/context/` en de provider in `App.tsx`): beide overzichten staan nu in de URL. Ook weg: de zes `scaffold*.ts` van `TasksFilter`, `Tasks.module.css`, `shared/FilterMenu`, en `app/components/filters/` (`MultipleOptionsFilterBox`, `NoCorporationFilter`, `FilterStyle` en het nergens gebruikte `MultipleOptionsFilter` met zijn test).
+- **Nog niet omgezet (volgende stap):** het toewijzen van een taak in de kolom Toegewezen (`AssignTask`: avatar, gebruikerskiezer, bevestigingsdialoog). Dat gebruikt nog de asc-ui-`Spinner` en de oude `ConfirmModal`; de vervanger daarvan (ADS `Dialog`) is een eigen pilot. Het handje bij Handhavingsverzoeken is ook nog het oude icoon met tooltip.
+
+Testchecklist takenoverzicht:
+
+- [ ] `/taken`: titel, filterrij, en de taken van je eigen rol; de aantallen kloppen; handhavingsverzoeken staan bovenaan als die er zijn, in hetzelfde witte vlak.
+- [ ] Toegewezen aan (jijzelf staat bovenaan), Thema, Rol, Taken en Stadsdelen filteren direct. Kies een andere rol: de gekozen taken worden gewist en de lijst met taaknamen past zich aan.
+- [ ] "Alle filters": Aanleiding, Corporaties en, bij een thema, Projecten/Onderwerpen/Tags.
+- [ ] Sorteren op en Items per pagina; de paginering onder de tabel; een verlopen slotdatum is rood.
+- [ ] "Zaakdetails" opent de zaak; terug (terugknop, breadcrumb, menu) geeft dezelfde filters. De URL verandert mee en is te delen.
+- [ ] "Wis alle filters" zet alles terug naar je eigen rol.
+- [ ] Een taak toewijzen, aan jezelf en aan een ander, en een toegewezen taak overnemen (met de bevestiging) werkt nog precies zoals eerst.
+- [ ] Smaller scherm: minder kolommen, de filterrij breekt af.
 
 ## Fase 3 — Verticale migratie per domein (± 4–8 weken)
 

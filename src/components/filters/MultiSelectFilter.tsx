@@ -11,6 +11,7 @@ type Props = {
   value: string[]
   onChange: (value: string[]) => void
   placeholder?: string
+  disabled?: boolean
 }
 
 /**
@@ -23,6 +24,7 @@ export function MultiSelectFilter({
   value,
   onChange,
   placeholder = "Alle",
+  disabled,
 }: Props) {
   const id = useId()
 
@@ -42,6 +44,7 @@ export function MultiSelectFilter({
           )
         }
         placeholder={placeholder}
+        isDisabled={disabled}
       />
     </Field>
   )
