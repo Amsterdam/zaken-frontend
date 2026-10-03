@@ -5,14 +5,15 @@ import debounce from "lodash.debounce"
 import { useFilterHandler } from "../CasesFilter/useFilterHandler"
 
 type Props = {
-  searchString: string
+  /** What the field starts with; after that it keeps what you type itself. */
+  initialValue: string
 }
 
 const DELAY = 750
 
-const SearchBarCases: React.FC<Props> = ({ searchString }) => {
+const SearchBarCases: React.FC<Props> = ({ initialValue }) => {
   const { onChangeFilter } = useFilterHandler()
-  const [inputValue, setInputValue] = useState(searchString)
+  const [inputValue, setInputValue] = useState(initialValue)
   const id = useId()
 
   const debouncedSearch = useMemo(

@@ -163,11 +163,6 @@
       "count": 3
     }
   },
-  "src/app/components/cases/CasesFilter/useFilterHandler.ts": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    }
-  },
   "src/app/components/cases/CreateForm/CreateForm.tsx": {
     "@typescript-eslint/no-explicit-any": {
       "count": 3
@@ -280,7 +275,7 @@
   },
   "src/app/state/context/ValueProvider.tsx": {
     "@typescript-eslint/no-explicit-any": {
-      "count": 2
+      "count": 1
     },
     "react-refresh/only-export-components": {
       "count": 1
@@ -288,7 +283,7 @@
   },
   "src/app/state/context/initialState.ts": {
     "@typescript-eslint/no-explicit-any": {
-      "count": 2
+      "count": 1
     }
   },
   "src/app/state/context/reducer.ts": {

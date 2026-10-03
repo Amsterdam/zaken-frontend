@@ -1,102 +1,81 @@
-import { useCallback, useContext } from "react"
-import { initialState } from "app/state/context/initialState"
-import { ContextValues } from "app/state/context/ValueProvider"
+import { useCallback } from "react"
+import {
+  type CasesFilters,
+  defaultCasesFilters,
+  useCasesFilters,
+} from "../useCasesFilters"
 
 type Item = string | string[] | boolean
 
+const firstPage = ({ pagination }: CasesFilters) => ({
+  pagination: { ...pagination, page: 1 },
+})
+
+/** The changes to the filters of the cases overview. Each one goes back to page 1. */
 export function useFilterHandler() {
-  const { pagination, updateContextCases } = useContext(ContextValues)["cases"]
+  const { update } = useCasesFilters()
 
   const onChangeFilter = useCallback(
-    (key: string, item: Item) => {
-      const casesContextItem: Partial<Record<string, any>> = {
+    (key: string, item: Item) =>
+      update((filters) => ({
         [key]: item,
-        pagination: {
-          ...pagination,
-          page: 1,
-        },
-      }
-
-      // Reset dependent filters if theme is changing
-      if (key === "theme") {
-        casesContextItem.reason = ""
-        casesContextItem.projects = []
-        casesContextItem.subjects = []
-        casesContextItem.tags = []
-      }
-
-      updateContextCases(casesContextItem)
-    },
-    [pagination, updateContextCases],
+        ...firstPage(filters),
+        // The filters that depend on the theme.
+        ...(key === "theme" && {
+          reason: "",
+          projects: [],
+          subjects: [],
+          tags: [],
+        }),
+      })),
+    [update],
   )
 
   // "Zonder corporatie" and the corporations exclude each other: the API
   // combines them with "and", which never matches.
   const onChangeCorporations = useCallback(
-    (housingCorporations: string[], housingCorporationIsNull: boolean) => {
-      updateContextCases({
+    (housingCorporations: string[], housingCorporationIsNull: boolean) =>
+      update((filters) => ({
         housingCorporations,
         housingCorporationIsNull,
-        pagination: { ...pagination, page: 1 },
-      })
-    },
-    [pagination, updateContextCases],
+        ...firstPage(filters),
+      })),
+    [update],
   )
 
   const onChangeSorting = useCallback(
-    (sorting: TABLE.Schemas.Sorting) => {
-      updateContextCases({ sorting, pagination: { ...pagination, page: 1 } })
-    },
-    [pagination, updateContextCases],
+    (sorting: CasesFilters["sorting"]) =>
+      update((filters) => ({ sorting, ...firstPage(filters) })),
+    [update],
   )
 
   const onChangePageSize = useCallback(
-    (pageSize: string) => {
-      updateContextCases({
-        pagination: {
-          ...pagination,
-          pageSize: parseInt(pageSize),
-          page: 1,
-        },
-      })
-    },
-    [pagination, updateContextCases],
+    (pageSize: string) =>
+      update({ pagination: { page: 1, pageSize: parseInt(pageSize) } }),
+    [update],
+  )
+
+  const onChangePage = useCallback(
+    (page: number) =>
+      update(({ pagination }) => ({ pagination: { ...pagination, page } })),
+    [update],
   )
 
   // Back to the defaults, the search included; the sorting and the page size stay.
-  const onResetFilters = useCallback(() => {
-    const {
-      addressSearch,
-      districtNames,
-      fromStartDate,
-      housingCorporations,
-      housingCorporationIsNull,
-      openCases,
-      projects,
-      reason,
-      subjects,
-      tags,
-      theme,
-    } = initialState.cases
-    const filters = {
-      addressSearch,
-      districtNames,
-      fromStartDate,
-      housingCorporations,
-      housingCorporationIsNull,
-      openCases,
-      projects,
-      reason,
-      subjects,
-      tags,
-      theme,
-    }
-    updateContextCases({ ...filters, pagination: { ...pagination, page: 1 } })
-  }, [pagination, updateContextCases])
+  const onResetFilters = useCallback(
+    () =>
+      update(({ sorting, pagination }) => ({
+        ...defaultCasesFilters,
+        sorting,
+        pagination: { ...pagination, page: 1 },
+      })),
+    [update],
+  )
 
   return {
     onChangeFilter,
     onChangeCorporations,
+    onChangePage,
     onChangePageSize,
     onChangeSorting,
     onResetFilters,

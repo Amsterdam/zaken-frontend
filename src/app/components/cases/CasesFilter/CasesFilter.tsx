@@ -5,7 +5,7 @@ import dayjs from "dayjs"
 import { MultiSelectFilter } from "@/components/filters/MultiSelectFilter"
 import { type Option, SelectFilter } from "@/components/filters/SelectFilter"
 import filterStyles from "@/components/filters/filters.module.css"
-import { initialState } from "@/app/state/context/initialState"
+import { defaultCasesFilters as defaults } from "../useCasesFilters"
 import CasesSorting from "../CasesSorting/CasesSorting"
 import SearchBarCases from "../SearchBarCases/SearchBarCases"
 import { useFilterHandler } from "./useFilterHandler"
@@ -72,8 +72,6 @@ const noCorporationOption: Option = {
   label: "Zonder corporatie",
 }
 
-const defaults = initialState.cases
-
 /**
  * The search, the sorting and the filters of the cases overview, in one
  * wrapping row above the table (after zwd-frontend). A filter applies as soon
@@ -136,7 +134,8 @@ const CasesFilter: React.FC<Props> = ({
     districtNames.length > 0
 
   const [showAllFilters, setShowAllFilters] = useState(hasMoreFiltersActive)
-  // The search field keeps what you type itself; a new key empties it.
+  // The search field keeps what you type itself; a new key starts it again,
+  // empty (the URL is not updated yet at that moment).
   const [resetCount, setResetCount] = useState(0)
 
   const onClickReset = () => {
@@ -163,7 +162,10 @@ const CasesFilter: React.FC<Props> = ({
 
   return (
     <div className={filterStyles.filters}>
-      <SearchBarCases key={resetCount} searchString={searchString} />
+      <SearchBarCases
+        key={resetCount}
+        initialValue={resetCount === 0 ? searchString : ""}
+      />
       <SelectFilter
         label="Thema"
         options={[{ value: "", label: "Alle" }, ...byName(themes)]}

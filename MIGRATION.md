@@ -18,7 +18,7 @@ Doel: zaken-frontend omzetten naar dezelfde toekomstbestendige stack als [`top-f
 
 - **Fase 0 ✅** Tooling: ESLint flat config (met bulk suppressions), Prettier (hele codebase geformatteerd), Testing Library 16, `@/`-alias, `AGENTS.md`.
 - **Fase 1 ✅** Alle data via TanStack Query (`src/api/`); de oude laag `src/app/state/rest/` en `axios`, `qs`, `lodash.merge`, `lodash.isempty` zijn weg. Mutaties werken alleen bij wat de gewijzigde data toont, vaak zonder refetch.
-- **Fase 2 (bezig):** ADS staat naast `asc-ui`; de pilot (nieuwe layout `src/components/DefaultLayout/` op de 404-pagina) is ✅ akkoord. Nu pagina voor pagina, met een controle na elke pagina: 404, Hulp, 403 en `/auth` (pilot voor `Description`, de vervanger van `DefinitionList` van `wonen-ui`) de invorderingscheck en de startpagina (adres zoeken) zijn ✅ akkoord. Bezig: het zakenoverzicht, in drie stappen: (1) layout + `Table` — ✅ akkoord; (2) filters naar ADS, boven de tabel — omgezet, wacht op test; (3) filters naar de URL.
+- **Fase 2 (bezig):** ADS staat naast `asc-ui`; de pilot (nieuwe layout `src/components/DefaultLayout/` op de 404-pagina) is ✅ akkoord. Nu pagina voor pagina, met een controle na elke pagina: 404, Hulp, 403 en `/auth` (pilot voor `Description`, de vervanger van `DefinitionList` van `wonen-ui`) de invorderingscheck en de startpagina (adres zoeken) zijn ✅ akkoord. Bezig: het zakenoverzicht, in drie stappen: (1) layout + `Table` — ✅ akkoord; (2) filters naar ADS, boven de tabel — ✅ akkoord; (3) filters naar de URL — omgezet, wacht op test.
 - **Restpunten:** filters van de overzichten naar de URL (eigen pilot, past bij Fase 3); `immer` (weg met flash messages → toasts en `ShowHide`); `lodash` (weg met `amsterdam-react-final-form`); 155 vastgelegde lint-overtredingen in `eslint-suppressions.json` (lossen grotendeels op in Fase 3).
 
 ## 1. Uitgangssituatie (gemeten op `main`, okt 2026)
@@ -372,7 +372,7 @@ Testchecklist (per formulier: invullen, bevestigen, terug op de zaak):
 - [x] Dependencies weg: `axios`, `qs`, `lodash.merge`, `lodash.isempty` (+ `@types/qs`, `@types/lodash.merge`, `@types/lodash.isempty`). De build controleert dat geen andere library er stilletjes op leunde.
 - [ ] `immer` blijft nog: gebruikt door `useFlashMessagesReducer` en `ShowHide` (gaan weg met de flash messages → toasts in Fase 2 en `ShowHide` in Fase 3).
 - [x] `ValueProvider`: de ongebruikte `results`/`count` zijn weg; alleen de filterwaarden staan er nog in.
-- [ ] `ValueProvider` vervangen door de URL (search params) voor de filters van het zaken- en takenoverzicht. Bewust nog niet gedaan: dat verandert gedrag (links met filters, terugknop) en verdient een eigen pilot.
+- [ ] `ValueProvider` vervangen door de URL (search params) voor de filters van het zaken- en takenoverzicht. Zakenoverzicht: gedaan in Fase 2 (stap 3 van het zakenoverzicht, zie daar). Takenoverzicht: volgt met die pagina.
 
 Testchecklist (de app moet zich precies zo gedragen als na de vorige stappen):
 
@@ -446,7 +446,7 @@ Testchecklist:
 | Gebruiker (`pages/auth/AuthPage`, `/auth`)                   | ✅ akkoord (pilot `Description`)                                                |
 | Invorderingscheck (`pages/fines/FinePage`, `/invorderingen`) | ✅ akkoord                                                                      |
 | Adres zoeken / start (`pages/home/HomePage`, `/`)            | ✅ akkoord                                                                      |
-| Zakenoverzicht (`pages/cases/index/IndexPage`, `/zaken`)     | stap 1 ✅ akkoord; stap 2 van 3 (filters boven de tabel) omgezet, wacht op test |
+| Zakenoverzicht (`pages/cases/index/IndexPage`, `/zaken`)     | stap 1 en 2 ✅ akkoord; stap 3 van 3 (filters in de URL) omgezet, wacht op test |
 
 **Hulp-pagina:** naar het voorbeeld van de veelgestelde-vragenpagina van top-frontend-v2: titel "Hulp" direct op de grijze achtergrond, daaronder één wit vlak met de vier onderwerpen in een ADS-`Accordion` (dicht bij het openen, net als eerst). Geen icoon meer naast de paginatitel. **Breadcrumbs** staan alleen nog op geneste pagina's: een pagina direct onder home (zoals `/hulp`) krijgt er geen. De lijstjes stonden in de oude versie binnen een alinea (ongeldige HTML); dat zijn nu losse ADS-lijsten. `EmailLink` zit in `HelpContent`; het ongebruikte `PhoneLink` en `HelpContent.module.css` zijn weg. `CustomTooltip` staat nog in dezelfde map omdat de zaakpagina's het gebruiken.
 
@@ -537,7 +537,7 @@ Testchecklist zakenoverzicht stap 1 (✅ akkoord):
 - [x] Smaller scherm: minder kolommen ("Zaakdetails" blijft altijd staan) en de tabel schuift zo nodig zijwaarts.
 - [x] Het takenoverzicht (nog oud) werkt nog precies zoals eerst.
 
-Stap 2 (filters) — omgezet, wacht op test:
+Stap 2 (filters) — ✅ akkoord:
 
 - De filters staan **boven de tabel** in één rij die afbreekt naar een volgende regel (naar zwd-frontend), in plaats van een kolom ernaast of eronder. De volgorde loopt van "welke zaken" naar "hoe ze getoond worden": Zoeken, Thema, Aanleiding, Stadsdelen, dan de filters achter de knop **"Alle filters"** (Projecten, Onderwerpen, Tags — alleen bij een thema dat ze heeft —, Corporaties, Startdatum en als laatste Toon zaken, want gesloten zaken zoek je zelden), en tot slot de weergave: Sorteren op en Items per pagina. Staat er bij het openen van de pagina al zo'n filter aan, dan zijn ze meteen zichtbaar.
 - **Zoeken en sorteren staan in dezelfde rij** als de filters, met het label erboven ("Zoeken", "Sorteren op"); de rij breekt als geheel af.
@@ -551,15 +551,34 @@ Stap 2 (filters) — omgezet, wacht op test:
 - Het gedrag is gelijk gebleven: een filter zet je terug op pagina 1; een ander thema wist aanleiding, projecten, onderwerpen en tags. De staat zit nog in `ValueProvider` (stap 3 zet hem in de URL).
 - Weg: de zes `scaffold*.ts` van `CasesFilter` en `Cases.module.css`. `FilterMenu`, `MultipleOptionsFilterBox` en `NoCorporationFilter` blijven tot het takenoverzicht om is.
 
-Testchecklist zakenoverzicht stap 2:
+Testchecklist zakenoverzicht stap 2 (✅ akkoord):
 
-- [ ] De filters staan boven de tabel en breken netjes af op een smaller scherm; de tabel gebruikt de volle breedte.
-- [ ] Thema, Aanleiding en Items per pagina: elke keuze filtert direct en het aantal in de titel verandert mee.
-- [ ] Stadsdelen: meerdere kiezen, typen om te zoeken, één verwijderen met het kruisje, alles wissen met het kruisje rechts. De lijst klapt open over de tabel heen en ziet eruit als de andere velden.
-- [ ] "Alle filters" toont Corporaties, Startdatum en Toon zaken, vóór Sorteren op. In Corporaties: kies een corporatie en daarna "Zonder corporatie" (de corporatie vervalt), en andersom; kies een thema en Projecten/Onderwerpen/Tags verschijnen (als dat thema ze heeft). Wissel van thema: die keuzes worden gewist.
-- [ ] "Wis alle filters" verschijnt ook na het typen van een zoekterm, zet alle filters terug en maakt het zoekveld leeg; sortering en aantal per pagina blijven.
-- [ ] Open een zaak en ga terug: de filters staan er nog.
-- [ ] Het takenoverzicht (nog oud, met de oude filters) werkt nog precies zoals eerst.
+- [x] De filters staan boven de tabel en breken netjes af op een smaller scherm; de tabel gebruikt de volle breedte.
+- [x] Thema, Aanleiding en Items per pagina: elke keuze filtert direct en het aantal in de titel verandert mee.
+- [x] Stadsdelen: meerdere kiezen, typen om te zoeken, één verwijderen met het kruisje, alles wissen met het kruisje rechts. De lijst klapt open over de tabel heen en ziet eruit als de andere velden.
+- [x] "Alle filters" toont Corporaties, Startdatum en Toon zaken, vóór Sorteren op. In Corporaties: kies een corporatie en daarna "Zonder corporatie" (de corporatie vervalt), en andersom; kies een thema en Projecten/Onderwerpen/Tags verschijnen (als dat thema ze heeft). Wissel van thema: die keuzes worden gewist.
+- [x] "Wis alle filters" verschijnt ook na het typen van een zoekterm, zet alle filters terug en maakt het zoekveld leeg; sortering en aantal per pagina blijven.
+- [x] Open een zaak en ga terug: de filters staan er nog.
+- [x] Het takenoverzicht (nog oud, met de oude filters) werkt nog precies zoals eerst.
+
+Stap 3 (filters in de URL) — omgezet, wacht op test:
+
+- Zoekterm, filters, sortering, pagina en aantal per pagina staan in de URL in plaats van in `ValueProvider`, via `useSearchParams` van React Router (`cases/useCasesFilters.ts`). Alleen wat afwijkt van de standaard staat erin, dus de standaardlijst is gewoon `/zaken`. Voorbeeld: `/zaken?thema=Vakantieverhuur&stadsdeel=Noord&stadsdeel=Centrum&sorteer=straat&pagina=2`.
+- Namen en waarden in de URL zijn Nederlands, net als de paden: `zoekterm`, `thema`, `aanleiding`, `stadsdeel`, `project`, `onderwerp`, `tag`, `corporatie`, `zonderCorporatie=ja`, `vanaf` (startdatum), `toon` (`gesloten`/`alle`), `sorteer` (`startdatum`, `gewijzigd`, `straat`, `postcode`, `aanleiding`; met een `-` ervoor voor aflopend), `pagina`, `perPagina`. Een waarde die niet klopt valt terug op de standaard.
+- **Nieuw:** een link naar het overzicht kun je delen of als bladwijzer bewaren, en herladen houdt de lijst vast.
+- Een filter is geen stap in de geschiedenis (`replace`): "terug" verlaat het overzicht in plaats van filter voor filter terug te lopen.
+- **Onthouden per tabblad:** de laatste filters staan ook in `sessionStorage`. Een link naar `/zaken` zonder filters (het menu, de breadcrumb op een zaak) brengt je terug naar die filters, zoals het voorheen ook werkte. "Wis alle filters" maakt ook dat geheugen leeg. Een nieuw tabblad begint met de standaard.
+- `ValueProvider` bevat alleen nog de filters van het takenoverzicht; de `cases`-tak (state, reducer, actie) is weg.
+- Het startdatumfilter bewaart een datum (`vanaf=2026-09-26`), geen "laatste 7 dagen": een oude link houdt dus die datum. Dat was in het geheugen ook zo.
+
+Testchecklist zakenoverzicht stap 3:
+
+- [ ] Zet een paar filters, een sortering en ga naar pagina 2: de URL verandert mee. Herlaad de pagina: dezelfde lijst.
+- [ ] Kopieer de URL naar een nieuw tabblad: dezelfde lijst, met de filters ingevuld (ook de extra filters klappen open als er één aan staat).
+- [ ] Open een zaak en ga terug met de terugknop, met de breadcrumb "Zakenoverzicht" en met het menu: steeds dezelfde filters.
+- [ ] "Wis alle filters": de URL is weer `/zaken`; ga naar een zaak en terug via het menu: de filters blijven leeg.
+- [ ] De terugknop van de browser verlaat het overzicht in één keer (niet filter voor filter).
+- [ ] Het takenoverzicht (nog met de oude filters) werkt nog precies zoals eerst en onthoudt zijn filters.
 
 ## Fase 3 — Verticale migratie per domein (± 4–8 weken)
 

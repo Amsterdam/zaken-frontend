@@ -1,20 +1,25 @@
 import { fireEvent, render, screen } from "@testing-library/react"
-import { useContext } from "react"
-import ValueProvider, { ContextValues } from "app/state/context/ValueProvider"
+import { MemoryRouter, useLocation } from "react-router-dom"
+import { useCasesFilters } from "../../useCasesFilters"
 import CasesFilter from "../CasesFilter"
 
 type Props = Parameters<typeof CasesFilter>[0]
 
-// The filters of the context, as text, to see what a change does.
-// (Functions are left out of the JSON.)
-const State = () => (
-  <output>{JSON.stringify(useContext(ContextValues).cases)}</output>
-)
+// The filters and the URL, as text, to see what a change does.
+const State = () => {
+  const { filters } = useCasesFilters()
+  return (
+    <>
+      <output>{JSON.stringify(filters)}</output>
+      <p data-testid="search">{useLocation().search}</p>
+    </>
+  )
+}
 const state = () => JSON.parse(screen.getByRole("status").textContent ?? "{}")
 
-// Renders the filter with the values of the context, like the overview does.
+// Renders the filter with the values of the URL, like the overview does.
 const Filter = (props: Partial<Props>) => {
-  const cases = useContext(ContextValues).cases
+  const cases = useCasesFilters().filters
   return (
     <CasesFilter
       date={cases.fromStartDate}
@@ -46,10 +51,10 @@ const Filter = (props: Partial<Props>) => {
 
 const renderFilter = (props: Partial<Props> = {}) =>
   render(
-    <ValueProvider>
+    <MemoryRouter initialEntries={["/zaken"]}>
       <Filter {...props} />
       <State />
-    </ValueProvider>,
+    </MemoryRouter>,
   )
 
 const choose = (label: string, value: string) =>
@@ -64,6 +69,21 @@ const chooseMulti = (label: string, option: string) => {
 }
 
 describe("CasesFilter", () => {
+  beforeEach(() => window.sessionStorage.clear())
+
+  it("keeps the filters in the URL", () => {
+    renderFilter()
+
+    choose("Thema", "Vakantieverhuur")
+    chooseMulti("Stadsdelen", "Noord")
+    chooseMulti("Stadsdelen", "Centrum")
+    choose("Items per pagina", "100")
+
+    expect(screen.getByTestId("search").textContent).toBe(
+      "?thema=Vakantieverhuur&stadsdeel=Noord&stadsdeel=Centrum&perPagina=100",
+    )
+  })
+
   it("applies a filter as soon as you choose, and goes back to page 1", () => {
     renderFilter()
 

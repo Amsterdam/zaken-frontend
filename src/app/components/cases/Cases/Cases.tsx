@@ -1,4 +1,3 @@
-import { useContext } from "react"
 import { Column, Grid, Heading } from "@amsterdam/design-system-react"
 import TableCases from "app/components/cases/TableCases/TableCases"
 import CasesFilter from "app/components/cases/CasesFilter/CasesFilter"
@@ -15,7 +14,8 @@ import {
 import useHasPermission, {
   SENSITIVE_CASE_PERMISSION,
 } from "@/hooks/useHasPermission"
-import { ContextValues } from "app/state/context/ValueProvider"
+import { useFilterHandler } from "app/components/cases/CasesFilter/useFilterHandler"
+import { useCasesFilters } from "app/components/cases/useCasesFilters"
 import getThemeId from "app/components/tasks/utils/getThemeId"
 
 const EMPTY_TEXT_NO_PERMISSION =
@@ -43,8 +43,8 @@ const Cases: React.FC = () => {
     subjects,
     tags,
     theme,
-    updateContextCases,
-  } = useContext(ContextValues)["cases"]
+  } = useCasesFilters().filters
+  const { onChangePage } = useFilterHandler()
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const { data: caseThemes } = useCaseThemes()
   const { data: reasons } = useTasksReasons(theme)
@@ -76,8 +76,8 @@ const Cases: React.FC = () => {
     housingCorporationIsNull,
   })
 
-  const onChangeTable = (pagination: TABLE.Schemas.Pagination) => {
-    updateContextCases({ pagination })
+  const onChangeTable = ({ page = 1 }: TABLE.Schemas.Pagination) => {
+    onChangePage(page)
   }
 
   const themes = caseThemes?.results || []

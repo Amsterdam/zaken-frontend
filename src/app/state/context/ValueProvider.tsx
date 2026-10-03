@@ -10,15 +10,6 @@ const ValueProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
   const value: StateType = {
-    cases: {
-      ...state.cases,
-      updateContextCases: useCallback(
-        (payload: any) => {
-          dispatch({ type: actions.UPDATE_CASES, payload })
-        },
-        [dispatch],
-      ),
-    },
     tasks: {
       ...state.tasks,
       updateContextTasks: useCallback(
