@@ -23,7 +23,7 @@ const markerIcon = L.icon({
 
 // Starts wide enough to see where in the city the place is (7 is the whole
 // city, 16 a single building).
-const DEFAULT_ZOOM = 6
+const DEFAULT_ZOOM = 7
 
 /**
  * A map of Amsterdam with a marker on one place (after the map of
