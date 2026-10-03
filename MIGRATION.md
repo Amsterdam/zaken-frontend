@@ -18,7 +18,7 @@ Doel: zaken-frontend omzetten naar dezelfde toekomstbestendige stack als [`top-f
 
 - **Fase 0 ✅** Tooling: ESLint flat config (met bulk suppressions), Prettier (hele codebase geformatteerd), Testing Library 16, `@/`-alias, `AGENTS.md`.
 - **Fase 1 ✅** Alle data via TanStack Query (`src/api/`); de oude laag `src/app/state/rest/` en `axios`, `qs`, `lodash.merge`, `lodash.isempty` zijn weg. Mutaties werken alleen bij wat de gewijzigde data toont, vaak zonder refetch.
-- **Fase 2 (bezig):** ADS staat naast `asc-ui`; de nieuwe layout (`src/components/DefaultLayout/`) is als pilot op de 404-pagina gezet en wacht op test. Daarna pagina voor pagina, met een controle na elke pagina.
+- **Fase 2 (bezig):** ADS staat naast `asc-ui`; de pilot (nieuwe layout `src/components/DefaultLayout/` op de 404-pagina) is ✅ akkoord. Nu pagina voor pagina, met een controle na elke pagina: de Hulp-pagina is omgezet en wacht op test.
 - **Restpunten:** filters van de overzichten naar de URL (eigen pilot, past bij Fase 3); `immer` (weg met flash messages → toasts en `ShowHide`); `lodash` (weg met `amsterdam-react-final-form`); 155 vastgelegde lint-overtredingen in `eslint-suppressions.json` (lossen grotendeels op in Fase 3).
 
 ## 1. Uitgangssituatie (gemeten op `main`, okt 2026)
@@ -381,7 +381,7 @@ Testchecklist (de app moet zich precies zo gedragen als na de vorige stappen):
 - [x] Adrespagina: andere adressen (huisletter/toevoeging) en het panorama.
 - [x] Filters in zaken- en takenoverzicht blijven bewaard als je naar een zaak gaat en terugkomt.
 
-## Fase 2 — Amsterdam Design System-fundament (pilot gebouwd, okt 2026)
+## Fase 2 — Amsterdam Design System-fundament (pilot akkoord, okt 2026)
 
 Doel: ADS geïnstalleerd en gedeelde bouwstenen klaar, terwijl asc-ui nog gewoon werkt.
 
@@ -408,7 +408,7 @@ Doel: ADS geïnstalleerd en gedeelde bouwstenen klaar, terwijl asc-ui nog gewoon
 >
 > Stand bij de start (okt 2026): `wonen-ui` in 32 bestanden (`DefinitionList` 7×, `Table` 6×, `DateDisplay` 6×, `CaseIdDisplay` 4×, `SmallSkeleton` 2×, `List` 2×, `Residents`, `PermitsOverview`, `PermitsSynopsis`, `LoadingRows`, `EventsTimeline` 1×); `amsterdam-react-final-form` in 37 (`FormPositioner` 25×, `ScaffoldForm` 8×, scaffold-velden); `react-final-form` in 3; `asc-ui` in 90; `styled-components` in 23.
 
-#### Status pilot: gebouwd, wacht op test
+#### Status pilot: ✅ akkoord (okt 2026)
 
 - **Layout** `src/components/DefaultLayout/DefaultLayout.tsx`: `PageHeader` met "Amsterdamse Zaak Administratie <omgeving>" (kort: "AZA <omgeving>") en logo-link naar `/`; menu (in de header op smalle schermen, links op brede) met Zaken, Taken, Invordering, Digitaal toezicht (externe link naar TON, nieuw tabblad), Zoeken, Hulp en "Uitloggen (<voornaam>)". Daaronder breadcrumbs en flash messages.
 - **Bewuste verschillen met de oude layout:**
@@ -427,14 +427,30 @@ Doel: ADS geïnstalleerd en gedeelde bouwstenen klaar, terwijl asc-ui nog gewoon
 
 Testchecklist:
 
-- [ ] Ga naar een niet-bestaande url (bijv. `/bestaat-niet`): de 404-pagina in de nieuwe layout, direct op de grijze achtergrond; de knop gaat naar de startpagina.
-- [ ] Het menu toont iconen (breed én smal scherm).
-- [ ] Smal scherm (smaller dan 1160 px): de menuknop staat rechts in de header en klapt het menu open en dicht; op een breed scherm is de knop weg en staat het menu links.
-- [ ] Header: naam van de app met omgeving; het logo gaat naar de startpagina zonder volledige herlaad.
-- [ ] Menu op een breed scherm (links) en smal scherm (menuknop in de header): alle items werken, zonder volledige herlaad en zonder afgebroken labels; Invordering en Digitaal toezicht alleen met het recht; Digitaal toezicht opent TON in een nieuw tabblad.
-- [ ] "Uitloggen (<voornaam>)" logt uit.
-- [ ] Toetsenbord: Tab vanaf de bovenkant toont "Direct naar: inhoud".
-- [ ] De andere pagina's (asc-ui) zien er precies hetzelfde uit als voorheen, ook de avatar in het takenoverzicht.
+- [x] Ga naar een niet-bestaande url (bijv. `/bestaat-niet`): de 404-pagina in de nieuwe layout, direct op de grijze achtergrond; de knop gaat naar de startpagina.
+- [x] Het menu toont iconen (breed én smal scherm).
+- [x] Smal scherm (smaller dan 1160 px): de menuknop staat rechts in de header en klapt het menu open en dicht; op een breed scherm is de knop weg en staat het menu links.
+- [x] Header: naam van de app met omgeving; het logo gaat naar de startpagina zonder volledige herlaad.
+- [x] Menu op een breed scherm (links) en smal scherm (menuknop in de header): alle items werken, zonder volledige herlaad en zonder afgebroken labels; Invordering en Digitaal toezicht alleen met het recht; Digitaal toezicht opent TON in een nieuw tabblad.
+- [x] "Uitloggen (<voornaam>)" logt uit.
+- [x] Toetsenbord: Tab vanaf de bovenkant toont "Direct naar: inhoud".
+- [x] De andere pagina's (asc-ui) zien er precies hetzelfde uit als voorheen, ook de avatar in het takenoverzicht.
+
+#### Pagina voor pagina
+
+| Pagina                            | Status                 |
+| --------------------------------- | ---------------------- |
+| 404 (`pages/errors/NotFoundPage`) | ✅ akkoord (pilot)     |
+| Hulp (`pages/help/HelpPage`)      | omgezet, wacht op test |
+
+**Hulp-pagina:** naar het voorbeeld van de veelgestelde-vragenpagina van top-frontend-v2: titel "Hulp" direct op de grijze achtergrond, daaronder één wit vlak met de vier onderwerpen in een ADS-`Accordion` (dicht bij het openen, net als eerst). Geen icoon meer naast de paginatitel. **Breadcrumbs** staan alleen nog op geneste pagina's: een pagina direct onder home (zoals `/hulp`) krijgt er geen. De lijstjes stonden in de oude versie binnen een alinea (ongeldige HTML); dat zijn nu losse ADS-lijsten. `EmailLink` zit in `HelpContent`; het ongebruikte `PhoneLink` en `HelpContent.module.css` zijn weg. `CustomTooltip` staat nog in dezelfde map omdat de zaakpagina's het gebruiken.
+
+Testchecklist:
+
+- [ ] `/hulp`: titel "Hulp", geen breadcrumbs, wit vlak met de vraag en vier onderwerpen.
+- [ ] Elk onderwerp klapt open en dicht; de tekst is gelijk aan de oude pagina, op de zin "We zijn momenteel bezig met het bijwerken van deze paragraaf…" na (weggehaald).
+- [ ] Support: het refresh-icoon staat netjes in de zin; de e-mailadressen openen je mailprogramma.
+- [ ] Smal scherm: de pagina blijft leesbaar.
 
 ## Fase 3 — Verticale migratie per domein (± 4–8 weken)
 

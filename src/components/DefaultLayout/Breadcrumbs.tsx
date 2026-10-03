@@ -7,17 +7,19 @@ import routes from "app/routing/routes"
 
 /**
  * The path to the current page, from the route config (same as the old
- * asc-ui BreadCrumbs). Only shown below the top level.
+ * asc-ui BreadCrumbs). Only shown on nested pages: a page directly below
+ * home (e.g. /hulp) has no breadcrumbs.
  */
 export function Breadcrumbs() {
   const routeParams = useParams()
   const navigate = useNavigate()
   const route = find(routes, window.location.pathname)
-  const items = (route ? (routes[route].path ?? []) : [])
+  const path = route ? (routes[route].path ?? []) : []
+  const items = path
     .filter((item) => item.title !== undefined)
     .map((item) => ({ title: item.title, href: to(item.path, routeParams) }))
 
-  if (items.length <= 1) return null
+  if (path.length <= 2 || items.length <= 1) return null
 
   const navigateTo = (href: string) => (event: MouseEvent) => {
     event.preventDefault()
