@@ -1,14 +1,21 @@
-import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
-import { RowWithColumn } from "app/components/layouts/Grid"
-import PageHeading from "app/components/shared/PageHeading/PageHeading"
-import FinesSearchWrapper from "app/components/fines/FinesSearchWrapper"
+import { Grid, Heading, Paragraph } from "@amsterdam/design-system-react"
+import { DefaultLayout } from "@/components/DefaultLayout/DefaultLayout"
+import FinesSearchWrapper from "@/app/components/fines/FinesSearchWrapper"
 
 const FinePage: React.FC = () => (
   <DefaultLayout>
-    <RowWithColumn>
-      <PageHeading />
-    </RowWithColumn>
-    <FinesSearchWrapper />
+    <Grid.Cell span="all" appearance="transparent">
+      <Heading level={1} className="ams-mb-s">
+        Invorderingscheck
+      </Heading>
+      <Paragraph>
+        Controleer met de invorderingscheck of de beschikking is opgepakt door
+        belastingen.
+      </Paragraph>
+    </Grid.Cell>
+    <Grid.Cell span="all">
+      <FinesSearchWrapper />
+    </Grid.Cell>
   </DefaultLayout>
 )
 

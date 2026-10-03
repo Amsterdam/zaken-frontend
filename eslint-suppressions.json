@@ -194,11 +194,6 @@
       "count": 25
     }
   },
-  "src/app/components/fines/hooks/useValues.tsx": {
-    "react-refresh/only-export-components": {
-      "count": 1
-    }
-  },
   "src/app/components/permits/PermitsPowerBrowser/PermitsPowerBrowser.tsx": {
     "@typescript-eslint/no-explicit-any": {
       "count": 1

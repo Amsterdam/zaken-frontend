@@ -18,7 +18,7 @@ Doel: zaken-frontend omzetten naar dezelfde toekomstbestendige stack als [`top-f
 
 - **Fase 0 ✅** Tooling: ESLint flat config (met bulk suppressions), Prettier (hele codebase geformatteerd), Testing Library 16, `@/`-alias, `AGENTS.md`.
 - **Fase 1 ✅** Alle data via TanStack Query (`src/api/`); de oude laag `src/app/state/rest/` en `axios`, `qs`, `lodash.merge`, `lodash.isempty` zijn weg. Mutaties werken alleen bij wat de gewijzigde data toont, vaak zonder refetch.
-- **Fase 2 (bezig):** ADS staat naast `asc-ui`; de pilot (nieuwe layout `src/components/DefaultLayout/` op de 404-pagina) is ✅ akkoord. Nu pagina voor pagina, met een controle na elke pagina: Hulp en de 403 zijn ✅ akkoord; `/auth` is omgezet (pilot voor `Description`, de vervanger van `DefinitionList` van `wonen-ui`) en wacht op test.
+- **Fase 2 (bezig):** ADS staat naast `asc-ui`; de pilot (nieuwe layout `src/components/DefaultLayout/` op de 404-pagina) is ✅ akkoord. Nu pagina voor pagina, met een controle na elke pagina: 404, Hulp, 403 en `/auth` (pilot voor `Description`, de vervanger van `DefinitionList` van `wonen-ui`) zijn ✅ akkoord; de invorderingscheck is omgezet en wacht op test.
 - **Restpunten:** filters van de overzichten naar de URL (eigen pilot, past bij Fase 3); `immer` (weg met flash messages → toasts en `ShowHide`); `lodash` (weg met `amsterdam-react-final-form`); 155 vastgelegde lint-overtredingen in `eslint-suppressions.json` (lossen grotendeels op in Fase 3).
 
 ## 1. Uitgangssituatie (gemeten op `main`, okt 2026)
@@ -438,12 +438,13 @@ Testchecklist:
 
 #### Pagina voor pagina
 
-| Pagina                                     | Status                                       |
-| ------------------------------------------ | -------------------------------------------- |
-| 404 (`pages/errors/NotFoundPage`)          | ✅ akkoord (pilot)                           |
-| Hulp (`pages/help/HelpPage`)               | ✅ akkoord                                   |
-| 403 (`pages/auth/NotAuthorizedPage`)       | ✅ akkoord                                   |
-| Gebruiker (`pages/auth/AuthPage`, `/auth`) | omgezet, wacht op test (pilot `Description`) |
+| Pagina                                                       | Status                           |
+| ------------------------------------------------------------ | -------------------------------- |
+| 404 (`pages/errors/NotFoundPage`)                            | ✅ akkoord (pilot)               |
+| Hulp (`pages/help/HelpPage`)                                 | ✅ akkoord                       |
+| 403 (`pages/auth/NotAuthorizedPage`)                         | ✅ akkoord                       |
+| Gebruiker (`pages/auth/AuthPage`, `/auth`)                   | ✅ akkoord (pilot `Description`) |
+| Invorderingscheck (`pages/fines/FinePage`, `/invorderingen`) | omgezet, wacht op test           |
 
 **Hulp-pagina:** naar het voorbeeld van de veelgestelde-vragenpagina van top-frontend-v2: titel "Hulp" direct op de grijze achtergrond, daaronder één wit vlak met de vier onderwerpen in een ADS-`Accordion` (dicht bij het openen, net als eerst). Geen icoon meer naast de paginatitel. **Breadcrumbs** staan alleen nog op geneste pagina's: een pagina direct onder home (zoals `/hulp`) krijgt er geen. De lijstjes stonden in de oude versie binnen een alinea (ongeldige HTML); dat zijn nu losse ADS-lijsten. `EmailLink` zit in `HelpContent`; het ongebruikte `PhoneLink` en `HelpContent.module.css` zijn weg. `CustomTooltip` staat nog in dezelfde map omdat de zaakpagina's het gebruiken.
 
@@ -469,8 +470,24 @@ Testchecklist 403:
 
 Testchecklist `/auth`:
 
-- [ ] `/auth`: titel, wit vlak met je voornaam, achternaam en e-mail naast de labels.
-- [ ] Smal scherm: labels en waarden blijven leesbaar.
+- [x] `/auth`: titel, wit vlak met je voornaam, achternaam en e-mail naast de labels.
+- [x] Smal scherm: labels en waarden blijven leesbaar.
+
+**Invorderingscheck (`/invorderingen`):** titel en uitleg op de grijze achtergrond, daaronder een wit vlak met het zoekveld (ADS `SearchField`, met zoekknop) en het resultaat.
+
+- Zoeken gaat nog steeds bij Enter of de zoekknop; het kenmerk blijft in de URL staan (`?query=…`), zodat herladen hetzelfde resultaat geeft. Het veld toont nu ook wat je typt (in de oude versie stond `value` vast op de laatste zoekopdracht).
+- Resultaat: per beschikking een `Description` met Kenmerk, Status en Datum. De datum komt uit het nieuwe `src/shared/dateFormatters.ts` (`formatDate`, overgenomen uit top-frontend-v2, DD-MM-YYYY) in plaats van `DateDisplay` van `wonen-ui`.
+- Tijdens het zoeken staat er "Zoeken naar de beschikking…" (was een asc-ui-`Spinner`), zoals het zoekscherm van top-frontend-v2.
+- **Bewust anders:** het info-knopje (i) achter "5 werkdagen" opende een modal met één zin. Die zin staat nu gewoon in de tekst ("Binnen die termijn wordt de eerste factuur naar de overtreder verstuurd."). De gedeelde `InfoButton` (asc-ui-modal) blijft bestaan voor de formulieren.
+- Weg: `fines/hooks/useValues.tsx`.
+
+Testchecklist invorderingscheck:
+
+- [ ] `/invorderingen`: titel, uitleg, zoekveld met focus; geen breadcrumbs.
+- [ ] Zoek op een bestaand kenmerk: Kenmerk, Status en Datum (DD-MM-YYYY) verschijnen; de URL krijgt `?query=…`; herladen toont hetzelfde resultaat met het kenmerk in het veld.
+- [ ] Zoek op een onbekend kenmerk: de uitleg dat de beschikking nog niet bekend is.
+- [ ] Zonder het recht `access_recovery_check`: de 403-pagina.
+- [ ] Smal scherm: zoekveld en resultaat blijven bruikbaar.
 
 ## Fase 3 — Verticale migratie per domein (± 4–8 weken)
 
