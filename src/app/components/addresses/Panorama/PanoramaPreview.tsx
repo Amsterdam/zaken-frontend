@@ -1,7 +1,7 @@
-import { useRef } from "react"
-
+import { useRef, useState } from "react"
 import usePanoramaByBagId from "@/hooks/usePanoramaByBagId"
 import useRect from "./hooks/useRect"
+import styles from "./PanoramaPreview.module.css"
 
 type Props = {
   bagId: components["schemas"]["Address"]["bag_id"]
@@ -11,6 +11,10 @@ type Props = {
   fov?: number
 }
 
+/**
+ * The street view of an address. The place is reserved from the start, with a
+ * grey shimmer until the image is there; the image then fades in.
+ */
 const PanoramaPreview: React.FC<Props> = ({
   bagId,
   width: w,
@@ -21,16 +25,25 @@ const PanoramaPreview: React.FC<Props> = ({
   const ref = useRef<HTMLDivElement>(null)
   const rect = useRect(ref, 100)
   const width = w ?? rect.width
-  const height = width !== undefined ? width / aspect : undefined
   const { data } = usePanoramaByBagId(bagId, width, aspect, radius, fov)
+  // The url of the image that has finished loading.
+  const [loadedUrl, setLoadedUrl] = useState<string>()
+  const isLoaded = data !== undefined && loadedUrl === data.url
 
   return (
-    <div ref={ref} style={{ height, backgroundColor: "#f5f5f5" }}>
+    <div
+      ref={ref}
+      className={`${styles.container} ${isLoaded ? styles.loaded : ""}`}
+      style={{ aspectRatio: aspect }}
+    >
       {data ? (
         <img
-          style={{ width: "100%" }}
+          // A new image starts hidden again.
+          key={data.url}
+          className={`${styles.image} ${isLoaded ? styles.imageLoaded : ""}`}
           src={data.url}
           alt={`Panorama preview voor BAG: ${bagId}`}
+          onLoad={() => setLoadedUrl(data.url)}
         />
       ) : null}
     </div>

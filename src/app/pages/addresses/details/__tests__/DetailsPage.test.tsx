@@ -31,6 +31,14 @@ vi.mock("@/api/hooks", () => ({
             verblijfsobjectOppervlakte: 75,
             verblijfsobjectAantalBouwlagen: 1,
             toegangOmschrijvingen: ["Trap", "Lift"],
+            openbareruimteNaam: "Amstel",
+            huisnummer: 1,
+            huisletter: null,
+            huisnummertoevoeging: "H",
+            adresseerbaarObjectPuntGeometrieWgs84: {
+              type: "Point",
+              coordinates: [4.8993, 52.3676],
+            },
             typeAdres: "Hoofdadres",
             typeAdresseerbaarObjectOmschrijving: "Verblijfsobject",
             verblijfsobjectStatusOmschrijving: "Verblijfsobject in gebruik",
@@ -84,7 +92,7 @@ vi.mock("app/state/auth/oidc/useDecodedToken", () => ({
 }))
 
 describe("the tab Adresdetails of an address", () => {
-  it("shows the object, its area and the panorama", () => {
+  it("shows the object, its area, the panorama and the map", () => {
     // The breadcrumbs read the path from window.location.
     window.history.pushState({}, "", `/adres/${BAG_ID}/details`)
     render(
@@ -117,6 +125,12 @@ describe("the tab Adresdetails of an address", () => {
 
     expect(screen.getByText("75m²")).toBeTruthy()
     expect(screen.getByText("Trap, Lift")).toBeTruthy()
+    // The map with the marker on the address.
+    expect(
+      screen.getByRole("region", { name: "Kaart van Amstel 1-H" }),
+    ).toBeTruthy()
+    expect(screen.getByAltText("Amstel 1-H")).toBeTruthy()
+
     // More from the BAG: the kind of address, the building and the area.
     const description = (label: string) =>
       screen.getByText(label, { selector: "dt" }).nextElementSibling

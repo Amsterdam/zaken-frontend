@@ -29,6 +29,11 @@ declare type BAGBenkAggAddress = {
   gebruiksdoelOmschrijvingen: Array<string> | null
   toegangOmschrijvingen: Array<string> | null
   wozSoortObjectOmschrijving: Array<string> | null
+  /** The place as GeoJSON: [longitude, latitude]. */
+  adresseerbaarObjectPuntGeometrieWgs84: {
+    type: "Point"
+    coordinates: [number, number]
+  } | null
   /** Each building as a JSON text, with keys like "bouwjaar Pand". */
   panden: Array<string> | null
 }

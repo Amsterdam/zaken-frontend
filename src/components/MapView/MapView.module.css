@@ -1,0 +1,7 @@
+.container {
+  height: 100%;
+  min-height: 300px;
+  /* Below the header and the dialogs. */
+  z-index: 1;
+  border: 1px solid var(--ams-color-separator);
+}

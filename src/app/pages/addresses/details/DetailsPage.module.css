@@ -1,4 +1,4 @@
-/* The object details next to the panorama; below each other on a narrow window. */
+/* The object details next to the panorama and the map; below each other on a narrow window. */
 .top {
   display: grid;
   gap: var(--ams-space-l);
@@ -9,4 +9,10 @@
   .top {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
+}
+
+.images {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ams-space-l);
 }

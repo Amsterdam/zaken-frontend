@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom"
 import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId"
+import AddressMap from "app/components/addresses/AddressMap/AddressMap"
 import AddressPage from "app/components/addresses/AddressOverview/AddressPage"
 import ObjectDetails from "app/components/addresses/ObjectDetails/ObjectDetails"
 import PanoramaPreview from "app/components/addresses/Panorama/PanoramaPreview"
@@ -20,7 +21,10 @@ const DetailsPage: React.FC = () => {
     <AddressPage bagId={bagId}>
       <div className={styles.top}>
         <ObjectDetails bagId={bagId} />
-        <PanoramaPreview bagId={bagId} />
+        <div className={styles.images}>
+          <PanoramaPreview bagId={bagId} />
+          <AddressMap bagId={bagId} />
+        </div>
       </div>
     </AddressPage>
   )
