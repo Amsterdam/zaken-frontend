@@ -15,7 +15,7 @@ import {
   FolderFillIcon,
   LogOutIcon,
   MonitorIcon,
-  QuestionMarkCircleFillIcon,
+  QuestionMarkCircleIcon,
   SearchIcon,
 } from "@amsterdam/design-system-react-icons"
 import { useUsersMe } from "@/api/hooks"
@@ -51,8 +51,8 @@ const menuItems: MenuItem[] = [
     permission: "access_sigital_surveillance",
     external: true,
   },
-  { href: "/", icon: SearchIcon, label: "Adres zoeken" },
-  { href: "/hulp", icon: QuestionMarkCircleFillIcon, label: "Hulp" },
+  { href: "/", icon: SearchIcon, label: "Zoeken" },
+  { href: "/hulp", icon: QuestionMarkCircleIcon, label: "Hulp" },
 ]
 
 type Props = {

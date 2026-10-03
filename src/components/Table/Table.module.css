@@ -1,0 +1,31 @@
+.wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.headerCell,
+.noWrap {
+  white-space: nowrap;
+}
+
+/* As high as a line of text, so a loading row is as high as a row with data. */
+.loadingCell {
+  display: flex;
+  align-items: center;
+  height: 1lh;
+}
+
+.emptyPlaceholder {
+  font-style: italic;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--ams-space-m);
+}

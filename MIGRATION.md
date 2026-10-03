@@ -18,7 +18,7 @@ Doel: zaken-frontend omzetten naar dezelfde toekomstbestendige stack als [`top-f
 
 - **Fase 0 ✅** Tooling: ESLint flat config (met bulk suppressions), Prettier (hele codebase geformatteerd), Testing Library 16, `@/`-alias, `AGENTS.md`.
 - **Fase 1 ✅** Alle data via TanStack Query (`src/api/`); de oude laag `src/app/state/rest/` en `axios`, `qs`, `lodash.merge`, `lodash.isempty` zijn weg. Mutaties werken alleen bij wat de gewijzigde data toont, vaak zonder refetch.
-- **Fase 2 (bezig):** ADS staat naast `asc-ui`; de pilot (nieuwe layout `src/components/DefaultLayout/` op de 404-pagina) is ✅ akkoord. Nu pagina voor pagina, met een controle na elke pagina: 404, Hulp, 403 en `/auth` (pilot voor `Description`, de vervanger van `DefinitionList` van `wonen-ui`) en de invorderingscheck zijn ✅ akkoord; de startpagina (adres zoeken) is omgezet en wacht op test. De pilot voor `Table` volgt bij het eerste overzicht.
+- **Fase 2 (bezig):** ADS staat naast `asc-ui`; de pilot (nieuwe layout `src/components/DefaultLayout/` op de 404-pagina) is ✅ akkoord. Nu pagina voor pagina, met een controle na elke pagina: 404, Hulp, 403 en `/auth` (pilot voor `Description`, de vervanger van `DefinitionList` van `wonen-ui`) de invorderingscheck en de startpagina (adres zoeken) zijn ✅ akkoord. Bezig: het zakenoverzicht, in drie stappen: (1) layout + `Table` — omgezet, wacht op test; (2) filters naar ADS + react-hook-form, boven de tabel; (3) filters naar de URL.
 - **Restpunten:** filters van de overzichten naar de URL (eigen pilot, past bij Fase 3); `immer` (weg met flash messages → toasts en `ShowHide`); `lodash` (weg met `amsterdam-react-final-form`); 155 vastgelegde lint-overtredingen in `eslint-suppressions.json` (lossen grotendeels op in Fase 3).
 
 ## 1. Uitgangssituatie (gemeten op `main`, okt 2026)
@@ -410,7 +410,7 @@ Doel: ADS geïnstalleerd en gedeelde bouwstenen klaar, terwijl asc-ui nog gewoon
 
 #### Status pilot: ✅ akkoord (okt 2026)
 
-- **Layout** `src/components/DefaultLayout/DefaultLayout.tsx`: `PageHeader` met "Amsterdamse Zaak Administratie <omgeving>" (kort: "AZA <omgeving>") en logo-link naar `/`; menu (in de header op smalle schermen, links op brede) met Zaken, Taken, Invordering, Digitaal toezicht (externe link naar TON, nieuw tabblad), Adres zoeken, Hulp en "Uitloggen (<voornaam>)". Daaronder breadcrumbs en flash messages.
+- **Layout** `src/components/DefaultLayout/DefaultLayout.tsx`: `PageHeader` met "Amsterdamse Zaak Administratie <omgeving>" (kort: "AZA <omgeving>") en logo-link naar `/`; menu (in de header op smalle schermen, links op brede) met Zaken, Taken, Invordering, Digitaal toezicht (externe link naar TON, nieuw tabblad), Zoeken, Hulp en "Uitloggen (<voornaam>)". Daaronder breadcrumbs en flash messages.
 - **Bewuste verschillen met de oude layout:**
   - Menu-items waarvoor je geen recht hebt worden **verborgen** (zoals top-frontend-v2). Invorderingscheck stond eerst uitgeschakeld in beeld.
   - Flash messages zijn ADS-`Alert`s: rood bij een fout, groen bij succes (eerst blauw).
@@ -438,14 +438,15 @@ Testchecklist:
 
 #### Pagina voor pagina
 
-| Pagina                                                       | Status                           |
-| ------------------------------------------------------------ | -------------------------------- |
-| 404 (`pages/errors/NotFoundPage`)                            | ✅ akkoord (pilot)               |
-| Hulp (`pages/help/HelpPage`)                                 | ✅ akkoord                       |
-| 403 (`pages/auth/NotAuthorizedPage`)                         | ✅ akkoord                       |
-| Gebruiker (`pages/auth/AuthPage`, `/auth`)                   | ✅ akkoord (pilot `Description`) |
-| Invorderingscheck (`pages/fines/FinePage`, `/invorderingen`) | ✅ akkoord                       |
-| Zoeken / start (`pages/home/HomePage`, `/`)                  | omgezet, wacht op test           |
+| Pagina                                                       | Status                                                 |
+| ------------------------------------------------------------ | ------------------------------------------------------ |
+| 404 (`pages/errors/NotFoundPage`)                            | ✅ akkoord (pilot)                                     |
+| Hulp (`pages/help/HelpPage`)                                 | ✅ akkoord                                             |
+| 403 (`pages/auth/NotAuthorizedPage`)                         | ✅ akkoord                                             |
+| Gebruiker (`pages/auth/AuthPage`, `/auth`)                   | ✅ akkoord (pilot `Description`)                       |
+| Invorderingscheck (`pages/fines/FinePage`, `/invorderingen`) | ✅ akkoord                                             |
+| Adres zoeken / start (`pages/home/HomePage`, `/`)            | ✅ akkoord                                             |
+| Zakenoverzicht (`pages/cases/index/IndexPage`, `/zaken`)     | stap 1 van 3 (layout + `Table`) omgezet, wacht op test |
 
 **Hulp-pagina:** naar het voorbeeld van de veelgestelde-vragenpagina van top-frontend-v2: titel "Hulp" direct op de grijze achtergrond, daaronder één wit vlak met de vier onderwerpen in een ADS-`Accordion` (dicht bij het openen, net als eerst). Geen icoon meer naast de paginatitel. **Breadcrumbs** staan alleen nog op geneste pagina's: een pagina direct onder home (zoals `/hulp`) krijgt er geen. De lijstjes stonden in de oude versie binnen een alinea (ongeldige HTML); dat zijn nu losse ADS-lijsten. `EmailLink` zit in `HelpContent`; het ongebruikte `PhoneLink` en `HelpContent.module.css` zijn weg. `CustomTooltip` staat nog in dezelfde map omdat de zaakpagina's het gebruiken.
 
@@ -497,17 +498,45 @@ Testchecklist invorderingscheck:
 - Resultaat: een ADS-`LinkList` (naar het voorbeeld van `AddressSearch` in keuzewijzeraardgasvrij-frontend); elk adres is zelf de link naar de adrespagina. Eerst was dit een tabel met een klikbare rij en een losse "Bekijk"-link, maar één kolom met links is geen tabeldata.
 - Mislukt het zoeken bij PDOK, dan staat er een rode `Alert` "Niet gelukt" (eerst leek het dan alsof er geen adressen waren).
 - **De `Table`-pilot is verplaatst** naar het eerste overzicht (taken of zaken): daar is het echte tabeldata en zijn sorteren en paginering nodig. Het eerder gebouwde `src/components/Table/` is weer verwijderd.
-- **Bewust anders:** de kop "Home" en de twee blokken "Takenoverzicht" en "Invorderingscheck" (`HomeMenu`) zijn weg; die staan al in het menu. Het menu-item heet "Adres zoeken" (was "Zoeken").
+- **Bewust anders:** de kop "Home" en de twee blokken "Takenoverzicht" en "Invorderingscheck" (`HomeMenu`) zijn weg; die staan al in het menu. Het menu-item heet "Zoeken"; de pagina zelf "Adres zoeken".
 - Weg: `components/home/HomeMenu`, `search/SearchResults/columns.tsx`.
 
 Testchecklist startpagina:
 
-- [ ] `/`: titel "Adres zoeken", de kop "Bekijk een adres", zoekveld met focus.
-- [ ] Typ een adres (minstens 3 tekens): na een korte pauze verschijnt de lijst met adressen; Enter of de zoekknop zoekt direct.
-- [ ] Onder het zoekveld: eerst "Voer minimaal 3 tekens in om te zoeken.", bij resultaten het aantal met de zoekterm (bij een ruime zoekterm met "(maximaal 25 getoond)"), en bij een onzin-zoekterm "Geen adressen gevonden."
-- [ ] Klik op een adres: de adrespagina opent. Ga terug: de zoekterm en de resultaten staan er nog.
-- [ ] Inloggen vanaf een diepe link (bijv. een zaak) brengt je na het inloggen nog steeds naar die pagina.
-- [ ] Smal scherm: zoekveld en lijst blijven bruikbaar.
+- [x] `/`: titel "Adres zoeken", de kop "Bekijk een adres", zoekveld met focus.
+- [x] Typ een adres (minstens 3 tekens): na een korte pauze verschijnt de lijst met adressen; Enter of de zoekknop zoekt direct.
+- [x] Onder het zoekveld: eerst "Voer minimaal 3 tekens in om te zoeken.", bij resultaten het aantal met de zoekterm (bij een ruime zoekterm met "(maximaal 25 getoond)"), en bij een onzin-zoekterm "Geen adressen gevonden."
+- [x] Klik op een adres: de adrespagina opent. Ga terug: de zoekterm en de resultaten staan er nog.
+- [x] Inloggen vanaf een diepe link (bijv. een zaak) brengt je na het inloggen nog steeds naar die pagina.
+- [x] Smal scherm: zoekveld en lijst blijven bruikbaar.
+
+**Zakenoverzicht (`/zaken`) — in drie stappen** (afgesproken):
+
+1. **Layout + tabel (pilot `Table`)** — omgezet, wacht op test.
+2. **Filters** naar ADS + `react-hook-form` + `@amsterdam/ee-ads-rhf` (installeren is akkoord). De filters komen **boven de tabel** in plaats van ernaast, naar het voorbeeld van `zwd-frontend` (`CasesFilters` + `ActiveFilters` op `CasesPage`); de multiselects worden de react-select uit `@amsterdam/ee-ads-rhf`.
+3. **Filters naar de URL** (het restpunt uit Fase 1; nu staan ze in `ValueProvider`).
+
+Stap 1:
+
+- Nieuw gedeeld component `src/components/Table/` op de ADS-`Table`, naar de tabellen van zwd-frontend en top-frontend-v2: `columns` (`header`, `dataIndex`, `render`, `minWidth`), `data`, `loading`, `numLoadingRows`, `emptyPlaceholder`, `pagination` en `onChange`. Pagineren werkt op de eigen rijen, of van buitenaf (de API pagineert) via `pagination.collectionSize` en `onChange`. Paginering is de ADS-`Pagination`.
+- **Sorteren zit niet in de tabel** (bewuste keuze): geen klikbare kolomkoppen, maar een aparte select "Sorteren op" boven de tabel (`cases/CasesSorting`, bijv. "Straat A-Z", "Startdatum nieuw-oud"). De tabel toont de rijen in de volgorde van de API. De overige vier plekken met de `wonen-ui`-tabel (`TableTasks`, `Workflow`, `OtherAddressesTable`, `CasesByBagId`) sorteren nu nog via de kolomkop; bij het omzetten krijgen ze zo nodig ook een select.
+- Nieuw `src/components/SmallSkeleton/` (uit zwd-frontend) voor de laadrijen; vervangt later ook `SmallSkeleton` van `wonen-ui`.
+- **Geen klikbare rij** (bewuste keuze, voor toegankelijkheid): een rij-klik werkt niet met toetsenbord of schermlezer en zit tekst selecteren en Ctrl-klik in de weg. **Eén patroon voor alle tabellen:** de laatste kolom heeft een echte link "Zaakdetails" (ADS `StandaloneLink`, met pijltje; geen `LinkList.Link`, want dat is een lijstitem en hoort in een `LinkList`) (voor de schermlezer "Zaakdetails van zaak 12, Amstel 1-H"), en die kolom staat op elke schermbreedte. Het ID en het adres zijn gewone tekst: een adres kan meerdere zaken hebben, en het takenoverzicht heeft geen ID-kolom (een rij is daar een taak), dus alleen de link-kolom is overal hetzelfde. Het gedeelde `Table`-component heeft daarom geen `onClickRow`; de andere tabellen volgen dezelfde lijn.
+- De kolommen zijn getypeerd op `Case` (geen `any` meer); datums via `formatDate`. Datums en postcode breken niet af (`noWrap`); de kop "Zaak ID" is "ID". Het aantal laadrijen is gelijk aan het aantal zaken per pagina, zodat de tabel niet verspringt.
+- Zoekveld: ADS `SearchField`; zoekt tijdens het typen (750 ms) en direct bij Enter. Het veld toont nu wat je typt (stond eerst vast op de laatste zoekopdracht).
+- **Tussenstand:** de filters zijn nog het oude formulier (asc-ui/final-form) en staan nog onder de tabel, of ernaast vanaf 1600 px. De pagina oogt daardoor half oud, half nieuw tot stap 2.
+- Niet meer: de vastgezette laatste kolom (`lastColumnFixed`); de tabel schuift als geheel zijwaarts als hij niet past.
+
+Testchecklist zakenoverzicht stap 1:
+
+- [ ] `/zaken`: titel met het aantal zaken, zoekveld, tabel met zaken in de nieuwe layout.
+- [ ] "Sorteren op" (rechts van het zoekveld): elke keuze sorteert de lijst en zet je terug op pagina 1; de kolomkoppen zijn niet meer klikbaar.
+- [ ] Paginering onder de tabel: volgende/vorige en een paginanummer; tijdens het laden staan er laadrijen.
+- [ ] Klik op "Zaakdetails": de zaak opent (ook met Tab + Enter, en met Ctrl-klik in een nieuw tabblad). De rest van de rij is niet klikbaar. Ga terug: pagina, sortering en filters staan er nog.
+- [ ] Zoeken op straat of postcode filtert de lijst; het aantal in de titel verandert mee.
+- [ ] De oude filters werken nog (thema, aanleiding, stadsdeel, aantal per pagina, …).
+- [ ] Smaller scherm: minder kolommen ("Zaakdetails" blijft altijd staan) en de tabel schuift zo nodig zijwaarts.
+- [ ] Het takenoverzicht (nog oud) werkt nog precies zoals eerst.
 
 ## Fase 3 — Verticale migratie per domein (± 4–8 weken)
 

@@ -1,15 +1,13 @@
-import { Table } from "@amsterdam/wonen-ui"
-import useNavigation from "app/routing/useNavigation"
-import getColumns from "./columns"
+import { Table } from "@/components/Table/Table"
+import columns from "./columns"
 import useMediaQuery from "app/hooks/useMediaQuery/useMediaQuery"
 import createResponsiveColumns from "./createPrioritizedColumns"
 
 type Props = {
   data: components["schemas"]["Case"][]
   isBusy: boolean
-  onChange: (pagination: any, sorting: any) => void
+  onChange: (pagination: TABLE.Schemas.Pagination) => void
   pagination: TABLE.Schemas.Pagination
-  sorting: TABLE.Schemas.Sorting
   emptyPlaceholder: string
 }
 
@@ -18,32 +16,21 @@ const TableCases: React.FC<Props> = ({
   isBusy,
   onChange,
   pagination,
-  sorting,
   emptyPlaceholder,
 }) => {
   const { windowWidth } = useMediaQuery()
-  const { navigateTo } = useNavigation()
 
-  const columns = getColumns(sorting)
   const prioritizedColumns = createResponsiveColumns(columns, windowWidth)
-
-  const onClickRow = (data: any) => {
-    navigateTo("/zaken/:id", { id: data.id })
-  }
 
   return (
     <Table
-      lastColumnFixed
       loading={isBusy}
-      numLoadingRows={10}
+      // As many as a page has, so the table keeps its height while loading.
+      numLoadingRows={pagination.pageSize}
       columns={prioritizedColumns}
       data={data}
-      onClickRow={onClickRow}
       onChange={onChange}
-      pagination={{
-        ...pagination,
-        paginationLength: 9,
-      }}
+      pagination={pagination}
       emptyPlaceholder={emptyPlaceholder}
     />
   )

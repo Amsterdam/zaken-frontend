@@ -1,6 +1,7 @@
-import type { ColumnType } from "@amsterdam/wonen-ui"
+import { type ColumnType } from "@/components/Table/types"
 
 const columnPriority = [
+  // Always shown: it holds the link to the case.
   "navigateId",
   "address.street_name",
   "address.postal_code",
@@ -11,8 +12,8 @@ const columnPriority = [
   "id",
 ]
 
-const createPrioritizedColumns = (
-  columns: ColumnType[],
+const createPrioritizedColumns = <T>(
+  columns: ColumnType<T>[],
   windowWidth: number,
 ) => {
   if (columns.length !== columnPriority.length) {

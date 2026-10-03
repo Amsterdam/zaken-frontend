@@ -67,7 +67,7 @@ describe("DefaultLayout (via the 404 page)", () => {
     expect(labels).toEqual([
       "Zaken",
       "Taken",
-      "Adres zoeken",
+      "Zoeken",
       "Hulp",
       "Uitloggen (Jan)",
     ])
