@@ -3,9 +3,12 @@ import { Column, SearchField } from "@amsterdam/design-system-react"
 import FinesSearchResultsList from "@/app/components/fines/FinesSearchResultsList"
 import useURLState from "@/app/hooks/useURLState/useURLState"
 
+// The name in the URL is Dutch, like the paths and the overviews.
+const SEARCH_PARAM = "zoekterm"
+
 const FinesSearchWrapper: React.FC = () => {
   // The query is kept in the URL, so a result can be shared or reloaded.
-  const [searchQuery, setSearchQuery] = useURLState("query")
+  const [searchQuery, setSearchQuery] = useURLState(SEARCH_PARAM)
   const [inputValue, setInputValue] = useState(searchQuery)
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -19,7 +22,7 @@ const FinesSearchWrapper: React.FC = () => {
         <SearchField.Input
           label="Kenmerk van de beschikking"
           placeholder="Vul kenmerk in, bijv. 12345_6_78"
-          name="query"
+          name={SEARCH_PARAM}
           value={inputValue}
           onChange={(event) => setInputValue(event.currentTarget.value)}
           autoFocus

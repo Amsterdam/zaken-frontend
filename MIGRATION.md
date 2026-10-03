@@ -472,7 +472,7 @@ Testchecklist 403:
 **Gebruikerspagina (`/auth`) — pilot `Description`:** de pagina waar je op uitkomt als de API een 403 geeft. Titel "Microsoft Entra-ID gebruiker" op de grijze achtergrond (was een h2, is nu de h1 van de pagina), daaronder een wit vlak met voornaam, achternaam en e-mail. De melding over de Keycloak-groepen (`NotAuthorizedAlert`) is weg: Keycloak wordt niet meer gebruikt. Daarmee zijn ook de hook `useIsAuthorized`, de query key en het type `IsAuthorizedResponse` verwijderd (werden nergens anders gebruikt).
 
 - Nieuw gedeeld component `src/components/Description/` (overgenomen uit top-frontend-v2, op de ADS-`DescriptionList`): een lijst van `{ label, value }`; regels zonder waarde vallen weg. Vervangt `DefinitionList` van `wonen-ui`, dat nog op 6 plekken staat (`CaseDetails` 2×, `FinesSearchResult`, `ConfirmScaffoldFields`, `ObjectDetails`, `PermitOverview`, `DecisionHeader`). Die gebruiken ook `title`, `loading`/`numLoadingRows`; dat komt erbij zodra de eerste pagina het nodig heeft.
-- **Testroute `/403`** toont altijd de 403-pagina (staat in `pages/auth/routes.tsx`, ook in productie; onschuldig).
+- **Testroute `/403`** toont altijd de 403-pagina (staat in `pages/auth/routes.tsx`, ook in productie; onschuldig). Blijft staan (besloten).
 - **Tests van pagina's** importeren eerst `app/routing/routes`, net als de app: pagina → layout → `Breadcrumbs` → `routes` → pagina is circulair, en met de pagina als startpunt is die pagina nog `undefined` als `routes` wordt opgebouwd.
 
 Testchecklist `/auth`:
@@ -482,7 +482,7 @@ Testchecklist `/auth`:
 
 **Invorderingscheck (`/invorderingen`):** titel en uitleg op de grijze achtergrond, daaronder een wit vlak met het zoekveld (ADS `SearchField`, met zoekknop) en het resultaat.
 
-- Zoeken gaat nog steeds bij Enter of de zoekknop; het kenmerk blijft in de URL staan (`?query=…`), zodat herladen hetzelfde resultaat geeft. Het veld toont nu ook wat je typt (in de oude versie stond `value` vast op de laatste zoekopdracht).
+- Zoeken gaat nog steeds bij Enter of de zoekknop; het kenmerk blijft in de URL staan (`?zoekterm=…`), zodat herladen hetzelfde resultaat geeft. Het veld toont nu ook wat je typt (in de oude versie stond `value` vast op de laatste zoekopdracht).
 - Resultaat: per beschikking een `Description` met Kenmerk, Status en Datum. De datum komt uit het nieuwe `src/shared/dateFormatters.ts` (`formatDate`, overgenomen uit top-frontend-v2, DD-MM-YYYY) in plaats van `DateDisplay` van `wonen-ui`.
 - Tijdens het zoeken staat er "Zoeken naar de beschikking…" (was een asc-ui-`Spinner`), zoals het zoekscherm van top-frontend-v2.
 - **Bewust anders:** het info-knopje (i) achter "5 werkdagen" opende een modal met één zin. Die zin staat nu gewoon in de tekst ("Binnen die termijn wordt de eerste factuur naar de overtreder verstuurd."). De gedeelde `InfoButton` (asc-ui-modal) blijft bestaan voor de formulieren.
@@ -491,14 +491,14 @@ Testchecklist `/auth`:
 Testchecklist invorderingscheck:
 
 - [x] `/invorderingen`: titel, uitleg, zoekveld met focus; geen breadcrumbs.
-- [x] Zoek op een bestaand kenmerk: Kenmerk, Status en Datum (DD-MM-YYYY) verschijnen; de URL krijgt `?query=…`; herladen toont hetzelfde resultaat met het kenmerk in het veld.
+- [x] Zoek op een bestaand kenmerk: Kenmerk, Status en Datum (DD-MM-YYYY) verschijnen; de URL krijgt `?zoekterm=…`; herladen toont hetzelfde resultaat met het kenmerk in het veld.
 - [x] Zoek op een onbekend kenmerk: de uitleg dat de beschikking nog niet bekend is.
 - [x] Zonder het recht `access_recovery_check`: de 403-pagina.
 - [x] Smal scherm: zoekveld en resultaat blijven bruikbaar.
 
 **Startpagina (`/`, "Adres zoeken"):** titel "Adres zoeken" op de grijze achtergrond (de zin "Ook om een nieuwe zaak aan te maken op een specifiek adres" is weg), daaronder een wit vlak met de h2 "Bekijk een adres", het zoekveld (ADS `SearchField`) en de gevonden adressen.
 
-- Zoeken: tijdens het typen (na 750 ms, zoals eerst) en nu ook direct bij Enter of de zoekknop. De zoekterm staat in de URL (`?query=…`) via `useSearchParams` van React Router in plaats van `useURLState`.
+- Zoeken: tijdens het typen (na 750 ms, zoals eerst) en nu ook direct bij Enter of de zoekknop. De zoekterm staat in de URL (`?zoekterm=…`) via `useSearchParams` van React Router in plaats van `useURLState`.
 - Onder het zoekveld staat altijd een regel, zoals in top-frontend-v2: "Voer minimaal 3 tekens in om te zoeken.", "Zoeken naar adressen..." (was een laadrij), "Geen adressen gevonden." of "**4** adressen gevonden voor "tjask"", met "(maximaal 25 getoond)" erachter als PDOK het maximum teruggeeft (`BAG_PDOK_MAX_RESULTS` in `api/hooks/dataPunt.ts`).
 - Resultaat: een ADS-`LinkList` (naar het voorbeeld van `AddressSearch` in keuzewijzeraardgasvrij-frontend); elk adres is zelf de link naar de adrespagina. Eerst was dit een tabel met een klikbare rij en een losse "Bekijk"-link, maar één kolom met links is geen tabeldata.
 - Mislukt het zoeken bij PDOK, dan staat er een rode `Alert` "Niet gelukt" (eerst leek het dan alsof er geen adressen waren).

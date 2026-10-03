@@ -5,18 +5,22 @@ import debounce from "lodash.debounce"
 import SearchResults from "@/app/components/search/SearchResults/SearchResults"
 
 const DELAY = 750
+// The name in the URL is Dutch, like the paths and the overviews.
+const SEARCH_PARAM = "zoekterm"
 
 const SearchWrapper: React.FC = () => {
   // The query is kept in the URL, so you return to the same results.
   const [searchParams, setSearchParams] = useSearchParams()
-  const searchString = searchParams.get("query") ?? ""
+  const searchString = searchParams.get(SEARCH_PARAM) ?? ""
   const [inputValue, setInputValue] = useState(searchString)
 
   const debouncedSearch = useMemo(
     () =>
       debounce((value: string) => {
         const query = value.trim()
-        setSearchParams(query ? { query } : {}, { replace: true })
+        setSearchParams(query ? { [SEARCH_PARAM]: query } : {}, {
+          replace: true,
+        })
       }, DELAY),
     [setSearchParams],
   )
@@ -40,7 +44,7 @@ const SearchWrapper: React.FC = () => {
         <SearchField.Input
           label="Adres"
           placeholder="Zoek een adres op basis van postcode en huisnummer of straatnaam."
-          name="query"
+          name={SEARCH_PARAM}
           value={inputValue}
           onChange={onChange}
           autoFocus

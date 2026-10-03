@@ -67,7 +67,7 @@ describe("HomePage", () => {
     fireEvent.change(input, { target: { value: " Amstel 1 " } })
     fireEvent.submit(input)
 
-    expect(location()).toBe("/?query=Amstel+1")
+    expect(location()).toBe("/?zoekterm=Amstel+1")
     expect(useBagPdok).toHaveBeenLastCalledWith("Amstel 1")
     // Only the address with a bag id.
     expect(screen.getByText(/gevonden voor/).textContent).toBe(
@@ -82,7 +82,7 @@ describe("HomePage", () => {
   })
 
   it("goes to the address when you click it", () => {
-    renderPage("/?query=Amstel")
+    renderPage("/?zoekterm=Amstel")
 
     fireEvent.click(screen.getByText("Amstel 1, 1011PN Amsterdam"))
 
@@ -90,7 +90,7 @@ describe("HomePage", () => {
   })
 
   it("does not search with fewer than three characters", () => {
-    renderPage("/?query=Am")
+    renderPage("/?zoekterm=Am")
 
     expect(useBagPdok).toHaveBeenLastCalledWith(undefined)
     expect(screen.queryByText(/gevonden/)).toBeNull()
@@ -98,7 +98,7 @@ describe("HomePage", () => {
 
   it("says so when no address is found", () => {
     addresses = []
-    renderPage("/?query=Bestaatniet")
+    renderPage("/?zoekterm=Bestaatniet")
 
     expect(screen.getByText("Geen adressen gevonden.")).toBeTruthy()
   })
@@ -108,7 +108,7 @@ describe("HomePage", () => {
       weergavenaam: `Amstel ${index + 1}`,
       adresseerbaarobject_id: `${index + 1}`,
     }))
-    renderPage("/?query=Amstel")
+    renderPage("/?zoekterm=Amstel")
 
     expect(screen.getByText(/gevonden voor/).textContent).toBe(
       '25 adressen gevonden voor "Amstel" (maximaal 25 getoond)',
@@ -117,7 +117,7 @@ describe("HomePage", () => {
 
   it("says so when the search failed", () => {
     isError = true
-    renderPage("/?query=Amstel")
+    renderPage("/?zoekterm=Amstel")
 
     expect(screen.getByText("Niet gelukt")).toBeTruthy()
     expect(screen.queryByText("Geen adressen gevonden.")).toBeNull()

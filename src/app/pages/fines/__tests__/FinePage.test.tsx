@@ -70,7 +70,7 @@ describe("FinePage", () => {
     search(" 12345_6_78 ")
 
     expect(useFine).toHaveBeenLastCalledWith("12345_6_78")
-    expect(window.location.search).toBe("?query=12345_6_78")
+    expect(window.location.search).toBe("?zoekterm=12345_6_78")
     expect(screen.getByText("12345_6_78")).toBeTruthy()
     expect(screen.getByText("Opgepakt")).toBeTruthy()
     expect(screen.getByText("09-03-2026")).toBeTruthy()
