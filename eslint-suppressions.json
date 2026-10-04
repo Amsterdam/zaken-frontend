@@ -47,17 +47,7 @@
       "count": 1
     }
   },
-  "src/app/components/case/forms/DecisionForm/hooks/useValues.tsx": {
-    "react-refresh/only-export-components": {
-      "count": 1
-    }
-  },
   "src/app/components/case/forms/DecisionForm/scaffold.tsx": {
-    "react-refresh/only-export-components": {
-      "count": 1
-    }
-  },
-  "src/app/components/case/forms/QuickDecisionForm/scaffold.tsx": {
     "react-refresh/only-export-components": {
       "count": 1
     }

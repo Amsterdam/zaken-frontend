@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import { Column, Paragraph } from "@amsterdam/design-system-react"
+import { Column } from "@amsterdam/design-system-react"
 import { ConfirmDialog } from "@/components/ConfirmDialog/ConfirmDialog"
 import { FormDialog } from "@/components/FormDialog/FormDialog"
 import { useToast } from "@/components/toasts/useToast"

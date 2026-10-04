@@ -59,3 +59,18 @@
     display: none;
   }
 }
+
+/* InvalidFormAlert links jump to the input/select/radio element's own id, which sits right
+   below its label/legend, so a plain anchor jump lands the label just above the viewport.
+   This keeps the label in view by reserving space above the control when it scrolls into
+   view (from top-frontend-v2). */
+input,
+select,
+textarea {
+  scroll-margin-top: 6rem;
+}
+
+/* A grid inside a grid cell: no page margins of its own (from top-frontend-v2). */
+.grid-in-cell {
+  padding-inline: 0;
+}

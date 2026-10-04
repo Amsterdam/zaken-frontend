@@ -439,22 +439,23 @@ Testchecklist:
 
 #### Pagina voor pagina
 
-| Pagina                                                                                    | Status                                                                                                                                                            |
-| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 404 (`pages/errors/NotFoundPage`)                                                         | ✅ akkoord (pilot)                                                                                                                                                |
-| Hulp (`pages/help/HelpPage`)                                                              | ✅ akkoord                                                                                                                                                        |
-| 403 (`pages/auth/NotAuthorizedPage`)                                                      | ✅ akkoord                                                                                                                                                        |
-| Gebruiker (`pages/auth/AuthPage`, `/auth`)                                                | ✅ akkoord (pilot `Description`)                                                                                                                                  |
-| Invorderingscheck (`pages/fines/FinePage`, `/invorderingen`)                              | ✅ akkoord                                                                                                                                                        |
-| Adres zoeken / start (`pages/home/HomePage`, `/`)                                         | ✅ akkoord                                                                                                                                                        |
-| Zakenoverzicht (`pages/cases/index/IndexPage`, `/zaken`)                                  | ✅ akkoord (3 stappen: `Table`, filters, URL)                                                                                                                     |
-| Takenoverzicht (`pages/tasks/IndexPage`, `/taken`)                                        | ✅ akkoord (incl. taak toewijzen, pilot `ConfirmDialog`)                                                                                                          |
-| Adres: Zaken (`pages/addresses/index/IndexPage`, `/adres/:bagId`)                         | ✅ akkoord                                                                                                                                                        |
-| Adres: Adresdetails (`pages/addresses/details/DetailsPage`, `/adres/:bagId/details`)      | ✅ akkoord                                                                                                                                                        |
-| Adres: Persoonsgegevens (`pages/addresses/people/PeoplePage`, `/adres/:bagId/personen`)   | ✅ akkoord                                                                                                                                                        |
-| Adres: Vergunningen (`pages/addresses/permits/PermitsPage`, `/adres/:bagId/vergunningen`) | ✅ akkoord                                                                                                                                                        |
-| Zaak: Taak opvoeren                                                                       | geen pagina meer: een venster op de zaakpagina (`case/forms/TaskForm/TaskDialog`); de route `/zaken/:id/taak` is weg                                              |
-| Zaakpagina (`pages/cases/details/DetailsPage`, `/zaken/:id`)                              | stap 1, 2, 3 en 4a (tag, onderwerpen en corporatie wijzigen) ✅ akkoord; stap 4b: slotdatum ✅ akkoord; urgentie ✅ akkoord; taak afronden omgezet, wacht op test |
+| Pagina                                                                                                  | Status                                                                                                               |
+| ------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| 404 (`pages/errors/NotFoundPage`)                                                                       | ✅ akkoord (pilot)                                                                                                   |
+| Hulp (`pages/help/HelpPage`)                                                                            | ✅ akkoord                                                                                                           |
+| 403 (`pages/auth/NotAuthorizedPage`)                                                                    | ✅ akkoord                                                                                                           |
+| Gebruiker (`pages/auth/AuthPage`, `/auth`)                                                              | ✅ akkoord (pilot `Description`)                                                                                     |
+| Invorderingscheck (`pages/fines/FinePage`, `/invorderingen`)                                            | ✅ akkoord                                                                                                           |
+| Adres zoeken / start (`pages/home/HomePage`, `/`)                                                       | ✅ akkoord                                                                                                           |
+| Zakenoverzicht (`pages/cases/index/IndexPage`, `/zaken`)                                                | ✅ akkoord (3 stappen: `Table`, filters, URL)                                                                        |
+| Takenoverzicht (`pages/tasks/IndexPage`, `/taken`)                                                      | ✅ akkoord (incl. taak toewijzen, pilot `ConfirmDialog`)                                                             |
+| Adres: Zaken (`pages/addresses/index/IndexPage`, `/adres/:bagId`)                                       | ✅ akkoord                                                                                                           |
+| Adres: Adresdetails (`pages/addresses/details/DetailsPage`, `/adres/:bagId/details`)                    | ✅ akkoord                                                                                                           |
+| Adres: Persoonsgegevens (`pages/addresses/people/PeoplePage`, `/adres/:bagId/personen`)                 | ✅ akkoord                                                                                                           |
+| Adres: Vergunningen (`pages/addresses/permits/PermitsPage`, `/adres/:bagId/vergunningen`)               | ✅ akkoord                                                                                                           |
+| Zaak: Taak opvoeren                                                                                     | geen pagina meer: een venster op de zaakpagina (`case/forms/TaskForm/TaskDialog`); de route `/zaken/:id/taak` is weg |
+| Zaak: Snel besluit (`pages/case/quick-decisions/CreatePage`, `/zaken/:id/snel-besluit/:caseUserTaskId`) | omgezet, wacht op test (pilot formulierpagina: `CaseFormPage`)                                                       |
+| Zaakpagina (`pages/cases/details/DetailsPage`, `/zaken/:id`)                                            | ✅ akkoord (4 stappen: opmaak, open taken, zaakhistorie, vensters)                                                   |
 
 **Hulp-pagina:** naar het voorbeeld van de veelgestelde-vragenpagina van top-frontend-v2: titel "Hulp" direct op de grijze achtergrond, daaronder één wit vlak met de vier onderwerpen in een ADS-`Accordion` (dicht bij het openen, net als eerst). Geen icoon meer naast de paginatitel. **Breadcrumbs** staan alleen nog op geneste pagina's: een pagina direct onder home (zoals `/hulp`) krijgt er geen. De lijstjes stonden in de oude versie binnen een alinea (ongeldige HTML); dat zijn nu losse ADS-lijsten. `EmailLink` zit in `HelpContent`; het ongebruikte `PhoneLink` en `HelpContent.module.css` zijn weg. `CustomTooltip` staat nog in dezelfde map omdat de zaakpagina's het gebruiken.
 
@@ -798,7 +799,7 @@ Stap 4b (de vensters achter de taakacties) — in drie delen, van klein naar gro
 
 1. **Slotdatum wijzigen** (`tasks/ChangeDueDate/ChangeDueDateDialog`) — ✅ akkoord. `FormDialog` met een datumveld (`DateControl`); de huidige slotdatum staat ingevuld. Een lege datum of een datum in het verleden geeft een melding bij het veld; verandert er niets, dan wordt er niets opgeslagen. Opslaan geeft een toast met de nieuwe datum; mislukt het, dan blijft het venster open (eerst sloot het ook bij een fout). Weg: `ChangeDueDateForm`, `ChangeDueDateModal` en `scaffold.ts` (final-form).
 2. **Urgentie** (`Workflow/components/UpdateSchedule/UpdateScheduleDialog`) — ✅ akkoord. De urgentie met een potloodje ernaast (was een klikbare tekst); het venster "Planning bezoek wijzigen" heeft keuzelijsten (even breed) voor urgentie (bovenaan), dagen en dagdeel, en keuzerondjes "Vanaf vandaag" / "Vanaf een specifieke datum" met een datumveld bij de tweede, dat op vandaag begint. De toast noemt de urgentie alleen als die veranderd is. De keuzes worden opgehaald zodra de kolom er staat, zodat het venster direct opent. Weg: `UpdateScheduleModal`, `form/` (final-form), `types.ts` en het CSS-bestand.
-3. **Taak afronden** (`tasks/CompleteTask/CompleteTaskDialog`) — omgezet, wacht op test.
+3. **Taak afronden** (`tasks/CompleteTask/CompleteTaskDialog`) — ✅ akkoord.
    - Een taak zonder formulier: de gedeelde `ConfirmDialog` met de vraag of de taak is afgerond (was een verplicht vinkje "Ja, deze taak is afgerond" plus een knop).
    - Een taak met formulier: `FormDialog` met per veld van de backend (`TaskFormField`) een keuzelijst, vinkje, groep vinkjes (meerkeuze), getal (tekstveld dat alleen een getal aanneemt; ADS heeft geen getalveld) of tekstvak. Een veld zonder type is alleen tekst om te lezen (bv. "Er zijn geen besluiten in te trekken."). De tooltip van de backend wordt niet getoond (wordt nergens gebruikt).
    - `taskFormValues.ts` zet de antwoorden om naar de variabelen voor de backend; wat leeg is gaat niet mee, een vinkje altijd (waar of onwaar).
@@ -825,6 +826,22 @@ Testchecklist taak afronden:
 - [ ] Een taak met formulier (bv. een keuze voor de volgende stap): de vragen staan in het venster; "Taak afronden" is uit tot de verplichte vragen zijn beantwoord.
 - [ ] Een taak met meerkeuze of een toelichting (bv. "Verwerken en opsturen besluit"): de vinkjes en het tekstvak werken; de zaakhistorie toont de antwoorden.
 - [ ] "Annuleren", het kruisje en Escape sluiten zonder af te ronden.
+
+**Formulierpagina's** — van klein naar groot: snel besluit (pilot), zaak afronden, besluit, huisbezoek inplannen, debrief, huisbezoek, melding, aanschrijving, nieuwe zaak aanmaken.
+
+Het patroon (pilot: snel besluit):
+
+- Het formuliercomponent (bv. `QuickDecisionForm`) geeft de hele pagina terug via het gedeelde `case/CaseFormPage`: de titel, en in het witte vlak de zaakgegevens (`CaseSummary`), een eventuele inleiding (`intro`) en het formulier (react-hook-form met de velden van ee-ads-rhf), met eronder de knop die opslaat en "Annuleren" (terug naar de zaak). De velden zijn smaller dan het witte vlak (een `Grid` met `grid-in-cell`, zoals top-frontend-v2).
+- Geen bevestigingsscherm: opslaan gaat direct, met een toast (`useAfterCaseFormSubmit`) en terug naar de zaak. Mislukt het, dan blijft het formulier staan.
+- Validatie: de knop blijft aan (anders dan in een venster); na een poging met fouten staat onder de paginatitel, boven het witte vlak, de ADS-`InvalidFormAlert` met links naar de velden, en de melding bij het veld zelf.
+- `DecisionForm/components/DecisionHeader` ("Besluit naar aanleiding van") gebruikt nu `Description` in plaats van wonen-ui; het oude besluitformulier gebruikt hem ook.
+
+Testchecklist snel besluit (een zaak met de taak "Besluit verwerken" die naar `/snel-besluit/` gaat):
+
+- [ ] De pagina toont de titel, het adres met zaak-ID, de aanschrijving met aangeschrevenen en het formulier.
+- [ ] Opslaan zonder besluit: de foutmelding bovenaan met een link naar het veld, en de melding bij het veld.
+- [ ] Een besluit kiezen en opslaan: terug op de zaakpagina met een toast; de taak is weg en de zaakhistorie toont het besluit.
+- [ ] "Annuleren" gaat terug naar de zaak zonder op te slaan.
 
 ## Fase 3 — Verticale migratie per domein (± 4–8 weken)
 

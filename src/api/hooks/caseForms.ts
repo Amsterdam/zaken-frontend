@@ -54,7 +54,8 @@ export const useCreateDecision = (caseId: CaseId) =>
 
 export const useCreateQuickDecision = (caseId: CaseId) =>
   useCaseFormMutation<
-    components["schemas"]["QuickDecision"],
+    // What the backend fills in itself is not sent.
+    Omit<components["schemas"]["QuickDecision"], "id" | "date_added">,
     components["schemas"]["QuickDecision"]
   >(caseId, makeApiUrl("quick-decisions"))
 
