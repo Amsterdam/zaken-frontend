@@ -937,6 +937,8 @@ Testchecklist nieuwe zaak (via "Nieuwe zaak aanmaken" op een adrespagina):
 
 **Oude formulierlaag verwijderd** (na het akkoord op alle formulieren): `case/WorkflowForm`, `shared/ConfirmScaffoldForm` (het bevestigingsscherm), `shared/Form`, `shared/InfoHeading` (`InfoButton`), `api/utils/toPostMethod` en `useNavigateWithFlashMessage`; ook de oude paginadelen die alleen de formulierpagina's nog gebruikten (`case/CaseHeading`, `shared/PageHeading`, `shared/AddressHeadingByBagId`, `shared/ConfirmButton`). `SpinnerWrap` staat nu bij `routing/components` (alleen `AuthorizedPage` gebruikt hem). De pakketten `@amsterdam/amsterdam-react-final-form`, `final-form`, `final-form-arrays`, `react-final-form` en `react-final-form-arrays` zijn uit `package.json`.
 
+**Spinner voor de hele pagina:** `src/components/spinners/AmsterdamCrossSpinner` (de drie draaiende Andreaskruizen, overgenomen uit top-frontend-v2), tijdens het inloggen (`App.tsx`) en terwijl de rechten voor een pagina laden (`AuthorizedPage`). Bewust een eigen kopie: in de repo van ee-ads-rhf staat hij alleen in het storybook-gedeelte, dat niet gepubliceerd wordt. De oude laadschermen (`SpinnerWrap`, `LoadingScreen`, `LoadingScreenAmsterdam`, `SpinnerWrapper`, de rode ring) zijn weg.
+
 ## Fase 3 — Verticale migratie per domein (± 4–8 weken)
 
 Per pagina/feature in één PR: styled-components → CSS Modules, asc-ui → ADS, wonen-ui → eigen/ADS-componenten, final-form → react-hook-form.

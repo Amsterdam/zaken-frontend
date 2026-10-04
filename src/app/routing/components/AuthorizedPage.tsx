@@ -1,6 +1,6 @@
 import NotAuthorizedPage from "app/pages/auth/NotAuthorizedPage"
+import { AmsterdamCrossSpinner } from "@/components/spinners/AmsterdamCrossSpinner/AmsterdamCrossSpinner"
 import useHasPermission from "@/hooks/useHasPermission"
-import SpinnerWrap from "./SpinnerWrap"
 
 type Props = {
   page: React.ComponentType
@@ -19,7 +19,7 @@ const AuthorizedPage: React.FC<Props> = ({
   const [hasPermission, isBusy] = useHasPermission(permissionNames)
 
   if (isBusy) {
-    return <SpinnerWrap />
+    return <AmsterdamCrossSpinner />
   }
   return hasPermission ? <Page {...restProps} /> : <NotAuthorizedPage />
 }

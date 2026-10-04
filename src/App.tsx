@@ -9,10 +9,8 @@ import Router from "app/routing/components/Router"
 import { ToastProvider } from "@/components/toasts/ToastProvider"
 import FlashMessageProvider from "app/state/flashMessages/FlashMessageProvider"
 import PageTitle from "app/routing/components/PageTitle"
-import {
-  LoadingScreenBasic,
-  FullScreenWrapper,
-} from "app/components/shared/loading"
+import { AmsterdamCrossSpinner } from "@/components/spinners/AmsterdamCrossSpinner/AmsterdamCrossSpinner"
+import { FullScreenWrapper } from "app/components/shared/loading"
 import Feedback from "app/components/Feedback"
 
 const App = () => {
@@ -38,7 +36,7 @@ const App = () => {
   }, [auth, hasTriedSignin])
 
   if (auth.isLoading) {
-    return <LoadingScreenBasic />
+    return <AmsterdamCrossSpinner />
   }
 
   if (auth.error) {
