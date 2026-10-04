@@ -118,7 +118,7 @@ describe("the open tasks of a case", () => {
   it("shows the tasks per state, with what you can do with them", () => {
     renderStatus()
 
-    // One table, a row per task, with the state of the case in front.
+    // One table, a row per task: the task with the state of the case below it.
     expect(screen.getAllByRole("table")).toHaveLength(1)
     const [, first, second] = screen.getAllByRole("row")
     expect(within(first).getByText("Inplannen Huisbezoek")).toBeTruthy()

@@ -1,67 +1,115 @@
-import { FormTitle } from "@amsterdam/asc-ui"
-
+import { useForm, useWatch } from "react-hook-form"
+import {
+  SelectControl,
+  TextAreaControl,
+  TextInputControl,
+} from "@amsterdam/ee-ads-rhf"
 import { useCase, useCreateDecision, useDecisionTypes } from "@/api/hooks"
-import { toPostMethod } from "@/api/utils/toPostMethod"
-import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
-import scaffold from "app/components/case/forms/DecisionForm/scaffold"
-import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
+import { CaseFormPage } from "app/components/case/CaseFormPage/CaseFormPage"
+import { useAfterCaseFormSubmit } from "../useAfterCaseFormSubmit"
 import DecisionHeader, { type Workflow } from "./components/DecisionHeader"
-import stripThousandSeparator from "./utils/stripThousandSeparator"
-import useNavigation from "app/routing/useNavigation"
 
 type Props = {
   id: components["schemas"]["CaseDetail"]["id"]
   caseUserTaskId: string
 }
 
-type DecisionData = Omit<components["schemas"]["Decision"], "decision_type"> & {
-  decision_type: { id: number }
-  description_closing?: string
-}
-const mapData = (data: DecisionData) => {
-  const decision_type = data.decision_type.id
-  const sanctionAmount = data.sanction_amount
-    ? Math.round(parseFloat(stripThousandSeparator(data.sanction_amount)))
-    : Number.NaN
-  const sanction_amount = !Number.isNaN(sanctionAmount)
-    ? String(sanctionAmount)
-    : null
-  const description = data.description ?? data.description_closing
-  return {
-    ...data,
-    decision_type,
-    sanction_amount,
-    description,
-  }
+type FormValues = {
+  decision_type: string
+  sanction_amount: string
+  description: string
 }
 
+// The decision type that needs an explanation.
+const DECISION_TYPE_WITH_EXPLANATION = 9
+
+/** The page to say which decision was made on a case, and its sanction. */
 const DecisionForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
   const { data: caseItem } = useCase(id)
-  const themeId = caseItem?.theme.id
-  const { data } = useDecisionTypes(themeId)
-  const decisionTypes = data?.results
-  const { navigateTo } = useNavigation()
-  const fields = useScaffoldedFields(scaffold, id, navigateTo, decisionTypes)
-  const createDecision = toPostMethod(useCreateDecision(id).mutateAsync)
+  const { data: types } = useDecisionTypes(caseItem?.theme.id)
+  const { mutateAsync: createDecision, isPending } = useCreateDecision(id)
+  const afterSubmit = useAfterCaseFormSubmit(id)
+  const form = useForm<FormValues>({
+    defaultValues: { decision_type: "", sanction_amount: "", description: "" },
+  })
+  const typeId = useWatch({ control: form.control, name: "decision_type" })
+  // Only a decision with a sanction has an amount.
+  const isSanction =
+    types?.results?.find(({ id }) => String(id) === typeId)?.is_sanction ===
+    true
+  const needsExplanation = Number(typeId) === DECISION_TYPE_WITH_EXPLANATION
+
+  const onSubmit = async (values: FormValues) => {
+    try {
+      await createDecision({
+        case: id,
+        case_user_task_id: caseUserTaskId,
+        decision_type: Number(values.decision_type),
+        sanction_amount: isSanction ? values.sanction_amount.trim() : null,
+        // Without an explanation the field is left out, as before.
+        ...(values.description.trim() !== "" && {
+          description: values.description,
+        }),
+      })
+    } catch {
+      // The error is shown as a message at the top of the page; the form stays.
+      return
+    }
+    afterSubmit()
+  }
 
   return (
-    <>
-      <DecisionHeader
-        caseId={id}
-        caseUserTaskId={caseUserTaskId}
-        workflows={(caseItem?.workflows ?? []) as unknown as Workflow[]}
+    <CaseFormPage
+      id={id}
+      title="Resultaat besluit"
+      form={form}
+      onSubmit={onSubmit}
+      isPending={isPending}
+      intro={
+        <DecisionHeader
+          caseId={id}
+          caseUserTaskId={caseUserTaskId}
+          workflows={(caseItem?.workflows ?? []) as unknown as Workflow[]}
+        />
+      }
+    >
+      <SelectControl<FormValues>
+        name="decision_type"
+        label="Welk besluit is opgesteld?"
+        options={[
+          { label: "Maak een keuze", value: "" },
+          ...(types?.results ?? []).map(({ id, name }) => ({
+            label: name,
+            value: String(id),
+          })),
+        ]}
+        registerOptions={{ required: "Kies een besluit." }}
       />
-      <FormTitle>
-        Gebruik dit formulier om aan te geven welk besluit is genomen
-      </FormTitle>
-      <WorkflowForm
-        id={id}
-        fields={fields}
-        mapData={mapData}
-        postMethod={createDecision}
-        caseUserTaskId={caseUserTaskId}
+      {isSanction && (
+        <TextInputControl<FormValues>
+          name="sanction_amount"
+          label="Wat is het opgelegde bedrag?"
+          description="Vul alleen cijfers in, geen punten, komma's of tekens."
+          // The keyboard for numbers.
+          attributes={{ inputMode: "numeric" }}
+          registerOptions={{
+            required: "Vul het bedrag in.",
+            pattern: {
+              value: /^\s*\d+\s*$/,
+              message: "Vul alleen cijfers in, geen punten, komma's of tekens.",
+            },
+          }}
+        />
+      )}
+      <TextAreaControl<FormValues>
+        name="description"
+        label="Korte toelichting"
+        rows={4}
+        registerOptions={{
+          required: needsExplanation && "Vul een toelichting in.",
+        }}
       />
-    </>
+    </CaseFormPage>
   )
 }
 

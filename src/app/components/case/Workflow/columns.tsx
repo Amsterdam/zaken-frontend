@@ -42,7 +42,7 @@ export function getColumns(
 
   return [
     {
-      // The state of the case, the task, and below them (small) who may do
+      // The task, the state of the case, and below them (small) who may do
       // it and more about the state: all in one cell, so the table has few
       // columns and fits in its card on a laptop.
       header: "Open taak",
@@ -51,8 +51,11 @@ export function getColumns(
         const details = [roles?.join(", "), information].filter(Boolean)
         return (
           <>
-            <strong>{state}</strong>
-            <Paragraph>{name}</Paragraph>
+            {/* The task is what the row is about: first, and it stands out. */}
+            <Paragraph>
+              <strong>{name}</strong>
+            </Paragraph>
+            <Paragraph>{state}</Paragraph>
             {details.length > 0 && (
               <Paragraph size="small">{details.join(" · ")}</Paragraph>
             )}

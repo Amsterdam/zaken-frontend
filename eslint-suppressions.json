@@ -34,24 +34,6 @@
       "count": 1
     }
   },
-  "src/app/components/case/forms/DebriefForm/DebriefForm.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    }
-  },
-  "src/app/components/case/forms/DebriefForm/scaffold.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 4
-    },
-    "react-refresh/only-export-components": {
-      "count": 1
-    }
-  },
-  "src/app/components/case/forms/DecisionForm/scaffold.tsx": {
-    "react-refresh/only-export-components": {
-      "count": 1
-    }
-  },
   "src/app/components/case/forms/ScheduleForm/scaffold.tsx": {
     "react-refresh/only-export-components": {
       "count": 1

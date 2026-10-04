@@ -455,7 +455,9 @@ Testchecklist:
 | Adres: Vergunningen (`pages/addresses/permits/PermitsPage`, `/adres/:bagId/vergunningen`)               | ✅ akkoord                                                                                                           |
 | Zaak: Taak opvoeren                                                                                     | geen pagina meer: een venster op de zaakpagina (`case/forms/TaskForm/TaskDialog`); de route `/zaken/:id/taak` is weg |
 | Zaak: Snel besluit (`pages/case/quick-decisions/CreatePage`, `/zaken/:id/snel-besluit/:caseUserTaskId`) | ✅ akkoord (pilot formulierpagina: `CaseFormPage`)                                                                   |
-| Zaak: Zaak afronden (`pages/case/complete/CompleteCasePage`, `/zaken/:id/afronding/:caseUserTaskId`)    | omgezet, wacht op test                                                                                               |
+| Zaak: Zaak afronden (`pages/case/complete/CompleteCasePage`, `/zaken/:id/afronding/:caseUserTaskId`)    | ✅ akkoord                                                                                                           |
+| Zaak: Besluit (`pages/case/decisions/CreatePage`, `/zaken/:id/besluit/:caseUserTaskId`)                 | omgezet, wacht op test                                                                                               |
+| Zaak: Debrief (`pages/case/debriefings/CreatePage`, `/zaken/:id/debriefing/:caseUserTaskId`)            | omgezet, wacht op test                                                                                               |
 | Zaakpagina (`pages/cases/details/DetailsPage`, `/zaken/:id`)                                            | ✅ akkoord (4 stappen: opmaak, open taken, zaakhistorie, vensters)                                                   |
 
 **Hulp-pagina:** naar het voorbeeld van de veelgestelde-vragenpagina van top-frontend-v2: titel "Hulp" direct op de grijze achtergrond, daaronder één wit vlak met de vier onderwerpen in een ADS-`Accordion` (dicht bij het openen, net als eerst). Geen icoon meer naast de paginatitel. **Breadcrumbs** staan alleen nog op geneste pagina's: een pagina direct onder home (zoals `/hulp`) krijgt er geen. De lijstjes stonden in de oude versie binnen een alinea (ongeldige HTML); dat zijn nu losse ADS-lijsten. `EmailLink` zit in `HelpContent`; het ongebruikte `PhoneLink` en `HelpContent.module.css` zijn weg. `CustomTooltip` staat nog in dezelfde map omdat de zaakpagina's het gebruiken.
@@ -853,6 +855,23 @@ Testchecklist zaak afronden (een zaak met de taak "Zaak afsluiten"):
 - [ ] Leeg opslaan: de foutmelding boven het witte vlak; de links gaan naar de reden en de toelichting.
 - [ ] Een reden met resultaat toont de vraag "Wat is het resultaat?"; een reden zonder resultaat verbergt hem weer.
 - [ ] Afronden: terug op de zaakpagina met een toast; de zaak is gesloten en de zaakhistorie toont reden, resultaat en toelichting.
+
+**Besluit** (`forms/DecisionForm`): de keuzelijst "Welk besluit is opgesteld?", alleen bij een besluit met sanctie het bedrag (tekstveld dat alleen cijfers aanneemt, met de uitleg eronder in plaats van achter een i-knop), en "Korte toelichting" (verplicht bij besluittype 9, zoals voorheen). Weg: `scaffold.tsx` en `utils/stripThousandSeparator` (punten in het bedrag worden nu geweigerd in plaats van weggehaald).
+
+Testchecklist besluit (een zaak met de taak "Besluit verwerken" die naar `/besluit/` gaat):
+
+- [ ] Een besluit met sanctie toont het bedragveld; een besluit zonder sanctie verbergt het weer.
+- [ ] Een bedrag met een punt, komma of letter geeft de foutmelding; alleen cijfers wordt opgeslagen.
+- [ ] Opslaan: terug op de zaakpagina met een toast; de zaakhistorie toont het besluit met het bedrag.
+
+**Debrief** (`forms/DebriefForm`): keuzerondjes voor de uitkomst (de vraag hangt af van het thema), de knop "Niet duidelijk of er een overtreding is?" die de uitleg in een venster opent (was een i-knop), alleen bij "naar ander thema" de keuzelijst met de andere thema's, alleen bij Vakantieverhuur het vinkje "Overlast geconstateerd" met de uitleg eronder, en een verplichte toelichting. De optie "-" in de themalijst is vervangen door "Maak een keuze".
+
+Testchecklist debrief (een zaak met de taak "Debrief verwerken"):
+
+- [ ] De uitkomsten staan als keuzerondjes; de knop met de uitleg opent een venster en sluiten verstuurt het formulier niet.
+- [ ] "Naar ander thema" toont de keuzelijst met thema's, zonder het thema van de zaak.
+- [ ] Bij een zaak Vakantieverhuur staat het vinkje "Overlast geconstateerd"; bij andere thema's niet.
+- [ ] Opslaan: terug op de zaakpagina met een toast; de zaakhistorie toont de debrief en de volgende taak verschijnt.
 
 ## Fase 3 — Verticale migratie per domein (± 4–8 weken)
 

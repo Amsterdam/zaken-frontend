@@ -36,7 +36,8 @@ export const useCaseFormMutation = <Payload, Response = unknown>(
 
 export const useCreateDebriefing = (caseId: CaseId) =>
   useCaseFormMutation<
-    components["schemas"]["DebriefingCreate"],
+    // What the backend fills in itself is not sent.
+    Omit<components["schemas"]["DebriefingCreate"], "id">,
     components["schemas"]["DebriefingCreate"]
   >(caseId, makeApiUrl("debriefings"))
 
@@ -48,7 +49,11 @@ export const useCreateSummon = (caseId: CaseId) =>
 
 export const useCreateDecision = (caseId: CaseId) =>
   useCaseFormMutation<
-    components["schemas"]["Decision"],
+    // What the backend fills in itself is not sent.
+    Omit<
+      components["schemas"]["Decision"],
+      "id" | "date_added" | "sanction_id"
+    >,
     components["schemas"]["Decision"]
   >(caseId, makeApiUrl("decisions"))
 
