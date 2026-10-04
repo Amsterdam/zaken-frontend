@@ -454,7 +454,8 @@ Testchecklist:
 | Adres: Persoonsgegevens (`pages/addresses/people/PeoplePage`, `/adres/:bagId/personen`)                 | ✅ akkoord                                                                                                           |
 | Adres: Vergunningen (`pages/addresses/permits/PermitsPage`, `/adres/:bagId/vergunningen`)               | ✅ akkoord                                                                                                           |
 | Zaak: Taak opvoeren                                                                                     | geen pagina meer: een venster op de zaakpagina (`case/forms/TaskForm/TaskDialog`); de route `/zaken/:id/taak` is weg |
-| Zaak: Snel besluit (`pages/case/quick-decisions/CreatePage`, `/zaken/:id/snel-besluit/:caseUserTaskId`) | omgezet, wacht op test (pilot formulierpagina: `CaseFormPage`)                                                       |
+| Zaak: Snel besluit (`pages/case/quick-decisions/CreatePage`, `/zaken/:id/snel-besluit/:caseUserTaskId`) | ✅ akkoord (pilot formulierpagina: `CaseFormPage`)                                                                   |
+| Zaak: Zaak afronden (`pages/case/complete/CompleteCasePage`, `/zaken/:id/afronding/:caseUserTaskId`)    | omgezet, wacht op test                                                                                               |
 | Zaakpagina (`pages/cases/details/DetailsPage`, `/zaken/:id`)                                            | ✅ akkoord (4 stappen: opmaak, open taken, zaakhistorie, vensters)                                                   |
 
 **Hulp-pagina:** naar het voorbeeld van de veelgestelde-vragenpagina van top-frontend-v2: titel "Hulp" direct op de grijze achtergrond, daaronder één wit vlak met de vier onderwerpen in een ADS-`Accordion` (dicht bij het openen, net als eerst). Geen icoon meer naast de paginatitel. **Breadcrumbs** staan alleen nog op geneste pagina's: een pagina direct onder home (zoals `/hulp`) krijgt er geen. De lijstjes stonden in de oude versie binnen een alinea (ongeldige HTML); dat zijn nu losse ADS-lijsten. `EmailLink` zit in `HelpContent`; het ongebruikte `PhoneLink` en `HelpContent.module.css` zijn weg. `CustomTooltip` staat nog in dezelfde map omdat de zaakpagina's het gebruiken.
@@ -834,6 +835,7 @@ Het patroon (pilot: snel besluit):
 - Het formuliercomponent (bv. `QuickDecisionForm`) geeft de hele pagina terug via het gedeelde `case/CaseFormPage`: de titel, en in het witte vlak de zaakgegevens (`CaseSummary`), een eventuele inleiding (`intro`) en het formulier (react-hook-form met de velden van ee-ads-rhf), met eronder de knop die opslaat en "Annuleren" (terug naar de zaak). De velden zijn smaller dan het witte vlak (een `Grid` met `grid-in-cell`, zoals top-frontend-v2).
 - Geen bevestigingsscherm: opslaan gaat direct, met een toast (`useAfterCaseFormSubmit`) en terug naar de zaak. Mislukt het, dan blijft het formulier staan.
 - Validatie: de knop blijft aan (anders dan in een venster); na een poging met fouten staat onder de paginatitel, boven het witte vlak, de ADS-`InvalidFormAlert` met links naar de velden, en de melding bij het veld zelf.
+- De links van de `InvalidFormAlert` zijn gewone `#id`-links, zoals in keuzewijzeraardgasvrij-frontend. Ze komen uit de eigen gedeelde helper `src/shared/mapErrorsToAlert` (gebruik die overal; lint verbiedt de import uit ee-ads-rhf), die alleen binnen een formulier zoekt: die van ee-ads-rhf zoekt in de hele pagina op naam, en vindt bij een veld dat `description` heet de `<meta name="description">` van `index.html` (zonder id, dus de link werd `#`). Daarvoor is `<base href="/">` uit `index.html` gehaald (die liet zulke links de startpagina laden); het script in `index.html` heeft nu een absoluut pad.
 - `DecisionForm/components/DecisionHeader` ("Besluit naar aanleiding van") gebruikt nu `Description` in plaats van wonen-ui; het oude besluitformulier gebruikt hem ook.
 
 Testchecklist snel besluit (een zaak met de taak "Besluit verwerken" die naar `/snel-besluit/` gaat):
@@ -842,6 +844,15 @@ Testchecklist snel besluit (een zaak met de taak "Besluit verwerken" die naar `/
 - [ ] Opslaan zonder besluit: de foutmelding bovenaan met een link naar het veld, en de melding bij het veld.
 - [ ] Een besluit kiezen en opslaan: terug op de zaakpagina met een toast; de taak is weg en de zaakhistorie toont het besluit.
 - [ ] "Annuleren" gaat terug naar de zaak zonder op te slaan.
+
+**Zaak afronden** (`forms/CaseCompleteForm`): keuzerondjes "Wat is de reden?", alleen bij een reden met resultaat de keuzerondjes "Wat is het resultaat?", en een verplichte toelichting. De knop heet "Zaak afronden" (was "Verwerken").
+
+Testchecklist zaak afronden (een zaak met de taak "Zaak afsluiten"):
+
+- [ ] De pagina toont de titel, de zaakgegevens en het formulier.
+- [ ] Leeg opslaan: de foutmelding boven het witte vlak; de links gaan naar de reden en de toelichting.
+- [ ] Een reden met resultaat toont de vraag "Wat is het resultaat?"; een reden zonder resultaat verbergt hem weer.
+- [ ] Afronden: terug op de zaakpagina met een toast; de zaak is gesloten en de zaakhistorie toont reden, resultaat en toelichting.
 
 ## Fase 3 — Verticale migratie per domein (± 4–8 weken)
 

@@ -14,8 +14,9 @@ import {
   Heading,
   InvalidFormAlert,
 } from "@amsterdam/design-system-react"
-import { FormProvider, mapErrorsToAlert } from "@amsterdam/ee-ads-rhf"
+import { FormProvider } from "@amsterdam/ee-ads-rhf"
 import { DefaultLayout } from "@/components/DefaultLayout/DefaultLayout"
+import { mapErrorsToAlert } from "@/shared/mapErrorsToAlert"
 import CaseSummary from "./CaseSummary"
 
 type Props<T extends FieldValues> = {
@@ -54,17 +55,6 @@ export function CaseFormPage<T extends FieldValues>({
   const { errors } = useFormState({ control: form.control })
   const alertErrors = mapErrorsToAlert(errors)
 
-  // The links of the alert point to "#<the id of the field>". With the
-  // <base href="/"> of index.html the browser would take that as a link to the
-  // start page and load it, so go to the field ourselves.
-  const goToField = (event: React.MouseEvent<HTMLElement>) => {
-    const link = (event.target as HTMLElement).closest("a")
-    const fieldId = link?.getAttribute("href")?.split("#")[1]
-    if (!fieldId) return
-    event.preventDefault()
-    document.getElementById(fieldId)?.focus()
-  }
-
   return (
     <DefaultLayout>
       <Grid.Cell span="all" appearance="transparent">
@@ -72,11 +62,7 @@ export function CaseFormPage<T extends FieldValues>({
       </Grid.Cell>
       {alertErrors.length > 0 && (
         <Grid.Cell span="all" appearance="transparent">
-          <InvalidFormAlert
-            errors={alertErrors}
-            headingLevel={2}
-            onClick={goToField}
-          />
+          <InvalidFormAlert errors={alertErrors} headingLevel={2} />
         </Grid.Cell>
       )}
       <Grid.Cell span="all">

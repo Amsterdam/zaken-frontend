@@ -137,11 +137,6 @@ describe("the page to process a quick decision", () => {
     expect(link.getAttribute("href")).toBe("#quick_decision_type")
     // The list is above the white area with the form, not inside the form.
     expect(link.closest("form")).toBeNull()
-    // The link goes to the field, without leaving the page.
-    expect(fireEvent.click(link)).toBe(false)
-    expect(document.activeElement).toBe(
-      screen.getByLabelText(/^Welk besluit is opgesteld/),
-    )
     expect(screen.getAllByText("Kies een besluit.")).toHaveLength(2)
     expect(createQuickDecision).not.toHaveBeenCalled()
   })

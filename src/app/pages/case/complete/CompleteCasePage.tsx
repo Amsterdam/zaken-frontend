@@ -1,13 +1,8 @@
 import { useParams } from "react-router-dom"
-import parseUrlParamId from "app/routing/utils/parseUrlParamId"
-import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
-import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
-import Row, { RowWithColumn } from "app/components/layouts/Grid/Row"
-import PageHeading from "app/components/shared/PageHeading/PageHeading"
-import CaseHeading from "app/components/case/CaseHeading/CaseHeading"
 import CaseCompleteForm from "app/components/case/forms/CaseCompleteForm/CaseCompleteForm"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
-import { Column } from "app/components/layouts/Grid"
+import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
+import parseUrlParamId from "app/routing/utils/parseUrlParamId"
 
 type RouteParams = {
   id: string
@@ -18,24 +13,9 @@ const CompleteCasePage: React.FC = () => {
   const { id: idString, caseUserTaskId } = useParams<RouteParams>()
   const id = parseUrlParamId(idString)
 
-  const isValid =
-    isValidUrlParamId<components["schemas"]["CaseDetail"]["id"]>(id) &&
-    isValidUrlParamId<string>(caseUserTaskId)
-
-  return isValid ? (
-    <DefaultLayout>
-      <RowWithColumn>
-        <PageHeading />
-      </RowWithColumn>
-      <RowWithColumn>
-        <CaseHeading id={id} />
-      </RowWithColumn>
-      <Row>
-        <Column spanLarge={50}>
-          <CaseCompleteForm id={id} caseUserTaskId={caseUserTaskId} />
-        </Column>
-      </Row>
-    </DefaultLayout>
+  return isValidUrlParamId<components["schemas"]["CaseDetail"]["id"]>(id) &&
+    isValidUrlParamId<string>(caseUserTaskId) ? (
+    <CaseCompleteForm id={id} caseUserTaskId={caseUserTaskId} />
   ) : (
     <NotFoundPage />
   )
