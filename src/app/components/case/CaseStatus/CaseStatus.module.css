@@ -1,6 +1,0 @@
-/* A light line below the heading and its button (the design system has no divider). */
-.header {
-  padding-block-end: var(--ams-space-s);
-  border-block-end: 1px solid var(--ams-color-separator);
-  margin-block-end: var(--ams-space-m);
-}

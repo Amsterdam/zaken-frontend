@@ -454,7 +454,7 @@ Testchecklist:
 | Adres: Persoonsgegevens (`pages/addresses/people/PeoplePage`, `/adres/:bagId/personen`)   | ✅ akkoord                                                                                                           |
 | Adres: Vergunningen (`pages/addresses/permits/PermitsPage`, `/adres/:bagId/vergunningen`) | ✅ akkoord                                                                                                           |
 | Zaak: Taak opvoeren                                                                       | geen pagina meer: een venster op de zaakpagina (`case/forms/TaskForm/TaskDialog`); de route `/zaken/:id/taak` is weg |
-| Zaakpagina (`pages/cases/details/DetailsPage`, `/zaken/:id`)                              | stap 1 ✅ akkoord; stap 2 van 4 (open taken + venster "Taak opvoeren") omgezet, wacht op test                        |
+| Zaakpagina (`pages/cases/details/DetailsPage`, `/zaken/:id`)                              | stap 1 en 2 ✅ akkoord; stap 3 van 4 (zaakhistorie) omgezet, wacht op test                                           |
 
 **Hulp-pagina:** naar het voorbeeld van de veelgestelde-vragenpagina van top-frontend-v2: titel "Hulp" direct op de grijze achtergrond, daaronder één wit vlak met de vier onderwerpen in een ADS-`Accordion` (dicht bij het openen, net als eerst). Geen icoon meer naast de paginatitel. **Breadcrumbs** staan alleen nog op geneste pagina's: een pagina direct onder home (zoals `/hulp`) krijgt er geen. De lijstjes stonden in de oude versie binnen een alinea (ongeldige HTML); dat zijn nu losse ADS-lijsten. `EmailLink` zit in `HelpContent`; het ongebruikte `PhoneLink` en `HelpContent.module.css` zijn weg. `CustomTooltip` staat nog in dezelfde map omdat de zaakpagina's het gebruiken.
 
@@ -724,7 +724,7 @@ Stap 1:
 
 - Titel: "Zaakdetails" als h1 met het map-icoon ervoor (`src/components/HeadingWithIcon/`, naar top-frontend-v2), en op dezelfde regel rechts het adres als link naar de adrespagina: een `StandaloneLink` met een kaartspeld als icoon in plaats van de chevron (ADS-`Row` met ruimte ertussen; op een smal scherm eronder). Breadcrumbs staan aan (Home / Zakenoverzicht / Zaakdetails).
 - Waarschuwingen direct onder de titel, als ADS-`Alert`: "Er loopt een ondermijningszaak" (rood) en "Let op: er is 3 keer overlast geconstateerd" (oranje, weg te klikken; de tekst is over kop en regel verdeeld).
-- De hele zaak staat in **één wit vlak**: Zaakgegevens, Open taken en Zaakhistorie onder elkaar, met ruimte ertussen.
+- **Indeling zoals de zaakpagina van top-frontend-v2** (na een eerdere versie met één wit vlak): witte kaarten in twee kolommen via `Grid.Subgrid`. Links (8 van 12): de kaarten Zaakinformatie en Open taken; rechts (4 van 12): de kaart Zaakhistorie. Op een smaller scherm onder elkaar. Elke kaart is het `Card`-component uit top-frontend-v2 (`src/components/Card/`: kop met icoon en optioneel een actie rechts).
 - De rijen van de Zaakgegevens staan dichter op elkaar dan de ADS-standaard (`dense` op `Description`: één ADS-variabele lager). Alleen hier; de andere feitenlijsten houden de standaardruimte (besloten). `DescriptionList.Section` is geprobeerd en helpt hier niet: dat groepeert meerdere labels bij één waarde.
 - **Zaakgegevens**: twee `Description`-kolommen (`EqualColumns`) met dezelfde gegevens als eerst. Datums via `formatDate`; "Overgedragen zaak" alleen als die er is. Tijdens het laden staan er laadrijen in plaats van een schermvullende spinner.
 - **Tussenstand:** "Open taken" en "Zaakhistorie" zijn nog de oude componenten; de potloodjes bij onderwerp, tag en corporatie openen nog de oude modals. De pagina oogt dus deels oud tot stap 2–4.
@@ -739,24 +739,39 @@ Testchecklist zaakpagina stap 1 (✅ akkoord):
 - [x] Een zaak op een adres met een ondermijningszaak toont de rode melding.
 - [x] Een niet-bestaand zaaknummer geeft de 404.
 
-Stap 2 (open taken) — omgezet, wacht op test:
+Stap 2 (open taken) — ✅ akkoord:
 
 - **Kop en knop:** "Open taken" met rechts de knop "Taak opvoeren" (secundair; uitgeschakeld zonder het recht).
 - **"Taak opvoeren" is een venster** (`case/forms/TaskForm/TaskDialog`, op het nieuwe gedeelde `src/components/OpenDialog/`: een ADS-`Dialog` die open is zolang hij gerenderd wordt; `ConfirmDialog` gebruikt het nu ook). Het formulierpatroon van de pilot is gebleven (react-hook-form, `SelectControl`, de fout onder het veld, direct opslaan); de samenvatting van fouten bovenaan is hier weggelaten (één veld). Na het opslaan sluit het venster, verschijnt er een toast ("Taak opgevoerd") en verversen de open taken een paar keer (`useRefreshCaseWorkflowsSoon`: de backend maakt de taak op de achtergrond aan, dus hij is er niet meteen). De pagina `pages/case/task` en de route zijn weg.
-- **Taken:** **één platte tabel**, een rij per taak. De eerste kolom "Open taak" bevat de status van de zaak (vet), de taak eronder en de toelichting van de status klein daaronder; samen in één cel scheelt een kolom, zodat de tabel ook op een smaller scherm past. Uitvoerder valt weg op een smal scherm. Zo lijnen de kolommen uit en staan er geen koprijen tussen. Geprobeerd en afgewezen: losse tabellen per status (steeds andere kolombreedtes) en één tabel met de status als tussenkop-rij (bij meestal één taak per status verdubbelt dat de rijen en lijnen). De kolom Urgentie staat er voor alle rijen zodra één taak hem nodig heeft. Kolommen: Open taak, (Urgentie bij een huisbezoek), Uitvoerder, Toegewezen, Slotdatum en Verwerking taak. Getypeerd op `Tasks.WorkflowTask`. De kolom met het slotje is weg (stond bij elke rij, zei niets).
+- **Taken:** **één platte tabel**, een rij per taak. De eerste kolom "Open taak" bevat de status van de zaak (vet), de taak eronder en de toelichting van de status klein daaronder; samen in één cel scheelt een kolom, zodat de tabel ook op een smaller scherm past. Uitvoerder valt weg op een smal scherm. De kolom met de avatar heeft een poppetje als kop (naam "Toewijzen" als tooltip en voor schermlezers), gecentreerd boven de avatar, zodat de kolom smal blijft. De knop "Taak opvoeren" staat rechts in de kop van de kaart. Zo lijnen de kolommen uit en staan er geen koprijen tussen. Geprobeerd en afgewezen: losse tabellen per status (steeds andere kolombreedtes) en één tabel met de status als tussenkop-rij (bij meestal één taak per status verdubbelt dat de rijen en lijnen). De kolom Urgentie staat er voor alle rijen zodra één taak hem nodig heeft. Kolommen: Open taak, (Urgentie bij een huisbezoek), Uitvoerder, Toegewezen, Slotdatum en Verwerking taak. Getypeerd op `Tasks.WorkflowTask`. De kolom met het slotje is weg (stond bij elke rij, zei niets).
 - **Acties:** in de kolom zien alle acties er hetzelfde uit (pijltje met vette tekst): een taak met een eigen formulier is een `StandaloneLink` naar dat formulier ("Debrief verwerken", …); een andere taak heeft "Taak afronden" als `src/components/StandaloneButton/` — een echte knop met het uiterlijk van de standalone link, omdat een ADS-`Button` in een tabelrij te zwaar oogt. Zonder recht is hij uitgeschakeld (grijs) met de uitleg als tooltip. De slotdatum is rood als hij verlopen is en heeft een potloodknop.
 - **Leeg en laden:** een ADS-`Skeleton` tijdens het laden en het wachten op de eerste taken; zonder taken de tekst met de knop "Herlaad taken".
 - **Nog oud (bewust, volgende stap):** de vensters achter de acties zelf: "Taak afronden" (`FormModal`, het dynamische formulier van de taak), "Slotdatum wijzigen" (`ChangeDueDateModal`) en "Urgentie" (`UpdateSchedule`). Die horen bij stap 4 (wijzigvensters), samen met onderwerp, tag en corporatie.
 
 Testchecklist zaakpagina stap 2:
 
-- [ ] Open taken: per status een kop en een tabel; uitvoerder, toegewezen, slotdatum (rood als verlopen) en de actie kloppen.
-- [ ] "Taak opvoeren" opent een venster op de zaakpagina. Zonder keuze: de fout onder het veld. Met keuze: het venster sluit, er staat een succesmelding en de taak verschijnt (soms na een paar seconden) bij de open taken.
-- [ ] "Annuleren", het kruisje en Escape sluiten het venster zonder iets op te voeren.
-- [ ] Een taak toewijzen, de slotdatum wijzigen en een taak afronden werken nog (de vensters zijn nog oud).
-- [ ] Een taak met een eigen formulier (debrief, besluit, …) opent dat formulier (nog oude pagina).
-- [ ] Een afgesloten zaak toont de tekst dat er geen open taken zijn.
-- [ ] De oude url `/zaken/<id>/taak` geeft nu de 404-pagina.
+- [x] Open taken: per status een kop en een tabel; uitvoerder, toegewezen, slotdatum (rood als verlopen) en de actie kloppen.
+- [x] "Taak opvoeren" opent een venster op de zaakpagina. Zonder keuze: de fout onder het veld. Met keuze: het venster sluit, er staat een succesmelding en de taak verschijnt (soms na een paar seconden) bij de open taken.
+- [x] "Annuleren", het kruisje en Escape sluiten het venster zonder iets op te voeren.
+- [x] Een taak toewijzen, de slotdatum wijzigen en een taak afronden werken nog (de vensters zijn nog oud).
+- [x] Een taak met een eigen formulier (debrief, besluit, …) opent dat formulier (nog oude pagina).
+- [x] Een afgesloten zaak toont de tekst dat er geen open taken zijn.
+- [x] De oude url `/zaken/<id>/taak` geeft nu de 404-pagina.
+
+Stap 3 (zaakhistorie) — omgezet, wacht op test:
+
+- De tijdlijn is het component van top-frontend-v2 (`components/CaseEventTimeline`, hier `src/components/CaseEventTimeline/`), op de ADS-`ProgressList`: de laatste gebeurtenis bovenaan, per gebeurtenis een titel met zijn gegevens als `Description`. Opeenvolgende gebeurtenissen van dezelfde soort worden één stap met substappen ("Bezoek (2/3)").
+- Standaard staan de **drie laatste** gebeurtenissen er; de knop "Toon meer" toont alles ("Toon minder" klapt terug). De oude tijdlijn toonde alles, ingeklapt per soort.
+- Alle negen soorten gebeurtenissen van de backend zitten erin (aanleiding, inplanning, bezoek, debrief, aanschrijving, besluit, SIG-melding, losse taak, zaak afgerond). De types staan in `src/types/CaseEvent.d.ts`, ook overgenomen.
+- Laden is een ADS-`Skeleton`, een fout een `Alert`, en zonder gebeurtenissen staat er een regel tekst.
+- Vervangt `EventsTimeline` van `wonen-ui`. Nieuw: `src/shared/textFormatters.ts` (`capitalize`).
+
+Testchecklist zaakpagina stap 3:
+
+- [ ] De zaakhistorie toont de drie laatste gebeurtenissen, de nieuwste bovenaan; "Toon meer" toont de rest.
+- [ ] De gegevens per gebeurtenis kloppen met de oude tijdlijn (datum, wie, toelichting, links naar advertenties).
+- [ ] Rond een taak af of voer er een op: de gebeurtenis verschijnt bovenaan zonder herladen.
+- [ ] Een zaak met meerdere bezoeken achter elkaar toont ze als substappen onder één stap.
 
 ## Fase 3 — Verticale migratie per domein (± 4–8 weken)
 

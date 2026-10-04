@@ -2,14 +2,19 @@ import { useParams } from "react-router-dom"
 import {
   Column,
   Grid,
-  Heading,
   Row,
   Skeleton,
   StandaloneLink,
 } from "@amsterdam/design-system-react"
-import { FolderIcon, MapMarkerIcon } from "@amsterdam/design-system-react-icons"
+import {
+  FolderIcon,
+  HistoryIcon,
+  MapMarkerIcon,
+  SuitcaseIcon,
+} from "@amsterdam/design-system-react-icons"
 import { DefaultLayout } from "@/components/DefaultLayout/DefaultLayout"
 import { RouterLink } from "@/components/DefaultLayout/RouterLink"
+import { Card } from "@/components/Card/Card"
 import { HeadingWithIcon } from "@/components/HeadingWithIcon/HeadingWithIcon"
 import useHasPermission, {
   SENSITIVE_CASE_PERMISSION,
@@ -89,25 +94,29 @@ const DetailsPage: React.FC = () => {
           {!isLoading && <CaseNuisanceAlert caseId={id} />}
         </Column>
       </Grid.Cell>
-      {/* One white area for the whole case. */}
-      <Grid.Cell span="all">
-        <Column gap="x-large">
-          <Column gap="small">
-            <Heading level={2}>Zaakgegevens</Heading>
+      {/* Like the case page of top-frontend-v2: cards in two columns, the
+          history next to the rest (below it on a narrower window). */}
+      <Grid.Subgrid span={{ narrow: 4, medium: 8, wide: 8 }}>
+        <Grid.Cell span="all">
+          <Card title="Zaakinformatie" icon={SuitcaseIcon} headingLevel={2}>
             <CaseDetails caseId={id} />
-          </Column>
-          {!isLoading && (
-            <>
-              {/* Still the old components (MIGRATION.md: the next steps of this page). */}
-              <CaseStatus id={id} />
-              <Column gap="small">
-                <Heading level={2}>Zaakhistorie</Heading>
-                <TimelineContainer caseId={id} />
-              </Column>
-            </>
-          )}
-        </Column>
-      </Grid.Cell>
+          </Card>
+        </Grid.Cell>
+        {!isLoading && (
+          <Grid.Cell span="all">
+            <CaseStatus id={id} />
+          </Grid.Cell>
+        )}
+      </Grid.Subgrid>
+      {!isLoading && (
+        <Grid.Subgrid span={{ narrow: 4, medium: 8, wide: 4 }}>
+          <Grid.Cell span="all">
+            <Card title="Zaakhistorie" icon={HistoryIcon} headingLevel={2}>
+              <TimelineContainer caseId={id} />
+            </Card>
+          </Grid.Cell>
+        </Grid.Subgrid>
+      )}
     </DefaultLayout>
   )
 }
