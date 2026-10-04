@@ -91,7 +91,8 @@ export const useCreateVisit = (caseId: CaseId) =>
 
 export const useCreateSchedule = (caseId: CaseId) =>
   useCaseFormMutation<
-    components["schemas"]["ScheduleCreate"],
+    // What the backend fills in itself is not sent.
+    Omit<components["schemas"]["ScheduleCreate"], "id" | "date_added">,
     components["schemas"]["ScheduleCreate"]
   >(caseId, makeApiUrl("schedules"))
 

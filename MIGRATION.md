@@ -456,9 +456,10 @@ Testchecklist:
 | Zaak: Taak opvoeren                                                                                     | geen pagina meer: een venster op de zaakpagina (`case/forms/TaskForm/TaskDialog`); de route `/zaken/:id/taak` is weg |
 | Zaak: Snel besluit (`pages/case/quick-decisions/CreatePage`, `/zaken/:id/snel-besluit/:caseUserTaskId`) | ✅ akkoord (pilot formulierpagina: `CaseFormPage`)                                                                   |
 | Zaak: Zaak afronden (`pages/case/complete/CompleteCasePage`, `/zaken/:id/afronding/:caseUserTaskId`)    | ✅ akkoord                                                                                                           |
-| Zaak: Besluit (`pages/case/decisions/CreatePage`, `/zaken/:id/besluit/:caseUserTaskId`)                 | omgezet, wacht op test                                                                                               |
+| Zaak: Besluit (`pages/case/decisions/CreatePage`, `/zaken/:id/besluit/:caseUserTaskId`)                 | ✅ akkoord                                                                                                           |
 | Zaak: Debrief (`pages/case/debriefings/CreatePage`, `/zaken/:id/debriefing/:caseUserTaskId`)            | ✅ akkoord                                                                                                           |
-| Zaak: Aanschrijving (`pages/case/summons/CreatePage`, `/zaken/:id/aanschrijving/:caseUserTaskId`)       | omgezet, wacht op test                                                                                               |
+| Zaak: Aanschrijving (`pages/case/summons/CreatePage`, `/zaken/:id/aanschrijving/:caseUserTaskId`)       | ✅ akkoord                                                                                                           |
+| Zaak: Bezoek inplannen (`pages/case/schedules/CreatePage`, `/zaken/:id/inplanning/:caseUserTaskId`)     | ✅ akkoord |
 | Zaakpagina (`pages/cases/details/DetailsPage`, `/zaken/:id`)                                            | ✅ akkoord (4 stappen: opmaak, open taken, zaakhistorie, vensters)                                                   |
 
 **Hulp-pagina:** naar het voorbeeld van de veelgestelde-vragenpagina van top-frontend-v2: titel "Hulp" direct op de grijze achtergrond, daaronder één wit vlak met de vier onderwerpen in een ADS-`Accordion` (dicht bij het openen, net als eerst). Geen icoon meer naast de paginatitel. **Breadcrumbs** staan alleen nog op geneste pagina's: een pagina direct onder home (zoals `/hulp`) krijgt er geen. De lijstjes stonden in de oude versie binnen een alinea (ongeldige HTML); dat zijn nu losse ADS-lijsten. `EmailLink` zit in `HelpContent`; het ongebruikte `PhoneLink` en `HelpContent.module.css` zijn weg. `CustomTooltip` staat nog in dezelfde map omdat de zaakpagina's het gebruiken.
@@ -885,6 +886,15 @@ Testchecklist aanschrijving (een zaak met de taak "Aanschrijving verwerken"):
 - [ ] Leeg opslaan: de foutmelding noemt per persoon wat ontbreekt en de links gaan naar het juiste veld.
 - [ ] Een aanschrijving "sluiting" vraagt het aantal gesloten logiesverblijven.
 - [ ] Opslaan: terug op de zaakpagina met een toast; de zaakhistorie toont de aanschrijving met de aangeschrevenen.
+
+**Bezoek inplannen** (`forms/ScheduleForm`): keuzelijsten voor dagen, dagdeel en urgentie (met de uitleg onder de vraag in plaats van achter een i-knop), keuzerondjes "Vanaf vandaag" / "Vanaf een specifieke datum" met een datumveld dat op vandaag begint (zoals in het venster "Planning bezoek wijzigen"), en een toelichting. Bij een zaak van het thema Ondermijning staat de gebruikelijke planning al ingevuld (via `values` van react-hook-form, zodra de zaak en de keuzes geladen zijn).
+
+Testchecklist bezoek inplannen (een zaak met de taak "Bezoek inplannen"):
+
+- [ ] Leeg opslaan: de foutmelding noemt de vier verplichte vragen.
+- [ ] "Vanaf een specifieke datum" toont het datumveld met vandaag ingevuld; een datum in het verleden wordt geweigerd.
+- [ ] Een zaak Ondermijning: doordeweeks, overdag, vanaf vandaag en machtiging staan al ingevuld.
+- [ ] Opslaan: terug op de zaakpagina met een toast; de zaakhistorie toont de planning en de kolom "Urgentie" verschijnt bij de taak voor het bezoek.
 
 ## Fase 3 — Verticale migratie per domein (± 4–8 weken)
 
