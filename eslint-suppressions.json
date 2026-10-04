@@ -19,27 +19,6 @@
       "count": 1
     }
   },
-  "src/app/components/case/CaseDetails/ChangeHousingCorporation/ChangeHousingCorporation.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    },
-    "react-hooks/set-state-in-effect": {
-      "count": 1
-    }
-  },
-  "src/app/components/case/CaseDetails/ChangeSubject/ChangeSubjectForm.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 2
-    },
-    "react-hooks/static-components": {
-      "count": 2
-    }
-  },
-  "src/app/components/case/CaseDetails/ChangeSubject/ChangeSubjectModal.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    }
-  },
   "src/app/components/case/Workflow/components/UpdateSchedule/UpdateSchedule.tsx": {
     "@typescript-eslint/no-explicit-any": {
       "count": 1

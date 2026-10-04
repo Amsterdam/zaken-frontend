@@ -1,13 +1,12 @@
 import { useForm, useWatch } from "react-hook-form"
-import { ActionGroup, Button, Dialog } from "@amsterdam/design-system-react"
-import { FormProvider, SelectControl } from "@amsterdam/ee-ads-rhf"
+import { SelectControl } from "@amsterdam/ee-ads-rhf"
 import {
   useRefreshCaseWorkflowsSoon,
   useStartWorkflowProcess,
   useWorkflowProcesses,
 } from "@/api/hooks"
 import { useToast } from "@/components/toasts/useToast"
-import { OpenDialog } from "@/components/OpenDialog/OpenDialog"
+import { FormDialog } from "@/components/FormDialog/FormDialog"
 
 type Props = {
   id: components["schemas"]["CaseDetail"]["id"]
@@ -55,44 +54,31 @@ const TaskDialog: React.FC<Props> = ({ id, onClose }) => {
   }
 
   return (
-    <OpenDialog
+    <FormDialog
       heading="Taak opvoeren"
+      form={form}
+      onSubmit={onSubmit}
+      submitText="Taak opvoeren"
+      pendingText="Bezig met opvoeren…"
+      isPending={isPending}
+      canSubmit={hasChoice}
       onClose={onClose}
-      footer={
-        <ActionGroup>
-          {/* The footer is outside the form, so the button submits it itself. */}
-          <Button
-            type="button"
-            disabled={isPending || !hasChoice}
-            onClick={() => void form.handleSubmit(onSubmit)()}
-          >
-            {isPending ? "Bezig met opvoeren…" : "Taak opvoeren"}
-          </Button>
-          <Button type="button" variant="secondary" onClick={Dialog.close}>
-            Annuleren
-          </Button>
-        </ActionGroup>
-      }
     >
-      <FormProvider form={form} onSubmit={onSubmit}>
-        <SelectControl<FormValues>
-          name="workflowProcess"
-          label="Welke taak wil je opvoeren?"
-          options={[
-            { label: "Selecteer een taak", value: "" },
-            ...(processes ?? []).map(({ id, name }) => ({
-              label: name,
-              value: String(id),
-            })),
-          ]}
-          registerOptions={{ required: "Kies een taak." }}
-          // Room between the field and the buttons of the dialog.
-          wrapperProps={{ className: "ams-mb-l" }}
-          disabled={processes === undefined}
-          inFieldSet
-        />
-      </FormProvider>
-    </OpenDialog>
+      <SelectControl<FormValues>
+        name="workflowProcess"
+        label="Welke taak wil je opvoeren?"
+        options={[
+          { label: "Selecteer een taak", value: "" },
+          ...(processes ?? []).map(({ id, name }) => ({
+            label: name,
+            value: String(id),
+          })),
+        ]}
+        registerOptions={{ required: "Kies een taak." }}
+        disabled={processes === undefined}
+        inFieldSet
+      />
+    </FormDialog>
   )
 }
 
