@@ -125,7 +125,6 @@ export function getColumns(
                 completeTask({ case: caseId, case_user_task_id, variables })
               }
               taskName={name}
-              caseId={caseId}
               form={form}
               disabled={disabled}
             />

@@ -24,9 +24,7 @@ type Props = {
  */
 const Workflow: React.FC<Props> = ({ id }) => {
   const { mutateAsync } = useCompleteTask(id)
-  // Errors are already shown as a flash message; undefined tells the modal it failed.
-  const completeTask = (payload: CompleteTaskPayload) =>
-    mutateAsync(payload).catch(() => undefined)
+  const completeTask = (payload: CompleteTaskPayload) => mutateAsync(payload)
   const { data: caseData } = useCase(id)
   // Until the case is loaded, assume it's open: so it may poll and keeps showing it's loading.
   const isClosed = caseData !== undefined && caseData.end_date !== null

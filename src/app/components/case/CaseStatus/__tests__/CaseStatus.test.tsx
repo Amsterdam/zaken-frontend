@@ -51,7 +51,7 @@ vi.mock("app/components/tasks/TableTasks/AssignTask/AssignTask", () => ({
 vi.mock("app/components/case/tasks/ChangeDueDate/ChangebleDueDate", () => ({
   default: ({ dueDate }: { dueDate: string }) => <span>{dueDate}</span>,
 }))
-vi.mock("app/components/case/tasks/FormModal/FormModal", () => ({
+vi.mock("app/components/case/tasks/CompleteTask/CompleteTaskDialog", () => ({
   default: () => null,
 }))
 

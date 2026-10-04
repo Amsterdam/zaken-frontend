@@ -12,6 +12,8 @@ type Props = {
   children?: ReactNode
   confirmText?: string
   cancelText?: string
+  /** While the action runs: the confirm button is off. */
+  isPending?: boolean
   onConfirm: () => void
   /** Also called when the dialog is closed with Escape or the close button. */
   onCancel: () => void
@@ -27,6 +29,7 @@ export function ConfirmDialog({
   children = "Weet je zeker dat je door wilt gaan met het uitvoeren van deze actie?",
   confirmText = "Doorgaan",
   cancelText = "Annuleren",
+  isPending = false,
   onConfirm,
   onCancel,
 }: Props) {
@@ -37,14 +40,17 @@ export function ConfirmDialog({
       onClose={onCancel}
       footer={
         <ActionGroup>
-          <Button onClick={onConfirm}>{confirmText}</Button>
+          <Button disabled={isPending} onClick={onConfirm}>
+            {confirmText}
+          </Button>
           <Button variant="secondary" onClick={Dialog.close}>
             {cancelText}
           </Button>
         </ActionGroup>
       }
     >
-      <Paragraph>{children}</Paragraph>
+      {/* Room between the question and the buttons, as in FormDialog. */}
+      <Paragraph className="ams-mb-l">{children}</Paragraph>
     </OpenDialog>
   )
 }

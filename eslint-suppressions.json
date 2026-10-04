@@ -77,26 +77,6 @@
       "count": 1
     }
   },
-  "src/app/components/case/tasks/WorkflowTask/utils/mapSubmitData.ts": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 5
-    }
-  },
-  "src/app/components/case/tasks/WorkflowTask/utils/mapWorkflowDataToInitialValues.ts": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    }
-  },
-  "src/app/components/case/tasks/WorkflowTask/utils/mapWorkflowDataToScaffold.test.ts": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    }
-  },
-  "src/app/components/case/tasks/WorkflowTask/utils/mapWorkflowDataToScaffold.ts": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 3
-    }
-  },
   "src/app/components/cases/CreateForm/CreateForm.tsx": {
     "@typescript-eslint/no-explicit-any": {
       "count": 3

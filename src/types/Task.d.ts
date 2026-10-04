@@ -16,10 +16,12 @@ declare namespace Tasks {
   type FormField = {
     label: string
     name: string
-    type: "select" | "checkbox" | "text" | string
-    required: boolean
-    tooltip: string | null
-    options: { label: string; value: string }[]
+    /** Without a type the field is only a text to read. */
+    type?: "select" | "checkbox" | "multiselect" | "number" | "text"
+    /** Left out by the backend for a field that may stay empty. */
+    required?: boolean
+    tooltip?: string | null
+    options?: { label: string; value: string | number }[]
   }
 
   /** Taak zoals gebruikt in Workflow */
