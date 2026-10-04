@@ -40,6 +40,7 @@ const ChangeSubjectDialog: React.FC<Props> = ({
   const { showToast } = useToast()
   const { mutateAsync: updateCase, isPending } = useUpdateCase(caseId)
   const form = useForm<FormValues>({
+    mode: "onChange",
     defaultValues: {
       theme: String(themeId),
       subjects: subjects.map(toOption),

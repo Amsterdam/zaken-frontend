@@ -20,6 +20,7 @@ const ChangeTagDialog: React.FC<Props> = ({ case: caseItem, onClose }) => {
   const { mutateAsync: updateCase, isPending } = useUpdateCase(caseItem.id)
   const { showToast } = useToast()
   const form = useForm<FormValues>({
+    mode: "onChange",
     defaultValues: {
       tag: caseItem.tags.length > 0 ? String(caseItem.tags[0].id) : NO_TAG,
     },

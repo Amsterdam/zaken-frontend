@@ -68,6 +68,15 @@ const openDialog = () =>
   fireEvent.click(screen.getByRole("button", { name: "Taak opvoeren" }))
 const dialog = () => within(screen.getByRole("dialog"))
 
+// The button is off until a task is chosen.
+const submitDialog = async () => {
+  const button = within(
+    screen.getByRole("dialog"),
+  ).getByRole<HTMLButtonElement>("button", { name: "Taak opvoeren" })
+  await waitFor(() => expect(button.disabled).toBe(false))
+  fireEvent.click(button)
+}
+
 describe("the open tasks of a case", () => {
   beforeEach(() => {
     permissions = ["perform_task"]
@@ -149,7 +158,7 @@ describe("the open tasks of a case", () => {
     fireEvent.change(dialog().getByLabelText(/^Welke taak wil je opvoeren/), {
       target: { value: "4" },
     })
-    fireEvent.click(dialog().getByRole("button", { name: "Taak opvoeren" }))
+    await submitDialog()
 
     await waitFor(() =>
       expect(startWorkflowProcess).toHaveBeenCalledWith({
@@ -165,7 +174,7 @@ describe("the open tasks of a case", () => {
     expect(screen.getByRole("heading", { name: "Open taken" })).toBeTruthy()
   })
 
-  it("can't be sent before a task is chosen", () => {
+  it("can't be sent before a task is chosen", async () => {
     renderStatus()
     openDialog()
     const submit = () =>
@@ -176,7 +185,7 @@ describe("the open tasks of a case", () => {
     fireEvent.change(dialog().getByLabelText(/^Welke taak wil je opvoeren/), {
       target: { value: "3" },
     })
-    expect(submit().disabled).toBe(false)
+    await waitFor(() => expect(submit().disabled).toBe(false))
   })
 
   it("keeps the dialog open when saving fails, and closes it with Annuleren", async () => {
@@ -187,7 +196,7 @@ describe("the open tasks of a case", () => {
     fireEvent.change(dialog().getByLabelText(/^Welke taak wil je opvoeren/), {
       target: { value: "3" },
     })
-    fireEvent.click(dialog().getByRole("button", { name: "Taak opvoeren" }))
+    await submitDialog()
     await waitFor(() => expect(startWorkflowProcess).toHaveBeenCalled())
     expect(screen.getByRole("dialog")).toBeTruthy()
 

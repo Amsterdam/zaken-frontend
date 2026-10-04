@@ -3,6 +3,7 @@ import {
   type FieldValues,
   type SubmitHandler,
   type UseFormReturn,
+  useFormState,
 } from "react-hook-form"
 import { ActionGroup, Button, Dialog } from "@amsterdam/design-system-react"
 import { FormProvider } from "@amsterdam/ee-ads-rhf"
@@ -17,8 +18,6 @@ type Props<T extends FieldValues> = {
   /** While saving: the submit button is off and says so. */
   isPending?: boolean
   pendingText?: string
-  /** False while there is nothing to submit yet (e.g. no choice made). */
-  canSubmit?: boolean
   onClose: () => void
   children: ReactNode
 }
@@ -26,7 +25,7 @@ type Props<T extends FieldValues> = {
 /**
  * A short form in a dialog (react-hook-form with the fields of
  * @amsterdam/ee-ads-rhf): the fields, and in the dialog's footer the button
- * that submits and "Annuleren". Open for as long as it is rendered.
+ * that submits (off until the form is valid) and "Annuleren". Open for as long as it is rendered.
  */
 export function FormDialog<T extends FieldValues>({
   heading,
@@ -35,10 +34,13 @@ export function FormDialog<T extends FieldValues>({
   submitText = "Opslaan",
   isPending = false,
   pendingText = "Bezig met opslaan…",
-  canSubmit = true,
   onClose,
   children,
 }: Props<T>) {
+  // Nothing to submit while a field is empty or wrong. Give the form
+  // `mode: "onChange"`, so the field says what is wrong while you fill it in.
+  const { isValid } = useFormState({ control: form.control })
+
   return (
     <OpenDialog
       heading={heading}
@@ -48,7 +50,7 @@ export function FormDialog<T extends FieldValues>({
           {/* The footer is outside the form, so the button submits it itself. */}
           <Button
             type="button"
-            disabled={isPending || !canSubmit}
+            disabled={isPending || !isValid}
             onClick={() => void form.handleSubmit(onSubmit)()}
           >
             {isPending ? pendingText : submitText}

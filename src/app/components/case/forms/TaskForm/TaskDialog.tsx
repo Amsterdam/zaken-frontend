@@ -1,4 +1,4 @@
-import { useForm, useWatch } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { SelectControl } from "@amsterdam/ee-ads-rhf"
 import {
   useRefreshCaseWorkflowsSoon,
@@ -28,10 +28,10 @@ const TaskDialog: React.FC<Props> = ({ id, onClose }) => {
     useStartWorkflowProcess(id)
   const refreshWorkflowsSoon = useRefreshCaseWorkflowsSoon(id)
   const { showToast } = useToast()
-  const form = useForm<FormValues>({ defaultValues: { workflowProcess: "" } })
-  // Nothing to start until a task is chosen.
-  const hasChoice =
-    useWatch({ control: form.control, name: "workflowProcess" }) !== ""
+  const form = useForm<FormValues>({
+    mode: "onChange",
+    defaultValues: { workflowProcess: "" },
+  })
 
   const onSubmit = async ({ workflowProcess }: FormValues) => {
     try {
@@ -61,7 +61,6 @@ const TaskDialog: React.FC<Props> = ({ id, onClose }) => {
       submitText="Taak opvoeren"
       pendingText="Bezig met opvoeren…"
       isPending={isPending}
-      canSubmit={hasChoice}
       onClose={onClose}
     >
       <SelectControl<FormValues>

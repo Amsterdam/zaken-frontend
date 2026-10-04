@@ -34,6 +34,7 @@ const ChangeHousingCorporationDialog: React.FC<Props> = ({
   const { mutateAsync: updateAddress, isPending } = useUpdateAddress(bagId)
   const { showToast } = useToast()
   const form = useForm<FormValues>({
+    mode: "onChange",
     defaultValues: {
       corporation:
         housingCorporationId != null

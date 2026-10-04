@@ -85,8 +85,14 @@ const renderDetails = () =>
   )
 
 const dialog = () => within(screen.getByRole("dialog"))
-const save = () =>
-  fireEvent.click(dialog().getByRole("button", { name: "Opslaan" }))
+// The button is off until the form is known to be valid.
+const save = async () => {
+  const button = dialog().getByRole<HTMLButtonElement>("button", {
+    name: "Opslaan",
+  })
+  await waitFor(() => expect(button.disabled).toBe(false))
+  fireEvent.click(button)
+}
 
 describe("changing the facts of a case", () => {
   beforeEach(() => {
@@ -113,7 +119,7 @@ describe("changing the facts of a case", () => {
     const select = dialog().getByLabelText<HTMLSelectElement>(/^Welke tag/)
     expect(select.value).toBe("3")
     fireEvent.change(select, { target: { value: "5" } })
-    save()
+    await save()
 
     await waitFor(() =>
       expect(updateCase).toHaveBeenCalledWith({ tag_ids: [5] }),
@@ -131,7 +137,7 @@ describe("changing the facts of a case", () => {
     fireEvent.change(dialog().getByLabelText(/^Welke tag/), {
       target: { value: "none" },
     })
-    save()
+    await save()
 
     await waitFor(() =>
       expect(updateCase).toHaveBeenCalledWith({ tag_ids: [] }),
@@ -145,7 +151,7 @@ describe("changing the facts of a case", () => {
     renderDetails()
     fireEvent.click(screen.getByRole("button", { name: "Wijzig tag" }))
 
-    save()
+    await save()
 
     await waitFor(() => expect(updateCase).toHaveBeenCalled())
     expect(screen.getByRole("dialog")).toBeTruthy()
@@ -163,7 +169,7 @@ describe("changing the facts of a case", () => {
     )
     expect(select.value).toBe("7")
     fireEvent.change(select, { target: { value: "8" } })
-    save()
+    await save()
 
     await waitFor(() =>
       expect(updateAddress).toHaveBeenCalledWith({ housing_corporation: 8 }),
@@ -184,7 +190,7 @@ describe("changing the facts of a case", () => {
     fireEvent.change(dialog().getByLabelText(/^Welke woningcorporatie/), {
       target: { value: "none" },
     })
-    save()
+    await save()
 
     await waitFor(() =>
       expect(updateAddress).toHaveBeenCalledWith({ housing_corporation: null }),
@@ -202,7 +208,7 @@ describe("changing the facts of a case", () => {
       screen.getByRole("button", { name: "Wijzig de woningcorporatie" }),
     )
 
-    save()
+    await save()
 
     await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
     expect(updateAddress).not.toHaveBeenCalled()
@@ -233,7 +239,7 @@ describe("changing the facts of a case", () => {
       target: { value: "2" },
     })
     chooseSubject("Onderhuur")
-    save()
+    await save()
 
     await waitFor(() =>
       expect(updateCase).toHaveBeenCalledWith({ subject_ids: [4, 6, 9] }),

@@ -92,16 +92,6 @@
       "count": 1
     }
   },
-  "src/app/components/case/tasks/ChangeDueDate/ChangeDueDateForm.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    }
-  },
-  "src/app/components/case/tasks/ChangeDueDate/ChangeDueDateModal.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    }
-  },
   "src/app/components/case/tasks/WorkflowTask/utils/mapSubmitData.ts": {
     "@typescript-eslint/no-explicit-any": {
       "count": 5
