@@ -162,21 +162,20 @@ const UpdateScheduleDialog: React.FC<Props> = ({
           }}
           inFieldSet
         />
-        {visitFrom === FROM_DATE && (
-          <DateControl<FormValues>
-            name="visit_from_date"
-            label="Vanaf welke datum kan het bezoek ingepland worden?"
-            min={today}
-            registerOptions={{
-              required: "Vul een datum in.",
-              validate: (date) =>
-                date === currentDate ||
-                date >= today ||
-                "Kies vandaag of een dag in de toekomst.",
-            }}
-            inFieldSet
-          />
-        )}
+        <DateControl<FormValues>
+          name="visit_from_date"
+          label="Vanaf welke datum kan het bezoek ingepland worden?"
+          min={today}
+          registerOptions={{
+            required: "Vul een datum in.",
+            validate: (date) =>
+              date === currentDate ||
+              date >= today ||
+              "Kies vandaag of een dag in de toekomst.",
+          }}
+          inFieldSet
+          shouldShow={visitFrom === FROM_DATE}
+        />
       </Column>
     </FormDialog>
   )

@@ -70,14 +70,13 @@ const CaseCompleteForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
         options={toOptions(reasons?.results)}
         registerOptions={{ required: "Kies een reden." }}
       />
-      {hasResult && (
-        <RadioControl<FormValues>
-          name="result"
-          label="Wat is het resultaat?"
-          options={toOptions(results?.results)}
-          registerOptions={{ required: "Kies een resultaat." }}
-        />
-      )}
+      <RadioControl<FormValues>
+        name="result"
+        label="Wat is het resultaat?"
+        options={toOptions(results?.results)}
+        registerOptions={{ required: "Kies een resultaat." }}
+        shouldShow={hasResult}
+      />
       <TextAreaControl<FormValues>
         name="description"
         label="Toelichting"

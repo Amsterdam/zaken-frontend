@@ -149,18 +149,17 @@ const ScheduleForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
           },
         }}
       />
-      {visitFrom === FROM_DATE && (
-        <DateControl<FormValues>
-          name="visit_from_date"
-          label="Vanaf welke datum kan het bezoek ingepland worden?"
-          min={today}
-          registerOptions={{
-            required: "Vul een datum in.",
-            validate: (date) =>
-              date >= today || "Kies vandaag of een dag in de toekomst.",
-          }}
-        />
-      )}
+      <DateControl<FormValues>
+        name="visit_from_date"
+        label="Vanaf welke datum kan het bezoek ingepland worden?"
+        min={today}
+        registerOptions={{
+          required: "Vul een datum in.",
+          validate: (date) =>
+            date >= today || "Kies vandaag of een dag in de toekomst.",
+        }}
+        shouldShow={visitFrom === FROM_DATE}
+      />
       <SelectControl<FormValues>
         name="priority"
         label="Wat is de urgentie voor het bezoek?"

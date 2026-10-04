@@ -99,24 +99,22 @@ const DebriefCreateForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
         registerOptions={{ required: "Kies een uitkomst." }}
       />
       <ViolationHelp />
-      {toOtherTheme && (
-        <SelectControl<FormValues>
-          name="theme"
-          label="Naar welk thema overdragen?"
-          options={[
-            { label: "Maak een keuze", value: "" },
-            ...otherThemes.map((name) => ({ label: name, value: name })),
-          ]}
-          registerOptions={{ required: "Kies een thema." }}
-        />
-      )}
-      {themeName === "Vakantieverhuur" && (
-        <CheckboxControl<FormValues>
-          name="nuisance_detected"
-          label="Overlast geconstateerd"
-          description="Vink aan als er overlast is geconstateerd, zoals geluid, lawaai, stank en vuil."
-        />
-      )}
+      <SelectControl<FormValues>
+        name="theme"
+        label="Naar welk thema overdragen?"
+        options={[
+          { label: "Maak een keuze", value: "" },
+          ...otherThemes.map((name) => ({ label: name, value: name })),
+        ]}
+        registerOptions={{ required: "Kies een thema." }}
+        shouldShow={toOtherTheme}
+      />
+      <CheckboxControl<FormValues>
+        name="nuisance_detected"
+        label="Overlast geconstateerd"
+        description="Vink aan als er overlast is geconstateerd, zoals geluid, lawaai, stank en vuil."
+        shouldShow={themeName === "Vakantieverhuur"}
+      />
       <TextAreaControl<FormValues>
         name="feedback"
         label="Korte toelichting"

@@ -149,22 +149,21 @@ const SummonForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
           </OrderedList.Item>
         </OrderedList>
       </HelpDialog>
-      {isClosing && (
-        <TextInputControl<FormValues>
-          name="number_of_accommodations"
-          label="Aantal gesloten logiesverblijven"
-          size={NUMBER_SIZE}
-          // The keyboard for numbers.
-          attributes={{ inputMode: "numeric" }}
-          registerOptions={{
-            required: "Vul het aantal gesloten logiesverblijven in.",
-            pattern: {
-              value: /^\s*\d+\s*$/,
-              message: "Vul het aantal in als een heel getal.",
-            },
-          }}
-        />
-      )}
+      <TextInputControl<FormValues>
+        name="number_of_accommodations"
+        label="Aantal gesloten logiesverblijven"
+        size={NUMBER_SIZE}
+        // The keyboard for numbers.
+        attributes={{ inputMode: "numeric" }}
+        registerOptions={{
+          required: "Vul het aantal gesloten logiesverblijven in.",
+          pattern: {
+            value: /^\s*\d+\s*$/,
+            message: "Vul het aantal in als een heel getal.",
+          },
+        }}
+        shouldShow={isClosing}
+      />
       <RadioControl<FormValues>
         name="entity_type"
         label="Aan wie is de aanschrijving gericht?"

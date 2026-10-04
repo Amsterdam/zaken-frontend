@@ -85,24 +85,23 @@ const DecisionForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
         ]}
         registerOptions={{ required: "Kies een besluit." }}
       />
-      {isSanction && (
-        <TextInputControl<FormValues>
-          name="sanction_amount"
-          label="Wat is het opgelegde bedrag?"
-          // As wide as an amount is.
-          size={10}
-          description="Vul alleen cijfers in, geen punten, komma's of tekens."
-          // The keyboard for numbers.
-          attributes={{ inputMode: "numeric" }}
-          registerOptions={{
-            required: "Vul het bedrag in.",
-            pattern: {
-              value: /^\s*\d+\s*$/,
-              message: "Vul alleen cijfers in, geen punten, komma's of tekens.",
-            },
-          }}
-        />
-      )}
+      <TextInputControl<FormValues>
+        name="sanction_amount"
+        label="Wat is het opgelegde bedrag?"
+        // As wide as an amount is.
+        size={10}
+        description="Vul alleen cijfers in, geen punten, komma's of tekens."
+        // The keyboard for numbers.
+        attributes={{ inputMode: "numeric" }}
+        registerOptions={{
+          required: "Vul het bedrag in.",
+          pattern: {
+            value: /^\s*\d+\s*$/,
+            message: "Vul alleen cijfers in, geen punten, komma's of tekens.",
+          },
+        }}
+        shouldShow={isSanction}
+      />
       <TextAreaControl<FormValues>
         name="description"
         label="Korte toelichting"
