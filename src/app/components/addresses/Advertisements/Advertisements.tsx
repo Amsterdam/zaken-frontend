@@ -1,10 +1,11 @@
 import {
   Column,
   Heading,
-  Link,
   Paragraph,
+  StandaloneLink,
   UnorderedList,
 } from "@amsterdam/design-system-react"
+import { LinkExternalIcon } from "@amsterdam/design-system-react-icons"
 import { useCasesByBagId } from "@/api/hooks"
 import { SmallSkeleton } from "@/components/SmallSkeleton/SmallSkeleton"
 
@@ -13,6 +14,20 @@ type Props = {
 }
 
 const IS_OPEN_CASES = true
+
+/**
+ * The site and the page of an advertisement, without "www." and without the
+ * search parameters (dates, tracking): "airbnb.nl/rooms/123". The link itself
+ * keeps the whole address.
+ */
+const shortenLink = (link: string) => {
+  try {
+    const { hostname, pathname } = new URL(link)
+    return `${hostname.replace(/^www\./, "")}${pathname.replace(/\/$/, "")}`
+  } catch {
+    return link
+  }
+}
 
 /** The advertisements of the open cases on an address, each one once. */
 const Advertisements: React.FC<Props> = ({ bagId }) => {
@@ -32,9 +47,23 @@ const Advertisements: React.FC<Props> = ({ bagId }) => {
         <UnorderedList markers={false}>
           {uniqueAds.map((ad) => (
             <UnorderedList.Item key={ad.id}>
-              <Link href={ad.link} target="_blank" rel="noopener noreferrer">
-                {ad.link}
-              </Link>
+              {/* You leave the app: the icon says so, and the hidden text
+                  says it to a screen reader. */}
+              <StandaloneLink
+                href={ad.link}
+                icon={LinkExternalIcon}
+                title={ad.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                // A long address without spaces must not widen the page.
+                style={{ overflowWrap: "anywhere" }}
+              >
+                {shortenLink(ad.link)}
+                <span className="ams-visually-hidden">
+                  {" "}
+                  (externe website, opent in een nieuw tabblad)
+                </span>
+              </StandaloneLink>
             </UnorderedList.Item>
           ))}
         </UnorderedList>

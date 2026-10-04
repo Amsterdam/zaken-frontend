@@ -26,8 +26,14 @@ const cases = [
     workflows: [{ state: { name: "Huisbezoek" } }],
     reason: { name: "Melding" },
     advertisements: [
-      { id: 1, link: "https://a.example/1" },
-      { id: 2, link: "https://a.example/1" },
+      {
+        id: 1,
+        link: "https://www.airbnb.nl/rooms/991?check_in=2026-11-03&source=p3",
+      },
+      {
+        id: 2,
+        link: "https://www.airbnb.nl/rooms/991?check_in=2026-11-03&source=p3",
+      },
     ],
   },
   {
@@ -136,9 +142,14 @@ describe("the address overview page", () => {
     expect(within(openCases).getByText("Huisbezoek")).toBeTruthy()
     expect(within(closedCases).getByText("30-06-2025")).toBeTruthy()
     // The same advertisement twice is shown once.
-    expect(
-      screen.getAllByRole("link", { name: "https://a.example/1" }),
-    ).toHaveLength(1)
+    // And without the search parameters; the link keeps the whole address.
+    const ads = screen.getAllByRole("link", {
+      name: /^airbnb\.nl\/rooms\/991\s*\(externe website, opent in een nieuw tabblad\)$/,
+    })
+    expect(ads).toHaveLength(1)
+    expect(ads[0].getAttribute("href")).toBe(
+      "https://www.airbnb.nl/rooms/991?check_in=2026-11-03&source=p3",
+    )
     expect(
       screen
         .getByRole("link", { name: "Zaakdetails van zaak 12" })

@@ -451,7 +451,7 @@ Testchecklist:
 | Takenoverzicht (`pages/tasks/IndexPage`, `/taken`)                                      | ✅ akkoord (incl. taak toewijzen, pilot `ConfirmDialog`) |
 | Adres: Zaken (`pages/addresses/index/IndexPage`, `/adres/:bagId`)                       | ✅ akkoord                                               |
 | Adres: Adresdetails (`pages/addresses/details/DetailsPage`, `/adres/:bagId/details`)    | ✅ akkoord                                               |
-| Adres: Persoonsgegevens (`pages/addresses/people/PeoplePage`, `/adres/:bagId/personen`) | omgezet, wacht op test                                   |
+| Adres: Persoonsgegevens (`pages/addresses/people/PeoplePage`, `/adres/:bagId/personen`) | ✅ akkoord                                               |
 | Adres: Vergunningen (`/adres/:bagId/vergunningen`)                                      | volgende: nog in de oude layout, zonder tabbalk          |
 
 **Hulp-pagina:** naar het voorbeeld van de veelgestelde-vragenpagina van top-frontend-v2: titel "Hulp" direct op de grijze achtergrond, daaronder één wit vlak met de vier onderwerpen in een ADS-`Accordion` (dicht bij het openen, net als eerst). Geen icoon meer naast de paginatitel. **Breadcrumbs** staan alleen nog op geneste pagina's: een pagina direct onder home (zoals `/hulp`) krijgt er geen. De lijstjes stonden in de oude versie binnen een alinea (ongeldige HTML); dat zijn nu losse ADS-lijsten. `EmailLink` zit in `HelpContent`; het ongebruikte `PhoneLink` en `HelpContent.module.css` zijn weg. `CustomTooltip` staat nog in dezelfde map omdat de zaakpagina's het gebruiken.
@@ -634,7 +634,7 @@ Testchecklist taak toewijzen:
 - **Nieuwe zaak aanmaken:** een primaire ADS-knop; zonder het recht uitgeschakeld (zoals eerst).
 - Het ophalen van het adres en de melding als PDOK het adres niet kent zitten nu in de hook `AddressHeader/useBagAddress`, gedeeld met de oude `AddressHeader` (die blijft voor de zaakpagina's).
 - Weg: `addresses/AddressMenu`, `addresses/NavBlock`, `shared/BlockMenu`. `PanoramaPreview` is ongewijzigd (had geen oude stack).
-- **Tab Adresdetails** (`/adres/:bagId/details`): Objectdetails (`Description`; uitgebreid met soort object, type adres, status, verdieping, eigendomsverhouding, WOZ-soort, bouwjaar en type woonobject, plus een groep "Gebied" met stadsdeel, wijk en buurt; lege velden vallen weg) met het panorama ernaast (onder elkaar op een smal scherm). De samenvatting van de vergunningen is hier weg (die hebben een eigen tab; `permits/PermitOverview` is verwijderd) en **Advertenties staan op de tab Zaken**, onder de zaken: het zijn de advertenties van de open zaken. Laden toont een grijze balk in plaats van de asc-ui-`Spinner`.
+- **Tab Adresdetails** (`/adres/:bagId/details`): Objectdetails (`Description`; uitgebreid met soort object, type adres, status, verdieping, eigendomsverhouding, WOZ-soort, bouwjaar en type woonobject, plus een groep "Gebied" met stadsdeel, wijk en buurt; lege velden vallen weg) met het panorama ernaast (onder elkaar op een smal scherm). De samenvatting van de vergunningen is hier weg (die hebben een eigen tab; `permits/PermitOverview` is verwijderd) en **Advertenties staan op de tab Zaken**, onder de zaken: het zijn de advertenties van de open zaken. De linktekst is ingekort tot site en pagina ("airbnb.nl/rooms/123", zonder `www.` en zonder de zoekparameters); de link zelf en de tooltip houden het hele adres. Het is een ADS-`StandaloneLink` met het icoon voor een externe link ervoor, met voor schermlezers "(externe website, opent in een nieuw tabblad)". Laden toont een grijze balk in plaats van de asc-ui-`Spinner`.
 - **Kaart met een marker** op de tab Adresdetails, onder het panorama: nieuw gedeeld component `src/components/MapView/` naar het voorbeeld van zwd-frontend (Leaflet met de topografische tegels van Amsterdam, `t1`–`t4.data.amsterdam.nl/topo_rd`, in het Nederlandse coördinatenstelsel RD via `getCrsRd`, met het blauwe marker-icoon van ton-frontend). Hier één marker, dus zonder de clustering van zwd. De coördinaten komen uit de BAG (`adresseerbaarObjectPuntGeometrieWgs84`); zonder coördinaten is er geen kaart. Scrollen over de kaart zoomt pas na een klik erop.
 - De Content Security Policy in `index.html` (`img-src`) staat de vier tegelservers `t1`–`t4.data.amsterdam.nl` toe; zonder dat bleef de kaart grijs. Zet de server zelf ook een CSP-header, dan moeten ze daar ook bij.
 - Geïnstalleerd (met akkoord): `leaflet` ^1.9.4 en `proj4` ^2.22 (voor RD), plus `@types/leaflet` als dev-dependency.
@@ -652,7 +652,7 @@ Testchecklist adresoverzicht:
 - [x] De adresregel op de zaakpagina's (oude layout) werkt nog, inclusief het wisselen van adres.
 - [x] Smal scherm: de tabs, het panorama en de tabellen blijven bruikbaar.
 
-**Adres: tab Persoonsgegevens (`/adres/:bagId/personen`)** — omgezet, wacht op test:
+**Adres: tab Persoonsgegevens (`/adres/:bagId/personen`)** — ✅ akkoord:
 
 - Hetzelfde component als de BRP-kaart van top-frontend-v2 (`pages/CaseDetailPage/BRPCard`), overgenomen in `addresses/Residents/`: de ingeschreven personen in een tabel (naam met een gekleurde avatar per geslacht, leeftijd), oudste eerst; een rij klapt open met "Persoonsgegevens" (voornamen, geslacht, geboren, geboorteplaats, nationaliteit, overleden, ingeschreven sinds) en "Familiegegevens" (ouders, partner(s), kinderen). Een briefadres krijgt een oranje badge. Wie langer dan een jaar geleden is overleden, wordt niet getoond.
 - Vervangt `Residents` van `wonen-ui`. Niet overgenomen: de kaart eromheen (de tab is het kader). Wel overgenomen: de **voorbeeldpersonen buiten productie** (`data/dummyResidentsResponse.ts`): op lokaal en acceptatie (`VITE_ENVIRONMENT_SHORT` is `LOCAL` of `ACC`, zie `app/config/isAcceptanceOrLocalEnvironment`) toont een adres zonder ingeschrevenen verzonnen personen, met een regel erboven dat het voorbeeldgegevens zijn. Bij een fout van de API niet, en in productie nooit (ook niet als de omgeving geen naam heeft). Zonder personen staat er geen kop, alleen de tekst.
@@ -662,11 +662,11 @@ Testchecklist adresoverzicht:
 
 Testchecklist Persoonsgegevens:
 
-- [ ] De tab toont titel en tabs (Persoonsgegevens actief, geen breadcrumbs) en "Ingeschreven personen (n)" met de personen, oudste eerst.
-- [ ] Een rij uitklappen (klik op de rij of op het pijltje, en met Tab + Enter): persoons- en familiegegevens; nog een keer klapt hem dicht.
-- [ ] Een adres zonder ingeschrevenen toont de tekst; zonder het recht ontbreekt de tab en geeft de URL de 403-pagina.
-- [ ] Smal scherm: de kolom Leeftijd valt weg, de details blijven leesbaar.
-- [ ] De overzichten (zaken, taken) en de zaken op een adres zien er nog hetzelfde uit: de tabel is aangepast.
+- [x] De tab toont titel en tabs (Persoonsgegevens actief, geen breadcrumbs) en "Ingeschreven personen (n)" met de personen, oudste eerst.
+- [x] Een rij uitklappen (klik op de rij of op het pijltje, en met Tab + Enter): persoons- en familiegegevens; nog een keer klapt hem dicht.
+- [x] Een adres zonder ingeschrevenen toont de tekst; zonder het recht ontbreekt de tab en geeft de URL de 403-pagina.
+- [x] Smal scherm: de kolom Leeftijd valt weg, de details blijven leesbaar.
+- [x] De overzichten (zaken, taken) en de zaken op een adres zien er nog hetzelfde uit: de tabel is aangepast.
 
 ## Fase 3 — Verticale migratie per domein (± 4–8 weken)
 
