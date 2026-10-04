@@ -33,3 +33,97 @@
   justify-content: center;
   margin-top: var(--ams-space-m);
 }
+
+@media (max-width: 576px) {
+  .hideOnMobile {
+    display: none;
+  }
+}
+
+/* Expandable rows (from top-frontend-v2). */
+.expandableRow {
+  cursor: pointer;
+}
+
+.expandableRow:hover {
+  background-color: #fafafa;
+}
+
+.expandCell {
+  text-align: end !important;
+}
+
+.expandButton {
+  all: unset;
+  display: inline-flex;
+  cursor: pointer;
+  transition:
+    transform 240ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 240ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.expandButton:focus-visible {
+  outline: auto;
+  outline-offset: 4px;
+}
+
+.expandButtonOpen {
+  transform: rotate(180deg);
+  color: var(--ams-color-interactive);
+}
+
+.expandedRow {
+  background-color: #fafafa;
+}
+
+.expandedCell {
+  --ams-table-cell-border-block-end: 0;
+  padding-block: 0 !important;
+  padding-inline: 0 !important;
+}
+
+.collapsible {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 320ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.collapsibleOpen {
+  grid-template-rows: 1fr;
+}
+
+/* Shut: not visible, not reachable with the keyboard and not read out; that
+   starts after the slide (the delay on visibility). */
+.collapsibleInner {
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  border-bottom: 0 solid var(--ams-color-separator);
+  transition:
+    opacity 200ms ease,
+    border-bottom-width 200ms ease,
+    visibility 0s linear 320ms;
+}
+
+.collapsibleOpen .collapsibleInner {
+  opacity: 1;
+  visibility: visible;
+  border-bottom-width: 1px;
+  transition:
+    opacity 200ms ease,
+    border-bottom-width 200ms ease,
+    visibility 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .collapsible,
+  .collapsibleInner,
+  .collapsibleOpen .collapsibleInner,
+  .expandButton {
+    transition: none;
+  }
+}
+
+.expandedContent {
+  padding: var(--ams-space-m);
+}

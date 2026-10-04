@@ -1,5 +1,6 @@
-import { type ReactNode } from "react"
-import { Table as ADSTable } from "@amsterdam/design-system-react"
+import { Fragment, type ReactNode, useState } from "react"
+import { Icon, Table as ADSTable } from "@amsterdam/design-system-react"
+import { ChevronDownIcon } from "@amsterdam/design-system-react-icons"
 import { SmallSkeleton } from "@/components/SmallSkeleton/SmallSkeleton"
 import usePagination from "./hooks/usePagination"
 import TablePagination from "./TablePagination"
@@ -25,8 +26,31 @@ export function Table<T extends object>({
   emptyPlaceholder = "",
   pagination,
   verticalAlign = "top",
+  expandable,
   onChange,
 }: TableProps<T>) {
+  // The rows that are open, by their index on the page.
+  const [expandedRows, setExpandedRows] = useState<Set<number>>(new Set())
+
+  const toggleRow = (index: number) =>
+    setExpandedRows((previous) => {
+      const next = new Set(previous)
+      if (!next.delete(index)) next.add(index)
+      return next
+    })
+
+  const cellClassName = (column: {
+    noWrap?: boolean
+    hideOnMobile?: boolean
+  }) =>
+    [
+      column.noWrap ? styles.noWrap : "",
+      column.hideOnMobile ? styles.hideOnMobile : "",
+    ]
+      .join(" ")
+      .trim() || undefined
+  const numColumns = columns.length + (expandable ? 1 : 0)
+
   const { page, pageSize, collectionSize, setInnerPage } = usePagination(
     data.length,
     pagination,
@@ -58,54 +82,106 @@ export function Table<T extends object>({
             {columns.map((column, index) => (
               <ADSTable.HeaderCell
                 key={index}
-                className={styles.headerCell}
+                className={`${styles.headerCell} ${column.hideOnMobile ? styles.hideOnMobile : ""}`}
                 style={{ minWidth: column.minWidth }}
               >
                 {column.header}
               </ADSTable.HeaderCell>
             ))}
+            {expandable && (
+              <ADSTable.HeaderCell className={styles.expandCell}>
+                Details
+              </ADSTable.HeaderCell>
+            )}
           </ADSTable.Row>
         </ADSTable.Header>
         <ADSTable.Body>
           {loading &&
             Array.from({ length: numLoadingRows }, (_, rowIndex) => (
               <ADSTable.Row key={rowIndex}>
-                {columns.map((_column, index) => (
-                  <ADSTable.Cell key={index}>
+                {columns.map((column, index) => (
+                  <ADSTable.Cell key={index} className={cellClassName(column)}>
                     <div className={styles.loadingCell}>
                       <SmallSkeleton />
                     </div>
                   </ADSTable.Cell>
                 ))}
+                {expandable && <ADSTable.Cell />}
               </ADSTable.Row>
             ))}
           {!loading &&
-            pageData.map((record, rowIndex) => (
-              <ADSTable.Row key={rowIndex}>
-                {columns.map((column, index) => {
-                  const value = column.dataIndex
-                    ? getNestedValue(
-                        record as Record<string, unknown>,
-                        column.dataIndex,
+            pageData.map((record, rowIndex) => {
+              const isExpanded = expandedRows.has(rowIndex)
+              return (
+                <Fragment key={rowIndex}>
+                  <ADSTable.Row
+                    className={expandable ? styles.expandableRow : undefined}
+                    onClick={expandable ? () => toggleRow(rowIndex) : undefined}
+                  >
+                    {columns.map((column, index) => {
+                      const value = column.dataIndex
+                        ? getNestedValue(
+                            record as Record<string, unknown>,
+                            column.dataIndex,
+                          )
+                        : undefined
+                      return (
+                        <ADSTable.Cell
+                          key={index}
+                          className={cellClassName(column)}
+                        >
+                          {column.render
+                            ? column.render(value, record)
+                            : ((value as ReactNode) ?? "")}
+                        </ADSTable.Cell>
                       )
-                    : undefined
-                  return (
-                    <ADSTable.Cell
-                      key={index}
-                      className={column.noWrap ? styles.noWrap : undefined}
-                    >
-                      {column.render
-                        ? column.render(value, record)
-                        : ((value as ReactNode) ?? "")}
-                    </ADSTable.Cell>
-                  )
-                })}
-              </ADSTable.Row>
-            ))}
+                    })}
+                    {expandable && (
+                      <ADSTable.Cell className={styles.expandCell}>
+                        <button
+                          type="button"
+                          className={`${styles.expandButton} ${isExpanded ? styles.expandButtonOpen : ""}`}
+                          aria-expanded={isExpanded}
+                          aria-label={`Details${expandable.rowLabel ? ` van ${expandable.rowLabel(record)}` : ""}`}
+                          onClick={(event) => {
+                            // The row toggles as well.
+                            event.stopPropagation()
+                            toggleRow(rowIndex)
+                          }}
+                        >
+                          <Icon svg={ChevronDownIcon} size="heading-3" />
+                        </button>
+                      </ADSTable.Cell>
+                    )}
+                  </ADSTable.Row>
+                  {expandable && (
+                    <ADSTable.Row className={styles.expandedRow}>
+                      <ADSTable.Cell
+                        colSpan={numColumns}
+                        className={styles.expandedCell}
+                      >
+                        {/* Always there, so it can slide shut as well as open;
+                            while shut it is hidden from everyone (CSS). */}
+                        <div
+                          className={`${styles.collapsible} ${isExpanded ? styles.collapsibleOpen : ""}`}
+                          aria-hidden={!isExpanded}
+                        >
+                          <div className={styles.collapsibleInner}>
+                            <div className={styles.expandedContent}>
+                              {expandable.expandedRow(record)}
+                            </div>
+                          </div>
+                        </div>
+                      </ADSTable.Cell>
+                    </ADSTable.Row>
+                  )}
+                </Fragment>
+              )
+            })}
           {!loading && isEmpty && (
             <ADSTable.Row>
               <ADSTable.Cell
-                colSpan={columns.length}
+                colSpan={numColumns}
                 className={styles.emptyPlaceholder}
               >
                 {emptyPlaceholder}

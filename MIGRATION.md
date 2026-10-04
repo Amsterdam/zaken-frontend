@@ -420,7 +420,7 @@ Doel: ADS geïnstalleerd en gedeelde bouwstenen klaar, terwijl asc-ui nog gewoon
 - **Tests:** rendertest van de layout via de 404-pagina (menu met/zonder rechten, externe link, flash message tonen en wegklikken). `src/test-utils/setupTests.ts` bootst `matchMedia` na, die ADS gebruikt en jsdom niet heeft.
 - **"Digitaal toezicht" staat niet meer in het menu** (op verzoek weggehaald, ook uit het oude menu). Ook weg: de route `/digitaaltoezicht` met de lege pagina (`pages/ton/`), de uitzondering in `IsAuthorizedMenuButton` en `VITE_TON_FRONTEND_URL` in de `.env`-bestanden (controleer de configuratie van productie).
 - **Menulabels:** "Zakenoverzicht" en "Takenoverzicht" voluit, "Invordering" kort. Het menu is smal, dus de lange woorden breken af; een zacht afbreekstreepje in het label en `hyphens: manual` op `.ams-menu__link` (in `design-system-overrides.css`) zorgen dat dat op de woordgrens gebeurt ("Zaken-overzicht") en niet ergens midden in ("Zakenover-zicht"). De paginatitels in `routes` blijven voluit.
-- Gevonden bij het testen: **geen iconen te zien.** ADS rendert sommige elementen met het `hidden`-attribuut en toont ze pas via de eigen CSS (zodat ze verborgen blijven tot de CSS geladen is). De `GlobalStyle` van asc-ui (`normalize()` van polished) voegt `[hidden] { display: none }` toe ná onze CSS, met hetzelfde gewicht, en verbergt ze dus allemaal. `src/styles/design-system-overrides.css` zet de bedoelde `display` terug voor `.ams-icon`, de checkbox-/radio-markering, paginerings- en tabnavigatielabels, en voor de menuknop in de header (daardoor ontbrak op smalle schermen het hele menu). Weg samen met asc-ui (Fase 5).
+- Gevonden bij het testen: **geen iconen te zien.** ADS rendert sommige elementen met het `hidden`-attribuut en toont ze pas via de eigen CSS (zodat ze verborgen blijven tot de CSS geladen is). De `GlobalStyle` van asc-ui (`normalize()` van polished) voegt `[hidden] { display: none }` toe ná onze CSS, met hetzelfde gewicht, en verbergt ze dus allemaal. `src/styles/design-system-overrides.css` zet de bedoelde `display` terug voor `.ams-icon`, de checkbox-/radio-markering, paginerings- en tabnavigatielabels, en voor de menuknop in de header (daardoor ontbrak op smalle schermen het hele menu). De `GlobalStyle` van asc-ui zet ook `box-sizing: border-box` op elk element; de ADS-`Avatar` werd daardoor een ovaal, en `design-system-overrides.css` zet hem terug op `content-box`. Weg samen met asc-ui (Fase 5).
 - **Menu-iconen:** de gevulde variant (`…FillIcon`) waar die bestaat, zoals ADS voorschrijft. Zaken heeft de map (`FolderFillIcon`).
 - **CSS-volgorde:** `index.css` (ADS) wordt in `index.tsx` als eerste geïmporteerd, vóór `App`. Anders komen de ADS-regels in de bundel ná de CSS Modules en winnen ze bij gelijk gewicht, waardoor pagina-CSS ADS niet kan overschrijven (gevonden bij de 404: `.ams-icon` heeft `align-self: baseline`, wat het centreren van het icoon tenietdeed).
 - **Pagina-opbouw:** ADS v4 staat in compact mode: grijze pagina (`--ams-color-background-body`) met witte `Grid.Cell`-vlakken. De layout zet de inhoud in een `Grid` (`paddingVertical`/`gapVertical` "large"); **elke pagina levert één of meer `Grid.Cell`s** (zoals top-frontend-v2). Breadcrumbs en flash messages zijn transparante cellen die alleen verschijnen als er iets te tonen is.
@@ -439,19 +439,20 @@ Testchecklist:
 
 #### Pagina voor pagina
 
-| Pagina                                                                               | Status                                                   |
-| ------------------------------------------------------------------------------------ | -------------------------------------------------------- |
-| 404 (`pages/errors/NotFoundPage`)                                                    | ✅ akkoord (pilot)                                       |
-| Hulp (`pages/help/HelpPage`)                                                         | ✅ akkoord                                               |
-| 403 (`pages/auth/NotAuthorizedPage`)                                                 | ✅ akkoord                                               |
-| Gebruiker (`pages/auth/AuthPage`, `/auth`)                                           | ✅ akkoord (pilot `Description`)                         |
-| Invorderingscheck (`pages/fines/FinePage`, `/invorderingen`)                         | ✅ akkoord                                               |
-| Adres zoeken / start (`pages/home/HomePage`, `/`)                                    | ✅ akkoord                                               |
-| Zakenoverzicht (`pages/cases/index/IndexPage`, `/zaken`)                             | ✅ akkoord (3 stappen: `Table`, filters, URL)            |
-| Takenoverzicht (`pages/tasks/IndexPage`, `/taken`)                                   | ✅ akkoord (incl. taak toewijzen, pilot `ConfirmDialog`) |
-| Adres: Zaken (`pages/addresses/index/IndexPage`, `/adres/:bagId`)                    | ✅ akkoord                                               |
-| Adres: Adresdetails (`pages/addresses/details/DetailsPage`, `/adres/:bagId/details`) | ✅ akkoord                                               |
-| Adres: Persoonsgegevens en Vergunningen (`/adres/:bagId/personen`, `/vergunningen`)  | volgende: nog in de oude layout, zonder tabbalk          |
+| Pagina                                                                                  | Status                                                   |
+| --------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| 404 (`pages/errors/NotFoundPage`)                                                       | ✅ akkoord (pilot)                                       |
+| Hulp (`pages/help/HelpPage`)                                                            | ✅ akkoord                                               |
+| 403 (`pages/auth/NotAuthorizedPage`)                                                    | ✅ akkoord                                               |
+| Gebruiker (`pages/auth/AuthPage`, `/auth`)                                              | ✅ akkoord (pilot `Description`)                         |
+| Invorderingscheck (`pages/fines/FinePage`, `/invorderingen`)                            | ✅ akkoord                                               |
+| Adres zoeken / start (`pages/home/HomePage`, `/`)                                       | ✅ akkoord                                               |
+| Zakenoverzicht (`pages/cases/index/IndexPage`, `/zaken`)                                | ✅ akkoord (3 stappen: `Table`, filters, URL)            |
+| Takenoverzicht (`pages/tasks/IndexPage`, `/taken`)                                      | ✅ akkoord (incl. taak toewijzen, pilot `ConfirmDialog`) |
+| Adres: Zaken (`pages/addresses/index/IndexPage`, `/adres/:bagId`)                       | ✅ akkoord                                               |
+| Adres: Adresdetails (`pages/addresses/details/DetailsPage`, `/adres/:bagId/details`)    | ✅ akkoord                                               |
+| Adres: Persoonsgegevens (`pages/addresses/people/PeoplePage`, `/adres/:bagId/personen`) | omgezet, wacht op test                                   |
+| Adres: Vergunningen (`/adres/:bagId/vergunningen`)                                      | volgende: nog in de oude layout, zonder tabbalk          |
 
 **Hulp-pagina:** naar het voorbeeld van de veelgestelde-vragenpagina van top-frontend-v2: titel "Hulp" direct op de grijze achtergrond, daaronder één wit vlak met de vier onderwerpen in een ADS-`Accordion` (dicht bij het openen, net als eerst). Geen icoon meer naast de paginatitel. **Breadcrumbs** staan alleen nog op geneste pagina's: een pagina direct onder home (zoals `/hulp`) krijgt er geen. De lijstjes stonden in de oude versie binnen een alinea (ongeldige HTML); dat zijn nu losse ADS-lijsten. `EmailLink` zit in `HelpContent`; het ongebruikte `PhoneLink` en `HelpContent.module.css` zijn weg. `CustomTooltip` staat nog in dezelfde map omdat de zaakpagina's het gebruiken.
 
@@ -650,6 +651,22 @@ Testchecklist adresoverzicht:
 - [x] Een adres dat PDOK niet kent geeft de rode melding bovenaan.
 - [x] De adresregel op de zaakpagina's (oude layout) werkt nog, inclusief het wisselen van adres.
 - [x] Smal scherm: de tabs, het panorama en de tabellen blijven bruikbaar.
+
+**Adres: tab Persoonsgegevens (`/adres/:bagId/personen`)** — omgezet, wacht op test:
+
+- Hetzelfde component als de BRP-kaart van top-frontend-v2 (`pages/CaseDetailPage/BRPCard`), overgenomen in `addresses/Residents/`: de ingeschreven personen in een tabel (naam met een gekleurde avatar per geslacht, leeftijd), oudste eerst; een rij klapt open met "Persoonsgegevens" (voornamen, geslacht, geboren, geboorteplaats, nationaliteit, overleden, ingeschreven sinds) en "Familiegegevens" (ouders, partner(s), kinderen). Een briefadres krijgt een oranje badge. Wie langer dan een jaar geleden is overleden, wordt niet getoond.
+- Vervangt `Residents` van `wonen-ui`. Niet overgenomen: de kaart eromheen (de tab is het kader). Wel overgenomen: de **voorbeeldpersonen buiten productie** (`data/dummyResidentsResponse.ts`): op lokaal en acceptatie (`VITE_ENVIRONMENT_SHORT` is `LOCAL` of `ACC`, zie `app/config/isAcceptanceOrLocalEnvironment`) toont een adres zonder ingeschrevenen verzonnen personen, met een regel erboven dat het voorbeeldgegevens zijn. Bij een fout van de API niet, en in productie nooit (ook niet als de omgeving geen naam heeft). Zonder personen staat er geen kop, alleen de tekst.
+- Het gedeelde `Table` heeft hiervoor **uitklapbare rijen** gekregen (`expandable`, naar top-frontend-v2) en `hideOnMobile` per kolom. Uitklappen gaat met een echte knop per rij (toetsenbord, `aria-expanded`, met de naam van de persoon in het label); een klik op de rij doet hetzelfde.
+- Ook overgenomen: `src/components/MobileOnlyWrapper/` en `src/icons/BabyIcon.tsx`.
+- Weg: `addresses/ResidentsOverview` en `shared/Details/LoadingDetails`.
+
+Testchecklist Persoonsgegevens:
+
+- [ ] De tab toont titel en tabs (Persoonsgegevens actief, geen breadcrumbs) en "Ingeschreven personen (n)" met de personen, oudste eerst.
+- [ ] Een rij uitklappen (klik op de rij of op het pijltje, en met Tab + Enter): persoons- en familiegegevens; nog een keer klapt hem dicht.
+- [ ] Een adres zonder ingeschrevenen toont de tekst; zonder het recht ontbreekt de tab en geeft de URL de 403-pagina.
+- [ ] Smal scherm: de kolom Leeftijd valt weg, de details blijven leesbaar.
+- [ ] De overzichten (zaken, taken) en de zaken op een adres zien er nog hetzelfde uit: de tabel is aangepast.
 
 ## Fase 3 — Verticale migratie per domein (± 4–8 weken)
 

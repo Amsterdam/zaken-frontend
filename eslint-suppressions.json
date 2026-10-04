@@ -19,11 +19,6 @@
       "count": 1
     }
   },
-  "src/app/components/addresses/ResidentsOverview/ResidentsOverview.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    }
-  },
   "src/app/components/case/CaseDetails/ChangeHousingCorporation/ChangeHousingCorporation.tsx": {
     "@typescript-eslint/no-explicit-any": {
       "count": 1
