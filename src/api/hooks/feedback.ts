@@ -5,13 +5,22 @@ import { makeApiUrl } from "@/api/utils/makeApiUrl"
 type Feedback = components["schemas"]["Feedback"]
 
 // app_name is filled in by the backend.
-export type FeedbackPayload = Omit<Feedback, "app_name">
+type FeedbackPayload = Omit<Feedback, "app_name">
 
-export const useCreateFeedback = () => {
+/** Sends feedback, with the page and the browser it comes from. */
+export const useSendFeedback = () => {
   const fetch = useApiFetch()
 
   return useMutation({
-    mutationFn: (data: FeedbackPayload) =>
-      fetch<Feedback>(makeApiUrl("feedback"), { method: "POST", data }),
+    mutationFn: (feedback: string) =>
+      fetch<Feedback>(makeApiUrl("feedback"), {
+        method: "POST",
+        data: {
+          feedback,
+          url: window.location.href,
+          user_agent: navigator.userAgent,
+          screen: `${window.innerWidth}x${window.innerHeight}`,
+        } satisfies FeedbackPayload,
+      }),
   })
 }

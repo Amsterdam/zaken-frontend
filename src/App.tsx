@@ -11,7 +11,7 @@ import FlashMessageProvider from "app/state/flashMessages/FlashMessageProvider"
 import PageTitle from "app/routing/components/PageTitle"
 import { AmsterdamCrossSpinner } from "@/components/spinners/AmsterdamCrossSpinner/AmsterdamCrossSpinner"
 import { FullScreenWrapper } from "app/components/shared/loading"
-import Feedback from "app/components/Feedback"
+import { Feedback } from "@/components/Feedback/Feedback"
 
 const App = () => {
   const auth = useAuth()
