@@ -1,8 +1,0 @@
-.styledLink {
-  text-decoration: none;
-}
-
-.styledLink:hover {
-  text-decoration: underline;
-  color: #ec0000;
-}

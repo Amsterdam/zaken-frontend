@@ -19,7 +19,7 @@ Doel: zaken-frontend omzetten naar dezelfde toekomstbestendige stack als [`top-f
 - **Fase 0 ✅** Tooling: ESLint flat config (met bulk suppressions), Prettier (hele codebase geformatteerd), Testing Library 16, `@/`-alias, `AGENTS.md`.
 - **Fase 1 ✅** Alle data via TanStack Query (`src/api/`); de oude laag `src/app/state/rest/` en `axios`, `qs`, `lodash.merge`, `lodash.isempty` zijn weg. Mutaties werken alleen bij wat de gewijzigde data toont, vaak zonder refetch.
 - **Fase 2 (bezig):** ADS staat naast `asc-ui`; de pilot (nieuwe layout `src/components/DefaultLayout/` op de 404-pagina) is ✅ akkoord. Nu pagina voor pagina, met een controle na elke pagina: 404, Hulp, 403 en `/auth` (pilot voor `Description`, de vervanger van `DefinitionList` van `wonen-ui`) de invorderingscheck en de startpagina (adres zoeken) zijn ✅ akkoord. Bezig: het zakenoverzicht, in drie stappen: (1) layout + `Table` — ✅ akkoord; (2) filters naar ADS, boven de tabel — ✅ akkoord; (3) filters naar de URL — ✅ akkoord. Het takenoverzicht is ✅ akkoord, inclusief het toewijzen van taken (pilot `ConfirmDialog`, de vervanger van de asc-ui-`ConfirmModal`). De adrespagina's (tabs Zaken, Adresdetails, Persoonsgegevens, Vergunningen), de zaakpagina en alle formulieren (react-hook-form + `ee-ads-rhf`) zijn ✅ akkoord; de oude formulierlaag is weg.
-- **Fase 2, opruimen van de oude gedeelde onderdelen (bezig):** (1) feedbackknop op de `FeedbackDialog` van top-frontend-v2 — ✅ akkoord; (2) flash messages weg: API-fouten zijn een toast met de korte teksten van top-frontend-v2 (`src/api/utils/mapApiErrorToToast.ts`), "adres niet gevonden in de BAG" is een `Alert` op de adrespagina — ✅ akkoord; (3) dode code verwijderen (oude navigatie, `shared/Modal`, `AddressHeader`, …); (4) `App.tsx` zonder asc-ui (`ThemeProvider`, `GlobalStyle`); (5) `asc-ui`, `asc-assets`, `wonen-ui`, `styled-components` en `immer` deïnstalleren. Daarna React 19.
+- **Fase 2, opruimen van de oude gedeelde onderdelen (bezig):** (1) feedbackknop op de `FeedbackDialog` van top-frontend-v2 — ✅ akkoord; (2) flash messages weg: API-fouten zijn een toast met de korte teksten van top-frontend-v2 (`src/api/utils/mapApiErrorToToast.ts`), "adres niet gevonden in de BAG" is een `Alert` op de adrespagina — ✅ akkoord; (3) dode code verwijderd (65 bestanden die de app niet meer bereikte: oude navigatie, `BreadCrumbs`, `SkipLinks`, `UserInfo`, `shared/Modal`, `AddressHeader`, `AddressSuffixSwitcher`, `Tabs`, `layouts/Grid`, `MainWrapper`, … en hun tests) — wacht op test; (4) `App.tsx` zonder asc-ui (`ThemeProvider`, `GlobalStyle`); (5) `asc-ui`, `asc-assets`, `wonen-ui`, `styled-components` en `immer` deïnstalleren. Daarna React 19.
 - **Restpunten:** filters van de overzichten naar de URL (eigen pilot, past bij Fase 3); `immer` (weg met flash messages → toasts en `ShowHide`); `lodash` (weg met `amsterdam-react-final-form`); 155 vastgelegde lint-overtredingen in `eslint-suppressions.json` (lossen grotendeels op in Fase 3).
 
 ## 1. Uitgangssituatie (gemeten op `main`, okt 2026)
@@ -371,7 +371,7 @@ Testchecklist (per formulier: invullen, bevestigen, terug op de zaak):
 - [x] De hele oude laag `src/app/state/rest/` is verwijderd: `ApiProvider`, `useApiRequest`, de request-queue, `useApiCache`, `useContextCache`, de mock-requests, `errorHandler`, `cleanParamObject` en de brug in `useApiRequest`. `ApiProvider` is uit `App.tsx`.
 - [x] Wat nog gebruikt werd is verhuisd: `makeApiUrl`/`makeTonApiUrl` → `src/api/utils/makeApiUrl.ts`; `useHasPermission` (samengevoegd met `usePermissions`, met test; de oude "zoek dubbelen"-check — samengevoegde lijsten in een `Set` — is vervangen door `permissionsToCheck.some(p => permissions.includes(p))`, die geen onterechte toegang meer geeft bij een dubbel recht in de lijst van de gebruiker of in de vraag), `useOtherAddressesByBagId` en `usePanoramaByBagId` → `src/hooks/` (de doelmap uit Fase 5).
 - [x] Dependencies weg: `axios`, `qs`, `lodash.merge`, `lodash.isempty` (+ `@types/qs`, `@types/lodash.merge`, `@types/lodash.isempty`). De build controleert dat geen andere library er stilletjes op leunde.
-- [ ] `immer` blijft nog: gebruikt door `useFlashMessagesReducer` en `ShowHide` (gaan weg met de flash messages → toasts in Fase 2 en `ShowHide` in Fase 3).
+- [x] `immer` wordt nergens meer gebruikt (`useFlashMessagesReducer` en `ShowHide` zijn weg); het pakket gaat eruit bij het deïnstalleren van de oude libraries.
 - [x] `ValueProvider`: de ongebruikte `results`/`count` zijn weg; alleen de filterwaarden staan er nog in.
 - [x] `ValueProvider` vervangen door de URL (search params) voor de filters van het zaken- en takenoverzicht. Gedaan in Fase 2 (zie het zaken- en takenoverzicht daar); `src/app/state/context/` is weg.
 
@@ -389,13 +389,13 @@ Doel: ADS geïnstalleerd en gedeelde bouwstenen klaar, terwijl asc-ui nog gewoon
 - [x] Installeren: `@amsterdam/design-system-assets`, `-css`, `-react`, `-react-icons`, `-tokens` (versies als top-frontend-v2). `@amsterdam/ee-ads-rhf` en `react-hook-form` volgen bij het eerste formulier (Fase 3).
 - [x] Global CSS in `src/index.css` (geïmporteerd in `index.tsx`), zoals in top-frontend-v2: fonts, `design-system-css`, tokens (+ `compact.css`), `styles/design-system-overrides.css`. Gecontroleerd: de ADS-CSS bevat geen enkele globale element-selector (alleen `.ams-*`, tokens op `:root` en `@font-face`), dus de asc-ui-pagina's merken er niets van.
 - [x] `src/app/components/shared/ams-tokens.css` verwijderd: de officiële tokens bevatten alles (ook de avatar-tokens). Let op: `compact.css` maakt o.a. randen dunner, dus de avatar in het takenoverzicht kan iets anders ogen.
-- [ ] Gedeelde componenten neerzetten in `src/components/`, waar mogelijk overgenomen uit top-frontend-v2:
+- [x] Gedeelde componenten neerzetten in `src/components/`, waar mogelijk overgenomen uit top-frontend-v2:
   - [x] `src/components/DefaultLayout/` (ADS `Page withMenu`, `PageHeader`, `Menu`, `Breadcrumb`, `Alert`, `SkipLink`), naar het voorbeeld van top-frontend-v2 → vervangt per pagina `app/components/layouts/DefaultLayout` (asc-ui `Header`, `MenuInline`/`MenuToggle`, `BreadCrumbs`, `FlashMessages`, `SkipLinks`, `MainWrapper`). Zie de pilot hieronder.
   - `toasts/` (ToastProvider + `toastBridge`) → vervangt `FlashMessageProvider` + `immer` reducer.
   - `Table` → vervangt `wonen-ui` `Table`/`LoadingRows`.
   - `Card`, `spinners/AmsterdamCrossSpinner`, `ErrorState`, `ConfirmDialog` (ADS `Dialog` → vervangt asc-ui `Modal`).
   - `CaseEventTimeline` → vervangt `wonen-ui` `EventsTimeline`.
-- [ ] Een gedeelde formulier-basis: `src/forms/` met `mapToOptions` en een `FormActions`/`SubmitButton` patroon.
+- [x] Een gedeelde formulier-basis. Anders dan gepland geen map `src/forms/`: `src/components/FormPage` (formulier op een pagina) en `src/components/FormDialog` (formulier in een dialoog) hebben die rol, met de knoppen erin.
 
 > **🧪 Pilot: eerst één voorbeeld**
 >
@@ -717,11 +717,11 @@ Het patroon voor alle zaakformulieren:
 
 Testchecklist "Taak opvoeren":
 
-- [ ] Open een zaak en kies "Taak opvoeren": titel, breadcrumbs, adres en zaak-ID, de keuzelijst met taken en twee knoppen.
-- [ ] Verstuur zonder keuze: de fout staat onder het veld en bovenaan in de samenvatting; de link in de samenvatting zet de cursor in het veld. Er wordt niets opgeslagen.
-- [ ] Kies een taak en verstuur: direct opgeslagen (geen bevestigingsscherm), terug op de zaak met de succesmelding, en de taak staat erbij.
-- [ ] "Annuleren" gaat terug naar de zaak zonder iets op te slaan.
-- [ ] Zonder het recht `perform_task` geeft de pagina de 403.
+- [x] Open een zaak en kies "Taak opvoeren": titel, breadcrumbs, adres en zaak-ID, de keuzelijst met taken en twee knoppen.
+- [x] Verstuur zonder keuze: de fout staat onder het veld en bovenaan in de samenvatting; de link in de samenvatting zet de cursor in het veld. Er wordt niets opgeslagen.
+- [x] Kies een taak en verstuur: direct opgeslagen (geen bevestigingsscherm), terug op de zaak met de succesmelding, en de taak staat erbij.
+- [x] "Annuleren" gaat terug naar de zaak zonder iets op te slaan.
+- [x] Zonder het recht `perform_task` geeft de pagina de 403.
 
 **Zaakpagina (`/zaken/:id`) — in vier stappen** (afgesproken: in stappen):
 
@@ -798,11 +798,11 @@ Stap 4a (wijzigen in de zaakinformatie) — ✅ akkoord:
 
 Testchecklist zaakpagina stap 4a:
 
-- [ ] Tag: het venster toont de huidige tag gekozen; een andere tag of "Geen tag" opslaan past de badge direct aan, met een toast.
-- [ ] Onderwerpen: de huidige staan in het veld; typen zoekt, een kruisje verwijdert er een; de lijst klapt uit binnen het venster en is niet afgesneden. Een ander thema kiezen voegt zijn onderwerpen toe aan de lijst.
-- [ ] Corporatie: de huidige is gekozen; een andere of "Geen corporatie" opslaan past de regel direct aan.
-- [ ] "Annuleren", het kruisje en Escape sluiten zonder op te slaan.
-- [ ] Zonder het recht om taken uit te voeren zijn er geen potloodjes.
+- [x] Tag: het venster toont de huidige tag gekozen; een andere tag of "Geen tag" opslaan past de badge direct aan, met een toast.
+- [x] Onderwerpen: de huidige staan in het veld; typen zoekt, een kruisje verwijdert er een; de lijst klapt uit binnen het venster en is niet afgesneden. Een ander thema kiezen voegt zijn onderwerpen toe aan de lijst.
+- [x] Corporatie: de huidige is gekozen; een andere of "Geen corporatie" opslaan past de regel direct aan.
+- [x] "Annuleren", het kruisje en Escape sluiten zonder op te slaan.
+- [x] Zonder het recht om taken uit te voeren zijn er geen potloodjes.
 
 Stap 4b (de vensters achter de taakacties) — in drie delen, van klein naar groot:
 
@@ -817,24 +817,24 @@ Stap 4b (de vensters achter de taakacties) — in drie delen, van klein naar gro
 
 Testchecklist slotdatum:
 
-- [ ] Het potloodje naast de slotdatum opent het venster met de huidige datum ingevuld.
-- [ ] Een nieuwe datum opslaan past de slotdatum in de tabel aan, met een toast.
-- [ ] Een lege datum of een datum in het verleden geeft direct een melding bij het veld en "Opslaan" is dan uit.
-- [ ] "Annuleren", het kruisje en Escape sluiten zonder op te slaan.
+- [x] Het potloodje naast de slotdatum opent het venster met de huidige datum ingevuld.
+- [x] Een nieuwe datum opslaan past de slotdatum in de tabel aan, met een toast.
+- [x] Een lege datum of een datum in het verleden geeft direct een melding bij het veld en "Opslaan" is dan uit.
+- [x] "Annuleren", het kruisje en Escape sluiten zonder op te slaan.
 
 Testchecklist urgentie (bij een zaak met de taak "Huisbezoek inplannen"):
 
-- [ ] In de kolom "Urgentie" staat de urgentie met een potloodje; dat opent het venster met de huidige planning ingevuld.
-- [ ] Een andere urgentie opslaan past de kolom direct aan, met een toast; de zaakhistorie toont de nieuwe planning.
-- [ ] "Vanaf een specifieke datum" toont het datumveld; zonder datum of met een datum in het verleden is "Opslaan" uit.
-- [ ] Zonder het recht om taken uit te voeren staat er alleen de urgentie.
+- [x] In de kolom "Urgentie" staat de urgentie met een potloodje; dat opent het venster met de huidige planning ingevuld.
+- [x] Een andere urgentie opslaan past de kolom direct aan, met een toast; de zaakhistorie toont de nieuwe planning.
+- [x] "Vanaf een specifieke datum" toont het datumveld; zonder datum of met een datum in het verleden is "Opslaan" uit.
+- [x] Zonder het recht om taken uit te voeren staat er alleen de urgentie.
 
 Testchecklist taak afronden:
 
-- [ ] Een taak zonder formulier: "Taak afronden" vraagt of de taak is afgerond; bevestigen rondt hem af, met een toast, en de volgende taak verschijnt.
-- [ ] Een taak met formulier (bv. een keuze voor de volgende stap): de vragen staan in het venster; "Taak afronden" is uit tot de verplichte vragen zijn beantwoord.
-- [ ] Een taak met meerkeuze of een toelichting (bv. "Verwerken en opsturen besluit"): de vinkjes en het tekstvak werken; de zaakhistorie toont de antwoorden.
-- [ ] "Annuleren", het kruisje en Escape sluiten zonder af te ronden.
+- [x] Een taak zonder formulier: "Taak afronden" vraagt of de taak is afgerond; bevestigen rondt hem af, met een toast, en de volgende taak verschijnt.
+- [x] Een taak met formulier (bv. een keuze voor de volgende stap): de vragen staan in het venster; "Taak afronden" is uit tot de verplichte vragen zijn beantwoord.
+- [x] Een taak met meerkeuze of een toelichting (bv. "Verwerken en opsturen besluit"): de vinkjes en het tekstvak werken; de zaakhistorie toont de antwoorden.
+- [x] "Annuleren", het kruisje en Escape sluiten zonder af te ronden.
 
 **Formulierpagina's** — van klein naar groot: snel besluit (pilot), zaak afronden, besluit, huisbezoek inplannen, debrief, huisbezoek, melding, aanschrijving, nieuwe zaak aanmaken.
 
@@ -848,36 +848,36 @@ Het patroon (pilot: snel besluit):
 
 Testchecklist snel besluit (een zaak met de taak "Besluit verwerken" die naar `/snel-besluit/` gaat):
 
-- [ ] De pagina toont de titel, het adres met zaak-ID, de aanschrijving met aangeschrevenen en het formulier.
-- [ ] Opslaan zonder besluit: de foutmelding bovenaan met een link naar het veld, en de melding bij het veld.
-- [ ] Een besluit kiezen en opslaan: terug op de zaakpagina met een toast; de taak is weg en de zaakhistorie toont het besluit.
-- [ ] "Annuleren" gaat terug naar de zaak zonder op te slaan.
+- [x] De pagina toont de titel, het adres met zaak-ID, de aanschrijving met aangeschrevenen en het formulier.
+- [x] Opslaan zonder besluit: de foutmelding bovenaan met een link naar het veld, en de melding bij het veld.
+- [x] Een besluit kiezen en opslaan: terug op de zaakpagina met een toast; de taak is weg en de zaakhistorie toont het besluit.
+- [x] "Annuleren" gaat terug naar de zaak zonder op te slaan.
 
 **Zaak afronden** (`forms/CaseCompleteForm`): keuzerondjes "Wat is de reden?", alleen bij een reden met resultaat de keuzerondjes "Wat is het resultaat?", en een verplichte toelichting. De knop heet "Zaak afronden" (was "Verwerken").
 
 Testchecklist zaak afronden (een zaak met de taak "Zaak afsluiten"):
 
-- [ ] De pagina toont de titel, de zaakgegevens en het formulier.
-- [ ] Leeg opslaan: de foutmelding boven het witte vlak; de links gaan naar de reden en de toelichting.
-- [ ] Een reden met resultaat toont de vraag "Wat is het resultaat?"; een reden zonder resultaat verbergt hem weer.
-- [ ] Afronden: terug op de zaakpagina met een toast; de zaak is gesloten en de zaakhistorie toont reden, resultaat en toelichting.
+- [x] De pagina toont de titel, de zaakgegevens en het formulier.
+- [x] Leeg opslaan: de foutmelding boven het witte vlak; de links gaan naar de reden en de toelichting.
+- [x] Een reden met resultaat toont de vraag "Wat is het resultaat?"; een reden zonder resultaat verbergt hem weer.
+- [x] Afronden: terug op de zaakpagina met een toast; de zaak is gesloten en de zaakhistorie toont reden, resultaat en toelichting.
 
 **Besluit** (`forms/DecisionForm`): de keuzelijst "Welk besluit is opgesteld?", alleen bij een besluit met sanctie het bedrag (tekstveld dat alleen cijfers aanneemt, met de uitleg eronder in plaats van achter een i-knop), en "Korte toelichting" (verplicht bij besluittype 9, zoals voorheen). Weg: `scaffold.tsx` en `utils/stripThousandSeparator` (punten in het bedrag worden nu geweigerd in plaats van weggehaald).
 
 Testchecklist besluit (een zaak met de taak "Besluit verwerken" die naar `/besluit/` gaat):
 
-- [ ] Een besluit met sanctie toont het bedragveld; een besluit zonder sanctie verbergt het weer.
-- [ ] Een bedrag met een punt, komma of letter geeft de foutmelding; alleen cijfers wordt opgeslagen.
-- [ ] Opslaan: terug op de zaakpagina met een toast; de zaakhistorie toont het besluit met het bedrag.
+- [x] Een besluit met sanctie toont het bedragveld; een besluit zonder sanctie verbergt het weer.
+- [x] Een bedrag met een punt, komma of letter geeft de foutmelding; alleen cijfers wordt opgeslagen.
+- [x] Opslaan: terug op de zaakpagina met een toast; de zaakhistorie toont het besluit met het bedrag.
 
 **Debrief** (`forms/DebriefForm`): keuzerondjes voor de uitkomst (de vraag hangt af van het thema), de knop "Niet duidelijk of er een overtreding is?" die de uitleg in een venster opent (was een i-knop), alleen bij "naar ander thema" de keuzelijst met de andere thema's, alleen bij Vakantieverhuur het vinkje "Overlast geconstateerd" met de uitleg eronder, en een verplichte toelichting. De optie "-" in de themalijst is vervangen door "Maak een keuze".
 
 Testchecklist debrief (een zaak met de taak "Debrief verwerken"):
 
-- [ ] De uitkomsten staan als keuzerondjes; de knop met de uitleg opent een venster en sluiten verstuurt het formulier niet.
-- [ ] "Naar ander thema" toont de keuzelijst met thema's, zonder het thema van de zaak.
-- [ ] Bij een zaak Vakantieverhuur staat het vinkje "Overlast geconstateerd"; bij andere thema's niet.
-- [ ] Opslaan: terug op de zaakpagina met een toast; de zaakhistorie toont de debrief en de volgende taak verschijnt.
+- [x] De uitkomsten staan als keuzerondjes; de knop met de uitleg opent een venster en sluiten verstuurt het formulier niet.
+- [x] "Naar ander thema" toont de keuzelijst met thema's, zonder het thema van de zaak.
+- [x] Bij een zaak Vakantieverhuur staat het vinkje "Overlast geconstateerd"; bij andere thema's niet.
+- [x] Opslaan: terug op de zaakpagina met een toast; de zaakhistorie toont de debrief en de volgende taak verschijnt.
 
 **Aanschrijving** (`forms/SummonForm`): de keuzelijst met aanschrijvingen (met de knop "Meerdere aanschrijvingen?" voor de uitleg), bij een sluiting het aantal gesloten logiesverblijven, en aan wie: een natuurlijk persoon (één of twee personen met voornaam, tussenvoegsel, achternaam en rol; `useFieldArray`) of een rechtspersoon (naam, rol, en aan het bestuur of aan één persoon). `summonPersons.ts` zet het formulier om naar de personen voor de backend. De velden van een persoon hebben nu een label in plaats van alleen een placeholder.
 
@@ -885,38 +885,38 @@ Nieuw gedeeld: `src/components/HelpDialog` (een knop die uitleg in een venster o
 
 Testchecklist aanschrijving (een zaak met de taak "Aanschrijving verwerken"):
 
-- [ ] Natuurlijk persoon: één persoon invullen, een tweede toevoegen en weer verwijderen; meer dan twee kan niet.
-- [ ] Rechtspersoon, aan bestuur: naam en rol; aan persoon: ook voornaam en achternaam.
-- [ ] Leeg opslaan: de foutmelding noemt per persoon wat ontbreekt en de links gaan naar het juiste veld.
-- [ ] Een aanschrijving "sluiting" vraagt het aantal gesloten logiesverblijven.
-- [ ] Opslaan: terug op de zaakpagina met een toast; de zaakhistorie toont de aanschrijving met de aangeschrevenen.
+- [x] Natuurlijk persoon: één persoon invullen, een tweede toevoegen en weer verwijderen; meer dan twee kan niet.
+- [x] Rechtspersoon, aan bestuur: naam en rol; aan persoon: ook voornaam en achternaam.
+- [x] Leeg opslaan: de foutmelding noemt per persoon wat ontbreekt en de links gaan naar het juiste veld.
+- [x] Een aanschrijving "sluiting" vraagt het aantal gesloten logiesverblijven.
+- [x] Opslaan: terug op de zaakpagina met een toast; de zaakhistorie toont de aanschrijving met de aangeschrevenen.
 
 **Bezoek inplannen** (`forms/ScheduleForm`): keuzelijsten voor dagen, dagdeel en urgentie (met de uitleg onder de vraag in plaats van achter een i-knop), keuzerondjes "Vanaf vandaag" / "Vanaf een specifieke datum" met een datumveld dat op vandaag begint (zoals in het venster "Planning bezoek wijzigen"), en een toelichting. Bij een zaak van het thema Ondermijning staat de gebruikelijke planning al ingevuld (via `values` van react-hook-form, zodra de zaak en de keuzes geladen zijn).
 
 Testchecklist bezoek inplannen (een zaak met de taak "Bezoek inplannen"):
 
-- [ ] Leeg opslaan: de foutmelding noemt de vier verplichte vragen.
-- [ ] "Vanaf een specifieke datum" toont het datumveld met vandaag ingevuld; een datum in het verleden wordt geweigerd.
-- [ ] Een zaak Ondermijning: doordeweeks, overdag, vanaf vandaag en machtiging staan al ingevuld.
-- [ ] Opslaan: terug op de zaakpagina met een toast; de zaakhistorie toont de planning en de kolom "Urgentie" verschijnt bij de taak voor het bezoek.
+- [x] Leeg opslaan: de foutmelding noemt de vier verplichte vragen.
+- [x] "Vanaf een specifieke datum" toont het datumveld met vandaag ingevuld; een datum in het verleden wordt geweigerd.
+- [x] Een zaak Ondermijning: doordeweeks, overdag, vanaf vandaag en machtiging staan al ingevuld.
+- [x] Opslaan: terug op de zaakpagina met een toast; de zaakhistorie toont de planning en de kolom "Urgentie" verschijnt bij de taak voor het bezoek.
 
 **Huisbezoek** (`forms/VisitForm`): het formulier om het resultaat van een bezoek met de hand toe te voegen, met bovenaan de waarschuwing dat het bezoek in de TOP app wordt verwerkt (de link ernaartoe in de takentabel staat uit; alleen via de URL bereikbaar). Twee verplichte keuzelijsten voor de toezichthouders (twee verschillende), de starttijd als datum-en-tijdveld dat op nu begint (was een tekstveld met de vaste waarde 2021-01-01T12:34), keuzerondjes voor de situatie (verplicht), vinkjes voor opvallende zaken, en de vragen over uitzetten en een nieuw bezoek met elk een toelichting. Geen bevestigingsscherm; dat had dit formulier al niet.
 
 Testchecklist huisbezoek (typ de URL `/zaken/<id>/huisbezoek/<taak-id>` van een taak "Doorgeven bezoek TOP"):
 
-- [ ] De waarschuwing staat boven het formulier; de starttijd staat op nu.
-- [ ] Opslaan zonder situatie geeft de foutmelding.
-- [ ] Opslaan: terug op de zaakpagina met een toast; de zaakhistorie toont het bezoek en de taak is weg.
+- [x] De waarschuwing staat boven het formulier; de starttijd staat op nu.
+- [x] Opslaan zonder situatie geeft de foutmelding.
+- [x] Opslaan: terug op de zaakpagina met een toast; de zaakhistorie toont het bezoek en de taak is weg.
 
 **Melding** (`forms/CitizenReportForm`): keuzerondjes of de melder anoniem is; zo niet, een blok met naam, telefoonnummer (tien cijfers) en e-mailadres, alle drie niet verplicht. Het SIG-nummer (een getal), de samenvatting, bij Vakantieverhuur het vinkje "Betreft overlast", en bij thema's met advertenties de vraag of er een advertentie is, met een lijst links (`useFieldArray`, minstens één). De uitleg van de drie i-knoppen staat nu onder de vraag.
 
 Testchecklist melding (een zaak met de taak "Melding verwerken"):
 
-- [ ] Leeg opslaan: de foutmelding noemt wat ontbreekt.
-- [ ] "Niet anoniem" toont de gegevens van de melder; een fout telefoonnummer of e-mailadres wordt geweigerd.
-- [ ] "Ja, er is een advertentie": een link invullen, een tweede toevoegen en weer verwijderen; een link zonder http(s):// wordt geweigerd.
-- [ ] Bij een thema zonder advertenties (bv. Kamerverhuur) staat de advertentievraag er niet.
-- [ ] Opslaan: terug op de zaakpagina met een toast; de zaakhistorie toont de melding met de advertentielinks.
+- [x] Leeg opslaan: de foutmelding noemt wat ontbreekt.
+- [x] "Niet anoniem" toont de gegevens van de melder; een fout telefoonnummer of e-mailadres wordt geweigerd.
+- [x] "Ja, er is een advertentie": een link invullen, een tweede toevoegen en weer verwijderen; een link zonder http(s):// wordt geweigerd.
+- [x] Bij een thema zonder advertenties (bv. Kamerverhuur) staat de advertentievraag er niet.
+- [x] Opslaan: terug op de zaakpagina met een toast; de zaakhistorie toont de melding met de advertentielinks.
 
 **Nieuwe zaak aanmaken** (`cases/CreateForm`): het laatste formulier. Het adres bovenaan, dan het thema (keuzerondjes); pas daarna de rest, die van thema en aanleiding afhangt: aanleiding (keuzerondjes), bij "SIG melding" de meldingsvelden, bij "Project" de projectnaam, bij "MMA" het MMA-nummer, de corporatie, de advertentievraag met links (bij thema's met advertenties), de onderwerpen (vinkjes, minstens één), "Overgedragen vanuit ander thema" met de eerdere zaak, en de toelichting. Een ander thema kiezen wist aanleiding, project en onderwerpen. Geen bevestigingsscherm meer: "Zaak aanmaken" slaat direct op, met een toast, en gaat naar de nieuwe zaak. De TON-koppeling (`?tonId=`) werkt als voorheen: thema, aanleiding "Digitaal toezicht" en de advertentielink staan dan ingevuld.
 
@@ -928,13 +928,13 @@ Nieuw gedeeld:
 
 Testchecklist nieuwe zaak (via "Nieuwe zaak aanmaken" op een adrespagina):
 
-- [ ] Eerst staat alleen het thema er; na het kiezen verschijnt de rest.
-- [ ] Aanleiding "SIG melding" toont de meldingsvelden, "Project" de projectnaam, "MMA" het MMA-nummer.
-- [ ] Onderwerpen: meerdere aanvinken; zonder onderwerp opslaan geeft de foutmelding met een werkende link.
-- [ ] Een ander thema kiezen wist aanleiding en onderwerpen.
-- [ ] "Overgedragen vanuit ander thema" toont de zaken op dit adres.
-- [ ] "Zaak aanmaken": je komt op de nieuwe zaakpagina met een toast; de gegevens (thema, aanleiding, onderwerpen, corporatie, melding, advertenties) kloppen daar.
-- [ ] Met `?tonId=<id>` achter de URL staat het formulier vooraf ingevuld.
+- [x] Eerst staat alleen het thema er; na het kiezen verschijnt de rest.
+- [x] Aanleiding "SIG melding" toont de meldingsvelden, "Project" de projectnaam, "MMA" het MMA-nummer.
+- [x] Onderwerpen: meerdere aanvinken; zonder onderwerp opslaan geeft de foutmelding met een werkende link.
+- [x] Een ander thema kiezen wist aanleiding en onderwerpen.
+- [x] "Overgedragen vanuit ander thema" toont de zaken op dit adres.
+- [x] "Zaak aanmaken": je komt op de nieuwe zaakpagina met een toast; de gegevens (thema, aanleiding, onderwerpen, corporatie, melding, advertenties) kloppen daar.
+- [x] Met `?tonId=<id>` achter de URL staat het formulier vooraf ingevuld.
 
 **Oude formulierlaag verwijderd** (na het akkoord op alle formulieren): `case/WorkflowForm`, `shared/ConfirmScaffoldForm` (het bevestigingsscherm), `shared/Form`, `shared/InfoHeading` (`InfoButton`), `api/utils/toPostMethod` en `useNavigateWithFlashMessage`; ook de oude paginadelen die alleen de formulierpagina's nog gebruikten (`case/CaseHeading`, `shared/PageHeading`, `shared/AddressHeadingByBagId`, `shared/ConfirmButton`). `SpinnerWrap` staat nu bij `routing/components` (alleen `AuthorizedPage` gebruikt hem). De pakketten `@amsterdam/amsterdam-react-final-form`, `final-form`, `final-form-arrays`, `react-final-form` en `react-final-form-arrays` zijn uit `package.json`.
 

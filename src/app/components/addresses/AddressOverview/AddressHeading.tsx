@@ -12,7 +12,7 @@ import {
 } from "@amsterdam/design-system-react"
 import { RouterLink } from "@/components/DefaultLayout/RouterLink"
 import useOtherAddressesByBagId from "@/hooks/useOtherAddressesByBagId"
-import { useBagAddress } from "../AddressHeader/useBagAddress"
+import { useBagAddress } from "./useBagAddress"
 
 type Props = {
   bagId: components["schemas"]["Address"]["bag_id"]
