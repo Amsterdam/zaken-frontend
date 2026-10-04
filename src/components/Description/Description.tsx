@@ -1,6 +1,5 @@
 import { Fragment, type ReactNode } from "react"
-import { DescriptionList } from "@amsterdam/design-system-react"
-import { SmallSkeleton } from "@/components/SmallSkeleton/SmallSkeleton"
+import { DescriptionList, Skeleton } from "@amsterdam/design-system-react"
 import styles from "./Description.module.css"
 
 export type DescriptionItem = {
@@ -12,6 +11,8 @@ type Props = {
   data: DescriptionItem[]
   termsWidth?: "narrow" | "medium" | "wide"
   className?: string
+  /** Puts the rows closer together. */
+  dense?: boolean
   /** Shows rows of grey bars in place of the data. */
   loading?: boolean
   numLoadingRows?: number
@@ -24,24 +25,29 @@ type Props = {
 export function Description({
   data,
   termsWidth,
-  className,
+  className: classNameProp,
+  dense = false,
   loading = false,
   numLoadingRows = 3,
 }: Props) {
+  const className =
+    [dense ? styles.dense : "", classNameProp ?? ""].join(" ").trim() ||
+    undefined
+
   if (loading) {
     return (
       <DescriptionList termsWidth={termsWidth} className={className}>
         {Array.from({ length: numLoadingRows }, (_, index) => (
           <Fragment key={index}>
             <DescriptionList.Term>
-              <div className={styles.loading}>
-                <SmallSkeleton maxRandomWidth={120} />
-              </div>
+              <Skeleton>
+                <Skeleton.Paragraph lines={1} />
+              </Skeleton>
             </DescriptionList.Term>
             <DescriptionList.Description>
-              <div className={styles.loading}>
-                <SmallSkeleton maxRandomWidth={220} />
-              </div>
+              <Skeleton>
+                <Skeleton.Paragraph lines={1} />
+              </Skeleton>
             </DescriptionList.Description>
           </Fragment>
         ))}

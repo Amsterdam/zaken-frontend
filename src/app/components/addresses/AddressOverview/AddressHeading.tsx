@@ -6,8 +6,8 @@ import {
   LinkList,
   Paragraph,
   Row,
+  Skeleton,
 } from "@amsterdam/design-system-react"
-import { SmallSkeleton } from "@/components/SmallSkeleton/SmallSkeleton"
 import { RouterLink } from "@/components/DefaultLayout/RouterLink"
 import useOtherAddressesByBagId from "@/hooks/useOtherAddressesByBagId"
 import { useBagAddress } from "../AddressHeader/useBagAddress"
@@ -32,7 +32,9 @@ const AddressHeading: React.FC<Props> = ({ bagId }) => {
   return (
     <Row align="between" alignVertical="center" wrap>
       {isBusy ? (
-        <SmallSkeleton height={10} maxRandomWidth={300} />
+        <Skeleton style={{ flex: "0 1 24rem" }}>
+          <Skeleton.Heading />
+        </Skeleton>
       ) : (
         <Heading level={1}>{address?.weergavenaam ?? "Adres"}</Heading>
       )}

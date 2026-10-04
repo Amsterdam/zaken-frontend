@@ -1,26 +1,38 @@
-import { Divider, Heading } from "@amsterdam/asc-ui"
 import { useParams } from "react-router-dom"
-import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
-import Row, { RowWithColumn } from "app/components/layouts/Grid/Row"
-import PageHeading from "app/components/shared/PageHeading/PageHeading"
-import TimelineContainer from "app/components/case/CaseTimeline/TimelineContainer"
-import CaseDetails from "app/components/case/CaseDetails/CaseDetails"
-import parseUrlParamId from "app/routing/utils/parseUrlParamId"
-import NotFoundPage from "app/pages/errors/NotFoundPage"
-import DetailHeaderByCaseId from "app/components/shared/DetailHeader/DetailHeaderByCaseId"
-import { Column } from "app/components/layouts/Grid"
-import CaseStatus from "app/components/case/CaseStatus/CaseStatus"
-import useExistingCase from "./hooks/useExistingCase"
-import { LoadingScreen } from "app/components/shared/loading"
-import CaseNuisanceAlert from "app/components/case/CaseNuisanceAlert/CaseNuisanceAlert"
-import CaseSensitiveAddressAlert from "app/components/case/CaseSensitiveAddressAlert/CaseSensitiveAddressAlert"
+import {
+  Column,
+  Grid,
+  Heading,
+  Row,
+  Skeleton,
+  StandaloneLink,
+} from "@amsterdam/design-system-react"
+import { FolderIcon, MapMarkerIcon } from "@amsterdam/design-system-react-icons"
+import { DefaultLayout } from "@/components/DefaultLayout/DefaultLayout"
+import { RouterLink } from "@/components/DefaultLayout/RouterLink"
+import { HeadingWithIcon } from "@/components/HeadingWithIcon/HeadingWithIcon"
 import useHasPermission, {
   SENSITIVE_CASE_PERMISSION,
 } from "@/hooks/useHasPermission"
+import CaseDetails from "app/components/case/CaseDetails/CaseDetails"
+import CaseNuisanceAlert from "app/components/case/CaseNuisanceAlert/CaseNuisanceAlert"
+import CaseSensitiveAddressAlert from "app/components/case/CaseSensitiveAddressAlert/CaseSensitiveAddressAlert"
+import CaseStatus from "app/components/case/CaseStatus/CaseStatus"
+import TimelineContainer from "app/components/case/CaseTimeline/TimelineContainer"
 import NotAuthorizedPage from "app/pages/auth/NotAuthorizedPage"
+import NotFoundPage from "app/pages/errors/NotFoundPage"
+import parseUrlParamId from "app/routing/utils/parseUrlParamId"
+import useExistingCase from "./hooks/useExistingCase"
 
 type Props = {
   id: string
+}
+
+const getAddress = (address?: components["schemas"]["Address"]) => {
+  if (!address) return undefined
+  const { street_name, number, suffix_letter, suffix, postal_code } = address
+  const houseNumber = [number, suffix_letter, suffix].filter(Boolean).join("-")
+  return `${street_name} ${houseNumber}, ${postal_code} Amsterdam`
 }
 
 const DetailsPage: React.FC = () => {
@@ -28,62 +40,75 @@ const DetailsPage: React.FC = () => {
   const [exists, isBusy, has404, id, caseItem] = useExistingCase(
     parseUrlParamId(idString),
   )
-  const [hasPermission, isLoading] = useHasPermission([
+  const [hasPermission, isLoadingPermission] = useHasPermission([
     SENSITIVE_CASE_PERMISSION,
   ])
-  const showSpinner = isBusy || isLoading
+  const isLoading = isBusy || isLoadingPermission
   // Don't show if sensitive case and no permission
   const isAuthorized =
     caseItem?.sensitive === false ||
     (caseItem?.sensitive === true && hasPermission)
-  const showNotFound = has404
 
-  if (showSpinner) {
-    return <LoadingScreen />
-  }
-  if (exists && !isAuthorized) {
-    return <NotAuthorizedPage />
-  }
+  if (!isLoading && has404) return <NotFoundPage />
+  if (!isLoading && exists && !isAuthorized) return <NotAuthorizedPage />
+  // No id, or the request failed otherwise (the error is shown as a message).
+  if (!isLoading && !exists) return <NotFoundPage />
+
+  const address = getAddress(caseItem?.address)
+  const bagId = caseItem?.address?.bag_id
 
   return (
-    <>
-      {exists && isAuthorized && (
-        <DefaultLayout>
-          <Row>
-            <Column spanLarge={50}>
-              <PageHeading />
-            </Column>
-            <Column spanLarge={50}>
-              <DetailHeaderByCaseId caseId={id} enableSwitch={false} />
-            </Column>
+    <DefaultLayout>
+      <Grid.Cell span="all" appearance="transparent">
+        <Column gap="small">
+          <Row align="between" alignVertical="center" wrap>
+            <HeadingWithIcon label="Zaakdetails" svg={FolderIcon} />
+            {isLoading ? (
+              <Skeleton style={{ flex: "0 1 20rem" }}>
+                <Skeleton.Paragraph lines={1} />
+              </Skeleton>
+            ) : (
+              address &&
+              bagId && (
+                // The address is the way to the other cases and the details of the address.
+                <StandaloneLink
+                  linkComponent={RouterLink}
+                  href={`/adres/${bagId}`}
+                  // A map marker: it is an address, not "the next step".
+                  icon={MapMarkerIcon}
+                >
+                  {address}
+                </StandaloneLink>
+              )
+            )}
           </Row>
+          {/* Warnings about the case come before its facts. */}
           <CaseSensitiveAddressAlert
             isVisible={caseItem?.has_open_sensitive_case_on_address}
           />
-          <Row bottomSpacing={4}>
-            <Column spanLarge={75}>
-              <CaseDetails caseId={id} />
-            </Column>
-          </Row>
-
-          <CaseNuisanceAlert caseId={id} />
-
-          <div style={{ paddingTop: 32 }}>
-            <RowWithColumn>
+          {!isLoading && <CaseNuisanceAlert caseId={id} />}
+        </Column>
+      </Grid.Cell>
+      {/* One white area for the whole case. */}
+      <Grid.Cell span="all">
+        <Column gap="x-large">
+          <Column gap="small">
+            <Heading level={2}>Zaakgegevens</Heading>
+            <CaseDetails caseId={id} />
+          </Column>
+          {!isLoading && (
+            <>
+              {/* Still the old components (MIGRATION.md: the next steps of this page). */}
               <CaseStatus id={id} />
-            </RowWithColumn>
-            <RowWithColumn>
-              <Heading as="h2">Zaakhistorie</Heading>
-              <Divider />
-            </RowWithColumn>
-            <RowWithColumn>
-              <TimelineContainer caseId={id} />
-            </RowWithColumn>
-          </div>
-        </DefaultLayout>
-      )}
-      {showNotFound && <NotFoundPage />}
-    </>
+              <Column gap="small">
+                <Heading level={2}>Zaakhistorie</Heading>
+                <TimelineContainer caseId={id} />
+              </Column>
+            </>
+          )}
+        </Column>
+      </Grid.Cell>
+    </DefaultLayout>
   )
 }
 

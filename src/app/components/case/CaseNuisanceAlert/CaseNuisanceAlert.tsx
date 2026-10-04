@@ -1,5 +1,5 @@
-import styled from "styled-components"
-import { Alert, themeSpacing } from "@amsterdam/asc-ui"
+import { useState } from "react"
+import { Alert, Paragraph } from "@amsterdam/design-system-react"
 import { useCaseEvents, useCaseWorkflows } from "@/api/hooks"
 
 const MAX_NUMBER_NUISANCE = 3
@@ -8,11 +8,8 @@ type Props = {
   caseId: components["schemas"]["CaseDetail"]["id"]
 }
 
-const StyledAlert = styled(Alert)`
-  margin-bottom: ${themeSpacing(6)};
-`
-
 const CaseNuisanceAlert: React.FC<Props> = ({ caseId }) => {
+  const [isClosed, setIsClosed] = useState(false)
   const { data: caseEvents } = useCaseEvents(caseId)
   const { data: caseWorkflowData } = useCaseWorkflows(caseId)
   const workflows = caseWorkflowData?.results ?? []
@@ -37,12 +34,21 @@ const CaseNuisanceAlert: React.FC<Props> = ({ caseId }) => {
   )
 
   const isVisible =
-    isMaxExceeded && !isNuisanceReportedInStates && !isNuisanceReportedInEvents
+    isMaxExceeded &&
+    !isNuisanceReportedInStates &&
+    !isNuisanceReportedInEvents &&
+    !isClosed
 
   return isVisible ? (
-    <StyledAlert level="warning" dismissible>
-      {`LET OP: er is ${MAX_NUMBER_NUISANCE} keer overlast geconstateerd. Voer de taak 'Melding overlast' op!`}
-    </StyledAlert>
+    <Alert
+      heading={`Let op: er is ${MAX_NUMBER_NUISANCE} keer overlast geconstateerd`}
+      headingLevel={2}
+      severity="warning"
+      closeable
+      onClose={() => setIsClosed(true)}
+    >
+      <Paragraph>Voer de taak "Melding overlast" op.</Paragraph>
+    </Alert>
   ) : null
 }
 

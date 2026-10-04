@@ -1,7 +1,10 @@
 import { Fragment, type ReactNode, useState } from "react"
-import { Icon, Table as ADSTable } from "@amsterdam/design-system-react"
+import {
+  Icon,
+  Skeleton,
+  Table as ADSTable,
+} from "@amsterdam/design-system-react"
 import { ChevronDownIcon } from "@amsterdam/design-system-react-icons"
-import { SmallSkeleton } from "@/components/SmallSkeleton/SmallSkeleton"
 import usePagination from "./hooks/usePagination"
 import TablePagination from "./TablePagination"
 import { type TableProps } from "./types"
@@ -101,9 +104,9 @@ export function Table<T extends object>({
               <ADSTable.Row key={rowIndex}>
                 {columns.map((column, index) => (
                   <ADSTable.Cell key={index} className={cellClassName(column)}>
-                    <div className={styles.loadingCell}>
-                      <SmallSkeleton />
-                    </div>
+                    <Skeleton>
+                      <Skeleton.Paragraph lines={1} />
+                    </Skeleton>
                   </ADSTable.Cell>
                 ))}
                 {expandable && <ADSTable.Cell />}

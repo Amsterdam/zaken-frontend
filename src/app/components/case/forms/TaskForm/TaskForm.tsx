@@ -1,38 +1,89 @@
-import { FormTitle } from "@amsterdam/asc-ui"
-
+import { useNavigate } from "react-router-dom"
+import { useForm } from "react-hook-form"
+import {
+  ActionGroup,
+  Button,
+  Column,
+  InvalidFormAlert,
+} from "@amsterdam/design-system-react"
+import {
+  FormProvider,
+  mapErrorsToAlert,
+  SelectControl,
+} from "@amsterdam/ee-ads-rhf"
 import { useStartWorkflowProcess, useWorkflowProcesses } from "@/api/hooks"
-import { toPostMethod } from "@/api/utils/toPostMethod"
-import scaffold from "./scaffold"
-import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
-import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
-import useNavigation from "app/routing/useNavigation"
+import { useAfterCaseFormSubmit } from "../useAfterCaseFormSubmit"
 
 type Props = {
   id: components["schemas"]["CaseDetail"]["id"]
 }
 
-const mapData = (data: {
-  workflowProcess: components["schemas"]["WorkflowOption"]
-}) => ({ workflow_option_id: data.workflowProcess.id })
+type FormValues = {
+  /** The id of the task (a workflow option) to start. */
+  workflowProcess: string
+}
 
+/**
+ * Starts a task on a case. Saves right away: what is wrong or missing is told
+ * in the form itself.
+ */
 const TaskForm: React.FC<Props> = ({ id }) => {
+  const navigate = useNavigate()
   const { data: processes } = useWorkflowProcesses(id)
-  const { navigateTo } = useNavigation()
-  const fields = useScaffoldedFields(scaffold, id, navigateTo, processes)
-  const startWorkflowProcess = toPostMethod(
-    useStartWorkflowProcess(id).mutateAsync,
-  )
+  const { mutateAsync: startWorkflowProcess, isPending } =
+    useStartWorkflowProcess(id)
+  const afterSubmit = useAfterCaseFormSubmit(id)
+  const form = useForm<FormValues>({ defaultValues: { workflowProcess: "" } })
+  const { errors } = form.formState
+
+  const onSubmit = async ({ workflowProcess }: FormValues) => {
+    try {
+      await startWorkflowProcess({
+        workflow_option_id: Number(workflowProcess),
+      })
+    } catch {
+      // The error is shown as a message at the top of the page; the form stays.
+      return
+    }
+    await afterSubmit()
+  }
 
   return (
-    <>
-      <FormTitle>Gebruik dit formulier om een taak op te voeren</FormTitle>
-      <WorkflowForm
-        id={id}
-        fields={fields}
-        postMethod={startWorkflowProcess}
-        mapData={mapData}
-      />
-    </>
+    <FormProvider form={form} onSubmit={onSubmit}>
+      <Column gap="large">
+        <InvalidFormAlert
+          errors={mapErrorsToAlert(errors)}
+          heading="Verbeter de fouten voor je verder gaat"
+          headingLevel={2}
+        />
+        <SelectControl<FormValues>
+          name="workflowProcess"
+          label="Taak"
+          description="Kies de taak die je op deze zaak wilt opvoeren."
+          options={[
+            { label: "Selecteer een taak", value: "" },
+            ...(processes ?? []).map(({ id, name }) => ({
+              label: name,
+              value: String(id),
+            })),
+          ]}
+          registerOptions={{ required: "Kies een taak." }}
+          disabled={processes === undefined}
+        />
+        <ActionGroup>
+          <Button type="submit" disabled={isPending}>
+            {isPending ? "Bezig met opvoeren…" : "Taak opvoeren"}
+          </Button>
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={() => navigate(`/zaken/${id}`)}
+          >
+            Annuleren
+          </Button>
+        </ActionGroup>
+      </Column>
+    </FormProvider>
   )
 }
 

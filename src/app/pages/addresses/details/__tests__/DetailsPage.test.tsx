@@ -1,7 +1,7 @@
 // First, like the app does: the page imports the layout, which imports the
 // routes, which import this page (circular).
 import "app/routing/routes"
-import { render, screen, within } from "@testing-library/react"
+import { fireEvent, render, screen, within } from "@testing-library/react"
 import { MemoryRouter, Route, Routes } from "react-router-dom"
 import FlashMessageProvider from "app/state/flashMessages/FlashMessageProvider"
 import DetailsPage from "../DetailsPage"
@@ -145,6 +145,10 @@ describe("the tab Adresdetails of an address", () => {
     // An empty value is left out.
     expect(screen.queryByText("Eigendomsverhouding")).toBeNull()
     expect(screen.queryByText("Aantal kamers")).toBeNull()
+    // The panorama loads out of sight, behind a skeleton, and is shown once
+    // it is there.
+    expect(screen.queryByRole("img", { name: /^Panorama preview/ })).toBeNull()
+    fireEvent.load(document.querySelector("img[hidden]") as HTMLImageElement)
     expect(
       screen
         .getByRole("img", { name: /^Panorama preview/ })

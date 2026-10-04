@@ -64,7 +64,7 @@ describe("Table", () => {
     render(<Table columns={columns} data={rows} loading numLoadingRows={4} />)
 
     expect(screen.getAllByRole("row")).toHaveLength(5)
-    expect(screen.getAllByTestId("small-skeleton")).toHaveLength(12)
+    expect(document.querySelectorAll(".ams-skeleton__line")).toHaveLength(12)
     expect(screen.queryByText("Brink")).toBeNull()
   })
 

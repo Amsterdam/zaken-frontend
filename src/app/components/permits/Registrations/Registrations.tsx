@@ -4,6 +4,7 @@ import {
   Icon,
   Paragraph,
   Row,
+  Skeleton,
 } from "@amsterdam/design-system-react"
 import {
   BedIcon,
@@ -13,7 +14,6 @@ import {
   PersonIcon,
 } from "@amsterdam/design-system-react-icons"
 import { useRegistrations } from "@/api/hooks"
-import { SmallSkeleton } from "@/components/SmallSkeleton/SmallSkeleton"
 import { formatDate } from "@/shared/dateFormatters"
 import { PermitsSection } from "../components/PermitsSection"
 import type { Registration } from "../types"
@@ -56,7 +56,10 @@ const Registrations: React.FC<Props> = ({ bagId }) => {
       isDummyData={isDummyData}
     >
       {query.isPending ? (
-        <SmallSkeleton height={10} maxRandomWidth={300} />
+        <Skeleton>
+          <Skeleton.Heading />
+          <Skeleton.Paragraph lines={5} />
+        </Skeleton>
       ) : (
         <Column gap="large">
           {registrationsToUse.map((reg) => (

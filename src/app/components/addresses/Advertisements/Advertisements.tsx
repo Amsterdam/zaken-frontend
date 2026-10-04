@@ -2,12 +2,12 @@ import {
   Column,
   Heading,
   Paragraph,
+  Skeleton,
   StandaloneLink,
   UnorderedList,
 } from "@amsterdam/design-system-react"
 import { LinkExternalIcon } from "@amsterdam/design-system-react-icons"
 import { useCasesByBagId } from "@/api/hooks"
-import { SmallSkeleton } from "@/components/SmallSkeleton/SmallSkeleton"
 
 type Props = {
   bagId: components["schemas"]["Address"]["bag_id"]
@@ -42,7 +42,9 @@ const Advertisements: React.FC<Props> = ({ bagId }) => {
     <Column gap="small">
       <Heading level={2}>Advertenties</Heading>
       {isBusy ? (
-        <SmallSkeleton height={10} maxRandomWidth={300} />
+        <Skeleton>
+          <Skeleton.List lines={2} />
+        </Skeleton>
       ) : uniqueAds.length > 0 ? (
         <UnorderedList markers={false}>
           {uniqueAds.map((ad) => (

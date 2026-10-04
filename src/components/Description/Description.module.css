@@ -1,6 +1,4 @@
-/* As high as a line of text, so a loading row is as high as a row with data. */
-.loading {
-  display: flex;
-  align-items: center;
-  height: 1lh;
+/* Less room between the rows than the design system's default, for a compact list of facts. */
+.dense {
+  --ams-description-list-description-margin-block-end: var(--ams-space-xs);
 }

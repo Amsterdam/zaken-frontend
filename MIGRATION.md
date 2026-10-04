@@ -439,20 +439,22 @@ Testchecklist:
 
 #### Pagina voor pagina
 
-| Pagina                                                                                    | Status                                                   |
-| ----------------------------------------------------------------------------------------- | -------------------------------------------------------- |
-| 404 (`pages/errors/NotFoundPage`)                                                         | ✅ akkoord (pilot)                                       |
-| Hulp (`pages/help/HelpPage`)                                                              | ✅ akkoord                                               |
-| 403 (`pages/auth/NotAuthorizedPage`)                                                      | ✅ akkoord                                               |
-| Gebruiker (`pages/auth/AuthPage`, `/auth`)                                                | ✅ akkoord (pilot `Description`)                         |
-| Invorderingscheck (`pages/fines/FinePage`, `/invorderingen`)                              | ✅ akkoord                                               |
-| Adres zoeken / start (`pages/home/HomePage`, `/`)                                         | ✅ akkoord                                               |
-| Zakenoverzicht (`pages/cases/index/IndexPage`, `/zaken`)                                  | ✅ akkoord (3 stappen: `Table`, filters, URL)            |
-| Takenoverzicht (`pages/tasks/IndexPage`, `/taken`)                                        | ✅ akkoord (incl. taak toewijzen, pilot `ConfirmDialog`) |
-| Adres: Zaken (`pages/addresses/index/IndexPage`, `/adres/:bagId`)                         | ✅ akkoord                                               |
-| Adres: Adresdetails (`pages/addresses/details/DetailsPage`, `/adres/:bagId/details`)      | ✅ akkoord                                               |
-| Adres: Persoonsgegevens (`pages/addresses/people/PeoplePage`, `/adres/:bagId/personen`)   | ✅ akkoord                                               |
-| Adres: Vergunningen (`pages/addresses/permits/PermitsPage`, `/adres/:bagId/vergunningen`) | omgezet, wacht op test                                   |
+| Pagina                                                                                    | Status                                                                                                       |
+| ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| 404 (`pages/errors/NotFoundPage`)                                                         | ✅ akkoord (pilot)                                                                                           |
+| Hulp (`pages/help/HelpPage`)                                                              | ✅ akkoord                                                                                                   |
+| 403 (`pages/auth/NotAuthorizedPage`)                                                      | ✅ akkoord                                                                                                   |
+| Gebruiker (`pages/auth/AuthPage`, `/auth`)                                                | ✅ akkoord (pilot `Description`)                                                                             |
+| Invorderingscheck (`pages/fines/FinePage`, `/invorderingen`)                              | ✅ akkoord                                                                                                   |
+| Adres zoeken / start (`pages/home/HomePage`, `/`)                                         | ✅ akkoord                                                                                                   |
+| Zakenoverzicht (`pages/cases/index/IndexPage`, `/zaken`)                                  | ✅ akkoord (3 stappen: `Table`, filters, URL)                                                                |
+| Takenoverzicht (`pages/tasks/IndexPage`, `/taken`)                                        | ✅ akkoord (incl. taak toewijzen, pilot `ConfirmDialog`)                                                     |
+| Adres: Zaken (`pages/addresses/index/IndexPage`, `/adres/:bagId`)                         | ✅ akkoord                                                                                                   |
+| Adres: Adresdetails (`pages/addresses/details/DetailsPage`, `/adres/:bagId/details`)      | ✅ akkoord                                                                                                   |
+| Adres: Persoonsgegevens (`pages/addresses/people/PeoplePage`, `/adres/:bagId/personen`)   | ✅ akkoord                                                                                                   |
+| Adres: Vergunningen (`pages/addresses/permits/PermitsPage`, `/adres/:bagId/vergunningen`) | ✅ akkoord                                                                                                   |
+| Zaak: Taak opvoeren (`pages/case/task/CreatePage`, `/zaken/:id/taak`)                     | pilot formulieren gebouwd; **wordt een venster op de zaakpagina** (stap 2 daar), de losse pagina vervalt dan |
+| Zaakpagina (`pages/cases/details/DetailsPage`, `/zaken/:id`)                              | stap 1 van 4 (layout, titel, waarschuwingen, zaakgegevens) omgezet, wacht op test                            |
 
 **Hulp-pagina:** naar het voorbeeld van de veelgestelde-vragenpagina van top-frontend-v2: titel "Hulp" direct op de grijze achtergrond, daaronder één wit vlak met de vier onderwerpen in een ADS-`Accordion` (dicht bij het openen, net als eerst). Geen icoon meer naast de paginatitel. **Breadcrumbs** staan alleen nog op geneste pagina's: een pagina direct onder home (zoals `/hulp`) krijgt er geen. De lijstjes stonden in de oude versie binnen een alinea (ongeldige HTML); dat zijn nu losse ADS-lijsten. `EmailLink` zit in `HelpContent`; het ongebruikte `PhoneLink` en `HelpContent.module.css` zijn weg. `CustomTooltip` staat nog in dezelfde map omdat de zaakpagina's het gebruiken.
 
@@ -527,7 +529,7 @@ Stap 1:
 - Nieuw gedeeld component `src/components/Table/` op de ADS-`Table`, naar de tabellen van zwd-frontend en top-frontend-v2: `columns` (`header`, `dataIndex`, `render`, `minWidth`), `data`, `loading`, `numLoadingRows`, `emptyPlaceholder`, `pagination` en `onChange`. Pagineren werkt op de eigen rijen, of van buitenaf (de API pagineert) via `pagination.collectionSize` en `onChange`. Paginering is de ADS-`Pagination`.
 - Optie `verticalAlign="middle"` centreert de celinhoud verticaal (ADS lijnt standaard bovenaan uit). Beide overzichten gebruiken het: in het takenoverzicht maakt de avatar de rij hoger dan een tekstregel, en het zakenoverzicht volgt voor de gelijkheid.
 - **Sorteren zit niet in de tabel** (bewuste keuze): geen klikbare kolomkoppen, maar een aparte select "Sorteren op" boven de tabel (`cases/CasesSorting`, bijv. "Straat A-Z", "Startdatum nieuw-oud"). De tabel toont de rijen in de volgorde van de API. De overige vier plekken met de `wonen-ui`-tabel (`TableTasks`, `Workflow`, `OtherAddressesTable`, `CasesByBagId`) sorteren nu nog via de kolomkop; bij het omzetten krijgen ze zo nodig ook een select.
-- Nieuw `src/components/SmallSkeleton/` (uit zwd-frontend) voor de laadrijen; vervangt later ook `SmallSkeleton` van `wonen-ui`.
+- Laadtoestanden gebruiken het **ADS-`Skeleton`** (`Skeleton.Paragraph`, `.Heading`, `.List`): in de laadrijen van `Table`, in `Description` en bij losse koppen en lijsten. Het eerst uit zwd-frontend overgenomen `src/components/SmallSkeleton/` is weer verwijderd. Vervangt later ook `SmallSkeleton` van `wonen-ui` in de oude componenten.
 - **Geen klikbare rij** (bewuste keuze, voor toegankelijkheid): een rij-klik werkt niet met toetsenbord of schermlezer en zit tekst selecteren en Ctrl-klik in de weg. **Eén patroon voor alle tabellen:** de laatste kolom heeft een echte link "Zaakdetails" (ADS `StandaloneLink`, met pijltje; geen `LinkList.Link`, want dat is een lijstitem en hoort in een `LinkList`) (voor de schermlezer "Zaakdetails van zaak 12, Amstel 1-H"), en die kolom staat op elke schermbreedte. Het ID en het adres zijn gewone tekst: een adres kan meerdere zaken hebben, en het takenoverzicht heeft geen ID-kolom (een rij is daar een taak), dus alleen de link-kolom is overal hetzelfde. Het gedeelde `Table`-component heeft daarom geen `onClickRow`; de andere tabellen volgen dezelfde lijn.
 - De kolommen zijn getypeerd op `Case` (geen `any` meer); datums via `formatDate`. Datums en postcode breken niet af (`noWrap`); de kop "Zaak ID" is "ID". Het aantal laadrijen is gelijk aan het aantal zaken per pagina, zodat de tabel niet verspringt.
 - Zoekveld: ADS `SearchField`; zoekt tijdens het typen (750 ms) en direct bij Enter. Het veld toont nu wat je typt (stond eerst vast op de laatste zoekopdracht).
@@ -668,7 +670,7 @@ Testchecklist Persoonsgegevens:
 - [x] Smal scherm: de kolom Leeftijd valt weg, de details blijven leesbaar.
 - [x] De overzichten (zaken, taken) en de zaken op een adres zien er nog hetzelfde uit: de tabel is aangepast.
 
-**Adres: tab Vergunningen (`/adres/:bagId/vergunningen`)** — omgezet, wacht op test:
+**Adres: tab Vergunningen (`/adres/:bagId/vergunningen`)** — ✅ akkoord:
 
 - De onderdelen zijn overgenomen uit top-frontend-v2 (`pages/CaseDetailPage/PermitsCardDecos`, `PermitsCard`, `MeldingenCard`, `VakantieverhuurCard`) en staan in `app/components/permits/`:
   - **Vergunningen Decos** (`Decos/`): tabel met de vergunning (groen vinkje of rood kruis voor geldig/niet geldig) en de status als badge (Verleend, Verlopen, Niet verleend); een rij klapt open met resultaat, omschrijving, soort, aanvrager, data en locatie. Vergunningen die Decos niet kent vallen weg.
@@ -684,11 +686,56 @@ Testchecklist Persoonsgegevens:
 
 Testchecklist Vergunningen:
 
-- [ ] De tab toont titel en tabs (Vergunningen actief) en de vier onderdelen met hun aantal.
-- [ ] Een vergunning en een melding uitklappen: de details kloppen met de oude pagina.
-- [ ] Een adres zonder vergunningen/meldingen: op acceptatie voorbeeldgegevens met de regel erboven.
-- [ ] De link naar Decos Join opent in een nieuw tabblad.
-- [ ] Smal scherm: de onderdelen staan onder elkaar, de kolom Status valt weg.
+- [x] De tab toont titel en tabs (Vergunningen actief) en de vier onderdelen met hun aantal.
+- [x] Een vergunning en een melding uitklappen: de details kloppen met de oude pagina.
+- [x] Een adres zonder vergunningen/meldingen: op acceptatie voorbeeldgegevens met de regel erboven.
+- [x] De link naar Decos Join opent in een nieuw tabblad.
+- [x] Smal scherm: de onderdelen staan onder elkaar, de kolom Status valt weg.
+
+**Zaak: formulier "Taak opvoeren" (`/zaken/:id/taak`) — pilot formulieren** — omgezet, wacht op test:
+
+Afgesproken volgorde voor wat nog over is: (1) dit formulier als pilot, (2) de zaakpagina, (3) de overige formulieren van klein naar groot, met "Nieuwe zaak aanmaken" als laatste. **Geen bevestigingsscherm meer** ("Controleer de gegevens"): een formulier slaat direct op, met duidelijke validatie in het formulier zelf.
+
+Het patroon voor alle zaakformulieren:
+
+- **Formulier:** `useForm` van `react-hook-form` met `FormProvider` en de velden van `@amsterdam/ee-ads-rhf` (hier `SelectControl`). Vervangt `ScaffoldForm`/`FormPositioner`/`ConfirmScaffoldForm` van `amsterdam-react-final-form`; het bijbehorende `scaffold.ts` verdwijnt.
+- **Validatie:** per veld via `registerOptions` (hier `required: "Kies een taak."`). Bij versturen met fouten staat de melding onder het veld (rood, `aria-invalid`) én bovenaan in een ADS-`InvalidFormAlert` met een link naar het veld (`mapErrorsToAlert`). Een verplicht veld heeft geen toevoeging; een optioneel veld krijgt van ee-ads-rhf "(niet verplicht)".
+- **Opslaan:** direct, zonder tussenscherm. Tijdens het opslaan is de knop uitgeschakeld met "Bezig met …". Daarna terug naar de zaak met de melding "Succes — Het resultaat is verwerkt" (`case/forms/useAfterCaseFormSubmit`). Mislukt het, dan toont de query client de foutmelding van de API bovenaan en blijft het formulier staan met wat je had ingevuld.
+- **Knoppen:** ADS-`ActionGroup` met de primaire knop (de actie) en "Annuleren" (secundair, terug naar de zaak).
+- **Pagina:** `case/CaseFormPage`: titel op de grijze achtergrond, en een wit vlak (8 van 12 kolommen breed) met om welke zaak het gaat (`CaseSummary`: adres en zaak-ID) en het formulier. Breadcrumbs staan aan (het is een geneste pagina).
+
+Testchecklist "Taak opvoeren":
+
+- [ ] Open een zaak en kies "Taak opvoeren": titel, breadcrumbs, adres en zaak-ID, de keuzelijst met taken en twee knoppen.
+- [ ] Verstuur zonder keuze: de fout staat onder het veld en bovenaan in de samenvatting; de link in de samenvatting zet de cursor in het veld. Er wordt niets opgeslagen.
+- [ ] Kies een taak en verstuur: direct opgeslagen (geen bevestigingsscherm), terug op de zaak met de succesmelding, en de taak staat erbij.
+- [ ] "Annuleren" gaat terug naar de zaak zonder iets op te slaan.
+- [ ] Zonder het recht `perform_task` geeft de pagina de 403.
+
+**Zaakpagina (`/zaken/:id`) — in vier stappen** (afgesproken: in stappen):
+
+1. **Layout, titel, waarschuwingen en zaakgegevens** — omgezet, wacht op test.
+2. **Open taken**: de tabel met taken en hun acties (taak afronden, slotdatum wijzigen, afspraak aanpassen) en "Taak opvoeren" **als venster** op deze pagina in plaats van een eigen pagina (besloten: één keuzelijst is te weinig voor een pagina; `/zaken/:id/taak` vervalt dan).
+3. **Zaakhistorie**: de tijdlijn (`EventsTimeline` van `wonen-ui` → het tijdlijncomponent van top-frontend-v2).
+4. **Wijzigen in de zaakgegevens**: onderwerpen, tag en corporatie (nu nog asc-ui-modals met final-form) → ADS-dialog + react-hook-form.
+
+Stap 1:
+
+- Titel: "Zaakdetails" als h1 met het map-icoon ervoor (`src/components/HeadingWithIcon/`, naar top-frontend-v2), en op dezelfde regel rechts het adres als link naar de adrespagina: een `StandaloneLink` met een kaartspeld als icoon in plaats van de chevron (ADS-`Row` met ruimte ertussen; op een smal scherm eronder). Breadcrumbs staan aan (Home / Zakenoverzicht / Zaakdetails).
+- Waarschuwingen direct onder de titel, als ADS-`Alert`: "Er loopt een ondermijningszaak" (rood) en "Let op: er is 3 keer overlast geconstateerd" (oranje, weg te klikken; de tekst is over kop en regel verdeeld).
+- De hele zaak staat in **één wit vlak**: Zaakgegevens, Open taken en Zaakhistorie onder elkaar, met ruimte ertussen.
+- **Zaakgegevens**: twee `Description`-kolommen (`EqualColumns`) met dezelfde gegevens als eerst. Datums via `formatDate`; "Overgedragen zaak" alleen als die er is. Tijdens het laden staan er laadrijen in plaats van een schermvullende spinner.
+- **Tussenstand:** "Open taken" en "Zaakhistorie" zijn nog de oude componenten; de potloodjes bij onderwerp, tag en corporatie openen nog de oude modals. De pagina oogt dus deels oud tot stap 2–4.
+- Een zaak die niet bestaat geeft de 404; een gevoelige zaak zonder het recht de 403 (zoals eerst).
+
+Testchecklist zaakpagina stap 1:
+
+- [ ] Open een zaak vanuit het zaken- of takenoverzicht: titel "Zaakdetails" met het map-icoon, rechts het adres als link (opent de adrespagina), breadcrumbs.
+- [ ] De zaakgegevens kloppen met de oude pagina; het wijzigen van onderwerp, tag en corporatie (potloodje) werkt nog.
+- [ ] Open taken: afronden, slotdatum wijzigen en "Taak opvoeren" werken nog.
+- [ ] De zaakhistorie staat er nog en klapt open zoals eerst.
+- [ ] Een zaak op een adres met een ondermijningszaak toont de rode melding.
+- [ ] Een niet-bestaand zaaknummer geeft de 404.
 
 ## Fase 3 — Verticale migratie per domein (± 4–8 weken)
 

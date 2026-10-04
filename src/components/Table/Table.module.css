@@ -17,13 +17,6 @@
   white-space: nowrap;
 }
 
-/* As high as a line of text, so a loading row is as high as a row with data. */
-.loadingCell {
-  display: flex;
-  align-items: center;
-  height: 1lh;
-}
-
 .emptyPlaceholder {
   font-style: italic;
 }
