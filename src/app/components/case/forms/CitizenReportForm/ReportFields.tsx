@@ -101,13 +101,12 @@ export const ReportFields: React.FC<Props> = ({ control, asksNuisance }) => {
           required: "Vul een samenvatting van de melding in.",
         }}
       />
-      {asksNuisance && (
-        <CheckboxControl<ReportValues>
-          name="nuisance"
-          label="Betreft overlast"
-          description="Vink aan als de melding over overlast gaat, zoals geluid, lawaai, stank en vuil."
-        />
-      )}
+      <CheckboxControl<ReportValues>
+        name="nuisance"
+        label="Betreft overlast"
+        description="Vink aan als de melding over overlast gaat, zoals geluid, lawaai, stank en vuil."
+        shouldShow={asksNuisance}
+      />
     </>
   )
 }

@@ -133,9 +133,9 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
       : undefined,
     resetOptions: { keepDirtyValues: true },
   })
-  const [theme, reason, otherTheme] = useWatch({
+  const [theme, reason] = useWatch({
     control: form.control,
-    name: ["theme", "reason", "other_theme"],
+    name: ["theme", "reason"],
   })
 
   // What can be chosen depends on the theme.
@@ -243,75 +243,70 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
           },
         }}
       />
-      {hasTheme && (
-        <RadioControl<FormValues>
-          name="reason"
-          label="Aanleiding"
-          options={toOptions(reasonOptions)}
-          registerOptions={{ required: "Kies een aanleiding." }}
-        />
-      )}
+      <RadioControl<FormValues>
+        name="reason"
+        label="Aanleiding"
+        options={toOptions(reasonOptions)}
+        registerOptions={{ required: "Kies een aanleiding." }}
+        shouldShow={hasTheme}
+      />
       {reasonName === REASON_SIG && (
         <ReportFields
           control={controlOf(form.control)}
           asksNuisance={themeName === "Vakantieverhuur"}
         />
       )}
-      {reasonName === REASON_PROJECT && (
-        <SelectControl<FormValues>
-          name="project"
-          label="Projectnaam"
-          options={[
-            { label: "Maak een keuze", value: "" },
-            ...toOptions(projects?.results),
-          ]}
-          registerOptions={{ required: "Kies een project." }}
-        />
-      )}
-      {reasonName === REASON_MMA && (
-        <TextInputControl<FormValues>
-          name="mma_number"
-          label="MMA-nummer"
-          // The keyboard for numbers.
-          attributes={{ inputMode: "numeric" }}
-          size={MMA_NUMBER_SIZE}
-          registerOptions={{
-            required: "Vul het MMA-nummer in.",
-            pattern: {
-              value: /^\s*[1-9]\d*\s*$/,
-              message: "Vul het MMA-nummer in als een getal.",
-            },
-          }}
-        />
-      )}
-      {hasTheme && sortedCorporations.length > 0 && (
-        <SelectControl<FormValues>
-          name="housing_corporation"
-          label="Selecteer de woningcorporatie"
-          options={[
-            { label: "Geen corporatie", value: "" },
-            ...toOptions(sortedCorporations),
-          ]}
-        />
-      )}
+      <SelectControl<FormValues>
+        name="project"
+        label="Projectnaam"
+        options={[
+          { label: "Maak een keuze", value: "" },
+          ...toOptions(projects?.results),
+        ]}
+        registerOptions={{ required: "Kies een project." }}
+        shouldShow={reasonName === REASON_PROJECT}
+      />
+      <TextInputControl<FormValues>
+        name="mma_number"
+        label="MMA-nummer"
+        // The keyboard for numbers.
+        attributes={{ inputMode: "numeric" }}
+        size={MMA_NUMBER_SIZE}
+        registerOptions={{
+          required: "Vul het MMA-nummer in.",
+          pattern: {
+            value: /^\s*[1-9]\d*\s*$/,
+            message: "Vul het MMA-nummer in als een getal.",
+          },
+        }}
+        shouldShow={reasonName === REASON_MMA}
+      />
+      <SelectControl<FormValues>
+        name="housing_corporation"
+        label="Selecteer de woningcorporatie"
+        options={[
+          { label: "Geen corporatie", value: "" },
+          ...toOptions(sortedCorporations),
+        ]}
+        shouldShow={hasTheme && sortedCorporations.length > 0}
+      />
       {asksAdvertisement && (
         <AdvertisementFields
           control={controlOf(form.control)}
           onlyYes={isTon}
         />
       )}
-      {hasTheme && (
-        <CheckboxControlGroup<FormValues>
-          name="subjects"
-          label="Onderwerp(en)"
-          options={toOptions(subjects?.results)}
-          registerOptions={{
-            validate: (chosen) =>
-              (Array.isArray(chosen) && chosen.length > 0) ||
-              "Kies ten minste één onderwerp.",
-          }}
-        />
-      )}
+      <CheckboxControlGroup<FormValues>
+        name="subjects"
+        label="Onderwerp(en)"
+        options={toOptions(subjects?.results)}
+        registerOptions={{
+          validate: (chosen) =>
+            (Array.isArray(chosen) && chosen.length > 0) ||
+            "Kies ten minste één onderwerp.",
+        }}
+        shouldShow={hasTheme}
+      />
       {hasTheme && (
         <>
           <Label>Ander thema</Label>
@@ -321,21 +316,19 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
           />
         </>
       )}
-      {hasTheme && otherTheme && (
-        <SelectControl<FormValues>
-          name="previous_case"
-          label="Overgedragen zaak ID"
-          options={[{ label: "Maak een keuze", value: "" }, ...previousCases]}
-          registerOptions={{ required: "Kies de zaak die is overgedragen." }}
-        />
-      )}
-      {hasTheme && (
-        <TextAreaControl<FormValues>
-          name="description"
-          label="Korte toelichting"
-          rows={4}
-        />
-      )}
+      <SelectControl<FormValues>
+        name="previous_case"
+        label="Overgedragen zaak ID"
+        options={[{ label: "Maak een keuze", value: "" }, ...previousCases]}
+        registerOptions={{ required: "Kies de zaak die is overgedragen." }}
+        shouldShow={(watch) => hasTheme && watch("other_theme")}
+      />
+      <TextAreaControl<FormValues>
+        name="description"
+        label="Korte toelichting"
+        rows={4}
+        shouldShow={hasTheme}
+      />
     </FormPage>
   )
 }
