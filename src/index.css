@@ -5,3 +5,4 @@
 @import "@amsterdam/design-system-tokens/dist/index.css";
 @import "@amsterdam/design-system-tokens/dist/compact.css";
 @import "./styles/design-system-overrides.css";
+@import "./styles/animations.css";

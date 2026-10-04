@@ -1,6 +1,8 @@
-import { Button, StandaloneLink } from "@amsterdam/design-system-react"
+import { Icon, Paragraph, StandaloneLink } from "@amsterdam/design-system-react"
+import { PersonIcon } from "@amsterdam/design-system-react-icons"
 import type { CompleteTaskPayload } from "@/api/hooks"
 import { RouterLink } from "@/components/DefaultLayout/RouterLink"
+import { StandaloneButton } from "@/components/StandaloneButton/StandaloneButton"
 import { type ColumnType } from "@/components/Table/types"
 import ChangeableDueDate from "app/components/case/tasks/ChangeDueDate/ChangebleDueDate"
 import TaskButton, {
@@ -10,7 +12,12 @@ import AssignTask from "app/components/tasks/TableTasks/AssignTask/AssignTask"
 import UpdateSchedule from "./components/UpdateSchedule/UpdateSchedule"
 import taskActionMap from "./utils/taskActionMap"
 
-type Task = Tasks.WorkflowTask
+/** A task with the state of the case it belongs to. */
+export type Task = Tasks.WorkflowTask & {
+  state: string
+  /** More about the state, e.g. who the summons is for. */
+  information?: string
+}
 
 export function getColumns(
   completeTask: (payload: CompleteTaskPayload) => Promise<unknown>,
@@ -34,15 +41,44 @@ export function getColumns(
   }
 
   return [
-    { header: "Open taak", dataIndex: "name", minWidth: 240 },
+    {
+      // The state of the case and the task in one cell, below each other: one
+      // column less, so the table also fits a narrower window.
+      header: "Open taak",
+      dataIndex: "name",
+      minWidth: 220,
+      render: (_, { state, name, information }) => (
+        <>
+          <strong>{state}</strong>
+          <Paragraph>{name}</Paragraph>
+          {information && <Paragraph size="small">{information}</Paragraph>}
+        </>
+      ),
+    },
     ...(hasCreateVisitTask ? [updateScheduleColumn] : []),
     {
       header: "Uitvoerder",
       dataIndex: "roles",
+      hideOnMobile: true,
       render: (_, { roles }) => (roles?.length ? roles.join(", ") : "-"),
     },
     {
-      header: "Toegewezen",
+      // An icon as the header, so the column needs no more room than the avatar; the
+      // name is there for a screen reader and as a tooltip.
+      header: (
+        <span
+          title="Toewijzen"
+          // As wide as the avatar below it, with the icon in the middle.
+          style={{
+            display: "inline-flex",
+            justifyContent: "center",
+            width: "2rem",
+          }}
+        >
+          <Icon svg={PersonIcon} />
+          <span className="ams-visually-hidden">Toewijzen</span>
+        </span>
+      ),
       dataIndex: "owner",
       render: (_, task) => (
         <AssignTask taskId={task.case_user_task_id} taskOwner={task.owner} />
@@ -96,9 +132,9 @@ export function getColumns(
         }
 
         return (action.disabled ?? disabled) ? (
-          <Button variant="secondary" disabled title={NO_PERMISSION}>
+          <StandaloneButton disabled title={NO_PERMISSION}>
             {action.name}
-          </Button>
+          </StandaloneButton>
         ) : (
           <StandaloneLink
             linkComponent={RouterLink}

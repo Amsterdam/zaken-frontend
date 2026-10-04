@@ -1,13 +1,12 @@
 import { useForm, useWatch } from "react-hook-form"
 import { ActionGroup, Button, Dialog } from "@amsterdam/design-system-react"
 import { FormProvider, SelectControl } from "@amsterdam/ee-ads-rhf"
-import { useLocation } from "react-router-dom"
 import {
   useRefreshCaseWorkflowsSoon,
   useStartWorkflowProcess,
   useWorkflowProcesses,
 } from "@/api/hooks"
-import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
+import { useToast } from "@/components/toasts/useToast"
 import { OpenDialog } from "@/components/OpenDialog/OpenDialog"
 
 type Props = {
@@ -29,8 +28,7 @@ const TaskDialog: React.FC<Props> = ({ id, onClose }) => {
   const { mutateAsync: startWorkflowProcess, isPending } =
     useStartWorkflowProcess(id)
   const refreshWorkflowsSoon = useRefreshCaseWorkflowsSoon(id)
-  const { addSuccessFlashMessage } = useFlashMessages()
-  const { pathname } = useLocation()
+  const { showToast } = useToast()
   const form = useForm<FormValues>({ defaultValues: { workflowProcess: "" } })
   // Nothing to start until a task is chosen.
   const hasChoice =
@@ -45,11 +43,13 @@ const TaskDialog: React.FC<Props> = ({ id, onClose }) => {
       // The error is shown as a message at the top of the page; the dialog stays.
       return
     }
-    addSuccessFlashMessage(
-      pathname,
-      "Taak opgevoerd",
-      "De taak verschijnt bij de open taken zodra hij is aangemaakt.",
-    )
+    // Something that worked is a toast; alerts are for errors and information.
+    showToast({
+      severity: "success",
+      title: "Taak opgevoerd",
+      description:
+        "De taak verschijnt bij de open taken zodra hij is aangemaakt.",
+    })
     refreshWorkflowsSoon()
     onClose()
   }

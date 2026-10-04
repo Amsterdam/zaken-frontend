@@ -6,7 +6,7 @@ import {
   within,
 } from "@testing-library/react"
 import { MemoryRouter } from "react-router-dom"
-import FlashMessageProvider from "app/state/flashMessages/FlashMessageProvider"
+import { ToastProvider } from "@/components/toasts/ToastProvider"
 import CaseStatus from "../CaseStatus"
 
 const startWorkflowProcess = vi.fn()
@@ -58,9 +58,9 @@ vi.mock("app/components/case/tasks/FormModal/FormModal", () => ({
 const renderStatus = () =>
   render(
     <MemoryRouter initialEntries={["/zaken/12"]}>
-      <FlashMessageProvider>
+      <ToastProvider>
         <CaseStatus id={12} />
-      </FlashMessageProvider>
+      </ToastProvider>
     </MemoryRouter>,
   )
 
@@ -109,10 +109,10 @@ describe("the open tasks of a case", () => {
   it("shows the tasks per state, with what you can do with them", () => {
     renderStatus()
 
-    expect(
-      screen.getByRole("heading", { level: 3, name: "Inplannen Huisbezoek" }),
-    ).toBeTruthy()
+    // One table, a row per task, with the state of the case in front.
+    expect(screen.getAllByRole("table")).toHaveLength(1)
     const [, first, second] = screen.getAllByRole("row")
+    expect(within(first).getByText("Inplannen Huisbezoek")).toBeTruthy()
     expect(within(first).getByText("Bepalen processtap")).toBeTruthy()
     expect(within(first).getByText("Projectmedewerker")).toBeTruthy()
     // A task without a form of its own is completed here.
@@ -152,9 +152,12 @@ describe("the open tasks of a case", () => {
         workflow_option_id: 4,
       }),
     )
-    // The dialog is gone, the tasks refresh and a message says it worked.
+    // The dialog is gone, the tasks refresh and a toast says it worked.
     await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
     expect(refreshWorkflowsSoon).toHaveBeenCalled()
+    expect(
+      within(screen.getByRole("status")).getByText("Taak opgevoerd"),
+    ).toBeTruthy()
     expect(screen.getByRole("heading", { name: "Open taken" })).toBeTruthy()
   })
 

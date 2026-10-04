@@ -3,6 +3,7 @@ import { Button, Column, Heading, Row } from "@amsterdam/design-system-react"
 import useHasPermission, { CAN_PERFORM_TASK } from "@/hooks/useHasPermission"
 import TaskDialog from "../forms/TaskForm/TaskDialog"
 import Workflow from "../Workflow/Workflow"
+import styles from "./CaseStatus.module.css"
 
 type Props = {
   id: components["schemas"]["CaseDetail"]["id"]
@@ -15,7 +16,12 @@ const CaseStatus: React.FC<Props> = ({ id }) => {
 
   return (
     <Column gap="small">
-      <Row align="between" alignVertical="center" wrap>
+      <Row
+        align="between"
+        alignVertical="center"
+        wrap
+        className={styles.header}
+      >
         <Heading level={2}>Open taken</Heading>
         <Button
           variant="secondary"

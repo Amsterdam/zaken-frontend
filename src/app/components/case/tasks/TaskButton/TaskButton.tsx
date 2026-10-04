@@ -1,4 +1,4 @@
-import { Button } from "@amsterdam/design-system-react"
+import { StandaloneButton } from "@/components/StandaloneButton/StandaloneButton"
 import { useModal } from "app/components/shared/Modal/hooks/useModal"
 import FormModal from "../FormModal/FormModal"
 
@@ -26,15 +26,14 @@ const TaskButton: React.FC<Props> = ({
 
   return (
     <>
-      <Button
-        variant="secondary"
+      <StandaloneButton
         disabled={disabled}
         title={disabled ? NO_PERMISSION : undefined}
         aria-label={`Taak afronden: ${taskName}`}
         onClick={openModal}
       >
         Taak afronden
-      </Button>
+      </StandaloneButton>
       <FormModal
         taskName={taskName}
         caseId={caseId}

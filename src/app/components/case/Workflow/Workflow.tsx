@@ -1,7 +1,6 @@
 import {
   Button,
   Column,
-  Heading,
   Paragraph,
   Skeleton,
 } from "@amsterdam/design-system-react"
@@ -19,7 +18,8 @@ type Props = {
 }
 
 /**
- * The open tasks of a case, a table per state of the case. A task can be
+ * The open tasks of a case in one table, each with the state of the case it
+ * belongs to. A task can be
  * assigned, get another due date and be completed here.
  */
 const Workflow: React.FC<Props> = ({ id }) => {
@@ -60,21 +60,23 @@ const Workflow: React.FC<Props> = ({ id }) => {
     )
   }
 
+  // One row per task, with the state of the case it belongs to: one table,
+  // so the columns line up and there are no heading rows in between.
+  const rows = workflows.flatMap(({ state, tasks, information }) =>
+    (tasks ?? []).map((task) => ({
+      ...task,
+      state: state.name,
+      information: information || undefined,
+    })),
+  )
+
   return (
-    <Column gap="x-large">
-      {workflows.map(({ state, tasks, information }, index) => (
-        <Column gap="small" key={`${state.name}_${index}`}>
-          <Heading level={3}>{state.name}</Heading>
-          {information && <Paragraph>{information}</Paragraph>}
-          <Table
-            columns={getColumns(completeTask, tasks, caseData?.theme.id)}
-            data={tasks ?? []}
-            pagination={false}
-            verticalAlign="middle"
-          />
-        </Column>
-      ))}
-    </Column>
+    <Table
+      columns={getColumns(completeTask, rows, caseData?.theme.id)}
+      data={rows}
+      pagination={false}
+      verticalAlign="middle"
+    />
   )
 }
 
