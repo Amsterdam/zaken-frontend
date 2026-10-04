@@ -1,6 +1,6 @@
 import NotAuthorizedPage from "app/pages/auth/NotAuthorizedPage"
 import useHasPermission from "@/hooks/useHasPermission"
-import SpinnerWrap from "app/components/shared/ConfirmScaffoldForm/components/SpinnerWrap"
+import SpinnerWrap from "./SpinnerWrap"
 
 type Props = {
   page: React.ComponentType

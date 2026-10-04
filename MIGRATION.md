@@ -462,7 +462,7 @@ Testchecklist:
 | Zaak: Bezoek inplannen (`pages/case/schedules/CreatePage`, `/zaken/:id/inplanning/:caseUserTaskId`)     | ✅ akkoord                                                                                                           |
 | Zaak: Huisbezoek (`pages/case/visits/CreatePage`, `/zaken/:id/huisbezoek/:caseUserTaskId`)              | ✅ akkoord                                                                                                           |
 | Zaak: Melding (`pages/case/citizenreports/CreatePage`, `/zaken/:id/melding/:caseUserTaskId`)            | ✅ akkoord                                                                                                           |
-| Nieuwe zaak aanmaken (`pages/cases/create/CreateCasePage`, `/adres/:bagId/zaken/nieuw`)                 | omgezet, wacht op test                                                                                               |
+| Nieuwe zaak aanmaken (`pages/cases/create/CreateCasePage`, `/adres/:bagId/zaken/nieuw`)                 | ✅ akkoord                                                                                                           |
 | Zaakpagina (`pages/cases/details/DetailsPage`, `/zaken/:id`)                                            | ✅ akkoord (4 stappen: opmaak, open taken, zaakhistorie, vensters)                                                   |
 
 **Hulp-pagina:** naar het voorbeeld van de veelgestelde-vragenpagina van top-frontend-v2: titel "Hulp" direct op de grijze achtergrond, daaronder één wit vlak met de vier onderwerpen in een ADS-`Accordion` (dicht bij het openen, net als eerst). Geen icoon meer naast de paginatitel. **Breadcrumbs** staan alleen nog op geneste pagina's: een pagina direct onder home (zoals `/hulp`) krijgt er geen. De lijstjes stonden in de oude versie binnen een alinea (ongeldige HTML); dat zijn nu losse ADS-lijsten. `EmailLink` zit in `HelpContent`; het ongebruikte `PhoneLink` en `HelpContent.module.css` zijn weg. `CustomTooltip` staat nog in dezelfde map omdat de zaakpagina's het gebruiken.
@@ -935,7 +935,7 @@ Testchecklist nieuwe zaak (via "Nieuwe zaak aanmaken" op een adrespagina):
 - [ ] "Zaak aanmaken": je komt op de nieuwe zaakpagina met een toast; de gegevens (thema, aanleiding, onderwerpen, corporatie, melding, advertenties) kloppen daar.
 - [ ] Met `?tonId=<id>` achter de URL staat het formulier vooraf ingevuld.
 
-Daarna: de oude formulierlaag verwijderen (`case/WorkflowForm`, `shared/ConfirmScaffoldForm`, `shared/Form`, `InfoButton`, `toPostMethod`) en daarmee `@amsterdam/amsterdam-react-final-form`.
+**Oude formulierlaag verwijderd** (na het akkoord op alle formulieren): `case/WorkflowForm`, `shared/ConfirmScaffoldForm` (het bevestigingsscherm), `shared/Form`, `shared/InfoHeading` (`InfoButton`), `api/utils/toPostMethod` en `useNavigateWithFlashMessage`; ook de oude paginadelen die alleen de formulierpagina's nog gebruikten (`case/CaseHeading`, `shared/PageHeading`, `shared/AddressHeadingByBagId`, `shared/ConfirmButton`). `SpinnerWrap` staat nu bij `routing/components` (alleen `AuthorizedPage` gebruikt hem). De pakketten `@amsterdam/amsterdam-react-final-form`, `final-form`, `final-form-arrays`, `react-final-form` en `react-final-form-arrays` zijn uit `package.json`.
 
 ## Fase 3 — Verticale migratie per domein (± 4–8 weken)
 

@@ -162,8 +162,9 @@ describe("the page to make a new case", () => {
     // The corporations by name.
     expect(
       [
-        ...screen.getByLabelText<HTMLSelectElement>(/^Welke corporatie/)
-          .options,
+        ...screen.getByLabelText<HTMLSelectElement>(
+          /^Selecteer de woningcorporatie/,
+        ).options,
       ].map((option) => option.text),
     ).toEqual(["Geen corporatie", "Eigen Haard", "Ymere"])
     submit()
@@ -189,7 +190,7 @@ describe("the page to make a new case", () => {
     fireEvent.click(screen.getByLabelText("Vakantieverhuur"))
     fireEvent.click(await screen.findByLabelText("Project"))
     type(/^Projectnaam/, "30")
-    type(/^Welke corporatie/, "8")
+    type(/^Selecteer de woningcorporatie/, "8")
     fireEvent.click(screen.getByLabelText("Nee, er is geen advertentie"))
     chooseSubject("Hotel")
     chooseSubject("Doorzon")

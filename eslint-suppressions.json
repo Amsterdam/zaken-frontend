@@ -19,40 +19,7 @@
       "count": 1
     }
   },
-  "src/app/components/case/WorkflowForm/WorkflowForm.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 2
-    }
-  },
-  "src/app/components/shared/ConfirmScaffoldForm/ConfirmScaffoldForm.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 2
-    }
-  },
-  "src/app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields.ts": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    }
-  },
-  "src/app/components/shared/ConfirmScaffoldForm/utils/createValuesObject.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    },
-    "react-refresh/only-export-components": {
-      "count": 1
-    }
-  },
   "src/app/components/shared/CustomIcon/CustomIcon.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    }
-  },
-  "src/app/components/shared/Form/ShowHide/ShowHide.test.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    }
-  },
-  "src/app/components/shared/Form/ShowHide/ShowHide.tsx": {
     "@typescript-eslint/no-explicit-any": {
       "count": 1
     }
