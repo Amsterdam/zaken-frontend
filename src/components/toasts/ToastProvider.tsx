@@ -59,6 +59,21 @@ export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
     registerToastBridge(showToast)
   }, [showToast])
 
+  // The toasts are a popover, so they are in the top layer: an error that
+  // comes while a modal dialog is open is shown above it, not under its
+  // backdrop. What is shown last is on top, so show it again for every toast.
+  const numToasts = toasts.length
+  useEffect(() => {
+    const container = containerRef.current
+    // Not in every browser (and not in jsdom): then it is a fixed element.
+    if (!container || typeof container.showPopover !== "function") return
+
+    // Set here: React 18 does not know the attribute yet.
+    container.popover = "manual"
+    if (container.matches(":popover-open")) container.hidePopover()
+    if (numToasts > 0) container.showPopover()
+  }, [numToasts])
+
   // FLIP: existing toasts smoothly reposition when the stack changes
   // (a toast is added or removed), instead of jumping to their new spot.
   // Newly added toasts are left alone here; they play their own enter

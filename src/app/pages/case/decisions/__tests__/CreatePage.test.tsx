@@ -4,7 +4,6 @@ import "app/routing/routes"
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { MemoryRouter, Route, Routes, useLocation } from "react-router-dom"
 import { ToastProvider } from "@/components/toasts/ToastProvider"
-import FlashMessageProvider from "app/state/flashMessages/FlashMessageProvider"
 import CreatePage from "../CreatePage"
 
 const createDecision = vi.fn()
@@ -56,18 +55,16 @@ const renderPage = () => {
   window.history.pushState({}, "", "/zaken/12/besluit/34")
   return render(
     <MemoryRouter initialEntries={["/zaken/12/besluit/34"]}>
-      <FlashMessageProvider>
-        <ToastProvider>
-          <Routes>
-            <Route
-              path="/zaken/:id/besluit/:caseUserTaskId"
-              element={<CreatePage />}
-            />
-            <Route path="*" element={null} />
-          </Routes>
-          <Location />
-        </ToastProvider>
-      </FlashMessageProvider>
+      <ToastProvider>
+        <Routes>
+          <Route
+            path="/zaken/:id/besluit/:caseUserTaskId"
+            element={<CreatePage />}
+          />
+          <Route path="*" element={null} />
+        </Routes>
+        <Location />
+      </ToastProvider>
     </MemoryRouter>,
   )
 }

@@ -39,7 +39,7 @@ const TaskDialog: React.FC<Props> = ({ id, onClose }) => {
         workflow_option_id: Number(workflowProcess),
       })
     } catch {
-      // The error is shown as a message at the top of the page; the dialog stays.
+      // The error is shown as a toast; the dialog stays.
       return
     }
     // Something that worked is a toast; alerts are for errors and information.

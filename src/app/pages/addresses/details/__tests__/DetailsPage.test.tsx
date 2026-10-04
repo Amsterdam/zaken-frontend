@@ -3,7 +3,6 @@
 import "app/routing/routes"
 import { fireEvent, render, screen, within } from "@testing-library/react"
 import { MemoryRouter, Route, Routes } from "react-router-dom"
-import FlashMessageProvider from "app/state/flashMessages/FlashMessageProvider"
 import DetailsPage from "../DetailsPage"
 
 const BAG_ID = "0363010000000001"
@@ -97,11 +96,9 @@ describe("the tab Adresdetails of an address", () => {
     window.history.pushState({}, "", `/adres/${BAG_ID}/details`)
     render(
       <MemoryRouter initialEntries={[`/adres/${BAG_ID}/details`]}>
-        <FlashMessageProvider>
-          <Routes>
-            <Route path="/adres/:bagId/details" element={<DetailsPage />} />
-          </Routes>
-        </FlashMessageProvider>
+        <Routes>
+          <Route path="/adres/:bagId/details" element={<DetailsPage />} />
+        </Routes>
       </MemoryRouter>,
     )
 

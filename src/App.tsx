@@ -7,7 +7,6 @@ import { queryClient } from "@/api/queryClient"
 import { hasAuthParams, useAuth } from "react-oidc-context"
 import Router from "app/routing/components/Router"
 import { ToastProvider } from "@/components/toasts/ToastProvider"
-import FlashMessageProvider from "app/state/flashMessages/FlashMessageProvider"
 import PageTitle from "app/routing/components/PageTitle"
 import { AmsterdamCrossSpinner } from "@/components/spinners/AmsterdamCrossSpinner/AmsterdamCrossSpinner"
 import { FullScreenWrapper } from "app/components/shared/loading"
@@ -56,16 +55,14 @@ const App = () => {
       <ThemeProvider>
         <GlobalStyle />
         <BrowserRouter>
-          <FlashMessageProvider>
-            <QueryClientProvider client={queryClient}>
-              <ToastProvider>
-                <PageTitle />
-                <Feedback />
-                <Router />
-              </ToastProvider>
-              {import.meta.env.DEV && <ReactQueryDevtools />}
-            </QueryClientProvider>
-          </FlashMessageProvider>
+          <QueryClientProvider client={queryClient}>
+            <ToastProvider>
+              <PageTitle />
+              <Feedback />
+              <Router />
+            </ToastProvider>
+            {import.meta.env.DEV && <ReactQueryDevtools />}
+          </QueryClientProvider>
         </BrowserRouter>
       </ThemeProvider>
     </React.Fragment>

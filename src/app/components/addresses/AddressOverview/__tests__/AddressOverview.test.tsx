@@ -3,7 +3,6 @@
 import "app/routing/routes"
 import { fireEvent, render, screen, within } from "@testing-library/react"
 import { MemoryRouter, Route, Routes, useLocation } from "react-router-dom"
-import FlashMessageProvider from "app/state/flashMessages/FlashMessageProvider"
 import IndexPage from "app/pages/addresses/index/IndexPage"
 
 let permissions: string[] = []
@@ -94,13 +93,11 @@ const Location = () => <output>{useLocation().pathname}</output>
 const renderPage = () =>
   render(
     <MemoryRouter initialEntries={["/adres/0363010000000001"]}>
-      <FlashMessageProvider>
-        <Routes>
-          <Route path="/adres/:bagId" element={<IndexPage />} />
-          <Route path="*" element={null} />
-        </Routes>
-        <Location />
-      </FlashMessageProvider>
+      <Routes>
+        <Route path="/adres/:bagId" element={<IndexPage />} />
+        <Route path="*" element={null} />
+      </Routes>
+      <Location />
     </MemoryRouter>,
   )
 

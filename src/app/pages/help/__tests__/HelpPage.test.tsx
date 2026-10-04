@@ -1,6 +1,5 @@
 import { render, screen } from "@testing-library/react"
 import { MemoryRouter } from "react-router-dom"
-import FlashMessageProvider from "app/state/flashMessages/FlashMessageProvider"
 import HelpPage from "../HelpPage"
 
 vi.mock("@/api/hooks", () => ({
@@ -21,9 +20,7 @@ describe("HelpPage", () => {
     window.history.pushState({}, "", "/hulp")
     render(
       <MemoryRouter initialEntries={["/hulp"]}>
-        <FlashMessageProvider>
-          <HelpPage />
-        </FlashMessageProvider>
+        <HelpPage />
       </MemoryRouter>,
     )
 

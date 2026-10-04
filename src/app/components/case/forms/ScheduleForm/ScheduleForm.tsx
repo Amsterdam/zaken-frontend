@@ -102,7 +102,7 @@ const ScheduleForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
         }),
       })
     } catch {
-      // The error is shown as a message at the top of the page; the form stays.
+      // The error is shown as a toast; the form stays.
       return
     }
     afterSubmit()

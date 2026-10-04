@@ -21,7 +21,6 @@ import { useUsersMe } from "@/api/hooks"
 import { env } from "app/config/env"
 import { useDecodedToken } from "app/state/auth/oidc/useDecodedToken"
 import { Breadcrumbs } from "./Breadcrumbs"
-import { FlashMessages } from "./FlashMessages"
 import { RouterLink } from "./RouterLink"
 
 type MenuItem = {
@@ -123,7 +122,6 @@ export function DefaultLayout({ children, hideBreadcrumbs = false }: Props) {
           {/* Pages render one or more Grid.Cell's (white areas in compact mode). */}
           <Grid paddingVertical="large" gapVertical="large">
             {!hideBreadcrumbs && <Breadcrumbs />}
-            <FlashMessages />
             {children}
           </Grid>
         </main>

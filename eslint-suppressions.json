@@ -62,11 +62,6 @@
       "count": 1
     }
   },
-  "src/app/state/flashMessages/FlashMessageProvider.tsx": {
-    "react-refresh/only-export-components": {
-      "count": 1
-    }
-  },
   "src/types/Task.d.ts": {
     "@typescript-eslint/no-explicit-any": {
       "count": 2

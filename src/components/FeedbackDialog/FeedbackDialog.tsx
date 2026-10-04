@@ -25,7 +25,7 @@ export function FeedbackDialog({ onClose }: Props) {
     e.preventDefault()
     if (!feedback.trim()) return
 
-    // When it fails the general error message says so; the dialog stays.
+    // The error is shown as a toast; the dialog stays.
     sendFeedback.mutate(feedback, {
       onSuccess: () => {
         onClose()

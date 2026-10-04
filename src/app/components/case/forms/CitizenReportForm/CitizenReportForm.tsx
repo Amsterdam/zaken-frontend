@@ -52,7 +52,7 @@ const CitizenReportForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
         ...(hasAdvertisement && { advertisements: toAdvertisements(values) }),
       })
     } catch {
-      // The error is shown as a message at the top of the page; the form stays.
+      // The error is shown as a toast; the form stays.
       return
     }
     afterSubmit()

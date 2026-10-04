@@ -3,7 +3,6 @@
 import "app/routing/routes"
 import { fireEvent, render, screen } from "@testing-library/react"
 import { MemoryRouter } from "react-router-dom"
-import FlashMessageProvider from "app/state/flashMessages/FlashMessageProvider"
 import FinePage from "../FinePage"
 
 type Fine = { identificatienummer: string; dagtekening: string }
@@ -29,9 +28,7 @@ vi.mock("app/state/auth/oidc/useDecodedToken", () => ({
 const search = (query: string) => {
   render(
     <MemoryRouter>
-      <FlashMessageProvider>
-        <FinePage />
-      </FlashMessageProvider>
+      <FinePage />
     </MemoryRouter>,
   )
   const input = screen.getByRole("searchbox")
@@ -48,9 +45,7 @@ describe("FinePage", () => {
   it("shows nothing below the search field before you search", () => {
     render(
       <MemoryRouter>
-        <FlashMessageProvider>
-          <FinePage />
-        </FlashMessageProvider>
+        <FinePage />
       </MemoryRouter>,
     )
 

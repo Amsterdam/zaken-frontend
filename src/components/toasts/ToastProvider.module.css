@@ -1,7 +1,13 @@
 .toastContainer {
   position: fixed;
-  bottom: 1rem;
-  right: 1rem;
+  /* It is a popover (see ToastProvider): not in the middle and without the
+     border and background a popover has, and shown when it is not open too. */
+  inset: auto 1rem 1rem auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  overflow: visible;
   z-index: 1000;
   display: flex;
   flex-direction: column;

@@ -34,7 +34,7 @@ const useCompleteTask = ({ taskName, onSubmit, onClose }: Props) => {
     try {
       await onSubmit(variables)
     } catch {
-      // The error is shown as a message at the top of the page; the dialog stays.
+      // The error is shown as a toast; the dialog stays.
       setIsPending(false)
       return
     }

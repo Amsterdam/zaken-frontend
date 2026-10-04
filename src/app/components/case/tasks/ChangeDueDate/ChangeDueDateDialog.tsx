@@ -47,7 +47,7 @@ const ChangeDueDateDialog: React.FC<Props> = ({
     try {
       await updateTask({ due_date: appendTimeToDate(date) })
     } catch {
-      // The error is shown as a message at the top of the page; the dialog stays.
+      // The error is shown as a toast; the dialog stays.
       return
     }
     showToast({

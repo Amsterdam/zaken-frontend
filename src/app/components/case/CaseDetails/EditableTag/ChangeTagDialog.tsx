@@ -30,7 +30,7 @@ const ChangeTagDialog: React.FC<Props> = ({ case: caseItem, onClose }) => {
     try {
       await updateCase({ tag_ids: tag === NO_TAG ? [] : [Number(tag)] })
     } catch {
-      // The error is shown as a message at the top of the page; the dialog stays.
+      // The error is shown as a toast; the dialog stays.
       return
     }
     const name = data?.results?.find(({ id }) => String(id) === tag)?.name

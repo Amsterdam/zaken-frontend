@@ -199,7 +199,7 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
         ...(isTon && { ton_ids: [tonId] }),
       })
     } catch {
-      // The error is shown as a message at the top of the page; the form stays.
+      // The error is shown as a toast; the form stays.
       return
     }
     showToast({

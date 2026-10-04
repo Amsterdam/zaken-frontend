@@ -3,7 +3,6 @@
 import "app/routing/routes"
 import { fireEvent, render, screen, within } from "@testing-library/react"
 import { MemoryRouter, Route, Routes } from "react-router-dom"
-import FlashMessageProvider from "app/state/flashMessages/FlashMessageProvider"
 import PermitsPage from "../PermitsPage"
 
 const BAG_ID = "0363010000000001"
@@ -61,11 +60,9 @@ vi.mock("app/state/auth/oidc/useDecodedToken", () => ({
 const renderPage = () =>
   render(
     <MemoryRouter initialEntries={[`/adres/${BAG_ID}/vergunningen`]}>
-      <FlashMessageProvider>
-        <Routes>
-          <Route path="/adres/:bagId/vergunningen" element={<PermitsPage />} />
-        </Routes>
-      </FlashMessageProvider>
+      <Routes>
+        <Route path="/adres/:bagId/vergunningen" element={<PermitsPage />} />
+      </Routes>
     </MemoryRouter>,
   )
 

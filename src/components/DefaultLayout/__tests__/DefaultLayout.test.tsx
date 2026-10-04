@@ -1,7 +1,5 @@
-import { fireEvent, render, screen, within } from "@testing-library/react"
+import { render, screen, within } from "@testing-library/react"
 import { MemoryRouter } from "react-router-dom"
-import FlashMessageProvider from "app/state/flashMessages/FlashMessageProvider"
-import { useFlashMessages } from "app/state/flashMessages/useFlashMessages"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
 
 let permissions: string[] = []
@@ -18,28 +16,10 @@ vi.mock("app/state/auth/oidc/useDecodedToken", () => ({
   useDecodedToken: () => ({ given_name: "Jan" }),
 }))
 
-// Like an API error that arrives after the page is shown (on mount the
-// provider clears the messages of the previous page).
-const AddErrorButton = () => {
-  const { addErrorFlashMessage } = useFlashMessages()
-  return (
-    <button
-      onClick={() =>
-        addErrorFlashMessage("Oeps er ging iets mis!", "Het ging fout")
-      }
-    >
-      Fout toevoegen
-    </button>
-  )
-}
-
-const renderPage = (withError = false) =>
+const renderPage = () =>
   render(
     <MemoryRouter initialEntries={["/bestaat-niet"]}>
-      <FlashMessageProvider>
-        {withError && <AddErrorButton />}
-        <NotFoundPage />
-      </FlashMessageProvider>
+      <NotFoundPage />
     </MemoryRouter>,
   )
 
@@ -74,14 +54,5 @@ describe("DefaultLayout (via the 404 page)", () => {
     renderPage()
 
     expect(sideMenu().getByRole("link", { name: "Invordering" })).toBeTruthy()
-  })
-
-  it("shows flash messages, and closing one removes it", () => {
-    renderPage(true)
-    fireEvent.click(screen.getByText("Fout toevoegen"))
-
-    expect(screen.getByText("Het ging fout")).toBeTruthy()
-    fireEvent.click(screen.getByRole("button", { name: "Sluiten" }))
-    expect(screen.queryByText("Het ging fout")).toBeNull()
   })
 })

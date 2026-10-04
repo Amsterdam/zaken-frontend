@@ -10,7 +10,6 @@ import {
 } from "@testing-library/react"
 import { MemoryRouter, Route, Routes, useLocation } from "react-router-dom"
 import { ToastProvider } from "@/components/toasts/ToastProvider"
-import FlashMessageProvider from "app/state/flashMessages/FlashMessageProvider"
 import CreatePage from "../CreatePage"
 
 const createDebriefing = vi.fn()
@@ -77,18 +76,16 @@ const renderPage = () => {
   window.history.pushState({}, "", "/zaken/12/debriefing/34")
   return render(
     <MemoryRouter initialEntries={["/zaken/12/debriefing/34"]}>
-      <FlashMessageProvider>
-        <ToastProvider>
-          <Routes>
-            <Route
-              path="/zaken/:id/debriefing/:caseUserTaskId"
-              element={<CreatePage />}
-            />
-            <Route path="*" element={null} />
-          </Routes>
-          <Location />
-        </ToastProvider>
-      </FlashMessageProvider>
+      <ToastProvider>
+        <Routes>
+          <Route
+            path="/zaken/:id/debriefing/:caseUserTaskId"
+            element={<CreatePage />}
+          />
+          <Route path="*" element={null} />
+        </Routes>
+        <Location />
+      </ToastProvider>
     </MemoryRouter>,
   )
 }

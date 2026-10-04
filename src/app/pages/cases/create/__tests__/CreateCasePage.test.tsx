@@ -4,7 +4,6 @@ import "app/routing/routes"
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { MemoryRouter, Route, Routes, useLocation } from "react-router-dom"
 import { ToastProvider } from "@/components/toasts/ToastProvider"
-import FlashMessageProvider from "app/state/flashMessages/FlashMessageProvider"
 import CreateCasePage from "../CreateCasePage"
 
 const BAG_ID = "0363010000000001"
@@ -103,18 +102,16 @@ const renderPage = (search = "") => {
   window.history.pushState({}, "", path)
   return render(
     <MemoryRouter initialEntries={[`${path}${search}`]}>
-      <FlashMessageProvider>
-        <ToastProvider>
-          <Routes>
-            <Route
-              path="/adres/:bagId/zaken/nieuw"
-              element={<CreateCasePage />}
-            />
-            <Route path="*" element={null} />
-          </Routes>
-          <Location />
-        </ToastProvider>
-      </FlashMessageProvider>
+      <ToastProvider>
+        <Routes>
+          <Route
+            path="/adres/:bagId/zaken/nieuw"
+            element={<CreateCasePage />}
+          />
+          <Route path="*" element={null} />
+        </Routes>
+        <Location />
+      </ToastProvider>
     </MemoryRouter>,
   )
 }

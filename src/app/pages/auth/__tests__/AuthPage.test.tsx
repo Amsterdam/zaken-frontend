@@ -3,7 +3,6 @@
 import "app/routing/routes"
 import { render, screen } from "@testing-library/react"
 import { MemoryRouter } from "react-router-dom"
-import FlashMessageProvider from "app/state/flashMessages/FlashMessageProvider"
 import AuthPage from "../AuthPage"
 
 vi.mock("@/api/hooks", () => ({
@@ -25,9 +24,7 @@ vi.mock("app/state/auth/oidc/useDecodedToken", () => ({
 const renderPage = () =>
   render(
     <MemoryRouter>
-      <FlashMessageProvider>
-        <AuthPage />
-      </FlashMessageProvider>
+      <AuthPage />
     </MemoryRouter>,
   )
 

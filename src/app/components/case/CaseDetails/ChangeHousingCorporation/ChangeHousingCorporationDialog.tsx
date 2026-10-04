@@ -62,7 +62,7 @@ const ChangeHousingCorporationDialog: React.FC<Props> = ({
         },
       }))
     } catch {
-      // The error is shown as a message at the top of the page; the dialog stays.
+      // The error is shown as a toast; the dialog stays.
       return
     }
     const name = housingCorporations.find(

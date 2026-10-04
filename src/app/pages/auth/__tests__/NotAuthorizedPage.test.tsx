@@ -3,7 +3,6 @@
 import "app/routing/routes"
 import { render, screen } from "@testing-library/react"
 import { MemoryRouter } from "react-router-dom"
-import FlashMessageProvider from "app/state/flashMessages/FlashMessageProvider"
 import NotAuthorizedPage from "../NotAuthorizedPage"
 
 vi.mock("@/api/hooks", () => ({
@@ -22,9 +21,7 @@ describe("NotAuthorizedPage", () => {
   it("tells you that you have no access, with a way back", () => {
     render(
       <MemoryRouter>
-        <FlashMessageProvider>
-          <NotAuthorizedPage />
-        </FlashMessageProvider>
+        <NotAuthorizedPage />
       </MemoryRouter>,
     )
 

@@ -3,7 +3,6 @@
 import "app/routing/routes"
 import { fireEvent, render, screen } from "@testing-library/react"
 import { MemoryRouter, useLocation } from "react-router-dom"
-import FlashMessageProvider from "app/state/flashMessages/FlashMessageProvider"
 import HomePage from "../HomePage"
 
 let addresses: Partial<BAGPdokAddress>[] = []
@@ -36,10 +35,8 @@ const Location = () => {
 const renderPage = (url = "/") =>
   render(
     <MemoryRouter initialEntries={[url]}>
-      <FlashMessageProvider>
-        <HomePage />
-        <Location />
-      </FlashMessageProvider>
+      <HomePage />
+      <Location />
     </MemoryRouter>,
   )
 

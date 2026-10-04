@@ -84,7 +84,7 @@ const UpdateScheduleDialog: React.FC<Props> = ({
             : null,
       })
     } catch {
-      // The error is shown as a message at the top of the page; the dialog stays.
+      // The error is shown as a toast; the dialog stays.
       return
     }
     showToast({

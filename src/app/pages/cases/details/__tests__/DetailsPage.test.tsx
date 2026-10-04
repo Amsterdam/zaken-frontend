@@ -3,7 +3,6 @@
 import "app/routing/routes"
 import { render, screen, within } from "@testing-library/react"
 import { MemoryRouter, Route, Routes } from "react-router-dom"
-import FlashMessageProvider from "app/state/flashMessages/FlashMessageProvider"
 import DetailsPage from "../DetailsPage"
 
 type CaseQuery = { data?: unknown; isLoading: boolean; error?: unknown }
@@ -88,11 +87,9 @@ const renderPage = (from?: string) => {
         { pathname: "/zaken/12", state: from ? { from } : null },
       ]}
     >
-      <FlashMessageProvider>
-        <Routes>
-          <Route path="/zaken/:id" element={<DetailsPage />} />
-        </Routes>
-      </FlashMessageProvider>
+      <Routes>
+        <Route path="/zaken/:id" element={<DetailsPage />} />
+      </Routes>
     </MemoryRouter>,
   )
 }
