@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react"
-import { ThemeProvider, GlobalStyle } from "@amsterdam/asc-ui"
+import { useEffect, useState } from "react"
 import { BrowserRouter } from "react-router-dom"
 import { QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
@@ -51,21 +50,16 @@ const App = () => {
   }
 
   return (
-    <React.Fragment>
-      <ThemeProvider>
-        <GlobalStyle />
-        <BrowserRouter>
-          <QueryClientProvider client={queryClient}>
-            <ToastProvider>
-              <PageTitle />
-              <Feedback />
-              <Router />
-            </ToastProvider>
-            {import.meta.env.DEV && <ReactQueryDevtools />}
-          </QueryClientProvider>
-        </BrowserRouter>
-      </ThemeProvider>
-    </React.Fragment>
+    <BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <ToastProvider>
+          <PageTitle />
+          <Feedback />
+          <Router />
+        </ToastProvider>
+        {import.meta.env.DEV && <ReactQueryDevtools />}
+      </QueryClientProvider>
+    </BrowserRouter>
   )
 }
 

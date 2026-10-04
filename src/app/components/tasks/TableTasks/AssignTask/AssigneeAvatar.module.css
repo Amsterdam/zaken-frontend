@@ -35,8 +35,11 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  /* The size includes the border. */
+  box-sizing: border-box;
   width: 2rem;
   height: 2rem;
+  margin: 0;
   aspect-ratio: var(--ams-avatar-aspect-ratio);
   border-radius: 50%;
   border-style: var(--ams-avatar-border-style);

@@ -37,7 +37,9 @@
 .searchInput {
   width: 100%;
   box-sizing: border-box;
+  margin: 0;
   padding: 6px 8px 6px 28px;
+  font: inherit;
   border: 1px solid var(--ams-color-separator);
   line-height: 1.4;
   color: var(--ams-color-text);

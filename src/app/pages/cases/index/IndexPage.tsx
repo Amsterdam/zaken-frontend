@@ -6,16 +6,17 @@ import { getLastCasesSearch } from "app/components/cases/useCasesFilters"
 const IndexPage: React.FC = () => {
   const { search } = useLocation()
 
-  // A link without filters (the menu, a breadcrumb) brings you back to the
-  // filters you had in this tab.
+  // A link without filters (a breadcrumb) brings you back to the filters you
+  // had in this tab. The layout stays, so the page does not flash.
   const lastSearch = search === "" ? getLastCasesSearch() : ""
-  if (lastSearch !== "") {
-    return <Navigate to={{ search: lastSearch }} replace />
-  }
 
   return (
     <DefaultLayout>
-      <Cases />
+      {lastSearch !== "" ? (
+        <Navigate to={{ search: lastSearch }} replace />
+      ) : (
+        <Cases />
+      )}
     </DefaultLayout>
   )
 }

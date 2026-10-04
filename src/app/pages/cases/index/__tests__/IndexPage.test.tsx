@@ -7,7 +7,16 @@ import { setLastCasesSearch } from "app/components/cases/useCasesFilters"
 import IndexPage from "../IndexPage"
 
 vi.mock("@/components/DefaultLayout/DefaultLayout", () => ({
-  DefaultLayout: () => <main>Zakenoverzicht</main>,
+  DefaultLayout: ({ children }: { children: React.ReactNode }) => (
+    <main>
+      <h1>Layout</h1>
+      {children}
+    </main>
+  ),
+}))
+
+vi.mock("app/components/cases/Cases/Cases", () => ({
+  default: () => <p>Zakenoverzicht</p>,
 }))
 
 const Location = () => <output>{useLocation().search}</output>
@@ -36,6 +45,8 @@ describe("the cases overview page", () => {
     setLastCasesSearch("thema=Kamerverhuur&pagina=2")
     renderPage("/zaken")
 
+    // The layout is there all along.
+    expect(screen.getByRole("heading", { name: "Layout" })).toBeTruthy()
     expect(screen.getByRole("status").textContent).toBe(
       "?thema=Kamerverhuur&pagina=2",
     )

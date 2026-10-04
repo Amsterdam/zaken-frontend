@@ -18,6 +18,8 @@ import {
   SearchIcon,
 } from "@amsterdam/design-system-react-icons"
 import { useUsersMe } from "@/api/hooks"
+import { getLastCasesSearch } from "app/components/cases/useCasesFilters"
+import { getLastTasksSearch } from "app/components/tasks/useTasksFilters"
 import { env } from "app/config/env"
 import { useDecodedToken } from "app/state/auth/oidc/useDecodedToken"
 import { Breadcrumbs } from "./Breadcrumbs"
@@ -28,6 +30,8 @@ type MenuItem = {
   icon: typeof FolderFillIcon
   label: string
   permission?: components["schemas"]["PermissionsEnum"]
+  /** The filters you had on that page in this tab: the link goes back to them. */
+  getLastSearch?: () => string
 }
 
 // Items without the permission are left out (like top-frontend-v2).
@@ -36,8 +40,18 @@ type MenuItem = {
 const menuItems: MenuItem[] = [
   // The start page comes first.
   { href: "/", icon: SearchIcon, label: "Zoeken" },
-  { href: "/taken", icon: ClipboardFillIcon, label: "Taken\u00ADoverzicht" },
-  { href: "/zaken", icon: FolderFillIcon, label: "Zaken\u00ADoverzicht" },
+  {
+    href: "/taken",
+    icon: ClipboardFillIcon,
+    label: "Taken\u00ADoverzicht",
+    getLastSearch: getLastTasksSearch,
+  },
+  {
+    href: "/zaken",
+    icon: FolderFillIcon,
+    label: "Zaken\u00ADoverzicht",
+    getLastSearch: getLastCasesSearch,
+  },
   {
     href: "/invorderingen",
     icon: EuroCoinsFillIcon,
@@ -55,7 +69,7 @@ type Props = {
 
 /**
  * Page layout with the Amsterdam Design System (MIGRATION.md Fase 2), based on
- * top-frontend-v2. Replaces app/components/layouts/DefaultLayout page by page.
+ * top-frontend-v2.
  * The children are Grid.Cell's: the layout puts them in a Grid.
  */
 export function DefaultLayout({ children, hideBreadcrumbs = false }: Props) {
@@ -70,10 +84,12 @@ export function DefaultLayout({ children, hideBreadcrumbs = false }: Props) {
   )
 
   const onClickItem =
-    ({ href }: MenuItem) =>
+    ({ href, getLastSearch }: MenuItem) =>
     (event: MouseEvent) => {
       event.preventDefault()
-      navigate(href)
+      // Straight to the overview with your filters, not by way of the page
+      // without them.
+      navigate({ pathname: href, search: getLastSearch?.() ?? "" })
     }
 
   const onSignOut = (event: MouseEvent) => {

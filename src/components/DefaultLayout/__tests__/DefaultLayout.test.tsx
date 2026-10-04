@@ -1,5 +1,5 @@
-import { render, screen, within } from "@testing-library/react"
-import { MemoryRouter } from "react-router-dom"
+import { fireEvent, render, screen, within } from "@testing-library/react"
+import { MemoryRouter, useLocation } from "react-router-dom"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
 
 let permissions: string[] = []
@@ -16,10 +16,16 @@ vi.mock("app/state/auth/oidc/useDecodedToken", () => ({
   useDecodedToken: () => ({ given_name: "Jan" }),
 }))
 
+const Location = () => {
+  const { pathname, search } = useLocation()
+  return <output>{`${pathname}${search}`}</output>
+}
+
 const renderPage = () =>
   render(
     <MemoryRouter initialEntries={["/bestaat-niet"]}>
       <NotFoundPage />
+      <Location />
     </MemoryRouter>,
   )
 
@@ -54,5 +60,20 @@ describe("DefaultLayout (via the 404 page)", () => {
     renderPage()
 
     expect(sideMenu().getByRole("link", { name: "Invordering" })).toBeTruthy()
+  })
+
+  it("goes to an overview with the filters you had there", () => {
+    window.sessionStorage.setItem("zaken.casesFilters", "thema=Kamerverhuur")
+    renderPage()
+
+    fireEvent.click(sideMenu().getByRole("link", { name: /^Zaken/ }))
+    expect(screen.getByRole("status").textContent).toBe(
+      "/zaken?thema=Kamerverhuur",
+    )
+
+    // Without filters there: the plain overview.
+    fireEvent.click(sideMenu().getByRole("link", { name: /^Taken/ }))
+    expect(screen.getByRole("status").textContent).toBe("/taken")
+    window.sessionStorage.clear()
   })
 })
