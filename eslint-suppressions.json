@@ -4,46 +4,8 @@
       "count": 1
     }
   },
-  "src/app/components/Tabs/Tabs.tsx": {
-    "react-hooks/set-state-in-effect": {
-      "count": 1
-    }
-  },
-  "src/app/components/addresses/AddressSuffixSwitcher/OtherAddressesTable.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    }
-  },
-  "src/app/components/addresses/AddressSuffixSwitcher/columns.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    }
-  },
   "src/app/components/shared/CustomIcon/CustomIcon.tsx": {
     "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    }
-  },
-  "src/app/components/shared/LinkButton/LinkButton.test.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 3
-    }
-  },
-  "src/app/components/shared/Modal/ConfirmModal.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    }
-  },
-  "src/app/components/shared/Modal/Modal.tsx": {
-    "react-refresh/only-export-components": {
-      "count": 2
-    }
-  },
-  "src/app/components/shared/loading/SpinnerButton.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    },
-    "react-hooks/preserve-manual-memoization": {
       "count": 1
     }
   },
