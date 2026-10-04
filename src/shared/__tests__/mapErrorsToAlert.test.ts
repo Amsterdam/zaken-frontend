@@ -50,6 +50,17 @@ describe("mapErrorsToAlert", () => {
     ])
   })
 
+  it("finds a field without a name by its id", () => {
+    // The input of a searchable select list has an id but no name.
+    document.body.innerHTML = `<form><input id="subjects" /></form>`
+
+    expect(
+      mapErrorsToAlert({
+        subjects: { type: "validate", message: "Kies een onderwerp." },
+      } as FieldErrors),
+    ).toEqual([{ id: "#subjects", label: "Kies een onderwerp." }])
+  })
+
   it("only looks at the fields of a form, not at e.g. a meta tag", () => {
     // Like index.html: an element with the name of a field, that is no field.
     document.head.innerHTML = `<meta name="description" content="AZA" />`

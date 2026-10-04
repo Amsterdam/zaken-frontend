@@ -27,6 +27,10 @@ export const mapErrorsToAlert = (
     if (!isFieldError(error)) {
       return mapErrorsToAlert(error as FieldErrors, name)
     }
-    const field = document.querySelector(`form [name="${CSS.escape(name)}"]`)
+    const field =
+      document.querySelector(`form [name="${CSS.escape(name)}"]`) ??
+      // A field without a name, like the input of a searchable select list:
+      // its id is the name.
+      document.querySelector(`form [id="${CSS.escape(name)}"]`)
     return [{ id: `#${field?.id ?? ""}`, label: String(error.message ?? "") }]
   })

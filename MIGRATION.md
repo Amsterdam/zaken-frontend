@@ -461,7 +461,8 @@ Testchecklist:
 | Zaak: Aanschrijving (`pages/case/summons/CreatePage`, `/zaken/:id/aanschrijving/:caseUserTaskId`)       | ✅ akkoord                                                                                                           |
 | Zaak: Bezoek inplannen (`pages/case/schedules/CreatePage`, `/zaken/:id/inplanning/:caseUserTaskId`)     | ✅ akkoord                                                                                                           |
 | Zaak: Huisbezoek (`pages/case/visits/CreatePage`, `/zaken/:id/huisbezoek/:caseUserTaskId`)              | ✅ akkoord                                                                                                           |
-| Zaak: Melding (`pages/case/citizenreports/CreatePage`, `/zaken/:id/melding/:caseUserTaskId`)            | omgezet, wacht op test                                                                                               |
+| Zaak: Melding (`pages/case/citizenreports/CreatePage`, `/zaken/:id/melding/:caseUserTaskId`)            | ✅ akkoord                                                                                                           |
+| Nieuwe zaak aanmaken (`pages/cases/create/CreateCasePage`, `/adres/:bagId/zaken/nieuw`)                 | omgezet, wacht op test                                                                                               |
 | Zaakpagina (`pages/cases/details/DetailsPage`, `/zaken/:id`)                                            | ✅ akkoord (4 stappen: opmaak, open taken, zaakhistorie, vensters)                                                   |
 
 **Hulp-pagina:** naar het voorbeeld van de veelgestelde-vragenpagina van top-frontend-v2: titel "Hulp" direct op de grijze achtergrond, daaronder één wit vlak met de vier onderwerpen in een ADS-`Accordion` (dicht bij het openen, net als eerst). Geen icoon meer naast de paginatitel. **Breadcrumbs** staan alleen nog op geneste pagina's: een pagina direct onder home (zoals `/hulp`) krijgt er geen. De lijstjes stonden in de oude versie binnen een alinea (ongeldige HTML); dat zijn nu losse ADS-lijsten. `EmailLink` zit in `HelpContent`; het ongebruikte `PhoneLink` en `HelpContent.module.css` zijn weg. `CustomTooltip` staat nog in dezelfde map omdat de zaakpagina's het gebruiken.
@@ -915,6 +916,26 @@ Testchecklist melding (een zaak met de taak "Melding verwerken"):
 - [ ] "Ja, er is een advertentie": een link invullen, een tweede toevoegen en weer verwijderen; een link zonder http(s):// wordt geweigerd.
 - [ ] Bij een thema zonder advertenties (bv. Kamerverhuur) staat de advertentievraag er niet.
 - [ ] Opslaan: terug op de zaakpagina met een toast; de zaakhistorie toont de melding met de advertentielinks.
+
+**Nieuwe zaak aanmaken** (`cases/CreateForm`): het laatste formulier. Het adres bovenaan, dan het thema (keuzerondjes); pas daarna de rest, die van thema en aanleiding afhangt: aanleiding (keuzerondjes), bij "SIG melding" de meldingsvelden, bij "Project" de projectnaam, bij "MMA" het MMA-nummer, de corporatie, de advertentievraag met links (bij thema's met advertenties), de onderwerpen (vinkjes, minstens één), "Overgedragen vanuit ander thema" met de eerdere zaak, en de toelichting. Een ander thema kiezen wist aanleiding, project en onderwerpen. Geen bevestigingsscherm meer: "Zaak aanmaken" slaat direct op, met een toast, en gaat naar de nieuwe zaak. De TON-koppeling (`?tonId=`) werkt als voorheen: thema, aanleiding "Digitaal toezicht" en de advertentielink staan dan ingevuld.
+
+Nieuw gedeeld:
+
+- `src/components/FormPage`: de pagina-opzet van een formulier (titel, foutmelding boven het witte vlak, smallere velden, knoppen); `CaseFormPage` is nu een `FormPage` met de zaakgegevens.
+- `forms/CitizenReportForm/ReportFields`, `AdvertisementFields` en `reportValues.ts`: de meldings- en advertentievelden, gebruikt door Melding én Nieuwe zaak aanmaken.
+- `src/shared/mapErrorsToAlert` vindt een veld zonder naam (zoals een doorzoekbare multiselect) op zijn id.
+
+Testchecklist nieuwe zaak (via "Nieuwe zaak aanmaken" op een adrespagina):
+
+- [ ] Eerst staat alleen het thema er; na het kiezen verschijnt de rest.
+- [ ] Aanleiding "SIG melding" toont de meldingsvelden, "Project" de projectnaam, "MMA" het MMA-nummer.
+- [ ] Onderwerpen: meerdere aanvinken; zonder onderwerp opslaan geeft de foutmelding met een werkende link.
+- [ ] Een ander thema kiezen wist aanleiding en onderwerpen.
+- [ ] "Overgedragen vanuit ander thema" toont de zaken op dit adres.
+- [ ] "Zaak aanmaken": je komt op de nieuwe zaakpagina met een toast; de gegevens (thema, aanleiding, onderwerpen, corporatie, melding, advertenties) kloppen daar.
+- [ ] Met `?tonId=<id>` achter de URL staat het formulier vooraf ingevuld.
+
+Daarna: de oude formulierlaag verwijderen (`case/WorkflowForm`, `shared/ConfirmScaffoldForm`, `shared/Form`, `InfoButton`, `toPostMethod`) en daarmee `@amsterdam/amsterdam-react-final-form`.
 
 ## Fase 3 — Verticale migratie per domein (± 4–8 weken)
 

@@ -24,22 +24,6 @@
       "count": 2
     }
   },
-  "src/app/components/cases/CreateForm/CreateForm.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 3
-    },
-    "react-hooks/set-state-in-effect": {
-      "count": 1
-    }
-  },
-  "src/app/components/cases/CreateForm/scaffold.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    },
-    "react-refresh/only-export-components": {
-      "count": 1
-    }
-  },
   "src/app/components/shared/ConfirmScaffoldForm/ConfirmScaffoldForm.tsx": {
     "@typescript-eslint/no-explicit-any": {
       "count": 2

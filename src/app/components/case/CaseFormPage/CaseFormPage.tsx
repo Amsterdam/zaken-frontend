@@ -3,20 +3,9 @@ import {
   type FieldValues,
   type SubmitHandler,
   type UseFormReturn,
-  useFormState,
 } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
-import {
-  ActionGroup,
-  Button,
-  Column,
-  Grid,
-  Heading,
-  InvalidFormAlert,
-} from "@amsterdam/design-system-react"
-import { FormProvider } from "@amsterdam/ee-ads-rhf"
-import { DefaultLayout } from "@/components/DefaultLayout/DefaultLayout"
-import { mapErrorsToAlert } from "@/shared/mapErrorsToAlert"
+import { FormPage } from "@/components/FormPage/FormPage"
 import CaseSummary from "./CaseSummary"
 
 type Props<T extends FieldValues> = {
@@ -29,82 +18,30 @@ type Props<T extends FieldValues> = {
   submitText?: string
   /** While saving: the submit button is off and says so. */
   isPending?: boolean
-  /** What the form is about besides the case, above the fields. */
+  /** What to know before filling in the form, above the white area. */
   intro?: ReactNode
   /** The fields of the form (@amsterdam/ee-ads-rhf). */
   children: ReactNode
 }
 
 /**
- * The page of a form about a case: the title, and in a white area which case
- * it is about and the form (react-hook-form), with below the fields the button
- * that saves and "Annuleren". What is wrong after a try to save is listed
- * above the white area, with links to the fields, and said at each field.
+ * The page of a form about a case: a FormPage that says which case it is
+ * about, and goes back to that case with "Annuleren".
  */
 export function CaseFormPage<T extends FieldValues>({
   id,
-  title,
-  form,
-  onSubmit,
   submitText = "Resultaat verwerken",
-  isPending = false,
-  intro,
-  children,
+  ...formPage
 }: Props<T>) {
   const navigate = useNavigate()
-  const { errors } = useFormState({ control: form.control })
-  const alertErrors = mapErrorsToAlert(errors)
 
   return (
-    <DefaultLayout>
-      <Grid.Cell span="all" appearance="transparent">
-        <Heading level={1}>{title}</Heading>
-      </Grid.Cell>
-      {intro && (
-        <Grid.Cell span="all" appearance="transparent">
-          {intro}
-        </Grid.Cell>
-      )}
-      {alertErrors.length > 0 && (
-        <Grid.Cell span="all" appearance="transparent">
-          <InvalidFormAlert errors={alertErrors} headingLevel={2} />
-        </Grid.Cell>
-      )}
-      <Grid.Cell span="all">
-        <Column gap="x-large">
-          <CaseSummary id={id} />
-         
-          <FormProvider form={form} onSubmit={onSubmit}>
-            {/* The fields are narrower than the white area they are in. */}
-            <Grid className="grid-in-cell">
-              <Grid.Cell
-                span={{ narrow: 4, medium: 6, wide: 6 }}
-                appearance="transparent"
-              >
-                <Column gap="large">
-                  {children}
-                  {/* In a block of its own, or the column stretches the buttons. */}
-                  <div>
-                    <ActionGroup>
-                      <Button type="submit" disabled={isPending}>
-                        {isPending ? "Bezig met opslaan…" : submitText}
-                      </Button>
-                      <Button
-                        type="button"
-                        variant="secondary"
-                        onClick={() => navigate(`/zaken/${id}`)}
-                      >
-                        Annuleren
-                      </Button>
-                    </ActionGroup>
-                  </div>
-                </Column>
-              </Grid.Cell>
-            </Grid>
-          </FormProvider>
-        </Column>
-      </Grid.Cell>
-    </DefaultLayout>
+    <FormPage
+      {...formPage}
+      submitText={submitText}
+      summary={<CaseSummary id={id} />}
+      onCancel={() => navigate(`/zaken/${id}`)}
+    />
   )
 }
 
