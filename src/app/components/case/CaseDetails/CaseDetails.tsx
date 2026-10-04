@@ -1,11 +1,8 @@
-import { Row } from "@amsterdam/design-system-react"
 import { useCase } from "@/api/hooks"
 import { Description } from "@/components/Description/Description"
 import { EqualColumns } from "@/components/EqualColumns/EqualColumns"
 import { formatDate } from "@/shared/dateFormatters"
 import caseStates from "app/constants/caseStates"
-import CaseEnforcement from "../icons/CaseEnforcement"
-import CaseSensitive from "../icons/CaseSensitive"
 import ChangeHousingCorporation from "./ChangeHousingCorporation/ChangeHousingCorporation"
 import ChangeableSubject from "./ChangeSubject/ChangeableSubject"
 import EditableTag from "./EditableTag/EditableTag"
@@ -34,15 +31,7 @@ const CaseDetails: React.FC<Props> = ({ caseId }) => {
             ? [
                 {
                   label: "Zaak ID",
-                  value: (
-                    <Row gap="small" alignVertical="center">
-                      {caseItem.id}
-                      <CaseSensitive isVisible={caseItem.sensitive} />
-                      <CaseEnforcement
-                        isVisible={caseItem.is_enforcement_request}
-                      />
-                    </Row>
-                  ),
+                  value: caseItem.id,
                 },
                 { label: "Status", value: caseStates[caseItem.state] },
                 {

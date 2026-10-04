@@ -1,4 +1,4 @@
-import { Column, Grid, Heading, Row } from "@amsterdam/design-system-react"
+import { Column, Grid, Heading } from "@amsterdam/design-system-react"
 import {
   useCaseThemes,
   useCorporations,
@@ -17,7 +17,6 @@ import TasksFilter from "../TasksFilter/TasksFilter"
 import useHasPermission, {
   SENSITIVE_CASE_PERMISSION,
 } from "@/hooks/useHasPermission"
-import CaseEnforcement from "app/components/case/icons/CaseEnforcement"
 import getThemeId from "app/components/tasks/utils/getThemeId"
 import { useMappedTaskOwners } from "../hooks/useMappedTaskOwners"
 import { useTasksFilters } from "../useTasksFilters"
@@ -130,12 +129,9 @@ const Tasks: React.FC = () => {
           />
           {enforcementTasksAvailable && (
             <Column>
-              <Row gap="small" alignVertical="center">
-                <Heading level={2}>
-                  Handhavingsverzoeken ({enforcementDataSource?.count})
-                </Heading>
-                <CaseEnforcement isVisible={true} />
-              </Row>
+              <Heading level={2}>
+                Handhavingsverzoeken ({enforcementDataSource?.count})
+              </Heading>
               <TableTasks
                 data={enforcementTasks}
                 isBusy={isLoadingEnforcement || isPlaceholderEnforcement}

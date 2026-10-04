@@ -42,26 +42,25 @@ export function getColumns(
 
   return [
     {
-      // The state of the case and the task in one cell, below each other: one
-      // column less, so the table also fits a narrower window.
+      // The state of the case, the task, and below them (small) who may do
+      // it and more about the state: all in one cell, so the table has few
+      // columns and fits in its card on a laptop.
       header: "Open taak",
       dataIndex: "name",
-      minWidth: 220,
-      render: (_, { state, name, information }) => (
-        <>
-          <strong>{state}</strong>
-          <Paragraph>{name}</Paragraph>
-          {information && <Paragraph size="small">{information}</Paragraph>}
-        </>
-      ),
+      render: (_, { state, name, roles, information }) => {
+        const details = [roles?.join(", "), information].filter(Boolean)
+        return (
+          <>
+            <strong>{state}</strong>
+            <Paragraph>{name}</Paragraph>
+            {details.length > 0 && (
+              <Paragraph size="small">{details.join(" · ")}</Paragraph>
+            )}
+          </>
+        )
+      },
     },
     ...(hasCreateVisitTask ? [updateScheduleColumn] : []),
-    {
-      header: "Uitvoerder",
-      dataIndex: "roles",
-      hideOnMobile: true,
-      render: (_, { roles }) => (roles?.length ? roles.join(", ") : "-"),
-    },
     {
       // An icon as the header, so the column needs no more room than the avatar; the
       // name is there for a screen reader and as a tooltip.
@@ -80,6 +79,7 @@ export function getColumns(
         </span>
       ),
       dataIndex: "owner",
+      hideOnMobile: true,
       render: (_, task) => (
         <AssignTask taskId={task.case_user_task_id} taskOwner={task.owner} />
       ),
@@ -87,6 +87,7 @@ export function getColumns(
     {
       header: "Slotdatum",
       dataIndex: "due_date",
+      hideOnMobile: true,
       noWrap: true,
       render: (_, task) =>
         task.due_date ? (

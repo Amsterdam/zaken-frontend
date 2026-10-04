@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom"
 import {
+  Badge,
   Column,
   Grid,
   Row,
@@ -8,7 +9,9 @@ import {
 } from "@amsterdam/design-system-react"
 import {
   FolderIcon,
+  GavelIcon,
   HistoryIcon,
+  LockClosedIcon,
   MapMarkerIcon,
   SuitcaseIcon,
 } from "@amsterdam/design-system-react-icons"
@@ -67,7 +70,24 @@ const DetailsPage: React.FC = () => {
       <Grid.Cell span="all" appearance="transparent">
         <Column gap="small">
           <Row align="between" alignVertical="center" wrap>
-            <HeadingWithIcon label="Zaakdetails" svg={FolderIcon} />
+            <Row alignVertical="center" wrap>
+              <HeadingWithIcon label="Zaakdetails" svg={FolderIcon} />
+              {/* What kind of case this is, in words: visible at once. */}
+              {caseItem?.is_enforcement_request && (
+                <Badge
+                  label="Handhavingsverzoek"
+                  color="orange"
+                  icon={GavelIcon}
+                />
+              )}
+              {caseItem?.sensitive && (
+                <Badge
+                  label="Gevoelige zaak"
+                  color="purple"
+                  icon={LockClosedIcon}
+                />
+              )}
+            </Row>
             {isLoading ? (
               <Skeleton style={{ flex: "0 1 20rem" }}>
                 <Skeleton.Paragraph lines={1} />

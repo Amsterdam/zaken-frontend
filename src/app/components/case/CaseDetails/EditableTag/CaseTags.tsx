@@ -21,7 +21,7 @@ const CaseTags: React.FC<Props> = ({
       {tags.map((tag) => (
         <Badge key={tag.id} label={tag.name} color="azure" />
       ))}
-      {!hasPermission && tags.length === 0 && "-"}
+      {tags.length === 0 && "Geen tag"}
       {hasPermission && (
         <IconButton label={titleAccess} svg={PencilIcon} onClick={onClick} />
       )}

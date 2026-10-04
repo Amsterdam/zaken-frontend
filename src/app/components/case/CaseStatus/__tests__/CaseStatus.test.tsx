@@ -114,7 +114,11 @@ describe("the open tasks of a case", () => {
     const [, first, second] = screen.getAllByRole("row")
     expect(within(first).getByText("Inplannen Huisbezoek")).toBeTruthy()
     expect(within(first).getByText("Bepalen processtap")).toBeTruthy()
+    // Who may do the task is below it, in the same cell.
     expect(within(first).getByText("Projectmedewerker")).toBeTruthy()
+    expect(
+      screen.queryByRole("columnheader", { name: "Uitvoerder" }),
+    ).toBeNull()
     // A task without a form of its own is completed here.
     expect(
       within(first).getByRole("button", {

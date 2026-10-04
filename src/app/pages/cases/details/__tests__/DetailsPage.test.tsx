@@ -1,7 +1,7 @@
 // First, like the app does: the page imports the layout, which imports the
 // routes, which import this page (circular).
 import "app/routing/routes"
-import { render, screen } from "@testing-library/react"
+import { render, screen, within } from "@testing-library/react"
 import { MemoryRouter, Route, Routes } from "react-router-dom"
 import FlashMessageProvider from "app/state/flashMessages/FlashMessageProvider"
 import DetailsPage from "../DetailsPage"
@@ -78,9 +78,16 @@ vi.mock("app/state/auth/oidc/useDecodedToken", () => ({
   useDecodedToken: () => ({ given_name: "Jan" }),
 }))
 
-const renderPage = () =>
-  render(
-    <MemoryRouter initialEntries={["/zaken/12"]}>
+// `from` is what a link passes on: the page you came from.
+const renderPage = (from?: string) => {
+  // The breadcrumbs read the path from window.location.
+  window.history.pushState({}, "", "/zaken/12")
+  return render(
+    <MemoryRouter
+      initialEntries={[
+        { pathname: "/zaken/12", state: from ? { from } : null },
+      ]}
+    >
       <FlashMessageProvider>
         <Routes>
           <Route path="/zaken/:id" element={<DetailsPage />} />
@@ -88,6 +95,12 @@ const renderPage = () =>
       </FlashMessageProvider>
     </MemoryRouter>,
   )
+}
+
+const breadcrumbs = () =>
+  within(screen.getByRole("navigation", { name: "Kruimelpad" }))
+    .getAllByRole("link")
+    .map((link) => [link.textContent, link.getAttribute("href")])
 
 const description = (label: string) =>
   screen.getByText(label, { selector: "dt" }).nextElementSibling?.textContent
@@ -111,6 +124,8 @@ describe("the case page", () => {
     ).toBe("/adres/0363010000000001")
 
     expect(description("Zaak ID")).toBe("12")
+    expect(screen.queryByText("Handhavingsverzoek")).toBeNull()
+    expect(screen.queryByText("Gevoelige zaak")).toBeNull()
     expect(description("Status")).toBe("Toezicht")
     expect(description("Startdatum")).toBe("09-03-2026")
     expect(description("Thema")).toBe("Vakantieverhuur")
@@ -123,6 +138,36 @@ describe("the case page", () => {
     ).toBeTruthy()
     expect(screen.getByText("Open taken")).toBeTruthy()
     expect(screen.getByText("Tijdlijn")).toBeTruthy()
+  })
+
+  it("has the cases overview in its breadcrumbs by default", () => {
+    renderPage()
+
+    expect(breadcrumbs()).toEqual([
+      ["Home", "/"],
+      ["Zakenoverzicht", "/zaken/"],
+      ["Zaakdetails", "/zaken/12/"],
+    ])
+  })
+
+  it("leads back to the tasks overview when you came from there", () => {
+    renderPage("/taken?rol=alle")
+
+    expect(breadcrumbs()).toEqual([
+      ["Home", "/"],
+      ["Takenoverzicht", "/taken?rol=alle"],
+      ["Zaakdetails", "/zaken/12/"],
+    ])
+  })
+
+  it("leads back to the address when you came from there", () => {
+    renderPage("/adres/0363010001004479")
+
+    expect(breadcrumbs()).toEqual([
+      ["Home", "/"],
+      ["Adresoverzicht", "/adres/0363010001004479"],
+      ["Zaakdetails", "/zaken/12/"],
+    ])
   })
 
   it("is the 404 page for a case that doesn't exist", () => {
@@ -138,10 +183,16 @@ describe("the case page", () => {
     expect(screen.getByRole("heading", { level: 1, name: /^403/ })).toBeTruthy()
   })
 
-  it("shows a sensitive case to who may see it", () => {
+  it("shows a sensitive case to who may see it, and says what kind of case it is", () => {
     permissions = ["access_sensitive_dossiers"]
-    caseQuery = { data: { ...caseItem, sensitive: true }, isLoading: false }
+    caseQuery = {
+      data: { ...caseItem, sensitive: true, is_enforcement_request: true },
+      isLoading: false,
+    }
     renderPage()
+
+    expect(screen.getByText("Gevoelige zaak")).toBeTruthy()
+    expect(screen.getByText("Handhavingsverzoek")).toBeTruthy()
 
     expect(
       screen.getByRole("heading", { level: 1, name: "Zaakdetails" }),
