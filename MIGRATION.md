@@ -210,7 +210,7 @@ Gaandeweg is het principe "1-op-1 met de oude groep" losgelaten voor mutaties: d
 | `roles`                                    | ✅            | `useRoles` (nog steeds mockdata, er is geen endpoint)                                                                                                       |
 | `fines`, `listings`, `housingCorporations` | ✅            | `useFine`, `useListing`, `useCorporations`                                                                                                                  |
 | `addresses`                                | ✅            | `useAddress` + `useUpdateAddress`, `usePermitDetails`, `usePermitsPowerBrowser`, `useMeldingen`, `useRegistrations`, `useResidents`, `useDistricts`         |
-| `dataPunt`                                 | ✅            | `useBagPdok`, `useBagPdokByBagId`, `useBenkAgg`, `usePanorama`                                                                                              |
+| `externalApis` (was `dataPunt`)            | ✅            | `useBagPdok`, `useBagPdokByBagId`, `useBenkAgg`, `usePanorama`                                                                                              |
 | `supportContacts`, `permissions`           | ✅ verwijderd | `useSupportContacts`, `usePermissions` (`/permissions/`) werden nergens gebruikt                                                                            |
 | `cases`, `case`, `task`                    | ✅            | zie hieronder. De opzoeklijsten `useDecisionTypes`, `useQuickDecisionTypes`, `useScheduleTypes` en `useViolationTypes` zijn al over, met keys onder `cases` |
 

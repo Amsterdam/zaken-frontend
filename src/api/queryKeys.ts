@@ -65,15 +65,15 @@ export const queryKeys = {
       ["cases", "themes", themeId, "violation-types"] as const,
   },
 
-  dataPunt: {
-    all: ["dataPunt"] as const,
+  externalApis: {
+    all: ["externalApis"] as const,
     bagPdokSuggest: (searchString?: string) =>
-      ["dataPunt", "pdok", "suggest", searchString] as const,
+      ["externalApis", "pdok", "suggest", searchString] as const,
     bagPdokFree: (searchString?: string) =>
-      ["dataPunt", "pdok", "free", searchString] as const,
-    benkAgg: (bagId?: BagId) => ["dataPunt", "benkagg", bagId] as const,
+      ["externalApis", "pdok", "free", searchString] as const,
+    benkAgg: (bagId?: BagId) => ["externalApis", "benkagg", bagId] as const,
     panorama: (params: Record<string, number | undefined>) =>
-      ["dataPunt", "panorama", params] as const,
+      ["externalApis", "panorama", params] as const,
   },
 
   fines: {

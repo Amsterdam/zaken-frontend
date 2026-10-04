@@ -3,10 +3,9 @@ import { useSearchParams } from "react-router-dom"
 import { Column, Heading, SearchField } from "@amsterdam/design-system-react"
 import debounce from "lodash.debounce"
 import SearchResults from "@/app/components/search/SearchResults/SearchResults"
+import { SEARCH_PARAM } from "@/app/components/search/useAddressSearch"
 
 const DELAY = 750
-// The name in the URL is Dutch, like the paths and the overviews.
-const SEARCH_PARAM = "zoekterm"
 
 const SearchWrapper: React.FC = () => {
   // The query is kept in the URL, so you return to the same results.
@@ -51,7 +50,7 @@ const SearchWrapper: React.FC = () => {
         />
         <SearchField.Button />
       </SearchField>
-      <SearchResults searchString={searchString} />
+      <SearchResults />
     </Column>
   )
 }

@@ -36,6 +36,8 @@ export const useCase = (caseId?: CaseId) => {
     queryKey: queryKeys.cases.detail(caseId),
     queryFn: () => fetch<CaseItem>(makeApiUrl("cases", caseId)),
     enabled: caseId !== undefined,
+    // A case that does not exist: the page says so (the 404 page).
+    meta: { globalErrorToast: (error) => error.status !== 404 },
   })
 }
 

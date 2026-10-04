@@ -40,18 +40,23 @@ const constructPdokQuery = (
 
 export const useBagPdok = (
   searchString?: string,
-  options?: { enabled?: boolean },
+  options?: {
+    enabled?: boolean
+    /** False when the page itself says that the search failed. */
+    globalErrorToast?: boolean
+  },
 ) => {
   const fetch = useApiFetch()
 
   return useQuery({
-    queryKey: queryKeys.dataPunt.bagPdokSuggest(searchString),
+    queryKey: queryKeys.externalApis.bagPdokSuggest(searchString),
     queryFn: () =>
       fetch<BAGPdokResponse>(
         `${PDOK_URL}/suggest${constructPdokQuery(true, searchString)}`,
         { authenticated: false },
       ),
     enabled: searchString !== undefined && (options?.enabled ?? true),
+    meta: { globalErrorToast: options?.globalErrorToast ?? true },
   })
 }
 
@@ -63,7 +68,7 @@ export const useBagPdokByBagId = (searchString?: string) => {
   const fetch = useApiFetch()
 
   return useQuery({
-    queryKey: queryKeys.dataPunt.bagPdokFree(searchString),
+    queryKey: queryKeys.externalApis.bagPdokFree(searchString),
     queryFn: () =>
       fetch<BAGPdokResponse>(
         `${PDOK_URL}/free${constructPdokQuery(false, searchString)}`,
@@ -82,7 +87,7 @@ export const useBenkAgg = (
   })
 
   return useQuery({
-    queryKey: queryKeys.dataPunt.benkAgg(bagId),
+    queryKey: queryKeys.externalApis.benkAgg(bagId),
     queryFn: () =>
       fetch<BAGBenkAggResponse>(`${BENKAGG_URL}${queryString}`, {
         authenticated: false,
@@ -108,7 +113,7 @@ export const usePanorama = (
   const queryString = stringifyQueryParams(params)
 
   return useQuery({
-    queryKey: queryKeys.dataPunt.panorama(params),
+    queryKey: queryKeys.externalApis.panorama(params),
     queryFn: () =>
       fetch<{ url: string }>(`${PANORAMA_URL}${queryString}`, {
         authenticated: false,

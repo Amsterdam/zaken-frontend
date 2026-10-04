@@ -1,20 +1,13 @@
-import { Alert, LinkList, Paragraph } from "@amsterdam/design-system-react"
-import { useBagPdok } from "@/api/hooks"
-import { BAG_PDOK_MAX_RESULTS } from "@/api/hooks/dataPunt"
+import { LinkList, Paragraph } from "@amsterdam/design-system-react"
+import { BAG_PDOK_MAX_RESULTS } from "@/api/hooks/externalApis"
 import { RouterLink } from "@/components/DefaultLayout/RouterLink"
+import {
+  MIN_SEARCH_LENGTH,
+  useAddressSearch,
+} from "@/app/components/search/useAddressSearch"
 
-type Props = {
-  searchString: string
-}
-
-const MIN_SEARCH_LENGTH = 3
-const isValidSearchString = (s: string) => s.length >= MIN_SEARCH_LENGTH
-
-const SearchResults: React.FC<Props> = ({ searchString }) => {
-  const isValid = isValidSearchString(searchString)
-  const { data, isLoading, isError } = useBagPdok(
-    isValid ? searchString : undefined,
-  )
+const SearchResults: React.FC = () => {
+  const { searchString, isValid, data, isLoading, isError } = useAddressSearch()
 
   if (!isValid) {
     return (
@@ -24,16 +17,8 @@ const SearchResults: React.FC<Props> = ({ searchString }) => {
     )
   }
   if (isLoading) return <Paragraph>Zoeken naar adressen...</Paragraph>
-  if (isError) {
-    return (
-      <Alert heading="Niet gelukt" headingLevel={3} severity="error">
-        <Paragraph>
-          Wegens een technische fout kon het adres niet worden opgezocht.
-          Probeer het over een paar minuten opnieuw.
-        </Paragraph>
-      </Alert>
-    )
-  }
+  // The page says so, under its title.
+  if (isError) return null
 
   const docs = data?.response?.docs ?? []
   // Only show addresses with a bagId
