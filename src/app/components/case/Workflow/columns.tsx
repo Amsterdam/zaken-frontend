@@ -42,26 +42,26 @@ export function getColumns(
 
   return [
     {
-      // The task, the state of the case, and below them (small) who may do
-      // it and more about the state: all in one cell, so the table has few
+      // The task, the state of the case, and below them (small) more about
+      // the state and who may do the task: all in one cell, so the table has few
       // columns and fits in its card on a laptop.
       header: "Open taak",
       dataIndex: "name",
-      render: (_, { state, name, roles, information }) => {
-        const details = [roles?.join(", "), information].filter(Boolean)
-        return (
-          <>
-            {/* The task is what the row is about: first, and it stands out. */}
-            <Paragraph>
-              <strong>{name}</strong>
-            </Paragraph>
-            <Paragraph>{state}</Paragraph>
-            {details.length > 0 && (
-              <Paragraph size="small">{details.join(" · ")}</Paragraph>
-            )}
-          </>
-        )
-      },
+      render: (_, { state, name, roles, information }) => (
+        <>
+          {/* The task is what the row is about: first, and it stands out. */}
+          <Paragraph>
+            <strong>{name}</strong>
+          </Paragraph>
+          <Paragraph>{state}</Paragraph>
+          {/* More about the state and who may do the task: each on a line
+              of its own, so the roles don't read as part of the text above. */}
+          {information && <Paragraph size="small">{information}</Paragraph>}
+          {roles && roles.length > 0 && (
+            <Paragraph size="small">{roles.join(", ")}</Paragraph>
+          )}
+        </>
+      ),
     },
     ...(hasCreateVisitTask ? [updateScheduleColumn] : []),
     {

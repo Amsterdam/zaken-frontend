@@ -457,7 +457,8 @@ Testchecklist:
 | Zaak: Snel besluit (`pages/case/quick-decisions/CreatePage`, `/zaken/:id/snel-besluit/:caseUserTaskId`) | ✅ akkoord (pilot formulierpagina: `CaseFormPage`)                                                                   |
 | Zaak: Zaak afronden (`pages/case/complete/CompleteCasePage`, `/zaken/:id/afronding/:caseUserTaskId`)    | ✅ akkoord                                                                                                           |
 | Zaak: Besluit (`pages/case/decisions/CreatePage`, `/zaken/:id/besluit/:caseUserTaskId`)                 | omgezet, wacht op test                                                                                               |
-| Zaak: Debrief (`pages/case/debriefings/CreatePage`, `/zaken/:id/debriefing/:caseUserTaskId`)            | omgezet, wacht op test                                                                                               |
+| Zaak: Debrief (`pages/case/debriefings/CreatePage`, `/zaken/:id/debriefing/:caseUserTaskId`)            | ✅ akkoord                                                                                                           |
+| Zaak: Aanschrijving (`pages/case/summons/CreatePage`, `/zaken/:id/aanschrijving/:caseUserTaskId`)       | omgezet, wacht op test                                                                                               |
 | Zaakpagina (`pages/cases/details/DetailsPage`, `/zaken/:id`)                                            | ✅ akkoord (4 stappen: opmaak, open taken, zaakhistorie, vensters)                                                   |
 
 **Hulp-pagina:** naar het voorbeeld van de veelgestelde-vragenpagina van top-frontend-v2: titel "Hulp" direct op de grijze achtergrond, daaronder één wit vlak met de vier onderwerpen in een ADS-`Accordion` (dicht bij het openen, net als eerst). Geen icoon meer naast de paginatitel. **Breadcrumbs** staan alleen nog op geneste pagina's: een pagina direct onder home (zoals `/hulp`) krijgt er geen. De lijstjes stonden in de oude versie binnen een alinea (ongeldige HTML); dat zijn nu losse ADS-lijsten. `EmailLink` zit in `HelpContent`; het ongebruikte `PhoneLink` en `HelpContent.module.css` zijn weg. `CustomTooltip` staat nog in dezelfde map omdat de zaakpagina's het gebruiken.
@@ -872,6 +873,18 @@ Testchecklist debrief (een zaak met de taak "Debrief verwerken"):
 - [ ] "Naar ander thema" toont de keuzelijst met thema's, zonder het thema van de zaak.
 - [ ] Bij een zaak Vakantieverhuur staat het vinkje "Overlast geconstateerd"; bij andere thema's niet.
 - [ ] Opslaan: terug op de zaakpagina met een toast; de zaakhistorie toont de debrief en de volgende taak verschijnt.
+
+**Aanschrijving** (`forms/SummonForm`): de keuzelijst met aanschrijvingen (met de knop "Meerdere aanschrijvingen?" voor de uitleg), bij een sluiting het aantal gesloten logiesverblijven, en aan wie: een natuurlijk persoon (één of twee personen met voornaam, tussenvoegsel, achternaam en rol; `useFieldArray`) of een rechtspersoon (naam, rol, en aan het bestuur of aan één persoon). `summonPersons.ts` zet het formulier om naar de personen voor de backend. De velden van een persoon hebben nu een label in plaats van alleen een placeholder.
+
+Nieuw gedeeld: `src/components/HelpDialog` (een knop die uitleg in een venster opent; vervangt de oude `InfoButton`, de debrief gebruikt hem ook). `src/shared/mapErrorsToAlert` kent nu ook de velden van een lijst of groep (`persons.0.first_name`).
+
+Testchecklist aanschrijving (een zaak met de taak "Aanschrijving verwerken"):
+
+- [ ] Natuurlijk persoon: één persoon invullen, een tweede toevoegen en weer verwijderen; meer dan twee kan niet.
+- [ ] Rechtspersoon, aan bestuur: naam en rol; aan persoon: ook voornaam en achternaam.
+- [ ] Leeg opslaan: de foutmelding noemt per persoon wat ontbreekt en de links gaan naar het juiste veld.
+- [ ] Een aanschrijving "sluiting" vraagt het aantal gesloten logiesverblijven.
+- [ ] Opslaan: terug op de zaakpagina met een toast; de zaakhistorie toont de aanschrijving met de aangeschrevenen.
 
 ## Fase 3 — Verticale migratie per domein (± 4–8 weken)
 

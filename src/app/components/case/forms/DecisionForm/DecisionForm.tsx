@@ -89,6 +89,8 @@ const DecisionForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
         <TextInputControl<FormValues>
           name="sanction_amount"
           label="Wat is het opgelegde bedrag?"
+          // As wide as an amount is.
+          size={10}
           description="Vul alleen cijfers in, geen punten, komma's of tekens."
           // The keyboard for numbers.
           attributes={{ inputMode: "numeric" }}

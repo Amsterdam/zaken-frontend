@@ -43,7 +43,13 @@ export const useCreateDebriefing = (caseId: CaseId) =>
 
 export const useCreateSummon = (caseId: CaseId) =>
   useCaseFormMutation<
-    components["schemas"]["Summon"],
+    // What the backend fills in itself is not sent.
+    Omit<
+      components["schemas"]["Summon"],
+      "id" | "type_name" | "date_added" | "persons"
+    > & {
+      persons: Omit<components["schemas"]["SummonedPerson"], "id" | "summon">[]
+    },
     components["schemas"]["Summon"]
   >(caseId, makeApiUrl("summons"))
 

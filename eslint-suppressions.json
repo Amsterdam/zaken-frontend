@@ -39,16 +39,6 @@
       "count": 1
     }
   },
-  "src/app/components/case/forms/SummonForm/SummonForm.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 4
-    }
-  },
-  "src/app/components/case/forms/SummonForm/scaffold.tsx": {
-    "react-refresh/only-export-components": {
-      "count": 1
-    }
-  },
   "src/app/components/cases/CreateForm/CreateForm.tsx": {
     "@typescript-eslint/no-explicit-any": {
       "count": 3

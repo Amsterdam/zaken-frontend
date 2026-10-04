@@ -11,7 +11,7 @@ export function formatCurrencyEUR(value: unknown) {
   }).format(value)
 }
 
-const PERSON_ROLE_MAP: Record<string, string> = {
+export const PERSON_ROLE_MAP: Record<string, string> = {
   PERSON_ROLE_OWNER: "Eigenaar",
   PERSON_ROLE_RESIDENT: "Bewoner",
   PERSON_ROLE_MIDDLEMAN: "Tussenpersoon",
