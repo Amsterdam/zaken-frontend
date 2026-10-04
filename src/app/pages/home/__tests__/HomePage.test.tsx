@@ -60,9 +60,9 @@ describe("HomePage", () => {
       screen.getByText("Voer minimaal 3 tekens in om te zoeken."),
     ).toBeTruthy()
 
-    const input = screen.getByRole("searchbox")
+    const input = screen.getByRole<HTMLInputElement>("searchbox")
     fireEvent.change(input, { target: { value: " Amstel 1 " } })
-    fireEvent.submit(input)
+    fireEvent.submit(input.form!)
 
     expect(location()).toBe("/?zoekterm=Amstel+1")
     expect(useBagPdok).toHaveBeenLastCalledWith("Amstel 1")

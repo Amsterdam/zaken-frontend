@@ -104,9 +104,11 @@ describe("CasesFilter", () => {
       order: "ASCEND",
     })
 
-    const search = screen.getByRole("searchbox", { name: /^Zoeken/ })
+    const search = screen.getByRole<HTMLInputElement>("searchbox", {
+      name: /^Zoeken/,
+    })
     fireEvent.change(search, { target: { value: " Amstel " } })
-    fireEvent.submit(search)
+    fireEvent.submit(search.form!)
     expect(state().addressSearch).toBe("Amstel")
   })
 
@@ -196,7 +198,7 @@ describe("CasesFilter", () => {
     const search = () => screen.getByRole<HTMLInputElement>("searchbox")
 
     fireEvent.change(search(), { target: { value: "Amstel" } })
-    fireEvent.submit(search())
+    fireEvent.submit(search().form!)
     fireEvent.click(screen.getByRole("button", { name: "Wis alle filters" }))
 
     expect(state().addressSearch).toBe("")

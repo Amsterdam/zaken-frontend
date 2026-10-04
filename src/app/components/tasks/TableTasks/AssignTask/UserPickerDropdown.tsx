@@ -17,7 +17,7 @@ type Props = {
   positionTop: number
   positionLeft: number
   positionTransform: string
-  dropdownRef: React.RefObject<HTMLDivElement>
+  dropdownRef: React.RefObject<HTMLDivElement | null>
 }
 
 const UserPickerDropdown: React.FC<Props> = ({

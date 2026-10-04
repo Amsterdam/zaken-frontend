@@ -31,9 +31,9 @@ const search = (query: string) => {
       <FinePage />
     </MemoryRouter>,
   )
-  const input = screen.getByRole("searchbox")
+  const input = screen.getByRole<HTMLInputElement>("searchbox")
   fireEvent.change(input, { target: { value: query } })
-  fireEvent.submit(input)
+  fireEvent.submit(input.form!)
 }
 
 describe("FinePage", () => {
