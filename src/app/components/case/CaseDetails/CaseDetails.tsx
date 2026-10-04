@@ -1,93 +1,93 @@
-import styles from "./CaseDetails.module.css"
-import { DefinitionList, CaseIdDisplay, DateDisplay } from "@amsterdam/wonen-ui"
-import type { DefinitionListData } from "@amsterdam/wonen-ui"
 import { useCase } from "@/api/hooks"
-import ChangeableSubject from "./ChangeSubject/ChangeableSubject"
-import ChangeHousingCorporation from "./ChangeHousingCorporation/ChangeHousingCorporation"
-import CaseSensitive from "../icons/CaseSensitive"
-import CaseEnforcement from "../icons/CaseEnforcement"
+import { Description } from "@/components/Description/Description"
+import { EqualColumns } from "@/components/EqualColumns/EqualColumns"
+import { formatDate } from "@/shared/dateFormatters"
 import caseStates from "app/constants/caseStates"
+import ChangeHousingCorporation from "./ChangeHousingCorporation/ChangeHousingCorporation"
+import ChangeableSubject from "./ChangeSubject/ChangeableSubject"
 import EditableTag from "./EditableTag/EditableTag"
 
 type Props = {
   caseId: components["schemas"]["CaseCreate"]["id"]
 }
 
-const getDataFirstCol = (caseItem?: components["schemas"]["CaseCreate"]) => {
-  if (caseItem === undefined) {
-    return undefined
-  }
-  const {
-    id,
-    start_date,
-    sensitive,
-    previous_case,
-    is_enforcement_request,
-    state,
-  } = caseItem
-  const data: DefinitionListData = {
-    "Zaak ID": (
-      <div className={styles.wrap}>
-        <CaseIdDisplay id={id} />
-        <CaseSensitive isVisible={sensitive} />
-        <CaseEnforcement isVisible={is_enforcement_request} />
-      </div>
-    ),
-    Status: caseStates[state],
-    Startdatum: <DateDisplay date={start_date ?? undefined} emptyText="-" />,
-  }
-  if (previous_case) {
-    data["Overgedragen zaak"] = previous_case
-  }
-  data["Tag"] = <EditableTag case={caseItem} />
-  return data
-}
-
-const getDataSecondCol = (caseItem?: components["schemas"]["CaseCreate"]) => {
-  if (caseItem === undefined) {
-    return undefined
-  }
-
-  const { id, theme, reason, project, subjects, address } = caseItem
-  const hasProject = project?.name !== undefined
-  const data: DefinitionListData = {
-    Thema: theme.name,
-    Aanleiding: `${reason.name}${hasProject ? ": " : ""}${hasProject ? project.name : ""}`,
-    "Onderwerp(en)": (
-      <ChangeableSubject subjects={subjects} caseId={id} themeId={theme.id} />
-    ),
-    Corporatie: (
-      <ChangeHousingCorporation
-        housingCorporationId={address?.housing_corporation}
-        bagId={address?.bag_id}
-        caseId={id}
-      />
-    ),
-  }
-  return data
-}
-
+/**
+ * The facts of a case in two columns. The subjects, the tag and the housing
+ * corporation can be changed here.
+ */
 const CaseDetails: React.FC<Props> = ({ caseId }) => {
-  const { data, isLoading: isBusy } = useCase(caseId)
-
-  const dataFirstCol = getDataFirstCol(data)
-  const dataSecondCol = getDataSecondCol(data)
+  const { data: caseItem, isLoading } = useCase(caseId)
+  const hasProject = caseItem?.project?.name !== undefined
 
   return (
-    <div className={styles.styledDiv}>
-      <DefinitionList
-        loading={isBusy}
-        numLoadingRows={2}
-        horizontalBordered={false}
-        data={dataFirstCol}
+    <EqualColumns gap="large">
+      <Description
+        termsWidth="medium"
+        dense
+        loading={isLoading}
+        numLoadingRows={4}
+        data={
+          caseItem
+            ? [
+                {
+                  label: "Zaak ID",
+                  value: caseItem.id,
+                },
+                { label: "Status", value: caseStates[caseItem.state] },
+                {
+                  label: "Startdatum",
+                  value: formatDate(caseItem.start_date, undefined, "-"),
+                },
+                // Only for a case that was handed over.
+                {
+                  label: "Overgedragen zaak",
+                  value: caseItem.previous_case || undefined,
+                },
+                { label: "Tag", value: <EditableTag case={caseItem} /> },
+              ]
+            : []
+        }
       />
-      <DefinitionList
-        loading={isBusy}
-        numLoadingRows={2}
-        horizontalBordered={false}
-        data={dataSecondCol}
+      <Description
+        termsWidth="medium"
+        dense
+        loading={isLoading}
+        numLoadingRows={4}
+        data={
+          caseItem
+            ? [
+                { label: "Thema", value: caseItem.theme.name },
+                {
+                  label: "Aanleiding",
+                  value: `${caseItem.reason.name}${hasProject ? `: ${caseItem.project.name}` : ""}`,
+                },
+                {
+                  label: "Onderwerp(en)",
+                  value: (
+                    <ChangeableSubject
+                      subjects={caseItem.subjects}
+                      caseId={caseItem.id}
+                      themeId={caseItem.theme.id}
+                    />
+                  ),
+                },
+                {
+                  label: "Corporatie",
+                  value: (
+                    <ChangeHousingCorporation
+                      housingCorporationId={
+                        caseItem.address?.housing_corporation
+                      }
+                      bagId={caseItem.address?.bag_id}
+                      caseId={caseItem.id}
+                    />
+                  ),
+                },
+              ]
+            : []
+        }
       />
-    </div>
+    </EqualColumns>
   )
 }
 

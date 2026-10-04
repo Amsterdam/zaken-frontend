@@ -1,68 +1,31 @@
-import styled, { keyframes } from "styled-components"
-import { Icon, themeSpacing } from "@amsterdam/asc-ui"
+import { Badge, IconButton, Row } from "@amsterdam/design-system-react"
+import { PencilIcon } from "@amsterdam/design-system-react-icons"
 import useHasPermission, { CAN_PERFORM_TASK } from "@/hooks/useHasPermission"
-import CustomIcon from "app/components/shared/CustomIcon/CustomIcon"
 
 type Props = {
   tags: components["schemas"]["Tag"][]
-  name?: string
   titleAccess?: string
-  onClick?: (event: React.MouseEvent<HTMLDivElement>) => void
+  onClick?: () => void
 }
 
-const fadeIn = keyframes`
-  0% {
-    transform: scale(0);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-`
-
-const ClickableSpan = styled.span`
-  cursor: pointer;
-`
-
-const Tag = styled.span`
-  background-color: #f9f9f9;
-  padding: 0 0.5em;
-  font-family: "Nimbus Mono PS", "Courier New", monospace;
-  border: 1px solid #eee;
-  border-radius: 2px;
-  margin-right: ${themeSpacing(2)};
-  animation: 0.5s ${fadeIn} cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-`
-
-const StyledIcon = styled(Icon)`
-  display: inline-block;
-  vertical-align: middle;
-  margin-left: ${themeSpacing(1)};
-  cursor: pointer;
-`
-
+/** The tags of a case as badges; who may perform tasks can change them. */
 const CaseTags: React.FC<Props> = ({
   tags = [],
   titleAccess = "Wijzig tag",
   onClick,
 }) => {
   const [hasPermission] = useHasPermission([CAN_PERFORM_TASK])
-  return hasPermission ? (
-    <ClickableSpan role="link" onClick={onClick}>
+
+  return (
+    <Row gap="small" alignVertical="center" wrap>
       {tags.map((tag) => (
-        <Tag key={tag.id}>{tag.name}</Tag>
+        <Badge key={tag.id} label={tag.name} color="azure" />
       ))}
-      <StyledIcon size={20}>
-        <CustomIcon name="Edit" titleAccess={titleAccess} />
-      </StyledIcon>
-    </ClickableSpan>
-  ) : (
-    <>
-      {tags.length > 0
-        ? tags.map((tag) => <Tag key={tag.id}>{tag.name}</Tag>)
-        : "-"}
-    </>
+      {tags.length === 0 && "Geen tag"}
+      {hasPermission && (
+        <IconButton label={titleAccess} svg={PencilIcon} onClick={onClick} />
+      )}
+    </Row>
   )
 }
 

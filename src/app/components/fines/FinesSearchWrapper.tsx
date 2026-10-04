@@ -1,50 +1,36 @@
 import { useState } from "react"
-import { SearchBar } from "@amsterdam/asc-ui"
+import { Column, SearchField } from "@amsterdam/design-system-react"
+import FinesSearchResultsList from "@/app/components/fines/FinesSearchResultsList"
+import useURLState from "@/app/hooks/useURLState/useURLState"
 
-import { Row, Column, RowWithColumn } from "app/components/layouts/Grid"
-import FinesSearchResultsList from "app/components/fines/FinesSearchResultsList"
-import useURLState from "app/hooks/useURLState/useURLState"
+// The name in the URL is Dutch, like the paths and the overviews.
+const SEARCH_PARAM = "zoekterm"
 
 const FinesSearchWrapper: React.FC = () => {
-  const [searchString, setSearchString] = useState("")
-  const [searchQuery, setSearchQuery] = useURLState("query")
-  const onSubmit = () => setSearchQuery(searchString)
-  const onClear = () => setSearchString("")
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setSearchString(event.target.value.trim())
+  // The query is kept in the URL, so a result can be shared or reloaded.
+  const [searchQuery, setSearchQuery] = useURLState(SEARCH_PARAM)
+  const [inputValue, setInputValue] = useState(searchQuery)
+
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    setSearchQuery(inputValue.trim())
+  }
 
   return (
-    <>
-      <RowWithColumn>
-        <span>
-          Controleer met de invorderingscheck of de beschikking is opgepakt door
-          belastingen.
-        </span>
-      </RowWithColumn>
-      <Row>
-        <Column spanLarge={50}>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault()
-              onSubmit()
-            }}
-          >
-            <SearchBar
-              placeholder="Vul kenmerk in, bijv. 12345_6_78"
-              value={searchQuery}
-              onChange={onChange}
-              onClear={onClear}
-              autoFocus={true}
-            />
-          </form>
-        </Column>
-      </Row>
-      <Row>
-        <Column spanLarge={70}>
-          <FinesSearchResultsList searchString={searchQuery} />
-        </Column>
-      </Row>
-    </>
+    <Column gap="large">
+      <SearchField onSubmit={onSubmit} style={{ maxWidth: 600 }}>
+        <SearchField.Input
+          label="Kenmerk van de beschikking"
+          placeholder="Vul kenmerk in, bijv. 12345_6_78"
+          name={SEARCH_PARAM}
+          value={inputValue}
+          onChange={(event) => setInputValue(event.currentTarget.value)}
+          autoFocus
+        />
+        <SearchField.Button />
+      </SearchField>
+      <FinesSearchResultsList searchString={searchQuery} />
+    </Column>
   )
 }
 

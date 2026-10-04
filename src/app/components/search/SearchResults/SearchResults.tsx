@@ -1,41 +1,55 @@
-import { Table } from "@amsterdam/wonen-ui"
-import { useBagPdok } from "@/api/hooks"
-import useNavigation from "app/routing/useNavigation"
-import columns from "./columns"
+import { LinkList, Paragraph } from "@amsterdam/design-system-react"
+import { BAG_PDOK_MAX_RESULTS } from "@/api/hooks/externalApis"
+import { RouterLink } from "@/components/DefaultLayout/RouterLink"
+import {
+  MIN_SEARCH_LENGTH,
+  useAddressSearch,
+} from "@/app/components/search/useAddressSearch"
 
-type Props = {
-  searchString: string
-}
+const SearchResults: React.FC = () => {
+  const { searchString, isValid, data, isLoading, isError } = useAddressSearch()
 
-const MIN_SEARCH_LENGTH = 3
-const isValidSearchString = (s: string) => s.length >= MIN_SEARCH_LENGTH
+  if (!isValid) {
+    return (
+      <Paragraph>
+        Voer minimaal {MIN_SEARCH_LENGTH} tekens in om te zoeken.
+      </Paragraph>
+    )
+  }
+  if (isLoading) return <Paragraph>Zoeken naar adressen...</Paragraph>
+  // The page says so, under its title.
+  if (isError) return null
 
-const SearchResults: React.FC<Props> = ({ searchString }) => {
-  const { navigateTo } = useNavigation()
-  const isValid = isValidSearchString(searchString)
-  const searchStringBagPdok = isValid ? searchString : undefined
-  const { data: bagData, isLoading: loading } = useBagPdok(searchStringBagPdok)
+  const docs = data?.response?.docs ?? []
+  // Only show addresses with a bagId
+  const addresses = docs.filter((obj) => obj.adresseerbaarobject_id)
 
-  const onClickRow = (data: any) => {
-    navigateTo("/adres/:bagId", { bagId: data.adresseerbaarobject_id })
+  if (addresses.length === 0) {
+    return <Paragraph>Geen adressen gevonden.</Paragraph>
   }
 
-  // Only show addresses with a bagId
-  const dataSource =
-    bagData?.response?.docs?.filter((obj) => obj.adresseerbaarobject_id) || []
-
-  return isValid ? (
-    <Table
-      lastColumnFixed
-      columns={columns}
-      data={dataSource}
-      loading={loading}
-      numLoadingRows={1}
-      onClickRow={onClickRow}
-      emptyPlaceholder="Er zijn geen adressen gevonden"
-      pagination={false}
-    />
-  ) : null
+  return (
+    <>
+      <Paragraph>
+        <strong>{addresses.length}</strong>{" "}
+        {addresses.length === 1 ? "adres" : "adressen"} gevonden voor "
+        {searchString}"
+        {docs.length >= BAG_PDOK_MAX_RESULTS &&
+          ` (maximaal ${BAG_PDOK_MAX_RESULTS} getoond)`}
+      </Paragraph>
+      <LinkList>
+        {addresses.map(({ adresseerbaarobject_id, weergavenaam }) => (
+          <LinkList.Link
+            key={adresseerbaarobject_id}
+            linkComponent={RouterLink}
+            href={`/adres/${adresseerbaarobject_id}`}
+          >
+            {weergavenaam}
+          </LinkList.Link>
+        ))}
+      </LinkList>
+    </>
+  )
 }
 
 export default SearchResults

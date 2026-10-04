@@ -1,23 +1,23 @@
-import { useModal } from "app/components/shared/Modal/hooks/useModal"
-import ChangeTagModal from "./ChangeTagModal"
+import { useState } from "react"
 import CaseTags from "./CaseTags"
+import ChangeTagDialog from "./ChangeTagDialog"
 
 type Props = {
   case: components["schemas"]["CaseCreate"]
 }
 
 const EditableTag: React.FC<Props> = ({ case: caseItem }) => {
-  const { tags } = caseItem
-  const { isModalOpen, openModal, closeModal } = useModal()
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   return (
     <>
-      <CaseTags tags={tags} onClick={openModal} />
-      <ChangeTagModal
-        isOpen={isModalOpen}
-        closeModal={closeModal}
-        case={caseItem}
-      />
+      <CaseTags tags={caseItem.tags} onClick={() => setIsDialogOpen(true)} />
+      {isDialogOpen && (
+        <ChangeTagDialog
+          case={caseItem}
+          onClose={() => setIsDialogOpen(false)}
+        />
+      )}
     </>
   )
 }

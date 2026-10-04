@@ -1,43 +1,79 @@
-import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
-import scaffold from "app/components/case/forms/CitizenReportForm/scaffold"
-import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
+import { useForm, useWatch } from "react-hook-form"
 import { useCase, useCreateCitizenReport } from "@/api/hooks"
-import { toPostMethod } from "@/api/utils/toPostMethod"
-import useNavigation from "app/routing/useNavigation"
+import { CaseFormPage } from "app/components/case/CaseFormPage/CaseFormPage"
+import { EXCLUDED_THEMES_ADVERTISEMENTS } from "app/constants/themeNames"
+import { useAfterCaseFormSubmit } from "../useAfterCaseFormSubmit"
+import { AdvertisementFields } from "./AdvertisementFields"
+import { ReportFields } from "./ReportFields"
+import {
+  type AdvertisementValues,
+  controlOf,
+  emptyAdvertisementValues,
+  emptyReportValues,
+  type ReportValues,
+  toAdvertisements,
+  toCitizenReport,
+  YES,
+} from "./reportValues"
 
 type Props = {
   id: components["schemas"]["CaseDetail"]["id"]
   caseUserTaskId: string
 }
 
-// Nuisance is an array but a boolean is expected.
-const mapData = (data: any) => ({
-  ...data,
-  nuisance: data.nuisance ? data.nuisance.includes("nuisance") : false,
-})
+type FormValues = ReportValues & AdvertisementValues
 
+/** The page to process a report of a citizen (a SIG report) on a case. */
 const CitizenReportForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
-  const createCitizenReport = toPostMethod(
-    useCreateCitizenReport(id).mutateAsync,
-  )
-  const { data } = useCase(id)
-  const themeName = data?.theme.name
-  const { navigateTo } = useNavigation()
-  const fields = useScaffoldedFields(
-    scaffold,
-    id,
-    navigateTo,
-    themeName as string,
-  )
+  const { data: caseItem } = useCase(id)
+  const themeName = caseItem?.theme.name
+  const { mutateAsync: createCitizenReport, isPending } =
+    useCreateCitizenReport(id)
+  const afterSubmit = useAfterCaseFormSubmit(id)
+  const form = useForm<FormValues>({
+    defaultValues: { ...emptyReportValues, ...emptyAdvertisementValues },
+  })
+  const advertisement = useWatch({
+    control: form.control,
+    name: "advertisement",
+  })
+  // Some themes have no advertisements.
+  const asksAdvertisement =
+    themeName !== undefined &&
+    !EXCLUDED_THEMES_ADVERTISEMENTS.includes(themeName)
+  const hasAdvertisement = asksAdvertisement && advertisement === YES
+
+  const onSubmit = async (values: FormValues) => {
+    try {
+      await createCitizenReport({
+        case: id,
+        case_user_task_id: caseUserTaskId,
+        ...toCitizenReport(values),
+        ...(hasAdvertisement && { advertisements: toAdvertisements(values) }),
+      })
+    } catch {
+      // The error is shown as a toast; the form stays.
+      return
+    }
+    afterSubmit()
+  }
 
   return (
-    <WorkflowForm
+    <CaseFormPage
       id={id}
-      postMethod={createCitizenReport}
-      fields={fields}
-      caseUserTaskId={caseUserTaskId}
-      mapData={mapData}
-    />
+      title="Melding verwerken"
+      form={form}
+      onSubmit={onSubmit}
+      isPending={isPending}
+    >
+      <ReportFields
+        control={controlOf(form.control)}
+        asksNuisance={themeName === "Vakantieverhuur"}
+      />
+      {asksAdvertisement && (
+        <AdvertisementFields control={controlOf(form.control)} />
+      )}
+    </CaseFormPage>
   )
 }
 

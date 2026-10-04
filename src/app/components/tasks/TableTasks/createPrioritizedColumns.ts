@@ -1,4 +1,4 @@
-import type { ColumnType } from "@amsterdam/wonen-ui"
+import { type ColumnType } from "@/components/Table/types"
 
 const columnPriority = [
   "case.id",
@@ -10,8 +10,8 @@ const columnPriority = [
   "case.start_date",
 ]
 
-const createPrioritizedColumns = (
-  columns: ColumnType[],
+const createPrioritizedColumns = <T>(
+  columns: ColumnType<T>[],
   windowWidth: number,
 ) => {
   if (columns.length !== columnPriority.length) {

@@ -1,17 +1,16 @@
-import React from "react"
-import { ScaffoldForm } from "@amsterdam/amsterdam-react-final-form"
-import { Spinner } from "@amsterdam/asc-ui"
-
-import FilterMenu from "app/components/shared/FilterMenu/FilterMenu"
-import ScaffoldFields from "app/components/shared/Form/ScaffoldFields"
-import scaffoldDate from "./scaffoldDate"
-import scaffoldTheme from "./scaffoldTheme"
-import scaffoldPageSize from "./scaffoldPageSize"
-import scaffoldReason from "./scaffoldReason"
-import MultipleOptionsFilterBox from "app/components/filters/MultipleOptionsFilterBox/MultipleOptionsFilterBox"
-import scaffoldClosedCases from "./scaffoldClosedCases"
+import { useState } from "react"
+import { Button } from "@amsterdam/design-system-react"
+import { CloseIcon, FilterIcon } from "@amsterdam/design-system-react-icons"
+import dayjs from "dayjs"
+import { MultiSelectFilter } from "@/components/filters/MultiSelectFilter"
+import { type Option, SelectFilter } from "@/components/filters/SelectFilter"
+import filterStyles from "@/components/filters/filters.module.css"
+import { defaultCasesFilters as defaults } from "../useCasesFilters"
+import CasesSorting from "../CasesSorting/CasesSorting"
+import SearchBarCases from "../SearchBarCases/SearchBarCases"
 import { useFilterHandler } from "./useFilterHandler"
-import NoCorporationFilter from "app/components/filters/NoCorporationFilter/NoCorporationFilter"
+
+type NamedOption = { id?: number | string; name: string }
 
 type Props = {
   date: string
@@ -23,7 +22,10 @@ type Props = {
   pageSize: string
   projects?: components["schemas"]["CaseProject"][]
   reason: string
-  reasons?: components["schemas"]["CaseReason"][]
+  searchString: string
+  sorting: TABLE.Schemas.Sorting
+  // The API returns the names of the reasons.
+  reasons?: (string | { name: string })[]
   selectedCorporations: string[]
   selectedProjects: string[]
   selectedSubjects: string[]
@@ -34,6 +36,48 @@ type Props = {
   themes: components["schemas"]["CaseTheme"][]
 }
 
+const DATE_FORMAT = "YYYY-MM-DD"
+const daysAgo = (days: number) =>
+  dayjs().subtract(days, "days").format(DATE_FORMAT)
+
+const getDateOptions = (): Option[] => [
+  { value: "", label: "Alle" },
+  { value: daysAgo(0), label: "Vandaag" },
+  { value: daysAgo(1), label: "Gisteren" },
+  { value: daysAgo(7), label: "Laatste 7 dagen" },
+  { value: daysAgo(30), label: "Laatste 30 dagen" },
+]
+
+const openCasesOptions: Option[] = [
+  { value: "open", label: "Open zaken" },
+  { value: "closed", label: "Gesloten zaken" },
+  { value: "all", label: "Alle zaken" },
+]
+
+const pageSizeOptions: Option[] = ["10", "25", "100"].map((size) => ({
+  value: size,
+  label: size,
+}))
+
+const byName = (options: { name: string }[] = []): Option[] =>
+  options.map(({ name }) => ({ value: name, label: name }))
+
+const byId = (options: NamedOption[] = []): Option[] =>
+  options.map(({ id, name }) => ({ value: String(id), label: name }))
+
+// The option for cases on an address without a housing corporation.
+const NO_CORPORATION = "none"
+const noCorporationOption: Option = {
+  value: NO_CORPORATION,
+  label: "Zonder corporatie",
+}
+
+/**
+ * The search, the sorting and the filters of the cases overview, in one
+ * wrapping row above the table (after zwd-frontend). A filter applies as soon
+ * as you change it. The less used ones are behind
+ * "Alle filters".
+ */
 const CasesFilter: React.FC<Props> = ({
   corporations,
   corporationIsNull,
@@ -45,6 +89,8 @@ const CasesFilter: React.FC<Props> = ({
   projects,
   reason,
   reasons,
+  searchString,
+  sorting,
   selectedCorporations,
   selectedProjects,
   selectedSubjects,
@@ -54,106 +100,161 @@ const CasesFilter: React.FC<Props> = ({
   theme,
   themes,
 }) => {
-  const { onChangeFilter, onChangePageSize } = useFilterHandler()
-  const setDate = (value: string) => onChangeFilter("fromStartDate", value)
-  const setDistrictNames = (
-    value: components["schemas"]["District"]["name"][],
-  ) => onChangeFilter("districtNames", value)
-  const setOpenCases = (value: string) => onChangeFilter("openCases", value)
-  const setPageSize = onChangePageSize
-  const setReason = (value: string) => onChangeFilter("reason", value)
-  const setSelectedCorporations = (value: string[]) =>
-    onChangeFilter("housingCorporations", value)
-  const setSelectedProjects = (value: string[]) =>
-    onChangeFilter("projects", value)
-  const setSelectedSubjects = (value: string[]) =>
-    onChangeFilter("subjects", value)
-  const setSelectedTags = (value: string[]) => onChangeFilter("tags", value)
-  const setTheme = (value: string) => onChangeFilter("theme", value)
-  const setCorporationIsNull = (value: boolean) =>
-    onChangeFilter("housingCorporationIsNull", value)
+  const {
+    onChangeFilter,
+    onChangeCorporations,
+    onChangePageSize,
+    onChangeSorting,
+    onResetFilters,
+  } = useFilterHandler()
 
-  const multipleFilters = [
+  // Choosing "Zonder corporatie" drops the corporations, and the other way around.
+  const onChangeCorporationFilter = (value: string[]) => {
+    const choseNoCorporation =
+      value.includes(NO_CORPORATION) && !corporationIsNull
+    onChangeCorporations(
+      choseNoCorporation ? [] : value.filter((id) => id !== NO_CORPORATION),
+      choseNoCorporation,
+    )
+  }
+
+  const hasMoreFiltersActive =
+    date !== defaults.fromStartDate ||
+    corporationIsNull !== defaults.housingCorporationIsNull ||
+    selectedCorporations.length > 0 ||
+    selectedProjects.length > 0 ||
+    selectedSubjects.length > 0 ||
+    selectedTags.length > 0 ||
+    openCases !== defaults.openCases
+  const hasFiltersActive =
+    hasMoreFiltersActive ||
+    theme !== defaults.theme ||
+    reason !== defaults.reason ||
+    searchString !== defaults.addressSearch ||
+    districtNames.length > 0
+
+  const [showAllFilters, setShowAllFilters] = useState(hasMoreFiltersActive)
+  // The search field keeps what you type itself; a new key starts it again,
+  // empty (the URL is not updated yet at that moment).
+  const [resetCount, setResetCount] = useState(0)
+
+  const onClickReset = () => {
+    onResetFilters()
+    setResetCount((count) => count + 1)
+  }
+
+  // Projects, subjects and tags belong to a theme: without a theme they are
+  // shown, but there is nothing to choose yet.
+  const themeFilters = [
     {
-      label: "Corporaties",
-      options: corporations,
-      selected: selectedCorporations,
-      setSelected: setSelectedCorporations,
-      byId: true,
-    },
-    {
+      key: "projects",
       label: "Projecten",
       options: projects,
       selected: selectedProjects,
-      setSelected: setSelectedProjects,
-      byId: true,
     },
     {
+      key: "subjects",
       label: "Onderwerpen",
       options: subjects,
       selected: selectedSubjects,
-      setSelected: setSelectedSubjects,
-      byId: true,
     },
-    {
-      label: "Tags",
-      options: tags,
-      selected: selectedTags,
-      setSelected: setSelectedTags,
-      byId: true,
-    },
-    {
-      label: "Stadsdelen",
-      options: districts,
-      selected: districtNames,
-      setSelected: setDistrictNames,
-      byId: false,
-    },
+    { key: "tags", label: "Tags", options: tags, selected: selectedTags },
   ]
 
   return (
-    <FilterMenu>
-      <ScaffoldForm>
-        <ScaffoldFields {...scaffoldTheme(theme, themes, setTheme)} />
-      </ScaffoldForm>
-      <ScaffoldForm>
-        <ScaffoldFields {...scaffoldDate(date, setDate)} />
-      </ScaffoldForm>
-      {reasons === undefined ? (
-        <Spinner />
-      ) : (
-        <ScaffoldForm>
-          <ScaffoldFields {...scaffoldReason(reason, setReason, reasons)} />
-        </ScaffoldForm>
-      )}
-      {multipleFilters.map(
-        ({ label, options, selected, setSelected, byId }) =>
-          options && (
-            <React.Fragment key={label}>
-              <MultipleOptionsFilterBox
-                key={label}
-                label={label}
-                options={options}
-                selectedOptions={selected}
-                setSelectedOptions={setSelected}
-                byId={byId}
-              />
-              {label === "Corporaties" && (
-                <NoCorporationFilter
-                  checked={corporationIsNull}
-                  setChecked={setCorporationIsNull}
-                />
-              )}
-            </React.Fragment>
+    <div className={filterStyles.filters}>
+      <SearchBarCases
+        key={resetCount}
+        initialValue={resetCount === 0 ? searchString : ""}
+      />
+      <SelectFilter
+        label="Thema"
+        options={[{ value: "", label: "Alle" }, ...byName(themes)]}
+        value={theme}
+        onChange={(value) => onChangeFilter("theme", value)}
+      />
+      <SelectFilter
+        label="Aanleiding"
+        options={[
+          { value: "", label: "Alle" },
+          ...byName(
+            reasons?.map((item) =>
+              typeof item === "string" ? { name: item } : item,
+            ),
           ),
+        ]}
+        value={reason}
+        disabled={reasons === undefined}
+        onChange={(value) => onChangeFilter("reason", value)}
+      />
+      <MultiSelectFilter
+        label="Stadsdelen"
+        options={byName(districts)}
+        value={districtNames}
+        onChange={(value) => onChangeFilter("districtNames", value)}
+      />
+      {showAllFilters && (
+        <>
+          {themeFilters.map(({ key, label, options, selected }) => (
+            <MultiSelectFilter
+              key={key}
+              label={label}
+              options={byId(options)}
+              value={selected}
+              disabled={theme === ""}
+              placeholder={theme === "" ? "Kies eerst een thema" : undefined}
+              onChange={(value) => onChangeFilter(key, value)}
+            />
+          ))}
+          <MultiSelectFilter
+            label="Corporaties"
+            options={[noCorporationOption, ...byId(corporations)]}
+            value={corporationIsNull ? [NO_CORPORATION] : selectedCorporations}
+            onChange={onChangeCorporationFilter}
+          />
+          <SelectFilter
+            label="Startdatum"
+            options={getDateOptions()}
+            value={date}
+            onChange={(value) => onChangeFilter("fromStartDate", value)}
+          />
+          <SelectFilter
+            label="Toon zaken"
+            options={openCasesOptions}
+            value={openCases}
+            onChange={(value) => onChangeFilter("openCases", value)}
+          />
+        </>
       )}
-      <ScaffoldForm>
-        <ScaffoldFields {...scaffoldPageSize(pageSize, setPageSize)} />
-      </ScaffoldForm>
-      <ScaffoldForm>
-        <ScaffoldFields {...scaffoldClosedCases(openCases, setOpenCases)} />
-      </ScaffoldForm>
-    </FilterMenu>
+      {/* The settings of the view come after the filters. */}
+      <CasesSorting sorting={sorting} onChange={onChangeSorting} />
+      <SelectFilter
+        label="Items per pagina"
+        options={pageSizeOptions}
+        value={pageSize}
+        onChange={onChangePageSize}
+      />
+      {!showAllFilters && (
+        <Button
+          className={filterStyles.alignBottom}
+          icon={FilterIcon}
+          iconBefore
+          onClick={() => setShowAllFilters(true)}
+        >
+          Alle filters
+        </Button>
+      )}
+      {hasFiltersActive && (
+        <Button
+          className={filterStyles.alignBottom}
+          icon={CloseIcon}
+          iconBefore
+          onClick={onClickReset}
+        >
+          Wis alle filters
+        </Button>
+      )}
+    </div>
   )
 }
 

@@ -1,7 +1,6 @@
-import { useModal } from "app/components/shared/Modal/hooks/useModal"
-import { useUpdateCase } from "@/api/hooks"
-import ChangeSubjectModal from "./ChangeSubjectModal"
+import { useState } from "react"
 import ChangeableItem from "../ChangeableItem/ChangeableItem"
+import ChangeSubjectDialog from "./ChangeSubjectDialog"
 
 type Props = {
   caseId: components["schemas"]["CaseCreate"]["id"]
@@ -10,34 +9,27 @@ type Props = {
 }
 
 const ChangeableSubject: React.FC<Props> = ({ subjects, caseId, themeId }) => {
-  const { isModalOpen, openModal, closeModal } = useModal()
-  const { mutate: updateCase } = useUpdateCase(caseId)
-
-  const onSubmit = (data: { subjects: components["schemas"]["Subject"][] }) => {
-    updateCase(
-      {
-        subject_ids: data.subjects.map(
-          (subject: components["schemas"]["Subject"]) => subject.id,
-        ),
-      },
-      { onSettled: closeModal },
-    )
-  }
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   return (
     <>
       <ChangeableItem
-        name={subjects?.map((subject) => subject.name).join(", ")}
+        name={
+          subjects?.length > 0
+            ? subjects.map((subject) => subject.name).join(", ")
+            : "Geen onderwerp"
+        }
         titleAccess="Wijzig het onderwerp"
-        onClick={openModal}
+        onClick={() => setIsDialogOpen(true)}
       />
-      <ChangeSubjectModal
-        onSubmit={onSubmit}
-        isOpen={isModalOpen}
-        closeModal={closeModal}
-        subjects={subjects}
-        themeId={themeId}
-      />
+      {isDialogOpen && (
+        <ChangeSubjectDialog
+          caseId={caseId}
+          themeId={themeId}
+          subjects={subjects ?? []}
+          onClose={() => setIsDialogOpen(false)}
+        />
+      )}
     </>
   )
 }

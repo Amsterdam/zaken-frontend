@@ -1,0 +1,8 @@
+/* Amsterdam Design System (MIGRATION.md Fase 2). Only .ams-* classes, tokens on :root
+   and the font, so it doesn't affect the pages that still use asc-ui. */
+@import "@amsterdam/design-system-assets/font/index.css";
+@import "@amsterdam/design-system-css/dist/index.css";
+@import "@amsterdam/design-system-tokens/dist/index.css";
+@import "@amsterdam/design-system-tokens/dist/compact.css";
+@import "./styles/design-system-overrides.css";
+@import "./styles/animations.css";

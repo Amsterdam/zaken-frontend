@@ -1,68 +1,89 @@
-import { FormTitle } from "@amsterdam/asc-ui"
+import { useForm } from "react-hook-form"
+import { SelectControl, TextAreaControl } from "@amsterdam/ee-ads-rhf"
 import {
   useCase,
   useCreateQuickDecision,
   useQuickDecisionTypes,
 } from "@/api/hooks"
-import { toPostMethod } from "@/api/utils/toPostMethod"
-import WorkflowForm from "app/components/case/WorkflowForm/WorkflowForm"
-import scaffold from "app/components/case/forms/QuickDecisionForm/scaffold"
-import useScaffoldedFields from "app/components/shared/ConfirmScaffoldForm/hooks/useScaffoldedFields"
+import { CaseFormPage } from "app/components/case/CaseFormPage/CaseFormPage"
+import { useAfterCaseFormSubmit } from "../useAfterCaseFormSubmit"
 import DecisionHeader, {
   type Workflow,
 } from "../DecisionForm/components/DecisionHeader"
-import useNavigation from "app/routing/useNavigation"
 
 type Props = {
   id: components["schemas"]["CaseDetail"]["id"]
   caseUserTaskId: string
 }
 
-type QuickDecisionData = Omit<
-  components["schemas"]["QuickDecision"],
-  "quick_decision_type"
-> & { quick_decision_type: { id: number } }
+type FormValues = {
+  quick_decision_type: string
+  description: string
+}
 
-const mapData = (data: QuickDecisionData) => ({
-  ...data,
-  quick_decision_type: data.quick_decision_type.id,
-})
-
+/**
+ * The page to say which decision was made on a case, without a sanction
+ * ("snel besluit").
+ */
 const QuickDecisionForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
   const { data: caseItem } = useCase(id)
-  const themeId = caseItem?.theme.id
-  const { data } = useQuickDecisionTypes(themeId)
-  const quickDecisionTypes = data?.results
-  const { navigateTo } = useNavigation()
-  const fields = useScaffoldedFields(
-    scaffold,
-    id,
-    navigateTo,
-    quickDecisionTypes,
-  )
+  const { data: types } = useQuickDecisionTypes(caseItem?.theme.id)
+  const { mutateAsync: createQuickDecision, isPending } =
+    useCreateQuickDecision(id)
+  const afterSubmit = useAfterCaseFormSubmit(id)
+  const form = useForm<FormValues>({
+    defaultValues: { quick_decision_type: "", description: "" },
+  })
 
-  const createQuickDecision = toPostMethod(
-    useCreateQuickDecision(id).mutateAsync,
-  )
+  const onSubmit = async ({ quick_decision_type, description }: FormValues) => {
+    try {
+      await createQuickDecision({
+        case: id,
+        case_user_task_id: caseUserTaskId,
+        quick_decision_type: Number(quick_decision_type),
+        // Without an explanation the field is left out, as before.
+        ...(description.trim() !== "" && { description }),
+      })
+    } catch {
+      // The error is shown as a toast; the form stays.
+      return
+    }
+    afterSubmit()
+  }
 
   return (
-    <>
-      <DecisionHeader
-        caseId={id}
-        caseUserTaskId={caseUserTaskId}
-        workflows={(caseItem?.workflows ?? []) as unknown as Workflow[]}
+    <CaseFormPage
+      id={id}
+      title="Resultaat besluit"
+      form={form}
+      onSubmit={onSubmit}
+      isPending={isPending}
+      intro={
+        <DecisionHeader
+          caseId={id}
+          caseUserTaskId={caseUserTaskId}
+          workflows={(caseItem?.workflows ?? []) as unknown as Workflow[]}
+        />
+      }
+    >
+      <SelectControl<FormValues>
+        name="quick_decision_type"
+        label="Welk besluit is opgesteld?"
+        options={[
+          { label: "Maak een keuze", value: "" },
+          ...(types?.results ?? []).map(({ id, name }) => ({
+            label: name,
+            value: String(id),
+          })),
+        ]}
+        registerOptions={{ required: "Kies een besluit." }}
       />
-      <FormTitle>
-        Gebruik dit formulier om aan te geven welk besluit is genomen
-      </FormTitle>
-      <WorkflowForm
-        id={id}
-        fields={fields}
-        mapData={mapData}
-        postMethod={createQuickDecision}
-        caseUserTaskId={caseUserTaskId}
+      <TextAreaControl<FormValues>
+        name="description"
+        label="Korte toelichting"
+        rows={4}
       />
-    </>
+    </CaseFormPage>
   )
 }
 

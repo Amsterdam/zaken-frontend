@@ -6,14 +6,11 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import { queryClient } from "@/api/queryClient"
 import { hasAuthParams, useAuth } from "react-oidc-context"
 import Router from "app/routing/components/Router"
-import FlashMessageProvider from "app/state/flashMessages/FlashMessageProvider"
-import ValueProvider from "app/state/context/ValueProvider"
+import { ToastProvider } from "@/components/toasts/ToastProvider"
 import PageTitle from "app/routing/components/PageTitle"
-import {
-  LoadingScreenBasic,
-  FullScreenWrapper,
-} from "app/components/shared/loading"
-import Feedback from "app/components/Feedback"
+import { AmsterdamCrossSpinner } from "@/components/spinners/AmsterdamCrossSpinner/AmsterdamCrossSpinner"
+import { FullScreenWrapper } from "app/components/shared/loading"
+import { Feedback } from "@/components/Feedback/Feedback"
 
 const App = () => {
   const auth = useAuth()
@@ -38,7 +35,7 @@ const App = () => {
   }, [auth, hasTriedSignin])
 
   if (auth.isLoading) {
-    return <LoadingScreenBasic />
+    return <AmsterdamCrossSpinner />
   }
 
   if (auth.error) {
@@ -58,16 +55,14 @@ const App = () => {
       <ThemeProvider>
         <GlobalStyle />
         <BrowserRouter>
-          <FlashMessageProvider>
-            <QueryClientProvider client={queryClient}>
-              <ValueProvider>
-                <PageTitle />
-                <Feedback />
-                <Router />
-              </ValueProvider>
-              {import.meta.env.DEV && <ReactQueryDevtools />}
-            </QueryClientProvider>
-          </FlashMessageProvider>
+          <QueryClientProvider client={queryClient}>
+            <ToastProvider>
+              <PageTitle />
+              <Feedback />
+              <Router />
+            </ToastProvider>
+            {import.meta.env.DEV && <ReactQueryDevtools />}
+          </QueryClientProvider>
         </BrowserRouter>
       </ThemeProvider>
     </React.Fragment>

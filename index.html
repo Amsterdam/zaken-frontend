@@ -15,14 +15,13 @@
     form-action 'self';
     upgrade-insecure-requests;
     style-src 'self' 'unsafe-inline';
-    img-src 'self' data: https://api.data.amsterdam.nl https://*.zaken.amsterdam.nl;
+    img-src 'self' data: https://api.data.amsterdam.nl https://t1.data.amsterdam.nl https://t2.data.amsterdam.nl https://t3.data.amsterdam.nl https://t4.data.amsterdam.nl https://*.zaken.amsterdam.nl;
   "
     />
     <title>AZA</title>
     <link rel="manifest" href="/manifest.json" />
-    <base href="/" />
     <script src="/config/env.js"></script>
-    <script type="module" src="src/index"></script>
+    <script type="module" src="/src/index"></script>
   </head>
 
   <body>

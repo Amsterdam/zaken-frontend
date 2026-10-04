@@ -2,9 +2,12 @@
   position: relative;
   display: inline-flex;
   align-items: center;
+  /* Not on the text baseline: the spinner has no text, so it would sit lower
+     than the avatar and make the row higher while loading. */
+  vertical-align: middle;
 }
 
 .noPermission {
-  color: var(--color-neutral-400, #9ca3af);
+  color: var(--ams-color-text-secondary);
   font-size: 0.875rem;
 }

@@ -20,13 +20,6 @@ const items = [
     ] as components["schemas"]["PermissionsEnum"][],
   },
   {
-    path: "/digitaaltoezicht",
-    permissionNames: [
-      "access_sigital_surveillance",
-    ] as components["schemas"]["PermissionsEnum"][],
-    isHidden: true,
-  },
-  {
     path: "/hulp",
     hiddenLaptopM: true,
   },
@@ -34,14 +27,13 @@ const items = [
 
 const MenuItems: React.FC = () => (
   <>
-    {items.map(({ path, hiddenLaptopM, permissionNames, isHidden }) => {
+    {items.map(({ path, hiddenLaptopM, permissionNames }) => {
       const { title } = routes[`${path}/`]
       const menuItem = (
         <MenuItem key={path}>
           {permissionNames !== undefined ? (
             <IsAuthorizedMenuButton
               permissionNames={permissionNames}
-              isHidden={isHidden}
               text={title}
               to={to(path)}
             />

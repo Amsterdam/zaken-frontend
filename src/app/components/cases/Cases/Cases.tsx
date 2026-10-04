@@ -1,5 +1,4 @@
-import { useContext } from "react"
-import { Heading } from "@amsterdam/asc-ui"
+import { Column, Grid, Heading } from "@amsterdam/design-system-react"
 import TableCases from "app/components/cases/TableCases/TableCases"
 import CasesFilter from "app/components/cases/CasesFilter/CasesFilter"
 import {
@@ -15,11 +14,9 @@ import {
 import useHasPermission, {
   SENSITIVE_CASE_PERMISSION,
 } from "@/hooks/useHasPermission"
-import { ContextValues } from "app/state/context/ValueProvider"
-import { RowWithColumn } from "app/components/layouts/Grid"
+import { useFilterHandler } from "app/components/cases/CasesFilter/useFilterHandler"
+import { useCasesFilters } from "app/components/cases/useCasesFilters"
 import getThemeId from "app/components/tasks/utils/getThemeId"
-import SearchBarCases from "app/components/cases/SearchBarCases/SearchBarCases"
-import styles from "./Cases.module.css"
 
 const EMPTY_TEXT_NO_PERMISSION =
   "Helaas, u bent niet geautoriseerd om deze zaken te bekijken."
@@ -46,8 +43,8 @@ const Cases: React.FC = () => {
     subjects,
     tags,
     theme,
-    updateContextCases,
-  } = useContext(ContextValues)["cases"]
+  } = useCasesFilters().filters
+  const { onChangePage } = useFilterHandler()
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const { data: caseThemes } = useCaseThemes()
   const { data: reasons } = useTasksReasons(theme)
@@ -79,11 +76,8 @@ const Cases: React.FC = () => {
     housingCorporationIsNull,
   })
 
-  const onChangeTable = (
-    pagination: TABLE.Schemas.Pagination,
-    sorting: TABLE.Schemas.Sorting,
-  ) => {
-    updateContextCases({ pagination, sorting })
+  const onChangeTable = ({ page = 1 }: TABLE.Schemas.Pagination) => {
+    onChangePage(page)
   }
 
   const themes = caseThemes?.results || []
@@ -96,26 +90,11 @@ const Cases: React.FC = () => {
 
   return (
     <>
-      <RowWithColumn bottomSpacing={6}>
-        <Heading>Zakenoverzicht ({dataSource?.count ?? 0})</Heading>
-      </RowWithColumn>
-      <RowWithColumn bottomSpacing={6}>
-        <SearchBarCases searchString={addressSearch} />
-      </RowWithColumn>
-      <div className={styles.Grid}>
-        <TableCases
-          data={dataSource?.results ?? []}
-          isBusy={isLoading || isPlaceholderData}
-          onChange={onChangeTable}
-          pagination={{
-            page: pagination.page,
-            pageSize: pagination.pageSize,
-            collectionSize: dataSource?.count || 1,
-          }}
-          sorting={sorting}
-          emptyPlaceholder={emptyPlaceholder}
-        />
-        <div className={styles.Filter}>
+      <Grid.Cell span="all" appearance="transparent">
+        <Heading level={1}>Zakenoverzicht ({dataSource?.count ?? 0})</Heading>
+      </Grid.Cell>
+      <Grid.Cell span="all">
+        <Column gap="large">
           <CasesFilter
             date={fromStartDate}
             corporations={corporationData?.results}
@@ -127,6 +106,8 @@ const Cases: React.FC = () => {
             projects={projectsTheme?.results}
             reason={reason}
             reasons={reasons}
+            searchString={addressSearch}
+            sorting={sorting}
             selectedCorporations={housingCorporations}
             selectedProjects={projects}
             selectedSubjects={subjects}
@@ -136,8 +117,19 @@ const Cases: React.FC = () => {
             theme={theme}
             themes={themes}
           />
-        </div>
-      </div>
+          <TableCases
+            data={dataSource?.results ?? []}
+            isBusy={isLoading || isPlaceholderData}
+            onChange={onChangeTable}
+            pagination={{
+              page: pagination.page,
+              pageSize: pagination.pageSize,
+              collectionSize: dataSource?.count || 1,
+            }}
+            emptyPlaceholder={emptyPlaceholder}
+          />
+        </Column>
+      </Grid.Cell>
     </>
   )
 }

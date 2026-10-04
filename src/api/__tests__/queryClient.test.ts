@@ -1,59 +1,54 @@
-import { showApiErrorFlashMessage } from "@/api/queryClient"
-import { registerFlashMessageBridge } from "app/state/flashMessages/flashMessageBridge"
+import { showApiErrorToast } from "@/api/queryClient"
+import { registerToastBridge } from "@/components/toasts/toastBridge"
 
-describe("showApiErrorFlashMessage", () => {
-  const addErrorFlashMessage = vi.fn()
-  let unregister: () => void
+describe("showApiErrorToast", () => {
+  const showToast = vi.fn()
+
+  let time = Date.now()
 
   beforeEach(() => {
-    addErrorFlashMessage.mockClear()
-    unregister = registerFlashMessageBridge(addErrorFlashMessage)
+    // Each test past the time in which the same error is not shown again.
+    time += 10_000
+    vi.useFakeTimers()
+    vi.setSystemTime(time)
+    showToast.mockClear()
+    registerToastBridge(showToast)
   })
 
   afterEach(() => {
-    unregister()
+    vi.useRealTimers()
   })
 
-  it("shows the detail from the API and the url, like the old useErrorHandler", () => {
-    showApiErrorFlashMessage({
-      status: 400,
-      message: "Bad Request",
-      detail: "Ongeldige invoer.",
-      url: "https://api.test/themes/",
-    })
+  it("shows an error toast", () => {
+    showApiErrorToast({ status: 500, message: "Internal Server Error" })
 
-    expect(addErrorFlashMessage).toHaveBeenCalledWith(
-      "Oeps er ging iets mis!",
-      "Ongeldige invoer. (URL: https://api.test/themes/)",
-    )
-  })
-
-  it("falls back to the message when there is no detail", () => {
-    showApiErrorFlashMessage({
-      status: 500,
-      message: "Internal Server Error",
-      url: "https://api.test/themes/",
-    })
-
-    expect(addErrorFlashMessage).toHaveBeenCalledWith(
-      "Oeps er ging iets mis!",
-      "Internal Server Error (URL: https://api.test/themes/)",
+    expect(showToast).toHaveBeenCalledWith(
+      expect.objectContaining({
+        title: "Oeps, iets ging mis!",
+        severity: "error",
+      }),
     )
   })
 
   it("handles network errors that never reached the API", () => {
-    showApiErrorFlashMessage(new TypeError("Failed to fetch"))
+    showApiErrorToast(new TypeError("Failed to fetch"))
 
-    expect(addErrorFlashMessage).toHaveBeenCalledWith(
-      "Oeps er ging iets mis!",
-      "Failed to fetch (URL: -)",
+    expect(showToast).toHaveBeenCalledWith(
+      expect.objectContaining({ title: "Oeps, iets ging mis!" }),
     )
   })
 
-  it("does nothing when no FlashMessageProvider is mounted", () => {
-    unregister()
+  it("shows the same error once while its toast is there", () => {
+    showApiErrorToast({ status: 500, message: "Internal Server Error" })
+    showApiErrorToast({ status: 502, message: "Bad Gateway" })
+    expect(showToast).toHaveBeenCalledTimes(1)
 
-    expect(() => showApiErrorFlashMessage(new Error("boom"))).not.toThrow()
-    expect(addErrorFlashMessage).not.toHaveBeenCalled()
+    // Another error is another toast.
+    showApiErrorToast({ status: 404, message: "Not Found" })
+    expect(showToast).toHaveBeenCalledTimes(2)
+
+    vi.advanceTimersByTime(5000)
+    showApiErrorToast({ status: 404, message: "Not Found" })
+    expect(showToast).toHaveBeenCalledTimes(3)
   })
 })

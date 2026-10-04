@@ -1,11 +1,14 @@
-import { Heading } from "@amsterdam/asc-ui"
-import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
+import { FaceSadIcon } from "@amsterdam/design-system-react-icons"
+import { ErrorPage } from "@/components/ErrorPage/ErrorPage"
 
 const NotFoundPage: React.FC = () => (
-  <DefaultLayout>
-    <Heading>404</Heading>
-    <p>Helaas, deze pagina bestaat niet</p>
-  </DefaultLayout>
+  <ErrorPage
+    icon={FaceSadIcon}
+    heading="404 – Oeps! We zijn de weg even kwijt."
+  >
+    De pagina die je zoekt bestaat niet of is verhuisd. Geen zorgen, we helpen
+    je graag weer op weg.
+  </ErrorPage>
 )
 
 export default NotFoundPage

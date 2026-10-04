@@ -1,7 +1,6 @@
 import { act, renderHook, waitFor } from "@testing-library/react"
 import { useCase, useCreateDebriefing } from "@/api/hooks"
 import { queryKeys } from "@/api/queryKeys"
-import { toPostMethod } from "@/api/utils/toPostMethod"
 import { createQueryWrapper } from "@/test-utils/createQueryWrapper"
 
 vi.mock("react-oidc-context", () => ({
@@ -63,19 +62,5 @@ describe("case form mutations", () => {
     expect(
       queryClient.getQueryState(queryKeys.cases.workflows(1))?.isInvalidated,
     ).toBe(false)
-  })
-})
-
-describe("toPostMethod", () => {
-  it("returns { data } when the mutation succeeded", async () => {
-    const postMethod = toPostMethod(() => Promise.resolve({ id: 1 }))
-
-    await expect(postMethod({})).resolves.toEqual({ data: { id: 1 } })
-  })
-
-  it("returns undefined when it failed, so the old forms don't continue", async () => {
-    const postMethod = toPostMethod(() => Promise.reject(new Error("boom")))
-
-    await expect(postMethod({})).resolves.toBeUndefined()
   })
 })

@@ -2,6 +2,7 @@ import type { ReactNode } from "react"
 import { act, renderHook, waitFor } from "@testing-library/react"
 import { QueryClientProvider } from "@tanstack/react-query"
 import {
+  useCase,
   useCases,
   useCasesByBagId,
   useCaseWorkflows,
@@ -9,7 +10,7 @@ import {
 } from "@/api/hooks"
 import { queryKeys } from "@/api/queryKeys"
 import { queryClient } from "@/api/queryClient"
-import { registerFlashMessageBridge } from "app/state/flashMessages/flashMessageBridge"
+import { registerToastBridge } from "@/components/toasts/toastBridge"
 import { createQueryWrapper } from "@/test-utils/createQueryWrapper"
 
 vi.mock("react-oidc-context", () => ({
@@ -198,8 +199,8 @@ describe("useCaseWorkflows errors", () => {
       "fetch",
       vi.fn().mockRejectedValue(new TypeError("Failed to fetch")),
     )
-    const addErrorFlashMessage = vi.fn()
-    const unregister = registerFlashMessageBridge(addErrorFlashMessage)
+    const showToast = vi.fn()
+    registerToastBridge(showToast)
     const Wrapper = ({ children }: { children: ReactNode }) => (
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     )
@@ -209,8 +210,52 @@ describe("useCaseWorkflows errors", () => {
     })
     await waitFor(() => expect(result.current.isError).toBe(true))
 
-    expect(addErrorFlashMessage).not.toHaveBeenCalled()
-    unregister()
+    expect(showToast).not.toHaveBeenCalled()
+  })
+})
+
+describe("useCase errors", () => {
+  const response = (status: number, statusText: string) => ({
+    ok: false,
+    status,
+    statusText,
+    text: () => Promise.resolve(""),
+  })
+  const Wrapper = ({ children }: { children: ReactNode }) => (
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  )
+
+  afterEach(() => {
+    vi.unstubAllGlobals()
+    queryClient.clear()
+  })
+
+  it("shows no toast for a case that does not exist", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(response(404, "Not Found")),
+    )
+    const showToast = vi.fn()
+    registerToastBridge(showToast)
+
+    const { result } = renderHook(() => useCase(404404), { wrapper: Wrapper })
+    await waitFor(() => expect(result.current.isError).toBe(true))
+
+    expect(showToast).not.toHaveBeenCalled()
+  })
+
+  it("shows a toast for another error", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(response(500, "Internal Server Error")),
+    )
+    const showToast = vi.fn()
+    registerToastBridge(showToast)
+
+    const { result } = renderHook(() => useCase(500500), { wrapper: Wrapper })
+    await waitFor(() => expect(result.current.isError).toBe(true))
+
+    expect(showToast).toHaveBeenCalledTimes(1)
   })
 })
 

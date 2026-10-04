@@ -1,5 +1,5 @@
 import { act, renderHook, waitFor } from "@testing-library/react"
-import { useCreateFeedback } from "@/api/hooks"
+import { useSendFeedback } from "@/api/hooks"
 import { createQueryWrapper } from "@/test-utils/createQueryWrapper"
 
 vi.mock("react-oidc-context", () => ({
@@ -17,26 +17,27 @@ const jsonResponse = (body: unknown) => ({
   text: () => Promise.resolve(JSON.stringify(body)),
 })
 
-describe("useCreateFeedback", () => {
+describe("useSendFeedback", () => {
   afterEach(() => {
     vi.unstubAllGlobals()
   })
 
-  it("posts the feedback", async () => {
+  it("posts the feedback with where it comes from", async () => {
     const fetchMock = vi.fn().mockResolvedValue(jsonResponse({}))
     vi.stubGlobal("fetch", fetchMock)
     const { Wrapper } = createQueryWrapper()
+    // The page and the browser are added to the feedback.
     const payload = {
       feedback: "Werkt goed",
-      url: "https://zaken.test/zaken",
-      user_agent: "vitest",
-      screen: "1024x768",
+      url: window.location.href,
+      user_agent: navigator.userAgent,
+      screen: `${window.innerWidth}x${window.innerHeight}`,
     }
 
-    const { result } = renderHook(() => useCreateFeedback(), {
+    const { result } = renderHook(() => useSendFeedback(), {
       wrapper: Wrapper,
     })
-    act(() => result.current.mutate(payload))
+    act(() => result.current.mutate("Werkt goed"))
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
     const [url, init] = fetchMock.mock.calls[0]

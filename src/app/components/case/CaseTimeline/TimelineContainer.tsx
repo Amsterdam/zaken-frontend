@@ -1,37 +1,39 @@
-import { Spinner, ErrorMessage } from "@amsterdam/asc-ui"
-import { EventsTimeline } from "@amsterdam/wonen-ui"
-import type { CaseEvent } from "@amsterdam/wonen-ui"
+import { Alert, Paragraph, Skeleton } from "@amsterdam/design-system-react"
 import { useCaseEvents } from "@/api/hooks"
-import { env } from "app/config/env"
+import { CaseEventTimeline } from "@/components/CaseEventTimeline/CaseEventTimeline"
 
 type Props = {
   caseId: components["schemas"]["CaseEvent"]["id"]
 }
 
+/**
+ * The history of a case: what happened, latest first (the timeline of
+ * top-frontend-v2).
+ */
 const TimelineContainer: React.FC<Props> = ({ caseId }) => {
-  const { data: timelineEvents, isError: hasErrors } = useCaseEvents(caseId)
-  const showEmpty = timelineEvents?.length === 0
+  const { data: events, isError } = useCaseEvents(caseId)
 
-  return (
-    <>
-      {hasErrors ? (
-        <ErrorMessage message="Laden van tijdlijn evenementen mislukt" />
-      ) : (
-        <>
-          {timelineEvents === undefined ? (
-            <Spinner />
-          ) : (
-            <EventsTimeline
-              events={timelineEvents as unknown as CaseEvent[]}
-              spacingHorizontal={3}
-              prefixUrl={`${env.VITE_AZA_FRONTEND_URL}zaken/`}
-            />
-          )}
-        </>
-      )}
-      {showEmpty && <p>Geen tijdlijn evenementen beschikbaar</p>}
-    </>
-  )
+  if (isError) {
+    return (
+      <Alert heading="Niet gelukt" headingLevel={3} severity="error">
+        <Paragraph>De zaakhistorie kon niet worden opgehaald.</Paragraph>
+      </Alert>
+    )
+  }
+  if (events === undefined) {
+    return (
+      <Skeleton>
+        <Skeleton.Heading />
+        <Skeleton.Paragraph lines={4} />
+      </Skeleton>
+    )
+  }
+  if (events.length === 0) {
+    return <Paragraph>Er is nog geen zaakhistorie.</Paragraph>
+  }
+
+  // The API schema leaves the values of an event open; the timeline knows them per type.
+  return <CaseEventTimeline data={events as unknown as CaseEvent[]} />
 }
 
 export default TimelineContainer

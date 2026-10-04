@@ -1,4 +1,3 @@
-import { Spinner } from "@amsterdam/asc-ui"
 import styles from "./AssigneeAvatar.module.css"
 import { useUserById } from "./hooks/useUserById"
 import { createNameAbbreviation } from "app/components/shared/Helpers/helpers"
@@ -25,9 +24,11 @@ const AssigneeAvatar: React.FC<Props> = ({
 
   if (isBusy || isUserBusy) {
     return (
-      <span className={styles.spinnerWrapper}>
-        <Spinner />
-      </span>
+      <span
+        className={styles.loading}
+        role="status"
+        aria-label="Toewijzing laden"
+      />
     )
   }
 

@@ -1,0 +1,40 @@
+.content {
+  align-items: center;
+  padding-block: var(--ams-space-xl);
+  text-align: center;
+}
+
+/* Like top-frontend-v2: 48px, wobbling every 5 seconds. */
+.icon {
+  /* .ams-icon has align-self: baseline, which overrides the centering above. */
+  align-self: center;
+  font-size: 3rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .icon {
+    animation: wobble-every-5s 5s infinite ease-in-out;
+  }
+}
+
+@keyframes wobble-every-5s {
+  0%,
+  85% {
+    transform: rotate(0deg);
+  }
+  88% {
+    transform: rotate(-10deg);
+  }
+  91% {
+    transform: rotate(10deg);
+  }
+  94% {
+    transform: rotate(-8deg);
+  }
+  97% {
+    transform: rotate(8deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}

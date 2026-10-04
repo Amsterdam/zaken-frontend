@@ -1,4 +1,5 @@
-import { Link } from "@amsterdam/asc-ui"
+import { StandaloneLink } from "@amsterdam/design-system-react"
+import { LinkExternalIcon } from "@amsterdam/design-system-react-icons"
 
 type Props = {
   bagId: components["schemas"]["Address"]["bag_id"]
@@ -6,15 +7,18 @@ type Props = {
 
 // TODO: make hardcoded link dynamic
 const DecosLink: React.FC<Props> = ({ bagId }) => (
-  <Link
+  <StandaloneLink
     href={`https://decosdvl.amsterdam.nl/decosweb/aspx/Search.aspx?q=${bagId}`}
-    variant="inline"
-    icon="external"
+    icon={LinkExternalIcon}
     target="_blank"
-    rel="noreferer"
+    rel="noopener noreferrer"
   >
     Voor alle vergunningen zie Decos Join
-  </Link>
+    <span className="ams-visually-hidden">
+      {" "}
+      (externe website, opent in een nieuw tabblad)
+    </span>
+  </StandaloneLink>
 )
 
 export default DecosLink

@@ -1,17 +1,16 @@
-import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
-import { RowWithColumn } from "app/components/layouts/Grid"
-import PageHeading from "app/components/shared/PageHeading/PageHeading"
-import HelpContent from "app/components/help/HelpContent/HelpContent"
+import { Grid, Heading } from "@amsterdam/design-system-react"
+import { DefaultLayout } from "@/components/DefaultLayout/DefaultLayout"
+import HelpContent from "@/app/components/help/HelpContent/HelpContent"
 
-const IndexPage: React.FC = () => (
+const HelpPage: React.FC = () => (
   <DefaultLayout>
-    <RowWithColumn>
-      <PageHeading />
-    </RowWithColumn>
-    <RowWithColumn>
+    <Grid.Cell span="all" appearance="transparent">
+      <Heading level={1}>Hulp</Heading>
+    </Grid.Cell>
+    <Grid.Cell span="all">
       <HelpContent />
-    </RowWithColumn>
+    </Grid.Cell>
   </DefaultLayout>
 )
 
-export default IndexPage
+export default HelpPage

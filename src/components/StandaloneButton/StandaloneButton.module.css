@@ -1,0 +1,13 @@
+/* A button with the look of the design system's standalone link. */
+.button {
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: var(--ams-cursor-interactive, pointer);
+}
+
+.button:disabled {
+  color: var(--ams-color-interactive-disabled);
+  cursor: var(--ams-cursor-disabled, not-allowed);
+  text-decoration-line: none;
+}

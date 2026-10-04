@@ -1,12 +1,11 @@
-import styled from "styled-components"
-import { Icon, themeSpacing } from "@amsterdam/asc-ui"
-import { useModal } from "app/components/shared/Modal/hooks/useModal"
-import { appendTimeToDate } from "app/components/shared/Helpers/helpers"
-import DueDate from "app/components/shared/DueDate/DueDate"
-import ChangeDueDateModal from "./ChangeDueDateModal"
-import { useUpdateTask } from "@/api/hooks"
+import { useState } from "react"
+import { IconButton, Row } from "@amsterdam/design-system-react"
+import { PencilIcon } from "@amsterdam/design-system-react-icons"
 import useHasPermission, { CAN_PERFORM_TASK } from "@/hooks/useHasPermission"
-import CustomIcon from "app/components/shared/CustomIcon/CustomIcon"
+import { formatDate } from "@/shared/dateFormatters"
+import isDateInPast from "app/components/shared/Date/isDateInPast"
+import styles from "../../Workflow/Workflow.module.css"
+import ChangeDueDateDialog from "./ChangeDueDateDialog"
 
 type Props = {
   caseId: components["schemas"]["CaseDetail"]["id"]
@@ -14,60 +13,47 @@ type Props = {
   dueDate: Tasks.WorkflowTask["due_date"]
 }
 
-const Span = styled.span`
-  display: flex;
-  align-items: center;
-  white-space: nowrap;
-  height: ${themeSpacing(5)};
-  cursor: pointer;
-  &:hover {
-    text-decoration: underline;
-  }
-`
-
-const StyledIcon = styled(Icon)`
-  display: inline-block;
-  margin-left: ${themeSpacing(2)};
-`
-
+/**
+ * The due date of a task, red when it has passed; who may perform tasks can
+ * change it with the button next to it.
+ */
 const ChangeableDueDate: React.FC<Props> = ({
   dueDate,
   caseId,
   caseUserTaskId,
 }) => {
-  const { isModalOpen, openModal, closeModal } = useModal()
-  const { mutate: updateTask } = useUpdateTask(caseUserTaskId, caseId)
+  const [isOpen, setIsOpen] = useState(false)
   const [hasPermission] = useHasPermission([CAN_PERFORM_TASK])
 
-  const onSubmit = (data: { date: string; id: string }) => {
-    if (appendTimeToDate(data.date) !== dueDate) {
-      updateTask(
-        { due_date: appendTimeToDate(data.date) },
-        { onSettled: closeModal },
-      )
-    } else {
-      closeModal()
-    }
-  }
+  const date = (
+    <span
+      className={isDateInPast(new Date(dueDate)) ? styles.overdue : undefined}
+    >
+      {formatDate(dueDate)}
+    </span>
+  )
 
-  return hasPermission ? (
+  if (!hasPermission) return date
+
+  return (
     <>
-      <Span role="link" onClick={openModal}>
-        <DueDate date={dueDate} />
-        <StyledIcon size={20}>
-          <CustomIcon name="Edit" titleAccess="Pas de slotdatum aan" />
-        </StyledIcon>
-      </Span>
-      <ChangeDueDateModal
-        onSubmit={onSubmit}
-        isOpen={isModalOpen}
-        closeModal={closeModal}
-        dueDate={dueDate}
-        taskId={caseUserTaskId}
-      />
+      <Row gap="small" alignVertical="center">
+        {date}
+        <IconButton
+          label="Pas de slotdatum aan"
+          svg={PencilIcon}
+          onClick={() => setIsOpen(true)}
+        />
+      </Row>
+      {isOpen && (
+        <ChangeDueDateDialog
+          caseId={caseId}
+          caseUserTaskId={caseUserTaskId}
+          dueDate={dueDate}
+          onClose={() => setIsOpen(false)}
+        />
+      )}
     </>
-  ) : (
-    <DueDate date={dueDate} />
   )
 }
 

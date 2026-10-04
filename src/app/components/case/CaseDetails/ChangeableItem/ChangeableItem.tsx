@@ -1,44 +1,28 @@
-import styled from "styled-components"
-import { Icon, themeSpacing } from "@amsterdam/asc-ui"
+import { IconButton, Row } from "@amsterdam/design-system-react"
+import { PencilIcon } from "@amsterdam/design-system-react-icons"
 import useHasPermission, { CAN_PERFORM_TASK } from "@/hooks/useHasPermission"
-import CustomIcon from "app/components/shared/CustomIcon/CustomIcon"
 
 type Props = {
   name?: string
+  /** What the button does, e.g. "Wijzig het onderwerp". */
   titleAccess?: string
-  onClick?: (event: React.MouseEvent<HTMLDivElement>) => void
+  onClick?: () => void
 }
 
-const Span = styled.span`
-  cursor: pointer;
-  position: relative;
-  display: inline-block;
-  &:hover {
-    text-decoration: underline;
-  }
-  > span {
-    position: absolute;
-    bottom: 2px;
-    left: 100%;
-  }
-`
-
-const StyledIcon = styled(Icon)`
-  display: inline-block;
-  margin-left: ${themeSpacing(1)};
-`
-
+/**
+ * A value that who may perform tasks can change: the value as plain text,
+ * with a button (a pencil) next to it that opens the form.
+ */
 const ChangeableItem = ({ name = "-", titleAccess = "", onClick }: Props) => {
   const [hasPermission] = useHasPermission([CAN_PERFORM_TASK])
-  return hasPermission ? (
-    <Span role="link" onClick={onClick}>
+
+  return (
+    <Row gap="small" alignVertical="center" wrap>
       {name}
-      <StyledIcon size={20}>
-        <CustomIcon name="Edit" titleAccess={titleAccess} />
-      </StyledIcon>
-    </Span>
-  ) : (
-    <>{name}</>
+      {hasPermission && (
+        <IconButton label={titleAccess} svg={PencilIcon} onClick={onClick} />
+      )}
+    </Row>
   )
 }
 

@@ -25,6 +25,19 @@ export default defineConfig([
       // Overgenomen uit de oude .eslintrc.cjs (niet-stilistisch, dus niet in strijd met Prettier).
       "arrow-body-style": ["error", "as-needed"],
       "@typescript-eslint/consistent-type-definitions": ["error", "type"],
+      "no-restricted-imports": [
+        "error",
+        {
+          paths: [
+            {
+              name: "@amsterdam/ee-ads-rhf",
+              importNames: ["mapErrorsToAlert"],
+              message:
+                "Gebruik mapErrorsToAlert uit @/shared/mapErrorsToAlert: die van de library zoekt in de hele pagina en vindt bij een veld 'description' de meta-tag van index.html.",
+            },
+          ],
+        },
+      ],
     },
   },
 ])

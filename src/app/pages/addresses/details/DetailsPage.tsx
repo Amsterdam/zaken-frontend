@@ -1,49 +1,33 @@
 import { useParams } from "react-router-dom"
+import { Column } from "@amsterdam/design-system-react"
+import { EqualColumns } from "@/components/EqualColumns/EqualColumns"
 import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId"
-import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
-import Row from "app/components/layouts/Grid/Row"
-import Column from "app/components/layouts/Grid/Column"
-import DetailHeader from "app/components/shared/DetailHeader/DetailHeader"
-import PageHeading from "app/components/shared/PageHeading/PageHeading"
+import AddressMap from "app/components/addresses/AddressMap/AddressMap"
+import AddressPage from "app/components/addresses/AddressOverview/AddressPage"
 import ObjectDetails from "app/components/addresses/ObjectDetails/ObjectDetails"
-import PermitOverview from "app/components/permits/PermitOverview/PermitOverview"
+import PanoramaPreview from "app/components/addresses/Panorama/PanoramaPreview"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
-import Advertisements from "app/components/addresses/Advertisements/Advertisements"
 
 type Props = {
   bagId: string
 }
 
+/** The tab "Adresdetails" of an address. */
 const DetailsPage: React.FC = () => {
   const { bagId } = useParams<Props>()
-  return isValidUrlParamBAGId(bagId) ? (
-    <DefaultLayout>
-      <Row>
-        <Column spanLarge={50}>
-          <PageHeading />
+
+  if (!isValidUrlParamBAGId(bagId)) return <NotFoundPage />
+
+  return (
+    <AddressPage bagId={bagId}>
+      <EqualColumns gap="large">
+        <ObjectDetails bagId={bagId} />
+        <Column gap="large">
+          <PanoramaPreview bagId={bagId} />
+          <AddressMap bagId={bagId} />
         </Column>
-        <Column spanLarge={50}>
-          <DetailHeader bagId={bagId} />
-        </Column>
-      </Row>
-      <Row>
-        <Column spanLarge={50}>
-          <ObjectDetails bagId={bagId} />
-        </Column>
-      </Row>
-      <Row>
-        <Column spanLarge={50}>
-          <Advertisements bagId={bagId} />
-        </Column>
-      </Row>
-      <Row>
-        <Column spanLarge={50}>
-          <PermitOverview bagId={bagId} />
-        </Column>
-      </Row>
-    </DefaultLayout>
-  ) : (
-    <NotFoundPage />
+      </EqualColumns>
+    </AddressPage>
   )
 }
 

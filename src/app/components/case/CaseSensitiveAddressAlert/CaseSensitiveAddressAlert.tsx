@@ -1,4 +1,4 @@
-import { Alert, Heading, Paragraph } from "@amsterdam/asc-ui"
+import { Alert, Paragraph } from "@amsterdam/design-system-react"
 
 type Props = {
   isVisible?: boolean
@@ -6,8 +6,11 @@ type Props = {
 
 const CaseSensitiveAddressAlert: React.FC<Props> = ({ isVisible = false }) =>
   isVisible ? (
-    <Alert level="error" style={{ marginBottom: 24 }}>
-      <Heading forwardedAs="h2">Er loopt een ondermijningszaak</Heading>
+    <Alert
+      heading="Er loopt een ondermijningszaak"
+      headingLevel={2}
+      severity="error"
+    >
       <Paragraph>
         Het is op dit moment niet mogelijk om voor dit adres een huisbezoek af
         te leggen. Dit adres is daarom uitgesloten van TOP. Neem voor meer
