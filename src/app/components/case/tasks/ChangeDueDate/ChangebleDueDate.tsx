@@ -1,12 +1,13 @@
-import styled from "styled-components"
-import { Icon, themeSpacing } from "@amsterdam/asc-ui"
-import { useModal } from "app/components/shared/Modal/hooks/useModal"
-import { appendTimeToDate } from "app/components/shared/Helpers/helpers"
-import DueDate from "app/components/shared/DueDate/DueDate"
-import ChangeDueDateModal from "./ChangeDueDateModal"
+import { IconButton, Row } from "@amsterdam/design-system-react"
+import { PencilIcon } from "@amsterdam/design-system-react-icons"
 import { useUpdateTask } from "@/api/hooks"
 import useHasPermission, { CAN_PERFORM_TASK } from "@/hooks/useHasPermission"
-import CustomIcon from "app/components/shared/CustomIcon/CustomIcon"
+import { formatDate } from "@/shared/dateFormatters"
+import isDateInPast from "app/components/shared/Date/isDateInPast"
+import { appendTimeToDate } from "app/components/shared/Helpers/helpers"
+import { useModal } from "app/components/shared/Modal/hooks/useModal"
+import styles from "../../Workflow/Workflow.module.css"
+import ChangeDueDateModal from "./ChangeDueDateModal"
 
 type Props = {
   caseId: components["schemas"]["CaseDetail"]["id"]
@@ -14,22 +15,10 @@ type Props = {
   dueDate: Tasks.WorkflowTask["due_date"]
 }
 
-const Span = styled.span`
-  display: flex;
-  align-items: center;
-  white-space: nowrap;
-  height: ${themeSpacing(5)};
-  cursor: pointer;
-  &:hover {
-    text-decoration: underline;
-  }
-`
-
-const StyledIcon = styled(Icon)`
-  display: inline-block;
-  margin-left: ${themeSpacing(2)};
-`
-
+/**
+ * The due date of a task, red when it has passed; who may perform tasks can
+ * change it with the button next to it.
+ */
 const ChangeableDueDate: React.FC<Props> = ({
   dueDate,
   caseId,
@@ -50,14 +39,26 @@ const ChangeableDueDate: React.FC<Props> = ({
     }
   }
 
-  return hasPermission ? (
+  const date = (
+    <span
+      className={isDateInPast(new Date(dueDate)) ? styles.overdue : undefined}
+    >
+      {formatDate(dueDate)}
+    </span>
+  )
+
+  if (!hasPermission) return date
+
+  return (
     <>
-      <Span role="link" onClick={openModal}>
-        <DueDate date={dueDate} />
-        <StyledIcon size={20}>
-          <CustomIcon name="Edit" titleAccess="Pas de slotdatum aan" />
-        </StyledIcon>
-      </Span>
+      <Row gap="small" alignVertical="center">
+        {date}
+        <IconButton
+          label="Pas de slotdatum aan"
+          svg={PencilIcon}
+          onClick={openModal}
+        />
+      </Row>
       <ChangeDueDateModal
         onSubmit={onSubmit}
         isOpen={isModalOpen}
@@ -66,8 +67,6 @@ const ChangeableDueDate: React.FC<Props> = ({
         taskId={caseUserTaskId}
       />
     </>
-  ) : (
-    <DueDate date={dueDate} />
   )
 }
 

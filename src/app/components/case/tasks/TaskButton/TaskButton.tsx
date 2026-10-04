@@ -1,9 +1,6 @@
+import { Button } from "@amsterdam/design-system-react"
 import { useModal } from "app/components/shared/Modal/hooks/useModal"
 import FormModal from "../FormModal/FormModal"
-import { Button } from "@amsterdam/asc-ui"
-import CustomTooltip from "app/components/help/HelpContent/CustomTooltip"
-import CustomIcon from "app/components/shared/CustomIcon/CustomIcon"
-import Hidden from "app/components/shared/Hidden/Hidden"
 
 type Props = {
   onSubmit: (
@@ -15,6 +12,9 @@ type Props = {
   disabled?: boolean
 }
 
+export const NO_PERMISSION = "U heeft geen rechten om deze actie uit te voeren"
+
+/** Completes a task: opens the form that belongs to it. */
 const TaskButton: React.FC<Props> = ({
   onSubmit,
   taskName,
@@ -26,25 +26,15 @@ const TaskButton: React.FC<Props> = ({
 
   return (
     <>
-      <div style={{ display: "flex", alignItems: "center", height: "100%" }}>
-        <CustomTooltip
-          title={
-            disabled ? "U heeft geen rechten om deze actie uit te voeren" : ""
-          }
-        >
-          <Button
-            variant="textButton"
-            as="button"
-            disabled={disabled}
-            iconLeft={<CustomIcon name="ChevronRight" />}
-            onClick={openModal}
-          >
-            <Hidden maxBreakpoint="laptopM">
-              <span>Taak afronden</span>
-            </Hidden>
-          </Button>
-        </CustomTooltip>
-      </div>
+      <Button
+        variant="secondary"
+        disabled={disabled}
+        title={disabled ? NO_PERMISSION : undefined}
+        aria-label={`Taak afronden: ${taskName}`}
+        onClick={openModal}
+      >
+        Taak afronden
+      </Button>
       <FormModal
         taskName={taskName}
         caseId={caseId}

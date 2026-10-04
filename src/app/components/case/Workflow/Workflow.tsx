@@ -1,18 +1,27 @@
-import { Button, Heading } from "@amsterdam/asc-ui"
+import {
+  Button,
+  Column,
+  Heading,
+  Paragraph,
+  Skeleton,
+} from "@amsterdam/design-system-react"
 import {
   useCase,
   useCaseWorkflows,
   useCompleteTask,
   type CompleteTaskPayload,
 } from "@/api/hooks"
+import { Table } from "@/components/Table/Table"
 import getColumns from "./columns"
-import { LoadingRows, Table } from "@amsterdam/wonen-ui"
-import styles from "./Workflow.module.css"
 
 type Props = {
   id: components["schemas"]["CaseDetail"]["id"]
 }
 
+/**
+ * The open tasks of a case, a table per state of the case. A task can be
+ * assigned, get another due date and be completed here.
+ */
 const Workflow: React.FC<Props> = ({ id }) => {
   const { mutateAsync } = useCompleteTask(id)
   // Errors are already shown as a flash message; undefined tells the modal it failed.
@@ -28,48 +37,44 @@ const Workflow: React.FC<Props> = ({ id }) => {
   const workflows = data?.results ?? []
 
   if ((isLoading || isPolling) && workflows.length === 0) {
-    return <LoadingRows numRows={2} />
+    return (
+      <Skeleton>
+        <Skeleton.Heading />
+        <Skeleton.Table rows={2} columns={5} />
+      </Skeleton>
+    )
   }
 
-  const onClickLink = (e: React.MouseEvent) => {
-    e.preventDefault()
-    void refetch()
+  if (workflows.length === 0) {
+    return (
+      <Column gap="small" alignHorizontal="start">
+        <Paragraph>
+          {isClosed
+            ? "Deze zaak is afgesloten, er zijn op dit moment geen open taken."
+            : "Geen taken beschikbaar."}
+        </Paragraph>
+        <Button variant="secondary" onClick={() => void refetch()}>
+          Herlaad taken
+        </Button>
+      </Column>
+    )
   }
 
   return (
-    <>
-      {workflows.length > 0 ? (
-        workflows.map(({ state, tasks, information }, index) => {
-          const columns = getColumns(completeTask, tasks, caseData?.theme.id)
-
-          return (
-            <div className={styles.wrap} key={`${state.name}_${index}`}>
-              <div className={styles.content}>
-                <Heading as="h4">{state.name}</Heading>
-                {information && <p>{information}</p>}
-              </div>
-              <Table
-                columns={columns}
-                lastColumnFixed
-                data={tasks || []}
-                pagination={false}
-              />
-            </div>
-          )
-        })
-      ) : (
-        <>
-          <>
-            {isClosed
-              ? "Deze zaak is afgesloten, er zijn op dit moment geen open taken."
-              : "Geen taken beschikbaar."}{" "}
-          </>
-          <Button variant="textButton" onClick={onClickLink}>
-            Herlaad taken.
-          </Button>
-        </>
-      )}
-    </>
+    <Column gap="x-large">
+      {workflows.map(({ state, tasks, information }, index) => (
+        <Column gap="small" key={`${state.name}_${index}`}>
+          <Heading level={3}>{state.name}</Heading>
+          {information && <Paragraph>{information}</Paragraph>}
+          <Table
+            columns={getColumns(completeTask, tasks, caseData?.theme.id)}
+            data={tasks ?? []}
+            pagination={false}
+            verticalAlign="middle"
+          />
+        </Column>
+      ))}
+    </Column>
   )
 }
 

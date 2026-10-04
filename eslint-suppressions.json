@@ -40,11 +40,6 @@
       "count": 1
     }
   },
-  "src/app/components/case/Workflow/columns.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 9
-    }
-  },
   "src/app/components/case/Workflow/components/UpdateSchedule/UpdateSchedule.tsx": {
     "@typescript-eslint/no-explicit-any": {
       "count": 1

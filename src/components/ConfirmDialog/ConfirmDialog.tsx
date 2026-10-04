@@ -1,10 +1,11 @@
-import { type ReactNode, useEffect, useRef } from "react"
+import { type ReactNode } from "react"
 import {
   ActionGroup,
   Button,
   Dialog,
   Paragraph,
 } from "@amsterdam/design-system-react"
+import { OpenDialog } from "@/components/OpenDialog/OpenDialog"
 
 type Props = {
   title?: string
@@ -29,16 +30,8 @@ export function ConfirmDialog({
   onConfirm,
   onCancel,
 }: Props) {
-  const dialogRef = useRef<HTMLDialogElement>(null)
-
-  useEffect(() => {
-    const dialog = dialogRef.current
-    if (dialog && !dialog.open) dialog.showModal()
-  }, [])
-
   return (
-    <Dialog
-      ref={dialogRef}
+    <OpenDialog
       heading={title}
       // The native close: Escape, the close button and "Annuleren".
       onClose={onCancel}
@@ -52,7 +45,7 @@ export function ConfirmDialog({
       }
     >
       <Paragraph>{children}</Paragraph>
-    </Dialog>
+    </OpenDialog>
   )
 }
 

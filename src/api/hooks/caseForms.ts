@@ -82,6 +82,30 @@ export const useCreateSchedule = (caseId: CaseId) =>
     components["schemas"]["ScheduleCreate"]
   >(caseId, makeApiUrl("schedules"))
 
+// The backend starts a workflow in the background (a Celery task), so the new
+// task is not there yet when the request returns.
+const WORKFLOW_REFRESH_DELAYS = [0, 2000, 6000]
+
+/**
+ * Refetches the open tasks and the events of a case now and a few times after,
+ * for an action whose result the backend makes in the background.
+ */
+export const useRefreshCaseWorkflowsSoon = (caseId: CaseId) => {
+  const queryClient = useQueryClient()
+
+  return () =>
+    WORKFLOW_REFRESH_DELAYS.forEach((delay) =>
+      setTimeout(() => {
+        void queryClient.invalidateQueries({
+          queryKey: queryKeys.cases.workflows(caseId),
+        })
+        void queryClient.invalidateQueries({
+          queryKey: queryKeys.cases.events(caseId),
+        })
+      }, delay),
+    )
+}
+
 /** Start an extra workflow process ("Taak opvoeren"). */
 export const useStartWorkflowProcess = (caseId: CaseId) =>
   useCaseFormMutation<
