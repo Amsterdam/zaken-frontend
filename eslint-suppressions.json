@@ -24,16 +24,6 @@
       "count": 2
     }
   },
-  "src/app/components/case/forms/CitizenReportForm/CitizenReportForm.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    }
-  },
-  "src/app/components/case/forms/CitizenReportForm/scaffold.tsx": {
-    "react-refresh/only-export-components": {
-      "count": 1
-    }
-  },
   "src/app/components/cases/CreateForm/CreateForm.tsx": {
     "@typescript-eslint/no-explicit-any": {
       "count": 3

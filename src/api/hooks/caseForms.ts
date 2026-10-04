@@ -79,7 +79,11 @@ export const useCloseCase = (caseId: CaseId) =>
 
 export const useCreateCitizenReport = (caseId: CaseId) =>
   useCaseFormMutation<
-    components["schemas"]["CitizenReport"],
+    // What the backend fills in itself is not sent.
+    Omit<
+      components["schemas"]["CitizenReport"],
+      "id" | "date_added" | "advertisements"
+    > & { advertisements?: { link: string }[] },
     components["schemas"]["CitizenReport"]
   >(caseId, makeApiUrl("cases", caseId, "citizen-reports"))
 

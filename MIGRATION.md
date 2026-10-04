@@ -460,7 +460,8 @@ Testchecklist:
 | Zaak: Debrief (`pages/case/debriefings/CreatePage`, `/zaken/:id/debriefing/:caseUserTaskId`)            | ✅ akkoord                                                                                                           |
 | Zaak: Aanschrijving (`pages/case/summons/CreatePage`, `/zaken/:id/aanschrijving/:caseUserTaskId`)       | ✅ akkoord                                                                                                           |
 | Zaak: Bezoek inplannen (`pages/case/schedules/CreatePage`, `/zaken/:id/inplanning/:caseUserTaskId`)     | ✅ akkoord                                                                                                           |
-| Zaak: Huisbezoek (`pages/case/visits/CreatePage`, `/zaken/:id/huisbezoek/:caseUserTaskId`)              | omgezet, wacht op test                                                                                               |
+| Zaak: Huisbezoek (`pages/case/visits/CreatePage`, `/zaken/:id/huisbezoek/:caseUserTaskId`)              | ✅ akkoord                                                                                                           |
+| Zaak: Melding (`pages/case/citizenreports/CreatePage`, `/zaken/:id/melding/:caseUserTaskId`)            | omgezet, wacht op test                                                                                               |
 | Zaakpagina (`pages/cases/details/DetailsPage`, `/zaken/:id`)                                            | ✅ akkoord (4 stappen: opmaak, open taken, zaakhistorie, vensters)                                                   |
 
 **Hulp-pagina:** naar het voorbeeld van de veelgestelde-vragenpagina van top-frontend-v2: titel "Hulp" direct op de grijze achtergrond, daaronder één wit vlak met de vier onderwerpen in een ADS-`Accordion` (dicht bij het openen, net als eerst). Geen icoon meer naast de paginatitel. **Breadcrumbs** staan alleen nog op geneste pagina's: een pagina direct onder home (zoals `/hulp`) krijgt er geen. De lijstjes stonden in de oude versie binnen een alinea (ongeldige HTML); dat zijn nu losse ADS-lijsten. `EmailLink` zit in `HelpContent`; het ongebruikte `PhoneLink` en `HelpContent.module.css` zijn weg. `CustomTooltip` staat nog in dezelfde map omdat de zaakpagina's het gebruiken.
@@ -904,6 +905,16 @@ Testchecklist huisbezoek (typ de URL `/zaken/<id>/huisbezoek/<taak-id>` van een 
 - [ ] De waarschuwing staat boven het formulier; de starttijd staat op nu.
 - [ ] Opslaan zonder situatie geeft de foutmelding.
 - [ ] Opslaan: terug op de zaakpagina met een toast; de zaakhistorie toont het bezoek en de taak is weg.
+
+**Melding** (`forms/CitizenReportForm`): keuzerondjes of de melder anoniem is; zo niet, een blok met naam, telefoonnummer (tien cijfers) en e-mailadres, alle drie niet verplicht. Het SIG-nummer (een getal), de samenvatting, bij Vakantieverhuur het vinkje "Betreft overlast", en bij thema's met advertenties de vraag of er een advertentie is, met een lijst links (`useFieldArray`, minstens één). De uitleg van de drie i-knoppen staat nu onder de vraag.
+
+Testchecklist melding (een zaak met de taak "Melding verwerken"):
+
+- [ ] Leeg opslaan: de foutmelding noemt wat ontbreekt.
+- [ ] "Niet anoniem" toont de gegevens van de melder; een fout telefoonnummer of e-mailadres wordt geweigerd.
+- [ ] "Ja, er is een advertentie": een link invullen, een tweede toevoegen en weer verwijderen; een link zonder http(s):// wordt geweigerd.
+- [ ] Bij een thema zonder advertenties (bv. Kamerverhuur) staat de advertentievraag er niet.
+- [ ] Opslaan: terug op de zaakpagina met een toast; de zaakhistorie toont de melding met de advertentielinks.
 
 ## Fase 3 — Verticale migratie per domein (± 4–8 weken)
 
