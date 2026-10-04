@@ -1,47 +1,39 @@
 import { useParams } from "react-router-dom"
-import Row from "app/components/layouts/Grid/Row"
-import PageHeading from "app/components/shared/PageHeading/PageHeading"
-import DefaultLayout from "app/components/layouts/DefaultLayout/DefaultLayout"
-import PermitDetailsList from "app/components/permits/PermitDetails/PermitDetails"
-import PermitsPowerBrowser from "app/components/permits/PermitsPowerBrowser/PermitsPowerBrowser"
-import HolidayRentalReports from "app/components/permits/HolidayRental/VacationRental"
-import HolidayRentalRegistrations from "app/components/permits/HolidayRental/Registrations"
-import DetailHeader from "app/components/shared/DetailHeader/DetailHeader"
-import Column from "app/components/layouts/Grid/Column"
-import NotFoundPage from "app/pages/errors/NotFoundPage"
+import { Column } from "@amsterdam/design-system-react"
+import { EqualColumns } from "@/components/EqualColumns/EqualColumns"
 import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId"
+import AddressPage from "app/components/addresses/AddressOverview/AddressPage"
 import DecosLink from "app/components/permits/DecosLink/DecosLink"
+import PermitsDecos from "app/components/permits/Decos/PermitsDecos"
+import Meldingen from "app/components/permits/Meldingen/Meldingen"
+import PermitsPowerBrowser from "app/components/permits/PowerBrowser/PermitsPowerBrowser"
+import Registrations from "app/components/permits/Registrations/Registrations"
+import NotFoundPage from "app/pages/errors/NotFoundPage"
 
 type Props = {
   bagId: string
 }
 
+/** The tab "Vergunningen" of an address. */
 const PermitsPage: React.FC = () => {
   const { bagId } = useParams<Props>()
-  return isValidUrlParamBAGId(bagId) ? (
-    <DefaultLayout>
-      <Row>
-        <Column spanLarge={50}>
-          <PageHeading />
-        </Column>
-        <Column spanLarge={50}>
-          <DetailHeader bagId={bagId} />
-        </Column>
-      </Row>
-      <Row>
-        <Column spanLarge={50}>
-          <PermitDetailsList bagId={bagId} />
-          <HolidayRentalReports bagId={bagId} />
+
+  if (!isValidUrlParamBAGId(bagId)) return <NotFoundPage />
+
+  return (
+    <AddressPage bagId={bagId}>
+      <EqualColumns>
+        <Column gap="x-large">
+          <PermitsPowerBrowser bagId={bagId} />
+          <PermitsDecos bagId={bagId} />
           <DecosLink bagId={bagId} />
         </Column>
-        <Column spanLarge={50}>
-          <PermitsPowerBrowser bagId={bagId} />
-          <HolidayRentalRegistrations bagId={bagId} />
+        <Column gap="x-large">
+          <Registrations bagId={bagId} />
+          <Meldingen bagId={bagId} />
         </Column>
-      </Row>
-    </DefaultLayout>
-  ) : (
-    <NotFoundPage />
+      </EqualColumns>
+    </AddressPage>
   )
 }
 

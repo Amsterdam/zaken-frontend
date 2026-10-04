@@ -164,11 +164,6 @@
       "count": 1
     }
   },
-  "src/app/components/permits/PermitsPowerBrowser/PermitsPowerBrowser.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    }
-  },
   "src/app/components/shared/ConfirmScaffoldForm/ConfirmScaffoldForm.tsx": {
     "@typescript-eslint/no-explicit-any": {
       "count": 2

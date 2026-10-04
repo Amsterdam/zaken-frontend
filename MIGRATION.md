@@ -439,20 +439,20 @@ Testchecklist:
 
 #### Pagina voor pagina
 
-| Pagina                                                                                  | Status                                                   |
-| --------------------------------------------------------------------------------------- | -------------------------------------------------------- |
-| 404 (`pages/errors/NotFoundPage`)                                                       | ✅ akkoord (pilot)                                       |
-| Hulp (`pages/help/HelpPage`)                                                            | ✅ akkoord                                               |
-| 403 (`pages/auth/NotAuthorizedPage`)                                                    | ✅ akkoord                                               |
-| Gebruiker (`pages/auth/AuthPage`, `/auth`)                                              | ✅ akkoord (pilot `Description`)                         |
-| Invorderingscheck (`pages/fines/FinePage`, `/invorderingen`)                            | ✅ akkoord                                               |
-| Adres zoeken / start (`pages/home/HomePage`, `/`)                                       | ✅ akkoord                                               |
-| Zakenoverzicht (`pages/cases/index/IndexPage`, `/zaken`)                                | ✅ akkoord (3 stappen: `Table`, filters, URL)            |
-| Takenoverzicht (`pages/tasks/IndexPage`, `/taken`)                                      | ✅ akkoord (incl. taak toewijzen, pilot `ConfirmDialog`) |
-| Adres: Zaken (`pages/addresses/index/IndexPage`, `/adres/:bagId`)                       | ✅ akkoord                                               |
-| Adres: Adresdetails (`pages/addresses/details/DetailsPage`, `/adres/:bagId/details`)    | ✅ akkoord                                               |
-| Adres: Persoonsgegevens (`pages/addresses/people/PeoplePage`, `/adres/:bagId/personen`) | ✅ akkoord                                               |
-| Adres: Vergunningen (`/adres/:bagId/vergunningen`)                                      | volgende: nog in de oude layout, zonder tabbalk          |
+| Pagina                                                                                    | Status                                                   |
+| ----------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| 404 (`pages/errors/NotFoundPage`)                                                         | ✅ akkoord (pilot)                                       |
+| Hulp (`pages/help/HelpPage`)                                                              | ✅ akkoord                                               |
+| 403 (`pages/auth/NotAuthorizedPage`)                                                      | ✅ akkoord                                               |
+| Gebruiker (`pages/auth/AuthPage`, `/auth`)                                                | ✅ akkoord (pilot `Description`)                         |
+| Invorderingscheck (`pages/fines/FinePage`, `/invorderingen`)                              | ✅ akkoord                                               |
+| Adres zoeken / start (`pages/home/HomePage`, `/`)                                         | ✅ akkoord                                               |
+| Zakenoverzicht (`pages/cases/index/IndexPage`, `/zaken`)                                  | ✅ akkoord (3 stappen: `Table`, filters, URL)            |
+| Takenoverzicht (`pages/tasks/IndexPage`, `/taken`)                                        | ✅ akkoord (incl. taak toewijzen, pilot `ConfirmDialog`) |
+| Adres: Zaken (`pages/addresses/index/IndexPage`, `/adres/:bagId`)                         | ✅ akkoord                                               |
+| Adres: Adresdetails (`pages/addresses/details/DetailsPage`, `/adres/:bagId/details`)      | ✅ akkoord                                               |
+| Adres: Persoonsgegevens (`pages/addresses/people/PeoplePage`, `/adres/:bagId/personen`)   | ✅ akkoord                                               |
+| Adres: Vergunningen (`pages/addresses/permits/PermitsPage`, `/adres/:bagId/vergunningen`) | omgezet, wacht op test                                   |
 
 **Hulp-pagina:** naar het voorbeeld van de veelgestelde-vragenpagina van top-frontend-v2: titel "Hulp" direct op de grijze achtergrond, daaronder één wit vlak met de vier onderwerpen in een ADS-`Accordion` (dicht bij het openen, net als eerst). Geen icoon meer naast de paginatitel. **Breadcrumbs** staan alleen nog op geneste pagina's: een pagina direct onder home (zoals `/hulp`) krijgt er geen. De lijstjes stonden in de oude versie binnen een alinea (ongeldige HTML); dat zijn nu losse ADS-lijsten. `EmailLink` zit in `HelpContent`; het ongebruikte `PhoneLink` en `HelpContent.module.css` zijn weg. `CustomTooltip` staat nog in dezelfde map omdat de zaakpagina's het gebruiken.
 
@@ -667,6 +667,28 @@ Testchecklist Persoonsgegevens:
 - [x] Een adres zonder ingeschrevenen toont de tekst; zonder het recht ontbreekt de tab en geeft de URL de 403-pagina.
 - [x] Smal scherm: de kolom Leeftijd valt weg, de details blijven leesbaar.
 - [x] De overzichten (zaken, taken) en de zaken op een adres zien er nog hetzelfde uit: de tabel is aangepast.
+
+**Adres: tab Vergunningen (`/adres/:bagId/vergunningen`)** — omgezet, wacht op test:
+
+- De onderdelen zijn overgenomen uit top-frontend-v2 (`pages/CaseDetailPage/PermitsCardDecos`, `PermitsCard`, `MeldingenCard`, `VakantieverhuurCard`) en staan in `app/components/permits/`:
+  - **Vergunningen Decos** (`Decos/`): tabel met de vergunning (groen vinkje of rood kruis voor geldig/niet geldig) en de status als badge (Verleend, Verlopen, Niet verleend); een rij klapt open met resultaat, omschrijving, soort, aanvrager, data en locatie. Vergunningen die Decos niet kent vallen weg.
+  - **Vergunningen PowerBrowser** (`PowerBrowser/`): zelfde opzet, geldige vergunningen eerst en daarna de nieuwste. De schakelaar "Alles tonen" is weg (die zat niet in het voorbeeld).
+  - **Meldingen** (`Meldingen/`): de meldingen van vakantieverhuur sinds het begin van vorig jaar, de laatste eerst, met het totaal aantal nachten; badges "Aangepast" en "Verwijderd"; uitklapbaar. Daarboven, als het geldt, de melding over de 15-nachtenregel (nu een ADS-`Alert`).
+  - **Vakantieverhuur** (`Registrations/`): de registraties met nummer, naam, e-mail, data en B&B.
+  - De link "Voor alle vergunningen zie Decos Join" is een `StandaloneLink` met het externe-link-icoon.
+- Elk onderdeel heeft een kop met het aantal, een eigen foutmelding en een eigen tekst als er niets is (`components/PermitsSection`). De koppen blijven staan bij een leeg onderdeel, omdat er vier onder elkaar staan.
+- **Voorbeeldgegevens buiten productie:** elk onderdeel dat een lege lijst terugkrijgt toont op lokaal en acceptatie de voorbeelddata van top-frontend-v2, met een regel erboven; bij een fout niet (`permits/useDummyData.ts`, dezelfde regel als bij Persoonsgegevens).
+- Indeling: twee kolommen (gedeeld `src/components/EqualColumns/`: een ADS-`Row` die afbreekt, met kolommen van gelijke breedte; ook op de tab Adresdetails). Links de vergunningen (PowerBrowser, daaronder Decos met de Decos-link), rechts de vakantieverhuur (Vakantieverhuur, daaronder Meldingen). Onder elkaar op een smal scherm, in die volgorde.
+- Nieuw: `src/shared/renderStatusBadge.tsx` (uit top-frontend-v2). Vervangt `PermitsOverview`, `PermitsSynopsis`, `HolidayRentalReports` en `HolidayRentalRegistrations` van `wonen-ui`. Weg: `permits/PermitDetails`, `permits/HolidayRental`, `shared/InfoAlert`.
+- Daarmee zijn **alle vier de adrestabs** omgezet; alleen het formulier "Nieuwe zaak aanmaken" onder het adres staat nog in de oude layout.
+
+Testchecklist Vergunningen:
+
+- [ ] De tab toont titel en tabs (Vergunningen actief) en de vier onderdelen met hun aantal.
+- [ ] Een vergunning en een melding uitklappen: de details kloppen met de oude pagina.
+- [ ] Een adres zonder vergunningen/meldingen: op acceptatie voorbeeldgegevens met de regel erboven.
+- [ ] De link naar Decos Join opent in een nieuw tabblad.
+- [ ] Smal scherm: de onderdelen staan onder elkaar, de kolom Status valt weg.
 
 ## Fase 3 — Verticale migratie per domein (± 4–8 weken)
 

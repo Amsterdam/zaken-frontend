@@ -1,11 +1,12 @@
 import { useParams } from "react-router-dom"
+import { Column } from "@amsterdam/design-system-react"
+import { EqualColumns } from "@/components/EqualColumns/EqualColumns"
 import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId"
 import AddressMap from "app/components/addresses/AddressMap/AddressMap"
 import AddressPage from "app/components/addresses/AddressOverview/AddressPage"
 import ObjectDetails from "app/components/addresses/ObjectDetails/ObjectDetails"
 import PanoramaPreview from "app/components/addresses/Panorama/PanoramaPreview"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
-import styles from "./DetailsPage.module.css"
 
 type Props = {
   bagId: string
@@ -19,13 +20,13 @@ const DetailsPage: React.FC = () => {
 
   return (
     <AddressPage bagId={bagId}>
-      <div className={styles.top}>
+      <EqualColumns gap="large">
         <ObjectDetails bagId={bagId} />
-        <div className={styles.images}>
+        <Column gap="large">
           <PanoramaPreview bagId={bagId} />
           <AddressMap bagId={bagId} />
-        </div>
-      </div>
+        </Column>
+      </EqualColumns>
     </AddressPage>
   )
 }
