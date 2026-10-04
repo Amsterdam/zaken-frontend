@@ -1,87 +1,66 @@
-import dayjs from "dayjs"
-
-import { useModal } from "app/components/shared/Modal/hooks/useModal"
+import { useState } from "react"
+import { IconButton, Row } from "@amsterdam/design-system-react"
+import { PencilIcon } from "@amsterdam/design-system-react-icons"
 import {
+  type CaseSchedule,
   useSchedulesByCaseId,
   useScheduleTypes,
-  useUpdateSchedule,
 } from "@/api/hooks"
 import useHasPermission, { CAN_PERFORM_TASK } from "@/hooks/useHasPermission"
-import CustomIcon from "app/components/shared/CustomIcon/CustomIcon"
-import UpdateScheduleModal from "./UpdateScheduleModal"
-import type { Schedule } from "./types"
-
-import styles from "./UpdateSchedule.module.css"
+import UpdateScheduleDialog from "./UpdateScheduleDialog"
 
 type Props = {
   caseId: components["schemas"]["CaseDetail"]["id"]
   themeId?: number
 }
 
-const getLatestSchedule = (schedules?: Schedule[]): Schedule | null => {
+const getLatestSchedule = (schedules?: CaseSchedule[]): CaseSchedule | null => {
   if (!schedules || schedules.length === 0) return null
 
-  return schedules.reduce<Schedule | null>((latest, current) => {
-    if (!latest) return current
-
-    return new Date(current.date_modified) > new Date(latest.date_modified)
+  return schedules.reduce((latest, current) =>
+    new Date(current.date_modified) > new Date(latest.date_modified)
       ? current
-      : latest
-  }, null)
+      : latest,
+  )
 }
 
+/**
+ * The urgency of the visit of a case; who may perform tasks can change the
+ * planning of the visit with the button next to it.
+ */
 const UpdateSchedule: React.FC<Props> = ({ caseId, themeId }) => {
-  const { isModalOpen, openModal, closeModal } = useModal()
-  const { data: schedules } = useSchedulesByCaseId(caseId)
-  const latestSchedule = getLatestSchedule(schedules as unknown as Schedule[])
-  const { mutate: updateSchedule } = useUpdateSchedule(
-    latestSchedule?.id,
-    caseId,
-  )
-  // Only needed (and fetched) once the modal is opened.
-  const { data: scheduleTypes } = useScheduleTypes(themeId, {
-    enabled: isModalOpen,
-  })
+  const [isOpen, setIsOpen] = useState(false)
   const [hasPermission] = useHasPermission([CAN_PERFORM_TASK])
-
-  const onSubmit = (data: any) => {
-    // The options (with their names), so the hook can update the cached schedule and timeline.
-    const update = {
-      week_segment: data.week_segment,
-      day_segment: data.day_segment,
-      priority: data.priority,
-      visit_from_datetime: data.visit_from_datetime
-        ? dayjs(data.visit_from_datetime).format()
-        : null,
-    }
-    updateSchedule(update, { onSettled: closeModal })
-  }
+  const { data: schedules } = useSchedulesByCaseId(caseId)
+  const latestSchedule = getLatestSchedule(schedules)
+  // The choices of the form: there before the dialog opens, so it opens at once.
+  const { data: scheduleTypes } = useScheduleTypes(themeId, {
+    enabled: hasPermission && latestSchedule !== null,
+  })
 
   const priorityName = latestSchedule?.priority?.name ?? "-"
 
-  return hasPermission ? (
+  if (!hasPermission || !latestSchedule || !scheduleTypes) return priorityName
+
+  return (
     <>
-      <span className={styles.link} role="link" onClick={openModal}>
+      <Row gap="small" alignVertical="center">
         {priorityName}
-        <span className={styles.icon}>
-          <CustomIcon
-            name="Edit"
-            titleAccess="Pas de planning van een bezoek aan"
-          />
-        </span>
-      </span>
-      {latestSchedule && scheduleTypes && (
-        <UpdateScheduleModal
-          onSubmit={onSubmit}
-          isOpen={isModalOpen}
-          closeModal={closeModal}
+        <IconButton
+          label="Pas de planning van het bezoek aan"
+          svg={PencilIcon}
+          onClick={() => setIsOpen(true)}
+        />
+      </Row>
+      {isOpen && (
+        <UpdateScheduleDialog
+          caseId={caseId}
           schedule={latestSchedule}
           scheduleTypes={scheduleTypes}
+          onClose={() => setIsOpen(false)}
         />
       )}
     </>
-  ) : (
-    <span>{priorityName}</span>
   )
 }
 

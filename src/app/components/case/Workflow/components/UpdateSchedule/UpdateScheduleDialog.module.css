@@ -1,0 +1,5 @@
+/* The select lists equally wide, whatever is chosen in them. */
+.select {
+  inline-size: 16rem;
+  max-inline-size: 100%;
+}

@@ -19,21 +19,6 @@
       "count": 1
     }
   },
-  "src/app/components/case/Workflow/components/UpdateSchedule/UpdateSchedule.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    }
-  },
-  "src/app/components/case/Workflow/components/UpdateSchedule/UpdateScheduleModal.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    }
-  },
-  "src/app/components/case/Workflow/components/UpdateSchedule/form/UpdateScheduleForm.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    }
-  },
   "src/app/components/case/WorkflowForm/WorkflowForm.tsx": {
     "@typescript-eslint/no-explicit-any": {
       "count": 2
