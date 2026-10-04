@@ -459,7 +459,8 @@ Testchecklist:
 | Zaak: Besluit (`pages/case/decisions/CreatePage`, `/zaken/:id/besluit/:caseUserTaskId`)                 | ✅ akkoord                                                                                                           |
 | Zaak: Debrief (`pages/case/debriefings/CreatePage`, `/zaken/:id/debriefing/:caseUserTaskId`)            | ✅ akkoord                                                                                                           |
 | Zaak: Aanschrijving (`pages/case/summons/CreatePage`, `/zaken/:id/aanschrijving/:caseUserTaskId`)       | ✅ akkoord                                                                                                           |
-| Zaak: Bezoek inplannen (`pages/case/schedules/CreatePage`, `/zaken/:id/inplanning/:caseUserTaskId`)     | ✅ akkoord |
+| Zaak: Bezoek inplannen (`pages/case/schedules/CreatePage`, `/zaken/:id/inplanning/:caseUserTaskId`)     | ✅ akkoord                                                                                                           |
+| Zaak: Huisbezoek (`pages/case/visits/CreatePage`, `/zaken/:id/huisbezoek/:caseUserTaskId`)              | omgezet, wacht op test                                                                                               |
 | Zaakpagina (`pages/cases/details/DetailsPage`, `/zaken/:id`)                                            | ✅ akkoord (4 stappen: opmaak, open taken, zaakhistorie, vensters)                                                   |
 
 **Hulp-pagina:** naar het voorbeeld van de veelgestelde-vragenpagina van top-frontend-v2: titel "Hulp" direct op de grijze achtergrond, daaronder één wit vlak met de vier onderwerpen in een ADS-`Accordion` (dicht bij het openen, net als eerst). Geen icoon meer naast de paginatitel. **Breadcrumbs** staan alleen nog op geneste pagina's: een pagina direct onder home (zoals `/hulp`) krijgt er geen. De lijstjes stonden in de oude versie binnen een alinea (ongeldige HTML); dat zijn nu losse ADS-lijsten. `EmailLink` zit in `HelpContent`; het ongebruikte `PhoneLink` en `HelpContent.module.css` zijn weg. `CustomTooltip` staat nog in dezelfde map omdat de zaakpagina's het gebruiken.
@@ -895,6 +896,14 @@ Testchecklist bezoek inplannen (een zaak met de taak "Bezoek inplannen"):
 - [ ] "Vanaf een specifieke datum" toont het datumveld met vandaag ingevuld; een datum in het verleden wordt geweigerd.
 - [ ] Een zaak Ondermijning: doordeweeks, overdag, vanaf vandaag en machtiging staan al ingevuld.
 - [ ] Opslaan: terug op de zaakpagina met een toast; de zaakhistorie toont de planning en de kolom "Urgentie" verschijnt bij de taak voor het bezoek.
+
+**Huisbezoek** (`forms/VisitForm`): het formulier om het resultaat van een bezoek met de hand toe te voegen, met bovenaan de waarschuwing dat het bezoek in de TOP app wordt verwerkt (de link ernaartoe in de takentabel staat uit; alleen via de URL bereikbaar). Twee verplichte keuzelijsten voor de toezichthouders (twee verschillende), de starttijd als datum-en-tijdveld dat op nu begint (was een tekstveld met de vaste waarde 2021-01-01T12:34), keuzerondjes voor de situatie (verplicht), vinkjes voor opvallende zaken, en de vragen over uitzetten en een nieuw bezoek met elk een toelichting. Geen bevestigingsscherm; dat had dit formulier al niet.
+
+Testchecklist huisbezoek (typ de URL `/zaken/<id>/huisbezoek/<taak-id>` van een taak "Doorgeven bezoek TOP"):
+
+- [ ] De waarschuwing staat boven het formulier; de starttijd staat op nu.
+- [ ] Opslaan zonder situatie geeft de foutmelding.
+- [ ] Opslaan: terug op de zaakpagina met een toast; de zaakhistorie toont het bezoek en de taak is weg.
 
 ## Fase 3 — Verticale migratie per domein (± 4–8 weken)
 

@@ -85,7 +85,9 @@ export const useCreateCitizenReport = (caseId: CaseId) =>
 
 export const useCreateVisit = (caseId: CaseId) =>
   useCaseFormMutation<
-    components["schemas"]["Visit"],
+    // What the backend fills in itself is not sent; the task the visit
+    // completes is.
+    Omit<components["schemas"]["Visit"], "id" | "authors"> & { task: string },
     components["schemas"]["Visit"]
   >(caseId, makeApiUrl("visits"))
 

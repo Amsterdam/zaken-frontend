@@ -60,6 +60,11 @@ export function CaseFormPage<T extends FieldValues>({
       <Grid.Cell span="all" appearance="transparent">
         <Heading level={1}>{title}</Heading>
       </Grid.Cell>
+      {intro && (
+        <Grid.Cell span="all" appearance="transparent">
+          {intro}
+        </Grid.Cell>
+      )}
       {alertErrors.length > 0 && (
         <Grid.Cell span="all" appearance="transparent">
           <InvalidFormAlert errors={alertErrors} headingLevel={2} />
@@ -68,7 +73,7 @@ export function CaseFormPage<T extends FieldValues>({
       <Grid.Cell span="all">
         <Column gap="x-large">
           <CaseSummary id={id} />
-          {intro}
+         
           <FormProvider form={form} onSubmit={onSubmit}>
             {/* The fields are narrower than the white area they are in. */}
             <Grid className="grid-in-cell">
