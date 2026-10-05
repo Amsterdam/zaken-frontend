@@ -10,7 +10,7 @@ vi.mock("react-oidc-context", () => ({
   }),
 }))
 
-vi.mock("app/routing/useNavigation", () => ({
+vi.mock("@/app/routing/useNavigation", () => ({
   default: () => ({ navigateTo }),
 }))
 

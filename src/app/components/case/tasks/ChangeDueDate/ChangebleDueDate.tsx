@@ -3,7 +3,7 @@ import { IconButton, Row } from "@amsterdam/design-system-react"
 import { PencilIcon } from "@amsterdam/design-system-react-icons"
 import useHasPermission, { CAN_PERFORM_TASK } from "@/hooks/useHasPermission"
 import { formatDate } from "@/shared/dateFormatters"
-import isDateInPast from "app/components/shared/Date/isDateInPast"
+import isDateInPast from "@/app/components/shared/Date/isDateInPast"
 import styles from "../../Workflow/Workflow.module.css"
 import ChangeDueDateDialog from "./ChangeDueDateDialog"
 

@@ -16,7 +16,7 @@ import {
 import { useCreateSummon, useSummonTypesByTaskId } from "@/api/hooks"
 import { PERSON_ROLE_MAP } from "@/components/CaseEventTimeline/utils/renderValue.formatters"
 import { HelpDialog } from "@/components/HelpDialog/HelpDialog"
-import { CaseFormPage } from "app/components/case/CaseFormPage/CaseFormPage"
+import { CaseFormPage } from "@/app/components/case/CaseFormPage/CaseFormPage"
 import { useAfterCaseFormSubmit } from "../useAfterCaseFormSubmit"
 import {
   BOARD,

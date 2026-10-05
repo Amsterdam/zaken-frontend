@@ -51,21 +51,21 @@ vi.mock("@/hooks/useHasPermission", () => ({
 
 // The parts of the page that are still to be converted, and the editable
 // values, have their own data and tests.
-vi.mock("app/components/case/CaseStatus/CaseStatus", () => ({
+vi.mock("@/app/components/case/CaseStatus/CaseStatus", () => ({
   default: () => <p>Open taken</p>,
 }))
-vi.mock("app/components/case/CaseTimeline/TimelineContainer", () => ({
+vi.mock("@/app/components/case/CaseTimeline/TimelineContainer", () => ({
   default: () => <p>Tijdlijn</p>,
 }))
-vi.mock("app/components/case/CaseDetails/EditableTag/EditableTag", () => ({
+vi.mock("@/app/components/case/CaseDetails/EditableTag/EditableTag", () => ({
   default: () => <span>-</span>,
 }))
 vi.mock(
-  "app/components/case/CaseDetails/ChangeSubject/ChangeableSubject",
+  "@/app/components/case/CaseDetails/ChangeSubject/ChangeableSubject",
   () => ({ default: () => <span>-</span> }),
 )
 vi.mock(
-  "app/components/case/CaseDetails/ChangeHousingCorporation/ChangeHousingCorporation",
+  "@/app/components/case/CaseDetails/ChangeHousingCorporation/ChangeHousingCorporation",
   () => ({ default: () => <span>-</span> }),
 )
 
@@ -73,7 +73,7 @@ vi.mock("react-oidc-context", () => ({
   useAuth: () => ({ signoutRedirect: vi.fn() }),
 }))
 
-vi.mock("app/state/auth/oidc/useDecodedToken", () => ({
+vi.mock("@/app/state/auth/oidc/useDecodedToken", () => ({
   useDecodedToken: () => ({ given_name: "Jan" }),
 }))
 

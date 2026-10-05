@@ -1,7 +1,7 @@
 import { Column, Heading } from "@amsterdam/design-system-react"
 import { useBenkAgg } from "@/api/hooks"
 import { Description } from "@/components/Description/Description"
-import { getAddressFromBenkAggResponse } from "app/components/addresses/utils"
+import { getAddressFromBenkAggResponse } from "@/app/components/addresses/utils"
 
 type Props = {
   bagId: components["schemas"]["Address"]["bag_id"]

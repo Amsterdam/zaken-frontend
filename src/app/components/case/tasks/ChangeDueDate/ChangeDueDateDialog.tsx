@@ -5,7 +5,7 @@ import { useUpdateTask } from "@/api/hooks"
 import { FormDialog } from "@/components/FormDialog/FormDialog"
 import { useToast } from "@/components/toasts/useToast"
 import { formatDate } from "@/shared/dateFormatters"
-import { appendTimeToDate } from "app/components/shared/Helpers/helpers"
+import { appendTimeToDate } from "@/app/components/shared/Helpers/helpers"
 
 type Props = {
   caseId: components["schemas"]["CaseDetail"]["id"]

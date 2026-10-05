@@ -1,5 +1,5 @@
 import { Table } from "@/components/Table/Table"
-import useMediaQuery from "app/hooks/useMediaQuery/useMediaQuery"
+import useMediaQuery from "@/app/hooks/useMediaQuery/useMediaQuery"
 import columns from "./columns"
 import createResponsiveColumns from "./createPrioritizedColumns"
 

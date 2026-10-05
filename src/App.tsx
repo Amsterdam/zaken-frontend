@@ -7,7 +7,7 @@ import { hasAuthParams, useAuth } from "react-oidc-context"
 import { router } from "@/router"
 import { ToastProvider } from "@/components/toasts/ToastProvider"
 import { AmsterdamCrossSpinner } from "@/components/spinners/AmsterdamCrossSpinner/AmsterdamCrossSpinner"
-import { FullScreenWrapper } from "app/components/shared/loading"
+import { FullScreenWrapper } from "@/app/components/shared/loading"
 import { Feedback } from "@/components/Feedback/Feedback"
 
 const App = () => {

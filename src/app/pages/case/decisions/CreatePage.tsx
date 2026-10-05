@@ -1,8 +1,8 @@
 import { useParams } from "react-router"
-import DecisionForm from "app/components/case/forms/DecisionForm/DecisionForm"
-import NotFoundPage from "app/pages/errors/NotFoundPage"
-import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
-import parseUrlParamId from "app/routing/utils/parseUrlParamId"
+import DecisionForm from "@/app/components/case/forms/DecisionForm/DecisionForm"
+import NotFoundPage from "@/app/pages/errors/NotFoundPage"
+import isValidUrlParamId from "@/app/routing/utils/isValidUrlParamId"
+import parseUrlParamId from "@/app/routing/utils/parseUrlParamId"
 
 type RouteParams = {
   id: string

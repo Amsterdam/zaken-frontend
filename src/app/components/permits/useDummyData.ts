@@ -1,4 +1,4 @@
-import { isAcceptanceOrLocalEnvironment } from "app/config/isAcceptanceOrLocalEnvironment"
+import { isAcceptanceOrLocalEnvironment } from "@/app/config/isAcceptanceOrLocalEnvironment"
 
 type Query = { isPending: boolean; isError: boolean }
 

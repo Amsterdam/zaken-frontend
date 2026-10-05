@@ -22,7 +22,7 @@ vi.mock("react-oidc-context", () => ({
   }),
 }))
 
-vi.mock("app/state/auth/oidc/useDecodedToken", () => ({
+vi.mock("@/app/state/auth/oidc/useDecodedToken", () => ({
   useDecodedToken: () => ({ given_name: "Jan" }),
 }))
 

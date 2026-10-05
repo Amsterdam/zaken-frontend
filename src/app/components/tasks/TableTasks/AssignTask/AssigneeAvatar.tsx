@@ -1,6 +1,6 @@
 import styles from "./AssigneeAvatar.module.css"
 import { useUserById } from "./hooks/useUserById"
-import { createNameAbbreviation } from "app/components/shared/Helpers/helpers"
+import { createNameAbbreviation } from "@/app/components/shared/Helpers/helpers"
 
 type Props = {
   taskOwner: string | null

@@ -3,7 +3,7 @@
 import "@/router/routes"
 import { render, screen } from "@testing-library/react"
 import { MemoryRouter, useLocation } from "react-router"
-import { setLastCasesSearch } from "app/components/cases/useCasesFilters"
+import { setLastCasesSearch } from "@/app/components/cases/useCasesFilters"
 import IndexPage from "../IndexPage"
 
 vi.mock("@/components/DefaultLayout/DefaultLayout", () => ({
@@ -15,7 +15,7 @@ vi.mock("@/components/DefaultLayout/DefaultLayout", () => ({
   ),
 }))
 
-vi.mock("app/components/cases/Cases/Cases", () => ({
+vi.mock("@/app/components/cases/Cases/Cases", () => ({
   default: () => <p>Zakenoverzicht</p>,
 }))
 

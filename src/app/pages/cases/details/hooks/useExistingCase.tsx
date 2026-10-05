@@ -1,4 +1,4 @@
-import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"
+import isValidUrlParamId from "@/app/routing/utils/isValidUrlParamId"
 import { useCase } from "@/api/hooks"
 import type { ApiError } from "@/api/types/apiError"
 

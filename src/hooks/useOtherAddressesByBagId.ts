@@ -1,5 +1,5 @@
 import { useBagPdok, useBagPdokByBagId } from "@/api/hooks"
-import { getAddressFromBagPdokResponse } from "app/components/addresses/utils"
+import { getAddressFromBagPdokResponse } from "@/app/components/addresses/utils"
 
 /**
  * Returns other addresses with the same postcode + huisnummer

@@ -1,5 +1,5 @@
 import { useAddress, useBagPdokByBagId } from "@/api/hooks"
-import { getAddressFromBagPdokResponse } from "app/components/addresses/utils"
+import { getAddressFromBagPdokResponse } from "@/app/components/addresses/utils"
 
 /**
  * The address of a bag id, from PDOK. When PDOK doesn't know the address,

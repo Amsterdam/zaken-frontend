@@ -1,4 +1,4 @@
-import { env } from "app/config/env"
+import { env } from "@/app/config/env"
 
 /**
  * Whether this is the acceptance or a local environment (from

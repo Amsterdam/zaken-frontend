@@ -7,7 +7,7 @@ import {
 import { useResidents } from "@/api/hooks"
 import { Table } from "@/components/Table/Table"
 import { type ColumnType } from "@/components/Table/types"
-import { isAcceptanceOrLocalEnvironment } from "app/config/isAcceptanceOrLocalEnvironment"
+import { isAcceptanceOrLocalEnvironment } from "@/app/config/isAcceptanceOrLocalEnvironment"
 import { PersonHeader } from "./components/PersonHeader/PersonHeader"
 import { ResidentDetails } from "./components/ResidentDetails/ResidentDetails"
 import { dummyResidentsResponse } from "./data/dummyResidentsResponse"

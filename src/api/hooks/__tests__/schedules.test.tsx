@@ -7,7 +7,7 @@ vi.mock("react-oidc-context", () => ({
   useAuth: () => ({ user: { access_token: "mock-token" } }),
 }))
 
-vi.mock("app/routing/useNavigation", () => ({
+vi.mock("@/app/routing/useNavigation", () => ({
   default: () => ({ navigateTo: vi.fn() }),
 }))
 

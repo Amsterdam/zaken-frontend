@@ -10,7 +10,7 @@ De app wordt gemigreerd naar de stack van `top-frontend-v2` (React 19, Amsterdam
 
 - **Eerst een voorbeeld, dan uitrollen.** Elke nieuwe soort wijziging begint met één pilot (één hook, component of pagina) die getest en goedgekeurd wordt. Voer een patroon nooit in één keer door de hele codebase door.
 - Nieuwe code gebruikt de nieuwe stack zodra die voor dat onderdeel beschikbaar is. Voeg geen nieuwe code toe met `styled-components`, `@amsterdam/asc-ui`, `@amsterdam/wonen-ui` of `@amsterdam/amsterdam-react-final-form`, tenzij je een bestaand, nog niet gemigreerd bestand klein aanpast.
-- Nieuwe imports gebruiken de `@/`-alias (`@/app/...`). Bestaande `app/...`-imports mogen blijven tot het bestand gemigreerd wordt.
+- Imports gebruiken de `@/`-alias (`@/app/...`, `@/components/...`). De oude alias `app/...` bestaat niet meer.
 
 ## Regels
 

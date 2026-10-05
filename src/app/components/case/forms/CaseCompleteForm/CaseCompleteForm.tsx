@@ -6,7 +6,7 @@ import {
   useCaseCloseResults,
   useCloseCase,
 } from "@/api/hooks"
-import { CaseFormPage } from "app/components/case/CaseFormPage/CaseFormPage"
+import { CaseFormPage } from "@/app/components/case/CaseFormPage/CaseFormPage"
 import { useAfterCaseFormSubmit } from "../useAfterCaseFormSubmit"
 
 type Props = {

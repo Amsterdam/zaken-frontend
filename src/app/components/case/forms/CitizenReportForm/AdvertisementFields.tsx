@@ -2,7 +2,7 @@ import { type Control, useFieldArray, useWatch } from "react-hook-form"
 import { Button, Column, FieldSet } from "@amsterdam/design-system-react"
 import { DeleteIcon, PlusIcon } from "@amsterdam/design-system-react-icons"
 import { RadioControl, TextInputControl } from "@amsterdam/ee-ads-rhf"
-import isValidUrl from "app/routing/utils/isValidUrl"
+import isValidUrl from "@/app/routing/utils/isValidUrl"
 import { type AdvertisementValues, NO, YES } from "./reportValues"
 
 type Props = {

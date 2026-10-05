@@ -1,5 +1,5 @@
 import { Description } from "@/components/Description/Description"
-import { useDecodedToken } from "app/state/auth/oidc/useDecodedToken"
+import { useDecodedToken } from "@/app/state/auth/oidc/useDecodedToken"
 
 const OidcValues: React.FC = () => {
   const decodedToken = useDecodedToken()

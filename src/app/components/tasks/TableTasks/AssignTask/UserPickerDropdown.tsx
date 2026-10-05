@@ -1,7 +1,7 @@
 import { useState, useEffect, useLayoutEffect, useRef } from "react"
 import { createPortal } from "react-dom"
 import { useUsers } from "@/api/hooks"
-import { createNameAbbreviation } from "app/components/shared/Helpers/helpers"
+import { createNameAbbreviation } from "@/app/components/shared/Helpers/helpers"
 import styles from "./UserPickerDropdown.module.css"
 
 type User = Pick<

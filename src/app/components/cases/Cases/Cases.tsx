@@ -1,6 +1,6 @@
 import { Column, Grid, Heading } from "@amsterdam/design-system-react"
-import TableCases from "app/components/cases/TableCases/TableCases"
-import CasesFilter from "app/components/cases/CasesFilter/CasesFilter"
+import TableCases from "@/app/components/cases/TableCases/TableCases"
+import CasesFilter from "@/app/components/cases/CasesFilter/CasesFilter"
 import {
   useCases,
   useCaseThemes,
@@ -14,9 +14,9 @@ import {
 import useHasPermission, {
   SENSITIVE_CASE_PERMISSION,
 } from "@/hooks/useHasPermission"
-import { useFilterHandler } from "app/components/cases/CasesFilter/useFilterHandler"
-import { useCasesFilters } from "app/components/cases/useCasesFilters"
-import getThemeId from "app/components/tasks/utils/getThemeId"
+import { useFilterHandler } from "@/app/components/cases/CasesFilter/useFilterHandler"
+import { useCasesFilters } from "@/app/components/cases/useCasesFilters"
+import getThemeId from "@/app/components/tasks/utils/getThemeId"
 
 const EMPTY_TEXT_NO_PERMISSION =
   "Helaas, u bent niet geautoriseerd om deze zaken te bekijken."

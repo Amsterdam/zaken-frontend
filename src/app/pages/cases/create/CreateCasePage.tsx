@@ -1,7 +1,7 @@
 import { useParams, useSearchParams } from "react-router"
-import CreateForm from "app/components/cases/CreateForm/CreateForm"
-import NotFoundPage from "app/pages/errors/NotFoundPage"
-import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId"
+import CreateForm from "@/app/components/cases/CreateForm/CreateForm"
+import NotFoundPage from "@/app/pages/errors/NotFoundPage"
+import isValidUrlParamBAGId from "@/app/routing/utils/isValidUrlParamBAGId"
 
 type RouteParams = {
   bagId: string

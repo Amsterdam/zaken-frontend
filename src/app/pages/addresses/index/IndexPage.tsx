@@ -1,11 +1,11 @@
 import { useNavigate, useParams } from "react-router"
 import { Button } from "@amsterdam/design-system-react"
 import useHasPermission from "@/hooks/useHasPermission"
-import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId"
-import Advertisements from "app/components/addresses/Advertisements/Advertisements"
-import AddressPage from "app/components/addresses/AddressOverview/AddressPage"
-import CasesByBagId from "app/components/addresses/CasesByBagId/CasesByBagId"
-import NotFoundPage from "app/pages/errors/NotFoundPage"
+import isValidUrlParamBAGId from "@/app/routing/utils/isValidUrlParamBAGId"
+import Advertisements from "@/app/components/addresses/Advertisements/Advertisements"
+import AddressPage from "@/app/components/addresses/AddressOverview/AddressPage"
+import CasesByBagId from "@/app/components/addresses/CasesByBagId/CasesByBagId"
+import NotFoundPage from "@/app/pages/errors/NotFoundPage"
 
 type Props = {
   bagId: string

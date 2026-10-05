@@ -22,14 +22,14 @@ import { HeadingWithIcon } from "@/components/HeadingWithIcon/HeadingWithIcon"
 import useHasPermission, {
   SENSITIVE_CASE_PERMISSION,
 } from "@/hooks/useHasPermission"
-import CaseDetails from "app/components/case/CaseDetails/CaseDetails"
-import CaseNuisanceAlert from "app/components/case/CaseNuisanceAlert/CaseNuisanceAlert"
-import CaseSensitiveAddressAlert from "app/components/case/CaseSensitiveAddressAlert/CaseSensitiveAddressAlert"
-import CaseStatus from "app/components/case/CaseStatus/CaseStatus"
-import TimelineContainer from "app/components/case/CaseTimeline/TimelineContainer"
-import NotAuthorizedPage from "app/pages/auth/NotAuthorizedPage"
-import NotFoundPage from "app/pages/errors/NotFoundPage"
-import parseUrlParamId from "app/routing/utils/parseUrlParamId"
+import CaseDetails from "@/app/components/case/CaseDetails/CaseDetails"
+import CaseNuisanceAlert from "@/app/components/case/CaseNuisanceAlert/CaseNuisanceAlert"
+import CaseSensitiveAddressAlert from "@/app/components/case/CaseSensitiveAddressAlert/CaseSensitiveAddressAlert"
+import CaseStatus from "@/app/components/case/CaseStatus/CaseStatus"
+import TimelineContainer from "@/app/components/case/CaseTimeline/TimelineContainer"
+import NotAuthorizedPage from "@/app/pages/auth/NotAuthorizedPage"
+import NotFoundPage from "@/app/pages/errors/NotFoundPage"
+import parseUrlParamId from "@/app/routing/utils/parseUrlParamId"
 import useExistingCase from "./hooks/useExistingCase"
 
 type Props = {

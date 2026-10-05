@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, within } from "@testing-library/react"
 import { MemoryRouter, useLocation } from "react-router"
-import NotFoundPage from "app/pages/errors/NotFoundPage"
+import NotFoundPage from "@/app/pages/errors/NotFoundPage"
 
 let permissions: string[] = []
 
@@ -12,7 +12,7 @@ vi.mock("react-oidc-context", () => ({
   useAuth: () => ({ signoutRedirect: vi.fn() }),
 }))
 
-vi.mock("app/state/auth/oidc/useDecodedToken", () => ({
+vi.mock("@/app/state/auth/oidc/useDecodedToken", () => ({
   useDecodedToken: () => ({ given_name: "Jan" }),
 }))
 

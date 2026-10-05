@@ -32,7 +32,7 @@ vi.mock("@/api/hooks", () => ({
 }))
 
 let environment: string | undefined
-vi.mock("app/config/env", () => ({
+vi.mock("@/app/config/env", () => ({
   env: {
     get VITE_ENVIRONMENT_SHORT() {
       return environment
@@ -46,7 +46,7 @@ vi.mock("react-oidc-context", () => ({
   useAuth: () => ({ signoutRedirect: vi.fn() }),
 }))
 
-vi.mock("app/state/auth/oidc/useDecodedToken", () => ({
+vi.mock("@/app/state/auth/oidc/useDecodedToken", () => ({
   useDecodedToken: () => ({ given_name: "Jan" }),
 }))
 

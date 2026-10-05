@@ -12,12 +12,12 @@ import {
   useTasksReasons,
   useUsersMe,
 } from "@/api/hooks"
-import TableTasks from "app/components/tasks/TableTasks/TableTasks"
+import TableTasks from "@/app/components/tasks/TableTasks/TableTasks"
 import TasksFilter from "../TasksFilter/TasksFilter"
 import useHasPermission, {
   SENSITIVE_CASE_PERMISSION,
 } from "@/hooks/useHasPermission"
-import getThemeId from "app/components/tasks/utils/getThemeId"
+import getThemeId from "@/app/components/tasks/utils/getThemeId"
 import { useMappedTaskOwners } from "../hooks/useMappedTaskOwners"
 import { useTasksFilters } from "../useTasksFilters"
 

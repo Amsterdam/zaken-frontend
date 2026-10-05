@@ -27,9 +27,9 @@ import {
 } from "@/api/hooks"
 import { FormPage } from "@/components/FormPage/FormPage"
 import { useToast } from "@/components/toasts/useToast"
-import { getAddressFromBagPdokResponse } from "app/components/addresses/utils"
-import { AdvertisementFields } from "app/components/case/forms/CitizenReportForm/AdvertisementFields"
-import { ReportFields } from "app/components/case/forms/CitizenReportForm/ReportFields"
+import { getAddressFromBagPdokResponse } from "@/app/components/addresses/utils"
+import { AdvertisementFields } from "@/app/components/case/forms/CitizenReportForm/AdvertisementFields"
+import { ReportFields } from "@/app/components/case/forms/CitizenReportForm/ReportFields"
 import {
   type AdvertisementValues,
   controlOf,
@@ -39,8 +39,8 @@ import {
   toAdvertisements,
   toCitizenReport,
   YES,
-} from "app/components/case/forms/CitizenReportForm/reportValues"
-import { EXCLUDED_THEMES_ADVERTISEMENTS } from "app/constants/themeNames"
+} from "@/app/components/case/forms/CitizenReportForm/reportValues"
+import { EXCLUDED_THEMES_ADVERTISEMENTS } from "@/app/constants/themeNames"
 
 type Props = {
   bagId: components["schemas"]["Address"]["bag_id"]

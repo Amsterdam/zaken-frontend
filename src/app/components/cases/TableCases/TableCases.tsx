@@ -1,6 +1,6 @@
 import { Table } from "@/components/Table/Table"
 import columns from "./columns"
-import useMediaQuery from "app/hooks/useMediaQuery/useMediaQuery"
+import useMediaQuery from "@/app/hooks/useMediaQuery/useMediaQuery"
 import createResponsiveColumns from "./createPrioritizedColumns"
 
 type Props = {

@@ -3,7 +3,7 @@
 import "@/router/routes"
 import { fireEvent, render, screen, within } from "@testing-library/react"
 import { MemoryRouter, Route, Routes, useLocation } from "react-router"
-import IndexPage from "app/pages/addresses/index/IndexPage"
+import IndexPage from "@/app/pages/addresses/index/IndexPage"
 
 let permissions: string[] = []
 const address = (id: string, weergavenaam: string) => ({
@@ -84,7 +84,7 @@ vi.mock("react-oidc-context", () => ({
   useAuth: () => ({ signoutRedirect: vi.fn() }),
 }))
 
-vi.mock("app/state/auth/oidc/useDecodedToken", () => ({
+vi.mock("@/app/state/auth/oidc/useDecodedToken", () => ({
   useDecodedToken: () => ({ given_name: "Jan" }),
 }))
 

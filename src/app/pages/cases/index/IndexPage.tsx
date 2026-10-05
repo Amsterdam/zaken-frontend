@@ -1,7 +1,7 @@
 import { Navigate, useLocation } from "react-router"
 import { DefaultLayout } from "@/components/DefaultLayout/DefaultLayout"
-import Cases from "app/components/cases/Cases/Cases"
-import { getLastCasesSearch } from "app/components/cases/useCasesFilters"
+import Cases from "@/app/components/cases/Cases/Cases"
+import { getLastCasesSearch } from "@/app/components/cases/useCasesFilters"
 
 const IndexPage: React.FC = () => {
   const { search } = useLocation()

@@ -5,7 +5,7 @@ import {
   TextInputControl,
 } from "@amsterdam/ee-ads-rhf"
 import { useCase, useCreateDecision, useDecisionTypes } from "@/api/hooks"
-import { CaseFormPage } from "app/components/case/CaseFormPage/CaseFormPage"
+import { CaseFormPage } from "@/app/components/case/CaseFormPage/CaseFormPage"
 import { useAfterCaseFormSubmit } from "../useAfterCaseFormSubmit"
 import DecisionHeader, { type Workflow } from "./components/DecisionHeader"
 

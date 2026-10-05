@@ -2,7 +2,7 @@ import { StandaloneLink } from "@amsterdam/design-system-react"
 import { RouterLink } from "@/components/DefaultLayout/RouterLink"
 import { type ColumnType } from "@/components/Table/types"
 import { formatDate } from "@/shared/dateFormatters"
-import isDateInPast from "app/components/shared/Date/isDateInPast"
+import isDateInPast from "@/app/components/shared/Date/isDateInPast"
 import AssignTask from "./AssignTask/AssignTask"
 import styles from "./TableTasks.module.css"
 

@@ -7,7 +7,7 @@ import {
   TextAreaControl,
 } from "@amsterdam/ee-ads-rhf"
 import { useCase, useCreateSchedule, useScheduleTypes } from "@/api/hooks"
-import { CaseFormPage } from "app/components/case/CaseFormPage/CaseFormPage"
+import { CaseFormPage } from "@/app/components/case/CaseFormPage/CaseFormPage"
 import { useAfterCaseFormSubmit } from "../useAfterCaseFormSubmit"
 
 type Props = {

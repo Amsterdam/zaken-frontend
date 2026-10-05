@@ -4,11 +4,11 @@ import type { CompleteTaskPayload } from "@/api/hooks"
 import { RouterLink } from "@/components/DefaultLayout/RouterLink"
 import { StandaloneButton } from "@/components/StandaloneButton/StandaloneButton"
 import { type ColumnType } from "@/components/Table/types"
-import ChangeableDueDate from "app/components/case/tasks/ChangeDueDate/ChangebleDueDate"
+import ChangeableDueDate from "@/app/components/case/tasks/ChangeDueDate/ChangebleDueDate"
 import TaskButton, {
   NO_PERMISSION,
-} from "app/components/case/tasks/TaskButton/TaskButton"
-import AssignTask from "app/components/tasks/TableTasks/AssignTask/AssignTask"
+} from "@/app/components/case/tasks/TaskButton/TaskButton"
+import AssignTask from "@/app/components/tasks/TableTasks/AssignTask/AssignTask"
 import UpdateSchedule from "./components/UpdateSchedule/UpdateSchedule"
 import taskActionMap from "./utils/taskActionMap"
 

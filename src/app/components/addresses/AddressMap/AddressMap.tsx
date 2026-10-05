@@ -1,7 +1,7 @@
 import { Skeleton } from "@amsterdam/design-system-react"
 import { useBenkAgg } from "@/api/hooks"
 import { MapView } from "@/components/MapView/MapView"
-import { getAddressFromBenkAggResponse } from "app/components/addresses/utils"
+import { getAddressFromBenkAggResponse } from "@/app/components/addresses/utils"
 
 type Props = {
   bagId: components["schemas"]["Address"]["bag_id"]

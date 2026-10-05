@@ -12,8 +12,6 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": resolve(import.meta.dirname, "src"),
-      app: resolve(import.meta.dirname, "src/app"),
-      __mocked__: resolve(import.meta.dirname, "src/__mocked__"),
     },
   },
   test: {

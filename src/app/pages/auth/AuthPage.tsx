@@ -1,6 +1,6 @@
 import { Grid, Heading } from "@amsterdam/design-system-react"
 import { DefaultLayout } from "@/components/DefaultLayout/DefaultLayout"
-import OidcValues from "app/components/auth/OidcValues/OidcValues"
+import OidcValues from "@/app/components/auth/OidcValues/OidcValues"
 
 const AuthPage: React.FC = () => (
   <DefaultLayout>

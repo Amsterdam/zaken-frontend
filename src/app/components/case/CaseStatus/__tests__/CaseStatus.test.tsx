@@ -45,13 +45,13 @@ vi.mock("@/hooks/useHasPermission", () => ({
 }))
 
 // The cells with their own data and dialogs have their own tests.
-vi.mock("app/components/tasks/TableTasks/AssignTask/AssignTask", () => ({
+vi.mock("@/app/components/tasks/TableTasks/AssignTask/AssignTask", () => ({
   default: () => <span>avatar</span>,
 }))
-vi.mock("app/components/case/tasks/ChangeDueDate/ChangebleDueDate", () => ({
+vi.mock("@/app/components/case/tasks/ChangeDueDate/ChangebleDueDate", () => ({
   default: ({ dueDate }: { dueDate: string }) => <span>{dueDate}</span>,
 }))
-vi.mock("app/components/case/tasks/CompleteTask/CompleteTaskDialog", () => ({
+vi.mock("@/app/components/case/tasks/CompleteTask/CompleteTaskDialog", () => ({
   default: () => null,
 }))
 

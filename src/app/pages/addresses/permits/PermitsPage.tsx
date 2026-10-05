@@ -1,14 +1,14 @@
 import { useParams } from "react-router"
 import { Column } from "@amsterdam/design-system-react"
 import { EqualColumns } from "@/components/EqualColumns/EqualColumns"
-import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId"
-import AddressPage from "app/components/addresses/AddressOverview/AddressPage"
-import DecosLink from "app/components/permits/DecosLink/DecosLink"
-import PermitsDecos from "app/components/permits/Decos/PermitsDecos"
-import Meldingen from "app/components/permits/Meldingen/Meldingen"
-import PermitsPowerBrowser from "app/components/permits/PowerBrowser/PermitsPowerBrowser"
-import Registrations from "app/components/permits/Registrations/Registrations"
-import NotFoundPage from "app/pages/errors/NotFoundPage"
+import isValidUrlParamBAGId from "@/app/routing/utils/isValidUrlParamBAGId"
+import AddressPage from "@/app/components/addresses/AddressOverview/AddressPage"
+import DecosLink from "@/app/components/permits/DecosLink/DecosLink"
+import PermitsDecos from "@/app/components/permits/Decos/PermitsDecos"
+import Meldingen from "@/app/components/permits/Meldingen/Meldingen"
+import PermitsPowerBrowser from "@/app/components/permits/PowerBrowser/PermitsPowerBrowser"
+import Registrations from "@/app/components/permits/Registrations/Registrations"
+import NotFoundPage from "@/app/pages/errors/NotFoundPage"
 
 type Props = {
   bagId: string

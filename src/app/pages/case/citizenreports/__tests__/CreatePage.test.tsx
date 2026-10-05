@@ -43,7 +43,7 @@ vi.mock("react-oidc-context", () => ({
   useAuth: () => ({ signoutRedirect: vi.fn() }),
 }))
 
-vi.mock("app/state/auth/oidc/useDecodedToken", () => ({
+vi.mock("@/app/state/auth/oidc/useDecodedToken", () => ({
   useDecodedToken: () => ({ given_name: "Jan" }),
 }))
 
