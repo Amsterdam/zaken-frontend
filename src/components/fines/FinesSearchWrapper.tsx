@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Column, SearchField } from "@amsterdam/design-system-react"
+import { Column, SearchField, Heading, Paragraph } from "@amsterdam/design-system-react"
 import FinesSearchResultsList from "@/components/fines/FinesSearchResultsList"
 import useURLState from "@/hooks/useURLState"
 
@@ -17,7 +17,8 @@ const FinesSearchWrapper: React.FC = () => {
   }
 
   return (
-    <Column gap="large">
+    <Column>
+      <Heading level={2}>Bekijk een invordering</Heading>
       <SearchField onSubmit={onSubmit} style={{ maxWidth: 600 }}>
         <SearchField.Input
           label="Kenmerk van de beschikking"
