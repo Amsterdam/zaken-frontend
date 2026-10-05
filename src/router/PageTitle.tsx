@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useLocation } from "react-router"
 import { useCase } from "@/api/hooks"
-import { env } from "@/app/config/env"
+import { env } from "@/config/env"
 import { getPageTitle } from "./routeTitles"
 
 const PAGE_TITLE = env.VITE_APP_TITLE_SHORT ?? ""

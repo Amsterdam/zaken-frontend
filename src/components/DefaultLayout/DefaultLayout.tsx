@@ -18,10 +18,10 @@ import {
   SearchIcon,
 } from "@amsterdam/design-system-react-icons"
 import { useUsersMe } from "@/api/hooks"
-import { getLastCasesSearch } from "@/app/components/cases/useCasesFilters"
-import { getLastTasksSearch } from "@/app/components/tasks/useTasksFilters"
-import { env } from "@/app/config/env"
-import { useDecodedToken } from "@/app/state/auth/oidc/useDecodedToken"
+import { getLastCasesSearch } from "@/components/cases/useCasesFilters"
+import { getLastTasksSearch } from "@/components/tasks/useTasksFilters"
+import { env } from "@/config/env"
+import { useDecodedToken } from "@/hooks/useDecodedToken"
 import { Breadcrumbs } from "./Breadcrumbs"
 import { RouterLink } from "./RouterLink"
 

@@ -1,7 +1,7 @@
 import { Outlet } from "react-router"
 import { AmsterdamCrossSpinner } from "@/components/spinners/AmsterdamCrossSpinner/AmsterdamCrossSpinner"
 import useHasPermission from "@/hooks/useHasPermission"
-import NotAuthorizedPage from "@/app/pages/auth/NotAuthorizedPage"
+import NotAuthorizedPage from "@/pages/auth/NotAuthorizedPage"
 
 type Props = {
   /** You need at least one of these. */

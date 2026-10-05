@@ -5,7 +5,7 @@ import { AuthProvider } from "react-oidc-context"
 import "./index.css"
 import App from "./App"
 import packageInfo from "../package.json"
-import { oidcConfig } from "@/app/state/auth/oidc/oidcConfig"
+import { oidcConfig } from "@/config/oidc"
 
 const container = document.getElementById("root")!
 const root = createRoot(container)
