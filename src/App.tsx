@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react"
-import { BrowserRouter } from "react-router-dom"
+import { RouterProvider } from "react-router/dom"
 import { QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import { queryClient } from "@/api/queryClient"
 import { hasAuthParams, useAuth } from "react-oidc-context"
-import Router from "app/routing/components/Router"
+import { router } from "@/router"
 import { ToastProvider } from "@/components/toasts/ToastProvider"
-import PageTitle from "app/routing/components/PageTitle"
 import { AmsterdamCrossSpinner } from "@/components/spinners/AmsterdamCrossSpinner/AmsterdamCrossSpinner"
 import { FullScreenWrapper } from "app/components/shared/loading"
 import { Feedback } from "@/components/Feedback/Feedback"
@@ -50,16 +49,13 @@ const App = () => {
   }
 
   return (
-    <BrowserRouter>
-      <QueryClientProvider client={queryClient}>
-        <ToastProvider>
-          <PageTitle />
-          <Feedback />
-          <Router />
-        </ToastProvider>
-        {import.meta.env.DEV && <ReactQueryDevtools />}
-      </QueryClientProvider>
-    </BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <ToastProvider>
+        <Feedback />
+        <RouterProvider router={router} />
+      </ToastProvider>
+      {import.meta.env.DEV && <ReactQueryDevtools />}
+    </QueryClientProvider>
   )
 }
 

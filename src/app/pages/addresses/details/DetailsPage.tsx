@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { useParams } from "react-router"
 import { Column } from "@amsterdam/design-system-react"
 import { EqualColumns } from "@/components/EqualColumns/EqualColumns"
 import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId"

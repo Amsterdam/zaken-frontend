@@ -1,4 +1,4 @@
-import { useSearchParams } from "react-router-dom"
+import { useSearchParams } from "react-router"
 import { useBagPdok } from "@/api/hooks"
 
 // The name in the URL is Dutch, like the paths and the overviews.

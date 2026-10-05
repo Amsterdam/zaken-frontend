@@ -4,7 +4,7 @@ import {
   type SubmitHandler,
   type UseFormReturn,
 } from "react-hook-form"
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router"
 import { FormPage } from "@/components/FormPage/FormPage"
 import CaseSummary from "./CaseSummary"
 

@@ -1,4 +1,4 @@
-import { Navigate, useLocation } from "react-router-dom"
+import { Navigate, useLocation } from "react-router"
 import { DefaultLayout } from "@/components/DefaultLayout/DefaultLayout"
 import Tasks from "app/components/tasks/Tasks/Tasks"
 import { getLastTasksSearch } from "app/components/tasks/useTasksFilters"

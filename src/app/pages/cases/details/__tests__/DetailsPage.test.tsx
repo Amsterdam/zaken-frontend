@@ -1,8 +1,8 @@
 // First, like the app does: the page imports the layout, which imports the
 // routes, which import this page (circular).
-import "app/routing/routes"
+import "@/router/routes"
 import { render, screen, within } from "@testing-library/react"
-import { MemoryRouter, Route, Routes } from "react-router-dom"
+import { MemoryRouter, Route, Routes } from "react-router"
 import DetailsPage from "../DetailsPage"
 
 type CaseQuery = { data?: unknown; isLoading: boolean; error?: unknown }
@@ -142,8 +142,8 @@ describe("the case page", () => {
 
     expect(breadcrumbs()).toEqual([
       ["Home", "/"],
-      ["Zakenoverzicht", "/zaken/"],
-      ["Zaakdetails", "/zaken/12/"],
+      ["Zakenoverzicht", "/zaken"],
+      ["Zaakdetails", "/zaken/12"],
     ])
   })
 
@@ -153,7 +153,7 @@ describe("the case page", () => {
     expect(breadcrumbs()).toEqual([
       ["Home", "/"],
       ["Takenoverzicht", "/taken?rol=alle"],
-      ["Zaakdetails", "/zaken/12/"],
+      ["Zaakdetails", "/zaken/12"],
     ])
   })
 
@@ -163,7 +163,7 @@ describe("the case page", () => {
     expect(breadcrumbs()).toEqual([
       ["Home", "/"],
       ["Adresoverzicht", "/adres/0363010001004479"],
-      ["Zaakdetails", "/zaken/12/"],
+      ["Zaakdetails", "/zaken/12"],
     ])
   })
 

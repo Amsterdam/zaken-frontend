@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router"
 import { Button } from "@amsterdam/design-system-react"
 import useHasPermission from "@/hooks/useHasPermission"
 import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId"

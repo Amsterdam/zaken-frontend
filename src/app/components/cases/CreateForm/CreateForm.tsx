@@ -1,5 +1,5 @@
 import { useForm, useWatch } from "react-hook-form"
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router"
 import {
   Column,
   Heading,

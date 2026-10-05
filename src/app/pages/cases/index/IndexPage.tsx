@@ -1,4 +1,4 @@
-import { Navigate, useLocation } from "react-router-dom"
+import { Navigate, useLocation } from "react-router"
 import { DefaultLayout } from "@/components/DefaultLayout/DefaultLayout"
 import Cases from "app/components/cases/Cases/Cases"
 import { getLastCasesSearch } from "app/components/cases/useCasesFilters"

@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { useParams } from "react-router"
 import SummonForm from "app/components/case/forms/SummonForm/SummonForm"
 import NotFoundPage from "app/pages/errors/NotFoundPage"
 import isValidUrlParamId from "app/routing/utils/isValidUrlParamId"

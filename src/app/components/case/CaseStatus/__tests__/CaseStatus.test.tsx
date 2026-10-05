@@ -5,7 +5,7 @@ import {
   waitFor,
   within,
 } from "@testing-library/react"
-import { MemoryRouter } from "react-router-dom"
+import { MemoryRouter } from "react-router"
 import { ToastProvider } from "@/components/toasts/ToastProvider"
 import CaseStatus from "../CaseStatus"
 

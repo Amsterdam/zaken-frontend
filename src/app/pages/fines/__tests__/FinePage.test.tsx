@@ -1,8 +1,8 @@
 // First, like the app does: the page imports the layout, which imports the
 // routes, which import this page (circular).
-import "app/routing/routes"
+import "@/router/routes"
 import { fireEvent, render, screen } from "@testing-library/react"
-import { MemoryRouter } from "react-router-dom"
+import { MemoryRouter } from "react-router"
 import FinePage from "../FinePage"
 
 type Fine = { identificatienummer: string; dagtekening: string }

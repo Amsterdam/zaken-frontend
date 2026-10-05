@@ -4,11 +4,6 @@
       "count": 1
     }
   },
-  "src/app/components/shared/CustomIcon/CustomIcon.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    }
-  },
   "src/app/components/tasks/TableTasks/AssignTask/UserPickerDropdown.tsx": {
     "react-hooks/set-state-in-effect": {
       "count": 1

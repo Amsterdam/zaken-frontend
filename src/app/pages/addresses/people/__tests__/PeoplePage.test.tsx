@@ -1,8 +1,8 @@
 // First, like the app does: the page imports the layout, which imports the
 // routes, which import this page (circular).
-import "app/routing/routes"
+import "@/router/routes"
 import { fireEvent, render, screen, within } from "@testing-library/react"
-import { MemoryRouter, Route, Routes } from "react-router-dom"
+import { MemoryRouter, Route, Routes } from "react-router"
 import PeoplePage from "../PeoplePage"
 
 const BAG_ID = "0363010000000001"

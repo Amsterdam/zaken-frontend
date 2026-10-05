@@ -1,5 +1,5 @@
 import { fireEvent, render, screen, within } from "@testing-library/react"
-import { MemoryRouter, useLocation } from "react-router-dom"
+import { MemoryRouter, useLocation } from "react-router"
 import TableCases from "../TableCases"
 
 type Case = components["schemas"]["Case"]

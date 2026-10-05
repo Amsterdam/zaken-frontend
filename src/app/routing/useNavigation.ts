@@ -1,16 +1,10 @@
-import { useNavigate } from "react-router-dom"
-import to from "./utils/to"
-
-export type NavigateToFunction = (
-  path: string,
-  params?: Record<string, unknown>,
-) => void
+import { useNavigate } from "react-router"
 
 const useNavigation = () => {
   const navigate = useNavigate()
 
-  const navigateTo = (path: string, params?: Record<string, unknown>) => {
-    navigate(to(path, params))
+  const navigateTo = (path: string) => {
+    navigate(path)
   }
 
   return { navigateTo }

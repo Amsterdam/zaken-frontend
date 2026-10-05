@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router"
 
 /**
  * Custom React hook that checks the URL for the second part of the "state" parameter

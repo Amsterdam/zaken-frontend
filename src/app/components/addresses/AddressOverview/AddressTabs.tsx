@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom"
+import { useLocation } from "react-router"
 import { TabNavigation } from "@amsterdam/design-system-react"
 import { usePermitDetails } from "@/api/hooks"
 import useHasPermission from "@/hooks/useHasPermission"

@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react"
-import { useSearchParams } from "react-router-dom"
+import { useSearchParams } from "react-router"
 import { Column, Heading, SearchField } from "@amsterdam/design-system-react"
 import debounce from "lodash.debounce"
 import SearchResults from "@/app/components/search/SearchResults/SearchResults"

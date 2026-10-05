@@ -1,5 +1,5 @@
 import { type AnchorHTMLAttributes, type Ref } from "react"
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation } from "react-router"
 
 type Props = AnchorHTMLAttributes<HTMLAnchorElement> & {
   href: string

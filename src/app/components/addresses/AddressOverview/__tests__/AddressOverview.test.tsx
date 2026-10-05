@@ -1,8 +1,8 @@
 // First, like the app does: the page imports the layout, which imports the
 // routes, which import this page (circular).
-import "app/routing/routes"
+import "@/router/routes"
 import { fireEvent, render, screen, within } from "@testing-library/react"
-import { MemoryRouter, Route, Routes, useLocation } from "react-router-dom"
+import { MemoryRouter, Route, Routes, useLocation } from "react-router"
 import IndexPage from "app/pages/addresses/index/IndexPage"
 
 let permissions: string[] = []

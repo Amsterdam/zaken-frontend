@@ -1,8 +1,8 @@
 // First, like the app does: the page imports the layout, which imports the
 // routes, which import this page (circular).
-import "app/routing/routes"
+import "@/router/routes"
 import { render, screen } from "@testing-library/react"
-import { MemoryRouter, useLocation } from "react-router-dom"
+import { MemoryRouter, useLocation } from "react-router"
 import { setLastCasesSearch } from "app/components/cases/useCasesFilters"
 import IndexPage from "../IndexPage"
 

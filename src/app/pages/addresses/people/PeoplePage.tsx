@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { useParams } from "react-router"
 import isValidUrlParamBAGId from "app/routing/utils/isValidUrlParamBAGId"
 import AddressPage from "app/components/addresses/AddressOverview/AddressPage"
 import Residents from "app/components/addresses/Residents/Residents"

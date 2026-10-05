@@ -1,8 +1,8 @@
 // First, like the app does: the page imports the layout, which imports the
 // routes, which import this page (circular).
-import "app/routing/routes"
+import "@/router/routes"
 import { fireEvent, render, screen } from "@testing-library/react"
-import { MemoryRouter, useLocation } from "react-router-dom"
+import { MemoryRouter, useLocation } from "react-router"
 import HomePage from "../HomePage"
 
 let addresses: Partial<BAGPdokAddress>[] = []
