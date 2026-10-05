@@ -1,5 +1,7 @@
-import { render, screen } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 import { createMemoryRouter, RouterProvider } from "react-router"
+import { ToastProvider } from "@/components/toasts/ToastProvider"
+import { createQueryWrapper } from "@/test-utils/createQueryWrapper"
 import { routes } from "../routes"
 
 let permissions: string[] = []
@@ -85,6 +87,22 @@ describe("the routes", () => {
     renderAt("/zaken/12/besluit/34")
 
     expect(heading(/^403/)).toBeTruthy()
+  })
+
+  it("opens the feedback dialog on a page", () => {
+    const { Wrapper } = createQueryWrapper()
+    render(
+      <Wrapper>
+        <ToastProvider>
+          <RouterProvider
+            router={createMemoryRouter(routes, { initialEntries: ["/403"] })}
+          />
+        </ToastProvider>
+      </Wrapper>,
+    )
+    fireEvent.click(screen.getByRole("button", { name: "Feedback" }))
+
+    expect(screen.getByRole("dialog")).toBeTruthy()
   })
 
   it("shows the 404 page for a path that does not exist", () => {

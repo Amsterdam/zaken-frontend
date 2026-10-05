@@ -8,7 +8,6 @@ import { router } from "@/router"
 import { ToastProvider } from "@/components/toasts/ToastProvider"
 import { AmsterdamCrossSpinner } from "@/components/spinners/AmsterdamCrossSpinner/AmsterdamCrossSpinner"
 import { FullScreenWrapper } from "@/components/FullScreenWrapper/FullScreenWrapper"
-import { Feedback } from "@/components/Feedback/Feedback"
 
 const App = () => {
   const auth = useAuth()
@@ -51,7 +50,6 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <ToastProvider>
-        <Feedback />
         <RouterProvider router={router} />
       </ToastProvider>
       {import.meta.env.DEV && <ReactQueryDevtools />}
