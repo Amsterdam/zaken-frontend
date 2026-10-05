@@ -1,4 +1,4 @@
-import { useState, type FormEventHandler } from "react"
+import { useState, type SubmitEventHandler } from "react"
 import {
   ActionGroup,
   Button,
@@ -21,7 +21,7 @@ export function FeedbackDialog({ onClose }: Props) {
   const sendFeedback = useSendFeedback()
   const { showToast } = useToast()
 
-  const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+  const onSubmit: SubmitEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault()
     if (!feedback.trim()) return
 

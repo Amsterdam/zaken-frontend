@@ -19,7 +19,7 @@ Doel: zaken-frontend omzetten naar dezelfde toekomstbestendige stack als [`top-f
 - **Fase 0 ✅** Tooling: ESLint flat config (met bulk suppressions), Prettier (hele codebase geformatteerd), Testing Library 16, `@/`-alias, `AGENTS.md`.
 - **Fase 1 ✅** Alle data via TanStack Query (`src/api/`); de oude laag `src/app/state/rest/` en `axios`, `qs`, `lodash.merge`, `lodash.isempty` zijn weg. Mutaties werken alleen bij wat de gewijzigde data toont, vaak zonder refetch.
 - **Fase 2 (bezig):** ADS staat naast `asc-ui`; de pilot (nieuwe layout `src/components/DefaultLayout/` op de 404-pagina) is ✅ akkoord. Nu pagina voor pagina, met een controle na elke pagina: 404, Hulp, 403 en `/auth` (pilot voor `Description`, de vervanger van `DefinitionList` van `wonen-ui`) de invorderingscheck en de startpagina (adres zoeken) zijn ✅ akkoord. Bezig: het zakenoverzicht, in drie stappen: (1) layout + `Table` — ✅ akkoord; (2) filters naar ADS, boven de tabel — ✅ akkoord; (3) filters naar de URL — ✅ akkoord. Het takenoverzicht is ✅ akkoord, inclusief het toewijzen van taken (pilot `ConfirmDialog`, de vervanger van de asc-ui-`ConfirmModal`). De adrespagina's (tabs Zaken, Adresdetails, Persoonsgegevens, Vergunningen), de zaakpagina en alle formulieren (react-hook-form + `ee-ads-rhf`) zijn ✅ akkoord; de oude formulierlaag is weg.
-- **Fase 2, opruimen van de oude gedeelde onderdelen (bezig):** (1) feedbackknop op de `FeedbackDialog` van top-frontend-v2 — ✅ akkoord; (2) flash messages weg: API-fouten zijn een toast met de korte teksten van top-frontend-v2 (`src/api/utils/mapApiErrorToToast.ts`), "adres niet gevonden in de BAG" is een `Alert` op de adrespagina — ✅ akkoord; (3) dode code verwijderd (65 bestanden die de app niet meer bereikte: oude navigatie, `BreadCrumbs`, `SkipLinks`, `UserInfo`, `shared/Modal`, `AddressHeader`, `AddressSuffixSwitcher`, `Tabs`, `layouts/Grid`, `MainWrapper`, … en hun tests) — wacht op test; (4) `App.tsx` zonder asc-ui (`ThemeProvider`, `GlobalStyle`); (5) `asc-ui`, `asc-assets`, `wonen-ui`, `styled-components` en `immer` deïnstalleren. Daarna React 19.
+- **Fase 2, opruimen van de oude gedeelde onderdelen ✅:** (1) feedbackknop op de `FeedbackDialog` van top-frontend-v2 — ✅ akkoord; (2) flash messages weg: API-fouten zijn een toast met de korte teksten van top-frontend-v2 (`src/api/utils/mapApiErrorToToast.ts`), "adres niet gevonden in de BAG" is een `Alert` op de adrespagina — ✅ akkoord; (3) dode code verwijderd (65 bestanden die de app niet meer bereikte: oude navigatie, `BreadCrumbs`, `SkipLinks`, `UserInfo`, `shared/Modal`, `AddressHeader`, `AddressSuffixSwitcher`, `Tabs`, `layouts/Grid`, `MainWrapper`, … en hun tests) — ✅ akkoord; (4) `App.tsx` zonder asc-ui (`ThemeProvider`, `GlobalStyle`): wat `GlobalStyle` regelde voor de pagina zelf (geen marge, lettertype, regelhoogte) staat nu in `src/index.css`, de overrides die alleen voor het samengaan met asc-ui bestonden (`[hidden]`, `box-sizing` van de avatar) zijn weg — ✅ akkoord; (5) `asc-ui`, `asc-assets`, `wonen-ui`, `styled-components` (met `@types/styled-components`), `immer`, `lodash` en `react-tooltip` zijn gedeïnstalleerd — ✅. De app draait nu alleen op de nieuwe stack; React 19 is geïnstalleerd (wacht op de test op acceptatie). De routing (Fase 4) is omgezet en akkoord. Fase 5 is daarmee ook gebouwd (`tsconfig`, aliassen, mapstructuur, README en `AGENTS.md`); na de test is de migratie klaar. Bewust niet gedaan: `React.FC` omzetten (werkt in React 19) en pagina's met hun componenten in één map per pagina zoals top-frontend-v2.
 - **Restpunten:** filters van de overzichten naar de URL (eigen pilot, past bij Fase 3); `immer` (weg met flash messages → toasts en `ShowHide`); `lodash` (weg met `amsterdam-react-final-form`); 155 vastgelegde lint-overtredingen in `eslint-suppressions.json` (lossen grotendeels op in Fase 3).
 
 ## 1. Uitgangssituatie (gemeten op `main`, okt 2026)
@@ -1050,11 +1050,11 @@ import styles from "./Component.module.css"
 
 ## Fase 4 — Routing modernisering (± 2–3 dagen, kan parallel aan Fase 3)
 
-- [ ] `react-router-dom` → `react-router` (v7 heeft alles in `react-router`; top-frontend-v2 draait al op v8).
-- [ ] `src/router/routes.tsx` + `createBrowserRouter` + `<RouterProvider>` in plaats van `<BrowserRouter>` + eigen `routesToRouteConfig`.
-- [ ] `ProtectedPage`/`AuthorizedPage` → `RequirePermissions` layout-route (zie top-frontend-v2).
-- [ ] `PageTitle` → per route `handle` of `<title>` (React 19 ondersteunt `<title>` in componenten).
-- [ ] `useNavigateWithFlashMessage` → navigeren + toast.
+- [x] `react-router-dom` → `react-router`, daarna van 7.18 naar 8.4 zoals top-frontend-v2 (`RouterProvider` komt uit `react-router/dom`). De stap naar 8 vroeg geen enkele codewijziging; versie 8 vraagt wel React ≥ 19.2.7 en Node ≥ 22.22.
+- [x] `src/router/routes.tsx` + `createBrowserRouter` + `<RouterProvider>` in plaats van `<BrowserRouter>` + eigen `routesToRouteConfig`.
+- [x] `ProtectedPage`/`AuthorizedPage` → `RequirePermissions` layout-route (zie top-frontend-v2).
+- [x] `PageTitle` → per route een `handle` met de titel. Niet het `<title>`-element van React 19: `index.html` heeft al een `<title>`, en de browser toont de eerste.
+- [x] `useNavigateWithFlashMessage` → navigeren + toast (al weg sinds de formulieren).
 
 > **🧪 Pilot: eerst één voorbeeld**
 >
@@ -1063,6 +1063,27 @@ import styles from "./Component.module.css"
 > Testen: deep links, terugknop, redirect na inloggen (`url_state`), permissiecheck en 404-pagina.
 >
 > **✅ Akkoord** → daarna de overige routegroepen overzetten.
+
+#### Status: pilot en uitrol ✅ akkoord (okt 2026)
+
+De pilot (alleen `/invorderingen` op de nieuwe manier, de rest via een vangnet-route door de oude config) is akkoord. Daarna zijn alle routes overgezet:
+
+- **`src/router/routes.tsx`** bevat alle routes, genest zoals de pagina's onder elkaar hangen (`zaken` → `:id` → `besluit/:caseUserTaskId`). Een route met een titel heeft `handle: { title }`.
+- **`RequirePermissions`** is de layout-route om de pagina's waar je een recht voor nodig hebt (invorderingscheck, persoonsgegevens, nieuwe zaak, de formulieren van een zaak). Anders dan in top-frontend-v2 stuurt hij zonder recht niet door naar de startpagina maar toont hij de 403-pagina op dezelfde URL, zoals `AuthorizedPage` deed.
+- **Titel van het tabblad en breadcrumbs** komen allebei uit de routes (`src/router/routeTitles.ts`): de titel is die van de pagina, de breadcrumbs zijn de routes met een titel op weg ernaartoe. De links in de breadcrumbs hebben geen slash meer aan het eind (`/zaken/12`), net als alle andere links.
+- **`RouteErrorPage`** (`errorElement`) vangt een pagina op die tijdens het tonen stukgaat, met een knop terug naar de startpagina.
+- **Weg:** `app/routing/routes.tsx`, de `routes.tsx` per paginagroep, `routesToRouteConfig`, `find`, de typeveilige `to()`, `Router`, `ProtectedPage`, `AuthorizedPage` en `CustomIcon` (de iconen uit de oude routeconfig). `ProtectedPage` toonde niets zonder token; `App.tsx` toont de router al alleen als je bent ingelogd.
+- **Blijft in `app/routing`:** `useNavigation` (voor de 403-redirect in `useApiFetch`), `useRedirectFromState` en de hulpjes voor URL-parameters.
+- De pagina's importeren de layout, die via de breadcrumbs de routes importeert, die de pagina's importeren (circulair). In de app gaat dat goed omdat `App.tsx` de router eerst laadt; een paginatest begint daarom met `import "@/router/routes"`.
+
+Testen:
+
+- [x] Elke pagina via het menu en via een directe URL: zoeken, taken, zaken, een zaak, een formulier van een zaak, een adres met zijn tabs, nieuwe zaak, invordering, hulp.
+- [x] Breadcrumbs op een zaak en op een formulier, ook als je via het takenoverzicht of een adres kwam; elke kruimel gaat naar de goede pagina.
+- [x] De titel van het tabblad op die pagina's, ook na navigeren zonder herladen; op een zaak staat het adres.
+- [x] Zonder recht: de 403-pagina op `/invorderingen`, de tab Persoonsgegevens, nieuwe zaak en een formulier van een zaak.
+- [x] Uitloggen en inloggen op een diepe URL: je komt terug op die URL (`url_state`).
+- [x] Een onbekende URL geeft de 404-pagina; terug en vooruit in de browser werken.
 
 ## Fase 5 — React 19 + opruimen (± 2–3 dagen)
 
@@ -1074,18 +1095,19 @@ Voorwaarde: `grep -r "@amsterdam/asc-ui\|wonen-ui\|amsterdam-react-final-form\|s
 >
 > **✅ Akkoord** na de test op acceptatie → pas dan mergen en naar productie.
 
-- [ ] Dependencies verwijderen: `@amsterdam/asc-ui`, `@amsterdam/asc-assets`, `@amsterdam/wonen-ui`, `@amsterdam/amsterdam-react-final-form`, `final-form`, `final-form-arrays`, `react-final-form`, `react-final-form-arrays`, `styled-components`, `@types/styled-components`, `lodash` (tijdelijk toegevoegd in Fase 0), `immer`, `react-router-dom`. (`axios`, `qs`, `lodash.merge` en `lodash.isempty` zijn al weg in Fase 1c.) Controleer `react-tooltip` (alleen in `CustomTooltip`; ADS-alternatief of native `title`/popover).
-- [ ] `ThemeProvider`/`GlobalStyle` uit `App.tsx`.
-- [ ] Upgrade: `react@^19`, `react-dom@^19`, `@types/react@^19`, `@types/react-dom@^19`.
-- [ ] Codemods draaien: `npx codemod@latest react/19/migration-recipe` en `npx types-react-codemod@latest preset-19 ./src`.
+- [x] Dependencies verwijderd: `@amsterdam/asc-ui`, `@amsterdam/asc-assets`, `@amsterdam/wonen-ui`, de vijf final-form-pakketten, `styled-components`, `@types/styled-components`, `lodash`, `immer` en `react-tooltip` (`CustomTooltip` is weg). (`axios`, `qs`, `lodash.merge` en `lodash.isempty` waren al weg in Fase 1c.) `react-router-dom` is vervangen door `react-router` (Fase 4).
+- [x] `ThemeProvider`/`GlobalStyle` uit `App.tsx`.
+- [x] Upgrade: `react@^19`, `react-dom@^19`, `@types/react@^19`, `@types/react-dom@^19` (19.3) — wacht op de test op acceptatie.
+- [x] Codemods: niet nodig gebleken. Na de upgrade gaf de typecheck twee fouten (een `RefObject` zonder `null`), met de hand opgelost; er was geen `useRef()` zonder argument, `defaultProps`, `propTypes` of globale `JSX`-namespace in eigen code.
 - [ ] Aandachtspunten React 19:
-  - `ref` is een gewone prop → `forwardRef` (1 bestand) kan weg.
+  - `ref` is een gewone prop → `forwardRef` is weg uit `RouterLink`; `toasts/Toast.tsx` houdt hem, zolang dat bestand gelijk is aan dat van top-frontend-v2.
+  - Tests: een `submit` moet op het formulier zelf (`input.form`), niet op een veld erin; React 19 leest het formulier uit bij een submit.
   - `React.FC` (191 bestanden) werkt nog. Bij voorkeur geleidelijk omzetten naar `function Component(props: Props)`, zoals in top-frontend-v2.
   - `useRef()` zonder argument is niet meer toegestaan → `useRef<T>(null)`.
   - `JSX` namespace: `React.JSX` gebruiken.
-- [ ] `tsconfig` gelijktrekken met top-frontend-v2 (`tsconfig.app.json` / `tsconfig.node.json`, `verbatimModuleSyntax`, `noUnusedLocals`), `app/` en `*` aliases verwijderen.
-- [ ] Mapstructuur gelijktrekken: `src/app/*` → `src/{api,components,pages,router,hooks,shared,forms,styles}`.
-- [ ] README en `AGENTS.md` bijwerken.
+- [x] `tsconfig` gelijkgetrokken met top-frontend-v2 (`tsconfig.app.json` / `tsconfig.node.json`, `verbatimModuleSyntax`, `noUnusedLocals`, `noUnusedParameters`, `erasableSyntaxOnly`, `noUncheckedSideEffectImports`, target ES2022). Dat gaf geen enkele typefout: de lintregels dwongen dit al af. De aliassen `app/`, `__mocked__/` en `*` zijn weg (uit `tsconfig` en `vite.config.ts`); de 190 imports via `app/...` zijn `@/app/...` geworden. — ✅ akkoord (lokaal getest)
+- [x] Mapstructuur gelijkgetrokken: de map `src/app` is weg (206 bestanden verhuisd, alle imports aangepast). `app/pages` → `src/pages`, `app/components/<onderdeel>` → `src/components/<onderdeel>` (naast de gedeelde componenten), `app/config` → `src/config` (met `oidc.ts`), `app/constants` → `src/shared/constants`, de hooks en `useNavigation`/`useRedirectFromState`/`useDecodedToken` → `src/hooks`, de hulpjes voor URL-parameters → `src/router/utils`, `slashSandwich` → `src/api/utils`, en `helpers`, `isDateInPast` en `isValidUrl` → `src/shared`. `FullScreenWrapper` is een eigen component in `src/components`. Geen map `src/forms`: `FormPage` en `FormDialog` hebben die rol. — ✅ akkoord (lokaal getest)
+- [x] README en `AGENTS.md` bijgewerkt naar de nieuwe stack en mapstructuur.
 
 ---
 

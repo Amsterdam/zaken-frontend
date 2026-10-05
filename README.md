@@ -15,19 +15,33 @@
 - `git clone https://github.com/Amsterdam/zaken-frontend.git`
 - `cd zaken-frontend`
 - `npm install`
-- `npm run swagger:generate-schema`
 - `npm run start`
 
-### Bypassing authentication
+The types of the API are in `src/__generated__/apiSchema.d.ts`. Generate them again after a change in the API with `npm run generate:api-schema:acc` (from acceptance) or `npm run generate:api-schema:local` (from a backend on localhost).
 
-- When running zaken-frontend and zaken-backend locally, it's possible to bypass Keycloak authentication. See https://github.com/Amsterdam/zaken-frontend/tree/main/src/app/state/auth/keycloak.
+### Stack
+
+- [Vite](https://vite.dev), TypeScript and React 19
+- [Amsterdam Design System](https://designsystem.amsterdam) for the components, with CSS Modules for our own styles
+- [TanStack Query](https://tanstack.com/query) for the data from the API (`src/api`)
+- [react-hook-form](https://react-hook-form.com) with `@amsterdam/ee-ads-rhf` for the forms
+- [React Router](https://reactrouter.com) for the routes (`src/router/routes.tsx`)
+- [Vitest](https://vitest.dev) and Testing Library for the tests
+
+### Checks
+
+Before every change is merged these must pass:
+
+- `npm run typecheck`
+- `npm run lint`
+- `npm test`
+
+`npm run format` formats the code with Prettier.
 
 ### Required access to services for development
 
 - ADW account (@amsterdam.nl)
 - GitHub repository (https://github.com/Amsterdam/zaken-frontend) OIS Basis
-- GitHub repository dependency (https://github.com/Amsterdam/wonen-ui) OIS Basis
-- GitHub repository dependency (https://github.com/Amsterdam/amsterdam-react-final-form) OIS Basis
 - NPM (https://www.npmjs.com/settings/amsterdam/packages) OIS Slack #frontend-amsterdam
 
 ### Connecting to Acceptance API
@@ -43,8 +57,18 @@ to [production](https://wonen.zaken.amsterdam.nl/).
 
 A `npm run deploy:prod` convenience script is also available. This also guarantees the versions between the Git tag and NPM (package.json) are in sync.
 
-# Directory tree structure
+## Structure
 
-```typescript
-tree -I "node_modules|.next|.git" -L 10 > directory-tree.txt
-```
+Imports use the `@/` alias for `src/`.
+
+| Folder           | What is in it                                                                                                                                                                           |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/api`        | The hooks for the API (TanStack Query), the query keys and the fetch with the access token                                                                                              |
+| `src/components` | Shared components (`Table`, `FormPage`, `DefaultLayout`, …) and, in the folders with a lowercase name, the components of one part of the app (`case`, `cases`, `addresses`, `tasks`, …) |
+| `src/config`     | The environment variables and the sign-in (OIDC)                                                                                                                                        |
+| `src/hooks`      | Shared hooks                                                                                                                                                                            |
+| `src/pages`      | The pages, one folder per part of the app                                                                                                                                               |
+| `src/router`     | The routes, the permissions per route and the title of the browser tab                                                                                                                  |
+| `src/shared`     | Functions and constants without React (dates, texts, theme names)                                                                                                                       |
+| `src/styles`     | Global styles on top of the design system                                                                                                                                               |
+| `src/types`      | Types that are not generated from the API                                                                                                                                               |

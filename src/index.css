@@ -1,8 +1,18 @@
-/* Amsterdam Design System (MIGRATION.md Fase 2). Only .ams-* classes, tokens on :root
-   and the font, so it doesn't affect the pages that still use asc-ui. */
+/* Amsterdam Design System: the .ams-* classes, the tokens on :root and the font. */
 @import "@amsterdam/design-system-assets/font/index.css";
 @import "@amsterdam/design-system-css/dist/index.css";
 @import "@amsterdam/design-system-tokens/dist/index.css";
 @import "@amsterdam/design-system-tokens/dist/compact.css";
 @import "./styles/design-system-overrides.css";
 @import "./styles/animations.css";
+
+/* The page itself: no margin around it, and the font and line height for the
+   few texts outside the components of the design system. */
+html {
+  line-height: 1.15;
+}
+
+body {
+  margin: 0;
+  font-family: var(--ams-typography-font-family);
+}

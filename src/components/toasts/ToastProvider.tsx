@@ -68,7 +68,8 @@ export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
     // Not in every browser (and not in jsdom): then it is a fixed element.
     if (!container || typeof container.showPopover !== "function") return
 
-    // Set here: React 18 does not know the attribute yet.
+    // Only here, where it can be shown: as an attribute it would hide the
+    // toasts where a popover cannot be opened.
     container.popover = "manual"
     if (container.matches(":popover-open")) container.hidePopover()
     if (numToasts > 0) container.showPopover()

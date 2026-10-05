@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import { queryKeys } from "@/api/queryKeys"
-import mockData from "__mocked__/data"
+import mockData from "@/__mocked__/data"
 
 /**
  * The backend has no roles endpoint yet, so this returns the mocked roles

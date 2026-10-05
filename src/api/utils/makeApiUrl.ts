@@ -1,5 +1,5 @@
-import slashSandwich from "app/routing/utils/slashSandwich"
-import { env } from "app/config/env"
+import slashSandwich from "@/api/utils/slashSandwich"
+import { env } from "@/config/env"
 
 /** An url of our own API, always with a trailing slash. */
 export const makeApiUrl = (...paths: Array<number | string | undefined>) =>

@@ -1,5 +1,5 @@
 import { useBagPdokByBagId, usePanorama } from "@/api/hooks"
-import { getAddressFromBagPdokResponse } from "app/components/addresses/utils"
+import { getAddressFromBagPdokResponse } from "@/components/addresses/utils"
 
 const extractLatLng = (point?: BAGPdokAddress["centroide_ll"]) => {
   // Ensure the string starts with "POINT(" and ends with ")"

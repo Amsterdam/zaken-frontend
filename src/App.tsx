@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from "react"
-import { ThemeProvider, GlobalStyle } from "@amsterdam/asc-ui"
-import { BrowserRouter } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { RouterProvider } from "react-router/dom"
 import { QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import { queryClient } from "@/api/queryClient"
 import { hasAuthParams, useAuth } from "react-oidc-context"
-import Router from "app/routing/components/Router"
+import { router } from "@/router"
 import { ToastProvider } from "@/components/toasts/ToastProvider"
-import PageTitle from "app/routing/components/PageTitle"
 import { AmsterdamCrossSpinner } from "@/components/spinners/AmsterdamCrossSpinner/AmsterdamCrossSpinner"
-import { FullScreenWrapper } from "app/components/shared/loading"
+import { FullScreenWrapper } from "@/components/FullScreenWrapper/FullScreenWrapper"
 import { Feedback } from "@/components/Feedback/Feedback"
 
 const App = () => {
@@ -51,21 +49,13 @@ const App = () => {
   }
 
   return (
-    <React.Fragment>
-      <ThemeProvider>
-        <GlobalStyle />
-        <BrowserRouter>
-          <QueryClientProvider client={queryClient}>
-            <ToastProvider>
-              <PageTitle />
-              <Feedback />
-              <Router />
-            </ToastProvider>
-            {import.meta.env.DEV && <ReactQueryDevtools />}
-          </QueryClientProvider>
-        </BrowserRouter>
-      </ThemeProvider>
-    </React.Fragment>
+    <QueryClientProvider client={queryClient}>
+      <ToastProvider>
+        <Feedback />
+        <RouterProvider router={router} />
+      </ToastProvider>
+      {import.meta.env.DEV && <ReactQueryDevtools />}
+    </QueryClientProvider>
   )
 }
 

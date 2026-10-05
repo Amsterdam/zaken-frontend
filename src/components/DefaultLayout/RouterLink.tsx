@@ -1,7 +1,10 @@
-import { forwardRef, type AnchorHTMLAttributes } from "react"
-import { Link, useLocation } from "react-router-dom"
+import { type AnchorHTMLAttributes, type Ref } from "react"
+import { Link, useLocation } from "react-router"
 
-type Props = AnchorHTMLAttributes<HTMLAnchorElement> & { href: string }
+type Props = AnchorHTMLAttributes<HTMLAnchorElement> & {
+  href: string
+  ref?: Ref<HTMLAnchorElement>
+}
 
 /** What a link tells the next page: where you came from (path and search). */
 export type LinkState = { from?: string }
@@ -12,11 +15,9 @@ export type LinkState = { from?: string }
  * page you leave goes along as `from`, so the next page's breadcrumbs can
  * lead back to it.
  */
-export const RouterLink = forwardRef<HTMLAnchorElement, Props>(
-  ({ href, ...props }, ref) => {
-    const { pathname, search } = useLocation()
-    const state: LinkState = { from: `${pathname}${search}` }
+export function RouterLink({ href, ...props }: Props) {
+  const { pathname, search } = useLocation()
+  const state: LinkState = { from: `${pathname}${search}` }
 
-    return <Link ref={ref} to={href} state={state} {...props} />
-  },
-)
+  return <Link to={href} state={state} {...props} />
+}
