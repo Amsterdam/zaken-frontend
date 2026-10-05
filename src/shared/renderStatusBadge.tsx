@@ -14,9 +14,7 @@ type StatusBadgeOptions =
       variant?: never
     }
 
-export function getStatusBadgeColor(
-  variant: StatusBadgeVariant,
-): BadgeProps["color"] {
+function getStatusBadgeColor(variant: StatusBadgeVariant): BadgeProps["color"] {
   switch (variant) {
     case "success":
       return undefined /* Badge does not accept green, green is the default */

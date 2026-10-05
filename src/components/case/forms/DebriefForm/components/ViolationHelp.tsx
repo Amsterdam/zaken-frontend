@@ -40,5 +40,3 @@ export const ViolationHelp: React.FC = () => (
     </OrderedList>
   </HelpDialog>
 )
-
-export default ViolationHelp

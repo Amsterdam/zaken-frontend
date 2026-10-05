@@ -87,5 +87,3 @@ export function MapView({
     />
   )
 }
-
-export default MapView

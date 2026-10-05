@@ -41,5 +41,3 @@ export function SelectFilter({
     </Field>
   )
 }
-
-export default SelectFilter

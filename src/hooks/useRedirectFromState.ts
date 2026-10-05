@@ -44,5 +44,3 @@ export const useRedirectFromState = () => {
     handleRedirect()
   }, [navigate])
 }
-
-export default useRedirectFromState

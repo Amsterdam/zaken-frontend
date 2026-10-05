@@ -20,5 +20,3 @@ export const dummyRegistrationsResponse: Registration[] = [
     agreementDate: "2026-03-03T14:26:15.5968961Z",
   },
 ]
-
-export default dummyRegistrationsResponse

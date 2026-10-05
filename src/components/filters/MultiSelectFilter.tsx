@@ -49,5 +49,3 @@ export function MultiSelectFilter({
     </Field>
   )
 }
-
-export default MultiSelectFilter

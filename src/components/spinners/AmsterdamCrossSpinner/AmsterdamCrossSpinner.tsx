@@ -30,5 +30,3 @@ export function AmsterdamCrossSpinner() {
     </div>
   )
 }
-
-export default AmsterdamCrossSpinner

@@ -44,14 +44,6 @@ export const isValidPermit = (permit: PowerBrowserPermit): boolean =>
   hasGrantedStatus(permit) && hasValidDateRange(permit)
 
 /**
- * Filters only valid permits from a list
- */
-export const getValidPermits = (
-  permits: PowerBrowserPermit[],
-): PowerBrowserPermit[] =>
-  Array.isArray(permits) ? permits.filter(isValidPermit) : []
-
-/**
  * Sorts permits by:
  * 1. Valid permits first
  * 2. Start date descending (newest first)

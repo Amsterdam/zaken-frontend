@@ -46,8 +46,3 @@ export const visit_go_ahead = {
   true: "Ja, doorlaten",
   false: "Nee, tegenhouden",
 }
-
-export const booleanObj = {
-  true: "Ja",
-  false: "Nee",
-}

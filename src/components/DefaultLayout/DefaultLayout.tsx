@@ -145,5 +145,3 @@ export function DefaultLayout({ children, hideBreadcrumbs = false }: Props) {
     </>
   )
 }
-
-export default DefaultLayout

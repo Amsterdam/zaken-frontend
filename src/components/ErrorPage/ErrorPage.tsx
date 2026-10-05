@@ -38,5 +38,3 @@ export function ErrorPage({ icon, heading, children }: Props) {
     </DefaultLayout>
   )
 }
-
-export default ErrorPage

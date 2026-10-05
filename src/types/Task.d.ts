@@ -8,11 +8,6 @@ declare namespace Tasks {
     name?: string
   }
 
-  /** Taak zoals gebruikt in TableTasks */
-  type Task = BaseTask & {
-    case: components["schemas"]["Case"]
-  }
-
   type FormField = {
     label: string
     name: string

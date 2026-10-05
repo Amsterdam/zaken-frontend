@@ -110,5 +110,3 @@ export const ReportFields: React.FC<Props> = ({ control, asksNuisance }) => {
     </>
   )
 }
-
-export default ReportFields

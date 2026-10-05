@@ -13,13 +13,13 @@ import UpdateSchedule from "./components/UpdateSchedule/UpdateSchedule"
 import taskActionMap from "./utils/taskActionMap"
 
 /** A task with the state of the case it belongs to. */
-export type Task = Tasks.WorkflowTask & {
+type Task = Tasks.WorkflowTask & {
   state: string
   /** More about the state, e.g. who the summons is for. */
   information?: string
 }
 
-export function getColumns(
+function getColumns(
   completeTask: (payload: CompleteTaskPayload) => Promise<unknown>,
   tasks: Task[] | undefined,
   themeId?: number,

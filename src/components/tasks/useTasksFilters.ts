@@ -155,7 +155,7 @@ export const getLastTasksSearch = () => {
   }
 }
 
-export const setLastTasksSearch = (search: string) => {
+const setLastTasksSearch = (search: string) => {
   try {
     window.sessionStorage.setItem(STORAGE_KEY, search)
   } catch {

@@ -22,5 +22,3 @@ export const useBagAddress = (
 
   return { address, isBusy, unknownAddress }
 }
-
-export default useBagAddress

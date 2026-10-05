@@ -6,7 +6,7 @@ type Coordinates = {
   y: number
 }
 
-export const CRS_CONFIG = {
+const CRS_CONFIG = {
   RD: {
     code: "EPSG:28992",
     projection:
@@ -27,7 +27,7 @@ export const CRS_CONFIG = {
   EARTH_RADIUS: 6378137,
 }
 
-export const proj4RD = proj4(CRS_CONFIG.WGS84.code, CRS_CONFIG.RD.projection)
+const proj4RD = proj4(CRS_CONFIG.WGS84.code, CRS_CONFIG.RD.projection)
 
 /**
  * The Dutch coordinate system (RD, "Rijksdriehoekscoördinaten") for Leaflet,
@@ -78,5 +78,3 @@ export const getCrsRd = (
     },
   }
 }
-
-export default getCrsRd

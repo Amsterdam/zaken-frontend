@@ -3,7 +3,7 @@ import { useAuth } from "react-oidc-context"
 import useNavigation from "@/hooks/useNavigation"
 import type { ApiError } from "@/api/types/apiError"
 
-export type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE"
+type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE"
 
 export type ApiFetchOptions = {
   method?: HttpMethod

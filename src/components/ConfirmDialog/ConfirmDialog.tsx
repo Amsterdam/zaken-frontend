@@ -54,5 +54,3 @@ export function ConfirmDialog({
     </OpenDialog>
   )
 }
-
-export default ConfirmDialog

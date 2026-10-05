@@ -68,5 +68,3 @@ export function FormDialog<T extends FieldValues>({
     </OpenDialog>
   )
 }
-
-export default FormDialog

@@ -94,5 +94,3 @@ export const dummyMeldingenResponse: Melding[] = [
       .format(),
   },
 ]
-
-export default dummyMeldingenResponse

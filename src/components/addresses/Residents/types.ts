@@ -80,7 +80,3 @@ export type Resident = {
     }
   }[]
 }
-
-export type ResidentsResponse = {
-  personen: Resident[]
-}

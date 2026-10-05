@@ -27,5 +27,3 @@ export function PermitValidityLabel({ label, isValid }: Props) {
     </Row>
   )
 }
-
-export default PermitValidityLabel

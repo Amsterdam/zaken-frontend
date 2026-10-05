@@ -106,5 +106,3 @@ export function FormPage<T extends FieldValues>({
     </DefaultLayout>
   )
 }
-
-export default FormPage

@@ -89,5 +89,3 @@ export const TaskFormField: React.FC<Props> = ({ field }) => {
       )
   }
 }
-
-export default TaskFormField

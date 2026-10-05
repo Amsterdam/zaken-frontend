@@ -24,5 +24,3 @@ export function ResidentDetails({ resident }: { resident: Resident }) {
     </Row>
   )
 }
-
-export default ResidentDetails

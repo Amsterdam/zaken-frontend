@@ -1,4 +1,4 @@
-export const THEME_NAMES = {
+const THEME_NAMES = {
   GOED_VERHUURDERSCHAP: "Goed verhuurderschap",
   HUISVESTINGSVERGUNNING: "Huisvestingsvergunning",
   KAMERVERHUUR: "Kamerverhuur",

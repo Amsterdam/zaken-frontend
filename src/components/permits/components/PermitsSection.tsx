@@ -57,5 +57,3 @@ export function PermitsSection({
     </Column>
   )
 }
-
-export default PermitsSection

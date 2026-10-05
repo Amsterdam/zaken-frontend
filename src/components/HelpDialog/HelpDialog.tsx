@@ -47,5 +47,3 @@ export function HelpDialog({ label, heading = label, children }: Props) {
     </div>
   )
 }
-
-export default HelpDialog

@@ -20,5 +20,3 @@ export function EqualColumns({ children, gap = "x-large" }: Props) {
     </Row>
   )
 }
-
-export default EqualColumns

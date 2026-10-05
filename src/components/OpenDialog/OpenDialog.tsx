@@ -28,5 +28,3 @@ export function OpenDialog({ heading, children, footer, onClose }: Props) {
     </Dialog>
   )
 }
-
-export default OpenDialog

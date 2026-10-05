@@ -22,5 +22,3 @@ export function Feedback() {
     </>
   )
 }
-
-export default Feedback

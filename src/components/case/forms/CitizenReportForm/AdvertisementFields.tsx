@@ -90,5 +90,3 @@ export const AdvertisementFields: React.FC<Props> = ({
     </>
   )
 }
-
-export default AdvertisementFields

@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { type PaginationType } from "../types"
 
-export const DEFAULT_PAGE_SIZE = 10
+const DEFAULT_PAGE_SIZE = 10
 
 /**
  * The pagination of the table: the `pagination` prop (paged from outside)

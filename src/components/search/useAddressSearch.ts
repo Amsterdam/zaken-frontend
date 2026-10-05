@@ -21,5 +21,3 @@ export const useAddressSearch = () => {
 
   return { searchString, isValid, data, isLoading, isError }
 }
-
-export default useAddressSearch

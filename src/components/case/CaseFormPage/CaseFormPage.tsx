@@ -44,5 +44,3 @@ export function CaseFormPage<T extends FieldValues>({
     />
   )
 }
-
-export default CaseFormPage

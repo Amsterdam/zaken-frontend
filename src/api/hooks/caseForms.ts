@@ -13,7 +13,7 @@ type CaseId = components["schemas"]["CaseDetail"]["id"]
  * form itself (refetchType "none"): the case page refetches what it shows once
  * it's back. The case and task lists are marked stale too.
  */
-export const useCaseFormMutation = <Payload, Response = unknown>(
+const useCaseFormMutation = <Payload, Response = unknown>(
   caseId: CaseId,
   url: string,
 ) => {

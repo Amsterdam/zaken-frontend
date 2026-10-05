@@ -30,5 +30,3 @@ export function StandaloneButton({
     </button>
   )
 }
-
-export default StandaloneButton

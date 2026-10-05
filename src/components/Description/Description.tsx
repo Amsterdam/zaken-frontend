@@ -73,5 +73,3 @@ export function Description({
     </DescriptionList>
   )
 }
-
-export default Description

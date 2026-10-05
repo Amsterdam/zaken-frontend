@@ -14,5 +14,3 @@ export const useMappedTaskOwners = () => {
       return 0
     })
 }
-
-export default useMappedTaskOwners

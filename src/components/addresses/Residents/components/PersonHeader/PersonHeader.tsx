@@ -27,5 +27,3 @@ export function PersonHeader({ resident }: { resident: Resident }) {
     </Row>
   )
 }
-
-export default PersonHeader

@@ -73,5 +73,3 @@ export function FeedbackDialog({ onClose }: Props) {
     </OpenDialog>
   )
 }
-
-export default FeedbackDialog

@@ -7,5 +7,3 @@ export const useUserById = (
   const user = data?.results?.find((user) => user.id === id)
   return [user, { isBusy }]
 }
-
-export default useUserById

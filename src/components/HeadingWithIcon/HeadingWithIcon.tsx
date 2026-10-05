@@ -20,5 +20,3 @@ export function HeadingWithIcon({ label, svg, level = 1 }: Props) {
     </Row>
   )
 }
-
-export default HeadingWithIcon
