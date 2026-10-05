@@ -2,7 +2,7 @@ import isValidUrlParamId from "@/router/utils/isValidUrlParamId"
 import { useCase } from "@/api/hooks"
 import type { ApiError } from "@/api/types/apiError"
 
-export default (oId: number | undefined) => {
+const useExistingCase = (oId: number | undefined) => {
   const valid =
     isValidUrlParamId<components["schemas"]["CaseDetail"]["id"]>(oId)
   const {
@@ -15,3 +15,5 @@ export default (oId: number | undefined) => {
 
   return [exists, isBusy, has404, oId!, caseItem] as const
 }
+
+export default useExistingCase

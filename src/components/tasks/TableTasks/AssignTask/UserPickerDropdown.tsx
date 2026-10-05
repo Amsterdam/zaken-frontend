@@ -1,4 +1,4 @@
-import { useState, useEffect, useLayoutEffect, useRef } from "react"
+import { useState, useEffect, useRef } from "react"
 import { createPortal } from "react-dom"
 import { useUsers } from "@/api/hooks"
 import { createNameAbbreviation } from "@/shared/helpers"
@@ -31,7 +31,6 @@ const UserPickerDropdown: React.FC<Props> = ({
   dropdownRef,
 }) => {
   const [search, setSearch] = useState("")
-  const [isPositioned, setIsPositioned] = useState(false)
   const { data, isLoading: isBusy } = useUsers()
   const users: User[] = (data?.results ?? []).filter(
     (u) => u.first_name && u.last_name,
@@ -40,10 +39,6 @@ const UserPickerDropdown: React.FC<Props> = ({
 
   useEffect(() => {
     searchRef.current?.focus()
-  }, [])
-
-  useLayoutEffect(() => {
-    setIsPositioned(true)
   }, [])
 
   const filtered: User[] = users.filter((u: User) => {
@@ -64,7 +59,6 @@ const UserPickerDropdown: React.FC<Props> = ({
         left: positionLeft,
         transform: positionTransform,
         zIndex: 9999,
-        opacity: isPositioned ? 1 : 0,
       }}
     >
       <div

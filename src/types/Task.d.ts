@@ -32,7 +32,7 @@ declare namespace Tasks {
     user_has_permission: boolean
     form: FormField[]
     roles?: string[]
-    form_variables?: Record<string, { value: any } | any>
+    form_variables?: Record<string, { value: unknown }>
   }
 
   type CaseWorkflow = {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef } from "react"
 import { RouterProvider } from "react-router/dom"
 import { QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
@@ -12,7 +12,7 @@ import { Feedback } from "@/components/Feedback/Feedback"
 
 const App = () => {
   const auth = useAuth()
-  const [hasTriedSignin, setHasTriedSignin] = useState(false)
+  const hasTriedSignin = useRef(false)
 
   useEffect(() => {
     if (
@@ -20,7 +20,7 @@ const App = () => {
       !auth.isAuthenticated &&
       !auth.activeNavigator &&
       !auth.isLoading &&
-      !hasTriedSignin
+      !hasTriedSignin.current
     ) {
       const currentUrl = new URL(window.location.href)
       const fullPathWithQuery = `${currentUrl.pathname}${currentUrl.search}`
@@ -28,9 +28,9 @@ const App = () => {
       auth.signinRedirect({
         url_state: fullPathWithQuery,
       })
-      setHasTriedSignin(true)
+      hasTriedSignin.current = true
     }
-  }, [auth, hasTriedSignin])
+  }, [auth])
 
   if (auth.isLoading) {
     return <AmsterdamCrossSpinner />

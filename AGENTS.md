@@ -27,11 +27,6 @@ Dezelfde stack als `top-frontend-v2`: Vite, TypeScript, React 19, Amsterdam Desi
 - Voeg geen nieuwe dependencies toe zonder expliciete toestemming. Los het eerst op met wat er al is.
 - Is een nieuwe dependency echt nodig, leg dan uit waarom en welke alternatieven je hebt overwogen.
 
-### Lint
-
-- `eslint-suppressions.json` legt de laatste bestaande overtredingen vast. Voeg daar geen nieuwe overtredingen aan toe; los ze op in de code.
-- Heb je een vastgelegde overtreding opgelost, draai dan `npx eslint . --prune-suppressions` zodat het bestand krimpt.
-
 ### Controleren
 
 Voor elke wijziging: `npm run typecheck`, `npm run lint` en `npm test` moeten slagen.

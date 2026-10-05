@@ -2,6 +2,5 @@
 dist
 coverage
 package-lock.json
-eslint-suppressions.json
 
 src/__generated__/
