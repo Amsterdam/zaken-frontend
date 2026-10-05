@@ -12,10 +12,9 @@ const isFieldError = (error: object): error is { message?: unknown } =>
  * Also for the fields of a list or a group ("persons.0.first_name").
  *
  * Use this one instead of mapErrorsToAlert of @amsterdam/ee-ads-rhf. That one
- * takes the first element in the whole page with the name of the field, and
- * for a field called "description" that is the <meta name="description"> of
- * index.html, which has no id: the link becomes "#". This one only looks at
- * the fields of a form.
+ * takes the first element in the whole page with the name of the field, which
+ * can be an element outside the form (like a <meta> tag) without an id: the
+ * link becomes "#". This one only looks at the fields of a form.
  */
 export const mapErrorsToAlert = (
   errors: FieldErrors,

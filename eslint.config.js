@@ -33,7 +33,7 @@ export default defineConfig([
               name: "@amsterdam/ee-ads-rhf",
               importNames: ["mapErrorsToAlert"],
               message:
-                "Gebruik mapErrorsToAlert uit @/shared/mapErrorsToAlert: die van de library zoekt in de hele pagina en vindt bij een veld 'description' de meta-tag van index.html.",
+                "Gebruik mapErrorsToAlert uit @/shared/mapErrorsToAlert: die van de library zoekt in de hele pagina in plaats van alleen in het formulier, en kan zo een element buiten het formulier met dezelfde naam vinden.",
             },
           ],
         },
