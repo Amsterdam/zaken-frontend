@@ -70,8 +70,7 @@ type Props = {
 }
 
 /**
- * Page layout with the Amsterdam Design System (MIGRATION.md Fase 2), based on
- * top-frontend-v2.
+ * Page layout with the Amsterdam Design System, based on top-frontend-v2.
  * The children are Grid.Cell's: the layout puts them in a Grid.
  */
 export function DefaultLayout({ children, hideBreadcrumbs = false }: Props) {
