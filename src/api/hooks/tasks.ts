@@ -95,7 +95,8 @@ export type CompleteTaskPayload = {
 
 /**
  * Complete a (generic) workflow task. Afterwards, so never before the POST is done:
- * - the workflows of the case refetch (the next task, the new state);
+ * - the workflows of the case refetch (the next task, the new state), and so do
+ *   its processes when they are shown (they are at a next step);
  * - the events refetch (the backend adds a GENERIC_TASK event);
  * - the case itself is only marked stale: its `workflows` field changed, which this
  *   page doesn't show but e.g. the decision form uses, so the next screen refetches it;
@@ -126,6 +127,9 @@ export const useCompleteTask = (
         }),
         queryClient.invalidateQueries({
           queryKey: queryKeys.cases.workflows(caseId),
+        }),
+        queryClient.invalidateQueries({
+          queryKey: queryKeys.cases.workflowInstances(caseId),
         }),
       ])
     },

@@ -44,6 +44,8 @@ export const queryKeys = {
     all: ["cases"] as const,
     detail: (caseId?: CaseId) => ["cases", caseId] as const,
     workflows: (caseId: CaseId) => ["cases", caseId, "workflows"] as const,
+    workflowInstances: (caseId: CaseId) =>
+      ["cases", caseId, "workflow-instances"] as const,
     events: (caseId: CaseId) => ["cases", caseId, "events"] as const,
     schedules: (caseId: CaseId) => ["cases", caseId, "schedules"] as const,
     summons: (caseId?: CaseId) => ["cases", caseId, "summons"] as const,

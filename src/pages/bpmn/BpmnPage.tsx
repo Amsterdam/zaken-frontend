@@ -6,16 +6,13 @@ import { BpmnDiagram } from "@/components/bpmn/BpmnDiagram"
 import { DefaultLayout } from "@/components/DefaultLayout/DefaultLayout"
 import filterStyles from "@/components/filters/filters.module.css"
 import { SelectFilter } from "@/components/filters/SelectFilter"
-import { capitalize } from "@/shared/textFormatters"
+import { formatWorkflowType } from "@/shared/textFormatters"
 
 // The choices live in the URL, so a diagram can be linked to.
 const MODEL_PARAM = "model"
 const VERSION_PARAM = "versie"
 // The ids of the tasks to highlight, separated by commas.
 const TASKS_PARAM = "taken"
-
-/** "sub_workflow" -> "Sub workflow" */
-const formatModelName = (name: string) => capitalize(name.replace(/_/g, " "))
 
 /** Choose a BPMN model and a version of it, and look at its diagram. */
 const BpmnPage: React.FC = () => {
@@ -46,7 +43,7 @@ const BpmnPage: React.FC = () => {
             options={[
               { label: "Selecteer naam", value: "" },
               ...modelNames.map((name) => ({
-                label: formatModelName(name),
+                label: formatWorkflowType(name),
                 value: name,
               })),
             ]}

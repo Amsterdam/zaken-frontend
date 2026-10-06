@@ -93,6 +93,7 @@ describe("useCompleteTask", () => {
     const { Wrapper, queryClient } = createQueryWrapper()
     queryClient.setQueryData(queryKeys.cases.events(5527), [])
     queryClient.setQueryData(queryKeys.cases.schedules(5527), [])
+    queryClient.setQueryData(queryKeys.cases.workflowInstances(5527), [])
     const { result } = renderHook(
       () => ({
         caseQuery: useCase(5527),
@@ -131,6 +132,11 @@ describe("useCompleteTask", () => {
     expect(
       queryClient.getQueryState(queryKeys.cases.schedules(5527))?.isInvalidated,
     ).toBe(false)
+    // The processes are at a next step.
+    expect(
+      queryClient.getQueryState(queryKeys.cases.workflowInstances(5527))
+        ?.isInvalidated,
+    ).toBe(true)
   })
 })
 

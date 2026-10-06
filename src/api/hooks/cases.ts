@@ -274,6 +274,25 @@ export const useCasesByBagId = (
   })
 }
 
+/**
+ * Every workflow that was started on a case, also the completed ones and
+ * those without an open task; the latest first.
+ */
+export const useCaseWorkflowInstances = (caseId: CaseId) => {
+  const fetch = useApiFetch()
+
+  return useQuery({
+    queryKey: queryKeys.cases.workflowInstances(caseId),
+    queryFn: () =>
+      fetch<components["schemas"]["CaseWorkflowInstance"][]>(
+        makeApiUrl("cases", caseId, "workflow-instances"),
+      ),
+    // The backend moves them on in the background: fetched again whenever
+    // they are shown, besides after completing or adding a task.
+    staleTime: 0,
+  })
+}
+
 export const useCaseEvents = (
   caseId: CaseId,
   options?: { enabled?: boolean },
