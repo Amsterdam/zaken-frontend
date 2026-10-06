@@ -1,0 +1,26 @@
+/* The red tab on the right edge of the window, with its text turned upward. */
+.feedbackButton {
+  z-index: 999;
+  right: 0;
+  top: 50%;
+  margin-top: -70px;
+  width: 40px;
+  height: 140px;
+  position: fixed;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  background-color: #ec0000;
+  color: white;
+  cursor: pointer;
+  /* Turned half around, so the shadow that falls to the left and down is
+     given to the right and up. */
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px -1.95px 2.6px;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+.feedbackButton:focus-visible {
+  outline: 2px solid black;
+  outline-offset: 2px;
+}

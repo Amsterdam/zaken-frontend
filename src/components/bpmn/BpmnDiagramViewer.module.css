@@ -1,0 +1,10 @@
+.container {
+  width: 100%;
+  height: 70vh;
+  min-height: 500px;
+}
+
+/* The task(s) a case is at. */
+.currentTask :global(.djs-visual) > :first-child {
+  fill: var(--ams-color-highlight-azure) !important;
+}

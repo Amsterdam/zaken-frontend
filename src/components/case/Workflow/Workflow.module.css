@@ -1,0 +1,13 @@
+.overdue {
+  color: var(--ams-color-feedback-error);
+}
+
+/* The urgency of a visit, below the state: small like the other line there,
+   with its button on the same line. */
+.urgency {
+  align-items: center;
+  display: flex;
+  font-size: var(--ams-paragraph-small-font-size);
+  gap: var(--ams-space-xs);
+  line-height: var(--ams-paragraph-small-line-height);
+}

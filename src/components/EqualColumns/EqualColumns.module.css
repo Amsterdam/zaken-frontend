@@ -1,0 +1,5 @@
+/* Each column gets an equal share; one that would get too narrow goes to the next line. */
+.column {
+  flex: 1 1 24rem;
+  min-width: 0;
+}

@@ -1,0 +1,80 @@
+import L, { type CRS, type LatLng, type PointExpression } from "leaflet"
+import proj4 from "proj4"
+
+type Coordinates = {
+  x: number
+  y: number
+}
+
+const CRS_CONFIG = {
+  RD: {
+    code: "EPSG:28992",
+    projection:
+      "+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +" +
+      "y_0=463000 +ellps=bessel +units=m +towgs84=565.2369,50.0087,465.658,-0.406857330322398,0.3507326" +
+      "76542563,-1.8703473836068,4.0812 +no_defs",
+    transformation: {
+      bounds: {
+        topLeft: [-285401, 903401] as PointExpression,
+        bottomRight: [595401.92, 22598.08] as PointExpression,
+      },
+    },
+  },
+  WGS84: {
+    code: "EPSG:4326",
+    projection: "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs",
+  },
+  EARTH_RADIUS: 6378137,
+}
+
+const proj4RD = proj4(CRS_CONFIG.WGS84.code, CRS_CONFIG.RD.projection)
+
+/**
+ * The Dutch coordinate system (RD, "Rijksdriehoekscoördinaten") for Leaflet,
+ * which the map tiles of Amsterdam use (from zwd-frontend). A CRS (coordinate
+ * reference system) tells what the coordinates of a point mean.
+ */
+export const getCrsRd = (
+  maxZoom = 16,
+  zeroScale = 3440.64,
+  scales: number[] = [],
+): CRS => {
+  for (let i = 0; i <= maxZoom; i++) {
+    scales.push(1 / (zeroScale * 0.5 ** i))
+  }
+
+  return {
+    ...L.CRS.Simple,
+    ...{
+      code: CRS_CONFIG.RD.code,
+      infinite: false,
+      projection: {
+        project: (latlng: LatLng) => {
+          const [x, y] = proj4RD.forward([latlng.lng, latlng.lat])
+          return new L.Point(x, y)
+        },
+        unproject: (point: Coordinates) => {
+          const [lng, lat] = proj4RD.inverse([point.x, point.y])
+          return L.latLng(lat, lng)
+        },
+        bounds: L.bounds(
+          CRS_CONFIG.RD.transformation.bounds.topLeft,
+          CRS_CONFIG.RD.transformation.bounds.bottomRight,
+        ),
+
+        proj4def: CRS_CONFIG.RD.projection,
+      },
+      transformation: new L.Transformation(1, 285401.92, -1, 903401.92),
+      distance: L.CRS.Earth.distance,
+      R: CRS_CONFIG.EARTH_RADIUS,
+      scale: (zoom: number) => {
+        if (scales[zoom]) {
+          return scales[zoom]
+        }
+        return 1 / (zeroScale * 0.5 ** zoom)
+      },
+
+      zoom: (scale: number) => Math.log(1 / scale / zeroScale) / Math.log(0.5),
+    },
+  }
+}
