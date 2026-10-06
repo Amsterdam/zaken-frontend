@@ -50,6 +50,7 @@ describe("DefaultLayout (via the 404 page)", () => {
       "Zoeken",
       "Takenoverzicht",
       "Zakenoverzicht",
+      "BPMN",
       "Hulp",
       "Uitloggen (Jan)",
     ])

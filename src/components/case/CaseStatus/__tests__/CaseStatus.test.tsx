@@ -5,7 +5,7 @@ import {
   waitFor,
   within,
 } from "@testing-library/react"
-import { MemoryRouter } from "react-router"
+import { MemoryRouter, useLocation } from "react-router"
 import { ToastProvider } from "@/components/toasts/ToastProvider"
 import CaseStatus from "../CaseStatus"
 
@@ -13,6 +13,26 @@ const startWorkflowProcess = vi.fn()
 const refreshWorkflowsSoon = vi.fn()
 let permissions: string[] = []
 let workflows: unknown[] = []
+const useCaseWorkflowInstances = vi.fn((caseId: number) => ({
+  data: [
+    {
+      id: 2,
+      workflow_type: "sub_workflow",
+      workflow_version: "0.10.0",
+      completed: false,
+      current_task_specs: ["task_a", "task_b"],
+    },
+    {
+      id: 1,
+      workflow_type: "director",
+      workflow_version: "0.1.0",
+      completed: true,
+      current_task_specs: [],
+      case: caseId,
+    },
+  ],
+  isLoading: false,
+}))
 
 vi.mock("@/api/hooks", () => ({
   useCase: () => ({ data: { id: 12, end_date: null, theme: { id: 1 } } }),
@@ -23,6 +43,8 @@ vi.mock("@/api/hooks", () => ({
     refetch: vi.fn(),
   }),
   useCompleteTask: () => ({ mutateAsync: vi.fn() }),
+  useCaseWorkflowInstances: (caseId: number) =>
+    useCaseWorkflowInstances(caseId),
   useWorkflowProcesses: () => ({
     data: [
       { id: 3, name: "Huisbezoek inplannen" },
@@ -59,12 +81,15 @@ vi.mock("@/components/case/tasks/CompleteTask/CompleteTaskDialog", () => ({
   default: () => null,
 }))
 
-const renderStatus = () =>
+const Search = () => <span data-testid="search">{useLocation().search}</span>
+
+const renderStatus = (search = "") =>
   render(
-    <MemoryRouter initialEntries={["/zaken/12"]}>
+    <MemoryRouter initialEntries={[`/zaken/12${search}`]}>
       <ToastProvider>
         <CaseStatus id={12} />
       </ToastProvider>
+      <Search />
     </MemoryRouter>,
   )
 
@@ -87,6 +112,7 @@ describe("the open tasks of a case", () => {
     startWorkflowProcess.mockReset()
     startWorkflowProcess.mockResolvedValue({})
     refreshWorkflowsSoon.mockReset()
+    useCaseWorkflowInstances.mockClear()
     workflows = [
       {
         state: { name: "Inplannen Huisbezoek" },
@@ -195,6 +221,63 @@ describe("the open tasks of a case", () => {
     expect(within(other).getAllByRole("cell")[1].textContent).toBe("Huisbezoek")
   })
 
+  it("shows the processes on their own tab, fetched when you open it", () => {
+    renderStatus()
+
+    expect(
+      screen.getByRole("tab", { name: "Open taken", selected: true }),
+    ).toBeTruthy()
+    expect(useCaseWorkflowInstances).not.toHaveBeenCalled()
+
+    fireEvent.click(screen.getByRole("tab", { name: "Processen" }))
+
+    expect(useCaseWorkflowInstances).toHaveBeenCalledWith(12)
+    expect(
+      screen.getAllByRole("columnheader").map((header) => header.textContent),
+    ).toEqual(["Proces", "Omschrijving", "Versie", "Status", ""])
+    const [, active, completed] = screen.getAllByRole("row")
+    expect(
+      within(active)
+        .getAllByRole("cell")
+        .map((cell) => cell.textContent),
+    ).toEqual([
+      "Sub workflow",
+      "Deelproces",
+      "0.10.0",
+      "Actief",
+      "Bekijk huidige processtap",
+    ])
+    // The link leads to the diagram, with the open tasks to highlight.
+    expect(
+      within(active)
+        .getByRole("link", {
+          name: "Bekijk huidige processtap: Sub workflow 0.10.0",
+        })
+        .getAttribute("href"),
+    ).toBe("/bpmn?model=sub_workflow&versie=0.10.0&taken=task_a%2Ctask_b")
+    expect(within(completed).getByText("Afgerond")).toBeTruthy()
+    expect(
+      within(completed)
+        .getByRole("link", { name: "Bekijk het proces: Director 0.1.0" })
+        .getAttribute("href"),
+    ).toBe("/bpmn?model=director&versie=0.1.0")
+  })
+
+  it("keeps the open tab in the URL", () => {
+    renderStatus("?tab=processen")
+
+    expect(
+      screen.getByRole("tab", { name: "Processen", selected: true }),
+    ).toBeTruthy()
+    expect(useCaseWorkflowInstances).toHaveBeenCalledWith(12)
+
+    fireEvent.click(screen.getByRole("tab", { name: "Open taken" }))
+    expect(screen.getByTestId("search").textContent).toBe("")
+
+    fireEvent.click(screen.getByRole("tab", { name: "Processen" }))
+    expect(screen.getByTestId("search").textContent).toBe("?tab=processen")
+  })
+
   it("says so when there are no tasks", () => {
     workflows = []
     renderStatus()
@@ -223,7 +306,9 @@ describe("the open tasks of a case", () => {
     expect(
       within(screen.getByRole("status")).getByText("Taak opgevoerd"),
     ).toBeTruthy()
-    expect(screen.getByRole("heading", { name: "Open taken" })).toBeTruthy()
+    expect(
+      screen.getByRole("heading", { name: "Taken en processen" }),
+    ).toBeTruthy()
   })
 
   it("can't be sent before a task is chosen", async () => {

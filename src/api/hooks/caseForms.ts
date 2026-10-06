@@ -107,8 +107,8 @@ export const useCreateSchedule = (caseId: CaseId) =>
 const WORKFLOW_REFRESH_DELAYS = [0, 2000, 6000]
 
 /**
- * Refetches the open tasks and the events of a case now and a few times after,
- * for an action whose result the backend makes in the background.
+ * Refetches the open tasks, the processes and the events of a case now and a
+ * few times after, for an action whose result the backend makes in the background.
  */
 export const useRefreshCaseWorkflowsSoon = (caseId: CaseId) => {
   const queryClient = useQueryClient()
@@ -118,6 +118,9 @@ export const useRefreshCaseWorkflowsSoon = (caseId: CaseId) => {
       setTimeout(() => {
         void queryClient.invalidateQueries({
           queryKey: queryKeys.cases.workflows(caseId),
+        })
+        void queryClient.invalidateQueries({
+          queryKey: queryKeys.cases.workflowInstances(caseId),
         })
         void queryClient.invalidateQueries({
           queryKey: queryKeys.cases.events(caseId),

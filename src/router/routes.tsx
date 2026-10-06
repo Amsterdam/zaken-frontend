@@ -5,6 +5,7 @@ import PeoplePage from "@/pages/addresses/people/PeoplePage"
 import PermitsPage from "@/pages/addresses/permits/PermitsPage"
 import AuthPage from "@/pages/auth/AuthPage"
 import NotAuthorizedPage from "@/pages/auth/NotAuthorizedPage"
+import BpmnPage from "@/pages/bpmn/BpmnPage"
 import CitizenReportCreatePage from "@/pages/case/citizenreports/CreatePage"
 import CompleteCasePage from "@/pages/case/complete/CompleteCasePage"
 import DebriefCreatePage from "@/pages/case/debriefings/CreatePage"
@@ -55,6 +56,7 @@ export const routes: RouteObject[] = [
       { path: "auth", element: <AuthPage /> },
       // To look at the 403 page without having to lack a permission.
       { path: "403", element: <NotAuthorizedPage /> },
+      { path: "bpmn", element: <BpmnPage />, ...titled("BPMN") },
       { path: "hulp", element: <HelpPage />, ...titled("Hulp") },
       {
         path: "taken",

@@ -1,4 +1,5 @@
 export * from "./addresses"
+export * from "./bpmn"
 export * from "./caseForms"
 export * from "./cases"
 export * from "./externalApis"
