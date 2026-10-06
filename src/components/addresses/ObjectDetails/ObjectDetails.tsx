@@ -2,6 +2,7 @@ import { Column, Heading } from "@amsterdam/design-system-react"
 import { useBenkAgg } from "@/api/hooks"
 import { Description } from "@/components/Description/Description"
 import { getAddressFromBenkAggResponse } from "@/components/addresses/utils"
+import { formatDate } from "@/shared/dateFormatters"
 
 type Props = {
   bagId: components["schemas"]["Address"]["bag_id"]
@@ -99,6 +100,34 @@ const ObjectDetails: React.FC<Props> = ({ bagId }) => {
             {
               label: "Bouwjaar",
               value: fromBuildings(object?.panden, "bouwjaar Pand"),
+            },
+            {
+              label: "Begin geldigheid",
+              value: text(formatDate(object?.beginGeldigheid)),
+            },
+            {
+              label: "BAG-proces verblijfsobject",
+              value: text(object?.verblijfsobjectBagproces),
+            },
+            {
+              label: "BAG-proces ligplaats",
+              value: text(object?.ligplaatsBagproces),
+            },
+            {
+              label: "BAG-proces standplaats",
+              value: text(object?.standplaatsBagproces),
+            },
+            {
+              label: "Begin geldigheid verblijfsobject",
+              value: text(formatDate(object?.verblijfsobjectBeginGeldigheid)),
+            },
+            {
+              label: "Begin geldigheid ligplaats",
+              value: text(formatDate(object?.ligplaatsBeginGeldigheid)),
+            },
+            {
+              label: "Begin geldigheid standplaats",
+              value: text(formatDate(object?.standplaatsBeginGeldigheid)),
             },
             {
               label: "Type woonobject",

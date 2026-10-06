@@ -43,6 +43,13 @@ vi.mock("@/api/hooks", () => ({
             verblijfsobjectStatusOmschrijving: "Verblijfsobject in gebruik",
             verblijfsobjectVerdiepingToegang: 0,
             verblijfsobjectEigendomsverhoudingOmschrijving: null,
+            beginGeldigheid: "1005-01-01T00:19:32",
+            verblijfsobjectBeginGeldigheid: "2022-07-25T02:00:00",
+            ligplaatsBeginGeldigheid: null,
+            standplaatsBeginGeldigheid: null,
+            verblijfsobjectBagproces: "Splitsing",
+            ligplaatsBagproces: null,
+            standplaatsBagproces: null,
             gebiedenStadsdeelNaam: "Nieuw-West",
             gebiedenWijkNaam: "Slotervaart-Zuid",
             gebiedenBuurtNaam: "Jacques Veltmanbuurt",
@@ -137,6 +144,14 @@ describe("the tab Adresdetails of an address", () => {
     expect(description("Type adres")).toBe("Hoofdadres")
     expect(description("Verdieping")).toBe("Begane grond")
     expect(description("Bouwjaar")).toBe("1958")
+    expect(description("Begin geldigheid")).toBe("01-01-1005")
+    expect(description("Begin geldigheid verblijfsobject")).toBe("25-07-2022")
+    // Not a berth or a pitch: those dates are empty and left out.
+    expect(screen.queryByText("Begin geldigheid ligplaats")).toBeNull()
+    expect(screen.queryByText("Begin geldigheid standplaats")).toBeNull()
+    expect(description("BAG-proces verblijfsobject")).toBe("Splitsing")
+    expect(screen.queryByText("BAG-proces ligplaats")).toBeNull()
+    expect(screen.queryByText("BAG-proces standplaats")).toBeNull()
     expect(description("Type woonobject")).toBe("Meerdere woningen")
     expect(description("Buurt")).toBe("Jacques Veltmanbuurt")
     // An empty value is left out.

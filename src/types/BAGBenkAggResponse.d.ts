@@ -23,6 +23,16 @@ declare type BAGBenkAggAddress = {
   verblijfsobjectAantalKamers: number | null
   verblijfsobjectVerdiepingToegang: number | null
   verblijfsobjectEigendomsverhoudingOmschrijving: string | null
+  // Since when this state holds, as an ISO date with a time: of the address
+  // itself, and of the kind of object it is (the other two are null).
+  beginGeldigheid: string | null
+  verblijfsobjectBeginGeldigheid: string | null
+  ligplaatsBeginGeldigheid: string | null
+  standplaatsBeginGeldigheid: string | null
+  // The BAG process that led to this state, per kind of object.
+  verblijfsobjectBagproces: string | number | null
+  ligplaatsBagproces: string | number | null
+  standplaatsBagproces: string | number | null
   gebiedenStadsdeelNaam: string | null
   gebiedenWijkNaam: string | null
   gebiedenBuurtNaam: string | null
