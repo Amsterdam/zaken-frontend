@@ -29,7 +29,7 @@ function getColumns(
     {
       // The task is what the row is about: first, and it stands out. Below it
       // (small) who may do the task.
-      header: "Open taak",
+      header: "Taak",
       dataIndex: "name",
       render: (_, { name, roles }) => (
         <>
@@ -45,7 +45,7 @@ function getColumns(
     {
       // The state of the case the task belongs to, and (small) more about it,
       // e.g. who the summons is for.
-      header: "Status",
+      header: "Proces",
       dataIndex: "state",
       render: (_, { state, information, task_name, case: caseId }) => (
         <>
@@ -85,7 +85,7 @@ function getColumns(
         ),
     },
     {
-      header: "Verwerking taak",
+      header: "",
       dataIndex: "case",
       noWrap: true,
       render: (_, task) => {

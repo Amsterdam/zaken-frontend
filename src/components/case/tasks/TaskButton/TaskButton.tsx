@@ -31,7 +31,7 @@ const TaskButton: React.FC<Props> = ({
         aria-label={`Taak afronden: ${taskName}`}
         onClick={() => setIsOpen(true)}
       >
-        Taak afronden
+        Afronden
       </StandaloneButton>
       {isOpen && (
         <CompleteTaskDialog
