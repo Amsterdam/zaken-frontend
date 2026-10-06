@@ -14,6 +14,7 @@ import {
   EuroCoinsFillIcon,
   FolderFillIcon,
   LogOutIcon,
+  OrganisationChartIcon,
   QuestionMarkCircleIcon,
   SearchIcon,
 } from "@amsterdam/design-system-react-icons"
@@ -58,6 +59,7 @@ const menuItems: MenuItem[] = [
     label: "Invordering",
     permission: "access_recovery_check",
   },
+  { href: "/bpmn", icon: OrganisationChartIcon, label: "BPMN" },
   { href: "/hulp", icon: QuestionMarkCircleIcon, label: "Hulp" },
 ]
 

@@ -32,6 +32,14 @@ export const queryKeys = {
     me: () => ["auth", "users", "me"] as const,
   },
 
+  bpmn: {
+    all: ["bpmn"] as const,
+    modelNames: () => ["bpmn", "models"] as const,
+    models: (modelName?: string) => ["bpmn", "models", modelName] as const,
+    file: (modelName?: string, version?: string) =>
+      ["bpmn", "models", modelName, "file", version] as const,
+  },
+
   cases: {
     all: ["cases"] as const,
     detail: (caseId?: CaseId) => ["cases", caseId] as const,
