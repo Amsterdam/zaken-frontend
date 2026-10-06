@@ -1,6 +1,11 @@
-import { fireEvent, render, screen } from "@testing-library/react"
-import { MemoryRouter, useLocation } from "react-router"
-import { useCasesFilters } from "../../useCasesFilters"
+import { fireEvent, render, screen, waitFor } from "@testing-library/react"
+import {
+  createMemoryRouter,
+  MemoryRouter,
+  RouterProvider,
+  useLocation,
+} from "react-router"
+import { getLastCasesSearch, useCasesFilters } from "../../useCasesFilters"
 import CasesFilter from "../CasesFilter"
 
 type Props = Parameters<typeof CasesFilter>[0]
@@ -225,5 +230,24 @@ describe("CasesFilter", () => {
       openCases: "open",
       pagination: { page: 1, pageSize: 100 },
     })
+  })
+
+  // The app has a data router, where the URL changes after the click is
+  // handled: nothing may store the old filters again in between.
+  it("forgets the last filters after a reset", async () => {
+    const search = "thema=Vakantieverhuur&stadsdeel=Noord"
+    const router = createMemoryRouter(
+      [{ path: "/zaken", element: <Filter /> }],
+      { initialEntries: [`/zaken?${search}`] },
+    )
+    render(<RouterProvider router={router} />)
+    const setItem = vi.spyOn(Storage.prototype, "setItem")
+
+    fireEvent.click(screen.getByRole("button", { name: "Wis alle filters" }))
+
+    await waitFor(() => expect(router.state.location.search).toBe(""))
+    expect(setItem).not.toHaveBeenCalledWith(expect.anything(), search)
+    expect(getLastCasesSearch()).toBe("")
+    setItem.mockRestore()
   })
 })

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from "react"
+import { useCallback, useMemo } from "react"
 import { useSearchParams } from "react-router"
 
 export type CasesFilters = {
@@ -179,9 +179,6 @@ type Update =
 export const useCasesFilters = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const filters = useMemo(() => parseCasesFilters(searchParams), [searchParams])
-
-  // Also for a URL you arrived on (a shared link).
-  useEffect(() => setLastCasesSearch(searchParams.toString()), [searchParams])
 
   const update = useCallback(
     (change: Update) =>

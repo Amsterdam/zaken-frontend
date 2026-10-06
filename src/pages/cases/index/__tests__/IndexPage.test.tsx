@@ -3,7 +3,10 @@
 import "@/router/routes"
 import { render, screen } from "@testing-library/react"
 import { MemoryRouter, useLocation } from "react-router"
-import { setLastCasesSearch } from "@/components/cases/useCasesFilters"
+import {
+  getLastCasesSearch,
+  setLastCasesSearch,
+} from "@/components/cases/useCasesFilters"
 import IndexPage from "../IndexPage"
 
 vi.mock("@/components/DefaultLayout/DefaultLayout", () => ({
@@ -57,5 +60,11 @@ describe("the cases overview page", () => {
     renderPage("/zaken")
 
     expect(screen.getByRole("status").textContent).toBe("")
+  })
+
+  it("remembers the filters of a URL you arrived on", () => {
+    renderPage("/zaken?thema=Vakantieverhuur")
+
+    expect(getLastCasesSearch()).toBe("thema=Vakantieverhuur")
   })
 })
