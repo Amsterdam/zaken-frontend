@@ -70,7 +70,7 @@ const Workflow: React.FC<Props> = ({ id }) => {
 
   return (
     <Table
-      columns={getColumns(completeTask, rows, caseData?.theme.id)}
+      columns={getColumns(completeTask, caseData?.theme.id)}
       data={rows}
       pagination={false}
       verticalAlign="middle"

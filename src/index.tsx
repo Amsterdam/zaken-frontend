@@ -4,7 +4,6 @@ import { AuthProvider } from "react-oidc-context"
 // First, so the CSS Modules of the components come after (and can override) the ADS CSS.
 import "./index.css"
 import App from "./App"
-import packageInfo from "../package.json"
 import { oidcConfig } from "@/config/oidc"
 
 const container = document.getElementById("root")!
@@ -17,5 +16,3 @@ root.render(
     </AuthProvider>
   </StrictMode>,
 )
-
-console.log("Name:", packageInfo.name, packageInfo.version)

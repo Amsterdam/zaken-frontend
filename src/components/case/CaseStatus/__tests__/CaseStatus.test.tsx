@@ -51,6 +51,10 @@ vi.mock("@/components/tasks/TableTasks/AssignTask/AssignTask", () => ({
 vi.mock("@/components/case/tasks/ChangeDueDate/ChangebleDueDate", () => ({
   default: ({ dueDate }: { dueDate: string }) => <span>{dueDate}</span>,
 }))
+vi.mock(
+  "@/components/case/Workflow/components/UpdateSchedule/UpdateSchedule",
+  () => ({ default: () => <span>Machtiging</span> }),
+)
 vi.mock("@/components/case/tasks/CompleteTask/CompleteTaskDialog", () => ({
   default: () => null,
 }))
@@ -118,16 +122,23 @@ describe("the open tasks of a case", () => {
   it("shows the tasks per state, with what you can do with them", () => {
     renderStatus()
 
-    // One table, a row per task: the task with the state of the case below it.
+    // One table, a row per task. Few columns, so it fits on a laptop.
     expect(screen.getAllByRole("table")).toHaveLength(1)
-    const [, first, second] = screen.getAllByRole("row")
-    expect(within(first).getByText("Inplannen Huisbezoek")).toBeTruthy()
-    expect(within(first).getByText("Bepalen processtap")).toBeTruthy()
-    // Who may do the task is below it, in the same cell.
-    expect(within(first).getByText("Projectmedewerker")).toBeTruthy()
     expect(
-      screen.queryByRole("columnheader", { name: "Uitvoerder" }),
-    ).toBeNull()
+      screen.getAllByRole("columnheader").map((header) => header.textContent),
+    ).toEqual([
+      "Open taak",
+      "Status",
+      "Toegewezen",
+      "Slotdatum",
+      "Verwerking taak",
+    ])
+    const [, first, second] = screen.getAllByRole("row")
+    // Who may do the task is below it, in the same cell.
+    const [task, state] = within(first).getAllByRole("cell")
+    expect(within(task).getByText("Bepalen processtap")).toBeTruthy()
+    expect(within(task).getByText("Projectmedewerker")).toBeTruthy()
+    expect(state.textContent).toBe("Inplannen Huisbezoek")
     // A task without a form of its own is completed here.
     expect(
       within(first).getByRole("button", {
@@ -141,6 +152,47 @@ describe("the open tasks of a case", () => {
         .getByRole("link", { name: "Debrief verwerken: Debrief verwerken" })
         .getAttribute("href"),
     ).toBe("/zaken/12/debriefing/def")
+  })
+
+  it("shows the urgency of a visit below the state, only for that task", () => {
+    workflows = [
+      {
+        state: { name: "Huisbezoek" },
+        information: "",
+        tasks: [
+          {
+            case: 12,
+            case_user_task_id: "ghi",
+            name: "Huisbezoek inplannen",
+            task_name: "task_create_visit",
+            roles: ["Toezichthouder"],
+            owner: null,
+            due_date: "2026-10-08",
+            user_has_permission: true,
+            form: [],
+          },
+          {
+            case: 12,
+            case_user_task_id: "abc",
+            name: "Bepalen processtap",
+            task_name: "task_bepalen_processtap",
+            roles: ["Projectmedewerker"],
+            owner: null,
+            due_date: "2026-10-06",
+            user_has_permission: true,
+            form: [],
+          },
+        ],
+      },
+    ]
+    renderStatus()
+
+    expect(screen.queryByRole("columnheader", { name: "Urgentie" })).toBeNull()
+    const [, visit, other] = screen.getAllByRole("row")
+    expect(within(visit).getAllByRole("cell")[1].textContent).toBe(
+      "HuisbezoekUrgentie: Machtiging",
+    )
+    expect(within(other).getAllByRole("cell")[1].textContent).toBe("Huisbezoek")
   })
 
   it("says so when there are no tasks", () => {

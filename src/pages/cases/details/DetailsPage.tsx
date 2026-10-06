@@ -32,7 +32,7 @@ import NotFoundPage from "@/pages/errors/NotFoundPage"
 import parseUrlParamId from "@/router/utils/parseUrlParamId"
 import useExistingCase from "./hooks/useExistingCase"
 
-type Props = {
+type Params = {
   id: string
 }
 
@@ -44,7 +44,7 @@ const getAddress = (address?: components["schemas"]["Address"]) => {
 }
 
 const DetailsPage: React.FC = () => {
-  const { id: idString } = useParams<Props>()
+  const { id: idString } = useParams<Params>()
   const [exists, isBusy, has404, id, caseItem] = useExistingCase(
     parseUrlParamId(idString),
   )
@@ -114,28 +114,24 @@ const DetailsPage: React.FC = () => {
           {!isLoading && <CaseNuisanceAlert caseId={id} />}
         </Column>
       </Grid.Cell>
-      {/* Like the case page of top-frontend-v2: cards in two columns, the
-          history next to the rest (below it on a narrower window). */}
-      <Grid.Subgrid span={{ narrow: 4, medium: 8, wide: 8 }}>
+      {/* The cards below each other, so the open tasks (what you act on) have
+          the full width; the history (what you look things up in) comes last. */}
+      <Grid.Cell span="all">
+        <Card title="Zaakinformatie" icon={SuitcaseIcon} headingLevel={2}>
+          <CaseDetails caseId={id} />
+        </Card>
+      </Grid.Cell>
+      {!isLoading && (
         <Grid.Cell span="all">
-          <Card title="Zaakinformatie" icon={SuitcaseIcon} headingLevel={2}>
-            <CaseDetails caseId={id} />
+          <CaseStatus id={id} />
+        </Grid.Cell>
+      )}
+      {!isLoading && (
+        <Grid.Cell span="all">
+          <Card title="Zaakhistorie" icon={HistoryIcon} headingLevel={2}>
+            <TimelineContainer caseId={id} />
           </Card>
         </Grid.Cell>
-        {!isLoading && (
-          <Grid.Cell span="all">
-            <CaseStatus id={id} />
-          </Grid.Cell>
-        )}
-      </Grid.Subgrid>
-      {!isLoading && (
-        <Grid.Subgrid span={{ narrow: 4, medium: 8, wide: 4 }}>
-          <Grid.Cell span="all">
-            <Card title="Zaakhistorie" icon={HistoryIcon} headingLevel={2}>
-              <TimelineContainer caseId={id} />
-            </Card>
-          </Grid.Cell>
-        </Grid.Subgrid>
       )}
     </DefaultLayout>
   )

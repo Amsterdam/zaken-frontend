@@ -1,25 +1,19 @@
-import { useMemo, useState } from "react"
-import {
-  ProgressList,
-  Button,
-  Row,
-  Heading,
-} from "@amsterdam/design-system-react"
-import { MinusIcon, PlusIcon } from "@amsterdam/design-system-react-icons"
+import { useMemo } from "react"
+import { ProgressList, Heading } from "@amsterdam/design-system-react"
 import { Description } from "@/components/Description/Description"
 import { EVENT_CONFIG } from "./config/eventConfig"
 import { buildDescriptionData } from "./utils/buildDescriptionData"
 
+/**
+ * The events of a case, latest first. Every event can be opened and closed;
+ * only the latest is open, so the whole history fits in a short list.
+ */
 export function CaseEventTimeline({ data }: { data?: CaseEvent[] }) {
-  const [showAll, setShowAll] = useState(false)
-
   // Sort events by ID descending
   const events = useMemo(
     () => (data ? [...data].sort((a, b) => b.id - a.id) : []),
     [data],
   )
-
-  const visibleEvents = showAll ? events : events.slice(0, 3)
 
   // Count total occurrences per type (excluding GENERIC_TASK)
   const totalCountPerType = useMemo(() => {
@@ -38,7 +32,7 @@ export function CaseEventTimeline({ data }: { data?: CaseEvent[] }) {
     const groups: CaseEvent[][] = []
     let currentGroup: CaseEvent[] = []
 
-    for (const event of visibleEvents) {
+    for (const event of events) {
       if (currentGroup.length === 0) {
         currentGroup.push(event)
         continue
@@ -59,97 +53,81 @@ export function CaseEventTimeline({ data }: { data?: CaseEvent[] }) {
     }
 
     return groups
-  }, [visibleEvents])
+  }, [events])
 
   return (
-    <>
-      <ProgressList headingLevel={3} className="ams-mb-xl">
-        {groupedEvents.map((group, groupIndex) => {
-          const firstEvent = group[0]
-          const config = EVENT_CONFIG[firstEvent.type]
-          if (!config) return null
+    <ProgressList headingLevel={3} collapsible>
+      {groupedEvents.map((group, groupIndex) => {
+        const firstEvent = group[0]
+        const config = EVENT_CONFIG[firstEvent.type]
+        if (!config) return null
 
-          const baseTitle =
-            typeof config.title === "function"
-              ? config.title(firstEvent)
-              : config.title
+        const baseTitle =
+          typeof config.title === "function"
+            ? config.title(firstEvent)
+            : config.title
 
-          const stepCount =
-            firstEvent.type === "GENERIC_TASK" ? 0 : group.length
+        const stepCount = firstEvent.type === "GENERIC_TASK" ? 0 : group.length
 
-          const totalCount = totalCountPerType[firstEvent.type] ?? 0
+        const totalCount = totalCountPerType[firstEvent.type] ?? 0
 
-          const title =
-            totalCount > 1 && stepCount > 0
-              ? `${baseTitle} (${stepCount}/${totalCount})`
-              : baseTitle
+        const title =
+          totalCount > 1 && stepCount > 0
+            ? `${baseTitle} (${stepCount}/${totalCount})`
+            : baseTitle
 
-          // Single event or GENERIC_TASK → normal Step
-          if (group.length === 1 || firstEvent.type === "GENERIC_TASK") {
-            const event = firstEvent
-            const descriptionData = buildDescriptionData(event, config)
+        // Single event or GENERIC_TASK → normal Step
+        if (group.length === 1 || firstEvent.type === "GENERIC_TASK") {
+          const event = firstEvent
+          const descriptionData = buildDescriptionData(event, config)
 
-            return (
-              <ProgressList.Step
-                key={event.id}
-                heading={title}
-                status={groupIndex === 0 ? "current" : "completed"}
-              >
-                <Description data={descriptionData} termsWidth="medium" />
-              </ProgressList.Step>
-            )
-          }
-
-          // Multiple consecutive events → Step with Substeps
           return (
             <ProgressList.Step
-              key={firstEvent.id}
+              key={event.id}
               heading={title}
               status={groupIndex === 0 ? "current" : "completed"}
-              hasSubsteps
             >
-              <ProgressList.Substeps>
-                {group.map((event) => {
-                  const descriptionData = buildDescriptionData(event, config)
-
-                  const dateItem = descriptionData.find(
-                    (item) => item.label === "Datum",
-                  )
-
-                  const rest = descriptionData.filter(
-                    (item) => item.label !== "Datum",
-                  )
-
-                  return (
-                    <ProgressList.Substep key={event.id} status="completed">
-                      {dateItem && (
-                        <Heading level={3} className="ams-mb-s">
-                          {dateItem.value}
-                        </Heading>
-                      )}
-
-                      <Description data={rest} termsWidth="medium" />
-                    </ProgressList.Substep>
-                  )
-                })}
-              </ProgressList.Substeps>
+              <Description data={descriptionData} termsWidth="medium" />
             </ProgressList.Step>
           )
-        })}
-      </ProgressList>
+        }
 
-      <Row align="center">
-        {events.length > 1 && (
-          <Button
-            variant="secondary"
-            onClick={() => setShowAll((prev) => !prev)}
-            icon={showAll ? MinusIcon : PlusIcon}
-            iconBefore
+        // Multiple consecutive events → Step with Substeps
+        return (
+          <ProgressList.Step
+            key={firstEvent.id}
+            heading={title}
+            status={groupIndex === 0 ? "current" : "completed"}
+            hasSubsteps
           >
-            {showAll ? "Toon minder" : "Toon meer"}
-          </Button>
-        )}
-      </Row>
-    </>
+            <ProgressList.Substeps>
+              {group.map((event) => {
+                const descriptionData = buildDescriptionData(event, config)
+
+                const dateItem = descriptionData.find(
+                  (item) => item.label === "Datum",
+                )
+
+                const rest = descriptionData.filter(
+                  (item) => item.label !== "Datum",
+                )
+
+                return (
+                  <ProgressList.Substep key={event.id} status="completed">
+                    {dateItem && (
+                      <Heading level={3} className="ams-mb-s">
+                        {dateItem.value}
+                      </Heading>
+                    )}
+
+                    <Description data={rest} termsWidth="medium" />
+                  </ProgressList.Substep>
+                )
+              })}
+            </ProgressList.Substeps>
+          </ProgressList.Step>
+        )
+      })}
+    </ProgressList>
   )
 }

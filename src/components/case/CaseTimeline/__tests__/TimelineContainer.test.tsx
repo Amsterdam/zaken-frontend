@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react"
+import { render, screen } from "@testing-library/react"
 import TimelineContainer from "../TimelineContainer"
 
 type Query = { data?: unknown[]; isError: boolean }
@@ -38,12 +38,8 @@ describe("the history of a case", () => {
     }
   })
 
-  it("shows the latest events first, and the rest on request", () => {
+  it("shows all events, the latest first and only that one open", () => {
     render(<TimelineContainer caseId={12} />)
-
-    expect(steps()).toEqual(["Aanschrijving", "Debrief", "Bezoek"])
-
-    fireEvent.click(screen.getByRole("button", { name: "Toon meer" }))
 
     expect(steps()).toEqual([
       "Aanschrijving",
@@ -52,7 +48,12 @@ describe("the history of a case", () => {
       "Bezoek ingepland",
       "Aanleiding",
     ])
-    expect(screen.getByRole("button", { name: "Toon minder" })).toBeTruthy()
+    // Every event has a button to open and close it.
+    expect(
+      screen
+        .getAllByRole("button")
+        .map((button) => button.getAttribute("aria-expanded")),
+    ).toEqual(["true", "false", "false", "false", "false"])
   })
 
   it("says so when there is no history, and when it failed", () => {

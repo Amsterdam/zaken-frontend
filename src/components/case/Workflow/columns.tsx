@@ -1,5 +1,4 @@
-import { Icon, Paragraph, StandaloneLink } from "@amsterdam/design-system-react"
-import { PersonIcon } from "@amsterdam/design-system-react-icons"
+import { Paragraph, StandaloneLink } from "@amsterdam/design-system-react"
 import type { CompleteTaskPayload } from "@/api/hooks"
 import { RouterLink } from "@/components/DefaultLayout/RouterLink"
 import { StandaloneButton } from "@/components/StandaloneButton/StandaloneButton"
@@ -11,6 +10,7 @@ import TaskButton, {
 import AssignTask from "@/components/tasks/TableTasks/AssignTask/AssignTask"
 import UpdateSchedule from "./components/UpdateSchedule/UpdateSchedule"
 import taskActionMap from "./utils/taskActionMap"
+import styles from "./Workflow.module.css"
 
 /** A task with the state of the case it belongs to. */
 type Task = Tasks.WorkflowTask & {
@@ -19,68 +19,49 @@ type Task = Tasks.WorkflowTask & {
   information?: string
 }
 
+// Five columns, so the table fits on a laptop (1300px) without scrolling
+// sideways: what would be a column of one word is a small line below another.
 function getColumns(
   completeTask: (payload: CompleteTaskPayload) => Promise<unknown>,
-  tasks: Task[] | undefined,
   themeId?: number,
 ): ColumnType<Task>[] {
-  const hasCreateVisitTask = tasks?.some(
-    (task) => task.task_name === "task_create_visit",
-  )
-
-  // Only when a visit is to be made: the urgency of that visit.
-  const updateScheduleColumn: ColumnType<Task> = {
-    header: "Urgentie",
-    dataIndex: "task_name",
-    render: (_, task) =>
-      task.task_name === "task_create_visit" ? (
-        <UpdateSchedule caseId={task.case} themeId={themeId} />
-      ) : (
-        "-"
-      ),
-  }
-
   return [
     {
-      // The task, the state of the case, and below them (small) more about
-      // the state and who may do the task: all in one cell, so the table has few
-      // columns and fits in its card on a laptop.
+      // The task is what the row is about: first, and it stands out. Below it
+      // (small) who may do the task.
       header: "Open taak",
       dataIndex: "name",
-      render: (_, { state, name, roles, information }) => (
+      render: (_, { name, roles }) => (
         <>
-          {/* The task is what the row is about: first, and it stands out. */}
           <Paragraph>
             <strong>{name}</strong>
           </Paragraph>
-          <Paragraph>{state}</Paragraph>
-          {/* More about the state and who may do the task: each on a line
-              of its own, so the roles don't read as part of the text above. */}
-          {information && <Paragraph size="small">{information}</Paragraph>}
           {roles && roles.length > 0 && (
             <Paragraph size="small">{roles.join(", ")}</Paragraph>
           )}
         </>
       ),
     },
-    ...(hasCreateVisitTask ? [updateScheduleColumn] : []),
     {
-      // An icon as the header, so the column needs no more room than the avatar; the
-      // name is there for a screen reader and as a tooltip.
-      header: (
-        <span
-          title="Toewijzen"
-          // As wide as the avatar below it, with the icon in the middle.
-          style={{
-            display: "inline-flex",
-            justifyContent: "center",
-            width: "2rem",
-          }}
-        >
-          <Icon svg={PersonIcon} />
-          <span className="ams-visually-hidden">Toewijzen</span>
-        </span>
+      // The state of the case the task belongs to, and (small) more about it,
+      // e.g. who the summons is for.
+      header: "Status",
+      dataIndex: "state",
+      render: (_, { state, information, task_name, case: caseId }) => (
+        <>
+          <Paragraph>{state}</Paragraph>
+          {information && <Paragraph size="small">{information}</Paragraph>}
+          {/* Only when a visit is to be made: the urgency of that visit. */}
+          {task_name === "task_create_visit" && (
+            <div className={styles.urgency}>
+              Urgentie: <UpdateSchedule caseId={caseId} themeId={themeId} />
+            </div>
+          )}
+        </>
       ),
+    },
+    {
+      header: "Toegewezen",
       dataIndex: "owner",
       hideOnMobile: true,
       render: (_, task) => (
