@@ -152,13 +152,7 @@ describe("the open tasks of a case", () => {
     expect(screen.getAllByRole("table")).toHaveLength(1)
     expect(
       screen.getAllByRole("columnheader").map((header) => header.textContent),
-    ).toEqual([
-      "Open taak",
-      "Status",
-      "Toegewezen",
-      "Slotdatum",
-      "Verwerking taak",
-    ])
+    ).toEqual(["Taak", "Proces", "Toegewezen", "Slotdatum", ""])
     const [, first, second] = screen.getAllByRole("row")
     // Who may do the task is below it, in the same cell.
     const [task, state] = within(first).getAllByRole("cell")
