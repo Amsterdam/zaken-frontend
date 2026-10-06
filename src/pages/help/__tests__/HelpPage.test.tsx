@@ -27,9 +27,15 @@ describe("HelpPage", () => {
     expect(screen.getByRole("heading", { level: 1, name: "Hulp" })).toBeTruthy()
     // A page directly below home has no breadcrumbs.
     expect(screen.queryByRole("navigation", { name: "Kruimelpad" })).toBeNull()
-    const topics = ["Werkproces", "Algemeen gebruik", "Support", "Feedback"]
+    const topics = ["Support", "Algemeen gebruik", "Werkproces", "Feedback"]
     topics.forEach((name) =>
       expect(screen.getByRole("button", { name })).toBeTruthy(),
+    )
+    // Only the first topic is open: most people come for support.
+    topics.forEach((name) =>
+      expect(
+        screen.getByRole("button", { name }).getAttribute("aria-expanded"),
+      ).toBe(String(name === "Support")),
     )
     expect(screen.getByText("ivdesk@amsterdam.nl").getAttribute("href")).toBe(
       "mailto:ivdesk@amsterdam.nl",
