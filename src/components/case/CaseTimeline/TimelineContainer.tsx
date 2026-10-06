@@ -4,14 +4,16 @@ import { CaseEventTimeline } from "@/components/CaseEventTimeline/CaseEventTimel
 
 type Props = {
   caseId: components["schemas"]["CaseEvent"]["id"]
+  /** False while it is not known yet whether you may see the case: nothing is fetched. */
+  enabled?: boolean
 }
 
 /**
  * The history of a case: what happened, latest first (the timeline of
  * top-frontend-v2).
  */
-const TimelineContainer: React.FC<Props> = ({ caseId }) => {
-  const { data: events, isError } = useCaseEvents(caseId)
+const TimelineContainer: React.FC<Props> = ({ caseId, enabled = true }) => {
+  const { data: events, isError } = useCaseEvents(caseId, { enabled })
 
   if (isError) {
     return (

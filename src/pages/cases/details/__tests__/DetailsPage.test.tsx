@@ -55,7 +55,9 @@ vi.mock("@/components/case/CaseStatus/CaseStatus", () => ({
   default: () => <p>Open taken</p>,
 }))
 vi.mock("@/components/case/CaseTimeline/TimelineContainer", () => ({
-  default: () => <p>Tijdlijn</p>,
+  default: ({ enabled }: { enabled: boolean }) => (
+    <p>{enabled ? "Tijdlijn" : "Tijdlijn wacht"}</p>
+  ),
 }))
 vi.mock("@/components/case/CaseDetails/EditableTag/EditableTag", () => ({
   default: () => <span>-</span>,
@@ -135,6 +137,15 @@ describe("the case page", () => {
     ).toBeTruthy()
     expect(screen.getByText("Open taken")).toBeTruthy()
     expect(screen.getByText("Tijdlijn")).toBeTruthy()
+  })
+
+  it("shows the tasks and the history at once, while the case loads", () => {
+    caseQuery = { isLoading: true }
+    renderPage()
+
+    expect(screen.getByText("Open taken")).toBeTruthy()
+    // The history is only fetched when the case says you may see it.
+    expect(screen.getByText("Tijdlijn wacht")).toBeTruthy()
   })
 
   it("has the cases overview in its breadcrumbs by default", () => {

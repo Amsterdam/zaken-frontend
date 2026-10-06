@@ -274,7 +274,10 @@ export const useCasesByBagId = (
   })
 }
 
-export const useCaseEvents = (caseId: CaseId) => {
+export const useCaseEvents = (
+  caseId: CaseId,
+  options?: { enabled?: boolean },
+) => {
   const fetch = useApiFetch()
 
   return useQuery({
@@ -283,6 +286,7 @@ export const useCaseEvents = (caseId: CaseId) => {
       fetch<components["schemas"]["CaseEvent"][]>(
         makeApiUrl("cases", caseId, "events"),
       ),
+    enabled: options?.enabled ?? true,
   })
 }
 

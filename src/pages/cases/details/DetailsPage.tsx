@@ -45,9 +45,8 @@ const getAddress = (address?: components["schemas"]["Address"]) => {
 
 const DetailsPage: React.FC = () => {
   const { id: idString } = useParams<Params>()
-  const [exists, isBusy, has404, id, caseItem] = useExistingCase(
-    parseUrlParamId(idString),
-  )
+  const parsedId = parseUrlParamId(idString)
+  const [exists, isBusy, has404, id, caseItem] = useExistingCase(parsedId)
   const [hasPermission, isLoadingPermission] = useHasPermission([
     SENSITIVE_CASE_PERMISSION,
   ])
@@ -57,9 +56,10 @@ const DetailsPage: React.FC = () => {
     caseItem?.sensitive === false ||
     (caseItem?.sensitive === true && hasPermission)
 
+  if (parsedId === undefined) return <NotFoundPage />
   if (!isLoading && has404) return <NotFoundPage />
   if (!isLoading && exists && !isAuthorized) return <NotAuthorizedPage />
-  // No id, or the request failed otherwise (the error is shown as a message).
+  // The request failed otherwise (the error is shown as a message).
   if (!isLoading && !exists) return <NotFoundPage />
 
   const address = getAddress(caseItem?.address)
@@ -115,24 +115,23 @@ const DetailsPage: React.FC = () => {
         </Column>
       </Grid.Cell>
       {/* The cards below each other, so the open tasks (what you act on) have
-          the full width; the history (what you look things up in) comes last. */}
+          the full width; the history (what you look things up in) comes last.
+          All three are there at once and load side by side. */}
       <Grid.Cell span="all">
         <Card title="Zaakinformatie" icon={SuitcaseIcon} headingLevel={2}>
           <CaseDetails caseId={id} />
         </Card>
       </Grid.Cell>
-      {!isLoading && (
-        <Grid.Cell span="all">
-          <CaseStatus id={id} />
-        </Grid.Cell>
-      )}
-      {!isLoading && (
-        <Grid.Cell span="all">
-          <Card title="Zaakhistorie" icon={HistoryIcon} headingLevel={2}>
-            <TimelineContainer caseId={id} />
-          </Card>
-        </Grid.Cell>
-      )}
+      <Grid.Cell span="all">
+        <CaseStatus id={id} />
+      </Grid.Cell>
+      <Grid.Cell span="all">
+        <Card title="Zaakhistorie" icon={HistoryIcon} headingLevel={2}>
+          {/* The API gives the history of a sensitive case to anyone, so it
+              is only asked for once the case says you may see it. */}
+          <TimelineContainer caseId={id} enabled={!isLoading} />
+        </Card>
+      </Grid.Cell>
     </DefaultLayout>
   )
 }
