@@ -1,3 +1,6 @@
+// The same language for dates as the app.
+import "@/config/dayjs"
+
 // jsdom has no matchMedia, which Amsterdam Design System components (e.g. the
 // responsive Menu and PageHeader) use. In tests every media query "doesn't match".
 if (!window.matchMedia) {

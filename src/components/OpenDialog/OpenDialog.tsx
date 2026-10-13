@@ -1,5 +1,6 @@
 import { type ReactNode, useEffect, useRef } from "react"
 import { Dialog } from "@amsterdam/design-system-react"
+import styles from "./OpenDialog.module.css"
 
 type Props = {
   heading: string
@@ -23,7 +24,13 @@ export function OpenDialog({ heading, children, footer, onClose }: Props) {
   }, [])
 
   return (
-    <Dialog ref={dialogRef} heading={heading} footer={footer} onClose={onClose}>
+    <Dialog
+      ref={dialogRef}
+      className={styles.dialog}
+      heading={heading}
+      footer={footer}
+      onClose={onClose}
+    >
       {children}
     </Dialog>
   )

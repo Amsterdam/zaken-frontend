@@ -9,12 +9,13 @@ type Props = {
   label: string
   svg: IconProps["svg"]
   level?: 1 | 2 | 3 | 4
+  className?: string
 }
 
 /** A heading with an icon in front of it, of the heading's size (after top-frontend-v2). */
-export function HeadingWithIcon({ label, svg, level = 1 }: Props) {
+export function HeadingWithIcon({ label, svg, level = 1, className }: Props) {
   return (
-    <Row gap="small" alignVertical="center">
+    <Row gap="small" alignVertical="center" className={className}>
       <Icon svg={svg} size={`heading-${level}` as IconProps["size"]} />
       <Heading level={level}>{label}</Heading>
     </Row>
