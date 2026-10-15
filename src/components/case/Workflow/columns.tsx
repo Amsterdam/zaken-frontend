@@ -1,9 +1,18 @@
-import { Paragraph, StandaloneLink } from "@amsterdam/design-system-react"
+import {
+  Column,
+  Paragraph,
+  StandaloneLink,
+} from "@amsterdam/design-system-react"
 import type { CompleteTaskPayload } from "@/api/hooks"
 import { RouterLink } from "@/components/DefaultLayout/RouterLink"
 import { StandaloneButton } from "@/components/StandaloneButton/StandaloneButton"
 import { type ColumnType } from "@/components/Table/types"
 import ChangeableDueDate from "@/components/case/tasks/ChangeDueDate/ChangebleDueDate"
+import SkipVisitButton from "@/components/case/tasks/SkipVisit/SkipVisitButton"
+import {
+  canSkipVisit,
+  getSkipReasonLabel,
+} from "@/components/case/tasks/SkipVisit/skipVisit"
 import TaskButton, {
   NO_PERMISSION,
 } from "@/components/case/tasks/TaskButton/TaskButton"
@@ -112,6 +121,26 @@ function getColumns(
               form={form}
               disabled={disabled}
             />
+          )
+        }
+
+        // A visit is passed on by TOP. Is it no longer needed, then it can be
+        // skipped here, when the workflow of the task has a route for that.
+        if (canSkipVisit(task)) {
+          return (
+            <Column gap="x-small" alignHorizontal="start">
+              <StandaloneButton disabled title={NO_PERMISSION}>
+                {action.name}
+              </StandaloneButton>
+              <SkipVisitButton
+                onSubmit={(variables = {}) =>
+                  completeTask({ case: caseId, case_user_task_id, variables })
+                }
+                taskName={name}
+                reasonLabel={getSkipReasonLabel(form)}
+                disabled={!user_has_permission}
+              />
+            </Column>
           )
         }
 

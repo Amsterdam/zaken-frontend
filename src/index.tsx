@@ -4,6 +4,7 @@ import { AuthProvider } from "react-oidc-context"
 // First, so the CSS Modules of the components come after (and can override) the ADS CSS.
 import "./index.css"
 import App from "./App"
+import "@/config/dayjs"
 import { oidcConfig } from "@/config/oidc"
 
 const container = document.getElementById("root")!

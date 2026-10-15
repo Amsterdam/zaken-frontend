@@ -1,8 +1,10 @@
-import { Column, Heading } from "@amsterdam/design-system-react"
+import { Column } from "@amsterdam/design-system-react"
+import { HouseIcon, AreaIcon } from "@amsterdam/design-system-react-icons"
 import { useBenkAgg } from "@/api/hooks"
 import { Description } from "@/components/Description/Description"
 import { getAddressFromBenkAggResponse } from "@/components/addresses/utils"
 import { formatDate } from "@/shared/dateFormatters"
+import { HeadingWithIcon } from "@/components/HeadingWithIcon/HeadingWithIcon"
 
 type Props = {
   bagId: components["schemas"]["Address"]["bag_id"]
@@ -47,9 +49,14 @@ const ObjectDetails: React.FC<Props> = ({ bagId }) => {
   const floor = object?.verblijfsobjectVerdiepingToegang
 
   return (
-    <Column gap="large">
+    <Column gap="x-large">
       <Column gap="small">
-        <Heading level={2}>Objectdetails</Heading>
+        <HeadingWithIcon
+          label="Objectdetails"
+          svg={HouseIcon}
+          level={2}
+          className="ams-mb-m"
+        />
         <Description
           termsWidth="medium"
           loading={isBusy}
@@ -137,7 +144,12 @@ const ObjectDetails: React.FC<Props> = ({ bagId }) => {
         />
       </Column>
       <Column gap="small">
-        <Heading level={2}>Gebied</Heading>
+      <HeadingWithIcon
+          label="Gebied"
+          svg={AreaIcon}
+          level={2}
+          className="ams-mb-m"
+        />
         <Description
           termsWidth="medium"
           loading={isBusy}

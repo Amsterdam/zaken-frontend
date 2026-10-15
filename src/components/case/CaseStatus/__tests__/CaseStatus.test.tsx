@@ -11,6 +11,7 @@ import CaseStatus from "../CaseStatus"
 
 const startWorkflowProcess = vi.fn()
 const refreshWorkflowsSoon = vi.fn()
+const completeTask = vi.fn()
 let permissions: string[] = []
 let workflows: unknown[] = []
 const useCaseWorkflowInstances = vi.fn((caseId: number) => ({
@@ -42,7 +43,7 @@ vi.mock("@/api/hooks", () => ({
     isPolling: false,
     refetch: vi.fn(),
   }),
-  useCompleteTask: () => ({ mutateAsync: vi.fn() }),
+  useCompleteTask: () => ({ mutateAsync: completeTask }),
   useCaseWorkflowInstances: (caseId: number) =>
     useCaseWorkflowInstances(caseId),
   useWorkflowProcesses: () => ({
@@ -112,6 +113,7 @@ describe("the open tasks of a case", () => {
     startWorkflowProcess.mockReset()
     startWorkflowProcess.mockResolvedValue({})
     refreshWorkflowsSoon.mockReset()
+    completeTask.mockReset().mockResolvedValue("ok")
     useCaseWorkflowInstances.mockClear()
     workflows = [
       {
@@ -213,6 +215,80 @@ describe("the open tasks of a case", () => {
       "HuisbezoekUrgentie: Machtiging",
     )
     expect(within(other).getAllByRole("cell")[1].textContent).toBe("Huisbezoek")
+    // The workflow of this visit has no route to skip it.
+    expect(
+      screen.queryByRole("button", { name: /^Bezoek overslaan/ }),
+    ).toBeNull()
+  })
+
+  it("can skip a visit, when the workflow of the visit has a route for it", async () => {
+    workflows = [
+      {
+        state: { name: "Huisbezoek" },
+        information: "",
+        tasks: [
+          {
+            case: 12,
+            case_user_task_id: "ghi",
+            name: "Doorgeven Huisbezoek TOP",
+            task_name: "task_create_visit",
+            roles: ["Toezichthouder"],
+            owner: null,
+            due_date: "2026-10-08",
+            user_has_permission: true,
+            form: [
+              {
+                label: "Wat is de situatie?",
+                name: "situation",
+                type: "select",
+                options: [
+                  { label: "access_granted", value: "access_granted" },
+                  { label: "visit_skipped", value: "visit_skipped" },
+                ],
+              },
+              {
+                label: "Reden overslaan huisbezoek",
+                name: "visit_skipped_reason",
+                type: "text",
+                required: false,
+              },
+            ],
+          },
+        ],
+      },
+    ]
+    renderStatus()
+
+    // Passing on the visit is still for TOP.
+    expect(
+      screen.getByRole<HTMLButtonElement>("button", {
+        name: "Doorgeven bezoek TOP",
+      }).disabled,
+    ).toBe(true)
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: "Bezoek overslaan: Doorgeven Huisbezoek TOP",
+      }),
+    )
+    fireEvent.change(dialog().getByLabelText(/^Reden overslaan huisbezoek/), {
+      target: { value: "De politie is al geweest." },
+    })
+    const submit = dialog().getByRole<HTMLButtonElement>("button", {
+      name: "Bezoek overslaan",
+    })
+    await waitFor(() => expect(submit.disabled).toBe(false))
+    fireEvent.click(submit)
+
+    await waitFor(() =>
+      expect(completeTask).toHaveBeenCalledWith({
+        case: 12,
+        case_user_task_id: "ghi",
+        variables: {
+          situation: { value: "visit_skipped" },
+          visit_skipped_reason: { value: "De politie is al geweest." },
+        },
+      }),
+    )
   })
 
   it("shows the processes on their own tab, fetched when you open it", () => {
