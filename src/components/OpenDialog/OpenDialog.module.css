@@ -1,0 +1,5 @@
+/* A dialog can be rendered where text doesn't wrap, e.g. in a table cell with
+   `noWrap`: its own text wraps as usual. */
+.dialog {
+  white-space: normal;
+}

@@ -1,0 +1,20 @@
+/* The skeleton or the image, and the image that loads out of sight, in the same place. */
+.container {
+  display: grid;
+}
+
+.container > * {
+  grid-area: 1 / 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .image {
+    animation: fade-in 0.4s ease-in;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}

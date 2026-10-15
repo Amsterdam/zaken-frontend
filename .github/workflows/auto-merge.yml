@@ -2,12 +2,12 @@ name: Dependabot auto-merge
 
 on:
   pull_request_target:
-    branches: [ main ]
+    branches: [main]
   workflow_run:
     types:
       - completed
     workflows:
-      - 'Install, lint, test & build'
+      - "Install, lint, test & build"
 
 permissions:
   pull-requests: write
@@ -31,4 +31,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # pass the Dashboard record key as an environment variable for Cypress Dashboard
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          CYPRESS_TEST_USER_PASSWORD:  ${{ secrets.CYPRESS_TEST_USER_PASSWORD }}
+          CYPRESS_TEST_USER_PASSWORD: ${{ secrets.CYPRESS_TEST_USER_PASSWORD }}

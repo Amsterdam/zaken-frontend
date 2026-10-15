@@ -1,0 +1,7 @@
+.container {
+  /* The same shape as the panorama and as its skeleton while loading. */
+  aspect-ratio: 16 / 9;
+  /* Below the header and the dialogs. */
+  z-index: 1;
+  border: 1px solid var(--ams-color-separator);
+}
