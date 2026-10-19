@@ -109,7 +109,13 @@ export function Table<T extends object>({
                     </Skeleton>
                   </ADSTable.Cell>
                 ))}
-                {expandable && <ADSTable.Cell />}
+                {expandable && (
+                  <ADSTable.Cell className={styles.expandCell}>
+                    <Skeleton>
+                      <Skeleton.Paragraph lines={1} />
+                    </Skeleton>
+                  </ADSTable.Cell>
+                )}
               </ADSTable.Row>
             ))}
           {!loading &&

@@ -68,6 +68,21 @@ describe("Table", () => {
     expect(screen.queryByText("Brink")).toBeNull()
   })
 
+  it("loads the Details column of an expandable table as well", () => {
+    render(
+      <Table
+        columns={columns}
+        data={rows}
+        loading
+        numLoadingRows={2}
+        expandable={{ expandedRow: ({ id }) => `Meer over ${id}` }}
+      />,
+    )
+
+    // Three columns and Details, in two rows.
+    expect(document.querySelectorAll(".ams-skeleton__line")).toHaveLength(8)
+  })
+
   it("shows the placeholder when there are no rows", () => {
     render(<Table columns={columns} data={[]} emptyPlaceholder="Geen zaken" />)
 
