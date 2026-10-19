@@ -59,7 +59,7 @@ const AddressHeading: React.FC<Props> = ({ bagId }) => {
               }
             >
               <Paragraph className="ams-mb-s">
-                Op dit huisnummer zijn meer adressen, met een andere huisletter
+                Op dit huisnummer zijn meer adressen met een andere huisletter
                 of toevoeging. Kies een adres om het te bekijken.
               </Paragraph>
               <LinkList>
