@@ -1,19 +1,21 @@
 import { useState } from "react"
+import { useSearchParams } from "react-router"
 import { Column, SearchField, Heading } from "@amsterdam/design-system-react"
 import FinesSearchResultsList from "@/components/fines/FinesSearchResultsList"
-import useURLState from "@/hooks/useURLState"
 
 // The name in the URL is Dutch, like the paths and the overviews.
 const SEARCH_PARAM = "zoekterm"
 
 const FinesSearchWrapper: React.FC = () => {
   // The query is kept in the URL, so a result can be shared or reloaded.
-  const [searchQuery, setSearchQuery] = useURLState(SEARCH_PARAM)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const searchQuery = searchParams.get(SEARCH_PARAM) ?? ""
   const [inputValue, setInputValue] = useState(searchQuery)
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    setSearchQuery(inputValue.trim())
+    const query = inputValue.trim()
+    setSearchParams(query ? { [SEARCH_PARAM]: query } : {}, { replace: true })
   }
 
   return (

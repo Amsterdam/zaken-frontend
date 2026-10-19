@@ -5,7 +5,6 @@ type Props = {
   bagId: components["schemas"]["Address"]["bag_id"]
 }
 
-// TODO: make hardcoded link dynamic
 const DecosLink: React.FC<Props> = ({ bagId }) => (
   <StandaloneLink
     href={`https://decosdvl.amsterdam.nl/decosweb/aspx/Search.aspx?q=${bagId}`}

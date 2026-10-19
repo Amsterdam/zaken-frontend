@@ -2,7 +2,7 @@
 // routes, which import this page (circular).
 import "@/router/routes"
 import { fireEvent, render, screen } from "@testing-library/react"
-import { MemoryRouter } from "react-router"
+import { MemoryRouter, useLocation } from "react-router"
 import FinePage from "../FinePage"
 
 type Fine = { identificatienummer: string; dagtekening: string }
@@ -25,10 +25,13 @@ vi.mock("@/hooks/useDecodedToken", () => ({
   useDecodedToken: () => ({ given_name: "Jan" }),
 }))
 
+const Location = () => <output>{useLocation().search}</output>
+
 const search = (query: string) => {
   render(
-    <MemoryRouter>
+    <MemoryRouter initialEntries={["/invorderingen"]}>
       <FinePage />
+      <Location />
     </MemoryRouter>,
   )
   const input = screen.getByRole<HTMLInputElement>("searchbox")
@@ -39,7 +42,6 @@ const search = (query: string) => {
 describe("FinePage", () => {
   beforeEach(() => {
     fines = []
-    window.history.replaceState({}, "", "/invorderingen")
   })
 
   it("shows nothing below the search field before you search", () => {
@@ -65,7 +67,7 @@ describe("FinePage", () => {
     search(" 12345_6_78 ")
 
     expect(useFine).toHaveBeenLastCalledWith("12345_6_78")
-    expect(window.location.search).toBe("?zoekterm=12345_6_78")
+    expect(screen.getByRole("status").textContent).toBe("?zoekterm=12345_6_78")
     expect(screen.getByText("12345_6_78")).toBeTruthy()
     expect(screen.getByText("Opgepakt")).toBeTruthy()
     expect(screen.getByText("09-03-2026")).toBeTruthy()
