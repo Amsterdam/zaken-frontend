@@ -100,7 +100,7 @@ describe("the routes", () => {
         </ToastProvider>
       </Wrapper>,
     )
-    fireEvent.click(screen.getByRole("button", { name: "Feedback" }))
+    fireEvent.click(screen.getByRole("link", { name: "Feedback" }))
 
     expect(screen.getByRole("dialog")).toBeTruthy()
   })

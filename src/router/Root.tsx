@@ -3,9 +3,8 @@ import { Feedback } from "@/components/Feedback/Feedback"
 import PageTitle from "./PageTitle"
 
 /**
- * What every page has: the title of the browser tab, the feedback button and
- * the page itself. The feedback button is here, inside the router, because
- * sending the feedback uses useApiFetch, which navigates.
+ * What every page has: the title of the browser tab, the old feedback button
+ * (it points to the footer) and the page itself.
  */
 export default function Root() {
   return (

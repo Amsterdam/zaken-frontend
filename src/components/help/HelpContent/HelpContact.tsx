@@ -64,9 +64,9 @@ const HelpContact: React.FC = () => (
     <Accordion.Section label="Feedback">
       <Paragraph>
         Ontdek je dingen die niet kloppen of heb je suggesties om AZA nog beter
-        te maken? Op elke pagina van AZA zie je aan de rechterkant een rood
-        label: Feedback. Via dit formulier kan je alles aan ons kwijt. We nemen
-        daarna zo snel mogelijk contact met je op om je vragen te beantwoorden.
+        te maken? Onderaan elke pagina van AZA staat de link Feedback. Via dit
+        formulier kan je alles aan ons kwijt. We nemen daarna zo snel mogelijk
+        contact met je op om je vragen te beantwoorden.
       </Paragraph>
     </Accordion.Section>
   </Accordion>

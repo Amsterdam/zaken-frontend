@@ -1,82 +1,42 @@
-import {
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-  within,
-} from "@testing-library/react"
-import { ToastProvider } from "@/components/toasts/ToastProvider"
+import { fireEvent, render, screen, within } from "@testing-library/react"
+import { Footer } from "@/components/DefaultLayout/Footer"
 import { Feedback } from "../Feedback"
-
-type Options = { onSuccess?: () => void }
-
-const sendFeedback = vi.fn()
-
-vi.mock("@/api/hooks", () => ({
-  useSendFeedback: () => ({ mutate: sendFeedback, isPending: false }),
-}))
-
-const renderFeedback = () =>
-  render(
-    <ToastProvider>
-      <Feedback />
-    </ToastProvider>,
-  )
 
 const open = () =>
   fireEvent.click(screen.getByRole("button", { name: "Feedback" }))
-const dialog = () => within(screen.getByRole("dialog"))
-const field = () =>
-  dialog().getByLabelText<HTMLTextAreaElement>(/^Wat is je feedback/)
-const sendButton = () =>
-  dialog().getByRole<HTMLButtonElement>("button", { name: "Versturen" })
 
-describe("the feedback button", () => {
-  beforeEach(() => {
-    sendFeedback.mockReset()
-  })
-
-  it("opens the dialog", () => {
-    renderFeedback()
+describe("the old feedback button", () => {
+  it("says the feedback moved to the footer", () => {
+    render(<Feedback />)
     expect(screen.queryByRole("dialog")).toBeNull()
     open()
 
-    expect(field().value).toBe("")
+    const dialog = within(screen.getByRole("dialog"))
+    expect(dialog.getByText(/verplaatst naar de footer/)).toBeTruthy()
+    expect(dialog.queryByRole("textbox")).toBeNull()
   })
 
-  it("cannot send without feedback", () => {
-    renderFeedback()
-    open()
-
-    expect(sendButton().disabled).toBe(true)
-    fireEvent.change(field(), { target: { value: "   " } })
-    expect(sendButton().disabled).toBe(true)
-  })
-
-  it("sends the feedback, with a toast when it worked", async () => {
-    sendFeedback.mockImplementation((_feedback: string, options: Options) =>
-      options.onSuccess?.(),
+  it("points to the link in the footer when closed", () => {
+    // jsdom does not scroll.
+    const scrollTo = vi.spyOn(window, "scrollTo").mockImplementation(() => {})
+    render(
+      <>
+        <Feedback />
+        <Footer />
+      </>,
     )
-    renderFeedback()
     open()
-    fireEvent.change(field(), { target: { value: "De knop doet het niet" } })
-    fireEvent.click(sendButton())
+    // The last one: the button in the footer, not the cross at the top.
+    const closeButton = within(screen.getByRole("dialog"))
+      .getAllByRole("button", { name: "Sluiten" })
+      .at(-1) as HTMLElement
+    fireEvent.click(closeButton)
 
-    expect(sendFeedback).toHaveBeenCalledWith(
-      "De knop doet het niet",
-      expect.anything(),
+    const link = screen.getByRole("link", { name: "Feedback" })
+    expect(scrollTo).toHaveBeenCalledWith(
+      expect.objectContaining({ top: document.documentElement.scrollHeight }),
     )
-    await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
-    expect(screen.getByText("Bedankt voor je feedback")).toBeTruthy()
-  })
-
-  it("stays open with the feedback when sending failed", () => {
-    renderFeedback()
-    open()
-    fireEvent.change(field(), { target: { value: "De knop doet het niet" } })
-    fireEvent.click(sendButton())
-
-    expect(sendFeedback).toHaveBeenCalled()
-    expect(field().value).toBe("De knop doet het niet")
+    expect(document.activeElement).toBe(link)
+    expect(link.className).toMatch(/highlight/)
   })
 })

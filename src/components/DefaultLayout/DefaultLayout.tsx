@@ -24,6 +24,7 @@ import { getLastTasksSearch } from "@/components/tasks/useTasksFilters"
 import { env } from "@/config/env"
 import { useDecodedToken } from "@/hooks/useDecodedToken"
 import { Breadcrumbs } from "./Breadcrumbs"
+import { Footer } from "./Footer"
 import { RouterLink } from "./RouterLink"
 
 type MenuItem = {
@@ -142,6 +143,8 @@ export function DefaultLayout({ children, hideBreadcrumbs = false }: Props) {
             {children}
           </Grid>
         </main>
+
+        <Footer />
       </Page>
     </>
   )

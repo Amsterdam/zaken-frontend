@@ -1,0 +1,10 @@
+/* The feedback link lights up three times, after the scroll to the footer. */
+.highlight {
+  animation: highlight 0.8s ease-in-out 0.4s 3;
+}
+
+@keyframes highlight {
+  50% {
+    background-color: var(--ams-color-highlight-yellow);
+  }
+}
