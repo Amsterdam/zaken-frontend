@@ -144,7 +144,7 @@ const ObjectDetails: React.FC<Props> = ({ bagId }) => {
         />
       </Column>
       <Column gap="small">
-      <HeadingWithIcon
+        <HeadingWithIcon
           label="Gebied"
           svg={AreaIcon}
           level={2}

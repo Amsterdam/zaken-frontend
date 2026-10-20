@@ -4,6 +4,7 @@ import {
   Button,
   Dialog,
   Label,
+  Paragraph,
   TextArea,
 } from "@amsterdam/design-system-react"
 import { useSendFeedback } from "@/api/hooks"
@@ -14,9 +15,11 @@ const FORM_ID = "feedback-form"
 
 type Props = {
   onClose: () => void
+  /** A line above the field, such as where the feedback link is now. */
+  notice?: string
 }
 
-export function FeedbackDialog({ onClose }: Props) {
+export function FeedbackDialog({ onClose, notice }: Props) {
   const [feedback, setFeedback] = useState("")
   const sendFeedback = useSendFeedback()
   const { showToast } = useToast()
@@ -30,7 +33,7 @@ export function FeedbackDialog({ onClose }: Props) {
       onSuccess: () => {
         onClose()
         showToast({
-          title: "Bedankt voor je feedback",
+          title: "Bedankt voor je bericht",
           description: "We hebben je melding ontvangen.",
           severity: "success",
         })
@@ -40,7 +43,7 @@ export function FeedbackDialog({ onClose }: Props) {
 
   return (
     <OpenDialog
-      heading="Feedback"
+      heading="Vraag, feedback of fout melden"
       onClose={onClose}
       footer={
         <ActionGroup>
@@ -58,9 +61,10 @@ export function FeedbackDialog({ onClose }: Props) {
         </ActionGroup>
       }
     >
+      {notice && <Paragraph className="ams-mb-m">{notice}</Paragraph>}
       <form id={FORM_ID} onSubmit={onSubmit}>
         <Label htmlFor="feedback-text" inFieldSet>
-          Wat is je feedback of welke bug heb je gevonden?
+          Wat wil je ons laten weten?
         </Label>
         <TextArea
           id="feedback-text"

@@ -4,7 +4,7 @@ import PageTitle from "./PageTitle"
 
 /**
  * What every page has: the title of the browser tab, the old feedback button
- * (it points to the footer) and the page itself.
+ * (it opens the feedback dialog too) and the page itself.
  */
 export default function Root() {
   return (

@@ -22,7 +22,6 @@ import { useUsersMe } from "@/api/hooks"
 import { getLastCasesSearch } from "@/components/cases/useCasesFilters"
 import { getLastTasksSearch } from "@/components/tasks/useTasksFilters"
 import { env } from "@/config/env"
-import { useDecodedToken } from "@/hooks/useDecodedToken"
 import { Breadcrumbs } from "./Breadcrumbs"
 import { Footer } from "./Footer"
 import { RouterLink } from "./RouterLink"
@@ -37,21 +36,20 @@ type MenuItem = {
 }
 
 // Items without the permission are left out (like top-frontend-v2).
-// The menu is narrow: a long word gets a soft hyphen (\u00AD) where it may
-// break, e.g. "Zaken-overzicht" (see design-system-overrides.css).
+// The menu is narrow: the labels are short, without "overzicht".
 const menuItems: MenuItem[] = [
   // The start page comes first.
   { href: "/", icon: SearchIcon, label: "Zoeken" },
   {
     href: "/taken",
     icon: ClipboardFillIcon,
-    label: "Taken\u00ADoverzicht",
+    label: "Taken",
     getLastSearch: getLastTasksSearch,
   },
   {
     href: "/zaken",
     icon: FolderFillIcon,
-    label: "Zaken\u00ADoverzicht",
+    label: "Zaken",
     getLastSearch: getLastCasesSearch,
   },
   {
@@ -78,7 +76,6 @@ export function DefaultLayout({ children, hideBreadcrumbs = false }: Props) {
   const auth = useAuth()
   const navigate = useNavigate()
   const { data: me } = useUsersMe()
-  const givenName = useDecodedToken()?.given_name
 
   const visibleMenuItems = menuItems.filter(
     ({ permission }) =>
@@ -112,7 +109,7 @@ export function DefaultLayout({ children, hideBreadcrumbs = false }: Props) {
         </Menu.Link>
       ))}
       <Menu.Link href="#" icon={LogOutIcon} onClick={onSignOut}>
-        {givenName ? `Uitloggen (${givenName})` : "Uitloggen"}
+        Uitloggen
       </Menu.Link>
     </>
   )

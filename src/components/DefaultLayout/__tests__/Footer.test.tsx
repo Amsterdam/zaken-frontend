@@ -24,10 +24,12 @@ const renderFeedback = () =>
   )
 
 const open = () =>
-  fireEvent.click(screen.getByRole("link", { name: "Feedback" }))
+  fireEvent.click(
+    screen.getByRole("link", { name: "Stuur je vraag of feedback" }),
+  )
 const dialog = () => within(screen.getByRole("dialog"))
 const field = () =>
-  dialog().getByLabelText<HTMLTextAreaElement>(/^Wat is je feedback/)
+  dialog().getByLabelText<HTMLTextAreaElement>(/^Wat wil je ons laten weten/)
 const sendButton = () =>
   dialog().getByRole<HTMLButtonElement>("button", { name: "Versturen" })
 
@@ -67,7 +69,7 @@ describe("the feedback link in the footer", () => {
       expect.anything(),
     )
     await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
-    expect(screen.getByText("Bedankt voor je feedback")).toBeTruthy()
+    expect(screen.getByText("Bedankt voor je bericht")).toBeTruthy()
   })
 
   it("stays open with the feedback when sending failed", () => {

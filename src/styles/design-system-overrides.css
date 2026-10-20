@@ -1,8 +1,8 @@
 /* Overrides of the default Amsterdam Design System styles. */
 
 /*
- * A menu label only breaks where it has a soft hyphen ("Zaken-overzicht"),
- * not where the browser thinks fit ("Zakenover-zicht").
+ * A menu label does not break where the browser thinks fit ("Invorde-ring"),
+ * only where it has a soft hyphen (\u00AD).
  */
 .ams-menu__link {
   hyphens: manual;
