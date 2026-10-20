@@ -11,7 +11,7 @@ const titleShort = "AZA"
 
 const HelpExplanation: React.FC = () => (
   <Accordion headingLevel={2}>
-    <Accordion.Section label="Zoeken">
+    <Accordion.Section label="Zoeken" defaultExpanded>
       <Column>
         <Paragraph>
           Via{" "}

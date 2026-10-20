@@ -61,12 +61,12 @@ const HelpContact: React.FC = () => (
       </Paragraph>
     </Accordion.Section>
 
-    <Accordion.Section label="Feedback">
+    <Accordion.Section label="Vraag of feedback">
       <Paragraph>
         Ontdek je dingen die niet kloppen of heb je suggesties om AZA nog beter
-        te maken? Onderaan elke pagina van AZA staat de link Feedback. Via dit
-        formulier kan je alles aan ons kwijt. We nemen daarna zo snel mogelijk
-        contact met je op om je vragen te beantwoorden.
+        te maken? Onderaan elke pagina van AZA staat de link “Stuur je vraag of
+        feedback”. Via dit formulier kan je alles aan ons kwijt. We nemen daarna
+        zo snel mogelijk contact met je op om je vragen te beantwoorden.
       </Paragraph>
     </Accordion.Section>
   </Accordion>

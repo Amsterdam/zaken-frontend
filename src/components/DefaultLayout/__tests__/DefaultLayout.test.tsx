@@ -12,10 +12,6 @@ vi.mock("react-oidc-context", () => ({
   useAuth: () => ({ signoutRedirect: vi.fn() }),
 }))
 
-vi.mock("@/hooks/useDecodedToken", () => ({
-  useDecodedToken: () => ({ given_name: "Jan" }),
-}))
-
 const Location = () => {
   const { pathname, search } = useLocation()
   return <output>{`${pathname}${search}`}</output>
@@ -44,15 +40,14 @@ describe("DefaultLayout (via the 404 page)", () => {
     expect(screen.getByRole("heading", { name: /^404/ })).toBeTruthy()
     const labels = sideMenu()
       .getAllByRole("link")
-      // Without the soft hyphens of the long labels.
-      .map((link) => link.textContent?.replaceAll("\u00AD", ""))
+      .map((link) => link.textContent)
     expect(labels).toEqual([
       "Zoeken",
-      "Takenoverzicht",
-      "Zakenoverzicht",
+      "Taken",
+      "Zaken",
       "BPMN",
       "Hulp",
-      "Uitloggen (Jan)",
+      "Uitloggen",
     ])
   })
 
