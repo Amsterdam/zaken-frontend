@@ -1,0 +1,23 @@
+{
+  "id": "AZA",
+  "name": "Amsterdamse Zaak Administratie",
+  "short_name": "AZA",
+  "description": "Zaaksysteem voor toezichthouders en handhavers van de gemeente Amsterdam voor de thema’s goed verhuurderschap, huisvestingsvergunning, kamerverhuur, leegstand, onderhuur, ondermijning, opkoopbescherming en vakantieverhuur.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#004699",
+  "icons": [
+    {
+      "src": "app-icons/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "app-icons/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}

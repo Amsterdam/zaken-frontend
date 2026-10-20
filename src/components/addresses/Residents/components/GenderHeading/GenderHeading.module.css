@@ -1,0 +1,7 @@
+.genderHeading {
+  padding-block-end: var(--ams-space-l);
+}
+
+.genderHeading strong {
+  color: inherit;
+}

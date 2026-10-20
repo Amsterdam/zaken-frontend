@@ -4,8 +4,6 @@ ARG NODE_VERSION=22
 # known for its small size and efficiency.
 FROM node:$NODE_VERSION-alpine AS builder
 
-ARG COMMIT_HASH
-
 ENV DIR=/var/www
 
 # build dirs

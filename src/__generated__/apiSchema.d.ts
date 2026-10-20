@@ -173,6 +173,57 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/bpmn-models/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Get all BPMN model names */
+        get: operations["bpmn_models_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/bpmn-models/{model_name}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Get versions and filenames for a specific model */
+        get: operations["bpmn_models_versions_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/bpmn-models/{model_name}/file/{version}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Get a specific BPMN workflow file */
+        get: operations["bpmn_models_file_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/case-close/": {
         parameters: {
             query?: never;
@@ -395,6 +446,23 @@ export interface paths {
         };
         /** @description Gets the Subjects associated with the given theme */
         get: operations["cases_subjects_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/cases/{id}/workflow-instances/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Get all workflow instances for this Case, including completed ones and those without open tasks */
+        get: operations["cases_workflow_instances_list"];
         put?: never;
         post?: never;
         delete?: never;
@@ -732,6 +800,54 @@ export interface paths {
         options?: never;
         head?: never;
         patch?: never;
+        trace?: never;
+    };
+    "/api/v1/puntenteller/adressen/{bag_id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["puntenteller_adressen_list"];
+        put?: never;
+        post: operations["puntenteller_adressen_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/puntenteller/adressen/{bag_id}/invoerwaarden/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["puntenteller_adressen_invoerwaarden_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/puntenteller/puntentellingen/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["puntenteller_puntentellingen_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["puntenteller_puntentellingen_partial_update"];
         trace?: never;
     };
     "/api/v1/quick-decision-types/": {
@@ -1392,12 +1508,80 @@ export interface components {
             /** Format: date-time */
             readonly date_added: string;
         };
+        BadkamerRuimte: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            naam: "BadkamerRuimte";
+            /** Format: decimal */
+            ruimte_m2: string;
+            /** @default false */
+            verwarmd: boolean;
+            /** @default 1 */
+            aantal_adressen_met_toegang_en_gebruiksrecht: number;
+            /** @default false */
+            gekoeld: boolean;
+            /** @default 0 */
+            wastafel: number;
+            /** @default 0 */
+            meerpersoons_wastafel: number;
+            /** @default 0 */
+            douche: number;
+            /** @default 0 */
+            bad: number;
+            /** @default 0 */
+            baddouche: number;
+            /** @default 0 */
+            toilet_hangend: number;
+            /** @default 0 */
+            toilet_normaal: number;
+            /** @default 0 */
+            bubbelfunctie_bad: number;
+            /** @default 0 */
+            volledige_afscheiding_douche: number;
+            /** @default 0 */
+            handdoekenradiator: number;
+            /** @default 0 */
+            kast_bij_wastafel: number;
+            /** @default 0 */
+            kastruimte: number;
+            /** @default 0 */
+            stopcontacten: number;
+            /** @default 0 */
+            eenhandsmengkraan: number;
+            /** @default 0 */
+            thermostatische_mengkraan: number;
+        };
+        /**
+         * @description * `badkamer` - Badkamer
+         * @enum {string}
+         */
+        BadkamerRuimteNaamEnum: "badkamer";
+        BpmnModel: {
+            version: string;
+            file_name: string;
+            model: string;
+        };
         Brp: {
             personen: {
                 [key: string]: unknown;
             }[];
             operation_id: string;
         };
+        Buitenruimte: {
+            naam: components["schemas"]["BuitenruimteNaamEnum"];
+            /** Format: decimal */
+            ruimte_m2: string;
+            /** @default 1 */
+            aantal_adressen_met_toegang_en_gebruiksrecht: number;
+        };
+        /**
+         * @description * `prive_buitenruimte` - Prive buitenruimte
+         *     * `gemeenschappelijke_buitenruimte` - Gemeenschappelijke buitenruimte
+         * @enum {string}
+         */
+        BuitenruimteNaamEnum: "prive_buitenruimte" | "gemeenschappelijke_buitenruimte";
         Case: {
             readonly id: number;
             readonly address: components["schemas"]["AddressTiny"];
@@ -1568,10 +1752,22 @@ export interface components {
             event_variables: unknown;
             /** Format: date-time */
             readonly date_created: string;
-            type: components["schemas"]["TypeEnum"];
+            type: components["schemas"]["CaseEventTypeEnum"];
             emitter_id: number;
             case: number;
         };
+        /**
+         * @description * `DEBRIEFING` - DEBRIEFING
+         *     * `VISIT` - VISIT
+         *     * `CASE` - CASE
+         *     * `CASE_CLOSE` - CASE_CLOSE
+         *     * `SUMMON` - SUMMON
+         *     * `GENERIC_TASK` - GENERIC_TASK
+         *     * `SCHEDULE` - SCHEDULE
+         *     * `CITIZEN_REPORT` - CITIZEN_REPORT
+         * @enum {string}
+         */
+        CaseEventTypeEnum: "DEBRIEFING" | "VISIT" | "CASE" | "CASE_CLOSE" | "SUMMON" | "GENERIC_TASK" | "SCHEDULE" | "CITIZEN_REPORT";
         CaseProject: {
             readonly id: number;
             name: string;
@@ -1622,6 +1818,14 @@ export interface components {
         };
         CaseWorkflowBase: {
             readonly state: components["schemas"]["CaseStateType"];
+        };
+        CaseWorkflowInstance: {
+            readonly id: number;
+            workflow_type?: components["schemas"]["WorkflowTypeEnum"];
+            workflow_version: string;
+            completed?: boolean;
+            main_workflow?: boolean;
+            readonly current_task_specs: string[];
         };
         CitizenReport: {
             readonly id: number;
@@ -1799,6 +2003,19 @@ export interface components {
             readonly id: number;
             name: string;
         };
+        Energie: {
+            type: components["schemas"]["EnergieTypeEnum"];
+            waarde?: string | null;
+            /** @default false */
+            heeft_energieprestatievergoeding: boolean;
+        };
+        /**
+         * @description * `label` - label
+         *     * `index` - index
+         *     * `bouwjaar` - bouwjaar
+         * @enum {string}
+         */
+        EnergieTypeEnum: "label" | "index" | "bouwjaar";
         Feedback: {
             feedback: string;
             url: string;
@@ -1850,6 +2067,99 @@ export interface components {
         FineList: {
             items: components["schemas"]["Fine"][];
         };
+        GebouwData: {
+            straat: string | null;
+            huisnummer: string | null;
+            gebruiksoppervlakte: number | null;
+            woz_waarden: components["schemas"]["WozWaarde"][] | null;
+            wozobjectnummer: number | null;
+            energie: {
+                [key: string]: unknown;
+            } | null;
+        };
+        GebruikersinvoerCreateResponse: {
+            rubrieken: {
+                [key: string]: number;
+            };
+            energieprestatie_berekening: unknown;
+            /** Format: double */
+            totaal_punten_bruto: number;
+            correcties: {
+                [key: string]: unknown;
+            };
+            /** Format: double */
+            totaal_punten_na_caps: number;
+        };
+        GebruikersinvoerRequest: {
+            readonly id: number;
+            energie?: components["schemas"]["Energie"];
+            buitenruimten?: components["schemas"]["Buitenruimte"][];
+            parkeerruimten?: components["schemas"]["Parkeerruimte"][];
+            is_eengezinswoning?: boolean | null;
+            /** @default false */
+            zorgwoning: boolean;
+            /** @default false */
+            nieuwbouw: boolean;
+            /** @default false */
+            bijzondere_voorziening_intercom_met_beeld: boolean;
+            /** @default 0 */
+            bijzondere_voorziening_laadpalen: number;
+            vertrekken?: components["schemas"]["VertrekRuimteInput"][];
+            overige_ruimten?: components["schemas"]["OverigeRuimteInput"][];
+            verkeersruimten?: components["schemas"]["VerkeersRuimteInput"][];
+            completed?: boolean;
+            gebruiksoppervlakte?: number;
+            woz_waarde?: number;
+            woz_peildatum_jaar?: number;
+            woz_kleine_nieuwbouwwoning?: boolean;
+            woz_nieuwbouw_2015_2019?: boolean;
+            /** Format: decimal */
+            woz_bouwvoltooiingspercentage?: string | null;
+            woonvoorziening_handicap?: boolean;
+            woonvoorziening_handicap_netto_investering?: number | null;
+            monument?: boolean;
+            monument_soort?: string | null;
+            /** Format: date */
+            huurovereenkomst_afgesloten_op?: string | null;
+        };
+        GebruikersinvoerResponse: {
+            readonly id: number;
+            energie?: components["schemas"]["Energie"];
+            buitenruimten?: components["schemas"]["Buitenruimte"][];
+            parkeerruimten?: components["schemas"]["Parkeerruimte"][];
+            is_eengezinswoning?: boolean | null;
+            /** @default false */
+            zorgwoning: boolean;
+            /** @default false */
+            nieuwbouw: boolean;
+            /** @default false */
+            bijzondere_voorziening_intercom_met_beeld: boolean;
+            /** @default 0 */
+            bijzondere_voorziening_laadpalen: number;
+            vertrekken?: components["schemas"]["VertrekRuimteResponse"][];
+            overige_ruimten?: components["schemas"]["OverigeRuimteResponse"][];
+            verkeersruimten?: components["schemas"]["VerkeersRuimteResponse"][];
+            /** Format: double */
+            punten: number;
+            punten_resultaat: components["schemas"]["PuntentellerResultaat"];
+            completed?: boolean;
+            gebruiksoppervlakte?: number;
+            woz_waarde?: number;
+            woz_peildatum_jaar?: number;
+            woz_kleine_nieuwbouwwoning?: boolean;
+            woz_nieuwbouw_2015_2019?: boolean;
+            /** Format: decimal */
+            woz_bouwvoltooiingspercentage?: string | null;
+            woonvoorziening_handicap?: boolean;
+            woonvoorziening_handicap_netto_investering?: number | null;
+            monument?: boolean;
+            monument_soort?: string | null;
+            /** Format: date */
+            huurovereenkomst_afgesloten_op?: string | null;
+            adres: number;
+            /** Format: uuid */
+            gebruiker?: string | null;
+        };
         GenericCompletedTask: {
             readonly id: number;
             case_user_task_id?: string;
@@ -1897,6 +2207,66 @@ export interface components {
         IsAuthorized: {
             is_authorized: boolean;
         };
+        KeukenRuimte: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            naam: "null";
+            /** Format: decimal */
+            ruimte_m2: string;
+            /** @default false */
+            verwarmd: boolean;
+            /** @default 1 */
+            aantal_adressen_met_toegang_en_gebruiksrecht: number;
+            /** @default false */
+            gekoeld: boolean;
+            /** @default 0 */
+            wastafel: number;
+            /** @default 0 */
+            meerpersoons_wastafel: number;
+            /** @default 0 */
+            douche: number;
+            /** @default 0 */
+            bad: number;
+            /** @default 0 */
+            baddouche: number;
+            /** Format: decimal */
+            aanrechtlengte_meters?: string | null;
+            /** @default 0 */
+            inbouw_afzuiginstallatie: number;
+            /** @default 0 */
+            inbouw_kookplaat_inductie: number;
+            /** @default 0 */
+            inbouw_kookplaat_keramisch: number;
+            /** @default 0 */
+            inbouw_kookplaat_gas: number;
+            /** @default 0 */
+            inbouw_koelkast: number;
+            /** @default 0 */
+            inbouw_vrieskast: number;
+            /** @default 0 */
+            inbouw_oven_elektrisch: number;
+            /** @default 0 */
+            inbouw_oven_gas: number;
+            /** @default 0 */
+            inbouw_magnetron: number;
+            /** @default 0 */
+            inbouw_vaatwasmachine: number;
+            /** @default 0 */
+            extra_kastruimte: number;
+            /** @default 0 */
+            eenhandsmengkraan: number;
+            /** @default 0 */
+            thermostatische_mengkraan: number;
+            /** @default 0 */
+            kokendwaterfunctie: number;
+        };
+        /**
+         * @description * `keuken` - Keuken
+         * @enum {string}
+         */
+        KeukenRuimteNaamEnum: "keuken";
         Meldingen: {
             pageNumber: number;
             pageSize: number;
@@ -1910,6 +2280,8 @@ export interface components {
         OIDCAuthenticate: {
             code: string;
         };
+        OverigeRuimteInput: components["schemas"]["StandaardOverigeRuimte"] | components["schemas"]["ToiletRuimte"] | components["schemas"]["ZolderRuimte"];
+        OverigeRuimteResponse: components["schemas"]["StandaardOverigeRuimte"] | components["schemas"]["ToiletRuimte"] | components["schemas"]["ZolderRuimte"];
         PaginatedActionList: {
             /** @example 123 */
             count: number;
@@ -2270,6 +2642,21 @@ export interface components {
             previous?: string | null;
             results: components["schemas"]["District"][];
         };
+        PaginatedGebruikersinvoerResponseList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?offset=400&limit=100
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?offset=200&limit=100
+             */
+            previous?: string | null;
+            results: components["schemas"]["GebruikersinvoerResponse"][];
+        };
         PaginatedGenericCompletedTaskList: {
             /** @example 123 */
             count: number;
@@ -2570,6 +2957,24 @@ export interface components {
             previous?: string | null;
             results: components["schemas"]["WorkflowOption"][];
         };
+        Parkeerruimte: {
+            naam: components["schemas"]["ParkeerruimteNaamEnum"];
+            /** @default 0 */
+            aantal_gesloten_garage_bij_complex: number;
+            /** @default 0 */
+            aantal_buiten_bij_complex_met_dak: number;
+            /** @default 0 */
+            aantal_buiten_bij_complex_zonder_dak: number;
+            /** @default 1 */
+            aantal_adressen_met_toegang_en_gebruiksrecht: number;
+            /** @default 0 */
+            aantal_laadpalen: number;
+        };
+        /**
+         * @description * `buitenruimte_parkeerplaats` - Buitenruimte parkeerplaats
+         * @enum {string}
+         */
+        ParkeerruimteNaamEnum: "buitenruimte_parkeerplaats";
         PatchedAddress: {
             bag_id?: string;
             district?: components["schemas"]["District"];
@@ -2644,6 +3049,38 @@ export interface components {
             readonly updated?: string;
             /** Format: uuid */
             owner?: string | null;
+        };
+        PatchedGebruikersinvoerRequest: {
+            readonly id?: number;
+            energie?: components["schemas"]["Energie"];
+            buitenruimten?: components["schemas"]["Buitenruimte"][];
+            parkeerruimten?: components["schemas"]["Parkeerruimte"][];
+            is_eengezinswoning?: boolean | null;
+            /** @default false */
+            zorgwoning: boolean;
+            /** @default false */
+            nieuwbouw: boolean;
+            /** @default false */
+            bijzondere_voorziening_intercom_met_beeld: boolean;
+            /** @default 0 */
+            bijzondere_voorziening_laadpalen: number;
+            vertrekken?: components["schemas"]["VertrekRuimteInput"][];
+            overige_ruimten?: components["schemas"]["OverigeRuimteInput"][];
+            verkeersruimten?: components["schemas"]["VerkeersRuimteInput"][];
+            completed?: boolean;
+            gebruiksoppervlakte?: number;
+            woz_waarde?: number;
+            woz_peildatum_jaar?: number;
+            woz_kleine_nieuwbouwwoning?: boolean;
+            woz_nieuwbouw_2015_2019?: boolean;
+            /** Format: decimal */
+            woz_bouwvoltooiingspercentage?: string | null;
+            woonvoorziening_handicap?: boolean;
+            woonvoorziening_handicap_netto_investering?: number | null;
+            monument?: boolean;
+            monument_soort?: string | null;
+            /** Format: date */
+            huurovereenkomst_afgesloten_op?: string | null;
         };
         PatchedScheduleUpdate: {
             priority?: number;
@@ -2724,6 +3161,19 @@ export interface components {
         Project: {
             readonly id: number;
             name: string;
+        };
+        PuntentellerResultaat: {
+            rubrieken: {
+                [key: string]: number;
+            };
+            energieprestatie_berekening: unknown;
+            /** Format: double */
+            totaal_punten_bruto: number;
+            correcties: {
+                [key: string]: unknown;
+            };
+            /** Format: double */
+            totaal_punten_na_caps: number;
         };
         QuickDecision: {
             readonly id: number;
@@ -2836,6 +3286,68 @@ export interface components {
          * @enum {string}
          */
         SoortVorderingEnum: "PBF" | "PBN" | "PRV" | "SOC";
+        StandaardOverigeRuimte: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            naam: "StandaardOverigeRuimte";
+            /** Format: decimal */
+            ruimte_m2: string;
+            /** @default false */
+            verwarmd: boolean;
+            /** @default 1 */
+            aantal_adressen_met_toegang_en_gebruiksrecht: number;
+            /** @default 0 */
+            wastafel: number;
+            /** @default 0 */
+            meerpersoons_wastafel: number;
+            /** @default 0 */
+            douche: number;
+            /** @default 0 */
+            bad: number;
+            /** @default 0 */
+            baddouche: number;
+        };
+        /**
+         * @description * `berging` - Berging
+         *     * `kelder` - Kelder
+         *     * `prive_parkeerruimte` - Prive parkeerruimte
+         * @enum {string}
+         */
+        StandaardOverigeRuimteNaamEnum: "berging" | "kelder" | "prive_parkeerruimte";
+        StandaardVertrek: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            naam: "StandaardVertrek";
+            /** Format: decimal */
+            ruimte_m2: string;
+            /** @default false */
+            verwarmd: boolean;
+            /** @default 1 */
+            aantal_adressen_met_toegang_en_gebruiksrecht: number;
+            /** @default false */
+            gekoeld: boolean;
+            /** @default 0 */
+            wastafel: number;
+            /** @default 0 */
+            meerpersoons_wastafel: number;
+            /** @default 0 */
+            douche: number;
+            /** @default 0 */
+            bad: number;
+            /** @default 0 */
+            baddouche: number;
+        };
+        /**
+         * @description * `woonkamer` - Woonkamer
+         *     * `slaapkamer` - Slaapkamer
+         *     * `wasruimte_bijkeuken` - Wasruimte/bijkeuken
+         * @enum {string}
+         */
+        StandaardVertrekNaamEnum: "woonkamer" | "slaapkamer" | "wasruimte_bijkeuken";
         StartWorkflow: {
             workflow_option_id: number;
         };
@@ -2903,18 +3415,38 @@ export interface components {
             day_segments: components["schemas"]["DaySegment"][];
             priorities: components["schemas"]["Priority"][];
         };
+        ToiletRuimte: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            naam: "ToiletRuimte";
+            /** Format: decimal */
+            ruimte_m2: string;
+            /** @default false */
+            verwarmd: boolean;
+            /** @default 1 */
+            aantal_adressen_met_toegang_en_gebruiksrecht: number;
+            /** @default 0 */
+            wastafel: number;
+            /** @default 0 */
+            meerpersoons_wastafel: number;
+            /** @default 0 */
+            douche: number;
+            /** @default 0 */
+            bad: number;
+            /** @default 0 */
+            baddouche: number;
+            /** @default 0 */
+            toilet_staand: number;
+            /** @default 0 */
+            toilet_hangend: number;
+        };
         /**
-         * @description * `DEBRIEFING` - DEBRIEFING
-         *     * `VISIT` - VISIT
-         *     * `CASE` - CASE
-         *     * `CASE_CLOSE` - CASE_CLOSE
-         *     * `SUMMON` - SUMMON
-         *     * `GENERIC_TASK` - GENERIC_TASK
-         *     * `SCHEDULE` - SCHEDULE
-         *     * `CITIZEN_REPORT` - CITIZEN_REPORT
+         * @description * `toiletruimte` - Toiletruimte
          * @enum {string}
          */
-        TypeEnum: "DEBRIEFING" | "VISIT" | "CASE" | "CASE_CLOSE" | "SUMMON" | "GENERIC_TASK" | "SCHEDULE" | "CITIZEN_REPORT";
+        ToiletRuimteNaamEnum: "toiletruimte";
         User: {
             /** Format: uuid */
             id?: string;
@@ -2937,6 +3469,28 @@ export interface components {
             readonly permissions: components["schemas"]["PermissionsEnum"][];
             readonly role: string;
         };
+        VerkeersRuimte: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            naam: "null";
+            /** Format: decimal */
+            ruimte_m2: string;
+            /** @default false */
+            verwarmd: boolean;
+            /** @default 1 */
+            aantal_adressen_met_toegang_en_gebruiksrecht: number;
+        };
+        VerkeersRuimteInput: components["schemas"]["VerkeersRuimte"];
+        /**
+         * @description * `verkeersruimte` - Verkeersruimte
+         * @enum {string}
+         */
+        VerkeersRuimteNaamEnum: "verkeersruimte";
+        VerkeersRuimteResponse: components["schemas"]["VerkeersRuimte"];
+        VertrekRuimteInput: components["schemas"]["StandaardVertrek"] | components["schemas"]["BadkamerRuimte"] | components["schemas"]["KeukenRuimte"];
+        VertrekRuimteResponse: components["schemas"]["StandaardVertrek"] | components["schemas"]["BadkamerRuimte"] | components["schemas"]["KeukenRuimte"];
         ViolationType: {
             id: number;
             key: string;
@@ -2974,6 +3528,62 @@ export interface components {
             enabled_on_case_closed?: boolean;
             theme: number;
         };
+        /**
+         * @description * `main_workflow` - main_workflow
+         *     * `sub_workflow` - sub_workflow
+         *     * `debrief` - debrief
+         *     * `closing_procedure` - closing_procedure
+         *     * `director` - director
+         *     * `visit` - visit
+         *     * `summon` - summon
+         *     * `decision` - decision
+         *     * `omzettingsvergunning` - omzettingsvergunning
+         *     * `renounce_decision` - renounce_decision
+         *     * `close_case` - close_case
+         *     * `digital_surveillance` - digital_surveillance
+         *     * `housing_corporation` - housing_corporation
+         *     * `unoccupied` - unoccupied
+         *     * `citizen_report_feedback` - citizen_report_feedback
+         * @enum {string}
+         */
+        WorkflowTypeEnum: "main_workflow" | "sub_workflow" | "debrief" | "closing_procedure" | "director" | "visit" | "summon" | "decision" | "omzettingsvergunning" | "renounce_decision" | "close_case" | "digital_surveillance" | "housing_corporation" | "unoccupied" | "citizen_report_feedback";
+        WozWaarde: {
+            /** Format: date */
+            peildatum: string;
+            vastgestelde_waarde: number;
+        };
+        ZolderRuimte: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            naam: "null";
+            /** Format: decimal */
+            ruimte_m2: string;
+            /** @default false */
+            verwarmd: boolean;
+            /** @default 1 */
+            aantal_adressen_met_toegang_en_gebruiksrecht: number;
+            /** @default 0 */
+            wastafel: number;
+            /** @default 0 */
+            meerpersoons_wastafel: number;
+            /** @default 0 */
+            douche: number;
+            /** @default 0 */
+            bad: number;
+            /** @default 0 */
+            baddouche: number;
+            /** @default true */
+            heeft_vaste_trap: boolean;
+            /** Format: decimal */
+            aftrek_loopruimte_m2?: string | null;
+        };
+        /**
+         * @description * `zolder` - Zolder
+         * @enum {string}
+         */
+        ZolderRuimteNaamEnum: "zolder";
     };
     responses: never;
     parameters: never;
@@ -3247,6 +3857,68 @@ export interface operations {
             };
         };
     };
+    bpmn_models_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string[];
+                };
+            };
+        };
+    };
+    bpmn_models_versions_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                model_name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BpmnModel"][];
+                };
+            };
+        };
+    };
+    bpmn_models_file_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                model_name: string;
+                version: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/xml": string;
+                };
+            };
+        };
+    };
     case_close_list: {
         parameters: {
             query?: {
@@ -3397,6 +4069,7 @@ export interface operations {
                 district?: number;
                 district_name?: string;
                 from_start_date?: string;
+                has_open_sensitive_case_on_address?: boolean;
                 housing_corporation?: number;
                 housing_corporation_isnull?: boolean;
                 ids?: number;
@@ -3452,41 +4125,7 @@ export interface operations {
     };
     cases_create: {
         parameters: {
-            query?: {
-                district?: number;
-                district_name?: string;
-                from_start_date?: string;
-                housing_corporation?: number;
-                housing_corporation_isnull?: boolean;
-                ids?: number;
-                is_enforcement_request?: boolean;
-                open_cases?: boolean;
-                ordering?: string;
-                page_size?: number;
-                postal_code_range?: string;
-                priority?: number;
-                project?: number;
-                project_name?: string;
-                reason?: number;
-                reason_name?: string;
-                schedule_day_segment?: number;
-                schedule_from_date_added?: string;
-                schedule_housing_corporation_combiteam?: boolean;
-                schedule_visit_from?: string;
-                schedule_week_segment?: number;
-                sensitive?: boolean;
-                simplified?: boolean;
-                start_date?: string;
-                state_types?: number;
-                state_types__name?: string;
-                subject?: number;
-                subject_name?: string;
-                tag?: number;
-                task?: string;
-                theme?: number;
-                theme_name?: string;
-                ton_ids?: number;
-            };
+            query?: never;
             header?: never;
             path?: never;
             cookie?: never;
@@ -3511,41 +4150,7 @@ export interface operations {
     };
     cases_retrieve: {
         parameters: {
-            query?: {
-                district?: number;
-                district_name?: string;
-                from_start_date?: string;
-                housing_corporation?: number;
-                housing_corporation_isnull?: boolean;
-                ids?: number;
-                is_enforcement_request?: boolean;
-                open_cases?: boolean;
-                ordering?: string;
-                page_size?: number;
-                postal_code_range?: string;
-                priority?: number;
-                project?: number;
-                project_name?: string;
-                reason?: number;
-                reason_name?: string;
-                schedule_day_segment?: number;
-                schedule_from_date_added?: string;
-                schedule_housing_corporation_combiteam?: boolean;
-                schedule_visit_from?: string;
-                schedule_week_segment?: number;
-                sensitive?: boolean;
-                simplified?: boolean;
-                start_date?: string;
-                state_types?: number;
-                state_types__name?: string;
-                subject?: number;
-                subject_name?: string;
-                tag?: number;
-                task?: string;
-                theme?: number;
-                theme_name?: string;
-                ton_ids?: number;
-            };
+            query?: never;
             header?: never;
             path: {
                 /** @description A unique integer value identifying this case. */
@@ -3567,41 +4172,7 @@ export interface operations {
     };
     cases_update: {
         parameters: {
-            query?: {
-                district?: number;
-                district_name?: string;
-                from_start_date?: string;
-                housing_corporation?: number;
-                housing_corporation_isnull?: boolean;
-                ids?: number;
-                is_enforcement_request?: boolean;
-                open_cases?: boolean;
-                ordering?: string;
-                page_size?: number;
-                postal_code_range?: string;
-                priority?: number;
-                project?: number;
-                project_name?: string;
-                reason?: number;
-                reason_name?: string;
-                schedule_day_segment?: number;
-                schedule_from_date_added?: string;
-                schedule_housing_corporation_combiteam?: boolean;
-                schedule_visit_from?: string;
-                schedule_week_segment?: number;
-                sensitive?: boolean;
-                simplified?: boolean;
-                start_date?: string;
-                state_types?: number;
-                state_types__name?: string;
-                subject?: number;
-                subject_name?: string;
-                tag?: number;
-                task?: string;
-                theme?: number;
-                theme_name?: string;
-                ton_ids?: number;
-            };
+            query?: never;
             header?: never;
             path: {
                 /** @description A unique integer value identifying this case. */
@@ -3629,41 +4200,7 @@ export interface operations {
     };
     cases_partial_update: {
         parameters: {
-            query?: {
-                district?: number;
-                district_name?: string;
-                from_start_date?: string;
-                housing_corporation?: number;
-                housing_corporation_isnull?: boolean;
-                ids?: number;
-                is_enforcement_request?: boolean;
-                open_cases?: boolean;
-                ordering?: string;
-                page_size?: number;
-                postal_code_range?: string;
-                priority?: number;
-                project?: number;
-                project_name?: string;
-                reason?: number;
-                reason_name?: string;
-                schedule_day_segment?: number;
-                schedule_from_date_added?: string;
-                schedule_housing_corporation_combiteam?: boolean;
-                schedule_visit_from?: string;
-                schedule_week_segment?: number;
-                sensitive?: boolean;
-                simplified?: boolean;
-                start_date?: string;
-                state_types?: number;
-                state_types__name?: string;
-                subject?: number;
-                subject_name?: string;
-                tag?: number;
-                task?: string;
-                theme?: number;
-                theme_name?: string;
-                ton_ids?: number;
-            };
+            query?: never;
             header?: never;
             path: {
                 /** @description A unique integer value identifying this case. */
@@ -3692,46 +4229,10 @@ export interface operations {
     cases_advertisements_list: {
         parameters: {
             query?: {
-                address_search?: string;
-                district?: number;
-                district_name?: string;
-                from_start_date?: string;
-                housing_corporation?: number;
-                housing_corporation_isnull?: boolean;
-                ids?: number;
-                is_enforcement_request?: boolean;
-                number?: string;
-                open_cases?: boolean;
-                ordering?: string;
                 /** @description A page number within the paginated result set. */
                 page?: number;
+                /** @description Number of results to return per page. */
                 page_size?: number;
-                postal_code?: string;
-                postal_code_range?: string;
-                priority?: number;
-                project?: number;
-                project_name?: string;
-                reason?: number;
-                reason_name?: string;
-                schedule_day_segment?: number;
-                schedule_from_date_added?: string;
-                schedule_housing_corporation_combiteam?: boolean;
-                schedule_visit_from?: string;
-                schedule_week_segment?: number;
-                sensitive?: boolean;
-                simplified?: boolean;
-                start_date?: string;
-                state_types?: number;
-                state_types__name?: string;
-                street_name?: string;
-                subject?: number;
-                subject_name?: string;
-                suffix?: string;
-                tag?: number;
-                task?: string;
-                theme?: number;
-                theme_name?: string;
-                ton_ids?: number;
             };
             header?: never;
             path: {
@@ -3754,41 +4255,7 @@ export interface operations {
     };
     cases_citizen_reports_create: {
         parameters: {
-            query?: {
-                district?: number;
-                district_name?: string;
-                from_start_date?: string;
-                housing_corporation?: number;
-                housing_corporation_isnull?: boolean;
-                ids?: number;
-                is_enforcement_request?: boolean;
-                open_cases?: boolean;
-                ordering?: string;
-                page_size?: number;
-                postal_code_range?: string;
-                priority?: number;
-                project?: number;
-                project_name?: string;
-                reason?: number;
-                reason_name?: string;
-                schedule_day_segment?: number;
-                schedule_from_date_added?: string;
-                schedule_housing_corporation_combiteam?: boolean;
-                schedule_visit_from?: string;
-                schedule_week_segment?: number;
-                sensitive?: boolean;
-                simplified?: boolean;
-                start_date?: string;
-                state_types?: number;
-                state_types__name?: string;
-                subject?: number;
-                subject_name?: string;
-                tag?: number;
-                task?: string;
-                theme?: number;
-                theme_name?: string;
-                ton_ids?: number;
-            };
+            query?: never;
             header?: never;
             path: {
                 /** @description A unique integer value identifying this case. */
@@ -3816,41 +4283,7 @@ export interface operations {
     };
     cases_events_retrieve: {
         parameters: {
-            query?: {
-                district?: number;
-                district_name?: string;
-                from_start_date?: string;
-                housing_corporation?: number;
-                housing_corporation_isnull?: boolean;
-                ids?: number;
-                is_enforcement_request?: boolean;
-                open_cases?: boolean;
-                ordering?: string;
-                page_size?: number;
-                postal_code_range?: string;
-                priority?: number;
-                project?: number;
-                project_name?: string;
-                reason?: number;
-                reason_name?: string;
-                schedule_day_segment?: number;
-                schedule_from_date_added?: string;
-                schedule_housing_corporation_combiteam?: boolean;
-                schedule_visit_from?: string;
-                schedule_week_segment?: number;
-                sensitive?: boolean;
-                simplified?: boolean;
-                start_date?: string;
-                state_types?: number;
-                state_types__name?: string;
-                subject?: number;
-                subject_name?: string;
-                tag?: number;
-                task?: string;
-                theme?: number;
-                theme_name?: string;
-                ton_ids?: number;
-            };
+            query?: never;
             header?: never;
             path: {
                 /** @description A unique integer value identifying this case. */
@@ -3873,46 +4306,10 @@ export interface operations {
     cases_processes_list: {
         parameters: {
             query?: {
-                address_search?: string;
-                district?: number;
-                district_name?: string;
-                from_start_date?: string;
-                housing_corporation?: number;
-                housing_corporation_isnull?: boolean;
-                ids?: number;
-                is_enforcement_request?: boolean;
-                number?: string;
-                open_cases?: boolean;
-                ordering?: string;
                 /** @description A page number within the paginated result set. */
                 page?: number;
+                /** @description Number of results to return per page. */
                 page_size?: number;
-                postal_code?: string;
-                postal_code_range?: string;
-                priority?: number;
-                project?: number;
-                project_name?: string;
-                reason?: number;
-                reason_name?: string;
-                schedule_day_segment?: number;
-                schedule_from_date_added?: string;
-                schedule_housing_corporation_combiteam?: boolean;
-                schedule_visit_from?: string;
-                schedule_week_segment?: number;
-                sensitive?: boolean;
-                simplified?: boolean;
-                start_date?: string;
-                state_types?: number;
-                state_types__name?: string;
-                street_name?: string;
-                subject?: number;
-                subject_name?: string;
-                suffix?: string;
-                tag?: number;
-                task?: string;
-                theme?: number;
-                theme_name?: string;
-                ton_ids?: number;
             };
             header?: never;
             path: {
@@ -3935,41 +4332,7 @@ export interface operations {
     };
     cases_processes_start_create: {
         parameters: {
-            query?: {
-                district?: number;
-                district_name?: string;
-                from_start_date?: string;
-                housing_corporation?: number;
-                housing_corporation_isnull?: boolean;
-                ids?: number;
-                is_enforcement_request?: boolean;
-                open_cases?: boolean;
-                ordering?: string;
-                page_size?: number;
-                postal_code_range?: string;
-                priority?: number;
-                project?: number;
-                project_name?: string;
-                reason?: number;
-                reason_name?: string;
-                schedule_day_segment?: number;
-                schedule_from_date_added?: string;
-                schedule_housing_corporation_combiteam?: boolean;
-                schedule_visit_from?: string;
-                schedule_week_segment?: number;
-                sensitive?: boolean;
-                simplified?: boolean;
-                start_date?: string;
-                state_types?: number;
-                state_types__name?: string;
-                subject?: number;
-                subject_name?: string;
-                tag?: number;
-                task?: string;
-                theme?: number;
-                theme_name?: string;
-                ton_ids?: number;
-            };
+            query?: never;
             header?: never;
             path: {
                 /** @description A unique integer value identifying this case. */
@@ -3998,46 +4361,10 @@ export interface operations {
     cases_schedules_list: {
         parameters: {
             query?: {
-                address_search?: string;
-                district?: number;
-                district_name?: string;
-                from_start_date?: string;
-                housing_corporation?: number;
-                housing_corporation_isnull?: boolean;
-                ids?: number;
-                is_enforcement_request?: boolean;
-                number?: string;
-                open_cases?: boolean;
-                ordering?: string;
                 /** @description A page number within the paginated result set. */
                 page?: number;
+                /** @description Number of results to return per page. */
                 page_size?: number;
-                postal_code?: string;
-                postal_code_range?: string;
-                priority?: number;
-                project?: number;
-                project_name?: string;
-                reason?: number;
-                reason_name?: string;
-                schedule_day_segment?: number;
-                schedule_from_date_added?: string;
-                schedule_housing_corporation_combiteam?: boolean;
-                schedule_visit_from?: string;
-                schedule_week_segment?: number;
-                sensitive?: boolean;
-                simplified?: boolean;
-                start_date?: string;
-                state_types?: number;
-                state_types__name?: string;
-                street_name?: string;
-                subject?: number;
-                subject_name?: string;
-                suffix?: string;
-                tag?: number;
-                task?: string;
-                theme?: number;
-                theme_name?: string;
-                ton_ids?: number;
             };
             header?: never;
             path: {
@@ -4061,46 +4388,10 @@ export interface operations {
     cases_subjects_list: {
         parameters: {
             query?: {
-                address_search?: string;
-                district?: number;
-                district_name?: string;
-                from_start_date?: string;
-                housing_corporation?: number;
-                housing_corporation_isnull?: boolean;
-                ids?: number;
-                is_enforcement_request?: boolean;
-                number?: string;
-                open_cases?: boolean;
-                ordering?: string;
                 /** @description A page number within the paginated result set. */
                 page?: number;
+                /** @description Number of results to return per page. */
                 page_size?: number;
-                postal_code?: string;
-                postal_code_range?: string;
-                priority?: number;
-                project?: number;
-                project_name?: string;
-                reason?: number;
-                reason_name?: string;
-                schedule_day_segment?: number;
-                schedule_from_date_added?: string;
-                schedule_housing_corporation_combiteam?: boolean;
-                schedule_visit_from?: string;
-                schedule_week_segment?: number;
-                sensitive?: boolean;
-                simplified?: boolean;
-                start_date?: string;
-                state_types?: number;
-                state_types__name?: string;
-                street_name?: string;
-                subject?: number;
-                subject_name?: string;
-                suffix?: string;
-                tag?: number;
-                task?: string;
-                theme?: number;
-                theme_name?: string;
-                ton_ids?: number;
             };
             header?: never;
             path: {
@@ -4121,49 +4412,35 @@ export interface operations {
             };
         };
     };
+    cases_workflow_instances_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this case. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CaseWorkflowInstance"][];
+                };
+            };
+        };
+    };
     cases_workflows_list: {
         parameters: {
             query?: {
-                address_search?: string;
-                district?: number;
-                district_name?: string;
-                from_start_date?: string;
-                housing_corporation?: number;
-                housing_corporation_isnull?: boolean;
-                ids?: number;
-                is_enforcement_request?: boolean;
-                number?: string;
-                open_cases?: boolean;
-                ordering?: string;
                 /** @description A page number within the paginated result set. */
                 page?: number;
+                /** @description Number of results to return per page. */
                 page_size?: number;
-                postal_code?: string;
-                postal_code_range?: string;
-                priority?: number;
-                project?: number;
-                project_name?: string;
-                reason?: number;
-                reason_name?: string;
-                schedule_day_segment?: number;
-                schedule_from_date_added?: string;
-                schedule_housing_corporation_combiteam?: boolean;
-                schedule_visit_from?: string;
-                schedule_week_segment?: number;
-                sensitive?: boolean;
-                simplified?: boolean;
-                start_date?: string;
-                state_types?: number;
-                state_types__name?: string;
-                street_name?: string;
-                subject?: number;
-                subject_name?: string;
-                suffix?: string;
-                tag?: number;
-                task?: string;
-                theme?: number;
-                theme_name?: string;
-                ton_ids?: number;
             };
             header?: never;
             path: {
@@ -4187,46 +4464,10 @@ export interface operations {
     cases_bag_ids_list: {
         parameters: {
             query?: {
-                address_search?: string;
-                district?: number;
-                district_name?: string;
-                from_start_date?: string;
-                housing_corporation?: number;
-                housing_corporation_isnull?: boolean;
-                ids?: number;
-                is_enforcement_request?: boolean;
-                number?: string;
-                open_cases?: boolean;
-                ordering?: string;
                 /** @description A page number within the paginated result set. */
                 page?: number;
+                /** @description Number of results to return per page. */
                 page_size?: number;
-                postal_code?: string;
-                postal_code_range?: string;
-                priority?: number;
-                project?: number;
-                project_name?: string;
-                reason?: number;
-                reason_name?: string;
-                schedule_day_segment?: number;
-                schedule_from_date_added?: string;
-                schedule_housing_corporation_combiteam?: boolean;
-                schedule_visit_from?: string;
-                schedule_week_segment?: number;
-                sensitive?: boolean;
-                simplified?: boolean;
-                start_date?: string;
-                state_types?: number;
-                state_types__name?: string;
-                street_name?: string;
-                subject?: number;
-                subject_name?: string;
-                suffix?: string;
-                tag?: number;
-                task?: string;
-                theme?: number;
-                theme_name?: string;
-                ton_ids?: number;
             };
             header?: never;
             path?: never;
@@ -4250,6 +4491,7 @@ export interface operations {
                 district?: number;
                 district_name?: string;
                 from_start_date?: string;
+                has_open_sensitive_case_on_address?: boolean;
                 housing_corporation?: number;
                 housing_corporation_isnull?: boolean;
                 ids?: number;
@@ -4304,6 +4546,7 @@ export interface operations {
                 district?: number;
                 district_name?: string;
                 from_start_date?: string;
+                has_open_sensitive_case_on_address?: boolean;
                 housing_corporation?: number;
                 housing_corporation_isnull?: boolean;
                 ids?: number;
@@ -4364,6 +4607,7 @@ export interface operations {
                 district?: number;
                 district_name?: string;
                 from_start_date?: string;
+                has_open_sensitive_case_on_address?: boolean;
                 housing_corporation?: number;
                 housing_corporation_isnull?: boolean;
                 ids?: number;
@@ -4438,6 +4682,7 @@ export interface operations {
                 district?: number;
                 district_name?: string;
                 from_start_date?: string;
+                has_open_sensitive_case_on_address?: boolean;
                 housing_corporation?: number;
                 housing_corporation_isnull?: boolean;
                 ids?: number;
@@ -4908,6 +5153,130 @@ export interface operations {
                 };
                 content: {
                     "application/json": string[];
+                };
+            };
+        };
+    };
+    puntenteller_adressen_list: {
+        parameters: {
+            query?: {
+                /** @description Number of results to return per page. */
+                limit?: number;
+                /** @description The initial index from which to return the results. */
+                offset?: number;
+            };
+            header?: never;
+            path: {
+                bag_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedGebruikersinvoerResponseList"];
+                };
+            };
+        };
+    };
+    puntenteller_adressen_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                bag_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["GebruikersinvoerRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["GebruikersinvoerRequest"];
+                "multipart/form-data": components["schemas"]["GebruikersinvoerRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GebruikersinvoerCreateResponse"];
+                };
+            };
+        };
+    };
+    puntenteller_adressen_invoerwaarden_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                bag_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GebouwData"];
+                };
+            };
+        };
+    };
+    puntenteller_puntentellingen_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this gebruikersinvoer. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GebruikersinvoerResponse"];
+                };
+            };
+        };
+    };
+    puntenteller_puntentellingen_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this gebruikersinvoer. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedGebruikersinvoerRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedGebruikersinvoerRequest"];
+                "multipart/form-data": components["schemas"]["PatchedGebruikersinvoerRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GebruikersinvoerResponse"];
                 };
             };
         };

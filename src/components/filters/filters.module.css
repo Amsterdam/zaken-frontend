@@ -1,0 +1,32 @@
+/* The filters above a table: fields next to each other, wrapping when needed. */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--ams-space-m);
+}
+
+.field {
+  min-width: 12rem;
+}
+
+/* As wide as its field, so at least as wide as the label above it. */
+.select {
+  width: 100%;
+}
+
+/* The search field takes the room that is left on its line. */
+.search {
+  flex: 1 1 20rem;
+  max-width: 40rem;
+}
+
+.multiSelect {
+  min-width: 16rem;
+  max-width: 28rem;
+}
+
+/* A button or checkbox without a label above it, in line with the inputs. */
+.alignBottom {
+  align-self: flex-end;
+}
