@@ -85,14 +85,16 @@ const HelpExplanation: React.FC = () => (
         </Paragraph>
       </Column>
     </Accordion.Section>
-    <Accordion.Section label="Bezoek overslaan">
+    <Accordion.Section label="Bezoek overslaan (Ondermijning)">
       <Column>
         <Paragraph>
           Een gepland huisbezoek wordt normaal via TOP doorgegeven. Is het
           bezoek niet meer nodig, bijvoorbeeld omdat de politie al ter plaatse
           is geweest, dan kan je het overslaan: klik bij een zaak onder “Open
           taken” op “Bezoek overslaan” en vul de reden in. De zaak gaat dan
-          direct door naar de debrief en de reden staat in de zaakhistorie.
+          direct door naar de debrief en de reden staat in de zaakhistorie. Let
+          op dat deze feature alleen beschikbaar is voor zaken met het thema
+          Ondermijning.
         </Paragraph>
         <Paragraph>
           De knop staat er alleen bij zaken met het thema Ondermijning, bij een
