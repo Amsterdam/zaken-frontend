@@ -8,6 +8,7 @@ import CreateCasePage from "../CreateCasePage"
 
 const BAG_ID = "0363010000000001"
 const createCase = vi.fn()
+let knownHousingCorporationId: number | null = null
 
 const reasonsByTheme: Record<number, { id: number; name: string }[]> = {
   1: [
@@ -34,6 +35,9 @@ vi.mock("@/api/hooks", () => ({
         ],
       },
     },
+  }),
+  useAddress: () => ({
+    data: { housing_corporation: knownHousingCorporationId },
   }),
   useCaseThemes: () => ({
     data: {
@@ -127,7 +131,78 @@ const chooseSubject = (name: string) =>
 
 describe("the page to make a new case", () => {
   beforeEach(() => {
+    knownHousingCorporationId = null
     createCase.mockReset().mockResolvedValue({ id: 99 })
+  })
+
+  it("pre-selects the known corporation on the address", async () => {
+    knownHousingCorporationId = 7
+    renderPage()
+    fireEvent.click(screen.getByLabelText("Vakantieverhuur"))
+
+    expect(
+      (
+        await screen.findByLabelText<HTMLSelectElement>(
+          /^Selecteer de woningcorporatie/,
+        )
+      ).value,
+    ).toBe("7")
+  })
+
+  it("submits with the selected corporation when confirming the change", async () => {
+    knownHousingCorporationId = 7
+    renderPage()
+    fireEvent.click(screen.getByLabelText("Vakantieverhuur"))
+    fireEvent.click(await screen.findByLabelText("Project"))
+    type(/^Projectnaam/, "30")
+    type(/^Selecteer de woningcorporatie/, "8")
+    fireEvent.click(screen.getByLabelText("Nee, er is geen advertentie"))
+    chooseSubject("Hotel")
+    submit()
+
+    fireEvent.click(
+      await screen.findByRole("button", { name: "Ja, wijzigen naar Ymere" }),
+    )
+
+    await waitFor(() =>
+      expect(createCase).toHaveBeenCalledWith({
+        bag_id: BAG_ID,
+        theme_id: 1,
+        reason_id: 11,
+        project_id: 30,
+        housing_corporation: 8,
+        subject_ids: [6],
+      }),
+    )
+  })
+
+  it("submits with the known corporation when cancelling the change", async () => {
+    knownHousingCorporationId = 7
+    renderPage()
+    fireEvent.click(screen.getByLabelText("Vakantieverhuur"))
+    fireEvent.click(await screen.findByLabelText("Project"))
+    type(/^Projectnaam/, "30")
+    type(/^Selecteer de woningcorporatie/, "8")
+    fireEvent.click(screen.getByLabelText("Nee, er is geen advertentie"))
+    chooseSubject("Hotel")
+    submit()
+
+    fireEvent.click(
+      await screen.findByRole("button", {
+        name: "Nee, Eigen Haard behouden",
+      }),
+    )
+
+    await waitFor(() =>
+      expect(createCase).toHaveBeenCalledWith({
+        bag_id: BAG_ID,
+        theme_id: 1,
+        reason_id: 11,
+        project_id: 30,
+        housing_corporation: 7,
+        subject_ids: [6],
+      }),
+    )
   })
 
   it("shows the address and first only asks the theme", async () => {
