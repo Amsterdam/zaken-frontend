@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react"
 import { useForm, useWatch } from "react-hook-form"
 import { useNavigate } from "react-router"
 import {
@@ -16,6 +17,7 @@ import {
 } from "@amsterdam/ee-ads-rhf"
 import {
   useBagPdokByBagId,
+  useAddress,
   useCaseThemes,
   useCasesByBagId,
   useCorporations,
@@ -26,6 +28,7 @@ import {
   useSubjects,
 } from "@/api/hooks"
 import { FormPage } from "@/components/FormPage/FormPage"
+import { ConfirmDialog } from "@/components/ConfirmDialog/ConfirmDialog"
 import { useToast } from "@/components/toasts/useToast"
 import { getAddressFromBagPdokResponse } from "@/components/addresses/utils"
 import { AdvertisementFields } from "@/components/case/forms/CitizenReportForm/AdvertisementFields"
@@ -63,6 +66,12 @@ type FormValues = ReportValues &
     description: string
   }
 
+type CorporationChangeConfirmation = {
+  knownCorporationId: number
+  knownCorporationName: string
+  selectedCorporationName: string
+}
+
 // A case made for a listing in TON has this theme and this reason.
 const TON_THEME_NAME = "Vakantieverhuur"
 const TON_REASON_NAME = "Digitaal toezicht"
@@ -99,12 +108,17 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
   const navigate = useNavigate()
   const { showToast } = useToast()
   const { data: bagAddressResponse } = useBagPdokByBagId(bagId)
+  const { data: knownAddress } = useAddress(bagId)
   const address = getAddressFromBagPdokResponse(bagAddressResponse)
   const { data: themes } = useCaseThemes()
   const { data: listing } = useListing(tonId)
   const { data: cases } = useCasesByBagId(bagId)
   const { data: corporations } = useCorporations()
   const { mutateAsync: createCase, isPending } = useCreateCase()
+  const [pendingConfirmationValues, setPendingConfirmationValues] =
+    useState<FormValues | null>(null)
+  const [corporationChangeConfirmation, setCorporationChangeConfirmation] =
+    useState<CorporationChangeConfirmation | null>(null)
 
   const isTon = tonId !== undefined
   // For a listing in TON only its own theme and reason can be chosen.
@@ -138,6 +152,21 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
     name: ["theme", "reason"],
   })
 
+  useEffect(() => {
+    if (knownAddress?.housing_corporation == null) {
+      return
+    }
+    const currentCorporation = form.getValues("housing_corporation")
+    const isHousingCorporationDirty = form.getFieldState("housing_corporation").isDirty
+    if (currentCorporation !== "" || isHousingCorporationDirty) {
+      return
+    }
+    form.setValue(
+      "housing_corporation",
+      String(knownAddress.housing_corporation),
+    )
+  }, [form, knownAddress?.housing_corporation])
+
   // What can be chosen depends on the theme.
   const themeId = theme !== "" ? Number(theme) : undefined
   const themeName = themeOptions.find(({ id }) => id === themeId)?.name
@@ -157,6 +186,9 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
   const sortedCorporations = [...(corporations?.results ?? [])].sort((a, b) =>
     a.name.localeCompare(b.name),
   )
+  const corporationNameById = new Map(
+    sortedCorporations.map(({ id, name }) => [String(id), name]),
+  )
   // The cases on this address, to say which one this case follows.
   const previousCases = [...(cases?.results ?? [])]
     .sort((a, b) => a.id - b.id)
@@ -165,7 +197,7 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
       value: String(id),
     }))
 
-  const onSubmit = async (values: FormValues) => {
+  const submitCase = async (values: FormValues) => {
     let result: components["schemas"]["CaseDetail"]
     try {
       result = await createCase({
@@ -214,21 +246,72 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
     navigate(`/zaken/${result.id}`)
   }
 
+  const onSubmit = async (values: FormValues) => {
+    const knownCorporationId = knownAddress?.housing_corporation
+    const selectedCorporationId =
+      values.housing_corporation !== "" ? Number(values.housing_corporation) : undefined
+    const hasDifferentCorporation =
+      knownCorporationId != null &&
+      selectedCorporationId != null &&
+      selectedCorporationId !== knownCorporationId
+
+    if (hasDifferentCorporation) {
+      setPendingConfirmationValues(values)
+      setCorporationChangeConfirmation({
+        knownCorporationId,
+        knownCorporationName:
+          corporationNameById.get(String(knownCorporationId)) ??
+          "de huidige woningcorporatie",
+        selectedCorporationName:
+          corporationNameById.get(values.housing_corporation) ??
+          "de gekozen woningcorporatie",
+      })
+      return
+    }
+
+    await submitCase(values)
+  }
+
+  const onConfirmCorporationChange = async () => {
+    const values = pendingConfirmationValues
+    setPendingConfirmationValues(null)
+    setCorporationChangeConfirmation(null)
+    if (values == null) {
+      return
+    }
+    await submitCase(values)
+  }
+
+  const onCancelCorporationChange = async () => {
+    const values = pendingConfirmationValues
+    const confirmation = corporationChangeConfirmation
+    setPendingConfirmationValues(null)
+    setCorporationChangeConfirmation(null)
+    if (values == null || confirmation == null) {
+      return
+    }
+    await submitCase({
+      ...values,
+      housing_corporation: String(confirmation.knownCorporationId),
+    })
+  }
+
   return (
-    <FormPage
-      title="Nieuwe zaak aanmaken"
-      form={form}
-      onSubmit={onSubmit}
-      submitText="Zaak aanmaken"
-      isPending={isPending}
-      onCancel={() => navigate(`/adres/${bagId}`)}
-      summary={
-        <Column gap="small">
-          <Heading level={2}>Adres</Heading>
-          <Paragraph>{address?.weergavenaam ?? "Adres laden…"}</Paragraph>
-        </Column>
-      }
-    >
+    <>
+      <FormPage
+        title="Nieuwe zaak aanmaken"
+        form={form}
+        onSubmit={onSubmit}
+        submitText="Zaak aanmaken"
+        isPending={isPending}
+        onCancel={() => navigate(`/adres/${bagId}`)}
+        summary={
+          <Column gap="small">
+            <Heading level={2}>Adres</Heading>
+            <Paragraph>{address?.weergavenaam ?? "Adres laden…"}</Paragraph>
+          </Column>
+        }
+      >
       <RadioControl<FormValues>
         name="theme"
         label="Kies het thema voor deze zaak"
@@ -323,13 +406,27 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
         registerOptions={{ required: "Kies de zaak die is overgedragen." }}
         shouldShow={(watch) => hasTheme && watch("other_theme")}
       />
-      <TextAreaControl<FormValues>
-        name="description"
-        label="Korte toelichting"
-        rows={4}
-        shouldShow={hasTheme}
-      />
-    </FormPage>
+        <TextAreaControl<FormValues>
+          name="description"
+          label="Korte toelichting"
+          rows={4}
+          shouldShow={hasTheme}
+        />
+      </FormPage>
+      {corporationChangeConfirmation != null && (
+        <ConfirmDialog
+          title="Woningcorporatie wijzigen"
+          confirmText={`Ja, wijzigen naar ${corporationChangeConfirmation.selectedCorporationName}`}
+          cancelText={`Nee, ${corporationChangeConfirmation.knownCorporationName} behouden`}
+          isPending={isPending}
+          onConfirm={onConfirmCorporationChange}
+          onCancel={onCancelCorporationChange}
+        >
+          Volgens onze gegevens hoort dit adres bij {corporationChangeConfirmation.knownCorporationName}. U heeft {corporationChangeConfirmation.selectedCorporationName} gekozen.
+          Wilt u de woningcorporatie voor dit adres wijzigen naar <strong>{corporationChangeConfirmation.selectedCorporationName}</strong>?
+        </ConfirmDialog>
+      )}
+    </>
   )
 }
 
