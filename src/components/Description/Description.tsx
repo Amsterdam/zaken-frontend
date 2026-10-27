@@ -64,7 +64,7 @@ export function Description({
         return (
           <Fragment key={index}>
             <DescriptionList.Term>{item.label}</DescriptionList.Term>
-            <DescriptionList.Description>
+            <DescriptionList.Description className={styles.value}>
               {item.value}
             </DescriptionList.Description>
           </Fragment>

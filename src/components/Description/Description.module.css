@@ -2,3 +2,8 @@
 .dense {
   --ams-description-list-description-margin-block-end: var(--ams-space-xs);
 }
+
+/* Keeps the line breaks people type in a text area, such as in a Toelichting. */
+.value {
+  white-space: pre-line;
+}
