@@ -3,6 +3,7 @@
 import "@/router/routes"
 import { render, screen, within } from "@testing-library/react"
 import { MemoryRouter, Route, Routes } from "react-router"
+import { ToastProvider } from "@/components/toasts/ToastProvider"
 import DetailsPage from "../DetailsPage"
 
 type CaseQuery = { data?: unknown; isLoading: boolean; error?: unknown }
@@ -84,15 +85,17 @@ const renderPage = (from?: string) => {
   // The breadcrumbs read the path from window.location.
   window.history.pushState({}, "", "/zaken/12")
   return render(
-    <MemoryRouter
-      initialEntries={[
-        { pathname: "/zaken/12", state: from ? { from } : null },
-      ]}
-    >
-      <Routes>
-        <Route path="/zaken/:id" element={<DetailsPage />} />
-      </Routes>
-    </MemoryRouter>,
+    <ToastProvider>
+      <MemoryRouter
+        initialEntries={[
+          { pathname: "/zaken/12", state: from ? { from } : null },
+        ]}
+      >
+        <Routes>
+          <Route path="/zaken/:id" element={<DetailsPage />} />
+        </Routes>
+      </MemoryRouter>
+    </ToastProvider>,
   )
 }
 
@@ -118,9 +121,11 @@ describe("the case page", () => {
     ).toBeTruthy()
     expect(
       screen
-        .getByRole("link", { name: "Amstel 1-H, 1011PN Amsterdam" })
+        .getByRole("link", { name: "Amstel 1-H, 1011 PN Amsterdam" })
         .getAttribute("href"),
     ).toBe("/adres/0363010000000001")
+    // A link is hard to select, so the address can be copied.
+    expect(screen.getByRole("button", { name: "Adres kopiëren" })).toBeTruthy()
 
     expect(description("Zaak ID")).toBe("12")
     expect(screen.queryByText("Handhavingsverzoek")).toBeNull()
