@@ -40,7 +40,11 @@ Dezelfde stack als `top-frontend-v2`: Vite, TypeScript, React 19, Amsterdam Desi
 
 ### Hulp-pagina
 
-Controleer bij elke wijziging of toevoeging van functionaliteit of de Hulp-pagina (`src/components/help/HelpContent`: `HelpContact.tsx` voor het tabblad Contact, `HelpExplanation.tsx` voor het tabblad Uitleg) nog klopt, en werk de tekst zo nodig bij.
+De Hulp-pagina (`src/components/help/HelpContent`: `HelpContact.tsx` voor het tabblad Contact, `HelpExplanation.tsx` voor het tabblad Uitleg) beschrijft hoe je de applicatie gebruikt, niet elke knop.
+
+- Werk de tekst bij als een wijziging iets wat er staat onjuist maakt.
+- Voeg alleen iets toe bij een nieuwe werkwijze of een onderdeel dat niet voor zich spreekt. Een knop met een duidelijke naam of een bekend icoon hoort er niet bij.
+- Twijfel je, voeg dan niets toe en noem het in je samenvatting.
 
 ### Controleren
 

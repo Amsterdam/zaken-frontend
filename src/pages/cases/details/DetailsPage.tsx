@@ -18,6 +18,7 @@ import {
 import { DefaultLayout } from "@/components/DefaultLayout/DefaultLayout"
 import { RouterLink } from "@/components/DefaultLayout/RouterLink"
 import { Card } from "@/components/Card/Card"
+import { CopyButton } from "@/components/CopyButton/CopyButton"
 import { HeadingWithIcon } from "@/components/HeadingWithIcon/HeadingWithIcon"
 import useHasPermission, {
   SENSITIVE_CASE_PERMISSION,
@@ -40,7 +41,9 @@ const getAddress = (address?: components["schemas"]["Address"]) => {
   if (!address) return undefined
   const { street_name, number, suffix_letter, suffix, postal_code } = address
   const houseNumber = [number, suffix_letter, suffix].filter(Boolean).join("-")
-  return `${street_name} ${houseNumber}, ${postal_code} Amsterdam`
+  // The official notation, with a space: "1011 PN".
+  const postalCode = postal_code?.replace(/^(\d{4})\s*([A-Z]{2})$/i, "$1 $2")
+  return `${street_name} ${houseNumber}, ${postalCode} Amsterdam`
 }
 
 const DetailsPage: React.FC = () => {
@@ -95,15 +98,23 @@ const DetailsPage: React.FC = () => {
             ) : (
               address &&
               bagId && (
-                // The address is the way to the other cases and the details of the address.
-                <StandaloneLink
-                  linkComponent={RouterLink}
-                  href={`/adres/${bagId}`}
-                  // A map marker: it is an address, not "the next step".
-                  icon={MapMarkerIcon}
-                >
-                  {address}
-                </StandaloneLink>
+                <Row gap="x-small" alignVertical="center">
+                  {/* The address is the way to the other cases and the details of the address. */}
+                  <StandaloneLink
+                    linkComponent={RouterLink}
+                    href={`/adres/${bagId}`}
+                    // A map marker: it is an address, not "the next step".
+                    icon={MapMarkerIcon}
+                  >
+                    {address}
+                  </StandaloneLink>
+                  {/* A link is hard to select, so long street names needn't be typed over. */}
+                  <CopyButton
+                    text={address}
+                    label="Adres kopiëren"
+                    copiedTitle="Adres gekopieerd"
+                  />
+                </Row>
               )
             )}
           </Row>
