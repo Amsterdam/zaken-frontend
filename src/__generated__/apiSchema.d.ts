@@ -1951,6 +1951,7 @@ export interface components {
             readonly id: number;
             nuisance_detected?: boolean;
             violation?: string;
+            name?: string;
             case_user_task_id?: string;
             violation_old?: string;
             violation_result?: unknown;

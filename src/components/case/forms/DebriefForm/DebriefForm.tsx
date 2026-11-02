@@ -48,7 +48,10 @@ const DebriefCreateForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
     },
   })
   const violation = useWatch({ control: form.control, name: "violation" })
-  const toOtherTheme = violation === SEND_TO_OTHER_THEME
+  const selectedViolation = violationTypes?.results.find(
+    ({ id }) => String(id) === violation,
+  )
+  const toOtherTheme = selectedViolation?.key === SEND_TO_OTHER_THEME
 
   // The other themes, by name: the theme of the case itself is left out.
   const otherThemes = [
@@ -63,7 +66,8 @@ const DebriefCreateForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
       await createDebriefing({
         case: id,
         case_user_task_id: caseUserTaskId,
-        violation: values.violation,
+        violation: selectedViolation?.key,
+        name: selectedViolation?.value,
         ...(toOtherTheme && { violation_result: { theme: values.theme } }),
         nuisance_detected: values.nuisance_detected,
         feedback: values.feedback,
@@ -91,9 +95,9 @@ const DebriefCreateForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
             ? "Wat is de uitkomst van het debriefen?"
             : "Wat is de uitkomst van het bezoek?"
         }
-        options={(violationTypes?.results ?? []).map(({ key, value }) => ({
+        options={(violationTypes?.results ?? []).map(({ id, value }) => ({
           label: value,
-          value: key,
+          value: String(id),
         }))}
         registerOptions={{ required: "Kies een uitkomst." }}
       />
