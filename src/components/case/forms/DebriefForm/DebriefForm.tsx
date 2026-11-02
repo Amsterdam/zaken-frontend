@@ -107,7 +107,7 @@ const DebriefCreateForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
             ? "Wat is de uitkomst van het debriefen?"
             : "Wat is de uitkomst van het bezoek?"
         }
-        options={(violationTypes?.results ?? []).map(({ id, key, value }) => ({
+        options={(violationTypes?.results ?? []).map(({ id, value }) => ({
           label: value,
           value: String(id),
         }))}
