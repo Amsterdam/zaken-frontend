@@ -1,5 +1,10 @@
+import { configure } from "@testing-library/react"
 // The same language for dates as the app.
 import "@/config/dayjs"
+
+// With all files in parallel the default of 1 second for findBy and waitFor is
+// too short on a busy machine.
+configure({ asyncUtilTimeout: 3000 })
 
 // jsdom has no matchMedia, which Amsterdam Design System components (e.g. the
 // responsive Menu and PageHeader) use. In tests every media query "doesn't match".

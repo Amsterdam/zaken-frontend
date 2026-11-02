@@ -159,6 +159,25 @@ describe("completing a task", () => {
     await waitFor(() => expect(submitButton().disabled).toBe(true))
   })
 
+  it("can submit a field when the backend returns a null label", async () => {
+    renderButton([
+      { label: null, name: "toelichting", type: "text", required: true },
+    ])
+    open()
+
+    const input = dialog().getByRole("textbox", { name: "" })
+    expect(submitButton().disabled).toBe(true)
+    fireEvent.change(input, { target: { value: "Zie het verslag." } })
+    await waitFor(() => expect(submitButton().disabled).toBe(false))
+    fireEvent.click(submitButton())
+
+    await waitFor(() =>
+      expect(onSubmit).toHaveBeenCalledWith({
+        toelichting: { value: "Zie het verslag." },
+      }),
+    )
+  })
+
   it("shows a field without a type as a text to read", async () => {
     renderButton([
       {

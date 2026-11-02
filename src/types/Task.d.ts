@@ -9,7 +9,7 @@ declare namespace Tasks {
   }
 
   type FormField = {
-    label: string
+    label: string | null
     name: string
     /** Without a type the field is only a text to read. */
     type?: "select" | "checkbox" | "multiselect" | "number" | "text"

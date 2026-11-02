@@ -21,7 +21,7 @@ const NOT_REQUIRED = /\s*\(niet verplicht\)\s*$/i
  */
 export const TaskFormField: React.FC<Props> = ({ field }) => {
   const { name, type, required = false, options = [] } = field
-  const label = field.label.replace(NOT_REQUIRED, "")
+  const label = field.label?.replace(NOT_REQUIRED, "")
   const selectOptions = options.map((option) => ({
     label: option.label,
     value: String(option.value),

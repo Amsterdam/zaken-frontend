@@ -13,7 +13,6 @@ import {
 } from "@/api/hooks"
 import { CaseFormPage } from "@/components/case/CaseFormPage/CaseFormPage"
 import { useAfterCaseFormSubmit } from "../useAfterCaseFormSubmit"
-import { ViolationHelp } from "./components/ViolationHelp"
 
 type Props = {
   id: components["schemas"]["CaseDetail"]["id"]
@@ -98,7 +97,6 @@ const DebriefCreateForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
         }))}
         registerOptions={{ required: "Kies een uitkomst." }}
       />
-      <ViolationHelp />
       <SelectControl<FormValues>
         name="theme"
         label="Naar welk thema overdragen?"
