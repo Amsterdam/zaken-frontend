@@ -3,7 +3,6 @@ import {
   Button,
   Column,
   FieldSet,
-  OrderedList,
   Paragraph,
 } from "@amsterdam/design-system-react"
 import { PlusIcon, DeleteIcon } from "@amsterdam/design-system-react-icons"
@@ -15,7 +14,6 @@ import {
 } from "@amsterdam/ee-ads-rhf"
 import { useCreateSummon, useSummonTypesByTaskId } from "@/api/hooks"
 import { PERSON_ROLE_MAP } from "@/components/CaseEventTimeline/utils/renderValue.formatters"
-import { HelpDialog } from "@/components/HelpDialog/HelpDialog"
 import { CaseFormPage } from "@/components/case/CaseFormPage/CaseFormPage"
 import { useAfterCaseFormSubmit } from "../useAfterCaseFormSubmit"
 import {
@@ -27,6 +25,7 @@ import {
   type SummonFormValues as FormValues,
   toSummonedPersons,
 } from "./summonPersons"
+import MultipleSummonsHelp from "./MultipleSummonsHelp"
 
 type Props = {
   id: components["schemas"]["CaseDetail"]["id"]
@@ -134,21 +133,7 @@ const SummonForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
         ]}
         registerOptions={{ required: "Kies een aanschrijving." }}
       />
-      <HelpDialog label="Meerdere aanschrijvingen?">
-        <OrderedList>
-          <OrderedList.Item>Verwerk eerst deze aanschrijving.</OrderedList.Item>
-          <OrderedList.Item>
-            Kies daarna bij “Taak opvoeren” op de zaakpagina “Opstellen concept
-            aanschrijving”.
-          </OrderedList.Item>
-          <OrderedList.Item>
-            Vul het formulier in en rond af met de knop “Resultaat verwerken”.
-          </OrderedList.Item>
-          <OrderedList.Item>
-            Herhaal dit per opgestelde aanschrijving.
-          </OrderedList.Item>
-        </OrderedList>
-      </HelpDialog>
+      <MultipleSummonsHelp />
       <TextInputControl<FormValues>
         name="number_of_accommodations"
         label="Aantal gesloten logiesverblijven"
