@@ -63,10 +63,6 @@ const DebriefCreateForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
     .sort((a, b) => a.localeCompare(b))
 
   const onSubmit = async (values: FormValues) => {
-    // const selectedViolation = violationTypes?.results.find(
-    //   ({ id }) => String(id) === values.violation,
-    // )
-
     try {
       await createDebriefing({
         case: id,
