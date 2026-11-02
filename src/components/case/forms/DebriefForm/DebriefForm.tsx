@@ -63,23 +63,16 @@ const DebriefCreateForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
     .sort((a, b) => a.localeCompare(b))
 
   const onSubmit = async (values: FormValues) => {
-    const selectedViolation = violationTypes?.results.find(
-      ({ id }) => String(id) === values.violation,
-    )
-    if (!selectedViolation) {
-      form.setError("violation", {
-        type: "validate",
-        message: "Kies een uitkomst.",
-      })
-      return
-    }
+    // const selectedViolation = violationTypes?.results.find(
+    //   ({ id }) => String(id) === values.violation,
+    // )
 
     try {
       await createDebriefing({
         case: id,
         case_user_task_id: caseUserTaskId,
-        violation: selectedViolation.key,
-        name: selectedViolation.value,
+        violation: selectedViolation?.key,
+        name: selectedViolation?.value,
         ...(toOtherTheme && { violation_result: { theme: values.theme } }),
         nuisance_detected: values.nuisance_detected,
         feedback: values.feedback,
