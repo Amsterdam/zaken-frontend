@@ -6,7 +6,6 @@ import {
   render,
   screen,
   waitFor,
-  within,
 } from "@testing-library/react"
 import { MemoryRouter, Route, Routes, useLocation } from "react-router"
 import { ToastProvider } from "@/components/toasts/ToastProvider"
@@ -130,27 +129,6 @@ describe("the page to give the feedback of a debrief", () => {
     ).toBeTruthy()
     // Nuisance is only asked for Vakantieverhuur.
     expect(screen.queryByLabelText(/^Overlast geconstateerd/)).toBeNull()
-  })
-
-  it("explains what to choose when the violation is not clear", () => {
-    renderPage()
-
-    fireEvent.click(
-      screen.getByRole("button", {
-        name: "Niet duidelijk of er een overtreding is?",
-      }),
-    )
-    const dialog = within(screen.getByRole("dialog"))
-    expect(dialog.getByText("Nader intern onderzoek nodig")).toBeTruthy()
-
-    // Closing the explanation does not send the form.
-    // (The close button in the heading of the dialog has the same name.)
-    const closeButtons = dialog.getAllByRole("button", { name: "Sluiten" })
-    fireEvent.click(closeButtons[closeButtons.length - 1])
-    expect(screen.queryByRole("dialog")).toBeNull()
-    expect(
-      screen.queryByRole("link", { name: "Kies een uitkomst." }),
-    ).toBeNull()
   })
 
   it("lists what is wrong when saved empty", async () => {

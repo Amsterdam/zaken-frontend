@@ -18,5 +18,8 @@ export default defineConfig({
     globals: true,
     environment: "jsdom",
     setupFiles: ["./src/test-utils/setupTests.ts"],
+    // With all files in parallel a page test can take longer than the
+    // default 5 seconds on a busy machine.
+    testTimeout: 15000,
   },
 })

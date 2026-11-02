@@ -268,19 +268,18 @@ describe("the page to process a summon", () => {
   it("explains what to do with more than one summon", () => {
     renderPage()
 
-    fireEvent.click(
-      screen.getByRole("button", { name: "Meerdere aanschrijvingen?" }),
-    )
+    const toggle = screen.getByRole("button", {
+      name: "Meer dan één aanschrijving opgesteld?",
+    })
+    expect(toggle.getAttribute("aria-expanded")).toBe("false")
+    fireEvent.click(toggle)
+    expect(toggle.getAttribute("aria-expanded")).toBe("true")
 
-    expect(
-      within(screen.getByRole("dialog")).getByText(
-        /^Verwerk eerst deze aanschrijving/,
-      ),
-    ).toBeTruthy()
+    const steps = within(
+      screen.getByText(/^Verwerk eerst deze aanschrijving/).closest("ol")!,
+    ).getAllByRole("listitem")
     // The steps, in order.
-    expect(
-      within(screen.getByRole("dialog")).getAllByRole("listitem"),
-    ).toHaveLength(4)
+    expect(steps).toHaveLength(4)
   })
 
   it("stays on the form when saving fails", async () => {
