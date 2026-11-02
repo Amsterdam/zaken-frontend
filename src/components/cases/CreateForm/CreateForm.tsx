@@ -384,8 +384,7 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
         label="Onderwerp(en)"
         options={toOptions(subjects?.results)}
         registerOptions={{
-          validate: (chosen) =>
-            (Array.isArray(chosen) && chosen.length > 0) ||
+         required:
             "Kies ten minste één onderwerp.",
         }}
         shouldShow={hasTheme}
