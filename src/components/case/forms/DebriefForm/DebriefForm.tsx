@@ -25,6 +25,7 @@ type FormValues = {
   theme: string
   nuisance_detected: boolean
   feedback: string
+  name: string
 }
 
 // The outcome that hands the case over to another theme.
@@ -46,6 +47,7 @@ const DebriefCreateForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
       theme: "",
       nuisance_detected: false,
       feedback: "",
+      name: ""
     },
   })
   const violation = useWatch({ control: form.control, name: "violation" })
@@ -83,6 +85,7 @@ const DebriefCreateForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
         ...(toOtherTheme && { violation_result: { theme: values.theme } }),
         nuisance_detected: values.nuisance_detected,
         feedback: values.feedback,
+        name: values.name,
       })
     } catch {
       // The error is shown as a toast; the form stays.

@@ -1957,6 +1957,7 @@ export interface components {
             violation_result?: unknown;
             feedback: string;
             case: number;
+            name: string;
         };
         Decision: {
             readonly id: number;
