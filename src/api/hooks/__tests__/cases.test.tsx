@@ -379,6 +379,27 @@ describe("useCases", () => {
       ["ordering", "start_date, id"],
     ])
   })
+
+  it("applies a descending order to every sort field", async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValue(jsonResponse({ count: 0, results: [] }))
+    vi.stubGlobal("fetch", fetchMock)
+    const { Wrapper } = createQueryWrapper()
+
+    const { result } = renderHook(
+      () =>
+        useCases({
+          pagination: { page: 1, pageSize: 10 },
+          sorting: { dataIndex: "start_date", order: "DESCEND" },
+        }),
+      { wrapper: Wrapper },
+    )
+    await waitFor(() => expect(result.current.isSuccess).toBe(true))
+
+    const url = new URL(fetchMock.mock.calls[0][0])
+    expect(url.searchParams.get("ordering")).toBe("-start_date,-id")
+  })
 })
 
 describe("useCasesByBagId", () => {
