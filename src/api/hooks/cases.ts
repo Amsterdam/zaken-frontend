@@ -178,7 +178,12 @@ const getCasesOrdering = (sorting?: TABLE.Schemas.Sorting) => {
   const value = sorting.dataIndex
     ? casesSortingIndexMapping[sorting.dataIndex]
     : ""
-  return sorting.order === "DESCEND" ? `-${value}` : value
+  if (!value || sorting.order !== "DESCEND") return value
+  // Apply the direction to every field, also to the secondary sorter.
+  return value
+    .split(",")
+    .map((field) => `-${field.trim()}`)
+    .join(",")
 }
 
 const getOpenCasesValue = (openCases?: string) => {

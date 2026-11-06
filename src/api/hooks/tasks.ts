@@ -149,7 +149,12 @@ const sortingIndexMapping: Record<string, string> = {
 const getOrdering = (sorting?: TABLE.Schemas.Sorting) => {
   if (!sorting) return undefined
   const value = sorting.dataIndex ? sortingIndexMapping[sorting.dataIndex] : ""
-  return sorting.order === "DESCEND" ? `-${value}` : value
+  if (!value || sorting.order !== "DESCEND") return value
+  // Apply the direction to every field, also to the secondary sorter.
+  return value
+    .split(",")
+    .map((field) => `-${field.trim()}`)
+    .join(",")
 }
 
 export type TasksParams = {
