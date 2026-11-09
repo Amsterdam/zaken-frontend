@@ -181,7 +181,7 @@ describe("useTasks", () => {
       ["tag", "Spoed"],
       ["tag", "Extra"],
       ["housing_corporation_isnull", "true"],
-      ["ordering", "-due_date, id"],
+      ["ordering", "-due_date,-id"],
     ])
   })
 
