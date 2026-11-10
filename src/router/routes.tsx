@@ -21,6 +21,7 @@ import NotFoundPage from "@/pages/errors/NotFoundPage"
 import FinePage from "@/pages/fines/FinePage"
 import HelpPage from "@/pages/help/HelpPage"
 import HomePage from "@/pages/home/HomePage"
+import ImportPage from "@/pages/import/ImportPage"
 import TasksIndexPage from "@/pages/tasks/IndexPage"
 import RequirePermissions from "./RequirePermissions"
 import Root from "./Root"
@@ -57,6 +58,7 @@ export const routes: RouteObject[] = [
       // To look at the 403 page without having to lack a permission.
       { path: "403", element: <NotAuthorizedPage /> },
       { path: "bpmn", element: <BpmnPage />, ...titled("BPMN") },
+      { path: "import", element: <ImportPage />, ...titled("Import") },
       { path: "hulp", element: <HelpPage />, ...titled("Hulp") },
       {
         path: "taken",

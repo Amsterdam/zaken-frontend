@@ -59,6 +59,7 @@ const menuItems: MenuItem[] = [
     permission: "access_recovery_check",
   },
   { href: "/bpmn", icon: OrganisationChartIcon, label: "BPMN" },
+  { href: "/import", icon: FolderFillIcon, label: "Import" },
   { href: "/hulp", icon: QuestionMarkCircleIcon, label: "Hulp" },
 ]
 

@@ -46,6 +46,7 @@ describe("DefaultLayout (via the 404 page)", () => {
       "Taken",
       "Zaken",
       "BPMN",
+      "Import",
       "Hulp",
       "Uitloggen",
     ])

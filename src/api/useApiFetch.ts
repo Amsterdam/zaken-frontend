@@ -8,6 +8,13 @@ type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE"
 export type ApiFetchOptions = {
   method?: HttpMethod
   data?: unknown
+  /** Send this body as-is (for example FormData for file uploads). */
+  body?: BodyInit
+  /**
+   * Override Content-Type behavior. Set to false to skip it (e.g. FormData),
+   * or set a value to force one.
+   */
+  contentType?: string | false
   /**
    * Send the user's token. Set to false for external APIs (PDOK, data.amsterdam.nl):
    * they don't need it, and it must never leave our own API.
@@ -27,14 +34,31 @@ export const useApiFetch = () => {
   return useCallback(
     async <Schema>(
       url: string,
-      { method = "GET", data, authenticated = true }: ApiFetchOptions = {},
+      {
+        method = "GET",
+        data,
+        body,
+        contentType,
+        authenticated = true,
+      }: ApiFetchOptions = {},
     ): Promise<Schema> => {
+      if (data !== undefined && body !== undefined) {
+        throw new Error("useApiFetch: use either data or body, not both")
+      }
+
       const headers: Record<string, string> = {}
 
       // Like axios did: only with a body, so a plain GET to an external API stays a "simple" CORS request.
-      if (data !== undefined) {
-        headers["Content-Type"] = "application/json"
+      if (contentType !== false && (contentType || data !== undefined)) {
+        headers["Content-Type"] = contentType || "application/json"
       }
+
+      const requestBody =
+        body !== undefined
+          ? body
+          : data !== undefined
+            ? JSON.stringify(data)
+            : undefined
 
       if (authenticated && token) {
         headers.Authorization = `Bearer ${token}`
@@ -43,7 +67,7 @@ export const useApiFetch = () => {
       const response = await fetch(url, {
         method,
         headers,
-        body: data !== undefined ? JSON.stringify(data) : undefined,
+        body: requestBody,
       })
 
       const text = await response.text()

@@ -15,6 +15,24 @@ vi.mock("@/api/hooks", async (importOriginal) => ({
   }),
   useCase: () => ({ data: undefined }),
   useFine: () => ({ data: undefined, isLoading: false }),
+  useValidateLeegstandFile: () => ({
+    isPending: false,
+    isSuccess: false,
+    isError: false,
+    data: undefined,
+    error: undefined,
+    mutate: vi.fn(),
+    reset: vi.fn(),
+  }),
+  useImportLeegstandFile: () => ({
+    isPending: false,
+    isSuccess: false,
+    isError: false,
+    data: undefined,
+    error: undefined,
+    mutate: vi.fn(),
+    reset: vi.fn(),
+  }),
 }))
 
 vi.mock("react-oidc-context", () => ({
@@ -74,6 +92,13 @@ describe("the routes", () => {
 
     expect(heading("Hulp")).toBeTruthy()
     expect(document.title).toMatch(/^Hulp \| /)
+  })
+
+  it("shows the import page, with its title on the tab", () => {
+    renderAt("/import")
+
+    expect(heading("Import")).toBeTruthy()
+    expect(document.title).toMatch(/^Import \| /)
   })
 
   it("has no title of its own for a page without one", () => {

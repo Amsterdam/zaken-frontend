@@ -1,0 +1,17 @@
+.import-case-results {
+  margin: 0.5rem 0 0;
+  padding-left: 1.25rem;
+}
+
+.import-case-results__item {
+  margin-top: 0.25rem;
+}
+
+.import-case-results__item--success {
+  color: #0a7f2e;
+}
+
+.import-case-results__item--error {
+  color: #c1121f;
+}
+
