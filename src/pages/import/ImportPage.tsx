@@ -1,4 +1,5 @@
 import { useState, type ChangeEvent, type FormEvent } from "react"
+import { useNavigate } from "react-router"
 import {
   Alert,
   Button,
@@ -17,7 +18,15 @@ import { DefaultLayout } from "@/components/DefaultLayout/DefaultLayout"
 import "./ImportPage.css"
 
 const getErrorMessage = (error: unknown) => {
-  const apiError = error as ApiError | undefined
+  const apiError = error as (ApiError & { error?: unknown }) | undefined
+  if (
+    (apiError?.status === 400 || apiError?.status === 500) &&
+    typeof apiError.error === "string" &&
+    apiError.error
+  ) {
+    return apiError.error
+  }
+
   return apiError?.detail || apiError?.message || "Uploaden is niet gelukt."
 }
 
@@ -25,6 +34,7 @@ const countFailedCases = (processedCases: ProcessedCaseResult[]) =>
   processedCases.filter((caseResult) => !caseResult.success).length
 
 const ImportPage: React.FC = () => {
+  const navigate = useNavigate()
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [uploadedFileName, setUploadedFileName] = useState<string>()
   const validateFile = useValidateLeegstandFile()
@@ -57,7 +67,11 @@ const ImportPage: React.FC = () => {
 
   const onImport = () => {
     if (!selectedFile || !canImport) return
-    importFile.mutate(selectedFile)
+    importFile.mutate(selectedFile, {
+      onSuccess: ({ task_id }) => {
+        navigate(`/import/${task_id}`)
+      },
+    })
   }
 
   return (
@@ -100,13 +114,6 @@ const ImportPage: React.FC = () => {
           {validateFile.isError && (
             <Alert heading="Uploaden is niet gelukt" headingLevel={2} severity="error">
               <Paragraph>{getErrorMessage(validateFile.error)}</Paragraph>
-            </Alert>
-          )}
-          {importFile.isSuccess && (
-            <Alert heading="Import gestart" headingLevel={2} severity="success">
-              <Paragraph>
-                Bestand wordt verwerkt met task_id={importFile.data.task_id}
-              </Paragraph>
             </Alert>
           )}
           {importFile.isError && (

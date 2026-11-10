@@ -96,6 +96,11 @@ export const queryKeys = {
     list: () => ["housingCorporations", "list"] as const,
   },
 
+  imports: {
+    all: ["imports"] as const,
+    status: (taskId?: string) => ["imports", "leegstand-file-status", taskId] as const,
+  },
+
   listings: {
     all: ["listings"] as const,
     detail: (tonId?: string) => ["listings", tonId] as const,

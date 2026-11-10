@@ -33,6 +33,11 @@ vi.mock("@/api/hooks", async (importOriginal) => ({
     mutate: vi.fn(),
     reset: vi.fn(),
   }),
+  useLeegstandFileStatus: () => ({
+    isError: false,
+    error: undefined,
+    data: undefined,
+  }),
 }))
 
 vi.mock("react-oidc-context", () => ({
@@ -99,6 +104,13 @@ describe("the routes", () => {
 
     expect(heading("Import")).toBeTruthy()
     expect(document.title).toMatch(/^Import \| /)
+  })
+
+  it("shows the import status page, with its title on the tab", () => {
+    renderAt("/import/abc-123")
+
+    expect(heading("Importstatus")).toBeTruthy()
+    expect(document.title).toMatch(/^Importstatus \| /)
   })
 
   it("has no title of its own for a page without one", () => {
