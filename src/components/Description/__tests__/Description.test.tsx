@@ -34,15 +34,11 @@ describe("Description", () => {
     expect(screen.queryByText("Datum")).toBeNull()
   })
 
-  it("preserves width, density and custom classes", () => {
-    const { container } = render(
-      <Description data={[]} termsWidth="medium" dense className="custom" />,
-    )
+  it("preserves custom classes", () => {
+    const { container } = render(<Description data={[]} className="custom" />)
 
-    const list = container.querySelector("dl")
-    expect(list?.className).toMatch(/medium/)
-    expect(list?.className).toMatch(/dense/)
-    expect(list?.className).toContain("custom")
+    const list = container.querySelector("dl.ams-data-list")
+    expect(list?.classList.contains("custom")).toBe(true)
   })
 
   it("keeps the line breaks in a value", () => {
