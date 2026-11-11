@@ -1,5 +1,5 @@
 import { Outlet } from "react-router"
-import { Feedback } from "@/components/Feedback/Feedback"
+// import { Feedback } from "@/components/Feedback/Feedback"
 import PageTitle from "./PageTitle"
 
 /**
@@ -10,7 +10,7 @@ export default function Root() {
   return (
     <>
       <PageTitle />
-      <Feedback />
+      {/*<Feedback />*/}
       <Outlet />
     </>
   )

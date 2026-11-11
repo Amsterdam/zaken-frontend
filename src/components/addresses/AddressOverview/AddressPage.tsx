@@ -19,12 +19,10 @@ const AddressPage: React.FC<Props> = ({ bagId, children }) => (
     <Grid.Cell span="all" appearance="transparent">
       <AddressHeading bagId={bagId} />
     </Grid.Cell>
-    <Grid.Cell span="all">
-      <Column gap="large">
-        <AddressTabs bagId={bagId} />
-        {children}
-      </Column>
+    <Grid.Cell span="all" appearance="flush">
+      <AddressTabs bagId={bagId} />
     </Grid.Cell>
+    <Grid.Subgrid span="all">{children}</Grid.Subgrid>
   </DefaultLayout>
 )
 
