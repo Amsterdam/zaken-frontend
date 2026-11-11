@@ -1,6 +1,5 @@
 import { useParams } from "react-router"
 import { Column, Grid } from "@amsterdam/design-system-react"
-import { EqualColumns } from "@/components/EqualColumns/EqualColumns"
 import isValidUrlParamBAGId from "@/router/utils/isValidUrlParamBAGId"
 import AddressMap from "@/components/addresses/AddressMap/AddressMap"
 import AddressPage from "@/components/addresses/AddressOverview/AddressPage"

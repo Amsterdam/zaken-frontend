@@ -1,5 +1,5 @@
 import { type ReactNode } from "react"
-import { Column, Grid } from "@amsterdam/design-system-react"
+import { Grid } from "@amsterdam/design-system-react"
 import { DefaultLayout } from "@/components/DefaultLayout/DefaultLayout"
 import AddressHeading from "./AddressHeading"
 import AddressTabs from "./AddressTabs"
