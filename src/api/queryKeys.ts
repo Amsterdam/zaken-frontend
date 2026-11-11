@@ -98,6 +98,8 @@ export const queryKeys = {
 
   imports: {
     all: ["imports"] as const,
+    allowedJumpWorkflows: () =>
+      ["imports", "allowed-jump-workflows"] as const,
     status: (taskId?: string) => ["imports", "leegstand-file-status", taskId] as const,
   },
 

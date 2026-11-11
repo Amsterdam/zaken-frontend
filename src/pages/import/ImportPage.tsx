@@ -1,5 +1,5 @@
 import { useState, type ChangeEvent, type FormEvent } from "react"
-import { useNavigate } from "react-router"
+import { useLocation, useNavigate } from "react-router"
 import {
   Alert,
   Button,
@@ -13,28 +13,18 @@ import {
   type ProcessedCaseResult,
   useValidateLeegstandFile,
 } from "@/api/hooks"
-import type { ApiError } from "@/api/types/apiError"
 import { DefaultLayout } from "@/components/DefaultLayout/DefaultLayout"
+import { getErrorMessage } from "@/pages/import/getErrorMessage"
+import type { ImportValidationLocationState } from "@/pages/import/importFlow"
 import "./ImportPage.css"
-
-const getErrorMessage = (error: unknown) => {
-  const apiError = error as (ApiError & { error?: unknown }) | undefined
-  if (
-    (apiError?.status === 400 || apiError?.status === 500) &&
-    typeof apiError.error === "string" &&
-    apiError.error
-  ) {
-    return apiError.error
-  }
-
-  return apiError?.detail || apiError?.message || "Uploaden is niet gelukt."
-}
 
 const countFailedCases = (processedCases: ProcessedCaseResult[]) =>
   processedCases.filter((caseResult) => !caseResult.success).length
 
 const ImportPage: React.FC = () => {
   const navigate = useNavigate()
+  const { state } = useLocation()
+  const importState = state as ImportValidationLocationState | undefined
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [uploadedFileName, setUploadedFileName] = useState<string>()
   const validateFile = useValidateLeegstandFile()
@@ -49,38 +39,72 @@ const ImportPage: React.FC = () => {
     setSelectedFile(file)
     setUploadedFileName(undefined)
     validateFile.reset()
-    importFile.reset()
   }
 
   const onValidate = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    if (!selectedFile) return
+    if (!selectedFile || !importState?.templateCase) return
 
     const fileToUpload = selectedFile
-    validateFile.mutate(fileToUpload, {
+    validateFile.mutate(
+      {
+        file: fileToUpload,
+        templateCase: importState.templateCase,
+      },
+      {
       onSuccess: () => {
         setUploadedFileName(fileToUpload.name)
-        importFile.reset()
       },
-    })
+      },
+    )
   }
 
   const onImport = () => {
-    if (!selectedFile || !canImport) return
-    importFile.mutate(selectedFile, {
-      onSuccess: ({ task_id }) => {
-        navigate(`/import/${task_id}`)
+    if (!selectedFile || !canImport || !importState?.templateCase) return
+    importFile.mutate(
+      {
+        file: selectedFile,
+        templateCase: importState.templateCase,
       },
-    })
+      {
+        onSuccess: ({ task_id }) => {
+          navigate(`/import/${task_id}`)
+        },
+      },
+    )
+  }
+
+  if (!importState?.templateCase) {
+    return (
+      <DefaultLayout>
+        <Grid.Cell span="all" appearance="transparent">
+          <Heading level={1}>Import valideren</Heading>
+        </Grid.Cell>
+        <Grid.Cell span="all">
+          <Column gap="large">
+            <Paragraph>
+              1. Template kiezen {"->"} 2. Valideren {"->"} 3. Importstatus
+            </Paragraph>
+            <Alert heading="Geen template gekozen" headingLevel={2} severity="error">
+              <Paragraph>Kies eerst een zaaktemplate om de import te starten.</Paragraph>
+            </Alert>
+            <Button type="button" onClick={() => navigate("/import")}>Naar template kiezen</Button>
+          </Column>
+        </Grid.Cell>
+      </DefaultLayout>
+    )
   }
 
   return (
     <DefaultLayout>
       <Grid.Cell span="all" appearance="transparent">
-        <Heading level={1}>Import</Heading>
+        <Heading level={1}>Import valideren</Heading>
       </Grid.Cell>
       <Grid.Cell span="all">
         <Column gap="large">
+          <Paragraph>
+            1. Template kiezen {"->"} 2. Valideren {"->"} 3. Importstatus
+          </Paragraph>
           <Paragraph>
             Upload een bestand om het door de backend te laten verwerken via
             process_leegstand_file.
@@ -133,16 +157,20 @@ const ImportPage: React.FC = () => {
                 disabled={!selectedFile || validateFile.isPending || importFile.isPending}
                 aria-busy={validateFile.isPending}
               >
-                {validateFile.isPending ? "Bestand valideren..." : "Bestand valideren"}
+                {validateFile.isPending
+                  ? "Stap 2: bestand valideren..."
+                  : "Stap 2: bestand valideren"}
               </Button>
               {canImport && (
                 <Button
                   type="button"
                   onClick={onImport}
-                  disabled={importFile.isPending || validateFile.isPending}
+                  disabled={validateFile.isPending || importFile.isPending}
                   aria-busy={importFile.isPending}
                 >
-                  {importFile.isPending ? "Bestand importeren..." : "Bestand importeren"}
+                  {importFile.isPending
+                    ? "Stap 2 afronden: bestand importeren..."
+                    : "Stap 2 afronden: bestand importeren"}
                 </Button>
               )}
             </Column>

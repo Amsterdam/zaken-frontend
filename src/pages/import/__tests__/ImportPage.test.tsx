@@ -7,9 +7,18 @@ const validateReset = vi.fn()
 const importMutate = vi.fn()
 const importReset = vi.fn()
 
+const templateCase = {
+  themeId: 1,
+  reasonId: 11,
+  subjectIds: [31],
+  jumpTo: null,
+}
+
 const Location = () => {
   const { pathname } = useLocation()
-  return <output>{pathname}</output>
+  return (
+    <output>{pathname}</output>
+  )
 }
 
 let validateState = {
@@ -29,9 +38,7 @@ let validateState = {
 
 let importState = {
   isPending: false,
-  isSuccess: false,
   isError: false,
-  data: undefined as { task_id: string } | undefined,
   error: undefined as unknown,
 }
 
@@ -56,9 +63,23 @@ vi.mock("react-oidc-context", () => ({
 
 const renderPage = () =>
   render(
-    <MemoryRouter initialEntries={["/import"]}>
+    <MemoryRouter
+      initialEntries={[
+        {
+          pathname: "/import/valideren",
+          state: { templateCase },
+        },
+      ]}
+    >
       <ImportPage />
       <Location />
+    </MemoryRouter>,
+  )
+
+const renderPageWithoutTemplate = () =>
+  render(
+    <MemoryRouter initialEntries={["/import/valideren"]}>
+      <ImportPage />
     </MemoryRouter>,
   )
 
@@ -78,14 +99,12 @@ describe("ImportPage", () => {
     }
     importState = {
       isPending: false,
-      isSuccess: false,
       isError: false,
-      data: undefined,
       error: undefined,
     }
   })
 
-  it("shows validation results and enables import afterwards", () => {
+  it("sends selected template data for validation and import", () => {
     validateState = {
       ...validateState,
       isSuccess: true,
@@ -106,21 +125,26 @@ describe("ImportPage", () => {
       },
     }
 
-    validateMutate.mockImplementation((_file, options) => {
+    const file = new File(["csv"], "leegstand.csv", { type: "text/csv" })
+
+    validateMutate.mockImplementation((payload, options) => {
+      expect(payload).toEqual({ file, templateCase })
       options?.onSuccess?.(undefined)
     })
-    importMutate.mockImplementation((_file, options) => {
+    importMutate.mockImplementation((payload, options) => {
+      expect(payload).toEqual({ file, templateCase })
       options?.onSuccess?.({ task_id: "abc-123" })
     })
 
     renderPage()
 
-    const file = new File(["csv"], "leegstand.csv", { type: "text/csv" })
     fireEvent.change(screen.getByLabelText("Bestand kiezen voor import"), {
       target: { files: [file] },
     })
 
-    fireEvent.click(screen.getByRole("button", { name: "Bestand valideren" }))
+    fireEvent.click(
+      screen.getByRole("button", { name: "Stap 2: bestand valideren" }),
+    )
 
     expect(
       screen.getByText("Zaken importeerbaar: 1 | niet importeerbaar: 1"),
@@ -136,14 +160,17 @@ describe("ImportPage", () => {
         .classList.contains("import-case-results__item--error"),
     ).toBe(true)
 
-    fireEvent.click(screen.getByRole("button", { name: "Bestand importeren" }))
-    expect(importMutate).toHaveBeenCalledWith(file, expect.any(Object))
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: "Stap 2 afronden: bestand importeren",
+      }),
+    )
     expect(screen.getByRole("status").textContent).toBe("/import/abc-123")
   })
 
-  it("shows an error when import fails", () => {
-    importState = {
-      ...importState,
+  it("shows an error when validate fails", () => {
+    validateState = {
+      ...validateState,
       isError: true,
       error: { message: "Mislukt" },
     }
@@ -154,8 +181,8 @@ describe("ImportPage", () => {
   })
 
   it("shows backend payload error for 400/500 responses", () => {
-    importState = {
-      ...importState,
+    validateState = {
+      ...validateState,
       isError: true,
       error: { status: 400, error: "Bestand heeft ongeldige kolommen" },
     }
@@ -163,6 +190,12 @@ describe("ImportPage", () => {
     renderPage()
 
     expect(screen.getByText("Bestand heeft ongeldige kolommen")).toBeTruthy()
+  })
+
+  it("shows an error when no template was selected", () => {
+    renderPageWithoutTemplate()
+
+    expect(screen.getByText("Geen template gekozen")).toBeTruthy()
   })
 })
 

@@ -20,6 +20,29 @@ export type ProcessLeegstandImportResponse = {
   task_id: string
 }
 
+export type ImportTemplateSelection = {
+  themeId: number
+  reasonId: number
+  projectId?: number
+  subjectIds: number[]
+  jumpTo: string | null
+}
+
+export type AllowedJumpWorkflowOption = {
+  value: string
+  label: string
+}
+
+type PostLeegstandFileVariables =
+  | File
+  | {
+    file: File
+    templateCase?: ImportTemplateSelection
+  }
+
+const toUploadPayload = (variables: PostLeegstandFileVariables) =>
+  variables instanceof File ? { file: variables } : variables
+
 export type LeegstandFileStatusResponse = {
   task_id: string
   status: string
@@ -30,11 +53,23 @@ export type LeegstandFileStatusResponse = {
 const usePostLeegstandFile = <Response>(dryRun: boolean) => {
   const fetch = useApiFetch()
 
-  return useMutation({
-    mutationFn: (file: File) => {
+  return useMutation<Response, ApiError, PostLeegstandFileVariables>({
+    mutationFn: (variables: PostLeegstandFileVariables) => {
+      const { file, templateCase } = toUploadPayload(variables)
       const formData = new FormData()
       formData.append("file", file)
       formData.append("dry_run", String(dryRun))
+      if (templateCase !== undefined) {
+        formData.append("theme_id", String(templateCase.themeId))
+        formData.append("reason_id", String(templateCase.reasonId))
+        if (templateCase.projectId !== undefined) {
+          formData.append("project_id", String(templateCase.projectId))
+        }
+        templateCase.subjectIds.forEach((subjectId) => {
+          formData.append("subject_ids", String(subjectId))
+        })
+        formData.append("jump_to", templateCase.jumpTo ?? "")
+      }
 
       return fetch<Response>(makeApiUrl("cases", "process-file"), {
         method: "POST",
@@ -50,6 +85,18 @@ export const useValidateLeegstandFile = () =>
 
 export const useImportLeegstandFile = () =>
   usePostLeegstandFile<ProcessLeegstandImportResponse>(false)
+
+export const useAllowedJumpWorkflows = () => {
+  const fetch = useApiFetch()
+
+  return useQuery({
+    queryKey: queryKeys.imports.allowedJumpWorkflows(),
+    queryFn: () =>
+      fetch<AllowedJumpWorkflowOption[]>(
+        makeApiUrl("cases", "allowed-jump-workflows"),
+      ),
+  })
+}
 
 const isTerminalTaskState = (data?: LeegstandFileStatusResponse) =>
   data?.status === "SUCCESS" || Boolean(data?.error)
