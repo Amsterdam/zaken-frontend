@@ -39,7 +39,7 @@ const Advertisements: React.FC<Props> = ({ bagId }) => {
   )
 
   return (
-    <Column gap="small">
+    <Column gap="small" className="ams-mb-m">
       <Heading level={2}>Advertenties</Heading>
       {isBusy ? (
         <Skeleton>

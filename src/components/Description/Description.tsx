@@ -1,5 +1,5 @@
-import { Fragment, type ReactNode } from "react"
-import { DescriptionList, Skeleton } from "@amsterdam/design-system-react"
+import type { ReactNode } from "react"
+import { DataList, Skeleton } from "@amsterdam/design-system-react"
 import styles from "./Description.module.css"
 
 export type DescriptionItem = {
@@ -24,52 +24,46 @@ type Props = {
  */
 export function Description({
   data,
-  termsWidth,
-  className: classNameProp,
-  dense = false,
+  className,
   loading = false,
   numLoadingRows = 3,
 }: Props) {
-  const className =
-    [dense ? styles.dense : "", classNameProp ?? ""].join(" ").trim() ||
-    undefined
-
   if (loading) {
     return (
-      <DescriptionList termsWidth={termsWidth} className={className}>
+      <DataList className={className}>
         {Array.from({ length: numLoadingRows }, (_, index) => (
-          <Fragment key={index}>
-            <DescriptionList.Term>
+          <DataList.Item key={index}>
+            <DataList.Key>
               <Skeleton>
                 <Skeleton.Paragraph lines={1} />
               </Skeleton>
-            </DescriptionList.Term>
-            <DescriptionList.Description>
+            </DataList.Key>
+            <DataList.Value>
               <Skeleton>
                 <Skeleton.Paragraph lines={1} />
               </Skeleton>
-            </DescriptionList.Description>
-          </Fragment>
+            </DataList.Value>
+          </DataList.Item>
         ))}
-      </DescriptionList>
+      </DataList>
     )
   }
 
   return (
-    <DescriptionList termsWidth={termsWidth} className={className}>
+    <DataList className={className}>
       {data.map((item, index) => {
         if (item.value === null || item.value === undefined) {
           return null
         }
         return (
-          <Fragment key={index}>
-            <DescriptionList.Term>{item.label}</DescriptionList.Term>
-            <DescriptionList.Description className={styles.value}>
+          <DataList.Item key={index}>
+            <DataList.Key>{item.label}</DataList.Key>
+            <DataList.Value className={styles.value}>
               {item.value}
-            </DescriptionList.Description>
-          </Fragment>
+            </DataList.Value>
+          </DataList.Item>
         )
       })}
-    </DescriptionList>
+    </DataList>
   )
 }

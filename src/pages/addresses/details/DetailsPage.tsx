@@ -1,6 +1,5 @@
 import { useParams } from "react-router"
-import { Column } from "@amsterdam/design-system-react"
-import { EqualColumns } from "@/components/EqualColumns/EqualColumns"
+import { Column, Grid } from "@amsterdam/design-system-react"
 import isValidUrlParamBAGId from "@/router/utils/isValidUrlParamBAGId"
 import AddressMap from "@/components/addresses/AddressMap/AddressMap"
 import AddressPage from "@/components/addresses/AddressOverview/AddressPage"
@@ -20,13 +19,15 @@ const DetailsPage: React.FC = () => {
 
   return (
     <AddressPage bagId={bagId}>
-      <EqualColumns gap="large">
+      <Grid.Cell span={{ narrow: 4, medium: 5, wide: 7 }}>
         <ObjectDetails bagId={bagId} />
+      </Grid.Cell>
+      <Grid.Cell span={{ narrow: 4, medium: 3, wide: 5 }}>
         <Column gap="large">
           <PanoramaPreview bagId={bagId} />
           <AddressMap bagId={bagId} />
         </Column>
-      </EqualColumns>
+      </Grid.Cell>
     </AddressPage>
   )
 }

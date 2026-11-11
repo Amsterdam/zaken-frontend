@@ -1,6 +1,5 @@
 import { useParams } from "react-router"
-import { Column } from "@amsterdam/design-system-react"
-import { EqualColumns } from "@/components/EqualColumns/EqualColumns"
+import { Column, Grid } from "@amsterdam/design-system-react"
 import isValidUrlParamBAGId from "@/router/utils/isValidUrlParamBAGId"
 import AddressPage from "@/components/addresses/AddressOverview/AddressPage"
 import DecosLink from "@/components/permits/DecosLink/DecosLink"
@@ -22,17 +21,19 @@ const PermitsPage: React.FC = () => {
 
   return (
     <AddressPage bagId={bagId}>
-      <EqualColumns>
+      <Grid.Cell span={{ narrow: 4, medium: 8, wide: 6 }}>
         <Column gap="x-large">
           <PermitsPowerBrowser bagId={bagId} />
           <PermitsDecos bagId={bagId} />
           <DecosLink bagId={bagId} />
         </Column>
+      </Grid.Cell>
+      <Grid.Cell span={{ narrow: 4, medium: 8, wide: 6 }}>
         <Column gap="x-large">
           <Registrations bagId={bagId} />
           <Meldingen bagId={bagId} />
         </Column>
-      </EqualColumns>
+      </Grid.Cell>
     </AddressPage>
   )
 }

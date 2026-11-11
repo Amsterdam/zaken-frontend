@@ -13,7 +13,7 @@ const EmailLink = ({ email }: { email: string }) => (
 )
 
 const HelpContact: React.FC = () => (
-  <Accordion headingLevel={2}>
+  <Accordion headingLevel={3}>
     <Accordion.Section label="Support" defaultExpanded>
       <Column>
         <Paragraph>
