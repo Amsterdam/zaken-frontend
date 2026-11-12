@@ -52,11 +52,17 @@ vi.mock("@/hooks/useDecodedToken", () => ({
 }))
 
 const renderAt = (path: string) =>
-  render(
-    <RouterProvider
-      router={createMemoryRouter(routes, { initialEntries: [path] })}
-    />,
-  )
+  // Route components may use React Query hooks; provide QueryClient like the app does.
+  (() => {
+    const { Wrapper } = createQueryWrapper()
+    return render(
+      <Wrapper>
+        <RouterProvider
+          router={createMemoryRouter(routes, { initialEntries: [path] })}
+        />
+      </Wrapper>,
+    )
+  })()
 const heading = (name: string | RegExp) =>
   screen.getByRole("heading", { level: 1, name })
 
@@ -102,8 +108,8 @@ describe("the routes", () => {
   it("shows the import page, with its title on the tab", () => {
     renderAt("/import")
 
-    expect(heading("Import")).toBeTruthy()
-    expect(document.title).toMatch(/^Import \| /)
+    expect(heading("Importtemplate kiezen")).toBeTruthy()
+    expect(document.title).toMatch(/^Importtemplate kiezen \| /)
   })
 
   it("shows the import status page, with its title on the tab", () => {
