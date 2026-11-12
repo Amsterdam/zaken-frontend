@@ -18,7 +18,7 @@ let taskStatusState = {
 vi.mock("@/api/hooks", async (importOriginal) => ({
   ...(await importOriginal<object>()),
   useUsersMe: () => ({ data: { permissions: [] } }),
-  useLeegstandFileStatus: () => taskStatusState,
+  useBulkImportFileStatus: () => taskStatusState,
 }))
 
 vi.mock("react-oidc-context", () => ({

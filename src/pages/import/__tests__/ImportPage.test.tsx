@@ -45,12 +45,12 @@ let importState = {
 vi.mock("@/api/hooks", async (importOriginal) => ({
   ...(await importOriginal<object>()),
   useUsersMe: () => ({ data: { permissions: [] } }),
-  useValidateLeegstandFile: () => ({
+  useValidateBulkImportFile: () => ({
     ...validateState,
     mutate: validateMutate,
     reset: validateReset,
   }),
-  useImportLeegstandFile: () => ({
+  useImportBulkImportFile: () => ({
     ...importState,
     mutate: importMutate,
     reset: importReset,

@@ -1,6 +1,6 @@
 import { Alert, Grid, Heading, Paragraph } from "@amsterdam/design-system-react"
 import { useParams } from "react-router"
-import { type ProcessedCaseResult, useLeegstandFileStatus } from "@/api/hooks"
+import { type ProcessedCaseResult, useBulkImportFileStatus } from "@/api/hooks"
 import type { ApiError } from "@/api/types/apiError"
 import { DefaultLayout } from "@/components/DefaultLayout/DefaultLayout"
 import { AmsterdamCrossSpinner } from "@/components/spinners/AmsterdamCrossSpinner/AmsterdamCrossSpinner"
@@ -36,7 +36,7 @@ const isFailedTaskStatus = (status?: string) =>
 
 const ImportStatusPage: React.FC = () => {
   const { taskId } = useParams<{ taskId: string }>()
-  const taskStatus = useLeegstandFileStatus(taskId)
+  const taskStatus = useBulkImportFileStatus(taskId)
   const caseData = getCaseData(taskStatus.data?.result)
   const failedCasesCount = countFailedCases(caseData)
   const succeededCasesCount = caseData.length - failedCasesCount
@@ -117,6 +117,7 @@ const ImportStatusPage: React.FC = () => {
 }
 
 export default ImportStatusPage
+
 
 
 

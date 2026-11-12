@@ -9,9 +9,9 @@ import {
   Paragraph,
 } from "@amsterdam/design-system-react"
 import {
-  useImportLeegstandFile,
+  useImportBulkImportFile,
   type ProcessedCaseResult,
-  useValidateLeegstandFile,
+  useValidateBulkImportFile,
 } from "@/api/hooks"
 import { DefaultLayout } from "@/components/DefaultLayout/DefaultLayout"
 import { getErrorMessage } from "@/pages/import/getErrorMessage"
@@ -27,8 +27,8 @@ const ImportPage: React.FC = () => {
   const importState = state as ImportValidationLocationState | undefined
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [uploadedFileName, setUploadedFileName] = useState<string>()
-  const validateFile = useValidateLeegstandFile()
-  const importFile = useImportLeegstandFile()
+  const validateFile = useValidateBulkImportFile()
+  const importFile = useImportBulkImportFile()
   const processedCases = validateFile.data?.case_data ?? []
   const failedCasesCount = countFailedCases(processedCases)
   const succeededCasesCount = processedCases.length - failedCasesCount

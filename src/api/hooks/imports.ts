@@ -9,7 +9,7 @@ export type ProcessedCaseResult = {
   msg: string
 }
 
-export type ProcessLeegstandFileResponse = {
+export type ProcessBulkImportFileResponse = {
   total_processed: number
   total_created: number
   dry_run: boolean
@@ -33,28 +33,28 @@ export type AllowedJumpWorkflowOption = {
   label: string
 }
 
-type PostLeegstandFileVariables =
+type PostBulkImportFileVariables =
   | File
   | {
     file: File
     templateCase?: ImportTemplateSelection
   }
 
-const toUploadPayload = (variables: PostLeegstandFileVariables) =>
+const toUploadPayload = (variables: PostBulkImportFileVariables) =>
   variables instanceof File ? { file: variables } : variables
 
-export type LeegstandFileStatusResponse = {
+export type BulkImportFileStatusResponse = {
   task_id: string
   status: string
   result: unknown
   error: string | null
 }
 
-const usePostLeegstandFile = <Response>(dryRun: boolean) => {
+const usePostBulkImportFile = <Response>(dryRun: boolean) => {
   const fetch = useApiFetch()
 
-  return useMutation<Response, ApiError, PostLeegstandFileVariables>({
-    mutationFn: (variables: PostLeegstandFileVariables) => {
+  return useMutation<Response, ApiError, PostBulkImportFileVariables>({
+    mutationFn: (variables: PostBulkImportFileVariables) => {
       const { file, templateCase } = toUploadPayload(variables)
       const formData = new FormData()
       formData.append("file", file)
@@ -80,11 +80,11 @@ const usePostLeegstandFile = <Response>(dryRun: boolean) => {
   })
 }
 
-export const useValidateLeegstandFile = () =>
-  usePostLeegstandFile<ProcessLeegstandFileResponse>(true)
+export const useValidateBulkImportFile = () =>
+  usePostBulkImportFile<ProcessBulkImportFileResponse>(true)
 
-export const useImportLeegstandFile = () =>
-  usePostLeegstandFile<ProcessLeegstandImportResponse>(false)
+export const useImportBulkImportFile = () =>
+  usePostBulkImportFile<ProcessLeegstandImportResponse>(false)
 
 export const useAllowedJumpWorkflows = () => {
   const fetch = useApiFetch()
@@ -98,19 +98,19 @@ export const useAllowedJumpWorkflows = () => {
   })
 }
 
-const isTerminalTaskState = (data?: LeegstandFileStatusResponse) =>
+const isTerminalTaskState = (data?: BulkImportFileStatusResponse) =>
   data?.status === "SUCCESS" || Boolean(data?.error)
 
 const isNotFoundError = (error: unknown) =>
   (error as ApiError | undefined)?.status === 404
 
-export const useLeegstandFileStatus = (taskId?: string) => {
+export const useBulkImportFileStatus = (taskId?: string) => {
   const fetch = useApiFetch()
 
   return useQuery({
     queryKey: queryKeys.imports.status(taskId),
     queryFn: () =>
-      fetch<LeegstandFileStatusResponse>(
+      fetch<BulkImportFileStatusResponse>(
         makeApiUrl("cases", "process-file", taskId, "status"),
       ),
     enabled: taskId !== undefined && taskId !== "",
@@ -118,7 +118,7 @@ export const useLeegstandFileStatus = (taskId?: string) => {
       !isNotFoundError(error) && failureCount < 3,
     refetchInterval: ({ state }) =>
       isNotFoundError(state.error) ||
-      isTerminalTaskState(state.data as LeegstandFileStatusResponse | undefined)
+      isTerminalTaskState(state.data as BulkImportFileStatusResponse | undefined)
         ? false
         : 1000,
   })
