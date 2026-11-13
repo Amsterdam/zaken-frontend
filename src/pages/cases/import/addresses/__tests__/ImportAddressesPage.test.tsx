@@ -1,13 +1,13 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import { MemoryRouter, useLocation } from "react-router"
-import ImportPage from "../ImportPage"
+import ImportAddressesPage from "../ImportAddressesPage"
 
 const validateMutate = vi.fn()
 const validateReset = vi.fn()
 const importMutate = vi.fn()
 const importReset = vi.fn()
 
-const templateCase = {
+const caseData = {
   themeId: 1,
   reasonId: 11,
   subjectIds: [31],
@@ -67,23 +67,23 @@ const renderPage = () =>
       initialEntries={[
         {
           pathname: "/zaken/importeren/controleren",
-          state: { templateCase },
+          state: { caseData },
         },
       ]}
     >
-      <ImportPage />
+      <ImportAddressesPage />
       <Location />
     </MemoryRouter>,
   )
 
-const renderPageWithoutTemplate = () =>
+const renderPageWithoutCaseData = () =>
   render(
     <MemoryRouter initialEntries={["/zaken/importeren/controleren"]}>
-      <ImportPage />
+      <ImportAddressesPage />
     </MemoryRouter>,
   )
 
-describe("ImportPage", () => {
+describe("ImportAddressesPage", () => {
   beforeEach(() => {
     validateMutate.mockReset()
     validateReset.mockReset()
@@ -104,7 +104,7 @@ describe("ImportPage", () => {
     }
   })
 
-  it("sends selected template data for validation and import", () => {
+  it("sends the chosen case data for checking and importing", () => {
     validateState = {
       ...validateState,
       isSuccess: true,
@@ -125,14 +125,14 @@ describe("ImportPage", () => {
       },
     }
 
-    const file = new File(["csv"], "leegstand.csv", { type: "text/csv" })
+    const file = new File(["csv"], "adressen.xlsx", { type: "text/csv" })
 
     validateMutate.mockImplementation((payload, options) => {
-      expect(payload).toEqual({ file, templateCase })
+      expect(payload).toEqual({ file, caseData })
       options?.onSuccess?.(undefined)
     })
     importMutate.mockImplementation((payload, options) => {
-      expect(payload).toEqual({ file, templateCase })
+      expect(payload).toEqual({ file, caseData })
       options?.onSuccess?.({ task_id: "abc-123" })
     })
 
@@ -193,7 +193,7 @@ describe("ImportPage", () => {
   })
 
   it("shows an error when no case type was chosen", () => {
-    renderPageWithoutTemplate()
+    renderPageWithoutCaseData()
 
     expect(screen.getByText("Geen soort zaak gekozen")).toBeTruthy()
   })

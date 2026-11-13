@@ -21,9 +21,9 @@ import NotFoundPage from "@/pages/errors/NotFoundPage"
 import FinePage from "@/pages/fines/FinePage"
 import HelpPage from "@/pages/help/HelpPage"
 import HomePage from "@/pages/home/HomePage"
-import ImportPage from "@/pages/import/ImportPage"
-import ImportStatusPage from "@/pages/import/status/ImportStatusPage"
-import ImportTemplatePage from "@/pages/import/template/ImportTemplatePage"
+import ImportAddressesPage from "@/pages/cases/import/addresses/ImportAddressesPage"
+import ImportResultPage from "@/pages/cases/import/result/ImportResultPage"
+import ImportThemePage from "@/pages/cases/import/theme/ImportThemePage"
 import TasksIndexPage from "@/pages/tasks/IndexPage"
 import RequirePermissions from "./RequirePermissions"
 import Root from "./Root"
@@ -121,15 +121,15 @@ export const routes: RouteObject[] = [
             path: "zaken/importeren",
             ...titled("Zaken importeren"),
             children: [
-              { index: true, element: <ImportTemplatePage /> },
+              { index: true, element: <ImportThemePage /> },
               {
                 path: "controleren",
-                element: <ImportPage />,
+                element: <ImportAddressesPage />,
                 ...titled("Bestand controleren"),
               },
               {
                 path: "resultaat/:taskId",
-                element: <ImportStatusPage />,
+                element: <ImportResultPage />,
                 ...titled("Resultaat"),
               },
             ],

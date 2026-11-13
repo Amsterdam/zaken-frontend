@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react"
 import { createMemoryRouter, RouterProvider } from "react-router"
-import ImportStatusPage from "../ImportStatusPage"
+import ImportResultPage from "../ImportResultPage"
 
 let taskStatusState = {
   isError: false,
@@ -27,14 +27,14 @@ vi.mock("react-oidc-context", () => ({
 
 const renderPage = () => {
   const router = createMemoryRouter(
-    [{ path: "/zaken/importeren/resultaat/:taskId", element: <ImportStatusPage /> }],
+    [{ path: "/zaken/importeren/resultaat/:taskId", element: <ImportResultPage /> }],
     { initialEntries: ["/zaken/importeren/resultaat/abc-123"] },
   )
 
   return render(<RouterProvider router={router} />)
 }
 
-describe("ImportStatusPage", () => {
+describe("ImportResultPage", () => {
   beforeEach(() => {
     taskStatusState = {
       isError: false,

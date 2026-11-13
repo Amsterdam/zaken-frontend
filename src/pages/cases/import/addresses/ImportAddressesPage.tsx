@@ -14,17 +14,17 @@ import {
 } from "@/api/hooks"
 import { DefaultLayout } from "@/components/DefaultLayout/DefaultLayout"
 import { PageHeading } from "@/components/PageHeading/PageHeading"
-import { getErrorMessage } from "@/pages/import/getErrorMessage"
-import type { ImportValidationLocationState } from "@/pages/import/importFlow"
-import "./ImportPage.css"
+import { getErrorMessage } from "@/pages/cases/import/getErrorMessage"
+import type { ImportLocationState } from "@/pages/cases/import/importFlow"
+import "./ImportAddressesPage.css"
 
 const countFailedCases = (processedCases: ProcessedCaseResult[]) =>
   processedCases.filter((caseResult) => !caseResult.success).length
 
-const ImportPage: React.FC = () => {
+const ImportAddressesPage: React.FC = () => {
   const navigate = useNavigate()
   const { state } = useLocation()
-  const importState = state as ImportValidationLocationState | undefined
+  const importState = state as ImportLocationState | undefined
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [uploadedFileName, setUploadedFileName] = useState<string>()
   const validateFile = useValidateBulkImportFile()
@@ -43,13 +43,13 @@ const ImportPage: React.FC = () => {
 
   const onValidate = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    if (!selectedFile || !importState?.templateCase) return
+    if (!selectedFile || !importState?.caseData) return
 
     const fileToUpload = selectedFile
     validateFile.mutate(
       {
         file: fileToUpload,
-        templateCase: importState.templateCase,
+        caseData: importState.caseData,
       },
       {
       onSuccess: () => {
@@ -60,11 +60,11 @@ const ImportPage: React.FC = () => {
   }
 
   const onImport = () => {
-    if (!selectedFile || !canImport || !importState?.templateCase) return
+    if (!selectedFile || !canImport || !importState?.caseData) return
     importFile.mutate(
       {
         file: selectedFile,
-        templateCase: importState.templateCase,
+        caseData: importState.caseData,
       },
       {
         onSuccess: ({ task_id }) => {
@@ -74,7 +74,7 @@ const ImportPage: React.FC = () => {
     )
   }
 
-  if (!importState?.templateCase) {
+  if (!importState?.caseData) {
     return (
       <DefaultLayout>
         <PageHeading title="Bestand controleren" />
@@ -177,7 +177,7 @@ const ImportPage: React.FC = () => {
   )
 }
 
-export default ImportPage
+export default ImportAddressesPage
 
 
 

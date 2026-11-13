@@ -5,8 +5,8 @@ import type { ApiError } from "@/api/types/apiError"
 import { DefaultLayout } from "@/components/DefaultLayout/DefaultLayout"
 import { PageHeading } from "@/components/PageHeading/PageHeading"
 import { AmsterdamCrossSpinner } from "@/components/spinners/AmsterdamCrossSpinner/AmsterdamCrossSpinner"
-import "../ImportPage.css"
-import "./ImportStatusPage.css"
+import "../addresses/ImportAddressesPage.css"
+import "./ImportResultPage.css"
 
 const getErrorMessage = (error: unknown) => {
   const apiError = error as ApiError | undefined
@@ -35,7 +35,7 @@ const failedTaskStatuses = ["FAILURE", "REVOKED"] as const
 const isFailedTaskStatus = (status?: string) =>
   status !== undefined && failedTaskStatuses.includes(status as (typeof failedTaskStatuses)[number])
 
-const ImportStatusPage: React.FC = () => {
+const ImportResultPage: React.FC = () => {
   const { taskId } = useParams<{ taskId: string }>()
   const taskStatus = useBulkImportFileStatus(taskId)
   const caseData = getCaseData(taskStatus.data?.result)
@@ -115,7 +115,7 @@ const ImportStatusPage: React.FC = () => {
   )
 }
 
-export default ImportStatusPage
+export default ImportResultPage
 
 
 

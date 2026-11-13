@@ -16,16 +16,20 @@ export type ProcessBulkImportFileResponse = {
   case_data: ProcessedCaseResult[]
 }
 
-export type ProcessLeegstandImportResponse = {
+export type ImportBulkImportFileResponse = {
   task_id: string
 }
 
-export type ImportTemplateSelection = {
+/**
+ * The data that goes for all imported cases. Checking the addresses (a dry
+ * run) needs only the theme; importing needs the rest too.
+ */
+export type ImportCaseData = {
   themeId: number
-  reasonId: number
+  reasonId?: number
   projectId?: number
-  subjectIds: number[]
-  jumpTo: string | null
+  subjectIds?: number[]
+  jumpTo?: string | null
 }
 
 export type AllowedJumpWorkflowOption = {
@@ -37,7 +41,7 @@ type PostBulkImportFileVariables =
   | File
   | {
     file: File
-    templateCase?: ImportTemplateSelection
+    caseData?: ImportCaseData
   }
 
 const toUploadPayload = (variables: PostBulkImportFileVariables) =>
@@ -55,20 +59,24 @@ const usePostBulkImportFile = <Response>(dryRun: boolean) => {
 
   return useMutation<Response, ApiError, PostBulkImportFileVariables>({
     mutationFn: (variables: PostBulkImportFileVariables) => {
-      const { file, templateCase } = toUploadPayload(variables)
+      const { file, caseData } = toUploadPayload(variables)
       const formData = new FormData()
       formData.append("file", file)
       formData.append("dry_run", String(dryRun))
-      if (templateCase !== undefined) {
-        formData.append("theme_id", String(templateCase.themeId))
-        formData.append("reason_id", String(templateCase.reasonId))
-        if (templateCase.projectId !== undefined) {
-          formData.append("project_id", String(templateCase.projectId))
+      if (caseData !== undefined) {
+        formData.append("theme_id", String(caseData.themeId))
+        if (caseData.reasonId !== undefined) {
+          formData.append("reason_id", String(caseData.reasonId))
         }
-        templateCase.subjectIds.forEach((subjectId) => {
+        if (caseData.projectId !== undefined) {
+          formData.append("project_id", String(caseData.projectId))
+        }
+        caseData.subjectIds?.forEach((subjectId) => {
           formData.append("subject_ids", String(subjectId))
         })
-        formData.append("jump_to", templateCase.jumpTo ?? "")
+        if (caseData.jumpTo !== undefined) {
+          formData.append("jump_to", caseData.jumpTo ?? "")
+        }
       }
 
       return fetch<Response>(makeApiUrl("cases", "process-file"), {
@@ -84,7 +92,7 @@ export const useValidateBulkImportFile = () =>
   usePostBulkImportFile<ProcessBulkImportFileResponse>(true)
 
 export const useImportBulkImportFile = () =>
-  usePostBulkImportFile<ProcessLeegstandImportResponse>(false)
+  usePostBulkImportFile<ImportBulkImportFileResponse>(false)
 
 export const useAllowedJumpWorkflows = () => {
   const fetch = useApiFetch()
