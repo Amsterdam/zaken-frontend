@@ -11,7 +11,7 @@ import { useCaseThemes, useValidateBulkImportFile } from "@/api/hooks"
 import { FormPage } from "@/components/FormPage/FormPage"
 import { getErrorMessage } from "@/pages/cases/import/getErrorMessage"
 import type { ImportLocationState } from "@/pages/cases/import/importFlow"
-import { CheckResultsTable } from "./CheckResultsTable"
+import { ImportErrorsTable } from "@/pages/cases/import/ImportErrorsTable"
 
 type FormValues = {
   file: FileList | null
@@ -176,7 +176,7 @@ const ImportAddressesPage: React.FC = () => {
         </Paragraph>
       )}
 
-      {failed.length > 0 && <CheckResultsTable failed={failed} />}
+      {failed.length > 0 && <ImportErrorsTable failed={failed} />}
     </FormPage>
   )
 }

@@ -8,13 +8,14 @@ type Props = {
 }
 
 /**
- * The addresses with errors after checking the file, in the order of the file:
+ * The addresses with errors after checking the file (step 2) or importing it
+ * (the result), in the order of the file:
  * the row in Excel, the address and what is wrong. An address found in the BAG
  * has a link to its overview in the last column, as in the other tables (e.g.
- * to see the open case that is already there). In a new tab: here you would
- * lose the file and the check.
+ * to see the open case that is already there). In a new tab: in step 2 you
+ * would lose the file and the check.
  */
-export function CheckResultsTable({ failed }: Props) {
+export function ImportErrorsTable({ failed }: Props) {
   return (
     <Column gap="small">
       <Heading level={3}>Fouten</Heading>

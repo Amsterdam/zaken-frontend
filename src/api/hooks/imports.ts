@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import type { ApiError } from "@/api/types/apiError"
 import { queryKeys } from "@/api/queryKeys"
 import { useApiFetch } from "@/api/useApiFetch"
@@ -64,8 +64,10 @@ const toUploadPayload = (variables: PostBulkImportFileVariables) =>
 
 export type BulkImportFileStatusResponse = {
   task_id: string
+  /** The state of the Celery task: PENDING, STARTED, SUCCESS, FAILURE, … */
   status: string
-  result: unknown
+  /** The result of the import, once it is done (SUCCESS). */
+  result: ProcessBulkImportFileResponse | null
   error: string | null
 }
 
@@ -132,21 +134,38 @@ const isNotFoundError = (error: unknown) =>
 
 export const useBulkImportFileStatus = (taskId?: string) => {
   const fetch = useApiFetch()
+  const queryClient = useQueryClient()
 
   return useQuery({
     queryKey: queryKeys.imports.status(taskId),
-    queryFn: () =>
-      fetch<BulkImportFileStatusResponse>(
+    queryFn: async () => {
+      const data = await fetch<BulkImportFileStatusResponse>(
         makeApiUrl("cases", "process-file", taskId, "status"),
-      ),
+      )
+      // Once the cases are made, the lists that show them are out of date:
+      // fetched again when they are shown (as after creating one case).
+      if (data.status === "SUCCESS") {
+        await Promise.all(
+          [
+            queryKeys.cases.listAll,
+            queryKeys.cases.byAddressAll,
+            queryKeys.cases.tasksAll,
+          ].map((queryKey) =>
+            queryClient.invalidateQueries({ queryKey, refetchType: "none" }),
+          ),
+        )
+      }
+      return data
+    },
     enabled: taskId !== undefined && taskId !== "",
     retry: (failureCount, error) =>
       !isNotFoundError(error) && failureCount < 3,
     refetchInterval: ({ state }) =>
       isNotFoundError(state.error) ||
-      isTerminalTaskState(state.data as BulkImportFileStatusResponse | undefined)
+      isTerminalTaskState(state.data)
         ? false
-        : 1000,
+        : // An import takes minutes: every 3 seconds is soon enough.
+          3000,
   })
 }
 

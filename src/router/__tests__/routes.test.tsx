@@ -118,7 +118,7 @@ describe("the routes", () => {
       permissions = ["create_case"]
       renderAt("/zaken/importeren/resultaat/abc-123")
 
-      expect(heading("Resultaat")).toBeTruthy()
+      expect(heading("Zaken importeren")).toBeTruthy()
       expect(document.title).toMatch(/^Resultaat \| /)
     })
 
