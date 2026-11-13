@@ -3,6 +3,7 @@ import { useParams } from "react-router"
 import { type ProcessedCaseResult, useBulkImportFileStatus } from "@/api/hooks"
 import type { ApiError } from "@/api/types/apiError"
 import { DefaultLayout } from "@/components/DefaultLayout/DefaultLayout"
+import { PageHeading } from "@/components/PageHeading/PageHeading"
 import { AmsterdamCrossSpinner } from "@/components/spinners/AmsterdamCrossSpinner/AmsterdamCrossSpinner"
 import "../ImportPage.css"
 import "./ImportStatusPage.css"
@@ -48,9 +49,7 @@ const ImportStatusPage: React.FC = () => {
 
   return (
     <DefaultLayout>
-      <Grid.Cell span="all" appearance="transparent">
-        <Heading level={1}>Importstatus</Heading>
-      </Grid.Cell>
+      <PageHeading title="Resultaat" />
       <Grid.Cell span="all">
         <Paragraph>Bestand wordt verwerkt met task_id={taskId}</Paragraph>
         {taskStatus.isError && (
@@ -80,11 +79,11 @@ const ImportStatusPage: React.FC = () => {
             )}
             {taskStatus.data.result && (
               <>
-                <Heading level={3}>Resultaat</Heading>
+                <Heading level={2}>Zaken</Heading>
                 {caseData.length > 0 ? (
                   <>
                     <Paragraph>
-                      Zaken geimporteerd: {succeededCasesCount} | niet importeerbaar: {failedCasesCount}
+                      Zaken geïmporteerd: {succeededCasesCount} | niet importeerbaar: {failedCasesCount}
                     </Paragraph>
                     <ul
                       className="import-case-results"

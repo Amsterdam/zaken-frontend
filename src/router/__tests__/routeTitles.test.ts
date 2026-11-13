@@ -20,6 +20,18 @@ describe("the titles of the routes", () => {
     ])
   })
 
+  it("puts importing cases, with its own menu item, below the start page", () => {
+    expect(titles("/zaken/importeren")).toEqual([
+      ["Home", "/"],
+      ["Zaken importeren", "/zaken/importeren"],
+    ])
+    expect(titles("/zaken/importeren/resultaat/abc-123")).toEqual([
+      ["Home", "/"],
+      ["Zaken importeren", "/zaken/importeren"],
+      ["Resultaat", "/zaken/importeren/resultaat/abc-123"],
+    ])
+  })
+
   it("gives the title of a page", () => {
     expect(getPageTitle("/")).toBe("Home")
     expect(getPageTitle("/zaken")).toBe("Zakenoverzicht")

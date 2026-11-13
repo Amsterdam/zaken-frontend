@@ -10,11 +10,11 @@ import {
   Button,
   Column,
   Grid,
-  Heading,
   InvalidFormAlert,
 } from "@amsterdam/design-system-react"
 import { FormProvider } from "@amsterdam/ee-ads-rhf"
 import { DefaultLayout } from "@/components/DefaultLayout/DefaultLayout"
+import { PageHeading } from "@/components/PageHeading/PageHeading"
 import { mapErrorsToAlert } from "@/shared/mapErrorsToAlert"
 
 type Props<T extends FieldValues> = {
@@ -57,9 +57,7 @@ export function FormPage<T extends FieldValues>({
 
   return (
     <DefaultLayout>
-      <Grid.Cell span="all" appearance="transparent">
-        <Heading level={1}>{title}</Heading>
-      </Grid.Cell>
+      <PageHeading title={title} />
       {intro && (
         <Grid.Cell span="all" appearance="transparent">
           {intro}

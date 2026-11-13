@@ -17,12 +17,12 @@ import {
   OrganisationChartIcon,
   QuestionMarkCircleIcon,
   SearchIcon,
+  UploadIcon,
 } from "@amsterdam/design-system-react-icons"
 import { useUsersMe } from "@/api/hooks"
 import { getLastCasesSearch } from "@/components/cases/useCasesFilters"
 import { getLastTasksSearch } from "@/components/tasks/useTasksFilters"
 import { env } from "@/config/env"
-import { Breadcrumbs } from "./Breadcrumbs"
 import { Footer } from "./Footer"
 import { RouterLink } from "./RouterLink"
 
@@ -58,22 +58,25 @@ const menuItems: MenuItem[] = [
     label: "Invordering",
     permission: "access_recovery_check",
   },
+  {
+    href: "/zaken/importeren",
+    icon: UploadIcon,
+    label: "Zaken importeren",
+    permission: "create_case",
+  },
   { href: "/bpmn", icon: OrganisationChartIcon, label: "BPMN" },
-  { href: "/import", icon: FolderFillIcon, label: "Import" },
   { href: "/hulp", icon: QuestionMarkCircleIcon, label: "Hulp" },
 ]
 
 type Props = {
   children: ReactNode
-  /** For a page with its own navigation (e.g. tabs), where the path adds nothing. */
-  hideBreadcrumbs?: boolean
 }
 
 /**
  * Page layout with the Amsterdam Design System, based on top-frontend-v2.
  * The children are Grid.Cell's: the layout puts them in a Grid.
  */
-export function DefaultLayout({ children, hideBreadcrumbs = false }: Props) {
+export function DefaultLayout({ children }: Props) {
   const auth = useAuth()
   const navigate = useNavigate()
   const { data: me } = useUsersMe()
@@ -137,7 +140,6 @@ export function DefaultLayout({ children, hideBreadcrumbs = false }: Props) {
         <main className="ams-page__area--body" id="main">
           {/* Pages render one or more Grid.Cell's (white areas in compact mode). */}
           <Grid paddingVertical="large" gapVertical="large">
-            {!hideBreadcrumbs && <Breadcrumbs />}
             {children}
           </Grid>
         </main>

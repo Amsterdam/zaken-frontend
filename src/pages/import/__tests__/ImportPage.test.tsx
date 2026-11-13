@@ -66,7 +66,7 @@ const renderPage = () =>
     <MemoryRouter
       initialEntries={[
         {
-          pathname: "/import/valideren",
+          pathname: "/zaken/importeren/controleren",
           state: { templateCase },
         },
       ]}
@@ -78,7 +78,7 @@ const renderPage = () =>
 
 const renderPageWithoutTemplate = () =>
   render(
-    <MemoryRouter initialEntries={["/import/valideren"]}>
+    <MemoryRouter initialEntries={["/zaken/importeren/controleren"]}>
       <ImportPage />
     </MemoryRouter>,
   )
@@ -143,7 +143,7 @@ describe("ImportPage", () => {
     })
 
     fireEvent.click(
-      screen.getByRole("button", { name: "Stap 2: bestand valideren" }),
+      screen.getByRole("button", { name: "Bestand controleren" }),
     )
 
     expect(
@@ -162,10 +162,10 @@ describe("ImportPage", () => {
 
     fireEvent.click(
       screen.getByRole("button", {
-        name: "Stap 2 afronden: bestand importeren",
+        name: "Zaken importeren",
       }),
     )
-    expect(screen.getByRole("status").textContent).toBe("/import/abc-123")
+    expect(screen.getByRole("status").textContent).toBe("/zaken/importeren/resultaat/abc-123")
   })
 
   it("shows an error when validate fails", () => {
@@ -192,10 +192,10 @@ describe("ImportPage", () => {
     expect(screen.getByText("Bestand heeft ongeldige kolommen")).toBeTruthy()
   })
 
-  it("shows an error when no template was selected", () => {
+  it("shows an error when no case type was chosen", () => {
     renderPageWithoutTemplate()
 
-    expect(screen.getByText("Geen template gekozen")).toBeTruthy()
+    expect(screen.getByText("Geen soort zaak gekozen")).toBeTruthy()
   })
 })
 

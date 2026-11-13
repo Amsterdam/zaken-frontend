@@ -27,8 +27,8 @@ vi.mock("react-oidc-context", () => ({
 
 const renderPage = () => {
   const router = createMemoryRouter(
-    [{ path: "/import/:taskId", element: <ImportStatusPage /> }],
-    { initialEntries: ["/import/abc-123"] },
+    [{ path: "/zaken/importeren/resultaat/:taskId", element: <ImportStatusPage /> }],
+    { initialEntries: ["/zaken/importeren/resultaat/abc-123"] },
   )
 
   return render(<RouterProvider router={router} />)
@@ -69,7 +69,7 @@ describe("ImportStatusPage", () => {
     ).toBeTruthy()
     expect(screen.getByText("Status: PENDING")).toBeTruthy()
     expect(
-      screen.getByText("Zaken geimporteerd: 1 | niet importeerbaar: 1"),
+      screen.getByText("Zaken geïmporteerd: 1 | niet importeerbaar: 1"),
     ).toBeTruthy()
     expect(
       screen

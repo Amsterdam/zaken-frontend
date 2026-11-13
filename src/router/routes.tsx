@@ -60,21 +60,6 @@ export const routes: RouteObject[] = [
       // To look at the 403 page without having to lack a permission.
       { path: "403", element: <NotAuthorizedPage /> },
       { path: "bpmn", element: <BpmnPage />, ...titled("BPMN") },
-      {
-        path: "import",
-        element: <ImportTemplatePage />,
-        ...titled("Importtemplate kiezen"),
-      },
-      {
-        path: "import/valideren",
-        element: <ImportPage />,
-        ...titled("Import valideren"),
-      },
-      {
-        path: "import/:taskId",
-        element: <ImportStatusPage />,
-        ...titled("Importstatus"),
-      },
       { path: "hulp", element: <HelpPage />, ...titled("Hulp") },
       {
         path: "taken",
@@ -123,6 +108,29 @@ export const routes: RouteObject[] = [
                 path: "zaken/nieuw",
                 element: <CreateCasePage />,
                 ...titled("Nieuwe zaak aanmaken"),
+              },
+            ],
+          },
+        ],
+      },
+      {
+        ...requires("create_case"),
+        children: [
+          {
+            // Its own item in the menu, so not below the cases overview.
+            path: "zaken/importeren",
+            ...titled("Zaken importeren"),
+            children: [
+              { index: true, element: <ImportTemplatePage /> },
+              {
+                path: "controleren",
+                element: <ImportPage />,
+                ...titled("Bestand controleren"),
+              },
+              {
+                path: "resultaat/:taskId",
+                element: <ImportStatusPage />,
+                ...titled("Resultaat"),
               },
             ],
           },

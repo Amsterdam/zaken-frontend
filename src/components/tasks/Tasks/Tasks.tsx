@@ -12,6 +12,7 @@ import {
   useTasksReasons,
   useUsersMe,
 } from "@/api/hooks"
+import { PageHeading } from "@/components/PageHeading/PageHeading"
 import TableTasks from "@/components/tasks/TableTasks/TableTasks"
 import TasksFilter from "../TasksFilter/TasksFilter"
 import useHasPermission, {
@@ -109,9 +110,7 @@ const Tasks: React.FC = () => {
 
   return (
     <>
-      <Grid.Cell span="all" appearance="transparent">
-        <Heading level={1}>Takenoverzicht</Heading>
-      </Grid.Cell>
+      <PageHeading title="Takenoverzicht" />
       <Grid.Cell span="all">
         <Column gap="large">
           <TasksFilter

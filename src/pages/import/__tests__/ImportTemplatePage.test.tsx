@@ -98,22 +98,22 @@ const Location = () => {
 
 const renderPage = () =>
   render(
-    <MemoryRouter initialEntries={["/import"]}>
+    <MemoryRouter initialEntries={["/zaken/importeren"]}>
       <ImportTemplatePage />
       <Location />
     </MemoryRouter>,
   )
 
 describe("ImportTemplatePage", () => {
-  it("navigates to validate step with selected template data", () => {
+  it("goes to checking the file with the chosen case data", () => {
     renderPage()
 
     fireEvent.click(
-      screen.getByRole("button", { name: "Stap 1 afronden: naar valideren" }),
+      screen.getByRole("button", { name: "Naar bestand controleren" }),
     )
 
     expect(screen.getByRole("status").textContent).toBe(
-      "/import/valideren|1|debrief",
+      "/zaken/importeren/controleren|1|debrief",
     )
   })
 
@@ -121,7 +121,7 @@ describe("ImportTemplatePage", () => {
     renderPage()
 
     expect(
-      screen.getByText("1. Template kiezen -> 2. Valideren -> 3. Importstatus"),
+      screen.getByText("1. Soort zaak kiezen → 2. Bestand controleren → 3. Resultaat"),
     ).toBeTruthy()
   })
 })

@@ -105,18 +105,28 @@ describe("the routes", () => {
     expect(document.title).toMatch(/^Hulp \| /)
   })
 
-  it("shows the import page, with its title on the tab", () => {
-    renderAt("/import")
+  describe("importing cases", () => {
+    it("shows the first step, with its title on the tab", () => {
+      permissions = ["create_case"]
+      renderAt("/zaken/importeren")
 
-    expect(heading("Importtemplate kiezen")).toBeTruthy()
-    expect(document.title).toMatch(/^Importtemplate kiezen \| /)
-  })
+      expect(heading("Zaken importeren")).toBeTruthy()
+      expect(document.title).toMatch(/^Zaken importeren \| /)
+    })
 
-  it("shows the import status page, with its title on the tab", () => {
-    renderAt("/import/abc-123")
+    it("shows the result page, with its title on the tab", () => {
+      permissions = ["create_case"]
+      renderAt("/zaken/importeren/resultaat/abc-123")
 
-    expect(heading("Importstatus")).toBeTruthy()
-    expect(document.title).toMatch(/^Importstatus \| /)
+      expect(heading("Resultaat")).toBeTruthy()
+      expect(document.title).toMatch(/^Resultaat \| /)
+    })
+
+    it("asks the permission to create cases", () => {
+      renderAt("/zaken/importeren")
+
+      expect(heading(/^403/)).toBeTruthy()
+    })
   })
 
   it("has no title of its own for a page without one", () => {

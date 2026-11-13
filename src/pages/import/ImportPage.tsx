@@ -5,7 +5,6 @@ import {
   Button,
   Column,
   Grid,
-  Heading,
   Paragraph,
 } from "@amsterdam/design-system-react"
 import {
@@ -14,6 +13,7 @@ import {
   useValidateBulkImportFile,
 } from "@/api/hooks"
 import { DefaultLayout } from "@/components/DefaultLayout/DefaultLayout"
+import { PageHeading } from "@/components/PageHeading/PageHeading"
 import { getErrorMessage } from "@/pages/import/getErrorMessage"
 import type { ImportValidationLocationState } from "@/pages/import/importFlow"
 import "./ImportPage.css"
@@ -68,7 +68,7 @@ const ImportPage: React.FC = () => {
       },
       {
         onSuccess: ({ task_id }) => {
-          navigate(`/import/${task_id}`)
+          navigate(`/zaken/importeren/resultaat/${task_id}`)
         },
       },
     )
@@ -77,18 +77,16 @@ const ImportPage: React.FC = () => {
   if (!importState?.templateCase) {
     return (
       <DefaultLayout>
-        <Grid.Cell span="all" appearance="transparent">
-          <Heading level={1}>Import valideren</Heading>
-        </Grid.Cell>
+        <PageHeading title="Bestand controleren" />
         <Grid.Cell span="all">
           <Column gap="large">
             <Paragraph>
-              1. Template kiezen {"->"} 2. Valideren {"->"} 3. Importstatus
+              1. Soort zaak kiezen → 2. Bestand controleren → 3. Resultaat
             </Paragraph>
-            <Alert heading="Geen template gekozen" headingLevel={2} severity="error">
-              <Paragraph>Kies eerst een zaaktemplate om de import te starten.</Paragraph>
+            <Alert heading="Geen soort zaak gekozen" headingLevel={2} severity="error">
+              <Paragraph>Kies eerst de soort zaak om de import te starten.</Paragraph>
             </Alert>
-            <Button type="button" onClick={() => navigate("/import")}>Naar template kiezen</Button>
+            <Button type="button" onClick={() => navigate("/zaken/importeren")}>Naar soort zaak kiezen</Button>
           </Column>
         </Grid.Cell>
       </DefaultLayout>
@@ -97,22 +95,20 @@ const ImportPage: React.FC = () => {
 
   return (
     <DefaultLayout>
-      <Grid.Cell span="all" appearance="transparent">
-        <Heading level={1}>Import valideren</Heading>
-      </Grid.Cell>
+      <PageHeading title="Bestand controleren" />
       <Grid.Cell span="all">
         <Column gap="large">
           <Paragraph>
-            1. Template kiezen {"->"} 2. Valideren {"->"} 3. Importstatus
+            1. Soort zaak kiezen → 2. Bestand controleren → 3. Resultaat
           </Paragraph>
           <Paragraph>
-            Upload een bestand om het door de backend te laten verwerken via
-            process_leegstand_file.
+            Upload het Excel-bestand met de zaken. Na het controleren zie je
+            welke zaken je kan importeren.
           </Paragraph>
           {validateFile.isSuccess && uploadedFileName && (
-            <Alert heading="Validatie gereed" headingLevel={2} severity="success">
+            <Alert heading="Bestand gecontroleerd" headingLevel={2} severity="success">
               <Paragraph>
-                Het bestand {uploadedFileName} is gevalideerd.
+                Het bestand {uploadedFileName} is gecontroleerd.
               </Paragraph>
               <Paragraph>
                 Zaken importeerbaar: {succeededCasesCount} | niet importeerbaar: {failedCasesCount}
@@ -136,7 +132,7 @@ const ImportPage: React.FC = () => {
             </Alert>
           )}
           {validateFile.isError && (
-            <Alert heading="Uploaden is niet gelukt" headingLevel={2} severity="error">
+            <Alert heading="Controleren is niet gelukt" headingLevel={2} severity="error">
               <Paragraph>{getErrorMessage(validateFile.error)}</Paragraph>
             </Alert>
           )}
@@ -158,8 +154,8 @@ const ImportPage: React.FC = () => {
                 aria-busy={validateFile.isPending}
               >
                 {validateFile.isPending
-                  ? "Stap 2: bestand valideren..."
-                  : "Stap 2: bestand valideren"}
+                  ? "Bestand controleren..."
+                  : "Bestand controleren"}
               </Button>
               {canImport && (
                 <Button
@@ -169,8 +165,8 @@ const ImportPage: React.FC = () => {
                   aria-busy={importFile.isPending}
                 >
                   {importFile.isPending
-                    ? "Stap 2 afronden: bestand importeren..."
-                    : "Stap 2 afronden: bestand importeren"}
+                    ? "Zaken importeren..."
+                    : "Zaken importeren"}
                 </Button>
               )}
             </Column>

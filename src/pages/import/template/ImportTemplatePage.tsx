@@ -68,23 +68,24 @@ const ImportTemplatePage: React.FC = () => {
         jumpTo: values.jump_to !== "" ? values.jump_to : null,
       },
     }
-    navigate("/import/valideren", { state })
+    navigate("/zaken/importeren/controleren", { state })
   }
 
   return (
     <FormPage<FormValues>
-      title="Importtemplate kiezen"
+      title="Zaken importeren"
       form={form}
       onSubmit={onSubmit}
-      submitText="Stap 1 afronden: naar valideren"
+      submitText="Naar bestand controleren"
       onCancel={() => navigate("/")}
       intro={
         <Column gap="small">
           <Paragraph>
-            1. Template kiezen {"->"} 2. Valideren {"->"} 3. Importstatus
+            1. Soort zaak kiezen → 2. Bestand controleren → 3. Resultaat
           </Paragraph>
           <Paragraph>
-            Kies welk type zaak als template gebruikt moet worden voor deze bulk import.
+            Upload een Excel-bestand om meerdere zaken tegelijk aan te maken.
+            Kies eerst de gegevens die voor alle zaken gelden.
           </Paragraph>
         </Column>
       }
@@ -130,7 +131,7 @@ const ImportTemplatePage: React.FC = () => {
       />
       <SelectControl<FormValues>
         name="jump_to"
-        label="Process voor zaken doorzetten naar"
+        label="Proces voor zaken doorzetten naar"
         options={[
           { label: "Niet doorzetten", value: "" },
           ...(allowedJumpWorkflows ?? []),
