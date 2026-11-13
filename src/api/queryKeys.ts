@@ -96,6 +96,12 @@ export const queryKeys = {
     list: () => ["housingCorporations", "list"] as const,
   },
 
+  imports: {
+    allowedJumpWorkflows: () =>
+      ["imports", "allowed-jump-workflows"] as const,
+    status: (taskId?: string) => ["imports", "status", taskId] as const,
+  },
+
   listings: {
     all: ["listings"] as const,
     detail: (tonId?: string) => ["listings", tonId] as const,

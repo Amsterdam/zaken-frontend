@@ -58,6 +58,15 @@ describe("DefaultLayout (via the 404 page)", () => {
     expect(sideMenu().getByRole("link", { name: "Invordering" })).toBeTruthy()
   })
 
+  it("shows importing cases with the permission to create cases", () => {
+    permissions = ["create_case"]
+    renderPage()
+
+    expect(
+      sideMenu().getByRole("link", { name: "Zaken importeren" }),
+    ).toBeTruthy()
+  })
+
   it("goes to an overview with the filters you had there", () => {
     window.sessionStorage.setItem("zaken.casesFilters", "thema=Kamerverhuur")
     renderPage()

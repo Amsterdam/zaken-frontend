@@ -15,6 +15,29 @@ vi.mock("@/api/hooks", async (importOriginal) => ({
   }),
   useCase: () => ({ data: undefined }),
   useFine: () => ({ data: undefined, isLoading: false }),
+  useCheckImportFile: () => ({
+    isPending: false,
+    isSuccess: false,
+    isError: false,
+    data: undefined,
+    error: undefined,
+    mutate: vi.fn(),
+    reset: vi.fn(),
+  }),
+  useImportFile: () => ({
+    isPending: false,
+    isSuccess: false,
+    isError: false,
+    data: undefined,
+    error: undefined,
+    mutate: vi.fn(),
+    reset: vi.fn(),
+  }),
+  useImportStatus: () => ({
+    isError: false,
+    error: undefined,
+    data: undefined,
+  }),
 }))
 
 vi.mock("react-oidc-context", () => ({
@@ -29,11 +52,17 @@ vi.mock("@/hooks/useDecodedToken", () => ({
 }))
 
 const renderAt = (path: string) =>
-  render(
-    <RouterProvider
-      router={createMemoryRouter(routes, { initialEntries: [path] })}
-    />,
-  )
+  // Route components may use React Query hooks; provide QueryClient like the app does.
+  (() => {
+    const { Wrapper } = createQueryWrapper()
+    return render(
+      <Wrapper>
+        <RouterProvider
+          router={createMemoryRouter(routes, { initialEntries: [path] })}
+        />
+      </Wrapper>,
+    )
+  })()
 const heading = (name: string | RegExp) =>
   screen.getByRole("heading", { level: 1, name })
 
@@ -74,6 +103,30 @@ describe("the routes", () => {
 
     expect(heading("Hulp")).toBeTruthy()
     expect(document.title).toMatch(/^Hulp \| /)
+  })
+
+  describe("importing cases", () => {
+    it("shows the first step, with its title on the tab", () => {
+      permissions = ["create_case"]
+      renderAt("/zaken/importeren")
+
+      expect(heading("Zaken importeren")).toBeTruthy()
+      expect(document.title).toMatch(/^Zaken importeren \| /)
+    })
+
+    it("shows the result page, with its title on the tab", () => {
+      permissions = ["create_case"]
+      renderAt("/zaken/importeren/resultaat/abc-123")
+
+      expect(heading("Zaken importeren")).toBeTruthy()
+      expect(document.title).toMatch(/^Resultaat \| /)
+    })
+
+    it("asks the permission to create cases", () => {
+      renderAt("/zaken/importeren")
+
+      expect(heading(/^403/)).toBeTruthy()
+    })
   })
 
   it("has no title of its own for a page without one", () => {

@@ -21,6 +21,10 @@ import NotFoundPage from "@/pages/errors/NotFoundPage"
 import FinePage from "@/pages/fines/FinePage"
 import HelpPage from "@/pages/help/HelpPage"
 import HomePage from "@/pages/home/HomePage"
+import ImportAddressesPage from "@/pages/cases/import/addresses/ImportAddressesPage"
+import ImportCaseDataPage from "@/pages/cases/import/casedata/ImportCaseDataPage"
+import ImportResultPage from "@/pages/cases/import/result/ImportResultPage"
+import ImportThemePage from "@/pages/cases/import/theme/ImportThemePage"
 import TasksIndexPage from "@/pages/tasks/IndexPage"
 import RequirePermissions from "./RequirePermissions"
 import Root from "./Root"
@@ -105,6 +109,34 @@ export const routes: RouteObject[] = [
                 path: "zaken/nieuw",
                 element: <CreateCasePage />,
                 ...titled("Nieuwe zaak aanmaken"),
+              },
+            ],
+          },
+        ],
+      },
+      {
+        ...requires("create_case"),
+        children: [
+          {
+            // Its own item in the menu, so not below the cases overview.
+            path: "zaken/importeren",
+            ...titled("Zaken importeren"),
+            children: [
+              { index: true, element: <ImportThemePage /> },
+              {
+                path: "controleren",
+                element: <ImportAddressesPage />,
+                ...titled("Adressen controleren"),
+              },
+              {
+                path: "zaakgegevens",
+                element: <ImportCaseDataPage />,
+                ...titled("Zaakgegevens kiezen"),
+              },
+              {
+                path: "resultaat/:taskId",
+                element: <ImportResultPage />,
+                ...titled("Resultaat"),
               },
             ],
           },

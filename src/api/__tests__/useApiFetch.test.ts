@@ -98,6 +98,23 @@ describe("useApiFetch", () => {
     })
   })
 
+  it("sends form data as it is, with the Content-Type of the browser", async () => {
+    const fetchMock = vi.fn().mockResolvedValue(createResponse(""))
+    vi.stubGlobal("fetch", fetchMock)
+    const formData = new FormData()
+    formData.append("file", new File(["xlsx"], "adressen.xlsx"))
+
+    await renderApiFetch()("https://api.test/things/", {
+      method: "POST",
+      formData,
+    })
+
+    const { headers, body } = fetchMock.mock.calls[0][1]
+    // No Content-Type of our own: the browser adds the boundary of the parts.
+    expect(headers).toEqual({ Authorization: "Bearer mock-token" })
+    expect(body).toBe(formData)
+  })
+
   it("throws an ApiError with the response body, status and url", async () => {
     vi.stubGlobal(
       "fetch",

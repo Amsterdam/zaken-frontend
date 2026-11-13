@@ -7,7 +7,13 @@ type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE"
 
 export type ApiFetchOptions = {
   method?: HttpMethod
+  /** Sent as JSON. */
   data?: unknown
+  /**
+   * Sent as multipart/form-data, e.g. with a file. The browser sets the
+   * Content-Type itself, with the boundary between the parts.
+   */
+  formData?: FormData
   /**
    * Send the user's token. Set to false for external APIs (PDOK, data.amsterdam.nl):
    * they don't need it, and it must never leave our own API.
@@ -27,7 +33,12 @@ export const useApiFetch = () => {
   return useCallback(
     async <Schema>(
       url: string,
-      { method = "GET", data, authenticated = true }: ApiFetchOptions = {},
+      {
+        method = "GET",
+        data,
+        formData,
+        authenticated = true,
+      }: ApiFetchOptions = {},
     ): Promise<Schema> => {
       const headers: Record<string, string> = {}
 
@@ -43,7 +54,7 @@ export const useApiFetch = () => {
       const response = await fetch(url, {
         method,
         headers,
-        body: data !== undefined ? JSON.stringify(data) : undefined,
+        body: formData ?? (data !== undefined ? JSON.stringify(data) : undefined),
       })
 
       const text = await response.text()

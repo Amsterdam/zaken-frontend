@@ -1,6 +1,7 @@
 import { type ReactNode } from "react"
 import { Column, Grid } from "@amsterdam/design-system-react"
 import { DefaultLayout } from "@/components/DefaultLayout/DefaultLayout"
+import { PageHeading } from "@/components/PageHeading/PageHeading"
 import AddressHeading from "./AddressHeading"
 import AddressTabs from "./AddressTabs"
 
@@ -15,10 +16,10 @@ type Props = {
  */
 const AddressPage: React.FC<Props> = ({ bagId, children }) => (
   // The tabs are the navigation between the pages of an address.
-  <DefaultLayout hideBreadcrumbs>
-    <Grid.Cell span="all" appearance="transparent">
+  <DefaultLayout>
+    <PageHeading hideBreadcrumbs>
       <AddressHeading bagId={bagId} />
-    </Grid.Cell>
+    </PageHeading>
     <Grid.Cell span="all">
       <Column gap="large">
         <AddressTabs bagId={bagId} />
