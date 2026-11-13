@@ -10,6 +10,7 @@ import {
   Button,
   Column,
   Grid,
+  type GridCellProps,
   InvalidFormAlert,
 } from "@amsterdam/design-system-react"
 import { FormProvider } from "@amsterdam/ee-ads-rhf"
@@ -25,12 +26,20 @@ type Props<T extends FieldValues> = {
   submitText: string
   /** While saving: the submit button is off and says so. */
   isPending?: boolean
-  /** Where "Annuleren" goes. */
+  /** Where the second button ("Annuleren") goes. */
   onCancel: () => void
+  /** The text of that button, e.g. "Vorige stap" in a form of several steps. */
+  cancelText?: string
   /** What to know before filling in the form, above the white area. */
   intro?: ReactNode
   /** What the form is about (e.g. which case), at the top of the white area. */
   summary?: ReactNode
+  /**
+   * How many columns of the white area the fields and buttons take. By default
+   * half on a wider window: fields are narrower than the area they are in. A
+   * form with a table or other wide content can take more, e.g. "all".
+   */
+  span?: GridCellProps["span"]
   /** The fields of the form (@amsterdam/ee-ads-rhf). */
   children: ReactNode
 }
@@ -48,8 +57,10 @@ export function FormPage<T extends FieldValues>({
   submitText,
   isPending = false,
   onCancel,
+  cancelText = "Annuleren",
   intro,
   summary,
+  span = { narrow: 4, medium: 6, wide: 6 },
   children,
 }: Props<T>) {
   const { errors } = useFormState({ control: form.control })
@@ -75,7 +86,7 @@ export function FormPage<T extends FieldValues>({
             {/* The fields are narrower than the white area they are in. */}
             <Grid className="grid-in-cell">
               <Grid.Cell
-                span={{ narrow: 4, medium: 6, wide: 6 }}
+                span={span}
                 appearance="transparent"
               >
                 <Column gap="large">
@@ -91,7 +102,7 @@ export function FormPage<T extends FieldValues>({
                         variant="secondary"
                         onClick={onCancel}
                       >
-                        Annuleren
+                        {cancelText}
                       </Button>
                     </ActionGroup>
                   </div>

@@ -4,9 +4,19 @@ import { queryKeys } from "@/api/queryKeys"
 import { useApiFetch } from "@/api/useApiFetch"
 import { makeApiUrl } from "@/api/utils/makeApiUrl"
 
+/** The result of a row of the Excel file. */
 export type ProcessedCaseResult = {
+  /** The number of the row in Excel. */
+  row_number: number
+  /** The address as in the file. */
+  address: string
+  /** The address in the BAG; null when it was not found. */
+  bag_id: string | null
   success: boolean
-  msg: string
+  /** What is wrong, in words for the user; null when the row is good. */
+  error: string | null
+  /** The case made for it (not in a dry run). */
+  case_id: number | null
 }
 
 export type ProcessBulkImportFileResponse = {

@@ -25,9 +25,9 @@ const Location = () => {
   return <output>{`${pathname} ${JSON.stringify(state)}`}</output>
 }
 
-const renderPage = () =>
+const renderPage = (state: unknown = null) =>
   render(
-    <MemoryRouter initialEntries={["/zaken/importeren"]}>
+    <MemoryRouter initialEntries={[{ pathname: "/zaken/importeren", state }]}>
       <ImportThemePage />
       <Location />
     </MemoryRouter>,
@@ -43,6 +43,20 @@ describe("ImportThemePage (step 1)", () => {
       expect.stringMatching(/^Adressen controleren:/),
       expect.stringMatching(/^Zaakgegevens kiezen en importeren:/),
     ])
+  })
+
+  it("says which step it is", () => {
+    renderPage()
+
+    expect(
+      screen.getByRole("heading", { level: 1, name: "Zaken importeren" }),
+    ).toBeTruthy()
+    expect(
+      screen.getByRole("heading", {
+        level: 2,
+        name: "Stap 1 van 3: Thema kiezen",
+      }),
+    ).toBeTruthy()
   })
 
   it("asks only the theme", () => {
@@ -74,5 +88,14 @@ describe("ImportThemePage (step 1)", () => {
 
     expect(await screen.findAllByText("Kies een thema.")).not.toHaveLength(0)
     expect(screen.getByRole("status").textContent).toBe("/zaken/importeren null")
+  })
+
+  it("still has the theme chosen when you come back from step 2", () => {
+    renderPage({ caseData: { themeId: 2 } })
+
+    expect(
+      (screen.getByRole("radio", { name: "Ondermijning" }) as HTMLInputElement)
+        .checked,
+    ).toBe(true)
   })
 })

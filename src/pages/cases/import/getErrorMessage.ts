@@ -10,6 +10,6 @@ export const getErrorMessage = (error: unknown) => {
     return apiError.error
   }
 
-  return apiError?.detail || apiError?.message || "Uploaden is niet gelukt."
+  return apiError?.detail || apiError?.message || "Probeer het later opnieuw."
 }
 

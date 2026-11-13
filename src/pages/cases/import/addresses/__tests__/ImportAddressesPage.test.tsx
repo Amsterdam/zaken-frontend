@@ -1,203 +1,308 @@
-import { fireEvent, render, screen } from "@testing-library/react"
-import { MemoryRouter, useLocation } from "react-router"
+import "@/router/routes"
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react"
+import { MemoryRouter, Route, Routes, useLocation } from "react-router"
+import type { ProcessedCaseResult } from "@/api/hooks"
 import ImportAddressesPage from "../ImportAddressesPage"
 
-const validateMutate = vi.fn()
-const validateReset = vi.fn()
-const importMutate = vi.fn()
-const importReset = vi.fn()
+const caseData = { themeId: 2 }
+const mutate = vi.fn()
+const reset = vi.fn()
 
-const caseData = {
-  themeId: 1,
-  reasonId: 11,
-  subjectIds: [31],
-  jumpTo: null,
-}
-
-const Location = () => {
-  const { pathname } = useLocation()
-  return (
-    <output>{pathname}</output>
-  )
-}
-
-let validateState = {
-  isPending: false,
-  isSuccess: false,
-  isError: false,
-  data: undefined as
-    | {
-        total_processed: number
-        total_created: number
-        dry_run: boolean
-        case_data: Array<{ success: boolean; msg: string }>
-      }
-    | undefined,
-  error: undefined as unknown,
-}
-
-let importState = {
-  isPending: false,
-  isError: false,
-  error: undefined as unknown,
+let check: {
+  isPending: boolean
+  isSuccess: boolean
+  isError: boolean
+  data?: { case_data: ProcessedCaseResult[] }
+  error?: unknown
 }
 
 vi.mock("@/api/hooks", async (importOriginal) => ({
   ...(await importOriginal<object>()),
   useUsersMe: () => ({ data: { permissions: [] } }),
-  useValidateBulkImportFile: () => ({
-    ...validateState,
-    mutate: validateMutate,
-    reset: validateReset,
+  useCaseThemes: () => ({
+    data: {
+      results: [
+        { id: 1, name: "Vakantieverhuur" },
+        { id: 2, name: "Kamerverhuur" },
+      ],
+    },
   }),
-  useImportBulkImportFile: () => ({
-    ...importState,
-    mutate: importMutate,
-    reset: importReset,
-  }),
+  useValidateBulkImportFile: () => ({ ...check, mutate, reset }),
 }))
 
 vi.mock("react-oidc-context", () => ({
   useAuth: () => ({ signoutRedirect: vi.fn() }),
 }))
 
-const renderPage = () =>
-  render(
+// The state of the route the page went to, with the File as it is.
+const seeState = vi.fn()
+const Location = () => {
+  const { pathname, state } = useLocation()
+  seeState(state)
+  return <output>{pathname}</output>
+}
+
+const page = (state: unknown = { caseData }) => (
     <MemoryRouter
-      initialEntries={[
-        {
-          pathname: "/zaken/importeren/controleren",
-          state: { caseData },
-        },
-      ]}
+      initialEntries={[{ pathname: "/zaken/importeren/controleren", state }]}
     >
-      <ImportAddressesPage />
-      <Location />
-    </MemoryRouter>,
-  )
+      <Routes>
+        <Route path="*" element={<Location />} />
+        <Route
+          path="/zaken/importeren/controleren"
+          element={
+            <>
+              <ImportAddressesPage />
+              <Location />
+            </>
+          }
+        />
+      </Routes>
+    </MemoryRouter>
+)
 
-const renderPageWithoutCaseData = () =>
-  render(
-    <MemoryRouter initialEntries={["/zaken/importeren/controleren"]}>
-      <ImportAddressesPage />
-    </MemoryRouter>,
-  )
+const renderPage = (state?: unknown) => render(page(state))
 
-describe("ImportAddressesPage", () => {
-  beforeEach(() => {
-    validateMutate.mockReset()
-    validateReset.mockReset()
-    importMutate.mockReset()
-    importReset.mockReset()
-
-    validateState = {
-      isPending: false,
-      isSuccess: false,
-      isError: false,
-      data: undefined,
-      error: undefined,
-    }
-    importState = {
-      isPending: false,
-      isError: false,
-      error: undefined,
-    }
+const file = new File(["xlsx"], "adressen.xlsx")
+const chooseFile = () =>
+  fireEvent.change(screen.getByLabelText("Excel-bestand"), {
+    target: { files: [file] },
   })
 
-  it("sends the chosen case data for checking and importing", () => {
-    validateState = {
-      ...validateState,
-      isSuccess: true,
-      data: {
-        total_processed: 2,
-        total_created: 0,
-        dry_run: true,
-        case_data: [
-          {
-            success: true,
-            msg: "Creating case for address=Hemonystraat 66-3, 1074BT: OK",
-          },
-          {
-            success: false,
-            msg: "No such address found: Linneausstraat 49-2, 1093EH !",
-          },
-        ],
-      },
-    }
+const ok: ProcessedCaseResult = {
+  row_number: 3,
+  address: "Hemonystraat 66-3, 1074BT",
+  bag_id: "0363010000000001",
+  success: true,
+  error: null,
+  case_id: null,
+}
+const wrong: ProcessedCaseResult = {
+  row_number: 9,
+  address: "Linneausstraat 49-2, 1093EH",
+  bag_id: null,
+  success: false,
+  error: "Adres niet gevonden.",
+  case_id: null,
+}
 
-    const file = new File(["csv"], "adressen.xlsx", { type: "text/csv" })
+describe("ImportAddressesPage (step 2)", () => {
+  beforeEach(() => {
+    mutate.mockReset()
+    reset.mockReset()
+    seeState.mockReset()
+    check = { isPending: false, isSuccess: false, isError: false }
+  })
 
-    validateMutate.mockImplementation((payload, options) => {
-      expect(payload).toEqual({ file, caseData })
-      options?.onSuccess?.(undefined)
-    })
-    importMutate.mockImplementation((payload, options) => {
-      expect(payload).toEqual({ file, caseData })
-      options?.onSuccess?.({ task_id: "abc-123" })
-    })
+  it("starts at step 1 without a chosen theme", () => {
+    renderPage(null)
 
+    expect(screen.getByRole("status").textContent).toBe("/zaken/importeren")
+  })
+
+  it("says which step it is and for which theme", () => {
     renderPage()
 
-    fireEvent.change(screen.getByLabelText("Bestand kiezen voor import"), {
-      target: { files: [file] },
-    })
-
-    fireEvent.click(
-      screen.getByRole("button", { name: "Bestand controleren" }),
-    )
-
     expect(
-      screen.getByText("Zaken importeerbaar: 1 | niet importeerbaar: 1"),
+      screen.getByRole("heading", { level: 1, name: "Zaken importeren" }),
     ).toBeTruthy()
     expect(
-      screen
-        .getByText("Creating case for address=Hemonystraat 66-3, 1074BT: OK")
-        .classList.contains("import-case-results__item--success"),
-    ).toBe(true)
+      screen.getByRole("heading", {
+        level: 2,
+        name: "Stap 2 van 3: Adressen controleren",
+      }),
+    ).toBeTruthy()
     expect(
-      screen
-        .getByText("No such address found: Linneausstraat 49-2, 1093EH !")
-        .classList.contains("import-case-results__item--error"),
-    ).toBe(true)
+      screen.getByText(/Kies het Excel-bestand/).textContent,
+    ).toContain("voor het thema Kamerverhuur")
+  })
 
-    fireEvent.click(
-      screen.getByRole("button", {
-        name: "Zaken importeren",
+  it("lets you choose only an Excel file", () => {
+    renderPage()
+
+    expect(screen.getByLabelText("Excel-bestand").getAttribute("accept")).toBe(
+      ".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    )
+  })
+
+  it("does not send a file that is not Excel, and says so", async () => {
+    renderPage()
+
+    fireEvent.change(screen.getByLabelText("Excel-bestand"), {
+      target: { files: [new File(["png"], "foto.png", { type: "image/png" })] },
+    })
+
+    expect(
+      await screen.findAllByText("Kies een Excel-bestand (.xlsx)."),
+    ).toHaveLength(1)
+    expect(mutate).not.toHaveBeenCalled()
+
+    fireEvent.click(screen.getByRole("button", { name: "Volgende stap" }))
+    await waitFor(() =>
+      expect(
+        screen.getAllByText("Kies een Excel-bestand (.xlsx)."),
+      ).toHaveLength(2),
+    )
+    expect(screen.getByRole("status").textContent).toBe(
+      "/zaken/importeren/controleren",
+    )
+  })
+
+  it("checks the addresses as soon as you choose a file", () => {
+    renderPage()
+
+    chooseFile()
+
+    expect(mutate).toHaveBeenCalledWith({ file, caseData }, expect.anything())
+  })
+
+  it("says when all addresses are good, without an alert", () => {
+    check = { ...check, isSuccess: true, data: { case_data: [ok, ok] } }
+    renderPage()
+
+    expect(screen.getByText(/Alle 2 adressen zijn gecontroleerd en zonder fouten/)).toBeTruthy()
+    expect(screen.queryByRole("heading", { name: /kunnen geïmporteerd worden/ })).toBeNull()
+  })
+
+  it("says in an alert when some addresses are not good", () => {
+    check = { ...check, isSuccess: true, data: { case_data: [ok, wrong] } }
+    renderPage()
+
+    expect(screen.getByText("Niet alle adressen kunnen geïmporteerd worden")).toBeTruthy()
+    expect(screen.getByText("1 van de 2 adressen")).toBeTruthy()
+  })
+
+  it("shows only the addresses with errors in a table", () => {
+    check = { ...check, isSuccess: true, data: { case_data: [ok, wrong] } }
+    renderPage()
+
+    expect(screen.getByRole("heading", { level: 3, name: "Fouten" })).toBeTruthy()
+    const rows = within(screen.getByRole("table")).getAllByRole("row")
+    expect(
+      rows.map((row) =>
+        [...row.querySelectorAll("th, td")].map((cell) => cell.textContent),
+      ),
+    ).toEqual([
+      ["Rij", "Adres", "Fout", ""],
+      ["9", "Linneausstraat 49-2, 1093EH", "Adres niet gevonden.", ""],
+    ])
+  })
+
+  it("links an address with an open case to its overview, in a new tab", () => {
+    const openCase: ProcessedCaseResult = {
+      row_number: 4,
+      address: "Kerkstraat 27-D, 1017GB",
+      bag_id: "0363010000000002",
+      success: false,
+      error: "Er bestaat al een open zaak met dit thema op dit adres.",
+      case_id: null,
+    }
+    check = {
+      ...check,
+      isSuccess: true,
+      data: { case_data: [ok, wrong, openCase] },
+    }
+    renderPage()
+
+    const link = screen.getByRole("link", {
+      name: "Adres bekijken: Kerkstraat 27-D, 1017GB (opent in een nieuw tabblad)",
+    })
+    expect(link.getAttribute("href")).toBe("/adres/0363010000000002")
+    expect(link.getAttribute("target")).toBe("_blank")
+    // Not found in the BAG: no address to go to.
+    expect(screen.getAllByRole("link", { name: /^Adres bekijken/ })).toHaveLength(1)
+  })
+
+  it("shows no table when all addresses are good", () => {
+    check = { ...check, isSuccess: true, data: { case_data: [ok, ok] } }
+    renderPage()
+
+    expect(screen.queryByRole("table")).toBeNull()
+  })
+
+  it("says once, at the field, when checking failed", async () => {
+    const error = { status: 400, error: "Bestand heeft ongeldige kolommen" }
+    // Like the request: done after the change of the field.
+    mutate.mockImplementation((_, { onError }) =>
+      setTimeout(() => {
+        check = { ...check, isError: true, error }
+        onError(error)
       }),
     )
-    expect(screen.getByRole("status").textContent).toBe("/zaken/importeren/resultaat/abc-123")
+    const { rerender } = renderPage()
+
+    chooseFile()
+
+    const message =
+      "Controleren is niet gelukt: Bestand heeft ongeldige kolommen"
+    expect(await screen.findAllByText(message)).toHaveLength(1)
+    expect(screen.queryByRole("heading", { name: /niet gelukt/ })).toBeNull()
+    // The mock of the request does not render the page again, as React Query does.
+    rerender(page())
+
+    // After "Volgende stap" also in the list above the form, that links to it.
+    fireEvent.click(screen.getByRole("button", { name: "Volgende stap" }))
+    await waitFor(() => expect(screen.getAllByText(message)).toHaveLength(2))
+    expect(screen.getByRole("link", { name: message })).toBeTruthy()
   })
 
-  it("shows an error when validate fails", () => {
-    validateState = {
-      ...validateState,
-      isError: true,
-      error: { message: "Mislukt" },
-    }
-
+  it("goes to step 3 with the theme and the file", async () => {
+    check = { ...check, isSuccess: true, data: { case_data: [ok, wrong] } }
     renderPage()
 
-    expect(screen.getByText("Mislukt")).toBeTruthy()
+    chooseFile()
+    fireEvent.click(screen.getByRole("button", { name: "Volgende stap" }))
+
+    await waitFor(() =>
+      expect(screen.getByRole("status").textContent).toBe(
+        "/zaken/importeren/zaakgegevens",
+      ),
+    )
+    expect(seeState).toHaveBeenLastCalledWith({ caseData, file })
   })
 
-  it("shows backend payload error for 400/500 responses", () => {
-    validateState = {
-      ...validateState,
-      isError: true,
-      error: { status: 400, error: "Bestand heeft ongeldige kolommen" },
-    }
-
+  it("does not go on without a file", async () => {
     renderPage()
 
-    expect(screen.getByText("Bestand heeft ongeldige kolommen")).toBeTruthy()
+    fireEvent.click(screen.getByRole("button", { name: "Volgende stap" }))
+
+    expect(
+      await screen.findAllByText("Kies een Excel-bestand met adressen."),
+    ).not.toHaveLength(0)
+    expect(screen.getByRole("status").textContent).toBe(
+      "/zaken/importeren/controleren",
+    )
   })
 
-  it("shows an error when no case type was chosen", () => {
-    renderPageWithoutCaseData()
+  it("says at the field when no address is good, and why", async () => {
+    const data = { case_data: [wrong] }
+    mutate.mockImplementation((_, { onSuccess }) =>
+      setTimeout(() => {
+        check = { ...check, isSuccess: true, data }
+        onSuccess(data)
+      }),
+    )
+    const { rerender } = renderPage()
 
-    expect(screen.getByText("Geen soort zaak gekozen")).toBeTruthy()
+    chooseFile()
+
+    expect(
+      await screen.findAllByText(
+        "Geen van de adressen is goed. Pas het bestand aan en kies het opnieuw.",
+      ),
+    ).toHaveLength(1)
+    rerender(page())
+    // Why, in the table: not a second message.
+    expect(screen.getByText(wrong.address)).toBeTruthy()
+    expect(screen.queryByRole("heading", { name: /kunnen geïmporteerd worden/ })).toBeNull()
+  })
+
+  it("goes back to step 1 with the chosen theme", () => {
+    renderPage()
+
+    fireEvent.click(screen.getByRole("button", { name: "Vorige stap" }))
+
+    expect(screen.getByRole("status").textContent).toBe("/zaken/importeren")
+    expect(seeState).toHaveBeenLastCalledWith({ caseData })
   })
 })
-
-
-

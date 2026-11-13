@@ -125,7 +125,7 @@ export const routes: RouteObject[] = [
               {
                 path: "controleren",
                 element: <ImportAddressesPage />,
-                ...titled("Bestand controleren"),
+                ...titled("Adressen controleren"),
               },
               {
                 path: "resultaat/:taskId",

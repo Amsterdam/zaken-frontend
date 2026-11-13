@@ -1,6 +1,11 @@
 import { useForm } from "react-hook-form"
-import { useNavigate } from "react-router"
-import { Column, OrderedList, Paragraph } from "@amsterdam/design-system-react"
+import { useLocation, useNavigate } from "react-router"
+import {
+  Column,
+  Heading,
+  OrderedList,
+  Paragraph,
+} from "@amsterdam/design-system-react"
 import { RadioControl } from "@amsterdam/ee-ads-rhf"
 import { useCaseThemes } from "@/api/hooks"
 import { FormPage } from "@/components/FormPage/FormPage"
@@ -13,7 +18,11 @@ type FormValues = {
 const ImportThemePage: React.FC = () => {
   const navigate = useNavigate()
   const { data: themes } = useCaseThemes()
-  const form = useForm<FormValues>({ defaultValues: { theme: "" } })
+  // Back from step 2 ("Vorige stap"): the theme you chose is still chosen.
+  const previous = useLocation().state as ImportLocationState | null
+  const form = useForm<FormValues>({
+    defaultValues: { theme: previous ? String(previous.caseData.themeId) : "" },
+  })
 
   const onSubmit = ({ theme }: FormValues) => {
     const state: ImportLocationState = {
@@ -31,6 +40,7 @@ const ImportThemePage: React.FC = () => {
       onCancel={() => navigate("/")}
       summary={
         <Column gap="small">
+          <Heading level={2}>Stap 1 van 3: Thema kiezen</Heading>
           <Paragraph>
             Upload een Excel-bestand met adressen en maak voor al die adressen
             in één keer een zaak aan. Dat gaat in drie stappen.

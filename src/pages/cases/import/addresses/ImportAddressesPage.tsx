@@ -1,183 +1,180 @@
-import { useState, type ChangeEvent, type FormEvent } from "react"
-import { useLocation, useNavigate } from "react-router"
+import { useForm } from "react-hook-form"
+import { Navigate, useLocation, useNavigate } from "react-router"
 import {
   Alert,
-  Button,
   Column,
-  Grid,
+  Heading,
   Paragraph,
 } from "@amsterdam/design-system-react"
-import {
-  useImportBulkImportFile,
-  type ProcessedCaseResult,
-  useValidateBulkImportFile,
-} from "@/api/hooks"
-import { DefaultLayout } from "@/components/DefaultLayout/DefaultLayout"
-import { PageHeading } from "@/components/PageHeading/PageHeading"
+import { FileInputControl } from "@amsterdam/ee-ads-rhf"
+import { useCaseThemes, useValidateBulkImportFile } from "@/api/hooks"
+import { FormPage } from "@/components/FormPage/FormPage"
 import { getErrorMessage } from "@/pages/cases/import/getErrorMessage"
 import type { ImportLocationState } from "@/pages/cases/import/importFlow"
-import "./ImportAddressesPage.css"
+import { CheckResultsTable } from "./CheckResultsTable"
 
-const countFailedCases = (processedCases: ProcessedCaseResult[]) =>
-  processedCases.filter((caseResult) => !caseResult.success).length
+type FormValues = {
+  file: FileList | null
+}
 
+// The backend reads .xlsx (openpyxl), not the old .xls. The extension, as not
+// every system gives an Excel file its MIME type.
+const EXCEL_EXTENSION = ".xlsx"
+const EXCEL_TYPE =
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+const isExcelFile = (file: File) =>
+  file.name.toLowerCase().endsWith(EXCEL_EXTENSION)
+const NOT_EXCEL = "Kies een Excel-bestand (.xlsx)."
+
+const NO_GOOD_ADDRESS =
+  "Geen van de adressen is goed. Pas het bestand aan en kies het opnieuw."
+
+const checkFailed = (error: unknown) =>
+  `Controleren is niet gelukt: ${getErrorMessage(error)}`
+
+/**
+ * Step 2 of importing cases: the Excel file with the addresses. Choosing it
+ * checks the addresses at once (a dry run: nothing is saved yet), so you see
+ * which ones can get a case before you go on.
+ */
 const ImportAddressesPage: React.FC = () => {
   const navigate = useNavigate()
-  const { state } = useLocation()
-  const importState = state as ImportLocationState | undefined
-  const [selectedFile, setSelectedFile] = useState<File | null>(null)
-  const [uploadedFileName, setUploadedFileName] = useState<string>()
-  const validateFile = useValidateBulkImportFile()
-  const importFile = useImportBulkImportFile()
-  const processedCases = validateFile.data?.case_data ?? []
-  const failedCasesCount = countFailedCases(processedCases)
-  const succeededCasesCount = processedCases.length - failedCasesCount
-  const canImport = validateFile.isSuccess && succeededCasesCount > 0
+  const state = useLocation().state as ImportLocationState | null
+  const { data: themes } = useCaseThemes()
+  const check = useValidateBulkImportFile()
+  const form = useForm<FormValues>({ defaultValues: { file: null } })
 
-  const onFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0] ?? null
-    setSelectedFile(file)
-    setUploadedFileName(undefined)
-    validateFile.reset()
-  }
+  // Without a theme (e.g. a link to this page) you start at step 1.
+  if (!state?.caseData) return <Navigate to="/zaken/importeren" replace />
+  const { caseData } = state
 
-  const onValidate = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    if (!selectedFile || !importState?.caseData) return
+  const themeName = themes?.results.find(
+    ({ id }) => id === caseData.themeId,
+  )?.name
+  const results = check.data?.case_data ?? []
+  const failed = results.filter(({ success }) => !success)
+  const succeededCount = results.length - failed.length
 
-    const fileToUpload = selectedFile
-    validateFile.mutate(
+  // A problem with the file is said at the field only (and, after "Volgende
+  // stap", in the list above the form that links to it): once, not also in
+  // an Alert. It shows as soon as the check is done, before you go on.
+  // FileInputControl passes on the files as the value of the field.
+  const onFileChange = (event: { target: { value: FileList | null } }) => {
+    const file = event.target.value?.[0]
+    check.reset()
+    form.clearErrors("file")
+    if (!file) return
+    // Only an Excel file goes to the backend.
+    if (!isExcelFile(file)) {
+      form.setError("file", { message: NOT_EXCEL })
+      return
+    }
+    check.mutate(
+      { file, caseData },
       {
-        file: fileToUpload,
-        caseData: importState.caseData,
-      },
-      {
-      onSuccess: () => {
-        setUploadedFileName(fileToUpload.name)
-      },
-      },
-    )
-  }
-
-  const onImport = () => {
-    if (!selectedFile || !canImport || !importState?.caseData) return
-    importFile.mutate(
-      {
-        file: selectedFile,
-        caseData: importState.caseData,
-      },
-      {
-        onSuccess: ({ task_id }) => {
-          navigate(`/zaken/importeren/resultaat/${task_id}`)
+        onSuccess: ({ case_data }) => {
+          if (!case_data.some(({ success }) => success))
+            form.setError("file", { message: NO_GOOD_ADDRESS })
         },
+        onError: (error) =>
+          form.setError("file", { message: checkFailed(error) }),
       },
     )
   }
 
-  if (!importState?.caseData) {
-    return (
-      <DefaultLayout>
-        <PageHeading title="Bestand controleren" />
-        <Grid.Cell span="all">
-          <Column gap="large">
-            <Paragraph>
-              1. Soort zaak kiezen → 2. Bestand controleren → 3. Resultaat
-            </Paragraph>
-            <Alert heading="Geen soort zaak gekozen" headingLevel={2} severity="error">
-              <Paragraph>Kies eerst de soort zaak om de import te starten.</Paragraph>
-            </Alert>
-            <Button type="button" onClick={() => navigate("/zaken/importeren")}>Naar soort zaak kiezen</Button>
-          </Column>
-        </Grid.Cell>
-      </DefaultLayout>
-    )
+  const validateFile = (files: FileList | null) => {
+    if (!files?.length) return true // "required" says so
+    if (!isExcelFile(files[0])) return NOT_EXCEL
+    if (check.isPending) return "Wacht tot de adressen gecontroleerd zijn."
+    if (check.isError) return checkFailed(check.error)
+    if (succeededCount === 0) return NO_GOOD_ADDRESS
+    return true
+  }
+
+  const onSubmit = ({ file }: FormValues) => {
+    const next: ImportLocationState = { caseData, file: file?.[0] }
+    navigate("/zaken/importeren/zaakgegevens", { state: next })
+  }
+
+  const onPrevious = () => {
+    const previous: ImportLocationState = { caseData }
+    navigate("/zaken/importeren", { state: previous })
   }
 
   return (
-    <DefaultLayout>
-      <PageHeading title="Bestand controleren" />
-      <Grid.Cell span="all">
-        <Column gap="large">
+    <FormPage<FormValues>
+      // The task, the same on every step; the step is the heading below.
+      title="Zaken importeren"
+      form={form}
+      onSubmit={onSubmit}
+      submitText="Volgende stap"
+      onCancel={onPrevious}
+      cancelText="Vorige stap"
+      // The table of the addresses with errors takes the full width.
+      span={{ narrow: 4, medium: 8, wide: 9 }}
+      summary={
+        <Column gap="small">
+          <Heading level={2}>Stap 2 van 3: Adressen controleren</Heading>
           <Paragraph>
-            1. Soort zaak kiezen → 2. Bestand controleren → 3. Resultaat
+            Kies het Excel-bestand met de adressen
+            {themeName && (
+              <>
+                {" "}
+                voor het thema <strong>{themeName}</strong>
+              </>
+            )}
+            . Je ziet meteen voor welke adressen een zaak aangemaakt kan worden.
+            Er wordt nog niets opgeslagen.
           </Paragraph>
-          <Paragraph>
-            Upload het Excel-bestand met de zaken. Na het controleren zie je
-            welke zaken je kan importeren.
-          </Paragraph>
-          {validateFile.isSuccess && uploadedFileName && (
-            <Alert heading="Bestand gecontroleerd" headingLevel={2} severity="success">
-              <Paragraph>
-                Het bestand {uploadedFileName} is gecontroleerd.
-              </Paragraph>
-              <Paragraph>
-                Zaken importeerbaar: {succeededCasesCount} | niet importeerbaar: {failedCasesCount}
-              </Paragraph>
-              {processedCases.length > 0 && (
-                <ul className="import-case-results" aria-label="Importresultaten per zaak">
-                  {processedCases.map((caseResult, index) => (
-                    <li
-                      key={`${index}-${caseResult.msg}`}
-                      className={
-                        caseResult.success
-                          ? "import-case-results__item import-case-results__item--success"
-                          : "import-case-results__item import-case-results__item--error"
-                      }
-                    >
-                      {caseResult.msg}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </Alert>
-          )}
-          {validateFile.isError && (
-            <Alert heading="Controleren is niet gelukt" headingLevel={2} severity="error">
-              <Paragraph>{getErrorMessage(validateFile.error)}</Paragraph>
-            </Alert>
-          )}
-          {importFile.isError && (
-            <Alert heading="Importeren is niet gelukt" headingLevel={2} severity="error">
-              <Paragraph>{getErrorMessage(importFile.error)}</Paragraph>
-            </Alert>
-          )}
-          <form onSubmit={onValidate}>
-            <Column gap="small" alignHorizontal="start">
-              <input
-                type="file"
-                onChange={onFileChange}
-                aria-label="Bestand kiezen voor import"
-              />
-              <Button
-                type="submit"
-                disabled={!selectedFile || validateFile.isPending || importFile.isPending}
-                aria-busy={validateFile.isPending}
-              >
-                {validateFile.isPending
-                  ? "Bestand controleren..."
-                  : "Bestand controleren"}
-              </Button>
-              {canImport && (
-                <Button
-                  type="button"
-                  onClick={onImport}
-                  disabled={validateFile.isPending || importFile.isPending}
-                  aria-busy={importFile.isPending}
-                >
-                  {importFile.isPending
-                    ? "Zaken importeren..."
-                    : "Zaken importeren"}
-                </Button>
-              )}
-            </Column>
-          </form>
         </Column>
-      </Grid.Cell>
-    </DefaultLayout>
+      }
+    >
+      <FileInputControl<FormValues>
+        name="file"
+        label="Excel-bestand"
+        // Only a filter of the file picker: you can still choose another file.
+        accept={`${EXCEL_EXTENSION},${EXCEL_TYPE}`}
+        registerOptions={{
+          required: "Kies een Excel-bestand met adressen.",
+          onChange: onFileChange,
+          validate: validateFile,
+        }}
+      />
+
+      {check.isPending && (
+        <Paragraph>De adressen worden gecontroleerd…</Paragraph>
+      )}
+
+      {/* Only when some are good: when none are, the error is at the field. */}
+      {check.isSuccess && failed.length > 0 && succeededCount > 0 && (
+        <Alert
+          heading="Niet alle adressen kunnen geïmporteerd worden"
+          headingLevel={2}
+          severity="warning"
+        >
+          <Paragraph>
+            Let op: voor{" "}
+            <strong>
+              {failed.length} van de {results.length} adressen
+            </strong>{" "}
+            kan geen zaak worden aangemaakt. In de tabel hieronder zie je wat er
+            mis is. Pas het bestand aan en upload het opnieuw. Of ga verder
+            zonder deze adressen: dan worden alleen zaken aangemaakt voor de
+            adressen zonder fouten.
+          </Paragraph>
+        </Alert>
+      )}
+
+      {check.isSuccess && failed.length === 0 && (
+        <Paragraph>
+          Alle {results.length} adressen zijn gecontroleerd en zonder fouten.
+          Voor elk adres kan een zaak worden aangemaakt.
+        </Paragraph>
+      )}
+
+      {failed.length > 0 && <CheckResultsTable failed={failed} />}
+    </FormPage>
   )
 }
 
 export default ImportAddressesPage
-
-
-

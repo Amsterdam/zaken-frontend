@@ -51,8 +51,8 @@ describe("ImportResultPage", () => {
         status: "PENDING",
         result: {
           case_data: [
-            { success: true, msg: "Zaak aangemaakt" },
-            { success: false, msg: "Adres niet gevonden" },
+            { row_number: 3, address: "Kerkstraat 27-D, 1017GB", bag_id: "0363010000000002", success: true, error: null, case_id: 1 },
+            { row_number: 4, address: "Rozenstraat 260-3, 1016VV", bag_id: null, success: false, error: "Adres niet gevonden.", case_id: null },
           ],
         },
         error: null,
@@ -73,12 +73,12 @@ describe("ImportResultPage", () => {
     ).toBeTruthy()
     expect(
       screen
-        .getByText("Zaak aangemaakt")
+        .getByText("Rij 3: Kerkstraat 27-D, 1017GB: zaak aangemaakt")
         .classList.contains("import-case-results__item--success"),
     ).toBe(true)
     expect(
       screen
-        .getByText("Adres niet gevonden")
+        .getByText("Rij 4: Rozenstraat 260-3, 1016VV: Adres niet gevonden.")
         .classList.contains("import-case-results__item--error"),
     ).toBe(true)
   })

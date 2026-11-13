@@ -5,7 +5,6 @@ import type { ApiError } from "@/api/types/apiError"
 import { DefaultLayout } from "@/components/DefaultLayout/DefaultLayout"
 import { PageHeading } from "@/components/PageHeading/PageHeading"
 import { AmsterdamCrossSpinner } from "@/components/spinners/AmsterdamCrossSpinner/AmsterdamCrossSpinner"
-import "../addresses/ImportAddressesPage.css"
 import "./ImportResultPage.css"
 
 const getErrorMessage = (error: unknown) => {
@@ -23,7 +22,7 @@ const getCaseData = (result: unknown): ProcessedCaseResult[] => {
       typeof item === "object" &&
       item !== null &&
       typeof (item as ProcessedCaseResult).success === "boolean" &&
-      typeof (item as ProcessedCaseResult).msg === "string",
+      typeof (item as ProcessedCaseResult).address === "string",
   )
 }
 
@@ -91,14 +90,16 @@ const ImportResultPage: React.FC = () => {
                     >
                       {caseData.map((caseResult, index) => (
                         <li
-                          key={`${index}-${caseResult.msg}`}
+                          key={`${index}-${caseResult.row_number}`}
                           className={
                             caseResult.success
                               ? "import-case-results__item import-case-results__item--success"
                               : "import-case-results__item import-case-results__item--error"
                           }
                         >
-                          {caseResult.msg}
+                          {`Rij ${caseResult.row_number}: ${caseResult.address}: ${
+                            caseResult.error ?? "zaak aangemaakt"
+                          }`}
                         </li>
                       ))}
                     </ul>
