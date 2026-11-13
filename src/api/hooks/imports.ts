@@ -40,11 +40,16 @@ export type ImportCaseData = {
   projectId?: number
   subjectIds?: number[]
   jumpTo?: string | null
+  /** For all cases, above the explanation of the row in the file. */
+  description?: string
 }
 
+/** A step of the process a new case can start at, skipping the ones before. */
 export type AllowedJumpWorkflowOption = {
   value: string
   label: string
+  /** The names of the themes it belongs to; null for every theme. */
+  themes: string[] | null
 }
 
 type PostBulkImportFileVariables =
@@ -84,6 +89,9 @@ const usePostBulkImportFile = <Response>(dryRun: boolean) => {
         caseData.subjectIds?.forEach((subjectId) => {
           formData.append("subject_ids", String(subjectId))
         })
+        if (caseData.description !== undefined) {
+          formData.append("description", caseData.description)
+        }
         if (caseData.jumpTo !== undefined) {
           formData.append("jump_to", caseData.jumpTo ?? "")
         }

@@ -43,6 +43,12 @@ import {
   toCitizenReport,
   YES,
 } from "@/components/case/forms/CitizenReportForm/reportValues"
+import {
+  REASON_DIGITAL_SURVEILLANCE,
+  REASON_MMA,
+  REASON_PROJECT,
+  REASON_SIG,
+} from "@/shared/constants/reasonNames"
 import { EXCLUDED_THEMES_ADVERTISEMENTS } from "@/shared/constants/themeNames"
 
 type Props = {
@@ -74,11 +80,7 @@ type CorporationChangeConfirmation = {
 
 // A case made for a listing in TON has this theme and this reason.
 const TON_THEME_NAME = "Vakantieverhuur"
-const TON_REASON_NAME = "Digitaal toezicht"
-// The reasons that ask for more.
-const REASON_MMA = "MMA"
-const REASON_PROJECT = "Project"
-const REASON_SIG = "SIG melding"
+const TON_REASON_NAME = REASON_DIGITAL_SURVEILLANCE
 
 // How wide a field is, in characters: as wide as what is filled in there.
 const MMA_NUMBER_SIZE = 10

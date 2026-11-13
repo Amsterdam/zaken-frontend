@@ -22,6 +22,7 @@ import FinePage from "@/pages/fines/FinePage"
 import HelpPage from "@/pages/help/HelpPage"
 import HomePage from "@/pages/home/HomePage"
 import ImportAddressesPage from "@/pages/cases/import/addresses/ImportAddressesPage"
+import ImportCaseDataPage from "@/pages/cases/import/case-data/ImportCaseDataPage"
 import ImportResultPage from "@/pages/cases/import/result/ImportResultPage"
 import ImportThemePage from "@/pages/cases/import/theme/ImportThemePage"
 import TasksIndexPage from "@/pages/tasks/IndexPage"
@@ -126,6 +127,11 @@ export const routes: RouteObject[] = [
                 path: "controleren",
                 element: <ImportAddressesPage />,
                 ...titled("Adressen controleren"),
+              },
+              {
+                path: "zaakgegevens",
+                element: <ImportCaseDataPage />,
+                ...titled("Zaakgegevens kiezen"),
               },
               {
                 path: "resultaat/:taskId",

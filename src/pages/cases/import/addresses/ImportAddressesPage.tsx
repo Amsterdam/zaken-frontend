@@ -92,7 +92,11 @@ const ImportAddressesPage: React.FC = () => {
   }
 
   const onSubmit = ({ file }: FormValues) => {
-    const next: ImportLocationState = { caseData, file: file?.[0] }
+    const next: ImportLocationState = {
+      caseData,
+      file: file?.[0],
+      goodAddressCount: succeededCount,
+    }
     navigate("/zaken/importeren/zaakgegevens", { state: next })
   }
 

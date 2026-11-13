@@ -258,7 +258,11 @@ describe("ImportAddressesPage (step 2)", () => {
         "/zaken/importeren/zaakgegevens",
       ),
     )
-    expect(seeState).toHaveBeenLastCalledWith({ caseData, file })
+    expect(seeState).toHaveBeenLastCalledWith({
+      caseData,
+      file,
+      goodAddressCount: 1,
+    })
   })
 
   it("does not go on without a file", async () => {
