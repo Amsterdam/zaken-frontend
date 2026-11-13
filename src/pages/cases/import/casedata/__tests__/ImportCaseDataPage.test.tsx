@@ -48,7 +48,7 @@ vi.mock("@/api/hooks", async (importOriginal) => ({
       },
     ],
   }),
-  useImportBulkImportFile: () => ({ ...importState, mutate }),
+  useImportFile: () => ({ ...importState, mutate }),
 }))
 
 vi.mock("react-oidc-context", () => ({

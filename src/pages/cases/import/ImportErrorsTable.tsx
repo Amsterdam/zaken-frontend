@@ -1,10 +1,10 @@
 import { Column, Heading, StandaloneLink } from "@amsterdam/design-system-react"
-import type { ProcessedCaseResult } from "@/api/hooks"
+import type { ImportRowResult } from "@/api/hooks"
 import { Table } from "@/components/Table/Table"
 
 type Props = {
   /** The addresses of the file for which no case can be made. */
-  failed: ProcessedCaseResult[]
+  failed: ImportRowResult[]
 }
 
 /**
@@ -19,7 +19,7 @@ export function ImportErrorsTable({ failed }: Props) {
   return (
     <Column gap="small">
       <Heading level={3}>Fouten</Heading>
-      <Table<ProcessedCaseResult>
+      <Table<ImportRowResult>
         data={failed}
         pagination={false}
         columns={[

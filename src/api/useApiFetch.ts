@@ -7,14 +7,13 @@ type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE"
 
 export type ApiFetchOptions = {
   method?: HttpMethod
+  /** Sent as JSON. */
   data?: unknown
-  /** Send this body as-is (for example FormData for file uploads). */
-  body?: BodyInit
   /**
-   * Override Content-Type behavior. Set to false to skip it (e.g. FormData),
-   * or set a value to force one.
+   * Sent as multipart/form-data, e.g. with a file. The browser sets the
+   * Content-Type itself, with the boundary between the parts.
    */
-  contentType?: string | false
+  formData?: FormData
   /**
    * Send the user's token. Set to false for external APIs (PDOK, data.amsterdam.nl):
    * they don't need it, and it must never leave our own API.
@@ -37,28 +36,16 @@ export const useApiFetch = () => {
       {
         method = "GET",
         data,
-        body,
-        contentType,
+        formData,
         authenticated = true,
       }: ApiFetchOptions = {},
     ): Promise<Schema> => {
-      if (data !== undefined && body !== undefined) {
-        throw new Error("useApiFetch: use either data or body, not both")
-      }
-
       const headers: Record<string, string> = {}
 
       // Like axios did: only with a body, so a plain GET to an external API stays a "simple" CORS request.
-      if (contentType !== false && (contentType || data !== undefined)) {
-        headers["Content-Type"] = contentType || "application/json"
+      if (data !== undefined) {
+        headers["Content-Type"] = "application/json"
       }
-
-      const requestBody =
-        body !== undefined
-          ? body
-          : data !== undefined
-            ? JSON.stringify(data)
-            : undefined
 
       if (authenticated && token) {
         headers.Authorization = `Bearer ${token}`
@@ -67,7 +54,7 @@ export const useApiFetch = () => {
       const response = await fetch(url, {
         method,
         headers,
-        body: requestBody,
+        body: formData ?? (data !== undefined ? JSON.stringify(data) : undefined),
       })
 
       const text = await response.text()

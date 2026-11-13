@@ -6,7 +6,7 @@ import {
   Heading,
   Paragraph,
 } from "@amsterdam/design-system-react"
-import { useBulkImportFileStatus } from "@/api/hooks"
+import { useImportStatus } from "@/api/hooks"
 import type { ApiError } from "@/api/types/apiError"
 import { DefaultLayout } from "@/components/DefaultLayout/DefaultLayout"
 import { PageHeading } from "@/components/PageHeading/PageHeading"
@@ -23,7 +23,7 @@ const FAILED_STATES = ["FAILURE", "REVOKED"]
  */
 const ImportResultPage: React.FC = () => {
   const { taskId } = useParams<{ taskId: string }>()
-  const status = useBulkImportFileStatus(taskId)
+  const status = useImportStatus(taskId)
   const state = status.data?.status
   const isFailed = state !== undefined && FAILED_STATES.includes(state)
   const isDone = state === "SUCCESS"

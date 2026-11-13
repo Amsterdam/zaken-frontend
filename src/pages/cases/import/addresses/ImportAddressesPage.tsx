@@ -7,10 +7,10 @@ import {
   Paragraph,
 } from "@amsterdam/design-system-react"
 import { FileInputControl } from "@amsterdam/ee-ads-rhf"
-import { useCaseThemes, useValidateBulkImportFile } from "@/api/hooks"
+import { useCaseThemes, useCheckImportFile } from "@/api/hooks"
 import { FormPage } from "@/components/FormPage/FormPage"
 import { getErrorMessage } from "@/pages/cases/import/getErrorMessage"
-import type { ImportLocationState } from "@/pages/cases/import/importFlow"
+import type { ImportLocationState } from "@/pages/cases/import/importLocationState"
 import { ImportErrorsTable } from "@/pages/cases/import/ImportErrorsTable"
 
 type FormValues = {
@@ -41,7 +41,7 @@ const ImportAddressesPage: React.FC = () => {
   const navigate = useNavigate()
   const state = useLocation().state as ImportLocationState | null
   const { data: themes } = useCaseThemes()
-  const check = useValidateBulkImportFile()
+  const check = useCheckImportFile()
   const form = useForm<FormValues>({ defaultValues: { file: null } })
 
   // Without a theme (e.g. a link to this page) you start at step 1.

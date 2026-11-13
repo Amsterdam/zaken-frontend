@@ -9,7 +9,7 @@ import {
 import { RadioControl } from "@amsterdam/ee-ads-rhf"
 import { useCaseThemes } from "@/api/hooks"
 import { FormPage } from "@/components/FormPage/FormPage"
-import type { ImportLocationState } from "@/pages/cases/import/importFlow"
+import type { ImportLocationState } from "@/pages/cases/import/importLocationState"
 
 type FormValues = {
   theme: string

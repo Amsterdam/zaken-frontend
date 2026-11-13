@@ -2,21 +2,21 @@ import "@/router/routes"
 import { render, screen } from "@testing-library/react"
 import { createMemoryRouter, RouterProvider } from "react-router"
 import type {
-  BulkImportFileStatusResponse,
-  ProcessedCaseResult,
+  ImportStatusResponse,
+  ImportRowResult,
 } from "@/api/hooks"
 import ImportResultPage from "../ImportResultPage"
 
 let status: {
   isError: boolean
   error: unknown
-  data?: BulkImportFileStatusResponse
+  data?: ImportStatusResponse
 }
 
 vi.mock("@/api/hooks", async (importOriginal) => ({
   ...(await importOriginal<object>()),
   useUsersMe: () => ({ data: { permissions: [] } }),
-  useBulkImportFileStatus: () => status,
+  useImportStatus: () => status,
 }))
 
 vi.mock("react-oidc-context", () => ({
@@ -38,7 +38,7 @@ const renderPage = () =>
     />,
   )
 
-const created: ProcessedCaseResult = {
+const created: ImportRowResult = {
   row_number: 3,
   address: "Kerkstraat 27-D, 1017 GB",
   bag_id: "0363010000000002",
@@ -46,7 +46,7 @@ const created: ProcessedCaseResult = {
   error: null,
   case_id: 42,
 }
-const notFound: ProcessedCaseResult = {
+const notFound: ImportRowResult = {
   row_number: 4,
   address: "Rozenstraat 260-3, 1016 VV",
   bag_id: null,
@@ -55,7 +55,7 @@ const notFound: ProcessedCaseResult = {
   case_id: null,
 }
 
-const done = (case_data: ProcessedCaseResult[]) => ({
+const done = (case_data: ImportRowResult[]) => ({
   isError: false,
   error: null,
   data: {

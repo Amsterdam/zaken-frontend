@@ -1,11 +1,11 @@
 import { Column, Heading, StandaloneLink } from "@amsterdam/design-system-react"
-import type { ProcessedCaseResult } from "@/api/hooks"
+import type { ImportRowResult } from "@/api/hooks"
 import { RouterLink } from "@/components/DefaultLayout/RouterLink"
 import { Table } from "@/components/Table/Table"
 
 type Props = {
   /** The rows of the file for which a case was made. */
-  created?: ProcessedCaseResult[]
+  created?: ImportRowResult[]
   /** While the cases are being made: rows that are loading. */
   loading?: boolean
 }
@@ -18,7 +18,7 @@ export function CreatedCasesTable({ created, loading = false }: Props) {
   return (
     <Column gap="small">
       <Heading level={3}>Aangemaakte zaken</Heading>
-      <Table<ProcessedCaseResult>
+      <Table<ImportRowResult>
         data={created}
         loading={loading}
         pagination={false}

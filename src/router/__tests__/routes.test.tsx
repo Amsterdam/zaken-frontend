@@ -15,7 +15,7 @@ vi.mock("@/api/hooks", async (importOriginal) => ({
   }),
   useCase: () => ({ data: undefined }),
   useFine: () => ({ data: undefined, isLoading: false }),
-  useValidateBulkImportFile: () => ({
+  useCheckImportFile: () => ({
     isPending: false,
     isSuccess: false,
     isError: false,
@@ -24,7 +24,7 @@ vi.mock("@/api/hooks", async (importOriginal) => ({
     mutate: vi.fn(),
     reset: vi.fn(),
   }),
-  useImportBulkImportFile: () => ({
+  useImportFile: () => ({
     isPending: false,
     isSuccess: false,
     isError: false,
@@ -33,7 +33,7 @@ vi.mock("@/api/hooks", async (importOriginal) => ({
     mutate: vi.fn(),
     reset: vi.fn(),
   }),
-  useBulkImportFileStatus: () => ({
+  useImportStatus: () => ({
     isError: false,
     error: undefined,
     data: undefined,

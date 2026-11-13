@@ -1,7 +1,7 @@
 import "@/router/routes"
 import { fireEvent, render, screen, waitFor, within } from "@testing-library/react"
 import { MemoryRouter, Route, Routes, useLocation } from "react-router"
-import type { ProcessedCaseResult } from "@/api/hooks"
+import type { ImportRowResult } from "@/api/hooks"
 import ImportAddressesPage from "../ImportAddressesPage"
 
 const caseData = { themeId: 2 }
@@ -12,7 +12,7 @@ let check: {
   isPending: boolean
   isSuccess: boolean
   isError: boolean
-  data?: { case_data: ProcessedCaseResult[] }
+  data?: { case_data: ImportRowResult[] }
   error?: unknown
 }
 
@@ -27,7 +27,7 @@ vi.mock("@/api/hooks", async (importOriginal) => ({
       ],
     },
   }),
-  useValidateBulkImportFile: () => ({ ...check, mutate, reset }),
+  useCheckImportFile: () => ({ ...check, mutate, reset }),
 }))
 
 vi.mock("react-oidc-context", () => ({
@@ -69,7 +69,7 @@ const chooseFile = () =>
     target: { files: [file] },
   })
 
-const ok: ProcessedCaseResult = {
+const ok: ImportRowResult = {
   row_number: 3,
   address: "Hemonystraat 66-3, 1074BT",
   bag_id: "0363010000000001",
@@ -77,7 +77,7 @@ const ok: ProcessedCaseResult = {
   error: null,
   case_id: null,
 }
-const wrong: ProcessedCaseResult = {
+const wrong: ImportRowResult = {
   row_number: 9,
   address: "Linneausstraat 49-2, 1093EH",
   bag_id: null,
@@ -189,7 +189,7 @@ describe("ImportAddressesPage (step 2)", () => {
   })
 
   it("links an address with an open case to its overview, in a new tab", () => {
-    const openCase: ProcessedCaseResult = {
+    const openCase: ImportRowResult = {
       row_number: 4,
       address: "Kerkstraat 27-D, 1017GB",
       bag_id: "0363010000000002",

@@ -5,7 +5,7 @@ import { useApiFetch } from "@/api/useApiFetch"
 import { makeApiUrl } from "@/api/utils/makeApiUrl"
 
 /** The result of a row of the Excel file. */
-export type ProcessedCaseResult = {
+export type ImportRowResult = {
   /** The number of the row in Excel. */
   row_number: number
   /** The address as in the file. */
@@ -19,14 +19,14 @@ export type ProcessedCaseResult = {
   case_id: number | null
 }
 
-export type ProcessBulkImportFileResponse = {
+export type ImportCheckResponse = {
   total_processed: number
   total_created: number
   dry_run: boolean
-  case_data: ProcessedCaseResult[]
+  case_data: ImportRowResult[]
 }
 
-export type ImportBulkImportFileResponse = {
+export type ImportStartResponse = {
   task_id: string
 }
 
@@ -39,7 +39,7 @@ export type ImportCaseData = {
   reasonId?: number
   projectId?: number
   subjectIds?: number[]
-  jumpTo?: string | null
+  jumpTo?: string
   /** For all cases, above the explanation of the row in the file. */
   description?: string
 }
@@ -52,67 +52,58 @@ export type AllowedJumpWorkflowOption = {
   themes: string[] | null
 }
 
-type PostBulkImportFileVariables =
-  | File
-  | {
-    file: File
-    caseData?: ImportCaseData
-  }
+type PostImportFileVariables = {
+  file: File
+  caseData: ImportCaseData
+}
 
-const toUploadPayload = (variables: PostBulkImportFileVariables) =>
-  variables instanceof File ? { file: variables } : variables
-
-export type BulkImportFileStatusResponse = {
+export type ImportStatusResponse = {
   task_id: string
   /** The state of the Celery task: PENDING, STARTED, SUCCESS, FAILURE, … */
   status: string
   /** The result of the import, once it is done (SUCCESS). */
-  result: ProcessBulkImportFileResponse | null
+  result: ImportCheckResponse | null
   error: string | null
 }
 
-const usePostBulkImportFile = <Response>(dryRun: boolean) => {
+const usePostImportFile = <Response>(dryRun: boolean) => {
   const fetch = useApiFetch()
 
-  return useMutation<Response, ApiError, PostBulkImportFileVariables>({
-    mutationFn: (variables: PostBulkImportFileVariables) => {
-      const { file, caseData } = toUploadPayload(variables)
+  return useMutation<Response, ApiError, PostImportFileVariables>({
+    mutationFn: ({ file, caseData }: PostImportFileVariables) => {
       const formData = new FormData()
       formData.append("file", file)
       formData.append("dry_run", String(dryRun))
-      if (caseData !== undefined) {
-        formData.append("theme_id", String(caseData.themeId))
-        if (caseData.reasonId !== undefined) {
-          formData.append("reason_id", String(caseData.reasonId))
-        }
-        if (caseData.projectId !== undefined) {
-          formData.append("project_id", String(caseData.projectId))
-        }
-        caseData.subjectIds?.forEach((subjectId) => {
-          formData.append("subject_ids", String(subjectId))
-        })
-        if (caseData.description !== undefined) {
-          formData.append("description", caseData.description)
-        }
-        if (caseData.jumpTo !== undefined) {
-          formData.append("jump_to", caseData.jumpTo ?? "")
-        }
+      formData.append("theme_id", String(caseData.themeId))
+      if (caseData.reasonId !== undefined) {
+        formData.append("reason_id", String(caseData.reasonId))
+      }
+      if (caseData.projectId !== undefined) {
+        formData.append("project_id", String(caseData.projectId))
+      }
+      caseData.subjectIds?.forEach((subjectId) => {
+        formData.append("subject_ids", String(subjectId))
+      })
+      if (caseData.description !== undefined) {
+        formData.append("description", caseData.description)
+      }
+      if (caseData.jumpTo !== undefined) {
+        formData.append("jump_to", caseData.jumpTo)
       }
 
       return fetch<Response>(makeApiUrl("cases", "process-file"), {
         method: "POST",
-        body: formData,
-        contentType: false,
+        formData,
       })
     },
   })
 }
 
-export const useValidateBulkImportFile = () =>
-  usePostBulkImportFile<ProcessBulkImportFileResponse>(true)
+export const useCheckImportFile = () =>
+  usePostImportFile<ImportCheckResponse>(true)
 
-export const useImportBulkImportFile = () =>
-  usePostBulkImportFile<ImportBulkImportFileResponse>(false)
+export const useImportFile = () =>
+  usePostImportFile<ImportStartResponse>(false)
 
 export const useAllowedJumpWorkflows = () => {
   const fetch = useApiFetch()
@@ -126,20 +117,20 @@ export const useAllowedJumpWorkflows = () => {
   })
 }
 
-const isTerminalTaskState = (data?: BulkImportFileStatusResponse) =>
+const isTerminalTaskState = (data?: ImportStatusResponse) =>
   data?.status === "SUCCESS" || Boolean(data?.error)
 
 const isNotFoundError = (error: unknown) =>
   (error as ApiError | undefined)?.status === 404
 
-export const useBulkImportFileStatus = (taskId?: string) => {
+export const useImportStatus = (taskId?: string) => {
   const fetch = useApiFetch()
   const queryClient = useQueryClient()
 
   return useQuery({
     queryKey: queryKeys.imports.status(taskId),
     queryFn: async () => {
-      const data = await fetch<BulkImportFileStatusResponse>(
+      const data = await fetch<ImportStatusResponse>(
         makeApiUrl("cases", "process-file", taskId, "status"),
       )
       // Once the cases are made, the lists that show them are out of date:

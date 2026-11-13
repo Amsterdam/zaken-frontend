@@ -15,14 +15,14 @@ import {
 import {
   useAllowedJumpWorkflows,
   useCaseThemes,
-  useImportBulkImportFile,
+  useImportFile,
   useProjects,
   useReasons,
   useSubjects,
 } from "@/api/hooks"
 import { FormPage } from "@/components/FormPage/FormPage"
 import { getErrorMessage } from "@/pages/cases/import/getErrorMessage"
-import type { ImportLocationState } from "@/pages/cases/import/importFlow"
+import type { ImportLocationState } from "@/pages/cases/import/importLocationState"
 import {
   REASON_PROJECT,
   REASONS_NOT_FOR_IMPORT,
@@ -59,7 +59,7 @@ const ImportCaseDataPage: React.FC = () => {
   const { data: projects } = useProjects(themeId)
   const { data: subjects } = useSubjects(themeId)
   const { data: jumpWorkflows } = useAllowedJumpWorkflows()
-  const importFile = useImportBulkImportFile()
+  const importFile = useImportFile()
   const form = useForm<FormValues>({
     defaultValues: {
       reason: "",
