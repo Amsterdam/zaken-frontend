@@ -125,6 +125,18 @@ describe("ImportAddressesPage (step 2)", () => {
     )
   })
 
+  it("has a link to download the example file", () => {
+    renderPage()
+
+    const link = screen.getByRole("link", {
+      name: "Download het voorbeeldbestand",
+    })
+    expect(link.getAttribute("href")).toBe(
+      "/downloads/voorbeeld-zaken-importeren.xlsx",
+    )
+    expect(link.hasAttribute("download")).toBe(true)
+  })
+
   it("lets you choose only an Excel file", () => {
     renderPage()
 

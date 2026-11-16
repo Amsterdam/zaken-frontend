@@ -6,7 +6,9 @@ import {
   Heading,
   Paragraph,
   Skeleton,
+  StandaloneLink,
 } from "@amsterdam/design-system-react"
+import { DownloadIcon } from "@amsterdam/design-system-react-icons"
 import { FileInputControl } from "@amsterdam/ee-ads-rhf"
 import { useCaseThemes, useCheckImportFile } from "@/api/hooks"
 import { FormPage } from "@/components/FormPage/FormPage"
@@ -27,6 +29,9 @@ const EXCEL_TYPE =
 const isExcelFile = (file: File) =>
   file.name.toLowerCase().endsWith(EXCEL_EXTENSION)
 const NOT_EXCEL = "Kies een Excel-bestand (.xlsx)."
+
+// In public/: a file with the columns the backend reads (BulkCaseImporter).
+const EXAMPLE_FILE = "/downloads/voorbeeld-zaken-importeren.xlsx"
 
 // After "Volgende stap", at the field: what to do. What went wrong is said in
 // the Alert below the field as soon as the check is done.
@@ -117,6 +122,9 @@ const ImportAddressesPage: React.FC = () => {
             . Je ziet meteen voor welke adressen een zaak aangemaakt kan worden.
             Er wordt nog niets opgeslagen.
           </Paragraph>
+          <StandaloneLink href={EXAMPLE_FILE} download icon={DownloadIcon}>
+            Download het voorbeeldbestand
+          </StandaloneLink>
         </Column>
       }
     >
