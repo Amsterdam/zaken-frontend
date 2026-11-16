@@ -1,9 +1,16 @@
 import { useMemo } from "react"
 import { useSearchParams } from "react-router"
-import { Grid, Heading } from "@amsterdam/design-system-react"
+import {
+  Column,
+  Grid,
+  Heading,
+  Link,
+  Paragraph,
+} from "@amsterdam/design-system-react"
 import { useBpmnModelNames, useBpmnModels } from "@/api/hooks"
 import { BpmnDiagram } from "@/components/bpmn/BpmnDiagram"
 import { DefaultLayout } from "@/components/DefaultLayout/DefaultLayout"
+import { RouterLink } from "@/components/DefaultLayout/RouterLink"
 import filterStyles from "@/components/filters/filters.module.css"
 import { SelectFilter } from "@/components/filters/SelectFilter"
 import { formatWorkflowType } from "@/shared/textFormatters"
@@ -37,40 +44,61 @@ const BpmnPage: React.FC = () => {
         <Heading level={1}>BPMN</Heading>
       </Grid.Cell>
       <Grid.Cell span="all">
-        <div className={filterStyles.filters}>
-          <SelectFilter
-            label="Naam"
-            options={[
-              { label: "Selecteer naam", value: "" },
-              ...modelNames.map((name) => ({
-                label: formatWorkflowType(name),
-                value: name,
-              })),
-            ]}
-            value={modelName ?? ""}
-            disabled={isLoadingNames}
-            onChange={(name) =>
-              setSearchParams(name ? { [MODEL_PARAM]: name } : {})
-            }
-          />
-          {modelName && (
+        <Column>
+          <Paragraph>
+            Een BPMN is een visuele weergave van een werkproces. Je ziet welke
+            stappen het proces bevat, in welke volgorde ze worden uitgevoerd en
+            waar keuzes of beslissingen worden gemaakt. Selecteer een proces en
+            een versie om de bijbehorende tekening te bekijken. Je kunt de
+            tekening verplaatsen door{" "}
+            <strong>
+              erop te klikken, de muisknop ingedrukt te houden en te slepen
+            </strong>
+            . Je kunt ook <strong>scrollen</strong> om verticaal te bewegen.
+            Houd <strong>Shift</strong> ingedrukt tijdens het scrollen om
+            horizontaal te bewegen en <strong>Ctrl</strong> om{" "}
+            <strong>in en uit te zoomen</strong>. Meer uitleg over BPMN en hoe
+            je een procesdiagram leest, vind je bij{" "}
+            <Link linkComponent={RouterLink} href="/hulp">
+              Hulp
+            </Link>
+            .
+          </Paragraph>
+          <div className={filterStyles.filters}>
             <SelectFilter
-              label="Versie"
-              // The latest version first.
-              options={models
-                .map(({ version }) => ({ label: version, value: version }))
-                .reverse()}
-              value={version ?? ""}
-              disabled={isLoadingModels}
-              onChange={(version) =>
-                setSearchParams({
-                  [MODEL_PARAM]: modelName,
-                  [VERSION_PARAM]: version,
-                })
+              label="Naam"
+              options={[
+                { label: "Selecteer naam", value: "" },
+                ...modelNames.map((name) => ({
+                  label: formatWorkflowType(name),
+                  value: name,
+                })),
+              ]}
+              value={modelName ?? ""}
+              disabled={isLoadingNames}
+              onChange={(name) =>
+                setSearchParams(name ? { [MODEL_PARAM]: name } : {})
               }
             />
-          )}
-        </div>
+            {modelName && (
+              <SelectFilter
+                label="Versie"
+                // The latest version first.
+                options={models
+                  .map(({ version }) => ({ label: version, value: version }))
+                  .reverse()}
+                value={version ?? ""}
+                disabled={isLoadingModels}
+                onChange={(version) =>
+                  setSearchParams({
+                    [MODEL_PARAM]: modelName,
+                    [VERSION_PARAM]: version,
+                  })
+                }
+              />
+            )}
+          </div>
+        </Column>
       </Grid.Cell>
       {modelName && version && (
         <Grid.Cell span="all">
