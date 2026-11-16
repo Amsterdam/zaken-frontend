@@ -191,7 +191,7 @@ describe("ImportCaseDataPage (step 3)", () => {
     renderPage()
 
     const group = screen.getByRole("radiogroup", {
-      name: "Waar beginnen de zaken?",
+      name: "Bij welke processtap beginnen de zaken?",
     })
     expect(group).toBeTruthy()
     expect(
@@ -208,7 +208,7 @@ describe("ImportCaseDataPage (step 3)", () => {
     renderPage()
 
     const steps = within(
-      screen.getByRole("radiogroup", { name: "Waar beginnen de zaken?" }),
+      screen.getByRole("radiogroup", { name: "Bij welke processtap beginnen de zaken?" }),
     )
       .getAllByRole("radio")
       .map((radio) => radio.getAttribute("value"))

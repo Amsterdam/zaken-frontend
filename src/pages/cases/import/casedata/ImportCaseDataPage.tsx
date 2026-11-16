@@ -186,15 +186,17 @@ const ImportCaseDataPage: React.FC = () => {
       />
       <RadioControl<FormValues>
         name="jump_to"
-        label="Waar beginnen de zaken?"
-        description="Nieuwe zaken beginnen standaard bij de eerste stap, zoals het huisbezoek. Je kunt ook kiezen om stappen over te slaan en de zaken later in het proces te laten beginnen, bijvoorbeeld bij de debrief of de aanschrijving."
+        label="Bij welke processtap beginnen de zaken?"
+        description="Standaard beginnen nieuwe zaken bij de eerste processtap, bijvoorbeeld 'Bepalen processtap'. Je kunt er ook voor kiezen om stappen over te slaan en de zaken later in het proces te laten beginnen, bijvoorbeeld bij de debrief of de aanschrijving."
         options={startOptions}
-        registerOptions={{ required: "Kies waar de zaken beginnen." }}
+        registerOptions={{
+          required: "Kies bij welke processtap de zaken beginnen.",
+        }}
       />
       <TextAreaControl<FormValues>
         name="description"
         label="Korte toelichting"
-        description="Komt bij elke zaak, boven de toelichting uit het bestand."
+        description="Wordt bij elke zaak weergegeven, boven de toelichting die afkomstig is uit het geïmporteerde bestand."
         rows={4}
       />
 

@@ -39,7 +39,7 @@ const seeState = vi.fn()
 const Location = () => {
   const { pathname, state } = useLocation()
   seeState(state)
-  return <output>{pathname}</output>
+  return <output aria-label="Pad">{pathname}</output>
 }
 
 const page = (state: unknown = { caseData }) => (
@@ -97,7 +97,7 @@ describe("ImportAddressesPage (step 2)", () => {
   it("starts at step 1 without a chosen theme", () => {
     renderPage(null)
 
-    expect(screen.getByRole("status").textContent).toBe("/zaken/importeren")
+    expect(screen.getByRole("status", { name: "Pad" }).textContent).toBe("/zaken/importeren")
   })
 
   it("says which step it is and for which theme", () => {
@@ -143,7 +143,7 @@ describe("ImportAddressesPage (step 2)", () => {
         screen.getAllByText("Kies een Excel-bestand (.xlsx)."),
       ).toHaveLength(2),
     )
-    expect(screen.getByRole("status").textContent).toBe(
+    expect(screen.getByRole("status", { name: "Pad" }).textContent).toBe(
       "/zaken/importeren/controleren",
     )
   })
@@ -162,15 +162,23 @@ describe("ImportAddressesPage (step 2)", () => {
 
     const button = screen.getByRole("button", { name: "Bezig met controleren…" })
     expect((button as HTMLButtonElement).disabled).toBe(true)
-    expect(screen.getByText("De adressen worden gecontroleerd…")).toBeTruthy()
+    // Read out by a screen reader: the skeleton is aria-hidden.
+    expect(
+      screen.getByText("De adressen worden gecontroleerd…").getAttribute("role"),
+    ).toBe("status")
   })
 
-  it("says when all addresses are good, without an alert", () => {
+  it("says in a success alert when all addresses are good", () => {
     check = { ...check, isSuccess: true, data: { case_data: [ok, ok] } }
     renderPage()
 
+    expect(
+      screen.getByRole("heading", {
+        name: "Alle adressen kunnen geïmporteerd worden",
+      }),
+    ).toBeTruthy()
     expect(screen.getByText(/Alle 2 adressen zijn gecontroleerd en zonder fouten/)).toBeTruthy()
-    expect(screen.queryByRole("heading", { name: /kunnen geïmporteerd worden/ })).toBeNull()
+    expect(screen.queryByText("Niet alle adressen kunnen geïmporteerd worden")).toBeNull()
   })
 
   it("says in an alert when some addresses are not good", () => {
@@ -263,7 +271,7 @@ describe("ImportAddressesPage (step 2)", () => {
     fireEvent.click(screen.getByRole("button", { name: "Volgende stap" }))
 
     await waitFor(() =>
-      expect(screen.getByRole("status").textContent).toBe(
+      expect(screen.getByRole("status", { name: "Pad" }).textContent).toBe(
         "/zaken/importeren/zaakgegevens",
       ),
     )
@@ -282,7 +290,7 @@ describe("ImportAddressesPage (step 2)", () => {
     expect(
       await screen.findAllByText("Kies een Excel-bestand met adressen."),
     ).not.toHaveLength(0)
-    expect(screen.getByRole("status").textContent).toBe(
+    expect(screen.getByRole("status", { name: "Pad" }).textContent).toBe(
       "/zaken/importeren/controleren",
     )
   })
@@ -317,7 +325,7 @@ describe("ImportAddressesPage (step 2)", () => {
     expect(screen.queryByRole("button", { name: "Vorige stap" })).toBeNull()
     fireEvent.click(screen.getByRole("link", { name: "Vorige stap" }))
 
-    expect(screen.getByRole("status").textContent).toBe("/zaken/importeren")
+    expect(screen.getByRole("status", { name: "Pad" }).textContent).toBe("/zaken/importeren")
     expect(seeState).toHaveBeenLastCalledWith({ caseData })
   })
 })

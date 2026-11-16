@@ -5,6 +5,7 @@ import {
   Column,
   Heading,
   Paragraph,
+  Skeleton,
 } from "@amsterdam/design-system-react"
 import { FileInputControl } from "@amsterdam/ee-ads-rhf"
 import { useCaseThemes, useCheckImportFile } from "@/api/hooks"
@@ -142,8 +143,19 @@ const ImportAddressesPage: React.FC = () => {
         }}
       />
 
+      {/* Always there, so a screen reader reads out the text when it comes:
+          the Skeleton is aria-hidden. */}
+      <p className="ams-visually-hidden" role="status">
+        {check.isPending && "De adressen worden gecontroleerd…"}
+      </p>
+
+      {/* The shape of the Alert that usually comes; not the table of errors,
+          as it is only there when some addresses are wrong. */}
       {check.isPending && (
-        <Paragraph>De adressen worden gecontroleerd…</Paragraph>
+        <Skeleton>
+          <Skeleton.Heading />
+          <Skeleton.Paragraph lines={2} />
+        </Skeleton>
       )}
 
       {/* Only when some are good: when none are, the error is at the field. */}
@@ -166,11 +178,19 @@ const ImportAddressesPage: React.FC = () => {
         </Alert>
       )}
 
+      {/* The outcome of the check, not a saved action (that is a toast): it
+          stays while you decide to go on, as the warning above does. */}
       {check.isSuccess && failed.length === 0 && (
-        <Paragraph>
-          Alle {results.length} adressen zijn gecontroleerd en zonder fouten.
-          Voor elk adres kan een zaak worden aangemaakt.
-        </Paragraph>
+        <Alert
+          heading="Alle adressen kunnen geïmporteerd worden"
+          headingLevel={2}
+          severity="success"
+        >
+          <Paragraph>
+            Alle {results.length} adressen zijn gecontroleerd en zonder fouten.
+            Voor elk adres kan een zaak worden aangemaakt.
+          </Paragraph>
+        </Alert>
       )}
 
       {failed.length > 0 && <ImportErrorsTable failed={failed} />}
