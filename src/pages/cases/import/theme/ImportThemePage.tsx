@@ -9,6 +9,7 @@ import {
 import { RadioControl } from "@amsterdam/ee-ads-rhf"
 import { useCaseThemes } from "@/api/hooks"
 import { FormPage } from "@/components/FormPage/FormPage"
+import { ExampleFileLink } from "@/pages/cases/import/ExampleFileLink"
 import type { ImportLocationState } from "@/pages/cases/import/importLocationState"
 
 type FormValues = {
@@ -49,9 +50,18 @@ const ImportThemePage: React.FC = () => {
               <strong>Thema kiezen:</strong> kies bij welk thema de zaken horen.
             </OrderedList.Item>
             <OrderedList.Item>
-              <strong>Adressen controleren:</strong> upload het Excel-bestand.
-              Je ziet per adres of er een zaak voor aangemaakt kan worden. Er
-              wordt nog niets opgeslagen.
+              {/* The link on its own line, below the explanation: a
+                  StandaloneLink, not a link in the running text. */}
+              <Column gap="x-small" alignHorizontal="start">
+                <span>
+                  <strong>Adressen controleren:</strong> upload het
+                  Excel-bestand. Je ziet per adres of er een zaak voor
+                  aangemaakt kan worden. Er wordt nog niets opgeslagen of
+                  aangemaakt. In het voorbeeldbestand zie je welke kolommen het
+                  Excel-bestand moet bevatten.
+                </span>
+                <ExampleFileLink />
+              </Column>
             </OrderedList.Item>
             <OrderedList.Item>
               <strong>Zaakgegevens kiezen en importeren:</strong> kies de

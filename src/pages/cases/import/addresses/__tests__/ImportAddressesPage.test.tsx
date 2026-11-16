@@ -369,7 +369,9 @@ describe("ImportAddressesPage (step 2)", () => {
         name: "Geen enkel adres kan geïmporteerd worden",
       }),
     ).toBeTruthy()
-    expect(screen.getByText(/Er staan geen adressen in het bestand/)).toBeTruthy()
+    expect(
+      screen.getByText(/Er staan geen adressen in het bestand/),
+    ).toBeTruthy()
     expect(
       screen.queryByRole("heading", {
         name: "Alle adressen kunnen geïmporteerd worden",
