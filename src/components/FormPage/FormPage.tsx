@@ -26,6 +26,8 @@ type Props<T extends FieldValues> = {
   submitText: string
   /** While saving: the submit button is off and says so. */
   isPending?: boolean
+  /** The text of the submit button while pending, e.g. while checking a file. */
+  pendingText?: string
   /**
    * Where the second button ("Annuleren") goes. Without it there is no second
    * button, e.g. on the first step of a form of several steps.
@@ -59,6 +61,7 @@ export function FormPage<T extends FieldValues>({
   onSubmit,
   submitText,
   isPending = false,
+  pendingText = "Bezig met opslaan…",
   onCancel,
   cancelText = "Annuleren",
   intro,
@@ -98,7 +101,7 @@ export function FormPage<T extends FieldValues>({
                   <div>
                     <ActionGroup>
                       <Button type="submit" disabled={isPending}>
-                        {isPending ? "Bezig met opslaan…" : submitText}
+                        {isPending ? pendingText : submitText}
                       </Button>
                       {onCancel && (
                         <Button

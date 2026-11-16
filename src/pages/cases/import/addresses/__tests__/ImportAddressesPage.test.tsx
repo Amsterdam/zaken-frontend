@@ -156,6 +156,15 @@ describe("ImportAddressesPage (step 2)", () => {
     expect(mutate).toHaveBeenCalledWith({ file, caseData }, expect.anything())
   })
 
+  it("turns the button off while checking, and says so", () => {
+    check = { ...check, isPending: true }
+    renderPage()
+
+    const button = screen.getByRole("button", { name: "Bezig met controleren…" })
+    expect((button as HTMLButtonElement).disabled).toBe(true)
+    expect(screen.getByText("De adressen worden gecontroleerd…")).toBeTruthy()
+  })
+
   it("says when all addresses are good, without an alert", () => {
     check = { ...check, isSuccess: true, data: { case_data: [ok, ok] } }
     renderPage()

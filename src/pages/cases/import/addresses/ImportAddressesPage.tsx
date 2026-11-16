@@ -86,7 +86,6 @@ const ImportAddressesPage: React.FC = () => {
   const validateFile = (files: FileList | null) => {
     if (!files?.length) return true // "required" says so
     if (!isExcelFile(files[0])) return NOT_EXCEL
-    if (check.isPending) return "Wacht tot de adressen gecontroleerd zijn."
     if (check.isError) return checkFailed(check.error)
     if (succeededCount === 0) return NO_GOOD_ADDRESS
     return true
@@ -108,6 +107,9 @@ const ImportAddressesPage: React.FC = () => {
       form={form}
       onSubmit={onSubmit}
       submitText="Volgende stap"
+      // Waiting for the check is not a mistake to correct: the button is off.
+      isPending={check.isPending}
+      pendingText="Bezig met controleren…"
       // The table of the addresses with errors takes the full width.
       span={{ narrow: 4, medium: 8, wide: 9 }}
       summary={
