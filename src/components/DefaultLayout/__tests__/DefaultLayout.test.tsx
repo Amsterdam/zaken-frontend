@@ -58,13 +58,22 @@ describe("DefaultLayout (via the 404 page)", () => {
     expect(sideMenu().getByRole("link", { name: "Invordering" })).toBeTruthy()
   })
 
-  it("shows importing cases with the permission to create cases", () => {
-    permissions = ["create_case"]
+  it("shows importing cases with the permission to import cases", () => {
+    permissions = ["perform_bulk_import"]
     renderPage()
 
     expect(
       sideMenu().getByRole("link", { name: "Zaken importeren" }),
     ).toBeTruthy()
+  })
+
+  it("does not show importing cases with only the permission to create cases", () => {
+    permissions = ["create_case"]
+    renderPage()
+
+    expect(
+      sideMenu().queryByRole("link", { name: "Zaken importeren" }),
+    ).toBeNull()
   })
 
   it("goes to an overview with the filters you had there", () => {

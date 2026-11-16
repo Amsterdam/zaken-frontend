@@ -62,7 +62,7 @@ const menuItems: MenuItem[] = [
     href: "/zaken/importeren",
     icon: UploadIcon,
     label: "Zaken importeren",
-    permission: "create_case",
+    permission: "perform_bulk_import",
   },
   { href: "/bpmn", icon: OrganisationChartIcon, label: "BPMN" },
   { href: "/hulp", icon: QuestionMarkCircleIcon, label: "Hulp" },

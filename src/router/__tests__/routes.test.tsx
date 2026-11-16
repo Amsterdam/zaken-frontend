@@ -107,7 +107,7 @@ describe("the routes", () => {
 
   describe("importing cases", () => {
     it("shows the first step, with its title on the tab", () => {
-      permissions = ["create_case"]
+      permissions = ["perform_bulk_import"]
       renderAt("/zaken/importeren")
 
       expect(heading("Zaken importeren")).toBeTruthy()
@@ -115,14 +115,21 @@ describe("the routes", () => {
     })
 
     it("shows the result page, with its title on the tab", () => {
-      permissions = ["create_case"]
+      permissions = ["perform_bulk_import"]
       renderAt("/zaken/importeren/resultaat/abc-123")
 
       expect(heading("Zaken importeren")).toBeTruthy()
       expect(document.title).toMatch(/^Resultaat \| /)
     })
 
-    it("asks the permission to create cases", () => {
+    it("asks the permission to import cases", () => {
+      renderAt("/zaken/importeren")
+
+      expect(heading(/^403/)).toBeTruthy()
+    })
+
+    it("is not enough to have the permission to create cases", () => {
+      permissions = ["create_case"]
       renderAt("/zaken/importeren")
 
       expect(heading(/^403/)).toBeTruthy()

@@ -115,7 +115,7 @@ export const routes: RouteObject[] = [
         ],
       },
       {
-        ...requires("create_case"),
+        ...requires("perform_bulk_import"),
         children: [
           {
             // Its own item in the menu, so not below the cases overview.
