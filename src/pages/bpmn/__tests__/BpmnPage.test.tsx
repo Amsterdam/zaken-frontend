@@ -86,10 +86,11 @@ describe("BpmnPage", () => {
   it("explains what a BPMN is and how to use the diagram", () => {
     renderPage()
 
-    expect(screen.getByText(/tekening van een werkproces/)).toBeTruthy()
-    const usage = screen.getByText(/Zoom in en uit/)
+    const explanation = screen.getByText(/visuele weergave van een werkproces/)
     expect(
-      within(usage).getByRole("link", { name: "Hulp" }).getAttribute("href"),
+      within(explanation)
+        .getByRole("link", { name: "Hulp" })
+        .getAttribute("href"),
     ).toBe("/hulp")
   })
 
