@@ -1,5 +1,11 @@
 import "@/router/routes"
-import { fireEvent, render, screen, waitFor, within } from "@testing-library/react"
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from "@testing-library/react"
 import { MemoryRouter, Route, Routes, useLocation } from "react-router"
 import type { ImportRowResult } from "@/api/hooks"
 import ImportAddressesPage from "../ImportAddressesPage"
@@ -43,22 +49,22 @@ const Location = () => {
 }
 
 const page = (state: unknown = { caseData }) => (
-    <MemoryRouter
-      initialEntries={[{ pathname: "/zaken/importeren/controleren", state }]}
-    >
-      <Routes>
-        <Route path="*" element={<Location />} />
-        <Route
-          path="/zaken/importeren/controleren"
-          element={
-            <>
-              <ImportAddressesPage />
-              <Location />
-            </>
-          }
-        />
-      </Routes>
-    </MemoryRouter>
+  <MemoryRouter
+    initialEntries={[{ pathname: "/zaken/importeren/controleren", state }]}
+  >
+    <Routes>
+      <Route path="*" element={<Location />} />
+      <Route
+        path="/zaken/importeren/controleren"
+        element={
+          <>
+            <ImportAddressesPage />
+            <Location />
+          </>
+        }
+      />
+    </Routes>
+  </MemoryRouter>
 )
 
 const renderPage = (state?: unknown) => render(page(state))
@@ -97,7 +103,9 @@ describe("ImportAddressesPage (step 2)", () => {
   it("starts at step 1 without a chosen theme", () => {
     renderPage(null)
 
-    expect(screen.getByRole("status", { name: "Pad" }).textContent).toBe("/zaken/importeren")
+    expect(screen.getByRole("status", { name: "Pad" }).textContent).toBe(
+      "/zaken/importeren",
+    )
   })
 
   it("says which step it is and for which theme", () => {
@@ -112,9 +120,9 @@ describe("ImportAddressesPage (step 2)", () => {
         name: "Stap 2 van 3: Adressen controleren",
       }),
     ).toBeTruthy()
-    expect(
-      screen.getByText(/Kies het Excel-bestand/).textContent,
-    ).toContain("voor het thema Kamerverhuur")
+    expect(screen.getByText(/Kies het Excel-bestand/).textContent).toContain(
+      "voor het thema Kamerverhuur",
+    )
   })
 
   it("lets you choose only an Excel file", () => {
@@ -160,11 +168,15 @@ describe("ImportAddressesPage (step 2)", () => {
     check = { ...check, isPending: true }
     renderPage()
 
-    const button = screen.getByRole("button", { name: "Bezig met controleren…" })
+    const button = screen.getByRole("button", {
+      name: "Bezig met controleren…",
+    })
     expect((button as HTMLButtonElement).disabled).toBe(true)
     // Read out by a screen reader: the skeleton is aria-hidden.
     expect(
-      screen.getByText("De adressen worden gecontroleerd…").getAttribute("role"),
+      screen
+        .getByText("De adressen worden gecontroleerd…")
+        .getAttribute("role"),
     ).toBe("status")
   })
 
@@ -177,15 +189,21 @@ describe("ImportAddressesPage (step 2)", () => {
         name: "Alle adressen kunnen geïmporteerd worden",
       }),
     ).toBeTruthy()
-    expect(screen.getByText(/Alle 2 adressen zijn gecontroleerd en zonder fouten/)).toBeTruthy()
-    expect(screen.queryByText("Niet alle adressen kunnen geïmporteerd worden")).toBeNull()
+    expect(
+      screen.getByText(/Alle 2 adressen zijn gecontroleerd en zonder fouten/),
+    ).toBeTruthy()
+    expect(
+      screen.queryByText("Niet alle adressen kunnen geïmporteerd worden"),
+    ).toBeNull()
   })
 
   it("says in an alert when some addresses are not good", () => {
     check = { ...check, isSuccess: true, data: { case_data: [ok, wrong] } }
     renderPage()
 
-    expect(screen.getByText("Niet alle adressen kunnen geïmporteerd worden")).toBeTruthy()
+    expect(
+      screen.getByText("Niet alle adressen kunnen geïmporteerd worden"),
+    ).toBeTruthy()
     expect(screen.getByText("1 van de 2 adressen")).toBeTruthy()
   })
 
@@ -193,7 +211,9 @@ describe("ImportAddressesPage (step 2)", () => {
     check = { ...check, isSuccess: true, data: { case_data: [ok, wrong] } }
     renderPage()
 
-    expect(screen.getByRole("heading", { level: 3, name: "Fouten" })).toBeTruthy()
+    expect(
+      screen.getByRole("heading", { level: 3, name: "Fouten" }),
+    ).toBeTruthy()
     const rows = within(screen.getByRole("table")).getAllByRole("row")
     expect(
       rows.map((row) =>
@@ -227,7 +247,9 @@ describe("ImportAddressesPage (step 2)", () => {
     expect(link.getAttribute("href")).toBe("/adres/0363010000000002")
     expect(link.getAttribute("target")).toBe("_blank")
     // Not found in the BAG: no address to go to.
-    expect(screen.getAllByRole("link", { name: /^Adres bekijken/ })).toHaveLength(1)
+    expect(
+      screen.getAllByRole("link", { name: /^Adres bekijken/ }),
+    ).toHaveLength(1)
   })
 
   it("shows no table when all addresses are good", () => {
@@ -315,7 +337,9 @@ describe("ImportAddressesPage (step 2)", () => {
     rerender(page())
     // Why, in the table: not a second message.
     expect(screen.getByText(wrong.address)).toBeTruthy()
-    expect(screen.queryByRole("heading", { name: /kunnen geïmporteerd worden/ })).toBeNull()
+    expect(
+      screen.queryByRole("heading", { name: /kunnen geïmporteerd worden/ }),
+    ).toBeNull()
   })
 
   it("goes back to step 1 with the chosen theme", () => {
@@ -325,7 +349,9 @@ describe("ImportAddressesPage (step 2)", () => {
     expect(screen.queryByRole("button", { name: "Vorige stap" })).toBeNull()
     fireEvent.click(screen.getByRole("link", { name: "Vorige stap" }))
 
-    expect(screen.getByRole("status", { name: "Pad" }).textContent).toBe("/zaken/importeren")
+    expect(screen.getByRole("status", { name: "Pad" }).textContent).toBe(
+      "/zaken/importeren",
+    )
     expect(seeState).toHaveBeenLastCalledWith({ caseData })
   })
 })

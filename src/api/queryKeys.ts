@@ -97,8 +97,7 @@ export const queryKeys = {
   },
 
   imports: {
-    allowedJumpWorkflows: () =>
-      ["imports", "allowed-jump-workflows"] as const,
+    allowedJumpWorkflows: () => ["imports", "allowed-jump-workflows"] as const,
     status: (taskId?: string) => ["imports", "status", taskId] as const,
   },
 

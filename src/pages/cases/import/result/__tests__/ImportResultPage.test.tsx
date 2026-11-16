@@ -1,10 +1,7 @@
 import "@/router/routes"
 import { render, screen } from "@testing-library/react"
 import { createMemoryRouter, RouterProvider } from "react-router"
-import type {
-  ImportStatusResponse,
-  ImportRowResult,
-} from "@/api/hooks"
+import type { ImportStatusResponse, ImportRowResult } from "@/api/hooks"
 import ImportResultPage from "../ImportResultPage"
 
 let status: {
@@ -79,7 +76,12 @@ describe("ImportResultPage", () => {
   it("says that the cases are being made, until they are", () => {
     status = {
       ...status,
-      data: { task_id: "abc-123", status: "PENDING", result: null, error: null },
+      data: {
+        task_id: "abc-123",
+        status: "PENDING",
+        result: null,
+        error: null,
+      },
     }
     renderPage()
 
@@ -144,7 +146,9 @@ describe("ImportResultPage", () => {
     renderPage()
 
     expect(screen.getByText("Er zijn geen zaken aangemaakt")).toBeTruthy()
-    expect(screen.queryByRole("heading", { name: "Aangemaakte zaken" })).toBeNull()
+    expect(
+      screen.queryByRole("heading", { name: "Aangemaakte zaken" }),
+    ).toBeNull()
   })
 
   it("says when the import failed, with the number to name", () => {

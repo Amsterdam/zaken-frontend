@@ -1,5 +1,11 @@
 import "@/router/routes"
-import { fireEvent, render, screen, waitFor, within } from "@testing-library/react"
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from "@testing-library/react"
 import { MemoryRouter, Route, Routes, useLocation } from "react-router"
 import ImportCaseDataPage from "../ImportCaseDataPage"
 
@@ -208,7 +214,9 @@ describe("ImportCaseDataPage (step 3)", () => {
     renderPage()
 
     const steps = within(
-      screen.getByRole("radiogroup", { name: "Bij welke processtap beginnen de zaken?" }),
+      screen.getByRole("radiogroup", {
+        name: "Bij welke processtap beginnen de zaken?",
+      }),
     )
       .getAllByRole("radio")
       .map((radio) => radio.getAttribute("value"))
@@ -217,12 +225,16 @@ describe("ImportCaseDataPage (step 3)", () => {
 
   it("offers a step of one theme only for that theme", () => {
     renderPage()
-    expect(screen.getByRole("radio", { name: "Leegstandsmelding" })).toBeTruthy()
+    expect(
+      screen.getByRole("radio", { name: "Leegstandsmelding" }),
+    ).toBeTruthy()
   })
 
   it("does not offer a step of another theme", () => {
     renderPage({ caseData: { themeId: 3 }, file, goodAddressCount: 29 })
-    expect(screen.queryByRole("radio", { name: "Leegstandsmelding" })).toBeNull()
+    expect(
+      screen.queryByRole("radio", { name: "Leegstandsmelding" }),
+    ).toBeNull()
   })
 
   it("asks the project only for the reason Project", async () => {

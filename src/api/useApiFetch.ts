@@ -54,7 +54,8 @@ export const useApiFetch = () => {
       const response = await fetch(url, {
         method,
         headers,
-        body: formData ?? (data !== undefined ? JSON.stringify(data) : undefined),
+        body:
+          formData ?? (data !== undefined ? JSON.stringify(data) : undefined),
       })
 
       const text = await response.text()

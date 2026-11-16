@@ -159,7 +159,9 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
       return
     }
     const currentCorporation = form.getValues("housing_corporation")
-    const isHousingCorporationDirty = form.getFieldState("housing_corporation").isDirty
+    const isHousingCorporationDirty = form.getFieldState(
+      "housing_corporation",
+    ).isDirty
     if (currentCorporation !== "" || isHousingCorporationDirty) {
       return
     }
@@ -251,7 +253,9 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
   const onSubmit = async (values: FormValues) => {
     const knownCorporationId = knownAddress?.housing_corporation
     const selectedCorporationId =
-      values.housing_corporation !== "" ? Number(values.housing_corporation) : undefined
+      values.housing_corporation !== ""
+        ? Number(values.housing_corporation)
+        : undefined
     const hasDifferentCorporation =
       knownCorporationId != null &&
       selectedCorporationId != null &&
@@ -314,99 +318,98 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
           </Column>
         }
       >
-      <RadioControl<FormValues>
-        name="theme"
-        label="Kies het thema voor deze zaak"
-        options={toOptions(themeOptions)}
-        registerOptions={{
-          required: "Kies een thema.",
-          // What was chosen belongs to the other theme.
-          onChange: () => {
-            form.setValue("reason", "")
-            form.setValue("project", "")
-            form.setValue("subjects", [])
-          },
-        }}
-      />
-      <RadioControl<FormValues>
-        name="reason"
-        label="Aanleiding"
-        options={toOptions(reasonOptions)}
-        registerOptions={{ required: "Kies een aanleiding." }}
-        shouldShow={hasTheme}
-      />
-      {reasonName === REASON_SIG && (
-        <ReportFields
-          control={controlOf(form.control)}
-          asksNuisance={themeName === "Vakantieverhuur"}
+        <RadioControl<FormValues>
+          name="theme"
+          label="Kies het thema voor deze zaak"
+          options={toOptions(themeOptions)}
+          registerOptions={{
+            required: "Kies een thema.",
+            // What was chosen belongs to the other theme.
+            onChange: () => {
+              form.setValue("reason", "")
+              form.setValue("project", "")
+              form.setValue("subjects", [])
+            },
+          }}
         />
-      )}
-      <SelectControl<FormValues>
-        name="project"
-        label="Projectnaam"
-        options={[
-          { label: "Maak een keuze", value: "" },
-          ...toOptions(projects?.results),
-        ]}
-        registerOptions={{ required: "Kies een project." }}
-        shouldShow={reasonName === REASON_PROJECT}
-      />
-      <TextInputControl<FormValues>
-        name="mma_number"
-        label="MMA-nummer"
-        // The keyboard for numbers.
-        attributes={{ inputMode: "numeric" }}
-        size={MMA_NUMBER_SIZE}
-        registerOptions={{
-          required: "Vul het MMA-nummer in.",
-          pattern: {
-            value: /^\s*[1-9]\d*\s*$/,
-            message: "Vul het MMA-nummer in als een getal.",
-          },
-        }}
-        shouldShow={reasonName === REASON_MMA}
-      />
-      <SelectControl<FormValues>
-        name="housing_corporation"
-        label="Selecteer de woningcorporatie"
-        options={[
-          { label: "Geen corporatie", value: "" },
-          ...toOptions(sortedCorporations),
-        ]}
-        shouldShow={hasTheme && sortedCorporations.length > 0}
-      />
-      {asksAdvertisement && (
-        <AdvertisementFields
-          control={controlOf(form.control)}
-          onlyYes={isTon}
+        <RadioControl<FormValues>
+          name="reason"
+          label="Aanleiding"
+          options={toOptions(reasonOptions)}
+          registerOptions={{ required: "Kies een aanleiding." }}
+          shouldShow={hasTheme}
         />
-      )}
-      <CheckboxControlGroup<FormValues>
-        name="subjects"
-        label="Onderwerp(en)"
-        options={toOptions(subjects?.results)}
-        registerOptions={{
-         required:
-            "Kies ten minste één onderwerp.",
-        }}
-        shouldShow={hasTheme}
-      />
-      {hasTheme && (
-        <>
-          <Label>Ander thema</Label>
-          <CheckboxControl<FormValues>
-            name="other_theme"
-            label="Overgedragen vanuit ander thema"
+        {reasonName === REASON_SIG && (
+          <ReportFields
+            control={controlOf(form.control)}
+            asksNuisance={themeName === "Vakantieverhuur"}
           />
-        </>
-      )}
-      <SelectControl<FormValues>
-        name="previous_case"
-        label="Overgedragen zaak ID"
-        options={[{ label: "Maak een keuze", value: "" }, ...previousCases]}
-        registerOptions={{ required: "Kies de zaak die is overgedragen." }}
-        shouldShow={(watch) => hasTheme && watch("other_theme")}
-      />
+        )}
+        <SelectControl<FormValues>
+          name="project"
+          label="Projectnaam"
+          options={[
+            { label: "Maak een keuze", value: "" },
+            ...toOptions(projects?.results),
+          ]}
+          registerOptions={{ required: "Kies een project." }}
+          shouldShow={reasonName === REASON_PROJECT}
+        />
+        <TextInputControl<FormValues>
+          name="mma_number"
+          label="MMA-nummer"
+          // The keyboard for numbers.
+          attributes={{ inputMode: "numeric" }}
+          size={MMA_NUMBER_SIZE}
+          registerOptions={{
+            required: "Vul het MMA-nummer in.",
+            pattern: {
+              value: /^\s*[1-9]\d*\s*$/,
+              message: "Vul het MMA-nummer in als een getal.",
+            },
+          }}
+          shouldShow={reasonName === REASON_MMA}
+        />
+        <SelectControl<FormValues>
+          name="housing_corporation"
+          label="Selecteer de woningcorporatie"
+          options={[
+            { label: "Geen corporatie", value: "" },
+            ...toOptions(sortedCorporations),
+          ]}
+          shouldShow={hasTheme && sortedCorporations.length > 0}
+        />
+        {asksAdvertisement && (
+          <AdvertisementFields
+            control={controlOf(form.control)}
+            onlyYes={isTon}
+          />
+        )}
+        <CheckboxControlGroup<FormValues>
+          name="subjects"
+          label="Onderwerp(en)"
+          options={toOptions(subjects?.results)}
+          registerOptions={{
+            required: "Kies ten minste één onderwerp.",
+          }}
+          shouldShow={hasTheme}
+        />
+        {hasTheme && (
+          <>
+            <Label>Ander thema</Label>
+            <CheckboxControl<FormValues>
+              name="other_theme"
+              label="Overgedragen vanuit ander thema"
+            />
+          </>
+        )}
+        <SelectControl<FormValues>
+          name="previous_case"
+          label="Overgedragen zaak ID"
+          options={[{ label: "Maak een keuze", value: "" }, ...previousCases]}
+          registerOptions={{ required: "Kies de zaak die is overgedragen." }}
+          shouldShow={(watch) => hasTheme && watch("other_theme")}
+        />
         <TextAreaControl<FormValues>
           name="description"
           label="Korte toelichting"
@@ -423,8 +426,14 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
           onConfirm={onConfirmCorporationChange}
           onCancel={onCancelCorporationChange}
         >
-          Volgens onze gegevens hoort dit adres bij {corporationChangeConfirmation.knownCorporationName}. U heeft {corporationChangeConfirmation.selectedCorporationName} gekozen.
-          Wilt u de woningcorporatie voor dit adres wijzigen naar <strong>{corporationChangeConfirmation.selectedCorporationName}</strong>?
+          Volgens onze gegevens hoort dit adres bij{" "}
+          {corporationChangeConfirmation.knownCorporationName}. U heeft{" "}
+          {corporationChangeConfirmation.selectedCorporationName} gekozen. Wilt
+          u de woningcorporatie voor dit adres wijzigen naar{" "}
+          <strong>
+            {corporationChangeConfirmation.selectedCorporationName}
+          </strong>
+          ?
         </ConfirmDialog>
       )}
     </>

@@ -37,7 +37,11 @@ const ImportResultPage: React.FC = () => {
   // The outcome of the import as a whole: below the title, above the details.
   const alert = status.isError ? (
     isNotFound ? (
-      <Alert heading="Resultaat niet gevonden" headingLevel={2} severity="error">
+      <Alert
+        heading="Resultaat niet gevonden"
+        headingLevel={2}
+        severity="error"
+      >
         <Paragraph>
           Het resultaat van een import is 24 uur te zien en alleen voor wie de
           import heeft gestart.
@@ -53,7 +57,11 @@ const ImportResultPage: React.FC = () => {
       </Alert>
     )
   ) : isFailed ? (
-    <Alert heading="Importeren is niet gelukt" headingLevel={2} severity="error">
+    <Alert
+      heading="Importeren is niet gelukt"
+      headingLevel={2}
+      severity="error"
+    >
       <Paragraph>
         Het importeren is gestopt door een fout. Mogelijk is een deel van de
         zaken al aangemaakt: kijk in het Zakenoverzicht voordat je het opnieuw

@@ -102,8 +102,7 @@ const usePostImportFile = <Response>(dryRun: boolean) => {
 export const useCheckImportFile = () =>
   usePostImportFile<ImportCheckResponse>(true)
 
-export const useImportFile = () =>
-  usePostImportFile<ImportStartResponse>(false)
+export const useImportFile = () => usePostImportFile<ImportStartResponse>(false)
 
 export const useAllowedJumpWorkflows = () => {
   const fetch = useApiFetch()
@@ -149,14 +148,11 @@ export const useImportStatus = (taskId?: string) => {
       return data
     },
     enabled: taskId !== undefined && taskId !== "",
-    retry: (failureCount, error) =>
-      !isNotFoundError(error) && failureCount < 3,
+    retry: (failureCount, error) => !isNotFoundError(error) && failureCount < 3,
     refetchInterval: ({ state }) =>
-      isNotFoundError(state.error) ||
-      isTerminalTaskState(state.data)
+      isNotFoundError(state.error) || isTerminalTaskState(state.data)
         ? false
         : // An import takes minutes: every 3 seconds is soon enough.
           3000,
   })
 }
-

@@ -17,7 +17,11 @@ type Props = {
  * of the Grid would come between them. Every page in a DefaultLayout starts
  * with one.
  */
-export function PageHeading({ title, children, hideBreadcrumbs = false }: Props) {
+export function PageHeading({
+  title,
+  children,
+  hideBreadcrumbs = false,
+}: Props) {
   return (
     <Grid.Cell span="all" appearance="transparent">
       {!hideBreadcrumbs && <Breadcrumbs />}

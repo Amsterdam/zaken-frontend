@@ -10,5 +10,3 @@ export type ImportLocationState = {
   file?: File
   goodAddressCount?: number
 }
-
-

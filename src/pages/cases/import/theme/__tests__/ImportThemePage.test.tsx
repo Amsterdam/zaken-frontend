@@ -1,5 +1,11 @@
 import "@/router/routes"
-import { fireEvent, render, screen, waitFor, within } from "@testing-library/react"
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from "@testing-library/react"
 import { MemoryRouter, useLocation } from "react-router"
 import ImportThemePage from "../ImportThemePage"
 
@@ -63,7 +69,9 @@ describe("ImportThemePage (step 1)", () => {
     renderPage()
 
     expect(screen.getAllByRole("radiogroup")).toHaveLength(1)
-    expect(screen.getByRole("radiogroup", { name: "Kies een thema" })).toBeTruthy()
+    expect(
+      screen.getByRole("radiogroup", { name: "Kies een thema" }),
+    ).toBeTruthy()
     expect(screen.queryByRole("combobox")).toBeNull()
     expect(screen.queryByRole("checkbox")).toBeNull()
   })
@@ -87,7 +95,9 @@ describe("ImportThemePage (step 1)", () => {
     fireEvent.click(screen.getByRole("button", { name: "Volgende stap" }))
 
     expect(await screen.findAllByText("Kies een thema.")).not.toHaveLength(0)
-    expect(screen.getByRole("status").textContent).toBe("/zaken/importeren null")
+    expect(screen.getByRole("status").textContent).toBe(
+      "/zaken/importeren null",
+    )
   })
 
   it("still has the theme chosen when you come back from step 2", () => {

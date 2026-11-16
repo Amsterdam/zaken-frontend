@@ -91,10 +91,7 @@ export function FormPage<T extends FieldValues>({
           <FormProvider form={form} onSubmit={onSubmit}>
             {/* The fields are narrower than the white area they are in. */}
             <Grid className="grid-in-cell">
-              <Grid.Cell
-                span={span}
-                appearance="transparent"
-              >
+              <Grid.Cell span={span} appearance="transparent">
                 <Column gap="large">
                   {children}
                   {/* In a block of its own, or the column stretches the buttons. */}
