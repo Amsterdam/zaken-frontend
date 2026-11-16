@@ -28,11 +28,10 @@ const isExcelFile = (file: File) =>
   file.name.toLowerCase().endsWith(EXCEL_EXTENSION)
 const NOT_EXCEL = "Kies een Excel-bestand (.xlsx)."
 
-const NO_GOOD_ADDRESS =
-  "Geen van de adressen is goed. Pas het bestand aan en kies het opnieuw."
-
-const checkFailed = (error: unknown) =>
-  `Controleren is niet gelukt: ${getErrorMessage(error)}`
+// After "Volgende stap", at the field: what to do. What went wrong is said in
+// the Alert below the field as soon as the check is done.
+const NO_GOOD_ADDRESS = "Kies een bestand met ten minste één goed adres."
+const CHECK_FAILED = "Kies het bestand opnieuw om de adressen te controleren."
 
 /**
  * Step 2 of importing cases: the Excel file with the addresses. Choosing it
@@ -57,10 +56,10 @@ const ImportAddressesPage: React.FC = () => {
   const failed = results.filter(({ success }) => !success)
   const succeededCount = results.length - failed.length
 
-  // A problem with the file is said at the field only (and, after "Volgende
-  // stap", in the list above the form that links to it): once, not also in
-  // an Alert. It shows as soon as the check is done, before you go on.
-  // FileInputControl passes on the files as the value of the field.
+  // The outcome of the check (all good, some, none, or failed) is an Alert
+  // below the field. Only a file that is not Excel (never checked) is an error
+  // at the field at once. FileInputControl passes on the files as the value
+  // of the field.
   const onFileChange = (event: { target: { value: FileList | null } }) => {
     const file = event.target.value?.[0]
     check.reset()
@@ -71,23 +70,13 @@ const ImportAddressesPage: React.FC = () => {
       form.setError("file", { message: NOT_EXCEL })
       return
     }
-    check.mutate(
-      { file, caseData },
-      {
-        onSuccess: ({ case_data }) => {
-          if (!case_data.some(({ success }) => success))
-            form.setError("file", { message: NO_GOOD_ADDRESS })
-        },
-        onError: (error) =>
-          form.setError("file", { message: checkFailed(error) }),
-      },
-    )
+    check.mutate({ file, caseData })
   }
 
   const validateFile = (files: FileList | null) => {
     if (!files?.length) return true // "required" says so
     if (!isExcelFile(files[0])) return NOT_EXCEL
-    if (check.isError) return checkFailed(check.error)
+    if (check.isError) return CHECK_FAILED
     if (succeededCount === 0) return NO_GOOD_ADDRESS
     return true
   }
@@ -158,7 +147,34 @@ const ImportAddressesPage: React.FC = () => {
         </Skeleton>
       )}
 
-      {/* Only when some are good: when none are, the error is at the field. */}
+      {check.isError && (
+        <Alert
+          heading="Controleren is niet gelukt"
+          headingLevel={2}
+          severity="error"
+        >
+          <Paragraph>
+            {getErrorMessage(check.error)} Kies het bestand opnieuw om het nog
+            eens te proberen.
+          </Paragraph>
+        </Alert>
+      )}
+
+      {check.isSuccess && succeededCount === 0 && (
+        <Alert
+          heading="Geen enkel adres kan geïmporteerd worden"
+          headingLevel={2}
+          severity="error"
+        >
+          <Paragraph>
+            {results.length === 0
+              ? "Er staan geen adressen in het bestand."
+              : `Voor geen van de ${results.length} adressen kan een zaak worden aangemaakt. In de tabel hieronder zie je wat er mis is.`}{" "}
+            Pas het bestand aan en kies het opnieuw.
+          </Paragraph>
+        </Alert>
+      )}
+
       {check.isSuccess && failed.length > 0 && succeededCount > 0 && (
         <Alert
           heading="Niet alle adressen kunnen geïmporteerd worden"
@@ -180,7 +196,7 @@ const ImportAddressesPage: React.FC = () => {
 
       {/* The outcome of the check, not a saved action (that is a toast): it
           stays while you decide to go on, as the warning above does. */}
-      {check.isSuccess && failed.length === 0 && (
+      {check.isSuccess && failed.length === 0 && results.length > 0 && (
         <Alert
           heading="Alle adressen kunnen geïmporteerd worden"
           headingLevel={2}

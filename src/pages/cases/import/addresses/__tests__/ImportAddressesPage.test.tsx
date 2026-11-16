@@ -161,7 +161,7 @@ describe("ImportAddressesPage (step 2)", () => {
 
     chooseFile()
 
-    expect(mutate).toHaveBeenCalledWith({ file, caseData }, expect.anything())
+    expect(mutate).toHaveBeenCalledWith({ file, caseData })
   })
 
   it("turns the button off while checking, and says so", () => {
@@ -259,30 +259,27 @@ describe("ImportAddressesPage (step 2)", () => {
     expect(screen.queryByRole("table")).toBeNull()
   })
 
-  it("says once, at the field, when checking failed", async () => {
-    const error = { status: 400, error: "Bestand heeft ongeldige kolommen" }
-    // Like the request: done after the change of the field.
-    mutate.mockImplementation((_, { onError }) =>
-      setTimeout(() => {
-        check = { ...check, isError: true, error }
-        onError(error)
-      }),
-    )
-    const { rerender } = renderPage()
+  it("says in an error alert when checking failed", async () => {
+    const error = { status: 400, error: "Bestand heeft ongeldige kolommen." }
+    check = { ...check, isError: true, error }
+    renderPage()
 
+    expect(
+      screen.getByRole("heading", { name: "Controleren is niet gelukt" }),
+    ).toBeTruthy()
+    expect(
+      screen.getByText(/Bestand heeft ongeldige kolommen\. Kies het bestand/),
+    ).toBeTruthy()
+
+    // After "Volgende stap": what to do, at the field and in the list above.
     chooseFile()
-
-    const message =
-      "Controleren is niet gelukt: Bestand heeft ongeldige kolommen"
-    expect(await screen.findAllByText(message)).toHaveLength(1)
-    expect(screen.queryByRole("heading", { name: /niet gelukt/ })).toBeNull()
-    // The mock of the request does not render the page again, as React Query does.
-    rerender(page())
-
-    // After "Volgende stap" also in the list above the form, that links to it.
+    check = { ...check, isError: true, error }
     fireEvent.click(screen.getByRole("button", { name: "Volgende stap" }))
+    const message = "Kies het bestand opnieuw om de adressen te controleren."
     await waitFor(() => expect(screen.getAllByText(message)).toHaveLength(2))
-    expect(screen.getByRole("link", { name: message })).toBeTruthy()
+    expect(screen.getByRole("status", { name: "Pad" }).textContent).toBe(
+      "/zaken/importeren/controleren",
+    )
   })
 
   it("goes to step 3 with the theme and the file", async () => {
@@ -317,28 +314,54 @@ describe("ImportAddressesPage (step 2)", () => {
     )
   })
 
-  it("says at the field when no address is good, and why", async () => {
-    const data = { case_data: [wrong] }
-    mutate.mockImplementation((_, { onSuccess }) =>
-      setTimeout(() => {
-        check = { ...check, isSuccess: true, data }
-        onSuccess(data)
+  it("says in an error alert when no address is good, and why", () => {
+    check = { ...check, isSuccess: true, data: { case_data: [wrong] } }
+    renderPage()
+
+    expect(
+      screen.getByRole("heading", {
+        name: "Geen enkel adres kan geïmporteerd worden",
       }),
-    )
-    const { rerender } = renderPage()
+    ).toBeTruthy()
+    expect(
+      screen.getByText(/Voor geen van de 1 adressen kan een zaak/),
+    ).toBeTruthy()
+    // Why, in the table.
+    expect(screen.getByText(wrong.address)).toBeTruthy()
+    // Not at the field yet: only after "Volgende stap".
+    expect(
+      screen.queryByText("Kies een bestand met ten minste één goed adres."),
+    ).toBeNull()
+  })
+
+  it("does not go on when no address is good", async () => {
+    check = { ...check, isSuccess: true, data: { case_data: [wrong] } }
+    renderPage()
 
     chooseFile()
+    fireEvent.click(screen.getByRole("button", { name: "Volgende stap" }))
+
+    const message = "Kies een bestand met ten minste één goed adres."
+    await waitFor(() => expect(screen.getAllByText(message)).toHaveLength(2))
+    expect(screen.getByRole("status", { name: "Pad" }).textContent).toBe(
+      "/zaken/importeren/controleren",
+    )
+  })
+
+  it("says in an error alert when the file has no addresses", () => {
+    check = { ...check, isSuccess: true, data: { case_data: [] } }
+    renderPage()
 
     expect(
-      await screen.findAllByText(
-        "Geen van de adressen is goed. Pas het bestand aan en kies het opnieuw.",
-      ),
-    ).toHaveLength(1)
-    rerender(page())
-    // Why, in the table: not a second message.
-    expect(screen.getByText(wrong.address)).toBeTruthy()
+      screen.getByRole("heading", {
+        name: "Geen enkel adres kan geïmporteerd worden",
+      }),
+    ).toBeTruthy()
+    expect(screen.getByText(/Er staan geen adressen in het bestand/)).toBeTruthy()
     expect(
-      screen.queryByRole("heading", { name: /kunnen geïmporteerd worden/ }),
+      screen.queryByRole("heading", {
+        name: "Alle adressen kunnen geïmporteerd worden",
+      }),
     ).toBeNull()
   })
 
