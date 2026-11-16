@@ -1,7 +1,7 @@
 // First, like the app does: the page imports the layout, which imports the
 // routes, which import this page (circular).
 import "@/router/routes"
-import { fireEvent, render, screen } from "@testing-library/react"
+import { fireEvent, render, screen, within } from "@testing-library/react"
 import { MemoryRouter, useLocation } from "react-router"
 import BpmnPage from "../BpmnPage"
 
@@ -81,6 +81,16 @@ describe("BpmnPage", () => {
     ).toEqual(["Selecteer naam", "Director", "Sub workflow"])
     expect(screen.queryByLabelText("Versie")).toBeNull()
     expect(screen.queryByTestId("diagram")).toBeNull()
+  })
+
+  it("explains what a BPMN is and how to use the diagram", () => {
+    renderPage()
+
+    expect(screen.getByText(/tekening van een werkproces/)).toBeTruthy()
+    const usage = screen.getByText(/Zoom in en uit/)
+    expect(
+      within(usage).getByRole("link", { name: "Hulp" }).getAttribute("href"),
+    ).toBe("/hulp")
   })
 
   it("shows the latest version of the chosen model", async () => {
