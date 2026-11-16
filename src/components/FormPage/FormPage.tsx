@@ -26,8 +26,11 @@ type Props<T extends FieldValues> = {
   submitText: string
   /** While saving: the submit button is off and says so. */
   isPending?: boolean
-  /** Where the second button ("Annuleren") goes. */
-  onCancel: () => void
+  /**
+   * Where the second button ("Annuleren") goes. Without it there is no second
+   * button, e.g. on the first step of a form of several steps.
+   */
+  onCancel?: () => void
   /** The text of that button, e.g. "Vorige stap" in a form of several steps. */
   cancelText?: string
   /** What to know before filling in the form, above the white area. */
@@ -47,7 +50,7 @@ type Props<T extends FieldValues> = {
 /**
  * The page of a form: the title, and in a white area what the form is about
  * and the form (react-hook-form), with below the fields the button that saves
- * and "Annuleren". What is wrong after a try to save is listed above the
+ * and (if there is an onCancel) "Annuleren". What is wrong after a try to save is listed above the
  * white area, with links to the fields, and said at each field.
  */
 export function FormPage<T extends FieldValues>({
@@ -97,13 +100,15 @@ export function FormPage<T extends FieldValues>({
                       <Button type="submit" disabled={isPending}>
                         {isPending ? "Bezig met opslaan…" : submitText}
                       </Button>
-                      <Button
-                        type="button"
-                        variant="secondary"
-                        onClick={onCancel}
-                      >
-                        {cancelText}
-                      </Button>
+                      {onCancel && (
+                        <Button
+                          type="button"
+                          variant="secondary"
+                          onClick={onCancel}
+                        >
+                          {cancelText}
+                        </Button>
+                      )}
                     </ActionGroup>
                   </div>
                 </Column>

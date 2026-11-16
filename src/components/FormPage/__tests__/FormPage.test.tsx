@@ -13,7 +13,7 @@ vi.mock("react-oidc-context", () => ({
   useAuth: () => ({ signoutRedirect: vi.fn() }),
 }))
 
-const Page = () => {
+const Page = ({ withCancel = true }: { withCancel?: boolean }) => {
   const form = useForm()
   return (
     <FormPage
@@ -21,7 +21,7 @@ const Page = () => {
       form={form}
       onSubmit={vi.fn()}
       submitText="Opslaan"
-      onCancel={vi.fn()}
+      onCancel={withCancel ? vi.fn() : undefined}
     >
       <p>Velden</p>
     </FormPage>
@@ -45,5 +45,17 @@ describe("FormPage", () => {
       name: "Resultaat besluit",
     })
     expect(heading.parentElement).toBe(breadcrumbs[0].parentElement)
+  })
+
+  it("shows no second button without onCancel", () => {
+    render(
+      <MemoryRouter initialEntries={["/zaken/12/besluit/34"]}>
+        <Page withCancel={false} />
+      </MemoryRouter>,
+    )
+
+    expect(screen.getAllByRole("button").map((b) => b.textContent)).toEqual([
+      "Opslaan",
+    ])
   })
 })

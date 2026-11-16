@@ -304,7 +304,9 @@ describe("ImportAddressesPage (step 2)", () => {
   it("goes back to step 1 with the chosen theme", () => {
     renderPage()
 
-    fireEvent.click(screen.getByRole("button", { name: "Vorige stap" }))
+    // A link above the heading, not a button next to "Volgende stap".
+    expect(screen.queryByRole("button", { name: "Vorige stap" })).toBeNull()
+    fireEvent.click(screen.getByRole("link", { name: "Vorige stap" }))
 
     expect(screen.getByRole("status").textContent).toBe("/zaken/importeren")
     expect(seeState).toHaveBeenLastCalledWith({ caseData })

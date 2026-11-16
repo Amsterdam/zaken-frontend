@@ -265,7 +265,9 @@ describe("ImportCaseDataPage (step 3)", () => {
   it("goes back to step 2 with the chosen theme", () => {
     renderPage()
 
-    fireEvent.click(screen.getByRole("button", { name: "Vorige stap" }))
+    // A link above the heading, not a button next to "Zaken importeren".
+    expect(screen.queryByRole("button", { name: "Vorige stap" })).toBeNull()
+    fireEvent.click(screen.getByRole("link", { name: "Vorige stap" }))
 
     expect(screen.getByRole("status").textContent).toBe(
       "/zaken/importeren/controleren",

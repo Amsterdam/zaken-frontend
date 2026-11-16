@@ -37,7 +37,6 @@ const ImportThemePage: React.FC = () => {
       form={form}
       onSubmit={onSubmit}
       submitText="Volgende stap"
-      onCancel={() => navigate("/")}
       summary={
         <Column gap="small">
           <Heading level={2}>Stap 1 van 3: Thema kiezen</Heading>

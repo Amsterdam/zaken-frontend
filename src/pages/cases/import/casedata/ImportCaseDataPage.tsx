@@ -23,6 +23,7 @@ import {
 import { FormPage } from "@/components/FormPage/FormPage"
 import { getErrorMessage } from "@/pages/cases/import/getErrorMessage"
 import type { ImportLocationState } from "@/pages/cases/import/importLocationState"
+import { PreviousStepLink } from "@/pages/cases/import/PreviousStepLink"
 import {
   REASON_PROJECT,
   REASONS_NOT_FOR_IMPORT,
@@ -126,11 +127,6 @@ const ImportCaseDataPage: React.FC = () => {
     )
 
   // Back to choosing the file: the theme stays chosen.
-  const onPrevious = () => {
-    const previous: ImportLocationState = { caseData }
-    navigate("/zaken/importeren/controleren", { state: previous })
-  }
-
   return (
     <FormPage<FormValues>
       title="Zaken importeren"
@@ -138,10 +134,12 @@ const ImportCaseDataPage: React.FC = () => {
       onSubmit={onSubmit}
       submitText="Zaken importeren"
       isPending={importFile.isPending}
-      onCancel={onPrevious}
-      cancelText="Vorige stap"
       summary={
         <Column gap="small">
+          <PreviousStepLink
+            to="/zaken/importeren/controleren"
+            state={{ caseData }}
+          />
           <Heading level={2}>
             Stap 3 van 3: Zaakgegevens kiezen en importeren
           </Heading>

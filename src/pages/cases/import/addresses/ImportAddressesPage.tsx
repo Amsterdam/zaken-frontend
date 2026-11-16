@@ -12,6 +12,7 @@ import { FormPage } from "@/components/FormPage/FormPage"
 import { getErrorMessage } from "@/pages/cases/import/getErrorMessage"
 import type { ImportLocationState } from "@/pages/cases/import/importLocationState"
 import { ImportErrorsTable } from "@/pages/cases/import/ImportErrorsTable"
+import { PreviousStepLink } from "@/pages/cases/import/PreviousStepLink"
 
 type FormValues = {
   file: FileList | null
@@ -100,11 +101,6 @@ const ImportAddressesPage: React.FC = () => {
     navigate("/zaken/importeren/zaakgegevens", { state: next })
   }
 
-  const onPrevious = () => {
-    const previous: ImportLocationState = { caseData }
-    navigate("/zaken/importeren", { state: previous })
-  }
-
   return (
     <FormPage<FormValues>
       // The task, the same on every step; the step is the heading below.
@@ -112,12 +108,11 @@ const ImportAddressesPage: React.FC = () => {
       form={form}
       onSubmit={onSubmit}
       submitText="Volgende stap"
-      onCancel={onPrevious}
-      cancelText="Vorige stap"
       // The table of the addresses with errors takes the full width.
       span={{ narrow: 4, medium: 8, wide: 9 }}
       summary={
         <Column gap="small">
+          <PreviousStepLink to="/zaken/importeren" state={{ caseData }} />
           <Heading level={2}>Stap 2 van 3: Adressen controleren</Heading>
           <Paragraph>
             Kies het Excel-bestand met de adressen
