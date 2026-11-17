@@ -16,6 +16,7 @@ import {
   SuitcaseIcon,
 } from "@amsterdam/design-system-react-icons"
 import { DefaultLayout } from "@/components/DefaultLayout/DefaultLayout"
+import { PageHeading } from "@/components/PageHeading/PageHeading"
 import { RouterLink } from "@/components/DefaultLayout/RouterLink"
 import { Card } from "@/components/Card/Card"
 import { CopyButton } from "@/components/CopyButton/CopyButton"
@@ -70,7 +71,7 @@ const DetailsPage: React.FC = () => {
 
   return (
     <DefaultLayout>
-      <Grid.Cell span="all" appearance="transparent">
+      <PageHeading>
         <Column gap="small">
           <Row align="between" alignVertical="center" wrap>
             <Row alignVertical="center" wrap>
@@ -124,7 +125,7 @@ const DetailsPage: React.FC = () => {
           />
           {!isLoading && <CaseNuisanceAlert caseId={id} />}
         </Column>
-      </Grid.Cell>
+      </PageHeading>
       {/* The cards below each other, so the open tasks (what you act on) have
           the full width; the history (what you look things up in) comes last.
           All three are there at once and load side by side. */}

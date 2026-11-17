@@ -6,6 +6,7 @@ import {
   Paragraph,
 } from "@amsterdam/design-system-react"
 import { DefaultLayout } from "@/components/DefaultLayout/DefaultLayout"
+import { PageHeading } from "@/components/PageHeading/PageHeading"
 import SearchWrapper from "@/components/search/SearchWrapper/SearchWrapper"
 import { useAddressSearch } from "@/components/search/useAddressSearch"
 import { useRedirectFromState } from "@/hooks/useRedirectFromState"
@@ -16,7 +17,7 @@ const HomePage: React.FC = () => {
 
   return (
     <DefaultLayout>
-      <Grid.Cell span="all" appearance="transparent">
+      <PageHeading>
         <Column>
           <Heading level={1}>Adres zoeken</Heading>
           {isError && (
@@ -28,7 +29,7 @@ const HomePage: React.FC = () => {
             </Alert>
           )}
         </Column>
-      </Grid.Cell>
+      </PageHeading>
       <Grid.Cell span="all">
         <SearchWrapper />
       </Grid.Cell>

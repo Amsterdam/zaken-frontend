@@ -3,7 +3,6 @@ import { useNavigate } from "react-router"
 import {
   Button,
   Column,
-  Grid,
   Heading,
   Icon,
   type IconProps,
@@ -11,6 +10,7 @@ import {
 } from "@amsterdam/design-system-react"
 import { HouseIcon } from "@amsterdam/design-system-react-icons"
 import { DefaultLayout } from "@/components/DefaultLayout/DefaultLayout"
+import { PageHeading } from "@/components/PageHeading/PageHeading"
 import styles from "./ErrorPage.module.css"
 
 type Props = {
@@ -25,7 +25,7 @@ export function ErrorPage({ icon, heading, children }: Props) {
 
   return (
     <DefaultLayout>
-      <Grid.Cell span="all" appearance="transparent">
+      <PageHeading>
         <Column gap="large" className={styles.content}>
           <Icon svg={icon} className={styles.icon} />
           <Heading level={1}>{heading}</Heading>
@@ -34,7 +34,7 @@ export function ErrorPage({ icon, heading, children }: Props) {
             Terug naar de startpagina
           </Button>
         </Column>
-      </Grid.Cell>
+      </PageHeading>
     </DefaultLayout>
   )
 }

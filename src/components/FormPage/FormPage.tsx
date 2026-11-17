@@ -10,11 +10,12 @@ import {
   Button,
   Column,
   Grid,
-  Heading,
+  type GridCellProps,
   InvalidFormAlert,
 } from "@amsterdam/design-system-react"
 import { FormProvider } from "@amsterdam/ee-ads-rhf"
 import { DefaultLayout } from "@/components/DefaultLayout/DefaultLayout"
+import { PageHeading } from "@/components/PageHeading/PageHeading"
 import { mapErrorsToAlert } from "@/shared/mapErrorsToAlert"
 
 type Props<T extends FieldValues> = {
@@ -25,12 +26,25 @@ type Props<T extends FieldValues> = {
   submitText: string
   /** While saving: the submit button is off and says so. */
   isPending?: boolean
-  /** Where "Annuleren" goes. */
-  onCancel: () => void
+  /** The text of the submit button while pending, e.g. while checking a file. */
+  pendingText?: string
+  /**
+   * Where the second button ("Annuleren") goes. Without it there is no second
+   * button, e.g. on the first step of a form of several steps.
+   */
+  onCancel?: () => void
+  /** The text of that button, e.g. "Vorige stap" in a form of several steps. */
+  cancelText?: string
   /** What to know before filling in the form, above the white area. */
   intro?: ReactNode
   /** What the form is about (e.g. which case), at the top of the white area. */
   summary?: ReactNode
+  /**
+   * How many columns of the white area the fields and buttons take. By default
+   * half on a wider window: fields are narrower than the area they are in. A
+   * form with a table or other wide content can take more, e.g. "all".
+   */
+  span?: GridCellProps["span"]
   /** The fields of the form (@amsterdam/ee-ads-rhf). */
   children: ReactNode
 }
@@ -38,7 +52,7 @@ type Props<T extends FieldValues> = {
 /**
  * The page of a form: the title, and in a white area what the form is about
  * and the form (react-hook-form), with below the fields the button that saves
- * and "Annuleren". What is wrong after a try to save is listed above the
+ * and (if there is an onCancel) "Annuleren". What is wrong after a try to save is listed above the
  * white area, with links to the fields, and said at each field.
  */
 export function FormPage<T extends FieldValues>({
@@ -47,9 +61,12 @@ export function FormPage<T extends FieldValues>({
   onSubmit,
   submitText,
   isPending = false,
+  pendingText = "Bezig met opslaan…",
   onCancel,
+  cancelText = "Annuleren",
   intro,
   summary,
+  span = { narrow: 4, medium: 6, wide: 6 },
   children,
 }: Props<T>) {
   const { errors } = useFormState({ control: form.control })
@@ -57,9 +74,7 @@ export function FormPage<T extends FieldValues>({
 
   return (
     <DefaultLayout>
-      <Grid.Cell span="all" appearance="transparent">
-        <Heading level={1}>{title}</Heading>
-      </Grid.Cell>
+      <PageHeading title={title} />
       {intro && (
         <Grid.Cell span="all" appearance="transparent">
           {intro}
@@ -76,25 +91,24 @@ export function FormPage<T extends FieldValues>({
           <FormProvider form={form} onSubmit={onSubmit}>
             {/* The fields are narrower than the white area they are in. */}
             <Grid className="grid-in-cell">
-              <Grid.Cell
-                span={{ narrow: 4, medium: 6, wide: 6 }}
-                appearance="transparent"
-              >
+              <Grid.Cell span={span} appearance="transparent">
                 <Column gap="large">
                   {children}
                   {/* In a block of its own, or the column stretches the buttons. */}
                   <div>
                     <ActionGroup>
                       <Button type="submit" disabled={isPending}>
-                        {isPending ? "Bezig met opslaan…" : submitText}
+                        {isPending ? pendingText : submitText}
                       </Button>
-                      <Button
-                        type="button"
-                        variant="secondary"
-                        onClick={onCancel}
-                      >
-                        Annuleren
-                      </Button>
+                      {onCancel && (
+                        <Button
+                          type="button"
+                          variant="secondary"
+                          onClick={onCancel}
+                        >
+                          {cancelText}
+                        </Button>
+                      )}
                     </ActionGroup>
                   </div>
                 </Column>

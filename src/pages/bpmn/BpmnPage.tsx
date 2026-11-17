@@ -1,15 +1,16 @@
 import { useMemo } from "react"
 import { useSearchParams } from "react-router"
+
 import {
   Column,
   Grid,
-  Heading,
   Link,
   Paragraph,
 } from "@amsterdam/design-system-react"
 import { useBpmnModelNames, useBpmnModels } from "@/api/hooks"
 import { BpmnDiagram } from "@/components/bpmn/BpmnDiagram"
 import { DefaultLayout } from "@/components/DefaultLayout/DefaultLayout"
+import { PageHeading } from "@/components/PageHeading/PageHeading"
 import { RouterLink } from "@/components/DefaultLayout/RouterLink"
 import filterStyles from "@/components/filters/filters.module.css"
 import { SelectFilter } from "@/components/filters/SelectFilter"
@@ -40,9 +41,7 @@ const BpmnPage: React.FC = () => {
 
   return (
     <DefaultLayout>
-      <Grid.Cell span="all" appearance="transparent">
-        <Heading level={1}>BPMN</Heading>
-      </Grid.Cell>
+      <PageHeading title="BPMN" />
       <Grid.Cell span="all">
         <Column>
           <Paragraph>
