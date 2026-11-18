@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react"
 import AssignTask from "../AssignTask"
 
 const assignTask = vi.fn()
+let canAssignToOthers = true
 const users = [
   { id: "me", first_name: "Jan", last_name: "Jansen", email: "jan@a.nl" },
   { id: "other", first_name: "Piet", last_name: "Pieters", email: "piet@a.nl" },
@@ -14,7 +15,16 @@ vi.mock("@/api/hooks", () => ({
 }))
 
 vi.mock("@/hooks/useHasPermission", () => ({
-  default: () => [true, false],
+  default: (permissionsToCheck?: string[]) => {
+    if (!permissionsToCheck || permissionsToCheck.length === 0) {
+      return [true, false]
+    }
+    if (permissionsToCheck.includes("assign_task_to_others")) {
+      return [canAssignToOthers, false]
+    }
+    return [true, false]
+  },
+  CAN_ASSIGN_TASK_TO_OTHERS: "assign_task_to_others",
   CAN_PERFORM_TASK: "perform_task",
 }))
 
@@ -22,7 +32,10 @@ const openPicker = () =>
   fireEvent.click(screen.getByRole("button", { name: /klik om/ }))
 
 describe("AssignTask", () => {
-  beforeEach(() => assignTask.mockClear())
+  beforeEach(() => {
+    assignTask.mockClear()
+    canAssignToOthers = true
+  })
 
   it("assigns a task that has no owner right away", () => {
     render(<AssignTask taskId={1} taskOwner={null} />)
@@ -60,5 +73,25 @@ describe("AssignTask", () => {
 
     expect(assignTask).not.toHaveBeenCalled()
     expect(screen.queryByRole("dialog")).toBeNull()
+  })
+
+  it("allows users without assign_task_to_others to assign a task only to themselves", () => {
+    canAssignToOthers = false
+    render(<AssignTask taskId={1} taskOwner={null} />)
+
+    openPicker()
+    fireEvent.click(screen.getByText("Piet Pieters"))
+    expect(assignTask).not.toHaveBeenCalled()
+
+    fireEvent.click(screen.getByText("Toewijzen aan mijzelf"))
+    expect(assignTask).toHaveBeenCalledWith("me")
+  })
+
+  it("hides unassign option without assign_task_to_others", () => {
+    canAssignToOthers = false
+    render(<AssignTask taskId={1} taskOwner="other" />)
+
+    openPicker()
+    expect(screen.queryByText("Niet toegewezen")).toBeNull()
   })
 })

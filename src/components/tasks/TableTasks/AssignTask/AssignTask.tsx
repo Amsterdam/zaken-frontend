@@ -1,7 +1,10 @@
 import { useState, useEffect, useRef } from "react"
 import { createPortal } from "react-dom"
 import { useAssignTask, useUsersMe } from "@/api/hooks"
-import useHasPermission, { CAN_PERFORM_TASK } from "@/hooks/useHasPermission"
+import useHasPermission, {
+  CAN_ASSIGN_TASK_TO_OTHERS,
+  CAN_PERFORM_TASK,
+} from "@/hooks/useHasPermission"
 import AssigneeAvatar from "./AssigneeAvatar"
 import UserPickerDropdown from "./UserPickerDropdown"
 import ConfirmReassignDialog from "./ConfirmReassignDialog"
@@ -14,6 +17,7 @@ type Props = {
 
 const AssignTask: React.FC<Props> = ({ taskId, taskOwner }) => {
   const [hasPerformTaskPermission] = useHasPermission([CAN_PERFORM_TASK])
+  const [canAssignTaskToOthers] = useHasPermission([CAN_ASSIGN_TASK_TO_OTHERS])
 
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const [dropdownPos, setDropdownPos] = useState<{
@@ -30,8 +34,16 @@ const AssignTask: React.FC<Props> = ({ taskId, taskOwner }) => {
   const dropdownRef = useRef<HTMLDivElement>(null)
 
   const { data: currentUser, isLoading: isMeBusy } = useUsersMe()
+  const currentUserId = currentUser?.id ?? null
   // Updates the owner wherever the task is shown: the overview and the case page.
   const { mutate: assignTask, isPending } = useAssignTask(taskId)
+
+  const canChangeOwner = (newOwner: string | null) => {
+    if (canAssignTaskToOthers) {
+      return true
+    }
+    return newOwner !== null && newOwner === currentUserId
+  }
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -52,6 +64,11 @@ const AssignTask: React.FC<Props> = ({ taskId, taskOwner }) => {
   }
 
   const handleUserSelect = (userId: string | null) => {
+    if (!canChangeOwner(userId)) {
+      setDropdownOpen(false)
+      return
+    }
+
     if (userId === null) {
       applyOwnerChange(null)
       return
@@ -138,8 +155,9 @@ const AssignTask: React.FC<Props> = ({ taskId, taskOwner }) => {
         dropdownPos &&
         createPortal(
           <UserPickerDropdown
-            currentUserId={currentUser?.id ?? null}
+            currentUserId={currentUserId}
             currentOwnerId={taskOwner ?? null}
+            canAssignToOthers={canAssignTaskToOthers}
             onSelect={handleUserSelect}
             onClose={() => setDropdownOpen(false)}
             positionTop={dropdownPos.top}

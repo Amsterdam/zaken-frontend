@@ -3275,6 +3275,7 @@ export interface components {
          *     * `perform_task` - Can perform a tasks
          *     * `perform_bulk_import` - Can execute a bulk import
          *     * `edit_task_week_number` - Can (un)assign a week number to a task.
+         *     * `assign_task_to_others` - Can (un)assign a task to other users than themselves.
          *     * `access_personal_data_register` - Can access 'BRP' (persoonsgegevens / ingeschreven personen)
          *     * `access_business_register` - Can access 'Handelsregister' (bedrijfseigenaren van panden, bedrijfsinformatie)
          *     * `access_recovery_check` - Can access 'invorderingscheck'
@@ -3283,7 +3284,7 @@ export interface components {
          *     * `access_document_management_system` - Can access 'DMS' (Alfresco / Decos)
          * @enum {string}
          */
-        PermissionsEnum: "create_case" | "create_digital_surveilance_case" | "close_case" | "perform_task" | "perform_bulk_import" | "edit_task_week_number" | "access_personal_data_register" | "access_business_register" | "access_recovery_check" | "access_sensitive_dossiers" | "access_sigital_surveillance" | "access_document_management_system";
+        PermissionsEnum: "create_case" | "create_digital_surveilance_case" | "close_case" | "perform_task" | "perform_bulk_import" | "edit_task_week_number" | "assign_task_to_others" | "access_personal_data_register" | "access_business_register" | "access_recovery_check" | "access_sensitive_dossiers" | "access_sigital_surveillance" | "access_document_management_system";
         Permit: {
             permit_granted: components["schemas"]["PermitGrantedEnum"];
             permit_type: string;

@@ -12,6 +12,7 @@ type User = Pick<
 type Props = {
   currentUserId: string | null
   currentOwnerId: string | null
+  canAssignToOthers: boolean
   onSelect: (userId: string | null) => void
   onClose: () => void
   positionTop: number
@@ -23,6 +24,7 @@ type Props = {
 const UserPickerDropdown: React.FC<Props> = ({
   currentUserId,
   currentOwnerId,
+  canAssignToOthers,
   onSelect,
   onClose,
   positionTop,
@@ -97,43 +99,45 @@ const UserPickerDropdown: React.FC<Props> = ({
         </div>
 
         <ul className={styles.list} role="group">
-          {/* Unassign option */}
-          <li
-            className={`${styles.item} ${styles.unassignItem} ${!currentOwnerId ? styles.itemDisabled : ""}`}
-            role="option"
-            aria-selected={!currentOwnerId}
-            onClick={() => !currentOwnerId || onSelect(null)}
-            tabIndex={0}
-            onKeyDown={(e) => e.key === "Enter" && onSelect(null)}
-          >
-            <span className={styles.unassignAvatar} aria-hidden="true">
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <circle cx="12" cy="8" r="4" />
-                <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
-                <line
-                  x1="22"
-                  y1="2"
-                  x2="2"
-                  y2="22"
+          {/* Unassigning is only allowed with assign-to-others permission. */}
+          {canAssignToOthers && (
+            <li
+              className={`${styles.item} ${styles.unassignItem} ${!currentOwnerId ? styles.itemDisabled : ""}`}
+              role="option"
+              aria-selected={!currentOwnerId}
+              onClick={() => !currentOwnerId || onSelect(null)}
+              tabIndex={0}
+              onKeyDown={(e) => e.key === "Enter" && onSelect(null)}
+            >
+              <span className={styles.unassignAvatar} aria-hidden="true">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
-                />
-              </svg>
-            </span>
-            <span className={styles.itemName}>Niet toegewezen</span>
-            {!currentOwnerId && (
-              <span className={styles.currentBadge}>huidig</span>
-            )}
-          </li>
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <circle cx="12" cy="8" r="4" />
+                  <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+                  <line
+                    x1="22"
+                    y1="2"
+                    x2="2"
+                    y2="22"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  />
+                </svg>
+              </span>
+              <span className={styles.itemName}>Niet toegewezen</span>
+              {!currentOwnerId && (
+                <span className={styles.currentBadge}>huidig</span>
+              )}
+            </li>
+          )}
 
           {/* Self-assign shortcut */}
           {currentUserId && (
@@ -166,17 +170,20 @@ const UserPickerDropdown: React.FC<Props> = ({
           )}
           {filtered.map((user: User) => {
             const isSelected = user.id === currentOwnerId
+            const isSelectable =
+              canAssignToOthers ||
+              (currentUserId !== null && user.id === currentUserId)
             const initials = createNameAbbreviation(user)
             return (
               <li
                 key={user.id}
-                className={`${styles.item} ${isSelected ? styles.itemActive : ""}`}
+                className={`${styles.item} ${isSelected ? styles.itemActive : ""} ${!isSelectable ? styles.itemDisabled : ""}`}
                 role="option"
                 aria-selected={isSelected}
-                onClick={() => onSelect(user.id ?? null)}
-                tabIndex={0}
+                onClick={() => isSelectable && onSelect(user.id ?? null)}
+                tabIndex={isSelectable ? 0 : -1}
                 onKeyDown={(e) =>
-                  e.key === "Enter" && onSelect(user.id ?? null)
+                  e.key === "Enter" && isSelectable && onSelect(user.id ?? null)
                 }
               >
                 <span className={styles.userInitials} aria-hidden="true">

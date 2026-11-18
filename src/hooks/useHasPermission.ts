@@ -2,6 +2,7 @@ import { useUsersMe } from "@/api/hooks"
 
 export const SENSITIVE_CASE_PERMISSION = "access_sensitive_dossiers"
 export const CAN_PERFORM_TASK = "perform_task"
+export const CAN_ASSIGN_TASK_TO_OTHERS = "assign_task_to_others"
 export const EDIT_TASK_WEEK_NUMBER_PERMISSION = "edit_task_week_number"
 
 /**
