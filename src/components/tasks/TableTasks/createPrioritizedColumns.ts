@@ -4,6 +4,7 @@ const columnPriority = [
   "case.id",
   "case.address.street_name",
   "name",
+  "week_number",
   "owner",
   "case.address.postal_code",
   "due_date",
@@ -24,7 +25,7 @@ const createPrioritizedColumns = <T>(
   if (windowWidth < 900) {
     sliceIndex = 4
   } else if (windowWidth < 1600) {
-    sliceIndex = 6
+    sliceIndex = 7
   }
   const prioArray = columnPriority.slice(0, sliceIndex)
   const prioritizedColumns = columns.filter(

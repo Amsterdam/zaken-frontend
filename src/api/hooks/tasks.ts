@@ -173,6 +173,7 @@ export type TasksParams = {
   tags?: string[]
   taskNames?: components["schemas"]["CaseUserTaskTaskName"]["name"][]
   theme?: string
+  weekNumbers?: string[]
 }
 
 /**
@@ -195,6 +196,7 @@ export const useTasks = ({
   tags,
   taskNames,
   theme,
+  weekNumbers,
 }: TasksParams) => {
   const fetch = useApiFetch()
   const queryParams = {
@@ -214,6 +216,7 @@ export const useTasks = ({
     district_name: nonEmpty(districtNames),
     housing_corporation: housingCorporations,
     housing_corporation_isnull: housingCorporationIsNull ? true : undefined,
+    week_number: nonEmpty(weekNumbers),
     ordering: getOrdering(sorting),
   }
 
@@ -246,23 +249,26 @@ export const useAssignTask = (taskId: Tasks.TaskId) => {
     onSuccess: (_, owner) => {
       queryClient.setQueriesData<
         components["schemas"]["PaginatedCaseUserTaskList"]
-      >({ queryKey: queryKeys.cases.tasksAll }, (data) =>
-        data
-          ? {
-              ...data,
-              results: data.results.map((task) =>
-                isTask(task.id, taskId) ? { ...task, owner } : task,
-              ),
-            }
-          : data,
+      >(
+        { queryKey: queryKeys.cases.tasksAll },
+        (data: components["schemas"]["PaginatedCaseUserTaskList"] | undefined) => {
+          if (!data) return data
+          return {
+            ...data,
+            results: data.results.map((task) =>
+              isTask(task.id, taskId) ? { ...task, owner } : task,
+            ),
+          }
+        },
       )
       queryClient.setQueriesData<Tasks.PaginatedWorkflowList>(
         {
           predicate: ({ queryKey }) =>
             queryKey[0] === "cases" && queryKey[2] === "workflows",
         },
-        (data) =>
-          data && {
+        (data: Tasks.PaginatedWorkflowList | undefined) => {
+          if (!data) return data
+          return {
             ...data,
             results: data.results.map((workflow) => ({
               ...workflow,
@@ -272,7 +278,46 @@ export const useAssignTask = (taskId: Tasks.TaskId) => {
                   : task,
               ),
             })),
-          },
+          } as Tasks.PaginatedWorkflowList
+        },
+      )
+    },
+  })
+}
+
+const patchTaskWeekNumber = (
+  fetch: ReturnType<typeof useApiFetch>,
+  taskId: Tasks.TaskId,
+  weekNumber: number | null,
+) =>
+  fetch<components["schemas"]["CaseUserTask"]>(makeApiUrl("tasks", taskId), {
+    method: "PATCH",
+    data: { week_number: weekNumber },
+  })
+
+export const useAssignTaskWeek = (taskId: Tasks.TaskId) => {
+  const fetch = useApiFetch()
+  const queryClient = useQueryClient()
+
+  return useMutation<components["schemas"]["CaseUserTask"], Error, number | null>({
+    mutationFn: (weekNumber: number | null) =>
+      patchTaskWeekNumber(fetch, taskId, weekNumber),
+    onSuccess: (_, weekNumber) => {
+      queryClient.setQueriesData<
+        components["schemas"]["PaginatedCaseUserTaskList"]
+      >(
+        { queryKey: queryKeys.cases.tasksAll },
+        (data: components["schemas"]["PaginatedCaseUserTaskList"] | undefined) => {
+          if (!data) return data
+          return {
+            ...data,
+            results: data.results.map((task) =>
+              isTask(task.id, taskId)
+                ? { ...task, week_number: weekNumber }
+                : task,
+            ),
+          }
+        },
       )
     },
   })

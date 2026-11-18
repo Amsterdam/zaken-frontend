@@ -16,6 +16,7 @@ export type TasksFilters = {
   tags: string[]
   taskNames: components["schemas"]["CaseUserTaskTaskName"]["name"][]
   theme: string
+  weekNumbers: string[]
 }
 
 export const defaultTasksFilters: TasksFilters = {
@@ -32,6 +33,7 @@ export const defaultTasksFilters: TasksFilters = {
   tags: [],
   taskNames: [],
   theme: "",
+  weekNumbers: [],
 }
 
 const PAGE_SIZES = [10, 25, 100]
@@ -50,6 +52,7 @@ const listParams = {
   subjects: "onderwerp",
   tags: "tag",
   taskNames: "taak",
+  weekNumbers: "week",
 } as const
 const NO_CORPORATION_PARAM = "zonderCorporatie"
 const ROLE_PARAM = "rol"

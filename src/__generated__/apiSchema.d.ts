@@ -581,7 +581,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** @description Process an uploaded bulk case import file (maximum 2 MiB). Dry runs return results immediately; dry_run=false queues a Celery task and returns its ID. Poll process-file/{task_id}/status for the state and import result within 24 hours of submission. */
+        /** @description Process an uploaded bulk case import file. Dry runs return results immediately; dry_run=false queues a Celery task and returns its ID. Poll process-file/{task_id}/status for the state and import result within 24 hours of submission. */
         post: operations["cases_process_file_create"];
         delete?: never;
         options?: never;
@@ -892,12 +892,24 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * @description A saved puntentelling. `completed` only shows whether the author is done with it;
+         *     it can still be changed and deleted either way.
+         */
         get: operations["puntenteller_puntentellingen_retrieve"];
         put?: never;
         post?: never;
-        delete?: never;
+        /**
+         * @description A saved puntentelling. `completed` only shows whether the author is done with it;
+         *     it can still be changed and deleted either way.
+         */
+        delete: operations["puntenteller_puntentellingen_destroy"];
         options?: never;
         head?: never;
+        /**
+         * @description A saved puntentelling. `completed` only shows whether the author is done with it;
+         *     it can still be changed and deleted either way.
+         */
         patch: operations["puntenteller_puntentellingen_partial_update"];
         trace?: never;
     };
@@ -1565,6 +1577,8 @@ export interface components {
              * @enum {string}
              */
             naam: "BadkamerRuimte";
+            /** @description Hoe de ruimte aan de voorkant wordt weergegeven, bijvoorbeeld 'Woonkamer met open keuken'. Om de puntentelling weer te kunnen openen; de berekening gebruikt naam, behalve 'Woonkamer met open keuken' (verwarming telt dubbel). */
+            weergavenaam?: string | null;
             /** Format: decimal */
             ruimte_m2: string;
             /** @default false */
@@ -1622,6 +1636,8 @@ export interface components {
         };
         Buitenruimte: {
             naam: components["schemas"]["BuitenruimteNaamEnum"];
+            /** @description Hoe de ruimte aan de voorkant wordt weergegeven, bijvoorbeeld 'Woonkamer met open keuken'. Om de puntentelling weer te kunnen openen; de berekening gebruikt naam, behalve 'Woonkamer met open keuken' (verwarming telt dubbel). */
+            weergavenaam?: string | null;
             /** Format: decimal */
             ruimte_m2: string;
             /** @default 1 */
@@ -1900,6 +1916,7 @@ export interface components {
             name: string;
             /** Format: date-time */
             due_date: string;
+            week_number?: number | null;
             /** Format: date-time */
             readonly created: string;
             /** Format: date-time */
@@ -2178,24 +2195,8 @@ export interface components {
             energie: {
                 [key: string]: unknown;
             } | null;
-        };
-        GebruikersinvoerCreateResponse: {
-            /**
-             * Format: double
-             * @description Som van de punten van alle rubrieken en opslagen.
-             */
-            totaal_punten: number;
-            rubrieken: components["schemas"]["Rubriek"][];
-            opslagen: components["schemas"]["Rubriek"][];
-            /** @description Opslagen op de maximale huurprijs. Deze tellen niet mee in de punten. */
-            huurprijsopslagen: components["schemas"]["Huurprijsopslag"][];
-            /**
-             * Format: double
-             * @description Som van de huurprijsopslagen in procenten.
-             */
-            huurprijsopslag_procent: number;
-            /** @description Leeg als er geen huurprijstabel geldt. */
-            maximale_huurprijs: components["schemas"]["MaximaleHuurprijs"] | null;
+            monument: boolean;
+            monument_soort: string | null;
         };
         GebruikersinvoerRequest: {
             readonly id: number;
@@ -2229,6 +2230,10 @@ export interface components {
             /** Format: date */
             huurovereenkomst_afgesloten_op?: string | null;
             huidige_huurprijs?: number | null;
+            /** Format: date-time */
+            readonly created: string;
+            /** Format: date-time */
+            readonly updated: string;
         };
         GebruikersinvoerResponse: {
             readonly id: number;
@@ -2247,6 +2252,8 @@ export interface components {
             vertrekken?: components["schemas"]["VertrekRuimteResponse"][];
             overige_ruimten?: components["schemas"]["OverigeRuimteResponse"][];
             verkeersruimten?: components["schemas"]["VerkeersRuimteResponse"][];
+            /** @description Toezichthouder die de puntentelling maakte; leeg als die niet meer bestaat. */
+            readonly author: components["schemas"]["User"] | null;
             /** Format: double */
             punten: number;
             punten_resultaat: components["schemas"]["PuntentellerResultaat"];
@@ -2265,9 +2272,11 @@ export interface components {
             /** Format: date */
             huurovereenkomst_afgesloten_op?: string | null;
             huidige_huurprijs?: number | null;
+            /** Format: date-time */
+            readonly created: string;
+            /** Format: date-time */
+            readonly updated: string;
             adres: number;
-            /** Format: uuid */
-            gebruiker?: string | null;
         };
         GenericCompletedTask: {
             readonly id: number;
@@ -2338,6 +2347,8 @@ export interface components {
              * @enum {string}
              */
             naam: "null";
+            /** @description Hoe de ruimte aan de voorkant wordt weergegeven, bijvoorbeeld 'Woonkamer met open keuken'. Om de puntentelling weer te kunnen openen; de berekening gebruikt naam, behalve 'Woonkamer met open keuken' (verwarming telt dubbel). */
+            weergavenaam?: string | null;
             /** Format: decimal */
             ruimte_m2: string;
             /** @default false */
@@ -2386,6 +2397,16 @@ export interface components {
             thermostatische_mengkraan: number;
             /** @default 0 */
             kokendwaterfunctie: number;
+            /**
+             * @description Telt als een eenhandsmengkraan plus een kokendwaterfunctie.
+             * @default 0
+             */
+            eenhandsmengkraan_kookfunctie: number;
+            /**
+             * @description Telt als een thermostatische mengkraan plus een kokendwaterfunctie.
+             * @default 0
+             */
+            thermostatische_mengkraan_kookfunctie: number;
         };
         /**
          * @description * `keuken` - Keuken
@@ -2786,21 +2807,6 @@ export interface components {
             previous?: string | null;
             results: components["schemas"]["District"][];
         };
-        PaginatedGebruikersinvoerResponseList: {
-            /** @example 123 */
-            count: number;
-            /**
-             * Format: uri
-             * @example http://api.example.org/accounts/?offset=400&limit=100
-             */
-            next?: string | null;
-            /**
-             * Format: uri
-             * @example http://api.example.org/accounts/?offset=200&limit=100
-             */
-            previous?: string | null;
-            results: components["schemas"]["GebruikersinvoerResponse"][];
-        };
         PaginatedGenericCompletedTaskList: {
             /** @example 123 */
             count: number;
@@ -3118,6 +3124,8 @@ export interface components {
         };
         Parkeerruimte: {
             naam: components["schemas"]["ParkeerruimteNaamEnum"];
+            /** @description Hoe de ruimte aan de voorkant wordt weergegeven, bijvoorbeeld 'Woonkamer met open keuken'. Om de puntentelling weer te kunnen openen; de berekening gebruikt naam, behalve 'Woonkamer met open keuken' (verwarming telt dubbel). */
+            weergavenaam?: string | null;
             /** @default 0 */
             aantal_gesloten_garage_bij_complex: number;
             /** @default 0 */
@@ -3208,6 +3216,7 @@ export interface components {
             name?: string;
             /** Format: date-time */
             due_date?: string;
+            week_number?: number | null;
             /** Format: date-time */
             readonly created?: string;
             /** Format: date-time */
@@ -3247,6 +3256,10 @@ export interface components {
             /** Format: date */
             huurovereenkomst_afgesloten_op?: string | null;
             huidige_huurprijs?: number | null;
+            /** Format: date-time */
+            readonly created?: string;
+            /** Format: date-time */
+            readonly updated?: string;
         };
         PatchedScheduleUpdate: {
             priority?: number;
@@ -3261,6 +3274,7 @@ export interface components {
          *     * `close_case` - Close a Case (by performing the last task)
          *     * `perform_task` - Can perform a tasks
          *     * `perform_bulk_import` - Can execute a bulk import
+         *     * `edit_task_week_number` - Can (un)assign a week number to a task.
          *     * `access_personal_data_register` - Can access 'BRP' (persoonsgegevens / ingeschreven personen)
          *     * `access_business_register` - Can access 'Handelsregister' (bedrijfseigenaren van panden, bedrijfsinformatie)
          *     * `access_recovery_check` - Can access 'invorderingscheck'
@@ -3269,7 +3283,7 @@ export interface components {
          *     * `access_document_management_system` - Can access 'DMS' (Alfresco / Decos)
          * @enum {string}
          */
-        PermissionsEnum: "create_case" | "create_digital_surveilance_case" | "close_case" | "perform_task" | "perform_bulk_import" | "access_personal_data_register" | "access_business_register" | "access_recovery_check" | "access_sensitive_dossiers" | "access_sigital_surveillance" | "access_document_management_system";
+        PermissionsEnum: "create_case" | "create_digital_surveilance_case" | "close_case" | "perform_task" | "perform_bulk_import" | "edit_task_week_number" | "access_personal_data_register" | "access_business_register" | "access_recovery_check" | "access_sensitive_dossiers" | "access_sigital_surveillance" | "access_document_management_system";
         Permit: {
             permit_granted: components["schemas"]["PermitGrantedEnum"];
             permit_type: string;
@@ -3346,6 +3360,23 @@ export interface components {
             huurprijsopslag_procent: number;
             /** @description Leeg als er geen huurprijstabel geldt. */
             maximale_huurprijs: components["schemas"]["MaximaleHuurprijs"] | null;
+        };
+        /**
+         * @description A puntentelling in the list of an address: only what an overview shows, without the
+         *     invoer and the berekening. Pass the kengetal in the context ("kengetal"), so it's
+         *     fetched once for the whole list.
+         */
+        PuntentellingLijst: {
+            readonly id: number;
+            /** @description Toezichthouder die de puntentelling maakte; leeg als die niet meer bestaat. */
+            readonly author: components["schemas"]["User"] | null;
+            completed?: boolean;
+            /** Format: date-time */
+            readonly created: string;
+            /** Format: date-time */
+            readonly updated: string;
+            /** Format: double */
+            readonly punten: number;
         };
         QuickDecision: {
             readonly id: number;
@@ -3483,6 +3514,8 @@ export interface components {
              * @enum {string}
              */
             naam: "StandaardOverigeRuimte";
+            /** @description Hoe de ruimte aan de voorkant wordt weergegeven, bijvoorbeeld 'Woonkamer met open keuken'. Om de puntentelling weer te kunnen openen; de berekening gebruikt naam, behalve 'Woonkamer met open keuken' (verwarming telt dubbel). */
+            weergavenaam?: string | null;
             /** Format: decimal */
             ruimte_m2: string;
             /** @default false */
@@ -3513,6 +3546,8 @@ export interface components {
              * @enum {string}
              */
             naam: "StandaardVertrek";
+            /** @description Hoe de ruimte aan de voorkant wordt weergegeven, bijvoorbeeld 'Woonkamer met open keuken'. Om de puntentelling weer te kunnen openen; de berekening gebruikt naam, behalve 'Woonkamer met open keuken' (verwarming telt dubbel). */
+            weergavenaam?: string | null;
             /** Format: decimal */
             ruimte_m2: string;
             /** @default false */
@@ -3612,6 +3647,8 @@ export interface components {
              * @enum {string}
              */
             naam: "ToiletRuimte";
+            /** @description Hoe de ruimte aan de voorkant wordt weergegeven, bijvoorbeeld 'Woonkamer met open keuken'. Om de puntentelling weer te kunnen openen; de berekening gebruikt naam, behalve 'Woonkamer met open keuken' (verwarming telt dubbel). */
+            weergavenaam?: string | null;
             /** Format: decimal */
             ruimte_m2: string;
             /** @default false */
@@ -3666,6 +3703,8 @@ export interface components {
              * @enum {string}
              */
             naam: "null";
+            /** @description Hoe de ruimte aan de voorkant wordt weergegeven, bijvoorbeeld 'Woonkamer met open keuken'. Om de puntentelling weer te kunnen openen; de berekening gebruikt naam, behalve 'Woonkamer met open keuken' (verwarming telt dubbel). */
+            weergavenaam?: string | null;
             /** Format: decimal */
             ruimte_m2: string;
             /** @default false */
@@ -3750,6 +3789,8 @@ export interface components {
              * @enum {string}
              */
             naam: "null";
+            /** @description Hoe de ruimte aan de voorkant wordt weergegeven, bijvoorbeeld 'Woonkamer met open keuken'. Om de puntentelling weer te kunnen openen; de berekening gebruikt naam, behalve 'Woonkamer met open keuken' (verwarming telt dubbel). */
+            weergavenaam?: string | null;
             /** Format: decimal */
             ruimte_m2: string;
             /** @default false */
@@ -5473,12 +5514,7 @@ export interface operations {
     };
     puntenteller_adressen_list: {
         parameters: {
-            query?: {
-                /** @description Number of results to return per page. */
-                limit?: number;
-                /** @description The initial index from which to return the results. */
-                offset?: number;
-            };
+            query?: never;
             header?: never;
             path: {
                 bag_id: string;
@@ -5492,7 +5528,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PaginatedGebruikersinvoerResponseList"];
+                    "application/json": components["schemas"]["PuntentellingLijst"][];
                 };
             };
         };
@@ -5519,7 +5555,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["GebruikersinvoerCreateResponse"];
+                    "application/json": components["schemas"]["GebruikersinvoerResponse"];
                 };
             };
         };
@@ -5564,6 +5600,27 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["GebruikersinvoerResponse"];
                 };
+            };
+        };
+    };
+    puntenteller_puntentellingen_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this gebruikersinvoer. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
@@ -6033,6 +6090,7 @@ export interface operations {
                 theme?: number;
                 theme_name?: string;
                 ton_ids?: number;
+                week_number?: string[];
             };
             header?: never;
             path?: never;
@@ -6080,6 +6138,7 @@ export interface operations {
                 theme?: number;
                 theme_name?: string;
                 ton_ids?: number;
+                week_number?: string[];
             };
             header?: never;
             path: {
@@ -6142,6 +6201,7 @@ export interface operations {
                 theme?: number;
                 theme_name?: string;
                 ton_ids?: number;
+                week_number?: string[];
             };
             header?: never;
             path: {
@@ -6198,6 +6258,7 @@ export interface operations {
                 theme?: number;
                 theme_name?: string;
                 ton_ids?: number;
+                week_number?: string[];
             };
             header?: never;
             path?: never;
@@ -6265,6 +6326,7 @@ export interface operations {
                 theme?: number;
                 theme_name?: string;
                 ton_ids?: number;
+                week_number?: string[];
             };
             header?: never;
             path?: never;
@@ -6318,6 +6380,7 @@ export interface operations {
                 theme?: number;
                 theme_name?: string;
                 ton_ids?: number;
+                week_number?: string[];
             };
             header?: never;
             path?: never;
@@ -6385,6 +6448,7 @@ export interface operations {
                 theme?: number;
                 theme_name?: string;
                 ton_ids?: number;
+                week_number?: string[];
             };
             header?: never;
             path?: never;

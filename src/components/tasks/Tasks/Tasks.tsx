@@ -16,6 +16,7 @@ import { PageHeading } from "@/components/PageHeading/PageHeading"
 import TableTasks from "@/components/tasks/TableTasks/TableTasks"
 import TasksFilter from "../TasksFilter/TasksFilter"
 import useHasPermission, {
+  EDIT_TASK_WEEK_NUMBER_PERMISSION,
   SENSITIVE_CASE_PERMISSION,
 } from "@/hooks/useHasPermission"
 import getThemeId from "@/components/tasks/utils/getThemeId"
@@ -42,9 +43,11 @@ const Tasks: React.FC = () => {
     tags,
     taskNames,
     theme,
+    weekNumbers,
   } = filters
 
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
+  const [canEditWeek] = useHasPermission([EDIT_TASK_WEEK_NUMBER_PERMISSION])
   const { data: roles } = useRoles()
   const { data: me } = useUsersMe()
   // Until you choose a role, the overview shows the tasks of your own role.
@@ -72,6 +75,7 @@ const Tasks: React.FC = () => {
     tags,
     taskNames,
     theme,
+    weekNumbers,
   }
   // While the next page/filter loads, the previous results stay visible (isPlaceholderData).
   const {
@@ -132,6 +136,7 @@ const Tasks: React.FC = () => {
                 Handhavingsverzoeken ({enforcementDataSource?.count})
               </Heading>
               <TableTasks
+                canEditWeek={canEditWeek}
                 data={enforcementTasks}
                 isBusy={isLoadingEnforcement || isPlaceholderEnforcement}
                 // As many as there are, so the table keeps its height while loading.
@@ -147,6 +152,7 @@ const Tasks: React.FC = () => {
               {dataSource?.count ?? 0})
             </Heading>
             <TableTasks
+              canEditWeek={canEditWeek}
               data={dataSource?.results ?? []}
               isBusy={isLoading || isPlaceholderData}
               // As many as a page has, so the table keeps its height while loading.

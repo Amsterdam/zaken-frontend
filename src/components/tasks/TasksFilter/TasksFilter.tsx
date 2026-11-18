@@ -4,6 +4,7 @@ import { CloseIcon, FilterIcon } from "@amsterdam/design-system-react-icons"
 import { MultiSelectFilter } from "@/components/filters/MultiSelectFilter"
 import { type Option, SelectFilter } from "@/components/filters/SelectFilter"
 import filterStyles from "@/components/filters/filters.module.css"
+import { getSortedWeekNumbers } from "@/components/tasks/weekNumbers"
 import {
   defaultTasksFilters as defaults,
   type TasksFilters,
@@ -88,6 +89,11 @@ const noCorporationOption: Option = {
   label: "Zonder corporatie",
 }
 
+const weekOptions: Option[] = getSortedWeekNumbers().map((week) => ({
+  value: String(week),
+  label: String(week),
+}))
+
 const CHOOSE_THEME = "Kies eerst een thema"
 
 const firstPage = ({ pagination }: TasksFilters) => ({
@@ -168,7 +174,8 @@ const TasksFilter: React.FC<Props> = ({
     role !== myRole ||
     filters.owners.length > 0 ||
     filters.taskNames.length > 0 ||
-    filters.districtNames.length > 0
+    filters.districtNames.length > 0 ||
+    filters.weekNumbers.length > 0
 
   const [showAllFilters, setShowAllFilters] = useState(hasMoreFiltersActive)
 
@@ -216,6 +223,12 @@ const TasksFilter: React.FC<Props> = ({
         options={byName(districts)}
         value={filters.districtNames}
         onChange={(value) => onChangeFilter("districtNames", value)}
+      />
+      <MultiSelectFilter
+        label="Week"
+        options={weekOptions}
+        value={filters.weekNumbers}
+        onChange={(value) => onChangeFilter("weekNumbers", value)}
       />
       {showAllFilters && (
         <>

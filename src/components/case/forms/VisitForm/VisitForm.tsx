@@ -37,6 +37,7 @@ const DATE_TIME_FORMAT = "YYYY-MM-DDTHH:mm"
 // A visit made here did not come from the TOP app: the id the backend asks
 // for is a made-up one, as it always was in this form.
 const TOP_VISIT_ID = 42
+const VISIT_TYPE = "visit"
 
 /** The text when there is one, else the field is left out. */
 const optional = <Key extends string>(key: Key, value: string) =>
@@ -77,6 +78,7 @@ const VisitForm: React.FC<Props> = ({ id, caseUserTaskId }) => {
       await createVisit({
         case: id,
         task: caseUserTaskId,
+        type: VISIT_TYPE,
         top_visit_id: TOP_VISIT_ID,
         completed: true,
         author_ids: [values.author1, values.author2],

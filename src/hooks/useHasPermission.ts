@@ -2,6 +2,7 @@ import { useUsersMe } from "@/api/hooks"
 
 export const SENSITIVE_CASE_PERMISSION = "access_sensitive_dossiers"
 export const CAN_PERFORM_TASK = "perform_task"
+export const EDIT_TASK_WEEK_NUMBER_PERMISSION = "edit_task_week_number"
 
 /**
  * Whether the current user has at least one of the given permissions.
@@ -20,10 +21,6 @@ const useHasPermission = (
   // Permissions are not loaded (yet)
   if (permissions === undefined || isLoading) {
     return [false, true] as const
-  }
-  // permissionsToCheck and permissions must be arrays.
-  if (!Array.isArray(permissionsToCheck) || !Array.isArray(permissions)) {
-    return [false, false] as const
   }
   const hasPermission = permissionsToCheck.some((permission) =>
     permissions.includes(permission),
