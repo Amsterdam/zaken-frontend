@@ -4,8 +4,9 @@ const columnPriority = [
   "case.id",
   "case.address.street_name",
   "name",
-  "week_number",
+  // Below 900px only the first four columns are shown: the assignee, not the week.
   "owner",
+  "week_number",
   "case.address.postal_code",
   "due_date",
   "case.start_date",

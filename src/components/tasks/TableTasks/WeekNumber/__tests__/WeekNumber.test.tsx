@@ -118,6 +118,16 @@ describe("WeekNumber", () => {
     expect(screen.queryByRole("listbox")).toBeNull()
   })
 
+  it("stays open when the page scrolls or the window resizes", () => {
+    render(<WeekNumber canEdit taskId={1} value={48} />)
+
+    openPicker()
+    fireEvent.scroll(document)
+    fireEvent(window, new Event("resize"))
+
+    expect(screen.getByRole("listbox")).toBeTruthy()
+  })
+
   it("shows the chosen week while it is being saved", () => {
     mutation = { isPending: true, variables: 50 }
     render(<WeekNumber canEdit taskId={1} value={48} />)

@@ -1,4 +1,8 @@
 import { useEffect, useRef } from "react"
+import {
+  type AnchoredPosition,
+  getAnchoredStyle,
+} from "@/hooks/useAnchoredPosition"
 import styles from "./WeekNumber.module.css"
 
 // Keep in sync with max-height of .picker.
@@ -10,8 +14,7 @@ type Props = {
   value: number | null
   currentWeek: number
   weekOptions: number[]
-  top: number
-  left: number
+  position: AnchoredPosition
   onSelect: (weekNumber: number | null) => void
   onClose: () => void
 }
@@ -22,8 +25,7 @@ const WeekPicker: React.FC<Props> = ({
   value,
   currentWeek,
   weekOptions,
-  top,
-  left,
+  position,
   onSelect,
   onClose,
 }) => {
@@ -81,7 +83,7 @@ const WeekPicker: React.FC<Props> = ({
     <ul
       ref={ref}
       className={styles.picker}
-      style={{ top, left }}
+      style={getAnchoredStyle(position)}
       role="listbox"
       aria-label={label}
     >

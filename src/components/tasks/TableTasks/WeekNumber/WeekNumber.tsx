@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useEffect, useMemo, useRef } from "react"
 import { createPortal } from "react-dom"
 import { Icon } from "@amsterdam/design-system-react"
 import { ChevronDownIcon } from "@amsterdam/design-system-react-icons"
 import { useAssignTaskWeek } from "@/api/hooks"
+import useAnchoredPosition from "@/hooks/useAnchoredPosition"
 import {
   getCurrentIsoWeekNumber,
   getSortedWeekNumbers,
@@ -14,21 +15,6 @@ type Props = {
   canEdit: boolean
   taskId: Tasks.TaskId
   value: number | null
-}
-
-type Position = { top: number; left: number }
-
-const GAP = 4
-
-// Below the button, or above it when there is not enough room below.
-const getPosition = (button: HTMLElement): Position => {
-  const rect = button.getBoundingClientRect()
-  const fitsBelow =
-    rect.bottom + GAP + PICKER_MAX_HEIGHT <= window.innerHeight - 8
-  return {
-    top: fitsBelow ? rect.bottom + GAP : rect.top - GAP - PICKER_MAX_HEIGHT,
-    left: rect.left,
-  }
 }
 
 // Shows the week as text. A user who may change it clicks the text to open a
@@ -44,18 +30,22 @@ const WeekNumber: React.FC<Props> = ({ canEdit, taskId, value }) => {
   // While saving, show the chosen week already. On an error it goes back.
   const shownValue = isPending ? (variables ?? null) : value
 
-  const [position, setPosition] = useState<Position | null>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
   const pickerRef = useRef<HTMLUListElement>(null)
+  const {
+    position,
+    open,
+    close: closePicker,
+  } = useAnchoredPosition(buttonRef, PICKER_MAX_HEIGHT)
   const isOpen = position !== null
 
   const close = (returnFocus: boolean) => {
-    setPosition(null)
+    closePicker()
     if (returnFocus) buttonRef.current?.focus()
   }
 
-  // Close on a click outside, or when the page scrolls or resizes, because
-  // the list has a fixed position and would no longer line up with the cell.
+  // Close on a click outside. Scrolling keeps the list open: it stays next to
+  // its cell, also when that scrolls out of view.
   useEffect(() => {
     if (!isOpen) return
     const handleMouseDown = (event: MouseEvent) => {
@@ -64,24 +54,12 @@ const WeekNumber: React.FC<Props> = ({ canEdit, taskId, value }) => {
         !buttonRef.current?.contains(target) &&
         !pickerRef.current?.contains(target)
       ) {
-        setPosition(null)
+        closePicker()
       }
     }
-    const handleScroll = (event: Event) => {
-      if (!pickerRef.current?.contains(event.target as Node)) {
-        setPosition(null)
-      }
-    }
-    const handleResize = () => setPosition(null)
     document.addEventListener("mousedown", handleMouseDown)
-    window.addEventListener("scroll", handleScroll, true)
-    window.addEventListener("resize", handleResize)
-    return () => {
-      document.removeEventListener("mousedown", handleMouseDown)
-      window.removeEventListener("scroll", handleScroll, true)
-      window.removeEventListener("resize", handleResize)
-    }
-  }, [isOpen])
+    return () => document.removeEventListener("mousedown", handleMouseDown)
+  }, [isOpen, closePicker])
 
   if (!canEdit) {
     return <span>{value ?? "-"}</span>
@@ -115,8 +93,8 @@ const WeekNumber: React.FC<Props> = ({ canEdit, taskId, value }) => {
           if (isPending) return
           if (isOpen) {
             close(false)
-          } else if (buttonRef.current) {
-            setPosition(getPosition(buttonRef.current))
+          } else {
+            open()
           }
         }}
       >
@@ -136,8 +114,7 @@ const WeekNumber: React.FC<Props> = ({ canEdit, taskId, value }) => {
             value={value}
             currentWeek={currentWeek}
             weekOptions={weekOptions}
-            top={position.top}
-            left={position.left}
+            position={position}
             onSelect={handleSelect}
             onClose={() => close(true)}
           />,

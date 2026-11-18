@@ -5,10 +5,15 @@ import useHasPermission, {
   CAN_ASSIGN_TASK_TO_OTHERS,
   CAN_PERFORM_TASK,
 } from "@/hooks/useHasPermission"
+import useAnchoredPosition from "@/hooks/useAnchoredPosition"
 import AssigneeAvatar from "./AssigneeAvatar"
 import UserPickerDropdown from "./UserPickerDropdown"
 import ConfirmReassignDialog from "./ConfirmReassignDialog"
 import styles from "./AssignTask.module.css"
+
+// An estimate, only to choose between opening below or above the avatar: the
+// search field, two shortcuts and at most 220px of users.
+const DROPDOWN_MAX_HEIGHT = 360
 
 type Props = {
   taskId: Tasks.TaskId
@@ -19,12 +24,6 @@ const AssignTask: React.FC<Props> = ({ taskId, taskOwner }) => {
   const [hasPerformTaskPermission] = useHasPermission([CAN_PERFORM_TASK])
   const [canAssignTaskToOthers] = useHasPermission([CAN_ASSIGN_TASK_TO_OTHERS])
 
-  const [dropdownOpen, setDropdownOpen] = useState(false)
-  const [dropdownPos, setDropdownPos] = useState<{
-    top: number
-    left: number
-    transform: string
-  } | null>(null)
   const [pendingUserId, setPendingUserId] = useState<string | null | undefined>(
     undefined,
   )
@@ -32,6 +31,12 @@ const AssignTask: React.FC<Props> = ({ taskId, taskOwner }) => {
 
   const containerRef = useRef<HTMLDivElement>(null)
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const {
+    position: dropdownPosition,
+    open: openDropdown,
+    close: closeDropdown,
+  } = useAnchoredPosition(containerRef, DROPDOWN_MAX_HEIGHT)
+  const dropdownOpen = dropdownPosition !== null
 
   const { data: currentUser, isLoading: isMeBusy } = useUsersMe()
   const currentUserId = currentUser?.id ?? null
@@ -45,27 +50,30 @@ const AssignTask: React.FC<Props> = ({ taskId, taskOwner }) => {
     return newOwner !== null && newOwner === currentUserId
   }
 
+  // Close on a click outside. Scrolling keeps the dropdown open: it stays next
+  // to its cell, also when that scrolls out of view.
   useEffect(() => {
+    if (!dropdownOpen) return
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Node
       const insideContainer = containerRef.current?.contains(target)
       const insideDropdown = dropdownRef.current?.contains(target)
       if (!insideContainer && !insideDropdown) {
-        setDropdownOpen(false)
+        closeDropdown()
       }
     }
     document.addEventListener("mousedown", handleClickOutside)
     return () => document.removeEventListener("mousedown", handleClickOutside)
-  }, [])
+  }, [dropdownOpen, closeDropdown])
 
   const applyOwnerChange = (newOwner: string | null) => {
-    setDropdownOpen(false)
+    closeDropdown()
     assignTask(newOwner)
   }
 
   const handleUserSelect = (userId: string | null) => {
     if (!canChangeOwner(userId)) {
-      setDropdownOpen(false)
+      closeDropdown()
       return
     }
 
@@ -74,13 +82,13 @@ const AssignTask: React.FC<Props> = ({ taskId, taskOwner }) => {
       return
     }
     if (userId === taskOwner) {
-      setDropdownOpen(false)
+      closeDropdown()
       return
     }
     if (taskOwner && taskOwner !== userId) {
       setPendingUserId(userId)
       setConfirmOpen(true)
-      setDropdownOpen(false)
+      closeDropdown()
       return
     }
     applyOwnerChange(userId)
@@ -100,41 +108,11 @@ const AssignTask: React.FC<Props> = ({ taskId, taskOwner }) => {
   }
 
   const handleAvatarClick = () => {
-    const rect = containerRef.current?.getBoundingClientRect()
-    if (!rect) return
-
-    const dropdownWidth = 240
-    const dropdownHeight = 380 // geschatte max hoogte
-    const viewportWidth = window.innerWidth
-    const viewportHeight = window.innerHeight
-
-    // Horizontale positie — relatief aan viewport (fixed)
-    const centerX = rect.left + rect.width / 2
-    const wouldOverflowLeft = centerX - dropdownWidth / 2 < 8
-    const wouldOverflowRight = centerX + dropdownWidth / 2 > viewportWidth - 8
-
-    let left: number
-    let transform: string
-    if (wouldOverflowLeft) {
-      left = rect.left
-      transform = "none"
-    } else if (wouldOverflowRight) {
-      left = rect.right - dropdownWidth
-      transform = "none"
+    if (dropdownOpen) {
+      closeDropdown()
     } else {
-      left = centerX
-      transform = "translateX(-50%)"
+      openDropdown()
     }
-
-    // Verticale positie — open boven de avatar als er onvoldoende ruimte onder is
-    const wouldOverflowBottom =
-      rect.bottom + dropdownHeight > viewportHeight - 8
-    const top = wouldOverflowBottom
-      ? rect.top - dropdownHeight - 6 // boven de avatar
-      : rect.bottom + 6 // onder de avatar
-
-    setDropdownPos({ top, left, transform })
-    setDropdownOpen((prev) => !prev)
   }
 
   if (!hasPerformTaskPermission) {
@@ -151,18 +129,15 @@ const AssignTask: React.FC<Props> = ({ taskId, taskOwner }) => {
         onClick={handleAvatarClick}
       />
 
-      {dropdownOpen &&
-        dropdownPos &&
+      {dropdownPosition &&
         createPortal(
           <UserPickerDropdown
             currentUserId={currentUserId}
             currentOwnerId={taskOwner ?? null}
             canAssignToOthers={canAssignTaskToOthers}
             onSelect={handleUserSelect}
-            onClose={() => setDropdownOpen(false)}
-            positionTop={dropdownPos.top}
-            positionLeft={dropdownPos.left}
-            positionTransform={dropdownPos.transform}
+            onClose={closeDropdown}
+            position={dropdownPosition}
             dropdownRef={dropdownRef}
           />,
           document.body,

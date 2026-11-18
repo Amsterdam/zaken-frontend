@@ -1,6 +1,9 @@
 import { useState, useEffect, useRef } from "react"
-import { createPortal } from "react-dom"
 import { useUsers } from "@/api/hooks"
+import {
+  type AnchoredPosition,
+  getAnchoredStyle,
+} from "@/hooks/useAnchoredPosition"
 import { createNameAbbreviation } from "@/shared/helpers"
 import styles from "./UserPickerDropdown.module.css"
 
@@ -15,9 +18,7 @@ type Props = {
   canAssignToOthers: boolean
   onSelect: (userId: string | null) => void
   onClose: () => void
-  positionTop: number
-  positionLeft: number
-  positionTransform: string
+  position: AnchoredPosition
   dropdownRef: React.RefObject<HTMLDivElement | null>
 }
 
@@ -27,9 +28,7 @@ const UserPickerDropdown: React.FC<Props> = ({
   canAssignToOthers,
   onSelect,
   onClose,
-  positionTop,
-  positionLeft,
-  positionTransform,
+  position,
   dropdownRef,
 }) => {
   const [search, setSearch] = useState("")
@@ -53,16 +52,9 @@ const UserPickerDropdown: React.FC<Props> = ({
     if (e.key === "Escape") onClose()
   }
 
-  const dropdown = (
-    <div
-      style={{
-        position: "fixed",
-        top: positionTop,
-        left: positionLeft,
-        transform: positionTransform,
-        zIndex: 9999,
-      }}
-    >
+  return (
+    // Placed on the page, so it scrolls along with its cell.
+    <div style={{ ...getAnchoredStyle(position), zIndex: 9999 }}>
       <div
         ref={dropdownRef}
         className={styles.dropdown}
@@ -215,8 +207,6 @@ const UserPickerDropdown: React.FC<Props> = ({
       </div>
     </div>
   )
-
-  return createPortal(dropdown, document.body)
 }
 
 export default UserPickerDropdown

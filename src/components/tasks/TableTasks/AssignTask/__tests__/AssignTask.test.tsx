@@ -87,6 +87,34 @@ describe("AssignTask", () => {
     expect(assignTask).toHaveBeenCalledWith("me")
   })
 
+  it("stays open when the page scrolls or the window resizes", () => {
+    render(<AssignTask taskId={1} taskOwner={null} />)
+
+    openPicker()
+    fireEvent.scroll(document)
+    fireEvent(window, new Event("resize"))
+
+    expect(screen.getByRole("listbox")).toBeTruthy()
+  })
+
+  it("closes on a click outside the list", () => {
+    render(<AssignTask taskId={1} taskOwner={null} />)
+
+    openPicker()
+    fireEvent.mouseDown(document.body)
+
+    expect(screen.queryByRole("listbox")).toBeNull()
+  })
+
+  it("closes when the avatar is clicked again", () => {
+    render(<AssignTask taskId={1} taskOwner={null} />)
+
+    openPicker()
+    openPicker()
+
+    expect(screen.queryByRole("listbox")).toBeNull()
+  })
+
   it("hides unassign option without assign_task_to_others", () => {
     canAssignToOthers = false
     render(<AssignTask taskId={1} taskOwner="other" />)
