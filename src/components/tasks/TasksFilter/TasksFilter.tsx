@@ -74,6 +74,11 @@ const pageSizeOptions: Option[] = ["10", "25", "100"].map((size) => ({
   label: size,
 }))
 
+const viewOptions: { label: string; value: TasksFilters["view"] }[] = [
+  { label: "Standaard", value: "standard" },
+  { label: "Per gebruiker", value: "perOwner" },
+]
+
 const all: Option = { value: "", label: "Alle" }
 
 const byName = (options: { name: string }[] = []): Option[] =>
@@ -153,12 +158,13 @@ const TasksFilter: React.FC<Props> = ({
     }))
   }
 
-  // Back to the defaults (your own role); the sorting and the page size stay.
+  // Back to the defaults (your own role); the view settings stay.
   const onResetFilters = () =>
-    update(({ sorting, pagination }) => ({
+    update(({ sorting, pagination, view }) => ({
       ...defaults,
       sorting,
       pagination: { ...pagination, page: 1 },
+      view,
     }))
 
   const hasMoreFiltersActive =
@@ -290,13 +296,27 @@ const TasksFilter: React.FC<Props> = ({
         }}
       />
       <SelectFilter
-        label="Items per pagina"
-        options={pageSizeOptions}
-        value={String(filters.pagination.pageSize)}
-        onChange={(pageSize) =>
-          update({ pagination: { page: 1, pageSize: parseInt(pageSize) } })
+        label="Weergave"
+        options={viewOptions}
+        value={filters.view}
+        onChange={(value) =>
+          update((current) => ({
+            view: value as TasksFilters["view"],
+            ...firstPage(current),
+          }))
         }
       />
+      {/* Per user the tables show all tasks, without pages. */}
+      {filters.view === "standard" && (
+        <SelectFilter
+          label="Items per pagina"
+          options={pageSizeOptions}
+          value={String(filters.pagination.pageSize)}
+          onChange={(pageSize) =>
+            update({ pagination: { page: 1, pageSize: parseInt(pageSize) } })
+          }
+        />
+      )}
       {!showAllFilters && (
         <Button
           className={filterStyles.alignBottom}

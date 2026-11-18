@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react"
-import { Button, Column, Grid, Heading } from "@amsterdam/design-system-react"
+import { useMemo } from "react"
+import { Column, Grid, Heading } from "@amsterdam/design-system-react"
 import {
   useCaseThemes,
   useCorporations,
@@ -32,7 +32,6 @@ const ONDERMIJNING = "Ondermijning"
 const GROUPED_VIEW_PAGE_SIZE = 1000
 
 const Tasks: React.FC = () => {
-  const [groupByOwnerView, setGroupByOwnerView] = useState(false)
   const { filters, update } = useTasksFilters()
   const {
     districtNames,
@@ -47,8 +46,10 @@ const Tasks: React.FC = () => {
     tags,
     taskNames,
     theme,
+    view,
     weekNumbers,
   } = filters
+  const groupByOwnerView = view === "perOwner"
 
   const [hasPermission] = useHasPermission([SENSITIVE_CASE_PERMISSION])
   const [canEditWeek] = useHasPermission([EDIT_TASK_WEEK_NUMBER_PERMISSION])
@@ -156,34 +157,36 @@ const Tasks: React.FC = () => {
             taskOwners={mappedTaskOwners}
             themes={caseThemes?.results}
           />
-          <Button
-            aria-pressed={groupByOwnerView}
-            onClick={() => setGroupByOwnerView((current) => !current)}
-          >
-            {groupByOwnerView ? "Standaardweergave" : "Weergave per gebruiker"}
-          </Button>
           {enforcementTasksAvailable && (
             <Column>
               <Heading level={2}>
                 Handhavingsverzoeken ({enforcementDataSource?.count})
               </Heading>
               {groupByOwnerView ? (
-                groupedEnforcementTasks.map(({ ownerId, ownerName, tasks }) => (
-                  <Column key={ownerId}>
-                    <Heading level={3}>
-                      {ownerName} ({tasks.length})
-                    </Heading>
-                    <TableTasks
-                      canEditWeek={canEditWeek}
-                      data={tasks}
-                      isBusy={isLoadingEnforcement || isPlaceholderEnforcement}
-                      // As many as there are, so the table keeps its height while loading.
-                      numLoadingRows={tasks.length}
-                      pagination={false}
-                      emptyPlaceholder={emptyPlaceholder}
-                    />
-                  </Column>
-                ))
+                // More room between the users than between a user and their
+                // table, so a name belongs to the table below it.
+                <Column gap="x-large">
+                  {groupedEnforcementTasks.map(
+                    ({ ownerId, ownerName, tasks }) => (
+                      <Column key={ownerId} gap="small">
+                        <Heading level={3}>
+                          {ownerName} ({tasks.length})
+                        </Heading>
+                        <TableTasks
+                          canEditWeek={canEditWeek}
+                          data={tasks}
+                          isBusy={
+                            isLoadingEnforcement || isPlaceholderEnforcement
+                          }
+                          // As many as there are, so the table keeps its height while loading.
+                          numLoadingRows={tasks.length}
+                          pagination={false}
+                          emptyPlaceholder={emptyPlaceholder}
+                        />
+                      </Column>
+                    ),
+                  )}
+                </Column>
               ) : (
                 <TableTasks
                   canEditWeek={canEditWeek}
@@ -204,22 +207,25 @@ const Tasks: React.FC = () => {
             </Heading>
             {groupByOwnerView ? (
               groupedTasks.length > 0 ? (
-                groupedTasks.map(({ ownerId, ownerName, tasks }) => (
-                  <Column key={ownerId}>
-                    <Heading level={3}>
-                      {ownerName} ({tasks.length})
-                    </Heading>
-                    <TableTasks
-                      canEditWeek={canEditWeek}
-                      data={tasks}
-                      isBusy={isLoading || isPlaceholderData}
-                      // As many as there are, so the table keeps its height while loading.
-                      numLoadingRows={tasks.length}
-                      pagination={false}
-                      emptyPlaceholder={emptyPlaceholder}
-                    />
-                  </Column>
-                ))
+                // Like the enforcement requests above.
+                <Column gap="x-large">
+                  {groupedTasks.map(({ ownerId, ownerName, tasks }) => (
+                    <Column key={ownerId} gap="small">
+                      <Heading level={3}>
+                        {ownerName} ({tasks.length})
+                      </Heading>
+                      <TableTasks
+                        canEditWeek={canEditWeek}
+                        data={tasks}
+                        isBusy={isLoading || isPlaceholderData}
+                        // As many as there are, so the table keeps its height while loading.
+                        numLoadingRows={tasks.length}
+                        pagination={false}
+                        emptyPlaceholder={emptyPlaceholder}
+                      />
+                    </Column>
+                  ))}
+                </Column>
               ) : (
                 <TableTasks
                   canEditWeek={canEditWeek}

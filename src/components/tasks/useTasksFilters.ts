@@ -16,6 +16,8 @@ export type TasksFilters = {
   tags: string[]
   taskNames: components["schemas"]["CaseUserTaskTaskName"]["name"][]
   theme: string
+  /** The standard view, or the tasks grouped by the user they are assigned to. */
+  view: "standard" | "perOwner"
   weekNumbers: string[]
 }
 
@@ -33,6 +35,7 @@ export const defaultTasksFilters: TasksFilters = {
   tags: [],
   taskNames: [],
   theme: "",
+  view: "standard",
   weekNumbers: [],
 }
 
@@ -61,6 +64,8 @@ const PAGE_PARAM = "pagina"
 const PAGE_SIZE_PARAM = "perPagina"
 const SORT_PARAM = "sorteer"
 const YES = "ja"
+const VIEW_PARAM = "weergave"
+const PER_OWNER_VIEW = "perGebruiker"
 
 const sortValues: Record<string, string> = {
   due_date: "slotdatum",
@@ -87,6 +92,7 @@ export const parseTasksFilters = (params: URLSearchParams): TasksFilters => {
     filters[key] = params.getAll(listParams[key])
   })
   filters.housingCorporationIsNull = params.get(NO_CORPORATION_PARAM) === YES
+  if (params.get(VIEW_PARAM) === PER_OWNER_VIEW) filters.view = "perOwner"
 
   const role = params.get(ROLE_PARAM)
   if (role !== null) filters.role = role === ALL_ROLES ? "" : role
@@ -120,6 +126,7 @@ export const serializeTasksFilters = (filters: TasksFilters) => {
     filters[key].forEach((value) => params.append(listParams[key], value))
   })
   if (filters.housingCorporationIsNull) params.set(NO_CORPORATION_PARAM, YES)
+  if (filters.view === "perOwner") params.set(VIEW_PARAM, PER_OWNER_VIEW)
   if (filters.role !== undefined) {
     params.set(ROLE_PARAM, filters.role === "" ? ALL_ROLES : filters.role)
   }

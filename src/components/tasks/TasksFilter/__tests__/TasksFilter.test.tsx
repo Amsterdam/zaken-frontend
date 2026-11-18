@@ -83,6 +83,23 @@ describe("TasksFilter", () => {
     expect(search()).toBe("?perPagina=100")
   })
 
+  it("keeps the view per user in the URL, without pages", () => {
+    renderFilter("/taken?pagina=3&perPagina=100")
+
+    choose("Weergave", "perOwner")
+
+    expect(search()).toBe("?weergave=perGebruiker&perPagina=100")
+    expect(screen.queryByLabelText("Items per pagina")).toBeNull()
+  })
+
+  it("keeps the view with 'Wis alle filters'", () => {
+    renderFilter("/taken?weergave=perGebruiker&stadsdeel=Noord")
+
+    fireEvent.click(screen.getByRole("button", { name: "Wis alle filters" }))
+
+    expect(search()).toBe("?weergave=perGebruiker")
+  })
+
   it("opens the less used filters when one of them is on", () => {
     renderFilter("/taken?corporatie=7")
 
