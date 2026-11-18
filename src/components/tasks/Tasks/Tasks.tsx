@@ -1,4 +1,5 @@
-import { Column, Grid, Heading } from "@amsterdam/design-system-react"
+import { useMemo, useState } from "react"
+import { Button, Column, Grid, Heading } from "@amsterdam/design-system-react"
 import {
   useCaseThemes,
   useCorporations,
@@ -22,13 +23,16 @@ import useHasPermission, {
 import getThemeId from "@/components/tasks/utils/getThemeId"
 import { useMappedTaskOwners } from "../hooks/useMappedTaskOwners"
 import { useTasksFilters } from "../useTasksFilters"
+import { groupTasksByOwner } from "./groupTasksByOwner"
 
 const EMPTY_TEXT_NO_PERMISSION =
   "Helaas, u bent niet geautoriseerd om deze taken te bekijken."
 const EMPTY_TEXT = "Er zijn momenteel geen open taken voor de gekozen filters."
 const ONDERMIJNING = "Ondermijning"
+const GROUPED_VIEW_PAGE_SIZE = 1000
 
 const Tasks: React.FC = () => {
+  const [groupByOwnerView, setGroupByOwnerView] = useState(false)
   const { filters, update } = useTasksFilters()
   const {
     districtNames,
@@ -61,6 +65,12 @@ const Tasks: React.FC = () => {
   const { data: tasksDistricts } = useDistricts()
   const { data: corporationData } = useCorporations()
   const mappedTaskOwners = useMappedTaskOwners()
+  const tasksPagination = groupByOwnerView
+    ? {
+        page: 1,
+        pageSize: GROUPED_VIEW_PAGE_SIZE,
+      }
+    : pagination
   const commonTaskArgs = {
     districtNames,
     housingCorporations,
@@ -84,7 +94,7 @@ const Tasks: React.FC = () => {
     isPlaceholderData,
   } = useTasks({
     ...commonTaskArgs,
-    pagination,
+    pagination: tasksPagination,
     isEnforcementRequest: false,
   })
   const {
@@ -109,8 +119,24 @@ const Tasks: React.FC = () => {
     hasPermission === false && theme === ONDERMIJNING
       ? EMPTY_TEXT_NO_PERMISSION
       : EMPTY_TEXT
-  const enforcementTasks = enforcementDataSource?.results ?? []
+  const enforcementTasks = useMemo(
+    () => enforcementDataSource?.results ?? [],
+    [enforcementDataSource?.results],
+  )
   const enforcementTasksAvailable = enforcementTasks.length > 0
+  const ownerNamesById = useMemo(
+    () =>
+      new Map((mappedTaskOwners ?? []).map((owner) => [String(owner.id), owner.name])),
+    [mappedTaskOwners],
+  )
+  const groupedTasks = useMemo(
+    () => groupTasksByOwner(dataSource?.results ?? [], ownerNamesById),
+    [dataSource?.results, ownerNamesById],
+  )
+  const groupedEnforcementTasks = useMemo(
+    () => groupTasksByOwner(enforcementTasks, ownerNamesById),
+    [enforcementTasks, ownerNamesById],
+  )
 
   return (
     <>
@@ -130,20 +156,45 @@ const Tasks: React.FC = () => {
             taskOwners={mappedTaskOwners}
             themes={caseThemes?.results}
           />
+          <Button
+            aria-pressed={groupByOwnerView}
+            onClick={() => setGroupByOwnerView((current) => !current)}
+          >
+            {groupByOwnerView ? "Standaardweergave" : "Weergave per gebruiker"}
+          </Button>
           {enforcementTasksAvailable && (
             <Column>
               <Heading level={2}>
                 Handhavingsverzoeken ({enforcementDataSource?.count})
               </Heading>
-              <TableTasks
-                canEditWeek={canEditWeek}
-                data={enforcementTasks}
-                isBusy={isLoadingEnforcement || isPlaceholderEnforcement}
-                // As many as there are, so the table keeps its height while loading.
-                numLoadingRows={enforcementTasks.length}
-                pagination={false}
-                emptyPlaceholder={emptyPlaceholder}
-              />
+              {groupByOwnerView ? (
+                groupedEnforcementTasks.map(({ ownerId, ownerName, tasks }) => (
+                  <Column key={ownerId}>
+                    <Heading level={3}>
+                      {ownerName} ({tasks.length})
+                    </Heading>
+                    <TableTasks
+                      canEditWeek={canEditWeek}
+                      data={tasks}
+                      isBusy={isLoadingEnforcement || isPlaceholderEnforcement}
+                      // As many as there are, so the table keeps its height while loading.
+                      numLoadingRows={tasks.length}
+                      pagination={false}
+                      emptyPlaceholder={emptyPlaceholder}
+                    />
+                  </Column>
+                ))
+              ) : (
+                <TableTasks
+                  canEditWeek={canEditWeek}
+                  data={enforcementTasks}
+                  isBusy={isLoadingEnforcement || isPlaceholderEnforcement}
+                  // As many as there are, so the table keeps its height while loading.
+                  numLoadingRows={enforcementTasks.length}
+                  pagination={false}
+                  emptyPlaceholder={emptyPlaceholder}
+                />
+              )}
             </Column>
           )}
           <Column>
@@ -151,20 +202,50 @@ const Tasks: React.FC = () => {
               Alle {enforcementTasksAvailable ? "overige" : ""} taken (
               {dataSource?.count ?? 0})
             </Heading>
-            <TableTasks
-              canEditWeek={canEditWeek}
-              data={dataSource?.results ?? []}
-              isBusy={isLoading || isPlaceholderData}
-              // As many as a page has, so the table keeps its height while loading.
-              numLoadingRows={pagination.pageSize}
-              onChange={onChangeTable}
-              pagination={{
-                page: pagination.page,
-                pageSize: pagination.pageSize,
-                collectionSize: dataSource?.count || 1,
-              }}
-              emptyPlaceholder={emptyPlaceholder}
-            />
+            {groupByOwnerView ? (
+              groupedTasks.length > 0 ? (
+                groupedTasks.map(({ ownerId, ownerName, tasks }) => (
+                  <Column key={ownerId}>
+                    <Heading level={3}>
+                      {ownerName} ({tasks.length})
+                    </Heading>
+                    <TableTasks
+                      canEditWeek={canEditWeek}
+                      data={tasks}
+                      isBusy={isLoading || isPlaceholderData}
+                      // As many as there are, so the table keeps its height while loading.
+                      numLoadingRows={tasks.length}
+                      pagination={false}
+                      emptyPlaceholder={emptyPlaceholder}
+                    />
+                  </Column>
+                ))
+              ) : (
+                <TableTasks
+                  canEditWeek={canEditWeek}
+                  data={[]}
+                  isBusy={isLoading || isPlaceholderData}
+                  numLoadingRows={1}
+                  pagination={false}
+                  emptyPlaceholder={emptyPlaceholder}
+                />
+              )
+            ) : (
+              <TableTasks
+                canEditWeek={canEditWeek}
+                data={dataSource?.results ?? []}
+                isBusy={isLoading || isPlaceholderData}
+                // As many as a page has, so the table keeps its height while loading.
+                numLoadingRows={pagination.pageSize}
+                onChange={onChangeTable}
+                pagination={{
+                  page: pagination.page,
+                  pageSize: pagination.pageSize,
+                  collectionSize: dataSource?.count || 1,
+                }}
+                emptyPlaceholder={emptyPlaceholder}
+              />
+            )}
           </Column>
         </Column>
       </Grid.Cell>
