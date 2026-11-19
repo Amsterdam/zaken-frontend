@@ -159,8 +159,10 @@ const getOrdering = (sorting?: TABLE.Schemas.Sorting) => {
 
 export type TasksParams = {
   districtNames?: components["schemas"]["District"]["name"][]
+  enabled?: boolean
   housingCorporationIsNull?: boolean
   housingCorporations?: string[]
+  hasOwner?: boolean
   isEnforcementRequest?: boolean
   owner?: string[]
   pagination: TABLE.Schemas.Pagination
@@ -182,8 +184,10 @@ export type TasksParams = {
  */
 export const useTasks = ({
   districtNames,
+  enabled,
   housingCorporationIsNull = false,
   housingCorporations,
+  hasOwner,
   isEnforcementRequest,
   owner,
   pagination,
@@ -213,6 +217,7 @@ export const useTasks = ({
     name: nonEmpty(taskNames),
     role: role || undefined,
     owner: nonEmpty(owner),
+    has_owner: hasOwner,
     district_name: nonEmpty(districtNames),
     housing_corporation: housingCorporations,
     housing_corporation_isnull: housingCorporationIsNull ? true : undefined,
@@ -222,6 +227,7 @@ export const useTasks = ({
 
   return useQuery({
     queryKey: queryKeys.cases.tasks(queryParams),
+    enabled,
     queryFn: () =>
       fetch<components["schemas"]["PaginatedCaseUserTaskList"]>(
         `${makeApiUrl("tasks")}${stringifyQueryParams(queryParams)}`,
@@ -261,6 +267,16 @@ export const useAssignTask = (taskId: Tasks.TaskId) => {
           }
         },
       )
+      // Per-owner view uses has_owner=true/false queries for totals; refetch those
+      // active queries so assigned/unassigned counts stay in sync after reassignment.
+      void queryClient.invalidateQueries({
+        predicate: ({ queryKey }) => {
+          if (queryKey[0] !== "cases" || queryKey[1] !== "tasks") return false
+          const params = queryKey[2]
+          if (typeof params !== "object" || params === null) return false
+          return "has_owner" in params
+        },
+      })
       queryClient.setQueriesData<Tasks.PaginatedWorkflowList>(
         {
           predicate: ({ queryKey }) =>

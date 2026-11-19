@@ -23,13 +23,13 @@ import useHasPermission, {
 import getThemeId from "@/components/tasks/utils/getThemeId"
 import { useMappedTaskOwners } from "../hooks/useMappedTaskOwners"
 import { useTasksFilters } from "../useTasksFilters"
-import { groupTasksByOwner } from "./groupTasksByOwner"
+import { groupTasksByOwner, UNASSIGNED_OWNER_ID } from "./groupTasksByOwner"
 
 const EMPTY_TEXT_NO_PERMISSION =
   "Helaas, u bent niet geautoriseerd om deze taken te bekijken."
 const EMPTY_TEXT = "Er zijn momenteel geen open taken voor de gekozen filters."
 const ONDERMIJNING = "Ondermijning"
-const GROUPED_VIEW_PAGE_SIZE = 1000
+const FULL_LIST_PAGE_SIZE = 1000
 
 const Tasks: React.FC = () => {
   const { filters, update } = useTasksFilters()
@@ -66,12 +66,10 @@ const Tasks: React.FC = () => {
   const { data: tasksDistricts } = useDistricts()
   const { data: corporationData } = useCorporations()
   const mappedTaskOwners = useMappedTaskOwners()
-  const tasksPagination = groupByOwnerView
-    ? {
-        page: 1,
-        pageSize: GROUPED_VIEW_PAGE_SIZE,
-      }
-    : pagination
+  const fullListPagination = {
+    page: 1,
+    pageSize: FULL_LIST_PAGE_SIZE,
+  }
   const commonTaskArgs = {
     districtNames,
     housingCorporations,
@@ -95,8 +93,9 @@ const Tasks: React.FC = () => {
     isPlaceholderData,
   } = useTasks({
     ...commonTaskArgs,
-    pagination: tasksPagination,
+    pagination,
     isEnforcementRequest: false,
+    enabled: !groupByOwnerView,
   })
   const {
     data: enforcementDataSource,
@@ -104,11 +103,29 @@ const Tasks: React.FC = () => {
     isPlaceholderData: isPlaceholderEnforcement,
   } = useTasks({
     ...commonTaskArgs,
-    pagination: {
-      page: 1,
-      pageSize: 1000,
-    },
+    pagination: fullListPagination,
     isEnforcementRequest: true,
+    enabled: !groupByOwnerView,
+  })
+  const {
+    data: assignedTasksByOwnerDataSource,
+    isLoading: isLoadingAssignedTasksByOwner,
+    isPlaceholderData: isPlaceholderAssignedTasksByOwner,
+  } = useTasks({
+    ...commonTaskArgs,
+    pagination: fullListPagination,
+    hasOwner: true,
+    enabled: groupByOwnerView,
+  })
+  const {
+    data: unassignedTasksDataSource,
+    isLoading: isLoadingUnassignedTasks,
+    isPlaceholderData: isPlaceholderUnassignedTasks,
+  } = useTasks({
+    ...commonTaskArgs,
+    pagination,
+    hasOwner: false,
+    enabled: groupByOwnerView,
   })
   const { data: taskNamesData } = useTaskNames(theme ?? null, role ?? null)
 
@@ -125,25 +142,42 @@ const Tasks: React.FC = () => {
     [enforcementDataSource?.results],
   )
   const enforcementTasksAvailable = enforcementTasks.length > 0
+  const assignedTasksByOwner = useMemo(
+    () => assignedTasksByOwnerDataSource?.results ?? [],
+    [assignedTasksByOwnerDataSource?.results],
+  )
+  const unassignedTasks = useMemo(
+    () => unassignedTasksDataSource?.results ?? [],
+    [unassignedTasksDataSource?.results],
+  )
   const allTasks = useMemo(
-    () => [...(dataSource?.results ?? []), ...enforcementTasks],
-    [dataSource?.results, enforcementTasks],
+    () =>
+      groupByOwnerView
+        ? [...assignedTasksByOwner, ...unassignedTasks]
+        : [...(dataSource?.results ?? []), ...enforcementTasks],
+    [
+      assignedTasksByOwner,
+      dataSource?.results,
+      enforcementTasks,
+      groupByOwnerView,
+      unassignedTasks,
+    ],
   )
   const allTasksCount =
-    (dataSource?.count ?? 0) + (enforcementDataSource?.count ?? 0)
+    groupByOwnerView
+      ? (assignedTasksByOwnerDataSource?.count ?? 0) +
+        (unassignedTasksDataSource?.count ?? 0)
+      : (dataSource?.count ?? 0) + (enforcementDataSource?.count ?? 0)
   const ownerNamesById = useMemo(
     () =>
       new Map((mappedTaskOwners ?? []).map((owner) => [String(owner.id), owner.name])),
     [mappedTaskOwners],
   )
   const groupedTasks = useMemo(
-    () =>
-      groupTasksByOwner(
-        groupByOwnerView ? allTasks : dataSource?.results ?? [],
-        ownerNamesById,
-      ),
-    [allTasks, dataSource?.results, groupByOwnerView, ownerNamesById],
+    () => groupTasksByOwner(allTasks, ownerNamesById),
+    [allTasks, ownerNamesById],
   )
+  const unassignedTasksCount = unassignedTasksDataSource?.count ?? 0
 
   return (
     <>
@@ -191,15 +225,42 @@ const Tasks: React.FC = () => {
                   {groupedTasks.map(({ ownerId, ownerName, tasks }) => (
                     <Column key={ownerId} gap="small">
                       <Heading level={3}>
-                        {ownerName} ({tasks.length})
+                        {ownerName} ({
+                          ownerId === UNASSIGNED_OWNER_ID
+                            ? unassignedTasksCount
+                            : tasks.length
+                        })
                       </Heading>
                       <TableTasks
                         canEditWeek={canEditWeek}
                         data={tasks}
-                        isBusy={isLoading || isPlaceholderData}
-                        // As many as there are, so the table keeps its height while loading.
-                        numLoadingRows={tasks.length}
-                        pagination={false}
+                        isBusy={
+                          ownerId === UNASSIGNED_OWNER_ID
+                            ? isLoadingUnassignedTasks ||
+                              isPlaceholderUnassignedTasks
+                            : isLoadingAssignedTasksByOwner ||
+                              isPlaceholderAssignedTasksByOwner
+                        }
+                        // Keep table height stable: one page for unassigned, all rows for assigned.
+                        numLoadingRows={
+                          ownerId === UNASSIGNED_OWNER_ID
+                            ? pagination.pageSize
+                            : tasks.length
+                        }
+                        onChange={
+                          ownerId === UNASSIGNED_OWNER_ID
+                            ? onChangeTable
+                            : undefined
+                        }
+                        pagination={
+                          ownerId === UNASSIGNED_OWNER_ID
+                            ? {
+                                page: pagination.page,
+                                pageSize: pagination.pageSize,
+                                collectionSize: unassignedTasksCount || 1,
+                              }
+                            : false
+                        }
                         emptyPlaceholder={emptyPlaceholder}
                       />
                     </Column>
@@ -209,7 +270,12 @@ const Tasks: React.FC = () => {
                 <TableTasks
                   canEditWeek={canEditWeek}
                   data={[]}
-                  isBusy={isLoading || isPlaceholderData}
+                  isBusy={
+                    isLoadingAssignedTasksByOwner ||
+                    isPlaceholderAssignedTasksByOwner ||
+                    isLoadingUnassignedTasks ||
+                    isPlaceholderUnassignedTasks
+                  }
                   numLoadingRows={1}
                   pagination={false}
                   emptyPlaceholder={emptyPlaceholder}

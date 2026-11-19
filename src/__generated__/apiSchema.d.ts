@@ -6063,6 +6063,7 @@ export interface operations {
                 district_name?: string;
                 due_date?: string;
                 from_start_date?: string;
+                has_owner?: boolean;
                 housing_corporation?: number;
                 housing_corporation_isnull?: boolean;
                 is_enforcement_request?: boolean;
@@ -6117,6 +6118,7 @@ export interface operations {
                 district_name?: string;
                 due_date?: string;
                 from_start_date?: string;
+                has_owner?: boolean;
                 housing_corporation?: number;
                 housing_corporation_isnull?: boolean;
                 is_enforcement_request?: boolean;
@@ -6174,6 +6176,7 @@ export interface operations {
                 district_name?: string;
                 due_date?: string;
                 from_start_date?: string;
+                has_owner?: boolean;
                 housing_corporation?: number;
                 housing_corporation_isnull?: boolean;
                 is_enforcement_request?: boolean;
@@ -6231,6 +6234,7 @@ export interface operations {
                 district_name?: string;
                 due_date?: string;
                 from_start_date?: string;
+                has_owner?: boolean;
                 housing_corporation?: number;
                 housing_corporation_isnull?: boolean;
                 is_enforcement_request?: boolean;
@@ -6299,6 +6303,7 @@ export interface operations {
                 district_name?: string;
                 due_date?: string;
                 from_start_date?: string;
+                has_owner?: boolean;
                 housing_corporation?: number;
                 housing_corporation_isnull?: boolean;
                 is_enforcement_request?: boolean;
@@ -6353,6 +6358,7 @@ export interface operations {
                 district_name?: string;
                 due_date?: string;
                 from_start_date?: string;
+                has_owner?: boolean;
                 housing_corporation?: number;
                 housing_corporation_isnull?: boolean;
                 is_enforcement_request?: boolean;
@@ -6421,6 +6427,7 @@ export interface operations {
                 district_name?: string;
                 due_date?: string;
                 from_start_date?: string;
+                has_owner?: boolean;
                 housing_corporation?: number;
                 housing_corporation_isnull?: boolean;
                 is_enforcement_request?: boolean;

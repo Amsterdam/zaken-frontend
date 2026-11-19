@@ -83,13 +83,13 @@ describe("TasksFilter", () => {
     expect(search()).toBe("?perPagina=100")
   })
 
-  it("keeps the view per user in the URL, without pages", () => {
+  it("keeps the view per user in the URL and keeps page size selectable", () => {
     renderFilter("/taken?pagina=3&perPagina=100")
 
     choose("Weergave", "perOwner")
 
     expect(search()).toBe("?weergave=perGebruiker&perPagina=100")
-    expect(screen.queryByLabelText("Items per pagina")).toBeNull()
+    expect(screen.getByLabelText("Items per pagina")).toBeTruthy()
   })
 
   it("keeps the view with 'Wis alle filters'", () => {

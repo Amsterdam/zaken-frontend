@@ -306,17 +306,14 @@ const TasksFilter: React.FC<Props> = ({
           }))
         }
       />
-      {/* Per user the tables show all tasks, without pages. */}
-      {filters.view === "standard" && (
-        <SelectFilter
-          label="Items per pagina"
-          options={pageSizeOptions}
-          value={String(filters.pagination.pageSize)}
-          onChange={(pageSize) =>
-            update({ pagination: { page: 1, pageSize: parseInt(pageSize) } })
-          }
-        />
-      )}
+      <SelectFilter
+        label="Items per pagina"
+        options={pageSizeOptions}
+        value={String(filters.pagination.pageSize)}
+        onChange={(pageSize) =>
+          update({ pagination: { page: 1, pageSize: parseInt(pageSize) } })
+        }
+      />
       {!showAllFilters && (
         <Button
           className={filterStyles.alignBottom}

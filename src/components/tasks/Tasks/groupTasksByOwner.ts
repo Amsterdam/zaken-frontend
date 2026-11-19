@@ -6,8 +6,8 @@ type GroupedTasks = {
   tasks: Task[]
 }
 
-const UNASSIGNED_OWNER_ID = "unassigned"
-const UNASSIGNED_OWNER_NAME = "Niet toegewezen"
+export const UNASSIGNED_OWNER_ID = "unassigned"
+export const UNASSIGNED_OWNER_NAME = "Niet toegewezen"
 
 export const groupTasksByOwner = (
   tasks: Task[],
