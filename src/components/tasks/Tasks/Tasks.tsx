@@ -125,18 +125,24 @@ const Tasks: React.FC = () => {
     [enforcementDataSource?.results],
   )
   const enforcementTasksAvailable = enforcementTasks.length > 0
+  const allTasks = useMemo(
+    () => [...(dataSource?.results ?? []), ...enforcementTasks],
+    [dataSource?.results, enforcementTasks],
+  )
+  const allTasksCount =
+    (dataSource?.count ?? 0) + (enforcementDataSource?.count ?? 0)
   const ownerNamesById = useMemo(
     () =>
       new Map((mappedTaskOwners ?? []).map((owner) => [String(owner.id), owner.name])),
     [mappedTaskOwners],
   )
   const groupedTasks = useMemo(
-    () => groupTasksByOwner(dataSource?.results ?? [], ownerNamesById),
-    [dataSource?.results, ownerNamesById],
-  )
-  const groupedEnforcementTasks = useMemo(
-    () => groupTasksByOwner(enforcementTasks, ownerNamesById),
-    [enforcementTasks, ownerNamesById],
+    () =>
+      groupTasksByOwner(
+        groupByOwnerView ? allTasks : dataSource?.results ?? [],
+        ownerNamesById,
+      ),
+    [allTasks, dataSource?.results, groupByOwnerView, ownerNamesById],
   )
 
   return (
@@ -157,53 +163,26 @@ const Tasks: React.FC = () => {
             taskOwners={mappedTaskOwners}
             themes={caseThemes?.results}
           />
-          {enforcementTasksAvailable && (
+          {!groupByOwnerView && enforcementTasksAvailable && (
             <Column>
               <Heading level={2}>
                 Handhavingsverzoeken ({enforcementDataSource?.count})
               </Heading>
-              {groupByOwnerView ? (
-                // More room between the users than between a user and their
-                // table, so a name belongs to the table below it.
-                <Column gap="x-large">
-                  {groupedEnforcementTasks.map(
-                    ({ ownerId, ownerName, tasks }) => (
-                      <Column key={ownerId} gap="small">
-                        <Heading level={3}>
-                          {ownerName} ({tasks.length})
-                        </Heading>
-                        <TableTasks
-                          canEditWeek={canEditWeek}
-                          data={tasks}
-                          isBusy={
-                            isLoadingEnforcement || isPlaceholderEnforcement
-                          }
-                          // As many as there are, so the table keeps its height while loading.
-                          numLoadingRows={tasks.length}
-                          pagination={false}
-                          emptyPlaceholder={emptyPlaceholder}
-                        />
-                      </Column>
-                    ),
-                  )}
-                </Column>
-              ) : (
-                <TableTasks
-                  canEditWeek={canEditWeek}
-                  data={enforcementTasks}
-                  isBusy={isLoadingEnforcement || isPlaceholderEnforcement}
-                  // As many as there are, so the table keeps its height while loading.
-                  numLoadingRows={enforcementTasks.length}
-                  pagination={false}
-                  emptyPlaceholder={emptyPlaceholder}
-                />
-              )}
+              <TableTasks
+                canEditWeek={canEditWeek}
+                data={enforcementTasks}
+                isBusy={isLoadingEnforcement || isPlaceholderEnforcement}
+                // As many as there are, so the table keeps its height while loading.
+                numLoadingRows={enforcementTasks.length}
+                pagination={false}
+                emptyPlaceholder={emptyPlaceholder}
+              />
             </Column>
           )}
           <Column>
             <Heading level={2}>
-              Alle {enforcementTasksAvailable ? "overige" : ""} taken (
-              {dataSource?.count ?? 0})
+              Alle {groupByOwnerView ? "" : enforcementTasksAvailable ? "overige" : ""} taken (
+              {groupByOwnerView ? allTasksCount : dataSource?.count ?? 0})
             </Heading>
             {groupByOwnerView ? (
               groupedTasks.length > 0 ? (
