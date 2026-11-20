@@ -4,16 +4,19 @@ import { type ColumnType } from "@/components/Table/types"
 import { formatDate } from "@/shared/dateFormatters"
 import isDateInPast from "@/shared/isDateInPast"
 import AssignTask from "./AssignTask/AssignTask"
+import WeekNumber from "./WeekNumber/WeekNumber"
 import styles from "./TableTasks.module.css"
 
 type Task = components["schemas"]["CaseUserTask"]
+
+const getWeekNumber = ({ week_number }: Task) => week_number ?? null
 
 const getAddress = ({ case: { address } }: Task) => {
   const { street_name, number, suffix, suffix_letter } = address ?? {}
   return `${street_name} ${number}${suffix ? "-" : ""}${suffix || ""}${suffix_letter ? "-" : ""}${suffix_letter || ""}`
 }
 
-const columns: ColumnType<Task>[] = [
+const getColumns = (canEditWeek: boolean): ColumnType<Task>[] => [
   {
     header: "Toegewezen",
     dataIndex: "owner",
@@ -34,6 +37,18 @@ const columns: ColumnType<Task>[] = [
     header: "Open taak",
     dataIndex: "name",
     minWidth: 200,
+  },
+  {
+    header: "Week",
+    dataIndex: "week_number",
+    noWrap: true,
+    render: (_, record) => (
+      <WeekNumber
+        canEdit={canEditWeek}
+        taskId={record.id}
+        value={getWeekNumber(record)}
+      />
+    ),
   },
   {
     header: "Startdatum",
@@ -70,4 +85,4 @@ const columns: ColumnType<Task>[] = [
   },
 ]
 
-export default columns
+export default getColumns

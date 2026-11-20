@@ -8,6 +8,10 @@ vi.mock("../AssignTask/AssignTask", () => ({
   ),
 }))
 
+vi.mock("../WeekNumber/WeekNumber", () => ({
+  default: ({ value }: { value: number | null }) => <span>{value ?? "-"}</span>,
+}))
+
 type Task = components["schemas"]["CaseUserTask"]
 
 const tasks = [
@@ -37,6 +41,7 @@ describe("TableTasks", () => {
     render(
       <MemoryRouter>
         <TableTasks
+          canEditWeek
           data={tasks}
           isBusy={false}
           pagination={false}
@@ -53,6 +58,7 @@ describe("TableTasks", () => {
       "Amstel 1-H",
       "1011PN",
       "Huisbezoek inplannen",
+      "-",
       "01-12-2019",
       "15-01-2020",
       "Zaakdetails",

@@ -4,6 +4,7 @@ import { CloseIcon, FilterIcon } from "@amsterdam/design-system-react-icons"
 import { MultiSelectFilter } from "@/components/filters/MultiSelectFilter"
 import { type Option, SelectFilter } from "@/components/filters/SelectFilter"
 import filterStyles from "@/components/filters/filters.module.css"
+import { getSortedWeekNumbers } from "@/components/tasks/weekNumbers"
 import {
   defaultTasksFilters as defaults,
   type TasksFilters,
@@ -73,6 +74,11 @@ const pageSizeOptions: Option[] = ["10", "25", "100"].map((size) => ({
   label: size,
 }))
 
+const viewOptions: { label: string; value: TasksFilters["view"] }[] = [
+  { label: "Standaard", value: "standard" },
+  { label: "Per gebruiker", value: "perOwner" },
+]
+
 const all: Option = { value: "", label: "Alle" }
 
 const byName = (options: { name: string }[] = []): Option[] =>
@@ -87,6 +93,11 @@ const noCorporationOption: Option = {
   value: NO_CORPORATION,
   label: "Zonder corporatie",
 }
+
+const weekOptions: Option[] = getSortedWeekNumbers().map((week) => ({
+  value: String(week),
+  label: String(week),
+}))
 
 const CHOOSE_THEME = "Kies eerst een thema"
 
@@ -147,12 +158,13 @@ const TasksFilter: React.FC<Props> = ({
     }))
   }
 
-  // Back to the defaults (your own role); the sorting and the page size stay.
+  // Back to the defaults (your own role); the view settings stay.
   const onResetFilters = () =>
-    update(({ sorting, pagination }) => ({
+    update(({ sorting, pagination, view }) => ({
       ...defaults,
       sorting,
       pagination: { ...pagination, page: 1 },
+      view,
     }))
 
   const hasMoreFiltersActive =
@@ -168,7 +180,8 @@ const TasksFilter: React.FC<Props> = ({
     role !== myRole ||
     filters.owners.length > 0 ||
     filters.taskNames.length > 0 ||
-    filters.districtNames.length > 0
+    filters.districtNames.length > 0 ||
+    filters.weekNumbers.length > 0
 
   const [showAllFilters, setShowAllFilters] = useState(hasMoreFiltersActive)
 
@@ -216,6 +229,12 @@ const TasksFilter: React.FC<Props> = ({
         options={byName(districts)}
         value={filters.districtNames}
         onChange={(value) => onChangeFilter("districtNames", value)}
+      />
+      <MultiSelectFilter
+        label="Week"
+        options={weekOptions}
+        value={filters.weekNumbers}
+        onChange={(value) => onChangeFilter("weekNumbers", value)}
       />
       {showAllFilters && (
         <>
@@ -275,6 +294,17 @@ const TasksFilter: React.FC<Props> = ({
             }))
           }
         }}
+      />
+      <SelectFilter
+        label="Weergave"
+        options={viewOptions}
+        value={filters.view}
+        onChange={(value) =>
+          update((current) => ({
+            view: value as TasksFilters["view"],
+            ...firstPage(current),
+          }))
+        }
       />
       <SelectFilter
         label="Items per pagina"

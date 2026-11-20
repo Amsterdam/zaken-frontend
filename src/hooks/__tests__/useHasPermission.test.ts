@@ -4,7 +4,10 @@ import useHasPermission, {
   SENSITIVE_CASE_PERMISSION,
 } from "@/hooks/useHasPermission"
 
-let me: { data?: { permissions: string[] }; isLoading: boolean }
+let me: {
+  data?: { permissions: components["schemas"]["PermissionsEnum"][] }
+  isLoading: boolean
+}
 
 vi.mock("@/api/hooks", () => ({
   useUsersMe: () => me,
