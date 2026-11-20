@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router"
-import { Button } from "@amsterdam/design-system-react"
+import { Button, Grid } from "@amsterdam/design-system-react"
 import useHasPermission from "@/hooks/useHasPermission"
 import isValidUrlParamBAGId from "@/router/utils/isValidUrlParamBAGId"
 import Advertisements from "@/components/addresses/Advertisements/Advertisements"
@@ -21,20 +21,26 @@ const IndexPage: React.FC = () => {
 
   return (
     <AddressPage bagId={bagId}>
-      <CasesByBagId
-        bagId={bagId}
-        openCases={true}
-        title="Open zaken"
-        emptyText="Op dit adres zijn er geen open zaken"
-      />
-      <CasesByBagId
-        title="Gesloten zaken AZA"
-        bagId={bagId}
-        emptyText="Op dit adres zijn geen gesloten zaken"
-      />
+      <Grid.Cell span="all">
+        <CasesByBagId
+          bagId={bagId}
+          openCases={true}
+          title="Open zaken"
+          emptyText="Op dit adres zijn er geen open zaken"
+        />
+      </Grid.Cell>
+      <Grid.Cell span="all">
+        <CasesByBagId
+          title="Gesloten zaken AZA"
+          bagId={bagId}
+          emptyText="Op dit adres zijn geen gesloten zaken"
+        />
+      </Grid.Cell>
       {/* The advertisements of the open cases. */}
-      <Advertisements bagId={bagId} />
-      <div>
+      <Grid.Cell span="all">
+        <Advertisements bagId={bagId} />
+      </Grid.Cell>
+      <Grid.Cell span="all" appearance="transparent">
         <Button
           disabled={!canCreateCase}
           title={
@@ -45,7 +51,7 @@ const IndexPage: React.FC = () => {
         >
           Nieuwe zaak aanmaken
         </Button>
-      </div>
+      </Grid.Cell>
     </AddressPage>
   )
 }

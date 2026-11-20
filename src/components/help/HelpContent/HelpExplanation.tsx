@@ -10,7 +10,7 @@ import { RouterLink } from "@/components/DefaultLayout/RouterLink"
 const titleShort = "AZA"
 
 const HelpExplanation: React.FC = () => (
-  <Accordion headingLevel={2}>
+  <Accordion headingLevel={3}>
     <Accordion.Section label="Zoeken" defaultExpanded>
       <Column>
         <Paragraph>

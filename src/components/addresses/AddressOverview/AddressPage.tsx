@@ -1,5 +1,5 @@
 import { type ReactNode } from "react"
-import { Column, Grid } from "@amsterdam/design-system-react"
+import { Grid } from "@amsterdam/design-system-react"
 import { DefaultLayout } from "@/components/DefaultLayout/DefaultLayout"
 import { PageHeading } from "@/components/PageHeading/PageHeading"
 import AddressHeading from "./AddressHeading"
@@ -20,12 +20,10 @@ const AddressPage: React.FC<Props> = ({ bagId, children }) => (
     <PageHeading hideBreadcrumbs>
       <AddressHeading bagId={bagId} />
     </PageHeading>
-    <Grid.Cell span="all">
-      <Column gap="large">
-        <AddressTabs bagId={bagId} />
-        {children}
-      </Column>
+    <Grid.Cell span="all" appearance="flush">
+      <AddressTabs bagId={bagId} />
     </Grid.Cell>
+    <Grid.Subgrid span="all">{children}</Grid.Subgrid>
   </DefaultLayout>
 )
 

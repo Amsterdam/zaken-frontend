@@ -29,16 +29,9 @@ import TasksIndexPage from "@/pages/tasks/IndexPage"
 import RequirePermissions from "./RequirePermissions"
 import Root from "./Root"
 import RouteErrorPage from "./RouteErrorPage"
+import { type RouteHandle, setRoutes } from "./routeTitles"
 
 type Permission = components["schemas"]["PermissionsEnum"]
-
-/**
- * What a route says about itself. Its title is the title of the browser tab
- * and its name in the breadcrumbs; the routes above it are the path to it.
- */
-export type RouteHandle = {
-  title: string
-}
 
 const titled = (title: string): { handle: RouteHandle } => ({
   handle: { title },
@@ -205,3 +198,5 @@ export const routes: RouteObject[] = [
     ],
   },
 ]
+
+setRoutes(routes)

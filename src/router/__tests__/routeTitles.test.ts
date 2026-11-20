@@ -1,3 +1,5 @@
+// The routes hand themselves over to routeTitles when they are imported.
+import "../routes"
 import { getPageTitle, getTitledRoutes } from "../routeTitles"
 
 vi.mock("react-oidc-context", () => ({ useAuth: () => ({}) }))

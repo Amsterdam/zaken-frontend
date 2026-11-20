@@ -17,7 +17,7 @@ Dezelfde stack als `top-frontend-v2`: Vite, TypeScript, React 19, Amsterdam Desi
 - `src/api`: de hooks voor de API (TanStack Query), de query keys en `useApiFetch`.
 - `src/components`: gedeelde componenten (mappen met een hoofdletter, zoals `Table`, `FormPage`, `FormDialog`, `DefaultLayout`) en de componenten van één onderdeel van de app (mappen met een kleine letter, zoals `case`, `cases`, `addresses`, `tasks`).
 - `src/pages`: de pagina's, per onderdeel van de app.
-- `src/router`: de routes (`routes.tsx`), de rechten per route (`RequirePermissions`) en de titel van het tabblad. Een paginatest begint met `import "@/router/routes"`, omdat pagina's, layout en routes elkaar importeren.
+- `src/router`: de routes (`routes.tsx`), de rechten per route (`RequirePermissions`) en de titel van het tabblad. Een paginatest importeert `@/router/routes`: de routes geven hun titels door aan de breadcrumbs en de titel van het tabblad (`setRoutes` in `routeTitles.ts`). Importeer `routes.tsx` niet vanuit iets wat een pagina gebruikt: die kring laat Vite bij elke wijziging de hele pagina verversen.
 - `src/config`, `src/hooks`, `src/shared`, `src/styles`, `src/types`: instellingen, gedeelde hooks, functies en constanten zonder React, globale stijlen en eigen types.
 
 ## Regels

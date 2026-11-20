@@ -1,5 +1,24 @@
-import { matchRoutes } from "react-router"
-import { type RouteHandle, routes } from "./routes"
+import { matchRoutes, type RouteObject } from "react-router"
+
+/**
+ * What a route says about itself. Its title is the title of the browser tab
+ * and its name in the breadcrumbs; the routes above it are the path to it.
+ */
+export type RouteHandle = {
+  title: string
+}
+
+/**
+ * The routes, handed over by routes.tsx. This file does not import them: the
+ * pages import the layout, which uses these titles, and routes.tsx imports the
+ * pages. That circle would make Vite reload the whole page on every change to
+ * a page, instead of only replacing the page (HMR).
+ */
+let routes: RouteObject[] = []
+
+export const setRoutes = (value: RouteObject[]) => {
+  routes = value
+}
 
 const titleOf = (handle: unknown) => (handle as RouteHandle | undefined)?.title
 
