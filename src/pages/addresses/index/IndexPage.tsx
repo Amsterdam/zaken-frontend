@@ -39,20 +39,18 @@ const IndexPage: React.FC = () => {
       {/* The advertisements of the open cases. */}
       <Grid.Cell span="all">
         <Advertisements bagId={bagId} />
-        <div>
-          <Button
-            disabled={!canCreateCase}
-            title={
-              canCreateCase
-                ? undefined
-                : "U heeft geen permissie tot deze actie"
-            }
-            onClick={() => navigate(`/adres/${bagId}/zaken/nieuw`)}
-            data-testid="btn_add_case"
-          >
-            Nieuwe zaak aanmaken
-          </Button>
-        </div>
+      </Grid.Cell>
+      <Grid.Cell span="all" appearance="transparent">
+        <Button
+          disabled={!canCreateCase}
+          title={
+            canCreateCase ? undefined : "U heeft geen permissie tot deze actie"
+          }
+          onClick={() => navigate(`/adres/${bagId}/zaken/nieuw`)}
+          data-testid="btn_add_case"
+        >
+          Nieuwe zaak aanmaken
+        </Button>
       </Grid.Cell>
     </AddressPage>
   )

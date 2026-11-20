@@ -2,20 +2,6 @@ import { render, screen } from "@testing-library/react"
 import { Description } from "../Description"
 
 describe("Description", () => {
-  it("renders labels and values as DataList items", () => {
-    const { container } = render(
-      <Description data={[{ label: "Datum", value: "3 nov 2011" }]} />,
-    )
-
-    const list = container.querySelector("dl.ams-data-list")
-    expect(list?.children).toHaveLength(1)
-    expect(screen.getByRole("term").textContent).toBe("Datum")
-    expect(screen.getByRole("definition").textContent).toBe("3 nov 2011")
-    expect(screen.getByRole("term").parentElement?.className).toContain(
-      "ams-data-list__item",
-    )
-  })
-
   it.each([undefined, 5])("renders loading rows (%s)", (numLoadingRows) => {
     const { container } = render(
       <Description
@@ -25,20 +11,24 @@ describe("Description", () => {
       />,
     )
 
-    const rows = container.querySelectorAll(".ams-data-list__item")
-    expect(rows).toHaveLength(numLoadingRows ?? 3)
-    for (const row of rows) {
-      expect(row.querySelector("dt .ams-skeleton")).not.toBeNull()
-      expect(row.querySelector("dd .ams-skeleton")).not.toBeNull()
+    const terms = container.querySelectorAll("dt")
+    const descriptions = container.querySelectorAll("dd")
+    expect(terms).toHaveLength(numLoadingRows ?? 3)
+    expect(descriptions).toHaveLength(numLoadingRows ?? 3)
+    for (const cell of [...terms, ...descriptions]) {
+      expect(cell.querySelector(".ams-skeleton")).not.toBeNull()
     }
     expect(screen.queryByText("Datum")).toBeNull()
   })
 
-  it("preserves custom classes", () => {
-    const { container } = render(<Description data={[]} className="custom" />)
+  it("keeps a custom class next to dense", () => {
+    const { container } = render(
+      <Description data={[]} className="custom" dense />,
+    )
 
-    const list = container.querySelector("dl.ams-data-list")
+    const list = container.querySelector("dl.ams-description-list")
     expect(list?.classList.contains("custom")).toBe(true)
+    expect(list?.className).toMatch(/dense/)
   })
 
   it("keeps the line breaks in a value", () => {

@@ -1,7 +1,7 @@
-import { Column } from "@amsterdam/design-system-react"
+import { Column, DataList, Skeleton } from "@amsterdam/design-system-react"
 import { HouseIcon, AreaIcon } from "@amsterdam/design-system-react-icons"
 import { useBenkAgg } from "@/api/hooks"
-import { Description } from "@/components/Description/Description"
+import type { DescriptionItem } from "@/components/Description/Description"
 import { getAddressFromBenkAggResponse } from "@/components/addresses/utils"
 import { formatDate } from "@/shared/dateFormatters"
 import { HeadingWithIcon } from "@/components/HeadingWithIcon/HeadingWithIcon"
@@ -16,7 +16,7 @@ const capitalize = <T extends string | number>(value: T) =>
     ? value.charAt(0).toUpperCase() + value.slice(1)
     : value
 
-// An empty value is left out of the list (the Description skips undefined).
+// An empty value is left out of the list (DetailsList skips undefined).
 const text = (value?: string | number | null) =>
   value === null || value === undefined || value === ""
     ? undefined
@@ -42,6 +42,41 @@ const fromBuildings = (buildings: string[] | null | undefined, key: string) =>
     }),
   )
 
+type DetailsListProps = {
+  items: DescriptionItem[]
+  loading: boolean
+  numLoadingRows: number
+}
+
+/** The details as a Data List; items without a value are left out. */
+const DetailsList = ({ items, loading, numLoadingRows }: DetailsListProps) => (
+  <DataList>
+    {loading
+      ? Array.from({ length: numLoadingRows }, (_, index) => (
+          <DataList.Item key={index}>
+            <DataList.Key>
+              <Skeleton>
+                <Skeleton.Paragraph lines={1} />
+              </Skeleton>
+            </DataList.Key>
+            <DataList.Value>
+              <Skeleton>
+                <Skeleton.Paragraph lines={1} />
+              </Skeleton>
+            </DataList.Value>
+          </DataList.Item>
+        ))
+      : items
+          .filter(({ value }) => value !== null && value !== undefined)
+          .map(({ label, value }, index) => (
+            <DataList.Item key={index}>
+              <DataList.Key>{label}</DataList.Key>
+              <DataList.Value>{value}</DataList.Value>
+            </DataList.Item>
+          ))}
+  </DataList>
+)
+
 /** What kind of home an address is, and where it lies (from the BAG). */
 const ObjectDetails: React.FC<Props> = ({ bagId }) => {
   const { data: benkAggResponse, isLoading: isBusy } = useBenkAgg(bagId)
@@ -57,11 +92,10 @@ const ObjectDetails: React.FC<Props> = ({ bagId }) => {
           level={2}
           className="ams-mb-m"
         />
-        <Description
-          termsWidth="medium"
+        <DetailsList
           loading={isBusy}
           numLoadingRows={10}
-          data={[
+          items={[
             {
               label: "Gebruiksdoel",
               value: list(object?.gebruiksdoelOmschrijvingen),
@@ -150,11 +184,10 @@ const ObjectDetails: React.FC<Props> = ({ bagId }) => {
           level={2}
           className="ams-mb-m"
         />
-        <Description
-          termsWidth="medium"
+        <DetailsList
           loading={isBusy}
           numLoadingRows={3}
-          data={[
+          items={[
             { label: "Stadsdeel", value: text(object?.gebiedenStadsdeelNaam) },
             { label: "Wijk", value: text(object?.gebiedenWijkNaam) },
             { label: "Buurt", value: text(object?.gebiedenBuurtNaam) },
