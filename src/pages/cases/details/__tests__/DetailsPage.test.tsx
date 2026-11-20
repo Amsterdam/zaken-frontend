@@ -1,5 +1,4 @@
-// First, like the app does: the page imports the layout, which imports the
-// routes, which import this page (circular).
+// The routes hand their titles to the breadcrumbs and the tab title.
 import "@/router/routes"
 import { render, screen, within } from "@testing-library/react"
 import { MemoryRouter, Route, Routes } from "react-router"
