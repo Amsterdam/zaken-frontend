@@ -1,11 +1,6 @@
 // The routes hand their titles to the breadcrumbs and the tab title.
 import "@/router/routes"
-import {
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-} from "@testing-library/react"
+import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { MemoryRouter, Route, Routes, useLocation } from "react-router"
 import { ToastProvider } from "@/components/toasts/ToastProvider"
 import CreatePage from "../CreatePage"

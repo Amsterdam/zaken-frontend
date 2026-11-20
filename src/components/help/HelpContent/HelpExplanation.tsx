@@ -153,9 +153,9 @@ const HelpExplanation: React.FC = () => (
         </UnorderedList>
         <Paragraph>
           In het diagram zoom je in en uit door Ctrl ingedrukt te houden en te
-          scrollen. Je verschuift het diagram door te slepen of te scrollen. Het
-          adres van de pagina onthoudt je keuze, dus je kan de link delen met
-          een collega.
+          scrollen. Je verschuift het diagram door te slepen of te scrollen; met
+          Shift ingedrukt scroll je opzij. Het adres van de pagina onthoudt je
+          keuze, dus je kan de link delen met een collega.
         </Paragraph>
         <Paragraph>
           Als een zaak wordt afgesloten, worden de processen van die zaak

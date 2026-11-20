@@ -1,12 +1,11 @@
-import { Grid, Heading } from "@amsterdam/design-system-react"
+import { Grid } from "@amsterdam/design-system-react"
 import { DefaultLayout } from "@/components/DefaultLayout/DefaultLayout"
+import { PageHeading } from "@/components/PageHeading/PageHeading"
 import HelpContent from "@/components/help/HelpContent/HelpContent"
 
 const HelpPage: React.FC = () => (
   <DefaultLayout>
-    <Grid.Cell span="all" appearance="transparent">
-      <Heading level={1}>Hulp</Heading>
-    </Grid.Cell>
+    <PageHeading title="Hulp" />
     <Grid.Cell span="all">
       <HelpContent />
     </Grid.Cell>

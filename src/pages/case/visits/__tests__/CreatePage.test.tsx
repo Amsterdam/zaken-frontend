@@ -124,6 +124,7 @@ describe("the page to add the result of a visit by hand", () => {
       expect(createVisit).toHaveBeenCalledWith({
         case: 12,
         task: "34",
+        type: "visit",
         top_visit_id: 42,
         completed: true,
         author_ids: ["a1", "b2"],
@@ -155,6 +156,7 @@ describe("the page to add the result of a visit by hand", () => {
       expect(createVisit).toHaveBeenCalledWith({
         case: 12,
         task: "34",
+        type: "visit",
         top_visit_id: 42,
         completed: true,
         author_ids: ["a1", "b2"],

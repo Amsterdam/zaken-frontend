@@ -1,6 +1,6 @@
 import { type MouseEvent } from "react"
 import { useLocation, useNavigate } from "react-router"
-import { Breadcrumb, Grid } from "@amsterdam/design-system-react"
+import { Breadcrumb } from "@amsterdam/design-system-react"
 import { getTitledRoutes } from "@/router/routeTitles"
 import { type LinkState } from "./RouterLink"
 
@@ -12,6 +12,9 @@ type Item = { title: string; href: string }
  * (the tasks overview, an address), that page takes the place of the pages in
  * between: "Home / Takenoverzicht / Zaakdetails". Only shown on nested pages:
  * a page directly below home (e.g. /hulp) has no breadcrumbs.
+ *
+ * Without a Grid.Cell of its own: it goes in the cell of the page title (see
+ * PageHeading), as in the examples of the Amsterdam Design System.
  */
 export function Breadcrumbs() {
   const navigate = useNavigate()
@@ -36,14 +39,12 @@ export function Breadcrumbs() {
   }
 
   return (
-    <Grid.Cell span="all" appearance="transparent">
-      <Breadcrumb>
-        {items.map(({ title, href }) => (
-          <Breadcrumb.Link key={href} href={href} onClick={navigateTo(href)}>
-            {title}
-          </Breadcrumb.Link>
-        ))}
-      </Breadcrumb>
-    </Grid.Cell>
+    <Breadcrumb>
+      {items.map(({ title, href }) => (
+        <Breadcrumb.Link key={href} href={href} onClick={navigateTo(href)}>
+          {title}
+        </Breadcrumb.Link>
+      ))}
+    </Breadcrumb>
   )
 }

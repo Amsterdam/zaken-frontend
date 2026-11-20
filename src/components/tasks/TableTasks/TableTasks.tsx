@@ -1,10 +1,11 @@
 import { Table } from "@/components/Table/Table"
 import useMediaQuery from "@/hooks/useMediaQuery"
-import columns from "./columns"
+import getColumns from "./columns"
 import createResponsiveColumns from "./createPrioritizedColumns"
 
 type Props = {
   data?: components["schemas"]["CaseUserTask"][]
+  canEditWeek: boolean
   isBusy: boolean
   numLoadingRows?: number
   onChange?: (pagination: TABLE.Schemas.Pagination) => void
@@ -14,6 +15,7 @@ type Props = {
 
 const TableTasks: React.FC<Props> = ({
   data,
+  canEditWeek,
   isBusy,
   numLoadingRows,
   onChange,
@@ -22,7 +24,10 @@ const TableTasks: React.FC<Props> = ({
 }) => {
   const { windowWidth } = useMediaQuery()
 
-  const prioritizedColumns = createResponsiveColumns(columns, windowWidth)
+  const prioritizedColumns = createResponsiveColumns(
+    getColumns(canEditWeek),
+    windowWidth,
+  )
 
   return (
     <Table

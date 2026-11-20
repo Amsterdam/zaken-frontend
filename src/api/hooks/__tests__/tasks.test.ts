@@ -1,5 +1,6 @@
 import { act, renderHook, waitFor } from "@testing-library/react"
 import {
+  useAssignTaskWeek,
   useAssignTask,
   useCase,
   useCaseWorkflows,
@@ -159,7 +160,9 @@ describe("useTasks", () => {
           sorting: { dataIndex: "due_date", order: "DESCEND" },
           theme: "Vakantieverhuur",
           tags: ["Spoed", "Extra"],
+          weekNumbers: ["47", "48"],
           subjects: [],
+          hasOwner: false,
           owner: undefined,
           role: "",
           isEnforcementRequest: false,
@@ -180,9 +183,13 @@ describe("useTasks", () => {
       ["theme_name", "Vakantieverhuur"],
       ["tag", "Spoed"],
       ["tag", "Extra"],
+      ["has_owner", "false"],
       ["housing_corporation_isnull", "true"],
+      ["week_number", "47"],
+      ["week_number", "48"],
       ["ordering", "-due_date,-id"],
     ])
+    expect(url.searchParams.has("week_segment")).toBe(false)
   })
 
   it("keeps showing the previous page while the next one loads", async () => {
@@ -275,3 +282,43 @@ describe("useAssignTask", () => {
     expect(queryClient.getQueryState(listKey)?.isInvalidated).toBe(false)
   })
 })
+
+describe("useAssignTaskWeek", () => {
+  afterEach(() => {
+    vi.unstubAllGlobals()
+  })
+
+  it("patches only week_number and updates the task list cache", async () => {
+    const fetchMock = vi.fn().mockResolvedValue(jsonResponse({}))
+    vi.stubGlobal("fetch", fetchMock)
+    const { Wrapper, queryClient } = createQueryWrapper()
+    const listKey = queryKeys.cases.tasks({ page: 1 })
+    queryClient.setQueryData(listKey, {
+      count: 2,
+      results: [
+        { id: 12, week_number: null },
+        { id: 13, week_number: 50 },
+      ],
+    })
+
+    const { result } = renderHook(() => useAssignTaskWeek(12), {
+      wrapper: Wrapper,
+    })
+    await act(() => result.current.mutateAsync(48))
+
+    expect(fetchMock).toHaveBeenCalledTimes(1)
+    const [url, init] = fetchMock.mock.calls[0]
+    expect(url).toMatch(/\/tasks\/12\/$/)
+    expect(init).toMatchObject({
+      method: "PATCH",
+      body: JSON.stringify({ week_number: 48 }),
+    })
+    expect(init.body).not.toContain("week_segment")
+    expect(
+      queryClient
+        .getQueryData<{ results: { week_number: number | null }[] }>(listKey)
+        ?.results.map(({ week_number }) => week_number),
+    ).toEqual([48, 50])
+  })
+})
+

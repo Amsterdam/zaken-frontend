@@ -27,6 +27,8 @@ describe("the filters of the tasks overview in the URL", () => {
       tags: ["6"],
       taskNames: ["Huisbezoek inplannen"],
       theme: "Vakantieverhuur",
+      view: "perOwner" as const,
+      weekNumbers: ["2", "3"],
     }
 
     const params = serializeTasksFilters(filters)
@@ -34,8 +36,9 @@ describe("the filters of the tasks overview in the URL", () => {
     expect(params.toString()).toBe(
       "aanleiding=Project&thema=Vakantieverhuur&stadsdeel=Centrum&stadsdeel=Noord" +
         "&corporatie=7&toegewezen=abc-123&project=3&onderwerp=4&tag=6" +
-        "&taak=Huisbezoek+inplannen&zonderCorporatie=ja&rol=Toezichthouder" +
-        "&pagina=3&perPagina=100&sorteer=-taak",
+        "&taak=Huisbezoek+inplannen&week=2&week=3&zonderCorporatie=ja" +
+        "&weergave=perGebruiker" +
+        "&rol=Toezichthouder&pagina=3&perPagina=100&sorteer=-taak",
     )
     expect(parseTasksFilters(params)).toEqual(filters)
   })

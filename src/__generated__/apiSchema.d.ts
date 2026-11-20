@@ -488,6 +488,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/cases/allowed-jump-workflows/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Get the allowed targets for starting a case at a subworkflow */
+        get: operations["cases_allowed_jump_workflows_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/cases/bag-ids/": {
         parameters: {
             query?: never;
@@ -547,6 +564,40 @@ export interface paths {
         };
         /** @description Gets all district names */
         get: operations["cases_district_names_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/cases/process-file/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Process an uploaded bulk case import file. Dry runs return results immediately; dry_run=false queues a Celery task and returns its ID. Poll process-file/{task_id}/status for the state and import result within 24 hours of submission. */
+        post: operations["cases_process_file_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/cases/process-file/{task_id}/status/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Get the state and result of your queued bulk import. Status is available for 24 hours after submission. Unknown, expired, and other users' task IDs return 404. */
+        get: operations["cases_process_file_status_retrieve"];
         put?: never;
         post?: never;
         delete?: never;
@@ -841,12 +892,24 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * @description A saved puntentelling. `completed` only shows whether the author is done with it;
+         *     it can still be changed and deleted either way.
+         */
         get: operations["puntenteller_puntentellingen_retrieve"];
         put?: never;
         post?: never;
-        delete?: never;
+        /**
+         * @description A saved puntentelling. `completed` only shows whether the author is done with it;
+         *     it can still be changed and deleted either way.
+         */
+        delete: operations["puntenteller_puntentellingen_destroy"];
         options?: never;
         head?: never;
+        /**
+         * @description A saved puntentelling. `completed` only shows whether the author is done with it;
+         *     it can still be changed and deleted either way.
+         */
         patch: operations["puntenteller_puntentellingen_partial_update"];
         trace?: never;
     };
@@ -1514,6 +1577,8 @@ export interface components {
              * @enum {string}
              */
             naam: "BadkamerRuimte";
+            /** @description Hoe de ruimte aan de voorkant wordt weergegeven, bijvoorbeeld 'Woonkamer met open keuken'. Om de puntentelling weer te kunnen openen; de berekening gebruikt naam, behalve 'Woonkamer met open keuken' (verwarming telt dubbel). */
+            weergavenaam?: string | null;
             /** Format: decimal */
             ruimte_m2: string;
             /** @default false */
@@ -1571,6 +1636,8 @@ export interface components {
         };
         Buitenruimte: {
             naam: components["schemas"]["BuitenruimteNaamEnum"];
+            /** @description Hoe de ruimte aan de voorkant wordt weergegeven, bijvoorbeeld 'Woonkamer met open keuken'. Om de puntentelling weer te kunnen openen; de berekening gebruikt naam, behalve 'Woonkamer met open keuken' (verwarming telt dubbel). */
+            weergavenaam?: string | null;
             /** Format: decimal */
             ruimte_m2: string;
             /** @default 1 */
@@ -1601,6 +1668,7 @@ export interface components {
             ton_ids?: string[] | null;
             /** Format: date-time */
             readonly last_updated: string;
+            is_bed_and_breakfast?: boolean;
         };
         /** @description Case-address serializer for CaseUserTasks */
         CaseAddress: {
@@ -1658,6 +1726,14 @@ export interface components {
             housing_corporation?: number;
             readonly state: string;
             readonly workflows: components["schemas"]["CaseWorkflow"][];
+            /**
+             * @description Start the case at the first task of this subworkflow (see docs/jump_to.md)
+             *
+             *     * `summon` - Aanschrijving
+             *     * `unoccupied` - Leegstandsmelding
+             *     * `debrief` - Debrief
+             */
+            jump_to?: (components["schemas"]["JumpToEnum"] | components["schemas"]["NullEnum"]) | null;
             /** Format: date */
             start_date?: string | null;
             /** Format: date */
@@ -1671,13 +1747,11 @@ export interface components {
             /** Format: date-time */
             readonly created: string;
             is_enforcement_request?: boolean;
-            /**
-             * Format: uri
-             * @description This is the case that can be found in openzaak.
-             */
-            case_url?: string | null;
+            /** @description This is the case that can be found in openzaak. */
+            case_url?: (string) | null;
             /** @description This field determines if the case is deleted in openzaak. */
             case_deleted?: boolean;
+            is_bed_and_breakfast?: boolean;
             previous_case?: number | null;
         };
         CaseData: {
@@ -1709,13 +1783,11 @@ export interface components {
             /** Format: date-time */
             readonly created: string;
             is_enforcement_request?: boolean;
-            /**
-             * Format: uri
-             * @description This is the case that can be found in openzaak.
-             */
-            case_url?: string | null;
+            /** @description This is the case that can be found in openzaak. */
+            case_url?: (string) | null;
             /** @description This field determines if the case is deleted in openzaak. */
             case_deleted?: boolean;
+            is_bed_and_breakfast?: boolean;
             previous_case?: number | null;
             /** Format: uuid */
             author?: string | null;
@@ -1744,6 +1816,7 @@ export interface components {
             /** Format: date-time */
             readonly last_updated: string;
             is_enforcement_request?: boolean;
+            is_bed_and_breakfast?: boolean;
             previous_case?: number | null;
         };
         CaseEvent: {
@@ -1768,6 +1841,49 @@ export interface components {
          * @enum {string}
          */
         CaseEventTypeEnum: "DEBRIEFING" | "VISIT" | "CASE" | "CASE_CLOSE" | "SUMMON" | "GENERIC_TASK" | "SCHEDULE" | "CITIZEN_REPORT";
+        CaseFileProcessResult: {
+            result: {
+                [key: string]: unknown;
+            };
+        };
+        CaseFileTaskResult: {
+            task_id: string;
+        };
+        CaseFileTaskStatus: {
+            task_id: string;
+            status: string;
+            result: {
+                [key: string]: unknown;
+            } | null;
+            error: string | null;
+        };
+        CaseFileUpload: {
+            /**
+             * Format: uri
+             * @description Excel file, maximum 2 MiB.
+             */
+            file: string;
+            /** @default true */
+            dry_run: boolean;
+            readonly theme: components["schemas"]["CaseTheme"];
+            theme_id: number;
+            readonly reason: components["schemas"]["CaseReason"];
+            reason_id?: number;
+            readonly project: components["schemas"]["CaseProject"];
+            project_id?: number;
+            readonly subjects: components["schemas"]["Subject"][];
+            subject_ids?: number[];
+            /**
+             * @description Start the case at the first task of this subworkflow (see docs/jump_to.md)
+             *
+             *     * `summon` - Aanschrijving
+             *     * `unoccupied` - Leegstandsmelding
+             *     * `debrief` - Debrief
+             */
+            jump_to?: (components["schemas"]["JumpToEnum"] | components["schemas"]["NullEnum"]) | null;
+            /** @description A short explanation for all cases, above the one of the row (the column 'toelichting'). */
+            description?: string;
+        };
         CaseProject: {
             readonly id: number;
             name: string;
@@ -1800,6 +1916,7 @@ export interface components {
             name: string;
             /** Format: date-time */
             due_date: string;
+            week_number?: number | null;
             /** Format: date-time */
             readonly created: string;
             /** Format: date-time */
@@ -1914,6 +2031,7 @@ export interface components {
             /** Format: date-time */
             readonly created: string;
             is_enforcement_request?: boolean;
+            is_bed_and_breakfast?: boolean;
         };
         DataTeamSchedule: {
             priority: components["schemas"]["SchedulePriority"];
@@ -1979,7 +2097,7 @@ export interface components {
             /** Format: decimal */
             sanction_amount?: string | null;
             /** Format: date-time */
-            readonly date_added: string;
+            date_added?: string;
             sanction_id?: string | null;
             active?: boolean;
         };
@@ -2077,19 +2195,8 @@ export interface components {
             energie: {
                 [key: string]: unknown;
             } | null;
-        };
-        GebruikersinvoerCreateResponse: {
-            rubrieken: {
-                [key: string]: number;
-            };
-            energieprestatie_berekening: unknown;
-            /** Format: double */
-            totaal_punten_bruto: number;
-            correcties: {
-                [key: string]: unknown;
-            };
-            /** Format: double */
-            totaal_punten_na_caps: number;
+            monument: boolean;
+            monument_soort: string | null;
         };
         GebruikersinvoerRequest: {
             readonly id: number;
@@ -2122,6 +2229,11 @@ export interface components {
             monument_soort?: string | null;
             /** Format: date */
             huurovereenkomst_afgesloten_op?: string | null;
+            huidige_huurprijs?: number | null;
+            /** Format: date-time */
+            readonly created: string;
+            /** Format: date-time */
+            readonly updated: string;
         };
         GebruikersinvoerResponse: {
             readonly id: number;
@@ -2140,6 +2252,8 @@ export interface components {
             vertrekken?: components["schemas"]["VertrekRuimteResponse"][];
             overige_ruimten?: components["schemas"]["OverigeRuimteResponse"][];
             verkeersruimten?: components["schemas"]["VerkeersRuimteResponse"][];
+            /** @description Toezichthouder die de puntentelling maakte; leeg als die niet meer bestaat. */
+            readonly author: components["schemas"]["User"] | null;
             /** Format: double */
             punten: number;
             punten_resultaat: components["schemas"]["PuntentellerResultaat"];
@@ -2157,9 +2271,12 @@ export interface components {
             monument_soort?: string | null;
             /** Format: date */
             huurovereenkomst_afgesloten_op?: string | null;
+            huidige_huurprijs?: number | null;
+            /** Format: date-time */
+            readonly created: string;
+            /** Format: date-time */
+            readonly updated: string;
             adres: number;
-            /** Format: uuid */
-            gebruiker?: string | null;
         };
         GenericCompletedTask: {
             readonly id: number;
@@ -2186,6 +2303,11 @@ export interface components {
             readonly id: number;
             name: string;
         };
+        Huurprijsopslag: {
+            naam: string;
+            /** Format: double */
+            procent: number;
+        };
         /**
          * @description * `J` - J
          *     * `N` - N
@@ -2208,12 +2330,25 @@ export interface components {
         IsAuthorized: {
             is_authorized: boolean;
         };
+        /**
+         * @description * `summon` - Aanschrijving
+         *     * `unoccupied` - Leegstandsmelding
+         *     * `debrief` - Debrief
+         * @enum {string}
+         */
+        JumpToEnum: "summon" | "unoccupied" | "debrief";
+        JumpToTarget: {
+            value: string;
+            label: string;
+        };
         KeukenRuimte: {
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
              */
             naam: "null";
+            /** @description Hoe de ruimte aan de voorkant wordt weergegeven, bijvoorbeeld 'Woonkamer met open keuken'. Om de puntentelling weer te kunnen openen; de berekening gebruikt naam, behalve 'Woonkamer met open keuken' (verwarming telt dubbel). */
+            weergavenaam?: string | null;
             /** Format: decimal */
             ruimte_m2: string;
             /** @default false */
@@ -2262,12 +2397,39 @@ export interface components {
             thermostatische_mengkraan: number;
             /** @default 0 */
             kokendwaterfunctie: number;
+            /**
+             * @description Telt als een eenhandsmengkraan plus een kokendwaterfunctie.
+             * @default 0
+             */
+            eenhandsmengkraan_kookfunctie: number;
+            /**
+             * @description Telt als een thermostatische mengkraan plus een kokendwaterfunctie.
+             * @default 0
+             */
+            thermostatische_mengkraan_kookfunctie: number;
         };
         /**
          * @description * `keuken` - Keuken
          * @enum {string}
          */
         KeukenRuimteNaamEnum: "keuken";
+        MaximaleHuurprijs: {
+            /**
+             * Format: double
+             * @description Maximale kale huur per maand bij het puntentotaal.
+             */
+            bedrag: number;
+            /**
+             * Format: double
+             * @description Maximale kale huur per maand inclusief de huurprijsopslagen.
+             */
+            met_opslagen: number;
+            /**
+             * Format: date
+             * @description Ingangsdatum van de gebruikte huurprijstabel.
+             */
+            prijspeil: string;
+        };
         Meldingen: {
             pageNumber: number;
             pageSize: number;
@@ -2278,6 +2440,8 @@ export interface components {
             }[];
             fifteenNightsRuleApplicable: boolean;
         };
+        /** @enum {unknown} */
+        NullEnum: null;
         OIDCAuthenticate: {
             code: string;
         };
@@ -2643,21 +2807,6 @@ export interface components {
             previous?: string | null;
             results: components["schemas"]["District"][];
         };
-        PaginatedGebruikersinvoerResponseList: {
-            /** @example 123 */
-            count: number;
-            /**
-             * Format: uri
-             * @example http://api.example.org/accounts/?offset=400&limit=100
-             */
-            next?: string | null;
-            /**
-             * Format: uri
-             * @example http://api.example.org/accounts/?offset=200&limit=100
-             */
-            previous?: string | null;
-            results: components["schemas"]["GebruikersinvoerResponse"][];
-        };
         PaginatedGenericCompletedTaskList: {
             /** @example 123 */
             count: number;
@@ -2687,6 +2836,21 @@ export interface components {
              */
             previous?: string | null;
             results: components["schemas"]["HousingCorporation"][];
+        };
+        PaginatedJumpToTargetList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["JumpToTarget"][];
         };
         PaginatedMeldingenList: {
             /** @example 123 */
@@ -2960,6 +3124,8 @@ export interface components {
         };
         Parkeerruimte: {
             naam: components["schemas"]["ParkeerruimteNaamEnum"];
+            /** @description Hoe de ruimte aan de voorkant wordt weergegeven, bijvoorbeeld 'Woonkamer met open keuken'. Om de puntentelling weer te kunnen openen; de berekening gebruikt naam, behalve 'Woonkamer met open keuken' (verwarming telt dubbel). */
+            weergavenaam?: string | null;
             /** @default 0 */
             aantal_gesloten_garage_bij_complex: number;
             /** @default 0 */
@@ -3014,6 +3180,14 @@ export interface components {
             housing_corporation?: number;
             readonly state?: string;
             readonly workflows?: components["schemas"]["CaseWorkflow"][];
+            /**
+             * @description Start the case at the first task of this subworkflow (see docs/jump_to.md)
+             *
+             *     * `summon` - Aanschrijving
+             *     * `unoccupied` - Leegstandsmelding
+             *     * `debrief` - Debrief
+             */
+            jump_to?: (components["schemas"]["JumpToEnum"] | components["schemas"]["NullEnum"]) | null;
             /** Format: date */
             start_date?: string | null;
             /** Format: date */
@@ -3027,13 +3201,11 @@ export interface components {
             /** Format: date-time */
             readonly created?: string;
             is_enforcement_request?: boolean;
-            /**
-             * Format: uri
-             * @description This is the case that can be found in openzaak.
-             */
-            case_url?: string | null;
+            /** @description This is the case that can be found in openzaak. */
+            case_url?: (string) | null;
             /** @description This field determines if the case is deleted in openzaak. */
             case_deleted?: boolean;
+            is_bed_and_breakfast?: boolean;
             previous_case?: number | null;
         };
         PatchedCaseUserTask: {
@@ -3044,6 +3216,7 @@ export interface components {
             name?: string;
             /** Format: date-time */
             due_date?: string;
+            week_number?: number | null;
             /** Format: date-time */
             readonly created?: string;
             /** Format: date-time */
@@ -3082,6 +3255,11 @@ export interface components {
             monument_soort?: string | null;
             /** Format: date */
             huurovereenkomst_afgesloten_op?: string | null;
+            huidige_huurprijs?: number | null;
+            /** Format: date-time */
+            readonly created?: string;
+            /** Format: date-time */
+            readonly updated?: string;
         };
         PatchedScheduleUpdate: {
             priority?: number;
@@ -3095,6 +3273,9 @@ export interface components {
          *     * `create_digital_surveilance_case` - Create a new 'Digitaal toezicht' Case
          *     * `close_case` - Close a Case (by performing the last task)
          *     * `perform_task` - Can perform a tasks
+         *     * `perform_bulk_import` - Can execute a bulk import
+         *     * `edit_task_week_number` - Can (un)assign a week number to a task.
+         *     * `assign_task_to_others` - Can (un)assign a task to other users than themselves.
          *     * `access_personal_data_register` - Can access 'BRP' (persoonsgegevens / ingeschreven personen)
          *     * `access_business_register` - Can access 'Handelsregister' (bedrijfseigenaren van panden, bedrijfsinformatie)
          *     * `access_recovery_check` - Can access 'invorderingscheck'
@@ -3103,7 +3284,7 @@ export interface components {
          *     * `access_document_management_system` - Can access 'DMS' (Alfresco / Decos)
          * @enum {string}
          */
-        PermissionsEnum: "create_case" | "create_digital_surveilance_case" | "close_case" | "perform_task" | "access_personal_data_register" | "access_business_register" | "access_recovery_check" | "access_sensitive_dossiers" | "access_sigital_surveillance" | "access_document_management_system";
+        PermissionsEnum: "create_case" | "create_digital_surveilance_case" | "close_case" | "perform_task" | "perform_bulk_import" | "edit_task_week_number" | "assign_task_to_others" | "access_personal_data_register" | "access_business_register" | "access_recovery_check" | "access_sensitive_dossiers" | "access_sigital_surveillance" | "access_document_management_system";
         Permit: {
             permit_granted: components["schemas"]["PermitGrantedEnum"];
             permit_type: string;
@@ -3164,17 +3345,39 @@ export interface components {
             name: string;
         };
         PuntentellerResultaat: {
-            rubrieken: {
-                [key: string]: number;
-            };
-            energieprestatie_berekening: unknown;
+            /**
+             * Format: double
+             * @description Som van de punten van alle rubrieken en opslagen.
+             */
+            totaal_punten: number;
+            rubrieken: components["schemas"]["Rubriek"][];
+            opslagen: components["schemas"]["Rubriek"][];
+            /** @description Opslagen op de maximale huurprijs. Deze tellen niet mee in de punten. */
+            huurprijsopslagen: components["schemas"]["Huurprijsopslag"][];
+            /**
+             * Format: double
+             * @description Som van de huurprijsopslagen in procenten.
+             */
+            huurprijsopslag_procent: number;
+            /** @description Leeg als er geen huurprijstabel geldt. */
+            maximale_huurprijs: components["schemas"]["MaximaleHuurprijs"] | null;
+        };
+        /**
+         * @description A puntentelling in the list of an address: only what an overview shows, without the
+         *     invoer and the berekening. Pass the kengetal in the context ("kengetal"), so it's
+         *     fetched once for the whole list.
+         */
+        PuntentellingLijst: {
+            readonly id: number;
+            /** @description Toezichthouder die de puntentelling maakte; leeg als die niet meer bestaat. */
+            readonly author: components["schemas"]["User"] | null;
+            completed?: boolean;
+            /** Format: date-time */
+            readonly created: string;
+            /** Format: date-time */
+            readonly updated: string;
             /** Format: double */
-            totaal_punten_bruto: number;
-            correcties: {
-                [key: string]: unknown;
-            };
-            /** Format: double */
-            totaal_punten_na_caps: number;
+            readonly punten: number;
         };
         QuickDecision: {
             readonly id: number;
@@ -3195,6 +3398,16 @@ export interface components {
             readonly id: number;
             name: string;
         };
+        Regel: {
+            omschrijving: string;
+            /** Format: double */
+            punten: number;
+            ruimte: string | null;
+            /** Format: double */
+            aantal: number | null;
+            /** Format: double */
+            factor: number | null;
+        };
         RegistrationDetails: {
             registrationNumber: string;
             requester: {
@@ -3208,6 +3421,15 @@ export interface components {
             createdAt: string;
             /** Format: date-time */
             agreementDate: string;
+        };
+        Rubriek: {
+            naam: string;
+            /**
+             * Format: double
+             * @description Som van de punten van de regels.
+             */
+            punten: number;
+            regels: components["schemas"]["Regel"][];
         };
         Schedule: {
             priority: components["schemas"]["PriorityTiny"];
@@ -3293,6 +3515,8 @@ export interface components {
              * @enum {string}
              */
             naam: "StandaardOverigeRuimte";
+            /** @description Hoe de ruimte aan de voorkant wordt weergegeven, bijvoorbeeld 'Woonkamer met open keuken'. Om de puntentelling weer te kunnen openen; de berekening gebruikt naam, behalve 'Woonkamer met open keuken' (verwarming telt dubbel). */
+            weergavenaam?: string | null;
             /** Format: decimal */
             ruimte_m2: string;
             /** @default false */
@@ -3323,6 +3547,8 @@ export interface components {
              * @enum {string}
              */
             naam: "StandaardVertrek";
+            /** @description Hoe de ruimte aan de voorkant wordt weergegeven, bijvoorbeeld 'Woonkamer met open keuken'. Om de puntentelling weer te kunnen openen; de berekening gebruikt naam, behalve 'Woonkamer met open keuken' (verwarming telt dubbel). */
+            weergavenaam?: string | null;
             /** Format: decimal */
             ruimte_m2: string;
             /** @default false */
@@ -3422,6 +3648,8 @@ export interface components {
              * @enum {string}
              */
             naam: "ToiletRuimte";
+            /** @description Hoe de ruimte aan de voorkant wordt weergegeven, bijvoorbeeld 'Woonkamer met open keuken'. Om de puntentelling weer te kunnen openen; de berekening gebruikt naam, behalve 'Woonkamer met open keuken' (verwarming telt dubbel). */
+            weergavenaam?: string | null;
             /** Format: decimal */
             ruimte_m2: string;
             /** @default false */
@@ -3476,6 +3704,8 @@ export interface components {
              * @enum {string}
              */
             naam: "null";
+            /** @description Hoe de ruimte aan de voorkant wordt weergegeven, bijvoorbeeld 'Woonkamer met open keuken'. Om de puntentelling weer te kunnen openen; de berekening gebruikt naam, behalve 'Woonkamer met open keuken' (verwarming telt dubbel). */
+            weergavenaam?: string | null;
             /** Format: decimal */
             ruimte_m2: string;
             /** @default false */
@@ -3503,6 +3733,7 @@ export interface components {
             author_ids?: string[];
             /** @default false */
             completed: boolean;
+            readonly type: string | null;
             /** Format: date-time */
             start_time: string;
             situation?: string | null;
@@ -3559,6 +3790,8 @@ export interface components {
              * @enum {string}
              */
             naam: "null";
+            /** @description Hoe de ruimte aan de voorkant wordt weergegeven, bijvoorbeeld 'Woonkamer met open keuken'. Om de puntentelling weer te kunnen openen; de berekening gebruikt naam, behalve 'Woonkamer met open keuken' (verwarming telt dubbel). */
+            weergavenaam?: string | null;
             /** Format: decimal */
             ruimte_m2: string;
             /** @default false */
@@ -4074,6 +4307,7 @@ export interface operations {
                 housing_corporation?: number;
                 housing_corporation_isnull?: boolean;
                 ids?: number;
+                is_bed_and_breakfast?: boolean;
                 is_enforcement_request?: boolean;
                 number?: string;
                 open_cases?: boolean;
@@ -4462,6 +4696,71 @@ export interface operations {
             };
         };
     };
+    cases_allowed_jump_workflows_list: {
+        parameters: {
+            query?: {
+                address_search?: string;
+                district?: string[];
+                district_name?: string[];
+                from_start_date?: string;
+                has_open_sensitive_case_on_address?: boolean;
+                housing_corporation?: string[];
+                housing_corporation_isnull?: boolean;
+                /** @description Meerdere waarden kunnen gescheiden worden door komma's. */
+                ids?: number[];
+                is_bed_and_breakfast?: boolean;
+                is_enforcement_request?: boolean;
+                number?: string;
+                open_cases?: boolean;
+                /** @description Which field to use when ordering the results. */
+                ordering?: string;
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+                postal_code?: string;
+                postal_code_range?: string;
+                priority?: string[];
+                project?: number[];
+                project_name?: string[];
+                reason?: number[];
+                reason_name?: string[];
+                schedule_day_segment?: string[];
+                schedule_from_date_added?: string;
+                schedule_housing_corporation_combiteam?: boolean;
+                schedule_visit_from?: string;
+                schedule_week_segment?: string[];
+                sensitive?: boolean;
+                start_date?: string;
+                state_types?: string[];
+                state_types__name?: string[];
+                street_name?: string;
+                subject?: string[];
+                subject_name?: string[];
+                suffix?: string;
+                tag?: string[];
+                task?: string[];
+                theme?: number[];
+                theme_name?: string[];
+                /** @description Meerdere waarden kunnen gescheiden worden door komma's. */
+                ton_ids?: string[];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedJumpToTargetList"];
+                };
+            };
+        };
+    };
     cases_bag_ids_list: {
         parameters: {
             query?: {
@@ -4496,6 +4795,7 @@ export interface operations {
                 housing_corporation?: number;
                 housing_corporation_isnull?: boolean;
                 ids?: number;
+                is_bed_and_breakfast?: boolean;
                 is_enforcement_request?: boolean;
                 open_cases?: boolean;
                 ordering?: string;
@@ -4551,6 +4851,7 @@ export interface operations {
                 housing_corporation?: number;
                 housing_corporation_isnull?: boolean;
                 ids?: number;
+                is_bed_and_breakfast?: boolean;
                 is_enforcement_request?: boolean;
                 number?: string;
                 open_cases?: boolean;
@@ -4612,6 +4913,7 @@ export interface operations {
                 housing_corporation?: number;
                 housing_corporation_isnull?: boolean;
                 ids?: number;
+                is_bed_and_breakfast?: boolean;
                 is_enforcement_request?: boolean;
                 number?: string;
                 open_cases?: boolean;
@@ -4676,6 +4978,58 @@ export interface operations {
             };
         };
     };
+    cases_process_file_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["CaseFileUpload"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CaseFileProcessResult"];
+                };
+            };
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CaseFileTaskResult"];
+                };
+            };
+        };
+    };
+    cases_process_file_status_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CaseFileTaskStatus"];
+                };
+            };
+        };
+    };
     cases_reason_names_list: {
         parameters: {
             query?: {
@@ -4687,6 +5041,7 @@ export interface operations {
                 housing_corporation?: number;
                 housing_corporation_isnull?: boolean;
                 ids?: number;
+                is_bed_and_breakfast?: boolean;
                 is_enforcement_request?: boolean;
                 number?: string;
                 open_cases?: boolean;
@@ -5160,12 +5515,7 @@ export interface operations {
     };
     puntenteller_adressen_list: {
         parameters: {
-            query?: {
-                /** @description Number of results to return per page. */
-                limit?: number;
-                /** @description The initial index from which to return the results. */
-                offset?: number;
-            };
+            query?: never;
             header?: never;
             path: {
                 bag_id: string;
@@ -5179,7 +5529,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PaginatedGebruikersinvoerResponseList"];
+                    "application/json": components["schemas"]["PuntentellingLijst"][];
                 };
             };
         };
@@ -5206,7 +5556,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["GebruikersinvoerCreateResponse"];
+                    "application/json": components["schemas"]["GebruikersinvoerResponse"];
                 };
             };
         };
@@ -5251,6 +5601,27 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["GebruikersinvoerResponse"];
                 };
+            };
+        };
+    };
+    puntenteller_puntentellingen_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this gebruikersinvoer. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
@@ -5692,6 +6063,7 @@ export interface operations {
                 district_name?: string;
                 due_date?: string;
                 from_start_date?: string;
+                has_owner?: boolean;
                 housing_corporation?: number;
                 housing_corporation_isnull?: boolean;
                 is_enforcement_request?: boolean;
@@ -5720,6 +6092,7 @@ export interface operations {
                 theme?: number;
                 theme_name?: string;
                 ton_ids?: number;
+                week_number?: string[];
             };
             header?: never;
             path?: never;
@@ -5745,6 +6118,7 @@ export interface operations {
                 district_name?: string;
                 due_date?: string;
                 from_start_date?: string;
+                has_owner?: boolean;
                 housing_corporation?: number;
                 housing_corporation_isnull?: boolean;
                 is_enforcement_request?: boolean;
@@ -5767,6 +6141,7 @@ export interface operations {
                 theme?: number;
                 theme_name?: string;
                 ton_ids?: number;
+                week_number?: string[];
             };
             header?: never;
             path: {
@@ -5801,6 +6176,7 @@ export interface operations {
                 district_name?: string;
                 due_date?: string;
                 from_start_date?: string;
+                has_owner?: boolean;
                 housing_corporation?: number;
                 housing_corporation_isnull?: boolean;
                 is_enforcement_request?: boolean;
@@ -5829,6 +6205,7 @@ export interface operations {
                 theme?: number;
                 theme_name?: string;
                 ton_ids?: number;
+                week_number?: string[];
             };
             header?: never;
             path: {
@@ -5857,6 +6234,7 @@ export interface operations {
                 district_name?: string;
                 due_date?: string;
                 from_start_date?: string;
+                has_owner?: boolean;
                 housing_corporation?: number;
                 housing_corporation_isnull?: boolean;
                 is_enforcement_request?: boolean;
@@ -5885,6 +6263,7 @@ export interface operations {
                 theme?: number;
                 theme_name?: string;
                 ton_ids?: number;
+                week_number?: string[];
             };
             header?: never;
             path?: never;
@@ -5924,6 +6303,7 @@ export interface operations {
                 district_name?: string;
                 due_date?: string;
                 from_start_date?: string;
+                has_owner?: boolean;
                 housing_corporation?: number;
                 housing_corporation_isnull?: boolean;
                 is_enforcement_request?: boolean;
@@ -5952,6 +6332,7 @@ export interface operations {
                 theme?: number;
                 theme_name?: string;
                 ton_ids?: number;
+                week_number?: string[];
             };
             header?: never;
             path?: never;
@@ -5977,6 +6358,7 @@ export interface operations {
                 district_name?: string;
                 due_date?: string;
                 from_start_date?: string;
+                has_owner?: boolean;
                 housing_corporation?: number;
                 housing_corporation_isnull?: boolean;
                 is_enforcement_request?: boolean;
@@ -6005,6 +6387,7 @@ export interface operations {
                 theme?: number;
                 theme_name?: string;
                 ton_ids?: number;
+                week_number?: string[];
             };
             header?: never;
             path?: never;
@@ -6044,6 +6427,7 @@ export interface operations {
                 district_name?: string;
                 due_date?: string;
                 from_start_date?: string;
+                has_owner?: boolean;
                 housing_corporation?: number;
                 housing_corporation_isnull?: boolean;
                 is_enforcement_request?: boolean;
@@ -6072,6 +6456,7 @@ export interface operations {
                 theme?: number;
                 theme_name?: string;
                 ton_ids?: number;
+                week_number?: string[];
             };
             header?: never;
             path?: never;

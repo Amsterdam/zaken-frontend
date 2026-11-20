@@ -1,4 +1,5 @@
-import { Column, Grid, Heading } from "@amsterdam/design-system-react"
+import { Column, Grid } from "@amsterdam/design-system-react"
+import { PageHeading } from "@/components/PageHeading/PageHeading"
 import TableCases from "@/components/cases/TableCases/TableCases"
 import CasesFilter from "@/components/cases/CasesFilter/CasesFilter"
 import {
@@ -90,9 +91,7 @@ const Cases: React.FC = () => {
 
   return (
     <>
-      <Grid.Cell span="all" appearance="transparent">
-        <Heading level={1}>Zakenoverzicht ({dataSource?.count ?? 0})</Heading>
-      </Grid.Cell>
+      <PageHeading title={`Zakenoverzicht (${dataSource?.count ?? 0})`} />
       <Grid.Cell span="all">
         <Column gap="large">
           <CasesFilter
