@@ -11,13 +11,11 @@ import { PermitsSection } from "../components/PermitsSection"
 import type { Melding } from "../types"
 import { shouldShowDummyData } from "../useDummyData"
 import { dummyMeldingenResponse } from "./data/dummyMeldingenResponse"
+import { getNightsPerYear } from "./getNightsPerYear"
 
 type Props = {
   bagId: string
 }
-
-// The reports are fetched from the start of last year (see useMeldingen).
-const START_DATE = dayjs().subtract(1, "years").startOf("year")
 
 /** The nights of a report; the year only when it is not obvious. */
 function formatMeldingPeriod(melding: Melding) {
@@ -88,10 +86,7 @@ const Meldingen: React.FC<Props> = ({ bagId }) => {
   const sortedMeldingen = [
     ...(isDummyData ? dummyMeldingenResponse : meldingen),
   ].sort((a, b) => dayjs(b.eindDatum).diff(dayjs(a.eindDatum)))
-  const totalNights = sortedMeldingen.reduce(
-    (total, { nachten }) => total + nachten,
-    0,
-  )
+  const nightsPerYear = getNightsPerYear(sortedMeldingen)
 
   return (
     <Column gap="large">
@@ -106,18 +101,25 @@ const Meldingen: React.FC<Props> = ({ bagId }) => {
       <PermitsSection
         title="Meldingen"
         count={sortedMeldingen.length}
+        showCount={false}
+        summary={
+          !query.isPending &&
+          !query.isError && (
+            <Column gap="small">
+              {nightsPerYear.map(([year, nights]) => (
+                <Paragraph key={year} size="small">
+                  {year}: {nights} {nights === 1 ? "nacht" : "nachten"}
+                </Paragraph>
+              ))}
+            </Column>
+          )
+        }
         isPending={query.isPending}
         isError={query.isError}
         errorText="Meldingen konden niet worden opgehaald."
         emptyText="Geen meldingen gevonden."
         isDummyData={isDummyData}
       >
-        {!query.isPending && (
-          <Paragraph size="small">
-            {totalNights} nachten sinds{" "}
-            {formatDate(START_DATE.format(), "D MMM YYYY")}
-          </Paragraph>
-        )}
         <Table
           columns={columns}
           data={sortedMeldingen}
