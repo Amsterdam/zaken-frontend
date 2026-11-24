@@ -10,6 +10,9 @@ type Props = {
   title: string
   /** The number behind the title; left out while loading. */
   count?: number
+  /** Whether to show the number behind the title. */
+  showCount?: boolean
+  summary?: ReactNode
   isPending: boolean
   isError: boolean
   errorText: string
@@ -26,6 +29,8 @@ type Props = {
 export function PermitsSection({
   title,
   count = 0,
+  showCount = true,
+  summary,
   isPending,
   isError,
   errorText,
@@ -37,7 +42,7 @@ export function PermitsSection({
     <Column gap="small">
       <Heading level={2}>
         {title}
-        {isPending || isError ? "" : ` (${count})`}
+        {showCount && !isPending && !isError ? ` (${count})` : ""}
       </Heading>
       {isDummyData && (
         <Paragraph size="small">
@@ -45,6 +50,7 @@ export function PermitsSection({
           op test en acceptatie.
         </Paragraph>
       )}
+      {summary}
       {isError ? (
         <Alert heading="Niet gelukt" headingLevel={3} severity="error">
           <Paragraph>{errorText}</Paragraph>

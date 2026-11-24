@@ -5,6 +5,8 @@ import { MemoryRouter, Route, Routes } from "react-router"
 import PermitsPage from "../PermitsPage"
 
 const BAG_ID = "0363010000000001"
+const currentYear = new Date().getFullYear()
+const previousYear = currentYear - 1
 const address = {
   adresseerbaarobject_id: BAG_ID,
   weergavenaam: "Amstel 1-H, 1011PN Amsterdam",
@@ -94,8 +96,8 @@ describe("the tab Vergunningen of an address", () => {
       fifteenNightsRuleApplicable: true,
       data: [
         {
-          startDatum: "2026-03-01",
-          eindDatum: "2026-03-04",
+          startDatum: `${currentYear}-03-01`,
+          eindDatum: `${currentYear}-03-04`,
           nachten: 3,
           gasten: 2,
           isAangepast: true,
@@ -103,8 +105,8 @@ describe("the tab Vergunningen of an address", () => {
           gemaaktOp: "2026-02-01T10:00:00Z",
         },
         {
-          startDatum: "2026-05-01",
-          eindDatum: "2026-05-05",
+          startDatum: `${currentYear}-05-01`,
+          eindDatum: `${currentYear}-05-05`,
           nachten: 4,
           gasten: 4,
           isAangepast: false,
@@ -148,8 +150,10 @@ describe("the tab Vergunningen of an address", () => {
     expect(heading("Vergunningen PowerBrowser (1)")).toBeTruthy()
     // In the row and in its (shut) details.
     expect(screen.getAllByText("Gereed").length).toBeGreaterThan(0)
-    expect(heading("Meldingen (2)")).toBeTruthy()
-    expect(screen.getByText(/^7 nachten sinds/)).toBeTruthy()
+    expect(heading("Meldingen")).toBeTruthy()
+    expect(screen.queryByRole("heading", { name: /Meldingen \(/ })).toBeNull()
+    expect(screen.getByText(`0 nachten in ${previousYear}`)).toBeTruthy()
+    expect(screen.getByText(`7 nachten in ${currentYear}`)).toBeTruthy()
     expect(heading("15-nachtenregel van toepassing!")).toBeTruthy()
     expect(heading("Vakantieverhuur (1)")).toBeTruthy()
     expect(screen.getByText("Anna de Vries")).toBeTruthy()
@@ -172,6 +176,27 @@ describe("the tab Vergunningen of an address", () => {
     ).toBeNull()
   })
 
+  it("splits nights across calendar years", () => {
+    meldingen = loaded({
+      fifteenNightsRuleApplicable: false,
+      data: [
+        {
+          startDatum: `${previousYear}-12-30`,
+          eindDatum: `${currentYear}-01-02`,
+          nachten: 3,
+          gasten: 2,
+          isAangepast: false,
+          isVerwijderd: true,
+          gemaaktOp: `${previousYear}-12-01T10:00:00Z`,
+        },
+      ],
+    })
+    renderPage()
+
+    expect(screen.getByText(`2 nachten in ${previousYear}`)).toBeTruthy()
+    expect(screen.getByText(`1 nacht in ${currentYear}`)).toBeTruthy()
+  })
+
   it("says so per part when there is nothing, or when it failed", () => {
     decos = loaded({ permits: [] })
     powerBrowser = { isPending: false, isError: true }
@@ -184,6 +209,8 @@ describe("the tab Vergunningen of an address", () => {
       screen.getByText("Vergunningen konden niet worden opgehaald."),
     ).toBeTruthy()
     expect(screen.getByText("Geen meldingen gevonden.")).toBeTruthy()
+    expect(screen.getByText(`0 nachten in ${previousYear}`)).toBeTruthy()
+    expect(screen.getByText(`0 nachten in ${currentYear}`)).toBeTruthy()
     expect(screen.getByText("Geen registraties gevonden.")).toBeTruthy()
     expect(screen.queryByText(/^Voorbeeldgegevens/)).toBeNull()
   })
