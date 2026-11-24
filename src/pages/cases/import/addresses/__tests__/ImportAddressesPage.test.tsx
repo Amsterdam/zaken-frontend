@@ -280,7 +280,9 @@ describe("ImportAddressesPage (step 2)", () => {
       screen.getByRole("heading", { name: "Controleren is niet gelukt" }),
     ).toBeTruthy()
     expect(
-      screen.getByText(/Bestand heeft ongeldige kolommen\. Kies het bestand/),
+      screen.getByText(
+        /Bestand heeft ongeldige kolommen\. Pas het bestand aan/,
+      ),
     ).toBeTruthy()
 
     // After "Volgende stap": what to do, at the field and in the list above.
