@@ -108,7 +108,7 @@ const Meldingen: React.FC<Props> = ({ bagId }) => {
             <Column gap="small">
               {nightsPerYear.map(([year, nights]) => (
                 <Paragraph key={year} size="small">
-                  {year}: {nights} {nights === 1 ? "nacht" : "nachten"}
+                  {nights} {nights === 1 ? "nacht" : "nachten"} in {year}
                 </Paragraph>
               ))}
             </Column>
