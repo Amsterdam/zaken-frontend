@@ -156,8 +156,8 @@ const ImportAddressesPage: React.FC = () => {
           severity="error"
         >
           <Paragraph>
-            {getErrorMessage(check.error)} Kies het bestand opnieuw om het nog
-            eens te proberen.
+            {getErrorMessage(check.error)} Pas het bestand aan en probeer het
+            opnieuw.
           </Paragraph>
         </Alert>
       )}
