@@ -152,8 +152,8 @@ describe("the tab Vergunningen of an address", () => {
     expect(screen.getAllByText("Gereed").length).toBeGreaterThan(0)
     expect(heading("Meldingen")).toBeTruthy()
     expect(screen.queryByRole("heading", { name: /Meldingen \(/ })).toBeNull()
-    expect(screen.getByText(`${previousYear}: 0 nachten`)).toBeTruthy()
-    expect(screen.getByText(`${currentYear}: 7 nachten`)).toBeTruthy()
+    expect(screen.getByText(`0 nachten in ${previousYear}`)).toBeTruthy()
+    expect(screen.getByText(`7 nachten in ${currentYear}`)).toBeTruthy()
     expect(heading("15-nachtenregel van toepassing!")).toBeTruthy()
     expect(heading("Vakantieverhuur (1)")).toBeTruthy()
     expect(screen.getByText("Anna de Vries")).toBeTruthy()
@@ -193,8 +193,8 @@ describe("the tab Vergunningen of an address", () => {
     })
     renderPage()
 
-    expect(screen.getByText(`${previousYear}: 2 nachten`)).toBeTruthy()
-    expect(screen.getByText(`${currentYear}: 1 nacht`)).toBeTruthy()
+    expect(screen.getByText(`2 nachten in ${previousYear}`)).toBeTruthy()
+    expect(screen.getByText(`1 nacht in ${currentYear}`)).toBeTruthy()
   })
 
   it("says so per part when there is nothing, or when it failed", () => {
@@ -209,8 +209,8 @@ describe("the tab Vergunningen of an address", () => {
       screen.getByText("Vergunningen konden niet worden opgehaald."),
     ).toBeTruthy()
     expect(screen.getByText("Geen meldingen gevonden.")).toBeTruthy()
-    expect(screen.getByText(`${previousYear}: 0 nachten`)).toBeTruthy()
-    expect(screen.getByText(`${currentYear}: 0 nachten`)).toBeTruthy()
+    expect(screen.getByText(`0 nachten in ${previousYear}`)).toBeTruthy()
+    expect(screen.getByText(`0 nachten in ${currentYear}`)).toBeTruthy()
     expect(screen.getByText("Geen registraties gevonden.")).toBeTruthy()
     expect(screen.queryByText(/^Voorbeeldgegevens/)).toBeNull()
   })
