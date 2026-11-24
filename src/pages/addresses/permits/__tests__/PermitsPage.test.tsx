@@ -176,18 +176,36 @@ describe("the tab Vergunningen of an address", () => {
     ).toBeNull()
   })
 
-  it("splits nights across calendar years", () => {
+  it("counts non-deleted nights from the start date, including future nights", () => {
     meldingen = loaded({
       fifteenNightsRuleApplicable: false,
       data: [
         {
           startDatum: `${previousYear}-12-30`,
-          eindDatum: `${currentYear}-01-02`,
+          eindDatum: `${previousYear}-12-30`,
           nachten: 3,
           gasten: 2,
           isAangepast: false,
-          isVerwijderd: true,
+          isVerwijderd: false,
           gemaaktOp: `${previousYear}-12-01T10:00:00Z`,
+        },
+        {
+          startDatum: `${currentYear}-06-01`,
+          eindDatum: `${currentYear}-06-11`,
+          nachten: 10,
+          gasten: 2,
+          isAangepast: false,
+          isVerwijderd: true,
+          gemaaktOp: `${currentYear}-05-01T10:00:00Z`,
+        },
+        {
+          startDatum: `${currentYear + 1}-12-30`,
+          eindDatum: `${currentYear}-01-01`,
+          nachten: 3,
+          gasten: 2,
+          isAangepast: false,
+          isVerwijderd: false,
+          gemaaktOp: `${currentYear}-05-01T10:00:00Z`,
         },
       ],
     })
@@ -195,6 +213,8 @@ describe("the tab Vergunningen of an address", () => {
 
     expect(screen.getByText(`2 nachten in ${previousYear}`)).toBeTruthy()
     expect(screen.getByText(`1 nacht in ${currentYear}`)).toBeTruthy()
+    expect(screen.getByText(`2 nachten in ${currentYear + 1}`)).toBeTruthy()
+    expect(screen.getByText(`1 nacht in ${currentYear + 2}`)).toBeTruthy()
   })
 
   it("says so per part when there is nothing, or when it failed", () => {
