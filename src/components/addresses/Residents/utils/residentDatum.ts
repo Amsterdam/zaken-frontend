@@ -13,7 +13,8 @@ const getPrecision = (datum: ResidentDatum) =>
 export const toIsoDate = (datum?: ResidentDatum) => {
   if (datum?.datum) return datum.datum
   if (!datum?.jaar) return undefined
-  if (datum.maand) return `${datum.jaar}-${String(datum.maand).padStart(2, "0")}`
+  if (datum.maand)
+    return `${datum.jaar}-${String(datum.maand).padStart(2, "0")}`
   return String(datum.jaar)
 }
 

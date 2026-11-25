@@ -13,6 +13,7 @@ import { ResidentDetails } from "./components/ResidentDetails/ResidentDetails"
 import { dummyResidentsResponse } from "./data/dummyResidentsResponse"
 import type { Resident } from "./types"
 import { formatName } from "./utils/formatting"
+import { getAge } from "./utils/getAge"
 import { getVisibleResidentsSortedByAge } from "./utils/getVisibleResidentsSortedByAge"
 
 type Props = {
@@ -25,7 +26,11 @@ const columns: ColumnType<Resident>[] = [
     dataIndex: "name",
     render: (_, resident) => <PersonHeader resident={resident} />,
   },
-  { header: "Leeftijd", dataIndex: "leeftijd", hideOnMobile: true },
+  {
+    header: "Leeftijd",
+    render: (_, resident) => getAge(resident),
+    hideOnMobile: true,
+  },
 ]
 
 /**

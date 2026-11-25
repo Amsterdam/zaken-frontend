@@ -35,9 +35,13 @@ export function getResidentPersonalDetails(resident: Resident) {
     },
     {
       label: "Nationaliteit",
-      value: resident?.nationaliteiten
-        ?.map((n) => n?.nationaliteit?.omschrijving)
-        .join(", "),
+      // Zonder omschrijving geen lege plek in de lijst, en zonder enige
+      // omschrijving geen lege regel.
+      value:
+        resident?.nationaliteiten
+          ?.map((n) => n?.nationaliteit?.omschrijving)
+          .filter(Boolean)
+          .join(", ") || undefined,
     },
     {
       label: "Overleden †",
