@@ -91,7 +91,13 @@ describe("the tab Persoonsgegevens of an address", () => {
             leeftijd: 90,
             naam: { voorletters: "O.", geslachtsnaam: "Lang" },
             // Died long ago: not shown.
-            overlijden: { datum: { langFormaat: "2001-01-01" } },
+            overlijden: {
+              datum: {
+                type: "Datum",
+                datum: "2001-01-01",
+                langFormaat: "1 januari 2001",
+              },
+            },
           },
         ],
       },
