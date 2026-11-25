@@ -1506,8 +1506,9 @@ export interface components {
         };
         Address: {
             bag_id: string;
+            readonly city: string | null;
             district: components["schemas"]["District"];
-            /** @description Retrieves a string with the full address of the object. */
+            /** @description Full address in PDOK notation, e.g. "Foppingadreef 26A-1, 1102CX Amsterdam". */
             readonly full_address: string;
             housing_corporation?: number | null;
             readonly id: number;
@@ -1558,6 +1559,7 @@ export interface components {
             readonly suffix_letter: string | null;
             readonly suffix: string | null;
             readonly postal_code: string | null;
+            readonly city: string | null;
             /** Format: double */
             readonly lat: number | null;
             /** Format: double */
@@ -1985,8 +1987,9 @@ export interface components {
         };
         DataTeamAddress: {
             bag_id: string;
+            readonly city: string | null;
             district: components["schemas"]["AddressDistrict"];
-            /** @description Retrieves a string with the full address of the object. */
+            /** @description Full address in PDOK notation, e.g. "Foppingadreef 26A-1, 1102CX Amsterdam". */
             readonly full_address: string;
             housing_corporation?: number | null;
             readonly id: number;
@@ -3144,8 +3147,9 @@ export interface components {
         ParkeerruimteNaamEnum: "buitenruimte_parkeerplaats";
         PatchedAddress: {
             bag_id?: string;
+            readonly city?: string | null;
             district?: components["schemas"]["District"];
-            /** @description Retrieves a string with the full address of the object. */
+            /** @description Full address in PDOK notation, e.g. "Foppingadreef 26A-1, 1102CX Amsterdam". */
             readonly full_address?: string;
             housing_corporation?: number | null;
             readonly id?: number;

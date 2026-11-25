@@ -2,12 +2,13 @@ import { StandaloneLink } from "@amsterdam/design-system-react"
 import { RouterLink } from "@/components/DefaultLayout/RouterLink"
 import { type ColumnType } from "@/components/Table/types"
 import { formatDate } from "@/shared/dateFormatters"
+import { formatHouseNumber } from "@/shared/formatHouseNumber"
 
 type Case = components["schemas"]["Case"]
 
 const getAddress = ({ address }: Case) => {
-  const { street_name, number, suffix, suffix_letter } = address ?? {}
-  return `${street_name} ${number}${suffix ? "-" : ""}${suffix || ""}${suffix_letter ? "-" : ""}${suffix_letter || ""}`
+  const { street_name, ...houseNumber } = address ?? {}
+  return `${street_name} ${formatHouseNumber(houseNumber)}`
 }
 
 const getStatus = ({ workflows, end_date }: Case) => {

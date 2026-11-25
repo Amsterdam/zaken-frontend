@@ -20,6 +20,7 @@ vi.mock("@/api/hooks", () => ({
         suffix_letter: null,
         suffix: "H",
         postal_code: "1011PN",
+        full_address: "Amstel 1-H, 1011PN Amsterdam",
       },
       workflows: [
         {

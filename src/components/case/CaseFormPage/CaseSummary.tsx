@@ -9,10 +9,6 @@ type Props = {
 /** Which case a form is about: its address and its id, under a heading. */
 const CaseSummary: React.FC<Props> = ({ id }) => {
   const { data, isLoading } = useCase(id)
-  const { street_name, number, suffix_letter, suffix, postal_code } =
-    data?.address ?? {}
-  const houseNumber = [number, suffix_letter, suffix].filter(Boolean).join("-")
-
   return (
     <Column gap="small">
       <Heading level={2}>Zaakgegevens</Heading>
@@ -23,9 +19,7 @@ const CaseSummary: React.FC<Props> = ({ id }) => {
         data={[
           {
             label: "Adres",
-            value: data
-              ? `${street_name} ${houseNumber}, ${postal_code} Amsterdam`
-              : undefined,
+            value: data?.address?.full_address,
           },
           { label: "Zaak ID", value: data?.id },
         ]}

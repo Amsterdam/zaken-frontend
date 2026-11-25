@@ -29,6 +29,8 @@ const caseItem = {
     suffix_letter: null,
     suffix: "H",
     postal_code: "1011PN",
+    city: "Amsterdam",
+    full_address: "Amstel 1-H, 1011PN Amsterdam",
     housing_corporation: null,
   },
 }
@@ -120,7 +122,7 @@ describe("the case page", () => {
     ).toBeTruthy()
     expect(
       screen
-        .getByRole("link", { name: "Amstel 1-H, 1011 PN Amsterdam" })
+        .getByRole("link", { name: "Amstel 1-H, 1011PN Amsterdam" })
         .getAttribute("href"),
     ).toBe("/adres/0363010000000001")
     // A link is hard to select, so the address can be copied.
