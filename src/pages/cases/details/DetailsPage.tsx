@@ -38,15 +38,6 @@ type Params = {
   id: string
 }
 
-const getAddress = (address?: components["schemas"]["Address"]) => {
-  if (!address) return undefined
-  const { street_name, number, suffix_letter, suffix, postal_code } = address
-  const houseNumber = [number, suffix_letter, suffix].filter(Boolean).join("-")
-  // The official notation, with a space: "1011 PN".
-  const postalCode = postal_code?.replace(/^(\d{4})\s*([A-Z]{2})$/i, "$1 $2")
-  return `${street_name} ${houseNumber}, ${postalCode} Amsterdam`
-}
-
 const DetailsPage: React.FC = () => {
   const { id: idString } = useParams<Params>()
   const parsedId = parseUrlParamId(idString)
@@ -66,7 +57,7 @@ const DetailsPage: React.FC = () => {
   // The request failed otherwise (the error is shown as a message).
   if (!isLoading && !exists) return <NotFoundPage />
 
-  const address = getAddress(caseItem?.address)
+  const address = caseItem?.address?.full_address
   const bagId = caseItem?.address?.bag_id
 
   return (
