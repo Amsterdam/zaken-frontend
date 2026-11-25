@@ -14,6 +14,7 @@ const reasonsByTheme: Record<number, { id: number; name: string }[]> = {
     { id: 10, name: "SIG melding" },
     { id: 11, name: "Project" },
     { id: 12, name: "Digitaal toezicht" },
+    { id: 13, name: "Extern Team" },
   ],
   2: [
     { id: 20, name: "MMA" },
@@ -310,6 +311,37 @@ describe("the page to make a new case", () => {
         ],
         advertisements: [{ link: "https://www.airbnb.nl/rooms/1" }],
         subject_ids: [6],
+      }),
+    )
+  })
+
+  it("makes an external team case with optional details left empty", async () => {
+    renderPage()
+    fireEvent.click(screen.getByLabelText("Vakantieverhuur"))
+    fireEvent.click(await screen.findByLabelText("Extern Team"))
+
+    expect(screen.queryByLabelText("Is de melder anoniem?")).toBeNull()
+    expect(screen.queryByLabelText("SIG-nummer")).toBeNull()
+    expect(screen.queryByText("Ander thema")).toBeNull()
+    expect(
+      screen.getByLabelText(/^Telefoonnummer melder \(niet verplicht\)/),
+    ).toBeTruthy()
+    expect(
+      screen.getByLabelText(/^E-mailadres melder \(niet verplicht\)/),
+    ).toBeTruthy()
+    type(/^Naam Extern Team/, "Team B&B")
+    type(/^Naam melder/, "Jan Jansen")
+    type(/^Korte samenvatting melding/, "Toeristen met koffers.")
+    expect(screen.getByText("Is er een advertentie bekend?")).toBeTruthy()
+    fireEvent.click(screen.getByLabelText("Nee, er is geen advertentie"))
+    submit()
+
+    await waitFor(() =>
+      expect(createCase).toHaveBeenCalledWith({
+        bag_id: BAG_ID,
+        theme_id: 1,
+        reason_id: 13,
+        subject_ids: [],
       }),
     )
   })

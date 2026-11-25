@@ -2,6 +2,7 @@
 export const REASON_PROJECT = "Project"
 export const REASON_MMA = "MMA"
 export const REASON_SIG = "SIG melding"
+export const REASON_EXTERN = "Extern Team"
 // Only for a case made for a listing in TON.
 export const REASON_DIGITAL_SURVEILLANCE = "Digitaal toezicht"
 

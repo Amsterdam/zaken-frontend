@@ -45,6 +45,7 @@ import {
 } from "@/components/case/forms/CitizenReportForm/reportValues"
 import {
   REASON_DIGITAL_SURVEILLANCE,
+  REASON_EXTERN,
   REASON_MMA,
   REASON_PROJECT,
   REASON_SIG,
@@ -339,10 +340,11 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
           registerOptions={{ required: "Kies een aanleiding." }}
           shouldShow={hasTheme}
         />
-        {reasonName === REASON_SIG && (
+        {(reasonName === REASON_SIG || reasonName === REASON_EXTERN) && (
           <ReportFields
             control={controlOf(form.control)}
             asksNuisance={themeName === "Vakantieverhuur"}
+            variant={reasonName === REASON_EXTERN ? "external" : "sig"}
           />
         )}
         <SelectControl<FormValues>
@@ -389,12 +391,14 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
           name="subjects"
           label="Onderwerp(en)"
           options={toOptions(subjects?.results)}
-          registerOptions={{
-            required: "Kies ten minste één onderwerp.",
-          }}
+          registerOptions={
+            reasonName === REASON_EXTERN
+              ? undefined
+              : { required: "Kies ten minste één onderwerp." }
+          }
           shouldShow={hasTheme}
         />
-        {hasTheme && (
+        {hasTheme && reasonName !== REASON_EXTERN && (
           <>
             <Label>Ander thema</Label>
             <CheckboxControl<FormValues>

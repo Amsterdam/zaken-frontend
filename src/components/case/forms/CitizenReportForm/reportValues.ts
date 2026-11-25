@@ -4,8 +4,9 @@ export const YES = "yes"
 export const NO = "no"
 type YesNo = "" | typeof YES | typeof NO
 
-/** The report of a citizen (a SIG report), as filled in. */
+/** The report details shared by SIG and external-team forms. */
 export type ReportValues = {
+  external_team_name: string
   reporter_anonymous: YesNo
   reporter_name: string
   reporter_phone: string
@@ -22,6 +23,7 @@ export type AdvertisementValues = {
 }
 
 export const emptyReportValues: ReportValues = {
+  external_team_name: "",
   reporter_anonymous: "",
   reporter_name: "",
   reporter_phone: "",
