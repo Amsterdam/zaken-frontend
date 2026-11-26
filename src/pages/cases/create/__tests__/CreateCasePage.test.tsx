@@ -315,7 +315,7 @@ describe("the page to make a new case", () => {
     )
   })
 
-  it("makes an external team case with optional details left empty", async () => {
+  it("makes an external team case with its report details and advertisement", async () => {
     renderPage()
     fireEvent.click(screen.getByLabelText("Vakantieverhuur"))
     fireEvent.click(await screen.findByLabelText("Extern Team"))
@@ -329,11 +329,15 @@ describe("the page to make a new case", () => {
     expect(
       screen.getByLabelText(/^E-mailadres melder \(niet verplicht\)/),
     ).toBeTruthy()
-    type(/^Naam Extern Team/, "Team B&B")
+    type(/^Teamnaam melder/, "Team B&B")
     type(/^Naam melder/, "Jan Jansen")
+    type(/^Telefoonnummer melder/, "0612345678")
+    type(/^E-mailadres melder/, "jan@example.nl")
     type(/^Korte samenvatting melding/, "Toeristen met koffers.")
     expect(screen.getByText("Is er een advertentie bekend?")).toBeTruthy()
-    fireEvent.click(screen.getByLabelText("Nee, er is geen advertentie"))
+    fireEvent.click(screen.getByLabelText("Ja, er is een advertentie"))
+    type(/^Link 1/, "https://www.airbnb.nl/rooms/2")
+    fireEvent.click(screen.getByLabelText(/^Betreft overlast/))
     submit()
 
     await waitFor(() =>
@@ -341,6 +345,17 @@ describe("the page to make a new case", () => {
         bag_id: BAG_ID,
         theme_id: 1,
         reason_id: 13,
+        external_team_reports: [
+          {
+            reporter_team_name: "Team B&B",
+            reporter_name: "Jan Jansen",
+            reporter_phone: "0612345678",
+            reporter_email: "jan@example.nl",
+            description_external_team_report: "Toeristen met koffers.",
+            nuisance: true,
+          },
+        ],
+        advertisements: [{ link: "https://www.airbnb.nl/rooms/2" }],
         subject_ids: [],
       }),
     )

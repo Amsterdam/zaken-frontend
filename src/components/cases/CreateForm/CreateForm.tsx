@@ -41,6 +41,7 @@ import {
   type ReportValues,
   toAdvertisements,
   toCitizenReport,
+  toExternalTeamReport,
   YES,
 } from "@/components/case/forms/CitizenReportForm/reportValues"
 import {
@@ -217,6 +218,9 @@ const CreateForm: React.FC<Props> = ({ bagId, tonId }) => {
         }),
         ...(reasonName === REASON_SIG && {
           citizen_reports: [toCitizenReport(values)],
+        }),
+        ...(reasonName === REASON_EXTERN && {
+          external_team_reports: [toExternalTeamReport(values)],
         }),
         ...(values.housing_corporation !== "" && {
           housing_corporation: Number(values.housing_corporation),

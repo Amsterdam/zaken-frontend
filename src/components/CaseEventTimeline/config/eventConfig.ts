@@ -4,6 +4,7 @@ import {
   citizenReportLabelsMap,
   debriefLabelsMap,
   decisionLabelsMap,
+  externalTeamReportLabelsMap,
   genericLabelsMap,
   reasonLabelsMap,
   scheduleLabelsMap,
@@ -56,6 +57,13 @@ export const EVENT_CONFIG: Record<string, EventConfig> = {
   CITIZEN_REPORT: {
     title: eventTypeTitle,
     fields: mapFields(citizenReportLabelsMap, {
+      advertisement_linklist: formatLinklist,
+    }),
+  },
+
+  EXTERNAL_TEAM_REPORT: {
+    title: eventTypeTitle,
+    fields: mapFields(externalTeamReportLabelsMap, {
       advertisement_linklist: formatLinklist,
     }),
   },

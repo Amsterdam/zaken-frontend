@@ -4,6 +4,7 @@ type CaseEvent =
   | DebriefingEvent
   | ScheduleEvent
   | VisitEvent
+  | ExternalTeamReportEvent
 type BaseCaseEvent<
   TType extends string,
   TValues,
@@ -81,5 +82,20 @@ type VisitEvent = BaseCaseEvent<
     situation?: string
     observations?: string
     can_next_visit_go_ahead?: boolean
+  }
+>
+
+type ExternalTeamReportEvent = BaseCaseEvent<
+  "EXTERNAL_TEAM_REPORT",
+  {
+    date_added: string
+    author: string
+    reporter_team_name: string
+    reporter_name: string
+    reporter_phone: string | null
+    reporter_email: string | null
+    description_external_team_report: string | null
+    advertisement_linklist: string[] | null
+    nuisance: boolean
   }
 >

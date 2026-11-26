@@ -34,6 +34,14 @@ describe("the history of a case", () => {
         event(3, "VISIT"),
         event(4, "DEBRIEFING"),
         event(5, "SUMMON"),
+        event(6, "EXTERNAL_TEAM_REPORT", {
+          reporter_team_name: "Team B&B",
+          reporter_name: "Jan Jansen",
+          reporter_email: "jan@example.nl",
+          description_external_team_report: "Toeristen met koffers.",
+          advertisement_linklist: ["https://www.airbnb.nl/rooms/2"],
+          nuisance: true,
+        }),
       ],
     }
   })
@@ -42,6 +50,7 @@ describe("the history of a case", () => {
     render(<TimelineContainer caseId={12} />)
 
     expect(steps()).toEqual([
+      "Externe teammelding verwerken",
       "Aanschrijving",
       "Debrief",
       "Bezoek",
@@ -53,7 +62,11 @@ describe("the history of a case", () => {
       screen
         .getAllByRole("button")
         .map((button) => button.getAttribute("aria-expanded")),
-    ).toEqual(["true", "false", "false", "false", "false"])
+    ).toEqual(["true", "false", "false", "false", "false", "false"])
+    expect(screen.getByText("Naam Extern Team")).toBeTruthy()
+    expect(screen.getByText("Team B&B")).toBeTruthy()
+    expect(screen.getByText("Samenvatting melding")).toBeTruthy()
+    expect(screen.getByText("Toeristen met koffers.")).toBeTruthy()
   })
 
   it("says so when there is no history, and when it failed", () => {

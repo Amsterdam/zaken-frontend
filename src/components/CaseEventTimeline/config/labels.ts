@@ -75,6 +75,20 @@ export const citizenReportLabelsMap = {
   advertisement_linklist: "Advertenties",
   nuisance: "Melding overlast",
 }
+
+// EXTERNAL TEAM REPORT
+export const externalTeamReportLabelsMap = {
+  date_added: "Datum",
+  author: "Projectmedewerker",
+  reporter_team_name: "Naam Extern Team",
+  reporter_name: "Naam melder",
+  reporter_phone: "Telefoonnummer melder",
+  reporter_email: "E-mailadres melder",
+  description_external_team_report: "Samenvatting melding",
+  advertisement_linklist: "Advertenties",
+  nuisance: "Melding overlast",
+}
+
 // GENERIC EVENT
 export const genericLabelsMap = {
   date_added: "Datum",

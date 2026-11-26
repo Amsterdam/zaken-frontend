@@ -65,6 +65,19 @@ export const toCitizenReport = (values: ReportValues) => ({
   nuisance: values.nuisance,
 })
 
+/** An external-team report as the backend takes it. */
+export const toExternalTeamReport = (values: ReportValues) => ({
+  reporter_team_name: values.external_team_name.trim(),
+  reporter_name: values.reporter_name.trim(),
+  ...optional("reporter_phone", values.reporter_phone),
+  ...optional("reporter_email", values.reporter_email),
+  ...optional(
+    "description_external_team_report",
+    values.description_citizenreport,
+  ),
+  nuisance: values.nuisance,
+})
+
 /** The links of the advertisements as the backend takes them. */
 export const toAdvertisements = (values: AdvertisementValues) =>
   values.advertisements.map(({ link }) => ({ link: link.trim() }))

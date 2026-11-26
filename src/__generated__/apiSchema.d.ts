@@ -1722,6 +1722,7 @@ export interface components {
             readonly tags: components["schemas"]["Tag"][];
             tag_ids?: (number | null)[];
             citizen_reports?: components["schemas"]["CitizenReportCase"][];
+            external_team_reports?: components["schemas"]["ExternalTeamReportCase"][];
             advertisements?: components["schemas"]["Advertisement"][];
             housing_corporation?: number;
             readonly state: string;
@@ -2135,6 +2136,19 @@ export interface components {
          * @enum {string}
          */
         EnergieTypeEnum: "label" | "index" | "bouwjaar";
+        ExternalTeamReportCase: {
+            readonly id: number;
+            advertisements?: components["schemas"]["Advertisement"][];
+            reporter_name?: string | null;
+            reporter_team_name?: string | null;
+            reporter_phone?: string | null;
+            reporter_email?: string | null;
+            advertisement_linklist?: string[] | null;
+            description_external_team_report?: string | null;
+            nuisance?: boolean;
+            /** Format: date-time */
+            readonly date_added: string;
+        };
         Feedback: {
             feedback: string;
             url: string;
@@ -3176,6 +3190,7 @@ export interface components {
             readonly tags?: components["schemas"]["Tag"][];
             tag_ids?: (number | null)[];
             citizen_reports?: components["schemas"]["CitizenReportCase"][];
+            external_team_reports?: components["schemas"]["ExternalTeamReportCase"][];
             advertisements?: components["schemas"]["Advertisement"][];
             housing_corporation?: number;
             readonly state?: string;
